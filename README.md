@@ -1,0 +1,2 @@
+# Warfare Plugins / Social Warfare Repository and Issue Tracker
+This is a public repository for the Social Warfare WordPress plugin created primarily for the purpose of publishing and maintaining a public list of bugs, known issues, and feature requests with the community at large. Please use the "Issues" link above to track or add information to existing issues or to submit new issues altogether.
