@@ -1,0 +1,534 @@
+/**
+ * admin pages class
+ *
+ * CSS used for the admin pages class and other form items.
+ *
+ * Copyright 2011 Ohad Raz (admin@bainternet.info)
+ */
+ 
+/* Common Rules for all fields.
+----------------------------------------------- */
+.form-table td.at-field {
+	border:1px solid #DDD;
+	padding:10px 10px 20px;
+	margin:0;
+	font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.at-label {
+	margin:0!important;
+	padding:5px 0 0;
+	font:20px/31px HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
+	text-shadow:rgba(255,255,255,1) 0 1px 0;
+	width:auto;
+	float:left;
+}
+
+.at-radio-label {
+	padding-right:10px;
+}
+
+.at-file-upload-label {
+	clear:both;
+	margin:5px 0 5px 1px;
+}
+
+.wp-picker-container {
+	float:right;
+	width:260px;
+}
+
+/* Form Fields
+----------------------------------------------- */
+.clearfix {
+	clear:both;
+	width:100%;
+}
+
+.postbox .at-field input,
+.postbox .at-field textarea {
+	padding:5px;
+	line-height:18px;
+}
+
+.postbox .at-field input.at-color {
+	border:0;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	margin-right:10px;
+	min-width:100px;
+}
+
+.at-field input:focus,
+.at-field textarea:focus {
+	background:#fffff8;
+}
+
+#wpcontent select.at-select {
+	min-height:30px!important;
+	padding:5px;
+	display:block;
+	min-width:200px;
+	float:right;
+}
+
+.at-field .desc-field {
+	color:#AAA;
+	font-style:italic;
+	margin:5px 0 0 3px!important;
+	font-size:13px;
+}
+
+.desc-field {
+	background-color:#D9EDF7;
+	border:1px solid #BCE8F1;
+	color:#3A87AD;
+	padding:8px 35px 8px 14px;
+	border-radius:4px 4px 4px 4px;
+	margin-bottom:20px;
+	padding:8px 35px 8px 14px;
+	text-shadow:0 1px 0 rgba(255,255,255,0.5);
+}
+
+.at-field .wp_themeSkin table.mceLayout {
+	border:1px solid #DFDFDF;
+}
+
+#post-body .at-field .wp_themeSkin .mceStatusbar a.mceResize {
+	top:-25px;
+}
+
+/* Uploaded Images
+----------------------------------------------- */
+.at-images li {
+	margin:5px 10px 0 0;
+	float:left;
+	width:150px;
+	height:150px;
+	text-align:center;
+	border:3px solid #ccc;
+	cursor:move;
+	position:relative;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+}
+
+.at-images img {
+	width:150px;
+	height:150px;
+}
+
+.at-images a {
+	position:absolute;
+	top:-12px;
+	right:-12px;
+	color:#fff;
+	font-weight:700;
+	padding:5px;
+}
+
+.at-images .at-delete-file img {
+	width:16px;
+	height:16px;
+}
+
+/* Upload Button
+----------------------------------------------- */
+.at-upload-button {
+	float:left;
+	clear:both;
+	margin-top:10px;
+}
+
+.at-add-file {
+	float:left;
+	clear:both;
+	margin-top:10px;
+}
+
+/* Time Picker
+----------------------------------------------- */
+.ui-timepicker-div {
+	font-size:.9em;
+}
+
+.ui-timepicker-div .ui-widget-header {
+	margin-bottom:8px;
+}
+
+.ui-timepicker-div dl {
+	text-align:left;
+}
+
+.ui-timepicker-div dl dt {
+	height:25px;
+}
+
+.ui-timepicker-div dl dd {
+	margin:-25px 0 10px 65px;
+}
+
+.ui-timepicker-div td {
+	font-size:90%;
+}
+
+#ui-datepicker-div {
+	display:none;
+}
+
+/* Repater Block
+----------------------------------------------- */
+/* inline */
+.at-inline label {
+	font-size:12px!important;
+}
+
+.at-inline textarea {
+	height:130px;
+	width:200px;
+}
+
+/* panel style
+----------------------------------------------- */
+.wrap {
+	background:#fff;
+	border:1px solid #CCC;
+	margin:17px 0 40px;
+	width:800px;
+	border-radius:0;
+}
+
+.header_wrap {
+	padding:5px 20px 10px;
+}
+
+.footer_wrap {
+	padding:5px 20px 10px;
+}
+
+.panel_menu {
+	float:left;
+	width:160px;
+}
+
+.clearboth {
+	clear:both;
+}
+
+.f_row {
+	border-bottom:1px solid #F9F9F9;
+}
+
+.sections {
+	background:none repeat scroll 0 0 #FFF;
+	float:left;
+	margin-top:1px;
+	min-height:520px;
+	padding-bottom:10px;
+	width:624px;
+	padding-left:15px;
+}
+
+.sw_field {
+	padding:10px;
+	border-bottom:1px solid #E9EAEE;
+}
+
+.sections textarea {
+	background:-moz-linear-gradient(center top,#F9F9F9,#FFF) repeat scroll 0 0 transparent;
+	color:#333;
+	font-size:12px;
+	height:175px;
+	line-height:1.5em;
+	padding:4px;
+	width:390px;
+}
+
+.sections label {
+	clear:both;
+	display:block;
+	font-size:12px;
+	font-weight:700;
+	margin:0 0 10px;
+	width:100%;
+}
+
+.setingstab {
+	min-height:500px;
+}
+
+.sections input[type="text"],
+.sections input[type="password"],
+.sections input[type="number"],
+.sections input[type="file"],
+.sections select {
+	background:-moz-linear-gradient(center top,#F9F9F9,#FFF) repeat scroll 0 0 transparent;
+	color:#333;
+	font-size:12px;
+	line-height:1em;
+	padding:10px;
+	width:65%;
+	font-size:100%;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow:none;
+	height:42px;
+	float:right;
+}
+
+.sections input[type="number"] {
+	width: 150px;
+}
+
+.nav_tab_link {
+	border:none;
+	-webkit-border-radius:0 4px 4px 0;
+	-moz-border-radius:0 4px 4px 0;
+	border-radius:0 4px 4px 0;
+	color:#444;
+	display:block;
+	font-size:12px;
+	line-height:1.5;
+	margin:0 6px -1px 0;
+	padding:10px 0 10px 20px;
+	text-decoration:none;
+	width:100%;
+}
+
+.nav_tab_link:hover {
+	background:#ee464f;
+	color:#fff;
+	font-weight:700;
+	-webkit-border-radius:0 4px 4px 0;
+	-moz-border-radius:0 4px 4px 0;
+	border-radius:0 4px 4px 0;
+}
+
+.description {
+	color:#999;
+	display:block;
+	float:right;
+	font-size:11px;
+	margin-top:-2px;
+	width:200px;
+}
+
+.active_tab {
+	background:#2f394f;
+	color:#fff;
+	font-weight:700;
+	-webkit-border-radius:0 4px 4px 0;
+	-moz-border-radius:0 4px 4px 0;
+	border-radius:0 4px 4px 0;
+}
+
+.active_tab a,.nav_tab_link:hover a {
+	color:#fff;
+	text-shadow:none;
+	-webkit-border-radius:0 4px 4px 0;
+	-moz-border-radius:0 4px 4px 0;
+	border-radius:0 4px 4px 0;
+}
+
+.editorcontainer {
+	-webkit-border-radius:6px;
+	border:1px solid #DEDEDE;
+}
+
+.btn,.btn-info,
+.btn-primary,
+.btn-warning {
+	color: #FFF;
+	padding: 10px 20px;
+	border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+	border-style:solid;
+	border-width:1px;
+	cursor:pointer;
+	display:inline-block;
+	line-height:18px;
+	padding: 10px 20px;
+	text-align:center;
+}
+
+.btn {
+	background-color:#FAFAFA;
+	background-image:-moz-linear-gradient(center top,#08C,#04C);
+	background-repeat:repeat-x;
+}
+
+.btn-info {
+	background-color:#2f394f;
+	background-image:-moz-linear-gradient(center top,#08C,#04C);
+	background-repeat:repeat-x;
+}
+
+.btn-primary {
+	background-color:#006DCC;
+	background-image:-moz-linear-gradient(center top,#08C,#04C);
+	background-repeat:repeat-x;
+}
+
+.btn-warning {
+	background-color:#FAA732;
+	background-image:-moz-linear-gradient(center top,#FBB450,#F89406);
+	background-repeat:repeat-x;
+}
+
+.btn:hover, 
+.btn-info:hover, 
+.btn-primary:hover {
+	background: #ee464f;
+}
+
+/* alerts */
+.alert {
+	background-color:#FCF8E3;
+	border:1px solid #FBEED5;
+	margin-bottom:20px;
+	padding: 10px 35px 10px 14px;
+	text-shadow:0 1px 0 rgba(255,255,255,0.5);
+}
+
+.alert,.alert-heading {
+	color:#C09853;
+}
+
+.alert h4 {
+	font-size:17px;
+	margin:0;
+}
+
+.alert-success {
+	background-color:#DFF0D8;
+	border-color:#D6E9C6;
+}
+
+.alert-success,
+.alert-success .alert-heading {
+	color:#468847;
+}
+
+.alert-danger,
+.alert-error {
+	background-color:#ee464f;
+	border-color:#d34250;
+	color:#fff;
+}
+
+.alert .close {
+	line-height:20px;
+	position:relative;
+	right:-21px;
+	top:-2px;
+}
+
+button.close {
+	background:none repeat scroll 0 0 transparent;
+	border:0 none;
+	cursor:pointer;
+	padding:0;
+}
+
+.close {
+	color:#000;
+	float:right;
+	font-size:20px;
+	font-weight:700;
+	line-height:20px;
+	opacity:.2;
+	text-shadow:0 1px 0 #FFF;
+}
+
+/* Sort */
+.widget-sort {
+	color: #fff;
+	background-color:#30394f;
+	border:1px dashed #fff;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	padding:10px;
+	text-align:center;
+	width:65%;
+}
+
+.ui-state-highlight {
+	background-color:#FFFFE0;
+	border-color:#E6DB55;
+	padding:14px;
+	width:60%;
+}
+
+.ui-sortable li {
+	cursor:move;
+	float:right;
+}
+
+.ui-sortable .at-repater-block {
+	cursor:move;
+}
+
+/* Typo field iris color picker */
+.wp-picker-container {
+	height:20px;
+	margin-top: 10px;
+}
+
+/* issue #17 number 7 */
+div.iris-picker {
+	z-index:100;
+}
+
+/* Select 2 typo  field Fix*/
+.at-typography-size {
+	width:11%;
+}
+
+.at-typography-face {
+	width:30%;
+}
+
+.hidden {
+	display:none;
+}
+
+.toplevel_page_social-warfare .sections {
+	width:624px!important;
+	max-width:624px!important;
+}
+.sw_loading_modal {
+    display:    none;
+    position:   fixed;
+    z-index:    100000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 0, 0, 0, .9 ) url('../images/ajax-loader.gif') 50% 66% no-repeat;
+}
+.sw_loading_modal .sw_modal_message {
+	position:absolute;
+	top:33%;
+	font-size:150%;	
+	width:100%;
+	color:white;
+	text-align:center;
+}
+.sw_loading_modal .sw_modal_message .sw_modal_subtitle {
+	font-size:85%;	
+}
+body.sw_loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.sw_loading .sw_loading_modal {
+    display: block;
+}

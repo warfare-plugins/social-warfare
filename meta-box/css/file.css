@@ -1,0 +1,58 @@
+.SW_META-file li {
+	width: 250px;
+	margin: 0 10px 10px 0;
+	-webkit-transition: width .25s, opacity .25s, -webkit-opacity .25s;
+	        transition: width .25s, opacity .25s;
+}
+.SW_META-file .SW_META-icon {
+	width: 60px;
+	text-align: center;
+	vertical-align: middle;
+	overflow: hidden;
+}
+.SW_META-file .SW_META-icon img {
+	max-height: 60px;
+	max-width: 60px;
+}
+.SW_META-file .SW_META-info {
+	width: 180px;
+	vertical-align: top;
+	overflow: hidden;
+}
+.SW_META-file .SW_META-info p {
+	margin: .1em 0;
+}
+.SW_META-file .SW_META-info a {
+	font-weight: bold;
+	text-decoration: none;
+}
+.SW_META-file li,
+.SW_META-file .SW_META-icon,
+.SW_META-file .SW_META-info {
+	display: inline-block;
+}
+.SW_META-file .SW_META-icon,
+.SW_META-file .SW_META-info {
+	margin: 0 0 2px 2px;
+}
+
+.SW_META-file li.removed {
+	width: 0;
+	margin: 0;
+	        opacity: 0;
+	-webkit-opacity: 0;
+	   -moz-opacity: 0;
+	     -o-opacity: 0;
+}
+
+.SW_META-file li.removed:after {
+	content: ' ';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	opacity: .4;
+	background-color: #f00;
+}

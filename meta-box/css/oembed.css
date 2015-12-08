@@ -1,0 +1,11 @@
+.SW_META-oembed-wrapper .spinner {
+	float: none;
+	vertical-align: top;
+	display: inline-block;
+}
+.SW_META-oembed-wrapper .embed-code {
+	margin-top: 1em;
+}
+.SW_META-oembed-wrapper .embed-code iframe {
+	max-width: 100%;
+}
