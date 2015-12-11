@@ -118,7 +118,7 @@
 		
 			$pd	= get_post_meta( $array['postID'] , 'nc_pinterestDescription' , true );
 			if($array['imageURL']): 
-				$pi 	= '&media='.$array['imageURL'];
+				$pi 	= '&media='.urlencode(html_entity_decode($array['imageURL'],ENT_COMPAT, 'UTF-8'));
 			else: 
 				$pi		= '';
 			endif;
