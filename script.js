@@ -595,5 +595,16 @@ jQuery(document).ready(function() {
 	getShares();
 
 	// Reset the cache
-	if (typeof sw_cache_url != 'undefined') { jQuery.get(sw_cache_url + '?sw_cache=rebuild'); }
+	if (typeof sw_cache_url != 'undefined') { 
+		
+		// If the URL Contains a question mark already
+		if (sw_cache_url.indexOf('?') != -1) {
+			var url_params = '&sw_cache=rebuild';
+			
+		// If the URL does not contain a question mark already
+		} else {
+			var url_params = '?sw_cache=rebuild';
+		}
+		jQuery.get(sw_cache_url + url_params); 
+	}
 });
