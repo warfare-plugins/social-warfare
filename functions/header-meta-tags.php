@@ -190,6 +190,9 @@
 							global $wpseo_og;
 							remove_action( 'wpseo_head', array( $wpseo_og, 'opengraph' ), 30 );
 							
+							// Fetch the WPSEO_SOCIAL Values
+							$wpseo_social = get_option( 'wpseo_social' );
+							
 						endif;					
 						
 						// Add all our Open Graph Tags to the Return Header Output
@@ -293,9 +296,15 @@
 
 						$info['header_output'] .= PHP_EOL .'<meta property="og:url" content="'.get_the_permalink().'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:site_name" content="'.get_bloginfo('name').'" />';
+						if(isset($wpseo_social) && isset($wpseo_social['facebook_site'])):
+							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$wpseo_social['facebook_site'].'" />';	
+						endif;
 						$info['header_output'] .= PHP_EOL .'<meta property="article:published_time" content="'.get_post_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="article:modified_time" content="'.get_post_modified_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:updated_time" content="'.get_post_modified_time('c').'" />';
+						if(isset($wpseo_social) && isset($wpseo_social['fbadminapp'])):
+							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$wpseo_social['fbadminapp'].'" />';	
+						endif;
 
 					endif;
 				endif;
