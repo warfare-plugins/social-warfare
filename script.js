@@ -33,9 +33,9 @@ jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
 			height = 270;
 			width = 500;
 		};
-		instance = window.open("about:blank", "_blank", "height=" + height + ",width=" + width);
-		instance.document.write("<meta http-equiv=\"refresh\" content=\"0;url="+href+"\">");
-		instance.document.close();
+		instance = window.open(href, "_blank", "height=" + height + ",width=" + width);
+		// instance.document.write("<meta http-equiv=\"refresh\" content=\"0;url="+href+"\">");
+		// instance.document.close();
 		return false;
 	};
 });
@@ -97,11 +97,6 @@ function swSetWidths(resize) {
 				jQuery(this).addClass('mobile').removeClass('notMobile');
 				jQuery('.spaceManWilly').css({'width':'auto'});
 				buttonWidths = 0;
-				if(jQuery('.nc_outlinesColor').length || jQuery('.nc_outlinesOnly').length || jQuery('.nc_outlinesFull').length) {
-					var outlines = true;	
-				} else {
-					var outlines = false;	
-				};
 				if(!jQuery('.sw_count .iconFiller').length) {
 					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .sw_count').hide();
 				} else {
@@ -109,23 +104,12 @@ function swSetWidths(resize) {
 				};
 				jQuery(this).find('.nc_tweetContainer').each(function() {
 					width = jQuery(this).find('.iconFiller').width();
-					
-					if(outlines == true) {
-						if(isOdd(average)) {
-							marginLeft = Math.floor((average - width) / 2) - 1;	
-							marginRight = Math.floor((average - width) / 2) - 1;
-						} else {
-							marginLeft = ((average - width) / 2) - 1;
-							marginRight = ((average - width) / 2) - 1;
-						};					
+					if(isOdd(average)) {
+						marginLeft = Math.floor((average - width) / 2) - 1;	
+						marginRight = Math.floor((average - width) / 2) - 1;
 					} else {
-						if(isOdd(average)) {
-							marginLeft = Math.floor((average - width) / 2);	
-							marginRight = Math.floor((average - width) / 2);
-						} else {
-							marginLeft = (average - width) / 2;
-							marginRight = (average - width) / 2;
-						};
+						marginLeft = ((average - width) / 2) - 1;
+						marginRight = ((average - width) / 2) - 1;
 					};
 					jQuery(this).find('.iconFiller').css({'margin-left':marginLeft+'px','margin-right':marginRight+'px'});
 				});
