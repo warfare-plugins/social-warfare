@@ -233,11 +233,11 @@ var file_frame;
 	}
 	
 	function swShowAlignment() {
-		scale = jQuery('select[name="buttonSize"').val();
+		scale = jQuery('select[name="buttonSize"]').val();
 		if(scale >= 1) {
-			jQuery('select[name="buttonFloat"').parents('.sw_field').slideUp();
+			jQuery('select[name="buttonFloat"]').parents('.sw_field').slideUp();
 		} else {
-			jQuery('select[name="buttonFloat"').parents('.sw_field').slideDown();	
+			jQuery('select[name="buttonFloat"]').parents('.sw_field').slideDown();	
 		}
 	}
 	
