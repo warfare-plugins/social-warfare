@@ -15,7 +15,7 @@
 		if( is_singular('post') ):
 			$visibility = $options['floatLocationPost'];
 		elseif( is_singular('page') ):
-			$visibility = $options['floatLocationPage'];
+			$visibility = $options['floatlocationPage'];
 		elseif( is_singular() ):
 			$postType = get_post_type($postID);
 			if(isset($options['floatLocation'.$postType])):
