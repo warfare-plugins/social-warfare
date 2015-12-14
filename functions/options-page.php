@@ -36,6 +36,43 @@
 
 /****************************************************************************************
 *																						*
+*	The Social Warfare Social Identity Settings												*
+*																						*
+*****************************************************************************************/
+	function sw_options_social_identity($sw_options) {
+		
+		// Declare the Options Tab and Tab Name
+		$sw_options['tabs']['links']['socialIdentity'] = 'Social Identity';
+		
+		// Declare the content that goes on this options page
+		$sw_options['options']['socialIdentity'] = array(
+			'twitterHandleDescription' => array(
+				'type'		=> 'paragraph',
+				'content'	=>	'<h3>Would you like to be mentioned in tweets?</h3><br />If so, please provide your Twitter username WITHOUT the @ symbol.'
+			),
+			'twitterID' => array(
+				'type'		=> 'textbox',
+				'content'	=> 'Twitter Username'
+			),
+			'facebookPublisherDescription' => array(
+				'type'		=> 'paragraph',
+				'content'	=>	'<h3>Would you like to activate Facebook Authorship?</h3><br />If so, please provide your Facebook page URL.'
+			),
+			'facebookPublisherUrl' => array(
+				'type'		=> 'textbox',
+				'content'	=> 'URL'
+			),
+			'pinterestUserDescription' => array(
+				'type'		=> 'paragraph',
+				'content'	=>	'<h3>Would you like to be mentioned in Pins?</h3><br />If so, please provide your Pinterest username WITHOUT the @ symbol.'
+			),
+			'pinterestID' => array(
+				'type'		=> 'textbox',
+				'content'	=> 'Pinterest Username'
+			),
+
+/****************************************************************************************
+*																						*
 *	The Social Warfare Display Settings													*
 *																						*
 *****************************************************************************************/
@@ -67,14 +104,6 @@
 				),
 				'default' => 'en'
 			),
-			'twitterHandleDescription' => array(
-				'type'		=> 'paragraph',
-				'content'	=>	'<h3>Would you like to be mentioned in tweets?</h3><br />If so, please provide your Twitter username WITHOUT the @ symbol.'
-			),
-			'twitterID' => array(
-				'type'		=> 'textbox',
-				'content'	=> 'Twitter Username'
-			),
 			'sw_twitter_card' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Activate Twitter Cards?',
@@ -86,7 +115,7 @@
 			),
 			'googlePlus' => array(
 				'type'		=> 'checkbox',
-				'content'	=> 'Google Plus',
+				'content'	=> 'Google+',
 				'default'	=> 1
 			),
 			'twitter' => array(
@@ -111,12 +140,12 @@
 			),
 			'totes' => array(
 				'type'		=> 'checkbox',
-				'content'	=> 'Show Total Network Shares',
+				'content'	=> 'Show Total Shares',
 				'default'	=> 1
 			),
 			'totesEach' => array(
 				'type'		=> 'checkbox',
-				'content'	=> 'Show Individual Network Shares',
+				'content'	=> 'Show Individual Button Counts',
 				'default'	=> 1
 			),
 			'minTotes' => array(
@@ -141,7 +170,7 @@
 				'type'		=> 'sortable',
 				'name'		=> 'Order Your Icons',
 				'content'	=> array(
-					'googlePlus'	=> 'Google Plus',
+					'googlePlus'	=> 'Google+',
 					'twitter'		=> 'Twitter',
 					'facebook'		=> 'Facebook',
 					'pinterest'		=> 'Pinterest',
@@ -582,36 +611,6 @@
 	};
 /****************************************************************************************
 *																						*
-*	The Social Warfare Frame Buster														*
-*																						*
-*****************************************************************************************/
-
-	function sw_options_frame_buster($sw_options) {
-					
-		// Declare the Display Settings tab and tab name
-		$sw_options['tabs']['links']['frameBuster'] = 'Frame Buster';
-	
-		$sw_options['options']['frameBuster'] = array(
-			'frameBusterTitle' => array(
-				'type' => 'title',
-				'content' => 'Frame Buster'
-			),
-			'frameBusterParagraph' => array(
-				'type' => 'paragraph',
-				'content' => 'Frame Buster checks if your site is being displayed inside of a frame like Sniply. If it is being displayed inside of a frame, the plugin will redirect to the page on your own domain, removing third party ads and calls to action.'
-			),
-			'sniplyBuster' => array(
-				'type' => 'checkbox',
-				'content' => 'Activate Frame Buster?',
-				'default' => 0
-			)
-		);
-		
-		return $sw_options;
-		
-	};
-/****************************************************************************************
-*																						*
 *	The Social Warfare Analytics														*
 *																						*
 *****************************************************************************************/
@@ -650,6 +649,36 @@
 	
 		return $sw_options;	
 	}
+/****************************************************************************************
+*																						*
+*	The Social Warfare Frame Buster														*
+*																						*
+*****************************************************************************************/
+
+	function sw_options_frame_buster($sw_options) {
+					
+		// Declare the Display Settings tab and tab name
+		$sw_options['tabs']['links']['frameBuster'] = 'Frame Buster';
+	
+		$sw_options['options']['frameBuster'] = array(
+			'frameBusterTitle' => array(
+				'type' => 'title',
+				'content' => 'Frame Buster'
+			),
+			'frameBusterParagraph' => array(
+				'type' => 'paragraph',
+				'content' => 'Frame Buster checks if your site is being displayed inside of a frame like Sniply. If it is being displayed inside of a frame, the plugin will redirect to the page on your own domain, removing third party ads and calls to action.'
+			),
+			'sniplyBuster' => array(
+				'type' => 'checkbox',
+				'content' => 'Activate Frame Buster?',
+				'default' => 0
+			)
+		);
+		
+		return $sw_options;
+		
+	};
 /****************************************************************************************
 *																						*
 *	The Social Warfare Click to Tweet													*
@@ -962,15 +991,16 @@
 *****************************************************************************************/
 
 	add_filter('sw_options', 'sw_options_display_settings' 	, 1);
-	add_filter('sw_options', 'sw_options_visual_options' 	, 2);
-	add_filter('sw_options', 'sw_options_display_locations' , 3);
-	add_filter('sw_options', 'sw_options_floating_buttons' 	, 4);
-	add_filter('sw_options', 'sw_options_link_shortening' 	, 5);
-	add_filter('sw_options', 'sw_options_frame_buster' 		, 6);
+	add_filter('sw_options', 'sw_options_social_identity' 	, 2);
+	add_filter('sw_options', 'sw_options_visual_options' 	, 3);
+	add_filter('sw_options', 'sw_options_display_locations' , 4);
+	add_filter('sw_options', 'sw_options_floating_buttons' 	, 5);
+	add_filter('sw_options', 'sw_options_link_shortening' 	, 6);
 	add_filter('sw_options', 'sw_options_analytics' 		, 7);
-	add_filter('sw_options', 'sw_options_clicktotweet' 		, 8);
-	add_filter('sw_options', 'sw_options_recover_shares' 	, 9);
-	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 10);
+	add_filter('sw_options', 'sw_options_frame_buster' 		, 8);
+	add_filter('sw_options', 'sw_options_clicktotweet' 		, 9);
+	add_filter('sw_options', 'sw_options_recover_shares' 	, 10);
+	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 11);
 	add_filter('sw_options', 'sw_options_registration' 		, 99);
 	add_filter('sw_options', 'sw_options_system_status'		, 100);
 
