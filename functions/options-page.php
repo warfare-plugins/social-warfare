@@ -119,11 +119,6 @@
 				'content'	=> 'Show Individual Network Shares',
 				'default'	=> 1
 			),
-			'showZeroes' => array(
-				'type'		=> 'checkbox',
-				'content'	=> 'Show Network Shares When at Zero',
-				'default'	=> 0
-			),
 			'minTotes' => array(
 				'type'		=> 'textbox',
 				'content'	=> 'Minimum Number of shares required before showing counts?',
