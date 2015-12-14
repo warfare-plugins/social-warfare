@@ -17,7 +17,7 @@ add_filter('sw_languages','sw_en_language',0);
 
 function sw_en_language($language) {
 		
-	$language['googlePlus'] 	= 'Share';
+	$language['googlePlus'] 	= '+1';
 	$language['twitter'] 		= 'Tweet';
 	$language['facebook']		= 'Share';
 	$language['pinterest']		= 'Pin';
