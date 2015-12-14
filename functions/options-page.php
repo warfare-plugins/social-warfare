@@ -56,11 +56,15 @@
 			),
 			'facebookPublisherDescription' => array(
 				'type'		=> 'paragraph',
-				'content'	=>	'<h3>Would you like to activate Facebook Authorship?</h3><br />If so, please provide your Facebook page URL.'
+				'content'	=>	'<h3>Would you like to activate Facebook Publisher tags?</h3><br />If so, please provide your Facebook page URL. If you would like to add the Author tag instead, just be sure to add your Facebook profile URL to your User profile. '
 			),
 			'facebookPublisherUrl' => array(
 				'type'		=> 'textbox',
-				'content'	=> 'URL'
+				'content'	=> 'Facebook Page URL'
+			),
+			'facebookAppID' => array(
+				'type'		=> 'textbox',
+				'content'	=> 'App ID'
 			),
 			'pinterestUserDescription' => array(
 				'type'		=> 'paragraph',
