@@ -30,7 +30,6 @@
 		if(!isset($sw_user_options['linkedIn'])) 					{ $sw_user_options['linkedIn'] 			= true; 	};
 		if(!isset($sw_user_options['totes'])) 						{ $sw_user_options['totes'] 			= true; 	};
 		if(!isset($sw_user_options['totesEach'])) 					{ $sw_user_options['totesEach'] 		= true; 	};
-		if(!isset($sw_user_options['showZeroes'])) 					{ $sw_user_options['showZeroes'] 		= false; 	};
 		if(!isset($sw_user_options['twitterID'])) 					{ $sw_user_options['twitterID'] 		= false; 	};
 		if(!isset($sw_user_options['sw_twitter_card'])) 			{ $sw_user_options['sw_twitter_card'] 	= true; 	};
 		if(!isset($sw_user_options['visualTheme'])) 				{ $sw_user_options['visualTheme'] 		= 'style1'; };
