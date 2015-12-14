@@ -69,7 +69,10 @@
 			'pinterestID' => array(
 				'type'		=> 'textbox',
 				'content'	=> 'Pinterest Username'
-			),
+			)
+		);
+		return $sw_options;
+	}
 
 /****************************************************************************************
 *																						*
