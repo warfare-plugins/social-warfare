@@ -179,7 +179,7 @@
 			),
 			'displayLocationsDescription' => array(
 				'type'		=> 'paragraph',
-				'content'	=>	'<h3>Where would you like to display your horizontal share buttons?</h3>If you select \'None/Manual Placement\' you can add the social warfare plugin by adding \'socialWarfare()\' to your themes files at the specific location that you want it to appear.'
+				'content'	=>	'<h3>Where would you like to display your horizontal share buttons?</h3>If you select \'None/Manual Placement\' you can add the social warfare plugin by adding \'social_warfare()\' to your themes files or shortcode [social_warfare] in posts or pages at the specific location that you want it to appear.'
 			),
 			'locationPost' => array(
 				'type'		=> 'select',
