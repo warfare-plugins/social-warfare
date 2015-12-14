@@ -3,9 +3,9 @@
 	"slug" : "social-warfare",
 	"download_url" : "http://beta.warfareplugins.com/updates/social-warfare.zip",
 	"version" : "1.3.17",
-	"last_updated" : "2015-11-10 18:30:00",
+	"last_updated" : "2015-12-14 17:00:00",
 	"requires" : "3.0",
-	"tested" : "4.3.2",
+	"tested" : "4.4",
 	"author" : "Warfare Plugins",
 	"sections" : {
 		"description" : "Your Ultimate Social Sharing Arsenal",
