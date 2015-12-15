@@ -303,72 +303,28 @@ function floatingBarReveal() {
 		offsetOne = panels.eq(0).offset();
 		scrollPos = windowElement.scrollTop();
 		var st = jQuery(window).scrollTop();
-		if(floatOption == 'floatBottom') {
-			if(position == 'both') {
-				offsetTwo = panels.eq(1).offset();
-				if(offsetOne.top < (scrollPos - 50) && offsetTwo.top > (scrollPos + windowHeight - 50) && st >= lst) {
-					ncWrapper.slideDown();
-				} else if(offsetOne.top < (scrollPos - 50) && offsetTwo.top > (scrollPos + windowHeight - 50) && st <= lst) {
-					ncWrapper.show();
-				} else if(offsetTwo.top < (scrollPos + (windowHeight / 2)) && offsetTwo.top > scrollPos ){
-					ncWrapper.slideUp();
-				} else if(offsetTwo.top < (scrollPos - 50)) {
-					ncWrapper.slideDown();
-				} else if(offsetTwo.top < (scrollPos + windowHeight - 50) && st > lst) {
-					ncWrapper.hide();
-				} else {
-					ncWrapper.slideUp();
+		if(floatOption == 'floatBottom' || floatOption == "floatTop") {
+			
+			var visible = false;
+			jQuery('.nc_socialPanel').not('.nc_socialPanelSide, .nc_wrapper .nc_socialPanel').each(function() {
+				
+				// Fetch our base numbers
+				var thisOffset 		= jQuery(this).offset();
+				var thisHeight 		= jQuery(this).height();
+				var screenBottom 	= thisOffset + thisHeight;
+				
+				// Check if it's visible
+				if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) { 
+					visible = true; 
 				};
-			} else if(position == 'above') {
-				if(offsetOne.top < (scrollPos - 60)) {
-					ncWrapper.slideDown();	
-				} else {
-					ncWrapper.slideUp();
-				};
-			} else if(position == 'below') {	
-				if(offsetOne.top > (scrollPos + windowHeight - 60)) {
-					ncWrapper.filter(":hidden").show();
-				} else if (offsetOne.top < (scrollPos - 60)) {
-					ncWrapper.filter(":hidden").slideDown();
-				} else if(offsetOne.top < scrollPos + (windowHeight / 2) ){
-					ncWrapper.slideUp();
-				} else {
-					ncWrapper.hide();
-				};
+								
+			});
+			if(visible) {
+				ncWrapper.hide();
+			} else {
+				ncWrapper.show();
 			};
-		} else if(floatOption == 'floatTop') {
-			if(position == 'both') {
-				offsetTwo = panels.eq(1).offset();
-				if(offsetOne.top < (scrollPos) && offsetTwo.top > (scrollPos + windowHeight) && st >= lst) {
-					ncWrapper.show(); 
-				} else if(offsetOne.top < (scrollPos) && offsetTwo.top > (scrollPos + windowHeight) && st <= lst) {
-					ncWrapper.slideDown();
-				} else if(offsetTwo.top < (scrollPos + (windowHeight / 2)) && offsetTwo.top > scrollPos ){
-					ncWrapper.hide();
-				} else if(offsetTwo.top < (scrollPos)) {
-					ncWrapper.show();
-				} else if(offsetTwo.top < (scrollPos + windowHeight) && st > lst) {
-					ncWrapper.slideUp();
-				} else {
-					ncWrapper.hide();
-				};
-			} else if(position == 'above') {
-				if(offsetOne.top < (scrollPos)) {
-					ncWrapper.show();	
-				} else {
-					ncWrapper.hide();
-				};
-			} else if(position == 'below') {	
-				if(offsetOne.top > (scrollPos + windowHeight)) {
-					ncWrapper.filter(":hidden").slideDown();
-				} else if (offsetOne.top < (scrollPos)) {
-					ncWrapper.filter(":hidden").show();
-				} else if(offsetOne.top < scrollPos + (windowHeight / 2) ){
-					ncWrapper.hide();
-				} else {
-					ncWrapper.slideUp();
-				};
-			};
+
 		} else if(floatOption == 'floatLeft') {
 			var visible = false;
 			jQuery('.nc_socialPanel').not('.nc_socialPanelSide').each(function() {
