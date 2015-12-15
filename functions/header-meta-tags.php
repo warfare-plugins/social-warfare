@@ -296,13 +296,20 @@
 
 						$info['header_output'] .= PHP_EOL .'<meta property="og:url" content="'.get_the_permalink().'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:site_name" content="'.get_bloginfo('name').'" />';
-						if(isset($wpseo_social) && isset($wpseo_social['facebook_site'])):
+						
+						if(isset($info['sw_user_options']['facebookPublisherUrl']) && $info['sw_user_options']['facebookPublisherUrl'] != ''):
+							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$info['sw_user_options']['facebookPublisherUrl'].'" />';
+						elseif(isset($wpseo_social) && isset($wpseo_social['facebook_site'])):
 							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$wpseo_social['facebook_site'].'" />';	
 						endif;
+						
 						$info['header_output'] .= PHP_EOL .'<meta property="article:published_time" content="'.get_post_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="article:modified_time" content="'.get_post_modified_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:updated_time" content="'.get_post_modified_time('c').'" />';
-						if(isset($wpseo_social) && isset($wpseo_social['fbadminapp'])):
+						
+						if(isset($info['sw_user_options']['facebookAppID']) && $info['sw_user_options']['facebookAppID'] != ''):
+							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$info['sw_user_options']['facebookAppID'].'" />';
+						elseif(isset($wpseo_social) && isset($wpseo_social['fbadminapp'])):
 							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$wpseo_social['fbadminapp'].'" />';	
 						endif;
 
