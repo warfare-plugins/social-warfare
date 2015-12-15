@@ -37,7 +37,7 @@
 					},
 					onsubmit: function( e ) {
 						if(e.data.reflection == 'alt' && e.data.postID != '') {
-							editor.insertContent( '[social_warfare postID="' + e.data.postID + '"]');
+							editor.insertContent( '[social_warfare post_id="' + e.data.postID + '"]');
 						} else {
 							editor.insertContent( '[social_warfare]');
 						}
