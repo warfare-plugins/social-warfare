@@ -132,6 +132,7 @@
 			add_filter( 'sw_meta_tags' , 'sw_frame_buster' , 3 );
 			add_filter( 'sw_meta_tags' , 'sw_output_custom_color' , 4 );
 			add_filter( 'sw_meta_tags' , 'sw_output_font_css' , 5 );
+			add_filter( 'sw_meta_tags' , 'sw_output_cache_trigger' , 6 );
 			add_action( 'admin_head'   , 'sw_output_font_css' , 10);
 
 /*****************************************************************
@@ -512,6 +513,20 @@
 			endif;
 			return $info;			
 		}
+
+/*****************************************************************
+*                                                                *
+*          CACHE REBUILD TRIGGER					             *
+*                                                                *
+******************************************************************/	
+function sw_output_cache_trigger($info) {
+	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false):
+		$url = get_the_permalink();
+		if(strpos($url, '?') === false) { $url = $url.'?sw_cache=rebuild'; } else { $url = $url.'&sw_cache=rebuild'; };
+		$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { jQuery.get("'. $url .'"); });</script>';
+	endif;
+	return $info;
+}
 		
 /*****************************************************************
 *                                                                *

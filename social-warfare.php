@@ -221,16 +221,3 @@ function sw_reset_cache_timestamp( $post_id ) {
 	endif;
 }
 add_action( 'save_post', 'sw_reset_cache_timestamp' );
-
-/*****************************************************************
-*                                                                *
-*   Trigger a Cache Refresh										 *
-*                                                                *
-******************************************************************/
-
-add_action('wp_footer', 'sw_cache_reset_trigger');
-function sw_cache_reset_trigger() {
-	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false):
-		echo '<script type="text/javascript"> var sw_cache_url = "'. get_the_permalink() .'" </script>';	
-	endif;
-}
