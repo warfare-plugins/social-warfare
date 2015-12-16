@@ -18,6 +18,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $network = esc_textarea($instance['network']);
 		 $showCount = esc_textarea($instance['showCount']);
 		 $countLabel = esc_textarea($instance['countLabel']);
+		 $style = esc_textarea($instance['style']);
 	} else {
 		 $title = 'Popular Posts';
 		 $count = '10';
@@ -25,6 +26,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $network = 'totes';
 		 $showCount = 'true';
 		 $countLabel = 'Total Shares';
+		 $style = 'Default';
 	}
 	?>
 	
@@ -67,6 +69,18 @@ class sw_popular_posts_widget extends WP_Widget {
 	<label for="<?php echo $this->get_field_id('countLabel'); ?>"><?php _e('Count Number Label', 'wp_widget_plugin'); ?></label>
 	<input class="widefat" id="<?php echo $this->get_field_id('countLabel'); ?>" name="<?php echo $this->get_field_name('countLabel'); ?>" type="text" value="<?php echo $countLabel; ?>" />
 	</p>
+         <p>
+	<label for="<?php echo $this->get_field_id('style'); ?>"><?php _e('Which visual style would you like to use?', 'wp_widget_plugin'); ?></label>
+	<select class="widefat" id="<?php echo $this->get_field_id('style'); ?>" name="<?php echo $this->get_field_name('style'); ?>">
+    	
+        <!-- Begin the options for the visual Selector -->
+       	<option value="first_style" <?php if($style=='first_style') echo 'selected'; ?>>First Style</option>
+        <option value="second_style" <?php if($style=='second_style') echo 'selected'; ?>>Second Style</option>
+    	<!-- End the options for the visual Selector -->
+        
+    </select>
+	</p>
+    
     
 	<?php
 	}
@@ -81,6 +95,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		  $instance['network'] = strip_tags($new_instance['network']);
 		  $instance['showCount'] = strip_tags($new_instance['showCount']);
 		  $instance['countLabel'] = strip_tags($new_instance['countLabel']);
+		  $instance['style'] = strip_tags($new_instance['style']);
 		 return $instance;
 	}
 	
