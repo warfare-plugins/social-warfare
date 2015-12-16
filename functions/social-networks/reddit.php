@@ -101,7 +101,7 @@
 			endif;
 			
 			$array['resource']['reddit'] = '<div class="nc_tweetContainer sw_reddit" data-id="'.$array['count'].'">';
-			$link = urlencode(urldecode(sw_process_url( $array['url'] , 'reddit' , $array['postID'] )));
+			$link = $array['url'];
 			$array['resource']['reddit'] .= '<a target="_blank" href="https://www.reddit.com/submit?url='.$link.'&title='.urlencode($title).'" data-link="https://www.reddit.com/submit?url='.$link.'&title='.urlencode($title).'" class="nc_tweet">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && isset($array['shares']['reddit']) && $array['shares']['reddit'] > 0):
 				$array['resource']['reddit'] .= '<span class="iconFiller">';
