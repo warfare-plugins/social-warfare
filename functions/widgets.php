@@ -109,6 +109,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	   $network = $instance['network'];
 	   $showCount = $instance['showCount'];
 	   $countLabel = $instance['countLabel'];
+	   $style	= $instance['style'];
 	   
 	   echo $before_widget;
 	   // Display the widget
@@ -130,7 +131,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		$q = new WP_Query( $args );
 		if( $q->have_posts() ) :
 			$i = 1;
-			echo '<ul>';
+			echo '<ul class="'.$style.'">';
 			while( $q->have_posts() ):
 				$q->the_post();
 				if($showCount == 'true'):
