@@ -28,6 +28,11 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $countLabel = 'Total Shares';
 		 $style = 'Default';
 	}
+	
+	$options = sw_get_user_options();	
+	$availableNetworks = $options['newOrderOfIcons'];
+
+	
 	?>
 	
 	<p>
@@ -49,11 +54,20 @@ class sw_popular_posts_widget extends WP_Widget {
 	<label for="<?php echo $this->get_field_id('network'); ?>"><?php _e('Which network would you like to base your posts popularity on?', 'wp_widget_plugin'); ?></label>
 	<select class="widefat" id="<?php echo $this->get_field_id('network'); ?>" name="<?php echo $this->get_field_name('network'); ?>">
     	<option value="totes" <?php if($network=='totes') echo 'selected'; ?>>All Networks</option>
-        <option value="googlePlus_shares" <?php if($network=='googlePlus_shares') echo 'selected'; ?>>Google Plus</option>
-        <option value="facebook_shares" <?php if($network=='facebook_shares') echo 'selected'; ?>>Facebook</option>
-        <option value="pinterest_shares" <?php if($network=='pinterest_shares') echo 'selected'; ?>>Pinterest</option>
-        <option value="twitter_shares" <?php if($network=='twitter_shares') echo 'selected'; ?>>Twitter</option>
-        <option value="linkedIn_shares" <?php if($network=='linkedIn_shares') echo 'selected'; ?>>LinkedIn</option>
+        
+        <?php
+		foreach($availableNetworks as $key => $value):
+			if($options[$key]) {
+				if($network == $key.'_shares'):
+        			echo '<option value="'.$key.'_shares" selected>'.$value.'</option>';
+				else:
+					echo '<option value="'.$key.'_shares">'.$value.'</option>';
+				endif;
+			};
+		endforeach;
+
+		?>
+
     </select>
 	</p>
     
