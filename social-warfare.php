@@ -60,6 +60,14 @@ require_once $pluginDir  . '/functions/social-networks/stumbleupon.php';
 ******************************************************************/
 $MyUpdateChecker = new PluginUpdateChecker('https://beta.warfareplugins.com/wp-content/plugins/social-warfare/social-warfare.json',__FILE__,'social-warfare',1);
 
+/*
+$updateCheckerClass = PucFactory::getLatestClassVersion('PucGitHubChecker');
+$myUpdateChecker = new $updateCheckerClass(
+    'https://github.com/warfare-plugins/social-warfare',
+    __FILE__,
+    'master'
+);
+*/
 // Add settings link on plugin page
 function sw_settings_link($links) { 
 	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>'; 
