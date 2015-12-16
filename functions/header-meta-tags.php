@@ -542,8 +542,7 @@ function sw_output_font_css($info=array()) {
 	else:
 	
 		// Add it to our array if we're using the frontend Head Hook
-		$info['header_output'] .= PHP_EOL.'<style>@font-face {font-family: "sw-icon-font";src:url("'.PLUGIN_DIR.'/fonts/sw-icon-font.eot");src:url("'.PLUGIN_DIR.'/fonts/sw-icon-font.eot?#iefix") format("embedded-opentype"),url("'.PLUGIN_DIR.'/fonts/sw-icon-font.woff") format("woff"),
-    url("'.PLUGIN_DIR.'/fonts/sw-icon-font.ttf") format("truetype"),url("'.PLUGIN_DIR.'/fonts/sw-icon-font.svg#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+		$info['header_output'] .= PHP_EOL.'<style>@font-face {font-family: "sw-icon-font";src:url("'.PLUGIN_DIR.'/fonts/sw-icon-font.eot");src:url("'.PLUGIN_DIR.'/fonts/sw-icon-font.eot?#iefix") format("embedded-opentype"),url("'.PLUGIN_DIR.'/fonts/sw-icon-font.woff") format("woff"), url("'.PLUGIN_DIR.'/fonts/sw-icon-font.ttf") format("truetype"),url("'.PLUGIN_DIR.'/fonts/sw-icon-font.svg#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
 		return $info;
 	endif;
