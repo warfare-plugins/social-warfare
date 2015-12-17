@@ -567,6 +567,15 @@
 				'type' => 'colorselect',
 				'name' => 'Floating Background Color',
 				'default' => '#ffffff'
+			),
+			'sw_float_scr_sz_description' => array(
+				'type' => 'paragraph',
+				'content' => 'Normally we use the width of the horizontal buttons located in the content to determine where the edge of the content area is located. This allows us to determine if there is enough space in the left margin to display the vertically stacked buttons. However, if you have the left floating buttons on a post or page without any horizontal buttons, this number will be used to determine at what screen sizes we should hide the floating buttons.'
+			),
+			'sw_float_scr_sz' => array(
+				'type' => 'textbox',
+				'content' => 'Minimum Screen Width',
+				'default' => '1100'
 			)
 		);
 

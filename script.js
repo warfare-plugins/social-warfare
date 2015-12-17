@@ -300,6 +300,7 @@ function floatingBarReveal() {
 		var ncWrapper = jQuery('.nc_wrapper');
 		var ncSideFloater = jQuery('.nc_socialPanelSide').filter(':not(.mobile)');
 		var position = jQuery('.nc_socialPanel').attr('data-position');
+		var minWidth = ncSideFloater.attr('data-screen-width'); 
 		offsetOne = panels.eq(0).offset();
 		scrollPos = windowElement.scrollTop();
 		var st = jQuery(window).scrollTop();
@@ -327,16 +328,24 @@ function floatingBarReveal() {
 
 		} else if(floatOption == 'floatLeft') {
 			var visible = false;
-			jQuery('.nc_socialPanel').not('.nc_socialPanelSide').each(function() {
-				var thisOffset = jQuery(this).offset();
-				var thisHeight = jQuery(this).height();
-				if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) { visible = true; };
-			});
-			if(visible || jQuery('.nc_socialPanelSide').hasClass('mobile')) {
-				ncSideFloater.removeClass('displayed');
+			if(jQuery('.nc_socialPanel').not('.nc_socialPanelSide').length){
+				jQuery('.nc_socialPanel').not('.nc_socialPanelSide').each(function() {
+					var thisOffset = jQuery(this).offset();
+					var thisHeight = jQuery(this).height();
+					if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) { visible = true; };
+				});
+				if(visible || jQuery('.nc_socialPanelSide').hasClass('mobile')) {
+					ncSideFloater.removeClass('displayed');
+				} else {
+					ncSideFloater.addClass('displayed');
+				};
 			} else {
-				ncSideFloater.addClass('displayed');
-			};
+				if (jQuery(window).width() > minWidth) {
+					ncSideFloater.addClass('displayed');
+				} else {
+					ncSideFloater.removeClass('displayed');
+				}
+			}
 			/*
 			
 			if(position == 'both') {

@@ -42,6 +42,7 @@
 		if(!isset($sw_user_options['floatStyleSource'])) 			{ $sw_user_options['floatStyleSource'] 	= true;};
 		if(!isset($sw_user_options['buttonSize'])) 					{ $sw_user_options['buttonSize'] 		= 1;};
 		if(!isset($sw_user_options['buttonFloat'])) 				{ $sw_user_options['buttonFloat'] 		= 'fullWidth';};
+		if(!isset($sw_user_options['sw_float_scr_sz'])) 			{ $sw_user_options['sw_float_scr_sz'] 	= 1100;};
 		if(!isset($sw_user_options['cttTheme'])) 					{ $sw_user_options['cttTheme'] 			= 'style1'; };
 		if(!isset($sw_user_options['float'])) 						{ $sw_user_options['float'] 			= true; 	};
 		if(!isset($sw_user_options['floatOption'])) 				{ $sw_user_options['floatOption'] 		= 'bottom'; };
