@@ -42,6 +42,15 @@
 		return $the_excerpt;
 	}
 
+	function convert_smart_quotes($content) {
+		 $content = str_replace('&#8220;', '&quot;', $content);
+		 $content = str_replace('&#8221;', '&quot;', $content);
+		 $content = str_replace('&#8216;', '&#39;', $content);
+		 $content = str_replace('&#8217;', '&#39;', $content);
+		
+		 return $content;
+	}
+
 	// This is the hook function we're adding the header
 	function sw_add_header_meta() {
 		
@@ -105,8 +114,8 @@
 			
 		// Create the image Open Graph Meta Tag
 		$info['postID'] 				= get_the_ID();
-		$info['title'] 					= get_post_meta( $info['postID'] , 'nc_ogTitle' , true );
-		$info['description'] 			= get_post_meta( $info['postID'] , 'nc_ogDescription' , true );
+		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
+		$info['description'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
 		$info['sw_user_options'] 		= sw_get_user_options();
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
@@ -235,7 +244,7 @@
 						else:
 						
 							// If nothing else is defined, let's use the post title
-							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.get_the_title().'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.htmlspecialchars(get_the_title()).'" />';
 							
 						endif;
 						
@@ -264,7 +273,7 @@
 						else:
 						
 							// If nothing else is defined, let's use the post excerpt
-							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.sw_get_excerpt_by_id($info['postID']).'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.htmlspecialchars(sw_get_excerpt_by_id($info['postID'])).'" />';
 							
 						endif;
 						
@@ -410,7 +419,7 @@
 						// If not title has been defined, let's use the post title
 						elseif(!$info['title']):
 						
-							$info['title'] = get_the_title();
+							$info['title'] = convert_smart_quotes( get_the_title() );
 							
 						endif;
 		
@@ -433,7 +442,7 @@
 						// If not, then let's use the excerpt
 						elseif(!$info['description']):
 						
-							$info['description'] = sw_get_excerpt_by_id($info['postID']);
+							$info['description'] = htmlspecialchars( sw_get_excerpt_by_id( $info['postID'] ) );
 						
 						endif;
 	
@@ -467,8 +476,8 @@
 						// Check if we have everything we need for a large image summary card
 						if($info['imageURL']):
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:card" content="summary_large_image">';
-							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.str_replace('"','\'',$info['title']).'">';
-							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.str_replace('"','\'',$info['description']).'">';
+							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.$info['title'].'">';
+							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.$info['description'].'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:image" content="'.$info['imageURL'].'">';
 							if($info['sw_user_options']['twitterID']):
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.$info['sw_user_options']['twitterID'].'">';
