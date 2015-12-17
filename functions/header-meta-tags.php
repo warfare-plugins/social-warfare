@@ -489,7 +489,6 @@
 						// Otherwise create a small summary card
 						else:
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:card" content="summary">';
-							$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.$info['sw_user_options']['twitterID'].'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.str_replace('"','\'',$info['title']).'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.str_replace('"','\'',$info['description']).'">';
 							if($info['sw_user_options']['twitterID']):
