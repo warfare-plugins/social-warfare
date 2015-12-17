@@ -895,7 +895,7 @@
 		$sw_options['options']['registration']['registrationCode'] = array(
 			'type' => 'paragraph',
 			'content' => '
-		<div class="at-label"><label for="regCode">Registration Code</label></div><input type="text" class="at-text" name="regCode" id="regCode" value="'.$regCode.'" size="30" readonly><input type="hidden" class="at-text" name="domain" id="domain" value="'.$homeURL.'" size="30" readonly><div class="clearfix"></div>
+		<div class="at-label"><label for="regCode">Registration Code</label></div><input type="text" class="at-text" name="regCode" id="regCode" value="'.$regCode.'" size="30" readonly><input type="hidden" class="at-text" name="domain" id="domain" value="'.$homeURL.'" size="30" readonly data-premcode="'.md5(md5($homeURL)).'"><div class="clearfix"></div>
 		'
 		);
 		

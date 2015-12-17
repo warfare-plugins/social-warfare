@@ -327,13 +327,49 @@ jQuery(document).ready(function($) {
 
 	jQuery('input[name="premiumCode"]').attr('readonly','readonly');
 	jQuery('input[name="regCode"]').parent('.sw_field').hide();
+	var premcode = jQuery('input#domain').attr('data-premcode');
 
-	if(jQuery('input[name="premiumCode"]').val() != '' && jQuery('.sw_not_registered').length ) {
+	// Check if we're in the middle of registering it
+	if(jQuery('input[name="premiumCode"]').val() == premcode && jQuery('.sw_not_registered').length) {
 		sw_loading_screen();
 		jQuery('form[name="admin_page_class"]').submit();
+	
+	// Check if we're in the middle of unregistering it
 	} else if(jQuery('input[name="premiumCode"]').val() == '' && jQuery('.sw_registered').length ) {
 		sw_loading_screen();
 		jQuery('form[name="admin_page_class"]').submit();
+		
+	// Check if the Premium code doesn't match
+	} else if (jQuery('input[name="premiumCode"]').val() != '' && jQuery('input[name="premiumCode"]').val() != premcode) {
+		
+		sw_loading_screen();
+		
+		// Fetch our variables
+		var regCode = jQuery('input[name="regCode"]').val();
+		var email = jQuery('input[name="emailAddress"]').val();
+		var domain = jQuery('input[name="domain"]').val();
+		
+		// Creat the unregister url
+		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&premiumCode='+jQuery('input[name="premiumCode"]').val();
+		
+		jQuery.get( url , function(data) {
+			console.log(data);
+			
+			url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
+			jQuery.get( url , function(subdata) {
+				var info = jQuery.parseJSON(subdata);
+				console.log(subdata);
+				if(info['status'] == 'success') {
+					jQuery('input[name="premiumCode"]').val(info['premiumCode']);
+					jQuery('form[name="admin_page_class"]').submit();			
+				} else {
+					jQuery('input[name="premiumCode"]').val('');
+					jQuery('form[name="admin_page_class"]').submit();
+				}
+			});
+				
+		
+		} );
 	};
 
 	jQuery('.activate[value="Activate Plugin"]').on('click',function(e) {
@@ -343,6 +379,7 @@ jQuery(document).ready(function($) {
 		var email = jQuery('input[name="emailAddress"]').val();
 		var domain = jQuery('input[name="domain"]').val();
 		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
+		
 		jQuery.get( url, function( data ) {
 			var object = jQuery.parseJSON(data);
 			if(object['status'] == 'failure') {
