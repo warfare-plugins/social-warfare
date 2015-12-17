@@ -353,12 +353,10 @@ jQuery(document).ready(function($) {
 		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&premiumCode='+jQuery('input[name="premiumCode"]').val();
 		
 		jQuery.get( url , function(data) {
-			console.log(data);
 			
 			url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 			jQuery.get( url , function(subdata) {
 				var info = jQuery.parseJSON(subdata);
-				console.log(subdata);
 				if(info['status'] == 'success') {
 					jQuery('input[name="premiumCode"]').val(info['premiumCode']);
 					jQuery('form[name="admin_page_class"]').submit();			
