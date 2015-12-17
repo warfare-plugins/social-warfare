@@ -41,7 +41,11 @@
 	
 		return $the_excerpt;
 	}
-
+/*****************************************************************
+*                                                                *
+*          Curly Quote Converter						         *
+*                                                                *
+******************************************************************/
 	function convert_smart_quotes($content) {
 		 $content = str_replace('&#8220;', '&quot;', $content);
 		 $content = str_replace('&#8221;', '&quot;', $content);
@@ -50,6 +54,33 @@
 		
 		 return $content;
 	}
+function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
+	global $wp_filter;
+	
+	// Take only filters on right hook name and priority
+	if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
+		return false;
+	
+	// Loop on filters registered
+	foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
+		// Test if filter is an array ! (always for class/method)
+		if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
+			// Test if object is a class and method is equal to param !
+			if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && $filter_array['function'][1] == $method_name ) {
+				unset($wp_filter[$hook_name][$priority][$unique_id]);
+			}
+		}
+		
+	}
+	
+	return false;
+}
+
+/*****************************************************************
+*                                                                *
+*          HEADER META DATA								         *
+*                                                                *
+******************************************************************/
 
 	// This is the hook function we're adding the header
 	function sw_add_header_meta() {
@@ -144,6 +175,13 @@
 			add_filter( 'sw_meta_tags' , 'sw_output_cache_trigger' , 6 );
 			add_action( 'admin_head'   , 'sw_output_font_css' , 10);
 
+			// Disable Simple Podcast Press Open Graph tags
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
+				global $ob_wp_simplepodcastpress;
+				remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress , 'spp_open_graph') , 1);
+			}
+			
 /*****************************************************************
 *                                                                *
 *   Open Graph Tags										         *
