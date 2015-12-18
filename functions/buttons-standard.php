@@ -178,7 +178,9 @@ function social_warfare_buttons($array = array()) {
 			
 			
 			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
-			// remove_filter( 'the_title', array( Subtitles::getinstance() , 'the_subtitle' ), 10, 2 );
+			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists ( 'Subtitles' ) ) :
+				remove_filter( 'the_title', array( Subtitles::getinstance() , 'the_subtitle' ), 10, 2 );
+			endif;
 			
 			// This array will contain the HTML for all of the individual buttons
 			$buttonsArray = apply_filters( 'sw_network_buttons' , $buttonsArray );

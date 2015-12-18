@@ -3,7 +3,7 @@
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 1.3.19
+Version: 1.3.18
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 */
@@ -23,6 +23,7 @@ define( 'PLUGIN_DIR' , $pluginUrl );
 *   INCLUDES: ALL THE FUNCTIONS FILES          					 *
 *                                                                *
 ******************************************************************/
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once SW_META_DIR . 'meta-box.php';
 require_once $pluginDir  . '/functions/curl_functions.php';
 require_once $pluginDir  . '/functions/options-page.php';
