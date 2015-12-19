@@ -579,7 +579,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 *                                                                *
 ******************************************************************/	
 function sw_output_cache_trigger($info) {
-	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false):
+	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
 		$url = get_the_permalink();
 		if(strpos($url, '?') === false) { $url = $url.'?sw_cache=rebuild'; } else { $url = $url.'&sw_cache=rebuild'; };
 		$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { jQuery.get("'. $url .'"); });</script>';

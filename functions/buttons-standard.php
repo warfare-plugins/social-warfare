@@ -24,7 +24,11 @@ function socialWarfare( $content = false , $where = 'default' , $echo = true ) {
 ******************************************************************/
 function sw_is_cache_fresh( $postID , $output=false ) {
 
-	if($output == false):
+	// Fetch the Options
+	$options 			= sw_get_user_options();
+	
+	// Check if output is being forced or if legacy caching is enabled
+	if($output == false && $options['cacheMethod'] != 'legacy'):
 		if(isset($_GET['sw_cache']) && $_GET['sw_cache'] == 'rebuild'):
 			$freshCache = false;
 		else:
@@ -32,7 +36,6 @@ function sw_is_cache_fresh( $postID , $output=false ) {
 		endif;
 
 	else:
-		$options 			= sw_get_user_options();
 		$postAge = floor(date('U') - get_post_time('U'));
 		if($postAge < (21 * 86400)){ $hours = 1; }
 		elseif($postAge < (60 * 86400)) { $hours = 4; }

@@ -58,6 +58,7 @@
 		if(!isset($sw_user_options['linkShortening'])) 				{ $sw_user_options['linkShortening'] 	= false;	};
 		if(!isset($sw_user_options['shorteningMethod'])) 			{ $sw_user_options['shorteningMethod'] 	= 'warfareLinks';	};
 		if(!isset($sw_user_options['minTotes']))					{ $sw_user_options['minTotes']			= 0; };
+		if(!isset($sw_user_options['cacheMethod']))					{ $sw_user_options['cacheMethod']		= 'advanced'; };
 		if(!isset($sw_user_options['rawNumbers']))					{ $sw_user_options['rawNumbers']		= false; };
 		if(!isset($sw_user_options['notShowing']))					{ $sw_user_options['notShowing']		= false; };
 		if(!isset($sw_user_options['visualEditorBug']))				{ $sw_user_options['visualEditorBug']	= false; };

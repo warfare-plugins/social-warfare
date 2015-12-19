@@ -846,6 +846,19 @@
 				'type' => 'checkbox',
 				'content' => 'Are shares showing up on related posts or in widget areas?',
 				'default' => '0'
+			),
+			'cacheMethodDescription' => array(
+				'type' => 'paragraph',
+				'content' => '<h3>Caching Method</h3>In order to supercharge the speed of the Social Warfare plugin, we only fetch new share counts every so often. When we do eventually fetch the share counts, we never do it while the page is loading. The first page load after the cache is expired sends a trigger back to the server to fetch updated numbers. However, if a site gets very little traffic, these cache rebuilds won\'t be triggered often. Instead, you may want to go ahead and fetch the share counts during the actual page load. This can add 1 to 3 seconds of additional time to the page loads when a page load is initiated with an expired cache that needs refreshed.'
+			),
+			'cacheMethod'		=> array(
+				'type'				=> 'select',
+				'name'				=> 'Previous Connection Protocol',
+				'content'			=> array(
+					'advanced'				=> 'Advanced Cache Triggering',
+					'legacy'				=> 'Legacy Cache Rebuilding during Page Loads'
+				),
+				'default'			=> 'advanced'
 			)
 		);
 		return $sw_options;
