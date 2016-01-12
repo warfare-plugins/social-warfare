@@ -1,9 +1,9 @@
-<?php 
+<?php
 /*
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 1.3.18
+Version: 1.3.19
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 */
@@ -70,10 +70,10 @@ $myUpdateChecker = new $updateCheckerClass(
 );
 */
 // Add settings link on plugin page
-function sw_settings_link($links) { 
-	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>'; 
-	  array_unshift($links, $settings_link); 
-	  return $links; 
+function sw_settings_link($links) {
+	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>';
+	  array_unshift($links, $settings_link);
+	  return $links;
 }
 $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_$plugin", 'sw_settings_link' );
@@ -91,7 +91,7 @@ function enqueueSocialWarfareScripts() {
 	wp_register_style( 'social_warfare', PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
 	wp_enqueue_style( 'social_warfare' );
 }
-	
+
 // Enqueue admin and Click to Tweet Styles
 add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
 function enqueueSocialWarfareAdminScripts() {
@@ -105,7 +105,7 @@ add_filter('the_content','social_warfare_wrapper',200);
 add_filter('the_excerpt','social_warfare_wrapper');
 function social_warfare_wrapper($content) {
 	$array['content'] = $content;
-	return social_warfare_buttons($array);	
+	return social_warfare_buttons($array);
 }
 function social_warfare($array = array()) {
 	$array['devs'] = true;
@@ -121,12 +121,12 @@ function social_warfare($array = array()) {
 	function socialWarfareWrapper( $content ) {
 		if( in_the_loop() && is_singular() ) :
 			$array['content'] = $content;
-			return social_warfare($array);	
+			return social_warfare($array);
 		else :
-			return $content;	
+			return $content;
 		endif;
 	}
-	
+
 	if($sw_user_options['rawNumbers'] == 1):
 		add_filter('the_content', 'socialWarfareWrapper', 20);
 	else:
@@ -162,7 +162,7 @@ add_shortcode( 'social_warfare', 'social_warfareShortcode' );
 *                                                                *
 *   SIDE FLOATER: 												 *
 *                                                                *
-******************************************************************/	
+******************************************************************/
 if($sw_user_options['floatOption'] == 'left' || $sw_user_options['floatOption'] == 'right'):
 	add_action('wp_footer', 'socialWarfareSideFloat');
 endif;
@@ -205,7 +205,7 @@ function sw_activate_registration_cron() {
 	wp_schedule_event(time(), 'daily', 'sw_check_registration_event');
 }
 
-// Deactivate the Cron Job	
+// Deactivate the Cron Job
 function socal_warfare_deactivation() {
 	wp_clear_scheduled_hook('sw_check_registration_event');
 }
@@ -214,15 +214,15 @@ register_deactivation_hook(__FILE__, 'social_warfare_deactivation');
 // Dump the cache timestamp when the post is saved
 function sw_reset_cache_timestamp( $post_id ) {
 	delete_post_meta($post_id,'sw_cache_timestamp');
-	
+
 	// Chache the og_image URL
 	$imageID = get_post_meta( $post_id , 'nc_ogImage' , true );
-	
+
 	if($imageID):
 		$imageURL = wp_get_attachment_url( $image_id );
 		delete_post_meta($post_id,'sw_open_graph_image_url');
 		update_post_meta($post_id,'sw_open_graph_image_url',$imageURL);
-	else:	
+	else:
 		$imageURL = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 		delete_post_meta($post_id,'sw_open_thumbnail_url');
 		update_post_meta($post_id,'sw_open_thumbnail_url' , $imageURL);
