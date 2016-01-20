@@ -91,7 +91,7 @@ function clickToTweetShortcode( $atts ){
 	
 	return '
 		<div class="sw-tweet-clear"></div>
-		<a class="sw_CTT '.$theme.'" href="https://twitter.com/share?text='.urlencode($atts['tweet']).'&url='.$url.''.($options['twitterID'] ? '&via='.$options['twitterID'] : '').'" data-link="https://twitter.com/share?text='.urlencode($atts['tweet']).'&url='.$url.''.($user_twitter_handle ? '&via='.$user_twitter_handle : '').'" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">'.$atts['quote'].'</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>';
+		<a class="sw_CTT '.$theme.'" href="https://twitter.com/share?text='.urlencode(html_entity_decode($atts['tweet'], ENT_COMPAT, 'UTF-8')).'&url='.$url.''.($options['twitterID'] ? '&via='.$options['twitterID'] : '').'" data-link="https://twitter.com/share?text='.urlencode(html_entity_decode($atts['tweet'], ENT_COMPAT, 'UTF-8')).'&url='.$url.''.($user_twitter_handle ? '&via='.$user_twitter_handle : '').'" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">'.$atts['quote'].'</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>';
 }
 
 add_shortcode( 'clickToTweet', 'clickToTweetShortcode' );
