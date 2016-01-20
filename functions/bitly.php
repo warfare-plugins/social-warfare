@@ -26,7 +26,11 @@ function sw_google_analytics( $array ) {
 
 	// Check if Analytics have been enabled or not
 	if($options['googleAnalytics'] == true):
-		$url = $url.urlencode('?utm_source='.$network.'&utm_medium='.$options['analyticsMedium'].'&utm_campaign='.$options['analyticsCampaign'].'');
+		if (strpos($url,'?') !== false) :
+			$url = $url.urlencode('&utm_source='.$network.'&utm_medium='.$options['analyticsMedium'].'&utm_campaign='.$options['analyticsCampaign'].'');
+		else:
+			$url = $url.urlencode('?utm_source='.$network.'&utm_medium='.$options['analyticsMedium'].'&utm_campaign='.$options['analyticsCampaign'].'');
+		endif;
 		return $url;
 	else:
 		return $url;
