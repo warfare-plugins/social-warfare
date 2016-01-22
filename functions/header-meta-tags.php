@@ -85,8 +85,6 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 	// This is the hook function we're adding the header
 	function sw_add_header_meta() {
 		
-		
-		
 		$info['postID'] = get_the_ID();
 			
 		// Cache some resource for fewer queries on subsequent page loads
@@ -105,6 +103,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 				delete_post_meta($info['postID'],'sw_open_graph_image_url');
 			endif;
 
+			// Cache the Twitter Handle
 			$user_twitter_handle 	= get_the_author_meta( 'sw_twitter' , sw_get_author($info['postID']));
 			if($user_twitter_handle):
 				delete_post_meta($info['postID'],'sw_twitter_username');
@@ -112,7 +111,6 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 			else:
 				delete_post_meta($info['postID'],'sw_twitter_username');
 			endif;
-
 		
 		else:
 		
@@ -147,6 +145,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 		$info['postID'] 				= get_the_ID();
 		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
 		$info['description'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
+		$info['sw_fb_author'] 				= htmlspecialchars( get_post_meta( $info['postID'] , 'sw_fb_author' , true ) );
 		$info['sw_user_options'] 		= sw_get_user_options();
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
@@ -340,9 +339,42 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 							endif;
 
 						endif;
+						
+						/*****************************************************************
+						*                                                                *
+						*     OPEN GRAPH URL & Site Name						         *
+						*                                                                *
+						******************************************************************/
 
 						$info['header_output'] .= PHP_EOL .'<meta property="og:url" content="'.get_the_permalink().'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:site_name" content="'.get_bloginfo('name').'" />';
+						
+						/*****************************************************************
+						*                                                                *
+						*     OPEN GRAPH AUTHOR									         *
+						*                                                                *
+						******************************************************************/
+
+						// Add the Facebook Author URL
+						if( get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID'])) ):
+						
+							// Output the Facebook Author URL
+							$facebook_author = get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID']));
+							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
+						
+						elseif( get_the_author_meta ( 'facebook' , sw_get_author($info['postID'])) ):
+
+							// Output the Facebook Author URL
+							$facebook_author = get_the_author_meta ( 'facebook' , sw_get_author($info['postID']));
+							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
+						
+						endif;
+						
+						/*****************************************************************
+						*                                                                *
+						*     OPEN GRAPH PUBLISHER								         *
+						*                                                                *
+						******************************************************************/
 						
 						// If they have a Facebook Publisher URL in our settings...
 						if(isset($info['sw_user_options']['facebookPublisherUrl']) && $info['sw_user_options']['facebookPublisherUrl'] != ''):
@@ -360,6 +392,12 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 						$info['header_output'] .= PHP_EOL .'<meta property="article:published_time" content="'.get_post_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="article:modified_time" content="'.get_post_modified_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:updated_time" content="'.get_post_modified_time('c').'" />';
+						
+						/*****************************************************************
+						*                                                                *
+						*     OPEN GRAPH APP ID									         *
+						*                                                                *
+						******************************************************************/
 						
 						// If the Facebook APP ID is in our settings...
 						if(isset($info['sw_user_options']['facebookAppID']) && $info['sw_user_options']['facebookAppID'] != ''):
