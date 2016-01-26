@@ -26,6 +26,7 @@ function sw_en_language($language) {
 	$language['stumbleupon']	= 'Stumble';
 	$language['reddit']	        = 'Reddit';
 	$language['email']			= 'Email';
+	$language['yummly']			= 'Yum';
 	$language['total']			= 'Total Shares';
 	
 	// Return the Languages Array or the world will explode

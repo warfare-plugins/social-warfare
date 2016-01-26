@@ -52,6 +52,7 @@ require_once $pluginDir  . '/functions/social-networks/pinterest.php';
 require_once $pluginDir  . '/functions/social-networks/tumblr.php';
 require_once $pluginDir  . '/functions/social-networks/reddit.php';
 require_once $pluginDir  . '/functions/social-networks/stumbleupon.php';
+require_once $pluginDir  . '/functions/social-networks/yummly.php';
 
 
 /*****************************************************************

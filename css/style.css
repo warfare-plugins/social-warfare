@@ -43,9 +43,8 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel.sw_flatFresh.sw_d_fullColor .linkedIn, html body .nc_socialPanel.sw_flatFresh.sw_i_fullColor .linkedIn:hover, body .nc_socialPanel.sw_flatFresh.sw_o_fullColor:hover .linkedIn {border:1px solid #0d77b7;}
 .nc_socialPanel.sw_flatFresh.sw_d_fullColor .sw_tumblr, html body .nc_socialPanel.sw_flatFresh.sw_i_fullColor .sw_tumblr:hover, body .nc_socialPanel.sw_flatFresh.sw_o_fullColor:hover .sw_tumblr {border:1px solid #39475d;}
 .nc_socialPanel.sw_flatFresh.sw_d_fullColor .sw_stumbleupon, html body .nc_socialPanel.sw_flatFresh.sw_i_fullColor .sw_stumbleupon:hover, body .nc_socialPanel.sw_flatFresh.sw_o_fullColor:hover .sw_stumbleupon {border:1px solid #ef5025;}
-
+.nc_socialPanel.sw_flatFresh.sw_d_fullColor .sw_yummly, html body .nc_socialPanel.sw_flatFresh.sw_i_fullColor .sw_yummly:hover, body .nc_socialPanel.sw_flatFresh.sw_o_fullColor:hover .sw_yummly {border:1px solid #e26426;}
 .nc_socialPanel.sw_flatFresh.sw_d_fullColor .sw_reddit, html body .nc_socialPanel.sw_flatFresh.sw_i_fullColor .sw_reddit:hover, body .nc_socialPanel.sw_flatFresh.sw_o_fullColor:hover .sw_reddit {border:1px solid #f04b23;}
-
 .nc_socialPanel.sw_flatFresh.sw_d_fullColor .sw_email, html body .nc_socialPanel.sw_flatFresh.sw_i_fullColor .sw_email:hover, body .nc_socialPanel.sw_flatFresh.sw_o_fullColor:hover .sw_email {border:1px solid #6bcce9;}
 /* Full Color */
 .nc_socialPanel.sw_d_fullColor a, html body .nc_socialPanel.sw_i_fullColor .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_fullColor:hover a {color:white;}
@@ -56,10 +55,10 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel.sw_d_fullColor .linkedIn, html body .nc_socialPanel.sw_i_fullColor .linkedIn:hover, body .nc_socialPanel.sw_o_fullColor:hover .linkedIn {background:#0d77b7;border:1px solid #0c6591;}
 .nc_socialPanel.sw_d_fullColor .sw_tumblr, html body .nc_socialPanel.sw_i_fullColor .sw_tumblr:hover, body .nc_socialPanel.sw_o_fullColor:hover .sw_tumblr {background:#39475d;border:1px solid #27313f;}
 .nc_socialPanel.sw_d_fullColor .sw_stumbleupon, html body .nc_socialPanel.sw_i_fullColor .sw_stumbleupon:hover, body .nc_socialPanel.sw_o_fullColor:hover .sw_stumbleupon {background:#ef5025;border:1px solid #d34427;}
-
+.nc_socialPanel.sw_d_fullColor .sw_yummly, html body .nc_socialPanel.sw_i_fullColor .sw_yummly:hover, body .nc_socialPanel.sw_o_fullColor:hover .sw_yummly {background:#e26426;border:1px solid #b65027;}
 .nc_socialPanel.sw_d_fullColor .sw_reddit, html body .nc_socialPanel.sw_i_fullColor .sw_reddit:hover, body .nc_socialPanel.sw_o_fullColor:hover .sw_reddit {background:#f04b23;border:1px solid #d33f27;}
-
 .nc_socialPanel.sw_d_fullColor .sw_email, html body .nc_socialPanel.sw_i_fullColor .sw_email:hover, body .nc_socialPanel.sw_o_fullColor:hover .sw_email {background:#6bcce9;border:1px solid #61bace;}
+/* Three Dee */
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .googlePlus, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .googlePlus:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .googlePlus {border-bottom:3px solid #c44133;}
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .twitter, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .twitter:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .twitter {border-bottom:3px solid #5595bc;}
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .fb, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .fb:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .fb {border-bottom:3px solid #2e4675;}
@@ -67,6 +66,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .linkedIn, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .linkedIn:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .linkedIn {border-bottom:3px solid #0c6591;}
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_tumblr, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_tumblr:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_tumblr {border-bottom:3px solid #27313f;}
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_stumbleupon, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_stumbleupon:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_stumbleupon {border-bottom:3px solid #d34427;}
+.nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_yummly, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_yummly:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_yummly {border-bottom:3px solid #b65027;}
 
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_reddit, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_reddit:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_reddit {border-bottom:3px solid #d33f27;}
 
@@ -99,6 +99,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel.sw_d_colorOutlines .linkedIn a, html body .nc_socialPanel.sw_i_colorOutlines .linkedIn a:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .linkedIn a {color:#0d77b7;}
 .nc_socialPanel.sw_d_colorOutlines .sw_tumblr a, html body .nc_socialPanel.sw_i_colorOutlines .sw_tumblr a:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_tumblr a {color:#39475d;}
 .nc_socialPanel.sw_d_colorOutlines .sw_stumbleupon a, html body .nc_socialPanel.sw_i_colorOutlines .sw_stumbleupon a:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_stumbleupon a {color:#ef5025;}
+.nc_socialPanel.sw_d_colorOutlines .sw_yummly a, html body .nc_socialPanel.sw_i_colorOutlines .sw_yummly a:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_yummly a {color:#e26426;}
 
 .nc_socialPanel.sw_d_colorOutlines .sw_reddit a, html body .nc_socialPanel.sw_i_colorOutlines .sw_reddit a:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_reddit a {color:#f04b23;}
 
@@ -111,6 +112,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel.sw_d_colorOutlines .linkedIn, html body .nc_socialPanel.sw_i_colorOutlines .linkedIn:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .linkedIn {background:transparent;border:1px solid #0d77b7;}
 .nc_socialPanel.sw_d_colorOutlines .sw_tumblr, html body .nc_socialPanel.sw_i_colorOutlines .sw_tumblr:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_tumblr {background:transparent;border:1px solid #39475d;}
 .nc_socialPanel.sw_d_colorOutlines .sw_stumbleupon, html body .nc_socialPanel.sw_i_colorOutlines .sw_stumbleupon:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_stumbleupon {background:transparent;border:1px solid #ef5025;}
+.nc_socialPanel.sw_d_colorOutlines .sw_yummly, html body .nc_socialPanel.sw_i_colorOutlines .sw_yummly:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_yummly {background:transparent;border:1px solid #e26426;}
 
 .nc_socialPanel.sw_d_colorOutlines .sw_reddit, html body .nc_socialPanel.sw_i_colorOutlines .sw_reddit:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_reddit {background:transparent;border:1px solid #f04b23;}
 
@@ -173,6 +175,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .sw-stumbleupon:before {content: "q";}
 .sw-reddit:before {content: "a";}
 .sw-email:before {content: "k"}
+.sw-yummly:before {content: "x"}
 .sw-social-warfare:before {content: "p"}
 /* Click to Tweet Global Styles */
 .sw-CTT {display:block;}
