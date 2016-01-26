@@ -181,10 +181,8 @@ function createSocialSharesColumn($defaults) {
 // SHOW THE FEATURED IMAGE
 function populateSocialSharesColumn($column_name, $post_ID) {
 	if ($column_name == 'swSocialShares') {
-		$answer = get_post_meta($post_ID,'_totes');
-		if ($answer) {
-			echo $answer[0];
-		}
+		$answer = get_post_meta($post_ID,'_totes',true);
+		echo intval($answer);
 	}
 }
 // Make the column Sortable
@@ -192,6 +190,18 @@ function makeSocialSharesSortable( $columns ) {
 	$columns['swSocialShares'] = 'Social Shares';
 	return $columns;
 }
+function sw_social_shares_orderby( $query ) {
+    if( ! is_admin() )
+        return;
+ 
+    $orderby = $query->get( 'orderby');
+ 
+    if( 'Social Shares' == $orderby ) {
+        $query->set('meta_key','_totes');
+        $query->set('orderby','meta_value_num');
+    }
+}
+add_action( 'pre_get_posts', 'sw_social_shares_orderby' );
 add_filter('manage_edit-post_sortable_columns', 'makeSocialSharesSortable');
 add_filter('manage_posts_columns', 'createSocialSharesColumn');
 add_action('manage_posts_custom_column', 'populateSocialSharesColumn', 10, 2);
