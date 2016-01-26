@@ -67,8 +67,8 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_tumblr, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_tumblr:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_tumblr {border-bottom:3px solid #27313f;}
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_stumbleupon, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_stumbleupon:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_stumbleupon {border-bottom:3px solid #d34427;}
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_yummly, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_yummly:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_yummly {border-bottom:3px solid #b65027;}
-
 .nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_reddit, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_reddit:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_reddit {border-bottom:3px solid #d33f27;}
+.nc_socialPanel.sw_threeDee.sw_d_fullColor .sw_email, html body .nc_socialPanel.sw_threeDee.sw_i_fullColor .sw_email:hover, body .nc_socialPanel.sw_threeDee.sw_o_fullColor:hover .sw_email {border-bottom:3px solid #61bace;}
 
 /* Light Gray */
 .nc_socialPanel.sw_d_lightGray a, html body .nc_socialPanel.sw_i_lightGray .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_lightGray:hover a {color:white}
