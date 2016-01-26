@@ -77,7 +77,11 @@ function get_social_warfare_shares($postID) {
 		endif;
 		
 		if($freshCache == true):
-			$shares['totes'] = get_post_meta($postID,'_totes',true);
+			if(get_post_meta($postID,'_totes',true)) :
+				$shares['totes'] = get_post_meta($postID,'_totes',true);
+			else:
+				$shares['totes'] = 0;
+			endif;
 		else:
 			
 			// Fetch all the share counts asyncrounously
