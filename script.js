@@ -254,9 +254,6 @@ function createFloatBar() {
 			jQuery('.nc_socialPanel').eq(0).addClass('sw_one');
 			jQuery('.nc_socialPanel').eq(2).addClass('sw_two');
 			jQuery('.nc_socialPanel').eq(1).addClass('sw_three');
-			if(floatOption == 'floatBottom') {
-				jQuery('body').animate({'padding-bottom': '+=50px'}, 0);
-			};
 			window.origSets['float'] = window.origSets[0];
 			swSetWidths();
 		};
@@ -321,9 +318,30 @@ function floatingBarReveal() {
 								
 			});
 			if(visible) {
+				
+				// Hide the Floating bar
 				ncWrapper.hide();
+				
+				// Add some padding to the page so it fits nicely at the top or bottom
+				if(floatOption == 'floatBottom') {
+					jQuery('body').animate({'padding-bottom': body_padding_bottom+'px'}, 0);
+				} else if (floatOption == 'floatTop') {
+					jQuery('body').animate({'padding-top': body_padding_top+'px'}, 0);
+				};
+				
 			} else {
+				
+				// Show the floating bar
 				ncWrapper.show();
+				
+				// Add some padding to the page so it fits nicely at the top or bottom
+				if(floatOption == 'floatBottom') {
+					new_padding = body_padding_bottom + 50;
+					jQuery('body').animate({'padding-bottom': new_padding+'px'}, 0);
+				} else if (floatOption == 'floatTop') {
+					new_padding = body_padding_top + 50;
+					jQuery('body').animate({'padding-top': new_padding+'px'}, 0);
+				};
 			};
 
 		} else if(floatOption == 'floatLeft') {
@@ -510,6 +528,12 @@ function swApplyScale() {
 
 function getShares() {
 		
+	// Fetch the padding amount to make space later for the floating bars
+	window['body_padding_top'] = jQuery('body').css('padding-top').replace('px','');
+	window['body_padding_bottom'] = jQuery('body').css('padding-bottom').replace('px','');
+	
+	console.log(body_padding_top);
+	
 	if(jQuery('.nc_socialPanel').length) {
 		var checkVisible = setInterval(function() {
 			if(jQuery('.nc_socialPanel:visible')) {
