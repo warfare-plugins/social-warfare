@@ -25,6 +25,7 @@ define( 'PLUGIN_DIR' , $pluginUrl );
 ******************************************************************/
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once SW_META_DIR . 'meta-box.php';
+require_once $pluginDir  . '/functions/mobile-detection.php';
 require_once $pluginDir  . '/functions/curl_functions.php';
 require_once $pluginDir  . '/functions/options-page.php';
 require_once $pluginDir  . '/functions/options-fetch.php';
@@ -54,6 +55,7 @@ require_once $pluginDir  . '/functions/social-networks/reddit.php';
 require_once $pluginDir  . '/functions/social-networks/stumbleupon.php';
 require_once $pluginDir  . '/functions/social-networks/yummly.php';
 require_once $pluginDir  . '/functions/social-networks/email.php';
+require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
 
 
 /*****************************************************************
