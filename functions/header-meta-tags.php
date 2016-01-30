@@ -367,7 +367,7 @@
 							$facebook_author = get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID']));
 							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
 						
-						elseif( get_the_author_meta ( 'facebook' , sw_get_author($info['postID'])) ):
+						elseif( get_the_author_meta ( 'facebook' , sw_get_author($info['postID'])) && defined('WPSEO_VERSION')):
 
 							// Output the Facebook Author URL
 							$facebook_author = get_the_author_meta ( 'facebook' , sw_get_author($info['postID']));
@@ -415,6 +415,12 @@
 						
 							// Output the Facebook APP ID
 							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$wpseo_social['fbadminapp'].'" />';	
+						
+						else:
+						
+							// Output the Facebook APP ID
+							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="529576650555031" />';
+						
 						endif;
 
 					endif;
