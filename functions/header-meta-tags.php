@@ -47,34 +47,39 @@
 *                                                                *
 ******************************************************************/
 	function convert_smart_quotes($content) {
-		 $content = str_replace('&#8220;', '&quot;', $content);
-		 $content = str_replace('&#8221;', '&quot;', $content);
-		 $content = str_replace('&#8216;', '&#39;', $content);
-		 $content = str_replace('&#8217;', '&#39;', $content);
-		
+		 $content = str_replace('"', '\'', $content);
+		 $content = str_replace('&#8220;', '\'', $content);
+		 $content = str_replace('&#8221;', '\'', $content);
+		 $content = str_replace('&#8216;', '\'', $content);
+		 $content = str_replace('&#8217;', '\'', $content);
 		 return $content;
 	}
-function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
-	global $wp_filter;
-	
-	// Take only filters on right hook name and priority
-	if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
-		return false;
-	
-	// Loop on filters registered
-	foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
-		// Test if filter is an array ! (always for class/method)
-		if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
-			// Test if object is a class and method is equal to param !
-			if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && $filter_array['function'][1] == $method_name ) {
-				unset($wp_filter[$hook_name][$priority][$unique_id]);
+/*****************************************************************
+*                                                                *
+*          Easy Hook Remover							         *
+*                                                                *
+******************************************************************/
+	function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
+		global $wp_filter;
+		
+		// Take only filters on right hook name and priority
+		if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
+			return false;
+		
+		// Loop on filters registered
+		foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
+			// Test if filter is an array ! (always for class/method)
+			if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
+				// Test if object is a class and method is equal to param !
+				if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && $filter_array['function'][1] == $method_name ) {
+					unset($wp_filter[$hook_name][$priority][$unique_id]);
+				}
 			}
+			
 		}
 		
+		return false;
 	}
-	
-	return false;
-}
 
 /*****************************************************************
 *                                                                *
@@ -145,7 +150,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 		$info['postID'] 				= get_the_ID();
 		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
 		$info['description'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
-		$info['sw_fb_author'] 				= htmlspecialchars( get_post_meta( $info['postID'] , 'sw_fb_author' , true ) );
+		$info['sw_fb_author'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'sw_fb_author' , true ) );
 		$info['sw_user_options'] 		= sw_get_user_options();
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
@@ -280,7 +285,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 						else:
 						
 							// If nothing else is defined, let's use the post title
-							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.htmlspecialchars(get_the_title()).'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.convert_smart_quotes(htmlspecialchars_decode(get_the_title())).'" />';
 							
 						endif;
 						
@@ -309,7 +314,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 						else:
 						
 							// If nothing else is defined, let's use the post excerpt
-							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.htmlspecialchars(sw_get_excerpt_by_id($info['postID'])).'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.convert_smart_quotes(htmlspecialchars_decode(sw_get_excerpt_by_id($info['postID']))).'" />';
 							
 						endif;
 						
@@ -494,7 +499,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 						// If not title has been defined, let's use the post title
 						elseif(!$info['title']):
 						
-							$info['title'] = convert_smart_quotes( get_the_title() );
+							$info['title'] = convert_smart_quotes(htmlspecialchars_decode( get_the_title() ));
 							
 						endif;
 		
@@ -517,7 +522,7 @@ function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 						// If not, then let's use the excerpt
 						elseif(!$info['description']):
 						
-							$info['description'] = htmlspecialchars( sw_get_excerpt_by_id( $info['postID'] ) );
+							$info['description'] = convert_smart_quotes(htmlspecialchars_decode( sw_get_excerpt_by_id( $info['postID'] )) );
 						
 						endif;
 	
