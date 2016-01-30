@@ -23,11 +23,20 @@
 		if(!isset($sw_user_options['locationPage'])) 				{ $sw_user_options['locationPage'] 		= 'both'; 	};
 		if(!isset($sw_user_options['language'])) 					{ $sw_user_options['language'] 			= 'en'; 	};
 		if(!isset($sw_user_options['locationSite'])) 				{ $sw_user_options['locationSite'] 		= 'both'; 	};
+		
+		// Default Buttons to Display
 		if(!isset($sw_user_options['googlePlus'])) 					{ $sw_user_options['googlePlus'] 		= true; 	};
 		if(!isset($sw_user_options['twitter'])) 					{ $sw_user_options['twitter'] 			= true; 	};
 		if(!isset($sw_user_options['facebook'])) 					{ $sw_user_options['facebook'] 			= true; 	};
 		if(!isset($sw_user_options['pinterest'])) 					{ $sw_user_options['pinterest'] 		= true; 	};
 		if(!isset($sw_user_options['linkedIn'])) 					{ $sw_user_options['linkedIn'] 			= true; 	};
+		if(!isset($sw_user_options['yummly'])) 						{ $sw_user_options['yummly'] 			= false; 	};
+		if(!isset($sw_user_options['email'])) 						{ $sw_user_options['email'] 			= false; 	};
+		if(!isset($sw_user_options['whatsapp'])) 					{ $sw_user_options['whatsapp'] 			= false; 	};
+		if(!isset($sw_user_options['tumblr'])) 						{ $sw_user_options['tumblr'] 			= false; 	};
+		if(!isset($sw_user_options['reddit'])) 						{ $sw_user_options['reddit'] 			= false; 	};
+		if(!isset($sw_user_options['stumbleupon'])) 				{ $sw_user_options['stumbleupon'] 		= false; 	};
+		
 		if(!isset($sw_user_options['totes'])) 						{ $sw_user_options['totes'] 			= true; 	};
 		if(!isset($sw_user_options['totesEach'])) 					{ $sw_user_options['totesEach'] 		= true; 	};
 		if(!isset($sw_user_options['twitterID'])) 					{ $sw_user_options['twitterID'] 		= false; 	};
