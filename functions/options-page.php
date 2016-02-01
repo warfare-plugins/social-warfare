@@ -901,7 +901,7 @@
 			'type' => 'paragraph',
 			'content' => '
 		1. Enter Your Email.<br />
-		2. Click on the "ACTIVATE PLUGIN" button.<br />
+		2. Click on the "Register Plugin" button.<br />
 		3. Watch the magic.<br /><br />'
 		);
 		
@@ -924,17 +924,17 @@
 		
 		$sw_options['options']['registration']['registrationActivateButton'] = array(
 			'type' => 'paragraph',
-			'content' => '<input type="submit" class="activate btn-info" value="Activate Plugin" />'
+			'content' => '<input type="submit" class="activate btn-info" value="Register Plugin" />'
 		);
 		
 		$sw_options['options']['registration']['unregisterInstructions'] = array(
 			'type' => 'paragraph',
-			'content' => 'To unregister the plugin from this site, simply click the "Deactivate Plugin" button below. This will disable it\'s functionality on this site, but will free up your license, allowing you to register this plugin to a different domain.'
+			'content' => 'To unregister the plugin from this site, simply click the "Unregister Plugin" button below. This will disable it\'s functionality on this site, but will free up your license, allowing you to register this plugin to a different domain.'
 		);
 		
 		$sw_options['options']['registration']['unregisterButtons'] = array(
 			'type' => 'paragraph',
-			'content' => '<input type="submit" class="deactivate btn-info" value="Deactivate Plugin" />'
+			'content' => '<input type="submit" class="deactivate btn-info" value="Unregister Plugin" />'
 		);
 		
 		return $sw_options;

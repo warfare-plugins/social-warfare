@@ -370,7 +370,7 @@ jQuery(document).ready(function($) {
 		} );
 	};
 
-	jQuery('.activate[value="Activate Plugin"]').on('click',function(e) {
+	jQuery('.activate[value="Register Plugin"]').on('click',function(e) {
 		e.preventDefault();
 		sw_loading_screen();
 		var regCode = jQuery('input[name="regCode"]').val();
@@ -389,7 +389,7 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
-	jQuery('.deactivate[value="Deactivate Plugin"]').on('click',function(e) {
+	jQuery('.deactivate[value="Unregister Plugin"]').on('click',function(e) {
 		e.preventDefault();
 		sw_loading_screen();
 		var regCode = jQuery('input[name="regCode"]').val();
