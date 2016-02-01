@@ -233,7 +233,7 @@ function sw_reset_cache_timestamp( $post_id ) {
 	$imageID = get_post_meta( $post_id , 'nc_ogImage' , true );
 	
 	if($imageID):
-		$imageURL = wp_get_attachment_url( $image_id );
+		$imageURL = wp_get_attachment_url( $imageID );
 		delete_post_meta($post_id,'sw_open_graph_image_url');
 		update_post_meta($post_id,'sw_open_graph_image_url',$imageURL);
 	else:	
