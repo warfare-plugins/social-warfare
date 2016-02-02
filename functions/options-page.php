@@ -727,21 +727,9 @@
 					'none' => 'None - Create Your Own CSS In Your Theme'),
 				'default' => 'style1'
 			),
-			'style1demo' => array(
+			'cttPreview' => array(
 				'type' => 'paragraph',
-				'content' => '<h4>Send Her My Love</h4><img src="'.PLUGIN_DIR.'/images/cttStyle1-demo.jpg"></p>'
-			),
-			'style2demo' => array(
-				'type' => 'paragraph',
-				'content' => '<h4>Roll With The Changes</h4><img src="'.PLUGIN_DIR.'/images/cttStyle2-demo.jpg"></p>'
-			),
-			'style3demo' => array(
-				'type' => 'paragraph',
-				'content' => '<h4>Free Bird</h4><img src="'.PLUGIN_DIR.'/images/cttStyle3-demo.jpg"></p>'
-			),
-			'style4demo' => array(
-				'type' => 'paragraph',
-				'content' => '<h4>Don\'t Stop Believin\'</h4><img src="'.PLUGIN_DIR.'/images/cttStyle4-demo.jpg"></p>'
+				'content' => '<a class="sw_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>'
 			)
 		);
 		

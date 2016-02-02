@@ -184,15 +184,15 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .sw-whatsapp:before {content: "y"}
 .sw-social-warfare:before {content: "p"}
 /* Click to Tweet Global Styles */
-.sw-CTT {display:block;}
+.sw_CTT {text-decoration:none!important;}
 .sw-tweet-clear {zoom: 1;}
 .sw-tweet-clear:after {display: block;visibility: hidden;height: 0;clear: both;content: ".";}
 .sw-click-to-tweet {display: block;position: relative;padding: 15px 30px;margin: 15px 0px;}
 .sw-click-to-tweet:after {content: ".";display: block;clear: both;visibility: hidden;line-height: 0;height: 0;}
 .sw-click-to-tweet .sw-ctt-text {margin: 0;padding: 0;position: relative;margin-bottom: 10px;word-wrap: break-word;}
 a .sw-click-to-tweet .sw-ctt-text {margin: 0;padding: 0;position: relative;font-size: 24px;line-height: 140%;text-transform: none;font-weight: 500;text-decoration: none;text-transform: none;display:block;}
-.sw-click-to-tweet .sw-ctt-btn {margin: 0;padding: 3px;position: relative;display: block;text-transform: uppercase;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 12px;font-weight: bold;line-height: 100%;float: right;padding-right: 5px;text-decoration: none;}
-.sw-click-to-tweet i.sw-twitter {float: right;font-size:21px;margin-left:15px;text-transform:none;margin-top:-3px;}
+.sw-click-to-tweet .sw-ctt-btn {margin: 10px 0 0 0;padding: 3px;position: relative;display: block;text-transform: uppercase;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 12px;font-weight: bold;line-height: 100%;float: right;padding-right: 5px;text-decoration: none;}
+.sw-click-to-tweet i.sw-twitter {float: right;font-size:21px;margin-left:15px;text-transform:none;margin-top:2px;}
 /*Click to Tweet Style #1 */
 a.sw_CTT.style1 .sw-click-to-tweet {background-color:#fff;border:1px solid #dddddd;border-radius:4px;}
 a.style1 .sw-click-to-tweet .sw-ctt-text {text-decoration: none;color: #999999;}
@@ -209,12 +209,9 @@ a.style2:hover .sw-click-to-tweet .sw-ctt-btn {text-decoration: none;color: #666
 a.style2 .sw-click-to-tweet i.sw-twitter {color:#429cd6;}
 /*Click to Tweet Style #3 */
 a.sw_CTT.style3:hover .sw-click-to-tweet {border-left:10px solid #3c87b2;padding-right:20px;transition:all .25s linear;}
-a.sw_CTT.style3 .sw-click-to-tweet {background-color:#429cd6;border:none;border-radius:0px;border-left:0px solid #3c87b2;padding-right:30px;transition:all .25s linear;}
+a.sw_CTT.style3 .sw-click-to-tweet {border:none;border-left:10px solid #429cd6;background-color:#429cd6;border-radius:0px;padding-right:20px;transition:all .25s linear;}
 a.style3 .sw-click-to-tweet .sw-ctt-text {text-decoration: none;color: #FFFFFF; font-style:italic; }
-a.style3:hover .sw-click-to-tweet .sw-ctt-text {text-decoration: none;color: #FFFFFF;}
-a.style3 .sw-click-to-tweet .sw-ctt-btn {text-decoration: none;color: #FFFFFF;}
-a.style3:hover .sw-click-to-tweet .sw-ctt-btn {text-decoration: none;color: #FFFFFF;}
-a.style3 .sw-click-to-tweet i.sw-twitter {color:#FFFFFF;}
+a.style3:hover .sw-click-to-tweet .sw-ctt-text, a.style3 .sw-click-to-tweet .sw-ctt-btn, a.style3:hover .sw-click-to-tweet .sw-ctt-btn, a.style3 .sw-click-to-tweet i.sw-twitter {text-decoration: none;color: #FFFFFF;}
 /*Click to Tweet Style #4 */
 a.sw_CTT.style4:hover .sw-click-to-tweet {border-left: 10px solid #3c87b2;transition:all .25s linear;}
 a.sw_CTT.style4 .sw-click-to-tweet {background-color:#333;border-left: 10px solid #C33;border-radius:0px;transition:all .25s linear;}

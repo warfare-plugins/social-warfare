@@ -164,8 +164,6 @@ var file_frame;
 			var i = 0;
 			var array = availableOptions[visualTheme];
 			
-			console.log(array);
-			
 			var dColor = array.hasOwnProperty(dColorSet);
 			var iColor = array.hasOwnProperty(iColorSet);
 			var oColor = array.hasOwnProperty(oColorSet);
@@ -323,7 +321,19 @@ function sw_clear_loading_screen() {
 	jQuery('.sw_loading_modal').remove();
 }
 
+function update_ctt_demo() {
+	var current_style 	= jQuery('.sw_CTT').attr('data-style');
+	var new_style		= jQuery('select[name="cttTheme"]').val();
+	jQuery('.sw_CTT').removeClass(current_style).addClass(new_style).attr('data-style',new_style);
+}
+
 jQuery(document).ready(function($) {
+
+	update_ctt_demo();
+	jQuery('select[name="cttTheme"]').on('change', function() {
+		update_ctt_demo();
+	});
+
 
 	jQuery('input[name="premiumCode"]').attr('readonly','readonly');
 	jQuery('input[name="regCode"]').parent('.sw_field').hide();
