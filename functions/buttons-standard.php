@@ -176,6 +176,7 @@ function social_warfare_buttons($array = array()) {
 			$buttonsArray['totes'] = 0;
 			$buttonsArray['options'] = $options;
 			if( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] ) ++$buttonsArray['count'];
+			
 			$buttonsArray['resource'] = array();
 			$buttonsArray['postID'] = $postID;
 			
