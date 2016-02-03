@@ -1039,16 +1039,16 @@
 *																						*
 *****************************************************************************************/
 
-	add_filter('sw_options', 'sw_options_display_settings' 	, 1);
-	add_filter('sw_options', 'sw_options_social_identity' 	, 2);
-	add_filter('sw_options', 'sw_options_visual_options' 	, 3);
-	add_filter('sw_options', 'sw_options_display_locations' , 4);
-	add_filter('sw_options', 'sw_options_floating_buttons' 	, 5);
-	add_filter('sw_options', 'sw_options_link_shortening' 	, 6);
-	add_filter('sw_options', 'sw_options_analytics' 		, 7);
-	add_filter('sw_options', 'sw_options_frame_buster' 		, 8);
-	add_filter('sw_options', 'sw_options_clicktotweet' 		, 9);
-	add_filter('sw_options', 'sw_options_tweet_counts' 		, 10);
+	add_filter('sw_options', 'sw_options_display_settings' 	, 1 );
+	add_filter('sw_options', 'sw_options_visual_options' 	, 2 );
+	add_filter('sw_options', 'sw_options_display_locations' , 3 );
+	add_filter('sw_options', 'sw_options_floating_buttons' 	, 4 );
+	add_filter('sw_options', 'sw_options_clicktotweet' 		, 5 );
+	add_filter('sw_options', 'sw_options_tweet_counts' 		, 6 );
+	add_filter('sw_options', 'sw_options_social_identity' 	, 7 );
+	add_filter('sw_options', 'sw_options_link_shortening' 	, 8 );
+	add_filter('sw_options', 'sw_options_analytics' 		, 9 );
+	add_filter('sw_options', 'sw_options_frame_buster' 		, 10);
 	add_filter('sw_options', 'sw_options_recover_shares' 	, 11);
 	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 12);
 	add_filter('sw_options', 'sw_options_registration' 		, 99);
