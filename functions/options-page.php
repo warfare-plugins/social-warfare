@@ -724,6 +724,8 @@
 					'style2' => 'Roll With The Changes', 
 					'style3' => 'Free Bird',
 					'style4' => 'Don\'t Stop Believin\'', 
+					'style5' => 'Thunderstruck', 
+					'style6' => 'Livin\' On A Prayer', 
 					'none' => 'None - Create Your Own CSS In Your Theme'),
 				'default' => 'style1'
 			),
@@ -741,20 +743,20 @@
 *																						*
 *****************************************************************************************/
 
-	function sw_options_twitter_shares($sw_options) {
+	function sw_options_tweet_counts($sw_options) {
 	
 		// Add the Click to Tweet Tab and Tab Name
-		$sw_options['tabs']['links']['twitter_shares'] = 'Twitter Shares';
+		$sw_options['tabs']['links']['tweet_counts'] = 'Tweet Counts';
 	
 		// Add the Click to Tweet Options Arrays
-		$sw_options['options']['twitter_shares'] = array(
+		$sw_options['options']['tweet_counts'] = array(
 			'twitter_shares_title' => array(
 				'type' => 'title',
-				'content' => 'Twitter Shares'
+				'content' => 'Activate Tweet Counts'
 			),
 			'twitter_shares_description' => array(
 				'type' => 'paragraph',
-				'content' => 'In order to reinstate the ability to display and record Twitter counts we\'ve partnered with New Share Counts. Here\'s what you need to do:<br /><br />1. <a target="_blank" href="http://newsharecounts.com" class="button">Click here to visit NewShareCounts.com</a><br /><br />2. At NewShareCounts.com, Enter your domain and click the "Sign in with Twitter" button.<br /><br /><img src="/wp-content/plugins/social-warfare/images/new_share_counts.png" ><br /><br />3. Flip the switch below to "ON" and then "Save Changes"'
+				'content' => 'In order to reinstate the ability to display and record tweet counts we\'ve partnered with New Share Counts. Here\'s what you need to do:<br /><br />1. <a target="_blank" href="http://newsharecounts.com" class="button">Click here to visit NewShareCounts.com</a><br /><br />2. At NewShareCounts.com, Enter your domain and click the "Sign in with Twitter" button.<br /><br /><img src="/wp-content/plugins/social-warfare/images/new_share_counts.png" ><br /><br />3. Flip the switch below to "ON" and then "Save Changes"'
 			),
 			'twitter_shares' 	=> array(
 				'type' 				=> 'checkbox',
@@ -1046,7 +1048,7 @@
 	add_filter('sw_options', 'sw_options_analytics' 		, 7);
 	add_filter('sw_options', 'sw_options_frame_buster' 		, 8);
 	add_filter('sw_options', 'sw_options_clicktotweet' 		, 9);
-	add_filter('sw_options', 'sw_options_twitter_shares' 	, 10);
+	add_filter('sw_options', 'sw_options_tweet_counts' 		, 10);
 	add_filter('sw_options', 'sw_options_recover_shares' 	, 11);
 	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 12);
 	add_filter('sw_options', 'sw_options_registration' 		, 99);
