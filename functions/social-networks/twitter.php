@@ -44,8 +44,24 @@
 *                                                                *
 ******************************************************************/
 	function sw_twitter_request_link($url) {
-		$request_url = 'https://urls.api.twitter.com/1/urls/count.json?url=' . $url;
-		return $request_url;
+		
+		// Fetch the user's options
+		$sw_user_options = sw_get_user_options();
+		
+		// If the user has enabled Twitter shares....
+		if($sw_user_options['twitter_shares']):
+		
+			// Return the correct Twitter JSON endpoint URL
+			$request_url = 'https://public.newsharecounts.com/count.json?url=' . $url;
+			return $request_url;
+			
+		// If the user has not enabled Twitter shares....
+		else:
+		
+			// Return nothing so we don't run an API call 
+			return 0;
+			
+		endif;
 	}
 /*****************************************************************
 *                                                                *
@@ -53,8 +69,24 @@
 *                                                                *
 ******************************************************************/	
 	function sw_format_twitter_response($response) {
-		$response = json_decode($response, true);
-		return isset($response['count'])?intval($response['count']):0;
+		
+		// Fetch the user's options
+		$sw_user_options = sw_get_user_options();
+		
+		// If the user has enabled Twitter shares....
+		if($sw_user_options['twitter_shares']):
+
+			// Parse the response to get the actual number		
+			$response = json_decode($response, true);
+			return isset($response['count'])?intval($response['count']):0;
+		
+		// If the user has not enabled Twitter shares....
+		else:
+		
+			// Return the number 0
+			return 0;
+		
+		endif;
 	}
 /*****************************************************************
 *                                                                *

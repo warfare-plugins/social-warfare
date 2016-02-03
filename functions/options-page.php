@@ -737,6 +737,36 @@
 	}
 /****************************************************************************************
 *																						*
+*	Twitter Share Counts																*
+*																						*
+*****************************************************************************************/
+
+	function sw_options_twitter_shares($sw_options) {
+	
+		// Add the Click to Tweet Tab and Tab Name
+		$sw_options['tabs']['links']['twitter_shares'] = 'Twitter Shares';
+	
+		// Add the Click to Tweet Options Arrays
+		$sw_options['options']['twitter_shares'] = array(
+			'twitter_shares_title' => array(
+				'type' => 'title',
+				'content' => 'Twitter Shares'
+			),
+			'twitter_shares_description' => array(
+				'type' => 'paragraph',
+				'content' => 'In order to reinstate the ability to display and record Twitter counts we\'ve partnered with New Share Counts. Here\'s what you need to do:<br /><br />1. <a target="_blank" href="http://newsharecounts.com" class="button">Click here to visit NewShareCounts.com</a><br /><br />2. At NewShareCounts.com, Enter your domain and click the "Sign in with Twitter" button.<br /><br /><img src="/wp-content/plugins/social-warfare/images/new_share_counts.png" ><br /><br />3. Flip the switch below to "ON" and then "Save Changes"'
+			),
+			'twitter_shares' 	=> array(
+				'type' 				=> 'checkbox',
+				'content' 			=> 'Activate Twitter Shares?',
+				'default' 			=> false
+			)
+		);
+		
+		return $sw_options;
+	}
+/****************************************************************************************
+*																						*
 *	Recover Shares																		*
 *																						*
 *****************************************************************************************/
@@ -843,8 +873,8 @@
 				'type'				=> 'select',
 				'name'				=> 'Previous Connection Protocol',
 				'content'			=> array(
-					'advanced'				=> 'Advanced Cache Triggering',
-					'legacy'				=> 'Legacy Cache Rebuilding during Page Loads'
+					'advanced'			=> 'Advanced Cache Triggering',
+					'legacy'			=> 'Legacy Cache Rebuilding during Page Loads'
 				),
 				'default'			=> 'advanced'
 			)
@@ -1016,8 +1046,9 @@
 	add_filter('sw_options', 'sw_options_analytics' 		, 7);
 	add_filter('sw_options', 'sw_options_frame_buster' 		, 8);
 	add_filter('sw_options', 'sw_options_clicktotweet' 		, 9);
-	add_filter('sw_options', 'sw_options_recover_shares' 	, 10);
-	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 11);
+	add_filter('sw_options', 'sw_options_twitter_shares' 	, 10);
+	add_filter('sw_options', 'sw_options_recover_shares' 	, 11);
+	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 12);
 	add_filter('sw_options', 'sw_options_registration' 		, 99);
 	add_filter('sw_options', 'sw_options_system_status'		, 100);
 
