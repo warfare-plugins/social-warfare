@@ -74,7 +74,7 @@ $myUpdateChecker = new $updateCheckerClass(
 );
 */
 // Add settings link on plugin page
-function sw_settings_link($links) { 
+function sw_settings_link($links) {
 	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>'; 
 	  array_unshift($links, $settings_link); 
 	  return $links; 

@@ -45,15 +45,7 @@ function swSetWidths(resize) {
 	if(typeof window.origSets === 'undefined' || resize) {
 		window.origSets = new Array();
 		jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
-			if(jQuery(this).find('.totesalt').length) {
-				if(jQuery(this).find('.totesalt').index() == 0) {
-					var totalWidth 	= jQuery(this).width() + 3;
-				} else {
-					var totalWidth 	= jQuery(this).width() - 2;
-				}
-			} else {
-				var totalWidth 	= jQuery(this).width() + 8;
-			}
+			var totalWidth 	= jQuery(this).width() - 2;
 			var totalElements	= jQuery(this).attr('data-count');
 			var average = parseInt(totalWidth) / parseInt(totalElements);
 			var space = parseInt(totalWidth) - parseInt(totalElements);
@@ -166,7 +158,6 @@ function swSetWidths(resize) {
 					activateHoverStates();
 					window.origSets['float'] = window.origSets[0];
 				} else {
-					var count = 1;
 					jQuery(this).find('.nc_tweetContainer').not('.totesalt').each(function() {
 						
 				
@@ -182,7 +173,7 @@ function swSetWidths(resize) {
 						paddingRight = parseInt(paddingRight.replace('px',''));
 						dataId = jQuery(this).attr('data-id');
 						dataId = parseInt(dataId);
-						// if(count > totalElements) {count = 1;}
+						if(count > totalElements) {count = 1;}
 						if(count <= oddball){add = 1;} else {add = 0;};
 						curWidth = jQuery(this).outerWidth(true);
 						curWidth = curWidth - paddingLeft;
@@ -195,7 +186,7 @@ function swSetWidths(resize) {
 							pl = dif+1+average;
 							pr = dif+average;
 							window.origSets[index][dataId]['pl'] = dif+1+'px';
-							window.origSets[index][dataId]['pr'] = dif+add+'px';
+							window.origSets[index][dataId]['pr'] = dif+'px';
 							window.origSets[index][dataId]['fil'] = jQuery(this).find('.iconFiller').width()+'px';
 							jQuery(this).find('.sw_count').animate({
 								"padding-left": window.origSets[index][dataId]['pl'],
@@ -209,7 +200,7 @@ function swSetWidths(resize) {
 							pl = dif+average;
 							pr = dif+average;
 							window.origSets[index][dataId]['pl'] = dif+'px';
-							window.origSets[index][dataId]['pr'] = dif+add+'px';
+							window.origSets[index][dataId]['pr'] = dif+'px';
 							window.origSets[index][dataId]['fil'] = jQuery(this).find('.iconFiller').width()+'px';
 							jQuery(this).find('.sw_count').animate({
 								"padding-left": window.origSets[index][dataId]['pl'],
