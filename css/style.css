@@ -5,7 +5,7 @@ div.nc_socialPanel .nc_tweetContainer {float:left;margin:0 5px;cursor:pointer;he
 .nc_socialPanel .nc_tweetContainer a.nc_tweet, .nc_socialPanel .totes .sw_count {display: block;font-size: 18px!important;font-family: 'Lato', sans-serif;font-weight: bold;text-decoration: none;height:30px;text-transform:none;}
 .nc_socialPanel a .sw_count {padding: 0;line-height: 32px;display:inline-block;}
 .nc_socialPanel .totes .sw_count {line-height:30px;}
-.nc_socialPanel .spaceManWilly {display:block;}
+.nc_socialPanel .spaceManWilly {display:block;max-width:none!important}
 /* Adjusted Margins for First and Last Elements */
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-child(1) {margin-left:0;}
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-last-child(1) {margin-right:0;}
