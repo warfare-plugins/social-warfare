@@ -598,7 +598,7 @@
 
 		function sw_frame_buster($info) {
 			if($info['sw_user_options']['sniplyBuster'] == true):
-				$info['header_output'] .= PHP_EOL.'<script type="text/javascript">function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; return(doc != "/wp-admin/customize.php"); }; if (top.location != self.location && parentIsEvil()) { top.location = self.location.href; };</script>';
+				$info['header_output'] .= PHP_EOL.'<script type="text/javascript">function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };</script>';
 			endif;
 			return $info;
 		}
