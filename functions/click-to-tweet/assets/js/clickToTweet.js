@@ -71,6 +71,8 @@
                         {text: 'Roll With The Changes', value: 'style2'},
                         {text: 'Free Bird', value: 'style3'},
                         {text: 'Don\'t Stop Believin\'', value: 'style4'},
+                        {text: 'Thunderstruck', value: 'style5'},
+                        {text: 'Livin\' On A Prayer', value: 'style6'},
                         ],
                     },
 					],
