@@ -798,7 +798,7 @@
 				'name' 				=> 'Previous URL Format',
 				'content' 			=> array(
 					'unchanged'			=> 'Unchanged',
-					'default' 			=> 'Default',
+					'default' 			=> 'Plain',
 					'day_and_name' 		=> 'Day and Name',
 					'month_and_name' 	=> 'Month and Name',
 					'numeric' 			=> 'Numeric',
