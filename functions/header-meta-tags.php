@@ -351,7 +351,7 @@
 						*                                                                *
 						******************************************************************/
 
-						$info['header_output'] .= PHP_EOL .'<meta property="og:url" content="'.get_the_permalink().'" />';
+						$info['header_output'] .= PHP_EOL .'<meta property="og:url" content="'.get_permalink().'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:site_name" content="'.get_bloginfo('name').'" />';
 						
 						/*****************************************************************
@@ -629,7 +629,7 @@
 ******************************************************************/	
 function sw_output_cache_trigger($info) {
 	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
-		$url = get_the_permalink();
+		$url = get_permalink();
 		if(strpos($url, '?') === false) { $url = $url.'?sw_cache=rebuild'; } else { $url = $url.'&sw_cache=rebuild'; };
 		$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { jQuery.get("'. $url .'"); });</script>';
 	endif;
