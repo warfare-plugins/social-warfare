@@ -60,8 +60,6 @@ function get_social_warfare_shares($postID) {
 				endif;
 			endif;
 		endforeach;
-
-		echo sw_get_alt_permalink();
 		
 		// Recover Shares From Previously Used URL Patterns
 		if($options['recover_shares'] == true && $freshCache == false):
