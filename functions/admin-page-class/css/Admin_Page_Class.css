@@ -8,13 +8,13 @@
  
 /* Common Rules for all fields.
 ----------------------------------------------- */
+form#admin_page_class { margin: 0; }
 .form-table td.at-field {
 	border:1px solid #DDD;
 	padding:10px 10px 20px;
 	margin:0;
 	font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
 .at-label {
 	margin:0!important;
 	padding:5px 0 0;
