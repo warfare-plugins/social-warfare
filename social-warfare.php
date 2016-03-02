@@ -17,7 +17,7 @@ define( 'SW_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
 define( 'SW_META_DIR' , trailingslashit( $pluginDir.'/meta-box' ) );
-define( 'PLUGIN_DIR' , $pluginUrl );
+define( 'SW_PLUGIN_DIR' , $pluginUrl );
 /*****************************************************************
 *                                                                *
 *   INCLUDES: ALL THE FUNCTIONS FILES          					 *
@@ -91,17 +91,17 @@ $sw_user_options = sw_get_user_options();
 add_action( 'wp_enqueue_scripts', 'enqueueSocialWarfareScripts' );
 function enqueueSocialWarfareScripts() {
 	global $sw_user_options;
-	wp_enqueue_script( 'social_warfare_script', PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
-	wp_register_style( 'social_warfare', PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
+	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
+	wp_register_style( 'social_warfare', SW_PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
 	wp_enqueue_style( 'social_warfare' );
 }
 	
 // Enqueue admin and Click to Tweet Styles
 add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
 function enqueueSocialWarfareAdminScripts() {
-	wp_register_style( 'social_warfare', PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
+	wp_register_style( 'social_warfare', SW_PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
 	wp_enqueue_style( 'social_warfare' );
-	wp_enqueue_script( 'social_warfare_script', PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
+	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
 }
 
 // Add the Social Warfare Content Filter

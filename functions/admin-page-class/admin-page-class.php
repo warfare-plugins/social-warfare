@@ -327,7 +327,7 @@ if ( ! class_exists( 'BF_Admin_Page_Class') ) :
         'capability' => 'edit_themes',
         'menu_title' => '',
         'id'         => 'id',
-        'icon_url'   => PLUGIN_DIR.'/images/socialwarfare-20x20.png',
+        'icon_url'   => SW_PLUGIN_DIR.'/images/socialwarfare-20x20.png',
         'position'   => null
       );
 
@@ -668,7 +668,7 @@ if ( ! class_exists( 'BF_Admin_Page_Class') ) :
 	$screen = get_current_screen();
 	$page = $screen->parent_base;
 	if($page == 'social-warfare'):
-	  echo '<a target="_blank" href="http://warfareplugins.com/affiliates/"><img src="'.PLUGIN_DIR.'/images/banner.jpg" class="swBanner" /></a>';
+	  echo '<a target="_blank" href="http://warfareplugins.com/affiliates/"><img src="'.SW_PLUGIN_DIR.'/images/banner.jpg" class="swBanner" /></a>';
     endif;
         
       wp_nonce_field( basename(__FILE__), 'BF_Admin_Page_Class_nonce' );
