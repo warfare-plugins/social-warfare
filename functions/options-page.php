@@ -451,6 +451,15 @@
 				),
 				'default' => '0'
 			 ),
+			'sw_decimal_separator' => array(
+				'type' => 'select',
+				'name' => 'Decimal Separator',
+				'content' => array(
+					'period' => 'Period',
+					'comma' => 'Comma'
+				),
+				'default' => 'period'
+			 ),
 			 'swTotesFormat' => array(
 				'type' => 'select',
 				'name' => 'Total Count Alignment',
