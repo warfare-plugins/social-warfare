@@ -590,6 +590,21 @@
 *****************************************************************************************/
 
 	function sw_options_link_shortening($sw_options) {
+			
+		$sw_user_options = sw_get_user_options();
+					
+		// Establish the redirect URL for Bitly oAuth 2
+		$admin_ajax = admin_url( 'admin-ajax.php' );
+					
+		if(isset($sw_user_options['bitly_access_token']) && $sw_user_options['bitly_access_token'] != ''):
+			
+			$bitly_message = '<span style="color:green;">Authentication:</span> You have successfully authenticated Bitly for shortlinks. You may, however, switch to a different Bitly account if you\'d like.<br /><a class="button button-large" href="https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state='.$admin_ajax.'&redirect_uri=https://warfareplugins.com/bitly_oauth.php">Activate A Different Bitly Account</a>';
+			
+		else:
+		
+			$bitly_message = '<span style="color:red;">Authentication:</span> You must authorize Social Warfare to create short links in order for link-shortening to work.<br /><a class="button button-large" href="https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state='.$admin_ajax.'&redirect_uri=https://warfareplugins.com/bitly_oauth.php">Activate Bitly Link Shortening</a>';
+		
+		endif;
 					
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['linkShortening'] = 'Link Shortening';
@@ -608,17 +623,9 @@
 				),
 				'default' => 'bitly'
 			),
-			'linkShorteningDescription' => array(
+			'bitly_oauth' => array(
 				'type' => 'paragraph',
-				'content' => 'You MUST provide your bitly information below in order for link-shortening to work. This information can be found by logging into Bitly and navigating to the Settings page: <a target="_blank" href="https://bitly.com/a/settings/advanced">Bitly Setting Page</a>'
-			),
-			'bitlyLogin' => array(
-				'type' => 'textbox',
-				'content' => 'Bitly Login / Username'
-			),
-			'bitlyAPI' => array(
-				'type' => 'textbox',
-				'content' => 'Bitly API Key'
+				'content' => $bitly_message
 			)
 		);
 		
