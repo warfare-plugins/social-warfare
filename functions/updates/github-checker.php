@@ -1,8 +1,8 @@
 <?php
 
-if ( !class_exists('PucGitHubChecker_2_2', false) ):
+if ( !class_exists('PucGitHubChecker_3_0', false) ):
 
-class PucGitHubChecker_2_2 extends PluginUpdateChecker_2_2 {
+class PucGitHubChecker_3_0 extends SW_PluginUpdateChecker {
 	/**
 	 * @var string GitHub username.
 	 */
@@ -54,10 +54,10 @@ class PucGitHubChecker_2_2 extends PluginUpdateChecker_2_2 {
 	 * Retrieve details about the latest plugin version from GitHub.
 	 *
 	 * @param array $unusedQueryArgs Unused.
-	 * @return PluginInfo
+	 * @return PluginInfo_3_0
 	 */
 	public function requestInfo($unusedQueryArgs = array()) {
-		$info = new PluginInfo_2_2();
+		$info = new PluginInfo_3_0();
 		$info->filename = $this->pluginFile;
 		$info->slug = $this->slug;
 		$info->sections = array();
@@ -110,31 +110,14 @@ class PucGitHubChecker_2_2 extends PluginUpdateChecker_2_2 {
 		//Try parsing readme.txt. If it's formatted according to WordPress.org standards, it will contain
 		//a lot of useful information like the required/tested WP version, changelog, and so on.
 		if ( $this->readmeTxtExistsLocally() ) {
-			$readmeTxt = $this->getRemoteFile('readme.txt', $ref);
-			if ( !empty($readmeTxt) ) {
-				$readme = $this->parseReadme($readmeTxt);
-
-				if ( isset($readme['sections']) ) {
-					$info->sections = array_merge($info->sections, $readme['sections']);
-				}
-				if ( !empty($readme['tested_up_to']) ) {
-					$info->tested = $readme['tested_up_to'];
-				}
-				if ( !empty($readme['requires_at_least']) ) {
-					$info->requires = $readme['requires_at_least'];
-				}
-
-				if ( isset($readme['upgrade_notice'], $readme['upgrade_notice'][$info->version]) ) {
-					$info->upgrade_notice = $readme['upgrade_notice'][$info->version];
-				}
-			}
+			$this->setInfoFromRemoteReadme($ref, $info);
 		}
 
 		//The changelog might be in a separate file.
 		if ( empty($info->sections['changelog']) ) {
 			$info->sections['changelog'] = $this->getRemoteChangelog($ref);
 			if ( empty($info->sections['changelog']) ) {
-				$info->sections['changelog'] = 'There is no changelog available.';
+				$info->sections['changelog'] = __('There is no changelog available.', 'plugin-update-checker');
 			}
 		}
 
@@ -377,7 +360,7 @@ class PucGitHubChecker_2_2 extends PluginUpdateChecker_2_2 {
 	 * Copy plugin metadata from a file header to a PluginInfo object.
 	 *
 	 * @param array $fileHeader
-	 * @param PluginInfo_2_2 $pluginInfo
+	 * @param PluginInfo_3_0 $pluginInfo
 	 */
 	protected function setInfoFromHeader($fileHeader, $pluginInfo) {
 		$headerToPropertyMap = array(
@@ -404,6 +387,35 @@ class PucGitHubChecker_2_2 extends PluginUpdateChecker_2_2 {
 		}
 		if ( !empty($fileHeader['Description']) ) {
 			$pluginInfo->sections['description'] = $fileHeader['Description'];
+		}
+	}
+
+	/**
+	 * Copy plugin metadata from the remote readme.txt file.
+	 *
+	 * @param string $ref GitHub tag or branch where to look for the readme.
+	 * @param PluginInfo_3_0 $pluginInfo
+	 */
+	protected function setInfoFromRemoteReadme($ref, $pluginInfo) {
+		$readmeTxt = $this->getRemoteFile('readme.txt', $ref);
+		if ( empty($readmeTxt) ) {
+			return;
+		}
+
+		$readme = $this->parseReadme($readmeTxt);
+
+		if ( isset($readme['sections']) ) {
+			$pluginInfo->sections = array_merge($pluginInfo->sections, $readme['sections']);
+		}
+		if ( !empty($readme['tested_up_to']) ) {
+			$pluginInfo->tested = $readme['tested_up_to'];
+		}
+		if ( !empty($readme['requires_at_least']) ) {
+			$pluginInfo->requires = $readme['requires_at_least'];
+		}
+
+		if ( isset($readme['upgrade_notice'], $readme['upgrade_notice'][$pluginInfo->version]) ) {
+			$pluginInfo->upgrade_notice = $readme['upgrade_notice'][$pluginInfo->version];
 		}
 	}
 

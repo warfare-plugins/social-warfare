@@ -64,7 +64,7 @@ require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
 *   PLUGINS PAGE: UPDATE CHECKER AND SETTINGS LINK	             *
 *                                                                *
 ******************************************************************/
-$MyUpdateChecker = new PluginUpdateChecker('https://beta.warfareplugins.com/wp-content/plugins/social-warfare/social-warfare.json',__FILE__,'social-warfare',1);
+$MyUpdateChecker = new SW_PluginUpdateChecker('https://beta.warfareplugins.com/wp-content/plugins/social-warfare/social-warfare.json',__FILE__,'social-warfare',1);
 
 /*
 $updateCheckerClass = PucFactory::getLatestClassVersion('PucGitHubChecker');
