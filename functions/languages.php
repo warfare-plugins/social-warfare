@@ -134,3 +134,29 @@ function sw_fr_language($language) {
 	endif;
 	return $language;
 }
+
+/****************************************************************************************
+*																						*
+*	Portuguese																				*
+*																						*
+*****************************************************************************************/
+
+// Add the terms to the buttons
+add_filter('sw_languages','sw_pt_language');
+function sw_pt_language($language) {
+	if(sw_get_single_option('language') == 'pt'):
+		$language['googlePlus'] 	= '+1';
+		$language['twitter'] 		= 'Tweetar';
+		$language['facebook']		= 'Partilhar';
+		$language['pinterest']		= 'Pin';
+		$language['linkedIn']		= 'Partilhar';
+		$language['tumblr']			= 'Partilhar';
+		$language['stumbleupon']	= 'Stumble';
+		$language['reddit']	        = 'Reddit';
+		$language['email']			= 'Enviar e-mail';
+		$language['yummly']			= 'Yum';
+		$language['whatsapp']		= 'WhatsApp';
+		$language['total']			= 'Total de partilhas';
+	endif;
+	return $language;
+}
