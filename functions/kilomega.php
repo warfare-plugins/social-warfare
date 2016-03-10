@@ -19,8 +19,8 @@ function kilomega( $val ) {
 			// If less than 1,000 just format and kick it back
 			return number_format($val);
 			
-		// Check if the value is greater than 1,000....
-		else:
+		// Check if the value is greater than 1,000 and less than 1,000,000....
+		elseif( $val < 1000000):
 		
 			// Start by deviding the value by 1,000
 			$val = intval($val) / 1000;
@@ -36,6 +36,26 @@ function kilomega( $val ) {
 
 				// Then format the number to the appropriate number of decimals
 				return number_format($val,$options['swDecimals'],',','.').'K';
+			
+			endif;
+			
+		// Check if the value is greater than 1,000,000....
+		else:
+		
+			// Start by deviding the value by 1,000,000
+			$val = intval($val) / 1000000;
+			
+			// If the decimal separator is a period
+			if($options['sw_decimal_separator'] == 'period'):
+
+				// Then format the number to the appropriate number of decimals
+				return number_format($val,$options['swDecimals'],'.',',').'M';
+		
+			// If the decimal separator is a comma
+			else:
+
+				// Then format the number to the appropriate number of decimals
+				return number_format($val,$options['swDecimals'],',','.').'M';
 			
 			endif;
 		
