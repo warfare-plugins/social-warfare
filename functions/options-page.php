@@ -799,7 +799,7 @@
 		$sw_options['options']['recover_shares'] = array(
 			'recover_sharesTitle' => array(
 				'type' => 'title',
-				'content' => 'Share Counts Recovery (Beta)'
+				'content' => 'Share Counts Recovery'
 			),
 			'recoverSharesDescription' => array(
 				'type' => 'paragraph',
@@ -809,6 +809,10 @@
 				'type' 				=> 'checkbox',
 				'content' 			=> 'Activate Share Count Recovery?',
 				'default' 			=> false
+			),
+			'recoverSharesDescription2' => array(
+				'type' => 'paragraph',
+				'content' => 'For any part of your permalink scheme that you have not changed, set the toggle to "UNCHANGED"'
 			),
 			'recovery_format' 	=> array(
 				'type' 				=> 'select',
@@ -827,10 +831,21 @@
 				'type'				=> 'select',
 				'name'				=> 'Previous Connection Protocol',
 				'content'			=> array(
+					'unchanged'			=> 'Unchanged',
 					'http'				=> 'http',
 					'https'				=> 'https'
 				),
-				'default'			=> 'http'
+				'default'			=> 'unchanged'
+			),
+			'recovery_prefix'	=> array(
+				'type'				=> 'select',
+				'name'				=> 'Previous Domain Prefix',
+				'content'			=> array(
+					'unchanged'			=> 'Unchanged',
+					'www'				=> 'www',
+					'nonwww'			=> 'non-www'
+				),
+				'default'			=> 'unchanged'
 			)
 		);
 	
@@ -890,7 +905,7 @@
 			),
 			'cacheMethod'		=> array(
 				'type'				=> 'select',
-				'name'				=> 'Previous Connection Protocol',
+				'name'				=> 'Cache Rebuild Method',
 				'content'			=> array(
 					'advanced'			=> 'Advanced Cache Triggering',
 					'legacy'			=> 'Legacy Cache Rebuilding during Page Loads'

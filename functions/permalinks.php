@@ -50,7 +50,7 @@
 	GENERATE THE ALTERNATE PERMALINK      
                                                                 
 ******************************************************************/
-	function sw_get_alternate_permalink($format,$protocol,$id) {
+	function sw_get_alternate_permalink($format,$protocol,$id,$prefix) {
 
 		// Setup the Default Permalink Structure
 		if($format == 'default'):
@@ -87,10 +87,21 @@
 		endif;
 
 		// Check and Adjust the Protocol setting
-		if($protocol == 'https' && strpos($url,'https') === false):
+		if($protocol == 'unchanged'):
+		elseif($protocol == 'https' && strpos($url,'https') === false):
 			$url = str_replace('http','https',$url);
 		elseif($protocol == 'http' && strpos($url,'https') !== false):
 			$url = str_replace('https','http',$url);
+		endif;
+
+		// Check and Adjust the Prefix setting
+		if($prefix == 'unchanged'):
+		elseif($prefix == 'www' && strpos($url,'www') === false):
+			$url = str_replace('http://','http://www.',$url);
+			$url = str_replace('https://','https://www.',$url);
+		elseif($prefix == 'nonwww' && strpos($url,'www') !== false):
+			$url = str_replace('http://www.','http://',$url);
+			$url = str_replace('https://www.','https://',$url);
 		endif;
 		
 		return $url;
