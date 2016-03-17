@@ -67,7 +67,7 @@
 			$buttonsArray = apply_filters( 'sw_network_buttons' , $buttonsArray );
 			
 			// Create the social panel
-			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel sw_'.$options['floatStyle'].' sw_d_'.$options['sideDColorSet'].' sw_i_'.$options['sideIColorSet'].' sw_o_'.$options['sideOColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-screen-width="'.$options['sw_float_scr_sz'].'">';
+			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel sw_'.$options['floatStyle'].' sw_d_'.$options['sideDColorSet'].' sw_i_'.$options['sideIColorSet'].' sw_o_'.$options['sideOColorSet'].' '.$options['sideReveal'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-screen-width="'.$options['sw_float_scr_sz'].'" data-transition="'.$options['sideReveal'].'">';
 			
 			// Display Total Shares if the Threshold has been met
 			if($options['totes'] && $buttonsArray['totes'] >= $options['minTotes']):

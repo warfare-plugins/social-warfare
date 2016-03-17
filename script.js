@@ -350,18 +350,32 @@ function floatingBarReveal() {
 				jQuery('.nc_socialPanel').not('.nc_socialPanelSide').each(function() {
 					var thisOffset = jQuery(this).offset();
 					var thisHeight = jQuery(this).height();
-					if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) { visible = true; };
+					if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) { visible = true; ncSideFloaterDisplay = true; };
 				});
 				if(visible || jQuery('.nc_socialPanelSide').hasClass('mobile')) {
-					ncSideFloater.removeClass('displayed');
+					visible = true;
 				} else {
-					ncSideFloater.addClass('displayed');
+					visible = false;
 				};
 			} else {
 				if (jQuery(window).width() > minWidth) {
-					ncSideFloater.addClass('displayed');
+					visible = false;
 				} else {
-					ncSideFloater.removeClass('displayed');
+					visible = true;
+				}
+			}
+			var transition = ncSideFloater.attr('data-transition');
+			if(transition == 'slide'){
+				if(visible == true) {
+					ncSideFloater.css({left:'-100px'},200);	
+				} else {
+					ncSideFloater.css({left:'5px'});
+				}
+			} else if(transition == 'fade'){
+				if(visible == true) {
+					ncSideFloater.fadeOut(200);
+				} else {
+					ncSideFloater.fadeIn(200);
 				}
 			}
 			/*

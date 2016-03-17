@@ -573,6 +573,15 @@
 				),
 				'default' => 'fullColor'
 			),
+			'sideReveal' => array(
+				'type' => 'select',
+				'name' => 'Hide & Seek Transition',
+				'content' => array(
+					'slide' 			=> 'Slide In / Slide Out',
+					'fade' 				=> 'Fade In / Fade Out'
+				),
+				'default' => 'slide'
+			),
 			'floatBgColor' => array(
 				'type' => 'colorselect',
 				'name' => 'Floating Background Color',

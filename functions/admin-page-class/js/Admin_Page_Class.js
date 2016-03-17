@@ -88,7 +88,7 @@ var file_frame;
 	if(jQuery('select[name="visualTheme"]').length) {
 		
 		// Update the items and previews on the initial page load
-		var visualTheme = jQuery('select[name="visualTheme"]').val();
+		var visualTheme  = jQuery('select[name="visualTheme"]').val();
 		var dColorSet    = jQuery('select[name="dColorSet"]').val();
 		var iColorSet    = jQuery('select[name="iColorSet"]').val();
 		var oColorSet    = jQuery('select[name="oColorSet"]').val();

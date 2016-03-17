@@ -124,8 +124,9 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 
 .nc_socialPanel.sw_d_colorOutlines .sw_email, html body .nc_socialPanel.sw_i_colorOutlines .sw_email:hover, body .nc_socialPanel.sw_o_colorOutlines:hover .sw_email {background:transparent;border:1px solid #6bcce9;}
 /* Side Floating Buttons */
-.nc_socialPanelSide {position:fixed;left:-100px;z-index:9999999;width:auto;top:200px;overflow:hidden;transition:all 0.2s linear;height:auto;width:100px!important;overflow:visible;}
-.nc_socialPanelSide.displayed {left:5px;transition:all 0.2s linear;}
+.nc_socialPanelSide {z-index:9999999;width:auto;top:200px;overflow:hidden;transition:all 0.2s linear;height:auto;width:100px!important;overflow:visible;}
+.nc_socialPanelSide.slide {position:fixed;left:-100px;transition:all 0.2s linear;}
+.nc_socialPanelSide.fade {position:fixed;left:5px;display:none;transition:all 0.2s linear;}
 .nc_socialPanelSide .nc_tweetContainer {width: auto;height: 32px;background: #DD4B38;margin: 3px 0!important;padding: 0;display: block;font-family: 'Lato',sans-serif;clear: both;vertical-align: top;width:90px;transition:all 0.1s linear;overflow:hidden;border-radius:3px;}
 .nc_socialPanelSide .nc_tweetContainer .iconFiller {display: inline-block;width: 21px;height: 40px;margin: 0 6px;padding: 0;vertical-align: middle;transition:all 0.1s linear;}
 .nc_socialPanelSide .nc_tweetContainer .sw_count {display: inline-block;width: 0;overflow:hidden;line-height: 35px;text-align: right;padding: 0;font-size: 19px;margin: 0;height: 32px;vertical-align: top;transition:all 0.1s linear;}
