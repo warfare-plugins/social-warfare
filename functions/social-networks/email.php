@@ -65,13 +65,13 @@
 		if( $array['options']['email'] ):
 		
 			// Collect the Title
-			$title = SW_META_meta( 'nc_ogTitle' );
+			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );
 			if(!$title):
 				$title = get_the_title();
 			endif;
 			
 			// Collect the Description
-			$description = SW_META_meta( 'nc_ogDescription' );
+			$description = get_post_meta( $array['postID'] , 'nc_ogDescription' , true );
 			if(!$description):
 				$description = sw_get_excerpt_by_id($array['postID']);
 			endif;
