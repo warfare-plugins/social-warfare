@@ -137,7 +137,7 @@ function sw_fr_language($language) {
 
 /****************************************************************************************
 *																						*
-*	Portuguese																				*
+*	Portuguese																			*
 *																						*
 *****************************************************************************************/
 
@@ -157,6 +157,31 @@ function sw_pt_language($language) {
 		$language['yummly']			= 'Yum';
 		$language['whatsapp']		= 'WhatsApp';
 		$language['total']			= 'Total de partilhas';
+	endif;
+	return $language;
+}
+
+/****************************************************************************************
+*																						*
+*	Danish																				*
+*																						*
+*****************************************************************************************/
+// Add the terms to the buttons
+add_filter('sw_languages','sw_da_language');
+function sw_da_language($language) {
+	if(sw_get_single_option('language') == 'da'):
+		$language['googlePlus'] 	= '+1';
+		$language['twitter'] 		= 'Tweet';
+		$language['facebook']		= 'Del';
+		$language['pinterest']		= 'Pin';
+		$language['linkedIn']		= 'Del';
+		$language['tumblr']			= 'Del';
+		$language['stumbleupon']	= 'Stumble';
+		$language['reddit']	        = 'Reddit';
+		$language['email']			= 'E-mail';
+		$language['yummly']			= 'Yum';
+		$language['whatsapp']		= 'WhatsApp';
+		$language['total']			= 'Delinger i alt';
 	endif;
 	return $language;
 }

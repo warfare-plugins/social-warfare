@@ -102,6 +102,7 @@
 				'type' => 'select',
 				'name' => 'Language',
 				'content' => array(
+					'da'	=> 'Danish',
 					'nl'	=> 'Dutch',
 					'en' 	=> 'English',
 					'fr' 	=> 'French',
