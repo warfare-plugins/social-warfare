@@ -630,10 +630,14 @@
 		$sw_options['tabs']['links']['linkShortening'] = 'Link Shortening';
 	
 		$sw_options['options']['linkShortening'] = array(
+			'linkShorteningTitle' => array(
+				'type' 		=> 'title',
+				'content' 	=> 'Link Shortening'
+			),
 			'linkShortening' => array(
 				'type' => 'checkbox',
 				'content' => 'Activate Link Shortening?',
-				'default' => '0'
+				'default' => false
 			),
 			'shorteningMethod' => array(
 				'type' => 'select',
