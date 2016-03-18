@@ -633,7 +633,7 @@
 			'linkShortening' => array(
 				'type' => 'checkbox',
 				'content' => 'Activate Link Shortening?',
-				'default' => 0
+				'default' => '0'
 			),
 			'shorteningMethod' => array(
 				'type' => 'select',
@@ -1042,17 +1042,6 @@
 		else :
 			$curl_status = '<span style="color:red;">Disabled</span>';
 		endif;
-		
-		// Test Our Connection to NewShareCounts.com
-		/*
-		$tweet_count_check_response = sw_file_get_contents_curl('http://public.newsharecounts.com/test.json');
-		if($tweet_count_check_response == true):
-			$tweet_check = '<tr><td><b>Tweet Counts</b></td><td><span style="color:green;">Enabled</span></td></tr>';
-		else :
-			$tweet_check = '<tr><td><b>Tweet Counts</b></td><td><span style="color:green;">Disabled</span></td></tr>';
-			$tweet_check .= '<tr><td colspan="2"><span style="color:red">It is likely that your server firewall is blocking the connection. Please contact your hosting provider and ask them to whitelist connections to NewShareCounts.com at the following IP addresses: 104.28.30.239 & 104.28.31.239</span></td></tr>';
-		endif;
-		*/
 		
 		$theme = wp_get_theme();
 		

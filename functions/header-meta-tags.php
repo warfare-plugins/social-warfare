@@ -628,11 +628,21 @@
 *                                                                *
 ******************************************************************/	
 function sw_output_cache_trigger($info) {
+	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
 	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
-		$url = get_permalink();
-		if(strpos($url, '?') === false) { $url = $url.'?sw_cache=rebuild'; } else { $url = $url.'&sw_cache=rebuild'; };
-		$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { jQuery.get("'. $url .'"); });</script>';
+		
+		// Make sure we're not on a WooCommerce Account Page
+		if(is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page()):
+			return $info;
+			
+		// Trigger the cache rebuild
+		else:
+			$url = get_permalink();
+			if(strpos($url, '?') === false) { $url = $url.'?sw_cache=rebuild'; } else { $url = $url.'&sw_cache=rebuild'; };
+			$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { jQuery.get("'. $url .'"); });</script>';
+		endif;		
 	endif;
+	// Return the array so the world doesn't explode
 	return $info;
 }
 		
