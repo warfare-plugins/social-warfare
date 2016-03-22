@@ -139,6 +139,7 @@
 			add_filter( 'sw_meta_tags' , 'sw_output_custom_color' , 4 );
 			add_filter( 'sw_meta_tags' , 'sw_output_font_css' , 5 );
 			add_filter( 'sw_meta_tags' , 'sw_output_cache_trigger' , 6 );
+			add_filter( 'sw_meta_tags' , 'sw_cache_rebuild_rel_canonical' , 7 );
 			add_action( 'admin_head'   , 'sw_output_font_css' , 10);
 
 			// Disable Simple Podcast Press Open Graph tags
@@ -600,14 +601,32 @@ function sw_output_cache_trigger($info) {
 		// Trigger the cache rebuild
 		else:
 			$url = get_permalink();
-			if(strpos($url, '?') === false) { $url = $url.'?sw_cache=rebuild'; } else { $url = $url.'&sw_cache=rebuild'; };
-			$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { jQuery.get("'. $url .'"); });</script>';
+			$info['header_output'] .= PHP_EOL.'<script type="text/javascript">document.addEventListener("DOMContentLoaded", function(event) { var URL = "'.$url.'"; if(URL.indexOf("?") > -1) { URL += "&sw_cache=rebuild"; } else { URL += "?sw_cache=rebuild"; }; var xhr = new XMLHttpRequest(); xhr.open("GET",URL,true); xhr.send(); });</script>';
 		endif;		
 	endif;
 	// Return the array so the world doesn't explode
 	return $info;
 }
-		
+/*****************************************************************
+*                                                                *
+*          CACHE REBUILD REL CANONICAL				             *
+*                                                                *
+******************************************************************/	
+function sw_cache_rebuild_rel_canonical($info) {
+	
+	// Fetch the Permalink
+	$url = get_permalink();
+	
+	// Check to see if the cache is currently being rebuilt
+	if(isset($_GET['sw_cache']) && $_GET['sw_cache'] == 'rebuild'):
+	
+		// Use a rel canonical so everyone knows this is not a real page
+		$info['header_output'] .= '<link rel="canonical" href="'.$url.'">';
+	endif;
+	
+	// Return the array so the world doesn't explode
+	return $info;
+}
 /*****************************************************************
 *                                                                *
 *          ICON FONT CSS							             *
