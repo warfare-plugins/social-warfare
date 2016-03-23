@@ -290,15 +290,6 @@
 			),
 			'default'	=> 'both'
 		);
-		$sw_options['options']['displayLocations']['floatlocationSite'] = array(
-			'type'		=> 'select',
-			'name'		=> 'Location Sitewide',
-			'content'	=> array(
-				'on'	=> 'On',
-				'off'	=> 'Off',
-			),
-			'default'	=> 'both'
-		);
 	
 		if(!empty($postTypes)):
 			
