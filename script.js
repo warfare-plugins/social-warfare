@@ -41,42 +41,94 @@ jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
 });
 function isOdd(num) { return num % 2;} 
 jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
+
+// Function to set or reset the button sizes to fit their respective container area
 function swSetWidths(resize) {
+	
+	// Check if this is the first or a forced resize
 	if(typeof window.origSets === 'undefined' || resize) {
-		window.origSets = new Array();
+		
+		// Declare the variable for saving presets	
+		window.origSets = [];
+		
+		// Declare the variable for saving original measurements
+		if(typeof window.defaults === 'undefined') {
+			window.defaults = [];
+		};
+			
+		// Loop through each set of buttons
 		jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
+		
+			// Declare a global so we can save the sizes for faster processing later
+			var index = jQuery('.nc_socialPanel').index(jQuery(this));
+			if(typeof window.defaults[index] === 'undefined') {
+				window.defaults[index] = [];
+			};
+			
+			// Measure the width of the container. Find out how much space is available.
 			var totalWidth 	= jQuery(this).width() - 2;
+			
+			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
+			
+			// The average shows us how wide each button needs to become
 			var average = parseInt(totalWidth) / parseInt(totalElements);
 			var space = parseInt(totalWidth) - parseInt(totalElements);
+			
+			// Check how much space is on the left so we can show or hide the floating buttons if they exist
 			var offset = jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').offset();
+			
+			// If we have 100px, show the side floaters. If not, hide it.
 			if(offset.left < 100) {
 				jQuery('.nc_socialPanelSide').addClass('mobile');
 			} else {
 				jQuery('.nc_socialPanelSide').removeClass('mobile');
 			};
+			
+			// Declare some variables for use later
 			var widthNeeded = 0;
 			var padding = 0;
 			var totesWidth = 0;
-			jQuery(this).find('.nc_tweetContainer').each( function() {
-				if(totalElements > 3) {
-					extraSpace = (totalElements - 1) * 5;
-				} else {
-					extraSpace = (totalElements - 1) * 15;
-				};
-				widthNeeded += jQuery(this).width() + extraSpace;
-				var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
-				paddingLeft = parseInt(paddingLeft.replace('px',''));
-				var paddingRight = jQuery(this).find('.sw_count').css('padding-right');
-				paddingRight = parseInt(paddingRight.replace('px',''));
-				padding = paddingLeft + paddingRight;
-				widthNeeded = widthNeeded - padding;
-			});
+			
+			// Check if we already have a widthNeeded saved from earlier
+			if(typeof window.defaults[index].default_width_needed === 'undefined') {
+			
+				// Loop through each button
+				jQuery(this).find('.nc_tweetContainer').each( function() {
+					
+					// Make sure we add extra space for expansions and whatnot
+					if(totalElements > 3) {
+						extraSpace = (totalElements - 1) * 5;
+					} else {
+						extraSpace = (totalElements - 1) * 15;
+					};
+					
+					// Check how wide it must be to fit
+					widthNeeded += jQuery(this).width() + extraSpace;
+					
+					var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
+					paddingLeft = parseInt(paddingLeft.replace('px',''));
+					var paddingRight = jQuery(this).find('.sw_count').css('padding-right');
+					paddingRight = parseInt(paddingRight.replace('px',''));
+					padding = paddingLeft + paddingRight;
+					widthNeeded = widthNeeded - padding;
+				});
+				// Save the width needed for later use
+				window.defaults[index].default_width_needed = widthNeeded;
+			
+			// If we already have it, use it
+			} else {
+				
+				widthNeeded = window.defaults[index].default_width_needed;
+			}
+			
+			// Check if we have enough room to display the total shares
 			totesWidth = jQuery(this).find('.nc_tweetContainer.totes').width();
 			if(totalWidth < widthNeeded && !jQuery(this).hasClass('nc_floater')) {
 				jQuery(this).find('.nc_tweetContainer.totes').hide();
 			}
-			if(totalWidth < (widthNeeded - totesWidth) && !jQuery(this).hasClass('nc_floater')) {
+			
+			if((totalWidth) <= (widthNeeded - totesWidth + 25) && !jQuery(this).hasClass('nc_floater')) {
 				if(jQuery(this).find('.totes').length) {
 					if(jQuery(this).hasClass('connected')) {
 						var average = (parseInt(totalWidth) / (parseInt(totalElements) - 1));
@@ -143,7 +195,7 @@ function swSetWidths(resize) {
 				}
 				count = 0;
 				index = jQuery('.nc_socialPanel').index(jQuery(this));
-				window.origSets[index] = new Array();
+				window.origSets[index] = [];
 				if(jQuery(this).hasClass('nc_floater')) {
 					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
 					var firstSocialPanel = jQuery('.nc_socialPanel').first();
@@ -214,6 +266,8 @@ function swSetWidths(resize) {
 				};
 			};
 		});
+		
+	// If we already have sizes, just reuse them
 	} else {
 		jQuery('.nc_tweetContainer').not('.totesalt').each(function() {
 			if(jQuery(this).parents('.nc_wrapper').length) {
@@ -364,6 +418,7 @@ function floatingBarReveal() {
 					visible = true;
 				}
 			}
+			console.log(transition);
 			var transition = ncSideFloater.attr('data-transition');
 			if(transition == 'slide'){
 				if(visible == true) {
@@ -494,7 +549,7 @@ function activateHoverStates() {
 			};
 		}
 	);
-	jQuery('.nc_socialPanel').on("mouseleave", function() {
+	jQuery('.nc_socialPanel').on("mouseleave click", function() {
 		if(!jQuery(this).hasClass('mobile')) {
 			swSetWidths();
 		};
@@ -547,18 +602,23 @@ function getShares() {
 	window['body_padding_bottom'] = jQuery('body').css('padding-bottom').replace('px','');
 	
 	if(jQuery('.nc_socialPanel').length) {
-		var checkVisible = setInterval(function() {
-			if(jQuery('.nc_socialPanel:visible')) {
-				clearInterval(checkVisible);
+		//var checkVisible = setInterval(function() {
+			//if(jQuery('.nc_socialPanel:visible')) {
+				//clearInterval(checkVisible);
 				swApplyScale();
-				swSetWidths();
+				// swSetWidths();
+				jQuery.when( swSetWidths() ).done(function() {
+					setTimeout( function() {
+						jQuery('.nc_socialPanel').css({opacity:1});
+					} , 50 );
+				});
 				createFloatBar();
 				lst = jQuery(window).scrollTop();
 				floatingBar();
 				floatingBarReveal();
 				activateHoverStates();
-			}
-		} , 250 );
+			//}
+		//} , 250 );
 	}
 }
 

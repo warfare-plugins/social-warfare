@@ -10,6 +10,7 @@ div.nc_socialPanel .nc_tweetContainer {float:left;margin:0 5px;cursor:pointer;he
 /* Adjusted Margins for First and Last Elements */
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-child(1) {margin-left:0;}
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-last-child(1) {margin-right:0;}
+.nc_socialPanel:not(.nc_socialPanelSide) {opacity:0; transition: opacity .2s ease-in-out;}
 .nc_socialPanel:not(.nc_socialPanelSide) div.totes.totesalt:nth-child(1) {margin-left:0;padding-left:0;margin-right:15px;}
 .nc_socialPanel:not(.nc_socialPanelSide) div.totes.totesalt:nth-last-child(1) {margin-right:0px;padding-right:0px;}
 /* Click to Tweet Cursor */
