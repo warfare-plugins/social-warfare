@@ -17,7 +17,7 @@ if ( !class_exists('PluginUpdateChecker_3_0', false) ):
  * @version 3.0
  * @access public
  */
-class SW_PluginUpdateChecker {
+class PluginUpdateChecker_3_0 {
 	public $metadataUrl = ''; //The URL of the plugin's metadata file.
 	public $pluginAbsolutePath = ''; //Full path of the main plugin file.
 	public $pluginFile = '';  //Plugin filename relative to the plugins directory. Many WP APIs use this to identify plugins.
@@ -326,7 +326,7 @@ class SW_PluginUpdateChecker {
 
 		$state = $this->getUpdateState();
 		if ( empty($state) ){
-			$state = new StdClass;
+			$state = new stdClass;
 			$state->lastCheck = 0;
 			$state->checkedVersion = '';
 			$state->update = null;
@@ -345,7 +345,7 @@ class SW_PluginUpdateChecker {
 	/**
 	 * Load the update checker state from the DB.
 	 *  
-	 * @return StdClass|null
+	 * @return stdClass|null
 	 */
 	public function getUpdateState() {
 		$state = get_site_option($this->optionName, null);
@@ -353,7 +353,7 @@ class SW_PluginUpdateChecker {
 			$state = null;
 		}
 
-		if ( !empty($state) && isset($state->update) && is_object($state->update) ){
+		if ( isset($state, $state->update) && is_object($state->update) ) {
 			$state->update = PluginUpdate_3_0::fromObject($state->update);
 		}
 		return $state;
@@ -399,13 +399,13 @@ class SW_PluginUpdateChecker {
     	$relevant = ($action == 'plugin_information') && isset($args->slug) && (
 			($args->slug == $this->slug) || ($args->slug == dirname($this->pluginFile))
 		);
-		if ( !$relevant ){
+		if ( !$relevant ) {
 			return $result;
 		}
 		
 		$pluginInfo = $this->requestInfo();
 		$pluginInfo = apply_filters('puc_pre_inject_info-' . $this->slug, $pluginInfo);
-		if ($pluginInfo){
+		if ( $pluginInfo ) {
 			return $pluginInfo->toWpFormat();
 		}
 				
@@ -447,7 +447,7 @@ class SW_PluginUpdateChecker {
 	 */
 	private function addUpdateToList($updates, $updateToAdd) {
 		if ( !is_object($updates) ) {
-			$updates = new StdClass();
+			$updates = new stdClass();
 			$updates->response = array();
 		}
 
@@ -464,8 +464,8 @@ class SW_PluginUpdateChecker {
 	}
 
 	/**
-	 * @param StdClass|null $updates
-	 * @return StdClass|null
+	 * @param stdClass|null $updates
+	 * @return stdClass|null
 	 */
 	private function removeUpdateFromList($updates) {
 		if ( isset($updates, $updates->response) ) {
@@ -594,8 +594,8 @@ class SW_PluginUpdateChecker {
 	public function getUpdate() {
 		$state = $this->getUpdateState(); /** @var StdClass $state */
 
-		//Is there an update available insert?
-		if ( !empty($state) && isset($state->update) && !empty($state->update) ){
+		//Is there an update available?
+		if ( isset($state, $state->update) ) {
 			$update = $state->update;
 			//Check if the update is actually newer than the currently installed version.
 			$installedVersion = $this->getInstalledVersion();
@@ -659,11 +659,11 @@ class SW_PluginUpdateChecker {
 			$update = $this->checkForUpdates();
 			$status = ($update === null) ? 'no_update' : 'update_available';
 			wp_redirect(add_query_arg(
-					array(
-					     'puc_update_check_result' => $status,
-					     'puc_slug' => $this->slug,
-					),
-					self_admin_url('plugins.php')
+				array(
+					'puc_update_check_result' => $status,
+					'puc_slug' => $this->slug,
+				),
+				self_admin_url('plugins.php')
 			));
 		}
 	}
@@ -842,7 +842,7 @@ class PluginInfo_3_0 {
 	public $slug;
 	public $version;
 	public $homepage;
-	public $sections;
+	public $sections = array();
 	public $banners;
 	public $download_url;
 
@@ -925,7 +925,7 @@ class PluginInfo_3_0 {
 	 * @return object
 	 */
 	public function toWpFormat(){
-		$info = new StdClass;
+		$info = new stdClass;
 		
 		//The custom update API is built so that many fields have the same name and format
 		//as those returned by the native WordPress.org API. These can be assigned directly. 
@@ -983,9 +983,13 @@ class PluginUpdate_3_0 {
 	public $homepage;
 	public $download_url;
 	public $upgrade_notice;
+	public $tested;
 	public $filename; //Plugin filename relative to the plugins directory.
 
-	private static $fields = array('id', 'slug', 'version', 'homepage', 'download_url', 'upgrade_notice', 'filename');
+	private static $fields = array(
+		'id', 'slug', 'version', 'homepage', 'tested',
+		'download_url', 'upgrade_notice', 'filename'
+	);
 	
 	/**
 	 * Create a new instance of PluginUpdate from its JSON-encoded representation.
@@ -1026,7 +1030,9 @@ class PluginUpdate_3_0 {
 	public static function fromObject($object) {
 		$update = new self();
 		$fields = self::$fields;
-		if (!empty($object->slug)) $fields = apply_filters('puc_retain_fields-'.$object->slug, $fields);
+		if ( !empty($object->slug) ) {
+			$fields = apply_filters('puc_retain_fields-' . $object->slug, $fields);
+		}
 		foreach($fields as $field){
 			if (property_exists($object, $field)) {
 				$update->$field = $object->$field;
@@ -1044,9 +1050,11 @@ class PluginUpdate_3_0 {
 	 * @return StdClass
 	 */
 	public function toStdClass() {
-		$object = new StdClass();
+		$object = new stdClass();
 		$fields = self::$fields;
-		if (!empty($this->slug)) $fields = apply_filters('puc_retain_fields-'.$this->slug, $fields);
+		if ( !empty($this->slug) ) {
+			$fields = apply_filters('puc_retain_fields-' . $this->slug, $fields);
+		}
 		foreach($fields as $field){
 			if (property_exists($this, $field)) {
 				$object->$field = $this->$field;
@@ -1062,13 +1070,14 @@ class PluginUpdate_3_0 {
 	 * @return object
 	 */
 	public function toWpFormat(){
-		$update = new StdClass;
+		$update = new stdClass;
 
 		$update->id = $this->id;
 		$update->slug = $this->slug;
 		$update->new_version = $this->version;
 		$update->url = $this->homepage;
 		$update->package = $this->download_url;
+		$update->tested = $this->tested;
 		$update->plugin = $this->filename;
 
 		if ( !empty($this->upgrade_notice) ){
@@ -1174,30 +1183,11 @@ class PucScheduler_3_0 {
 			return;
 		}
 
-		$currentFilter = current_filter();
-		if ( in_array($currentFilter, array('load-update-core.php', 'upgrader_process_complete')) ) {
-			//Check more often when the user visits "Dashboard -> Updates" or does a bulk update.
-			$timeout = 60;
-		} else if ( in_array($currentFilter, array('load-plugins.php', 'load-update.php')) ) {
-			//Also check more often on the "Plugins" page and /wp-admin/update.php.
-			$timeout = 3600;
-		} else if ( $this->throttleRedundantChecks && ($this->updateChecker->getUpdate() !== null) ) {
-			//Check less frequently if it's already known that an update is available.
-			$timeout = $this->throttledCheckPeriod * 3600;
-		} else if ( defined('DOING_CRON') && constant('DOING_CRON') ) {
-			//WordPress cron schedules are not exact, so lets do an update check even
-			//if slightly less than $checkPeriod hours have elapsed since the last check.
-			$cronFuzziness = 20 * 60;
-			$timeout = $this->checkPeriod * 3600 - $cronFuzziness;
-		} else {
-			$timeout = $this->checkPeriod * 3600;
-		}
-
 		$state = $this->updateChecker->getUpdateState();
 		$shouldCheck =
 			empty($state) ||
 			!isset($state->lastCheck) ||
-			( (time() - $state->lastCheck) >= $timeout );
+			( (time() - $state->lastCheck) >= $this->getEffectiveCheckPeriod() );
 
 		//Let plugin authors substitute their own algorithm.
 		$shouldCheck = apply_filters(
@@ -1210,6 +1200,34 @@ class PucScheduler_3_0 {
 		if ( $shouldCheck ) {
 			$this->updateChecker->checkForUpdates();
 		}
+	}
+
+	/**
+	 * Calculate the actual check period based on the current status and environment.
+	 *
+	 * @return int Check period in seconds.
+	 */
+	protected function getEffectiveCheckPeriod() {
+		$currentFilter = current_filter();
+		if ( in_array($currentFilter, array('load-update-core.php', 'upgrader_process_complete')) ) {
+			//Check more often when the user visits "Dashboard -> Updates" or does a bulk update.
+			$period = 60;
+		} else if ( in_array($currentFilter, array('load-plugins.php', 'load-update.php')) ) {
+			//Also check more often on the "Plugins" page and /wp-admin/update.php.
+			$period = 3600;
+		} else if ( $this->throttleRedundantChecks && ($this->updateChecker->getUpdate() !== null) ) {
+			//Check less frequently if it's already known that an update is available.
+			$period = $this->throttledCheckPeriod * 3600;
+		} else if ( defined('DOING_CRON') && constant('DOING_CRON') ) {
+			//WordPress cron schedules are not exact, so lets do an update check even
+			//if slightly less than $checkPeriod hours have elapsed since the last check.
+			$cronFuzziness = 20 * 60;
+			$period = $this->checkPeriod * 3600 - $cronFuzziness;
+		} else {
+			$period = $this->checkPeriod * 3600;
+		}
+
+		return $period;
 	}
 
 	/**

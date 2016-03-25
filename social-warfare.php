@@ -3,7 +3,7 @@
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 1.4.3
+Version: 1.4.4
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 */
@@ -12,7 +12,7 @@ Author URI: http://warfareplugins.com
 *   VERSION AND DIRECTORIES							             *
 *                                                                *
 ******************************************************************/
-$pluginVersion = '1.4.3';
+$pluginVersion = '1.4.4';
 define( 'SW_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
@@ -65,16 +65,11 @@ require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
 *   PLUGINS PAGE: UPDATE CHECKER AND SETTINGS LINK	             *
 *                                                                *
 ******************************************************************/
-$MyUpdateChecker = new SW_PluginUpdateChecker('https://beta.warfareplugins.com/wp-content/plugins/social-warfare/social-warfare.json',__FILE__,'social-warfare',1);
-
-/*
-$updateCheckerClass = PucFactory::getLatestClassVersion('PucGitHubChecker');
-$myUpdateChecker = new $updateCheckerClass(
-    'https://github.com/warfare-plugins/social-warfare',
-    __FILE__,
-    'master'
+$sw_update_checker = PucFactory::buildUpdateChecker(
+    'https://beta.warfareplugins.com/wp-content/plugins/social-warfare/social-warfare.json',
+    __FILE__
 );
-*/
+
 // Add settings link on plugin page
 function sw_settings_link($links) {
 	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>'; 

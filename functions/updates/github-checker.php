@@ -2,7 +2,7 @@
 
 if ( !class_exists('PucGitHubChecker_3_0', false) ):
 
-class PucGitHubChecker_3_0 extends SW_PluginUpdateChecker {
+class PucGitHubChecker_3_0 extends PluginUpdateChecker_3_0 {
 	/**
 	 * @var string GitHub username.
 	 */
@@ -60,7 +60,6 @@ class PucGitHubChecker_3_0 extends SW_PluginUpdateChecker {
 		$info = new PluginInfo_3_0();
 		$info->filename = $this->pluginFile;
 		$info->slug = $this->slug;
-		$info->sections = array();
 
 		$this->setInfoFromHeader($this->getPluginHeader(), $info);
 
@@ -240,7 +239,7 @@ class PucGitHubChecker_3_0 extends SW_PluginUpdateChecker {
 	 */
 	protected function parseMarkdown($markdown) {
 		if ( !class_exists('Parsedown', false) ) {
-			require_once(dirname(__FILE__) . '/vendor/Parsedown.php');
+			require_once(dirname(__FILE__) . '/vendor/Parsedown' . (version_compare(PHP_VERSION, '5.3.0', '>=') ? '' : 'Legacy') . '.php');
 		}
 
 		$instance = Parsedown::instance();
@@ -382,9 +381,6 @@ class PucGitHubChecker_3_0 extends SW_PluginUpdateChecker {
 			}
 		}
 
-		if ( !isset($pluginInfo->sections) ) {
-			$pluginInfo->sections = array();
-		}
 		if ( !empty($fileHeader['Description']) ) {
 			$pluginInfo->sections['description'] = $fileHeader['Description'];
 		}

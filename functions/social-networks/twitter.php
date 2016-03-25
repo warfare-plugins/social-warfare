@@ -67,7 +67,7 @@
 *                                                                *
 *   #4: Parse the Response to get the share count	             *
 *                                                                *
-******************************************************************/	
+******************************************************************/
 	function sw_format_twitter_response($response) {
 		
 		// Fetch the user's options
