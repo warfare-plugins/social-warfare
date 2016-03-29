@@ -77,9 +77,11 @@ function swSetWidths(resize) {
 			
 			// Check how much space is on the left so we can show or hide the floating buttons if they exist
 			var offset = jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').offset();
+			var min_screen_width = jQuery('.nc_socialPanelSide').attr('data-screen-width');
+			console.log(min_screen_width);
 			
 			// If we have 100px, show the side floaters. If not, hide it.
-			if(offset.left < 100) {
+			if(offset.left < 100 || jQuery(window).width() < min_screen_width) {
 				jQuery('.nc_socialPanelSide').addClass('mobile');
 			} else {
 				jQuery('.nc_socialPanelSide').removeClass('mobile');
