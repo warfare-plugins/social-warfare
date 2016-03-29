@@ -128,9 +128,9 @@
 			endif;
 			
 			if($user_twitter_handle):
-				$viaText = '&via='.$user_twitter_handle;
+				$viaText = '&via='.str_replace('@','',$user_twitter_handle);
 			elseif($array['options']['twitterID']): 
-				$viaText = '&via='.$array['options']['twitterID']; 
+				$viaText = '&via='.str_replace('@','',$array['options']['twitterID']); 
 			else: 
 				$viaText = ''; 
 			endif;
