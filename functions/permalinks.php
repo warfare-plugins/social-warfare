@@ -147,7 +147,9 @@
 		// Build the structure
 		$structure = $sw_user_options['recovery_format'];
 		
-		if($structure == 'unchanged'):
+		if($structure == 'custom'):
+			$permalink = $sw_user_options['recovery_custom_format'];
+		elseif($structure == 'unchanged'):
 			$permalink = get_option('permalink_structure');
 		elseif($structure == 'default'):
 			$permalink ='';
@@ -252,10 +254,26 @@
 		 */
 		$url = apply_filters( 'post_link', $permalink, $post, $leavename );
 		
+		// Filter the Protocol
 		if($sw_user_options['recovery_protocol'] == 'https' && strpos($url,'https') === false):
 			$url = str_replace('http','https',$url);
 		elseif($sw_user_options['recovery_protocol'] == 'http' && strpos($url,'https') !== false):
 			$url = str_replace('https','http',$url);
+		endif;
+		
+		// Filter the prefix
+		if($sw_user_options['recovery_prefix'] == 'unchanged'):
+		elseif($sw_user_options['recovery_prefix'] == 'www' && strpos($url,'www') === false):
+			$url = str_replace('http://','http://www.',$url);
+			$url = str_replace('https://','https://www.',$url);
+		elseif($sw_user_options['recovery_prefix'] == 'nonwww' && strpos($url,'www') !== false):
+			$url = str_replace('http://www.','http://',$url);
+			$url = str_replace('https://www.','https://',$url);
+		endif;
+		
+		// Filter out the subdomain
+		if(isset($sw_user_options['recovery_subdomain']) && $sw_user_options['recovery_subdomain'] != ''):
+			$url = str_replace($sw_user_options['recovery_subdomain'] . '.' , '' , $url);
 		endif;
 		
 		return $url;

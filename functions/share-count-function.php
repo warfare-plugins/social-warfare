@@ -64,7 +64,13 @@ function get_social_warfare_shares($postID) {
 		// Recover Shares From Previously Used URL Patterns
 		if($options['recover_shares'] == true && $freshCache == false):
 			
-			$alternateURL = sw_get_alternate_permalink($options['recovery_format'],$options['recovery_protocol'],$postID,$options['recovery_prefix']);
+			$alternateURL = sw_get_alt_permalink($postID);
+			
+			// Debug the Alternate URL being checked
+			if(isset($_GET['sw_recovery_debug']) && $_GET['sw_recovery_debug'] == true):
+				echo $alternateURL;
+			endif;
+			
 			foreach($networks as $network):
 			
 				// Check if this network is even activated

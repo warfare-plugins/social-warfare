@@ -828,9 +828,19 @@
 					'day_and_name' 		=> 'Day and Name',
 					'month_and_name' 	=> 'Month and Name',
 					'numeric' 			=> 'Numeric',
-					'post_name' 		=> 'Post Name'
+					'post_name' 		=> 'Post Name',
+					'custom'			=> 'Custom'
 				),
 				'default' 			=> 'unchanged'
+			),
+			'recoverSharesDescription3' => array(
+				'type' => 'paragraph',
+				'content' => 'Select custom above to check shares for your own custom permalink structure. <a href="https://codex.wordpress.org/Using_Permalinks">Click Here</a> for WordPress permalink pattern information.'
+			),
+			'recovery_custom_format' => array(
+				'type' => 'textbox',
+				'content' => 'Custom Permalink Format',
+				'default' => ''
 			),
 			'recovery_protocol'	=> array(
 				'type'				=> 'select',
@@ -851,6 +861,15 @@
 					'nonwww'			=> 'non-www'
 				),
 				'default'			=> 'unchanged'
+			),
+			'recoverSharesDescription4' => array(
+				'type' => 'paragraph',
+				'content' => 'If you\'re blog is currently on a subdomain, but the previous version was not, enter your subdomain here, and we\'ll strip it out when we check the alternate version for shares.'
+			),
+			'recovery_subdomain' => array(
+				'type' => 'textbox',
+				'content' => 'Subdomain',
+				'default' => ''
 			)
 		);
 	
