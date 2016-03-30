@@ -28,6 +28,7 @@ function sw_en_language($language) {
 	$language['email']			= 'Email';
 	$language['yummly']			= 'Yum';
 	$language['whatsapp']		= 'WhatsApp';
+	$language['pocket']			= 'Pocket';
 	$language['total']			= 'Total Shares';
 	
 	// Return the Languages Array or the world will explode

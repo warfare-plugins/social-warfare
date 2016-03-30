@@ -58,6 +58,7 @@ require_once $pluginDir  . '/functions/social-networks/stumbleupon.php';
 require_once $pluginDir  . '/functions/social-networks/yummly.php';
 require_once $pluginDir  . '/functions/social-networks/email.php';
 require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
+require_once $pluginDir  . '/functions/social-networks/pocket.php';
 
 
 /*****************************************************************
