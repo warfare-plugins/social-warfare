@@ -53,6 +53,12 @@
 		
 			// Return the correct Twitter JSON endpoint URL
 			$request_url = 'https://public.newsharecounts.com/count.json?url=' . $url;
+			
+			// Debugging
+			if(isset($_GET['sw_twitter_debug']) && $_GET['sw_twitter_debug'] == true):
+				echo '<b>Request URL:</b> '.$request_url.'<br />';
+			endif;
+			
 			return $request_url;
 			
 		// If the user has not enabled Twitter shares....
@@ -75,9 +81,15 @@
 		
 		// If the user has enabled Twitter shares....
 		if($sw_user_options['twitter_shares']):
+			
+			// Debugging
+			if(isset($_GET['sw_twitter_debug']) && $_GET['sw_twitter_debug'] == true):
+				echo '<b>Response:</b> '.$response.'<br />';
+			endif;
 
 			// Parse the response to get the actual number		
 			$response = json_decode($response, true);
+			
 			return isset($response['count'])?intval($response['count']):0;
 		
 		// If the user has not enabled Twitter shares....
