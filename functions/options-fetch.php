@@ -61,6 +61,9 @@
 		if(!isset($sw_user_options['floatStyle'])) 					{ $sw_user_options['floatStyle'] 		= 'default';};
 		if(!isset($sw_user_options['customColor'])) 				{ $sw_user_options['customColor'] 		= '#000000';};
 		if(!isset($sw_user_options['recover_shares'])) 				{ $sw_user_options['recover_shares'] 	= false;	};
+		if(!isset($sw_user_options['recovery_format'])) 			{ $sw_user_options['recovery_format'] 	= 'unchanged';	};
+		if(!isset($sw_user_options['recovery_protocol'])) 			{ $sw_user_options['recovery_protocol'] = 'unchanged';	};
+		if(!isset($sw_user_options['recovery_prefix'])) 			{ $sw_user_options['recovery_prefix'] 	= 'unchanged';	};
 		if(!isset($sw_user_options['swDecimals'])) 					{ $sw_user_options['swDecimals'] 		= 0;		};
 		if(!isset($sw_user_options['sw_decimal_separator'])) 		{ $sw_user_options['sw_decimal_separator'] = 'period';};
 		if(!isset($sw_user_options['swTotesFormat'])) 				{ $sw_user_options['swTotesFormat'] 	= 'totesalt';	};
