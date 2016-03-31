@@ -36,6 +36,8 @@
 		if(!isset($sw_user_options['tumblr'])) 						{ $sw_user_options['tumblr'] 			= false; 	};
 		if(!isset($sw_user_options['reddit'])) 						{ $sw_user_options['reddit'] 			= false; 	};
 		if(!isset($sw_user_options['stumbleupon'])) 				{ $sw_user_options['stumbleupon'] 		= false; 	};
+		if(!isset($sw_user_options['pocket'])) 						{ $sw_user_options['pocket'] 			= false; 	};
+		if(!isset($sw_user_options['buffer'])) 						{ $sw_user_options['buffer'] 			= false; 	};
 		
 		if(!isset($sw_user_options['totes'])) 						{ $sw_user_options['totes'] 			= true; 	};
 		if(!isset($sw_user_options['totesEach'])) 					{ $sw_user_options['totesEach'] 		= true; 	};

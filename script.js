@@ -25,10 +25,10 @@ jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
 		event.preventDefault();
 		href = jQuery(this).attr("data-link");
 		href = href.replace("’","'");
-		if (jQuery(this).hasClass("pinterest"))
+		if (jQuery(this).hasClass("pinterest") || jQuery(this).hasClass("buffer_link"))
 		{
 			height = 550;
-			width = 700;
+			width = 775;
 		} else {
 			height = 270;
 			width = 500;

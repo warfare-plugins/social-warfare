@@ -59,6 +59,7 @@ require_once $pluginDir  . '/functions/social-networks/yummly.php';
 require_once $pluginDir  . '/functions/social-networks/email.php';
 require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
 require_once $pluginDir  . '/functions/social-networks/pocket.php';
+require_once $pluginDir  . '/functions/social-networks/buffer.php';
 
 
 /*****************************************************************
@@ -75,7 +76,7 @@ $sw_update_checker = PucFactory::buildUpdateChecker(
 function sw_settings_link($links) {
 	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>'; 
 	  array_unshift($links, $settings_link); 
-	  return $links; 
+	  return $links;
 }
 $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_$plugin", 'sw_settings_link' );
