@@ -236,7 +236,11 @@
 				$post->post_name,
 			);
 			$permalink = home_url( str_replace($rewritecode, $rewritereplace, $permalink) );
-			$permalink = user_trailingslashit($permalink, 'single');
+				
+			if($structure != 'custom'):	
+				$permalink = user_trailingslashit($permalink, 'single');
+			endif;
+			
 		} else { // if they're not using the fancy permalink option
 			$permalink = home_url('?p=' . $post->ID);
 		}
