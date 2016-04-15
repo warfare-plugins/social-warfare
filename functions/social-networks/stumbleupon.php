@@ -83,7 +83,7 @@
 			endif;
 			
 			$array['resource']['stumbleupon'] = '<div class="nc_tweetContainer sw_stumbleupon" data-id="'.$array['count'].'">';
-			$link = urlencode(urldecode(sw_process_url( $array['url'] , 'stumbleupon' , $array['postID'] )));
+			$link = $array['url'];
 			$array['resource']['stumbleupon'] .= '<a target="_blank" href="http://www.stumbleupon.com/submit?url='.$link.'&title='.urlencode($title).'" data-link="http://www.stumbleupon.com/submit?url='.$link.'&title='.urlencode($title).'" class="nc_tweet">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && isset($array['shares']['stumbleupon']) && $array['shares']['stumbleupon'] > 0):
 				$array['resource']['stumbleupon'] .= '<span class="iconFiller">';
