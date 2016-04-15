@@ -49,6 +49,7 @@
 				curl_setopt($curly[$id], CURLOPT_CONNECTTIMEOUT, 5);
 				curl_setopt($curly[$id], CURLOPT_NOSIGNAL, 1);
 				curl_setopt($curly[$id], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+				curl_setopt($curly[$id], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
 		 
 			endif;
 		
@@ -102,3 +103,4 @@
 		}
 		return $cont;
 	}
+	
