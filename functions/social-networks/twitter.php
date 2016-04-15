@@ -52,7 +52,7 @@
 		if($sw_user_options['twitter_shares']):
 		
 			// Return the correct Twitter JSON endpoint URL
-			$request_url = 'https://public.newsharecounts.com/count.json?url=' . $url;
+			$request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
 			
 			// Debugging
 			if(isset($_GET['sw_twitter_debug']) && $_GET['sw_twitter_debug'] == true):

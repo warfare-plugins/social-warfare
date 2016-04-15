@@ -88,8 +88,8 @@ class sw_popular_posts_widget extends WP_Widget {
 	<select class="widefat" id="<?php echo $this->get_field_id('style'); ?>" name="<?php echo $this->get_field_name('style'); ?>">
     	
         <!-- Begin the options for the visual Selector -->
-       	<option value="first_style" <?php if($style=='first_style') echo 'selected'; ?>>First Style</option>
-        <option value="second_style" <?php if($style=='second_style') echo 'selected'; ?>>Second Style</option>
+       	<option value="style1" <?php if($style=='style1') echo 'selected'; ?>>First Style</option>
+        <option value="style2" <?php if($style=='style2') echo 'selected'; ?>>Second Style</option>
     	<!-- End the options for the visual Selector -->
         
     </select>
@@ -127,7 +127,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	   
 	   echo $before_widget;
 	   // Display the widget
-	   echo '<div class="widget-text wp_widget_plugin_box">';
+	   echo '<div class="widget-text wp_widget_plugin_box sw_pop_'.$style.'">';
 	
 	   // Check if title is set
 	   if ( $title ) {
@@ -145,7 +145,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		$q = new WP_Query( $args );
 		if( $q->have_posts() ) :
 			$i = 1;
-			echo '<ul class="'.$style.'">';
+			echo '<ul">';
 			while( $q->have_posts() ):
 				$q->the_post();
 				if($showCount == 'true'):

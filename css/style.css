@@ -7,6 +7,8 @@ div.nc_socialPanel .nc_tweetContainer {float:left;margin:0 5px;cursor:pointer;he
 .nc_socialPanel span:before {content:initial!important}
 .nc_socialPanel .totes .sw_count {line-height:30px;}
 .nc_socialPanel .spaceManWilly {display:block;max-width:none!important}
+.nc_socialPanel span.sw_count {font-size:14px;}
+.nc_socialPanel span.iconFiller {font-size: 18px;}
 /* Adjusted Margins for First and Last Elements */
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-child(1) {margin-left:0;}
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-last-child(1) {margin-right:0;}
@@ -136,7 +138,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanelSide.fade {position:fixed;left:5px;display:none;transition:all 0.2s linear;}
 .nc_socialPanelSide .nc_tweetContainer {width: auto;height: 32px;background: #DD4B38;margin: 3px 0!important;padding: 0;display: block;font-family: 'Lato',sans-serif;clear: both;vertical-align: top;width:90px;transition:all 0.1s linear;overflow:hidden;border-radius:3px;}
 .nc_socialPanelSide .nc_tweetContainer .iconFiller {display: inline-block;width: 21px;height: 40px;margin: 0 6px;padding: 0;vertical-align: middle;transition:all 0.1s linear;}
-.nc_socialPanelSide .nc_tweetContainer .sw_count {display: inline-block;width: 0;overflow:hidden;line-height: 35px;text-align: right;padding: 0;font-size: 19px;margin: 0;height: 32px;vertical-align: top;transition:all 0.1s linear;}
+.nc_socialPanelSide .nc_tweetContainer .sw_count {display: inline-block;width: 0;overflow:hidden;line-height: 35px;text-align: right;padding: 0;font-size: 14px;margin: 0;height: 32px;vertical-align: top;transition:all 0.1s linear;}
 .nc_socialPanelSide .nc_tweetContainer a {display: block;text-decoration: none;padding: 0;margin: 0;vertical-align: top;height: 36px;cursor:pointer;transition:all 0.1s linear;font-weight:500;}
 .nc_socialPanelSide .nc_tweetContainer .sw, .nc_socialPanelSide .nc_tweetContainer .sw_share {line-height:34px;float:left;}
 .nc_socialPanelSide .nc_tweetContainer .sw_share {font-size:13px;}

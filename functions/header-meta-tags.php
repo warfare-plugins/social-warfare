@@ -601,7 +601,7 @@ function sw_output_cache_trigger($info) {
 		// Trigger the cache rebuild
 		else:
 			$url = get_permalink();
-			$info['header_output'] .= PHP_EOL.'<script type="text/javascript">var sw_buttons_exist = !!document.getElementsByClassName("nc_socialPanel"); if(sw_buttons_exist == true) { document.addEventListener("DOMContentLoaded", function(event) { var URL = "'.$url.'"; if(URL.indexOf("?") > -1) { URL += "&sw_cache=rebuild"; } else { URL += "?sw_cache=rebuild"; }; var xhr = new XMLHttpRequest(); xhr.open("GET",URL,true); xhr.send(); });}</script>';
+			$info['header_output'] .= PHP_EOL.'<script type="text/javascript">var sw_buttons_exist = !!document.getElementsByClassName("nc_socialPanel"); if(sw_buttons_exist == true) { document.addEventListener("DOMContentLoaded", function(event) { var SW_CACHE_URL = "'.$url.'"; if(SW_CACHE_URL.indexOf("?") > -1) { SW_CACHE_URL += "&sw_cache=rebuild"; } else { SW_CACHE_URL += "?sw_cache=rebuild"; }; var xhr = new XMLHttpRequest(); xhr.open("GET",URL,true); xhr.send(); });}</script>';
 		endif;
 	endif;
 	// Return the array so the world doesn't explode

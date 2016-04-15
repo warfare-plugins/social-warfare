@@ -1052,7 +1052,8 @@
 		endif;
 		
 		if ( function_exists('curl_version') ) :
-			$curl_status = '<span style="color:green;">Enabled</span>';
+			$curl_version = curl_version();
+			$curl_status = '<span style="color:green;">Enabled: v'.$curl_version['version'].'</span>';
 		else :
 			$curl_status = '<span style="color:red;">Disabled</span>';
 		endif;
