@@ -33,6 +33,10 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanel .totes .sw_label {font-size:10px;vertical-align:middle;}
 .nc_socialPanel .totes.totesalt .sw_count {color:#474B4D;font-size:24px;}
 .nc_socialPanel:hover .totes, .nc_socialPanel.sw_fullColor .totes, .nc_socialPanel.sw_fade .totes, .nc_socialPanel.sw_customFull:hover div.totes {background:#e08a0f;}
+.nc_tweetContainer.totes.totesalt:before {content: "o";font-family: "sw-icon-font";display: inline-block;margin-right: 10px;vertical-align: top;margin-top: 7px;}
+.nc_socialPanel div.totes.totesalt, .nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {margin-left: 0 !important;}
+.nc_socialPanel .totes.totesalt .sw_count {line-height: 0;margin-top: 12px;display: inline-block;vertical-align: middle;}
+span.sw_label {display: block;position: absolute;margin-top: 13px;text-transform: uppercase;font-size: 9px !important;text-align: center !important;}
 /* Button Shapes */
 .nc_socialPanel.sw_leaf .nc_tweetContainer {border-radius:15px 0;border-width:1px;}
 .nc_socialPanel.sw_pill .nc_tweetContainer {border-radius:50px; border-width:1px;}
@@ -160,7 +164,6 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {background:trans
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) {line-height:34px;}
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .iconFiller {width:30px;margin-left:2px;}
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .sw_count {width:48px;padding:0 8px;}
-.nc_socialPanelSide:not(.sw_boxed) .nc_tweetContainer:not(.totes) .sw_count {width:100%;}
 .nc_socialPanelSide:not(.sw_boxed) .nc_tweetContainer:not(.totes):hover {width:130px;}
 .nc_socialPanelSide .nc_tweetContainer:not(.totes):hover .iconFiller, .nc_socialPanelSide .nc_tweetContainer:not(.totes) .spaceManWilly {width:72px;}
 /* Side Floating Totals */
@@ -249,3 +252,17 @@ a.style6:hover .sw-click-to-tweet .sw-ctt-text {text-decoration: none;color: #2A
 a.style6 .sw-click-to-tweet .sw-ctt-btn {text-decoration: none;color: #30394F;}
 a.style6:hover .sw-click-to-tweet .sw-ctt-btn, a.style6:hover .sw-click-to-tweet i.sw-twitter {text-decoration: none;color: #2A2D34;}
 a.style6 .sw-click-to-tweet i.sw-twitter {color:#30394F;}
+/*Popular Posts Style #1*/
+.sw_pop_style1 a.swPopularity {
+    font-size: 14px;
+    margin: 10px;
+    display: block;
+}
+.sw_pop_style1 a.swPopularity b {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.2;
+    margin: 0;
+    display: inline;
+}
+/* Need to work in a class for the .totes section of the swPopularity*/
