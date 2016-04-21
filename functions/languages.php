@@ -30,7 +30,7 @@ function sw_en_language($language) {
 	$language['whatsapp']		= 'WhatsApp';
 	$language['pocket']			= 'Pocket';
 	$language['buffer']			= 'Buffer';
-	$language['total']			= 'Total Shares';
+	$language['total']			= 'Shares';
 	
 	// Return the Languages Array or the world will explode
 	return $language;
