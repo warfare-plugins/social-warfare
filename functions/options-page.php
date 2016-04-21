@@ -778,7 +778,7 @@
 			),
 			'twitter_shares_description' => array(
 				'type' => 'paragraph',
-				'content' => 'In order to reinstate the ability to display and record tweet counts we\'ve partnered with New Share Counts. Here\'s what you need to do:<br /><br />1. <a target="_blank" href="http://newsharecounts.com" class="button">Click here to visit NewShareCounts.com</a><br /><br />2. At NewShareCounts.com, Enter your domain and click the "Sign in with Twitter" button.<br /><br /><img src="/wp-content/plugins/social-warfare/images/new_share_counts.png" ><br /><br />3. Flip the switch below to "ON" and then "Save Changes"'
+				'content' => 'In order to reinstate the ability to display and record tweet counts we\'ve partnered with New Share Counts. Here\'s what you need to do:<br /><br />1. <a target="_blank" href="http://newsharecounts.com" class="button">Click here to visit NewShareCounts.com</a><br /><br />2. At NewShareCounts.com, Enter your domain and click the "Sign in with Twitter" button.<br /><br /><img src="'.SW_PLUGIN_DIR.'/images/new_share_counts.png" ><br /><br />3. Flip the switch below to "ON" and then "Save Changes"'
 			),
 			'twitter_shares' 	=> array(
 				'type' 				=> 'checkbox',
