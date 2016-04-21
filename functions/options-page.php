@@ -705,7 +705,7 @@
 			),
 			'frameBusterParagraph' => array(
 				'type' => 'paragraph',
-				'content' => 'Frame Buster checks if your site is being displayed inside of a frame like Sniply. If it is being displayed inside of a frame, the plugin will redirect to the page on your own domain, removing third party ads and calls to action.'
+				'content' => 'Frame Buster checks if your site is being displayed inside of a frame like Sniply or Start A Fire. If it is being displayed inside of a frame, the plugin will redirect to the page on your own domain, removing third party ads and calls to action.'
 			),
 			'sniplyBuster' => array(
 				'type' => 'checkbox',
