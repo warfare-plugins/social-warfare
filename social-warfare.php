@@ -39,7 +39,6 @@ require_once $pluginDir  . '/functions/click-to-tweet/clickToTweet.php';
 require_once $pluginDir  . '/functions/sw-shortcode-generator.php';
 require_once $pluginDir  . '/functions/buttons-standard.php';
 require_once $pluginDir  . '/functions/buttons-floating.php';
-require_once $pluginDir  . '/functions/sniply-buster.php';
 require_once $pluginDir  . '/functions/permalinks.php';
 require_once $pluginDir  . '/functions/post-options.php';
 require_once $pluginDir  . '/functions/share-count-function.php';
