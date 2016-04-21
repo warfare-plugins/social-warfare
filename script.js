@@ -66,7 +66,7 @@ function swSetWidths(resize) {
 			};
 			
 			// Measure the width of the container. Find out how much space is available.
-			var totalWidth 	= jQuery(this).width() - 2;
+			var totalWidth 	= jQuery(this).width() - 5;
 			
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
