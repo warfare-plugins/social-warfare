@@ -27,7 +27,7 @@
 
 	};
 
-	add_filter( 'SW_META_meta_boxes', 'nc_register_meta_boxes' );
+	add_filter( 'rwmb_meta_boxes', 'nc_register_meta_boxes' );
 	function nc_register_meta_boxes( $meta_boxes )
 	{
 		
@@ -52,28 +52,31 @@
 			  
 			  		// Setup the social media image
 					array(
-						 'name'  => '<i class="fa fa-share-alt"></i> Social Media Image',
+						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Image',
 						 'desc'  => 'Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1280px by 720px.',
 						 'id'    => $prefix . 'ogImage',
 						 'type'  => 'image_advanced',
 						 'clone' => false,
+						 'class' => $prefix . 'ogImageWrapper',
 						 'max_file_uploads' => 1
 					),
 					
 					// Setup the social media title
 					array(
-						 'name'  => '<i class="fa fa-share-alt"></i> Social Media Title',
+						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Title',
 						 'desc'  => 'Add a title that will populate the open graph meta tag which will be used when users share your content onto Facebook, LinkedIn, and Google+. If nothing is provided here, we will use the post title as a backup.',
 						 'id'    => $prefix . 'ogTitle',
 						 'type'  => 'textarea',
+						 'class' => $prefix . 'ogTitleWrapper',
 						 'clone' => false,
 					),
 					
 					// Setup the social media description
 					array(
-						 'name'  => '<i class="fa fa-share-alt"></i> Social Media Description',
+						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Description',
 						 'desc'  => 'Add a description that will populate the open graph meta tag which will be used when users share your content onto Facebook, LinkedIn, and Google Plus.',
 						 'id'    => $prefix . 'ogDescription',
+						 'class' => $prefix . 'ogDescriptionWrapper',
 						 'type'  => 'textarea',
 						 'clone' => false,
 					),
@@ -87,9 +90,10 @@
 					
 					// Setup the pinterest optimized image
 					array(
-						 'name'  => '<i class="fa fa-pinterest"></i> Pinterest Image',
+						 'name'  => '<i class="sw sw-pinterest"></i> Pinterest Image',
 						 'desc'  => 'Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formated in a 2:3 aspect ratio like 600x900 or 735x1100.',
 						 'id'    => $prefix . 'pinterestImage',
+						 'class' => $prefix . 'pinterestImageWrapper',
 						 'type'  => 'image_advanced',
 						 'clone' => false,
 						 'max_file_uploads' => 1
@@ -97,27 +101,30 @@
 					
 					// Setup the pinterest description
 					array(
-						 'name'  => '<i class="fa fa-pinterest"></i> Pinterest Description',
+						 'name'  => '<i class="sw sw-pinterest"></i> Pinterest Description',
 						 'desc'  => 'Place a customized message that will be used when this post is shared on Pinterest. Leave this blank to use the title of the post.',
 						 'id'    => $prefix . 'pinterestDescription',
+						 'class' => $prefix . 'pinterestDescriptionWrapper',
 						 'type'  => 'textarea',
 						 'clone' => false,
 					),
 					
 					// Setup the Custom Tweet box
 					array(
-						 'name'  => '<i class="fa fa-twitter"></i> Custom Tweet',
-						 'desc'  => 'If this is left blank your post title will be used. '.($options['twitterID'] ? 'Based on your username (@'.$options['twitterID'].'), <span class="tweetLinkSection">a link being added,</span> and the current content above' : '<span ="tweetLinkSection">Based on a link being added, and</span> the current content above').', your tweet has <span class="counterNumber">140</span> characters remaining.',
+						 'name'  => '<i class="sw sw-twitter"></i> Custom Tweet',
+						 'desc'  => 'If this is left blank your post title will be used. '.($options['twitterID'] ? 'Based on your username (@'.str_replace('@','',$options['twitterID']).'), <span class="tweetLinkSection">a link being added,</span> and the current content above' : '<span ="tweetLinkSection">Based on a link being added, and</span> the current content above').', your tweet has <span class="counterNumber">140</span> characters remaining.',
 						 'id'    => $prefix . 'customTweet',
+						 'class' => $prefix . 'customTweetWrapper',
 						 'type'  => 'textarea',
 						 'clone' => false,
 					),
 					
 					// Set up the location on post options
 					array(
-						 'name'  => '<i class="fa fa-location-arrow"></i> Horizontal Buttons Location',
+						 'name'  => '<span class="dashicons dashicons-randomize"></span> Horizontal Buttons Location',
 						 'desc'  => 'Where would you like to have the share buttons displayed on this post? Leave this option on "default" to use the settings you have selected on the Social Warfare settings page.',
 						 'id'    => $prefix . 'postLocation',
+						 'class' => $prefix . 'postLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
 						 	'default' => 'Default',
@@ -132,9 +139,10 @@
 		 
 		 
 		 $meta_boxes[0]['fields'][] = array(
-						 'name'  => '<i class="fa fa-location-arrow"></i> Side Floating Buttons Location',
+						 'name'  => '<span class="dashicons dashicons-randomize"></span> Side Floating Buttons Location',
 						 'desc'  => 'Do you wish to have the floating sidebar buttons on this post?',
 						 'id'    => $prefix . 'floatLocation',
+						 'class' => $prefix . 'floatLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
 						 	'on' => 'On',
@@ -154,6 +162,7 @@
 		 $meta_boxes[0]['fields'][] =array(
 						 'name'  => $options['twitterID'],
 						 'id'    => 'twitterID',
+						 'class' => 'twitterIDWrapper',
 						 'type'  => 'hidden',
 						 'std'   => $options['twitterID']
 					);

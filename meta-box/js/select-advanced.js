@@ -14,8 +14,10 @@ jQuery( function ( $ )
 			options = $this.data( 'options' );
 		$this.siblings( '.select2-container' ).remove();
 		$this.show().select2( options );
+
+		rwmbSelect.bindEvents( $this );
 	}
 
-	$( ':input.SW_META-select-advanced' ).each( update );
-	$( '.SW_META-input' ).on( 'clone', ':input.SW_META-select-advanced', update );
+	$( ':input.rwmb-select_advanced' ).each( update );
+	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-select_advanced', update );
 } );

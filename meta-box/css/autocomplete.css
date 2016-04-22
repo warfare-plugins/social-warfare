@@ -1,13 +1,13 @@
-.SW_META-autocomplete-result {
+.rwmb-autocomplete-result {
 	border-bottom: 1px solid #ccc;
 	padding: 1em 0;
 	overflow: hidden;
 }
-.SW_META-autocomplete-result .label {
+.rwmb-autocomplete-result .label {
 	float: left;
 	width: 90%;
 }
-.SW_META-autocomplete-result .actions {
+.rwmb-autocomplete-result .actions {
 	width: 10%;
 	float: right;
 	cursor: pointer;

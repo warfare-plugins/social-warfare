@@ -1,64 +1,95 @@
 /* =Styles for 'normal' meta boxes
 -------------------------------------------------------------- */
 
-.SW_META-field {
+/* Clearfix for field */
+.rwmb-field:before,
+.rwmb-field:after {
+	content: " ";
+	display: table;
+}
+.rwmb-field:after {
+	clear: both;
+}
+.rwmb-field {
+	*zoom: 1;
+
 	margin: 0 0 10px;
 }
-.SW_META-label,
-.SW_META-input {
-	display: inline-block;
+.rwmb-label,
+.rwmb-input {
 	vertical-align: top;
+	float: left;
 }
-.SW_META-label {
-	width: 100%;
-	padding: 15px 0;
+.rwmb-label {
+	width: 25%;
 }
-.SW_META-label label {
-  font-weight: bold;
-  color: #30394f;
-  font-size: 18px;
-}
-.SW_META-label.required > span {
+.rwmb-label.required > span {
 	color: #c00;
 	font-weight: bold;
+	margin-left: 3px;
 }
 
 /* 75% if field has label, 100% if no label */
-.SW_META-input {
+.rwmb-input {
 	width: 100%;
 }
-.SW_META-label ~ .SW_META-input {
-	width: 100%;
+.rwmb-label ~ .rwmb-input {
+	width: 75%;
 }
-.SW_META-input h4 {
+.rwmb-input h4 {
 	margin: 0;
 }
-.SW_META-textarea {
+.rwmb-textarea {
 	resize: vertical;
 }
 
 /* Clone */
-.SW_META-clone {
+.rwmb-clone {
 	min-height: 24px;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	position: relative;
+	clear: both;
+	background: #fff;
 }
-.SW_META-clone > input[type='radio'],
-.SW_META-clone > input[type='checkbox'] {
+.rwmb-clone > input[type='radio'],
+.rwmb-clone > input[type='checkbox'] {
 	margin: 6px 0 0 4px;
 }
-.SW_META-button {
-	float: right;
-}
-.SW_META-button.remove-clone {
+.rwmb-button.remove-clone {
+	text-decoration: none;
+	color: #fff;
+	background: #c00;
+	border-radius: 50%;
+	display: inline-block;
 	position: absolute;
 	top: 0;
 	right: 0;
 }
-
-/* Fix empty block below admin footer (issue #24) */
-#ui-datepicker-div {
-	display: none;
+.remove-clone:focus {
+	outline: 0;
+	box-shadow: none;
+}
+.rwmb-button.add-clone {
+	margin-top: 5px;
+}
+.rwmb-clone-icon {
+	cursor: move;
+	background: url(../img/drag_icon.gif) no-repeat;
+	height: 23px;
+	width: 15px;
+	vertical-align: top;
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.rwmb-clone-placeholder {
+	background: #fcf8e3;
+	border: 1px solid #faebcc;
+	display: block;
+}
+.rwmb-sort-clone {
+	padding-left: 15px;
 }
 
 /* jQuery validation */
@@ -69,7 +100,7 @@ label.error {
 input.error,
 textarea.error,
 select.error {
-	border: #c00 solid 1px !important;
+	border-color: #c00 !important;
 	background: #ffebe8 !important;
 }
 
@@ -77,116 +108,7 @@ select.error {
 /* =Styles for 'side' meta boxes
 -------------------------------------------------------------- */
 
-#side-sortables .SW_META-label,
-#side-sortables .SW_META-input {
+#side-sortables .rwmb-label,
+#side-sortables .rwmb-input {
 	width: 100%;
-}
-
-/* Social Warfare Custom Options
--------------------------------------------------------------- */
-
-#socialWarfare h3 {
-  background-color: #30394F;
-  color: #FFF;
-  background-image: url('../../images/socialwarfare-20x20.png');
-  background-repeat: no-repeat;
-  background-position-x: 15px;
-  background-position-y: center;
-  padding-left: 50px;
-}
-
-.wp-core-ui #socialWarfare .button {
-  background-color: #30394f;
-  color: #fff;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border: none;
-  padding: 10px 0;
-  height: 45px;
-  font-style: italic;
-  font-weight: lighter;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  width: 100%;
-  text-align: center;
-}
-
-.wp-core-ui #socialWarfare .button:hover {
-	background-color: #ee464f;
-}
-
-.SW_META-field.SW_META-textarea-wrapper.nc_ogTitle, .SW_META-field.SW_META-textarea-wrapper.nc_ogDescription, .SW_META-field.SW_META-textarea-wrapper.nc_pinterestDescription, .SW_META-field.SW_META-textarea-wrapper.nc_customTweet, .SW_META-field.SW_META-select-wrapper.nc_postLocation, .SW_META-field.SW_META-select-wrapper.nc_floatLocation {
-  width: 63%;
-  float: left;
-}
-
-.SW_META-field.SW_META-image_advanced-wrapper.nc_ogImage, .SW_META-field.SW_META-image_advanced-wrapper.nc_pinterestImage {
-  width: 30%;
-  float: left;
-  margin-right: 3%;
-}
-
-#socialWarfare .nc_ogImage .SW_META-input {
-  width: 100%;
-}
-
-.nc_ogTitle .SW_META-label, .nc_ogDescription .SW_META-label, .nc_pinterestDescription .SW_META-label {
-  margin-bottom: 12px;
-}
-
-#socialWarfare ul.SW_META-images.SW_META-uploaded.ui-sortable.hidden {
-  display: block;
-  width: 100%;
-  background-size: contain;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-color: #ccc;
-  border-radius:4px;
-}
-#socialWarfare .nc_ogImage ul.SW_META-images.SW_META-uploaded.ui-sortable.hidden {
-	background-image: url('../../images/img-placeholder-og.jpg');
-}
-#socialWarfare .nc_pinterestImage ul.SW_META-images.SW_META-uploaded.ui-sortable.hidden {
-	background-image: url('../../images/img-placeholder-pin.jpg');
-}
-.SW_META-images img {
-	border-radius:4px;	
-}
-
-.SW_META-field.SW_META-divider-wrapper {
-  width: 100%;
-  height: 1px;
-  clear: both;
-}
-
-.SW_META-divider-wrapper hr {
-	border-top: none !important;
-}
-
-.SW_META-meta-box {
-	padding-left: 20px;
-}
-
-.SW_META-label i.fa {
-  padding-right: 12px;
-}
-.sw_CountDown {
-	background-color: #CCC;
-	display: inline-block;
-	float: right;
-	padding: 5px 15px;
-	border-radius: 3px 3px 0 0;
-	color: #FFF;
-	font-weight: bold;
-	margin-top:-27px;
-}
-.sw_CountDown.sw_blue {
-	background-color:#30394F;
-}
-.sw_CountDown.sw_red {
-	background-color:#EE464F;
-}
-#socialWarfare textarea.large-text {
-	width:100%;
 }

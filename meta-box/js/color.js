@@ -2,43 +2,37 @@ jQuery( function ( $ )
 {
 	'use strict';
 
-	function SW_META_update_color_picker()
+	/**
+	 * Update color picker element
+	 * Used for static & dynamic added elements (when clone)
+	 */
+	function update()
 	{
 		var $this = $( this ),
-			$clone_container = $this.closest( '.SW_META-clone' ),
-			$color_picker = $this.siblings( '.SW_META-color-picker' );
+			$container = $this.closest( '.rwmb-color-clone' ),
+			data = $.extend(
+				{
+					change: function()
+					{
+						$( this ).trigger( 'color:change' );
+					},
+					clear: function()
+					{
+						$( this ).trigger( 'color:clear' );
+					}
+				},
+				$this.data( 'options' ) );
 
-		// Make sure the value is displayed
-		if ( !$this.val() )
+		// Clone doesn't have input for color picker, we have to add the input and remove the color picker container
+		if ( $container.length > 0 )
 		{
-			$this.val( '#' );
+			$this.appendTo( $container ).siblings( '.wp-picker-container' ).remove();
 		}
 
-		if ( typeof $.wp === 'object' && typeof $.wp.wpColorPicker === 'function' )
-		{
-			if ( $clone_container.length > 0 )
-			{
-				$this.appendTo( $clone_container ).siblings( 'div.wp-picker-container' ).remove();
-			}
-			$this.wpColorPicker();
-		}
-		else
-		{
-			//We use farbtastic if the WordPress color picker widget doesn't exist
-			$color_picker.farbtastic( $this );
-		}
+		// Show color picker
+		$this.wpColorPicker( data );
 	}
 
-	$( ':input.SW_META-color' ).each( SW_META_update_color_picker );
-	$( '.SW_META-input' )
-		.on( 'clone', ':input.SW_META-color', SW_META_update_color_picker )
-		.on( 'focus', '.SW_META-color', function ()
-		{
-			$( this ).siblings( '.SW_META-color-picker' ).show();
-			return false;
-		} ).on( 'blur', '.SW_META-color', function ()
-		{
-			$( this ).siblings( '.SW_META-color-picker' ).hide();
-			return false;
-		} );
+	$( ':input.rwmb-color' ).each( update );
+	$( '.rwmb-input' ).on( 'clone', 'input.rwmb-color', update );
 } );

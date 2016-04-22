@@ -3,13 +3,13 @@ jQuery( document ).ready( function ( $ )
 	'use strict';
 
 	// Add more file
-	$( '.SW_META-add-file' ).each( function ()
+	$( '.rwmb-add-file' ).each( function ()
 	{
 		var $this = $( this ),
 			$uploads = $this.siblings( '.file-input' ),
 			$first = $uploads.first(),
 			uploadCount = $uploads.length,
-			$fileList = $this.closest( '.SW_META-input' ).find( '.SW_META-uploaded' ),
+			$fileList = $this.closest( '.rwmb-input' ).find( '.rwmb-uploaded' ),
 			fileCount = $fileList.children( 'li' ).length,
 			maxFileUploads = $fileList.data( 'max_file_uploads' );
 
@@ -46,13 +46,13 @@ jQuery( document ).ready( function ( $ )
 	} );
 
 	// Delete file via Ajax
-	$( '.SW_META-uploaded' ).on( 'click', '.SW_META-delete-file', function ()
+	$( '.rwmb-uploaded' ).on( 'click', '.rwmb-delete-file', function ()
 	{
 		var $this = $( this ),
 			$parent = $this.parents( 'li' ),
-			$container = $this.closest( '.SW_META-uploaded' ),
+			$container = $this.closest( '.rwmb-uploaded' ),
 			data = {
-				action       : 'SW_META_delete_file',
+				action       : 'rwmb_delete_file',
 				_ajax_nonce  : $container.data( 'delete_nonce' ),
 				post_id      : $( '#post_ID' ).val(),
 				field_id     : $container.data( 'field_id' ),
@@ -78,13 +78,13 @@ jQuery( document ).ready( function ( $ )
 			)
 			{
 				$parent.remove();
-				$container.trigger( 'update.SW_METAFile' );
+				$container.trigger( 'update.rwmbFile' );
 			}
 
-			$( '.SW_META-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
+			$( '.rwmb-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
 			{
 				$( this ).remove();
-				$container.trigger( 'update.SW_METAFile' );
+				$container.trigger( 'update.rwmbFile' );
 			} );
 		}, 'json' );
 
@@ -92,12 +92,12 @@ jQuery( document ).ready( function ( $ )
 	} );
 
 	//Remove deleted file
-	$( '.SW_META-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
+	$( '.rwmb-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
 	{
 		$( this ).remove();
 	} );
 
-	$( 'body' ).on( 'update.SW_METAFile', '.SW_META-uploaded', function ()
+	$( 'body' ).on( 'update.rwmbFile', '.rwmb-uploaded', function ()
 	{
 		var $fileList = $( this ),
 			maxFileUploads = $fileList.data( 'max_file_uploads' ),
@@ -133,11 +133,11 @@ jQuery( document ).ready( function ( $ )
 	} );
 
 	// Reorder images
-	$( '.SW_META-file' ).each( function ()
+	$( '.rwmb-file' ).each( function ()
 	{
 		var $this = $( this ),
 			data = {
-				action     : 'SW_META_reorder_files',
+				action     : 'rwmb_reorder_files',
 				_ajax_nonce: $this.data( 'reorder_nonce' ),
 				post_id    : $( '#post_ID' ).val(),
 				field_id   : $this.data( 'field_id' )

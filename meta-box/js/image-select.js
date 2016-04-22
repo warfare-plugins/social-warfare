@@ -2,7 +2,7 @@ jQuery( function ( $ )
 {
 	'use strict';
 
-	$( 'body' ).on( 'change', '.SW_META-image-select input', function ()
+	$( 'body' ).on( 'change', '.rwmb-image-select input', function ()
 	{
 		var $this = $( this ),
 			type = $this.attr( 'type' ),
@@ -11,16 +11,16 @@ jQuery( function ( $ )
 			$others = $parent.siblings();
 		if ( selected )
 		{
-			$parent.addClass( 'SW_META-active' );
+			$parent.addClass( 'rwmb-active' );
 			if ( type === 'radio' )
 			{
-				$others.removeClass( 'SW_META-active' );
+				$others.removeClass( 'rwmb-active' );
 			}
 		}
 		else
 		{
-			$parent.removeClass( 'SW_META-active' );
+			$parent.removeClass( 'rwmb-active' );
 		}
 	} );
-	$( '.SW_META-image-select input' ).trigger( 'change' );
+	$( '.rwmb-image-select input' ).trigger( 'change' );
 } );

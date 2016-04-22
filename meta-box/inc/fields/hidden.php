@@ -1,27 +1,22 @@
 <?php
-// Prevent loading this file directly
-defined( 'ABSPATH' ) || exit;
-
-if ( ! class_exists( 'SW_META_Hidden_Field' ) )
+/**
+ * Hidden field class.
+ */
+class RWMB_Hidden_Field extends RWMB_Input_Field
 {
-	class SW_META_Hidden_Field extends SW_META_Field
+	/**
+	 * Get the attributes for a field
+	 *
+	 * @param array $field
+	 * @param mixed $value
+	 *
+	 * @return array
+	 */
+	static function get_attributes( $field, $value = null )
 	{
-		/**
-		 * Get field HTML
-		 *
-		 * @param mixed $meta
-		 * @param array $field
-		 *
-		 * @return string
-		 */
-		static function html( $meta, $field )
-		{
-			return sprintf(
-				'<input type="hidden" class="SW_META-hidden" name="%s" id="%s" value="%s" />',
-				$field['field_name'],
-				$field['id'],
-				$meta
-			);
-		}
+		$attributes = parent::get_attributes( $field, $value );
+		$attributes['type'] = 'hidden';
+
+		return $attributes;
 	}
 }

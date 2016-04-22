@@ -1,9 +1,9 @@
-.SW_META-slider {
+.rwmb-slider {
 	display: inline-block;
 	vertical-align: middle;
 	width: 50%;
 }
-.SW_META-slider-value-label {
+.rwmb-slider-value-label {
 	margin-left: 10px;
 	vertical-align: middle;
 }

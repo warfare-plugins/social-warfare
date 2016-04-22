@@ -6,7 +6,7 @@ jQuery( function( $ )
 	{
 		if ( typeof s.data !== 'undefined' &&  -1 !== s.data.indexOf( 'action=autosave' ) )
 		{
-			$( '.SW_META-meta-box').each( function()
+			$( '.rwmb-meta-box').each( function()
 			{
 				var $meta_box = $( this );
 				if ( $meta_box.data( 'autosave' ) === true )

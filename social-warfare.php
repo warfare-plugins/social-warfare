@@ -57,7 +57,7 @@ require_once $pluginDir  . '/functions/social-networks/stumbleupon.php';
 require_once $pluginDir  . '/functions/social-networks/yummly.php';
 require_once $pluginDir  . '/functions/social-networks/email.php';
 require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
-require_once $pluginDir  . '/functions/social-networks/pocket.php';
+// require_once $pluginDir  . '/functions/social-networks/pocket.php';
 require_once $pluginDir  . '/functions/social-networks/buffer.php';
 
 
@@ -99,7 +99,10 @@ add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
 function enqueueSocialWarfareAdminScripts() {
 	wp_register_style( 'social_warfare', SW_PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
 	wp_enqueue_style( 'social_warfare' );
+	wp_register_style( 'social_warfare_admin', SW_PLUGIN_DIR.'/css/admin.css',array(),SW_VERSION );
+	wp_enqueue_style( 'social_warfare_admin' );
 	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
+	wp_enqueue_script( 'social_warfare_admin_script', SW_PLUGIN_DIR . '/admin.js',array( 'jquery' ),SW_VERSION);
 }
 
 // Add the Social Warfare Content Filter
@@ -113,6 +116,7 @@ function social_warfare($array = array()) {
 	$array['devs'] = true;
 	return social_warfare_buttons($array);
 }
+
 /*****************************************************************
 *                                                                *
 *   LEGACY: STUFF I'M WORKING ON REBUILDING						 *

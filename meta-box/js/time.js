@@ -6,15 +6,41 @@ jQuery( function ( $ )
 	 * Update datetime picker element
 	 * Used for static & dynamic added elements (when clone)
 	 */
-	function SW_META_update_time_picker()
+	function update()
 	{
 		var $this = $( this ),
-			options = $this.data( 'options' );
+			options = $this.data( 'options' ),
+			$inline = $this.siblings( '.rwmb-datetime-inline' ),
+			current = $this.val();
 
-		$this.siblings( '.ui-datepicker-append' ).remove();         // Remove appended text
-		$this.removeClass( 'hasDatepicker' ).attr( 'id', '' ).timepicker( options );
+		$this.siblings( '.ui-datepicker-append' ).remove();  // Remove appended text
+
+		if( $inline.length )
+		{
+			options.altField = '#' + $this.attr( 'id' );
+			$inline
+				.removeClass( 'hasDatepicker' )
+				.empty()
+				.prop( 'id', '' )
+				.timepicker( options )
+				.timepicker( "setTime", current );
+		}
+		else
+		{
+			$this.removeClass( 'hasDatepicker' ).timepicker( options );
+		}
 	}
 
-	$( ':input.SW_META-time' ).each( SW_META_update_time_picker );
-	$( '.SW_META-input' ).on( 'clone', ':input.SW_META-time', SW_META_update_time_picker );
+	// Set language if available
+	if ( $.timepicker.regional.hasOwnProperty( RWMB_Timepicker.locale ) )
+	{
+		$.timepicker.setDefaults( $.timepicker.regional[RWMB_Timepicker.locale] );
+	}
+	else if ( $.timepicker.regional.hasOwnProperty( RWMB_Timepicker.localeShort ) )
+	{
+		$.timepicker.setDefaults( $.timepicker.regional[RWMB_Timepicker.localeShort] );
+	}
+
+	$( '.rwmb-time' ).each( update );
+	$( '.rwmb-input' ).on( 'clone', '.rwmb-time', update );
 } );

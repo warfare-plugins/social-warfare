@@ -24,9 +24,9 @@
 		// Initialize DOM elements
 		initDomElements   : function ()
 		{
-			this.canvas = this.$container.find( '.SW_META-map-canvas' )[0];
-			this.$coordinate = this.$container.find( '.SW_META-map-coordinate' );
-			this.$findButton = this.$container.find( '.SW_META-map-goto-address-button' );
+			this.canvas = this.$container.find( '.rwmb-map-canvas' )[0];
+			this.$coordinate = this.$container.find( '.rwmb-map-coordinate' );
+			this.$findButton = this.$container.find( '.rwmb-map-goto-address-button' );
 			this.addressField = this.$findButton.val();
 		},
 
@@ -91,6 +91,36 @@
 				that.geocodeAddress();
 				return false;
 			} );
+
+			/**
+			 * Add a custom event that allows other scripts to refresh the maps when needed
+			 * For example: when maps is in tabs or hidden div (this is known issue of Google Maps)
+			 *
+			 * @see https://developers.google.com/maps/documentation/javascript/reference
+			 *      ('resize' Event)
+			 */
+			$( window ).on( 'rwmb_map_refresh', function()
+			{
+				that.refreshMap();
+			} );
+
+			//Refresh on meta box hide and show
+			$( document ).on( 'postbox-toggled', function() {
+			  that.refreshMap();
+			} );
+		},
+
+		refreshMap: function()
+		{
+			var zoom = this.map.getZoom(),
+				center = this.map.getCenter();
+
+			if ( this.map )
+			{
+				google.maps.event.trigger( this.map, 'resize' );
+				this.map.setZoom( zoom );
+				this.map.setCenter( center );
+			}
 		},
 
 		// Autocomplete address
@@ -107,7 +137,6 @@
 			$( '#' + this.addressField ).autocomplete( {
 				source: function ( request, response )
 				{
-					// TODO: add 'region' option, to help bias geocoder.
 					that.geocoder.geocode( {
 						'address': request.term
 					}, function ( results )
@@ -174,17 +203,18 @@
 
 	$( function ()
 	{
-		$( '.SW_META-map-field' ).each( function ()
+		$( '.rwmb-map-field' ).each( function ()
 		{
 			var field = new MapField( $( this ) );
 			field.init();
 
 			$( this ).data( 'mapController', field );
+
 		} );
 
-		$( '.SW_META-input' ).on( 'clone', function ()
+		$( '.rwmb-input' ).on( 'clone', function ()
 		{
-			$( '.SW_META-map-field' ).each( function ()
+			$( '.rwmb-map-field' ).each( function ()
 			{
 				var field = new MapField( $( this ) );
 				field.init();

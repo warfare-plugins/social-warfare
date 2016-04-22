@@ -6,15 +6,52 @@ jQuery( function ( $ )
 	 * Update date picker element
 	 * Used for static & dynamic added elements (when clone)
 	 */
-	function SW_META_update_date_picker()
+	function update()
 	{
 		var $this = $( this ),
-			options = $this.data( 'options' );
+			options = $this.data( 'options' ),
+			$inline = $this.siblings( '.rwmb-datetime-inline' ),
+			$timestamp = $this.siblings( '.rwmb-datetime-timestamp' ),
+			current = $this.val();
 
-		$this.siblings( '.ui-datepicker-append' ).remove();         // Remove appended text
-		$this.removeClass( 'hasDatepicker' ).attr( 'id', '' ).datepicker( options );
+		$this.siblings( '.ui-datepicker-append' ).remove(); // Remove appended text
+		if ( $timestamp.length )
+		{
+			var $picker = $inline.length ? $inline : $this;
+			options.onSelect = function ()
+			{
+				$timestamp.val( getTimestamp( $picker.datepicker( 'getDate' ) ) );
+			};
+		}
+
+		if ( $inline.length )
+		{
+			options.altField = '#' + $this.attr( 'id' );
+			$inline
+				.removeClass( 'hasDatepicker' )
+				.empty()
+				.prop( 'id', '' )
+				.datepicker( options )
+				.datepicker( 'setDate', current );
+		}
+		else
+		{
+			$this.removeClass( 'hasDatepicker' ).datepicker( options );
+		}
 	}
 
-	$( ':input.SW_META-date' ).each( SW_META_update_date_picker );
-	$( '.SW_META-input' ).on( 'clone', ':input.SW_META-date', SW_META_update_date_picker );
+	/**
+	 * Convert date to Unix timestamp in milliseconds
+	 * @link http://stackoverflow.com/a/14006555/556258
+	 * @param date
+	 * @return number
+	 */
+	function getTimestamp( date )
+	{
+		var milliseconds = Date.UTC( date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds() );
+		return Math.floor( milliseconds / 1000 );
+	}
+
+	$( ':input.rwmb-date' ).each( update );
+	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-date', update );
 } );

@@ -65,6 +65,7 @@ function get_social_warfare_shares($postID) {
 		if($options['recover_shares'] == true && $freshCache == false):
 			
 			$alternateURL = sw_get_alt_permalink($postID);
+			$alternateURL = apply_filters('sw_recovery_filter',$alternateURL);
 			
 			// Debug the Alternate URL being checked
 			if(isset($_GET['sw_recovery_debug']) && $_GET['sw_recovery_debug'] == true):
