@@ -18,7 +18,7 @@ div.nc_socialPanel .nc_tweetContainer {float:left;margin:0 5px;cursor:pointer;he
 /* Click to Tweet Cursor */
 a.sw_CTT {cursor:pointer;}
 /* Icons and Calls to Action */
-span.sw_share {font-weight: normal;font-size: 14px;display:block;height: 30px;vertical-align: middle;line-height: 32px;float:right;max-width:none!important;}
+span.sw_share {font-weight: normal;font-size: 14px;display:block;height: 30px;vertical-align: middle;line-height: 30px;float:right;max-width:none!important;}
 .nc_socialPanel .sw {margin: 0 7px;height: 30px;line-height: 32px; text-shadow:none!important;width:20px;}
 /* Default Icon Settings */
 .iconFiller {display:block;float:left;transition: width .1s linear;overflow:hidden;height:30px}
