@@ -53,7 +53,7 @@
 			  		// Setup the social media image
 					array(
 						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Image',
-						 'desc'  => 'Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1280px by 720px.',
+						 'desc'  => 'Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1200px by 628px.',
 						 'id'    => $prefix . 'ogImage',
 						 'type'  => 'image_advanced',
 						 'clone' => false,
@@ -91,7 +91,7 @@
 					// Setup the pinterest optimized image
 					array(
 						 'name'  => '<i class="sw sw-pinterest"></i> Pinterest Image',
-						 'desc'  => 'Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formated in a 2:3 aspect ratio like 600x900 or 735x1100.',
+						 'desc'  => 'Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formated in a 2:3 aspect ratio like 735x1100.',
 						 'id'    => $prefix . 'pinterestImage',
 						 'class' => $prefix . 'pinterestImageWrapper',
 						 'type'  => 'image_advanced',
