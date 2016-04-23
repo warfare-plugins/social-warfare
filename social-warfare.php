@@ -3,7 +3,7 @@
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 1.4.6
+Version: 1.4.7
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 */
@@ -12,7 +12,7 @@ Author URI: http://warfareplugins.com
 *   VERSION AND DIRECTORIES							             *
 *                                                                *
 ******************************************************************/
-$pluginVersion = '1.4.6';
+$pluginVersion = '1.4.7';
 define( 'SW_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
