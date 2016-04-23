@@ -77,7 +77,7 @@
 			++$array['count'];
 		
 			// Collect the Title
-			$title = SW_META_meta( 'nc_ogTitle' );
+			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );
 			if(!$title):
 				$title = get_the_title();
 			endif;
