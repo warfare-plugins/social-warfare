@@ -182,6 +182,7 @@ span.sw_label {display: block;position: absolute;margin-top: 13px;text-transform
 .nc_socialPanel.mobile .iconFiller ~ .sw_count {display:none;}
 /* Custom Font Icons */
 .sw {display: inline-block;font-family:"sw-icon-font"!important;font-size: inherit;text-rendering: auto;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;transform: translate(0, 0);font-style:normal;font-weight:normal;}
+.sw:before{display:block!important;}
 .wp-editor-container .sw:before {font-size:18px;line-height:22px;}
 .wp-editor-container .sw-twitter:before{color:#429cd6;}
 .wp-editor-container .sw-social-warfare:before{color:#ee464f;}
