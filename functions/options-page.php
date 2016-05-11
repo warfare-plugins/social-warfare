@@ -107,6 +107,7 @@
 					'en' 	=> 'English',
 					'fr' 	=> 'French',
 					'de'	=> 'German',
+					'it' 	=> 'Italian',
 					'pt'	=> 'Portuguese',
 					'ru'	=> 'Russian',
 					'uk'	=> 'Ukrainian'
