@@ -11,7 +11,7 @@
 
 	// Create all of the options in one giant array
 	$sw_options = array(
-	
+
 		// The Options Page Configuration
 		'config' => array(
 			'menu'=> array('top' => 'social-warfare'),  	// sub page to settings page
@@ -23,13 +23,13 @@
 			'local_images' => false,             			// Use local or hosted images (meta box images for add/remove)
 			'use_with_theme' => false
 		),
-		
+
 		// A List of Options Page Tabs and Their Titles
 		'tabs' => array(
 			'links' => array(
 			)
 		),
-		
+
 		// A list of options in each of the options tabs
 		'options' => array()
 	);
@@ -40,10 +40,10 @@
 *																						*
 *****************************************************************************************/
 	function sw_options_social_identity($sw_options) {
-		
+
 		// Declare the Options Tab and Tab Name
 		$sw_options['tabs']['links']['socialIdentity'] = 'Social Identity';
-		
+
 		// Declare the content that goes on this options page
 		$sw_options['options']['socialIdentity'] = array(
 			'twitterHandleDescription' => array(
@@ -84,10 +84,10 @@
 *																						*
 *****************************************************************************************/
 	function sw_options_display_settings($sw_options) {
-		
+
 		// Declare the Options Tab and Tab Name
 		$sw_options['tabs']['links']['displaySettings'] = 'Display Settings';
-		
+
 		// Declare the content that goes on this options page
 		$sw_options['options']['displaySettings'] = array(
 			'displaySettingsTitle' => array(
@@ -198,18 +198,18 @@
 
 	// A function to add display locations to the array
 	function sw_options_display_locations($sw_options) {
-		
+
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['displayLocations'] = 'Display Locations';
-		
+
 		// Default locations available (ARRAY)
 		$contentLocations = array(
 			'above'=>'Above the Content',
-			'below' => 'Below the Content', 
-			'both' => 'Both Above and Below the Content', 
+			'below' => 'Below the Content',
+			'both' => 'Both Above and Below the Content',
 			'none' => 'None/Manual Placement'
 		);
-		
+
 		// Add the options to this tab
 		$sw_options['options']['displayLocations'] = array(
 			'displayLocationsTitle' => array(
@@ -239,10 +239,10 @@
 				'default'	=> 'both'
 			)
 		);
-		
+
 		// Get the post Types
 		$postTypes = get_post_types();
-		
+
 		// Unset the post types that don't matter
 		if(isset($postTypes['post'])) 				unset($postTypes['post']);
 		if(isset($postTypes['page'])) 				unset($postTypes['page']);
@@ -254,25 +254,25 @@
 		if(isset($postTypes['shop_order_refund'])) 	unset($postTypes['shop_order_refund']);
 		if(isset($postTypes['shop_coupon'])) 		unset($postTypes['shop_coupon']);
 		if(isset($postTypes['shop_webhook'])) 		unset($postTypes['shop_webhook']);
-		
+
 		if(!empty($postTypes)):
-			
+
 			// Loop through the Custom Post Type Options
 			foreach($postTypes as $postType):
 				$sw_options['options']['displayLocations']['location'.$postType] = array(
 					'type'		=> 'select',
 					'name'		=> 'Location on '.$postType.' Posts',
 					'content'	=> $contentLocations,
-					'default'	=> 'both'					
+					'default'	=> 'both'
 				);
 			endforeach;
 		endif;
-		
+
 		$sw_options['options']['displayLocations']['floatLocationsDescription'] = array(
 			'type'		=> 'paragraph',
 			'content'	=>	'<h3>Custom Post Type Placements for Vertical Floating Buttons (If Activated)</h3>These are the the same options as above, but now you get to choose where you want the vertical floating buttons to be turned off or on.'
 		);
-		
+
 		$sw_options['options']['displayLocations']['floatLocationPost'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Location on Posts',
@@ -291,9 +291,9 @@
 			),
 			'default'	=> 'both'
 		);
-	
+
 		if(!empty($postTypes)):
-			
+
 			// Loop through the Custom Post Type Options
 			foreach($postTypes as $postType):
 				$sw_options['options']['displayLocations']['floatLocation'.$postType] = array(
@@ -303,14 +303,14 @@
 						'on'	=> 'On',
 						'off'	=> 'Off',
 					),
-					'default'	=> 'On'					
+					'default'	=> 'On'
 				);
 			endforeach;
 		endif;
-		
+
 		// Return the options values
 		return $sw_options;
-		
+
 	}
 /****************************************************************************************
 *																						*
@@ -319,10 +319,10 @@
 *****************************************************************************************/
 
 	function sw_options_visual_options($sw_options) {
-					
+
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['visualOptions'] = 'Visual Options';
-	
+
 		$sw_options['options']['visualOptions'] = array(
 			'visualOptionsTitle' => array(
 				'type' 		=> 'title',
@@ -464,10 +464,10 @@
 				'default' => 'totesAlt'
 			)
 		);
-		
+
 		// Return the options value
 		return $sw_options;
-	
+
 	}
 
 /****************************************************************************************
@@ -477,7 +477,7 @@
 *****************************************************************************************/
 
 	function sw_options_floating_buttons($sw_options) {
-					
+
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['floatingButtons'] = 'Floating Buttons';
 
@@ -495,9 +495,9 @@
 				'type' => 'select',
 				'name' => 'Float Position',
 				'content' => array(
-					'top' => 'Top of the Page', 
+					'top' => 'Top of the Page',
 					'bottom' => 'Bottom of the Page',
-					'left' => 'On the left side of the page' 
+					'left' => 'On the left side of the page'
 				),
 				'default' => 'bottom'
 			),
@@ -505,7 +505,7 @@
 				'type' => 'select',
 				'name' => 'Float Style',
 				'content' => array(
-					'default' => 'Buttons', 
+					'default' => 'Buttons',
 					'boxed' => 'Boxes'
 				),
 				'default' => 'default'
@@ -602,25 +602,25 @@
 *****************************************************************************************/
 
 	function sw_options_link_shortening($sw_options) {
-			
+
 		$sw_user_options = sw_get_user_options();
-					
+
 		// Establish the redirect URL for Bitly oAuth 2
 		$admin_ajax = admin_url( 'admin-ajax.php' );
-					
+
 		if(isset($sw_user_options['bitly_access_token']) && $sw_user_options['bitly_access_token'] != ''):
-			
+
 			$bitly_message = '<span style="color:green;">Authentication:</span> You have successfully authenticated Bitly for shortlinks. You may, however, switch to a different Bitly account if you\'d like.<br /><a class="button button-large" href="https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state='.$admin_ajax.'&redirect_uri=https://warfareplugins.com/bitly_oauth.php">Activate A Different Bitly Account</a>';
-			
+
 		else:
-		
+
 			$bitly_message = '<span style="color:red;">Authentication:</span> You must authorize Social Warfare to create short links in order for link-shortening to work.<br /><a class="button button-large" href="https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state='.$admin_ajax.'&redirect_uri=https://warfareplugins.com/bitly_oauth.php">Activate Bitly Link Shortening</a>';
-		
+
 		endif;
-					
+
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['linkShortening'] = 'Link Shortening';
-	
+
 		$sw_options['options']['linkShortening'] = array(
 			'linkShorteningTitle' => array(
 				'type' 		=> 'title',
@@ -644,9 +644,9 @@
 				'content' => $bitly_message
 			)
 		);
-		
+
 		return $sw_options;
-		
+
 	};
 /****************************************************************************************
 *																						*
@@ -655,10 +655,10 @@
 *****************************************************************************************/
 
 	function sw_options_analytics($sw_options) {
-	
+
 		// Add the Analytics Tab and Tab Name
 		$sw_options['tabs']['links']['analytics'] = 'Analytics';
-	
+
 		// Add the Analytics Options Arrays
 		$sw_options['options']['analytics'] = array(
 			'analyticsTitle' => array(
@@ -683,10 +683,15 @@
 				'type' => 'textbox',
 				'content' => 'Analytics Campaign',
 				'default' => 'SocialWarfare'
+			),
+			'sw_click_tracking' => array(
+				'type' => 'checkbox',
+				'content' => 'Activate Google Analytics Event Tracking for button clicks?',
+				'default' => false
 			)
 		);
-	
-		return $sw_options;	
+
+		return $sw_options;
 	}
 /****************************************************************************************
 *																						*
@@ -695,10 +700,10 @@
 *****************************************************************************************/
 
 	function sw_options_frame_buster($sw_options) {
-					
+
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['frameBuster'] = 'Frame Buster';
-	
+
 		$sw_options['options']['frameBuster'] = array(
 			'frameBusterTitle' => array(
 				'type' => 'title',
@@ -714,9 +719,9 @@
 				'default' => 0
 			)
 		);
-		
+
 		return $sw_options;
-		
+
 	};
 /****************************************************************************************
 *																						*
@@ -725,10 +730,10 @@
 *****************************************************************************************/
 
 	function sw_options_clicktotweet($sw_options) {
-	
+
 		// Add the Click to Tweet Tab and Tab Name
 		$sw_options['tabs']['links']['clicktotweet'] = 'Click to Tweet';
-	
+
 		// Add the Click to Tweet Options Arrays
 		$sw_options['options']['clicktotweet'] = array(
 			'clicktotweetTitle' => array(
@@ -743,12 +748,12 @@
 				'type' => 'select',
 				'name' => 'Visual Theme',
 				'content' => array(
-					'style1' => 'Send Her My Love', 
-					'style2' => 'Roll With The Changes', 
+					'style1' => 'Send Her My Love',
+					'style2' => 'Roll With The Changes',
 					'style3' => 'Free Bird',
-					'style4' => 'Don\'t Stop Believin\'', 
-					'style5' => 'Thunderstruck', 
-					'style6' => 'Livin\' On A Prayer', 
+					'style4' => 'Don\'t Stop Believin\'',
+					'style5' => 'Thunderstruck',
+					'style6' => 'Livin\' On A Prayer',
 					'none' => 'None - Create Your Own CSS In Your Theme'),
 				'default' => 'style1'
 			),
@@ -757,7 +762,7 @@
 				'content' => '<a class="sw_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>'
 			)
 		);
-		
+
 		return $sw_options;
 	}
 /****************************************************************************************
@@ -767,10 +772,10 @@
 *****************************************************************************************/
 
 	function sw_options_tweet_counts($sw_options) {
-	
+
 		// Add the Click to Tweet Tab and Tab Name
 		$sw_options['tabs']['links']['tweet_counts'] = 'Tweet Counts';
-	
+
 		// Add the Click to Tweet Options Arrays
 		$sw_options['options']['tweet_counts'] = array(
 			'twitter_shares_title' => array(
@@ -787,7 +792,7 @@
 				'default' 			=> false
 			)
 		);
-		
+
 		return $sw_options;
 	}
 /****************************************************************************************
@@ -797,10 +802,10 @@
 *****************************************************************************************/
 
 	function sw_options_recover_shares($sw_options) {
-	
+
 		// Add the Recover Shares Tab and Tab Name
 		$sw_options['tabs']['links']['recover_shares'] = 'Share Recovery';
-	
+
 		// Add the Recover Shares Options Arrays
 		$sw_options['options']['recover_shares'] = array(
 			'recover_sharesTitle' => array(
@@ -873,9 +878,9 @@
 				'default' => ''
 			)
 		);
-	
+
 		return $sw_options;
-		
+
 	}
 /****************************************************************************************
 *																						*
@@ -884,10 +889,10 @@
 *****************************************************************************************/
 
 	function sw_options_rare_bug_fixes($sw_options) {
-					
+
 		// Declare the Display Settings tab and tab name
 		$sw_options['tabs']['links']['bugFixes'] = 'Rare Configurations';
-	 
+
 		$sw_options['options']['bugFixes'] = array(
 			'visualOptionsBugFixTitle' => array(
 				'type' 		=> 'title',
@@ -947,10 +952,10 @@
 *****************************************************************************************/
 
 	function sw_options_registration($sw_options) {
-	
+
 		// Add the Registration Tab and Tab Name
 		$sw_options['tabs']['links']['registration'] = 'Registration';
-	
+
 		// Add the Registration Options Arrays
 		$sw_options['options']['registration'] = array(
 			'registrationTitle' => array(
@@ -958,10 +963,10 @@
 				'content' => 'Premium Registration'
 			)
 		);
-		
+
 		$homeURL = get_home_url();
 		$regCode = md5($homeURL);
-		
+
 		if(is_sw_registered()):
 			$sw_options['options']['registration']['registrationNotice'] = array(
 				'type' => 'paragraph',
@@ -973,7 +978,7 @@
 				'content' => '<span style="color:#ed464f" class="sw_registration_span sw_not_registered"><b>This copy of Social Warfare IS NOT registered.</b></span>'
 			);
 		endif;
-		
+
 		$sw_options['options']['registration']['registrationInstructions'] = array(
 			'type' => 'paragraph',
 			'content' => '
@@ -981,41 +986,41 @@
 		2. Click on the "Register Plugin" button.<br />
 		3. Watch the magic.<br /><br />'
 		);
-		
+
 		$sw_options['options']['registration']['registrationCode'] = array(
 			'type' => 'paragraph',
 			'content' => '
 		<div class="at-label"><label for="regCode">Registration Code</label></div><input type="text" class="at-text" name="regCode" id="regCode" value="'.$regCode.'" size="30" readonly><input type="hidden" class="at-text" name="domain" id="domain" value="'.$homeURL.'" size="30" readonly data-premcode="'.md5(md5($homeURL)).'"><div class="clearfix"></div>
 		'
 		);
-		
+
 		$sw_options['options']['registration']['emailAddress'] = array(
 			'type' => 'textbox',
 			'content' => 'Email Address'
 		);
-		
+
 		$sw_options['options']['registration']['premiumCode'] = array(
 			'type' => 'textbox',
 			'content' => 'Premium Code'
 		);
-		
+
 		$sw_options['options']['registration']['registrationActivateButton'] = array(
 			'type' => 'paragraph',
 			'content' => '<input type="submit" class="activate btn-info" value="Register Plugin" />'
 		);
-		
+
 		$sw_options['options']['registration']['unregisterInstructions'] = array(
 			'type' => 'paragraph',
 			'content' => 'To unregister the plugin from this site, simply click the "Unregister Plugin" button below. This will disable it\'s functionality on this site, but will free up your license, allowing you to register this plugin to a different domain.'
 		);
-		
+
 		$sw_options['options']['registration']['unregisterButtons'] = array(
 			'type' => 'paragraph',
 			'content' => '<input type="submit" class="deactivate btn-info" value="Unregister Plugin" />'
 		);
-		
+
 		return $sw_options;
-		
+
 	}
 
 /****************************************************************************************
@@ -1025,10 +1030,10 @@
 *****************************************************************************************/
 
 	function sw_options_system_status($sw_options) {
-	
+
 		// Add the System Status Tab and Tab Name
 		$sw_options['tabs']['links']['systemstatus'] = 'System Status';
-	
+
 		// Add the System Status Options Arrays
 		$sw_options['options']['systemstatus'] = array(
 			'systemStatusTitle' => array(
@@ -1036,7 +1041,7 @@
 				'content' => 'System Status'
 			)
 		);
-			
+
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -1045,22 +1050,22 @@
 		foreach ($plugins as $plugin):
 			$pluginList .= '<tr><td><b>'.$plugin['Name'].'</b></td><td>'.$plugin['Version'].'</td></tr>';
 		endforeach;
-		
+
 		if ( function_exists('fsockopen') ) :
 			$fsockopen = '<span style="color:green;">Enabled</span>';
 		else :
 			$fsockopen = '<span style="color:red;">Disabled</span>';
 		endif;
-		
+
 		if ( function_exists('curl_version') ) :
 			$curl_version = curl_version();
 			$curl_status = '<span style="color:green;">Enabled: v'.$curl_version['version'].'</span>';
 		else :
 			$curl_status = '<span style="color:red;">Disabled</span>';
 		endif;
-		
+
 		$theme = wp_get_theme();
-		
+
 		$sw_options['options']['systemstatus']['systemStatusOutput'] = array(
 			'type' => 'paragraph',
 			'content' => '
@@ -1082,13 +1087,13 @@
 				<tr><td><b>Active Plugins</b></td><td></td></tr>
 				<tr><td><b>Number of Active Plugins</b></td><td>'.count($plugins).'</td></tr>
 				'.$pluginList.'
-				
+
 			</table>
 			'
 		);
-		
+
 		return $sw_options;
-		
+
 	};
 
 /****************************************************************************************
@@ -1120,40 +1125,40 @@
 
 	// Queue up the Social Warfare options hook
 	add_action('init' , 'sw_optionsClass' , 20);
-	
+
 	// The Options Function which relies on the Options Array above
 	function sw_optionsClass() {
-	
+
 		// Fetch the Options Array - This is the sw_options filter hook
 		global $sw_options;
 		$sw_options = apply_filters('sw_options',$sw_options);
 
 		// Initiate the Options Class with the config settings in the array
 		$options_panel = new BF_Admin_Page_Class($sw_options['config']);
-	
+
 		// Open the Options Tabs Container
 		$options_panel->OpenTabs_container('');
-		
+
 		// Execute the list of options tabs
 		$options_panel->TabsListing($sw_options['tabs']);
-		
+
 		// Loop through the options tabs and build the options page
 		foreach($sw_options['options'] as $tabName => $tabOptions):
 			$options_panel->OpenTab($tabName);
-			
+
 			// Loop through and output the options for this tab
 			foreach($tabOptions as $key => $option):
-			
+
 				// TITLE - Add a Title
 				if($option['type'] == 'title'):
 					$options_panel->Title($option['content']);
 				endif;
-				
+
 				// PARAGRAPH - Add a Paragraph of Information
 				if($option['type'] == 'paragraph'):
 					$options_panel->addParagraph($option['content']);
 				endif;
-				
+
 				// TEXTBOX - Add a Textbox option
 				if($option['type'] == 'textbox'):
 					if(isset($option['default'])):
@@ -1162,12 +1167,12 @@
 						$options_panel->addText($key,array('name' => $option['content']));
 					endif;
 				endif;
-				
+
 				// CHECKBOX - Add a checkbox option
 				if($option['type'] == 'checkbox'):
 					$options_panel->addCheckbox($key,array('name' => $option['content'], $key => $key, 'std' => $option['default']));
 				endif;
-				
+
 				// SORTABLE - Add a sortable option
 				if($option['type'] == 'sortable'):
 					$options_panel->addSortable(
@@ -1176,7 +1181,7 @@
 						array('name' => $option['name'])
 					);
 				endif;
-				
+
 				// SELECT - Add a select option
 				if($option['type'] == 'select'):
 					$options_panel->addSelect(
@@ -1188,25 +1193,25 @@
 						)
 					);
 				endif;
-				
+
 				// COLOROPTION - Add a color picker
 				if($option['type'] == 'colorselect'):
 					$options_panel->addColor(
 						$key,
 						array(
-							'name'=> $option['name'], 
+							'name'=> $option['name'],
 							'std' => $option['default']
 						)
 					);
 				endif;
-			
+
 			endforeach;
-			
+
 			// Close the tab and move on to the next one
 			$options_panel->CloseTab();
 		endforeach;
 	};
-	
+
 /****************************************************************************************
 *																						*
 *	The Social Warfare Add Option(s) After Hook	Function								*
@@ -1216,32 +1221,32 @@
 function sw_add_option_after($sw_options,$tabName,$optionName,$newOptionArray) {
 
 	// Locate the index of the option you want to insert next to
-    $keyIndex = array_search( 
-        $optionName, 
-        array_keys( $sw_options['options'][$tabName] ) 
+    $keyIndex = array_search(
+        $optionName,
+        array_keys( $sw_options['options'][$tabName] )
     );
-    
+
     // Split the array at the location of the option above
     $first_array = array_splice (
-        $sw_options['options'][$tabName], 
-        0, 
+        $sw_options['options'][$tabName],
+        0,
         $keyIndex+1
-    ); 
-    
+    );
+
     // Merge the two parts of the split array with your option added in the middle
     $sw_options['options'][$tabName] = array_merge (
-        $first_array, 
-        $newOptionArray, 
+        $first_array,
+        $newOptionArray,
         $sw_options['options'][$tabName]
-    ); 
- 
+    );
+
     // Return the option array or the world will explode
     return $sw_options;
-	
+
 }
 
 function sw_add_language_option($sw_options,$langName,$langCode) {
-	
+
 	// Add our new language to the options page
 	$sw_options['options']['displaySettings']['language']['content'][$langCode] = $langName;
 
@@ -1252,28 +1257,28 @@ function sw_add_language_option($sw_options,$langName,$langCode) {
 
 function sw_add_network_option($sw_options,$newOptionArray) {
 		// Locate the index of the option you want to insert next to
-    $keyIndex = array_search( 
-        'iconDisplayInfo', 
-        array_keys( $sw_options['options']['displaySettings'] ) 
+    $keyIndex = array_search(
+        'iconDisplayInfo',
+        array_keys( $sw_options['options']['displaySettings'] )
     );
-    
+
     // Split the array at the location of the option above
     $first_array = array_splice (
-        $sw_options['options']['displaySettings'], 
-        0, 
+        $sw_options['options']['displaySettings'],
+        0,
         $keyIndex+1
-    ); 
-    
+    );
+
     // Merge the two parts of the split array with your option added in the middle
     $sw_options['options']['displaySettings'] = array_merge (
-        $first_array, 
-        $newOptionArray, 
+        $first_array,
+        $newOptionArray,
         $sw_options['options']['displaySettings']
-    ); 
-	
+    );
+
 	$key = key($newOptionArray);
 	$sw_options['options']['displaySettings']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
- 
+
     // Return the option array or the world will explode
     return $sw_options;
 }

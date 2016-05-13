@@ -23,11 +23,11 @@
 ******************************************************************/
 	function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 		global $wp_filter;
-		
+
 		// Take only filters on right hook name and priority
 		if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
 			return false;
-		
+
 		// Loop on filters registered
 		foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
 			// Test if filter is an array ! (always for class/method)
@@ -37,9 +37,9 @@
 					unset($wp_filter[$hook_name][$priority][$unique_id]);
 				}
 			}
-			
+
 		}
-		
+
 		return false;
 	}
 
@@ -51,12 +51,12 @@
 
 	// This is the hook function we're adding the header
 	function sw_add_header_meta() {
-		
+
 		$info['postID'] = get_the_ID();
-			
+
 		// Cache some resource for fewer queries on subsequent page loads
 		if(sw_is_cache_fresh($info['postID']) == false):
-		
+
 			// Check if an image ID has been provided
 			$info['imageID'] = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
 			if($info['imageID']):
@@ -78,36 +78,36 @@
 			else:
 				delete_post_meta($info['postID'],'sw_twitter_username');
 			endif;
-		
+
 		else:
-		
+
 			// Check if we have a cached Open Graph Image URL
 			$info['imageURL'] = get_post_meta( $info['postID'] , 'sw_open_graph_image_url' , true );
-			
+
 			// If not, let's check to see if we have an ID to generate one
 			if(!$info['imageURL']):
-				
+
 				// Check for an Open Graph Image ID
 				$info['imageID'] = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
 				if($info['imageID']):
-				
+
 					// If we find one, let's convert it to a link and cache it for next time
 					$info['imageURL'] = wp_get_attachment_url( $info['imageID'] );
 					delete_post_meta($info['postID'],'sw_open_graph_image_url');
 					update_post_meta($info['postID'],'sw_open_graph_image_url',$info['imageURL']);
-					
+
 				else:
-				
+
 					// If we don't find one, let's save the URL of the thumbnail in case we need it
 					$thumbnail_image = get_post_meta($info['postID'],'sw_open_thumbnail_url' , true);
 				endif;
 			endif;
-			
-			
+
+
 			$user_twitter_handle = get_post_meta( $info['postID'] , 'sw_twitter_username' , true );
-						
-		endif;			
-			
+
+		endif;
+
 		// Create the image Open Graph Meta Tag
 		$info['postID'] 				= get_the_ID();
 		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
@@ -116,7 +116,7 @@
 		$info['sw_user_options'] 		= sw_get_user_options();
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
-		
+
 		$info = apply_filters( 'sw_meta_tags' , $info );
 
 		if($info['header_output']):
@@ -131,7 +131,7 @@
 *          Queue Up our Open Graph Hooks				         *
 *                                                                *
 ******************************************************************/
-			
+
 			// Queue up our hook function
 			add_filter( 'sw_meta_tags' , 'sw_open_graph_tags' , 1 );
 			add_filter( 'sw_meta_tags' , 'sw_add_twitter_card' , 2 );
@@ -147,7 +147,7 @@
 				global $ob_wp_simplepodcastpress;
 				remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress , 'spp_open_graph') , 1);
 			}
-			
+
 /*****************************************************************
 *                                                                *
 *   Open Graph Tags										         *
@@ -162,10 +162,10 @@
 ******************************************************************/
 
 			function sw_open_graph_tags($info) {
-			
+
 				// We only modify the Open Graph tags on single blog post pages
 				if(is_singular()):
-					
+
 					// If Yoast Open Graph is activated, we only output Open Graph tags if the user has filled out at least one field
 					// Then we'll work along with Yoast to make sure all fields get filled properly
 					if(defined('WPSEO_VERSION')):
@@ -174,20 +174,20 @@
 					else:
 						$yoast_og_setting = false;
 					endif;
-						
+
 					if(
-						(isset($info['title']) && $info['title']) || 
-						(isset($info['description']) && $info['description']) || 
+						(isset($info['title']) && $info['title']) ||
+						(isset($info['description']) && $info['description']) ||
 						(isset($info['imageURL']) && $info['imageURL']) ||
 						!$yoast_og_setting
 					):
-					
+
 						/*****************************************************************
 						*                                                                *
 						*     YOAST SEO: It rocks, so let's coordinate with it	         *
 						*                                                                *
 						******************************************************************/
-					
+
 						// Check if Yoast Exists so we can coordinate output with their plugin accordingly
 						if (defined('WPSEO_VERSION')):
 
@@ -203,12 +203,12 @@
 							// Cancel their output if ours have been defined so we don't have two sets of tags
 							global $wpseo_og;
 							remove_action( 'wpseo_head', array( $wpseo_og, 'opengraph' ), 30 );
-							
+
 							// Fetch the WPSEO_SOCIAL Values
 							$wpseo_social = get_option( 'wpseo_social' );
-							
-						endif;					
-						
+
+						endif;
+
 						// Add all our Open Graph Tags to the Return Header Output
 						$info['header_output'] .= PHP_EOL .'<meta property="og:type" content="article" /> ';
 
@@ -217,70 +217,70 @@
 						*     JETPACK: If ours are enabled, disable theirs		         *
 						*                                                                *
 						******************************************************************/
-						
+
 						if ( class_exists( 'JetPack' ) ) :
 							add_filter( 'jetpack_enable_opengraph', '__return_false', 99 );
 							add_filter( 'jetpack_enable_open_graph', '__return_false', 99 );
 						endif;
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH TITLE									         *
 						*                                                                *
 						******************************************************************/
-						
+
 						// Open Graph Title: Create an open graph title meta tag
 						if($info['title']):
-							
+
 							// If the user defined an social media title, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.$info['title'].'" />';
-							
-						elseif(isset($yoast_og_title) && $yoast_og_title):	
-						
+
+						elseif(isset($yoast_og_title) && $yoast_og_title):
+
 							// If the user defined an title over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.$yoast_og_title.'" />';
-						
+
 						elseif(isset($yoast_seo_title) && $yoast_seo_title):
-						
+
 							// If the user defined an title over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.$yoast_seo_title.'" />';
-						
+
 						else:
-						
+
 							// If nothing else is defined, let's use the post title
 							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.convert_smart_quotes(htmlspecialchars_decode(get_the_title())).'" />';
-							
+
 						endif;
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH DESCRIPTION							         *
 						*                                                                *
-						******************************************************************/						
-						
+						******************************************************************/
+
 						// Open Graph Description: Create an open graph description meta tag
 						if($info['description']):
-							
+
 							// If the user defined an social media description, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.$info['description'].'" />';
-							
-						elseif(isset($yoast_og_description) && $yoast_og_description):	
-						
+
+						elseif(isset($yoast_og_description) && $yoast_og_description):
+
 							// If the user defined an description over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.$yoast_og_description.'" />';
-						
+
 						elseif(isset($yoast_seo_description) && $yoast_seo_description):
-						
+
 							// If the user defined an description over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.$yoast_seo_description.'" />';
-						
+
 						else:
-						
+
 							// If nothing else is defined, let's use the post excerpt
 							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.convert_smart_quotes(htmlspecialchars_decode(sw_get_excerpt_by_id($info['postID']))).'" />';
-							
+
 						endif;
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH IMAGE									         *
@@ -289,17 +289,17 @@
 
 						// Open Graph Image: Create an open graph image meta tag
 						if($info['imageURL']):
-							
+
 							// If the user defined an image, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$info['imageURL'].'" />';
-							
-						elseif(isset($yoast_og_image) && $yoast_og_image):	
-						
+
+						elseif(isset($yoast_og_image) && $yoast_og_image):
+
 							// If the user defined an image over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$yoast_og_image.'" />';
-						
+
 						else:
-						
+
 							// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
 							$og_image = get_post_meta( $info['postID'] , 'sw_open_thumbnail_url' , true );
 							if($og_image):
@@ -307,7 +307,7 @@
 							endif;
 
 						endif;
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH URL & Site Name						         *
@@ -316,7 +316,7 @@
 
 						$info['header_output'] .= PHP_EOL .'<meta property="og:url" content="'.get_permalink().'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:site_name" content="'.get_bloginfo('name').'" />';
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH AUTHOR									         *
@@ -325,73 +325,73 @@
 
 						// Add the Facebook Author URL
 						if( get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID'])) ):
-						
+
 							// Output the Facebook Author URL
 							$facebook_author = get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID']));
 							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
-						
+
 						elseif( get_the_author_meta ( 'facebook' , sw_get_author($info['postID'])) && defined('WPSEO_VERSION')):
 
 							// Output the Facebook Author URL
 							$facebook_author = get_the_author_meta ( 'facebook' , sw_get_author($info['postID']));
 							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
-						
+
 						endif;
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH PUBLISHER								         *
 						*                                                                *
 						******************************************************************/
-						
+
 						// If they have a Facebook Publisher URL in our settings...
 						if(isset($info['sw_user_options']['facebookPublisherUrl']) && $info['sw_user_options']['facebookPublisherUrl'] != ''):
-						
+
 							// Output the Publisher URL
 							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$info['sw_user_options']['facebookPublisherUrl'].'" />';
-						
+
 						// If they have a Facebook Publisher URL in Yoast's settings...
 						elseif(isset($wpseo_social) && isset($wpseo_social['facebook_site']) && $wpseo_social['facebook_site'] != ''):
-						
+
 							// Output the Publisher URL
-							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$wpseo_social['facebook_site'].'" />';	
+							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$wpseo_social['facebook_site'].'" />';
 						endif;
-						
+
 						$info['header_output'] .= PHP_EOL .'<meta property="article:published_time" content="'.get_post_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="article:modified_time" content="'.get_post_modified_time('c').'" />';
 						$info['header_output'] .= PHP_EOL .'<meta property="og:updated_time" content="'.get_post_modified_time('c').'" />';
-						
+
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH APP ID									         *
 						*                                                                *
 						******************************************************************/
-						
+
 						// If the Facebook APP ID is in our settings...
 						if(isset($info['sw_user_options']['facebookAppID']) && $info['sw_user_options']['facebookAppID'] != ''):
-							
+
 							// Output the Facebook APP ID
 							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$info['sw_user_options']['facebookAppID'].'" />';
-						
+
 						// If the Facebook APP ID is set in Yoast's settings...
 						elseif(isset($wpseo_social) && isset($wpseo_social['fbadminapp']) && $wpseo_social['fbadminapp'] != ''):
-						
+
 							// Output the Facebook APP ID
-							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$wpseo_social['fbadminapp'].'" />';	
-						
+							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$wpseo_social['fbadminapp'].'" />';
+
 						else:
-						
+
 							// Output the Facebook APP ID
 							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="529576650555031" />';
-						
+
 						endif;
 
 					endif;
 				endif;
-				
+
 				// Return the variable containing our information for the meta tags
 				return $info;
-				
+
 			}
 
 /*****************************************************************
@@ -413,13 +413,13 @@
 				if(is_singular()):
 					// Check if Twitter Cards are Activated
 					if($info['sw_user_options']['sw_twitter_card']):
-					
+
 						/*****************************************************************
 						*                                                                *
 						*     YOAST SEO: It rocks, so let's coordinate with it	         *
 						*                                                                *
 						******************************************************************/
-					
+
 						// Check if Yoast Exists so we can coordinate output with their plugin accordingly
 						if (defined('WPSEO_VERSION')):
 
@@ -427,93 +427,93 @@
 							$yoast_twitter_title 		= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-title' , true );
 							$yoast_twitter_description 	= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-description' , true );
 							$yoast_twitter_image 		= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-image' , true );
-						
+
 							// Collect their SEO fields as 3rd string backups in case we need them
 							$yoast_seo_title			= get_post_meta( $info['postID'] , '_yoast_wpseo_title' , true );
 							$yoast_seo_description		= get_post_meta( $info['postID'] , '_yoast_wpseo_metadesc' , true );
-						
+
 							// Cancel their output if ours have been defined so we don't have two sets of tags
 							remove_action( 'wpseo_head' , array( 'WPSEO_Twitter' , 'get_instance' ) , 40 );
-						
-						endif;	
-						
+
+						endif;
+
 						/*****************************************************************
 						*                                                                *
 						*     JET PACK: If ours are activated, disable theirs	         *
 						*                                                                *
 						******************************************************************/
-						
+
 						if ( class_exists( 'JetPack' ) ) :
-						
+
 							add_filter( 'jetpack_disable_twitter_cards', '__return_true', 99 );
-							
-						endif;				
+
+						endif;
 
 						/*****************************************************************
 						*                                                                *
 						*     TWITTER TITLE										         *
 						*                                                                *
 						******************************************************************/
-						
+
 						// If the user defined a Social Media title, use it, otherwise check for Yoast's
 						if(!$info['title'] && isset($yoast_twitter_title) && $yoast_twitter_title):
-						
+
 							$info['title'] = $yoast_twitter_title;
-						
+
 						// If not title has been defined, let's check the SEO description as a 3rd string option
 						elseif(!$info['title'] && isset($yoast_seo_title) && $yoast_seo_title):
-						
+
 							$info['title'] = $yoast_seo_title;
-							
+
 						// If not title has been defined, let's use the post title
 						elseif(!$info['title']):
-						
+
 							$info['title'] = convert_smart_quotes(htmlspecialchars_decode( get_the_title() ));
-							
+
 						endif;
-		
+
 						/*****************************************************************
 						*                                                                *
 						*     TWITTER DESCRIPTION								         *
 						*                                                                *
 						******************************************************************/
-						
+
 						// Open Graph Description
 						if(!$info['description'] && isset($yoast_twitter_description) && $yoast_twitter_description):
-						
+
 							$info['description'] = $yoast_twitter_description;
-						
+
 						// If not title has been defined, let's check the SEO description as a 3rd string option
 						elseif(!$info['description'] && isset($yoast_seo_description) && $yoast_seo_description):
-						
+
 							$info['description'] = $yoast_seo_description;
-						
+
 						// If not, then let's use the excerpt
 						elseif(!$info['description']):
-						
+
 							$info['description'] = convert_smart_quotes(htmlspecialchars_decode( sw_get_excerpt_by_id( $info['postID'] )) );
-						
+
 						endif;
-	
+
 						/*****************************************************************
 						*                                                                *
 						*     TWITTER IMAGE								         *
 						*                                                                *
 						******************************************************************/
-											
+
 						// Open Graph Description
 						if(!$info['imageURL'] && isset($yoast_twitter_image) && $yoast_twitter_image):
-						
+
 							$info['imageURL'] = $yoast_twitter_image;
-						
+
 						else:
-						
+
 						// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
 							$twitter_image = get_post_meta( $info['postID'] , 'sw_open_thumbnail_url' , true );
 							if($twitter_image):
 								$info['imageURL'] = $twitter_image;
 							endif;
-												
+
 						endif;
 
 						/*****************************************************************
@@ -521,7 +521,7 @@
 						*     PUT IT ALL TOGETHER						         		 *
 						*                                                                *
 						******************************************************************/
-						
+
 						// Check if we have everything we need for a large image summary card
 						if($info['imageURL']):
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:card" content="summary_large_image">';
@@ -534,7 +534,7 @@
 							if($info['user_twitter_handle']):
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:creator" content="@'.str_replace('@','',$info['user_twitter_handle']).'">';
 							endif;
-							
+
 						// Otherwise create a small summary card
 						else:
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:card" content="summary">';
@@ -547,7 +547,7 @@
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:creator" content="@'.str_replace('@','',$info['user_twitter_handle']).'">';
 							endif;
 						endif;
-							
+
 					endif;
 				endif;
 				return $info;
@@ -565,39 +565,39 @@
 			endif;
 			return $info;
 		}
- 
+
 /*****************************************************************
 *                                                                *
 *          CUSTOM COLORS 							             *
 *                                                                *
 ******************************************************************/
-	
+
 		function sw_output_custom_color($info) {
 			if($info['sw_user_options']['dColorSet'] == 'customColor' || $info['sw_user_options']['iColorSet'] == 'customColor' || $info['sw_user_options']['oColorSet'] == 'customColor'):
 				$info['header_output'] .= PHP_EOL.'<style type="text/css">.nc_socialPanel.sw_d_customColor a, html body .nc_socialPanel.sw_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_customColor:hover a {color:white} .nc_socialPanel.sw_d_customColor .nc_tweetContainer, html body .nc_socialPanel.sw_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.sw_o_customColor:hover .nc_tweetContainer {background-color:'.$info['sw_user_options']['customColor'].';border:1px solid '.$info['sw_user_options']['customColor'].';} </style>';
 			endif;
-			
+
 			if($info['sw_user_options']['dColorSet'] == 'ccOutlines' || $info['sw_user_options']['iColorSet'] == 'ccOutlines' || $info['sw_user_options']['oColorSet'] == 'ccOutlines'):
 				$info['header_output'] .= PHP_EOL.'<style type="text/css">.nc_socialPanel.sw_d_ccOutlines a, html body .nc_socialPanel.sw_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_ccOutlines:hover a { color:'.$info['sw_user_options']['customColor'].'; }
 .nc_socialPanel.sw_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.sw_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.sw_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '.$info['sw_user_options']['customColor'].'; } </style>';
-				
+
 			endif;
-			return $info;			
+			return $info;
 		}
 
 /*****************************************************************
 *                                                                *
 *          CACHE REBUILD TRIGGER					             *
 *                                                                *
-******************************************************************/	
+******************************************************************/
 function sw_output_cache_trigger($info) {
 	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
 	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
-		
+
 		// Make sure we're not on a WooCommerce Account Page
 		if(is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page()):
 			return $info;
-			
+
 		// Trigger the cache rebuild
 		else:
 			$url = get_permalink();
@@ -611,19 +611,19 @@ function sw_output_cache_trigger($info) {
 *                                                                *
 *          CACHE REBUILD REL CANONICAL				             *
 *                                                                *
-******************************************************************/	
+******************************************************************/
 function sw_cache_rebuild_rel_canonical($info) {
-	
+
 	// Fetch the Permalink
 	$url = get_permalink();
-	
+
 	// Check to see if the cache is currently being rebuilt
 	if(isset($_GET['sw_cache']) && $_GET['sw_cache'] == 'rebuild'):
-	
+
 		// Use a rel canonical so everyone knows this is not a real page
 		$info['header_output'] .= '<link rel="canonical" href="'.$url.'">';
 	endif;
-	
+
 	// Return the array so the world doesn't explode
 	return $info;
 }
@@ -634,15 +634,27 @@ function sw_cache_rebuild_rel_canonical($info) {
 ******************************************************************/
 function sw_output_font_css($info=array()) {
 	if(is_admin()):
-	
+
 		// Echo it if we're using the Admin Head Hook
 		echo '<style>@font-face {font-family: "sw-icon-font";src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'");src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'#iefix") format("embedded-opentype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.SW_VERSION.'") format("woff"),
     url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.SW_VERSION.'") format("truetype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.SW_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 	else:
-	
+
 		// Add it to our array if we're using the frontend Head Hook
 		$info['header_output'] .= PHP_EOL.'<style>@font-face {font-family: "sw-icon-font";src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'");src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'#iefix") format("embedded-opentype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.SW_VERSION.'") format("woff"), url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.SW_VERSION.'") format("truetype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.SW_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
 		return $info;
 	endif;
 }
+/*****************************************************************
+*                                                                *
+*          Click Tracking							             *
+*                                                                *
+******************************************************************/
+function sw_click_tracking() {
+	$sw_options = sw_get_user_options();
+	if( $sw_options['sw_click_tracking'] == 1 ):
+    	echo '<script>if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "sw_" + network + "_share" );});}</script>';
+	endif;
+}
+add_action( 'wp_footer', 'sw_click_tracking' );

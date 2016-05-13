@@ -2,13 +2,13 @@
 	$sw_user_options = get_option('socialWarfareOptions');
 	function sw_get_user_options() {
 		global $sw_user_options;
-		
+
 		// Reset the Order of Icons Options
 		if (isset($sw_user_options['orderOfIcons'])):
 		 	unset($sw_user_options['orderOfIcons']);
-			update_option('socialWarfareOptions',$sw_user_options);			
+			update_option('socialWarfareOptions',$sw_user_options);
 		endif;
-		
+
 		// Force the plugin off on certain post types
 		$sw_user_options['locationattachment'] 		= 'none';
 		$sw_user_options['locationrevision'] 		= 'none';
@@ -17,13 +17,13 @@
 		$sw_user_options['shop_order_refund'] 		= 'none';
 		$sw_user_options['shop_coupon'] 			= 'none';
 		$sw_user_options['shop_webhook'] 			= 'none';
-		
+
 		// Set defaults for everthing
 		if(!isset($sw_user_options['locationPost'])) 				{ $sw_user_options['locationPost'] 		= 'both'; 	};
 		if(!isset($sw_user_options['locationPage'])) 				{ $sw_user_options['locationPage'] 		= 'both'; 	};
 		if(!isset($sw_user_options['language'])) 					{ $sw_user_options['language'] 			= 'en'; 	};
 		if(!isset($sw_user_options['locationSite'])) 				{ $sw_user_options['locationSite'] 		= 'both'; 	};
-		
+
 		// Default Buttons to Display
 		if(!isset($sw_user_options['googlePlus'])) 					{ $sw_user_options['googlePlus'] 		= true; 	};
 		if(!isset($sw_user_options['twitter'])) 					{ $sw_user_options['twitter'] 			= true; 	};
@@ -38,7 +38,7 @@
 		if(!isset($sw_user_options['stumbleupon'])) 				{ $sw_user_options['stumbleupon'] 		= false; 	};
 		if(!isset($sw_user_options['pocket'])) 						{ $sw_user_options['pocket'] 			= false; 	};
 		if(!isset($sw_user_options['buffer'])) 						{ $sw_user_options['buffer'] 			= false; 	};
-		
+
 		if(!isset($sw_user_options['totes'])) 						{ $sw_user_options['totes'] 			= true; 	};
 		if(!isset($sw_user_options['totesEach'])) 					{ $sw_user_options['totesEach'] 		= true; 	};
 		if(!isset($sw_user_options['twitterID'])) 					{ $sw_user_options['twitterID'] 		= false; 	};
@@ -84,6 +84,7 @@
 		if(!isset($sw_user_options['googleAnalytics']))				{ $sw_user_options['googleAnalytics']	= true; };
 		if(!isset($sw_user_options['analyticsMedium']))				{ $sw_user_options['analyticsMedium']	= 'social'; };
 		if(!isset($sw_user_options['analyticsCampaign']))			{ $sw_user_options['analyticsCampaign']	= 'SocialWarfare'; };
+		if(!isset($sw_user_options['sw_click_tracking']))			{ $sw_user_options['sw_click_tracking']	= false; };
 		if(!isset($sw_user_options['orderOfIconsSelect']))			{ $sw_user_options['orderOfIconsSelect']	= 'manual'; };
 		if(!isset($sw_user_options['newOrderOfIcons'])) 			{ $sw_user_options['newOrderOfIcons'] 		= array(
 				"twitter" => "Twitter",

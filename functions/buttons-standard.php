@@ -26,7 +26,7 @@ function sw_is_cache_fresh( $postID , $output=false ) {
 
 	// Fetch the Options
 	$options 			= sw_get_user_options();
-	
+
 	// Check if output is being forced or if legacy caching is enabled
 	if($output == false && $options['cacheMethod'] != 'legacy'):
 		if(isset($_GET['sw_cache']) && $_GET['sw_cache'] == 'rebuild'):
@@ -40,14 +40,14 @@ function sw_is_cache_fresh( $postID , $output=false ) {
 		if($postAge < (21 * 86400)){ $hours = 1; }
 		elseif($postAge < (60 * 86400)) { $hours = 4; }
 		else { $hours = 12; }
-	
+
 		$time = floor(((date('U')/60)/60));
 		$lastChecked = get_post_meta($postID,'sw_cache_timestamp',true);
-		
+
 		// Check if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED
 		if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])):
 			$freshCache = true;
-			
+
 		// Next, check if the cache is fresh or needs rebuilt
 		// Always be TRUE if we're not on a single.php otherwise we could end up
 		// Rebuilding multiple page caches which will cost a lot of time.
@@ -63,10 +63,10 @@ function sw_is_cache_fresh( $postID , $output=false ) {
 
 function sw_disable_subs() { return false; };
 /*****************************************************************
-                                                                
-THE SHARE BUTTONS FUNCTION: 
 
-This function accepts an array of parameters resulting in the 
+THE SHARE BUTTONS FUNCTION:
+
+This function accepts an array of parameters resulting in the
 outputting of the Social Warfare Buttons.
 
 
@@ -74,17 +74,17 @@ ACCEPTED PARAMETERS :
 
 content 	: The post content to which we append the buttons
 			: (string)
-			
+
 where   	: Used to overwrite the default location in relation to the content
 			: ( above | below | both | none )
-			
+
 echo    	: Used to print or store the variables.
 			: ( true | false )
 
-		 
-			
+
+
 ******************************************************************/
-function social_warfare_buttons($array = array()) { 
+function social_warfare_buttons($array = array()) {
 
 	// Setup the default Array parameters
 	if(!isset($array['where'])) { $array['where'] = 'default'; }
@@ -129,23 +129,23 @@ function social_warfare_buttons($array = array()) {
 			$array['where'] = $specWhere;
 		endif;
 	endif;
-	
+
 	// Disable the buttons on Buddy Press pages
 	if(function_exists('is_buddypress') && is_buddypress()):
 		return $array['content'];
-		
+
 	// Disable the buttons if the location is set to "None / Manual"
 	elseif($array['where'] == 'none' && !isset($array['devs'])):
 		return $array['content'];
-		
+
 	// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
 	elseif( (!is_main_query() || !in_the_loop()) && !isset($array['devs']) ):
 		return $array['content'];
-	
+
 	// Don't do anything if we're in the admin section
 	elseif( is_admin() ):
 		return $array['content'];
-	
+
 	// If all the checks pass, let's make us some buttons!
 	else:
 
@@ -155,20 +155,20 @@ function social_warfare_buttons($array = array()) {
 		else:
 			$floatOption = 'floatNone';
 		endif;
-		
+
 		// Disable the plugin on feeds, search results, and non-published content
 		if (!is_feed() && !is_search() && get_post_status($postID) == 'publish' ):
-		
+
 			// Acquire the social stats from the networks
-			if(isset($array['url'])): 
+			if(isset($array['url'])):
 				$buttonsArray['url'] = $array['url'];
-			else: 
+			else:
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
-			
+
 			$language = array();
 			$language = apply_filters('sw_languages',$language);
-			
+
 			// Setup the buttons array to pass into the 'sw_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares($postID);
 			$buttonsArray['language'] = apply_filters( 'sw_languages' , $language );
@@ -176,26 +176,26 @@ function social_warfare_buttons($array = array()) {
 			$buttonsArray['totes'] = 0;
 			$buttonsArray['options'] = $options;
 			if( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] ) ++$buttonsArray['count'];
-			
+
 			$buttonsArray['resource'] = array();
 			$buttonsArray['postID'] = $postID;
-			
-			
+
+
 			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
 			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists ( 'Subtitles' ) ) :
 				remove_filter( 'the_title', array( Subtitles::getinstance() , 'the_subtitle' ), 10, 2 );
 			endif;
-			
+
 			// This array will contain the HTML for all of the individual buttons
 			$buttonsArray = apply_filters( 'sw_network_buttons' , $buttonsArray );
-			
+
 			// Create the social panel
 			$assets = '<div class="nc_socialPanel sw_'.$options['visualTheme'].' sw_d_'.$options['dColorSet'].' sw_i_'.$options['iColorSet'].' sw_o_'.$options['oColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
 
 			// Setup the total shares count if it's on the left
 			if($options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes']):
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.$language['total'].'</span></span>'; 
+				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.$language['total'].'</span></span>';
 				$assets .= '</div>';
 			endif;
 
@@ -219,11 +219,11 @@ function social_warfare_buttons($array = array()) {
 			if( $options['totes'] && $options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes']):
 				if($options['swTotesFormat'] == 'totes'):
 					$assets .= '<div class="nc_tweetContainer totes" data-id="6" >';
-					$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.$language['total'].'</span></span>'; 
+					$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.$language['total'].'</span></span>';
 					$assets .= '</div>';
 				else:
 					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-					$assets .= '<span class="sw_count"><span class="sw_label">'.$language['total'].'</span> '.kilomega($buttonsArray['totes']).'</span>'; 
+					$assets .= '<span class="sw_count"><span class="sw_label">'.$language['total'].'</span> '.kilomega($buttonsArray['totes']).'</span>';
 					$assets .= '</div>';
 				endif;
 			endif;
@@ -257,5 +257,5 @@ function social_warfare_buttons($array = array()) {
 			return $array['content'];
 		endif;
 
-	endif;	
+	endif;
 }

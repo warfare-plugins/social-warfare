@@ -7,7 +7,7 @@
 ******************************************************************/
 	add_filter('sw_options', 'sw_yummly_options_function',20);
 	function sw_yummly_options_function($sw_options) {
-	
+
 		// Create the new option in a variable to be inserted
 		$yummly = array(
 			'yummly' => array(
@@ -16,10 +16,10 @@
 				 'default' => 0
 			)
 		);
-	 
+
 		// Call the function that adds the On / Off Switch and Sortable Option
 		return sw_add_network_option($sw_options,$yummly);
-	
+
 	};
 /*****************************************************************
 *                                                                *
@@ -28,13 +28,13 @@
 ******************************************************************/
 	// Queue up your filter to be ran on the sw_options hook.
 	add_filter('sw_add_networks', 'sw_yummly_network');
-	
+
 	// Create the function that will filter the options
 	function sw_yummly_network($networks) {
-		
+
 		// Add your network to the existing network array
 		$networks[] = 'yummly';
-	
+
 		// Be sure to return the modified options array or the world will explode
 		return $networks;
 	};
@@ -51,7 +51,7 @@
 *                                                                *
 *   #4: Parse the Response to get the share count	             *
 *                                                                *
-******************************************************************/	
+******************************************************************/
 	function sw_format_yummly_response($response) {
 		$response = json_decode($response, true);
 		return isset($response['count'])?intval($response['count']):0;
@@ -63,37 +63,37 @@
 ******************************************************************/
 	add_filter('sw_network_buttons', 'sw_yummly_button_html',10);
 	function sw_yummly_button_html($array) {
-		
+
 		// If we've already generated this button, just use our existing html
 		if(isset($_GLOBALS['sw']['buttons'][$array['postID']]['yummly'])):
 			$array['resource']['yummly'] = $_GLOBALS['sw']['buttons'][$array['postID']]['yummly'];
-			
+
 		// If not, let's check if Yummly is activated and create the button HTML
 		elseif( $array['options']['yummly'] ):
-			
+
 			$array['totes'] += $array['shares']['yummly'];
-			++$array['count']; 
-			
+			++$array['count'];
+
 			// Let's create a title
 			if(get_post_meta( $array['postID'] , 'nc_ogTitle' , true )):
-							
+
 				// If the user defined an social media title, let's use it.
 				$title = urlencode(urldecode(get_post_meta( $array['postID'] , 'nc_ogTitle' , true )));
-				
+
 			else:
-			
+
 				// Otherwise we'll use the default post title
 				$title = urlencode(urldecode(get_the_title()));
-			
+
 			endif;
-			
+
 			if(get_post_meta($array['postID'],'sw_open_graph_image_url')):
 				$image = urlencode(urldecode(get_post_meta($array['postID'],'sw_open_graph_image_url',true)));
 			else:
 				$image = urlencode(urldecode(get_post_meta($array['postID'],'sw_open_thumbnail_url',true)));
 			endif;
-			
-			$array['resource']['yummly'] = '<div class="nc_tweetContainer sw_yummly" data-id="'.$array['count'].'">';
+
+			$array['resource']['yummly'] = '<div class="nc_tweetContainer sw_yummly" data-id="'.$array['count'].'" data-network="yummly">';
 			// $link = urlencode(urldecode(sw_process_url( $array['url'] , 'yummly' , $array['postID'] )));
 			$link = $array['url'];
 			$array['resource']['yummly'] .= '<a target="_blank" href="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" data-link="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" class="nc_tweet">';
@@ -103,7 +103,7 @@
 				$array['resource']['yummly'] .= '<i class="sw sw-yummly"></i>';
 				$array['resource']['yummly'] .= '<span class="sw_share"> '.$array['language']['yummly'].'</span>';
 				$array['resource']['yummly'] .= '</span></span>';
-				$array['resource']['yummly'] .= '<span class="sw_count">'.kilomega($array['shares']['yummly']).'</span>'; 
+				$array['resource']['yummly'] .= '<span class="sw_count">'.kilomega($array['shares']['yummly']).'</span>';
 			else:
 				$array['resource']['yummly'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="sw_share"> '.$array['language']['yummly'].'</span></span></span></span>';
 			endif;
@@ -114,11 +114,7 @@
 			$_GLOBALS['sw']['buttons'][$array['postID']]['yummly'] = $array['resource']['yummly'];
 
 		endif;
-				
+
 		return $array;
-		
+
 	};
-
-
-
-
