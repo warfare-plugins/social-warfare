@@ -39,75 +39,74 @@ jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
 		return false;
 	};
 });
-function isOdd(num) { return num % 2;} 
+function isOdd(num) { return num % 2;}
 jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
 
 // Function to set or reset the button sizes to fit their respective container area
 function swSetWidths(resize) {
-	
+
 	// Check if this is the first or a forced resize
 	if(typeof window.origSets === 'undefined' || resize) {
-		
-		// Declare the variable for saving presets	
+
+		// Declare the variable for saving presets
 		window.origSets = [];
-		
+
 		// Declare the variable for saving original measurements
 		if(typeof window.defaults === 'undefined') {
 			window.defaults = [];
 		};
-			
+
 		// Loop through each set of buttons
 		jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
-		
+
 			// Declare a global so we can save the sizes for faster processing later
 			var index = jQuery('.nc_socialPanel').index(jQuery(this));
 			if(typeof window.defaults[index] === 'undefined') {
 				window.defaults[index] = [];
 			};
-			
+
 			// Measure the width of the container. Find out how much space is available.
 			var totalWidth 	= jQuery(this).width() - 5;
-			
+
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
-			
+
 			// The average shows us how wide each button needs to become
 			var average = parseInt(totalWidth) / parseInt(totalElements);
 			var space = parseInt(totalWidth) - parseInt(totalElements);
-			
+
 			// Check how much space is on the left so we can show or hide the floating buttons if they exist
 			var offset = jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').offset();
 			var min_screen_width = jQuery('.nc_socialPanelSide').attr('data-screen-width');
-			console.log(min_screen_width);
-			
+
 			// If we have 100px, show the side floaters. If not, hide it.
 			if(offset.left < 100 || jQuery(window).width() < min_screen_width) {
 				jQuery('.nc_socialPanelSide').addClass('mobile');
 			} else {
 				jQuery('.nc_socialPanelSide').removeClass('mobile');
 			};
-			
+
 			// Declare some variables for use later
 			var widthNeeded = 0;
 			var padding = 0;
 			var totesWidth = 0;
-			
+
 			// Check if we already have a widthNeeded saved from earlier
 			if(typeof window.defaults[index].default_width_needed === 'undefined') {
-			
+
 				// Loop through each button
 				jQuery(this).find('.nc_tweetContainer').each( function() {
-					
+
 					// Make sure we add extra space for expansions and whatnot
 					if(totalElements > 3) {
 						extraSpace = (totalElements - 1) * 5;
 					} else {
 						extraSpace = (totalElements - 1) * 15;
 					};
-					
+
 					// Check how wide it must be to fit
 					widthNeeded += jQuery(this).width() + extraSpace;
-					
+
 					var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
 					paddingLeft = parseInt(paddingLeft.replace('px',''));
 					var paddingRight = jQuery(this).find('.sw_count').css('padding-right');
@@ -117,19 +116,19 @@ function swSetWidths(resize) {
 				});
 				// Save the width needed for later use
 				window.defaults[index].default_width_needed = widthNeeded;
-			
+
 			// If we already have it, use it
 			} else {
-				
+
 				widthNeeded = window.defaults[index].default_width_needed;
 			}
-			
+
 			// Check if we have enough room to display the total shares
 			totesWidth = jQuery(this).find('.nc_tweetContainer.totes').width();
 			if(totalWidth < widthNeeded && !jQuery(this).hasClass('nc_floater')) {
 				jQuery(this).find('.nc_tweetContainer.totes').hide();
 			}
-			
+
 			if((totalWidth) <= (widthNeeded - totesWidth + 25) && !jQuery(this).hasClass('nc_floater')) {
 				if(jQuery(this).find('.totes').length) {
 					if(jQuery(this).hasClass('connected')) {
@@ -139,7 +138,7 @@ function swSetWidths(resize) {
 					};
 					var oddball = average * (totalElements - 1);
 				} else {
-					
+
 					if(jQuery(this).hasClass('connected')) {
 						var average = (parseInt(totalWidth) / (parseInt(totalElements)));
 					} else {
@@ -154,12 +153,12 @@ function swSetWidths(resize) {
 				if(!jQuery('.sw_count .iconFiller').length) {
 					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .sw_count').hide();
 				} else {
-					jQuery(this).find('.nc_tweetContainer.totes').hide();	
+					jQuery(this).find('.nc_tweetContainer.totes').hide();
 				};
 				jQuery(this).find('.nc_tweetContainer').each(function() {
 					width = jQuery(this).find('.iconFiller').width();
 					if(isOdd(average)) {
-						marginLeft = Math.floor((average - width) / 2) - 1;	
+						marginLeft = Math.floor((average - width) / 2) - 1;
 						marginRight = Math.floor((average - width) / 2) - 1;
 					} else {
 						marginLeft = ((average - width) / 2) - 1;
@@ -169,7 +168,7 @@ function swSetWidths(resize) {
 				});
 			// jQuery('.nc_tweetContainer').css({"padding-left":"4px","padding-right":"4px"});
 			} else {
-				
+
 				jQuery(this).addClass('notMobile').removeClass('mobile');
 				if(totalWidth > widthNeeded) {
 					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .sw_count').show();
@@ -213,14 +212,14 @@ function swSetWidths(resize) {
 					window.origSets['float'] = window.origSets[0];
 				} else {
 					jQuery(this).find('.nc_tweetContainer').not('.totesalt').each(function() {
-						
-				
+
+
 						icon 		= jQuery(this).find('i.sw').outerWidth() + 14;
 						shareTerm 	= jQuery(this).find('.sw_share').outerWidth();
 						tote		= icon + shareTerm + 3;
 						jQuery(this).find('.spaceManWilly').css({'width':tote+'px'});
-						
-						++count; 
+
+						++count;
 						var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
 						paddingLeft = parseInt(paddingLeft.replace('px',''));
 						var paddingRight = jQuery(this).find('.sw_count').css('padding-right');
@@ -234,7 +233,7 @@ function swSetWidths(resize) {
 						curWidth = curWidth - paddingRight;
 						dif = average - curWidth;
 						window.origSets[index][dataId] = new Array();
-						if(isOdd(dif)){ 
+						if(isOdd(dif)){
 							dif = dif - 1;
 							dif = dif / 2;
 							pl = dif+1+average;
@@ -247,7 +246,7 @@ function swSetWidths(resize) {
 								"padding-right": window.origSets[index][dataId]['pr']
 								}, 0, "linear", function() {
 									jQuery(this).css({transition : 'padding .1s linear'
-								});		
+								});
 							});
 						} else {
 							dif = dif / 2;
@@ -259,22 +258,22 @@ function swSetWidths(resize) {
 							jQuery(this).find('.sw_count').animate({
 								"padding-left": window.origSets[index][dataId]['pl'],
 								"padding-right": window.origSets[index][dataId]['pr']
-								}, 0, "linear", function() {	
+								}, 0, "linear", function() {
 									jQuery(this).css({transition : 'padding .1s linear'});
-								});	
+								});
 						};
 					window.resized = true;
-					}); 
+					});
 				};
 			};
 		});
-		
+
 	// If we already have sizes, just reuse them
 	} else {
 		jQuery('.nc_tweetContainer').not('.totesalt').each(function() {
 			if(jQuery(this).parents('.nc_wrapper').length) {
 				index = 'float';
-			} else {	
+			} else {
 				index = jQuery('.nc_socialPanel').index(jQuery(this).parent('.nc_socialPanel'));
 			};
 			dataId = parseInt(jQuery(this).attr('data-id'));
@@ -328,10 +327,10 @@ function ReplaceNumberWithCommas(nStr) {
   return x1 + x2;
 };
 function number_format( val ) {
-    if( val < 1000 ){ 
+    if( val < 1000 ){
 	 	return ReplaceNumberWithCommas(val);
-	 } else { 
-	 	val = val/1000; 
+	 } else {
+	 	val = val/1000;
 		val = Math.round(val);
 		return ReplaceNumberWithCommas(val)+'K';
 	 };
@@ -344,7 +343,7 @@ function floatingBar() {
 	});
 };
 
-function floatingBarReveal() {	
+function floatingBarReveal() {
 		// Adjust the floating bar
 		var panels = jQuery('.nc_socialPanel');
 		var floatOption = panels.eq(0).attr('data-float');
@@ -353,43 +352,43 @@ function floatingBarReveal() {
 		var ncWrapper = jQuery('.nc_wrapper');
 		var ncSideFloater = jQuery('.nc_socialPanelSide').filter(':not(.mobile)');
 		var position = jQuery('.nc_socialPanel').attr('data-position');
-		var minWidth = ncSideFloater.attr('data-screen-width'); 
+		var minWidth = ncSideFloater.attr('data-screen-width');
 		offsetOne = panels.eq(0).offset();
 		scrollPos = windowElement.scrollTop();
 		var st = jQuery(window).scrollTop();
 		if(floatOption == 'floatBottom' || floatOption == "floatTop") {
-			
+
 			var visible = false;
 			jQuery('.nc_socialPanel').not('.nc_socialPanelSide, .nc_wrapper .nc_socialPanel').each(function() {
-				
+
 				// Fetch our base numbers
 				var thisOffset 		= jQuery(this).offset();
 				var thisHeight 		= jQuery(this).height();
 				var screenBottom 	= thisOffset + thisHeight;
-				
+
 				// Check if it's visible
-				if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) { 
-					visible = true; 
+				if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
+					visible = true;
 				};
-								
+
 			});
 			if(visible) {
-				
+
 				// Hide the Floating bar
 				ncWrapper.hide();
-				
+
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if(floatOption == 'floatBottom') {
 					jQuery('body').animate({'padding-bottom': body_padding_bottom+'px'}, 0);
 				} else if (floatOption == 'floatTop') {
 					jQuery('body').animate({'padding-top': body_padding_top+'px'}, 0);
 				};
-				
+
 			} else {
-				
+
 				// Show the floating bar
 				ncWrapper.show();
-				
+
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if(floatOption == 'floatBottom') {
 					new_padding = body_padding_bottom + 50;
@@ -420,11 +419,11 @@ function floatingBarReveal() {
 					visible = true;
 				}
 			}
-			console.log(transition);
+
 			var transition = ncSideFloater.attr('data-transition');
 			if(transition == 'slide'){
 				if(visible == true) {
-					ncSideFloater.css({left:'-100px'},200);	
+					ncSideFloater.css({left:'-100px'},200);
 				} else {
 					ncSideFloater.css({left:'5px'});
 				}
@@ -436,12 +435,12 @@ function floatingBarReveal() {
 				}
 			}
 			/*
-			
+
 			if(position == 'both') {
 				offsetTwo = panels.eq(1).offset();
 				if(offsetOne.top < (scrollPos) && offsetTwo.top > (scrollPos + windowHeight) && st >= lst) {
 					ncSideFloater.addClass('displayed');
-					
+
 				} else if(offsetOne.top < (scrollPos) && offsetTwo.top > (scrollPos + windowHeight) && st <= lst) {
 					ncSideFloater.addClass('displayed');
 				} else if(offsetTwo.top < (scrollPos + (windowHeight / 2)) && offsetTwo.top > scrollPos ){
@@ -455,11 +454,11 @@ function floatingBarReveal() {
 				};
 			} else if(position == 'above') {
 				if(offsetOne.top < (scrollPos)) {
-					ncSideFloater.addClass('displayed');	
+					ncSideFloater.addClass('displayed');
 				} else {
 					ncSideFloater.removeClass('displayed');
 				};
-			} else if(position == 'below') {	
+			} else if(position == 'below') {
 				if(offsetOne.top > (scrollPos + windowHeight)) {
 					ncSideFloater.addClass('displayed');
 				} else if (offsetOne.top < (scrollPos)) {
@@ -473,7 +472,7 @@ function floatingBarReveal() {
 			*/
 		};
 		lst = st;
-	
+
 }
 
 function activateHoverStates() {
@@ -534,13 +533,13 @@ function activateHoverStates() {
 							pl = parseInt(window.origSets[index][dataId]['pl']) - offsetL;
 							pr = parseInt(window.origSets[index][dataId]['pr']) - offsetR;
 						} else {
-	
+
 							offsetL = (ave / 2);
 							offsetR = (ave / 2 );
 							pl = parseInt(window.origSets[index][dataId]['pl']) - offsetL;
 							pr = parseInt(window.origSets[index][dataId]['pr']) - offsetR;
 						};
-						
+
 						jQuery(this).find('.iconFiller').css({"width":origSets[index][dataId]['fil']});
 						jQuery(this).find('.sw_count').css({
 							"padding-left": pl +"px",
@@ -559,7 +558,7 @@ function activateHoverStates() {
 	jQuery('.nc_fade .nc_tweetContainer').on("mouseenter", function() {
 		jQuery(this).css({"opacity": 1 }).siblings('.nc_tweetContainer').css({"opacity": 0.5 });
 	});
-	jQuery('.nc_fade').on("mouseleave", 
+	jQuery('.nc_fade').on("mouseleave",
 	function() {
 		jQuery('.nc_fade .nc_tweetContainer').css({"opacity": 1 });
 	});
@@ -570,7 +569,7 @@ function createTotal() {
 	var linkshares	= jQuery('.linkedIn').attr('data-count');
 	var pins 		= jQuery('.nc_pinterest').attr('data-count');
 	var shares 		= jQuery('.fb').attr('data-count');
-	var plusses 	= jQuery('.googlePlus').attr('data-count');	
+	var plusses 	= jQuery('.googlePlus').attr('data-count');
 	var total = parseInt(tweets) + parseInt(linkshares) + parseInt(pins) + parseInt(shares) + parseInt(plusses);
 	jQuery('.totes .sw_count').text(number_format(total)+' SHARES');
 }
@@ -585,24 +584,24 @@ function swApplyScale() {
 			jQuery(this).css('cssText', 'width:'+newWidth+'px!important;');
 			jQuery(this).css({
 				'transform':'scale('+scale+')',
-				'transform-origin':'left'	
+				'transform-origin':'left'
 			});
 		} else if(align != 'fullWidth' && scale < 1) {
 			newWidth = width / scale;
 			jQuery(this).css({
 				'transform':'scale('+scale+')',
-				'transform-origin':align	
+				'transform-origin':align
 			});
 		}
 	});
 }
 
 function getShares() {
-		
+
 	// Fetch the padding amount to make space later for the floating bars
 	window['body_padding_top'] = jQuery('body').css('padding-top').replace('px','');
 	window['body_padding_bottom'] = jQuery('body').css('padding-bottom').replace('px','');
-	
+
 	if(jQuery('.nc_socialPanel').length) {
 		//var checkVisible = setInterval(function() {
 			//if(jQuery('.nc_socialPanel:visible')) {
@@ -631,7 +630,7 @@ jQuery(document).ready(function() {
 			floatingBarReveal();
 		};
 	});
-	
+
 	if(jQuery('.nc_socialPanelSide').length) {
 		var buttonsHeight = jQuery('.nc_socialPanelSide').height();
 		var windowHeight = jQuery(window).height();
@@ -642,16 +641,16 @@ jQuery(document).ready(function() {
 	getShares();
 
 	// Reset the cache
-	if (typeof sw_cache_url != 'undefined') { 
-		
+	if (typeof sw_cache_url != 'undefined') {
+
 		// If the URL Contains a question mark already
 		if (sw_cache_url.indexOf('?') != -1) {
 			var url_params = '&sw_cache=rebuild';
-			
+
 		// If the URL does not contain a question mark already
 		} else {
 			var url_params = '?sw_cache=rebuild';
 		}
-		jQuery.get(sw_cache_url + url_params); 
+		jQuery.get(sw_cache_url + url_params);
 	}
 });
