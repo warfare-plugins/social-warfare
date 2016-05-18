@@ -102,6 +102,8 @@ function social_warfare_buttons($array = array()) {
 
 	// Check to see if display location was specifically defined for this post
 	$specWhere = get_post_meta($postID,'nc_postLocation',true);
+	if( !$specWhere ) { $specWhere = 'default'; };
+	
 	if($array['where'] == 'default'):
 		if($specWhere == 'default' || $specWhere == ''):
 			if( is_singular('post') ):

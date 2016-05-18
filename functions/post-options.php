@@ -133,6 +133,7 @@
 							'both' => 'Both Above and Below the Content', 
 							'none' => 'None/Manual Placement'),
 						 'clone' => false,
+						 'std'	 => 'default'
 					)
 			  )
 		 );
@@ -145,10 +146,12 @@
 						 'class' => $prefix . 'floatLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
+						 	'default' => 'Default',
 						 	'on' => 'On',
 							'off'=> 'Off'
 						 ),
 						 'clone' => false,
+						 'std'	=> 'default'
 		 
 		 );
 		 
