@@ -2,7 +2,7 @@ jQuery( function ( $ )
 {
 	'use strict';
 
-	var $form = $( '#post' ),
+	var $form = $( '#post #socialWarfare' ),
 		rules = {
 			invalidHandler: function ()
 			{
