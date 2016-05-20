@@ -6,6 +6,7 @@ Description: A plugin to maximize social shares and drive more traffic using the
 Version: 1.4.8
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
+Text Domain: social-warfare
 */
 /*****************************************************************
 *                                                                *
@@ -18,6 +19,16 @@ $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
 define( 'SW_META_DIR' , trailingslashit( $pluginDir.'/meta-box' ) );
 define( 'SW_PLUGIN_DIR' , $pluginUrl );
+/*****************************************************************
+*                                                                *
+*   LANGUAGES & LOCALIZATION						             *
+*                                                                *
+******************************************************************/
+function sw_localization_init() {
+	$plugin_dir = basename(dirname(__FILE__));
+	load_plugin_textdomain( 'social-warfare', false, $plugin_dir .'/languages' );
+}
+add_action('plugins_loaded', 'sw_localization_init');
 /*****************************************************************
 *                                                                *
 *   INCLUDES: ALL THE FUNCTIONS FILES          					 *
