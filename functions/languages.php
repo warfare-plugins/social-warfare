@@ -197,20 +197,20 @@ function sw_da_language($language) {
 add_filter('sw_languages','sw_it_language');
 function sw_it_language($language) {
 	if(sw_get_single_option('language') == 'it'):
-		$language['googlePlus'] = '+1'; 
-		$language['twitter'] = 'Twitta'; 
-		$language['facebook']	= 'Condividi'; 
-		$language['pinterest']	= 'Pin'; 
-		$language['linkedIn']	= 'Condividi'; 
-		$language['tumblr']	= 'Condividi'; 
+		$language['googlePlus'] 	= '+1'; 
+		$language['twitter'] 		= 'Twitta'; 
+		$language['facebook']		= 'Condividi'; 
+		$language['pinterest']		= 'Pin'; 
+		$language['linkedIn']		= 'Condividi'; 
+		$language['tumblr']			= 'Condividi'; 
 		$language['stumbleupon']	= 'Stumble'; 
-		$language['reddit']	= 'Reddit'; 
-		$language['email']	= 'Email'; 
-		$language['yummly']	= 'Yum'; 
-		$language['whatsapp']	= 'WhatsApp'; 
-		$language['pocket']	= 'Pocket'; 
-		$language['buffer']	= 'Buffer'; 
-		$language['total']	= 'Condivisioni';
+		$language['reddit']			= 'Reddit'; 
+		$language['email']			= 'Email'; 
+		$language['yummly']			= 'Yum'; 
+		$language['whatsapp']		= 'WhatsApp'; 
+		$language['pocket']			= 'Pocket'; 
+		$language['buffer']			= 'Buffer'; 
+		$language['total']			= 'Condivisioni';
 	endif;
 	return $language;
 }
