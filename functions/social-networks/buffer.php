@@ -87,11 +87,11 @@
 				$array['resource']['buffer'] .= '<span class="iconFiller">';
 				$array['resource']['buffer'] .= '<span class="spaceManWilly">';
 				$array['resource']['buffer'] .= '<i class="sw sw-buffer"></i>';
-				$array['resource']['buffer'] .= '<span class="sw_share"> '.$array['language']['buffer'].'</span>';
+				$array['resource']['buffer'] .= '<span class="sw_share"> '.__('Buffer','social-warfare').'</span>';
 				$array['resource']['buffer'] .= '</span></span>';
 				$array['resource']['buffer'] .= '<span class="sw_count">'.kilomega($array['shares']['buffer']).'</span>';
 			else:
-				$array['resource']['buffer'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-buffer"></i><span class="sw_share"> '.$array['language']['buffer'].'</span></span></span></span>';
+				$array['resource']['buffer'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-buffer"></i><span class="sw_share"> '.__('Buffer','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['buffer'] .= '</a>';
 			$array['resource']['buffer'] .= '</div>';

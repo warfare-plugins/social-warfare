@@ -82,11 +82,11 @@
 				$array['resource']['whatsapp'] .= '<span class="iconFiller">';
 				$array['resource']['whatsapp'] .= '<span class="spaceManWilly">';
 				$array['resource']['whatsapp'] .= '<i class="sw sw-whatsapp"></i>';
-				$array['resource']['whatsapp'] .= '<span class="sw_share"> '.$array['language']['whatsapp'].'</span>';
+				$array['resource']['whatsapp'] .= '<span class="sw_share"> '.__('WhatsApp','social-warfare').'</span>';
 				$array['resource']['whatsapp'] .= '</span></span>';
 				$array['resource']['whatsapp'] .= '<span class="sw_count">'.kilomega($array['shares']['whatsapp']).'</span>';
 			else:
-				$array['resource']['whatsapp'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-whatsapp"></i><span class="sw_share"> '.$array['language']['whatsapp'].'</span></span></span></span>';
+				$array['resource']['whatsapp'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-whatsapp"></i><span class="sw_share"> '.__('WhatsApp','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['whatsapp'] .= '</a>';
 			$array['resource']['whatsapp'] .= '</div>';

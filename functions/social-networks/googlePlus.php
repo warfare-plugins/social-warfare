@@ -80,11 +80,11 @@
 				$array['resource']['googlePlus'] .= '<span class="iconFiller">';
 				$array['resource']['googlePlus'] .= '<span class="spaceManWilly">';
 				$array['resource']['googlePlus'] .= '<i class="sw sw-google-plus"></i>';
-				$array['resource']['googlePlus'] .= '<span class="sw_share"> '.$array['language']['googlePlus'].'</span>';
+				$array['resource']['googlePlus'] .= '<span class="sw_share"> '.__('+1','social-warfare').'</span>';
 				$array['resource']['googlePlus'] .= '</span></span>';
 				$array['resource']['googlePlus'] .= '<span class="sw_count">'.kilomega($array['shares']['googlePlus']).'</span>';
 			else:
-				$array['resource']['googlePlus'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="sw_share"> '.$array['language']['googlePlus'].'</span></span></span></span>';
+				$array['resource']['googlePlus'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="sw_share"> '.__('+1','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['googlePlus'] .= '</a>';
 			$array['resource']['googlePlus'] .= '</div>';

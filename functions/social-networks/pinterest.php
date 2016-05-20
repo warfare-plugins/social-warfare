@@ -138,11 +138,11 @@
 				$array['resource']['pinterest'] .= '<span class="iconFiller">';
 				$array['resource']['pinterest'] .= '<span class="spaceManWilly" style="width:55px;">';
 				$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';
-				$array['resource']['pinterest'] .= '<span class="sw_share"> '.$array['language']['pinterest'].'</span>';
+				$array['resource']['pinterest'] .= '<span class="sw_share"> '.__('Pin','social-warfare').'</span>';
 				$array['resource']['pinterest'] .= '</span></span>';
 				$array['resource']['pinterest'] .= '<span class="sw_count">'.kilomega($array['shares']['pinterest']).'</span>';
 			else:
-				$array['resource']['pinterest'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="sw_share"> '.$array['language']['pinterest'].'</span></span></span></span>';
+				$array['resource']['pinterest'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="sw_share"> '.__('Pin','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['pinterest'] .= '</a>';
 			$array['resource']['pinterest'] .= '</div>';

@@ -81,11 +81,11 @@
 				$array['resource']['linkedIn'] .= '<span class="iconFiller">';
 				$array['resource']['linkedIn'] .= '<span class="spaceManWilly">';
 				$array['resource']['linkedIn'] .= '<i class="sw sw-linkedin"></i>';
-				$array['resource']['linkedIn'] .= '<span class="sw_share"> '.$array['language']['linkedIn'].'</span>';
+				$array['resource']['linkedIn'] .= '<span class="sw_share"> '.__('Share','social-warfare').'</span>';
 				$array['resource']['linkedIn'] .= '</span></span>';
 				$array['resource']['linkedIn'] .= '<span class="sw_count">'.kilomega($array['shares']['linkedIn']).'</span>';
 			else:
-				$array['resource']['linkedIn'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="sw_share"> '.$array['language']['linkedIn'].'</span></span></span></span>';
+				$array['resource']['linkedIn'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="sw_share"> '.__('Share','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['linkedIn'] .= '</a>';
 			$array['resource']['linkedIn'] .= '</div>';

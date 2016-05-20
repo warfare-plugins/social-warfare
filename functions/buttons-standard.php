@@ -197,7 +197,7 @@ function social_warfare_buttons($array = array()) {
 			// Setup the total shares count if it's on the left
 			if($options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes']):
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.$language['total'].'</span></span>';
+				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.__('Shares','social-warfare').'</span></span>';
 				$assets .= '</div>';
 			endif;
 
@@ -221,7 +221,7 @@ function social_warfare_buttons($array = array()) {
 			if( $options['totes'] && $options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes']):
 				if($options['swTotesFormat'] == 'totes'):
 					$assets .= '<div class="nc_tweetContainer totes" data-id="6" >';
-					$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.$language['total'].'</span></span>';
+					$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.__('Shares','social-warfare').'</span></span>';
 					$assets .= '</div>';
 				else:
 					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';

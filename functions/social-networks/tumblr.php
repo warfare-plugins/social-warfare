@@ -88,11 +88,11 @@
 				$array['resource']['tumblr'] .= '<span class="iconFiller">';
 				$array['resource']['tumblr'] .= '<span class="spaceManWilly">';
 				$array['resource']['tumblr'] .= '<i class="sw sw-tumblr"></i>';
-				$array['resource']['tumblr'] .= '<span class="sw_share"> '.$array['language']['tumblr'].'</span>';
+				$array['resource']['tumblr'] .= '<span class="sw_share"> '.__('Share','social-warfare').'</span>';
 				$array['resource']['tumblr'] .= '</span></span>';
 				$array['resource']['tumblr'] .= '<span class="sw_count">'.kilomega($array['shares']['tumblr']).'</span>';
 			else:
-				$array['resource']['tumblr'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-tumblr"></i><span class="sw_share"> '.$array['language']['tumblr'].'</span></span></span></span>';
+				$array['resource']['tumblr'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-tumblr"></i><span class="sw_share"> '.__('Share','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['tumblr'] .= '</a>';
 			$array['resource']['tumblr'] .= '</div>';

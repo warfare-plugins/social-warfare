@@ -72,7 +72,7 @@
 			// Display Total Shares if the Threshold has been met
 			if($options['totes'] && $buttonsArray['totes'] >= $options['minTotes']):
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).'</span><span class="sw_label"> '.$language['total'].'</span>';
+				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).'</span><span class="sw_label"> '.__('Shares','social-warfare').'</span>';
 				$assets .= '</div>';
 			endif;
 

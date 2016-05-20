@@ -80,7 +80,7 @@
 			$array['resource']['email'] = '<div class="nc_tweetContainer sw_email" data-id="'.$array['count'].'" data-network="email">';
 			$link = urlencode(urldecode(sw_process_url( $array['url'] , 'email' , $array['postID'] )));
 			$array['resource']['email'] .= '<a href="mailto:?subject='.rawurlencode($title).'&body='.rawurlencode($description).rawurlencode(' Read here: ') .$link.'" class="nc_tweet">';
-			$array['resource']['email'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-email"></i><span class="sw_share"> '.$array['language']['email'].'</span></span></span></span>';
+			$array['resource']['email'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-email"></i><span class="sw_share"> '.__('Email','social-warfare').'</span></span></span></span>';
 			$array['resource']['email'] .= '</a>';
 			$array['resource']['email'] .= '</div>';
 

@@ -153,11 +153,11 @@
 				$array['resource']['twitter'] .= '<span class="iconFiller">';
 				$array['resource']['twitter'] .= '<span class="spaceManWilly">';
 				$array['resource']['twitter'] .= '<i class="sw sw-twitter"></i>';
-				$array['resource']['twitter'] .= '<span class="sw_share"> '.$array['language']['twitter'].'</span>';
+				$array['resource']['twitter'] .= '<span class="sw_share"> '.__('Tweet','social-warfare').'</span>';
 				$array['resource']['twitter'] .= '</span></span>';
 				$array['resource']['twitter'] .= '<span class="sw_count">'.kilomega($array['shares']['twitter']).'</span>';
 			else:
-				$array['resource']['twitter'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> '.$array['language']['twitter'].'</span></span></span></span>';
+				$array['resource']['twitter'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> '.__('Tweet','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['twitter'] .= '</a>';
 			$array['resource']['twitter'] .= '</div>';

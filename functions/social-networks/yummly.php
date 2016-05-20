@@ -101,11 +101,11 @@
 				$array['resource']['yummly'] .= '<span class="iconFiller">';
 				$array['resource']['yummly'] .= '<span class="spaceManWilly">';
 				$array['resource']['yummly'] .= '<i class="sw sw-yummly"></i>';
-				$array['resource']['yummly'] .= '<span class="sw_share"> '.$array['language']['yummly'].'</span>';
+				$array['resource']['yummly'] .= '<span class="sw_share"> '.__('Yum','social-warfare').'</span>';
 				$array['resource']['yummly'] .= '</span></span>';
 				$array['resource']['yummly'] .= '<span class="sw_count">'.kilomega($array['shares']['yummly']).'</span>';
 			else:
-				$array['resource']['yummly'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="sw_share"> '.$array['language']['yummly'].'</span></span></span></span>';
+				$array['resource']['yummly'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="sw_share"> '.__('Yum','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['yummly'] .= '</a>';
 			$array['resource']['yummly'] .= '</div>';

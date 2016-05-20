@@ -81,11 +81,11 @@
 				$array['resource']['facebook'] .= '<span class="iconFiller">';
 				$array['resource']['facebook'] .= '<span class="spaceManWilly">';
 				$array['resource']['facebook'] .= '<i class="sw sw-facebook"></i>';
-				$array['resource']['facebook'] .= '<span class="sw_share"> '.$array['language']['facebook'].'</span>';
+				$array['resource']['facebook'] .= '<span class="sw_share"> '.__('Share','social-warfare').'</span>';
 				$array['resource']['facebook'] .= '</span></span>';
 				$array['resource']['facebook'] .= '<span class="sw_count">'.kilomega($array['shares']['facebook']).'</span>';
 			else:
-				$array['resource']['facebook'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="sw_share"> '.$array['language']['facebook'].'</span></span></span></span>';
+				$array['resource']['facebook'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="sw_share"> '.__('Share','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['facebook'] .= '</a>';
 			$array['resource']['facebook'] .= '</div>';

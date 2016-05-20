@@ -107,11 +107,11 @@
 				$array['resource']['reddit'] .= '<span class="iconFiller">';
 				$array['resource']['reddit'] .= '<span class="spaceManWilly">';
 				$array['resource']['reddit'] .= '<i class="sw sw-reddit"></i>';
-				$array['resource']['reddit'] .= '<span class="sw_share"> '.$array['language']['reddit'].'</span>';
+				$array['resource']['reddit'] .= '<span class="sw_share"> '.__('Reddit','social-warfare').'</span>';
 				$array['resource']['reddit'] .= '</span></span>';
 				$array['resource']['reddit'] .= '<span class="sw_count">'.kilomega($array['shares']['reddit']).'</span>';
 			else:
-				$array['resource']['reddit'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-reddit"></i><span class="sw_share"> '.$array['language']['reddit'].'</span></span></span></span>';
+				$array['resource']['reddit'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-reddit"></i><span class="sw_share"> '.__('Reddit','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['reddit'] .= '</a>';
 			$array['resource']['reddit'] .= '</div>';

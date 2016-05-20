@@ -89,11 +89,11 @@
 				$array['resource']['stumbleupon'] .= '<span class="iconFiller">';
 				$array['resource']['stumbleupon'] .= '<span class="spaceManWilly">';
 				$array['resource']['stumbleupon'] .= '<i class="sw sw-stumbleupon"></i>';
-				$array['resource']['stumbleupon'] .= '<span class="sw_share"> '.$array['language']['stumbleupon'].'</span>';
+				$array['resource']['stumbleupon'] .= '<span class="sw_share"> '.__('Stumble','social-warfare').'</span>';
 				$array['resource']['stumbleupon'] .= '</span></span>';
 				$array['resource']['stumbleupon'] .= '<span class="sw_count">'.kilomega($array['shares']['stumbleupon']).'</span>';
 			else:
-				$array['resource']['stumbleupon'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-stumbleupon"></i><span class="sw_share"> '.$array['language']['stumbleupon'].'</span></span></span></span>';
+				$array['resource']['stumbleupon'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-stumbleupon"></i><span class="sw_share"> '.__('Stumble','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['stumbleupon'] .= '</a>';
 			$array['resource']['stumbleupon'] .= '</div>';
