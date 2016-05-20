@@ -44,7 +44,7 @@
 		 // Setup our meta box using an array
 		 $meta_boxes[0] = array(
 			  'id'       => 'socialWarfare',
-			  'title'    => 'Social Warfare Custom Options',
+			  'title'    => __('Social Warfare Custom Options','social-warfare'),
 			  'pages'    => $postType,
 			  'context'  => 'normal',
 			  'priority' => 'high',
@@ -52,8 +52,8 @@
 			  
 			  		// Setup the social media image
 					array(
-						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Image',
-						 'desc'  => 'Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1200px by 628px.',
+						 'name'  => '<span class="dashicons dashicons-share"></span> '.__('Social Media Image','social-warfare'),
+						 'desc'  => __('Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1200px by 628px.','social-warfare'),
 						 'id'    => $prefix . 'ogImage',
 						 'type'  => 'image_advanced',
 						 'clone' => false,
@@ -63,8 +63,8 @@
 					
 					// Setup the social media title
 					array(
-						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Title',
-						 'desc'  => 'Add a title that will populate the open graph meta tag which will be used when users share your content onto Facebook, LinkedIn, and Google+. If nothing is provided here, we will use the post title as a backup.',
+						 'name'  => '<span class="dashicons dashicons-share"></span> '. __('Social Media Title','social-warfare'),
+						 'desc'  => __('Add a title that will populate the open graph meta tag which will be used when users share your content onto Facebook, LinkedIn, and Google+. If nothing is provided here, we will use the post title as a backup.','social-warfare'),
 						 'id'    => $prefix . 'ogTitle',
 						 'type'  => 'textarea',
 						 'class' => $prefix . 'ogTitleWrapper',
@@ -73,8 +73,8 @@
 					
 					// Setup the social media description
 					array(
-						 'name'  => '<span class="dashicons dashicons-share"></span> Social Media Description',
-						 'desc'  => 'Add a description that will populate the open graph meta tag which will be used when users share your content onto Facebook, LinkedIn, and Google Plus.',
+						 'name'  => '<span class="dashicons dashicons-share"></span> '.__('Social Media Description','social-warfare'),
+						 'desc'  => __('Add a description that will populate the open graph meta tag which will be used when users share your content onto Facebook, LinkedIn, and Google Plus.','social-warfare'),
 						 'id'    => $prefix . 'ogDescription',
 						 'class' => $prefix . 'ogDescriptionWrapper',
 						 'type'  => 'textarea',
@@ -90,8 +90,8 @@
 					
 					// Setup the pinterest optimized image
 					array(
-						 'name'  => '<i class="sw sw-pinterest"></i> Pinterest Image',
-						 'desc'  => 'Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formated in a 2:3 aspect ratio like 735x1100.',
+						 'name'  => '<i class="sw sw-pinterest"></i> '.__('Pinterest Image','social-warfare'),
+						 'desc'  => __('Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formated in a 2:3 aspect ratio like 735x1102.','social-warfare'),
 						 'id'    => $prefix . 'pinterestImage',
 						 'class' => $prefix . 'pinterestImageWrapper',
 						 'type'  => 'image_advanced',
@@ -101,8 +101,8 @@
 					
 					// Setup the pinterest description
 					array(
-						 'name'  => '<i class="sw sw-pinterest"></i> Pinterest Description',
-						 'desc'  => 'Place a customized message that will be used when this post is shared on Pinterest. Leave this blank to use the title of the post.',
+						 'name'  => '<i class="sw sw-pinterest"></i>'. __('Pinterest Description','social-warfare'),
+						 'desc'  => __('Place a customized message that will be used when this post is shared on Pinterest. Leave this blank to use the title of the post.','social-warfare'),
 						 'id'    => $prefix . 'pinterestDescription',
 						 'class' => $prefix . 'pinterestDescriptionWrapper',
 						 'type'  => 'textarea',
@@ -111,7 +111,7 @@
 					
 					// Setup the Custom Tweet box
 					array(
-						 'name'  => '<i class="sw sw-twitter"></i> Custom Tweet',
+						 'name'  => '<i class="sw sw-twitter"></i> '.__('Custom Tweet','social-warfare'),
 						 'desc'  => 'If this is left blank your post title will be used. '.($options['twitterID'] ? 'Based on your username (@'.str_replace('@','',$options['twitterID']).'), <span class="tweetLinkSection">a link being added,</span> and the current content above' : '<span ="tweetLinkSection">Based on a link being added, and</span> the current content above').', your tweet has <span class="counterNumber">140</span> characters remaining.',
 						 'id'    => $prefix . 'customTweet',
 						 'class' => $prefix . 'customTweetWrapper',
@@ -121,8 +121,7 @@
 					
 					// Set up the location on post options
 					array(
-						 'name'  => '<span class="dashicons dashicons-randomize"></span> Horizontal Buttons Location',
-						 'desc'  => 'Where would you like to have the share buttons displayed on this post? Leave this option on "default" to use the settings you have selected on the Social Warfare settings page.',
+						 'name'  => '<span class="dashicons dashicons-randomize"></span> '.__('Horizontal Buttons Location','social-warfare'),
 						 'id'    => $prefix . 'postLocation',
 						 'class' => $prefix . 'postLocationWrapper',
 						 'type'  => 'select',
@@ -140,8 +139,7 @@
 		 
 		 
 		 $meta_boxes[0]['fields'][] = array(
-						 'name'  => '<span class="dashicons dashicons-randomize"></span> Side Floating Buttons Location',
-						 'desc'  => 'Do you wish to have the floating sidebar buttons on this post?',
+						 'name'  => '<span class="dashicons dashicons-randomize"></span> '.__('Side Floating Buttons Location','social-warfare'),
 						 'id'    => $prefix . 'floatLocation',
 						 'class' => $prefix . 'floatLocationWrapper',
 						 'type'  => 'select',
