@@ -225,7 +225,7 @@ function social_warfare_buttons($array = array()) {
 					$assets .= '</div>';
 				else:
 					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-					$assets .= '<span class="sw_count"><span class="sw_label">'.$language['total'].'</span> '.kilomega($buttonsArray['totes']).'</span>';
+					$assets .= '<span class="sw_count"><span class="sw_label">'.__('Shares','social-warfare').'</span> '.kilomega($buttonsArray['totes']).'</span>';
 					$assets .= '</div>';
 				endif;
 			endif;
