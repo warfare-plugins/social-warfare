@@ -151,7 +151,7 @@
 							'off'=> 'Off'
 						 ),
 						 'clone' => false,
-						 'std'	=> 'default'
+						 'std'	=> 'default',
 		 
 		 );
 		 
