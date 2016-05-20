@@ -53,7 +53,7 @@
 			  		// Setup the social media image
 					array(
 						 'name'  => '<span class="dashicons dashicons-share"></span> '.__('Social Media Image','social-warfare'),
-						 'desc'  => __('Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1200px by 628px.','social-warfare'),
+						 'desc'  => __('Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1,200px by 628px.','social-warfare'),
 						 'id'    => $prefix . 'ogImage',
 						 'type'  => 'image_advanced',
 						 'clone' => false,
@@ -91,7 +91,7 @@
 					// Setup the pinterest optimized image
 					array(
 						 'name'  => '<i class="sw sw-pinterest"></i> '.__('Pinterest Image','social-warfare'),
-						 'desc'  => __('Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formated in a 2:3 aspect ratio like 735x1102.','social-warfare'),
+						 'desc'  => __('Add an image that is optimized for maximum exposure on Pinterest. We recommend using an image that is formatted in a 2:3 aspect ratio like 735x1102.','social-warfare'),
 						 'id'    => $prefix . 'pinterestImage',
 						 'class' => $prefix . 'pinterestImageWrapper',
 						 'type'  => 'image_advanced',
@@ -102,7 +102,7 @@
 					// Setup the pinterest description
 					array(
 						 'name'  => '<i class="sw sw-pinterest"></i>'. __('Pinterest Description','social-warfare'),
-						 'desc'  => __('Place a customized message that will be used when this post is shared on Pinterest. Leave this blank to use the title of the post.','social-warfare'),
+						 'desc'  => __('Craft a customized description that will be used when this post is shared on Pinterest. Leave this blank to use the title of the post.','social-warfare'),
 						 'id'    => $prefix . 'pinterestDescription',
 						 'class' => $prefix . 'pinterestDescriptionWrapper',
 						 'type'  => 'textarea',
