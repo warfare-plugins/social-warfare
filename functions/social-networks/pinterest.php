@@ -76,8 +76,15 @@
 			$array['totes'] += $array['shares']['pinterest'];
 			++$array['count'];
 
-
 			$pi = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true);
+			
+			// Pinterest Username
+			$pinterest_username = $array['options']['pinterestID'];
+			if(isset($pinterest_username) && $pinterest_username != ''):
+				$pu = ' via @'.str_replace('@','',$pinterest_username);
+			else:
+				$pu = '';
+			endif;
 
 			if(sw_is_cache_fresh($array['postID']) == false):
 
@@ -128,7 +135,7 @@
 			$title = str_replace('|','',$title);
 
 			if($pi != ''):
-				$a = '<a data-link="https://pinterest.com/pin/create/button/?url='.$pinterestLink.''.$pi.'&description='.($pd != '' ? urlencode(html_entity_decode($pd, ENT_COMPAT, 'UTF-8')) : urlencode(html_entity_decode($title, ENT_COMPAT, 'UTF-8'))).'" class="nc_tweet" data-count="0">';
+				$a = '<a data-link="https://pinterest.com/pin/create/button/?url='.$pinterestLink.''.$pi.'&description='.($pd != '' ? urlencode(html_entity_decode($pd.$pu, ENT_COMPAT, 'UTF-8')) : urlencode(html_entity_decode($title.$pu, ENT_COMPAT, 'UTF-8'))).'" class="nc_tweet" data-count="0">';
 			else:
 				$a = '<a onClick="var e=document.createElement(\'script\');e.setAttribute(\'type\',\'text/javascript\');e.setAttribute(\'charset\',\'UTF-8\');e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);document.body.appendChild(e);" class="nc_tweet noPop">';
 			endif;
