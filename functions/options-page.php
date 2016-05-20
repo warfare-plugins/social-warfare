@@ -98,22 +98,6 @@
 				'type'		=> 'paragraph',
 				'content'	=> 'Welcome to Social Warfare! Get ready to dominate the world\'s social networks. This is the page where you\'ll select which social media icons to display, where to display them, and in what order.'
 			),
-			'language' => array(
-				'type' => 'select',
-				'name' => 'Language',
-				'content' => array(
-					'da'	=> 'Danish',
-					'nl'	=> 'Dutch',
-					'en' 	=> 'English',
-					'fr' 	=> 'French',
-					'de'	=> 'German',
-					'it' 	=> 'Italian',
-					'pt'	=> 'Portuguese',
-					'ru'	=> 'Russian',
-					'uk'	=> 'Ukrainian'
-				),
-				'default' => 'en'
-			),
 			'sw_twitter_card' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Activate Twitter Cards?',

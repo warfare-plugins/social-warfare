@@ -21,7 +21,6 @@
 		// Set defaults for everthing
 		if(!isset($sw_user_options['locationPost'])) 				{ $sw_user_options['locationPost'] 		= 'both'; 	};
 		if(!isset($sw_user_options['locationPage'])) 				{ $sw_user_options['locationPage'] 		= 'both'; 	};
-		if(!isset($sw_user_options['language'])) 					{ $sw_user_options['language'] 			= 'en'; 	};
 		if(!isset($sw_user_options['locationSite'])) 				{ $sw_user_options['locationSite'] 		= 'both'; 	};
 
 		// Default Buttons to Display

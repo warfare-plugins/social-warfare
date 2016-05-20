@@ -168,12 +168,8 @@ function social_warfare_buttons($array = array()) {
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
 
-			$language = array();
-			$language = apply_filters('sw_languages',$language);
-
 			// Setup the buttons array to pass into the 'sw_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares($postID);
-			$buttonsArray['language'] = apply_filters( 'sw_languages' , $language );
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
 			$buttonsArray['options'] = $options;

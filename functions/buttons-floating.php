@@ -46,9 +46,6 @@
 				$floatOption = 'floatNone';
 			endif;
 
-			$language = array();
-			$language = apply_filters('sw_languages',$language);
-
 			if($options['floatStyleSource'] == true):
 				$options['sideDColorSet'] = $options['dColorSet'];
 				$options['sideIColorSet'] = $options['iColorSet'];
@@ -57,7 +54,6 @@
 
 			// Setup the buttons array to pass into the 'sw_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares($postID);
-			$buttonsArray['language'] = apply_filters( 'sw_languages' , $language );
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
 			$buttonsArray['options'] = $options;
