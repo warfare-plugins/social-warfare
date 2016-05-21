@@ -40,7 +40,7 @@
 		 endforeach;
 		 $postType[] = 'page';
 		 $postType[] = 'post';
-		 
+		 		 
 		 // Setup our meta box using an array
 		 $meta_boxes[0] = array(
 			  'id'       => 'socialWarfare',
@@ -112,12 +112,7 @@
 					// Setup the Custom Tweet box
 					array(
 						 'name'  => '<i class="sw sw-twitter"></i> '.__('Custom Tweet','social-warfare'),
-						 
-						 
-						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@$1%s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$options['twitterID']),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$options['twitterID']),'<span class="counterNumber">140</span>')),
-						 
-						 
-						 'desc'  => 'If this is left blank your post title will be used. '.($options['twitterID'] ? 'Based on your username (@'.str_replace('@','',$options['twitterID']).'), <span class="tweetLinkSection">a link being added,</span> and the current content above' : '<span ="tweetLinkSection">Based on a link being added, and</span> the current content above').', your tweet has <span class="counterNumber">140</span> characters remaining.',
+						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@$1%s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$twitter_handle),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$twitter_handle),'<span class="counterNumber">140</span>')),
 						 'id'    => $prefix . 'customTweet',
 						 'class' => $prefix . 'customTweetWrapper',
 						 'type'  => 'textarea',
@@ -166,11 +161,11 @@
 					
 					// Twitter ID
 		 $meta_boxes[0]['fields'][] =array(
-						 'name'  => $options['twitterID'],
+						 'name'  => $twitter_handle,
 						 'id'    => 'twitterID',
 						 'class' => 'twitterIDWrapper',
 						 'type'  => 'hidden',
-						 'std'   => $options['twitterID']
+						 'std'   => $twitter_handle
 					);
 		 
 		 // Return the meta boxes

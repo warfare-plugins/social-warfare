@@ -17,7 +17,7 @@
 							onkeyup: function() {
 								var value = jQuery('.mce-first textarea').val();
 								var strLength = value.length;
-								var handle = jQuery('#socialWarfare .twitterID label').html();
+								var handle = jQuery('#socialWarfare .twitterIDWrapper label').html();
 								if(typeof handle === 'undefined') {
 									var remaining = 140 - value.length - 23;
 								} else {

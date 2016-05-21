@@ -29,12 +29,12 @@ function smDescriptionRemaining() {
 // Function for Twitter Box Counting
 function twitterRemaining() {
 	var smTwitter = jQuery('#socialWarfare textarea#nc_customTweet').val();
-	var handle = jQuery('#socialWarfare .twitterID label').html();
-	if(smTwitter.indexOf('http') > -1) { 
+	var handle = jQuery('#socialWarfare .twitterIDWrapper label').html();
+	if(smTwitter.indexOf('http') > -1 || smTwitter.indexOf('https') > -1) { 
 		linkSpace = 0;
 		jQuery('.tweetLinkSection').css({'text-decoration':'line-through'});
 	} else { 
-		linkSpace = 23; 
+		linkSpace = 24; 
 		jQuery('.tweetLinkSection').css({'text-decoration':'none'});
 	};
 	if(typeof handle === 'undefined') {
