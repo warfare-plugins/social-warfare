@@ -40,7 +40,7 @@
 		 endforeach;
 		 $postType[] = 'page';
 		 $postType[] = 'post';
-		 		 
+		 
 		 // Setup our meta box using an array
 		 $meta_boxes[0] = array(
 			  'id'       => 'socialWarfare',
@@ -112,7 +112,7 @@
 					// Setup the Custom Tweet box
 					array(
 						 'name'  => '<i class="sw sw-twitter"></i> '.__('Custom Tweet','social-warfare'),
-						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@$1%s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$twitter_handle),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$twitter_handle),'<span class="counterNumber">140</span>')),
+						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@%1$s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has %2$s characters remaining.','social-warfare'),str_replace('@','',$options['twitterID']),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has %s characters remaining.','social-warfare'),'<span class="counterNumber">140</span>')),
 						 'id'    => $prefix . 'customTweet',
 						 'class' => $prefix . 'customTweetWrapper',
 						 'type'  => 'textarea',
@@ -161,11 +161,11 @@
 					
 					// Twitter ID
 		 $meta_boxes[0]['fields'][] =array(
-						 'name'  => $twitter_handle,
+						 'name'  => $options['twitterID'],
 						 'id'    => 'twitterID',
 						 'class' => 'twitterIDWrapper',
 						 'type'  => 'hidden',
-						 'std'   => $twitter_handle
+						 'std'   => $options['twitterID']
 					);
 		 
 		 // Return the meta boxes
