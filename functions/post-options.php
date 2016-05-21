@@ -112,6 +112,11 @@
 					// Setup the Custom Tweet box
 					array(
 						 'name'  => '<i class="sw sw-twitter"></i> '.__('Custom Tweet','social-warfare'),
+						 
+						 
+						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@$1%s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$options['twitterID']),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has $2%s characters remaining.','social-warfare'),str_replace('@','',$options['twitterID']),'<span class="counterNumber">140</span>')),
+						 
+						 
 						 'desc'  => 'If this is left blank your post title will be used. '.($options['twitterID'] ? 'Based on your username (@'.str_replace('@','',$options['twitterID']).'), <span class="tweetLinkSection">a link being added,</span> and the current content above' : '<span ="tweetLinkSection">Based on a link being added, and</span> the current content above').', your tweet has <span class="counterNumber">140</span> characters remaining.',
 						 'id'    => $prefix . 'customTweet',
 						 'class' => $prefix . 'customTweetWrapper',
