@@ -126,11 +126,12 @@
 						 'class' => $prefix . 'postLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
-						 	'default' => 'Default',
-							'above'=>'Above the Content',
-							'below' => 'Below the Content', 
-							'both' => 'Both Above and Below the Content', 
-							'none' => 'None/Manual Placement'),
+						 	'default'	=> __('Default','social-warfare'),
+							'above'		=> __('Above the Content','social-warfare'),
+							'below' 	=> __('Below the Content','social-warfare'),
+							'both' 		=> __('Both Above and Below the Content','social-warfare'),
+							'none' 		=> __('None/Manual Placement','social-warfare')
+						 ),
 						 'clone' => false,
 						 'std'	 => 'default'
 					)
@@ -144,9 +145,9 @@
 						 'class' => $prefix . 'floatLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
-						 	'default' => 'Default',
-						 	'on' => 'On',
-							'off'=> 'Off'
+						 	'default' 	=> __('Default','social-warfare'),
+						 	'on' 		=> __('On','social-warfare'),
+							'off'		=> __('Off','social-warfare')
 						 ),
 						 'clone' => false,
 						 'std'	=> 'default',
