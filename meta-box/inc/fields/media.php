@@ -15,12 +15,12 @@ class RWMB_Media_Field extends RWMB_Field
 		wp_enqueue_style( 'rwmb-media', RWMB_CSS_URL . 'media.css', array(), RWMB_VER );
 		wp_enqueue_script( 'rwmb-media', RWMB_JS_URL . 'media.js', array( 'jquery-ui-sortable', 'underscore', 'backbone' ), RWMB_VER, true );
 		wp_localize_script( 'rwmb-media', 'i18nRwmbMedia', array(
-			'add'                => apply_filters( 'rwmb_media_add_string', _x( '+ Add Media', 'media', 'meta-box' ) ),
+			'add'                => apply_filters( 'rwmb_media_add_string', __( 'Add Media', 'default' ) ),
 			'single'             => apply_filters( 'rwmb_media_single_files_string', _x( ' file', 'media', 'meta-box' ) ),
 			'multiple'           => apply_filters( 'rwmb_media_multiple_files_string', _x( ' files', 'media', 'meta-box' ) ),
-			'remove'             => apply_filters( 'rwmb_media_remove_string', _x( 'Remove', 'media', 'meta-box' ) ),
-			'edit'               => apply_filters( 'rwmb_media_edit_string', _x( 'Edit', 'media', 'meta-box' ) ),
-			'view'               => apply_filters( 'rwmb_media_view_string', _x( 'View', 'media', 'meta-box' ) ),
+			'remove'             => apply_filters( 'rwmb_media_remove_string', __( 'Remove', 'default' ) ),
+			'edit'               => apply_filters( 'rwmb_media_edit_string', __( 'Edit', 'default' ) ),
+			'view'               => apply_filters( 'rwmb_media_view_string', __( 'View', 'default' ) ),
 			'noTitle'            => _x( 'No Title', 'media', 'meta-box' ),
 			'loadingUrl'         => RWMB_URL . 'img/loader.gif',
 			'extensions'         => self::get_mime_extensions(),
