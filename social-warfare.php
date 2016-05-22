@@ -21,16 +21,6 @@ define( 'SW_META_DIR' , trailingslashit( $pluginDir.'/meta-box' ) );
 define( 'SW_PLUGIN_DIR' , $pluginUrl );
 /*****************************************************************
 *                                                                *
-*   LANGUAGES & LOCALIZATION						             *
-*                                                                *
-******************************************************************/
-function sw_localization_init() {
-	$plugin_dir = basename(dirname(__FILE__));
-	load_plugin_textdomain( 'social-warfare', false, $plugin_dir .'/languages' );
-}
-add_action('plugins_loaded', 'sw_localization_init');
-/*****************************************************************
-*                                                                *
 *   INCLUDES: ALL THE FUNCTIONS FILES          					 *
 *                                                                *
 ******************************************************************/
@@ -114,6 +104,24 @@ function enqueueSocialWarfareAdminScripts() {
 	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
 	wp_enqueue_script( 'social_warfare_admin_script', SW_PLUGIN_DIR . '/admin.js',array( 'jquery' ),SW_VERSION);
 }
+/*****************************************************************
+*                                                                *
+*   LANGUAGES & LOCALIZATION						             *
+*                                                                *
+******************************************************************/
+function sw_localization_init() {
+	$plugin_dir = basename(dirname(__FILE__));
+	load_plugin_textdomain( 'social-warfare', false, $plugin_dir .'/languages' );
+}
+add_action('plugins_loaded', 'sw_localization_init');
+
+function sw_localize_admin_scripts() {
+	wp_localize_script('social_warfare_admin_script', 'sw_localize_admin', array(
+			'sw_characters_remaining' => __('Characters Remaining', 'social-warfare')
+		)
+	);
+};
+add_action('admin_enqueue_scripts', 'sw_localize_admin_scripts');
 
 // Add the Social Warfare Content Filter
 add_filter('the_content','social_warfare_wrapper',200);

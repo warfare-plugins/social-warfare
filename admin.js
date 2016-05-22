@@ -58,13 +58,13 @@ jQuery(document).ready( function() {
 	if(jQuery('#socialWarfare.postbox').length) {
 		
 		// Add the CountDown Box for the Social Media Title
-		jQuery('#socialWarfare #nc_ogTitle').parent().prepend('<div class="sw_CountDown"><span class="counterNumber">60</span> Characters Remaining</div>');
+		jQuery('#socialWarfare #nc_ogTitle').parent().prepend('<div class="sw_CountDown"><span class="counterNumber">60</span> '+sw_localize_admin.sw_characters_remaining+'</div>');
 		
 		// Add the CountDown Box for the Social Media Description
-		jQuery('#socialWarfare #nc_ogDescription').parent().prepend('<div class="sw_CountDown"><span class="counterNumber">150</span> Characters Remaining</div>');
+		jQuery('#socialWarfare #nc_ogDescription').parent().prepend('<div class="sw_CountDown"><span class="counterNumber">150</span> '+sw_localize_admin.sw_characters_remaining+'</div>');
 		
 		// Add the CountDown Box for the Twitter Box
-		jQuery('#socialWarfare #nc_customTweet').parent().prepend('<div class="sw_CountDown"><span class="counterNumber">118</span> Characters Remaining</div>');
+		jQuery('#socialWarfare #nc_customTweet').parent().prepend('<div class="sw_CountDown"><span class="counterNumber">118</span> '+sw_localize_admin.sw_characters_remaining+'</div>');
 		
 		smTitleRemaining();
 		jQuery('#socialWarfare textarea#nc_ogTitle').on('input', function() { smTitleRemaining(); });
