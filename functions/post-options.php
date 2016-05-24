@@ -52,10 +52,9 @@
 		 	$post_id = $_GET['post'];
 			$author_id 			= sw_get_author($post_id);
 			$twitter_handle 	= get_the_author_meta( 'sw_twitter' , $author_id);
-		 endif;
 		 
 		 // Fetch the Twitter handle for the logged in user if the above fails
-		 if(!$twitter_handle):
+		 else:
 			 $logged_in_user 	= get_current_user_id();
 			 $twitter_handle 	= get_the_author_meta( 'sw_twitter' , $logged_in_user);
 		 endif;
