@@ -142,6 +142,7 @@
     color: #30394f;
     font-size: 18px;
 }
+#socialWarfare .rwmb-divider-wrapper {max-height:1px;clear:both;}
 #socialWarfare .rwmb-label { margin-bottom:10px; }
 #socialWarfare h2.hndle span:before {content:'p';margin-right:10px;font-family:"sw-icon-font";vertical-align:middle;}
 #socialWarfare .dashicons, #socialWarfare .sw {vertical-align:middle;margin-right:10px;font-size:18px;}
