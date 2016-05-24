@@ -27,8 +27,8 @@
 
 	};
 
-	add_filter( 'rwmb_meta_boxes', 'nc_register_meta_boxes' );
-	function nc_register_meta_boxes( $meta_boxes )
+	add_filter( 'rwmb_meta_boxes', 'sw_register_meta_boxes' );
+	function sw_register_meta_boxes( $meta_boxes )
 	{
 		
 		// Setup the prefix to avoid conflicts
@@ -40,7 +40,37 @@
 		 endforeach;
 		 $postType[] = 'page';
 		 $postType[] = 'post';
+
+/*****************************************************************
+                                                                
+           FETCH THE TWITTER HANDLE FOR TWEET COUNTS         
+                                                                
+******************************************************************/
+
+		 // Fetch the Twitter handle for the Post Author if it exists
+		 if(isset($_GET['post'])):
+		 	$post_id = $_GET['post'];
+			$author_id 			= sw_get_author($post_id);
+			$twitter_handle 	= get_the_author_meta( 'sw_twitter' , $author_id);
+		 endif;
 		 
+		 // Fetch the Twitter handle for the logged in user if the above fails
+		 if(!$twitter_handle):
+			 $logged_in_user 	= get_current_user_id();
+			 $twitter_handle 	= get_the_author_meta( 'sw_twitter' , $logged_in_user);
+		 endif;
+		 
+		 // Fetch the site-wide Twitter Handle if both of the above fail
+		 if(!$twitter_handle):
+		 	$twitter_handle = $options['twitterID'];
+		 endif;
+
+/*****************************************************************
+                                                                
+           BUILD THE OPTIONS FIELDS         
+                                                                
+******************************************************************/
+
 		 // Setup our meta box using an array
 		 $meta_boxes[0] = array(
 			  'id'       => 'socialWarfare',
@@ -112,7 +142,7 @@
 					// Setup the Custom Tweet box
 					array(
 						 'name'  => '<i class="sw sw-twitter"></i> '.__('Custom Tweet','social-warfare'),
-						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@%1$s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has %2$s characters remaining.','social-warfare'),str_replace('@','',$options['twitterID']),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has %s characters remaining.','social-warfare'),'<span class="counterNumber">140</span>')),
+						 'desc'  => ($options['twitterID'] ? sprintf(__('If this is left blank your post title will be used. Based on your username (@%1$s), <span class="tweetLinkSection">a link being added,</span> and the current content above, your tweet has %2$s characters remaining.','social-warfare'),str_replace('@','',$twitter_handle),'<span class="counterNumber">140</span>') : sprintf(__('If this is left blank your post title will be used. <span ="tweetLinkSection">Based on a link being added, and</span> the current content above, your tweet has %s characters remaining.','social-warfare'),'<span class="counterNumber">140</span>')),
 						 'id'    => $prefix . 'customTweet',
 						 'class' => $prefix . 'customTweetWrapper',
 						 'type'  => 'textarea',
@@ -162,11 +192,11 @@
 					
 					// Twitter ID
 		 $meta_boxes[0]['fields'][] =array(
-						 'name'  => $options['twitterID'],
+						 'name'  => $twitter_handle,
 						 'id'    => 'twitterID',
 						 'class' => 'twitterIDWrapper',
 						 'type'  => 'hidden',
-						 'std'   => $options['twitterID']
+						 'std'   => $twitter_handle
 					);
 		 
 		 // Return the meta boxes
