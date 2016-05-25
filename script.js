@@ -22,7 +22,7 @@
 })(jQuery);
 jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
 	if(jQuery(this).hasClass('noPop') || !jQuery(this).attr("data-link")) {} else {
-		event.preventDefault();
+		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 		href = jQuery(this).attr("data-link");
 		href = href.replace("’","'");
 		if (jQuery(this).hasClass("pinterest") || jQuery(this).hasClass("buffer_link"))
