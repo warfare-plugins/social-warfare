@@ -656,7 +656,7 @@
 			'googleAnalytics' => array(
 				'type' => 'checkbox',
 				'content' => 'Activate Google Analytics Tracking?',
-				'default' => 0
+				'default' => false
 			),
 			'analyticsMedium' => array(
 				'type' => 'textbox',
