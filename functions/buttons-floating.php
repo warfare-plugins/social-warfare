@@ -19,7 +19,7 @@
 		elseif( is_singular() ):
 			$postType = get_post_type($postID);
 			if(isset($options['floatLocation'.$postType])):
-				$visilibity = $options['floatLocation'.$postType];
+				$visibility = $options['floatLocation'.$postType];
 			else:
 				$visibility = 'on';
 			endif;
