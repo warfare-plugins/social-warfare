@@ -13,7 +13,7 @@
 			'email' => array(
 				 'type' => 'checkbox',
 				 'content' => 'Email',
-				 'default' => 0
+				 'default' => false
 			)
 		);
 

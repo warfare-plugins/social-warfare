@@ -101,7 +101,7 @@
 			'sw_twitter_card' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Activate Twitter Cards?',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'iconDisplayInfo' => array(
 				'type'		=> 'paragraph',
@@ -110,42 +110,42 @@
 			'googlePlus' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Google+',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'twitter' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Twitter',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'facebook' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Facebook',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'pinterest' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Pinterest',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'linkedIn' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'LinkedIn',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'totes' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Show Total Shares',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'totesEach' => array(
 				'type'		=> 'checkbox',
 				'content'	=> 'Show Individual Button Counts',
-				'default'	=> 1
+				'default'	=> true
 			),
 			'minTotes' => array(
 				'type'		=> 'textbox',
 				'content'	=> 'Minimum Number of shares required before showing counts?',
-				'default'	=> 0
+				'default'	=> true
 			),
 			'orderOfIconsDescription' => array(
 				'type'		=> 'paragraph',

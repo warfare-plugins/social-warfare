@@ -13,7 +13,7 @@
 			'yummly' => array(
 				 'type' => 'checkbox',
 				 'content' => 'Yummly',
-				 'default' => 0
+				 'default' => false
 			)
 		);
 

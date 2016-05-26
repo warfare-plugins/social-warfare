@@ -13,7 +13,7 @@
 			'reddit' => array(
 				 'type' => 'checkbox',
 				 'content' => 'Reddit',
-				 'default' => 0
+				 'default' => false
 			)
 		);
 

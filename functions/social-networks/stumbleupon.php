@@ -13,7 +13,7 @@
 			'stumbleupon' => array(
 				 'type' => 'checkbox',
 				 'content' => 'StumbleUpon',
-				 'default' => 0
+				 'default' => false
 			)
 		);
 

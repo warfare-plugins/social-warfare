@@ -13,7 +13,7 @@
 			'tumblr' => array(
 				 'type' => 'checkbox',
 				 'content' => 'Tumblr',
-				 'default' => 0
+				 'default' => false
 			)
 		);
 		// Call the function that adds the On / Off Switch and Sortable Option

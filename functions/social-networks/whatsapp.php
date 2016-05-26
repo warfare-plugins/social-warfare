@@ -13,7 +13,7 @@
 			'whatsapp' => array(
 				 'type' => 'checkbox',
 				 'content' => 'WhatsApp',
-				 'default' => 0
+				 'default' => false
 			)
 		);
 
