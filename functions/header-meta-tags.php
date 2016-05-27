@@ -529,7 +529,7 @@
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.$info['description'].'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:image" content="'.$info['imageURL'].'">';
 							if($info['sw_user_options']['twitterID']):
-								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.$info['sw_user_options']['twitterID'].'">';
+								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.str_replace('@','',$info['sw_user_options']['twitterID']).'">';
 							endif;
 							if($info['user_twitter_handle']):
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:creator" content="@'.str_replace('@','',$info['user_twitter_handle']).'">';
@@ -541,7 +541,7 @@
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.str_replace('"','\'',$info['title']).'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.str_replace('"','\'',$info['description']).'">';
 							if($info['sw_user_options']['twitterID']):
-								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.$info['sw_user_options']['twitterID'].'">';
+								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.str_replace('@','',$info['sw_user_options']['twitterID']).'">';
 							endif;
 							if($info['user_twitter_handle']):
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:creator" content="@'.str_replace('@','',$info['user_twitter_handle']).'">';
