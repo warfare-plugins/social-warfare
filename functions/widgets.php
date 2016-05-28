@@ -1,166 +1,253 @@
 <?php 
 
+/*************************************************************
+
+	POPULAR POSTS WIDGET CLASS
+
+**************************************************************/
 class sw_popular_posts_widget extends WP_Widget {
 
-	// constructor
+	// Class Constructor
 	function sw_popular_posts_widget() {
-		parent::__construct(false, $name = __('Popular Posts by Social Warfare', 'wp_widget_plugin') );
+		parent::__construct(false, $name = 'Social Warfare: Popular Posts' );
 	}
 	
-	// widget form creation
+/*************************************************************
+
+	FUNCTION - CREATE THE WIDGET FORM
+
+**************************************************************/	
+
 	function form($instance) {
 	
-	// Check values
+	// Check For Previously Set Values
 	if( $instance ) {
-		 $title = esc_attr($instance['title']);
-		 $count = esc_attr($instance['count']);
-		 $timeframe = esc_textarea($instance['timeframe']);
-		 $network = esc_textarea($instance['network']);
-		 $showCount = esc_textarea($instance['showCount']);
-		 $countLabel = esc_textarea($instance['countLabel']);
-		 $style = esc_textarea($instance['style']);
+		 $title 		= esc_attr($instance['title']);
+		 $count 		= esc_attr($instance['count']);
+		 $timeframe 	= esc_textarea($instance['timeframe']);
+		 $network 		= esc_textarea($instance['network']);
+		 $showCount 	= esc_textarea($instance['showCount']);
+		 $countLabel 	= esc_textarea($instance['countLabel']);
+		 $style 		= esc_textarea($instance['style']);
+		 $thumbnails 	= esc_textarea($instance['thumbnails']);
+		 
+	// If not previous values, set some by default
 	} else {
-		 $title = 'Popular Posts';
-		 $count = '10';
-		 $timeframe = '180';
-		 $network = 'totes';
-		 $showCount = 'true';
-		 $countLabel = 'Total Shares';
-		 $style = 'Default';
+		 $title 		= 'Popular Posts';
+		 $count 		= '10';
+		 $timeframe 	= '180';
+		 $network 		= 'totes';
+		 $showCount 	= 'true';
+		 $countLabel 	= 'Total Shares';
+		 $style 		= 'Default';
+		 $thumbnails 	= 'true';
 	}
 	
-	$options = sw_get_user_options();	
+	// Fetch the Social Warfare Options
+	$options = sw_get_user_options();
+	
+	// Fetch the networks that are active on this blog
 	$availableNetworks = $options['newOrderOfIcons'];
 
+	// Build the Widget Form
+	$form = '';	
 	
-	?>
+	// The Widget Title Field
+	$form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('title').'">Widget Title</label>';
+	$form .= '<input class="widefat" id="'.$this->get_field_id('title').'" name="'.$this->get_field_name('title').'" type="text" value="'.$title.'" />';
+	$form .= '</p>';
 	
-	<p>
-	<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Widget Title', 'wp_widget_plugin'); ?></label>
-	<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
-	</p>
+	// Number of Posts to Display Field
+	$form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('count').'">How many posts would you like to display?</label>';
+	$form .= '<input class="widefat" id="'.$this->get_field_id('count').'" name="'.$this->get_field_name('count').'" type="number" value="'.$count.'" min="0" />';
+	$form .= '</p>';
 	
-	<p>
-	<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('How many posts would you like to display?', 'wp_widget_plugin'); ?></label>
-	<input class="widefat" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="number" value="<?php echo $count; ?>" min="0" />
-	</p>
-	
-	<p style="display:none;">
-	<label for="<?php echo $this->get_field_id('timeframe'); ?>"><?php _e('What is maximum age of a post (in days) that you would like to include?', 'wp_widget_plugin'); ?></label>
-	<input class="widefat" id="<?php echo $this->get_field_id('timeframe'); ?>" name="<?php echo $this->get_field_name('timeframe'); ?>" value="<?php echo $timeframe; ?>" type="number" min="0">
-	</p>
+	// Age of the pots to display field
+	$form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('timeframe').'">What is maximum age of a post (in days) that you would like to include (0 = Unlimited)?</label>';
+	$form .= '<input class="widefat" id="'.$this->get_field_id('timeframe').'" name="'.$this->get_field_name('timeframe').'" value="'.$timeframe.'" type="number" min="0">';
+	$form .= '</p>';
     
-    <p>
-	<label for="<?php echo $this->get_field_id('network'); ?>"><?php _e('Which network would you like to base your posts popularity on?', 'wp_widget_plugin'); ?></label>
-	<select class="widefat" id="<?php echo $this->get_field_id('network'); ?>" name="<?php echo $this->get_field_name('network'); ?>">
-    	<option value="totes" <?php if($network=='totes') echo 'selected'; ?>>All Networks</option>
-        
-        <?php
+	// Which networks to use as the basis field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('network').'">Which network would you like to base your posts popularity on?</label>';
+	$form .= '<select class="widefat" id="'.$this->get_field_id('network').'" name="'.$this->get_field_name('network').'">';
+    $form .= '<option value="totes"'. ( $network == 'totes' ? 'selected' : '' ).'>All Networks</option>';
 		foreach($availableNetworks as $key => $value):
 			if($options[$key]) {
 				if($network == $key.'_shares'):
-        			echo '<option value="'.$key.'_shares" selected>'.$value.'</option>';
+        			$form .= '<option value="'.$key.'_shares" selected>'.$value.'</option>';
 				else:
-					echo '<option value="'.$key.'_shares">'.$value.'</option>';
+					$form .= '<option value="'.$key.'_shares">'.$value.'</option>';
 				endif;
 			};
 		endforeach;
-
-		?>
-
-    </select>
-	</p>
+	$form .= '</select>';
+	$form .= '</p>';
     
-     <p>
-	<label for="<?php echo $this->get_field_id('showCount'); ?>"><?php _e('Would you like to show the count?', 'wp_widget_plugin'); ?></label>
-	<select class="widefat" id="<?php echo $this->get_field_id('showCount'); ?>" name="<?php echo $this->get_field_name('showCount'); ?>">
-    	<option value="true" <?php if($showCount=='true') echo 'selected'; ?>>Yes</option>
-        <option value="false" <?php if($showCount=='false') echo 'selected'; ?>>No</option>
-    </select>
-	</p>
+	// Display the share count toggle field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('showCount').'">Would you like to show the count?</label>';
+	$form .= '<select class="widefat" id="'.$this->get_field_id('showCount').'" name="'.$this->get_field_name('showCount').'">';
+    $form .= '<option value="true" '.( $showCount == 'true' ? 'selected' : '').'>Yes</option>';
+    $form .= '<option value="false" '.( $showCount == 'false' ? 'selected' : '').'>No</option>';
+    $form .= '</select>';
+	$form .= '</p>';
     
-    	<p>
-	<label for="<?php echo $this->get_field_id('countLabel'); ?>"><?php _e('Count Number Label', 'wp_widget_plugin'); ?></label>
-	<input class="widefat" id="<?php echo $this->get_field_id('countLabel'); ?>" name="<?php echo $this->get_field_name('countLabel'); ?>" type="text" value="<?php echo $countLabel; ?>" />
-	</p>
-         <p>
-	<label for="<?php echo $this->get_field_id('style'); ?>"><?php _e('Which visual style would you like to use?', 'wp_widget_plugin'); ?></label>
-	<select class="widefat" id="<?php echo $this->get_field_id('style'); ?>" name="<?php echo $this->get_field_name('style'); ?>">
-    	
-        <!-- Begin the options for the visual Selector -->
-       	<option value="style1" <?php if($style=='style1') echo 'selected'; ?>>First Style</option>
-        <option value="style2" <?php if($style=='style2') echo 'selected'; ?>>Second Style</option>
-    	<!-- End the options for the visual Selector -->
-        
-    </select>
-	</p>
-    
-    
-	<?php
-	}
+	// Count Label Field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('countLabel').'">Count Number Label</label>';
+	$form .= '<input class="widefat" id="'.$this->get_field_id('countLabel').'" name="'.$this->get_field_name('countLabel').'" type="text" value="'.$countLabel.'" />';
+	$form .= '</p>';
 	
-	// update widget
+	// Post thumbnails toggle field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('thumbnails').'">Would you like to display thumbnails?</label>';
+	$form .= '<select class="widefat" id="'.$this->get_field_id('thumbnails').'" name="'.$this->get_field_name('thumbnails').'">';
+    $form .= '<option value="true" '.( $thumbnails == 'true' ? 'selected' : '').'>Yes</option>';
+    $form .= '<option value="false" '.( $thumbnails == 'false' ? 'selected' : '').'>No</option>';
+    $form .= '</select>';
+	$form .= '</p>';
+	
+	// Color Scheme Field
+	$form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('style').'">Which color scheme would you like to use?</label>';
+	$form .= '<select class="widefat" id="'.$this->get_field_id('style').'" name="'.$this->get_field_name('style').'">';
+    $form .= '<option value="style1" '.( $style == 'style1' ? 'selected' : '' ) .'>First Style</option>';
+    $form .= '<option value="style2" '.( $style == 'style2' ? 'selected' : '' ) .'>Second Style</option>';
+    $form .= '</select>';
+	$form .= '</p>';
+    
+	// Output the form fields
+	echo $form;
+	
+	}
+
+/*************************************************************
+
+	FUNCTION - UPDATE VALUES FROM THE FORM
+
+**************************************************************/	
+	
 	function update($new_instance, $old_instance) {
 		  $instance = $old_instance;
-		  // Fields
-		  $instance['title'] = strip_tags($new_instance['title']);
-		  $instance['count'] = strip_tags($new_instance['count']);
-		  $instance['timeframe'] = strip_tags($new_instance['timeframe']);
-		  $instance['network'] = strip_tags($new_instance['network']);
-		  $instance['showCount'] = strip_tags($new_instance['showCount']);
-		  $instance['countLabel'] = strip_tags($new_instance['countLabel']);
-		  $instance['style'] = strip_tags($new_instance['style']);
+		  
+		  // Fetch the values from the form
+		  $instance['title'] 		= strip_tags($new_instance['title']);
+		  $instance['count'] 		= strip_tags($new_instance['count']);
+		  $instance['timeframe'] 	= strip_tags($new_instance['timeframe']);
+		  $instance['network'] 		= strip_tags($new_instance['network']);
+		  $instance['showCount'] 	= strip_tags($new_instance['showCount']);
+		  $instance['countLabel'] 	= strip_tags($new_instance['countLabel']);
+		  $instance['style'] 		= strip_tags($new_instance['style']);
+		  $instance['thumbnails'] 	= strip_tags($new_instance['thumbnails']);
 		 return $instance;
 	}
-	
-	// display widget
+/*************************************************************
+
+	FUNCTION - OUTPUT THE WIDGET TO THE SITE
+
+**************************************************************/	
+
 	function widget($args, $instance) {
-	   extract( $args );
-	   // these are the widget options
-	   $title = apply_filters('widget_title', $instance['title']);
-	   $count = $instance['count'];
-	   $timeframe = $instance['timeframe'].' days ago';
-	   $network = $instance['network'];
-	   $showCount = $instance['showCount'];
-	   $countLabel = $instance['countLabel'];
-	   $style	= $instance['style'];
+		extract( $args );
 	   
-	   echo $before_widget;
-	   // Display the widget
-	   echo '<div class="widget-text wp_widget_plugin_box sw_pop_'.$style.'">';
+		// Fetch the field values from the form
+		$title 		= apply_filters('widget_title', $instance['title']);
+		$count 		= $instance['count'];
+		$timeframe 	= $instance['timeframe'];
+		$network 	= $instance['network'];
+		$showCount 	= $instance['showCount'];
+		$countLabel 	= $instance['countLabel'];
+		$style		= $instance['style'];
+		$thumbnails	= $instance['thumbnails'];
+		
+		// Begin output of the widget html
+		echo $before_widget;
+		echo '<div class="widget-text wp_widget_plugin_box sw_pop_'.$style.'">';
+		
+		// Check if title is set
+		if ( $title ) {
+			echo $before_title . $title . $after_title;
+		}
 	
-	   // Check if title is set
-	   if ( $title ) {
-		  echo $before_title . $title . $after_title;
-	   }
-	
-	   // Check if text is set
-	  $args = array(
-			"posts_per_page" => $count,
-			"post_type" => "post",
-			"meta_key" => '_'.$network,
-			"orderby" => "meta_value_num",
-			"order" => "DESC"
-		);
+		// If a custom timeframe is not being used....
+		if( $timeframe == 0 ):
+		
+			// Create the arguments for a query without a timeframe
+			$args = array(
+				'posts_per_page' 	=> $count,
+				'post_type' 		=> 'post',
+				'meta_key' 			=> '_'.$network,
+				'orderby' 			=> 'meta_value_num',
+				'order' 			=> 'DESC',
+			);
+		
+		// If a custom timeframe is being used....
+		else:
+		
+			// Create the arguments for a query with a timeframe
+			$args = array(
+				'posts_per_page' 	=> $count,
+				'post_type' 		=> 'post',
+				'meta_key' 			=> '_'.$network,
+				'orderby' 			=> 'meta_value_num',
+				'order' 			=> 'DESC',
+				'date_query'    	=> array(
+					'column'  		=> 'post_date',
+					'after'   		=> '- 300 days'
+				)
+			);
+		endif;
+		
+		// Query and fetch the posts
 		$q = new WP_Query( $args );
+		
+		// Begin the loop
 		if( $q->have_posts() ) :
 			$i = 1;
-			echo '<ul">';
 			while( $q->have_posts() ):
+				
 				$q->the_post();
+				
+				// If we are supposed to show count numbers....
 				if($showCount == 'true'):
 					$postID = get_the_ID();
 					$shares = get_post_meta($postID,'_'.$network,true);
-					echo '<li><a class="swPopularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b> - '.kilomega($shares).' '.$countLabel.'</a></li>';
+					$share_html = '<span class="sw_pop_count"> - '.kilomega($shares).' '.$countLabel.'</span>';
+					
+				// If we are not supposed to show count numbers
 				else:
-					echo '<li><a class="swPopularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b></a></li>';
+					$share_html = '';
 				endif;
+
+				// If we are supposed to show thumbnails
+				if($thumbnails == true && has_post_thumbnail()):
+					$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
+					$thumbnail_html = '<a href="'.get_the_permalink().'"><img class="sw_pop_thumb" src="'.$thumbnail_url[0].'"></a>';
+					
+				// If we are not supposed to show thumbnails
+				else:
+					$thumbnail_html = '';
+				endif;
+
+				// Generate the HTML for a link
+				$link_html = '<a class="sw_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
+				
+				// Output the post to the site
+				echo '<div class="sw_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
+				echo '<div class="sw_clearfix"></div>';
+				
+			// End the loop
 			endwhile;
-			echo '</ul>';
 		endif;
+		
+		// Reset the main query
 		wp_reset_postdata();
-	   echo '</div>';
-	   echo $after_widget;
+		echo '</div>';
+		echo $after_widget;
 	}
 }
 

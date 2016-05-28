@@ -255,16 +255,27 @@ a.style6 .sw-click-to-tweet .sw-ctt-btn {text-decoration: none;color: #30394F;}
 a.style6:hover .sw-click-to-tweet .sw-ctt-btn, a.style6:hover .sw-click-to-tweet i.sw-twitter {text-decoration: none;color: #2A2D34;}
 a.style6 .sw-click-to-tweet i.sw-twitter {color:#30394F;}
 /*Popular Posts Style #1*/
-.sw_pop_style1 a.swPopularity {
-    font-size: 14px;
+.sw_pop_thumb {
+	float:left;	
+	width:100px;
+	height:100px;
+	margin:5px 15px 5px 0;
+}
+.sw_popular_post {
+	clear:both;	
+}
+.sw_clearfix:after {
+   content: " ";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+a.sw_popularity {
     margin: 10px;
     display: block;
+	border:none;
 }
-.sw_pop_style1 a.swPopularity b {
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 1.2;
-    margin: 0;
-    display: inline;
+.sw_pop_count {
+	font-size:70%;	
 }
-/* Need to work in a class for the .totes section of the swPopularity*/
