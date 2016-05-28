@@ -14,7 +14,7 @@
 		echo '<th><label for="twitter">Twitter Username</label></th>';
 		echo '<td>';
 		echo '<input type="text" name="sw_twitter" id="sw_twitter" value="'.esc_attr( get_the_author_meta( 'sw_twitter' , $user->ID ) ).'" class="regular-text" />';
-		echo '<br /><span class="description">Please enter your Twitter username (without the @ symbol).</span>';
+		echo '<br /><span class="description">Please enter your Twitter username.</span>';
         echo '</td>';
         echo '</tr>';		
 		echo '<tr>';

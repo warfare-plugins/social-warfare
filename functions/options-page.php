@@ -48,7 +48,7 @@
 		$sw_options['options']['socialIdentity'] = array(
 			'twitterHandleDescription' => array(
 				'type'		=> 'paragraph',
-				'content'	=>	'<h3>Would you like to be mentioned in tweets?</h3><br />If so, please provide your Twitter username WITHOUT the @ symbol.'
+				'content'	=>	'<h3>Would you like to be mentioned in tweets?</h3><br />If so, please provide your Twitter username.'
 			),
 			'twitterID' => array(
 				'type'		=> 'textbox',
