@@ -354,7 +354,7 @@ class sw_popular_posts_widget extends WP_Widget {
 				if($showCount == 'true'):
 					$postID = get_the_ID();
 					$shares = get_post_meta($postID,'_'.$network,true);
-					$share_html = '<span class="sw_pop_count"> - '.kilomega($shares).' '.$countLabel.'</span>';
+					$share_html = '<span class="sw_pop_count">'.kilomega($shares).' '.$countLabel.'</span>';
 					
 				// If we are not supposed to show count numbers
 				else:
