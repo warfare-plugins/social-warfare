@@ -32,6 +32,8 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $thumbnails 	= esc_textarea($instance['thumbnails']);
 		 $thumb_size 	= esc_textarea($instance['thumb_size']);
 		 $font_size 	= esc_textarea($instance['font_size']);
+		 $custom_bg	 	= esc_textarea($instance['custom_bg']);
+		 $custom_link 	= esc_textarea($instance['custom_link']);
 		 
 	// If not previous values, set some by default
 	} else {
@@ -45,6 +47,8 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $thumbnails 	= 'true';
 		 $thumb_size 	= '100';
 		 $font_size		= '100';
+		 $custom_bg		= '#ffffff';
+		 $custom_link	= '#000000';
 	}
 	
 	// Fetch the Social Warfare Options
@@ -164,6 +168,18 @@ class sw_popular_posts_widget extends WP_Widget {
     $form .= '<option value="custom" '.( $style == 'custom' ? 'selected' : '' ) .'>Custom</option>';
     $form .= '</select>';
 	$form .= '</p>';
+	
+	// Custom Background Color Field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('custom_bg').'">Custom Background Color</label>';
+	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_bg').'" name="'.$this->get_field_name('custom_bg').'" type="text" value="'.$custom_bg.'" />';
+	$form .= '</p>';
+	
+	// Custom Link Color Field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('custom_link').'">Custom Link Color</label>';
+	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_link').'" name="'.$this->get_field_name('custom_link').'" type="text" value="'.$custom_link.'" />';
+	$form .= '</p>';
     
 	// Output the form fields
 	echo $form;
@@ -177,20 +193,23 @@ class sw_popular_posts_widget extends WP_Widget {
 **************************************************************/	
 	
 	function update($new_instance, $old_instance) {
-		  $instance = $old_instance;
-		  
-		  // Fetch the values from the form
-		  $instance['title'] 		= strip_tags($new_instance['title']);
-		  $instance['count'] 		= strip_tags($new_instance['count']);
-		  $instance['timeframe'] 	= strip_tags($new_instance['timeframe']);
-		  $instance['network'] 		= strip_tags($new_instance['network']);
-		  $instance['showCount'] 	= strip_tags($new_instance['showCount']);
-		  $instance['countLabel'] 	= strip_tags($new_instance['countLabel']);
-		  $instance['style'] 		= strip_tags($new_instance['style']);
-		  $instance['thumbnails'] 	= strip_tags($new_instance['thumbnails']);
-		  $instance['thumb_size'] 	= strip_tags($new_instance['thumb_size']);
-		  $instance['font_size'] 	= strip_tags($new_instance['font_size']);
-		 return $instance;
+		$instance = $old_instance;
+		
+		// Fetch the values from the form
+		$instance['title'] 			= strip_tags($new_instance['title']);
+		$instance['count'] 			= strip_tags($new_instance['count']);
+		$instance['timeframe'] 		= strip_tags($new_instance['timeframe']);
+		$instance['network'] 		= strip_tags($new_instance['network']);
+		$instance['showCount'] 		= strip_tags($new_instance['showCount']);
+		$instance['countLabel'] 	= strip_tags($new_instance['countLabel']);
+		$instance['style'] 			= strip_tags($new_instance['style']);
+		$instance['thumbnails'] 	= strip_tags($new_instance['thumbnails']);
+		$instance['thumb_size'] 	= strip_tags($new_instance['thumb_size']);
+		$instance['font_size'] 		= strip_tags($new_instance['font_size']);
+		$instance['custom_bg'] 		= strip_tags($new_instance['custom_bg']);
+		$instance['custom_link'] 	= strip_tags($new_instance['custom_link']);
+
+		return $instance;
 	}
 /*************************************************************
 
@@ -212,6 +231,8 @@ class sw_popular_posts_widget extends WP_Widget {
 		$thumbnails	= $instance['thumbnails'];
 		$thumb_size	= $instance['thumb_size'];
 		$font_size	= $instance['font_size'];
+		$custom_bg	= $instance['custom_bg'];
+		$custom_link= $instance['custom_link'];
 		
 		/*************************************************************
 
@@ -242,6 +263,10 @@ class sw_popular_posts_widget extends WP_Widget {
 		// Inspired by Pinterest
 		$styles['style_06']['wrapper'] 	= 'padding:15px;background:#cd2029;';
 		$styles['style_06']['links']	= 'color:#ffffff;';
+		
+		// Custom
+		$styles['custom']['wrapper'] 	= 'padding:15px;background:'.$custom_bg.';';
+		$styles['custom']['links']		= 'color:'.$custom_link.';';
 		
 		/*************************************************************
 
