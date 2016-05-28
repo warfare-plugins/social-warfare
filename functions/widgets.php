@@ -156,7 +156,12 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '<label for="'.$this->get_field_id('style').'">Which color scheme would you like to use?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('style').'" name="'.$this->get_field_name('style').'">';
     $form .= '<option value="style_01" '.( $style == 'style_01' ? 'selected' : '' ) .'>Vanilla (No Styling)</option>';
-    $form .= '<option value="style_02" '.( $style == 'style_02' ? 'selected' : '' ) .'>Winter Wonderland</option>';
+    $form .= '<option value="style_02" '.( $style == 'style_02' ? 'selected' : '' ) .'>Inspired by Twitter</option>';
+    $form .= '<option value="style_03" '.( $style == 'style_03' ? 'selected' : '' ) .'>Inspired by Facebook</option>';
+    $form .= '<option value="style_04" '.( $style == 'style_04' ? 'selected' : '' ) .'>Inspired by Google Plus</option>';
+    $form .= '<option value="style_05" '.( $style == 'style_05' ? 'selected' : '' ) .'>Inspired by LinkedIn</option>';
+    $form .= '<option value="style_06" '.( $style == 'style_06' ? 'selected' : '' ) .'>Inspired by Pinterest</option>';
+    $form .= '<option value="custom" '.( $style == 'custom' ? 'selected' : '' ) .'>Custom</option>';
     $form .= '</select>';
 	$form .= '</p>';
     
@@ -218,9 +223,25 @@ class sw_popular_posts_widget extends WP_Widget {
 		$styles['style_01']['wrapper'] 	= 'background:transparent;';
 		$styles['style_01']['links']	= '';
 		
-		// Winter Wonderland
-		$styles['style_02']['wrapper'] 	= 'padding:15px;background:yellow;';
-		$styles['style_02']['links']	= 'color:blue;';
+		// Inspired by Twitter
+		$styles['style_02']['wrapper'] 	= 'padding:15px;background:#429cd6;';
+		$styles['style_02']['links']	= 'color:#ffffff;';
+		
+		// Inspired by Facebook
+		$styles['style_03']['wrapper'] 	= 'padding:15px;background:#3a589e;';
+		$styles['style_03']['links']	= 'color:#ffffff;';
+		
+		// Inspired by Google Plus
+		$styles['style_04']['wrapper'] 	= 'padding:15px;background:#df4b37;';
+		$styles['style_04']['links']	= 'color:#ffffff;';
+		
+		// Inspired by LinkedIn
+		$styles['style_05']['wrapper'] 	= 'padding:15px;background:#0d77b7;';
+		$styles['style_05']['links']	= 'color:#ffffff;';
+		
+		// Inspired by Pinterest
+		$styles['style_06']['wrapper'] 	= 'padding:15px;background:#cd2029;';
+		$styles['style_06']['links']	= 'color:#ffffff;';
 		
 		/*************************************************************
 
