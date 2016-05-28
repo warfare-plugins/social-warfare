@@ -114,5 +114,39 @@ jQuery(document).ready( function() {
 		} , 1000 );
 		
 	};
+
+	// Show and Hide the Count Label based on if we're showing counts		
+	jQuery('.sw_popular_post_options .showCount select').on('change', function() {
+		var value = jQuery(this).val()
+		if(value = true) {
+			jQuery('.sw_popular_post_options .countLabel').slideDown('slow');
+		} else {
+			jQuery('.sw_popular_post_options .countLabel').slideUp('slow');
+		}
+	});
+
+	// Show and Hide the Thumbnail size based on if we're showing thmbnails		
+	jQuery('.sw_popular_post_options .thumbnails select').on('change', function() {
+		var value = jQuery(this).val()
+		if(value = true) {
+			jQuery('.sw_popular_post_options .thumb_size').slideDown('slow');
+		} else {
+			jQuery('.sw_popular_post_options .thumb_size').slideUp('slow');
+		}
+	});
+	
+	// Show and Hide the Custom fields based on if we're using a custom color scheme		
+	jQuery('.sw_popular_post_options .style select').on('change', function() {
+		var value = jQuery(this).val()
+		if(value = 'custom') {
+			jQuery('.sw_popular_post_options .custom_bg, .sw_popular_post_options .custom_link').slideDown('slow');
+		} else {
+			jQuery('.sw_popular_post_options .custom_bg, .sw_popular_post_options .custom_link').slideUp('slow');
+		}
+	});
+	
+
 	
 });
+
+

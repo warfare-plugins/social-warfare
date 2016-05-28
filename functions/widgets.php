@@ -58,28 +58,28 @@ class sw_popular_posts_widget extends WP_Widget {
 	$availableNetworks = $options['newOrderOfIcons'];
 
 	// Build the Widget Form
-	$form = '';	
+	$form = '<div class="sw_popular_post_options">';	
 	
 	// The Widget Title Field
-	$form .= '<p>';
+	$form .= '<p class="title">';
 	$form .= '<label for="'.$this->get_field_id('title').'">Widget Title</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('title').'" name="'.$this->get_field_name('title').'" type="text" value="'.$title.'" />';
 	$form .= '</p>';
 	
 	// Number of Posts to Display Field
-	$form .= '<p>';
+	$form .= '<p class="count">';
 	$form .= '<label for="'.$this->get_field_id('count').'">How many posts would you like to display?</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('count').'" name="'.$this->get_field_name('count').'" type="number" value="'.$count.'" min="0" />';
 	$form .= '</p>';
 	
 	// Age of the pots to display field
-	$form .= '<p>';
+	$form .= '<p class="timeframe">';
 	$form .= '<label for="'.$this->get_field_id('timeframe').'">What is maximum age of a post (in days) that you would like to include (0 = Unlimited)?</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('timeframe').'" name="'.$this->get_field_name('timeframe').'" value="'.$timeframe.'" type="number" min="0">';
 	$form .= '</p>';
     
 	// Which networks to use as the basis field
-    $form .= '<p>';
+    $form .= '<p class="network">';
 	$form .= '<label for="'.$this->get_field_id('network').'">Which network would you like to base your posts popularity on?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('network').'" name="'.$this->get_field_name('network').'">';
     $form .= '<option value="totes"'. ( $network == 'totes' ? 'selected' : '' ).'>All Networks</option>';
@@ -96,7 +96,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
     
 	// Display the share count toggle field
-    $form .= '<p>';
+    $form .= '<p class="showCount">';
 	$form .= '<label for="'.$this->get_field_id('showCount').'">Would you like to show the count?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('showCount').'" name="'.$this->get_field_name('showCount').'">';
     $form .= '<option value="true" '.( $showCount == 'true' ? 'selected' : '').'>Yes</option>';
@@ -105,13 +105,13 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
     
 	// Count Label Field
-    $form .= '<p>';
+    $form .= '<p '.( $showCount == 'false' ? 'style="display:none;"' : '' ).' class="countLabel">';
 	$form .= '<label for="'.$this->get_field_id('countLabel').'">Count Number Label</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('countLabel').'" name="'.$this->get_field_name('countLabel').'" type="text" value="'.$countLabel.'" />';
 	$form .= '</p>';
 	
 	// Post thumbnails toggle field
-    $form .= '<p>';
+    $form .= '<p class="thumbnails">';
 	$form .= '<label for="'.$this->get_field_id('thumbnails').'">Would you like to display thumbnails?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('thumbnails').'" name="'.$this->get_field_name('thumbnails').'">';
     $form .= '<option value="true" '.( $thumbnails == 'true' ? 'selected' : '').'>Yes</option>';
@@ -120,7 +120,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
 
 	// Thumbnails size field
-    $form .= '<p>';
+    $form .= '<p '.( $thumbnails == 'false' ? 'style="display:none;"' : '' ).' class="thumb_size">';
 	$form .= '<label for="'.$this->get_field_id('thumb_size').'">What size would you like your thumbnails?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('thumb_size').'" name="'.$this->get_field_name('thumb_size').'">';
     $form .= '<option value="50" '.( $thumb_size == '50' ? 'selected' : '').'>50px</option>';
@@ -138,7 +138,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
 
 	// Font size field
-    $form .= '<p>';
+    $form .= '<p class="font_size">';
 	$form .= '<label for="'.$this->get_field_id('font_size').'">What size would you like the font?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('font_size').'" name="'.$this->get_field_name('font_size').'">';
     $form .= '<option value="50" '.( $font_size == '50' ? 'selected' : '').'>50%</option>';
@@ -156,7 +156,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
 	
 	// Color Scheme Field
-	$form .= '<p>';
+	$form .= '<p class="style">';
 	$form .= '<label for="'.$this->get_field_id('style').'">Which color scheme would you like to use?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('style').'" name="'.$this->get_field_name('style').'">';
     $form .= '<option value="style_01" '.( $style == 'style_01' ? 'selected' : '' ) .'>Vanilla (No Styling)</option>';
@@ -170,17 +170,20 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
 	
 	// Custom Background Color Field
-    $form .= '<p>';
+    $form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_bg">';
 	$form .= '<label for="'.$this->get_field_id('custom_bg').'">Custom Background Color</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_bg').'" name="'.$this->get_field_name('custom_bg').'" type="text" value="'.$custom_bg.'" />';
 	$form .= '</p>';
 	
 	// Custom Link Color Field
-    $form .= '<p>';
+    $form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_link">';
 	$form .= '<label for="'.$this->get_field_id('custom_link').'">Custom Link Color</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_link').'" name="'.$this->get_field_name('custom_link').'" type="text" value="'.$custom_link.'" />';
 	$form .= '</p>';
-    
+	
+	// Close the Div
+	$form .= '</div>';
+	
 	// Output the form fields
 	echo $form;
 	
