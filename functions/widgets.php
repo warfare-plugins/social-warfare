@@ -39,7 +39,7 @@ class sw_popular_posts_widget extends WP_Widget {
 	} else {
 		 $title 		= 'Popular Posts';
 		 $count 		= '10';
-		 $timeframe 	= '180';
+		 $timeframe 	= '0';
 		 $network 		= 'totes';
 		 $showCount 	= 'true';
 		 $countLabel 	= 'Total Shares';
