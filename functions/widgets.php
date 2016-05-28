@@ -41,7 +41,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $network 		= 'totes';
 		 $showCount 	= 'true';
 		 $countLabel 	= 'Total Shares';
-		 $style 		= 'Default';
+		 $style 		= 'style_01';
 		 $thumbnails 	= 'true';
 		 $thumb_size 	= '100';
 		 $font_size		= '100';
@@ -155,8 +155,8 @@ class sw_popular_posts_widget extends WP_Widget {
 	$form .= '<p>';
 	$form .= '<label for="'.$this->get_field_id('style').'">Which color scheme would you like to use?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('style').'" name="'.$this->get_field_name('style').'">';
-    $form .= '<option value="style1" '.( $style == 'style1' ? 'selected' : '' ) .'>First Style</option>';
-    $form .= '<option value="style2" '.( $style == 'style2' ? 'selected' : '' ) .'>Second Style</option>';
+    $form .= '<option value="style_01" '.( $style == 'style_01' ? 'selected' : '' ) .'>Vanilla (No Styling)</option>';
+    $form .= '<option value="style_02" '.( $style == 'style_02' ? 'selected' : '' ) .'>Winter Wonderland</option>';
     $form .= '</select>';
 	$form .= '</p>';
     
@@ -208,9 +208,29 @@ class sw_popular_posts_widget extends WP_Widget {
 		$thumb_size	= $instance['thumb_size'];
 		$font_size	= $instance['font_size'];
 		
+		/*************************************************************
+
+			STYLES - CREATE AN ARRAY OF BACKGROUNDS AND LINK COLORS
+
+		**************************************************************/	
+		
+		// Vanilla (No Styling)
+		$styles['style_01']['wrapper'] 	= 'background:transparent;';
+		$styles['style_01']['links']	= '';
+		
+		// Winter Wonderland
+		$styles['style_02']['wrapper'] 	= 'padding:15px;background:yellow;';
+		$styles['style_02']['links']	= 'color:blue;';
+		
+		/*************************************************************
+
+			BUILD OUT THE WIDGET
+
+		**************************************************************/	
+		
 		// Begin output of the widget html
 		echo $before_widget;
-		echo '<div class="widget-text wp_widget_plugin_box sw_pop_'.$style.'">';
+		echo '<div class="widget-text sw_widget_box" style="'.$styles[$style]['wrapper'].'">';
 		
 		// Check if title is set
 		if ( $title ) {
@@ -281,7 +301,7 @@ class sw_popular_posts_widget extends WP_Widget {
 				endif;
 
 				// Generate the HTML for a link
-				$link_html = '<a style="font-size:'.$font_size.'%;" class="sw_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
+				$link_html = '<a style="font-size:'.$font_size.'%;'.$styles[$style]['links'].'" class="sw_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
 				
 				// Output the post to the site
 				echo '<div class="sw_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
