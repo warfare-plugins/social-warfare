@@ -30,6 +30,8 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $countLabel 	= esc_textarea($instance['countLabel']);
 		 $style 		= esc_textarea($instance['style']);
 		 $thumbnails 	= esc_textarea($instance['thumbnails']);
+		 $thumb_size 	= esc_textarea($instance['thumb_size']);
+		 $font_size 	= esc_textarea($instance['font_size']);
 		 
 	// If not previous values, set some by default
 	} else {
@@ -41,6 +43,8 @@ class sw_popular_posts_widget extends WP_Widget {
 		 $countLabel 	= 'Total Shares';
 		 $style 		= 'Default';
 		 $thumbnails 	= 'true';
+		 $thumb_size 	= '100';
+		 $font_size		= '100';
 	}
 	
 	// Fetch the Social Warfare Options
@@ -110,6 +114,42 @@ class sw_popular_posts_widget extends WP_Widget {
     $form .= '<option value="false" '.( $thumbnails == 'false' ? 'selected' : '').'>No</option>';
     $form .= '</select>';
 	$form .= '</p>';
+
+	// Thumbnails size field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('thumb_size').'">What size would you like your thumbnails?</label>';
+	$form .= '<select class="widefat" id="'.$this->get_field_id('thumb_size').'" name="'.$this->get_field_name('thumb_size').'">';
+    $form .= '<option value="50" '.( $thumb_size == '50' ? 'selected' : '').'>50px</option>';
+    $form .= '<option value="60" '.( $thumb_size == '60' ? 'selected' : '').'>60px</option>';
+    $form .= '<option value="70" '.( $thumb_size == '70' ? 'selected' : '').'>70px</option>';
+    $form .= '<option value="80" '.( $thumb_size == '80' ? 'selected' : '').'>80px</option>';
+    $form .= '<option value="90" '.( $thumb_size == '90' ? 'selected' : '').'>90px</option>';
+    $form .= '<option value="100" '.( $thumb_size == '100' ? 'selected' : '').'>100px</option>';
+    $form .= '<option value="110" '.( $thumb_size == '110' ? 'selected' : '').'>110px</option>';
+    $form .= '<option value="120" '.( $thumb_size == '120' ? 'selected' : '').'>120px</option>';
+    $form .= '<option value="130" '.( $thumb_size == '130' ? 'selected' : '').'>130px</option>';
+    $form .= '<option value="140" '.( $thumb_size == '140' ? 'selected' : '').'>140px</option>';
+    $form .= '<option value="150" '.( $thumb_size == '150' ? 'selected' : '').'>150px</option>';
+    $form .= '</select>';
+	$form .= '</p>';
+
+	// Font size field
+    $form .= '<p>';
+	$form .= '<label for="'.$this->get_field_id('font_size').'">What size would you like the font?</label>';
+	$form .= '<select class="widefat" id="'.$this->get_field_id('font_size').'" name="'.$this->get_field_name('font_size').'">';
+    $form .= '<option value="50" '.( $font_size == '50' ? 'selected' : '').'>50%</option>';
+    $form .= '<option value="60" '.( $font_size == '60' ? 'selected' : '').'>60%</option>';
+    $form .= '<option value="70" '.( $font_size == '70' ? 'selected' : '').'>70%</option>';
+    $form .= '<option value="80" '.( $font_size == '80' ? 'selected' : '').'>80%</option>';
+    $form .= '<option value="90" '.( $font_size == '90' ? 'selected' : '').'>90%</option>';
+    $form .= '<option value="100" '.( $font_size == '100' ? 'selected' : '').'>100%</option>';
+    $form .= '<option value="110" '.( $font_size == '110' ? 'selected' : '').'>110%</option>';
+    $form .= '<option value="120" '.( $font_size == '120' ? 'selected' : '').'>120%</option>';
+    $form .= '<option value="130" '.( $font_size == '130' ? 'selected' : '').'>130%</option>';
+    $form .= '<option value="140" '.( $font_size == '140' ? 'selected' : '').'>140%</option>';
+    $form .= '<option value="150" '.( $font_size == '150' ? 'selected' : '').'>150%</option>';
+    $form .= '</select>';
+	$form .= '</p>';
 	
 	// Color Scheme Field
 	$form .= '<p>';
@@ -143,6 +183,8 @@ class sw_popular_posts_widget extends WP_Widget {
 		  $instance['countLabel'] 	= strip_tags($new_instance['countLabel']);
 		  $instance['style'] 		= strip_tags($new_instance['style']);
 		  $instance['thumbnails'] 	= strip_tags($new_instance['thumbnails']);
+		  $instance['thumb_size'] 	= strip_tags($new_instance['thumb_size']);
+		  $instance['font_size'] 	= strip_tags($new_instance['font_size']);
 		 return $instance;
 	}
 /*************************************************************
@@ -160,9 +202,11 @@ class sw_popular_posts_widget extends WP_Widget {
 		$timeframe 	= $instance['timeframe'];
 		$network 	= $instance['network'];
 		$showCount 	= $instance['showCount'];
-		$countLabel 	= $instance['countLabel'];
+		$countLabel = $instance['countLabel'];
 		$style		= $instance['style'];
 		$thumbnails	= $instance['thumbnails'];
+		$thumb_size	= $instance['thumb_size'];
+		$font_size	= $instance['font_size'];
 		
 		// Begin output of the widget html
 		echo $before_widget;
@@ -226,7 +270,10 @@ class sw_popular_posts_widget extends WP_Widget {
 				// If we are supposed to show thumbnails
 				if($thumbnails == true && has_post_thumbnail()):
 					$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
-					$thumbnail_html = '<a href="'.get_the_permalink().'"><img class="sw_pop_thumb" src="'.$thumbnail_url[0].'"></a>';
+					$thumbnail_html = '';
+					$thumbnail_html .= '<a href="'.get_the_permalink().'">';
+					$thumbnail_html .= '<img style="width:'.$thumb_size.'px;height:'.$thumb_size.'px;" class="sw_pop_thumb" src="'.$thumbnail_url[0].'">';
+					$thumbnail_html .= '</a>';
 					
 				// If we are not supposed to show thumbnails
 				else:
@@ -234,7 +281,7 @@ class sw_popular_posts_widget extends WP_Widget {
 				endif;
 
 				// Generate the HTML for a link
-				$link_html = '<a class="sw_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
+				$link_html = '<a style="font-size:'.$font_size.'%;" class="sw_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
 				
 				// Output the post to the site
 				echo '<div class="sw_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
