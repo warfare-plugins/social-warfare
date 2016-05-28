@@ -20,37 +20,57 @@ class sw_popular_posts_widget extends WP_Widget {
 
 	function form($instance) {
 	
-	// Check For Previously Set Values
-	if( $instance ) {
-		 $title 		= esc_attr($instance['title']);
-		 $count 		= esc_attr($instance['count']);
-		 $timeframe 	= esc_textarea($instance['timeframe']);
-		 $network 		= esc_textarea($instance['network']);
-		 $showCount 	= esc_textarea($instance['showCount']);
-		 $countLabel 	= esc_textarea($instance['countLabel']);
-		 $style 		= esc_textarea($instance['style']);
-		 $thumbnails 	= esc_textarea($instance['thumbnails']);
-		 $thumb_size 	= esc_textarea($instance['thumb_size']);
-		 $font_size 	= esc_textarea($instance['font_size']);
-		 $custom_bg	 	= esc_textarea($instance['custom_bg']);
-		 $custom_link 	= esc_textarea($instance['custom_link']);
-		 
-	// If not previous values, set some by default
-	} else {
-		 $title 		= 'Popular Posts';
-		 $count 		= '10';
-		 $timeframe 	= '0';
-		 $network 		= 'totes';
-		 $showCount 	= 'true';
-		 $countLabel 	= 'Total Shares';
-		 $style 		= 'style_01';
-		 $thumbnails 	= 'true';
-		 $thumb_size 	= '100';
-		 $font_size		= '100';
-		 $custom_bg		= '#ffffff';
-		 $custom_link	= '#000000';
-	}
+	// Default Title
+	if( isset($instance['title'] )) { 		$title 			= esc_attr($instance['title']);		
+	} else {								$title 			= 'Popular Posts'; }
+
+	// Default Count
+	if( isset($instance['count'] )) { 		$count 			= esc_attr($instance['count']);		
+	} else {								$count 			= '10'; }
+
+	// Default Timeframe
+	if( isset($instance['timeframe'] )) { 	$timeframe 		= esc_attr($instance['timeframe']);		
+	} else {								$timeframe 		= '0'; }
+
+	// Default Title
+	if( isset($instance['network'] )) { 	$network 		= esc_attr($instance['network']);		
+	} else {								$network 		= 'totes'; }
+
+	// Default showCount
+	if( isset($instance['showCount'] )) { 	$showCount 		= esc_attr($instance['showCount']);		
+	} else {								$showCount 		= 'true'; }
+
+
+	// Default countLabel
+	if( isset($instance['countLabel'] )) { 	$countLabel 	= esc_attr($instance['countLabel']);		
+	} else {								$countLabel 	= 'Total Shares'; }
+
+
+	// Default Style
+	if( isset($instance['style'] )) { 		$style 			= esc_attr($instance['style']);		
+	} else {								$style 			= 'style_01'; }
+
+
+	// Default Thumbnails toggle
+	if( isset($instance['thumbnails'] )) { 	$thumbnails 	= esc_attr($instance['thumbnails']);		
+	} else {								$thumbnails 	= 'true'; }
+
+	// Default Thumbnail size
+	if( isset($instance['thumb_size'] )) { 	$thumb_size 	= esc_attr($instance['thumb_size']);		
+	} else {								$thumb_size 	= '100'; }
 	
+	// Default Font Size
+	if( isset($instance['font_size'] )) { 	$font_size 		= esc_attr($instance['font_size']);		
+	} else {								$font_size 		= '100'; }	
+	
+	// Default Custom Background
+	if( isset($instance['custom_bg'] )) { 	$custom_bg 		= esc_attr($instance['custom_bg']);		
+	} else {								$custom_bg 		= '#ffffff'; }	
+	
+	// Default Custom Link
+	if( isset($instance['custom_link'] )) { $custom_link 	= esc_attr($instance['custom_link']);		
+	} else {								$custom_link 	= '#000000'; }	
+		
 	// Fetch the Social Warfare Options
 	$options = sw_get_user_options();
 	
@@ -222,20 +242,25 @@ class sw_popular_posts_widget extends WP_Widget {
 
 	function widget($args, $instance) {
 		extract( $args );
-	   
+		
 		// Fetch the field values from the form
-		$title 		= apply_filters('widget_title', $instance['title']);
-		$count 		= $instance['count'];
-		$timeframe 	= $instance['timeframe'];
-		$network 	= $instance['network'];
-		$showCount 	= $instance['showCount'];
-		$countLabel = $instance['countLabel'];
-		$style		= $instance['style'];
-		$thumbnails	= $instance['thumbnails'];
-		$thumb_size	= $instance['thumb_size'];
-		$font_size	= $instance['font_size'];
-		$custom_bg	= $instance['custom_bg'];
-		$custom_link= $instance['custom_link'];
+		(isset($instance['title'] ) 		? $title 		= $instance['title'] 		: $title 		= 'Popular Posts');
+		(isset($instance['count'] ) 		? $count 		= $instance['count'] 		: $count 		= '10');
+		(isset($instance['timeframe'] ) 	? $timeframe 	= $instance['timeframe'] 	: $timeframe 	= '0');
+		(isset($instance['network'] ) 		? $network 		= $instance['network'] 		: $network 		= 'totes');
+		(isset($instance['showCount'] ) 	? $showCount 	= $instance['showCount'] 	: $showCount 	= 'true');
+		(isset($instance['countLabel'] ) 	? $countLabel 	= $instance['countLabel'] 	: $countLabel 	= 'Total Shares');
+		(isset($instance['style'] ) 		? $style 		= $instance['style'] 		: $style 		= 'style_01');
+		(isset($instance['thumbnails'] ) 	? $thumbnails 	= $instance['thumbnails'] 	: $thumbnails 	= 'true');
+		(isset($instance['thumb_size'] ) 	? $thumb_size 	= $instance['thumb_size'] 	: $thumb_size 	= '100');
+		(isset($instance['font_size'] ) 	? $font_size 	= $instance['font_size'] 	: $font_size 	= '100');
+		(isset($instance['custom_bg'] ) 	? $custom_bg 	= $instance['custom_bg'] 	: $custom_bg 	= '#ffffff');
+		(isset($instance['custom_link'] ) 	? $custom_link 	= $instance['custom_link'] 	: $custom_link 	= '#000000');
+		
+		// Correct the previous style with the new version if it is present on the site
+		if( $style == 'first_style' || $style == 'second_style' ):
+			$style = 'style_01';
+		endif;
 		
 		/*************************************************************
 
@@ -283,7 +308,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		
 		// Check if title is set
 		if ( $title ) {
-			echo $before_title . $title . $after_title;
+			echo '<h3 class="widgettitle widget-title" style="'.$styles[$style]['links'].'">'.$title.'</h3>';
 		}
 	
 		// If a custom timeframe is not being used....
@@ -337,7 +362,7 @@ class sw_popular_posts_widget extends WP_Widget {
 				endif;
 
 				// If we are supposed to show thumbnails
-				if($thumbnails == true && has_post_thumbnail()):
+				if($thumbnails == 'true' && has_post_thumbnail()):
 					$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
 					$thumbnail_html = '';
 					$thumbnail_html .= '<a href="'.get_the_permalink().'">';

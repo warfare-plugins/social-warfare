@@ -255,8 +255,9 @@ a.style6 .sw-click-to-tweet .sw-ctt-btn {text-decoration: none;color: #30394F;}
 a.style6:hover .sw-click-to-tweet .sw-ctt-btn, a.style6:hover .sw-click-to-tweet i.sw-twitter {text-decoration: none;color: #2A2D34;}
 a.style6 .sw-click-to-tweet i.sw-twitter {color:#30394F;}
 /*Popular Posts Layout Settings*/
-.sw_pop_thumb {float:left;width:100px;height:100px;margin:5px 15px 5px 0px;}
+.sw_pop_thumb {float:left;width:100px;height:100px;margin:5px 25px 5px 0px;border-radius:3px;}
 .sw_popular_post {clear:both;}
 .sw_clearfix:after {content: " ";visibility: hidden;display: block;height: 0;clear: both;}
-a.sw_popularity {margin: 10px;display: block;border:none;}
-.sw_pop_count {font-size:70%;}
+.sw_popular_post a.sw_popularity {margin:20px 0;display: block;border:none;line-height:1.5;}
+span.sw_pop_count {font-size:70%;display:block;}
+.sw_widget_box {border-radius:3px;}
