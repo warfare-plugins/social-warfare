@@ -30,17 +30,40 @@
 							classes: 'postid',
 							label: 'The ID of the post or page to reflect:'
 						},
+						{
+							type: 'textbox',
+							multiline: false,
+							name: 'buttons',
+							classes: 'buttons',
+							label: 'Buttons to Include:'
+						},
+						{
+							type: 'label',
+							name: 'someHelpText',
+							onPostRender : function() {				
+								this.getEl().innerHTML =
+								   '<span style="float:right;">Comma separated list of social network (e.g. "Facebook,Twitter,Pinterest"). Leave blank to use site-wide defaults.</span>';},
+							text: ''},
 					],
 					onPostRender : function() {
 						jQuery('.mce-postid').parent().parent().slideUp();
 						jQuery('.mce-title').prepend('<i class="sw sw-social-warfare"></i>');
 					},
 					onsubmit: function( e ) {
+						// Check if this is supposed to refelct a different post_id
 						if(e.data.reflection == 'alt' && e.data.postID != '') {
-							editor.insertContent( '[social_warfare post_id="' + e.data.postID + '"]');
+							var post_information = ' post_id="' + e.data.postID + '"';
 						} else {
-							editor.insertContent( '[social_warfare]');
+							var post_information = '';
 						}
+						// Check if this is a custom set of buttons
+						if(e.data.buttons != '') {
+							var button_set = ' buttons="'+e.data.buttons+'"';
+						} else {
+							var button_set = '';
+						}
+						editor.insertContent( '[social_warfare'+post_information+''+button_set+']');
+
 					}
 				});
 			}
