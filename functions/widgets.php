@@ -185,6 +185,9 @@ class sw_popular_posts_widget extends WP_Widget {
     $form .= '<option value="style_04" '.( $style == 'style_04' ? 'selected' : '' ) .'>Inspired by Google Plus</option>';
     $form .= '<option value="style_05" '.( $style == 'style_05' ? 'selected' : '' ) .'>Inspired by LinkedIn</option>';
     $form .= '<option value="style_06" '.( $style == 'style_06' ? 'selected' : '' ) .'>Inspired by Pinterest</option>';
+    $form .= '<option value="style_07" '.( $style == 'style_07' ? 'selected' : '' ) .'>Don\'t Stop Believin\'</option>';
+    $form .= '<option value="style_08" '.( $style == 'style_08' ? 'selected' : '' ) .'>Thunderstruck</option>';
+    $form .= '<option value="style_09" '.( $style == 'style_09' ? 'selected' : '' ) .'>Livin\' On A Prayer</option>';
     $form .= '<option value="custom" '.( $style == 'custom' ? 'selected' : '' ) .'>Custom</option>';
     $form .= '</select>';
 	$form .= '</p>';
@@ -291,6 +294,18 @@ class sw_popular_posts_widget extends WP_Widget {
 		// Inspired by Pinterest
 		$styles['style_06']['wrapper'] 	= 'padding:15px;background:#cd2029;';
 		$styles['style_06']['links']	= 'color:#ffffff;';
+		
+		// Don't Stop Believin'
+		$styles['style_07']['wrapper'] 	= 'padding:15px;background:#333333;';
+		$styles['style_07']['links']	= 'color:#ffffff;';
+		
+		// Thunderstruck
+		$styles['style_08']['wrapper'] 	= 'padding:15px;background:#30394F;';
+		$styles['style_08']['links']	= 'color:#ffffff;';
+		
+		// Livin' On A Prayer
+		$styles['style_09']['wrapper'] 	= 'padding:15px;background:#EEEEEE;';
+		$styles['style_09']['links']	= 'color:#30394F;';
 		
 		// Custom
 		$styles['custom']['wrapper'] 	= 'padding:15px;background:'.$custom_bg.';';
