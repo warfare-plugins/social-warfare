@@ -181,20 +181,14 @@ function social_warfare_buttons($array = array()) {
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
 
-			// Setup the buttons array to pass into the 'sw_network_buttons' hook
-			$buttonsArray['shares'] = get_social_warfare_shares($postID);
-			$buttonsArray['count'] = 0;
-			$buttonsArray['totes'] = 0;
+			// Pass the sw_options into the array so we can pass it into the filter
 			$buttonsArray['options'] = $options;
-			if( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] ) ++$buttonsArray['count'];
-
-			$buttonsArray['resource'] = array();
-			$buttonsArray['postID'] = $postID;
 
 			// Customize which buttosn we're going to display
 			if( isset ( $array['buttons'] ) ):
 			
 				// Fetch the global names and keys
+				$sw_options = array();
 				$sw_available_options = apply_filters('sw_options',$sw_options);
 				$available_buttons = $sw_available_options['options']['displaySettings'];
 				
@@ -210,7 +204,21 @@ function social_warfare_buttons($array = array()) {
 						$buttonsArray['buttons'][$key] = $button;
 					endif;
 				endforeach;
+				
+				// Manually turn the total shares on or off
+				if(array_search('Total',$button_set_array)) $buttonsArray['buttons']['totes'] = 'Total';
 			endif;
+
+			// Setup the buttons array to pass into the 'sw_network_buttons' hook
+			$buttonsArray['shares'] = get_social_warfare_shares($postID);
+			$buttonsArray['count'] = 0;
+			$buttonsArray['totes'] = 0;
+			if( 	( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] && !isset($array['buttons']) )
+				|| 	( isset($buttonsArray['buttons']) && isset($buttonsArray['buttons']['totes']) && $buttonsArray['totes'] >= $options['minTotes'] ) ) :
+				++$buttonsArray['count'];
+			endif;
+			$buttonsArray['resource'] = array();
+			$buttonsArray['postID'] = $postID;
 
 			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
 			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists ( 'Subtitles' ) ) :
@@ -224,7 +232,8 @@ function social_warfare_buttons($array = array()) {
 			$assets = '<div class="nc_socialPanel sw_'.$options['visualTheme'].' sw_d_'.$options['dColorSet'].' sw_i_'.$options['iColorSet'].' sw_o_'.$options['oColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
 
 			// Setup the total shares count if it's on the left
-			if($options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes']):
+			if( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($array['buttons'] ) ) 
+			|| 	($options['swTotesFormat'] == 'totesAltLeft' && isset($array['buttons']) && isset($array['buttons']['totes']) && $buttonsArray['totes'] >= $options['minTotes'] ) ):
 				++$buttonsArray['count'];
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="'.$buttonsArray['count'].'" >';
 				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.__('Shares','social-warfare').'</span></span>';
@@ -248,7 +257,8 @@ function social_warfare_buttons($array = array()) {
 			endif;
 
 			// Create the Total Shares Box if it's on the right
-			if( $options['totes'] && $options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes']):
+			if( ( $options['totes'] && $options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($buttonsArray['buttons'] ) ) 
+			|| 	( $options['swTotesFormat'] != 'totesAltLeft' && isset($buttonsArray['buttons']) && isset($buttonsArray['buttons']['totes']) && $buttonsArray['totes'] >= $options['minTotes'] ) ):
 				++$buttonsArray['count'];
 				if($options['swTotesFormat'] == 'totes'):
 					$assets .= '<div class="nc_tweetContainer totes" data-id="'.$buttonsArray['count'].'" >';

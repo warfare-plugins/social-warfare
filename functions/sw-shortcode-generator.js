@@ -42,7 +42,7 @@
 							name: 'someHelpText',
 							onPostRender : function() {				
 								this.getEl().innerHTML =
-								   '<span style="float:right;">Comma separated list of social network (e.g. "Facebook,Twitter,Pinterest"). Leave blank to use site-wide defaults.</span>';},
+								   '<span style="float:right;">Comma separated list of social network (e.g. "Facebook,Twitter,Total"). Leave blank to use site-wide defaults.</span>';},
 							text: ''},
 					],
 					onPostRender : function() {
