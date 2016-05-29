@@ -62,7 +62,8 @@
 	add_filter('sw_network_buttons', 'sw_pocket_button_html',10);
 	function sw_pocket_button_html($array) {
 
-		if( $array['options']['pocket'] ):
+		if( ($array['options']['pocket'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['pocket']))  ):
+
 
 			// Collect the Title
 			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );

@@ -69,7 +69,7 @@
 			$array['resource']['linkedIn'] = $_GLOBALS['sw']['buttons'][$array['postID']]['linkedIn'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif( $array['options']['linkedIn'] ):
+		elseif( ($array['options']['linkedIn'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['linkedIn']))  ):
 
 			$array['totes'] += $array['shares']['linkedIn'];
 			++$array['count'];

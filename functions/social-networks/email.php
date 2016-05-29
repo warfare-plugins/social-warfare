@@ -62,7 +62,7 @@
 	add_filter('sw_network_buttons', 'sw_email_button_html',10);
 	function sw_email_button_html($array) {
 
-		if( $array['options']['email'] ):
+		if( ($array['options']['email'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['email']))  ):
 
 			// Collect the Title
 			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );

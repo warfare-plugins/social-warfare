@@ -67,7 +67,7 @@
 			$array['resource']['tumblr'] = $_GLOBALS['sw']['buttons'][$array['postID']]['tumblr'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif( isset($array['options']['tumblr']) && $array['options']['tumblr'] ):
+		elseif( ($array['options']['tumblr'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['tumblr']))  ):
 
 			$array['totes'] += $array['shares']['tumblr'];
 			++$array['count'];
