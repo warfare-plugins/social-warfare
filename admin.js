@@ -34,13 +34,13 @@ function twitterRemaining() {
 		linkSpace = 0;
 		jQuery('.tweetLinkSection').css({'text-decoration':'line-through'});
 	} else { 
-		linkSpace = 24; 
+		linkSpace = 23; 
 		jQuery('.tweetLinkSection').css({'text-decoration':'none'});
 	};
 	if(typeof handle === 'undefined') {
-		var remaining = 140 - getTweetLength(smTwitter) - linkSpace;
+		var remaining = 140 - link_length(smTwitter) - linkSpace;
 	} else {
-		var remaining = 140 - getTweetLength(smTwitter) - handle.length - linkSpace - 6;
+		var remaining = 140 - link_length(smTwitter) - handle.length - linkSpace - 6;
 	}
 	if(smTwitter.length > 0 && remaining >= 0) { jQuery('#socialWarfare .nc_customTweetWrapper .sw_CountDown').removeClass('sw_red').addClass('sw_blue');	
 	} else if (smTwitter.length > 0 && remaining < 0 ) { jQuery('#socialWarfare .nc_customTweetWrapper .sw_CountDown').removeClass('sw_blue').addClass('sw_red');
@@ -48,9 +48,9 @@ function twitterRemaining() {
 	jQuery('#socialWarfare .nc_customTweetWrapper .counterNumber').html(remaining);
 }
 
-function getTweetLength(input) {
+function link_length(input) {
   var tmp = "";
-  for(var i = 0; i < 22; i++){tmp+="o"}
+  for(var i = 0; i < 23; i++){tmp+="o"}
   return input.replace(/(http:\/\/[\S]*)/g, tmp).length;
 };
 

@@ -18,10 +18,17 @@
 								var value = jQuery('.mce-first textarea').val();
 								var strLength = value.length;
 								var handle = jQuery('#socialWarfare .twitterIDWrapper label').html();
+
+								if(value.indexOf('http') > -1 || value.indexOf('https') > -1) { 
+									linkSpace = 0;
+								} else { 
+									linkSpace = 23;
+								};
+																											
 								if(typeof handle === 'undefined') {
-									var remaining = 140 - value.length - 23;
+									var remaining = 140 - link_length(value) - linkSpace;
 								} else {
-									var remaining = 140 - value.length - handle.length - 23 - 6;
+									var remaining = 140 - link_length(value) - linkSpace - handle.length - 6;
 								}
 								if(remaining > 1 || remaining == 0) {
 									jQuery('.tweetCounter').css({'color':'green'}).text(remaining + ' characters');	
@@ -40,11 +47,19 @@
 								var value = jQuery('.mce-first textarea').val();
 								var strLength = value.length;
 								var handle = jQuery('#socialWarfare .twitterIDWrapper label').html();
+								
+								if(value.indexOf('http') > -1 || value.indexOf('https') > -1) { 
+									linkSpace = 0;
+								} else { 
+									linkSpace = 23;
+								};
+									
 								if(typeof handle === 'undefined') {
-									var remaining = 140 - value.length - 23;
+									var remaining = 140 - link_length(value) - linkSpace;
 								} else {
-									var remaining = 140 - value.length - handle.length - 23 - 6;
-								}
+									var remaining = 140 - link_length(value) - linkSpace - handle.length - 6;
+								}								
+								
 								this.getEl().innerHTML =
 								   '<span style="float:right;">You have <span class="tweetCounter" style="color:green">'+remaining+' characters</span> remaining.</span>';},
 							text: ''},

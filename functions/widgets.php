@@ -392,5 +392,6 @@ class sw_popular_posts_widget extends WP_Widget {
 	}
 }
 
-// register widget
+// Register the Widget
 add_action('widgets_init', create_function('', 'return register_widget("sw_popular_posts_widget");'));
+
