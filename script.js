@@ -487,7 +487,7 @@ function activateHoverStates() {
 				dif			= wrapper - icon;
 				origDif		= dif;
 				orig		= parseInt(tote) - parseInt(dif);
-				ele			= jQuery('.nc_socialPanel').attr('data-count');
+				ele			= jQuery(this).parents('.nc_socialPanel').attr('data-count');
 				if(jQuery(this).siblings('.totes').length) {
 					average 	= (parseInt(dif) / ((parseInt(ele)-2)));
 					average 	= Math.floor(average);
