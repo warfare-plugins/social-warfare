@@ -16,7 +16,20 @@ function socialWarfare( $content = false , $where = 'default' , $echo = true ) {
 	// Pass the array into the new function
 	return social_warfare($array);
 }
-
+/*****************************************************************
+*                                                                *
+*          A RECURSIVE ARRAY SEARCH FUNCTION         			 *
+*                                                                *
+******************************************************************/
+function recursive_array_search($needle,$haystack) {
+    foreach($haystack as $key=>$value) {
+        $current_key=$key;
+        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
+            return $current_key;
+        }
+    }
+    return false;
+}
 /*****************************************************************
 *                                                                *
 *          CACHe CHECKING FUNCTION         			 			 *
@@ -178,6 +191,26 @@ function social_warfare_buttons($array = array()) {
 			$buttonsArray['resource'] = array();
 			$buttonsArray['postID'] = $postID;
 
+			// Customize which buttosn we're going to display
+			if( isset ( $array['buttons'] ) ):
+			
+				// Fetch the global names and keys
+				$sw_available_options = apply_filters('sw_options',$sw_options);
+				$available_buttons = $sw_available_options['options']['displaySettings'];
+				
+				// Split the comma separated list into an array
+				$button_set_array = explode(',', $array['buttons']);
+				
+				// Match the names in the list to their appropriate system-wide keys
+				foreach($button_set_array as $button):
+					if( recursive_array_search( $button , $available_buttons ) ) :
+						$key = recursive_array_search( $button , $available_buttons );
+						
+						// Store the result in the array that gets passed to the HTML generator
+						$buttonsArray['buttons'][$key] = $button;
+					endif;
+				endforeach;
+			endif;
 
 			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
 			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists ( 'Subtitles' ) ) :
