@@ -42,6 +42,50 @@ jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
 function isOdd(num) { return num % 2;}
 jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
 
+// Function to check if the buttons are on one line or two
+/*
+var sw_check_is_running = false;
+function sw_button_size_check() {
+	if( sw_check_is_running == true ) {
+		return false	
+	} else {
+		sw_check_is_running = true;
+		setTimeout( function() {
+			
+			// Let's check each iteration of the social panel
+			var not_inline = false;
+			jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
+			
+				// Fetch the offset.top of the first element in the panel
+				if(jQuery(this).find('nc_tweetContainer:nth-child(1)').is(':visible')) {
+					first_button = jQuery(this).find('.nc_tweetContainer:nth-child(1)').offset();
+				} else {
+					first_button = jQuery(this).find('.nc_tweetContainer:nth-child(2)').offset();
+				}
+				
+				// Fetch the offset.top of the last element in the panel
+				if(jQuery(this).find('nc_tweetContainer:nth-last-child(1)').is(':visible')) {
+					last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').offset();
+				} else {
+					last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(2)').offset();
+				}
+				
+				console.log(first_button.top +''+ last_button.top);
+				if(first_button.top != last_button.top) {
+					not_inline = true;	
+				}
+			
+			});
+			if(not_inline == true) {
+				console.log('Fired');
+				swSetWidths(true);	
+			}
+			sw_check_is_running = false;
+		} , 500 );
+	}
+}
+*/
+
 // Function to set or reset the button sizes to fit their respective container area
 function swSetWidths(resize) {
 
@@ -164,6 +208,7 @@ function swSetWidths(resize) {
 						marginLeft = ((average - width) / 2) - 1;
 						marginRight = ((average - width) / 2) - 1;
 					};
+					jQuery(this).find('.sw_count').css({'padding-left':0,'padding-right':0});
 					jQuery(this).find('.iconFiller').css({'margin-left':marginLeft+'px','margin-right':marginRight+'px'});
 				});
 			// jQuery('.nc_tweetContainer').css({"padding-left":"4px","padding-right":"4px"});
@@ -628,6 +673,10 @@ jQuery(document).ready(function() {
 		if(jQuery('.nc_socialPanel:hover').length) { } else {
 			swSetWidths(true);
 			floatingBarReveal();
+			setTimeout( function() {
+				swSetWidths(true);
+				floatingBarReveal();
+			} , 2000 );
 		};
 	});
 
