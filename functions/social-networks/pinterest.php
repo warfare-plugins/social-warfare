@@ -141,7 +141,7 @@
 			endif;
 			$array['resource']['pinterest'] = '<div class="nc_tweetContainer nc_pinterest" data-id="'.$array['count'].'" data-network="pinterest">';
 			$array['resource']['pinterest'] .= $a;
-			if($array['options']['totesEach'] && $array['totes'] >= $array['options']['minTotes'] && $array['shares']['pinterest'] > 0):
+			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['pinterest'] > 0):
 				$array['resource']['pinterest'] .= '<span class="iconFiller">';
 				$array['resource']['pinterest'] .= '<span class="spaceManWilly" style="width:55px;">';
 				$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';
