@@ -82,7 +82,7 @@
 
 			$array['resource']['buffer'] = '<div class="nc_tweetContainer sw_buffer" data-id="'.$array['count'].'" data-network="buffer">';
 			$link = urlencode(urldecode(sw_process_url( $array['url'] , 'buffer' , $array['postID'] )));
-			$array['resource']['buffer'] .= '<a target="_blank" href="http://bufferapp.com/add?url='.$link.'&text='.urlencode($title).'" data-link="http://bufferapp.com/add?url='.$link.'&text='.urlencode($title).'" class="nc_tweet buffer_link">';
+			$array['resource']['buffer'] .= '<a target="_blank" href="http://bufferapp.com/add?url='.$link.'&text='.urlencode(html_entity_decode($title, ENT_COMPAT, 'UTF-8')).'" data-link="http://bufferapp.com/add?url='.$link.'&text='.urlencode(html_entity_decode($title, ENT_COMPAT, 'UTF-8')).'" class="nc_tweet buffer_link">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['buffer'] > 0):
 				$array['resource']['buffer'] .= '<span class="iconFiller">';
 				$array['resource']['buffer'] .= '<span class="spaceManWilly">';
