@@ -181,6 +181,9 @@ function social_warfare_buttons($array = array()) {
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
 
+			// Fetch the share counts
+			$buttonsArray['shares'] = get_social_warfare_shares($postID);
+
 			// Pass the sw_options into the array so we can pass it into the filter
 			$buttonsArray['options'] = $options;
 
@@ -202,6 +205,12 @@ function social_warfare_buttons($array = array()) {
 						
 						// Store the result in the array that gets passed to the HTML generator
 						$buttonsArray['buttons'][$key] = $button;
+
+						// Declare a default share count of zero. This will be overriden later
+						if(!isset($buttonsArray['shares'][$key])):
+							$buttonsArray['shares'][$key] = 0;
+						endif;
+						
 					endif;
 				endforeach;
 				
@@ -210,7 +219,6 @@ function social_warfare_buttons($array = array()) {
 			endif;
 
 			// Setup the buttons array to pass into the 'sw_network_buttons' hook
-			$buttonsArray['shares'] = get_social_warfare_shares($postID);
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
 			if( 	( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] && !isset($array['buttons']) )
