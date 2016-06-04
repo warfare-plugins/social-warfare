@@ -132,13 +132,13 @@
 *                                                                *
 ******************************************************************/
 
-			// Queue up our hook function
+			// Queue up our header hook function
 			add_filter( 'sw_meta_tags' , 'sw_open_graph_tags' , 1 );
 			add_filter( 'sw_meta_tags' , 'sw_add_twitter_card' , 2 );
 			add_filter( 'sw_meta_tags' , 'sw_frame_buster' , 3 );
 			add_filter( 'sw_meta_tags' , 'sw_output_custom_color' , 4 );
 			add_filter( 'sw_meta_tags' , 'sw_output_font_css' , 5 );
-			add_filter( 'sw_meta_tags' , 'sw_output_cache_trigger' , 6 );
+			// add_filter( 'sw_meta_tags' , 'sw_output_cache_trigger' , 6 );
 			add_filter( 'sw_meta_tags' , 'sw_cache_rebuild_rel_canonical' , 7 );
 			add_action( 'admin_head'   , 'sw_output_font_css' , 10);
 
@@ -587,28 +587,6 @@
 
 /*****************************************************************
 *                                                                *
-*          CACHE REBUILD TRIGGER					             *
-*                                                                *
-******************************************************************/
-function sw_output_cache_trigger($info) {
-	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
-	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
-
-		// Make sure we're not on a WooCommerce Account Page
-		if(is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page()):
-			return $info;
-
-		// Trigger the cache rebuild
-		else:
-			$url = get_permalink();
-			$info['header_output'] .= PHP_EOL.'<script type="text/javascript">var sw_buttons_exist = !!document.getElementsByClassName("nc_socialPanel"); if(sw_buttons_exist == true) { document.addEventListener("DOMContentLoaded", function(event) { var SW_CACHE_URL = "'.$url.'"; if(SW_CACHE_URL.indexOf("?") > -1) { SW_CACHE_URL += "&sw_cache=rebuild"; } else { SW_CACHE_URL += "?sw_cache=rebuild"; }; var xhr = new XMLHttpRequest(); xhr.open("GET",SW_CACHE_URL,true); xhr.send(); });}</script>';
-		endif;
-	endif;
-	// Return the array so the world doesn't explode
-	return $info;
-}
-/*****************************************************************
-*                                                                *
 *          CACHE REBUILD REL CANONICAL				             *
 *                                                                *
 ******************************************************************/
@@ -648,13 +626,67 @@ function sw_output_font_css($info=array()) {
 }
 /*****************************************************************
 *                                                                *
+*          FOOTER HOOKS & SCRIPTS					             *
+*                                                                *
+******************************************************************/
+// Queue up our hook function
+add_action( 'wp_footer' , 'sw_footer_functions' , 1 );
+
+// Queue up our footer hook function
+add_filter( 'sw_footer_scripts' , 'sw_output_cache_trigger' );
+add_filter( 'sw_footer_scripts' , 'sw_click_tracking' );
+
+function sw_footer_functions() {
+
+		// Fetch a few variables
+		$info['postID'] 				= get_the_ID();
+		$info['sw_user_options'] 		= sw_get_user_options();
+		$info['footer_output']			= '';
+
+		// Pass the array through our custom filters
+		$info = apply_filters( 'sw_footer_scripts' , $info );
+
+		// If we have output, output it
+		if($info['footer_output']):
+			echo '<script type="text/javascript">';
+			echo $info['footer_output'];
+			echo '</script>';
+		endif;
+		
+}
+
+/*****************************************************************
+*                                                                *
+*          CACHE REBUILD TRIGGER					             *
+*                                                                *
+******************************************************************/
+function sw_output_cache_trigger($info) {
+	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
+	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
+
+		// Make sure we're not on a WooCommerce Account Page
+		if(is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page()):
+			return $info;
+
+		// Trigger the cache rebuild
+		else:
+			$url = get_permalink();
+			$admin_ajax = admin_url( 'admin-ajax.php' );
+			$info['footer_output'] .= PHP_EOL.'var sw_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(sw_buttons_exist) {jQuery(document).on( "ready" , function() { var sw_admin_ajax = "'.$admin_ajax.'";var sw_cache_data = {"action":"sw_cache_trigger","post_id":'.$info['postID'].'};jQuery.post(sw_admin_ajax, sw_cache_data, function(response) {console.log(response);});});}';
+		endif;
+	endif;
+	// Return the array so the world doesn't explode
+	return $info;
+}
+/*****************************************************************
+*                                                                *
 *          Click Tracking							             *
 *                                                                *
 ******************************************************************/
-function sw_click_tracking() {
+function sw_click_tracking($info) {
 	$sw_options = sw_get_user_options();
 	if( $sw_options['sw_click_tracking'] == 1 ):
-    	echo '<script>if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "sw_" + network + "_share" );});}</script>';
+    	$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "sw_" + network + "_share" );});}';
 	endif;
+	return $info;
 }
-add_action( 'wp_footer', 'sw_click_tracking' );

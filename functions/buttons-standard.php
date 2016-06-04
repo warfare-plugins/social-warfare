@@ -35,7 +35,7 @@ function recursive_array_search($needle,$haystack) {
 *          CACHe CHECKING FUNCTION         			 			 *
 *                                                                *
 ******************************************************************/
-function sw_is_cache_fresh( $postID , $output=false ) {
+function sw_is_cache_fresh( $postID , $output=false , $ajax=false ) {
 
 	// Fetch the Options
 	$options 			= sw_get_user_options();
@@ -49,7 +49,7 @@ function sw_is_cache_fresh( $postID , $output=false ) {
 		endif;
 
 	else:
-		$postAge = floor(date('U') - get_post_time('U'));
+		$postAge = floor(date('U') - get_post_time( 'U' , false , $postID));
 		if($postAge < (21 * 86400)){ $hours = 1; }
 		elseif($postAge < (60 * 86400)) { $hours = 4; }
 		else { $hours = 12; }
@@ -64,7 +64,7 @@ function sw_is_cache_fresh( $postID , $output=false ) {
 		// Next, check if the cache is fresh or needs rebuilt
 		// Always be TRUE if we're not on a single.php otherwise we could end up
 		// Rebuilding multiple page caches which will cost a lot of time.
-		elseif(($lastChecked > ($time - $hours) && $lastChecked > 390000) || !is_singular()) :
+		elseif(($lastChecked > ($time - $hours) && $lastChecked > 390000) || (!is_singular() && $ajax == false) ) :
 			$freshCache = true;
 		else:
 			$freshCache = false;

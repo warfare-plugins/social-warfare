@@ -50,49 +50,54 @@ function sw_button_size_check() {
 		return false	
 	} else {
 		sw_check_is_running = true;
-		setTimeout( function() {
 			
-			// Let's check each iteration of the social panel
-			var not_inline = false;
-			jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
-			
-				// Fetch the offset.top of the first element in the panel
-				if(jQuery(this).find('nc_tweetContainer:nth-child(1)').css('display') != 'none') {
-					first_button = jQuery(this).find('.nc_tweetContainer:nth-child(1)').offset();
-					first_label = 'First';
-				} else {
-					first_button = jQuery(this).find('.nc_tweetContainer:nth-child(2)').offset();
-					first_label = 'Second';
-				}
-				
-				// Fetch the offset.top of the last element in the panel
-				if(jQuery(this).find('nc_tweetContainer:nth-last-child(1)').css('display') != 'none') {
-					last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').offset();
-					last_label = 'Last';
-				} else {
-					last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(2)').offset();
-					last_label = 'Second Last';
-				}
-				
-				// console.log(first_label+': '+first_button.top +' <=> '+ last_label+': '+last_button.top);
-				if(first_button.top != last_button.top) {
-					not_inline = true;	
-				}
-			
-			});
-			if(not_inline == true) {
-				swSetWidths(true,true);	
+		// Let's check each iteration of the social panel
+		var not_inline = false;
+		jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
+		
+			// Fetch the offset.top of the first element in the panel
+			if(jQuery(this).find('nc_tweetContainer:nth-child(1)').css('display') != 'none') {
+				first_button = jQuery(this).find('.nc_tweetContainer:nth-child(1)').offset();
+				first_label = 'First';
 			} else {
-				jQuery('.nc_socialPanel').css({opacity:1});	
+				first_button = jQuery(this).find('.nc_tweetContainer:nth-child(2)').offset();
+				first_label = 'Second';
 			}
-			sw_check_is_running = false;
-		} , 100 );
+			
+			// Fetch the offset.top of the last element in the panel
+			if(jQuery(this).find('nc_tweetContainer:nth-last-child(1)').css('display') != 'none') {
+				last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').offset();
+				last_label = 'Last';
+			} else {
+				last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(2)').offset();
+				last_label = 'Second Last';
+			}
+			
+			// console.log(first_label+': '+first_button.top +' <=> '+ last_label+': '+last_button.top);
+			if(first_button.top != last_button.top) {
+				not_inline = true;	
+			}
+		
+		});
+		if(not_inline == true) {
+			swSetWidths(true,true);	
+		} else {
+			jQuery('.nc_socialPanel').css({opacity:1});	
+		}
+		sw_check_is_running = false;
+
 	}
 }
 
 
 // Function to set or reset the button sizes to fit their respective container area
-function swSetWidths(resize,adjust) {
+function swSetWidths(resize,adjust,secondary) {
+
+	var anim_props = {
+		duration:0,
+		easing:'linear',
+		queue:false
+	};
 
 	// Check if this is the first or a forced resize
 	if(typeof window.origSets === 'undefined' || resize) {
@@ -225,8 +230,8 @@ function swSetWidths(resize,adjust) {
 						marginLeft = ((average - width) / 2) - 1;
 						marginRight = ((average - width) / 2) - 1;
 					};
-					jQuery(this).find('.sw_count').animate({'padding-left':0,'padding-right':0},0);
-					jQuery(this).find('.iconFiller').animate({'margin-left':marginLeft+'px','margin-right':marginRight+'px'},0);
+					jQuery(this).find('.sw_count').animate({'padding-left':0,'padding-right':0},anim_props);
+					jQuery(this).find('.iconFiller').animate({'margin-left':marginLeft+'px','margin-right':marginRight+'px'},anim_props);
 				});
 			// jQuery('.nc_tweetContainer').css({"padding-left":"4px","padding-right":"4px"});
 			} else {
@@ -235,7 +240,7 @@ function swSetWidths(resize,adjust) {
 				if(totalWidth > widthNeeded) {
 					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .sw_count').show();
 				}
-				jQuery(this).find('.nc_tweetContainer .iconFiller').animate({'margin-left':'0px','margin-right':'0px'},0);
+				jQuery(this).find('.nc_tweetContainer .iconFiller').animate({'margin-left':'0px','margin-right':'0px'},anim_props);
 				var average = Math.floor(average);
 				var oddball = average * totalElements;
 				var oddball = totalWidth - oddball;
@@ -279,7 +284,7 @@ function swSetWidths(resize,adjust) {
 						icon 		= jQuery(this).find('i.sw').outerWidth() + 14;
 						shareTerm 	= jQuery(this).find('.sw_share').outerWidth();
 						tote		= icon + shareTerm + 3;
-						jQuery(this).find('.spaceManWilly').css({'width':tote+'px'});
+						jQuery(this).find('.spaceManWilly').animate({'width':tote+'px'},anim_props);
 
 						++count;
 						var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
@@ -329,9 +334,12 @@ function swSetWidths(resize,adjust) {
 				};
 			};
 		});
-		setTimeout( function() {
-			sw_button_size_check();
-		} , 100);
+		if(secondary == true || window.sw_secondary == true) {
+			window.sw_secondary = true;
+			setTimeout( function() {
+				sw_button_size_check();
+			} , 200);
+		}
 	// If we already have sizes, just reuse them
 	} else {
 		jQuery('.nc_tweetContainer').not('.totesalt').each(function() {
@@ -342,11 +350,11 @@ function swSetWidths(resize,adjust) {
 			};
 			dataId = parseInt(jQuery(this).attr('data-id'));
 			if(typeof window.origSets[index] === 'undefined') { } else {
-				jQuery(this).find('.iconFiller').css({"width":window.origSets[index][dataId]['fil']});
-				jQuery(this).find('.sw_count').css({
+				jQuery(this).find('.iconFiller').animate({"width":window.origSets[index][dataId]['fil']},anim_props);
+				jQuery(this).find('.sw_count').animate({
 					"padding-left": window.origSets[index][dataId]['pl'],
 					"padding-right":  window.origSets[index][dataId]['pr']
-				});
+				},anim_props);
 			};
 		});
 	};
@@ -685,9 +693,9 @@ function getShares() {
 					
 					setTimeout( function() {
 						
-						swSetWidths(true);
+						swSetWidths(true,false,true);
 						// jQuery('.nc_socialPanel').css({opacity:1});
-					} , 1000 );
+					} , 200 );
 					
 				});
 				createFloatBar();

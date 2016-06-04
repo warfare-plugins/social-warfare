@@ -43,6 +43,7 @@ require_once $pluginDir  . '/functions/buttons-floating.php';
 require_once $pluginDir  . '/functions/permalinks.php';
 require_once $pluginDir  . '/functions/post-options.php';
 require_once $pluginDir  . '/functions/share-count-function.php';
+require_once $pluginDir  . '/functions/cache-rebuild.php';
 require_once $pluginDir  . '/functions/header-meta-tags.php';
 require_once $pluginDir  . '/functions/profile-fields.php';
 // Networks
