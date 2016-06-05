@@ -83,9 +83,41 @@
 	margin-right: 0 !important;
 }
 
+.sw-clearfix:after,
+.sw-clearfix:before 
+{
+	content: ' ';
+	display: table;
+}
+
+.sw-clearfix:after {
+	clear: both;
+}
+
 /*********************************************************
 
 	More CSS Coming Soon
 
 *********************************************************/
 
+#wpcontent {background:#fff;padding-left:0;}
+.sw-top-menu {border-bottom: 1px solid #CCC;float:none;}
+.sw-header-logo {height:75px;float:left;}
+.sw-header-menu {height:75px;}
+.sw-header-menu li {
+    float: left;
+    margin: 0 15px;
+    font-size: 16px;
+	display:table;
+	height:75px;
+}
+.sw-header-menu li span {padding:0 5px 5px 5px;}
+.sw-header-menu li.active span, .sw-header-menu li:hover span {
+	border-bottom:4px solid black;
+}
+.sw-header-menu li a {
+	color:black;
+	text-decoration:none;	
+	display:table-cell;
+	vertical-align:middle;
+}

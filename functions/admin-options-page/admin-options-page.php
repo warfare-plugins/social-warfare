@@ -38,6 +38,8 @@ function sw_admin_options_css() {
 
 // Enqueue the Admin Options JS
 function sw_admin_options_js() {
+	wp_enqueue_script('jquery');
+	wp_enqueue_script( 'jquery-effects-core' );
     wp_enqueue_script( 'sw_admin_options_js', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , SW_VERSION );
 }
 
@@ -54,8 +56,29 @@ function sw_plugin_options() {
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
-	
-	echo '<div class="wrap">';
-	echo '<p>Here is where the form would go if I actually had options.</p>';
-	echo '</div>';
+	?>
+	<div class="sw-grid sw-col-940 sw-top-menu">
+    	<img class="sw-header-logo" src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/social-warfare-light.png" />
+		<ul class="sw-header-menu">
+        	<li class="active"><a href="#"><span>Display</span></a></li>
+        	<li><a href="#"><span>Styles</span></a></li>
+        	<li><a href="#"><span>Social Identity</span></a></li>
+        	<li><a href="#"><span>Advanced</span></a></li>
+        	<li><a href="#"><span>Registration</span></a></li>
+		</ul>
+	</div>
+	<?php
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
