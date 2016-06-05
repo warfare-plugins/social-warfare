@@ -93,14 +93,28 @@
 .sw-clearfix:after {
 	clear: both;
 }
+.sw-clearfix {clear:both;width:100%;}
 
+img {
+	-ms-interpolation-mode: bicubic;
+	border: 0;
+	height: auto;
+	max-width: 100%;
+	vertical-align: middle;
+}
+.sw-admin-divider {
+	width:100%;
+	height:1px;
+	border-bottom:1px solid #CED3DC;	
+	margin-bottom:40px;
+}
 /*********************************************************
 
-	More CSS Coming Soon
+	The Header Menu
 
 *********************************************************/
 
-#wpcontent {background:#fff;padding-left:0;}
+#wpwrap, #wpcontent {background:#fff;padding-left:0;}
 .sw-top-menu {border-bottom: 1px solid #CCC;float:none;}
 .sw-header-logo {height:75px;float:left;}
 .sw-header-menu {height:75px;}
@@ -111,8 +125,9 @@
 	display:table;
 	height:75px;
 }
+.sw-header-menu li:focus, .sw-header-menu li a:focus {outline:none;}
 .sw-header-menu li span {padding:0 5px 5px 5px;}
-.sw-header-menu li.active span, .sw-header-menu li:hover span {
+.sw-header-menu li.sw-active-tab span, .sw-header-menu li:hover span {
 	border-bottom:4px solid black;
 }
 .sw-header-menu li a {
@@ -120,4 +135,51 @@
 	text-decoration:none;	
 	display:table-cell;
 	vertical-align:middle;
+}
+/*********************************************************
+
+	The Header Menu
+
+*********************************************************/
+.sw-admin-wrapper {
+	clear: both;
+	margin: 20px auto 20px auto;
+	padding: 0 40px 20px 40px;
+	position: relative;	
+}
+.sw-tabs-container .sw-admin-tab {display:none;}
+.sw-tabs-container .sw-admin-tab:nth-child(1) {display:block;}
+.sw-admin-tab h2 {
+font-size: 26px;
+line-height: 1.2;
+margin: 0;
+}
+p.sw-subtitle {
+font-size: 14px;
+line-height: 1.2;
+margin: 10px 0;
+}
+p.sw-checkbox-label {
+font-size: 16px;
+font-weight: bold;
+}
+/*********************************************************
+
+	Checkboxes
+
+*********************************************************/
+.sw-checkbox-toggle {
+	width:104px;
+	height:46px;
+	background-image:url('images/on-off-toggle.jpg');	
+	float:right;
+	margin-top:5px 0;
+}
+input.sw-admin-input {
+padding: 15px;
+border: 1px solid #ced3cd;
+border-radius: 4px;
+float: right;
+box-shadow: none;
+margin:2px 0 1px 0;
 }
