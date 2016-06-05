@@ -26,6 +26,7 @@ define( 'SW_PLUGIN_DIR' , $pluginUrl );
 ******************************************************************/
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once SW_META_DIR . 'meta-box.php';
+require_once $pluginDir  . '/functions/admin-options-page/admin-options-page.php';
 require_once $pluginDir  . '/functions/kilomega.php';
 require_once $pluginDir  . '/functions/excerpt.php';
 require_once $pluginDir  . '/functions/mobile-detection.php';
