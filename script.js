@@ -673,58 +673,41 @@ function swApplyScale() {
 	});
 }
 
-function getShares() {
+function sw_init_share_buttons() {
 
 	// Fetch the padding amount to make space later for the floating bars
 	window['body_padding_top'] = jQuery('body').css('padding-top').replace('px','');
 	window['body_padding_bottom'] = jQuery('body').css('padding-bottom').replace('px','');
-
 	if(jQuery('.nc_socialPanel').length) {
-		//var checkVisible = setInterval(function() {
-			//if(jQuery('.nc_socialPanel:visible')) {
-				//clearInterval(checkVisible);
-				swApplyScale();
-				// swSetWidths();
-				
-				jQuery.when( 
-				
-					swSetWidths() 
-				
-				).done(function() {
-				
-					// setTimeout( function() {
-						// jQuery('.nc_socialPanel').css({opacity:1});
-					// } , 50 );
-					
-					setTimeout( function() {
-						
-						swSetWidths(true,false,true);
-						// jQuery('.nc_socialPanel').css({opacity:1});
-					} , 200 );
-					
-				});
-				createFloatBar();
-				lst = jQuery(window).scrollTop();
-				floatingBar();
-				floatingBarReveal();
-				activateHoverStates();
-			//}
-		//} , 250 );
+		swApplyScale();
+		jQuery.when( 
+			swSetWidths(true) 
+		).done(function() {
+			setTimeout( function() {
+				swSetWidths(true,false,true);
+			} , 200 );
+		});
+		createFloatBar();
+		lst = jQuery(window).scrollTop();
+		floatingBar();
+		floatingBarReveal();
+		activateHoverStates();
 	}
 }
 
 jQuery(document).ready(function() {
 	jQuery(window).resize(function() {
 		if(jQuery('.nc_socialPanel:hover').length) { } else {
-			// swSetWidths(true);
-			// floatingBarReveal();
 			setTimeout( function() {
 				window.sw_adjust = 1;
-				swSetWidths(true);
-				floatingBarReveal();
+				sw_init_share_buttons();
 			} , 100 );
 		};
 	});
+
+	jQuery( document.body ).on( 'post-load', function () {
+    	sw_init_share_buttons();
+	} );
 
 	if(jQuery('.nc_socialPanelSide').length) {
 		var buttonsHeight = jQuery('.nc_socialPanelSide').height();
@@ -733,7 +716,7 @@ jQuery(document).ready(function() {
 		jQuery('.nc_socialPanelSide').css({'top':newPosition+'px'});
 	}
 
-	getShares();
+	sw_init_share_buttons();
 
 	// Reset the cache
 	if (typeof sw_cache_url != 'undefined') {
