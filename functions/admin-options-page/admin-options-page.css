@@ -106,7 +106,7 @@ img {
 	width:100%;
 	height:1px;
 	border-bottom:1px solid #CED3DC;	
-	margin-bottom:40px;
+	margin:20px 0 40px 0;
 }
 /*********************************************************
 
@@ -125,7 +125,7 @@ img {
 	display:table;
 	height:75px;
 }
-.sw-header-menu li:focus, .sw-header-menu li a:focus {outline:none;}
+.sw-header-menu li:focus, .sw-header-menu li a:focus {outline:none;box-shadow:none;}
 .sw-header-menu li span {padding:0 5px 5px 5px;}
 .sw-header-menu li.sw-active-tab span, .sw-header-menu li:hover span {
 	border-bottom:4px solid black;
@@ -154,6 +154,9 @@ font-size: 26px;
 line-height: 1.2;
 margin: 0;
 }
+.sw-admin-tab h2.sw-h-label {
+	line-height:56px;	
+}
 p.sw-subtitle {
 font-size: 14px;
 line-height: 1.2;
@@ -162,6 +165,9 @@ margin: 10px 0;
 p.sw-checkbox-label {
 font-size: 16px;
 font-weight: bold;
+}
+p.sw-short {
+	margin:1em 0 0 0;	
 }
 /*********************************************************
 
@@ -173,13 +179,67 @@ font-weight: bold;
 	height:46px;
 	background-image:url('images/on-off-toggle.jpg');	
 	float:right;
-	margin-top:5px 0;
+	margin:5px 0;
 }
 input.sw-admin-input {
-padding: 15px;
-border: 1px solid #ced3cd;
-border-radius: 4px;
-float: right;
-box-shadow: none;
-margin:2px 0 1px 0;
+	padding: 15px;
+	border: 1px solid #ced3cd;
+	border-radius: 2px;
+	float: right;
+	box-shadow: none;
+	margin:2px 0 1px 0;
 }
+.sw-grid select {
+width: 100%;
+box-shadow: none;
+border: 1px solid #ced3cd;
+height: 51px;
+padding: 15px;
+margin: 2px 1px 3px 0;
+}
+a.button.sw-navy-button,a.button.sw-blue-button {
+padding: 15px 30px;
+height: auto;
+line-height: 1;
+border-radius: 2px;
+box-shadow: none;
+float: right;
+margin: 15px 0;
+}
+a.button.sw-navy-button {
+background: #30394f;
+color: #fff;
+border-color: #2a2d34;
+}
+a.button.sw-navy-button:hover, a.button.sw-blue-button:hover {
+background: #2a2d34;
+border-color: #2a2d34;
+color: #fff;
+}
+a.button.sw-blue-button {
+background: #6bcce9;
+border-color: #6bcce9;
+color: #fff;
+}
+
+.sw-red-notice,
+.sw-green-notice {
+color: #fff;
+padding: 15px 30px;
+border-radius: 2px;
+margin:15px 0;
+}
+
+.sw-red-notice { background: #ee464f }
+.sw-green-notice { background: #71C069 }
+
+.sw-red-notice:before,
+.sw-green-notice:before {
+   font-family: 'Dashicons';
+   font-size: 26px;
+   margin: 0 15px 0 0;
+   vertical-align: middle;
+}
+
+.sw-red-notice:before { content: "\f158" }
+.sw-green-notice:before { content: "\f147" }

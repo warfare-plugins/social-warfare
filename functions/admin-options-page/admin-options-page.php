@@ -127,13 +127,66 @@ function sw_plugin_options() {
                 <div class="sw-admin-divider sw-clearfix"></div>
                 <!-- End Share Counts -->
                 
+                <!-- Begin Twitter Cards -->
+                 <div class="sw-grid sw-col-300">
+                	<h2 class="sw-h-label">Twitter Cards</h2>
+                </div>
+
+                <div class="sw-grid sw-col-300">
+                	<div class="sw-checkbox-toggle"></div>
+                </div>
+                
+                <div class="sw-grid sw-col-300 sw-fit">
+                </div>
+                <div class="sw-clearfix"></div>
+                <div class="sw-admin-divider sw-clearfix"></div>
+                <!-- End Twitter Cards -->
+            
+				<!-- Begin The Social Networks -->
+                <h2>Position Share Buttons</h2>
+                <p class="sw-subtitle">The options below will allow you to customize the positioning of share buttons for each post type.</p>
+
+				
+                <div class="sw-grid sw-col-300">
+                </div>
+                <div class="sw-grid sw-col-300">
+                	<p class="sw-checkbox-label sw-short">Static Buttons</p>
+                </div>
+                <div class="sw-grid sw-col-300 sw-fit">
+                	<p class="sw-checkbox-label sw-short">Side Floating Buttons (If Activated)</p>
+                </div>
+                
+
+                <div class="sw-grid sw-col-300">
+                	<p class="sw-checkbox-label">Position on Posts</p>
+                </div>
+
+                <div class="sw-grid sw-col-300">
+                	<select>
+                    	<option value="option1">Option 1</option>
+                    	<option value="option2">Option 2</option>
+                    </select>
+                </div>
+
+                <div class="sw-grid sw-col-300 sw-fit">
+                	<select>
+                    	<option value="option1">Option 1</option>
+                    	<option value="option2">Option 2</option>
+                    </select>
+                </div>
+
+
+                <div class="sw-admin-divider sw-clearfix"></div>
+                <!-- End Social Networks -->
+                
 			<!-- End Display Tab -->
 			</div>
             
             <!-- Begin Display Tab -->
 			<div id="sw-styles-tab" class="sw-admin-tab sw-grid sw-col-940">
 			
-            	Styles Tab
+            	<div class="sw-red-notice">This copy of Social Warfare is NOT registered! Let's fix it below.</div>
+            	<div class="sw-green-notice">This copy of Social Warfare IS registered! Wah-hoo!.</div>
             
             <!-- End Display Tab -->
             </div>
@@ -145,11 +198,11 @@ function sw_plugin_options() {
         
 		<!-- Begin Admin Sidebar -->        
         <div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">
-            <img src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/sidebar-button-save-changes.jpg">
+        	<a href="#" class="button sw-navy-button">Save Changes</a>
             <img src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/sidebar-images.jpg">
             <p class="sw-support-notice">Need help? Check out our Knowledgebase.</p>
             <p class="sw-support-notice">Opening a support ticket? Copy your System Status by clicking the button below.</p>
-            <img src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/sidebar-button-support.jpg">
+        	<a href="#" class="button sw-blue-button">Get System Status</a>
         
         <!-- End Admin Sidebar -->
         </div>
