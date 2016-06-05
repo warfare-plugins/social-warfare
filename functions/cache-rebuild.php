@@ -13,8 +13,6 @@ function sw_cache_rebuild() {
 	// Fetch the Post ID
 	$post_id = $_POST['post_id'];
 
-	var_dump( sw_is_cache_fresh( $post_id , true , true ) );
-
 	// Ensure that the cache for this post is actually expired
 	if( sw_is_cache_fresh( $post_id , true , true ) == false ):
 
@@ -28,9 +26,8 @@ function sw_cache_rebuild() {
 		delete_post_meta( $post_id , 'sw_cache_timestamp' );
 		update_post_meta( $post_id , 'sw_cache_timestamp' , floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
 
-		// Encode and return the new share counts
-		$shares = json_encode($shares);
-		echo $shares;
+		// Return the share count
+		wp_send_json( $shares );
 
 	endif;
 
