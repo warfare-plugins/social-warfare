@@ -56,7 +56,7 @@ function sw_button_size_check() {
 		jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
 		
 			// Fetch the offset.top of the first element in the panel
-			if(jQuery(this).find('nc_tweetContainer:nth-child(1)').css('display') != 'none') {
+			if(jQuery(this).find('.nc_tweetContainer:nth-child(1)').css('display') != 'none') {
 				first_button = jQuery(this).find('.nc_tweetContainer:nth-child(1)').offset();
 				first_label = 'First';
 			} else {
@@ -65,7 +65,7 @@ function sw_button_size_check() {
 			}
 			
 			// Fetch the offset.top of the last element in the panel
-			if(jQuery(this).find('nc_tweetContainer:nth-last-child(1)').css('display') != 'none') {
+			if(jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').css('display') != 'none') {
 				last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').offset();
 				last_label = 'Last';
 			} else {
@@ -125,14 +125,19 @@ function swSetWidths(resize,adjust,secondary) {
 			// }
 			
 			if(typeof window.sw_adjust === 'undefined' && !adjust) {
-				var totalWidth 	= jQuery(this).width() - 0;
+				window.sw_adjust = 0;
+				//var totalWidth 	= jQuery(this).width() - 0;
 			} else if (typeof window.sw_adjust === 'undefined' && adjust == true) {
 				window.sw_adjust = 1;
-				var totalWidth  = jQuery(this).width() - 1;
+				// var totalWidth  = jQuery(this).width() - 1;
 			} else if (adjust == true) {
 				++window.sw_adjust;
-				var totalWidth  = jQuery(this).width() - window.sw_adjust;
+				// var totalWidth  = jQuery(this).width() - window.sw_adjust;
+			} else {
+				window.sw_adjust = 0;	
 			};
+			var totalWidth  = jQuery(this).width() - window.sw_adjust;
+			// console.log(window.sw_adjust);
 			// console.log('Total Width: '+totalWidth);
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
@@ -714,6 +719,7 @@ jQuery(document).ready(function() {
 			// swSetWidths(true);
 			// floatingBarReveal();
 			setTimeout( function() {
+				window.sw_adjust = 1;
 				swSetWidths(true);
 				floatingBarReveal();
 			} , 100 );
