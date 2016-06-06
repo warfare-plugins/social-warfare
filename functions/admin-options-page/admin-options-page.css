@@ -108,6 +108,7 @@ img {
 	border-bottom:1px solid #CED3DC;	
 	margin:20px 0 40px 0;
 }
+.sw-hidden {display:none!important;}
 /*********************************************************
 
 	The Header Menu
@@ -180,7 +181,10 @@ p.sw-short {
 	background-image:url('images/on-off-toggle.jpg');	
 	float:right;
 	margin:5px 0;
+	cursor:pointer;
 }
+.sw-checkbox-toggle[status="on"] {background-position:0% 0%;}
+.sw-checkbox-toggle[status="off"] {background-position:100% 0%;}
 input.sw-admin-input {
 	padding: 15px;
 	border: 1px solid #ced3cd;
@@ -190,44 +194,44 @@ input.sw-admin-input {
 	margin:2px 0 1px 0;
 }
 .sw-grid select {
-width: 100%;
-box-shadow: none;
-border: 1px solid #ced3cd;
-height: 51px;
-padding: 15px;
-margin: 2px 1px 3px 0;
+	width: 100%;
+	box-shadow: none;
+	border: 1px solid #ced3cd;
+	height: 51px;
+	padding: 15px;
+	margin: 2px 1px 3px 0;
 }
 a.button.sw-navy-button,a.button.sw-blue-button {
-padding: 15px 30px;
-height: auto;
-line-height: 1;
-border-radius: 2px;
-box-shadow: none;
-float: right;
-margin: 15px 0;
+	padding: 15px 30px;
+	height: auto;
+	line-height: 1;
+	border-radius: 2px;
+	box-shadow: none;
+	float: right;
+	margin: 15px 0;
 }
 a.button.sw-navy-button {
-background: #30394f;
-color: #fff;
-border-color: #2a2d34;
+	background: #30394f;
+	color: #fff;
+	border-color: #2a2d34;
 }
 a.button.sw-navy-button:hover, a.button.sw-blue-button:hover {
-background: #2a2d34;
-border-color: #2a2d34;
-color: #fff;
+	background: #2a2d34;
+	border-color: #2a2d34;
+	color: #fff;
 }
 a.button.sw-blue-button {
-background: #6bcce9;
-border-color: #6bcce9;
-color: #fff;
+	background: #6bcce9;
+	border-color: #6bcce9;
+	color: #fff;
 }
 
 .sw-red-notice,
 .sw-green-notice {
-color: #fff;
-padding: 15px 30px;
-border-radius: 2px;
-margin:15px 0;
+	color: #fff;
+	padding: 15px 30px;
+	border-radius: 2px;
+	margin:15px 0;
 }
 
 .sw-red-notice { background: #ee464f }

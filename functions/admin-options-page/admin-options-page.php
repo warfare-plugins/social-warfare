@@ -128,16 +128,12 @@ function sw_plugin_options() {
                 <!-- End Share Counts -->
                 
                 <!-- Begin Twitter Cards -->
-                 <div class="sw-grid sw-col-300">
-                	<h2 class="sw-h-label">Twitter Cards</h2>
-                </div>
-
+				<div class="sw-grid sw-col-300"><h2 class="sw-h-label">Twitter Cards</h2></div>
                 <div class="sw-grid sw-col-300">
-                	<div class="sw-checkbox-toggle"></div>
+                	<div class="sw-checkbox-toggle" status="off" field="#sw_twitter_card"></div>
+                    <input type="checkbox" class="sw-hidden" name="sw_twitter_card" id="sw_twitter_card">
                 </div>
-                
-                <div class="sw-grid sw-col-300 sw-fit">
-                </div>
+                <div class="sw-grid sw-col-300 sw-fit"></div>
                 <div class="sw-clearfix"></div>
                 <div class="sw-admin-divider sw-clearfix"></div>
                 <!-- End Twitter Cards -->
