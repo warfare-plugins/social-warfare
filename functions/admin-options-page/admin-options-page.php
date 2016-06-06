@@ -168,6 +168,7 @@ function sw_build_options_page() {
 					$status = 'off'; $selected = '';
 				endif;
 						
+				// Check for four-fourths size
 				if($option['size'] == 'four-fourths'):
 
 					echo '<div class="sw-grid sw-col-620"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
@@ -176,6 +177,20 @@ function sw_build_options_page() {
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
 					echo '</div>';
 				
+				// Check for three-fourths-advanced size
+				elseif($option['size'] == 'two-thirds-advanced'):
+
+					echo '<div class="two-thirds-advanced">';
+					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300">';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '</div>';
+					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+					echo '</div>';
+					echo '<div class="sw-clearfix"></div>';
+				
+				// Check for two-fourths size
 				elseif( $option['size'] == 'two-fourths'):
 				
 					if($last_size == 'two-fourths'):
@@ -193,6 +208,7 @@ function sw_build_options_page() {
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
 					echo '</div></div>';
 				
+				// All others
 				else:
 								
 					if($options['header'] == true):
@@ -218,7 +234,7 @@ function sw_build_options_page() {
 
 			if($option['type'] == 'input' && $option['size'] == 'two-thirds'):
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$option['default'].'" /></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="'.$option['default'].'" value="'.$option['default'].'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-clearfix"></div>';
 				
@@ -288,6 +304,19 @@ function sw_build_options_page() {
 				endforeach;
 				echo '</select></div>';
 				echo '</div>';
+				
+			elseif( $option['type'] == 'select' && $option['size'] == 'two-thirds' ):
+
+				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
+				echo '<div class="sw-grid sw-col-300"><select name="'.$key.'">';
+				if(!isset($option['default'])):
+					echo '<option value="">Select...</option>';					
+				endif;
+				foreach( $option['content'] as $select_key => $select_value ) :
+					echo '<option value="'.$select_key.'" '.($option['default'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+				endforeach;
+				echo '</select></div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 			
 			endif;
 
@@ -373,7 +402,10 @@ function sw_build_options_page() {
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
 	echo '<a href="#" class="button sw-navy-button">Save Changes</a>';
-	echo '<img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/sidebar-images.jpg">';
+	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
+	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/starter-guide-300x150.jpg"></a>';
+	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/measure-roi-300x150.jpg"></a>';
+	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/paradox-of-choice-300x150.jpg"></a>';
 	echo '<p class="sw-support-notice">Need help? Check out our Knowledgebase.</p>';
 	echo '<p class="sw-support-notice">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
 	echo '<a href="#" class="button sw-blue-button">Get System Status</a>';

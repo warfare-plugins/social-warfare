@@ -542,6 +542,140 @@
 
 /****************************************************************************************
 *																						*
+*	The Advanced Tab																	*
+*																						*
+*****************************************************************************************/
+
+	function sw_options_advanced($sw_options) {
+
+		// Declare the Display Settings tab and tab name
+		$sw_options['tabs']['links']['sw_advanced'] = 'Advanced';
+
+		$sw_options['options']['sw_advanced'] = array(
+			'sniplyBuster' => array(
+				'type'			=> 'checkbox',
+				'title' 		=> 'Frame Buster',
+				'description' 	=> 'If you want to stop content pirates from framing your content, turn this on.',
+				'size'			=> 'two-thirds-advanced',
+				'divider'		=> true
+			),
+			'link_shortening' => array(
+				'type'			=> 'checkbox',
+				'title' 		=> 'Bitly Link Shortening',
+				'description' 	=> 'If you like to have all of your links automatically shortened, turn this on.',
+				'size'			=> 'two-thirds-advanced',
+			),
+			'bitly_authentication' => array(
+				'type'		=> 'authentication',
+				'link'		=> '#',
+				'name'		=> 'Connect Your Bitly Account',
+				'divider'	=> true
+			),
+			'googleAnalytics' => array(
+				'type'			=> 'checkbox',
+				'title' 		=> 'Analytics Tracking',
+				'description' 	=> 'If you want to activate UTM tracking for shared URLs, turn this on.',
+				'size'			=> 'two-thirds-advanced',
+			),
+			'analyticsMedium' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'	=> 'UTM Medium',
+			),
+			'analyticsCampaign' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'		=> 'UTM Campaign',
+				'divider' 	=> true
+			),
+			'share_recovery_title' => array(
+				'type'		=> 'title',
+				'content'	=> 'Share Recovery'
+			),
+			'share_recovery_description' => array(
+				'type'		=> 'description',
+				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them.'
+			),
+			'recover_shares' => array(
+				'type'		=> 'checkbox',
+				'size'		=> 'two-thirds',
+				'content'	=> 'Activate Share Recovery',
+				'default'	=> false
+			),
+			'recovery_format' 	=> array(
+				'type' 				=> 'select',
+				'name' 				=> 'Previous URL Format',
+				'size'				=> 'two-thirds',
+				'content' 			=> array(
+					'unchanged'			=> 'Unchanged',
+					'default' 			=> 'Plain',
+					'day_and_name' 		=> 'Day and Name',
+					'month_and_name' 	=> 'Month and Name',
+					'numeric' 			=> 'Numeric',
+					'post_name' 		=> 'Post Name',
+					'custom'			=> 'Custom'
+				),
+				'default' 			=> 'unchanged'
+			),
+			'recovery_custom_format' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'	=> 'Custom Permalink Format',
+			),'recovery_protocol'	=> array(
+				'type'				=> 'select',
+				'size'				=> 'two-thirds',
+				'name'				=> 'Previous Connection Protocol',
+				'content'			=> array(
+					'unchanged'			=> 'Unchanged',
+					'http'				=> 'http',
+					'https'				=> 'https'
+				),
+				'default'			=> 'unchanged'
+			),
+			'recovery_prefix'	=> array(
+				'type'				=> 'select',
+				'size'				=> 'two-thirds',
+				'name'				=> 'Previous Domain Prefix',
+				'content'			=> array(
+					'unchanged'			=> 'Unchanged',
+					'www'				=> 'www',
+					'nonwww'			=> 'non-www'
+				),
+				'default'			=> 'unchanged'
+			),
+			'recovery_subdomain' => array(
+				'type' 		=> 'input',
+				'size'		=> 'two-thirds',
+				'name' 		=> 'Subdomain',
+				'default' 	=> '',
+				'divider'	=> true
+			),
+			'caching_method_title' => array(
+				'type'		=> 'title',
+				'content'	=> 'Caching Method'
+			),
+			'caching_method_description' => array(
+				'type'		=> 'paragraph',
+				'content'	=> 'If you have advanced knowledge of caching configurations, you may want to choose your own below.'
+			),
+			'cacheMethod'		=> array(
+				'type'				=> 'select',
+				'size'				=> 'two-thirds',
+				'name'				=> 'Cache Rebuild Method',
+				'content'			=> array(
+					'advanced'			=> 'Advanced Cache Triggering',
+					'legacy'			=> 'Legacy Cache Rebuilding during Page Loads'
+				),
+				'default'			=> 'advanced'
+			)
+		);
+		
+		return $sw_options;
+	};
+
+
+/****************************************************************************************
+*																						*
 *	Queue up the Options Filters														*
 *																						*
 *****************************************************************************************/
@@ -549,18 +683,7 @@
 	add_filter('sw_options_page', 'sw_options_display' 			, 1 );
 	add_filter('sw_options_page', 'sw_options_styles' 			, 2 );
 	add_filter('sw_options_page', 'sw_options_social_identity'	, 3 );
-//	add_filter('sw_options', 'sw_options_display_locations' , 3 );
-//	add_filter('sw_options', 'sw_options_floating_buttons' 	, 4 );
-//	add_filter('sw_options', 'sw_options_clicktotweet' 		, 5 );
-//	add_filter('sw_options', 'sw_options_tweet_counts' 		, 6 );
-//	add_filter('sw_options', 'sw_options_social_identity' 	, 7 );
-//	add_filter('sw_options', 'sw_options_link_shortening' 	, 8 );
-//	add_filter('sw_options', 'sw_options_analytics' 		, 9 );
-//	add_filter('sw_options', 'sw_options_frame_buster' 		, 10);
-//	add_filter('sw_options', 'sw_options_recover_shares' 	, 11);
-//	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 12);
-//	add_filter('sw_options', 'sw_options_registration' 		, 99);
-//	add_filter('sw_options', 'sw_options_system_status'		, 100);
+	add_filter('sw_options_page', 'sw_options_advanced'			, 4 );
 
 /****************************************************************************************
 *																						*
