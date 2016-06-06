@@ -163,7 +163,7 @@ font-size: 14px;
 line-height: 1.2;
 margin: 10px 0;
 }
-p.sw-checkbox-label, p.sw-input-label, p.sw-select-label {
+p.sw-checkbox-label, p.sw-input-label, p.sw-select-label, p.sw-authenticate-label {
 font-size: 16px;
 font-weight: bold;
 }

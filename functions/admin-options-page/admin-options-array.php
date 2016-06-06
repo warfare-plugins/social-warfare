@@ -467,6 +467,78 @@
 	}
 
 
+/****************************************************************************************
+*																						*
+*	Queue up the Options Filters														*
+*																						*
+*****************************************************************************************/
+
+	function sw_options_social_identity($sw_options) {
+
+		// Declare the Display Settings tab and tab name
+		$sw_options['tabs']['links']['sw_social_identity'] = 'Social Identity';
+
+		$sw_options['options']['sw_social_identity'] = array(
+			'social_identity_title' => array(
+				'type' 		=> 'title',
+				'content' 	=> 'Sitewide Identity'
+			),
+			'social_identity_description' => array(
+				'type' 		=> 'paragraph',
+				'content' 	=> 'If you would like to set sitewide defaults for your social identity, add them below.'
+			),
+			'twitterID' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'		=> 'Twitter Username'
+			),
+			'pinterestID' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'		=> 'Pinterest Username'
+			),
+			'facebookPublisherUrl' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'		=> 'Facebook Page URL'
+			),
+			'facebookAppID' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-thirds',
+				'name'		=> 'Facebook App ID'
+			),
+			'social_identity_divider' => array(
+				'type'		=> 'divider'
+			),
+			'social_authentication_title' => array(
+				'type' 		=> 'title',
+				'content'	=> 'Social Authentication'
+			),
+			'social_authentication_description' => array(
+				'type' 		=> 'paragraph',
+				'content'	=> 'In order to have some of the advanced functions like uploading images to Twitter for the custom tweet or fetching your follower counts for the follow widget, we need you to login with your social accounts.'
+			),
+			'twitter_authentication' => array(
+				'type'		=> 'authentication',
+				'link'		=> '#',
+				'name'		=> 'Connect Your Twitter Account'
+			),
+			'facebook_authentication' => array(
+				'type'		=> 'authentication',
+				'link'		=> '#',
+				'name'		=> 'Connect Your Facebook Account'
+			),
+			'google_authentication' => array(
+				'type'		=> 'authentication',
+				'link'		=> '#',
+				'name'		=> 'Connect Your Google Account'
+			)
+			
+		);
+		
+		return $sw_options;
+		
+	}
 
 /****************************************************************************************
 *																						*
@@ -476,6 +548,7 @@
 
 	add_filter('sw_options_page', 'sw_options_display' 			, 1 );
 	add_filter('sw_options_page', 'sw_options_styles' 			, 2 );
+	add_filter('sw_options_page', 'sw_options_social_identity'	, 3 );
 //	add_filter('sw_options', 'sw_options_display_locations' , 3 );
 //	add_filter('sw_options', 'sw_options_floating_buttons' 	, 4 );
 //	add_filter('sw_options', 'sw_options_clicktotweet' 		, 5 );

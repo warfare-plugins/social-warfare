@@ -220,6 +220,7 @@ function sw_build_options_page() {
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$option['default'].'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				echo '<div class="sw-clearfix"></div>';
 				
 			elseif($option['type'] == 'input' && $option['size'] == 'two-fourths'):
 				if($last_size == 'two-fourths'):
@@ -326,6 +327,19 @@ function sw_build_options_page() {
 				echo '<div class="sw-clearfix"></div></div>';
 			endif;
 
+/***************************************************************
+
+	Authentication / Button Module
+
+***************************************************************/
+
+			if($option['type'] == 'authentication'):
+				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">'.$option['name'].'</p></div>';
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<a class="button sw-navy-button">Authenticate</a>';
+				echo '</div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+			endif;
 /***************************************************************
 
 	Close the Tab Container
