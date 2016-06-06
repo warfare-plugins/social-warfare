@@ -35,26 +35,26 @@
 			),
 			'totesEach' => array(
 				'type'		=> 'checkbox',
-				'spacing'	=> 'two-thirds',
+				'size'		=> 'two-thirds',
 				'content'	=> 'Button Counts',
 				'default'	=> true
 			),
 			'totes' => array(
 				'type'		=> 'checkbox',
-				'spacing'	=> 'two-thirds',
+				'size'		=> 'two-thirds',
 				'content'	=> 'Total Counts',
 				'default'	=> true
 			),
 			'minTotes' => array(
 				'type'		=> 'input',
-				'spacing'	=> 'two-thirds',
-				'content'	=> 'Minimum Shares',
+				'size'		=> 'two-thirds',
+				'name'	=> 'Minimum Shares',
 				'default'	=> 0,
 				'divider'	=> true
 			),
 			'sw_twitter_card' => array(
 				'type'		=> 'checkbox',
-				'spacing'	=> 'two-thirds',
+				'size'		=> 'two-thirds',
 				'content'	=> 'Twitter Cards',
 				'header'	=> true,
 				'divider'	=> true,
@@ -158,8 +158,6 @@
 			'content_2'	=> $tags
 		);
 		
-		var_dump($tags);
-		
 		return $sw_options;
 	}
 
@@ -175,9 +173,291 @@
 		$sw_options['tabs']['links']['sw_styles'] = 'Styles';
 
 		$sw_options['options']['sw_styles'] = array(
-			'visualOptionsTitle' => array(
+			'visual_options_title' => array(
 				'type' 		=> 'title',
 				'content' 	=> 'Visual Options'
+			),
+			'visual_options_description' => array(
+				'type' 		=> 'paragraph',
+				'content' 	=> 'Use the settings below to customize the look of your share buttons.'
+			),
+			'visualTheme' => array(
+				'type'		=> 'select',
+				'size'		=> 'two-fourths',
+				'name'		=> 'Button Shape',
+				'content'	=> array(
+					'flatFresh' 	=> 'Flat & Fresh',
+					'leaf' 			=> 'A Leaf on the Wind',
+					'shift' 		=> 'Shift',
+					'pill' 			=> 'Pills',
+					'threeDee' 		=> 'Three-Dee',
+					'connected' 	=> 'Connected'
+				),
+				'default' => 'flatFresh'
+			),
+			'buttonSize' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Button Size',
+				'content' => array(
+					'1.4' => '140%',
+					'1.3' => '130%',
+					'1.2' => '120%',
+					'1.1' => '110%',
+					'1'   => '100%',
+					'0.9' => '90%',
+					'0.8' => '80%',
+					'0.7' => '70%'
+				),
+				'default' => '1'
+			 ),
+			'dColorSet' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Default Color Set',
+				'content' => array(
+					'fullColor' 		=> 'Full Color',
+					'lightGray' 		=> 'Light Gray',
+					'mediumGray'		=> 'Medium Gray',
+					'darkGray' 			=> 'Dark Gray',
+					'lgOutlines' 		=> 'Light Gray Outlines',
+					'mdOutlines'		=> 'Medium Gray Outlines',
+					'dgOutlines' 		=> 'Dark Gray Outlines',
+					'colorOutlines' 	=> 'Color Outlines',
+					'customColor' 		=> 'Custom Color',
+					'ccOutlines' 		=> 'Custom Color Outlines'
+				),
+				'default' => 'fullColor'
+			),
+			'oColorSet' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Hover Color Set',
+				'content' => array(
+					'fullColor' 		=> 'Full Color',
+					'lightGray' 		=> 'Light Gray',
+					'mediumGray'		=> 'Medium Gray',
+					'darkGray' 			=> 'Dark Gray',
+					'lgOutlines' 		=> 'Light Gray Outlines',
+					'mdOutlines'		=> 'Medium Gray Outlines',
+					'dgOutlines' 		=> 'Dark Gray Outlines',
+					'colorOutlines' 	=> 'Color Outlines',
+					'customColor' 		=> 'Custom Color',
+					'ccOutlines' 		=> 'Custom Color Outlines'
+				),
+				'default' => 'fullColor'
+			),
+			'iColorSet' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Single Button Hover',
+				'content' => array(
+					'fullColor' 		=> 'Full Color',
+					'lightGray' 		=> 'Light Gray',
+					'mediumGray'		=> 'Medium Gray',
+					'darkGray' 			=> 'Dark Gray',
+					'lgOutlines' 		=> 'Light Gray Outlines',
+					'mdOutlines'		=> 'Medium Gray Outlines',
+					'dgOutlines' 		=> 'Dark Gray Outlines',
+					'colorOutlines' 	=> 'Color Outlines',
+					'customColor' 		=> 'Custom Color',
+					'ccOutlines' 		=> 'Custom Color Outlines'
+				),
+				'default' => 'fullColor'
+			),
+			'maximum_width' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-fourths',
+				'name'		=> 'Maximum Width'
+			),
+			'buttons_preview' => array(
+				'type' => 'html',
+				'divider' => true,
+				'content' => '<div class="nc_socialPanel sw_flatFresh sw_d_fullColor sw_i_fullColor sw_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="sw_share"> +1</span></span></span><span class="sw_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> Tweet</span></span></span><span class="sw_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="sw_share"> Pin</span></span></span><span class="sw_count">104</span></a></div><div class="nc_tweetContainer fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="sw_count"><span class="sw_label">Shares</span> 1.8K</span></div></div>'
+			),
+			'total_counts_title' => array(
+				'type'	=> 'title',
+				'content' => 'Total Counts'
+			),
+			'total_counts_description' => array(
+				'type' 		=> 'paragraph',
+				'content' 	=> 'Customize how the "Total Shares" section of your share buttons look.'
+			),
+			'swDecimals' => array(
+				'type' => 'select',
+				'name' => 'Decimal Places',
+				'size' => 'two-fourths',
+				'content' => array(
+					'0' => 'Zero',
+					'1' => 'One',
+					'2' => 'Two'
+				),
+				'default' => '0'
+			 ),
+			'sw_decimal_separator' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Decimal Separator',
+				'content' => array(
+					'period' => 'Period',
+					'comma' => 'Comma'
+				),
+				'default' => 'period'
+			 ),
+			 'swTotesFormat' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Alignment',
+				'content' => array(
+					'totesAlt'		=>	'Right',
+					'totesAltLeft'	=>	'Left'
+				),
+				'default' => 'totesAlt'
+			),
+			'total_counts_divider' => array(
+				'type' => 'divider'
+			),
+			'float' => array(
+				'type'			=> 'checkbox',
+				'title' 		=> 'Floating Share Buttons',
+				'description' 	=> 'If you would like to activate floating share buttons, turn this on.',
+				'size'			=> 'four-fourths'
+			),
+			'total_counts_description' => array(
+				'type' 		=> 'paragraph',
+				'content' 	=> 'If you would like to activate floating share buttons, turn this on.'
+			),
+			'floatOption' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Float Position',
+				'content' => array(
+					'top' => 'Top of the Page',
+					'bottom' => 'Bottom of the Page',
+					'left' => 'On the left side of the page'
+				),
+				'default' => 'bottom'
+			),
+			'floatStyle' => array(
+				'type' => 'select',
+				'name' => 'Float Style',
+				'size' => 'two-fourths',
+				'content' => array(
+					'default' => 'Buttons',
+					'boxed' => 'Boxes'
+				),
+				'default' => 'default'
+			),
+			'floatStyleSource' => array(
+				'type' => 'checkbox',
+				'size' => 'two-fourths',
+				'content' => 'Inherit Visual Options',
+				'default' => '1'
+			),
+			'sideDColorSet' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Default Color Set',
+				'content' => array(
+					'fullColor' 		=> 'Full Color',
+					'lightGray' 		=> 'Light Gray',
+					'mediumGray'		=> 'Medium Gray',
+					'darkGray' 			=> 'Dark Gray',
+					'lgOutlines' 		=> 'Light Gray Outlines',
+					'mdOutlines'		=> 'Medium Gray Outlines',
+					'dgOutlines' 		=> 'Dark Gray Outlines',
+					'colorOutlines' 	=> 'Color Outlines',
+					'customColor' 		=> 'Custom Color',
+					'ccOutlines' 		=> 'Custom Color Outlines'
+				),
+				'default' => 'fullColor'
+			),
+			'sideOColorSet' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Hover Color Set',
+				'content' => array(
+					'fullColor' 		=> 'Full Color',
+					'lightGray' 		=> 'Light Gray',
+					'mediumGray'		=> 'Medium Gray',
+					'darkGray' 			=> 'Dark Gray',
+					'lgOutlines' 		=> 'Light Gray Outlines',
+					'mdOutlines'		=> 'Medium Gray Outlines',
+					'dgOutlines' 		=> 'Dark Gray Outlines',
+					'colorOutlines' 	=> 'Color Outlines',
+					'customColor' 		=> 'Custom Color',
+					'ccOutlines' 		=> 'Custom Color Outlines'
+				),
+				'default' => 'fullColor'
+			),
+			'sideIColorSet' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Single Button Hover',
+				'content' => array(
+					'fullColor' 		=> 'Full Color',
+					'lightGray' 		=> 'Light Gray',
+					'mediumGray'		=> 'Medium Gray',
+					'darkGray' 			=> 'Dark Gray',
+					'lgOutlines' 		=> 'Light Gray Outlines',
+					'mdOutlines'		=> 'Medium Gray Outlines',
+					'dgOutlines' 		=> 'Dark Gray Outlines',
+					'colorOutlines' 	=> 'Color Outlines',
+					'customColor' 		=> 'Custom Color',
+					'ccOutlines' 		=> 'Custom Color Outlines'
+				),
+				'default' => 'fullColor'
+			),
+			'sideReveal' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Hide & Seek Transition',
+				'content' => array(
+					'slide' 			=> 'Slide In / Slide Out',
+					'fade' 				=> 'Fade In / Fade Out'
+				),
+				'default' => 'slide'
+			),
+			'floatBgColor' => array(
+				'type' => 'input',
+				'size' => 'two-fourths',
+				'name' => 'Background Color',
+				'default' => '#ffffff'
+			),
+			'sw_float_scr_sz' => array(
+				'type' => 'input',
+				'size' => 'two-fourths',
+				'name' => 'Minimum Screen Width',
+				'default' => '1100'
+			),
+			'click_to_tweet_divider' => array(
+				'type' => 'divider'
+			),
+			'click_to_tweet_title' => array(
+				'type' => 'title',
+				'content' => 'Click-to-Tweet Style'
+			),
+			'click_to_tweet_description' => array(
+				'type' => 'paragraph',
+				'content' => 'Select the default visual style for Click-to-Tweets on your site.'
+			),
+			'cttTheme' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Visual Theme',
+				'content' => array(
+					'style1' => 'Send Her My Love',
+					'style2' => 'Roll With The Changes',
+					'style3' => 'Free Bird',
+					'style4' => 'Don\'t Stop Believin\'',
+					'style5' => 'Thunderstruck',
+					'style6' => 'Livin\' On A Prayer',
+					'none' => 'None - Create Your Own CSS In Your Theme'),
+				'default' => 'style1'
+			),
+			'cttPreview' => array(
+				'type' => 'html',
+				'content' => '<a class="sw_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>'
 			)
 		);
 

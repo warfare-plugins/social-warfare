@@ -167,17 +167,47 @@ function sw_build_options_page() {
 				else:
 					$status = 'off'; $selected = '';
 				endif;
-								
-				if($options['header'] == true):
-					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['content'].'</h2></div>';
+						
+				if($option['size'] == 'four-fourths'):
+
+					echo '<div class="sw-grid sw-col-620"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300 sw-fit">';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '</div>';
+				
+				elseif( $option['size'] == 'two-fourths'):
+				
+					if($last_size == 'two-fourths'):
+						$last_size = '';
+						$fit = 'sw-fit';
+					else:
+						$last_size = 'two-fourths';
+						$fit = '';
+					endif;
+
+					echo '<div class="sw-grid sw-col-460 '.$fit.'">';
+					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';				
+					echo '<div class="sw-grid sw-col-460 sw-fit">';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '</div></div>';
+				
 				else:
-					echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';
+								
+					if($options['header'] == true):
+						echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['content'].'</h2></div>';
+					else:
+						echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';
+					endif;
+					
+					echo '<div class="sw-grid sw-col-300">';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '</div>';
+					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+
 				endif;
-				echo '<div class="sw-grid sw-col-300">';
-				echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
-				echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
-				echo '</div>';
-				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 			endif;
 
 /***************************************************************
@@ -186,10 +216,24 @@ function sw_build_options_page() {
 
 ***************************************************************/
 
-			if($option['type'] == 'input'):
-				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['content'].'</p></div>';
+			if($option['type'] == 'input' && $option['size'] == 'two-thirds'):
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$option['default'].'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				
+			elseif($option['type'] == 'input' && $option['size'] == 'two-fourths'):
+				if($last_size == 'two-fourths'):
+					$last_size = '';
+					$fit = 'sw-fit';
+				else:
+					$last_size = 'two-fourths';
+					$fit = '';
+				endif;
+
+				echo '<div class="sw-grid sw-col-460 '.$fit.'">';
+				echo '<div class="sw-grid sw-col-460"><p class="sw-input-label">'.$option['name'].'</p></div>';
+				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$option['default'].'" /></div>';
+				echo '</div>';
 			endif;
 
 /***************************************************************
@@ -203,7 +247,7 @@ function sw_build_options_page() {
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<select name="'.$option['primary'].'">';
-				if(!isset($options['default'])):
+				if(!isset($option['default'])):
 					echo '<option value="">Select...</option>';					
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
@@ -221,6 +265,29 @@ function sw_build_options_page() {
 				endforeach;
 				echo '</select>';
 				echo '</div>';
+				
+			elseif( $option['type'] == 'select' && $option['size'] == 'two-fourths' ):
+			
+				if($last_size == 'two-fourths'):
+					$last_size = '';
+					$fit = 'sw-fit';
+				else:
+					$last_size = 'two-fourths';
+					$fit = '';
+				endif;
+			
+				echo '<div class="sw-grid sw-col-460 '.$fit.'">';
+				echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
+				echo '<div class="sw-grid sw-col-460 sw-fit"><select name="'.$key.'">';
+				if(!isset($option['default'])):
+					echo '<option value="">Select...</option>';					
+				endif;
+				foreach( $option['content'] as $select_key => $select_value ) :
+					echo '<option value="'.$select_key.'" '.($option['default'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+				endforeach;
+				echo '</select></div>';
+				echo '</div>';
+			
 			endif;
 
 /***************************************************************
@@ -249,6 +316,18 @@ function sw_build_options_page() {
 
 /***************************************************************
 
+	HTML Module
+
+***************************************************************/
+
+			if($option['type'] == 'html'):
+				echo '<div class="sw-grid sw-col-940">';
+				echo $option['content'];
+				echo '<div class="sw-clearfix"></div></div>';
+			endif;
+
+/***************************************************************
+
 	Close the Tab Container
 
 ***************************************************************/
@@ -256,6 +335,10 @@ function sw_build_options_page() {
 			// Add a divider element if necessary
 			if($option['divider'] == true):
 				echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
+			endif;
+
+			if($option['size'] != 'two-fourths'):
+				$last_size = '';
 			endif;
 
 		// Close the loop

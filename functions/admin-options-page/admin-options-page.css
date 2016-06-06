@@ -170,6 +170,9 @@ font-weight: bold;
 p.sw-short {
 	margin:1em 0 0 0;	
 }
+p.sw-subtext-label {
+    margin-top: -10px;
+}
 /*********************************************************
 
 	Checkboxes
@@ -192,6 +195,7 @@ input.sw-admin-input {
 	float: right;
 	box-shadow: none;
 	margin:2px 0 1px 0;
+	width:100%;
 }
 .sw-grid select {
 	width: 100%;

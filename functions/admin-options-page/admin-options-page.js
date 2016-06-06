@@ -19,6 +19,8 @@ jQuery(document).ready(function() {
 		jQuery('#'+tab).show();
 		jQuery('.sw-header-menu li').removeClass('sw-active-tab');
 		jQuery(this).parents('li').addClass('sw-active-tab');
+		swSetWidths(true);
+		activateHoverStates();
 	});
 
 /*********************************************************
