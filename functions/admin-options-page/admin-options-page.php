@@ -56,163 +56,234 @@ function sw_plugin_options() {
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
-	?>
-
-	<div class="sw-grid sw-col-940 sw-top-menu">
-    	<img class="sw-header-logo" src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/social-warfare-light.png" />
-		<ul class="sw-header-menu">
-        	<li class="sw-active-tab"><a class="sw-tab-selector" href="#" data-link="sw-display-tab"><span>Display</span></a></li>
-        	<li><a class="sw-tab-selector" href="#" data-link="sw-styles-tab"><span>Styles</span></a></li>
-        	<li><a class="sw-tab-selector" href="#" data-link="sw-social-identity-tab"><span>Social Identity</span></a></li>
-        	<li><a class="sw-tab-selector" href="#" data-link="sw-advanced-tab"><span>Advanced</span></a></li>
-        	<li><a class="sw-tab-selector" href="#" data-link="sw-registration-tab"><span>Registration</span></a></li>
-		</ul>
-	</div>
-	<div class="sw-clearfix"></div>
-	<div class="sw-admin-wrapper">
-		<!-- Begin Tabs Container -->
-    	<div class="sw-tabs-container sw-grid sw-col-700">
-        	
-            <!-- Begin Display Tab -->
-            <div id="sw-display-tab" class="sw-admin-tab sw-grid sw-col-940">
-        		
-                <!-- Begin The Social Networks -->
-                <h2>Social Networks</h2>
-                <p class="sw-subtitle">Drag & Drop to activate and order your share buttons.</p>
-				<img src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/social-networks.png">
-                <div class="sw-admin-divider sw-clearfix"></div>
-                <!-- End Social Networks -->
-
-                <!-- Begin Share Counts -->
-                <h2>Share Counts</h2>
-                <p class="sw-subtitle">Use the toggles below to determine how to display your social proof.</p>
-
-                <div class="sw-grid sw-col-300">
-                	<p class="sw-checkbox-label">Button Counts</p>
-                </div>
-
-                <div class="sw-grid sw-col-300">
-                	<div class="sw-checkbox-toggle"></div>
-                </div>
-                
-                <div class="sw-grid sw-col-300 sw-fit">
-                </div>
-                
-                <div class="sw-clearfix"></div>
-                
-                <div class="sw-grid sw-col-300">
-                	<p class="sw-checkbox-label">Total Counts</p>
-                </div>
-
-                <div class="sw-grid sw-col-300">
-                	<div class="sw-checkbox-toggle"></div>
-                </div>
-                
-                <div class="sw-grid sw-col-300 sw-fit">
-                </div>
-                
-                <div class="sw-clearfix"></div>
-                
-                <div class="sw-grid sw-col-300">
-                	<p class="sw-checkbox-label">Minimum Shares</p>
-                </div>
-
-                <div class="sw-grid sw-col-300">
-                	<input type="text" class="sw-admin-input" placeholder="0"/>
-                </div>
-                
-                <div class="sw-grid sw-col-300 sw-fit">
-                </div>
-                
-                <div class="sw-admin-divider sw-clearfix"></div>
-                <!-- End Share Counts -->
-                
-                <!-- Begin Twitter Cards -->
-				<div class="sw-grid sw-col-300"><h2 class="sw-h-label">Twitter Cards</h2></div>
-                <div class="sw-grid sw-col-300">
-                	<div class="sw-checkbox-toggle" status="off" field="#sw_twitter_card"></div>
-                    <input type="checkbox" class="sw-hidden" name="sw_twitter_card" id="sw_twitter_card">
-                </div>
-                <div class="sw-grid sw-col-300 sw-fit"></div>
-                <div class="sw-clearfix"></div>
-                <div class="sw-admin-divider sw-clearfix"></div>
-                <!-- End Twitter Cards -->
-            
-				<!-- Begin The Social Networks -->
-                <h2>Position Share Buttons</h2>
-                <p class="sw-subtitle">The options below will allow you to customize the positioning of share buttons for each post type.</p>
-
-				
-                <div class="sw-grid sw-col-300">
-                </div>
-                <div class="sw-grid sw-col-300">
-                	<p class="sw-checkbox-label sw-short">Static Buttons</p>
-                </div>
-                <div class="sw-grid sw-col-300 sw-fit">
-                	<p class="sw-checkbox-label sw-short">Side Floating Buttons (If Activated)</p>
-                </div>
-                
-
-                <div class="sw-grid sw-col-300">
-                	<p class="sw-checkbox-label">Position on Posts</p>
-                </div>
-
-                <div class="sw-grid sw-col-300">
-                	<select>
-                    	<option value="option1">Option 1</option>
-                    	<option value="option2">Option 2</option>
-                    </select>
-                </div>
-
-                <div class="sw-grid sw-col-300 sw-fit">
-                	<select>
-                    	<option value="option1">Option 1</option>
-                    	<option value="option2">Option 2</option>
-                    </select>
-                </div>
-
-
-                <div class="sw-admin-divider sw-clearfix"></div>
-                <!-- End Social Networks -->
-                
-			<!-- End Display Tab -->
-			</div>
-            
-            <!-- Begin Display Tab -->
-			<div id="sw-styles-tab" class="sw-admin-tab sw-grid sw-col-940">
-			
-            	<div class="sw-red-notice">This copy of Social Warfare is NOT registered! Let's fix it below.</div>
-            	<div class="sw-green-notice">This copy of Social Warfare IS registered! Wah-hoo!.</div>
-            
-            <!-- End Display Tab -->
-            </div>
-            
-        
-        <!-- End Tabs Container -->
-        </div>
-        
-        
-		<!-- Begin Admin Sidebar -->        
-        <div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">
-        	<a href="#" class="button sw-navy-button">Save Changes</a>
-            <img src="<?php echo SW_PLUGIN_DIR ?>/functions/admin-options-page/images/sidebar-images.jpg">
-            <p class="sw-support-notice">Need help? Check out our Knowledgebase.</p>
-            <p class="sw-support-notice">Opening a support ticket? Copy your System Status by clicking the button below.</p>
-        	<a href="#" class="button sw-blue-button">Get System Status</a>
-        
-        <!-- End Admin Sidebar -->
-        </div>
 	
-    
-    </div>
-    
-    
-	<?php
+	sw_build_options_page();
+	
 }
 
-function sw_build_options_page($array) {
+/***************************************************************
+
+	A Function to Parse the Array & Builg the Options Page
+
+***************************************************************/
+function sw_build_options_page() {
 	
+	// Create all of the options in one giant array
+	$sw_options_page = array(
+
+		// A List of Options Page Tabs and Their Titles
+		'tabs' => array(
+			'links' => array(
+			)
+		),
+
+		// A list of options in each of the options tabs
+		'options' => array()
+	);
+
+
+	// Fetch the global options array
+	// global $sw_options_page;
+	$sw_options_page = apply_filters( 'sw_options_page' , $sw_options_page );
 	
+/***************************************************************
+
+	Build the header menu
+
+***************************************************************/
+	
+	echo '<div class="sw-grid sw-col-940 sw-top-menu">';
+    echo '<img class="sw-header-logo" src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/social-warfare-light.png" />';
+	echo '<ul class="sw-header-menu">';
+	$i=0; foreach ( $sw_options_page['tabs']['links'] as $key => $value): ++$i;
+		echo '<li'.($i == 1 ? ' class="sw-active-tab"' : '').'><a class="sw-tab-selector" href="#" data-link="'.$key.'"><span>'.$value.'</span></a></li>';
+	endforeach;
+	echo '</ul>';
+	echo '</div>';
+	echo '<div class="sw-clearfix"></div>';
+
+/***************************************************************
+
+	Build the Tab Container
+
+***************************************************************/
+
+	// Wrapper for the entire content area
+	echo '<div class="sw-admin-wrapper">';
+	
+	// Wrapper for the left 3/4 non-sidebar content
+	echo '<div class="sw-tabs-container sw-grid sw-col-700">';
+
+	// Loop through the options tabs and build the options page
+	foreach($sw_options_page['options'] as $tab_name => $tab_options):
+		
+		// Individual Tab Container - Full Width
+		echo '<div id="'.$tab_name.'" class="sw-admin-tab sw-grid sw-col-940">';
+		
+		// Loop through and output each option module for this tab
+		foreach($tab_options as $key => $option):
+
+/***************************************************************
+
+	Title Module
+
+***************************************************************/
+			
+			if($option['type'] == 'title'):
+				echo '<h2>'.$option['content'].'</h2>';
+			endif;
+
+/***************************************************************
+
+	Description Module
+
+***************************************************************/
+
+			if($option['type'] == 'paragraph'):
+				echo '<p class="sw-subtitle">'.$option['content'].'</p>';
+			endif;
+
+/***************************************************************
+
+	Image Module
+
+***************************************************************/
+
+			if($option['type'] == 'image'):
+				echo '<img src="'.$option['content'].'">';
+			endif;
+
+/***************************************************************
+
+	Checkbox Module
+
+***************************************************************/
+
+			if($option['type'] == 'checkbox'):
+			
+				// Check for a default value
+				if($option['default'] == true):
+					$status = 'on'; $selected = 'selected';
+				else:
+					$status = 'off'; $selected = '';
+				endif;
+								
+				if($options['header'] == true):
+					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['content'].'</h2></div>';
+				else:
+					echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';
+				endif;
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+				echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+				echo '</div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+			endif;
+
+/***************************************************************
+
+	Input Module
+
+***************************************************************/
+
+			if($option['type'] == 'input'):
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['content'].'</p></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$option['default'].'" /></div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+			endif;
+
+/***************************************************************
+
+	Select Module
+
+***************************************************************/
+
+			if($option['type'] == 'select' && isset($option['secondary'])):
+							
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<select name="'.$option['primary'].'">';
+				if(!isset($options['default'])):
+					echo '<option value="">Select...</option>';					
+				endif;
+				foreach( $option['content'] as $select_key => $select_value ) :
+					echo '<option value="'.$select_key.'" '.($option['default'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+				endforeach;
+				echo '</select>';
+				echo '</div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit">';
+				echo '<select name="'.$option['secondary'].'">';
+				if(!isset($options['default_2'])):
+					echo '<option value="">Select...</option>';					
+				endif;
+				foreach( $option['content_2'] as $select_key => $select_value ) :
+					echo '<option value="'.$select_key.'" '.($option['default_2'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+				endforeach;
+				echo '</select>';
+				echo '</div>';
+			endif;
+
+/***************************************************************
+
+	Three-Wide Column Labels Module
+
+***************************************************************/
+
+			if($option['type'] == 'column_labels'):
+				if($option['columns'] == 3):
+					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short">'.$option['column_1'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short">'.$option['column_2'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short">'.$option['column_3'].'</p></div>';
+				endif;
+			endif;
+
+/***************************************************************
+
+	Divider Module
+
+***************************************************************/
+
+			if($option['type'] == 'divider'):
+				echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
+			endif;
+
+/***************************************************************
+
+	Close the Tab Container
+
+***************************************************************/
+
+			// Add a divider element if necessary
+			if($option['divider'] == true):
+				echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
+			endif;
+
+		// Close the loop
+		endforeach;
+
+		// Close the tab container
+		echo '</div>';
+		
+	endforeach;
+
+	echo '</div>';
+
+/***************************************************************
+
+	The Right Sidebar
+
+***************************************************************/
+
+	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
+	echo '<a href="#" class="button sw-navy-button">Save Changes</a>';
+	echo '<img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/sidebar-images.jpg">';
+	echo '<p class="sw-support-notice">Need help? Check out our Knowledgebase.</p>';
+	echo '<p class="sw-support-notice">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
+	echo '<a href="#" class="button sw-blue-button">Get System Status</a>';
+	echo '</div>';
+	
+	echo '</div>';
+
 }
 
 
