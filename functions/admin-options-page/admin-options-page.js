@@ -73,14 +73,23 @@ function sw_fetch_all_options() {
 		} else {
 			var value = jQuery(this).val();		
 		}
-		
 		values[name] = value;
-		
 	});
-	
-	console.log(values);
-
 }
+
+/*********************************************************
+
+	A Function send the array of setting to ajax.php
+
+*********************************************************/
+
+
+/*********************************************************
+
+	A Function to register the plugin
+
+*********************************************************/
+
 
 
 

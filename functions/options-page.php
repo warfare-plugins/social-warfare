@@ -39,7 +39,7 @@
 *	The Social Warfare Social Identity Settings												*
 *																						*
 *****************************************************************************************/
-	function sw_options_social_identity($sw_options) {
+	function sw_options_social_identity_bak($sw_options) {
 
 		// Declare the Options Tab and Tab Name
 		$sw_options['tabs']['links']['socialIdentity'] = 'Social Identity';
@@ -935,7 +935,7 @@
 *																						*
 *****************************************************************************************/
 
-	function sw_options_registration($sw_options) {
+	function sw_options_registration_bak($sw_options) {
 
 		// Add the Registration Tab and Tab Name
 		$sw_options['tabs']['links']['registration'] = 'Registration';
@@ -1092,13 +1092,13 @@
 	add_filter('sw_options', 'sw_options_floating_buttons' 	, 4 );
 	add_filter('sw_options', 'sw_options_clicktotweet' 		, 5 );
 	add_filter('sw_options', 'sw_options_tweet_counts' 		, 6 );
-	add_filter('sw_options', 'sw_options_social_identity' 	, 7 );
+	add_filter('sw_options', 'sw_options_social_identity_bak' 	, 7 );
 	add_filter('sw_options', 'sw_options_link_shortening' 	, 8 );
 	add_filter('sw_options', 'sw_options_analytics' 		, 9 );
 	add_filter('sw_options', 'sw_options_frame_buster' 		, 10);
 	add_filter('sw_options', 'sw_options_recover_shares' 	, 11);
 	add_filter('sw_options', 'sw_options_rare_bug_fixes' 	, 12);
-	add_filter('sw_options', 'sw_options_registration' 		, 99);
+	add_filter('sw_options', 'sw_options_registration_bak' 		, 99);
 	add_filter('sw_options', 'sw_options_system_status'		, 100);
 
 /****************************************************************************************

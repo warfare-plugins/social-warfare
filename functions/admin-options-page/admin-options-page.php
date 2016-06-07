@@ -68,6 +68,8 @@ function sw_plugin_options() {
 ***************************************************************/
 function sw_build_options_page() {
 	
+	$sw_user_options = get_option('socialWarfareOptions');
+
 	// Create all of the options in one giant array
 	$sw_options_page = array(
 
@@ -163,7 +165,13 @@ function sw_build_options_page() {
 			if($option['type'] == 'checkbox'):
 			
 				// Check for a default value
-				if($option['default'] == true):
+				if(isset($sw_user_options[$key]) && $sw_user_options[$key] == true):
+					$status = 'on'; 
+					$selected = 'checked';
+				elseif(isset($sw_user_options[$key]) && $sw_user_options[$key] == false):
+					$status = 'off'; 
+					$selected = '';
+				elseif($option['default'] == true):
 					$status = 'on'; 
 					$selected = 'checked';
 				else:
@@ -235,9 +243,15 @@ function sw_build_options_page() {
 
 ***************************************************************/
 
+			if(isset($sw_user_options[$key])):
+				$value = $sw_user_options[$key];
+			else:
+				$value = $option['default'];
+			endif;
+
 			if($option['type'] == 'input' && $option['size'] == 'two-thirds'):
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="'.$option['default'].'" value="'.$option['default'].'" /></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="'.$option['default'].'" value="'.$value.'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-clearfix"></div>';
 				
@@ -252,7 +266,7 @@ function sw_build_options_page() {
 
 				echo '<div class="sw-grid sw-col-460 '.$fit.'">';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-input-label">'.$option['name'].'</p></div>';
-				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$option['default'].'" /></div>';
+				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$value.'" /></div>';
 				echo '</div>';
 			endif;
 
@@ -263,6 +277,18 @@ function sw_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'select' && isset($option['secondary'])):
+
+				if(isset($sw_user_options[$option['primary']])):
+					$value = $sw_user_options[$option['primary']];
+				else:
+					$value = $option['default'];
+				endif;
+
+				if(isset($sw_user_options[$option['secondary']])):
+					$value2 = $sw_user_options[$option['secondary']];
+				else:
+					$value2 = $option['default_2'];
+				endif;
 							
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
@@ -271,7 +297,7 @@ function sw_build_options_page() {
 					echo '<option value="">Select...</option>';					
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
-					echo '<option value="'.$select_key.'" '.($option['default'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+					echo '<option value="'.$select_key.'" '.($value == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
 				endforeach;
 				echo '</select>';
 				echo '</div>';
@@ -281,12 +307,18 @@ function sw_build_options_page() {
 					echo '<option value="">Select...</option>';					
 				endif;
 				foreach( $option['content_2'] as $select_key => $select_value ) :
-					echo '<option value="'.$select_key.'" '.($option['default_2'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+					echo '<option value="'.$select_key.'" '.($value2 == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
 				endforeach;
 				echo '</select>';
 				echo '</div>';
 				
 			elseif( $option['type'] == 'select' && $option['size'] == 'two-fourths' ):
+
+				if(isset($sw_user_options[$key])):
+					$value = $sw_user_options[$key];
+				else:
+					$value = $option['default'];
+				endif;
 			
 				if($last_size == 'two-fourths'):
 					$last_size = '';
@@ -303,12 +335,18 @@ function sw_build_options_page() {
 					echo '<option value="">Select...</option>';					
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
-					echo '<option value="'.$select_key.'" '.($option['default'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+					echo '<option value="'.$select_key.'" '.($value == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
 				endforeach;
 				echo '</select></div>';
 				echo '</div>';
 				
 			elseif( $option['type'] == 'select' && $option['size'] == 'two-thirds' ):
+
+				if(isset($sw_user_options[$key])):
+					$value = $sw_user_options[$key];
+				else:
+					$value = $option['default'];
+				endif;
 
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><select name="'.$key.'">';
@@ -316,7 +354,7 @@ function sw_build_options_page() {
 					echo '<option value="">Select...</option>';					
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
-					echo '<option value="'.$select_key.'" '.($option['default'] == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
+					echo '<option value="'.$select_key.'" '.($value == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
 				endforeach;
 				echo '</select></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -382,7 +420,7 @@ function sw_build_options_page() {
 			if($option['type'] == 'plugin_registration'):
 				
 				// Begin Registration Wrapper
-				echo '<div class="registration-wrapper" registration="false">';
+				echo '<div class="registration-wrapper" registration="'.is_sw_registered().'">';
 				
 				// Registration Title
 				echo '<h2>Premium Registration</h2>';
@@ -397,11 +435,23 @@ function sw_build_options_page() {
 				
 				$homeURL = get_home_url();
 				$regCode = md5($homeURL);
+				if(isset($sw_user_options['emailAddress'])):
+					$email = $sw_user_options['emailAddress'];
+				else:
+					$email = '';
+				endif;
+				
+				if(isset($sw_user_options['premiumCode'])):
+					$premiumCode = $sw_user_options['premiumCode'];
+				else:
+					$premiumCode = '';
+				endif;
+				
 				
 				// Email Input Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">Email Address</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="" /></div>';
-				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="" />';
+				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="'.$email.'" /></div>';
+				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="'.$premiumCode.'" />';
 				echo '<input name="regCode" type="text" class="sw-admin-input sw-hidden" value="'.$regCode.'" />';
 				echo '<input type="hidden" class="at-text" name="domain" id="domain" value="'.$homeURL.'" size="30" readonly data-premcode="'.md5(md5($homeURL)).'">';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -450,6 +500,18 @@ function sw_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'tweet_counts'):
+
+				// Check for a default value
+				if(isset($sw_user_options['twitter_shares']) && $sw_user_options['twitter_shares'] == true):
+					$status = 'on'; 
+					$selected = 'checked';
+				elseif(isset($sw_user_options['twitter_shares']) && $sw_user_options['twitter_shares'] == false):
+					$status = 'off'; 
+					$selected = '';
+				else:
+					$status = 'off'; 
+					$selected = '';
+				endif;
 				
 				// Begin Registration Wrapper
 				echo '<div class="tweet-count-wrapper" registration="false">';
@@ -471,8 +533,8 @@ function sw_build_options_page() {
 				// Checkbox Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';					
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<div class="sw-checkbox-toggle" status="off" field="#twitter_shares"></div>';
-				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" />';
+				echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#twitter_shares"></div>';
+				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" '.$selected.' />';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				
