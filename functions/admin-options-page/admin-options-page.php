@@ -110,6 +110,7 @@ function sw_build_options_page() {
 
 	// Wrapper for the entire content area
 	echo '<div class="sw-admin-wrapper">';
+	echo '<form class="sw-admin-settings-form">';
 	
 	// Wrapper for the left 3/4 non-sidebar content
 	echo '<div class="sw-tabs-container sw-grid sw-col-700">';
@@ -163,9 +164,11 @@ function sw_build_options_page() {
 			
 				// Check for a default value
 				if($option['default'] == true):
-					$status = 'on'; $selected = 'selected';
+					$status = 'on'; 
+					$selected = 'checked';
 				else:
-					$status = 'off'; $selected = '';
+					$status = 'off'; 
+					$selected = '';
 				endif;
 						
 				// Check for four-fourths size
@@ -174,7 +177,7 @@ function sw_build_options_page() {
 					echo '<div class="sw-grid sw-col-620"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 				
 				// Check for three-fourths-advanced size
@@ -184,7 +187,7 @@ function sw_build_options_page() {
 					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
 					echo '<div class="sw-grid sw-col-300">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 					echo '</div>';
@@ -205,7 +208,7 @@ function sw_build_options_page() {
 					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';				
 					echo '<div class="sw-grid sw-col-460 sw-fit">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div></div>';
 				
 				// All others
@@ -219,7 +222,7 @@ function sw_build_options_page() {
 					
 					echo '<div class="sw-grid sw-col-300">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="sw_twitter_card" '.$selected.'>';
+					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 
@@ -392,9 +395,15 @@ function sw_build_options_page() {
 				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
 				
+				$homeURL = get_home_url();
+				$regCode = md5($homeURL);
+				
 				// Email Input Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">Email Address</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="" /></div>';
+				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="" />';
+				echo '<input name="regCode" type="text" class="sw-admin-input sw-hidden" value="'.$regCode.'" />';
+				echo '<input type="hidden" class="at-text" name="domain" id="domain" value="'.$homeURL.'" size="30" readonly data-premcode="'.md5(md5($homeURL)).'">';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-clearfix"></div>';
 
@@ -462,8 +471,8 @@ function sw_build_options_page() {
 				// Checkbox Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';					
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<div class="sw-checkbox-toggle" status="false" field="#twitter_shares"></div>';
-				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares">';
+				echo '<div class="sw-checkbox-toggle" status="off" field="#twitter_shares"></div>';
+				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" />';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				
@@ -496,6 +505,7 @@ function sw_build_options_page() {
 		
 	endforeach;
 
+	echo '</form>';
 	echo '</div>';
 
 /***************************************************************
@@ -505,13 +515,13 @@ function sw_build_options_page() {
 ***************************************************************/
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
-	echo '<a href="#" class="button sw-navy-button">Save Changes</a>';
+	echo '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/starter-guide-300x150.jpg"></a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/measure-roi-300x150.jpg"></a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/paradox-of-choice-300x150.jpg"></a>';
-	echo '<p class="sw-support-notice">Need help? Check out our Knowledgebase.</p>';
-	echo '<p class="sw-support-notice">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
+	echo '<p class="sw-support-notice sw-italic">Need help? Check out our Knowledgebase.</p>';
+	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
 	echo '<a href="#" class="button sw-blue-button">Get System Status</a>';
 	echo '</div>';
 	

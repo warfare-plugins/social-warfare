@@ -137,6 +137,7 @@ img {
 	display:table-cell;
 	vertical-align:middle;
 }
+
 /*********************************************************
 
 	The Header Menu
@@ -159,9 +160,9 @@ margin: 0;
 	line-height:56px;	
 }
 p.sw-subtitle {
-font-size: 14px;
+font-size: 16px;
 line-height: 1.2;
-margin: 10px 0;
+margin: 10px 0 30px 0;
 }
 p.sw-checkbox-label, p.sw-input-label, p.sw-select-label, p.sw-authenticate-label {
 font-size: 16px;

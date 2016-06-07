@@ -340,7 +340,7 @@
 			),
 			'floatStyle' => array(
 				'type' => 'select',
-				'name' => 'Float Style',
+				'name' => 'Button Shape',
 				'size' => 'two-fourths',
 				'content' => array(
 					'default' => 'Buttons',
@@ -557,6 +557,7 @@
 				'title' 		=> 'Frame Buster',
 				'description' 	=> 'If you want to stop content pirates from framing your content, turn this on.',
 				'size'			=> 'two-thirds-advanced',
+				'default'		=> true,
 				'divider'		=> true
 			),
 			'link_shortening' => array(
@@ -564,6 +565,7 @@
 				'title' 		=> 'Bitly Link Shortening',
 				'description' 	=> 'If you like to have all of your links automatically shortened, turn this on.',
 				'size'			=> 'two-thirds-advanced',
+				'default'		=> false
 			),
 			'bitly_authentication' => array(
 				'type'		=> 'authentication',
@@ -576,17 +578,20 @@
 				'title' 		=> 'Analytics Tracking',
 				'description' 	=> 'If you want to activate UTM tracking for shared URLs, turn this on.',
 				'size'			=> 'two-thirds-advanced',
+				'default'		=> false
 			),
 			'analyticsMedium' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'	=> 'UTM Medium',
+				'name'		=> 'UTM Medium',
+				'default'	=> 'Social'
 			),
 			'analyticsCampaign' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
 				'name'		=> 'UTM Campaign',
-				'divider' 	=> true
+				'divider' 	=> true,
+				'default'	=> 'SocialWarfare'
 			),
 			'share_recovery_title' => array(
 				'type'		=> 'title',
