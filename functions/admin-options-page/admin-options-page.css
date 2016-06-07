@@ -260,3 +260,15 @@ a.button.sw-blue-button {
 line-height: 1.2;
 margin-bottom: 15px;
 }
+.sw-italic {
+	font-style:italic;	
+}
+p.sw-subtitle.sw-registration-text {
+    padding: 20px 0 0 0;
+    font-size: 120%;
+    line-height: 175%;
+}
+.registration-wrapper[registration="true"] .sw_is_not_registered {display:none;}
+.registration-wrapper[registration="false"] .sw_is_registered {display:none;}
+.tweet-count-wrapper[registration="true"] .sw_tweets_not_activated {display:none;}
+.sw-tweet-count-demo {margin:20px 0;}

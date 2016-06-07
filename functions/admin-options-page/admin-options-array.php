@@ -673,6 +673,30 @@
 		return $sw_options;
 	};
 
+/****************************************************************************************
+*																						*
+*	The Advanced Tab																	*
+*																						*
+*****************************************************************************************/
+
+	function sw_options_registration($sw_options) {
+
+		// Declare the Display Settings tab and tab name
+		$sw_options['tabs']['links']['sw_registration'] = 'Registration';
+
+		$sw_options['options']['sw_registration'] = array(
+			'plugin_registration' => array(
+				'type'			=> 'plugin_registration',
+				'divider'		=> true
+			),
+			'activate_tweet_counts' => array(
+				'type'			=> 'tweet_counts'
+			)
+		);
+		
+		return $sw_options;
+		
+	}
 
 /****************************************************************************************
 *																						*
@@ -684,6 +708,7 @@
 	add_filter('sw_options_page', 'sw_options_styles' 			, 2 );
 	add_filter('sw_options_page', 'sw_options_social_identity'	, 3 );
 	add_filter('sw_options_page', 'sw_options_advanced'			, 4 );
+	add_filter('sw_options_page', 'sw_options_registration'		, 5 );
 
 /****************************************************************************************
 *																						*

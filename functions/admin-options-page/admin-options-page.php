@@ -369,6 +369,110 @@ function sw_build_options_page() {
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 			endif;
+
+/***************************************************************
+
+	Plugin Registration Module
+
+***************************************************************/
+
+			if($option['type'] == 'plugin_registration'):
+				
+				// Begin Registration Wrapper
+				echo '<div class="registration-wrapper" registration="false">';
+				
+				// Registration Title
+				echo '<h2>Premium Registration</h2>';
+				
+				// Open the IS NOT REGISTERED container
+				echo '<div class="sw-grid sw-col-940 sw_is_not_registered">';
+				
+				// The Warning Notice & Instructions
+				echo '<div class="sw-red-notice">This copy of Social Warfare is not registered. Let\'s fix it below.</div>';
+				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
+				
+				// Email Input Module
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">Email Address</p></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="" /></div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				echo '<div class="sw-clearfix"></div>';
+
+				// Activate Plugin Module
+				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Activate Registration</p></div>';
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<a class="button sw-navy-button">Register Plugin</a>';
+				echo '</div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				
+				// Close the IS NOT REGISTERED container
+				echo '</div>';
+
+
+				// Open the IS NOT REGISTERED container
+				echo '<div class="sw-grid sw-col-940 sw_is_registered">';
+				
+				// The Warning Notice & Instructions
+				echo '<div class="sw-green-notice">This copy of Social Warfare is registered. Wah-hoo!</div>';
+				echo '<p class="sw-subtitle sw-registration-text">To unregister your license click the button below to free it up for use on another domain.</p>';
+				
+				// Deactivate Plugin Module
+				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Deactivate Registration</p></div>';
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<a class="button sw-navy-button">Unregister Plugin</a>';
+				echo '</div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				
+				// Close the IS NOT REGISTERED container
+				echo '</div>';
+
+
+
+				
+				// Close the Registration Wrapper
+				echo '</div>';
+				
+			endif;
+
+/***************************************************************
+
+	Plugin Registration Module
+
+***************************************************************/
+
+			if($option['type'] == 'tweet_counts'):
+				
+				// Begin Registration Wrapper
+				echo '<div class="tweet-count-wrapper" registration="false">';
+				
+				// Registration Title
+				echo '<h2>Tweet Count Registration</h2>';
+				
+				// Open the IS NOT Activated container
+				echo '<div class="sw-grid sw-col-940 sw_tweets_not_activated">';
+				
+				// The Warning Notice & Instructions
+				echo '<p class="sw-subtitle sw-registration-text">In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
+				
+				
+				// Close the IS NOT ACTIVATED container
+				echo '</div>';
+
+				// Checkbox Module
+				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';					
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<div class="sw-checkbox-toggle" status="false" field="#twitter_shares"></div>';
+				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares">';
+				echo '</div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				
+				// Close the Registration Wrapper
+				echo '</div>';
+				
+			endif;
+
+
 /***************************************************************
 
 	Close the Tab Container
