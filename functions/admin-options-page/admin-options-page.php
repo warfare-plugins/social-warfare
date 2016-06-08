@@ -540,7 +540,7 @@ function sw_build_options_page() {
 				echo '<h2>Tweet Count Registration</h2>';
 				
 				// Open the IS NOT Activated container
-				echo '<div class="sw-grid sw-col-940 sw_tweets_not_activated">';
+				echo '<div class="sw-grid sw-col-940 sw_tweets_not_activated" dep="twitter_shares" dep_val="[false]">';
 				
 				// The Warning Notice & Instructions
 				echo '<p class="sw-subtitle sw-registration-text">In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.</p>';
