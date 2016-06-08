@@ -244,19 +244,19 @@ a.button.sw-blue-button {
 	margin:15px 0;
 }
 
-.sw-red-notice { background: #ee464f }
-.sw-green-notice { background: #71C069 }
+.sw-red-notice, .sw-loading-message { background: #ee464f }
+.sw-green-notice, .sw-loading-complete { background: #71C069 }
 
-.sw-red-notice:before,
-.sw-green-notice:before {
+.sw-red-notice:before, .sw-loading-message:before,
+.sw-green-notice:before, .sw-loading-complete:before {
    font-family: 'Dashicons';
    font-size: 26px;
    margin: 0 15px 0 0;
    vertical-align: middle;
 }
 
-.sw-red-notice:before { content: "\f158" }
-.sw-green-notice:before { content: "\f147" }
+.sw-red-notice:before, .sw-loading-message:before { content: "\f158" }
+.sw-green-notice:before, .sw-loading-complete:before { content: "\f147" }
 .sw-admin-tab .two-thirds-advanced h2.sw-h-label {
 line-height: 1.2;
 margin-bottom: 15px;
@@ -273,3 +273,16 @@ p.sw-subtitle.sw-registration-text {
 .registration-wrapper[registration="0"] .sw_is_registered {display:none;}
 .tweet-count-wrapper[registration="true"] .sw_tweets_not_activated {display:none;}
 .sw-tweet-count-demo {margin:20px 0;}
+.sw-loading-message, .sw-loading-complete {
+	position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 3px;
+    padding: 25px;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+	width:240px;
+    margin-top: -46px;
+    margin-left: -40px;
+}

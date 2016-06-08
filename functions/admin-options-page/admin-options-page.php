@@ -242,20 +242,27 @@ function sw_build_options_page() {
 	Input Module
 
 ***************************************************************/
-
-			if(isset($sw_user_options[$key])):
-				$value = $sw_user_options[$key];
-			else:
-				$value = $option['default'];
-			endif;
-
 			if($option['type'] == 'input' && $option['size'] == 'two-thirds'):
+
+				if(isset($sw_user_options[$key])):
+					$value = $sw_user_options[$key];
+				else:
+					$value = $option['default'];
+				endif;
+
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="'.$option['default'].'" value="'.$value.'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-clearfix"></div>';
 				
 			elseif($option['type'] == 'input' && $option['size'] == 'two-fourths'):
+
+				if(isset($sw_user_options[$key])):
+					$value = $sw_user_options[$key];
+				else:
+					$value = $option['default'];
+				endif;
+
 				if($last_size == 'two-fourths'):
 					$last_size = '';
 					$fit = 'sw-fit';
@@ -420,7 +427,7 @@ function sw_build_options_page() {
 			if($option['type'] == 'plugin_registration'):
 				
 				// Begin Registration Wrapper
-				echo '<div class="registration-wrapper" registration="'.is_sw_registered().'">';
+				echo '<div class="registration-wrapper" registration="'.(is_sw_registered() ? '1' : '0').'">';
 				
 				// Registration Title
 				echo '<h2>Premium Registration</h2>';
@@ -591,6 +598,33 @@ function sw_build_options_page() {
 
 }
 
+/*********************************************************
+
+	A Function to handle the request inside of admin-ajax.php
+
+*********************************************************/
+
+add_action( 'wp_ajax_sw_store_settings', 'sw_store_the_settings' );
+function sw_store_the_settings() {
+	global $wpdb;
+
+	$settings = $_POST['settings'];
+	
+	foreach($settings as $key => $value):
+		if($value == 'true'):
+			$options[$key] = true;
+		elseif($value == 'false'):
+			$options[$key] = false;
+		else:
+			$options[$key] = $value;
+		endif;
+		
+	endforeach;
+	
+	return update_option('socialWarfareOptions',$options);
+
+	wp_die();
+}
 
 
 

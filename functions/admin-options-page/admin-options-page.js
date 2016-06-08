@@ -63,7 +63,7 @@ jQuery(document).ready(function() {
 
 function sw_fetch_all_options() {
 	
-	values = [];
+	values = {};
 	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').each( function() {
 		
 		
@@ -75,6 +75,9 @@ function sw_fetch_all_options() {
 		}
 		values[name] = value;
 	});
+	
+	return values;
+	
 }
 
 /*********************************************************
@@ -83,6 +86,36 @@ function sw_fetch_all_options() {
 
 *********************************************************/
 
+jQuery(document).ready(function() {
+
+	jQuery('.sw-save-settings').on('click',function(event) {
+		
+		// Block the default action
+		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+		
+		jQuery('body').append('<div class="sw-loading-message">Saving Changes</div>');
+		
+		// Fetch all the settings
+		settings = sw_fetch_all_options();
+				
+		// Prepare date
+		var data = {
+			action: 'sw_store_settings',
+			settings: settings
+		};
+
+		// Send the POST request
+		jQuery.post(ajaxurl, data, function(response) {
+			
+			jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete').delay(1000).fadeOut(1000);
+			setTimeout( function() {
+				jQuery('.sw-loading-complete').remove();
+			} , 2500);
+			console.log('Got this from the server: ' + response);
+		});
+		
+	});
+});
 
 /*********************************************************
 
