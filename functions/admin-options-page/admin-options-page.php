@@ -221,7 +221,7 @@ function sw_build_options_page() {
 						$fit = '';
 					endif;
 
-					echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper">';
+					echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').'>';
 					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';				
 					echo '<div class="sw-grid sw-col-460 sw-fit">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
@@ -280,7 +280,7 @@ function sw_build_options_page() {
 					$fit = '';
 				endif;
 
-				echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper">';
+				echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').'>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$value.'" /></div>';
 				echo '</div>';
@@ -344,7 +344,7 @@ function sw_build_options_page() {
 					$fit = '';
 				endif;
 			
-				echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper">';
+				echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').'>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-460 sw-fit"><select name="'.$key.'">';
 				if(!isset($option['default'])):

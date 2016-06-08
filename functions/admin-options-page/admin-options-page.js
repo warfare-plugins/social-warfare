@@ -46,6 +46,7 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery('.nc_socialPanel').animate({opacity:0},0);
 		}
+		sw_conditional_fields();
 	});
 
 /*********************************************************
@@ -64,9 +65,11 @@ jQuery(document).ready(function() {
 			jQuery(elem).prop('checked', true);
 		};
 		sw_fetch_all_options();
+		sw_conditional_fields();
 	});
 
 	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').on('change' , function() {
+		sw_conditional_fields();
 		sw_fetch_all_options();
 	});
 	
@@ -381,25 +384,11 @@ jQuery(document).ready( function() {
 		activateHoverStates();
 	}
 	
-	function swShowAlignment() {
-		scale = jQuery('select[name="buttonSize"]').val();
-		if(scale >= 1) {
-			jQuery('.buttonFloat_wrapper').slideUp();
-		} else {
-			jQuery('.buttonFloat_wrapper').slideDown();	
-		}
-	}
-
 jQuery(document).ready( function() {
 	
 	scale = jQuery('select[name="buttonSize"]').val();
-	if(scale != 1) {
-		swUpdateScale();
-	}
-	swShowAlignment();
 	jQuery('select[name="buttonSize"],select[name="buttonFloat"]').on('change',function() {
 		swUpdateScale();
-		swShowAlignment();
 	});
 
 });
@@ -423,3 +412,49 @@ jQuery(document).ready(function($) {
 	});
 	
 });
+
+/*********************************************************
+
+	A function to show/hide conditionals
+
+*********************************************************/
+
+jQuery(document).ready(function() {
+	sw_conditional_fields();
+	jQuery('[name="float"]')
+	
+});
+
+function sw_conditional_fields() {
+	
+	// Loop through all the fields that have dependancies
+	jQuery('div[dep]').each( function() {
+		
+		// Fetch the conditional values
+		var con_dep 	= jQuery(this).attr('dep');
+		var con_dep_val = jQuery.parseJSON(jQuery(this).attr('dep_val'));
+		
+		// Fetch the value of checkboxes or other input types
+		if(jQuery('[name="'+con_dep+'"]').attr('type') == 'checkbox') {
+			var value = jQuery('[name="'+con_dep+'"]').prop('checked');	
+		} else {
+			var value = jQuery('[name="'+con_dep+'"]').val();		
+		}
+
+console.log(value);
+		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+		if(jQuery.inArray(value,con_dep_val) !== -1 && jQuery('[name="'+con_dep+'"]').parent('.sw-grid').is(':visible')) {
+			jQuery(this).slideDown('fast');
+		} else {
+			jQuery(this).slideUp('fast');			
+		}		
+	});
+}
+
+
+
+
+
+
+
+

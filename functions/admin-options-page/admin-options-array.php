@@ -297,7 +297,9 @@
 					'right'   	=> 'Right',
 					'center' 	=> 'Center'
 				),
-				'default' => 'fullWidth'
+				'default' 	=> 'fullWidth',
+				'dep' 		=> 'buttonSize',
+				'dep_val'	=> array('0.9','0.8','0.7') 
 			 ),
 			'buttons_preview' => array(
 				'type' => 'html',
@@ -365,7 +367,9 @@
 					'bottom' => 'Bottom of the Page',
 					'left' => 'On the left side of the page'
 				),
-				'default' => 'bottom'
+				'default' => 'bottom',
+				'dep' 		=> 'float',
+				'dep_val'	=> array(true)
 			),
 			'floatStyle' => array(
 				'type' => 'select',
@@ -375,13 +379,17 @@
 					'default' => 'Buttons',
 					'boxed' => 'Boxes'
 				),
-				'default' => 'boxed'
+				'default' => 'boxed',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left')
 			),
 			'floatStyleSource' => array(
 				'type' => 'checkbox',
 				'size' => 'two-fourths',
 				'content' => 'Inherit Visual Options',
-				'default' => '1'
+				'default' => '1',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left')
 			),
 			'sideDColorSet' => array(
 				'type' => 'select',
@@ -399,7 +407,9 @@
 					'customColor' 		=> 'Custom Color',
 					'ccOutlines' 		=> 'Custom Color Outlines'
 				),
-				'default' => 'fullColor'
+				'default' => 'fullColor',
+				'dep' 		=> 'floatStyleSource',
+				'dep_val'	=> array(false)
 			),
 			'sideOColorSet' => array(
 				'type' => 'select',
@@ -417,7 +427,9 @@
 					'customColor' 		=> 'Custom Color',
 					'ccOutlines' 		=> 'Custom Color Outlines'
 				),
-				'default' => 'fullColor'
+				'default' => 'fullColor',
+				'dep' 		=> 'floatStyleSource',
+				'dep_val'	=> array(false)
 			),
 			'sideIColorSet' => array(
 				'type' => 'select',
@@ -435,7 +447,9 @@
 					'customColor' 		=> 'Custom Color',
 					'ccOutlines' 		=> 'Custom Color Outlines'
 				),
-				'default' => 'fullColor'
+				'default' => 'fullColor',
+				'dep' 		=> 'floatStyleSource',
+				'dep_val'	=> array(false)
 			),
 			'sideReveal' => array(
 				'type' => 'select',
@@ -445,19 +459,25 @@
 					'slide' 			=> 'Slide In / Slide Out',
 					'fade' 				=> 'Fade In / Fade Out'
 				),
-				'default' => 'slide'
+				'default' => 'slide',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left')
 			),
 			'floatBgColor' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
 				'name' => 'Background Color',
-				'default' => '#ffffff'
+				'default' => '#ffffff',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('top','bottom')
 			),
 			'sw_float_scr_sz' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
 				'name' => 'Minimum Screen Width',
-				'default' => '1100'
+				'default' => '1100',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left')
 			),
 			'click_to_tweet_divider' => array(
 				'type' => 'divider'
