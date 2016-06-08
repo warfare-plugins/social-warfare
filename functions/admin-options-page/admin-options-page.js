@@ -334,7 +334,7 @@ jQuery(document).ready( function() {
 
 /*********************************************************
 
-	A Function to update the preview buttons
+	A Function to update the button sizing options
 
 *********************************************************/
 
@@ -382,4 +382,24 @@ jQuery(document).ready( function() {
 		swShowAlignment();
 	});
 
+});
+
+/*********************************************************
+
+	Update the Click To Tweet Demo
+
+*********************************************************/
+function update_ctt_demo() {
+	var current_style 	= jQuery('.sw_CTT').attr('data-style');
+	var new_style		= jQuery('select[name="cttTheme"]').val();
+	jQuery('.sw_CTT').removeClass(current_style).addClass(new_style).attr('data-style',new_style);
+}
+
+jQuery(document).ready(function($) {
+
+	update_ctt_demo();
+	jQuery('select[name="cttTheme"]').on('change', function() {
+		update_ctt_demo();
+	});
+	
 });
