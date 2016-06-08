@@ -15,7 +15,7 @@ function sw_admin_options_page() {
 		'SW 2.0', 
 		'SW 2.0', 
 		'manage_options', 
-		'social-warfare-2', 
+		'social-warfare', 
 		'sw_plugin_options',
 		SW_PLUGIN_DIR.'/images/socialwarfare-20x20.png'
 	);
@@ -422,7 +422,11 @@ function sw_build_options_page() {
 			if($option['type'] == 'authentication'):
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<a class="button sw-navy-button">Authenticate</a>';
+				if(isset($sw_user_options[$option['dependant']]) && $sw_user_options[$option['dependant']] != ''):
+					echo '<a class="button sw-green-button" href="'.$option['link'].'">Connected</a>';
+				else: 
+					echo '<a class="button sw-navy-button" href="'.$option['link'].'">Authenticate</a>';
+				endif;
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 			endif;
@@ -614,10 +618,17 @@ function sw_build_options_page() {
 
 add_action( 'wp_ajax_sw_store_settings', 'sw_store_the_settings' );
 function sw_store_the_settings() {
+	
+	// Access the database
 	global $wpdb;
 
+	// Fetch the settings from the POST submission
 	$settings = $_POST['settings'];
 	
+	// Fetch the existing options set
+	$options = get_options('socialWarfareOptions');
+	
+	// Loop and check for checkbox values, convert them to boolean 
 	foreach($settings as $key => $value):
 		if($value == 'true'):
 			$options[$key] = true;
@@ -626,11 +637,12 @@ function sw_store_the_settings() {
 		else:
 			$options[$key] = $value;
 		endif;
-		
 	endforeach;
 	
+	// Store the values back in the database
 	return update_option('socialWarfareOptions',$options);
 
+	// Kill WordPress
 	wp_die();
 }
 

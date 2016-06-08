@@ -587,9 +587,10 @@
 			),
 			'bitly_authentication' => array(
 				'type'		=> 'authentication',
-				'link'		=> '#',
+				'link'		=> 'https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=https://beta.warfareplugins.com/wp-admin/admin-ajax.php&redirect_uri=https://warfareplugins.com/bitly_oauth.php',
 				'name'		=> 'Connect Your Bitly Account',
-				'divider'	=> true
+				'divider'	=> true,
+				'dependant'	=> 'bitly_access_token'
 			),
 			'googleAnalytics' => array(
 				'type'			=> 'checkbox',

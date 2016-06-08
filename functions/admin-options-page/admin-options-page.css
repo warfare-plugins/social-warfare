@@ -213,7 +213,7 @@ input.sw-admin-input {
 	padding: 15px;
 	margin: 2px 1px 3px 0;
 }
-a.button.sw-navy-button,a.button.sw-blue-button {
+a.button.sw-navy-button,a.button.sw-blue-button,a.button.sw-green-button {
 	padding: 15px 30px;
 	height: auto;
 	line-height: 1;
@@ -235,6 +235,10 @@ a.button.sw-navy-button:hover, a.button.sw-blue-button:hover {
 a.button.sw-blue-button {
 	background: #6bcce9;
 	border-color: #6bcce9;
+	color: #fff;
+}
+a.button.sw-green-button {
+	background: #71C069;
 	color: #fff;
 }
 .sw-admin-tab a.button {

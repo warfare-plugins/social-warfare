@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 *********************************************************/
 	jQuery(document).on('click','.sw-tab-selector',function(event) {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-		jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+		jQuery("html, body").animate({ scrollTop: 0 }, 0);
 		var tab = jQuery(this).attr('data-link');
 		jQuery('.sw-admin-tab').hide();
 		jQuery('.nc_socialPanel').animate({opacity:0},0);
