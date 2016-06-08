@@ -454,9 +454,9 @@ function sw_conditional_fields() {
 
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 		if(jQuery.inArray(value,con_dep_val) !== -1 && jQuery('[name="'+con_dep+'"]').parent('.sw-grid').is(':visible')) {
-			jQuery(this).slideDown('fast');
+			jQuery(this).show();
 		} else {
-			jQuery(this).slideUp('fast');			
+			jQuery(this).hide();			
 		}		
 	});
 }
