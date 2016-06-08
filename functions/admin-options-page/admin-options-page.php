@@ -480,7 +480,7 @@ function sw_build_options_page() {
 				// Activate Plugin Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Activate Registration</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<a class="button sw-navy-button">Register Plugin</a>';
+				echo '<a href="#" id="register-plugin" class="button sw-navy-button">Register Plugin</a>';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				
@@ -498,7 +498,7 @@ function sw_build_options_page() {
 				// Deactivate Plugin Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Deactivate Registration</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<a class="button sw-navy-button">Unregister Plugin</a>';
+				echo '<a href="#" id="unregister-plugin" class="button sw-navy-button">Unregister Plugin</a>';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				
@@ -515,7 +515,7 @@ function sw_build_options_page() {
 
 /***************************************************************
 
-	Plugin Registration Module
+	Twitter Registration Module
 
 ***************************************************************/
 
@@ -647,6 +647,59 @@ function sw_store_the_settings() {
 }
 
 
+/*********************************************************
+
+	A Function to store the registration code
+
+*********************************************************/
+
+add_action( 'wp_ajax_sw_store_registration', 'sw_store_the_registration' );
+function sw_store_the_registration() {
+	
+	// Access the database
+	global $wpdb;
+
+	// Fetch the settings from the POST submission
+	$premiumCode = $_POST['premiumCode'];
+
+	// Fetch the existing options set
+	$options = get_option('socialWarfareOptions');
+	
+	// Loop and check for checkbox values, convert them to boolean 
+	$options['premiumCode'] = $premiumCode;
+	
+	// Store the values back in the database
+	return update_option('socialWarfareOptions',$options);
+
+	// Kill WordPress
+	wp_die();
+}
+
+/*********************************************************
+
+	A Function to delete the registration code
+
+*********************************************************/
+
+add_action( 'wp_ajax_sw_delete_registration', 'sw_delete_the_registration' );
+function sw_delete_the_registration() {
+	
+	// Access the database
+	global $wpdb;
+
+	// Fetch the existing options set
+	$options = get_option('socialWarfareOptions');
+	
+	$options['premiumCode'] = '';
+	$options['emailAddress'] = '';
+		
+	// Store the values back in the database
+	return update_option('socialWarfareOptions',$options);
+
+	// Kill WordPress
+	wp_die();
+	
+}
 
 
 

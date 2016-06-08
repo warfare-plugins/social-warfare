@@ -116,7 +116,8 @@ jQuery(document).ready(function() {
 		// Block the default action
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 		
-		jQuery('body').append('<div class="sw-loading-message">Saving Changes</div>');
+		// The loading screen
+		sw_loading_screen();
 		
 		// Fetch all the settings
 		settings = sw_fetch_all_options();
@@ -130,15 +131,25 @@ jQuery(document).ready(function() {
 		// Send the POST request
 		jQuery.post(ajaxurl, data, function(response) {
 			
-			jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete').delay(1000).fadeOut(1000);
-			setTimeout( function() {
-				jQuery('.sw-loading-complete').remove();
-			} , 2500);
+			// Clear the loading screen
+			sw_clear_loading_screen();
+			
 			console.log('Got this from the server: ' + response);
 		});
 		
 	});
 });
+
+function sw_loading_screen() {
+	jQuery('body').append('<div class="sw-loading-message">Saving Changes</div>');	
+}
+
+function sw_clear_loading_screen() {
+	jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete').delay(1000).fadeOut(1000);
+	setTimeout( function() {
+		jQuery('.sw-loading-complete').remove();
+	} , 2500);	
+}
 
 /*********************************************************
 
@@ -441,7 +452,6 @@ function sw_conditional_fields() {
 			var value = jQuery('[name="'+con_dep+'"]').val();		
 		}
 
-console.log(value);
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 		if(jQuery.inArray(value,con_dep_val) !== -1 && jQuery('[name="'+con_dep+'"]').parent('.sw-grid').is(':visible')) {
 			jQuery(this).slideDown('fast');
@@ -451,10 +461,119 @@ console.log(value);
 	});
 }
 
+/*******************************************************
+
+	Register the Plugin
+
+*******************************************************/
+
+// Wait for the DOM to load
+jQuery(document).ready(function() {
+
+	// Register the plugin
+	jQuery('#register-plugin').on('click',function(e) {
+		
+		// Block the default action
+		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+		// The loading screen
+		sw_loading_screen();
+
+		// Fetch all the registration values
+		var regCode = jQuery('input[name="regCode"]').val();
+		var email = jQuery('input[name="emailAddress"]').val();
+		var domain = jQuery('input[name="domain"]').val();
+		
+		// Create the ajax URL
+		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
+		
+		// Ping the home server to create a registration log
+		jQuery.get( url, function( data ) {
+			
+			// Parse the JSON response
+			var object = jQuery.parseJSON(data);
+			
+			// If the response was a failure...
+			if(object['status'] == 'failure') {
+				
+				// Remove the loading message
+				jQuery('.sw-loading-complete').remove();
+				
+				// Alert the failure status
+				alert('Failure: '+object['message']);
+				
+			// If the response was a success	
+			} else {
+				jQuery('input[name="premiumCode"]').val(object['premiumCode']);
+
+				// Prepare data
+				var data = {
+					action: 'sw_store_registration',
+					premiumCode: object['premiumCode']
+				};
+					
+				// Send the response to admin-ajax.php
+				jQuery.post(ajaxurl, data, function(response) {
+					
+					// Clear the loading screen
+					sw_clear_loading_screen();
+					
+					// Toggle the registration display
+					jQuery('.registration-wrapper').attr('registration','1');
+					
+				});
+			}
+		});
+	});
+	
+	// Unregister the plugin
+	jQuery('#unregister-plugin').on('click',function(e) {
+		
+		// Block the default action
+		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+		// The loading screen
+		sw_loading_screen();
+		
+		// Fetch the registration values
+		var regCode = jQuery('input[name="regCode"]').val();
+		var email = jQuery('input[name="emailAddress"]').val();
+		var domain = jQuery('input[name="domain"]').val();
+		
+		// Assemble the link for the Ajax request
+		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
+		
+		// Ping the home server for the registration log
+		jQuery.get( url, function( data ) {
+			
+			// Parse the JSON response
+			var object = jQuery.parseJSON(data);
+			
+			// Clear out the premium code and the email address field
+			jQuery('input[name="premiumCode"]').val('');
+			jQuery('input[name="emailAddress"]').val('');
+
+							// Prepare data
+				var data = {
+					action: 'sw_delete_registration',
+					premiumCode: '',
+					emailAddress: ''
+				};
+					
+				// Send the response to admin-ajax.php
+				jQuery.post(ajaxurl, data, function(response) {
+					
+					// Clear the loading screen
+					sw_clear_loading_screen();
+					
+					// Toggle the registration display
+					jQuery('.registration-wrapper').attr('registration','0');
+					
+				});			
+			
+		});
+	});
 
 
-
-
-
-
+});
 
