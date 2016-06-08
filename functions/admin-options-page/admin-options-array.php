@@ -106,7 +106,7 @@
 			foreach($postTypes as $postType):
 				$sw_options['options']['sw_display']['location_'.$postType] = array(
 					'type'		=> 'select',
-					'name'		=> 'Location on '.$postType.' Posts',
+					'name'		=> $postType.' Posts',
 					'primary'	=> 'location_'.$postType,
 					'secondary' => 'float_location_'.$postType,
 					'content'	=> $contentLocations,
@@ -270,6 +270,24 @@
 				'size'		=> 'two-fourths',
 				'name'		=> 'Maximum Width'
 			),
+			'customColor' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-fourths',
+				'name'		=> 'Custom Color',
+				'default'	=> '#FFFFFF'
+			),
+			'buttonFloat' 	=> array(
+				'type' 		=> 'select',
+				'size'		=> 'two-fourths',
+				'name' 		=> 'Button Alignment',
+				'content' 	=> array(
+					'fullWidth' => 'Full Width',
+					'left' 		=> 'Left',
+					'right'   	=> 'Right',
+					'center' 	=> 'Center'
+				),
+				'default' => 'fullWidth'
+			 ),
 			'buttons_preview' => array(
 				'type' => 'html',
 				'divider' => true,

@@ -167,6 +167,7 @@ margin: 10px 0 30px 0;
 p.sw-checkbox-label, p.sw-input-label, p.sw-select-label, p.sw-authenticate-label {
 font-size: 16px;
 font-weight: bold;
+padding-left:10%;
 }
 p.sw-short {
 	margin:1em 0 0 0;	
