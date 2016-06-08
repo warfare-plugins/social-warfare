@@ -66,7 +66,7 @@
 			$array['resource']['facebook'] = $_GLOBALS['sw']['buttons'][$array['postID']]['facebook'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif( ($array['options']['facebook'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['facebook']))  ):
+		elseif( ($array['options']['newOrderOfIcons']['facebook'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['facebook']))  ):
 
 			$array['totes'] += $array['shares']['facebook'];
 			++$array['count'];

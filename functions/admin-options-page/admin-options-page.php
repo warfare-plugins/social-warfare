@@ -180,9 +180,10 @@ function sw_build_options_page() {
 				echo '<div class="sw-active sw-buttons-sort">';
 				
 				// Check if we have saved settings to use
-				if( isset($sw_user_options['newOrderOfIcons']['active'] ) ):
+				if( isset($sw_user_options['newOrderOfIcons'] ) ):
+				
 					// Loop through each active button
-					foreach($sw_user_options['newOrderOfIcons']['active'] as $key => $value):
+					foreach($sw_user_options['newOrderOfIcons'] as $key => $value):
 						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
 					endforeach;				
 				
@@ -205,11 +206,11 @@ function sw_build_options_page() {
 				echo '<div class="sw-inactive sw-buttons-sort">';
 
 				// Check if we have saved settings to use
-				if( isset($sw_user_options['newOrderOfIcons']['active'] ) ):
+				if( isset($sw_user_options['newOrderOfIcons'] ) ):
 		
 					// Loop through each active button
 					foreach($option['content'] as $key => $value):
-						if(!isset($sw_user_options['newOrderOfIcons']['active'][$key])):
+						if(!isset($sw_user_options['newOrderOfIcons'][$key])):
 							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
 						endif;
 					endforeach;	
@@ -694,6 +695,9 @@ function sw_store_the_settings() {
 	
 	// Fetch the existing options set
 	$options = get_option('socialWarfareOptions');
+	
+	unset($options['newOrderOfIcons']['active']);
+	unset($options['newOrderOfIcons']['inactive']);
 	
 	// Loop and check for checkbox values, convert them to boolean 
 	foreach($settings as $key => $value):

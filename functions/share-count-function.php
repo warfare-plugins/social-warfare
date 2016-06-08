@@ -36,7 +36,7 @@ function get_social_warfare_shares($postID) {
 		foreach($availableNetworks as $key => $value):
 			if($options[$key]) $networks[] = $key;
 		endforeach;
-
+		
 /*****************************************************************
 *                                                                *
 *       Loop through the Networks                    			 *
@@ -46,19 +46,16 @@ function get_social_warfare_shares($postID) {
 		// Loop through the networks and fetch their share counts
 		foreach($networks as $network):
 			
-			// Check if this network is even activated
-			if( $options[$network] ):
-			
-				// Check if we can used the cached share numbers
-				if($freshCache == true):
-					$shares[$network] = get_post_meta($postID,'_'.$network.'_shares',true);
-					
-				// If cache is expired, fetch new and update the cache
-				else:
-					$old_shares[$network]  	= get_post_meta($postID,'_'.$network.'_shares',true);
-					$share_links[$network]	= call_user_func('sw_'.$network.'_request_link',$url);
-				endif;
+			// Check if we can used the cached share numbers
+			if($freshCache == true):
+				$shares[$network] = get_post_meta($postID,'_'.$network.'_shares',true);
+				
+			// If cache is expired, fetch new and update the cache
+			else:
+				$old_shares[$network]  	= get_post_meta($postID,'_'.$network.'_shares',true);
+				$share_links[$network]	= call_user_func('sw_'.$network.'_request_link',$url);
 			endif;
+
 		endforeach;
 		
 		// Recover Shares From Previously Used URL Patterns
@@ -73,14 +70,9 @@ function get_social_warfare_shares($postID) {
 			endif;
 			
 			foreach($networks as $network):
+						
+				$old_share_links[$network] = call_user_func('sw_'.$network.'_request_link',$alternateURL);
 			
-				// Check if this network is even activated
-				if( $options[$network] ):
-			
-					$old_share_links[$network] = call_user_func('sw_'.$network.'_request_link',$alternateURL);
-				
-				endif;
-
 			endforeach;
 		endif;
 		
@@ -99,30 +91,25 @@ function get_social_warfare_shares($postID) {
 			endif;
 
 			foreach($networks as $network):
-						
-				// Check if this network is even activated
-				if( $options[$network] ):
 				
-					if(!isset($raw_shares_array[$network])) $raw_shares_array[$network] = 0;
-					if(!isset($old_raw_shares_array[$network])) $old_raw_shares_array[$network] = 0;
-					
-					$shares[$network] = call_user_func('sw_format_'.$network.'_response',$raw_shares_array[$network]);
-					if($options['recover_shares'] == true):
-						$recovered_shares[$network] = call_user_func('sw_format_'.$network.'_response',$old_raw_shares_array[$network]);
-						if($shares[$network] != $recovered_shares[$network]):
-							$shares[$network] = $shares[$network] + $recovered_shares[$network];
-						endif;
-					endif;
-					if($shares[$network] <= $old_shares[$network]):
-						$shares[$network] = $old_shares[$network];
-					else:
-						delete_post_meta($postID,'_'.$network.'_shares');
-						update_post_meta($postID,'_'.$network.'_shares',$shares[$network]);
-					endif;
-					$shares['totes'] += $shares[$network];
+				if(!isset($raw_shares_array[$network])) $raw_shares_array[$network] = 0;
+				if(!isset($old_raw_shares_array[$network])) $old_raw_shares_array[$network] = 0;
 				
+				$shares[$network] = call_user_func('sw_format_'.$network.'_response',$raw_shares_array[$network]);
+				if($options['recover_shares'] == true):
+					$recovered_shares[$network] = call_user_func('sw_format_'.$network.'_response',$old_raw_shares_array[$network]);
+					if($shares[$network] != $recovered_shares[$network]):
+						$shares[$network] = $shares[$network] + $recovered_shares[$network];
+					endif;
 				endif;
-
+				if($shares[$network] <= $old_shares[$network]):
+					$shares[$network] = $old_shares[$network];
+				else:
+					delete_post_meta($postID,'_'.$network.'_shares');
+					update_post_meta($postID,'_'.$network.'_shares',$shares[$network]);
+				endif;
+				$shares['totes'] += $shares[$network];
+		
 			endforeach;
 		endif;
 

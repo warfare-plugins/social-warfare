@@ -103,23 +103,14 @@ function sw_fetch_all_options() {
 	
 	// Create the objects
 	values.newOrderOfIcons = {};
-	values.newOrderOfIcons.active = {};
-	values.newOrderOfIcons.inactive = {};
 	
 	// Loop through each active network
 	jQuery('.sw-active i').each( function() {
 		var network = jQuery(this).attr('value');
-		values.newOrderOfIcons.active[network] = network;
+		values.newOrderOfIcons[network] = network;
 	});
-	
-	// Loop through each inactive network
-	jQuery('.sw-inactive i').each( function() {
-		var network = jQuery(this).attr('value');
-		values.newOrderOfIcons.inactive[network] = network;
-	});
-	
-	console.log(values);
-	
+	console.log(values.newOrderOfIcons);
+		
 	return values;
 	
 }

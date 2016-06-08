@@ -66,7 +66,7 @@
 			$array['resource']['yummly'] = $_GLOBALS['sw']['buttons'][$array['postID']]['yummly'];
 
 		// If not, let's check if Yummly is activated and create the button HTML
-		elseif( ($array['options']['yummly'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['yummly']))  ):
+		elseif( ($array['options']['newOrderOfIcons']['yummly'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['yummly']))  ):
 
 			$array['totes'] += $array['shares']['yummly'];
 			++$array['count'];

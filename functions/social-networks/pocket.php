@@ -59,7 +59,7 @@
 	add_filter('sw_network_buttons', 'sw_pocket_button_html',10);
 	function sw_pocket_button_html($array) {
 
-		if( ($array['options']['pocket'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['pocket']))  ):
+		if( ($array['options']['newOrderOfIcons']['pocket'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['pocket']))  ):
 
 
 			// Collect the Title

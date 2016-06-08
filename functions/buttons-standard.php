@@ -246,9 +246,9 @@ function social_warfare_buttons($array = array()) {
 
 			// Sort the buttons according to the user's preferences
 			if($options['orderOfIconsSelect'] == 'manual'):
-				foreach($options['newOrderOfIcons'] as $thisIcon => $status):
-					if(isset($buttonsArray['resource'][$thisIcon])):
-						$assets .= $buttonsArray['resource'][$thisIcon];
+				foreach($options['newOrderOfIcons'] as $key => $value):
+					if(isset($buttonsArray['resource'][$key])):
+						$assets .= $buttonsArray['resource'][$key];
 					endif;
 				endforeach;
 			elseif($options['orderOfIconsSelect'] == 'dynamicCount'):

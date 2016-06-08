@@ -24,20 +24,6 @@
 		if(!isset($sw_user_options['locationSite'])) 				{ $sw_user_options['locationSite'] 		= 'both'; 	};
 
 		// Default Buttons to Display
-		if(!isset($sw_user_options['googlePlus'])) 					{ $sw_user_options['googlePlus'] 		= true; 	};
-		if(!isset($sw_user_options['twitter'])) 					{ $sw_user_options['twitter'] 			= true; 	};
-		if(!isset($sw_user_options['facebook'])) 					{ $sw_user_options['facebook'] 			= true; 	};
-		if(!isset($sw_user_options['pinterest'])) 					{ $sw_user_options['pinterest'] 		= true; 	};
-		if(!isset($sw_user_options['linkedIn'])) 					{ $sw_user_options['linkedIn'] 			= true; 	};
-		if(!isset($sw_user_options['yummly'])) 						{ $sw_user_options['yummly'] 			= false; 	};
-		if(!isset($sw_user_options['email'])) 						{ $sw_user_options['email'] 			= false; 	};
-		if(!isset($sw_user_options['whatsapp'])) 					{ $sw_user_options['whatsapp'] 			= false; 	};
-		if(!isset($sw_user_options['tumblr'])) 						{ $sw_user_options['tumblr'] 			= false; 	};
-		if(!isset($sw_user_options['reddit'])) 						{ $sw_user_options['reddit'] 			= false; 	};
-		if(!isset($sw_user_options['stumbleupon'])) 				{ $sw_user_options['stumbleupon'] 		= false; 	};
-		if(!isset($sw_user_options['pocket'])) 						{ $sw_user_options['pocket'] 			= false; 	};
-		if(!isset($sw_user_options['buffer'])) 						{ $sw_user_options['buffer'] 			= false; 	};
-
 		if(!isset($sw_user_options['totes'])) 						{ $sw_user_options['totes'] 			= true; 	};
 		if(!isset($sw_user_options['totesEach'])) 					{ $sw_user_options['totesEach'] 		= true; 	};
 		if(!isset($sw_user_options['twitterID'])) 					{ $sw_user_options['twitterID'] 		= false; 	};
@@ -85,7 +71,8 @@
 		if(!isset($sw_user_options['analyticsCampaign']))			{ $sw_user_options['analyticsCampaign']	= 'SocialWarfare'; };
 		if(!isset($sw_user_options['sw_click_tracking']))			{ $sw_user_options['sw_click_tracking']	= false; };
 		if(!isset($sw_user_options['orderOfIconsSelect']))			{ $sw_user_options['orderOfIconsSelect']	= 'manual'; };
-		if(!isset($sw_user_options['newOrderOfIcons'])) 			{ $sw_user_options['newOrderOfIcons'] 		= array(
+		
+		if(!isset($sw_user_options['newOrderOfIcons'])) 			{ $sw_user_options['newOrderOfIcons']['active'] 		= array(
 				"twitter" => "Twitter",
 				"linkedIn" => "LinkedIn",
 				"pinterest" => "Pinterest",
