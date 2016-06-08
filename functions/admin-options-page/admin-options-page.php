@@ -296,10 +296,12 @@ function sw_build_options_page() {
 					$value = $option['default'];
 				endif;
 
+				echo '<div class="sw-grid sw-col-940 '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').'>';
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="'.$option['default'].'" value="'.$value.'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-clearfix"></div>';
+				echo '</div>';
 				
 			elseif($option['type'] == 'input' && $option['size'] == 'two-fourths'):
 

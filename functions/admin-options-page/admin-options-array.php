@@ -27,6 +27,17 @@
 				'content'	=> 'Drag & Drop to activate and order your share buttons.'
 			),
 			'buttons' => $icons_array,
+			'orderOfIconsSelect' => array(
+				'type'		=> 'select',
+				'size'		=> 'two-thirds',
+				'content'	=> array(
+					'manual' 	=> 'Sort Manually Above',
+					'dynamic' 	=> 'Sort Dyanamically By Share Counts'
+				),
+				'default'	=> 'manual',
+				'name'		=> 'Button Ordering',
+				'divider'	=> true
+			),
 			'share_counts_title' => array(
 				'type' 		=> 'title',
 				'content' 	=> 'Share Counts'
@@ -625,25 +636,42 @@
 				'divider'	=> true,
 				'dependant'	=> 'bitly_access_token'
 			),
+			'analytics_title'	=> array(
+				'type'		=> 'title',
+				'content'	=> 'Analytics Tracking'
+			),
+			'analtycis_description' => array(
+				'type'		=> 'paragraph',
+				'content'	=> 'If you want to activate UTM tracking for shared URL, turn this on.'
+			),
+			'sw_click_tracking' => array(
+				'type'			=> 'checkbox',
+				'content' 		=> 'Button Click Tracking',
+				'size'			=> 'two-thirds',
+				'default'		=> false
+			),
 			'googleAnalytics' => array(
 				'type'			=> 'checkbox',
-				'title' 		=> 'Analytics Tracking',
-				'description' 	=> 'If you want to activate UTM tracking for shared URLs, turn this on.',
-				'size'			=> 'two-thirds-advanced',
+				'content' 		=> 'UTM Link Tracking',
+				'size'			=> 'two-thirds',
 				'default'		=> false
 			),
 			'analyticsMedium' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
 				'name'		=> 'UTM Medium',
-				'default'	=> 'Social'
+				'default'	=> 'Social',
+				'dep'		=> 'googleAnalytics',
+				'dep_val'	=> array(true)
 			),
 			'analyticsCampaign' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
 				'name'		=> 'UTM Campaign',
 				'divider' 	=> true,
-				'default'	=> 'SocialWarfare'
+				'default'	=> 'SocialWarfare',
+				'dep'		=> 'googleAnalytics',
+				'dep_val'	=> array(true)
 			),
 			'share_recovery_title' => array(
 				'type'		=> 'title',

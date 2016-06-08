@@ -249,7 +249,7 @@ a.button.sw-green-button {
 .sw-red-notice,
 .sw-green-notice {
 	color: #fff;
-	padding: 15px 30px;
+	padding: 15px;
 	border-radius: 2px;
 	margin:15px 0;
 }
@@ -307,7 +307,7 @@ p.sw-subtitle.sw-registration-text {
     margin: 0 0 5px 0;
     min-width: 50px;
     border: 1px dashed #ced3dc;
-    padding: 5px;
+    padding: 7px 5px 3px;
     border-radius: 4px;
     width: auto;
     height: 30px;
@@ -318,7 +318,7 @@ p.sw-subtitle.sw-registration-text {
 	background-color: #ced3dc;
 	border: 1px solid #ced3dc;
 	color: #fff;
-	padding: 5px 30px;
+	padding: 5px 30px 4px;
 	margin: 0 3px;
 	border-radius: 2px;
 	display:inline-block;
@@ -326,12 +326,6 @@ p.sw-subtitle.sw-registration-text {
 	font-size:15px;
 	line-height:15px;
 	cursor:pointer;
-}
-
-.sw-twitter-icon:before { content: 't'; }
-.sw-active .sw-s.sw-twitter-icon {
-  background-color: #429cd6;
-  border-color: #3c87b2;
 }
 
 .sw-twitter-icon:before { content: 's'; }
@@ -408,6 +402,6 @@ p.sw-subtitle.sw-registration-text {
 
 .sw-email-icon:before { content: 'k'; }
 .sw-active .sw-s.sw-email-icon {
- background-color: #ff3;
- border-color: #ff3;
+background-color: #6bcce9;
+border-color: #6bcce9;
 }
