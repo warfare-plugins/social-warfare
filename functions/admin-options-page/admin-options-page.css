@@ -224,24 +224,29 @@ a.button.sw-navy-button,a.button.sw-blue-button,a.button.sw-green-button {
 	float: right;
 	margin: 15px 0;
 }
-a.button.sw-navy-button {
+a.button.sw-navy-button, a.button.sw-navy-button:focus {
 	background: #30394f;
 	color: #fff;
 	border-color: #2a2d34;
+	box-shadow:none;
 }
 a.button.sw-navy-button:hover, a.button.sw-blue-button:hover {
 	background: #2a2d34;
 	border-color: #2a2d34;
 	color: #fff;
+	box-shadow:none;
 }
-a.button.sw-blue-button {
+a.button.sw-blue-button, a.button.sw-blue-button:focus {
 	background: #6bcce9;
 	border-color: #6bcce9;
 	color: #fff;
+	box-shadow:none;
 }
-a.button.sw-green-button {
+a.button.sw-green-button, a.button.sw-green-button:focus {
 	background: #71C069;
 	color: #fff;
+	border-color: #71C069;
+	box-shadow:none;
 }
 .sw-admin-tab a.button {
 		margin:5px 0 15px 0;

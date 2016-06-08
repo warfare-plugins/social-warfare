@@ -179,12 +179,24 @@ function sw_build_options_page() {
 				echo '<h3 class="sw-buttons-toggle">Active</h3>';
 				echo '<div class="sw-active sw-buttons-sort">';
 				
-				// Loop through the available buttons
-				foreach($option['content'] as $key => $value):
-					if($value['default'] == true):
+				// Check if we have saved settings to use
+				if( isset($sw_user_options['newOrderOfIcons']['active'] ) ):
+					// Loop through each active button
+					foreach($sw_user_options['newOrderOfIcons']['active'] as $key => $value):
 						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
-					endif;
-				endforeach;
+					endforeach;				
+				
+				// Use defaults if nothing is saved
+				else:
+				
+					// Loop through the available buttons
+					foreach($option['content'] as $key => $value):
+						if($value['default'] == true):
+							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+						endif;
+					endforeach;
+
+				endif;
 
 				echo '</div>';
 
@@ -192,12 +204,28 @@ function sw_build_options_page() {
 				echo '<h3 class="sw-buttons-toggle">Inactive</h3>';
 				echo '<div class="sw-inactive sw-buttons-sort">';
 
-				// Loop through the available buttons
-				foreach($option['content'] as $key => $value):
-					if($value['default'] == false):
-						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
-					endif;
-				endforeach;
+				// Check if we have saved settings to use
+				if( isset($sw_user_options['newOrderOfIcons']['active'] ) ):
+		
+					// Loop through each active button
+					foreach($option['content'] as $key => $value):
+						if(!isset($sw_user_options['newOrderOfIcons']['active'][$key])):
+							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+						endif;
+					endforeach;	
+				
+				// Use defaults if nothing is saved
+				else:
+
+					// Loop through the available buttons
+					foreach($option['content'] as $key => $value):
+						if($value['default'] == false):
+							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+						endif;
+					endforeach;
+				
+				endif;
+				
 				echo '</div>';
 
 			endif;

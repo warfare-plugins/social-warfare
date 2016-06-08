@@ -86,9 +86,11 @@ jQuery(document).ready(function() {
 
 function sw_fetch_all_options() {
 	
+	// Create an object
 	values = {};
+	
+	// Loop through all the inputs
 	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').each( function() {
-		
 		
 		var name = jQuery(this).attr('name');
 		if(jQuery(this).attr('type') == 'checkbox') {
@@ -98,6 +100,25 @@ function sw_fetch_all_options() {
 		}
 		values[name] = value;
 	});
+	
+	// Create the objects
+	values.newOrderOfIcons = {};
+	values.newOrderOfIcons.active = {};
+	values.newOrderOfIcons.inactive = {};
+	
+	// Loop through each active network
+	jQuery('.sw-active i').each( function() {
+		var network = jQuery(this).attr('value');
+		values.newOrderOfIcons.active[network] = network;
+	});
+	
+	// Loop through each inactive network
+	jQuery('.sw-inactive i').each( function() {
+		var network = jQuery(this).attr('value');
+		values.newOrderOfIcons.inactive[network] = network;
+	});
+	
+	console.log(values);
 	
 	return values;
 	
