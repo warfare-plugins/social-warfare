@@ -656,7 +656,8 @@
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
 				'name'	=> 'Custom Permalink Format',
-			),'recovery_protocol'	=> array(
+			),
+			'recovery_protocol'	=> array(
 				'type'				=> 'select',
 				'size'				=> 'two-thirds',
 				'name'				=> 'Previous Connection Protocol',
