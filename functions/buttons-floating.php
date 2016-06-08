@@ -12,14 +12,10 @@
 		$options = sw_get_user_options();
 		$postType = get_post_type($postID);
 
-		if( is_singular('post') ):
-			$visibility = $options['floatLocationPost'];
-		elseif( is_singular('page') ):
-			$visibility = $options['floatlocationPage'];
-		elseif( is_singular() ):
+		if( is_singular() ):
 			$postType = get_post_type($postID);
-			if(isset($options['floatLocation'.$postType])):
-				$visibility = $options['floatLocation'.$postType];
+			if(isset($options['float_location_'.$postType])):
+				$visibility = $options['float_location_'.$postType];
 			else:
 				$visibility = 'on';
 			endif;

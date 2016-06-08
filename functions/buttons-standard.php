@@ -119,21 +119,17 @@ function social_warfare_buttons($array = array()) {
 	
 	if($array['where'] == 'default'):
 		if($specWhere == 'default' || $specWhere == ''):
-			if( is_singular('post') ):
-				$array['where'] = $options['locationPost'];
-			elseif( is_singular('page') ):
-				$array['where'] = $options['locationPage'];
-			elseif( is_singular() ):
+			if( is_singular() ):
 				$postType = get_post_type($postID);
-				if(isset($options['location'.$postType])):
-					$array['where'] = $options['location'.$postType];
+				if(isset($options['location_'.$postType])):
+					$array['where'] = $options['location_'.$postType];
 				else:
 					$array['where'] = 'none';
 				endif;
 			else:
 				$postType = get_post_type($postID);
-				if(isset($options['location'.$postType])):
-					$array['where'] = $options['location'.$postType];
+				if(isset($options['location_'.$postType])):
+					$array['where'] = $options['location_'.$postType];
 				elseif($postType == 'post' || $postType == 'page'):
 					$array['where'] = $options['locationSite'];
 				else:
