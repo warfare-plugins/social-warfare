@@ -176,7 +176,11 @@ function sw_build_options_page() {
 			if($option['type'] == 'buttons'):
 			
 				// The Active Buttons
+				echo '<div class="sw-grid sw-col-220 sw-fit">';
 				echo '<h3 class="sw-buttons-toggle">Active</h3>';
+				echo '</div>';
+				
+				echo '<div class="sw-grid sw-col-700 sw-fit">';
 				echo '<div class="sw-active sw-buttons-sort">';
 				
 				// Check if we have saved settings to use
@@ -200,9 +204,16 @@ function sw_build_options_page() {
 				endif;
 
 				echo '</div>';
+				echo '</div>';
+
+				echo '<div class="sw-clearfix"></div>';
 
 				// The Inactive Buttons
+				echo '<div class="sw-grid sw-col-220 sw-fit">';
 				echo '<h3 class="sw-buttons-toggle">Inactive</h3>';
+				echo '</div>';
+
+				echo '<div class="sw-grid sw-col-700 sw-fit">';
 				echo '<div class="sw-inactive sw-buttons-sort">';
 
 				// Check if we have saved settings to use
@@ -227,6 +238,7 @@ function sw_build_options_page() {
 				
 				endif;
 				
+				echo '</div>';
 				echo '</div>';
 
 			endif;

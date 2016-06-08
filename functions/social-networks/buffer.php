@@ -66,7 +66,7 @@
 			$array['resource']['buffer'] = $_GLOBALS['sw']['buttons'][$array['postID']]['buffer'];
 
 		// If not, let's check if Buffer is activated and create the button HTML
-		elseif( ($array['options']['buffer'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['buffer']))  ):
+		elseif( ($array['options']['newOrderOfIcons']['buffer'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['buffer']))  ):
 
 			// Collect the Title
 			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );

@@ -191,6 +191,13 @@ p.sw-subtext-label {
     border: 1px solid #CED3DC;
     padding: 5%;
 }
+h3.sw-buttons-toggle {
+    width: 100px;
+    float: left;
+    clear: left;
+    margin: 15px 0 30px 0;
+	padding-left:10%;
+}
 /*********************************************************
 
 	Checkboxes
@@ -322,10 +329,10 @@ p.sw-subtitle.sw-registration-text {
     margin: 0 0 5px 0;
     min-width: 50px;
     border: 1px dashed #ced3dc;
-    padding: 7px 5px 3px;
+    padding: 0;
     border-radius: 4px;
     width: auto;
-    height: 30px;
+    height: auto;
     display: inline-block;
 }
 .sw-s {
@@ -334,7 +341,7 @@ p.sw-subtitle.sw-registration-text {
 	border: 1px solid #ced3dc;
 	color: #fff;
 	padding: 5px 30px 4px;
-	margin: 0 3px;
+	margin: 7px 5px 7px;
 	border-radius: 2px;
 	display:inline-block;
 	font-style:normal;
