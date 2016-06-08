@@ -52,12 +52,12 @@ function sw_bitly_shortener( $array ) {
 
 	// Fetch the User's Options
 	$options = sw_get_user_options();
-
+	
 	// If Link shortening is activated....
 	if($options['linkShortening'] == true) :
 
 		// If Bitly is activated and we have all the appropriate credentials....
-		if($options['shorteningMethod'] == 'bitly' && isset($options['bitly_access_token'])):
+		if(isset($options['bitly_access_token'])):
 
 			// Collect our bitly login information
 			$access_token = $options['bitly_access_token'];

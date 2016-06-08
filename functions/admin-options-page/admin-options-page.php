@@ -319,7 +319,7 @@ function sw_build_options_page() {
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit">';
 				echo '<select name="'.$option['secondary'].'">';
-				if(!isset($options['default_2'])):
+				if(!isset($option['default_2'])):
 					echo '<option value="">Select...</option>';					
 				endif;
 				foreach( $option['content_2'] as $select_key => $select_value ) :
@@ -626,7 +626,7 @@ function sw_store_the_settings() {
 	$settings = $_POST['settings'];
 	
 	// Fetch the existing options set
-	$options = get_options('socialWarfareOptions');
+	$options = get_option('socialWarfareOptions');
 	
 	// Loop and check for checkbox values, convert them to boolean 
 	foreach($settings as $key => $value):

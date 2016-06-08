@@ -84,7 +84,7 @@
 			'both' => 'Both Above and Below the Content',
 			'none' => 'None/Manual Placement'
 		);
-		
+				
 		// Get the post Types
 		$postTypes = get_post_types();
 
@@ -110,12 +110,23 @@
 					'primary'	=> 'location_'.$postType,
 					'secondary' => 'float_location_'.$postType,
 					'content'	=> $contentLocations,
-					'content_2'	=> $contentLocations, 
+					'content_2'	=> array(
+						'on'	=> 'On',
+						'off'	=> 'Off',
+					),
 					'default'	=> 'both',
-					'default_2' => 'both'
+					'default_2' => 'on'
 				);
 			endforeach;
 		endif;
+
+		$sw_options['options']['sw_display']['locationSite'] = array(
+			'type'		=> 'select',
+			'name'		=> 'Archive & Categories',
+			'content'	=> $contentLocations,
+			'default'	=> 'below',
+			'size'		=> 'two-thirds'
+		);
 
 		$sw_options['options']['sw_display']['yummly_divider'] = array(
 			'type'		=> 'divider'			
@@ -364,7 +375,7 @@
 					'default' => 'Buttons',
 					'boxed' => 'Boxes'
 				),
-				'default' => 'default'
+				'default' => 'boxed'
 			),
 			'floatStyleSource' => array(
 				'type' => 'checkbox',
@@ -578,7 +589,7 @@
 				'default'		=> true,
 				'divider'		=> true
 			),
-			'link_shortening' => array(
+			'linkShortening' => array(
 				'type'			=> 'checkbox',
 				'title' 		=> 'Bitly Link Shortening',
 				'description' 	=> 'If you like to have all of your links automatically shortened, turn this on.',
