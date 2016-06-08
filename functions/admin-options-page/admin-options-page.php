@@ -17,7 +17,7 @@ function sw_admin_options_page() {
 		'manage_options', 
 		'social-warfare', 
 		'sw_plugin_options',
-		SW_PLUGIN_DIR.'/images/socialwarfare-20x20.png'
+		SW_PLUGIN_DIR.'/functions/admin-options-page/images/socialwarfare-20x20.png'
 	);
 	
 	// Hook into the CSS and Javascript Enqueue process for this specific page

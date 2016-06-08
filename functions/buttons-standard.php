@@ -251,7 +251,7 @@ function social_warfare_buttons($array = array()) {
 						$assets .= $buttonsArray['resource'][$key];
 					endif;
 				endforeach;
-			elseif($options['orderOfIconsSelect'] == 'dynamicCount'):
+			elseif($options['orderOfIconsSelect'] == 'dynamic'):
 				arsort($buttonsArray['shares']);
 				foreach($buttonsArray['shares'] as $thisIcon => $status):
 					if(isset($buttonsArray['resource'][$thisIcon])):
