@@ -5,20 +5,17 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_options', 'sw_whatsapp_options_function',20);
-	function sw_whatsapp_options_function($sw_options) {
+	add_filter('sw_button_options', 'sw_whatsapp_options_function',20);
+	function sw_whatsapp_options_function($options) {
 
 		// Create the new option in a variable to be inserted
-		$whatsapp = array(
-			'whatsapp' => array(
-				 'type' => 'checkbox',
-				 'content' => 'WhatsApp',
-				 'default' => false
-			)
+		$options['content']['whatsapp'] = array(
+			'type' => 'checkbox',
+			'content' => 'whatsapp',
+			'default' => false
 		);
 
-		// Call the function that adds the On / Off Switch and Sortable Option
-		return sw_add_network_option($sw_options,$whatsapp);
+		return $options;		 
 
 	};
 /*****************************************************************

@@ -296,3 +296,118 @@ p.sw-subtitle.sw-registration-text {
     margin-top: -46px;
     margin-left: -40px;
 }
+/*********************************************************
+
+	Buttons Drag & Drop
+
+*********************************************************/
+
+.sw-active,
+.sw-inactive {
+    margin: 0 0 5px 0;
+    min-width: 50px;
+    border: 1px dashed #ced3dc;
+    padding: 5px;
+    border-radius: 4px;
+    width: auto;
+    height: 30px;
+    display: inline-block;
+}
+.sw-s {	
+	font-family:'sw-icon-font';
+	background-color: #ced3dc;
+	border: 1px solid #ced3dc;
+	color: #fff;
+	padding: 5px 30px;
+	margin: 0 3px;
+	border-radius: 2px;
+	display:inline-block;
+	font-style:normal;
+	font-size:15px;
+	line-height:15px;
+	cursor:pointer;
+}
+
+.sw-twitter-icon:before { content: 't'; }
+.sw-active .sw-s.sw-twitter-icon {
+  background-color: #429cd6;
+  border-color: #3c87b2;
+}
+
+.sw-twitter-icon:before { content: 's'; }
+.sw-active .sw-s.sw-twitter-icon {
+ background-color: #429cd6;
+ border-color: #3c87b2;
+}
+
+.sw-googlePlus-icon:before { content: 'h'; }
+.sw-active .sw-s.sw-googlePlus-icon {
+ background-color: #df4b37;
+ border-color: #c44133;
+}
+
+.sw-facebook-icon:before { content: 'j'; }
+.sw-active .sw-s.sw-facebook-icon {
+ background-color: #3a589e;
+ border-color: #2e4675;
+}
+
+.sw-pinterest-icon:before { content: 'b'; }
+.sw-active .sw-s.sw-pinterest-icon {
+ background-color: #cd2029;
+ border-color: #aa1b29;
+}
+
+.sw-linkedIn-icon:before { content: 'f'; }
+.sw-active .sw-s.sw-linkedIn-icon {
+ background-color: #0d77b7;
+ border-color: #0c6591;
+}
+
+.sw-tumblr-icon:before { content: 'r'; }
+.sw-active .sw-s.sw-tumblr-icon {
+ background-color: #39475d;
+ border-color: #27313f;
+}
+
+.sw-stumbleupon-icon:before { content: 'q'; }
+.sw-active .sw-s.sw-stumbleupon-icon {
+ background-color: #ef5025;
+ border-color: #d34427;
+}
+
+.sw-reddit-icon:before { content: 'a'; }
+.sw-active .sw-s.sw-reddit-icon {
+ background-color: #f04b23;
+ border-color: #d33f27;
+}
+
+.sw-yummly-icon:before { content: 'x'; }
+.sw-active .sw-s.sw-yummly-icon {
+ background-color: #e26426;
+ border-color: #b65027;
+}
+
+.sw-whatsapp-icon:before { content: 'y'; }
+.sw-active .sw-s.sw-whatsapp-icon {
+ background-color: #71c169;
+ border-color: #28b04b;
+}
+
+.sw-pocket-icon:before { content: 'B'; }
+.sw-active .sw-s.sw-pocket-icon {
+ background-color: #ef4056;
+ border-color: #ce3d55;
+}
+
+.sw-buffer-icon:before { content: 'z'; }
+.sw-active .sw-s.sw-buffer-icon {
+ background-color: #323b43;
+ border-color: #59626a;
+}
+
+.sw-email-icon:before { content: 'k'; }
+.sw-active .sw-s.sw-email-icon {
+ background-color: #ff3;
+ border-color: #ff3;
+}

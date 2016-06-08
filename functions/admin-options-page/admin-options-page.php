@@ -40,6 +40,8 @@ function sw_admin_options_css() {
 function sw_admin_options_js() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script( 'jquery-effects-core' );
+	wp_enqueue_script( 'jquery-ui-core' );
+	wp_enqueue_script( 'jquery-ui-sortable' );
     wp_enqueue_script( 'sw_admin_options_js', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , SW_VERSION );
 }
 
@@ -86,7 +88,7 @@ function sw_build_options_page() {
 
 	// Fetch the global options array
 	// global $sw_options_page;
-	$sw_options_page = apply_filters( 'sw_options_page' , $sw_options_page );
+	$sw_options_page = apply_filters( 'sw_options' , $sw_options_page );
 	
 /***************************************************************
 
@@ -165,6 +167,41 @@ function sw_build_options_page() {
 				echo '<img src="'.$option['content'].'">';
 			endif;
 
+/***************************************************************
+
+	Buttons Module
+
+***************************************************************/
+
+			if($option['type'] == 'buttons'):
+			
+				// The Active Buttons
+				echo '<h3 class="sw-buttons-toggle">Active</h3>';
+				echo '<div class="sw-active sw-buttons-sort">';
+				
+				// Loop through the available buttons
+				foreach($option['content'] as $key => $value):
+					if($value['default'] == true):
+						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+					endif;
+				endforeach;
+
+				echo '</div>';
+
+				// The Inactive Buttons
+				echo '<h3 class="sw-buttons-toggle">Inactive</h3>';
+				echo '<div class="sw-inactive sw-buttons-sort">';
+
+				// Loop through the available buttons
+				foreach($option['content'] as $key => $value):
+					if($value['default'] == false):
+						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+					endif;
+				endforeach;
+				echo '</div>';
+
+			endif;
+	
 /***************************************************************
 
 	Checkbox Module

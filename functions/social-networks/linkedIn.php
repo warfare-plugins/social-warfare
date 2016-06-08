@@ -5,20 +5,17 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_options', 'sw_linkedIn_options_function',20);
-	function sw_linkedIn_options_function($sw_options) {
+	add_filter('sw_button_options', 'sw_linkedIn_options_function',20);
+	function sw_linkedIn_options_function($options) {
 
 		// Create the new option in a variable to be inserted
-		$linkedIn = array(
-			'linkedIn' => array(
-				 'type' => 'checkbox',
-				 'content' => 'LinkedIn',
-				 'default' => 1
-			)
+		$options['content']['linkedIn'] = array(
+			'type' => 'checkbox',
+			'content' => 'linkedIn',
+			'default' => true
 		);
 
-		// Call the function that adds the On / Off Switch and Sortable Option
-		return sw_add_network_option($sw_options,$linkedIn);
+		return $options;		 
 
 	};
 /*****************************************************************

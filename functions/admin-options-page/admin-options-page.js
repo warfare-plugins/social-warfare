@@ -577,3 +577,13 @@ jQuery(document).ready(function() {
 
 });
 
+/*******************************************************
+
+	Register the Plugin
+
+*******************************************************/
+
+jQuery(document).ready( function() {
+	jQuery( '.sw-buttons-sort.sw-active' ).sortable({connectWith: ".sw-buttons-sort.sw-inactive"});
+	jQuery( '.sw-buttons-sort.sw-inactive' ).sortable({connectWith: ".sw-buttons-sort.sw-active"});
+});

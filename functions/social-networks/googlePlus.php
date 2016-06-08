@@ -5,20 +5,17 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_options', 'sw_googlePlus_options_function',20);
-	function sw_googlePlus_options_function($sw_options) {
+	add_filter('sw_button_options', 'sw_googlePlus_options_function',20);
+	function sw_googlePlus_options_function($options) {
 
 		// Create the new option in a variable to be inserted
-		$googlePlus = array(
-			'googlePlus' => array(
-				 'type' => 'checkbox',
-				 'content' => 'Google Plus',
-				 'default' => 1
-			)
+		$options['content']['googlePlus'] = array(
+			'type' => 'checkbox',
+			'content' => 'Google Plus',
+			'default' => true
 		);
 
-		// Call the function that adds the On / Off Switch and Sortable Option
-		return sw_add_network_option($sw_options,$googlePlus);
+		return $options;		 
 
 	};
 /*****************************************************************

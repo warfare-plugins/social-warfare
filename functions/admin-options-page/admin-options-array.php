@@ -7,6 +7,12 @@
 *****************************************************************************************/
 	function sw_options_display($sw_options) {
 
+		$icons_array = array(
+			'type'		=> 'buttons',
+			'divider'	=> true
+		);
+		$icons_array = apply_filters( 'sw_button_options' , $icons_array );
+
 		// Declare the Options Tab and Tab Name
 		$sw_options['tabs']['links']['sw_display'] = 'Display';
 
@@ -20,11 +26,7 @@
 				'type'		=> 'paragraph',
 				'content'	=> 'Drag & Drop to activate and order your share buttons.'
 			),
-			'button_order_placeholder' => array(
-				'type'		=> 'image',
-				'content'	=> SW_PLUGIN_DIR.'/functions/admin-options-page/images/social-networks.png',
-				'divider'	=> true
-			),
+			'buttons' => $icons_array,
 			'share_counts_title' => array(
 				'type' 		=> 'title',
 				'content' 	=> 'Share Counts'
@@ -760,11 +762,11 @@
 *																						*
 *****************************************************************************************/
 
-	add_filter('sw_options_page', 'sw_options_display' 			, 1 );
-	add_filter('sw_options_page', 'sw_options_styles' 			, 2 );
-	add_filter('sw_options_page', 'sw_options_social_identity'	, 3 );
-	add_filter('sw_options_page', 'sw_options_advanced'			, 4 );
-	add_filter('sw_options_page', 'sw_options_registration'		, 5 );
+	add_filter('sw_options', 'sw_options_display' 			, 1 );
+	add_filter('sw_options', 'sw_options_styles' 			, 2 );
+	add_filter('sw_options', 'sw_options_social_identity'	, 3 );
+	add_filter('sw_options', 'sw_options_advanced'			, 4 );
+	add_filter('sw_options', 'sw_options_registration'		, 5 );
 
 /****************************************************************************************
 *																						*
@@ -903,30 +905,10 @@ function sw_add_language_option($sw_options,$langName,$langCode) {
 	return $sw_options;
 
 }
-
+*/
 function sw_add_network_option($sw_options,$newOptionArray) {
-		// Locate the index of the option you want to insert next to
-    $keyIndex = array_search(
-        'iconDisplayInfo',
-        array_keys( $sw_options['options']['displaySettings'] )
-    );
-
-    // Split the array at the location of the option above
-    $first_array = array_splice (
-        $sw_options['options']['displaySettings'],
-        0,
-        $keyIndex+1
-    );
-
-    // Merge the two parts of the split array with your option added in the middle
-    $sw_options['options']['displaySettings'] = array_merge (
-        $first_array,
-        $newOptionArray,
-        $sw_options['options']['displaySettings']
-    );
-
-	$key = key($newOptionArray);
-	$sw_options['options']['displaySettings']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
+	
+	$sw_options['options']['sw_display']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
 
     // Return the option array or the world will explode
     return $sw_options;

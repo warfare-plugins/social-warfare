@@ -5,20 +5,17 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_options', 'sw_twitter_options_function',20);
-	function sw_twitter_options_function($sw_options) {
+	add_filter('sw_button_options', 'sw_twitter_options_function',20);
+	function sw_twitter_options_function($options) {
 
 		// Create the new option in a variable to be inserted
-		$twitter = array(
-			'twitter' => array(
-				 'type' => 'checkbox',
-				 'content' => 'Twitter',
-				 'default' => 1
-			)
+		$options['content']['twitter'] = array(
+			'type' => 'checkbox',
+			'content' => 'Twitter',
+			'default' => true
 		);
 
-		// Call the function that adds the On / Off Switch and Sortable Option
-		return sw_add_network_option($sw_options,$twitter);
+		return $options;		 
 
 	};
 /*****************************************************************
