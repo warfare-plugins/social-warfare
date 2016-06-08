@@ -358,23 +358,28 @@ jQuery(document).ready( function() {
 			});
 		}
 		swSetWidths(true);
+		activateHoverStates();
 	}
 	
 	function swShowAlignment() {
 		scale = jQuery('select[name="buttonSize"]').val();
 		if(scale >= 1) {
-			jQuery('select[name="buttonFloat"]').parents('.sw_field').slideUp();
+			jQuery('.buttonFloat_wrapper').slideUp();
 		} else {
-			jQuery('select[name="buttonFloat"]').parents('.sw_field').slideDown();	
+			jQuery('.buttonFloat_wrapper').slideDown();	
 		}
 	}
+
+jQuery(document).ready( function() {
 	
-	if(jQuery('select[name="buttonSize"]').length) {
+	scale = jQuery('select[name="buttonSize"]').val();
+	if(scale != 1) {
+		swUpdateScale();
+	}
+	swShowAlignment();
+	jQuery('select[name="buttonSize"],select[name="buttonFloat"]').on('change',function() {
 		swUpdateScale();
 		swShowAlignment();
-		jQuery('select[name="buttonSize"],select[name="buttonFloat"]').on('change',function() {
-			swUpdateScale();
-			swShowAlignment();
-		});
-	}
+	});
 
+});
