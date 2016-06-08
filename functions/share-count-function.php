@@ -34,9 +34,9 @@ function get_social_warfare_shares($postID) {
 		$availableNetworks = $options['newOrderOfIcons'];
 		$networks = array();
 		foreach($availableNetworks as $key => $value):
-			if($options[$key]) $networks[] = $key;
+			if($options['newOrderOfIcons'][$key]) $networks[] = $key;
 		endforeach;
-		
+
 /*****************************************************************
 *                                                                *
 *       Loop through the Networks                    			 *
