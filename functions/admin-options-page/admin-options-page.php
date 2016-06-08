@@ -660,6 +660,58 @@ function sw_build_options_page() {
 
 /***************************************************************
 
+	System Status Generator
+
+***************************************************************/
+
+	if ( ! function_exists( 'get_plugins' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+	$plugins = get_plugins();
+	$pluginList = '';
+	foreach ($plugins as $plugin):
+		$pluginList .= '<tr><td><b>'.$plugin['Name'].'</b></td><td>'.$plugin['Version'].'</td></tr>';
+	endforeach;
+
+	if ( function_exists('fsockopen') ) :
+		$fsockopen = '<span style="color:green;">Enabled</span>';
+	else :
+		$fsockopen = '<span style="color:red;">Disabled</span>';
+	endif;
+
+	if ( function_exists('curl_version') ) :
+		$curl_version = curl_version();
+		$curl_status = '<span style="color:green;">Enabled: v'.$curl_version['version'].'</span>';
+	else :
+		$curl_status = '<span style="color:red;">Disabled</span>';
+	endif;
+
+	$theme = wp_get_theme();
+
+	$system_status = '
+		<table style="width:100%;">
+			<tr><td><h2>Environment Statuses</h2></td><td></td></tr>
+			<tr><td><b>Home URL</b></td><td>'.get_home_url().'</td></tr>
+			<tr><td><b>Site URL</b></td><td>'.get_site_url().'</td></tr>
+			<tr><td><b>WordPress Version</b></td><td>'.get_bloginfo('version').'</td></tr>
+			<tr><td><b>PHP Version</b></td><td>'.phpversion().'</td></tr>
+			<tr><td><b>WP Memory Limit</b></td><td>'.WP_MEMORY_LIMIT.'</td></tr>
+			<tr><td><b>Social Warfare Version</b></td><td>'.SW_VERSION.'</td></tr>
+			<tr><td><h2>Connection Statuses</h2></td><td></td></tr>
+			<tr><td><b>fsockopen</b></td><td>'.$fsockopen.'</td></tr>
+			<tr><td><b>cURL</b></td><td>'.$curl_status.'</td></tr>
+			<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
+			<tr><td><b>Theme Name</b></td><td>'.$theme['Name'].'</td></tr>
+			<tr><td><b>Theme Version</b></td><td>'.$theme['Version'].'</td></tr>
+			<tr><td><b>Active Plugins</b></td><td></td></tr>
+			<tr><td><b>Number of Active Plugins</b></td><td>'.count($plugins).'</td></tr>
+			'.$pluginList.'
+
+		</table>
+		';
+
+/***************************************************************
+
 	The Right Sidebar
 
 ***************************************************************/
@@ -671,7 +723,16 @@ function sw_build_options_page() {
 	echo '<a href="https://warfareplugins.com/the-paradox-of-choice-how-it-can-supercharge-your-marketing/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/paradox-of-choice-300x150.jpg"></a>';
 	echo '<p class="sw-support-notice sw-italic">Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.</a></p>';
 	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
-	echo '<a href="#" class="button sw-blue-button">Get System Status</a>';
+	echo '<a href="#" class="button sw-blue-button sw-system-status">Get System Status</a>';
+	
+	// Sytem Status Container
+	echo '<div class="sw-clearfix"></div>';
+	echo '<div class="system-status-wrapper">';
+	echo '<h4>Press Ctrl+C to Copy this information.</h4>';
+	echo '<div class="system-status-container">'.$system_status.'</div>';
+
+	echo '</div>';
+	
 	echo '</div>';
 	
 	echo '</div>';

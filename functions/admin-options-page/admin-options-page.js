@@ -591,11 +591,46 @@ jQuery(document).ready(function() {
 
 /*******************************************************
 
-	Register the Plugin
+	Make the buttons sortable
 
 *******************************************************/
 
 jQuery(document).ready( function() {
 	jQuery( '.sw-buttons-sort.sw-active' ).sortable({connectWith: ".sw-buttons-sort.sw-inactive"});
 	jQuery( '.sw-buttons-sort.sw-inactive' ).sortable({connectWith: ".sw-buttons-sort.sw-active"});
+});
+
+/*********************************************************
+
+	A Function send the array of setting to ajax.php
+
+*********************************************************/
+jQuery.fn.selectText = function(){
+    var doc = document
+        , element = this[0]
+        , range, selection
+    ;
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();        
+        range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+};
+
+jQuery(document).ready( function() {
+	jQuery('.sw-system-status').on('click', function() {
+				
+		// Block the default action
+		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+		
+		jQuery('.system-status-wrapper').slideToggle();
+		jQuery('.system-status-container').selectText();
+		
+	});
 });
