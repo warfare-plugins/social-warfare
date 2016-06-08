@@ -9,11 +9,31 @@ jQuery(document).ready(function() {
 	jQuery('.nc_socialPanel').animate({opacity:0},0);
 /*********************************************************
 
+	Header Menu
+
+*********************************************************/
+
+	jQuery(document).ready(function() {
+		offset 	= jQuery('.sw-top-menu').offset();
+		width 	= jQuery('.sw-top-menu').width();
+		jQuery('.sw-top-menu').css({
+			'position':'fixed',
+			'left':offset.left,
+			'top':offset.top,
+			'width':width
+		});
+		jQuery('.sw-admin-wrapper').css('padding-top', '75px');
+		
+	});
+
+/*********************************************************
+
 	Tab Navigation
 
 *********************************************************/
 	jQuery(document).on('click','.sw-tab-selector',function(event) {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+		jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 		var tab = jQuery(this).attr('data-link');
 		jQuery('.sw-admin-tab').hide();
 		jQuery('.nc_socialPanel').animate({opacity:0},0);

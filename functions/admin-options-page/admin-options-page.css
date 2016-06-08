@@ -116,9 +116,9 @@ img {
 *********************************************************/
 
 #wpwrap, #wpcontent {background:#fff;padding-left:0;}
-.sw-top-menu {border-bottom: 1px solid #CCC;float:none;}
+.sw-top-menu {border-bottom: 1px solid #CCC;float:none;background:#fff;z-index:99999;margin:0;}
 .sw-header-logo {height:75px;float:left;}
-.sw-header-menu {height:75px;}
+.sw-header-menu {height:75px;margin:0;}
 .sw-header-menu li {
     float: left;
     margin: 0 15px;
@@ -137,18 +137,21 @@ img {
 	display:table-cell;
 	vertical-align:middle;
 }
-
+.sw-top-menu .sw-grid {
+	margin-bottom:0;	
+}
 /*********************************************************
 
 	The Header Menu
 
 *********************************************************/
-.sw-admin-wrapper {
+.sw-admin-wrapper, .sw-header-wrapper {
 	clear: both;
 	margin: 20px auto 20px auto;
 	padding: 0 40px 20px 40px;
 	position: relative;	
 }
+.sw-header-wrapper {margin:0;}
 .sw-tabs-container .sw-admin-tab {display:none;}
 .sw-tabs-container .sw-admin-tab:nth-child(1) {display:block;}
 .sw-admin-tab h2 {

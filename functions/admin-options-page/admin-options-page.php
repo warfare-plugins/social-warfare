@@ -93,8 +93,12 @@ function sw_build_options_page() {
 	Build the header menu
 
 ***************************************************************/
-	
+
+	// Wrapper for the entire content area
+	echo '<div class="sw-header-wrapper">';
+
 	echo '<div class="sw-grid sw-col-940 sw-top-menu">';
+	echo '<div class="sw-grid sw-col-700">';
     echo '<img class="sw-header-logo" src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/social-warfare-light.png" />';
 	echo '<ul class="sw-header-menu">';
 	$i=0; foreach ( $sw_options_page['tabs']['links'] as $key => $value): ++$i;
@@ -102,7 +106,12 @@ function sw_build_options_page() {
 	endforeach;
 	echo '</ul>';
 	echo '</div>';
+	echo '<div class="sw-grid sw-col-220 sw-fit">';
+	echo '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
+	echo '</div>';
 	echo '<div class="sw-clearfix"></div>';
+	echo '</div>';
+	echo '</div>';
 
 /***************************************************************
 
@@ -110,8 +119,8 @@ function sw_build_options_page() {
 
 ***************************************************************/
 
-	// Wrapper for the entire content area
 	echo '<div class="sw-admin-wrapper">';
+
 	echo '<form class="sw-admin-settings-form">';
 	
 	// Wrapper for the left 3/4 non-sidebar content
@@ -584,7 +593,6 @@ function sw_build_options_page() {
 ***************************************************************/
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
-	echo '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/starter-guide-300x150.jpg"></a>';
 	echo '<a href="#"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/measure-roi-300x150.jpg"></a>';
