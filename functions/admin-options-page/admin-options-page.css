@@ -116,7 +116,7 @@ img {
 *********************************************************/
 
 #wpwrap, #wpcontent {background:#fff;padding-left:0;}
-.sw-top-menu {border-bottom: 1px solid #CCC;float:none;background:#fff;z-index:5;margin:0;}
+.sw-top-menu {border-bottom: 1px solid #CED3DC;float:none;background:#fff;z-index:5;margin:0;}
 .sw-header-logo {height:75px;float:left;}
 .sw-header-menu {height:75px;margin:0;}
 .sw-header-menu li {
@@ -193,13 +193,14 @@ p.sw-subtext-label {
 	float:right;
 	margin:5px 0;
 	cursor:pointer;
+	border-radius:4px;
 }
 .sw-checkbox-toggle[status="on"] {background-position:0% 0%;}
 .sw-checkbox-toggle[status="off"] {background-position:100% 0%;}
 input.sw-admin-input {
 	padding: 15px;
 	border: 1px solid #ced3cd;
-	border-radius: 2px;
+	border-radius: 4px;
 	float: right;
 	box-shadow: none;
 	margin:2px 0 1px 0;
@@ -212,12 +213,13 @@ input.sw-admin-input {
 	height: 51px;
 	padding: 15px;
 	margin: 2px 1px 3px 0;
+	border-radius:4px;
 }
 a.button.sw-navy-button,a.button.sw-blue-button,a.button.sw-green-button {
 	padding: 15px 30px;
 	height: auto;
 	line-height: 1;
-	border-radius: 2px;
+	border-radius: 4px;
 	box-shadow: none;
 	float: right;
 	margin: 15px 0;
