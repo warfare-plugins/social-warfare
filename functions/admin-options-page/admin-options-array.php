@@ -678,7 +678,7 @@
 				'content'	=> 'Share Recovery'
 			),
 			'share_recovery_description' => array(
-				'type'		=> 'description',
+				'type'		=> 'paragraph',
 				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them.'
 			),
 			'recover_shares' => array(
