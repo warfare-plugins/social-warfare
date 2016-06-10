@@ -633,7 +633,7 @@ function sw_build_options_page() {
 				// Checkbox Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';					
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#twitter_shares"></div>';
+				echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#twitter_shares"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" '.$selected.' />';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
