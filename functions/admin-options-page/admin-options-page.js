@@ -153,14 +153,15 @@ jQuery(document).ready(function() {
 });
 
 function sw_loading_screen() {
-	jQuery('body').append('<div class="sw-loading-message">Saving Changes</div>');	
+	jQuery('body').append('<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>');	
 }
 
 function sw_clear_loading_screen() {
-	jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete').delay(1000).fadeOut(1000);
+	jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete');
+	jQuery('.sw-loading-bg').delay(1000).fadeOut(1000);
 	setTimeout( function() {
-		jQuery('.sw-loading-complete').remove();
-	} , 2500);	
+		jQuery('.sw-loading-bg').remove();
+	} , 2000);	
 }
 
 /*********************************************************

@@ -303,6 +303,15 @@ a.button.sw-green-button, a.button.sw-green-button:focus {
 
 .sw-red-notice, .sw-loading-message { background: #ee464f }
 .sw-green-notice, .sw-loading-complete { background: #71C069 }
+.sw-loading-bg {
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	height:100%;
+	background:rgba(0,0,0,0.8);
+	z-index:999999999999;	
+}
 
 .sw-red-notice:before, .sw-loading-message:before,
 .sw-green-notice:before, .sw-loading-complete:before {
@@ -341,7 +350,7 @@ p.sw-subtitle.sw-registration-text {
     color: white;
 	width:240px;
     margin-top: -46px;
-    margin-left: -40px;
+    margin-left: -120px;
 }
 /*********************************************************
 
