@@ -271,7 +271,7 @@ function sw_build_options_page() {
 
 					echo '<div class="sw-grid sw-col-620"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit">';
-					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 				
@@ -281,7 +281,7 @@ function sw_build_options_page() {
 					echo '<div class="two-thirds-advanced">';
 					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
 					echo '<div class="sw-grid sw-col-300">';
-					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -302,7 +302,7 @@ function sw_build_options_page() {
 					echo '<div class="sw-grid sw-col-460 sw-fit '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').'>';
 					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';				
 					echo '<div class="sw-grid sw-col-460 sw-fit">';
-					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div></div>';
 				
@@ -316,7 +316,7 @@ function sw_build_options_page() {
 					endif;
 					
 					echo '<div class="sw-grid sw-col-300">';
-					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"></div>';
+					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';

@@ -204,16 +204,37 @@ h3.sw-buttons-toggle {
 
 *********************************************************/
 .sw-checkbox-toggle {
-	width:104px;
+	width:130px;
 	height:46px;
-	background-image:url('images/on-off-toggle.jpg');
+	background-color:#30394f;
 	float:right;
 	margin:5px 0;
 	cursor:pointer;
 	border-radius:4px;
+	overflow:hidden;
+	position:relative;
 }
-.sw-checkbox-toggle[status="on"] {background-position:0% 0%;}
-.sw-checkbox-toggle[status="off"] {background-position:100% 0%;}
+.sw-checkbox-on, .sw-checkbox-off {
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    line-height: 46px;
+	position:absolute;
+	top:0;
+	width:50%;
+	height:100%;	
+}
+.sw-checkbox-toggle[status="on"] .sw-checkbox-on {
+    left: 0;
+    background-color:#71C069;
+}
+.sw-checkbox-toggle[status="on"] .sw-checkbox-off, .sw-checkbox-toggle[status="off"] .sw-checkbox-on {
+	display:none;	
+}
+.sw-checkbox-toggle[status="off"] .sw-checkbox-off {
+    right: 0;
+    background-color:#ee464f;
+}
 input.sw-admin-input {
 	padding: 15px;
 	border: 1px solid #ced3cd;
