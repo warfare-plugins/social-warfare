@@ -700,12 +700,16 @@
 					'post_name' 		=> 'Post Name',
 					'custom'			=> 'Custom'
 				),
-				'default' 			=> 'unchanged'
+				'default' 			=> 'unchanged',
+				'dep'				=> 'recover_shares',
+				'dep_val'			=> array(true)
 			),
 			'recovery_custom_format' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
 				'name'	=> 'Custom Permalink Format',
+				'dep'				=> 'recover_shares',
+				'dep_val'			=> array(true)
 			),
 			'recovery_protocol'	=> array(
 				'type'				=> 'select',
@@ -716,7 +720,9 @@
 					'http'				=> 'http',
 					'https'				=> 'https'
 				),
-				'default'			=> 'unchanged'
+				'default'			=> 'unchanged',
+				'dep'				=> 'recover_shares',
+				'dep_val'			=> array(true)
 			),
 			'recovery_prefix'	=> array(
 				'type'				=> 'select',
@@ -727,14 +733,18 @@
 					'www'				=> 'www',
 					'nonwww'			=> 'non-www'
 				),
-				'default'			=> 'unchanged'
+				'default'			=> 'unchanged',
+				'dep'				=> 'recover_shares',
+				'dep_val'			=> array(true)
 			),
 			'recovery_subdomain' => array(
 				'type' 		=> 'input',
 				'size'		=> 'two-thirds',
 				'name' 		=> 'Subdomain',
 				'default' 	=> '',
-				'divider'	=> true
+				'divider'	=> true,
+				'dep'				=> 'recover_shares',
+				'dep_val'			=> array(true)
 			),
 			'caching_method_title' => array(
 				'type'		=> 'title',

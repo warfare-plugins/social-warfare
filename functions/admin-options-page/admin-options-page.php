@@ -444,6 +444,9 @@ function sw_build_options_page() {
 					$value = $option['default'];
 				endif;
 
+				echo '<div class="sw-grid sw-col-940 sw-fit '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').'>';
+
+
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><select name="'.$key.'">';
 				if(!isset($option['default'])):
@@ -454,6 +457,8 @@ function sw_build_options_page() {
 				endforeach;
 				echo '</select></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+				
+				echo '</div>';
 			
 			endif;
 
