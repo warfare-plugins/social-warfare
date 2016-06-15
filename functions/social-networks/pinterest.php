@@ -91,9 +91,9 @@
 					$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
 					delete_post_meta($array['postID'],'sw_pinterest_image_url');
 					update_post_meta($array['postID'],'sw_pinterest_image_url',$array['imageURL']);
-				else:
-					$array['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-					delete_post_meta($array['postID'],'sw_pinterest_image_url');
+				// else:
+				//	$array['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
+				//	delete_post_meta($array['postID'],'sw_pinterest_image_url');
 				endif;
 
 			else:
