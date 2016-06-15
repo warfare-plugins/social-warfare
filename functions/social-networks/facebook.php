@@ -71,7 +71,7 @@
 			$array['totes'] += $array['shares']['facebook'];
 			++$array['count'];
 
-			$array['resource']['facebook'] = '<div class="nc_tweetContainer fb" data-id="'.$array['count'].'" data-network="facebook">';
+			$array['resource']['facebook'] = '<div class="nc_tweetContainer sw_fb" data-id="'.$array['count'].'" data-network="facebook">';
 			$link = urlencode(urldecode(sw_process_url( $array['url'] , 'facebook' , $array['postID'] )));
 			$array['resource']['facebook'] .= '<a target="_blank" href="http://www.facebook.com/share.php?u='.$link.'" data-link="http://www.facebook.com/share.php?u='.$link.'" class="nc_tweet">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['facebook'] > 0):

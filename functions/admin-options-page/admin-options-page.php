@@ -470,9 +470,9 @@ function sw_build_options_page() {
 
 			if($option['type'] == 'column_labels'):
 				if($option['columns'] == 3):
-					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short">'.$option['column_1'].'</p></div>';
-					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short">'.$option['column_2'].'</p></div>';
-					echo '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short">'.$option['column_3'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">'.$option['column_1'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">'.$option['column_2'].'</p></div>';
+					echo '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short sw-no-padding">'.$option['column_3'].'</p></div>';
 				endif;
 			endif;
 

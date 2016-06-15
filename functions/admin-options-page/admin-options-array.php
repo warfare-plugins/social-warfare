@@ -8,8 +8,7 @@
 	function sw_options_display($sw_options) {
 
 		$icons_array = array(
-			'type'		=> 'buttons',
-			'divider'	=> true
+			'type'		=> 'buttons'
 		);
 		$icons_array = apply_filters( 'sw_button_options' , $icons_array );
 
@@ -31,8 +30,8 @@
 				'type'		=> 'select',
 				'size'		=> 'two-thirds',
 				'content'	=> array(
-					'manual' 	=> 'Sort Manually Above',
-					'dynamic' 	=> 'Sort Dyanamically By Share Counts'
+					'manual' 	=> 'Sort Manually Using Drag & Drop Above',
+					'dynamic' 	=> 'Sort Dyanamically By Order Of Most Shares'
 				),
 				'default'	=> 'manual',
 				'name'		=> 'Button Ordering',
@@ -84,7 +83,7 @@
 			'location_column_labels' => array(
 				'type'		=> 'column_labels',
 				'columns'	=> 3,
-				'column_1'	=> '',
+				'column_1'	=> 'Post Type',
 				'column_2'	=> 'Static Buttons',
 				'column_3'	=> 'Side Floating Buttons (If Activated)'
 			)
@@ -119,7 +118,7 @@
 			foreach($postTypes as $postType):
 				$sw_options['options']['sw_display']['location_'.$postType] = array(
 					'type'		=> 'select',
-					'name'		=> $postType.' Posts',
+					'name'		=> ucfirst($postType),
 					'primary'	=> 'location_'.$postType,
 					'secondary' => 'float_location_'.$postType,
 					'content'	=> $contentLocations,
