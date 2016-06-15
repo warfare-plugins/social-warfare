@@ -238,17 +238,17 @@
 						elseif(isset($yoast_og_title) && $yoast_og_title):
 
 							// If the user defined an title over in Yoast, let's use it.
-							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.$yoast_og_title.'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.trim($yoast_og_title).'" />';
 
 						elseif(isset($yoast_seo_title) && $yoast_seo_title):
 
 							// If the user defined an title over in Yoast, let's use it.
-							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.$yoast_seo_title.'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.trim($yoast_seo_title).'" />';
 
 						else:
 
 							// If nothing else is defined, let's use the post title
-							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.convert_smart_quotes(htmlspecialchars_decode(get_the_title())).'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:title" content="'.trim(convert_smart_quotes(htmlspecialchars_decode(get_the_title()))).'" />';
 
 						endif;
 
@@ -525,7 +525,7 @@
 						// Check if we have everything we need for a large image summary card
 						if($info['imageURL']):
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:card" content="summary_large_image">';
-							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.$info['title'].'">';
+							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.trim($info['title']).'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.$info['description'].'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:image" content="'.$info['imageURL'].'">';
 							if($info['sw_user_options']['twitterID']):
