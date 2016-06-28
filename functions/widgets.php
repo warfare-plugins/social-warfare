@@ -350,10 +350,13 @@ class sw_popular_posts_widget extends WP_Widget {
 				'order' 			=> 'DESC',
 				'date_query'    	=> array(
 					'column'  		=> 'post_date',
-					'after'   		=> '- 300 days'
+					'after'   		=> '- '.$timeframe.' days'
 				)
 			);
 		endif;
+		
+		// Reset the main query
+		wp_reset_postdata();
 		
 		// Query and fetch the posts
 		$q = new WP_Query( $args );
