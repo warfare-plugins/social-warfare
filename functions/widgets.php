@@ -330,7 +330,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		if( $timeframe == 0 ):
 		
 			// Create the arguments for a query without a timeframe
-			$args = array(
+			$sw_args = array(
 				'posts_per_page' 	=> $count,
 				'post_type' 		=> 'post',
 				'meta_key' 			=> '_'.$network,
@@ -342,7 +342,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		else:
 		
 			// Create the arguments for a query with a timeframe
-			$args = array(
+			$sw_args = array(
 				'posts_per_page' 	=> $count,
 				'post_type' 		=> 'post',
 				'meta_key' 			=> '_'.$network,
@@ -359,14 +359,14 @@ class sw_popular_posts_widget extends WP_Widget {
 		wp_reset_postdata();
 		
 		// Query and fetch the posts
-		$q = new WP_Query( $args );
+		$swq = new WP_Query( $sw_args );
 		
 		// Begin the loop
-		if( $q->have_posts() ) :
+		if( $swq->have_posts() ) :
 			$i = 1;
-			while( $q->have_posts() ):
+			while( $swq->have_posts() ):
 				
-				$q->the_post();
+				$swq->the_post();
 				
 				// If we are supposed to show count numbers....
 				if($showCount == 'true'):

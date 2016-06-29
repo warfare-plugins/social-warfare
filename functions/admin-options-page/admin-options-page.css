@@ -256,7 +256,7 @@ input.sw-admin-input {
 	margin: 2px 1px 3px 0;
 	border-radius:4px;
 }
-a.button.sw-navy-button,a.button.sw-blue-button,a.button.sw-green-button {
+a.button.sw-navy-button,a.button.sw-blue-button,a.button.sw-green-button,a.button.sw-red-button {
 	padding: 15px 30px;
 	height: auto;
 	line-height: 1;
@@ -287,6 +287,12 @@ a.button.sw-green-button, a.button.sw-green-button:focus {
 	background: #71C069;
 	color: #fff;
 	border-color: #71C069;
+	box-shadow:none;
+}
+a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hover {
+	background: #ee464f;
+	color: #fff;
+	border-color: #ee464f;
 	box-shadow:none;
 }
 .sw-admin-tab a.button {
@@ -463,4 +469,15 @@ p.sw-subtitle.sw-registration-text {
 .sw-active .sw-s.sw-email-icon {
 	background-color: #6bcce9;
 	border-color: #6bcce9;
+}
+@media screen and (max-width: 1350px) {
+	.sw-header-menu li {
+		font-size:12px;
+		margin:0 10px;	
+	}
+}
+@media screen and (max-width: 1080px) {
+	.sw-header-logo {
+		display:none;	
+	}
 }

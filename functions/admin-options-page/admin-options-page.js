@@ -65,18 +65,34 @@ jQuery(document).ready(function() {
 			jQuery(elem).prop('checked', true);
 		};
 		sw_fetch_all_options();
+		save_color_toggle();
 		sw_conditional_fields();
 	});
 
 	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').on('change' , function() {
 		sw_conditional_fields();
-		sw_fetch_all_options();
+		var new_options = sw_fetch_all_options();
+		save_color_toggle()
 	});
 	
-	sw_fetch_all_options();
+	default_options = sw_fetch_all_options();
 	
 // End the Document Ready Trigger
 });
+
+/*********************************************************
+
+	A Function to change the color of the save button
+
+*********************************************************/
+function save_color_toggle() {
+	var new_options = sw_fetch_all_options();
+	if(JSON.stringify(new_options) != JSON.stringify(default_options)) {
+		jQuery('.sw-save-settings').removeClass('sw-navy-button').addClass('sw-red-button');
+	} else {
+		jQuery('.sw-save-settings').removeClass('sw-red-button').addClass('sw-navy-button');	
+	}
+}
 
 /*********************************************************
 
@@ -109,7 +125,6 @@ function sw_fetch_all_options() {
 		var network = jQuery(this).attr('value');
 		values.newOrderOfIcons[network] = network;
 	});
-	console.log(values.newOrderOfIcons);
 		
 	return values;
 	
@@ -145,8 +160,11 @@ jQuery(document).ready(function() {
 			
 			// Clear the loading screen
 			sw_clear_loading_screen();
+				
+			// Reset the default options variable
+			default_options = sw_fetch_all_options();
+			save_color_toggle();
 			
-			console.log('Got this from the server: ' + response);
 		});
 		
 	});
@@ -597,8 +615,14 @@ jQuery(document).ready(function() {
 *******************************************************/
 
 jQuery(document).ready( function() {
-	jQuery( '.sw-buttons-sort.sw-active' ).sortable({connectWith: ".sw-buttons-sort.sw-inactive"});
-	jQuery( '.sw-buttons-sort.sw-inactive' ).sortable({connectWith: ".sw-buttons-sort.sw-active"});
+	jQuery( '.sw-buttons-sort.sw-active' ).sortable({
+		connectWith: ".sw-buttons-sort.sw-inactive",
+		update: function( event, ui ) { save_color_toggle(); }
+	});
+	jQuery( '.sw-buttons-sort.sw-inactive' ).sortable({
+		connectWith: ".sw-buttons-sort.sw-active",
+		update: function( event, ui ) { save_color_toggle(); }
+	});
 });
 
 /*********************************************************
