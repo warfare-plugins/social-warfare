@@ -127,20 +127,20 @@ function social_warfare_buttons($array = array()) {
 					$array['where'] = 'none';
 				endif;
 			else:
-				$postType = get_post_type($postID);
-				if(isset($options['location_'.$postType])):
-					$array['where'] = $options['location_'.$postType];
-				elseif($postType == 'post' || $postType == 'page'):
+				//$postType = get_post_type($postID);
+				//if(isset($options['location_'.$postType])):
+				//	$array['where'] = $options['location_'.$postType];
+				//elseif($postType == 'post' || $postType == 'page'):
 					$array['where'] = $options['locationSite'];
-				else:
-					$array['where'] = 'none';
-				endif;
+				//else:
+				//	$array['where'] = 'none';
+				//endif;
 			endif;
 		else:
 			$array['where'] = $specWhere;
 		endif;
 	endif;
-
+	
 	// Disable the buttons on Buddy Press pages
 	if(function_exists('is_buddypress') && is_buddypress()):
 		return $array['content'];
@@ -283,22 +283,34 @@ function social_warfare_buttons($array = array()) {
 				delete_post_meta($postID,'sw_cache_timestamp');
 				update_post_meta($postID,'sw_cache_timestamp',floor(((date('U')/60)/60)));
 			endif;
-
-			if($array['echo'] == false && $array['where'] != 'none'):
-				return $assets;
-			elseif($array['content'] === false):
-				echo $assets;
-			elseif($array['where']	== 'below'):
-				$content = $array['content'].''.$assets;
-				return $content;
-			elseif($array['where'] 	== 'above'):
-				$content = $assets.''.$array['content'];
-				return $content;
-			elseif($array['where'] 	== 'both'):
-				$content = $assets.''.$array['content'].''.$assets;
-				return $content;
-			elseif($array['where']  	== 'none'):
-				return $array['content'];
+			
+			if($array['genesis']):
+				if($array['where']	== 'below' && $array['genesis'] == 'below'):
+					return $assets;
+				elseif($array['where'] 	== 'above' && $array['genesis'] == 'above'):
+					return $assets;
+				elseif($array['where'] 	== 'both'):
+					return $assets;
+				elseif($array['where']  == 'none'):
+					return false;
+				endif;
+			else:
+				if($array['echo'] == false && $array['where'] != 'none'):
+					return $assets;
+				elseif($array['content'] === false):
+					echo $assets;
+				elseif($array['where']	== 'below'):
+					$content = $array['content'].''.$assets;
+					return $content;
+				elseif($array['where'] 	== 'above'):
+					$content = $assets.''.$array['content'];
+					return $content;
+				elseif($array['where'] 	== 'both'):
+					$content = $assets.''.$array['content'].''.$assets;
+					return $content;
+				elseif($array['where']  	== 'none'):
+					return $array['content'];
+				endif;
 			endif;
 		else:
 			return $array['content'];

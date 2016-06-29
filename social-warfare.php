@@ -127,11 +127,26 @@ function sw_localize_admin_scripts() {
 add_action('admin_enqueue_scripts', 'sw_localize_admin_scripts');
 
 // Add the Social Warfare Content Filter
-add_filter('the_content','social_warfare_wrapper',200);
-add_filter('the_excerpt','social_warfare_wrapper');
+$theme = wp_get_theme();
+if($theme->get('Name') == 'Genesis' || $theme->parent()->Name == 'Genesis'):
+	add_action('genesis_entry_content','social_warfare_genesis_wrapper_top');
+	add_action('genesis_entry_footer','social_warfare_genesis_wrapper_bottom');
+else:
+	add_filter('the_content','social_warfare_wrapper',200);
+	add_filter('the_excerpt','social_warfare_wrapper');
+endif;
+
 function social_warfare_wrapper($content) {
 	$array['content'] = $content;
 	return social_warfare_buttons($array);
+}
+function social_warfare_genesis_wrapper_top() {
+	$array['genesis'] = 'above';
+	echo social_warfare_buttons($array);
+}
+function social_warfare_genesis_wrapper_bottom() {
+	$array['genesis'] = 'below';
+	echo social_warfare_buttons($array);
 }
 function social_warfare($array = array()) {
 	$array['devs'] = true;
