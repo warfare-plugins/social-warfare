@@ -850,7 +850,19 @@ function sw_delete_the_registration() {
 	
 }
 
+add_action( 'wp_ajax_sw_ajax_passthrough', 'sw_ajax_passthrough' );
+function sw_ajax_passthrough() {
 
+	// Pass the URL request via cURL	
+	$response = sw_file_get_contents_curl($_POST['url']);
+
+	// Echo the response to the screen
+	echo $response;
+
+	// Kill WordPress
+	wp_die();
+	
+}
 
 
 

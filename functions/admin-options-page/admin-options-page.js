@@ -518,8 +518,13 @@ jQuery(document).ready(function() {
 		// Create the ajax URL
 		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 		
+		ajax_data = {
+			'action':'sw_ajax_passthrough',
+			'url':url
+		}
+		
 		// Ping the home server to create a registration log
-		jQuery.get( url, function( data ) {
+		jQuery.post( ajaxurl, ajax_data, function( data ) {
 			
 			// Parse the JSON response
 			var object = jQuery.parseJSON(data);
@@ -557,7 +562,11 @@ jQuery(document).ready(function() {
 		});
 	});
 	
-	// Unregister the plugin
+/*******************************************************
+
+	Unregister the Plugin
+
+*******************************************************/
 	jQuery('#unregister-plugin').on('click',function(e) {
 		
 		// Block the default action
@@ -574,8 +583,14 @@ jQuery(document).ready(function() {
 		// Assemble the link for the Ajax request
 		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 		
+		// Create the ajax object
+		ajax_data = {
+			'action':'sw_ajax_passthrough',
+			'url':url
+		}
+		
 		// Ping the home server for the registration log
-		jQuery.get( url, function( data ) {
+		jQuery.post( ajaxurl, ajax_data, function( data ) {
 			
 			// Parse the JSON response
 			var object = jQuery.parseJSON(data);
@@ -584,7 +599,7 @@ jQuery(document).ready(function() {
 			jQuery('input[name="premiumCode"]').val('');
 			jQuery('input[name="emailAddress"]').val('');
 
-							// Prepare data
+				// Prepare data
 				var data = {
 					action: 'sw_delete_registration',
 					premiumCode: '',
@@ -605,6 +620,98 @@ jQuery(document).ready(function() {
 		});
 	});
 
+
+});
+
+/*********************************************************
+
+	Rearm the Registration if the domain has changed
+
+*********************************************************/
+
+// Wait for the DOM to load
+jQuery(document).ready(function() {
+
+	jQuery('input[name="premiumCode"]').attr('readonly','readonly');
+	jQuery('input[name="regCode"]').parent('.sw_field').hide();
+	var premcode = jQuery('input#domain').attr('data-premcode');
+
+	if (jQuery('input[name="premiumCode"]').val() != '' && jQuery('input[name="premiumCode"]').val() != premcode) {
+		
+		// Fetch our variables
+		var regCode = jQuery('input[name="regCode"]').val();
+		var email = jQuery('input[name="emailAddress"]').val();
+		var domain = jQuery('input[name="domain"]').val();
+		
+		// Create the unregister url
+		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&premiumCode='+jQuery('input[name="premiumCode"]').val();
+		
+		// Create the ajax object
+		ajax_data = {
+			'action':'sw_ajax_passthrough',
+			'url':url
+		}
+		
+		// Pass the URL to the admin-ajax.php passthrough function
+		jQuery.get( ajaxurl, ajax_data , function(data) {
+			
+			// Create the register URL
+			url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
+			
+			// Create the ajax object
+			ajax_data = {
+				'action':'sw_ajax_passthrough',
+				'url':url
+			}
+			
+			// Pass the URL to the admin-ajax.php passthrough function
+			jQuery.post( ajaxurl, ajax_data , function(subdata) {
+				
+				// Parse the response
+				var info = jQuery.parseJSON(subdata);
+				
+				// If the rearm was successful
+				if(info['status'] == 'success') {
+					
+					// Prepare data
+					var data = {
+						action: 'sw_store_registration',
+						premiumCode: info['premiumCode']
+					};
+					
+					// Send the response to admin-ajax.php
+					jQuery.post(ajaxurl, data, function(response) {
+						
+						// Toggle the registration display
+						jQuery('.registration-wrapper').attr('registration','1');
+						
+					});
+					
+					jQuery('input[name="premiumCode"]').val(info['premiumCode']);
+					
+				} else {
+					
+					// Prepare data
+					var data = {
+						action: 'sw_delete_registration',
+						premiumCode: '',
+						emailAddress: ''
+					};
+						
+					// Send the response to admin-ajax.php
+					jQuery.post(ajaxurl, data, function(response) {
+												
+						// Toggle the registration display
+						jQuery('.registration-wrapper').attr('registration','0');
+						
+					});
+					
+				}
+			});
+				
+		
+		} );
+	};
 
 });
 
