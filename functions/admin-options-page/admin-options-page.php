@@ -12,8 +12,8 @@ function sw_admin_options_page() {
 	
 	// Declare the menu link
 	$sw_menu = add_menu_page( 
-		'SW 2.0', 
-		'SW 2.0', 
+		'Social Warfare', 
+		'Social Warfare', 
 		'manage_options', 
 		'social-warfare', 
 		'sw_plugin_options',
