@@ -9,13 +9,13 @@
 // Add the link to the WordPress menu
 add_action( 'admin_menu', 'sw_admin_options_page' );
 function sw_admin_options_page() {
-	
+
 	// Declare the menu link
-	$sw_menu = add_menu_page( 
-		'Social Warfare', 
-		'Social Warfare', 
-		'manage_options', 
-		'social-warfare', 
+	$sw_menu = add_menu_page(
+		'Social Warfare',
+		'Social Warfare',
+		'manage_options',
+		'social-warfare',
 		'sw_plugin_options',
 		SW_PLUGIN_DIR.'/functions/admin-options-page/images/socialwarfare-20x20.png'
 	);

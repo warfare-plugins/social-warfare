@@ -55,19 +55,32 @@
 		$info['postID'] = get_the_ID();
 
 		// Cache some resource for fewer queries on subsequent page loads
-		if(sw_is_cache_fresh($info['postID']) == false):
+		if(sw_is_cache_fresh($info['postID'] , true) == false):
 
 			// Check if an image ID has been provided
 			$info['imageID'] = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
 			if($info['imageID']):
+				
+				// Cache the image URL
 				$info['imageURL'] = wp_get_attachment_url( $info['imageID'] );
 				delete_post_meta($info['postID'],'sw_open_graph_image_url');
 				update_post_meta($info['postID'],'sw_open_graph_image_url',$info['imageURL']);
+				
+				// Cache the height and width
+				$info['image_data'] = wp_get_attachment_image_src( $info['imageID'] , 'full' );
+				delete_post_meta($info['postID'],'sw_open_graph_image_data');
+				update_post_meta($info['postID'],'sw_open_graph_image_data',json_encode($info['image_data']));
+				
 			else:
 				$info['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $info['postID'] ) );
 				delete_post_meta($info['postID'],'sw_open_thumbnail_url');
 				update_post_meta($info['postID'],'sw_open_thumbnail_url' , $info['imageURL']);
 				delete_post_meta($info['postID'],'sw_open_graph_image_url');
+				
+				// Cache the height and width
+				$info['image_data'] = wp_get_attachment_image_src( get_post_thumbnail_id( $info['postID'] ) , 'full' );
+				delete_post_meta($info['postID'],'sw_open_graph_image_data');
+				update_post_meta($info['postID'],'sw_open_graph_image_data',json_encode($info['image_data']));
 			endif;
 
 			// Cache the Twitter Handle
@@ -307,7 +320,23 @@
 							endif;
 
 						endif;
-
+						/*****************************************************************
+						*                                                                *
+						*     OPEN GRAPH IMAGE DIMENSIONS						         *
+						*                                                                *
+						******************************************************************/
+						if($info['image_data']):
+						
+							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
+						
+						elseif(get_post_meta( $info['postID'] , 'sw_open_graph_image_data' , true )):
+						
+							$info['image_data'] = json_decode(get_post_meta( $info['postID'] , 'sw_open_graph_image_data' , true ));
+							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
+						
+						endif;
 						/*****************************************************************
 						*                                                                *
 						*     OPEN GRAPH URL & Site Name						         *
