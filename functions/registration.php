@@ -23,7 +23,7 @@
 		else:
 		
 			// It's not registered
-			return false;
+			return 0;
 			
 		endif;
 	}

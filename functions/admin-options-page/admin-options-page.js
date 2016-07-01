@@ -556,6 +556,7 @@ jQuery(document).ready(function() {
 					
 					// Toggle the registration display
 					jQuery('.registration-wrapper').attr('registration','1');
+					jQuery('.sw-admin-wrapper').attr('sw-registered','1');
 					
 				});
 			}
@@ -614,6 +615,7 @@ jQuery(document).ready(function() {
 					
 					// Toggle the registration display
 					jQuery('.registration-wrapper').attr('registration','0');
+					jQuery('.sw-admin-wrapper').attr('sw-registered','0');
 					
 				});			
 			
@@ -684,6 +686,7 @@ jQuery(document).ready(function() {
 						
 						// Toggle the registration display
 						jQuery('.registration-wrapper').attr('registration','1');
+						jQuery('.sw-admin-wrapper').attr('sw-registered','1');
 						
 					});
 					
@@ -703,6 +706,7 @@ jQuery(document).ready(function() {
 												
 						// Toggle the registration display
 						jQuery('.registration-wrapper').attr('registration','0');
+						jQuery('.sw-admin-wrapper').attr('sw-registered','0');
 						
 					});
 					

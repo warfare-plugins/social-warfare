@@ -35,7 +35,8 @@
 				),
 				'default'	=> 'manual',
 				'name'		=> 'Button Ordering',
-				'divider'	=> true
+				'divider'	=> true,
+				'premium'	=> true
 			),
 			'share_counts_title' => array(
 				'type' 		=> 'title',
@@ -49,20 +50,23 @@
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
 				'content'	=> 'Button Counts',
-				'default'	=> true
+				'default'	=> true,
+				'premium'	=> false
 			),
 			'totes' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
 				'content'	=> 'Total Counts',
-				'default'	=> true
+				'default'	=> true,
+				'premium'	=> false
 			),
 			'minTotes' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
 				'name'	=> 'Minimum Shares',
 				'default'	=> 0,
-				'divider'	=> true
+				'divider'	=> true,
+				'premium'	=> true
 			),
 			'sw_twitter_card' => array(
 				'type'		=> 'checkbox',
@@ -70,7 +74,8 @@
 				'content'	=> 'Twitter Cards',
 				'header'	=> true,
 				'divider'	=> true,
-				'default'	=> true
+				'default'	=> true,
+				'premium'	=> true
 			),
 			'position_title' => array(
 				'type' 		=> 'title',
@@ -146,12 +151,14 @@
 
 		$sw_options['options']['sw_display']['yummly_cat_title'] = array(
 			'type' 		=> 'title',
-			'content' 	=> 'Yummly Display Control'
+			'content' 	=> 'Yummly Display Control',
+			'premium'	=> true
 		);
 
 		$sw_options['options']['sw_display']['yummly_cat_description'] = array(
 			'type' 		=> 'paragraph',
-			'content' 	=> 'If you would like the Yummly to display on a specific category or tag, choose it below.'
+			'content' 	=> 'If you would like the Yummly to display on a specific category or tag, choose it below.',
+			'premium'	=> true
 		);
 		
 		$sw_options['options']['sw_display']['yummly_column_labels'] = array(
@@ -159,7 +166,8 @@
 			'columns'	=> 3,
 			'column_1'	=> '',
 			'column_2'	=> 'Choose Category',
-			'column_3'	=> 'Choose Tag'
+			'column_3'	=> 'Choose Tag',
+			'premium'	=> true
 		);
 		
 		$raw_tags = get_terms( array('taxonomy' => 'post_tag' , 'hide_empty' => false ) );
@@ -178,7 +186,8 @@
 			'primary'	=> 'yummly_categories',
 			'secondary' => 'yummly_tags',
 			'content'	=> $cats,
-			'content_2'	=> $tags
+			'content_2'	=> $tags,
+			'premium'	=> true
 		);
 		
 		return $sw_options;
@@ -198,11 +207,13 @@
 		$sw_options['options']['sw_styles'] = array(
 			'visual_options_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> 'Visual Options'
+				'content' 	=> 'Visual Options',
+				'premium'	=> true
 			),
 			'visual_options_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> 'Use the settings below to customize the look of your share buttons.'
+				'content' 	=> 'Use the settings below to customize the look of your share buttons.',
+				'premium'	=> true
 			),
 			'visualTheme' => array(
 				'type'		=> 'select',
@@ -216,7 +227,8 @@
 					'threeDee' 		=> 'Three-Dee',
 					'connected' 	=> 'Connected'
 				),
-				'default' => 'flatFresh'
+				'default' => 'flatFresh',
+				'premium'	=> true
 			),
 			'buttonSize' => array(
 				'type' => 'select',
@@ -232,7 +244,8 @@
 					'0.8' => '80%',
 					'0.7' => '70%'
 				),
-				'default' => '1'
+				'default' => '1',
+				'premium'	=> true
 			 ),
 			'dColorSet' => array(
 				'type' => 'select',
@@ -250,7 +263,8 @@
 					'customColor' 		=> 'Custom Color',
 					'ccOutlines' 		=> 'Custom Color Outlines'
 				),
-				'default' => 'fullColor'
+				'default' => 'fullColor',
+				'premium'	=> true
 			),
 			'oColorSet' => array(
 				'type' => 'select',
@@ -268,7 +282,8 @@
 					'customColor' 		=> 'Custom Color',
 					'ccOutlines' 		=> 'Custom Color Outlines'
 				),
-				'default' => 'fullColor'
+				'default' => 'fullColor',
+				'premium'	=> true
 			),
 			'iColorSet' => array(
 				'type' => 'select',
@@ -286,18 +301,21 @@
 					'customColor' 		=> 'Custom Color',
 					'ccOutlines' 		=> 'Custom Color Outlines'
 				),
-				'default' => 'fullColor'
+				'default' => 'fullColor',
+				'premium'	=> true
 			),
 			'maximum_width' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-fourths',
-				'name'		=> 'Maximum Width'
+				'name'		=> 'Maximum Width',
+				'premium'	=> true
 			),
 			'customColor' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-fourths',
 				'name'		=> 'Custom Color',
-				'default'	=> '#FFFFFF'
+				'default'	=> '#FFFFFF',
+				'premium'	=> true
 			),
 			'buttonFloat' 	=> array(
 				'type' 		=> 'select',
@@ -311,12 +329,13 @@
 				),
 				'default' 	=> 'fullWidth',
 				'dep' 		=> 'buttonSize',
-				'dep_val'	=> array('0.9','0.8','0.7') 
+				'dep_val'	=> array('0.9','0.8','0.7'),
+				'premium'	=> true
 			 ),
 			'buttons_preview' => array(
 				'type' => 'html',
 				'divider' => true,
-				'content' => '<div class="nc_socialPanel sw_flatFresh sw_d_fullColor sw_i_fullColor sw_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="sw_share"> +1</span></span></span><span class="sw_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> Tweet</span></span></span><span class="sw_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="sw_share"> Pin</span></span></span><span class="sw_count">104</span></a></div><div class="nc_tweetContainer fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="sw_count"><span class="sw_label">Shares</span> 1.8K</span></div></div>'
+				'content' => '<div class="nc_socialPanel sw_flatFresh sw_d_fullColor sw_i_fullColor sw_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="sw_share"> +1</span></span></span><span class="sw_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> Tweet</span></span></span><span class="sw_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="sw_share"> Pin</span></span></span><span class="sw_count">104</span></a></div><div class="nc_tweetContainer sw_fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="sw_count"><span class="sw_label">Shares</span> 1.8K</span></div></div>'
 			),
 			'total_counts_title' => array(
 				'type'	=> 'title',
@@ -393,7 +412,8 @@
 				),
 				'default' => 'boxed',
 				'dep' 		=> 'floatOption',
-				'dep_val'	=> array('left')
+				'dep_val'	=> array('left'),
+				'premium'	=> true
 			),
 			'floatStyleSource' => array(
 				'type' => 'checkbox',
@@ -401,7 +421,8 @@
 				'content' => 'Inherit Visual Options',
 				'default' => '1',
 				'dep' 		=> 'floatOption',
-				'dep_val'	=> array('left')
+				'dep_val'	=> array('left'),
+				'premium'	=> true
 			),
 			'sideDColorSet' => array(
 				'type' => 'select',
@@ -496,11 +517,13 @@
 			),
 			'click_to_tweet_title' => array(
 				'type' => 'title',
-				'content' => 'Click-to-Tweet Style'
+				'content' => 'Click-to-Tweet Style',
+				'premium' => true
 			),
 			'click_to_tweet_description' => array(
 				'type' => 'paragraph',
-				'content' => 'Select the default visual style for Click-to-Tweets on your site.'
+				'content' => 'Select the default visual style for Click-to-Tweets on your site.',
+				'premium' => true
 			),
 			'cttTheme' => array(
 				'type' => 'select',
@@ -514,11 +537,13 @@
 					'style5' => 'Thunderstruck',
 					'style6' => 'Livin\' On A Prayer',
 					'none' => 'None - Create Your Own CSS In Your Theme'),
-				'default' => 'style1'
+				'default' => 'style1',
+				'premium'	=> true
 			),
 			'cttPreview' => array(
 				'type' => 'html',
-				'content' => '<a class="sw_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>'
+				'content' => '<a class="sw_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>',
+				'premium' => true
 			)
 		);
 
@@ -626,34 +651,40 @@
 				'title' 		=> 'Bitly Link Shortening',
 				'description' 	=> 'If you like to have all of your links automatically shortened, turn this on.',
 				'size'			=> 'two-thirds-advanced',
-				'default'		=> false
+				'default'		=> false,
+				'premium'		=> true
 			),
 			'bitly_authentication' => array(
 				'type'		=> 'authentication',
 				'link'		=> 'https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=https://beta.warfareplugins.com/wp-admin/admin-ajax.php&redirect_uri=https://warfareplugins.com/bitly_oauth.php',
 				'name'		=> 'Connect Your Bitly Account',
 				'divider'	=> true,
-				'dependant'	=> 'bitly_access_token'
+				'dependant'	=> 'bitly_access_token',
+				'premium'	=> true
 			),
 			'analytics_title'	=> array(
 				'type'		=> 'title',
-				'content'	=> 'Analytics Tracking'
+				'content'	=> 'Analytics Tracking',
+				'premium'	=> true
 			),
 			'analtycis_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If you want to activate UTM tracking for shared URL, turn this on.'
+				'content'	=> 'If you want to activate UTM tracking for shared URL, turn this on.',
+				'premium'	=> true
 			),
 			'sw_click_tracking' => array(
 				'type'			=> 'checkbox',
 				'content' 		=> 'Button Click Tracking',
 				'size'			=> 'two-thirds',
-				'default'		=> false
+				'default'		=> false,
+				'premium'		=> true
 			),
 			'googleAnalytics' => array(
 				'type'			=> 'checkbox',
 				'content' 		=> 'UTM Link Tracking',
 				'size'			=> 'two-thirds',
-				'default'		=> false
+				'default'		=> false,
+				'premium'		=> true
 			),
 			'analyticsMedium' => array(
 				'type'		=> 'input',
@@ -661,7 +692,8 @@
 				'name'		=> 'UTM Medium',
 				'default'	=> 'Social',
 				'dep'		=> 'googleAnalytics',
-				'dep_val'	=> array(true)
+				'dep_val'	=> array(true),
+				'premium'	=> true
 			),
 			'analyticsCampaign' => array(
 				'type'		=> 'input',
@@ -670,21 +702,25 @@
 				'divider' 	=> true,
 				'default'	=> 'SocialWarfare',
 				'dep'		=> 'googleAnalytics',
-				'dep_val'	=> array(true)
+				'dep_val'	=> array(true),
+				'premium'	=> true
 			),
 			'share_recovery_title' => array(
 				'type'		=> 'title',
-				'content'	=> 'Share Recovery'
+				'content'	=> 'Share Recovery',
+				'premium'	=> true
 			),
 			'share_recovery_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them.'
+				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them.',
+				'premium'	=> true
 			),
 			'recover_shares' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
 				'content'	=> 'Activate Share Recovery',
-				'default'	=> false
+				'default'	=> false,
+				'premium'	=> true
 			),
 			'recovery_format' 	=> array(
 				'type' 				=> 'select',
@@ -701,14 +737,16 @@
 				),
 				'default' 			=> 'unchanged',
 				'dep'				=> 'recover_shares',
-				'dep_val'			=> array(true)
+				'dep_val'			=> array(true),
+				'premium'			=> true
 			),
 			'recovery_custom_format' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'	=> 'Custom Permalink Format',
+				'name'		=> 'Custom Permalink Format',
 				'dep'				=> 'recover_shares',
-				'dep_val'			=> array(true)
+				'dep_val'			=> array(true),
+				'premium'	=> true
 			),
 			'recovery_protocol'	=> array(
 				'type'				=> 'select',
@@ -721,7 +759,8 @@
 				),
 				'default'			=> 'unchanged',
 				'dep'				=> 'recover_shares',
-				'dep_val'			=> array(true)
+				'dep_val'			=> array(true),
+				'premium'	=> true
 			),
 			'recovery_prefix'	=> array(
 				'type'				=> 'select',
@@ -734,7 +773,8 @@
 				),
 				'default'			=> 'unchanged',
 				'dep'				=> 'recover_shares',
-				'dep_val'			=> array(true)
+				'dep_val'			=> array(true),
+				'premium'	=> true
 			),
 			'recovery_subdomain' => array(
 				'type' 		=> 'input',
@@ -743,7 +783,8 @@
 				'default' 	=> '',
 				'divider'	=> true,
 				'dep'				=> 'recover_shares',
-				'dep_val'			=> array(true)
+				'dep_val'			=> array(true),
+				'premium'	=> true
 			),
 			'caching_method_title' => array(
 				'type'		=> 'title',
@@ -782,10 +823,12 @@
 		$sw_options['options']['sw_registration'] = array(
 			'plugin_registration' => array(
 				'type'			=> 'plugin_registration',
-				'divider'		=> true
+				'divider'		=> true,
+				'premium'	=> true
 			),
 			'activate_tweet_counts' => array(
-				'type'			=> 'tweet_counts'
+				'type'			=> 'tweet_counts',
+				'premium'	=> true
 			)
 		);
 		
