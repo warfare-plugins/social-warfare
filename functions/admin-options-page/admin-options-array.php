@@ -527,7 +527,7 @@
 			),
 			'cttTheme' => array(
 				'type' => 'select',
-				'size' => 'two-fourths',
+				'size' => 'two-thirds',
 				'name' => 'Visual Theme',
 				'content' => array(
 					'style1' => 'Send Her My Love',
@@ -828,7 +828,7 @@
 			),
 			'activate_tweet_counts' => array(
 				'type'			=> 'tweet_counts',
-				'premium'	=> true
+				'premium'		=> true
 			)
 		);
 		

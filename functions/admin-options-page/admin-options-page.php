@@ -34,6 +34,7 @@ function sw_admin_options_page() {
 // Enqueue the Admin Options CSS
 function sw_admin_options_css() {
     wp_enqueue_style( 'sw_admin_options_css', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.css' , array() , SW_VERSION );
+    wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() , SW_VERSION );
 }
 
 // Enqueue the Admin Options JS
@@ -42,6 +43,7 @@ function sw_admin_options_js() {
 	wp_enqueue_script( 'jquery-effects-core' );
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
+	wp_enqueue_script( 'jquery-ui-tooltip' );
     wp_enqueue_script( 'sw_admin_options_js', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , SW_VERSION );
 }
 
@@ -146,7 +148,7 @@ function sw_build_options_page() {
 			if($option['type'] == 'title'):
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
 				echo '<h2>'.$option['content'].'</h2>';
-				echo '<div class="sw-premium-blocker"></div>';
+				echo '<div class="sw-premium-blocker" title="test"></div>';
 				echo '</div>';
 			endif;
 
@@ -159,7 +161,7 @@ function sw_build_options_page() {
 			if($option['type'] == 'paragraph'):
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
 				echo '<p class="sw-subtitle">'.$option['content'].'</p>';
-				echo '<div class="sw-premium-blocker"></div>';
+				echo '<div class="sw-premium-blocker no-icon"></div>';
 				echo '</div>';
 			endif;
 
@@ -567,7 +569,7 @@ function sw_build_options_page() {
 				echo '<div class="sw-grid sw-col-940 sw_is_not_registered">';
 				
 				// The Warning Notice & Instructions
-				echo '<div class="sw-red-notice">This copy of Social Warfare is not registered. Let\'s fix it below.</div>';
+				echo '<div class="sw-red-notice">This copy of Social Warfare is NOT registered. <a href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.</div>';
 				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
 				

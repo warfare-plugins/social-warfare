@@ -770,3 +770,43 @@ jQuery(document).ready( function() {
 		
 	});
 });
+
+jQuery(document).ready( function() {
+	jQuery('.sw-premium-blocker').tooltip({
+                items: '.sw-premium-blocker',
+                content: '<i></i>Unlock this feature by registering your license.',
+				position: {
+                   	my: 'center top',
+                    at: 'center top'
+                },
+				tooltipClass: "sw-admin-hover-notice",
+				open: function(event, ui)
+				{
+					if (typeof(event.originalEvent) === 'undefined')
+					{
+						return false;
+					}
+			
+					var $id = jQuery(ui.tooltip).attr('id');
+			
+					// close any lingering tooltips
+					jQuery('div.ui-tooltip').not('#' + $id).remove();
+			
+					// ajax function to pull in data and add it to the tooltip goes here
+				},
+				close: function(event, ui)
+				{
+					ui.tooltip.hover(function()
+					{
+						jQuery(this).stop(true).fadeTo(400, 1); 
+					},
+					function()
+					{
+						jQuery(this).fadeOut('400', function()
+						{
+							jQuery(this).remove();
+						});
+					});
+				}
+            });
+});
