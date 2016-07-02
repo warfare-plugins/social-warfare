@@ -12,7 +12,8 @@
 		$options['content']['pocket'] = array(
 			'type' => 'checkbox',
 			'content' => 'Pocket',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

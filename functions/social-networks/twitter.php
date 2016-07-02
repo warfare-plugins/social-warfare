@@ -12,7 +12,8 @@
 		$options['content']['twitter'] = array(
 			'type' => 'checkbox',
 			'content' => 'Twitter',
-			'default' => true
+			'default' => true,
+			'premium' => false
 		);
 
 		return $options;		 

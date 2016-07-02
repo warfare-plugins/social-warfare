@@ -12,7 +12,8 @@
 		$options['content']['reddit'] = array(
 			'type' => 'checkbox',
 			'content' => 'Reddit',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

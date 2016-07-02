@@ -12,7 +12,8 @@
 		$options['content']['email'] = array(
 			'type' => 'checkbox',
 			'content' => 'Email',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

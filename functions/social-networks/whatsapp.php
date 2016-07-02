@@ -12,7 +12,8 @@
 		$options['content']['whatsapp'] = array(
 			'type' => 'checkbox',
 			'content' => 'whatsapp',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

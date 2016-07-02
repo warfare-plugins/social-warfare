@@ -12,7 +12,8 @@
 		$options['content']['facebook'] = array(
 			'type' => 'checkbox',
 			'content' => 'Facebook',
-			'default' => true
+			'default' => true,
+			'premium' => false
 		);
 
 		return $options;		 

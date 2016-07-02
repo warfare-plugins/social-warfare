@@ -12,7 +12,8 @@
 		$options['content']['linkedIn'] = array(
 			'type' => 'checkbox',
 			'content' => 'linkedIn',
-			'default' => true
+			'default' => true,
+			'premium' => false
 		);
 
 		return $options;		 

@@ -402,6 +402,26 @@
 				'dep' 		=> 'float',
 				'dep_val'	=> array(true)
 			),
+			'sw_float_scr_sz' => array(
+				'type' => 'input',
+				'size' => 'two-fourths',
+				'name' => 'Minimum Screen Width',
+				'default' => '1100',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left')
+			),
+			'sideReveal' => array(
+				'type' => 'select',
+				'size' => 'two-fourths',
+				'name' => 'Transition',
+				'content' => array(
+					'slide' 			=> 'Slide In / Slide Out',
+					'fade' 				=> 'Fade In / Fade Out'
+				),
+				'default' => 'slide',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left')
+			),
 			'floatStyle' => array(
 				'type' => 'select',
 				'name' => 'Button Shape',
@@ -484,18 +504,6 @@
 				'dep' 		=> 'floatStyleSource',
 				'dep_val'	=> array(false)
 			),
-			'sideReveal' => array(
-				'type' => 'select',
-				'size' => 'two-fourths',
-				'name' => 'Hide & Seek Transition',
-				'content' => array(
-					'slide' 			=> 'Slide In / Slide Out',
-					'fade' 				=> 'Fade In / Fade Out'
-				),
-				'default' => 'slide',
-				'dep' 		=> 'floatOption',
-				'dep_val'	=> array('left')
-			),
 			'floatBgColor' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
@@ -503,14 +511,6 @@
 				'default' => '#ffffff',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('top','bottom')
-			),
-			'sw_float_scr_sz' => array(
-				'type' => 'input',
-				'size' => 'two-fourths',
-				'name' => 'Minimum Screen Width',
-				'default' => '1100',
-				'dep' 		=> 'floatOption',
-				'dep_val'	=> array('left')
 			),
 			'click_to_tweet_divider' => array(
 				'type' => 'divider'

@@ -12,7 +12,8 @@
 		$options['content']['yummly'] = array(
 			'type' => 'checkbox',
 			'content' => 'Yummly',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

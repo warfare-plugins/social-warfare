@@ -12,7 +12,8 @@
 		$options['content']['googlePlus'] = array(
 			'type' => 'checkbox',
 			'content' => 'Google Plus',
-			'default' => true
+			'default' => true,
+			'premium' => false
 		);
 
 		return $options;		 

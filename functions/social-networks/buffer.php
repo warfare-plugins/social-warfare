@@ -12,7 +12,8 @@
 		$options['content']['buffer'] = array(
 			'type' => 'checkbox',
 			'content' => 'Buffer',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

@@ -524,6 +524,12 @@ p.sw-subtitle.sw-registration-text {
 	float:right;
 	margin:20px 20px 0 0;
 }
+.sw-admin-wrapper[sw-registered="0"] i[premium-button="1"] {
+	display:none;	
+}
+.sw-admin-wrapper[sw-registered="1"] .sw-premium-buttons {
+	display:none;
+}
 .sw-admin-wrapper[sw-registered="1"] .sw-premium-blocker {
 	display:none;	
 }

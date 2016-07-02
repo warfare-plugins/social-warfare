@@ -12,7 +12,8 @@
 		$options['content']['tumblr'] = array(
 			'type' => 'checkbox',
 			'content' => 'Tumblr',
-			'default' => false
+			'default' => false,
+			'premium' => true
 		);
 
 		return $options;		 

@@ -12,7 +12,8 @@
 		$options['content']['stumbleupon'] = array(
 			'type' => 'checkbox',
 			'content' => 'StumbleUpon',
-			'default' => false
+			'default' => false,
+			'premium' => false
 		);
 
 		return $options;		 

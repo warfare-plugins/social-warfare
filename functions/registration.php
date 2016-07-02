@@ -8,7 +8,7 @@
 	function is_sw_registered() {
 		
 		// Fetch the User's Options Array
-		$sw_user_options = sw_get_user_options();
+		$sw_user_options = get_option('socialWarfareOptions');
 		
 		// Create a Registration Code from the Domain Name
 		$regCode = md5(get_home_url());

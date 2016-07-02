@@ -12,7 +12,8 @@
 		$options['content']['pinterest'] = array(
 			'type' => 'checkbox',
 			'content' => 'Pinterest',
-			'default' => true
+			'default' => true,
+			'premium' => false
 		);
 
 		return $options;		 

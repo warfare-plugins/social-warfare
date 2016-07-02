@@ -196,7 +196,7 @@ function sw_build_options_page() {
 				
 					// Loop through each active button
 					foreach($sw_user_options['newOrderOfIcons'] as $key => $value):
-						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 					endforeach;				
 				
 				// Use defaults if nothing is saved
@@ -205,7 +205,7 @@ function sw_build_options_page() {
 					// Loop through the available buttons
 					foreach($option['content'] as $key => $value):
 						if($value['default'] == true):
-							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 						endif;
 					endforeach;
 
@@ -230,7 +230,7 @@ function sw_build_options_page() {
 					// Loop through each active button
 					foreach($option['content'] as $key => $value):
 						if(!isset($sw_user_options['newOrderOfIcons'][$key])):
-							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 						endif;
 					endforeach;	
 				
@@ -240,13 +240,34 @@ function sw_build_options_page() {
 					// Loop through the available buttons
 					foreach($option['content'] as $key => $value):
 						if($value['default'] == false):
-							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 						endif;
 					endforeach;
 				
 				endif;
 				
 				echo '</div>';
+				echo '</div>';
+				
+				// The Inactive Buttons
+				echo '<div class="sw-grid sw-col-940 sw-premium-buttons sw-option-container" premium="1">';
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<h3 class="sw-buttons-toggle">Premium</h3>';
+				echo '</div>';
+
+				echo '<div class="sw-grid sw-col-620 sw-fit">';
+				echo '<div class="sw-inactive sw-buttons-sort">';
+
+				// Loop through the available buttons
+				foreach($option['content'] as $key => $value):
+					if($option['content'][$key]['premium'] == true):
+						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
+					endif;
+				endforeach;
+				
+				echo '</div>';
+				echo '</div>';
+				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
 
 			endif;
@@ -569,7 +590,7 @@ function sw_build_options_page() {
 				echo '<div class="sw-grid sw-col-940 sw_is_not_registered">';
 				
 				// The Warning Notice & Instructions
-				echo '<div class="sw-red-notice">This copy of Social Warfare is NOT registered. <a href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.</div>';
+				echo '<div class="sw-red-notice">This copy of Social Warfare is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.</div>';
 				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
 				
