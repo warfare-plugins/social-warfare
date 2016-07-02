@@ -798,7 +798,6 @@ function sw_build_options_page() {
 	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
 	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/starter-guide-300x150.jpg"></a>';
 	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/measure-roi-300x150.jpg"></a>';
-	echo '<a href="https://warfareplugins.com/the-paradox-of-choice-how-it-can-supercharge-your-marketing/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/paradox-of-choice-300x150.jpg"></a>';
 	echo '<p class="sw-support-notice sw-italic">Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.</a></p>';
 	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
 	echo '<a href="#" class="button sw-blue-button sw-system-status">Get System Status</a>';

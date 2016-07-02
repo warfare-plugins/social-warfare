@@ -145,7 +145,55 @@ jQuery(document).ready( function() {
 		}
 	});
 	
-
+	if(jQuery('.postbox#socialWarfare').length){
+		var registration_status = jQuery('#socialWarfare .registrationWrapper input').attr('id');
+		if( registration_status == 'false' ) {
+			jQuery('.postbox#socialWarfare')
+				.css({position:'relative',opacity:'0.3'})
+				.append('<div class="sw-premium-blocker"></div>');
+				
+			jQuery('#socialWarfare .sw-premium-blocker').tooltip({
+				items: '#socialWarfare .sw-premium-blocker',
+				content: '<i></i>Unlock these features by registering your license.',
+				position: {
+					my: 'center top',
+					at: 'center top'
+				},
+				tooltipClass: "sw-admin-hover-notice",
+				open: function(event, ui)
+				{
+					if (typeof(event.originalEvent) === 'undefined')
+					{
+						return false;
+					}
+			
+					var $id = jQuery(ui.tooltip).attr('id');
+			
+					// close any lingering tooltips
+					jQuery('div.ui-tooltip').not('#' + $id).remove();
+			
+					// ajax function to pull in data and add it to the tooltip goes here
+				},
+				close: function(event, ui)
+				{
+					ui.tooltip.hover(function()
+					{
+						jQuery(this).stop(true).fadeTo(400, 1); 
+					},
+					function()
+					{
+						jQuery(this).fadeOut('400', function()
+						{
+							jQuery(this).remove();
+						});
+					});
+				}
+			});	
+				
+		}
+	};
+	
+	
 	
 });
 

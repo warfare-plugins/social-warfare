@@ -163,12 +163,8 @@
 						 ),
 						 'clone' => false,
 						 'std'	 => 'default'
-					)
-			  )
-		 );
-		 
-		 
-		 $meta_boxes[0]['fields'][] = array(
+					),
+					array(
 						 'name'  => '<span class="dashicons dashicons-randomize"></span> '.__('Side Floating Buttons Location','social-warfare'),
 						 'id'    => $prefix . 'floatLocation',
 						 'class' => $prefix . 'floatLocationWrapper',
@@ -181,22 +177,28 @@
 						 'clone' => false,
 						 'std'	=> 'default',
 		 
-		 );
-		 
-		 $meta_boxes[0]['fields'][] = array(
+		 			),
+					array(
 						 'name'  => 'divider2',
 						 'id'    => 'divider2',
 						 'type'  => 'divider'
-					);
-					
-					// Twitter ID
-		 $meta_boxes[0]['fields'][] =array(
+					),
+					array(
 						 'name'  => $twitter_handle,
 						 'id'    => 'twitterID',
 						 'class' => 'twitterIDWrapper',
 						 'type'  => 'hidden',
 						 'std'   => $twitter_handle
-					);
+					),
+					array(
+						 'name'  => (is_sw_registered() ? 'true' : 'false'),
+						 'id'    => (is_sw_registered() ? 'true' : 'false'),
+						 'class' => 'registrationWrapper',
+						 'type'  => 'hidden',
+						 'std'   => (is_sw_registered() ? 'true' : 'false')
+					)
+			  )
+		 );
 		 
 		 // Return the meta boxes
 		 return $meta_boxes;

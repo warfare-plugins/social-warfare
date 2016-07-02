@@ -105,6 +105,10 @@ function enqueueSocialWarfareAdminScripts() {
 	wp_enqueue_style( 'social_warfare_admin' );
 	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
 	wp_enqueue_script( 'social_warfare_admin_script', SW_PLUGIN_DIR . '/admin.js',array( 'jquery' ),SW_VERSION);
+	if( !is_sw_registered() ):
+		wp_enqueue_script( 'jquery-ui-tooltip' );
+		wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() );
+	endif;
 }
 /*****************************************************************
 *                                                                *

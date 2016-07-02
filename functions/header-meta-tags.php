@@ -146,8 +146,10 @@
 ******************************************************************/
 
 			// Queue up our header hook function
-			add_filter( 'sw_meta_tags' , 'sw_open_graph_tags' , 1 );
-			add_filter( 'sw_meta_tags' , 'sw_add_twitter_card' , 2 );
+			if( is_sw_registered() ):
+				add_filter( 'sw_meta_tags' , 'sw_open_graph_tags' , 1 );
+				add_filter( 'sw_meta_tags' , 'sw_add_twitter_card' , 2 );
+			endif;
 			add_filter( 'sw_meta_tags' , 'sw_frame_buster' , 3 );
 			add_filter( 'sw_meta_tags' , 'sw_output_custom_color' , 4 );
 			add_filter( 'sw_meta_tags' , 'sw_output_font_css' , 5 );
