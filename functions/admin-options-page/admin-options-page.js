@@ -532,11 +532,11 @@ jQuery(document).ready(function() {
 			// If the response was a failure...
 			if(object['status'] == 'failure') {
 				
-				// Remove the loading message
-				jQuery('.sw-loading-complete').remove();
-				
 				// Alert the failure status
 				alert('Failure: '+object['message']);
+				
+				// Clear the loading screen
+				sw_clear_loading_screen();
 				
 			// If the response was a success	
 			} else {
