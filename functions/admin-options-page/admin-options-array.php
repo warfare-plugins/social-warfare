@@ -145,6 +145,69 @@
 			'size'		=> 'two-thirds'
 		);
 
+		$sw_options['options']['sw_display']['pinit_divider'] = array(
+			'type'		=> 'divider'			
+		);
+
+		$sw_options['options']['sw_display']['pinit_title'] = array(
+			'type' 		=> 'title',
+			'content' 	=> 'Image Hover Pinit Button',
+			'premium'	=> true
+		);
+
+		$sw_options['options']['sw_display']['pinit_description'] = array(
+			'type' 		=> 'paragraph',
+			'content' 	=> 'If you would like a "Pin It" button to appear on images when users hover over them, activate this.',
+			'premium'	=> true
+		);
+		
+		$sw_options['options']['sw_display']['pinit_toggle'] = array(
+			'type'		=> 'checkbox',
+			'size'		=> 'two-thirds',
+			'content'	=> 'Pinit Button',
+			'default'	=> true,
+			'premium'	=> true
+		);
+		
+		$sw_options['options']['sw_display']['pinit_location_horizontal'] = array(
+			'type'		=> 'select',
+			'name'		=> 'Horizontal Location',
+			'content'	=> array(
+				'left' 		=> 'Left',
+				'center'	=> 'Center',
+				'right' 	=> 'Right'
+			),
+			'default'	=> 'center',
+			'size'		=> 'two-thirds',
+			'premium'	=> true,
+			'dep' 		=> 'pinit_toggle',
+			'dep_val'	=> array(true)
+		);
+		
+		$sw_options['options']['sw_display']['pinit_location_vertical'] = array(
+			'type'		=> 'select',
+			'name'		=> 'Vertical Location',
+			'content'	=> array(
+				'top' 		=> 'Top',
+				'middle'	=> 'Middle',
+				'bottom' 	=> 'Bottom'
+			),
+			'default'	=> 'top',
+			'size'		=> 'two-thirds',
+			'premium'	=> true,
+			'dep' 		=> 'pinit_toggle',
+			'dep_val'	=> array(true)
+		);
+		
+		//$sw_options['options']['sw_display']['pinit_custom_image'] = array(
+		//	'type'		=> 'image_upload',
+		//	'name'		=> 'Custom Image',
+		//	'default'	=> 'top_left',
+		//	'premium'	=> true,
+		//	'dep' 		=> 'pinit_toggle',
+		//	'dep_val'	=> array(true)
+		//);
+
 		$sw_options['options']['sw_display']['yummly_divider'] = array(
 			'type'		=> 'divider'			
 		);

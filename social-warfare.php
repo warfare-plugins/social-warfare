@@ -141,11 +141,14 @@ endif;
 
 function social_warfare_wrapper($content) {
 	$array['content'] = $content;
-	return social_warfare_buttons($array);
+	$content = social_warfare_buttons($array);
+	$content .= '<div class="sw-content-locator"></div>';
+	return $content;
 }
 function social_warfare_genesis_wrapper_top() {
 	$array['genesis'] = 'above';
 	echo social_warfare_buttons($array);
+	echo '<div class="sw-content-locator"></div>';
 }
 function social_warfare_genesis_wrapper_bottom() {
 	$array['genesis'] = 'below';
@@ -153,7 +156,9 @@ function social_warfare_genesis_wrapper_bottom() {
 }
 function social_warfare($array = array()) {
 	$array['devs'] = true;
-	return social_warfare_buttons($array);
+	$content = social_warfare_buttons($array);
+	$content .= '<div class="sw-content-locator"></div>';
+	return $content;
 }
 
 /*****************************************************************

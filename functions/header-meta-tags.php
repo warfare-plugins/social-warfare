@@ -666,6 +666,7 @@ add_action( 'wp_footer' , 'sw_footer_functions' , 1 );
 // Queue up our footer hook function
 add_filter( 'sw_footer_scripts' , 'sw_output_cache_trigger' );
 add_filter( 'sw_footer_scripts' , 'sw_click_tracking' );
+add_filter( 'sw_footer_scripts' , 'sw_pinit' );
 
 function sw_footer_functions() {
 
@@ -684,6 +685,20 @@ function sw_footer_functions() {
 			echo '</script>';
 		endif;
 		
+}
+
+/*****************************************************************
+*                                                                *
+*          PIN IMAGES VARIABLES						             *
+*                                                                *
+******************************************************************/
+function sw_pinit($info) {
+	if($info['sw_user_options']['pinit_toggle'] == true && is_sw_registered()):
+		$info['footer_output'] .= 'sw_pinit=true;sw_pinit_h_location="'.$info['sw_user_options']['pinit_location_horizontal'].'";sw_pinit_v_location="'.$info['sw_user_options']['pinit_location_vertical'].'";';
+	else:
+		$info['footer_output'] .= 'sw_pinit=false;';
+	endif;
+	return $info;	
 }
 
 /*****************************************************************

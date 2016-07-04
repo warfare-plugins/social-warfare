@@ -44,6 +44,7 @@ function sw_admin_options_js() {
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'jquery-ui-tooltip' );
+	wp_enqueue_media();
     wp_enqueue_script( 'sw_admin_options_js', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , SW_VERSION );
 }
 
@@ -174,6 +175,52 @@ function sw_build_options_page() {
 			if($option['type'] == 'image'):
 				echo '<img src="'.$option['content'].'">';
 			endif;
+
+/***************************************************************
+
+	Image Upload Module
+
+***************************************************************/
+
+			if($option['type'] == 'image_upload'):
+			
+				// Fetch the value
+				if(isset($sw_user_options[$key])):
+					$value = $sw_user_options[$key];
+				else:
+					$value = $option['default'];
+				endif;
+			
+				// Create a whole parent container
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				
+				// Title goes on the left
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<p class="sw-checkbox-label">Custom Button Image</p>';
+				echo '</div>';
+				
+				// Button goes in the middle
+				echo '<div class="sw-grid sw-col-300">';
+				echo '<label for="upload_image">
+						<input class="sw_upload_image_field" type="text" size="36" name="'.$key.'" value="'.$value.'" /> 
+						<a class="sw_upload_image_button button sw-navy-button" for="'.$key.'" type="button" value="Upload Image" />Upload Image</a>
+					</label>';
+				echo '</div>';
+				
+				// Preview goes on the right
+				echo '<div class="sw-grid sw-col-300 sw-fit">';
+					echo '<div class="sw-preview-container">';
+					if($value):
+						echo '<img class="sw-admin-image-preview" src="'.$value.'" />';
+						echo '<div class="sw-delete-image"></div>';
+					endif;
+					echo '</div>';
+				echo '</div>';
+				
+				echo '</div>';
+
+			endif;
+
 
 /***************************************************************
 

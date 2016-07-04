@@ -773,40 +773,87 @@ jQuery(document).ready( function() {
 
 jQuery(document).ready( function() {
 	jQuery('.sw-premium-blocker').tooltip({
-                items: '.sw-premium-blocker',
-                content: '<i></i>Unlock this feature by registering your license.',
-				position: {
-                   	my: 'center top',
-                    at: 'center top'
-                },
-				tooltipClass: "sw-admin-hover-notice",
-				open: function(event, ui)
+		items: '.sw-premium-blocker',
+		content: '<i></i>Unlock this feature by registering your license.',
+		position: {
+			my: 'center top',
+			at: 'center top'
+		},
+		tooltipClass: "sw-admin-hover-notice",
+		open: function(event, ui)
+		{
+			if (typeof(event.originalEvent) === 'undefined')
+			{
+				return false;
+			}
+	
+			var $id = jQuery(ui.tooltip).attr('id');
+	
+			// close any lingering tooltips
+			jQuery('div.ui-tooltip').not('#' + $id).remove();
+	
+			// ajax function to pull in data and add it to the tooltip goes here
+		},
+		close: function(event, ui)
+		{
+			ui.tooltip.hover(function()
+			{
+				jQuery(this).stop(true).fadeTo(400, 1); 
+			},
+			function()
+			{
+				jQuery(this).fadeOut('400', function()
 				{
-					if (typeof(event.originalEvent) === 'undefined')
-					{
-						return false;
-					}
-			
-					var $id = jQuery(ui.tooltip).attr('id');
-			
-					// close any lingering tooltips
-					jQuery('div.ui-tooltip').not('#' + $id).remove();
-			
-					// ajax function to pull in data and add it to the tooltip goes here
-				},
-				close: function(event, ui)
-				{
-					ui.tooltip.hover(function()
-					{
-						jQuery(this).stop(true).fadeTo(400, 1); 
-					},
-					function()
-					{
-						jQuery(this).fadeOut('400', function()
-						{
-							jQuery(this).remove();
-						});
-					});
-				}
-            });
+					jQuery(this).remove();
+				});
+			});
+		}
+	});
+});
+
+/*********************************************************
+
+	A Function for image upload buttons
+
+*********************************************************/
+
+jQuery(document).ready(function($){
+ 
+ 
+    var custom_uploader;
+ 
+ 
+    jQuery('.sw_upload_image_button').click(function(e) {
+ 
+        e.preventDefault();
+		
+		input_field = jQuery(this).attr('for');
+ 
+        //If the uploader object has already been created, reopen the dialog
+        if (custom_uploader) {
+            custom_uploader.open();
+            return;
+        }
+ 
+        //Extend the wp.media object
+        custom_uploader = wp.media.frames.file_frame = wp.media({
+            title: 'Choose Image',
+            button: {
+                text: 'Choose Image'
+            },
+            multiple: false
+        });
+ 
+        //When a file is selected, grab the URL and set it as the text field's value
+        custom_uploader.on('select', function() {
+            attachment = custom_uploader.state().get('selection').first().toJSON();
+            jQuery('input[name="'+input_field+'"').val(attachment.url);
+        });
+ 
+        //Open the uploader dialog
+        custom_uploader.open();
+ 
+    });
+ 
+ 
 });

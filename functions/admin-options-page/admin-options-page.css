@@ -553,3 +553,10 @@ p.sw-subtitle.sw-registration-text {
    float:left;
    font-style:normal;
 }
+.sw_upload_image_field {
+	display:none;	
+}
+.sw-admin-image-preview {
+	max-height:50px;
+	float:right;
+}

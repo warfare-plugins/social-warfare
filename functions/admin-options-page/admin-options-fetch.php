@@ -68,6 +68,9 @@
 			if(!isset($sw_user_options['analyticsCampaign']))			{ $sw_user_options['analyticsCampaign']	= 'SocialWarfare'; };
 			if(!isset($sw_user_options['sw_click_tracking']))			{ $sw_user_options['sw_click_tracking']	= false; };
 			if(!isset($sw_user_options['orderOfIconsSelect']))			{ $sw_user_options['orderOfIconsSelect']	= 'manual'; };
+			if(!isset($sw_user_options['pinit_toggle']))				{ $sw_user_options['pinit_toggle']		= false; };
+			if(!isset($sw_user_options['pinit_location_horizontal']))	{ $sw_user_options['pinit_location_horizontal']	= 'center'; };
+			if(!isset($sw_user_options['pinit_location_vertical']))		{ $sw_user_options['pinit_location_vertical'] = 'top'; };
 		
 		// If it's not registered
 		else:
@@ -117,6 +120,9 @@
 			if(!isset($sw_user_options['analyticsCampaign']))			{ $sw_user_options['analyticsCampaign']	= 'SocialWarfare'; };
 			$sw_user_options['sw_click_tracking'] = false;
 			$sw_user_options['orderOfIconsSelect'] = 'manual';
+			$sw_user_options['pinit_toggle'] = false;
+			$sw_user_options['pinit_location_horizontal'] = 'center';
+			$sw_user_options['pinit_location_vertical'] = 'top';
 		
 		endif;
 		
