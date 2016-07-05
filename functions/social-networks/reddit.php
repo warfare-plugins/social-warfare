@@ -79,14 +79,14 @@
 ******************************************************************/
 	add_filter('sw_network_buttons', 'sw_reddit_button_html',10);
 	function sw_reddit_button_html($array) {
-
+		
 		// If we've already generated this button, just use our existing html
 		if(isset($_GLOBALS['sw']['buttons'][$array['postID']]['reddit'])):
 			$array['resource']['reddit'] = $_GLOBALS['sw']['buttons'][$array['postID']]['reddit'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif( ($array['options']['newOrderOfIcons']['reddit'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['reddit']))  ):
-
+			
 			if(isset($array['shares']['reddit'])):
 				$array['totes'] += $array['shares']['reddit'];
 			endif;

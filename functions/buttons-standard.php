@@ -189,8 +189,8 @@ function social_warfare_buttons($array = array()) {
 				// Fetch the global names and keys
 				$sw_options = array();
 				$sw_available_options = apply_filters('sw_options',$sw_options);
-				$available_buttons = $sw_available_options['options']['displaySettings'];
-				
+				$available_buttons = $sw_available_options['options']['sw_display']['buttons']['content'];
+
 				// Split the comma separated list into an array
 				$button_set_array = explode(',', $array['buttons']);
 				
@@ -213,7 +213,7 @@ function social_warfare_buttons($array = array()) {
 				// Manually turn the total shares on or off
 				if(array_search('Total',$button_set_array)) $buttonsArray['buttons']['totes'] = 'Total';
 			endif;
-
+			
 			// Setup the buttons array to pass into the 'sw_network_buttons' hook
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
@@ -231,7 +231,7 @@ function social_warfare_buttons($array = array()) {
 
 			// This array will contain the HTML for all of the individual buttons
 			$buttonsArray = apply_filters( 'sw_network_buttons' , $buttonsArray );
-
+			
 			// Create the social panel
 			$assets = '<div class="nc_socialPanel sw_'.$options['visualTheme'].' sw_d_'.$options['dColorSet'].' sw_i_'.$options['iColorSet'].' sw_o_'.$options['oColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
 
@@ -245,7 +245,13 @@ function social_warfare_buttons($array = array()) {
 			endif;
 
 			// Sort the buttons according to the user's preferences
-			if($options['orderOfIconsSelect'] == 'manual'):
+			if(isset($buttonsArray) && isset($buttonsArray['buttons'])):
+				foreach($buttonsArray['buttons'] as $key=>$value):
+					if(isset($buttonsArray['resource'][$key])):
+						$assets .= $buttonsArray['resource'][$key];
+					endif;
+				endforeach;
+			elseif($options['orderOfIconsSelect'] == 'manual'):
 				foreach($options['newOrderOfIcons'] as $key => $value):
 					if(isset($buttonsArray['resource'][$key])):
 						$assets .= $buttonsArray['resource'][$key];

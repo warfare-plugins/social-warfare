@@ -11,7 +11,7 @@
 		// Create the new option in a variable to be inserted
 		$options['content']['linkedIn'] = array(
 			'type' => 'checkbox',
-			'content' => 'linkedIn',
+			'content' => 'LinkedIn',
 			'default' => true,
 			'premium' => false
 		);

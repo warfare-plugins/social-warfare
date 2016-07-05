@@ -11,7 +11,7 @@
 		// Create the new option in a variable to be inserted
 		$options['content']['whatsapp'] = array(
 			'type' => 'checkbox',
-			'content' => 'whatsapp',
+			'content' => 'WhatsApp',
 			'default' => false,
 			'premium' => true
 		);
