@@ -34,7 +34,6 @@ function swp_admin_options_page() {
 // Enqueue the Admin Options CSS
 function swp_admin_options_css() {
     wp_enqueue_style( 'swp_admin_options_css', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.css' , array() , swp_VERSION );
-    wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() , swp_VERSION );
 }
 
 // Enqueue the Admin Options JS
