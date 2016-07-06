@@ -1,7 +1,7 @@
 <?php
 
 	// Queue up our hook function
-	add_action( 'wp_head' , 'sw_add_header_meta' , 1 );
+	add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
 
 /*****************************************************************
 *                                                                *
@@ -21,7 +21,7 @@
 *          Easy Hook Remover							         *
 *                                                                *
 ******************************************************************/
-	function sw_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
+	function swp_remove_filter($hook_name = '', $method_name = '', $priority = 0 ) {
 		global $wp_filter;
 
 		// Take only filters on right hook name and priority
@@ -50,12 +50,12 @@
 ******************************************************************/
 
 	// This is the hook function we're adding the header
-	function sw_add_header_meta() {
+	function swp_add_header_meta() {
 
 		$info['postID'] = get_the_ID();
 
 		// Cache some resource for fewer queries on subsequent page loads
-		if(sw_is_cache_fresh($info['postID'] , true) == false):
+		if(swp_is_cache_fresh($info['postID'] , true) == false):
 
 			// Check if an image ID has been provided
 			$info['imageID'] = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
@@ -63,39 +63,39 @@
 				
 				// Cache the image URL
 				$info['imageURL'] = wp_get_attachment_url( $info['imageID'] );
-				delete_post_meta($info['postID'],'sw_open_graph_image_url');
-				update_post_meta($info['postID'],'sw_open_graph_image_url',$info['imageURL']);
+				delete_post_meta($info['postID'],'swp_open_graph_image_url');
+				update_post_meta($info['postID'],'swp_open_graph_image_url',$info['imageURL']);
 				
 				// Cache the height and width
 				$info['image_data'] = wp_get_attachment_image_src( $info['imageID'] , 'full' );
-				delete_post_meta($info['postID'],'sw_open_graph_image_data');
-				update_post_meta($info['postID'],'sw_open_graph_image_data',json_encode($info['image_data']));
+				delete_post_meta($info['postID'],'swp_open_graph_image_data');
+				update_post_meta($info['postID'],'swp_open_graph_image_data',json_encode($info['image_data']));
 				
 			else:
 				$info['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $info['postID'] ) );
-				delete_post_meta($info['postID'],'sw_open_thumbnail_url');
-				update_post_meta($info['postID'],'sw_open_thumbnail_url' , $info['imageURL']);
-				delete_post_meta($info['postID'],'sw_open_graph_image_url');
+				delete_post_meta($info['postID'],'swp_open_thumbnail_url');
+				update_post_meta($info['postID'],'swp_open_thumbnail_url' , $info['imageURL']);
+				delete_post_meta($info['postID'],'swp_open_graph_image_url');
 				
 				// Cache the height and width
 				$info['image_data'] = wp_get_attachment_image_src( get_post_thumbnail_id( $info['postID'] ) , 'full' );
-				delete_post_meta($info['postID'],'sw_open_graph_image_data');
-				update_post_meta($info['postID'],'sw_open_graph_image_data',json_encode($info['image_data']));
+				delete_post_meta($info['postID'],'swp_open_graph_image_data');
+				update_post_meta($info['postID'],'swp_open_graph_image_data',json_encode($info['image_data']));
 			endif;
 
 			// Cache the Twitter Handle
-			$user_twitter_handle 	= get_the_author_meta( 'sw_twitter' , sw_get_author($info['postID']));
+			$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , swp_get_author($info['postID']));
 			if($user_twitter_handle):
-				delete_post_meta($info['postID'],'sw_twitter_username');
-				update_post_meta($info['postID'],'sw_twitter_username',$user_twitter_handle);
+				delete_post_meta($info['postID'],'swp_twitter_username');
+				update_post_meta($info['postID'],'swp_twitter_username',$user_twitter_handle);
 			else:
-				delete_post_meta($info['postID'],'sw_twitter_username');
+				delete_post_meta($info['postID'],'swp_twitter_username');
 			endif;
 
 		else:
 
 			// Check if we have a cached Open Graph Image URL
-			$info['imageURL'] = get_post_meta( $info['postID'] , 'sw_open_graph_image_url' , true );
+			$info['imageURL'] = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
 
 			// If not, let's check to see if we have an ID to generate one
 			if(!$info['imageURL']):
@@ -106,18 +106,18 @@
 
 					// If we find one, let's convert it to a link and cache it for next time
 					$info['imageURL'] = wp_get_attachment_url( $info['imageID'] );
-					delete_post_meta($info['postID'],'sw_open_graph_image_url');
-					update_post_meta($info['postID'],'sw_open_graph_image_url',$info['imageURL']);
+					delete_post_meta($info['postID'],'swp_open_graph_image_url');
+					update_post_meta($info['postID'],'swp_open_graph_image_url',$info['imageURL']);
 
 				else:
 
 					// If we don't find one, let's save the URL of the thumbnail in case we need it
-					$thumbnail_image = get_post_meta($info['postID'],'sw_open_thumbnail_url' , true);
+					$thumbnail_image = get_post_meta($info['postID'],'swp_open_thumbnail_url' , true);
 				endif;
 			endif;
 
 
-			$user_twitter_handle = get_post_meta( $info['postID'] , 'sw_twitter_username' , true );
+			$user_twitter_handle = get_post_meta( $info['postID'] , 'swp_twitter_username' , true );
 
 		endif;
 
@@ -125,17 +125,17 @@
 		$info['postID'] 				= get_the_ID();
 		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
 		$info['description'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
-		$info['sw_fb_author'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'sw_fb_author' , true ) );
-		$info['sw_user_options'] 		= sw_get_user_options();
+		$info['swp_fb_author'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'swp_fb_author' , true ) );
+		$info['swp_user_options'] 		= swp_get_user_options();
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
 
-		$info = apply_filters( 'sw_meta_tags' , $info );
+		$info = apply_filters( 'swp_meta_tags' , $info );
 
 		if($info['header_output']):
-			echo PHP_EOL .'<!-- Open Graph Meta Tags & Twitter Card generated by Social Warfare v'.SW_VERSION.' http://warfareplugins.com -->';
+			echo PHP_EOL .'<!-- Open Graph Meta Tags & Twitter Card generated by Social Warfare v'.swp_VERSION.' http://warfareplugins.com -->';
 			echo $info['header_output'];
-			echo PHP_EOL .'<!-- Open Graph Meta Tags & Twitter Card generated by Social Warfare v'.SW_VERSION.' http://warfareplugins.com -->'. PHP_EOL . PHP_EOL;
+			echo PHP_EOL .'<!-- Open Graph Meta Tags & Twitter Card generated by Social Warfare v'.swp_VERSION.' http://warfareplugins.com -->'. PHP_EOL . PHP_EOL;
 		endif;
 	}
 
@@ -146,16 +146,16 @@
 ******************************************************************/
 
 			// Queue up our header hook function
-			if( is_sw_registered() ):
-				add_filter( 'sw_meta_tags' , 'sw_open_graph_tags' , 1 );
-				add_filter( 'sw_meta_tags' , 'sw_add_twitter_card' , 2 );
+			if( is_swp_registered() ):
+				add_filter( 'swp_meta_tags' , 'swp_open_graph_tags' , 1 );
+				add_filter( 'swp_meta_tags' , 'swp_add_twitter_card' , 2 );
 			endif;
-			add_filter( 'sw_meta_tags' , 'sw_frame_buster' , 3 );
-			add_filter( 'sw_meta_tags' , 'sw_output_custom_color' , 4 );
-			add_filter( 'sw_meta_tags' , 'sw_output_font_css' , 5 );
-			// add_filter( 'sw_meta_tags' , 'sw_output_cache_trigger' , 6 );
-			add_filter( 'sw_meta_tags' , 'sw_cache_rebuild_rel_canonical' , 7 );
-			add_action( 'admin_head'   , 'sw_output_font_css' , 10);
+			add_filter( 'swp_meta_tags' , 'swp_frame_buster' , 3 );
+			add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
+			add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
+			// add_filter( 'swp_meta_tags' , 'swp_output_cache_trigger' , 6 );
+			add_filter( 'swp_meta_tags' , 'swp_cache_rebuild_rel_canonical' , 7 );
+			add_action( 'admin_head'   , 'swp_output_font_css' , 10);
 
 			// Disable Simple Podcast Press Open Graph tags
 			if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
@@ -176,7 +176,7 @@
 *	4. We'll just auto-generate the field from the post.		 *
 ******************************************************************/
 
-			function sw_open_graph_tags($info) {
+			function swp_open_graph_tags($info) {
 
 				// We only modify the Open Graph tags on single blog post pages
 				if(is_singular()):
@@ -292,7 +292,7 @@
 						else:
 
 							// If nothing else is defined, let's use the post excerpt
-							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.convert_smart_quotes(htmlspecialchars_decode(sw_get_excerpt_by_id($info['postID']))).'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="og:description" content="'.convert_smart_quotes(htmlspecialchars_decode(swp_get_excerpt_by_id($info['postID']))).'" />';
 
 						endif;
 
@@ -316,7 +316,7 @@
 						else:
 
 							// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
-							$og_image = get_post_meta( $info['postID'] , 'sw_open_thumbnail_url' , true );
+							$og_image = get_post_meta( $info['postID'] , 'swp_open_thumbnail_url' , true );
 							if($og_image):
 								$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$og_image.'" />';
 							endif;
@@ -332,9 +332,9 @@
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
 						
-						elseif(get_post_meta( $info['postID'] , 'sw_open_graph_image_data' , true )):
+						elseif(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true )):
 						
-							$info['image_data'] = json_decode(get_post_meta( $info['postID'] , 'sw_open_graph_image_data' , true ));
+							$info['image_data'] = json_decode(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ));
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
 						
@@ -355,16 +355,16 @@
 						******************************************************************/
 
 						// Add the Facebook Author URL
-						if( get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID'])) ):
+						if( get_the_author_meta ( 'swp_fb_author' , swp_get_author($info['postID'])) ):
 
 							// Output the Facebook Author URL
-							$facebook_author = get_the_author_meta ( 'sw_fb_author' , sw_get_author($info['postID']));
+							$facebook_author = get_the_author_meta ( 'swp_fb_author' , swp_get_author($info['postID']));
 							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
 
-						elseif( get_the_author_meta ( 'facebook' , sw_get_author($info['postID'])) && defined('WPSEO_VERSION')):
+						elseif( get_the_author_meta ( 'facebook' , swp_get_author($info['postID'])) && defined('WPSEO_VERSION')):
 
 							// Output the Facebook Author URL
-							$facebook_author = get_the_author_meta ( 'facebook' , sw_get_author($info['postID']));
+							$facebook_author = get_the_author_meta ( 'facebook' , swp_get_author($info['postID']));
 							$info['header_output'] .= PHP_EOL .'<meta property="article:author" content="'.$facebook_author.'" />';
 
 						endif;
@@ -376,10 +376,10 @@
 						******************************************************************/
 
 						// If they have a Facebook Publisher URL in our settings...
-						if(isset($info['sw_user_options']['facebookPublisherUrl']) && $info['sw_user_options']['facebookPublisherUrl'] != ''):
+						if(isset($info['swp_user_options']['facebookPublisherUrl']) && $info['swp_user_options']['facebookPublisherUrl'] != ''):
 
 							// Output the Publisher URL
-							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$info['sw_user_options']['facebookPublisherUrl'].'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="article:publisher" content="'.$info['swp_user_options']['facebookPublisherUrl'].'" />';
 
 						// If they have a Facebook Publisher URL in Yoast's settings...
 						elseif(isset($wpseo_social) && isset($wpseo_social['facebook_site']) && $wpseo_social['facebook_site'] != ''):
@@ -399,10 +399,10 @@
 						******************************************************************/
 
 						// If the Facebook APP ID is in our settings...
-						if(isset($info['sw_user_options']['facebookAppID']) && $info['sw_user_options']['facebookAppID'] != ''):
+						if(isset($info['swp_user_options']['facebookAppID']) && $info['swp_user_options']['facebookAppID'] != ''):
 
 							// Output the Facebook APP ID
-							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$info['sw_user_options']['facebookAppID'].'" />';
+							$info['header_output'] .= PHP_EOL .'<meta property="fb:app_id" content="'.$info['swp_user_options']['facebookAppID'].'" />';
 
 						// If the Facebook APP ID is set in Yoast's settings...
 						elseif(isset($wpseo_social) && isset($wpseo_social['fbadminapp']) && $wpseo_social['fbadminapp'] != ''):
@@ -440,10 +440,10 @@
 *																 *
 ******************************************************************/
 
-			function sw_add_twitter_card($info) {
+			function swp_add_twitter_card($info) {
 				if(is_singular()):
 					// Check if Twitter Cards are Activated
-					if($info['sw_user_options']['sw_twitter_card']):
+					if($info['swp_user_options']['swp_twitter_card']):
 
 						/*****************************************************************
 						*                                                                *
@@ -522,7 +522,7 @@
 						// If not, then let's use the excerpt
 						elseif(!$info['description']):
 
-							$info['description'] = convert_smart_quotes(htmlspecialchars_decode( sw_get_excerpt_by_id( $info['postID'] )) );
+							$info['description'] = convert_smart_quotes(htmlspecialchars_decode( swp_get_excerpt_by_id( $info['postID'] )) );
 
 						endif;
 
@@ -540,7 +540,7 @@
 						else:
 
 						// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
-							$twitter_image = get_post_meta( $info['postID'] , 'sw_open_thumbnail_url' , true );
+							$twitter_image = get_post_meta( $info['postID'] , 'swp_open_thumbnail_url' , true );
 							if($twitter_image):
 								$info['imageURL'] = $twitter_image;
 							endif;
@@ -559,8 +559,8 @@
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.trim($info['title']).'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.$info['description'].'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:image" content="'.$info['imageURL'].'">';
-							if($info['sw_user_options']['twitterID']):
-								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.str_replace('@','',$info['sw_user_options']['twitterID']).'">';
+							if($info['swp_user_options']['twitterID']):
+								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.str_replace('@','',$info['swp_user_options']['twitterID']).'">';
 							endif;
 							if($info['user_twitter_handle']):
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:creator" content="@'.str_replace('@','',$info['user_twitter_handle']).'">';
@@ -571,8 +571,8 @@
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:card" content="summary">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:title" content="'.str_replace('"','\'',$info['title']).'">';
 							$info['header_output'] .= PHP_EOL .'<meta name="twitter:description" content="'.str_replace('"','\'',$info['description']).'">';
-							if($info['sw_user_options']['twitterID']):
-								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.str_replace('@','',$info['sw_user_options']['twitterID']).'">';
+							if($info['swp_user_options']['twitterID']):
+								$info['header_output'] .= PHP_EOL .'<meta name="twitter:site" content="@'.str_replace('@','',$info['swp_user_options']['twitterID']).'">';
 							endif;
 							if($info['user_twitter_handle']):
 								$info['header_output'] .= PHP_EOL .'<meta name="twitter:creator" content="@'.str_replace('@','',$info['user_twitter_handle']).'">';
@@ -590,8 +590,8 @@
 *                                                                *
 ******************************************************************/
 
-		function sw_frame_buster($info) {
-			if($info['sw_user_options']['sniplyBuster'] == true):
+		function swp_frame_buster($info) {
+			if($info['swp_user_options']['sniplyBuster'] == true):
 				$info['header_output'] .= PHP_EOL.'<script type="text/javascript">function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "'.get_permalink().'";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};</script>';
 			endif;
 			return $info;
@@ -603,14 +603,14 @@
 *                                                                *
 ******************************************************************/
 
-		function sw_output_custom_color($info) {
-			if($info['sw_user_options']['dColorSet'] == 'customColor' || $info['sw_user_options']['iColorSet'] == 'customColor' || $info['sw_user_options']['oColorSet'] == 'customColor'):
-				$info['header_output'] .= PHP_EOL.'<style type="text/css">.nc_socialPanel.sw_d_customColor a, html body .nc_socialPanel.sw_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_customColor:hover a {color:white} .nc_socialPanel.sw_d_customColor .nc_tweetContainer, html body .nc_socialPanel.sw_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.sw_o_customColor:hover .nc_tweetContainer {background-color:'.$info['sw_user_options']['customColor'].';border:1px solid '.$info['sw_user_options']['customColor'].';} </style>';
+		function swp_output_custom_color($info) {
+			if($info['swp_user_options']['dColorSet'] == 'customColor' || $info['swp_user_options']['iColorSet'] == 'customColor' || $info['swp_user_options']['oColorSet'] == 'customColor'):
+				$info['header_output'] .= PHP_EOL.'<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:'.$info['swp_user_options']['customColor'].';border:1px solid '.$info['swp_user_options']['customColor'].';} </style>';
 			endif;
 
-			if($info['sw_user_options']['dColorSet'] == 'ccOutlines' || $info['sw_user_options']['iColorSet'] == 'ccOutlines' || $info['sw_user_options']['oColorSet'] == 'ccOutlines'):
-				$info['header_output'] .= PHP_EOL.'<style type="text/css">.nc_socialPanel.sw_d_ccOutlines a, html body .nc_socialPanel.sw_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_ccOutlines:hover a { color:'.$info['sw_user_options']['customColor'].'; }
-.nc_socialPanel.sw_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.sw_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.sw_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '.$info['sw_user_options']['customColor'].'; } </style>';
+			if($info['swp_user_options']['dColorSet'] == 'ccOutlines' || $info['swp_user_options']['iColorSet'] == 'ccOutlines' || $info['swp_user_options']['oColorSet'] == 'ccOutlines'):
+				$info['header_output'] .= PHP_EOL.'<style type="text/css">.nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:'.$info['swp_user_options']['customColor'].'; }
+.nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '.$info['swp_user_options']['customColor'].'; } </style>';
 
 			endif;
 			return $info;
@@ -621,13 +621,13 @@
 *          CACHE REBUILD REL CANONICAL				             *
 *                                                                *
 ******************************************************************/
-function sw_cache_rebuild_rel_canonical($info) {
+function swp_cache_rebuild_rel_canonical($info) {
 
 	// Fetch the Permalink
 	$url = get_permalink();
 
 	// Check to see if the cache is currently being rebuilt
-	if(isset($_GET['sw_cache']) && $_GET['sw_cache'] == 'rebuild'):
+	if(isset($_GET['swp_cache']) && $_GET['swp_cache'] == 'rebuild'):
 
 		// Use a rel canonical so everyone knows this is not a real page
 		$info['header_output'] .= '<link rel="canonical" href="'.$url.'">';
@@ -641,16 +641,16 @@ function sw_cache_rebuild_rel_canonical($info) {
 *          ICON FONT CSS							             *
 *                                                                *
 ******************************************************************/
-function sw_output_font_css($info=array()) {
+function swp_output_font_css($info=array()) {
 	if(is_admin()):
 
 		// Echo it if we're using the Admin Head Hook
-		echo '<style>@font-face {font-family: "sw-icon-font";src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'");src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'#iefix") format("embedded-opentype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.SW_VERSION.'") format("woff"),
-    url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.SW_VERSION.'") format("truetype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.SW_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+		echo '<style>@font-face {font-family: "sw-icon-font";src:url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.swp_VERSION.'");src:url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.swp_VERSION.'#iefix") format("embedded-opentype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.swp_VERSION.'") format("woff"),
+    url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.swp_VERSION.'") format("truetype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.swp_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 	else:
 
 		// Add it to our array if we're using the frontend Head Hook
-		$info['header_output'] .= PHP_EOL.'<style>@font-face {font-family: "sw-icon-font";src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'");src:url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.SW_VERSION.'#iefix") format("embedded-opentype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.SW_VERSION.'") format("woff"), url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.SW_VERSION.'") format("truetype"),url("'.SW_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.SW_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+		$info['header_output'] .= PHP_EOL.'<style>@font-face {font-family: "sw-icon-font";src:url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.swp_VERSION.'");src:url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.swp_VERSION.'#iefix") format("embedded-opentype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.swp_VERSION.'") format("woff"), url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.swp_VERSION.'") format("truetype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.swp_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
 		return $info;
 	endif;
@@ -661,22 +661,22 @@ function sw_output_font_css($info=array()) {
 *                                                                *
 ******************************************************************/
 // Queue up our hook function
-add_action( 'wp_footer' , 'sw_footer_functions' , 1 );
+add_action( 'wp_footer' , 'swp_footer_functions' , 1 );
 
 // Queue up our footer hook function
-add_filter( 'sw_footer_scripts' , 'sw_output_cache_trigger' );
-add_filter( 'sw_footer_scripts' , 'sw_click_tracking' );
-add_filter( 'sw_footer_scripts' , 'sw_pinit' );
+add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
+add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
+add_filter( 'swp_footer_scripts' , 'swp_pinit' );
 
-function sw_footer_functions() {
+function swp_footer_functions() {
 
 		// Fetch a few variables
 		$info['postID'] 				= get_the_ID();
-		$info['sw_user_options'] 		= sw_get_user_options();
+		$info['swp_user_options'] 		= swp_get_user_options();
 		$info['footer_output']			= '';
 
 		// Pass the array through our custom filters
-		$info = apply_filters( 'sw_footer_scripts' , $info );
+		$info = apply_filters( 'swp_footer_scripts' , $info );
 
 		// If we have output, output it
 		if($info['footer_output']):
@@ -692,11 +692,11 @@ function sw_footer_functions() {
 *          PIN IMAGES VARIABLES						             *
 *                                                                *
 ******************************************************************/
-function sw_pinit($info) {
-	if($info['sw_user_options']['pinit_toggle'] == true && is_sw_registered()):
-		$info['footer_output'] .= 'sw_pinit=true;sw_pinit_h_location="'.$info['sw_user_options']['pinit_location_horizontal'].'";sw_pinit_v_location="'.$info['sw_user_options']['pinit_location_vertical'].'";';
+function swp_pinit($info) {
+	if($info['swp_user_options']['pinit_toggle'] == true && is_swp_registered()):
+		$info['footer_output'] .= 'swp_pinit=true;swp_pinit_h_location="'.$info['swp_user_options']['pinit_location_horizontal'].'";swp_pinit_v_location="'.$info['swp_user_options']['pinit_location_vertical'].'";';
 	else:
-		$info['footer_output'] .= 'sw_pinit=false;';
+		$info['footer_output'] .= 'swp_pinit=false;';
 	endif;
 	return $info;	
 }
@@ -706,9 +706,9 @@ function sw_pinit($info) {
 *          CACHE REBUILD TRIGGER					             *
 *                                                                *
 ******************************************************************/
-function sw_output_cache_trigger($info) {
+function swp_output_cache_trigger($info) {
 	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
-	if(is_singular() && sw_is_cache_fresh( get_the_ID() , true ) == false && $info['sw_user_options']['cacheMethod'] != 'legacy'):
+	if(is_singular() && swp_is_cache_fresh( get_the_ID() , true ) == false && $info['swp_user_options']['cacheMethod'] != 'legacy'):
 
 		// Make sure we're not on a WooCommerce Account Page
 		if(is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page()):
@@ -718,7 +718,7 @@ function sw_output_cache_trigger($info) {
 		else:
 			$url = get_permalink();
 			$admin_ajax = admin_url( 'admin-ajax.php' );
-			$info['footer_output'] .= PHP_EOL.'var sw_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(sw_buttons_exist) {jQuery(document).on( "ready" , function() { var sw_admin_ajax = "'.$admin_ajax.'";var sw_cache_data = {"action":"sw_cache_trigger","post_id":'.$info['postID'].'};jQuery.post(sw_admin_ajax, sw_cache_data, function(response) {console.log(response);});});}';
+			$info['footer_output'] .= PHP_EOL.'var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).on( "ready" , function() { var swp_admin_ajax = "'.$admin_ajax.'";var swp_cache_data = {"action":"swp_cache_trigger","post_id":'.$info['postID'].'};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});}';
 		endif;
 	endif;
 	// Return the array so the world doesn't explode
@@ -729,10 +729,10 @@ function sw_output_cache_trigger($info) {
 *          Click Tracking							             *
 *                                                                *
 ******************************************************************/
-function sw_click_tracking($info) {
-	$sw_options = sw_get_user_options();
-	if( $sw_options['sw_click_tracking'] == 1 ):
-    	$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "sw_" + network + "_share" );});}';
+function swp_click_tracking($info) {
+	$swp_options = swp_get_user_options();
+	if( $swp_options['swp_click_tracking'] == 1 ):
+    	$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "swp_" + network + "_share" );});}';
 	endif;
 	return $info;
 }

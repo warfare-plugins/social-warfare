@@ -362,9 +362,9 @@ p.sw-subtitle.sw-registration-text {
     font-size: 120%;
     line-height: 175%;
 }
-.registration-wrapper[registration="1"] .sw_is_not_registered {display:none;}
-.registration-wrapper[registration="0"] .sw_is_registered {display:none;}
-.tweet-count-wrapper[registration="true"] .sw_tweets_not_activated {display:none;}
+.registration-wrapper[registration="1"] .swp_is_not_registered {display:none;}
+.registration-wrapper[registration="0"] .swp_is_registered {display:none;}
+.tweet-count-wrapper[registration="true"] .swp_tweets_not_activated {display:none;}
 .sw-tweet-count-demo {margin:20px 0;}
 .sw-loading-message, .sw-loading-complete {
 	position: fixed;
@@ -552,7 +552,7 @@ p.sw-subtitle.sw-registration-text {
    float:left;
    font-style:normal;
 }
-.sw_upload_image_field {
+.swp_upload_image_field {
 	display:none;	
 }
 .sw-admin-image-preview {

@@ -5,18 +5,18 @@
 *	The Social Warfare Display Settings													*
 *																						*
 *****************************************************************************************/
-	function sw_options_display($sw_options) {
+	function swp_options_display($swp_options) {
 
 		$icons_array = array(
 			'type'		=> 'buttons'
 		);
-		$icons_array = apply_filters( 'sw_button_options' , $icons_array );
+		$icons_array = apply_filters( 'swp_button_options' , $icons_array );
 
 		// Declare the Options Tab and Tab Name
-		$sw_options['tabs']['links']['sw_display'] = 'Display';
+		$swp_options['tabs']['links']['swp_display'] = 'Display';
 
 		// Declare the content that goes on this options page
-		$sw_options['options']['sw_display'] = array(
+		$swp_options['options']['swp_display'] = array(
 			'social_networks_title' => array(
 				'type' 		=> 'title',
 				'content' 	=> 'Social Networks'
@@ -68,7 +68,7 @@
 				'divider'	=> true,
 				'premium'	=> true
 			),
-			'sw_twitter_card' => array(
+			'swp_twitter_card' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
 				'content'	=> 'Twitter Cards',
@@ -121,7 +121,7 @@
 
 			// Loop through the Custom Post Type Options
 			foreach($postTypes as $postType):
-				$sw_options['options']['sw_display']['location_'.$postType] = array(
+				$swp_options['options']['swp_display']['location_'.$postType] = array(
 					'type'		=> 'select',
 					'name'		=> ucfirst($postType),
 					'primary'	=> 'location_'.$postType,
@@ -137,7 +137,7 @@
 			endforeach;
 		endif;
 
-		$sw_options['options']['sw_display']['locationSite'] = array(
+		$swp_options['options']['swp_display']['locationSite'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Archive & Categories',
 			'content'	=> $contentLocations,
@@ -145,23 +145,23 @@
 			'size'		=> 'two-thirds'
 		);
 
-		$sw_options['options']['sw_display']['pinit_divider'] = array(
+		$swp_options['options']['swp_display']['pinit_divider'] = array(
 			'type'		=> 'divider'			
 		);
 
-		$sw_options['options']['sw_display']['pinit_title'] = array(
+		$swp_options['options']['swp_display']['pinit_title'] = array(
 			'type' 		=> 'title',
 			'content' 	=> 'Image Hover Pinit Button',
 			'premium'	=> true
 		);
 
-		$sw_options['options']['sw_display']['pinit_description'] = array(
+		$swp_options['options']['swp_display']['pinit_description'] = array(
 			'type' 		=> 'paragraph',
 			'content' 	=> 'If you would like a "Pin It" button to appear on images when users hover over them, activate this.',
 			'premium'	=> true
 		);
 		
-		$sw_options['options']['sw_display']['pinit_toggle'] = array(
+		$swp_options['options']['swp_display']['pinit_toggle'] = array(
 			'type'		=> 'checkbox',
 			'size'		=> 'two-thirds',
 			'content'	=> 'Pinit Button',
@@ -169,7 +169,7 @@
 			'premium'	=> true
 		);
 		
-		$sw_options['options']['sw_display']['pinit_location_horizontal'] = array(
+		$swp_options['options']['swp_display']['pinit_location_horizontal'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Horizontal Location',
 			'content'	=> array(
@@ -184,7 +184,7 @@
 			'dep_val'	=> array(true)
 		);
 		
-		$sw_options['options']['sw_display']['pinit_location_vertical'] = array(
+		$swp_options['options']['swp_display']['pinit_location_vertical'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Vertical Location',
 			'content'	=> array(
@@ -199,7 +199,7 @@
 			'dep_val'	=> array(true)
 		);
 		
-		//$sw_options['options']['sw_display']['pinit_custom_image'] = array(
+		//$swp_options['options']['swp_display']['pinit_custom_image'] = array(
 		//	'type'		=> 'image_upload',
 		//	'name'		=> 'Custom Image',
 		//	'default'	=> 'top_left',
@@ -208,23 +208,23 @@
 		//	'dep_val'	=> array(true)
 		//);
 
-		$sw_options['options']['sw_display']['yummly_divider'] = array(
+		$swp_options['options']['swp_display']['yummly_divider'] = array(
 			'type'		=> 'divider'			
 		);
 
-		$sw_options['options']['sw_display']['yummly_cat_title'] = array(
+		$swp_options['options']['swp_display']['yummly_cat_title'] = array(
 			'type' 		=> 'title',
 			'content' 	=> 'Yummly Display Control',
 			'premium'	=> true
 		);
 
-		$sw_options['options']['sw_display']['yummly_cat_description'] = array(
+		$swp_options['options']['swp_display']['yummly_cat_description'] = array(
 			'type' 		=> 'paragraph',
 			'content' 	=> 'If you would like the Yummly to display on a specific category or tag, choose it below.',
 			'premium'	=> true
 		);
 		
-		$sw_options['options']['sw_display']['yummly_column_labels'] = array(
+		$swp_options['options']['swp_display']['yummly_column_labels'] = array(
 			'type'		=> 'column_labels',
 			'columns'	=> 3,
 			'column_1'	=> '',
@@ -243,7 +243,7 @@
 			$cats[$cat->slug] = $cat->name;
 		endforeach;
 		
-		$sw_options['options']['sw_display']['yummly_terms'] = array(
+		$swp_options['options']['swp_display']['yummly_terms'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Yummly Terms',
 			'primary'	=> 'yummly_categories',
@@ -253,7 +253,7 @@
 			'premium'	=> true
 		);
 		
-		return $sw_options;
+		return $swp_options;
 	}
 
 /****************************************************************************************
@@ -262,12 +262,12 @@
 *																						*
 *****************************************************************************************/
 
-	function sw_options_styles($sw_options) {
+	function swp_options_styles($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$sw_options['tabs']['links']['sw_styles'] = 'Styles';
+		$swp_options['tabs']['links']['swp_styles'] = 'Styles';
 
-		$sw_options['options']['sw_styles'] = array(
+		$swp_options['options']['swp_styles'] = array(
 			'visual_options_title' => array(
 				'type' 		=> 'title',
 				'content' 	=> 'Visual Options',
@@ -398,7 +398,7 @@
 			'buttons_preview' => array(
 				'type' => 'html',
 				'divider' => true,
-				'content' => '<div class="nc_socialPanel sw_flatFresh sw_d_fullColor sw_i_fullColor sw_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="sw_share"> +1</span></span></span><span class="sw_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> Tweet</span></span></span><span class="sw_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="sw_share"> Pin</span></span></span><span class="sw_count">104</span></a></div><div class="nc_tweetContainer sw_fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="sw_share"> Share</span></span></span><span class="sw_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="sw_count"><span class="sw_label">Shares</span> 1.8K</span></div></div>'
+				'content' => '<div class="nc_socialPanel swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> +1</span></span></span><span class="swp_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="swp_share"> Tweet</span></span></span><span class="swp_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="swp_share"> Pin</span></span></span><span class="swp_count">104</span></a></div><div class="nc_tweetContainer swp_fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="swp_share"> Share</span></span></span><span class="swp_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="swp_share"> Share</span></span></span><span class="swp_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="swp_count"><span class="swp_label">Shares</span> 1.8K</span></div></div>'
 			),
 			'total_counts_title' => array(
 				'type'	=> 'title',
@@ -419,7 +419,7 @@
 				),
 				'default' => '0'
 			 ),
-			'sw_decimal_separator' => array(
+			'swp_decimal_separator' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
 				'name' => 'Decimal Separator',
@@ -465,7 +465,7 @@
 				'dep' 		=> 'float',
 				'dep_val'	=> array(true)
 			),
-			'sw_float_scr_sz' => array(
+			'swp_float_scr_sz' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
 				'name' => 'Minimum Screen Width',
@@ -605,13 +605,13 @@
 			),
 			'cttPreview' => array(
 				'type' => 'html',
-				'content' => '<a class="sw_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>',
+				'content' => '<a class="swp_CTT style1"  data-style="style1" href="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins" data-link="https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">We couldn\'t find one social sharing plugin that met all of our needs, so we built it ourselves.</span><span class="sw-ctt-btn">Click To Tweet<i class="sw sw-twitter"></i></span></span></a>',
 				'premium' => true
 			)
 		);
 
 		// Return the options value
-		return $sw_options;
+		return $swp_options;
 
 	}
 
@@ -622,12 +622,12 @@
 *																						*
 *****************************************************************************************/
 
-	function sw_options_social_identity($sw_options) {
+	function swp_options_social_identity($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$sw_options['tabs']['links']['sw_social_identity'] = 'Social Identity';
+		$swp_options['tabs']['links']['swp_social_identity'] = 'Social Identity';
 
-		$sw_options['options']['sw_social_identity'] = array(
+		$swp_options['options']['swp_social_identity'] = array(
 			'social_identity_title' => array(
 				'type' 		=> 'title',
 				'content' 	=> 'Sitewide Identity'
@@ -685,7 +685,7 @@
 			
 		);
 		
-		return $sw_options;
+		return $swp_options;
 		
 	}
 
@@ -695,12 +695,12 @@
 *																						*
 *****************************************************************************************/
 
-	function sw_options_advanced($sw_options) {
+	function swp_options_advanced($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$sw_options['tabs']['links']['sw_advanced'] = 'Advanced';
+		$swp_options['tabs']['links']['swp_advanced'] = 'Advanced';
 
-		$sw_options['options']['sw_advanced'] = array(
+		$swp_options['options']['swp_advanced'] = array(
 			'sniplyBuster' => array(
 				'type'			=> 'checkbox',
 				'title' 		=> 'Frame Buster',
@@ -735,7 +735,7 @@
 				'content'	=> 'If you want to activate UTM tracking for shared URL, turn this on.',
 				'premium'	=> true
 			),
-			'sw_click_tracking' => array(
+			'swp_click_tracking' => array(
 				'type'			=> 'checkbox',
 				'content' 		=> 'Button Click Tracking',
 				'size'			=> 'two-thirds',
@@ -869,7 +869,7 @@
 			)
 		);
 		
-		return $sw_options;
+		return $swp_options;
 	};
 
 /****************************************************************************************
@@ -878,12 +878,12 @@
 *																						*
 *****************************************************************************************/
 
-	function sw_options_registration($sw_options) {
+	function swp_options_registration($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$sw_options['tabs']['links']['sw_registration'] = 'Registration';
+		$swp_options['tabs']['links']['swp_registration'] = 'Registration';
 
-		$sw_options['options']['sw_registration'] = array(
+		$swp_options['options']['swp_registration'] = array(
 			'plugin_registration' => array(
 				'type'			=> 'plugin_registration',
 				'divider'		=> true,
@@ -895,7 +895,7 @@
 			)
 		);
 		
-		return $sw_options;
+		return $swp_options;
 		
 	}
 
@@ -905,11 +905,11 @@
 *																						*
 *****************************************************************************************/
 
-	add_filter('sw_options', 'sw_options_display' 			, 1 );
-	add_filter('sw_options', 'sw_options_styles' 			, 2 );
-	add_filter('sw_options', 'sw_options_social_identity'	, 3 );
-	add_filter('sw_options', 'sw_options_advanced'			, 4 );
-	add_filter('sw_options', 'sw_options_registration'		, 5 );
+	add_filter('swp_options', 'swp_options_display' 			, 1 );
+	add_filter('swp_options', 'swp_options_styles' 			, 2 );
+	add_filter('swp_options', 'swp_options_social_identity'	, 3 );
+	add_filter('swp_options', 'swp_options_advanced'			, 4 );
+	add_filter('swp_options', 'swp_options_registration'		, 5 );
 
 /****************************************************************************************
 *																						*
@@ -918,26 +918,26 @@
 *****************************************************************************************
 
 	// Queue up the Social Warfare options hook
-	// add_action('init' , 'sw_optionsClass' , 20);
+	// add_action('init' , 'swp_optionsClass' , 20);
 
 	// The Options Function which relies on the Options Array above
-	function sw_optionsClass() {
+	function swp_optionsClass() {
 
-		// Fetch the Options Array - This is the sw_options filter hook
-		global $sw_options;
-		$sw_options = apply_filters('sw_options',$sw_options);
+		// Fetch the Options Array - This is the swp_options filter hook
+		global $swp_options;
+		$swp_options = apply_filters('swp_options',$swp_options);
 
 		// Initiate the Options Class with the config settings in the array
-		$options_panel = new BF_Admin_Page_Class($sw_options['config']);
+		$options_panel = new BF_Admin_Page_Class($swp_options['config']);
 
 		// Open the Options Tabs Container
 		$options_panel->OpenTabs_container('');
 
 		// Execute the list of options tabs
-		$options_panel->TabsListing($sw_options['tabs']);
+		$options_panel->TabsListing($swp_options['tabs']);
 
 		// Loop through the options tabs and build the options page
-		foreach($sw_options['options'] as $tabName => $tabOptions):
+		foreach($swp_options['options'] as $tabName => $tabOptions):
 			$options_panel->OpenTab($tabName);
 
 			// Loop through and output the options for this tab
@@ -1012,47 +1012,47 @@
 *																						*
 *****************************************************************************************
 
-function sw_add_option_after($sw_options,$tabName,$optionName,$newOptionArray) {
+function swp_add_option_after($swp_options,$tabName,$optionName,$newOptionArray) {
 
 	// Locate the index of the option you want to insert next to
     $keyIndex = array_search(
         $optionName,
-        array_keys( $sw_options['options'][$tabName] )
+        array_keys( $swp_options['options'][$tabName] )
     );
 
     // Split the array at the location of the option above
     $first_array = array_splice (
-        $sw_options['options'][$tabName],
+        $swp_options['options'][$tabName],
         0,
         $keyIndex+1
     );
 
     // Merge the two parts of the split array with your option added in the middle
-    $sw_options['options'][$tabName] = array_merge (
+    $swp_options['options'][$tabName] = array_merge (
         $first_array,
         $newOptionArray,
-        $sw_options['options'][$tabName]
+        $swp_options['options'][$tabName]
     );
 
     // Return the option array or the world will explode
-    return $sw_options;
+    return $swp_options;
 
 }
 
-function sw_add_language_option($sw_options,$langName,$langCode) {
+function swp_add_language_option($swp_options,$langName,$langCode) {
 
 	// Add our new language to the options page
-	$sw_options['options']['displaySettings']['language']['content'][$langCode] = $langName;
+	$swp_options['options']['displaySettings']['language']['content'][$langCode] = $langName;
 
 	// Return the option array or the world will explode
-	return $sw_options;
+	return $swp_options;
 
 }
 */
-function sw_add_network_option($sw_options,$newOptionArray) {
+function swp_add_network_option($swp_options,$newOptionArray) {
 	
-	$sw_options['options']['sw_display']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
+	$swp_options['options']['swp_display']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
 
     // Return the option array or the world will explode
-    return $sw_options;
+    return $swp_options;
 }

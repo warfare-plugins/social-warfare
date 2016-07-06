@@ -8,7 +8,7 @@
 function get_social_warfare_shares($postID) {
 
 		// Set the initial options
-		$options 			= sw_get_user_options();
+		$options 			= swp_get_user_options();
 		$url 				= get_permalink( $postID );
 		// $url				= 'https://youtu.be/jjK1aUU2Dx4';
 
@@ -18,7 +18,7 @@ function get_social_warfare_shares($postID) {
 *                                                                *
 ******************************************************************/
 
-		$freshCache = sw_is_cache_fresh($postID);
+		$freshCache = swp_is_cache_fresh($postID);
 		// $freshCache = false;
 
 /*****************************************************************
@@ -53,7 +53,7 @@ function get_social_warfare_shares($postID) {
 			// If cache is expired, fetch new and update the cache
 			else:
 				$old_shares[$network]  	= get_post_meta($postID,'_'.$network.'_shares',true);
-				$share_links[$network]	= call_user_func('sw_'.$network.'_request_link',$url);
+				$share_links[$network]	= call_user_func('swp_'.$network.'_request_link',$url);
 			endif;
 
 		endforeach;
@@ -61,17 +61,17 @@ function get_social_warfare_shares($postID) {
 		// Recover Shares From Previously Used URL Patterns
 		if($options['recover_shares'] == true && $freshCache == false):
 			
-			$alternateURL = sw_get_alt_permalink($postID);
-			$alternateURL = apply_filters('sw_recovery_filter',$alternateURL);
+			$alternateURL = swp_get_alt_permalink($postID);
+			$alternateURL = apply_filters('swp_recovery_filter',$alternateURL);
 			
 			// Debug the Alternate URL being checked
-			if(isset($_GET['sw_recovery_debug']) && $_GET['sw_recovery_debug'] == true):
+			if(isset($_GET['swp_recovery_debug']) && $_GET['swp_recovery_debug'] == true):
 				echo $alternateURL;
 			endif;
 			
 			foreach($networks as $network):
 						
-				$old_share_links[$network] = call_user_func('sw_'.$network.'_request_link',$alternateURL);
+				$old_share_links[$network] = call_user_func('swp_'.$network.'_request_link',$alternateURL);
 			
 			endforeach;
 		endif;
@@ -85,9 +85,9 @@ function get_social_warfare_shares($postID) {
 		else:
 			
 			// Fetch all the share counts asyncrounously
-			$raw_shares_array = sw_fetch_shares_via_curl_multi($share_links);
+			$raw_shares_array = swp_fetch_shares_via_curl_multi($share_links);
 			if($options['recover_shares'] == true):
-				$old_raw_shares_array = sw_fetch_shares_via_curl_multi($old_share_links);
+				$old_raw_shares_array = swp_fetch_shares_via_curl_multi($old_share_links);
 			endif;
 
 			foreach($networks as $network):
@@ -95,9 +95,9 @@ function get_social_warfare_shares($postID) {
 				if(!isset($raw_shares_array[$network])) $raw_shares_array[$network] = 0;
 				if(!isset($old_raw_shares_array[$network])) $old_raw_shares_array[$network] = 0;
 				
-				$shares[$network] = call_user_func('sw_format_'.$network.'_response',$raw_shares_array[$network]);
+				$shares[$network] = call_user_func('swp_format_'.$network.'_response',$raw_shares_array[$network]);
 				if($options['recover_shares'] == true):
-					$recovered_shares[$network] = call_user_func('sw_format_'.$network.'_response',$old_raw_shares_array[$network]);
+					$recovered_shares[$network] = call_user_func('swp_format_'.$network.'_response',$old_raw_shares_array[$network]);
 					if($shares[$network] != $recovered_shares[$network]):
 						$shares[$network] = $shares[$network] + $recovered_shares[$network];
 					endif;

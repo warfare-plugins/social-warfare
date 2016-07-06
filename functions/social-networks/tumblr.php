@@ -5,8 +5,8 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_button_options', 'sw_tumblr_options_function',20);
-	function sw_tumblr_options_function($options) {
+	add_filter('swp_button_options', 'swp_tumblr_options_function',20);
+	function swp_tumblr_options_function($options) {
 
 		// Create the new option in a variable to be inserted
 		$options['content']['tumblr'] = array(
@@ -24,11 +24,11 @@
 *   #2: Add it to global network array	         				 *
 *                                                                *
 ******************************************************************/
-	// Queue up your filter to be ran on the sw_options hook.
-	add_filter('sw_add_networks', 'sw_tumblr_network');
+	// Queue up your filter to be ran on the swp_options hook.
+	add_filter('swp_add_networks', 'swp_tumblr_network');
 
 	// Create the function that will filter the options
-	function sw_tumblr_network($networks) {
+	function swp_tumblr_network($networks) {
 
 		// Add your network to the existing network array
 		$networks[] = 'tumblr';
@@ -41,7 +41,7 @@
 *   #3: Generate the API Share Count Request URL	             *
 *                                                                *
 ******************************************************************/
-	function sw_tumblr_request_link($url) {
+	function swp_tumblr_request_link($url) {
 		$request_url = 'https://api.tumblr.com/v2/share/stats?url=' . $url;
 		return $request_url;
 	}
@@ -50,7 +50,7 @@
 *   #4: Parse the Response to get the share count	             *
 *                                                                *
 ******************************************************************/
-	function sw_format_tumblr_response($response) {
+	function swp_format_tumblr_response($response) {
 		$response = json_decode($response, true);
 		return isset($response['response']['note_count'])?intval($response['response']['note_count']):0;
 	}
@@ -59,8 +59,8 @@
 *   #5: Create the Button HTML				  		             *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_network_buttons', 'sw_tumblr_button_html',10);
-	function sw_tumblr_button_html($array) {
+	add_filter('swp_network_buttons', 'swp_tumblr_button_html',10);
+	function swp_tumblr_button_html($array) {
 
 		// If we've already generated this button, just use our existing html
 		if(isset($_GLOBALS['sw']['buttons'][$array['postID']]['tumblr'])):
@@ -81,18 +81,18 @@
 			// Collect the Description
 			$description = get_post_meta( $array['postID'] , 'nc_ogDescription' , true );
 
-			$array['resource']['tumblr'] = '<div class="nc_tweetContainer sw_tumblr" data-id="'.$array['count'].'" data-network="tumblr">';
-			$link = urlencode(urldecode(sw_process_url( $array['url'] , 'tumblr' , $array['postID'] )));
+			$array['resource']['tumblr'] = '<div class="nc_tweetContainer swp_tumblr" data-id="'.$array['count'].'" data-network="tumblr">';
+			$link = urlencode(urldecode(swp_process_url( $array['url'] , 'tumblr' , $array['postID'] )));
 			$array['resource']['tumblr'] .= '<a target="_blank" href="http://www.tumblr.com/share/link?url='.$link.'&name='.urlencode($title).($description ? '&description=' : '').urlencode($description).'" data-link="http://www.tumblr.com/share/link?url='.$link.'&name='.urlencode($title).($description ? '&description=' : '').urlencode($description).'" class="nc_tweet">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['tumblr'] > 0):
 				$array['resource']['tumblr'] .= '<span class="iconFiller">';
 				$array['resource']['tumblr'] .= '<span class="spaceManWilly">';
 				$array['resource']['tumblr'] .= '<i class="sw sw-tumblr"></i>';
-				$array['resource']['tumblr'] .= '<span class="sw_share"> '.__('Share','social-warfare').'</span>';
+				$array['resource']['tumblr'] .= '<span class="swp_share"> '.__('Share','social-warfare').'</span>';
 				$array['resource']['tumblr'] .= '</span></span>';
-				$array['resource']['tumblr'] .= '<span class="sw_count">'.kilomega($array['shares']['tumblr']).'</span>';
+				$array['resource']['tumblr'] .= '<span class="swp_count">'.swp_kilomega($array['shares']['tumblr']).'</span>';
 			else:
-				$array['resource']['tumblr'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-tumblr"></i><span class="sw_share"> '.__('Share','social-warfare').'</span></span></span></span>';
+				$array['resource']['tumblr'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-tumblr"></i><span class="swp_share"> '.__('Share','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['tumblr'] .= '</a>';
 			$array['resource']['tumblr'] .= '</div>';

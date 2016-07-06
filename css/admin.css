@@ -61,7 +61,7 @@
 .notAvailable {
  	opacity:0.3;  
 }
-.sw_CountDown {
+.swp_CountDown {
 	background-color: #CCC;
 	display: inline-block;
 	float: right;
@@ -71,10 +71,10 @@
 	font-weight: bold;
 	margin-top:-27px;
 }
-.sw_CountDown.sw_blue {
+.swp_CountDown.swp_blue {
 	background-color:#30394F;
 }
-.sw_CountDown.sw_red {
+.swp_CountDown.swp_red {
 	background-color:#EE464F;
 }
 #socialWarfare textarea.large-text {

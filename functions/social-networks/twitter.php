@@ -5,8 +5,8 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_button_options', 'sw_twitter_options_function',20);
-	function sw_twitter_options_function($options) {
+	add_filter('swp_button_options', 'swp_twitter_options_function',20);
+	function swp_twitter_options_function($options) {
 
 		// Create the new option in a variable to be inserted
 		$options['content']['twitter'] = array(
@@ -24,11 +24,11 @@
 *   #2: Add it to global network array	         				 *
 *                                                                *
 ******************************************************************/
-	// Queue up your filter to be ran on the sw_options hook.
-	add_filter('sw_add_networks', 'sw_twitter_network');
+	// Queue up your filter to be ran on the swp_options hook.
+	add_filter('swp_add_networks', 'swp_twitter_network');
 
 	// Create the function that will filter the options
-	function sw_twitter_network($networks) {
+	function swp_twitter_network($networks) {
 
 		// Add your network to the existing network array
 		$networks[] = 'twitter';
@@ -41,19 +41,19 @@
 *   #3: Generate the API Share Count Request URL	             *
 *                                                                *
 ******************************************************************/
-	function sw_twitter_request_link($url) {
+	function swp_twitter_request_link($url) {
 
 		// Fetch the user's options
-		$sw_user_options = sw_get_user_options();
+		$swp_user_options = swp_get_user_options();
 
 		// If the user has enabled Twitter shares....
-		if($sw_user_options['twitter_shares']):
+		if($swp_user_options['twitter_shares']):
 
 			// Return the correct Twitter JSON endpoint URL
 			$request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
 
 			// Debugging
-			if(isset($_GET['sw_twitter_debug']) && $_GET['sw_twitter_debug'] == true):
+			if(isset($_GET['swp_twitter_debug']) && $_GET['swp_twitter_debug'] == true):
 				echo '<b>Request URL:</b> '.$request_url.'<br />';
 			endif;
 
@@ -72,16 +72,16 @@
 *   #4: Parse the Response to get the share count	             *
 *                                                                *
 ******************************************************************/
-	function sw_format_twitter_response($response) {
+	function swp_format_twitter_response($response) {
 
 		// Fetch the user's options
-		$sw_user_options = sw_get_user_options();
+		$swp_user_options = swp_get_user_options();
 
 		// If the user has enabled Twitter shares....
-		if($sw_user_options['twitter_shares']):
+		if($swp_user_options['twitter_shares']):
 
 			// Debugging
-			if(isset($_GET['sw_twitter_debug']) && $_GET['sw_twitter_debug'] == true):
+			if(isset($_GET['swp_twitter_debug']) && $_GET['swp_twitter_debug'] == true):
 				echo '<b>Response:</b> '.$response.'<br />';
 			endif;
 
@@ -103,8 +103,8 @@
 *   #5: Create the Button HTML				  		             *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_network_buttons', 'sw_twitter_button_html',10);
-	function sw_twitter_button_html($array) {
+	add_filter('swp_network_buttons', 'swp_twitter_button_html',10);
+	function swp_twitter_button_html($array) {
 
 		// If we've already generated this button, just use our existing html
 		if(isset($_GLOBALS['sw']['buttons'][$array['postID']]['twitter'])):
@@ -122,19 +122,19 @@
 
 
 			$ct = ($ct != '' ? urlencode(html_entity_decode($ct, ENT_COMPAT, 'UTF-8')) : urlencode(html_entity_decode($title, ENT_COMPAT, 'UTF-8')));
-			$twitterLink = sw_process_url( $array['url'] , 'twitter' , $array['postID'] );
+			$twitterLink = swp_process_url( $array['url'] , 'twitter' , $array['postID'] );
 			if (strpos($ct,'http') !== false) : $urlParam = '&url=/'; else: $urlParam = '&url='.$twitterLink; endif;
 
-			if(sw_is_cache_fresh($array['postID']) == false):
-				$user_twitter_handle 	= get_the_author_meta( 'sw_twitter' , sw_get_author($array['postID']));
+			if(swp_is_cache_fresh($array['postID']) == false):
+				$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , swp_get_author($array['postID']));
 				if($user_twitter_handle):
-					delete_post_meta($array['postID'],'sw_twitter_username');
-					update_post_meta($array['postID'],'sw_twitter_username',$user_twitter_handle);
+					delete_post_meta($array['postID'],'swp_twitter_username');
+					update_post_meta($array['postID'],'swp_twitter_username',$user_twitter_handle);
 				else:
-					delete_post_meta($array['postID'],'sw_twitter_username');
+					delete_post_meta($array['postID'],'swp_twitter_username');
 				endif;
 			else:
-				$user_twitter_handle = get_post_meta( $array['postID'] , 'sw_twitter_username' , true );
+				$user_twitter_handle = get_post_meta( $array['postID'] , 'swp_twitter_username' , true );
 			endif;
 
 			if($user_twitter_handle):
@@ -151,11 +151,11 @@
 				$array['resource']['twitter'] .= '<span class="iconFiller">';
 				$array['resource']['twitter'] .= '<span class="spaceManWilly">';
 				$array['resource']['twitter'] .= '<i class="sw sw-twitter"></i>';
-				$array['resource']['twitter'] .= '<span class="sw_share"> '.__('Tweet','social-warfare').'</span>';
+				$array['resource']['twitter'] .= '<span class="swp_share"> '.__('Tweet','social-warfare').'</span>';
 				$array['resource']['twitter'] .= '</span></span>';
-				$array['resource']['twitter'] .= '<span class="sw_count">'.kilomega($array['shares']['twitter']).'</span>';
+				$array['resource']['twitter'] .= '<span class="swp_count">'.swp_kilomega($array['shares']['twitter']).'</span>';
 			else:
-				$array['resource']['twitter'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="sw_share"> '.__('Tweet','social-warfare').'</span></span></span></span>';
+				$array['resource']['twitter'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="swp_share"> '.__('Tweet','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['twitter'] .= '</a>';
 			$array['resource']['twitter'] .= '</div>';

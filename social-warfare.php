@@ -14,18 +14,18 @@ Text Domain: social-warfare
 *                                                                *
 ******************************************************************/
 $pluginVersion = '2.0.0';
-define( 'SW_VERSION' , $pluginVersion);
+define( 'swp_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
-define( 'SW_META_DIR' , trailingslashit( $pluginDir.'/meta-box' ) );
-define( 'SW_PLUGIN_DIR' , $pluginUrl );
+define( 'swp_META_DIR' , trailingslashit( $pluginDir.'/meta-box' ) );
+define( 'swp_PLUGIN_DIR' , $pluginUrl );
 /*****************************************************************
 *                                                                *
 *   INCLUDES: ALL THE FUNCTIONS FILES          					 *
 *                                                                *
 ******************************************************************/
 require_once( ABSPATH 	 . 'wp-admin/includes/plugin.php' );
-require_once SW_META_DIR . 'meta-box.php';
+require_once swp_META_DIR . 'meta-box.php';
 require_once $pluginDir  . '/functions/admin-options-page/admin-options-array.php';
 require_once $pluginDir  . '/functions/admin-options-page/admin-options-page.php';
 require_once $pluginDir  . '/functions/kilomega.php';
@@ -68,44 +68,44 @@ require_once $pluginDir  . '/functions/social-networks/buffer.php';
 *   PLUGINS PAGE: UPDATE CHECKER AND SETTINGS LINK	             *
 *                                                                *
 ******************************************************************/
-//$sw_update_checker = PucFactory::buildUpdateChecker(
+//$swp_update_checker = PucFactory::buildUpdateChecker(
 //   'https://beta.warfareplugins.com/wp-content/plugins/social-warfare/social-warfare.json',
 //   __FILE__
 //);
 
 // Add settings link on plugin page
-function sw_settings_link($links) {
+function swp_settings_link($links) {
 	  $settings_link = '<a href="admin.php?page=social-warfare">Settings</a>';
 	  array_unshift($links, $settings_link);
 	  return $links;
 }
 $plugin = plugin_basename(__FILE__);
-add_filter("plugin_action_links_$plugin", 'sw_settings_link' );
+add_filter("plugin_action_links_$plugin", 'swp_settings_link' );
 /*****************************************************************
 *                                                                *
 *   ENQUEUE: SCRIPTS AND STYLES									 *
 *                                                                *
 ******************************************************************/
-$sw_user_options = sw_get_user_options();
+$swp_user_options = swp_get_user_options();
 
 add_action( 'wp_enqueue_scripts', 'enqueueSocialWarfareScripts' );
 function enqueueSocialWarfareScripts() {
-	global $sw_user_options;
-	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
-	wp_register_style( 'social_warfare', SW_PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
+	global $swp_user_options;
+	wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),swp_VERSION);
+	wp_register_style( 'social_warfare', swp_PLUGIN_DIR.'/css/style.css',array(),swp_VERSION );
 	wp_enqueue_style( 'social_warfare' );
 }
 
 // Enqueue admin and Click to Tweet Styles
 add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
 function enqueueSocialWarfareAdminScripts() {
-	wp_register_style( 'social_warfare', SW_PLUGIN_DIR.'/css/style.css',array(),SW_VERSION );
+	wp_register_style( 'social_warfare', swp_PLUGIN_DIR.'/css/style.css',array(),swp_VERSION );
 	wp_enqueue_style( 'social_warfare' );
-	wp_register_style( 'social_warfare_admin', SW_PLUGIN_DIR.'/css/admin.css',array(),SW_VERSION );
+	wp_register_style( 'social_warfare_admin', swp_PLUGIN_DIR.'/css/admin.css',array(),swp_VERSION );
 	wp_enqueue_style( 'social_warfare_admin' );
-	wp_enqueue_script( 'social_warfare_script', SW_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),SW_VERSION);
-	wp_enqueue_script( 'social_warfare_admin_script', SW_PLUGIN_DIR . '/admin.js',array( 'jquery' ),SW_VERSION);
-	if( !is_sw_registered() ):
+	wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),swp_VERSION);
+	wp_enqueue_script( 'social_warfare_admin_script', swp_PLUGIN_DIR . '/admin.js',array( 'jquery' ),swp_VERSION);
+	if( !is_swp_registered() ):
 		wp_enqueue_script( 'jquery-ui-tooltip' );
 		wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() );
 	endif;
@@ -115,19 +115,19 @@ function enqueueSocialWarfareAdminScripts() {
 *   LANGUAGES & LOCALIZATION						             *
 *                                                                *
 ******************************************************************/
-function sw_localization_init() {
+function swp_localization_init() {
 	$plugin_dir = basename(dirname(__FILE__));
 	load_plugin_textdomain( 'social-warfare', false, $plugin_dir .'/languages' );
 }
-add_action('plugins_loaded', 'sw_localization_init');
+add_action('plugins_loaded', 'swp_localization_init');
 
-function sw_localize_admin_scripts() {
-	wp_localize_script('social_warfare_admin_script', 'sw_localize_admin', array(
-			'sw_characters_remaining' => __('Characters Remaining', 'social-warfare')
+function swp_localize_admin_scripts() {
+	wp_localize_script('social_warfare_admin_script', 'swp_localize_admin', array(
+			'swp_characters_remaining' => __('Characters Remaining', 'social-warfare')
 		)
 	);
 };
-add_action('admin_enqueue_scripts', 'sw_localize_admin_scripts');
+add_action('admin_enqueue_scripts', 'swp_localize_admin_scripts');
 
 // Add the Social Warfare Content Filter
 $theme = wp_get_theme();
@@ -177,10 +177,10 @@ function social_warfare($array = array()) {
 		endif;
 	}
 
-	if($sw_user_options['rawNumbers'] == 1):
+	if($swp_user_options['rawNumbers'] == 1):
 		add_filter('the_content', 'socialWarfareWrapper', 20);
 	else:
-		if($sw_user_options['visualEditorBug']):
+		if($swp_user_options['visualEditorBug']):
 			add_filter('the_content', 'socialWarfare' , 200);
 		else:
 			add_filter('the_content', 'socialWarfare' , 10);
@@ -213,7 +213,7 @@ add_shortcode( 'social_warfare', 'social_warfareShortcode' );
 *   SIDE FLOATER: 												 *
 *                                                                *
 ******************************************************************/
-if($sw_user_options['floatOption'] == 'left' || $sw_user_options['floatOption'] == 'right'):
+if($swp_user_options['floatOption'] == 'left' || $swp_user_options['floatOption'] == 'right'):
 	add_action('wp_footer', 'socialWarfareSideFloat');
 endif;
 /*****************************************************************
@@ -238,7 +238,7 @@ function makeSocialSharesSortable( $columns ) {
 	$columns['swSocialShares'] = 'Social Shares';
 	return $columns;
 }
-function sw_social_shares_orderby( $query ) {
+function swp_social_shares_orderby( $query ) {
     if( ! is_admin() )
         return;
 
@@ -249,7 +249,7 @@ function sw_social_shares_orderby( $query ) {
         $query->set('orderby','meta_value_num');
     }
 }
-add_action( 'pre_get_posts', 'sw_social_shares_orderby' );
+add_action( 'pre_get_posts', 'swp_social_shares_orderby' );
 add_filter('manage_edit-post_sortable_columns', 'makeSocialSharesSortable');
 add_filter('manage_posts_columns', 'createSocialSharesColumn');
 add_action('manage_posts_custom_column', 'populateSocialSharesColumn', 10, 2);
@@ -259,34 +259,34 @@ add_action('manage_posts_custom_column', 'populateSocialSharesColumn', 10, 2);
 *                                                                *
 ******************************************************************/
 // Activate the Cron Job
-register_activation_hook(__FILE__, 'sw_activate_registration_cron');
-add_action('sw_check_registration_event', 'sw_check_registration_status');
-function sw_activate_registration_cron() {
-	wp_schedule_event(time(), 'daily', 'sw_check_registration_event');
+register_activation_hook(__FILE__, 'swp_activate_registration_cron');
+add_action('swp_check_registration_event', 'swp_check_registration_status');
+function swp_activate_registration_cron() {
+	wp_schedule_event(time(), 'daily', 'swp_check_registration_event');
 }
 
 // Deactivate the Cron Job
 function socal_warfare_deactivation() {
-	wp_clear_scheduled_hook('sw_check_registration_event');
+	wp_clear_scheduled_hook('swp_check_registration_event');
 }
 register_deactivation_hook(__FILE__, 'social_warfare_deactivation');
 
 // Dump the cache timestamp when the post is saved
-function sw_reset_cache_timestamp( $post_id ) {
-	delete_post_meta($post_id,'sw_cache_timestamp');
+function swp_reset_cache_timestamp( $post_id ) {
+	delete_post_meta($post_id,'swp_cache_timestamp');
 
 	// Chache the og_image URL
 	$imageID = get_post_meta( $post_id , 'nc_ogImage' , true );
 
 	if($imageID):
 		$imageURL = wp_get_attachment_url( $imageID );
-		delete_post_meta($post_id,'sw_open_graph_image_url');
-		update_post_meta($post_id,'sw_open_graph_image_url',$imageURL);
+		delete_post_meta($post_id,'swp_open_graph_image_url');
+		update_post_meta($post_id,'swp_open_graph_image_url',$imageURL);
 	else:
 		$imageURL = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
-		delete_post_meta($post_id,'sw_open_thumbnail_url');
-		update_post_meta($post_id,'sw_open_thumbnail_url' , $imageURL);
-		delete_post_meta($post_id,'sw_open_graph_image_url');
+		delete_post_meta($post_id,'swp_open_thumbnail_url');
+		update_post_meta($post_id,'swp_open_thumbnail_url' , $imageURL);
+		delete_post_meta($post_id,'swp_open_graph_image_url');
 	endif;
 }
-add_action( 'save_post', 'sw_reset_cache_timestamp' );
+add_action( 'save_post', 'swp_reset_cache_timestamp' );

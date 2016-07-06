@@ -112,11 +112,11 @@
   clear: both;
   content: ".";
 }
-a.sw_CTT {
+a.swp_CTT {
   text-decoration: none;
   text-transform: none;
 }
-a.sw_CTT:hover {
+a.swp_CTT:hover {
   text-decoration: none;
 }
 .sw-click-to-tweet .sw-ctt-text {

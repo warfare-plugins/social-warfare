@@ -6,7 +6,7 @@
                                                                 
 ******************************************************************/
 
-	function sw_get_post_types() {
+	function swp_get_post_types() {
 
 		// Get the post Types
 		$postTypes = get_post_types();
@@ -27,14 +27,14 @@
 
 	};
 
-	add_filter( 'rwmb_meta_boxes', 'sw_register_meta_boxes' );
-	function sw_register_meta_boxes( $meta_boxes )
+	add_filter( 'rwmb_meta_boxes', 'swp_register_meta_boxes' );
+	function swp_register_meta_boxes( $meta_boxes )
 	{
 		
 		// Setup the prefix to avoid conflicts
 		 $prefix = 'nc_';
-		 $options = sw_get_user_options();
-		 $postTypes = sw_get_post_types();
+		 $options = swp_get_user_options();
+		 $postTypes = swp_get_post_types();
 		 foreach($postTypes as $key => $value):
 			$postType[] = $key;
 		 endforeach;
@@ -50,13 +50,13 @@
 		 // Fetch the Twitter handle for the Post Author if it exists
 		 if(isset($_GET['post'])):
 		 	$post_id = $_GET['post'];
-			$author_id 			= sw_get_author($post_id);
-			$twitter_handle 	= get_the_author_meta( 'sw_twitter' , $author_id);
+			$author_id 			= swp_get_author($post_id);
+			$twitter_handle 	= get_the_author_meta( 'swp_twitter' , $author_id);
 		 
 		 // Fetch the Twitter handle for the logged in user if the above fails
 		 else:
 			 $logged_in_user 	= get_current_user_id();
-			 $twitter_handle 	= get_the_author_meta( 'sw_twitter' , $logged_in_user);
+			 $twitter_handle 	= get_the_author_meta( 'swp_twitter' , $logged_in_user);
 		 endif;
 		 
 		 // Fetch the site-wide Twitter Handle if both of the above fail
@@ -191,11 +191,11 @@
 						 'std'   => $twitter_handle
 					),
 					array(
-						 'name'  => (is_sw_registered() ? 'true' : 'false'),
-						 'id'    => (is_sw_registered() ? 'true' : 'false'),
+						 'name'  => (is_swp_registered() ? 'true' : 'false'),
+						 'id'    => (is_swp_registered() ? 'true' : 'false'),
 						 'class' => 'registrationWrapper',
 						 'type'  => 'hidden',
-						 'std'   => (is_sw_registered() ? 'true' : 'false')
+						 'std'   => (is_swp_registered() ? 'true' : 'false')
 					)
 			  )
 		 );

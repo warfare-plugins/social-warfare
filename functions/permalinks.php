@@ -50,7 +50,7 @@
 	GENERATE THE ALTERNATE PERMALINK      
                                                                 
 ******************************************************************/
-	function sw_get_alternate_permalink($format,$protocol,$id,$prefix) {
+	function swp_get_alternate_permalink($format,$protocol,$id,$prefix) {
 
 		// Setup the Default Permalink Structure
 		if($format == 'default'):
@@ -108,10 +108,10 @@
 
 	}
 	
-	function sw_get_alt_permalink( $post = 0, $leavename = false ) {
+	function swp_get_alt_permalink( $post = 0, $leavename = false ) {
 		
 		// Fetch the Social Warfare user's options
-		$sw_user_options = sw_get_user_options();
+		$swp_user_options = swp_get_user_options();
 		
 		$rewritecode = array(
 			'%year%',
@@ -145,10 +145,10 @@
 			return get_post_permalink($post, $leavename, $sample);
 		
 		// Build the structure
-		$structure = $sw_user_options['recovery_format'];
+		$structure = $swp_user_options['recovery_format'];
 		
 		if($structure == 'custom'):
-			$permalink = $sw_user_options['recovery_custom_format'];
+			$permalink = $swp_user_options['recovery_custom_format'];
 		elseif($structure == 'unchanged'):
 			$permalink = get_option('permalink_structure');
 		elseif($structure == 'default'):
@@ -259,25 +259,25 @@
 		$url = apply_filters( 'post_link', $permalink, $post, $leavename );
 		
 		// Filter the Protocol
-		if($sw_user_options['recovery_protocol'] == 'https' && strpos($url,'https') === false):
+		if($swp_user_options['recovery_protocol'] == 'https' && strpos($url,'https') === false):
 			$url = str_replace('http','https',$url);
-		elseif($sw_user_options['recovery_protocol'] == 'http' && strpos($url,'https') !== false):
+		elseif($swp_user_options['recovery_protocol'] == 'http' && strpos($url,'https') !== false):
 			$url = str_replace('https','http',$url);
 		endif;
 		
 		// Filter the prefix
-		if($sw_user_options['recovery_prefix'] == 'unchanged'):
-		elseif($sw_user_options['recovery_prefix'] == 'www' && strpos($url,'www') === false):
+		if($swp_user_options['recovery_prefix'] == 'unchanged'):
+		elseif($swp_user_options['recovery_prefix'] == 'www' && strpos($url,'www') === false):
 			$url = str_replace('http://','http://www.',$url);
 			$url = str_replace('https://','https://www.',$url);
-		elseif($sw_user_options['recovery_prefix'] == 'nonwww' && strpos($url,'www') !== false):
+		elseif($swp_user_options['recovery_prefix'] == 'nonwww' && strpos($url,'www') !== false):
 			$url = str_replace('http://www.','http://',$url);
 			$url = str_replace('https://www.','https://',$url);
 		endif;
 		
 		// Filter out the subdomain
-		if(isset($sw_user_options['recovery_subdomain']) && $sw_user_options['recovery_subdomain'] != ''):
-			$url = str_replace($sw_user_options['recovery_subdomain'] . '.' , '' , $url);
+		if(isset($swp_user_options['recovery_subdomain']) && $swp_user_options['recovery_subdomain'] != ''):
+			$url = str_replace($swp_user_options['recovery_subdomain'] . '.' , '' , $url);
 		endif;
 		
 		return $url;

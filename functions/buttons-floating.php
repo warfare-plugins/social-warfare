@@ -9,7 +9,7 @@
 	function socialWarfareSideFloat() {
 
 		$postID = get_the_ID();
-		$options = sw_get_user_options();
+		$options = swp_get_user_options();
 		$postType = get_post_type($postID);
 
 		if( is_singular() ):
@@ -48,7 +48,7 @@
 				$options['sideOColorSet'] = $options['oColorSet'];
 			endif;
 
-			// Setup the buttons array to pass into the 'sw_network_buttons' hook
+			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares($postID);
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
@@ -56,15 +56,15 @@
 			if( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] ) ++$buttonsArray['count'];
 			$buttonsArray['resource'] = array();
 			$buttonsArray['postID'] = $postID;
-			$buttonsArray = apply_filters( 'sw_network_buttons' , $buttonsArray );
+			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
 			// Create the social panel
-			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel sw_'.$options['floatStyle'].' sw_d_'.$options['sideDColorSet'].' sw_i_'.$options['sideIColorSet'].' sw_o_'.$options['sideOColorSet'].' '.$options['sideReveal'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-screen-width="'.$options['sw_float_scr_sz'].'" data-transition="'.$options['sideReveal'].'">';
+			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_'.$options['floatStyle'].' swp_d_'.$options['sideDColorSet'].' swp_i_'.$options['sideIColorSet'].' swp_o_'.$options['sideOColorSet'].' '.$options['sideReveal'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-screen-width="'.$options['swp_float_scr_sz'].'" data-transition="'.$options['sideReveal'].'">';
 
 			// Display Total Shares if the Threshold has been met
 			if($options['totes'] && $buttonsArray['totes'] >= $options['minTotes']):
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).'</span><span class="sw_label"> '.__('Shares','social-warfare').'</span>';
+				$assets .= '<span class="swp_count">'.swp_kilomega($buttonsArray['totes']).'</span><span class="swp_label"> '.__('Shares','social-warfare').'</span>';
 				$assets .= '</div>';
 			endif;
 

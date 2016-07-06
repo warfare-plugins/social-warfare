@@ -6,7 +6,7 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_file_get_contents_curl($url){
+	function swp_file_get_contents_curl($url){
 		$ch=curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
@@ -33,9 +33,9 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_fetch_twitter_shares($url) {
+	function swp_fetch_twitter_shares($url) {
 		$url = rawurlencode($url);
-		$json_string = sw_file_get_contents_curl('https://urls.api.twitter.com/1/urls/count.json?url=' . $url);
+		$json_string = swp_file_get_contents_curl('https://urls.api.twitter.com/1/urls/count.json?url=' . $url);
 		$json = json_decode($json_string, true);
 		return isset($json['count'])?intval($json['count']):0;
 	}
@@ -46,9 +46,9 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_fetch_facebook_shares($url) {
+	function swp_fetch_facebook_shares($url) {
 		$url = rawurlencode($url);
-		$json_string = sw_file_get_contents_curl('https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls='.$url);
+		$json_string = swp_file_get_contents_curl('https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls='.$url);
 		$json = json_decode($json_string, true);
 		return isset($json[0]['total_count'])?intval($json[0]['total_count']):0;
 	}
@@ -59,7 +59,7 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_fetch_googlePlus_shares($url)  {
+	function swp_fetch_googlePlus_shares($url)  {
 		$url = rawurlencode($url);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, "https://clients6.google.com/rpc");
@@ -80,9 +80,9 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_fetch_pinterest_shares($url) {
+	function swp_fetch_pinterest_shares($url) {
 		$url = rawurlencode($url);
-		$return_data = sw_file_get_contents_curl('https://api.pinterest.com/v1/urls/count.json?url='.$url);
+		$return_data = swp_file_get_contents_curl('https://api.pinterest.com/v1/urls/count.json?url='.$url);
 		$json_string = preg_replace('/^receiveCount\((.*)\)$/', "\\1", $return_data);
 		$json = json_decode($json_string, true);
 		return isset($json['count'])?intval($json['count']):0;
@@ -94,9 +94,9 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_fetch_linkedIn_shares($url) { 
+	function swp_fetch_linkedIn_shares($url) { 
 		$url = rawurlencode($url);
-		$json_string = sw_file_get_contents_curl('https://www.linkedin.com/countserv/count/share?url='.$url.'&format=json');
+		$json_string = swp_file_get_contents_curl('https://www.linkedin.com/countserv/count/share?url='.$url.'&format=json');
 		$json = json_decode($json_string, true);
 		return isset($json['count'])?intval($json['count']):0;
 	}

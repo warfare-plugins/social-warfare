@@ -1,14 +1,14 @@
 <?php
 
-if ( ! class_exists( 'sw_shortcode_generator' ) ) {
+if ( ! class_exists( 'swp_shortcode_generator' ) ) {
 
-	class sw_shortcode_generator  {
+	class swp_shortcode_generator  {
 
 		public function __construct() {
-			$this->sw_shortcode_generator();
+			$this->swp_shortcode_generator();
 		}
 
-		public function sw_shortcode_generator() {
+		public function swp_shortcode_generator() {
 			register_activation_hook( __FILE__, array( __CLASS__, 'activation' ) );
 			register_deactivation_hook( __FILE__, array( __CLASS__, 'deactivation' ) );
 
@@ -48,12 +48,12 @@ if ( ! class_exists( 'sw_shortcode_generator' ) ) {
 		}
 
 		public function tinymce_register_button($buttons) {
-		   array_push($buttons, "|", "sw_shortcode_generator");
+		   array_push($buttons, "|", "swp_shortcode_generator");
 		   return $buttons;
 		}
 
 		public function tinymce_register_plugin($plugin_array) {
-		   $plugin_array['sw_shortcode_generator'] = plugins_url( '/sw-shortcode-generator.js', __FILE__);
+		   $plugin_array['swp_shortcode_generator'] = plugins_url( '/sw-shortcode-generator.js', __FILE__);
 		   return $plugin_array;
 		}
 
@@ -63,6 +63,6 @@ if ( ! class_exists( 'sw_shortcode_generator' ) ) {
 		}
 	}
 
-	new sw_shortcode_generator();
+	new swp_shortcode_generator();
 
 }

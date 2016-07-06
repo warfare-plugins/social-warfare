@@ -77,12 +77,12 @@ if ( ! class_exists( 'clickToTweet' ) ) {
 	
 function clickToTweetShortcode( $atts ){
 	
-	$url = sw_process_url( get_permalink() , 'twitter' , get_the_ID() );
+	$url = swp_process_url( get_permalink() , 'twitter' , get_the_ID() );
 	(strpos($atts['tweet'],'http') !== false ? $urlParam = '&url=/' : $urlParam = '&url='.$url );
 	$atts['tweet'] = rtrim($atts['tweet']);
 	
-	$options = sw_get_user_options();
-	$user_twitter_handle = get_post_meta( get_the_ID() , 'sw_twitter_username' , true );
+	$options = swp_get_user_options();
+	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
 	if(!$user_twitter_handle):
 		$user_twitter_handle = $options['twitterID'];
 	endif;
@@ -95,7 +95,7 @@ function clickToTweetShortcode( $atts ){
 	
 	return '
 		<div class="sw-tweet-clear"></div>
-		<a class="sw_CTT '.$theme.'" href="https://twitter.com/share?text='.urlencode(html_entity_decode($atts['tweet'], ENT_COMPAT, 'UTF-8')) . $urlParam . ''.($user_twitter_handle ? '&via='.str_replace('@','',$user_twitter_handle) : '').'" data-link="https://twitter.com/share?text='.urlencode(html_entity_decode($atts['tweet'], ENT_COMPAT, 'UTF-8')).$urlParam.''.($user_twitter_handle ? '&via='.str_replace('@','',$user_twitter_handle) : '').'" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">'.$atts['quote'].'</span><span class="sw-ctt-btn">'.__('Click To Tweet','social-warfare').'<i class="sw sw-twitter"></i></span></span></a>';
+		<a class="swp_CTT '.$theme.'" href="https://twitter.com/share?text='.urlencode(html_entity_decode($atts['tweet'], ENT_COMPAT, 'UTF-8')) . $urlParam . ''.($user_twitter_handle ? '&via='.str_replace('@','',$user_twitter_handle) : '').'" data-link="https://twitter.com/share?text='.urlencode(html_entity_decode($atts['tweet'], ENT_COMPAT, 'UTF-8')).$urlParam.''.($user_twitter_handle ? '&via='.str_replace('@','',$user_twitter_handle) : '').'" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">'.$atts['quote'].'</span><span class="sw-ctt-btn">'.__('Click To Tweet','social-warfare').'<i class="sw sw-twitter"></i></span></span></a>';
 }
 
 add_shortcode( 'clickToTweet', 'clickToTweetShortcode' );

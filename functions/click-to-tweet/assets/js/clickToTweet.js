@@ -6,7 +6,7 @@
             onclick: function() {
 				editor.windowManager.open( {
 					title: 'Build Your "Click to Tweet"',
-					class: 'sw_ctt',
+					class: 'swp_ctt',
 					body: [
 						{
 							type: 'textbox',

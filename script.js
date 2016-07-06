@@ -20,7 +20,7 @@
         });
     };
 })(jQuery);
-jQuery(document).on('click','.nc_tweet, a.sw_CTT',function(event) {
+jQuery(document).on('click','.nc_tweet, a.swp_CTT',function(event) {
 	if(jQuery(this).hasClass('noPop') || !jQuery(this).attr("data-link")) {} else {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 		href = jQuery(this).attr("data-link");
@@ -44,12 +44,12 @@ jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery(
 
 // Function to check if the buttons are on one line or two
 
-var sw_check_is_running = false;
-function sw_button_size_check() {
-	if( sw_check_is_running == true ) {
+var swp_check_is_running = false;
+function swp_button_size_check() {
+	if( swp_check_is_running == true ) {
 		return false	
 	} else {
-		sw_check_is_running = true;
+		swp_check_is_running = true;
 			
 		// Let's check each iteration of the social panel
 		var not_inline = false;
@@ -84,7 +84,7 @@ function sw_button_size_check() {
 		} else {
 			jQuery('.nc_socialPanel').css({opacity:1});	
 		}
-		sw_check_is_running = false;
+		swp_check_is_running = false;
 
 	}
 }
@@ -121,23 +121,23 @@ function swSetWidths(resize,adjust,secondary) {
 
 			// Measure the width of the container. Find out how much space is available.
 			// if( resize == true && adjust == false ) {
-			//	window.sw_adjust = 0;	
+			//	window.swp_adjust = 0;	
 			// }
 			
-			if(typeof window.sw_adjust === 'undefined' && !adjust) {
-				window.sw_adjust = 0;
+			if(typeof window.swp_adjust === 'undefined' && !adjust) {
+				window.swp_adjust = 0;
 				//var totalWidth 	= jQuery(this).width() - 0;
-			} else if (typeof window.sw_adjust === 'undefined' && adjust == true) {
-				window.sw_adjust = 1;
+			} else if (typeof window.swp_adjust === 'undefined' && adjust == true) {
+				window.swp_adjust = 1;
 				// var totalWidth  = jQuery(this).width() - 1;
 			} else if (adjust == true) {
-				++window.sw_adjust;
-				// var totalWidth  = jQuery(this).width() - window.sw_adjust;
+				++window.swp_adjust;
+				// var totalWidth  = jQuery(this).width() - window.swp_adjust;
 			} else {
-				window.sw_adjust = 0;	
+				window.swp_adjust = 0;	
 			};
-			var totalWidth  = jQuery(this).width() - window.sw_adjust;
-			// console.log(window.sw_adjust);
+			var totalWidth  = jQuery(this).width() - window.swp_adjust;
+			// console.log(window.swp_adjust);
 			// console.log('Total Width: '+totalWidth);
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
@@ -178,9 +178,9 @@ function swSetWidths(resize,adjust,secondary) {
 					// Check how wide it must be to fit
 					widthNeeded += jQuery(this).width() + extraSpace;
 
-					var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
+					var paddingLeft = jQuery(this).find('.swp_count').css('padding-left');
 					paddingLeft = parseInt(paddingLeft.replace('px',''));
-					var paddingRight = jQuery(this).find('.sw_count').css('padding-right');
+					var paddingRight = jQuery(this).find('.swp_count').css('padding-right');
 					paddingRight = parseInt(paddingRight.replace('px',''));
 					padding = paddingLeft + paddingRight;
 					widthNeeded = widthNeeded - padding;
@@ -221,8 +221,8 @@ function swSetWidths(resize,adjust,secondary) {
 				jQuery(this).addClass('mobile').removeClass('notMobile');
 				jQuery('.spaceManWilly').css({'width':'auto'});
 				buttonWidths = 0;
-				if(!jQuery('.sw_count .iconFiller').length) {
-					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .sw_count').hide();
+				if(!jQuery('.swp_count .iconFiller').length) {
+					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .swp_count').hide();
 				} else {
 					jQuery(this).find('.nc_tweetContainer.totes').hide();
 				};
@@ -235,7 +235,7 @@ function swSetWidths(resize,adjust,secondary) {
 						marginLeft = ((average - width) / 2) - 1;
 						marginRight = ((average - width) / 2) - 1;
 					};
-					jQuery(this).find('.sw_count').animate({'padding-left':0,'padding-right':0},anim_props);
+					jQuery(this).find('.swp_count').animate({'padding-left':0,'padding-right':0},anim_props);
 					jQuery(this).find('.iconFiller').animate({'margin-left':marginLeft+'px','margin-right':marginRight+'px'},anim_props);
 				});
 			// jQuery('.nc_tweetContainer').css({"padding-left":"4px","padding-right":"4px"});
@@ -243,7 +243,7 @@ function swSetWidths(resize,adjust,secondary) {
 
 				jQuery(this).addClass('notMobile').removeClass('mobile');
 				if(totalWidth > widthNeeded) {
-					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .sw_count').show();
+					jQuery(this).find('.nc_tweetContainer.totes,.nc_tweetContainer .swp_count').show();
 				}
 				jQuery(this).find('.nc_tweetContainer .iconFiller').animate({'margin-left':'0px','margin-right':'0px'},anim_props);
 				var average = Math.floor(average);
@@ -287,14 +287,14 @@ function swSetWidths(resize,adjust,secondary) {
 
 
 						icon 		= jQuery(this).find('i.sw').outerWidth() + 14;
-						shareTerm 	= jQuery(this).find('.sw_share').outerWidth();
+						shareTerm 	= jQuery(this).find('.swp_share').outerWidth();
 						tote		= icon + shareTerm + 3;
 						jQuery(this).find('.spaceManWilly').animate({'width':tote+'px'},anim_props);
 
 						++count;
-						var paddingLeft = jQuery(this).find('.sw_count').css('padding-left');
+						var paddingLeft = jQuery(this).find('.swp_count').css('padding-left');
 						paddingLeft = parseInt(paddingLeft.replace('px',''));
-						var paddingRight = jQuery(this).find('.sw_count').css('padding-right');
+						var paddingRight = jQuery(this).find('.swp_count').css('padding-right');
 						paddingRight = parseInt(paddingRight.replace('px',''));
 						dataId = jQuery(this).attr('data-id');
 						dataId = parseInt(dataId);
@@ -313,7 +313,7 @@ function swSetWidths(resize,adjust,secondary) {
 							window.origSets[index][dataId]['pl'] = dif+1+'px';
 							window.origSets[index][dataId]['pr'] = dif+'px';
 							window.origSets[index][dataId]['fil'] = jQuery(this).find('.iconFiller').width()+'px';
-							jQuery(this).find('.sw_count').animate({
+							jQuery(this).find('.swp_count').animate({
 								"padding-left": window.origSets[index][dataId]['pl'],
 								"padding-right": window.origSets[index][dataId]['pr']
 								}, 0, "linear", function() {
@@ -327,7 +327,7 @@ function swSetWidths(resize,adjust,secondary) {
 							window.origSets[index][dataId]['pl'] = dif+'px';
 							window.origSets[index][dataId]['pr'] = dif+'px';
 							window.origSets[index][dataId]['fil'] = jQuery(this).find('.iconFiller').width()+'px';
-							jQuery(this).find('.sw_count').animate({
+							jQuery(this).find('.swp_count').animate({
 								"padding-left": window.origSets[index][dataId]['pl'],
 								"padding-right": window.origSets[index][dataId]['pr']
 								}, 0, "linear", function() {
@@ -339,10 +339,10 @@ function swSetWidths(resize,adjust,secondary) {
 				};
 			};
 		});
-		if(secondary == true || window.sw_secondary == true) {
-			window.sw_secondary = true;
+		if(secondary == true || window.swp_secondary == true) {
+			window.swp_secondary = true;
 			setTimeout( function() {
-				sw_button_size_check();
+				swp_button_size_check();
 			} , 200);
 		}
 	// If we already have sizes, just reuse them
@@ -356,7 +356,7 @@ function swSetWidths(resize,adjust,secondary) {
 			dataId = parseInt(jQuery(this).attr('data-id'));
 			if(typeof window.origSets[index] === 'undefined') { } else {
 				jQuery(this).find('.iconFiller').animate({"width":window.origSets[index][dataId]['fil']},anim_props);
-				jQuery(this).find('.sw_count').animate({
+				jQuery(this).find('.swp_count').animate({
 					"padding-left": window.origSets[index][dataId]['pl'],
 					"padding-right":  window.origSets[index][dataId]['pr']
 				},anim_props);
@@ -382,10 +382,10 @@ function createFloatBar() {
 					'width':width,
 					'left':offset.left
 				});
-			jQuery('.nc_socialPanel .sw_count').css({transition : 'padding .1s linear'});
-			jQuery('.nc_socialPanel').eq(0).addClass('sw_one');
-			jQuery('.nc_socialPanel').eq(2).addClass('sw_two');
-			jQuery('.nc_socialPanel').eq(1).addClass('sw_three');
+			jQuery('.nc_socialPanel .swp_count').css({transition : 'padding .1s linear'});
+			jQuery('.nc_socialPanel').eq(0).addClass('swp_one');
+			jQuery('.nc_socialPanel').eq(2).addClass('swp_two');
+			jQuery('.nc_socialPanel').eq(1).addClass('swp_three');
 			window.origSets['float'] = window.origSets[0];
 			swSetWidths();
 		};
@@ -558,7 +558,7 @@ function activateHoverStates() {
 			if(!jQuery(this).parents('.nc_socialPanel').hasClass('mobile')) {
 				thisElem 	= jQuery(this);
 				icon 		= thisElem.find('.iconFiller').width();
-				shareTerm 	= thisElem.find('.sw_share').outerWidth();
+				shareTerm 	= thisElem.find('.swp_share').outerWidth();
 				wrapper		= thisElem.find('.spaceManWilly').outerWidth();
 				tote		= wrapper;
 				dif			= wrapper - icon;
@@ -583,7 +583,7 @@ function activateHoverStates() {
 				jQuery(this).find('.iconFiller').css({ "width":wrapper });
 				pl = window.origSets[index][dataId]['pl'];
 				pr = window.origSets[index][dataId]['pr'];
-				jQuery(this).find('.sw_count').css({
+				jQuery(this).find('.swp_count').css({
 						"padding-left": window.origSets[index][dataId]['pl'],
 						"padding-right": window.origSets[index][dataId]['pr']
 					});
@@ -593,7 +593,7 @@ function activateHoverStates() {
 					jQuery(this).siblings('.nc_tweetContainer').each(function() {
 						dataId = parseInt(jQuery(this).attr('data-id'));
 						jQuery(this).find('.iconFiller').css({"width":window.origSets[index][dataId]['fil']});
-						jQuery(this).find('.sw_count').css({
+						jQuery(this).find('.swp_count').css({
 							"padding-left": window.origSets[index][dataId]['pl'],
 							"padding-right": window.origSets[index][dataId]['pr']
 							});
@@ -618,7 +618,7 @@ function activateHoverStates() {
 						};
 
 						jQuery(this).find('.iconFiller').css({"width":origSets[index][dataId]['fil']});
-						jQuery(this).find('.sw_count').css({
+						jQuery(this).find('.swp_count').css({
 							"padding-left": pl +"px",
 							"padding-right": pr +"px"
 						});
@@ -648,7 +648,7 @@ function createTotal() {
 	var shares 		= jQuery('.fb').attr('data-count');
 	var plusses 	= jQuery('.googlePlus').attr('data-count');
 	var total = parseInt(tweets) + parseInt(linkshares) + parseInt(pins) + parseInt(shares) + parseInt(plusses);
-	jQuery('.totes .sw_count').text(number_format(total)+' SHARES');
+	jQuery('.totes .swp_count').text(number_format(total)+' SHARES');
 }
 */
 function swApplyScale() {
@@ -673,7 +673,7 @@ function swApplyScale() {
 	});
 }
 
-function sw_init_share_buttons() {
+function swp_init_share_buttons() {
 
 	// Fetch the padding amount to make space later for the floating bars
 	window['body_padding_top'] = jQuery('body').css('padding-top').replace('px','');
@@ -699,14 +699,14 @@ jQuery(document).ready(function() {
 	jQuery(window).resize(function() {
 		if(jQuery('.nc_socialPanel:hover').length) { } else {
 			setTimeout( function() {
-				window.sw_adjust = 1;
-				sw_init_share_buttons();
+				window.swp_adjust = 1;
+				swp_init_share_buttons();
 			} , 100 );
 		};
 	});
 
 	jQuery( document.body ).on( 'post-load', function () {
-    	sw_init_share_buttons();
+    	swp_init_share_buttons();
 	} );
 
 	if(jQuery('.nc_socialPanelSide').length) {
@@ -716,20 +716,20 @@ jQuery(document).ready(function() {
 		jQuery('.nc_socialPanelSide').css({'top':newPosition+'px'});
 	}
 
-	sw_init_share_buttons();
+	swp_init_share_buttons();
 
 	// Reset the cache
-	if (typeof sw_cache_url != 'undefined') {
+	if (typeof swp_cache_url != 'undefined') {
 
 		// If the URL Contains a question mark already
-		if (sw_cache_url.indexOf('?') != -1) {
-			var url_params = '&sw_cache=rebuild';
+		if (swp_cache_url.indexOf('?') != -1) {
+			var url_params = '&swp_cache=rebuild';
 
 		// If the URL does not contain a question mark already
 		} else {
-			var url_params = '?sw_cache=rebuild';
+			var url_params = '?swp_cache=rebuild';
 		}
-		jQuery.get(sw_cache_url + url_params);
+		jQuery.get(swp_cache_url + url_params);
 	}
 });
 
@@ -770,7 +770,7 @@ jQuery(document).ready(function() {
 				if(eHeight > 200 && eWidth > 100) {
 				
 						e.wrap(o.wrap);
-						e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+sw_pinit_v_location+' sw-pinit-'+sw_pinit_h_location+'">Pin</a></span>');
+						e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
 					
 					jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
 						window.open(jQuery(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');				
@@ -793,7 +793,7 @@ jQuery(document).ready(function() {
 })(jQuery);
 jQuery(document).ready( function() {
 	setTimeout( function() {
-		if(sw_pinit == true) {
+		if(swp_pinit == true) {
 			jQuery('.sw-content-locator').parent().find('img').each( function() {
 				if( !jQuery(this).parent('a').length ) {
 					jQuery(this).pinit();	

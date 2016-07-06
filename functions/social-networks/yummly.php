@@ -5,8 +5,8 @@
 *   #1: Add the On / Off Switch	and Sortable Option				 *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_button_options', 'sw_yummly_options_function',20);
-	function sw_yummly_options_function($options) {
+	add_filter('swp_button_options', 'swp_yummly_options_function',20);
+	function swp_yummly_options_function($options) {
 
 		// Create the new option in a variable to be inserted
 		$options['content']['yummly'] = array(
@@ -24,11 +24,11 @@
 *   #2: Add it to global network array	         				 *
 *                                                                *
 ******************************************************************/
-	// Queue up your filter to be ran on the sw_options hook.
-	add_filter('sw_add_networks', 'sw_yummly_network');
+	// Queue up your filter to be ran on the swp_options hook.
+	add_filter('swp_add_networks', 'swp_yummly_network');
 
 	// Create the function that will filter the options
-	function sw_yummly_network($networks) {
+	function swp_yummly_network($networks) {
 
 		// Add your network to the existing network array
 		$networks[] = 'yummly';
@@ -41,7 +41,7 @@
 *   #3: Generate the API Share Count Request URL	             *
 *                                                                *
 ******************************************************************/
-	function sw_yummly_request_link($url) {
+	function swp_yummly_request_link($url) {
 		$request_url = 'http://www.yummly.com/services/yum-count?url=' . $url;
 		return $request_url;
 	}
@@ -50,7 +50,7 @@
 *   #4: Parse the Response to get the share count	             *
 *                                                                *
 ******************************************************************/
-	function sw_format_yummly_response($response) {
+	function swp_format_yummly_response($response) {
 		$response = json_decode($response, true);
 		return isset($response['count'])?intval($response['count']):0;
 	}
@@ -59,8 +59,8 @@
 *   #5: Create the Button HTML				  		             *
 *                                                                *
 ******************************************************************/
-	add_filter('sw_network_buttons', 'sw_yummly_button_html',10);
-	function sw_yummly_button_html($array) {
+	add_filter('swp_network_buttons', 'swp_yummly_button_html',10);
+	function swp_yummly_button_html($array) {
 
 		// If we've already generated this button, just use our existing html
 		if(isset($_GLOBALS['sw']['buttons'][$array['postID']]['yummly'])):
@@ -85,25 +85,25 @@
 
 			endif;
 
-			if(get_post_meta($array['postID'],'sw_open_graph_image_url')):
-				$image = urlencode(urldecode(get_post_meta($array['postID'],'sw_open_graph_image_url',true)));
+			if(get_post_meta($array['postID'],'swp_open_graph_image_url')):
+				$image = urlencode(urldecode(get_post_meta($array['postID'],'swp_open_graph_image_url',true)));
 			else:
-				$image = urlencode(urldecode(get_post_meta($array['postID'],'sw_open_thumbnail_url',true)));
+				$image = urlencode(urldecode(get_post_meta($array['postID'],'swp_open_thumbnail_url',true)));
 			endif;
 
-			$array['resource']['yummly'] = '<div class="nc_tweetContainer sw_yummly" data-id="'.$array['count'].'" data-network="yummly">';
-			// $link = urlencode(urldecode(sw_process_url( $array['url'] , 'yummly' , $array['postID'] )));
+			$array['resource']['yummly'] = '<div class="nc_tweetContainer swp_yummly" data-id="'.$array['count'].'" data-network="yummly">';
+			// $link = urlencode(urldecode(swp_process_url( $array['url'] , 'yummly' , $array['postID'] )));
 			$link = $array['url'];
 			$array['resource']['yummly'] .= '<a target="_blank" href="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" data-link="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" class="nc_tweet">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['yummly'] > 0):
 				$array['resource']['yummly'] .= '<span class="iconFiller">';
 				$array['resource']['yummly'] .= '<span class="spaceManWilly">';
 				$array['resource']['yummly'] .= '<i class="sw sw-yummly"></i>';
-				$array['resource']['yummly'] .= '<span class="sw_share"> '.__('Yum','social-warfare').'</span>';
+				$array['resource']['yummly'] .= '<span class="swp_share"> '.__('Yum','social-warfare').'</span>';
 				$array['resource']['yummly'] .= '</span></span>';
-				$array['resource']['yummly'] .= '<span class="sw_count">'.kilomega($array['shares']['yummly']).'</span>';
+				$array['resource']['yummly'] .= '<span class="swp_count">'.swp_kilomega($array['shares']['yummly']).'</span>';
 			else:
-				$array['resource']['yummly'] .= '<span class="sw_count sw_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="sw_share"> '.__('Yum','social-warfare').'</span></span></span></span>';
+				$array['resource']['yummly'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="swp_share"> '.__('Yum','social-warfare').'</span></span></span></span>';
 			endif;
 			$array['resource']['yummly'] .= '</a>';
 			$array['resource']['yummly'] .= '</div>';

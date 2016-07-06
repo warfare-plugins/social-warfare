@@ -40,13 +40,13 @@ jQuery(document).ready(function() {
 		jQuery('#'+tab).show();
 		jQuery('.sw-header-menu li').removeClass('sw-active-tab');
 		jQuery(this).parents('li').addClass('sw-active-tab');
-		if(tab == 'sw_styles') {
+		if(tab == 'swp_styles') {
 			swSetWidths(true);
 			activateHoverStates();
 		} else {
 			jQuery('.nc_socialPanel').animate({opacity:0},0);
 		}
-		sw_conditional_fields();
+		swp_conditional_fields();
 	});
 
 /*********************************************************
@@ -64,18 +64,18 @@ jQuery(document).ready(function() {
 			jQuery(this).attr('status','on');
 			jQuery(elem).prop('checked', true);
 		};
-		sw_fetch_all_options();
+		swp_fetch_all_options();
 		save_color_toggle();
-		sw_conditional_fields();
+		swp_conditional_fields();
 	});
 
 	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').on('change' , function() {
-		sw_conditional_fields();
-		var new_options = sw_fetch_all_options();
+		swp_conditional_fields();
+		var new_options = swp_fetch_all_options();
 		save_color_toggle()
 	});
 	
-	default_options = sw_fetch_all_options();
+	default_options = swp_fetch_all_options();
 	
 // End the Document Ready Trigger
 });
@@ -86,7 +86,7 @@ jQuery(document).ready(function() {
 
 *********************************************************/
 function save_color_toggle() {
-	var new_options = sw_fetch_all_options();
+	var new_options = swp_fetch_all_options();
 	if(JSON.stringify(new_options) != JSON.stringify(default_options)) {
 		jQuery('.sw-save-settings').removeClass('sw-navy-button').addClass('sw-red-button');
 	} else {
@@ -100,7 +100,7 @@ function save_color_toggle() {
 
 *********************************************************/
 
-function sw_fetch_all_options() {
+function swp_fetch_all_options() {
 	
 	// Create an object
 	values = {};
@@ -144,14 +144,14 @@ jQuery(document).ready(function() {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 		
 		// The loading screen
-		sw_loading_screen();
+		swp_loading_screen();
 		
 		// Fetch all the settings
-		settings = sw_fetch_all_options();
+		settings = swp_fetch_all_options();
 				
 		// Prepare date
 		var data = {
-			action: 'sw_store_settings',
+			action: 'swp_store_settings',
 			settings: settings
 		};
 
@@ -159,10 +159,10 @@ jQuery(document).ready(function() {
 		jQuery.post(ajaxurl, data, function(response) {
 			
 			// Clear the loading screen
-			sw_clear_loading_screen();
+			swp_clear_loading_screen();
 				
 			// Reset the default options variable
-			default_options = sw_fetch_all_options();
+			default_options = swp_fetch_all_options();
 			save_color_toggle();
 			
 		});
@@ -170,11 +170,11 @@ jQuery(document).ready(function() {
 	});
 });
 
-function sw_loading_screen() {
+function swp_loading_screen() {
 	jQuery('body').append('<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>');	
 }
 
-function sw_clear_loading_screen() {
+function swp_clear_loading_screen() {
 	jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete');
 	jQuery('.sw-loading-bg').delay(1000).fadeOut(1000);
 	setTimeout( function() {
@@ -308,9 +308,9 @@ jQuery(document).ready( function() {
 			var dColorSet    = jQuery('select[name="dColorSet"]').val();
 			var iColorSet    = jQuery('select[name="iColorSet"]').val();
 			var oColorSet    = jQuery('select[name="oColorSet"]').val();
-			var buttonsClass = 'sw_'+visualTheme+' sw_d_'+dColorSet+' sw_i_'+iColorSet+' sw_o_'+oColorSet;
+			var buttonsClass = 'swp_'+visualTheme+' swp_d_'+dColorSet+' swp_i_'+iColorSet+' swp_o_'+oColorSet;
 			if(typeof lastClass === 'undefined'){
-				jQuery('.nc_socialPanel').removeClass('sw_flatFresh sw_d_fullColor sw_i_fullColor sw_o_fullColor').addClass(buttonsClass);
+				jQuery('.nc_socialPanel').removeClass('swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor').addClass(buttonsClass);
 			} else {
 				jQuery('.nc_socialPanel').removeClass(lastClass).addClass(buttonsClass);
 			};
@@ -365,9 +365,9 @@ jQuery(document).ready( function() {
 				++i;
 			});
 
-			var buttonsClass = 'sw_'+visualTheme+' sw_d_'+dColorSet+' sw_i_'+iColorSet+' sw_o_'+oColorSet;
+			var buttonsClass = 'swp_'+visualTheme+' swp_d_'+dColorSet+' swp_i_'+iColorSet+' swp_o_'+oColorSet;
 			if(typeof lastClass === 'undefined'){
-				jQuery('.nc_socialPanel').removeClass('sw_flatFresh sw_d_fullColor sw_i_fullColor sw_o_fullColor').addClass(buttonsClass);
+				jQuery('.nc_socialPanel').removeClass('swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor').addClass(buttonsClass);
 			} else {
 				jQuery('.nc_socialPanel').removeClass(lastClass).addClass(buttonsClass);
 			};
@@ -384,17 +384,17 @@ jQuery(document).ready( function() {
 		var iColorSet    = jQuery('select[name="iColorSet"]').val();
 		var oColorSet    = jQuery('select[name="oColorSet"]').val();
 			
-		jQuery('style.sw_customColorStuff').remove();
+		jQuery('style.swp_customColorStuff').remove();
 			var colorCode = jQuery('input[name="customColor"]').val();
 			customCSS = '';
 			if(dColorSet == 'customColor' || iColorSet == 'customColor' || oColorSet == 'customColor') {
-				var customCSS = '.nc_socialPanel.sw_d_customColor a, html body .nc_socialPanel.sw_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_customColor:hover a {color:white} .nc_socialPanel.sw_d_customColor .nc_tweetContainer, html body .nc_socialPanel.sw_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.sw_o_customColor:hover .nc_tweetContainer {background-color:'+colorCode+';border:1px solid '+colorCode+';}';
+				var customCSS = '.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:'+colorCode+';border:1px solid '+colorCode+';}';
 			}
 			if(dColorSet == 'ccOutlines' || iColorSet == 'ccOutlines' || oColorSet == 'ccOutlines' ) {
-				var customCSS = customCSS+' .nc_socialPanel.sw_d_ccOutlines a, html body .nc_socialPanel.sw_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.sw_o_ccOutlines:hover a { color:'+colorCode+'; } .nc_socialPanel.sw_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.sw_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.sw_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '+colorCode+'; }';	
+				var customCSS = customCSS+' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:'+colorCode+'; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '+colorCode+'; }';	
 			}
 			
-			jQuery('head').append('<style type="text/css" class="sw_customColorStuff">'+customCSS+'</style>');	
+			jQuery('head').append('<style type="text/css" class="swp_customColorStuff">'+customCSS+'</style>');	
 	};
 
 /*********************************************************
@@ -441,9 +441,9 @@ jQuery(document).ready( function() {
 
 *********************************************************/
 function update_ctt_demo() {
-	var current_style 	= jQuery('.sw_CTT').attr('data-style');
+	var current_style 	= jQuery('.swp_CTT').attr('data-style');
 	var new_style		= jQuery('select[name="cttTheme"]').val();
-	jQuery('.sw_CTT').removeClass(current_style).addClass(new_style).attr('data-style',new_style);
+	jQuery('.swp_CTT').removeClass(current_style).addClass(new_style).attr('data-style',new_style);
 }
 
 jQuery(document).ready(function($) {
@@ -462,12 +462,12 @@ jQuery(document).ready(function($) {
 *********************************************************/
 
 jQuery(document).ready(function() {
-	sw_conditional_fields();
+	swp_conditional_fields();
 	jQuery('[name="float"]')
 	
 });
 
-function sw_conditional_fields() {
+function swp_conditional_fields() {
 	
 	// Loop through all the fields that have dependancies
 	jQuery('div[dep]').each( function() {
@@ -508,7 +508,7 @@ jQuery(document).ready(function() {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
 		// The loading screen
-		sw_loading_screen();
+		swp_loading_screen();
 
 		// Fetch all the registration values
 		var regCode = jQuery('input[name="regCode"]').val();
@@ -519,7 +519,7 @@ jQuery(document).ready(function() {
 		url = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 		
 		ajax_data = {
-			'action':'sw_ajax_passthrough',
+			'action':'swp_ajax_passthrough',
 			'url':url
 		}
 		
@@ -536,7 +536,7 @@ jQuery(document).ready(function() {
 				alert('Failure: '+object['message']);
 				
 				// Clear the loading screen
-				sw_clear_loading_screen();
+				swp_clear_loading_screen();
 				
 			// If the response was a success	
 			} else {
@@ -544,7 +544,7 @@ jQuery(document).ready(function() {
 
 				// Prepare data
 				var data = {
-					action: 'sw_store_registration',
+					action: 'swp_store_registration',
 					premiumCode: object['premiumCode']
 				};
 					
@@ -552,7 +552,7 @@ jQuery(document).ready(function() {
 				jQuery.post(ajaxurl, data, function(response) {
 					
 					// Clear the loading screen
-					sw_clear_loading_screen();
+					swp_clear_loading_screen();
 					
 					// Toggle the registration display
 					jQuery('.registration-wrapper').attr('registration','1');
@@ -574,7 +574,7 @@ jQuery(document).ready(function() {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
 		// The loading screen
-		sw_loading_screen();
+		swp_loading_screen();
 		
 		// Fetch the registration values
 		var regCode = jQuery('input[name="regCode"]').val();
@@ -586,7 +586,7 @@ jQuery(document).ready(function() {
 		
 		// Create the ajax object
 		ajax_data = {
-			'action':'sw_ajax_passthrough',
+			'action':'swp_ajax_passthrough',
 			'url':url
 		}
 		
@@ -602,7 +602,7 @@ jQuery(document).ready(function() {
 
 				// Prepare data
 				var data = {
-					action: 'sw_delete_registration',
+					action: 'swp_delete_registration',
 					premiumCode: '',
 					emailAddress: ''
 				};
@@ -611,7 +611,7 @@ jQuery(document).ready(function() {
 				jQuery.post(ajaxurl, data, function(response) {
 					
 					// Clear the loading screen
-					sw_clear_loading_screen();
+					swp_clear_loading_screen();
 					
 					// Toggle the registration display
 					jQuery('.registration-wrapper').attr('registration','0');
@@ -635,7 +635,7 @@ jQuery(document).ready(function() {
 jQuery(document).ready(function() {
 
 	jQuery('input[name="premiumCode"]').attr('readonly','readonly');
-	jQuery('input[name="regCode"]').parent('.sw_field').hide();
+	jQuery('input[name="regCode"]').parent('.swp_field').hide();
 	var premcode = jQuery('input#domain').attr('data-premcode');
 
 	if (jQuery('input[name="premiumCode"]').val() != '' && jQuery('input[name="premiumCode"]').val() != premcode) {
@@ -650,7 +650,7 @@ jQuery(document).ready(function() {
 		
 		// Create the ajax object
 		ajax_data = {
-			'action':'sw_ajax_passthrough',
+			'action':'swp_ajax_passthrough',
 			'url':url
 		}
 		
@@ -662,7 +662,7 @@ jQuery(document).ready(function() {
 			
 			// Create the ajax object
 			ajax_data = {
-				'action':'sw_ajax_passthrough',
+				'action':'swp_ajax_passthrough',
 				'url':url
 			}
 			
@@ -677,7 +677,7 @@ jQuery(document).ready(function() {
 					
 					// Prepare data
 					var data = {
-						action: 'sw_store_registration',
+						action: 'swp_store_registration',
 						premiumCode: info['premiumCode']
 					};
 					
@@ -696,7 +696,7 @@ jQuery(document).ready(function() {
 					
 					// Prepare data
 					var data = {
-						action: 'sw_delete_registration',
+						action: 'swp_delete_registration',
 						premiumCode: '',
 						emailAddress: ''
 					};
@@ -823,7 +823,7 @@ jQuery(document).ready(function($){
     var custom_uploader;
  
  
-    jQuery('.sw_upload_image_button').click(function(e) {
+    jQuery('.swp_upload_image_button').click(function(e) {
  
         e.preventDefault();
 		

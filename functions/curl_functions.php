@@ -5,7 +5,7 @@
 *                                                                *
 ******************************************************************/
 
-	function sw_fetch_shares_via_curl_multi($data, $options = array()) {
+	function swp_fetch_shares_via_curl_multi($data, $options = array()) {
 	 
 	  // array of curl handles
 	  $curly = array();
@@ -82,7 +82,7 @@
 	  return $result;
 	}
 
-	function sw_file_get_contents_curl($url){
+	function swp_file_get_contents_curl($url){
 		$ch=curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);

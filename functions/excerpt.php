@@ -7,7 +7,7 @@
 ******************************************************************/
 
 	// A function to process the excerpts for descriptions		
-	function sw_get_excerpt_by_id($post_id){
+	function swp_get_excerpt_by_id($post_id){
 		
 		// Check if the post has an excerpt
 		if(has_excerpt()):

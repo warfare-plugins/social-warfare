@@ -5,10 +5,10 @@
 *          ROUND TO THE APPROPRATE THOUSANDS                     *
 *                                                                *
 ******************************************************************/
-function kilomega( $val ) {
+function swp_kilomega( $val ) {
 
 	// Fetch the user assigned options
-	$options = sw_get_user_options();
+	$options = swp_get_user_options();
 	
 	// Check if we even have a value to format
 	if($val):
@@ -26,7 +26,7 @@ function kilomega( $val ) {
 			$val = intval($val) / 1000;
 			
 			// If the decimal separator is a period
-			if($options['sw_decimal_separator'] == 'period'):
+			if($options['swp_decimal_separator'] == 'period'):
 
 				// Then format the number to the appropriate number of decimals
 				return number_format($val,$options['swDecimals'],'.',',').'K';
@@ -46,7 +46,7 @@ function kilomega( $val ) {
 			$val = intval($val) / 1000000;
 			
 			// If the decimal separator is a period
-			if($options['sw_decimal_separator'] == 'period'):
+			if($options['swp_decimal_separator'] == 'period'):
 
 				// Then format the number to the appropriate number of decimals
 				return number_format($val,$options['swDecimals'],'.',',').'M';

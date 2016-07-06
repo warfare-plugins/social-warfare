@@ -7,8 +7,8 @@
 ******************************************************************/
 
 // Enqueue the Bitly Shortener Hook
-add_filter('sw_link_shortening'  	, 'sw_bitly_shortener' );
-add_filter('sw_analytics' 			, 'sw_google_analytics' );
+add_filter('swp_link_shortening'  	, 'swp_bitly_shortener' );
+add_filter('swp_analytics' 			, 'swp_google_analytics' );
 
 
 /*****************************************************************
@@ -17,10 +17,10 @@ add_filter('sw_analytics' 			, 'sw_google_analytics' );
 *                                                                *
 ******************************************************************/
 
-function sw_google_analytics( $array ) {
+function swp_google_analytics( $array ) {
 
 	// Fetch the user options
-	$options = sw_get_user_options();
+	$options = swp_get_user_options();
 	$url = $array['url'];
 	$network = $array['network'];
 
@@ -44,14 +44,14 @@ function sw_google_analytics( $array ) {
 ******************************************************************/
 
 // The Bitly Shortener Function called by the filter hook
-function sw_bitly_shortener( $array ) {
+function swp_bitly_shortener( $array ) {
 
 	$url = $array['url'];
 	$network = $array['network'];
 	$postID = $array['postID'];
 
 	// Fetch the User's Options
-	$options = sw_get_user_options();
+	$options = swp_get_user_options();
 	
 	// If Link shortening is activated....
 	if($options['linkShortening'] == true) :
@@ -66,11 +66,11 @@ function sw_bitly_shortener( $array ) {
 			if($options['googleAnalytics'] == true):
 
 				// If the Cache is still fresh or a previous API request failed....
-				if(sw_is_cache_fresh($postID) == true || (isset($_GLOBALS['bitly_status']) && $_GLOBALS['bitly_status'] == 'failure') ):
+				if(swp_is_cache_fresh($postID) == true || (isset($_GLOBALS['bitly_status']) && $_GLOBALS['bitly_status'] == 'failure') ):
 
 					// If the link has already been shortened....
 					$existingURL 		= get_post_meta($postID,'bitly_link_'.$network,true);
-					if($existingURL && sw_is_cache_fresh($postID) == true):
+					if($existingURL && swp_is_cache_fresh($postID) == true):
 						return $existingURL;
 
 					// If the link has NOT already been shortened
@@ -85,7 +85,7 @@ function sw_bitly_shortener( $array ) {
 				else:
 
 					// If the API provides a shortened URL...
-					$shortURL = sw_make_bitly_url( urldecode($url) , $network , $access_token );
+					$shortURL = swp_make_bitly_url( urldecode($url) , $network , $access_token );
 					if($shortURL):
 
 						// Store the link in the cache and return it to the buttons
@@ -112,7 +112,7 @@ function sw_bitly_shortener( $array ) {
 			else:
 
 				// If the cache is fresh or if the API has failed already....
-				if(sw_is_cache_fresh($postID) == true || (isset($_GLOBALS['bitly_status']) && $_GLOBALS['bitly_status'] == 'failure')):
+				if(swp_is_cache_fresh($postID) == true || (isset($_GLOBALS['bitly_status']) && $_GLOBALS['bitly_status'] == 'failure')):
 
 					// If we have a shortened URL in the cache....
 					$existingURL = get_post_meta($postID,'bitly_link',true);
@@ -144,7 +144,7 @@ function sw_bitly_shortener( $array ) {
 					else:
 
 						// Use the bitly function to construct a shortened link
-						$shortURL = sw_make_bitly_url( urldecode($url) , $network , $access_token );
+						$shortURL = swp_make_bitly_url( urldecode($url) , $network , $access_token );
 
 						// If we got a shortened URL from their API....
 						if($shortURL):
@@ -200,16 +200,16 @@ function sw_bitly_shortener( $array ) {
 	endif;
 }
 
-function sw_make_bitly_url( $url , $network , $access_token) {
+function swp_make_bitly_url( $url , $network , $access_token) {
 
 	// Fetch the user's options
-	$options = sw_get_user_options();
+	$options = swp_get_user_options();
 
 	/* Create a link to check if the permalink has already been shortened.
 	$bitly_lookup_url = 'https://api-ssl.bitly.com/v3/user/link_lookup?url='.urlencode($url).'&access_token='.$access_token;
 
 	// Fetch a response from the Bitly Lookup API
-	$bitly_lookup_response = sw_file_get_contents_curl( $bitly_lookup_url );
+	$bitly_lookup_response = swp_file_get_contents_curl( $bitly_lookup_url );
 
 	// Parse the JSON formatted response from the Bitly Lookup API
 	$bitly_lookup_response = json_decode( $bitly_lookup_response , true );
@@ -230,7 +230,7 @@ function sw_make_bitly_url( $url , $network , $access_token) {
 		$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token='.$access_token.'&uri='.urlencode($url).'&format='.$format;
 
 		// Fetch a response from the Bitly Shortening API
-		$data = sw_file_get_contents_curl($bitly_api);
+		$data = swp_file_get_contents_curl($bitly_api);
 
 		// Parse the JSON formated response into an array
 		$data = json_decode( $data , true);
@@ -261,10 +261,10 @@ function sw_make_bitly_url( $url , $network , $access_token) {
 *                                                                *
 ******************************************************************/
 
-function sw_process_url( $url , $network , $postID) {
+function swp_process_url( $url , $network , $postID) {
 
 	// $bitly_api = 'https://api-ssl.bitly.com/v3/link/lookup?url='.urlencode($url).'&login='.$login.'&apiKey='.$appkey;
-	// $data = sw_file_get_contents_curl($bitly_api);
+	// $data = swp_file_get_contents_curl($bitly_api);
 	// $data = json_decode($data);
 	// var_dump($data);
 
@@ -276,12 +276,12 @@ function sw_process_url( $url , $network , $postID) {
 		return $_GLOBALS['sw']['links'][$postID];
 	else:
 
-		// $options = sw_get_user_options();
+		// $options = swp_get_user_options();
 		$array['url'] = $url;
 		$array['network'] = $network;
 		$array['postID'] = $postID;
-		$array['url'] = apply_filters('sw_analytics' , $array);
-		$url = apply_filters('sw_link_shortening' , $array);
+		$array['url'] = apply_filters('swp_analytics' , $array);
+		$url = apply_filters('swp_link_shortening' , $array);
 		return $url;
 
 	endif;
@@ -293,17 +293,17 @@ function sw_process_url( $url , $network , $postID) {
 * 	BITLY OAUTH TRIGGER RESPONSE								 *
 *                                                                *
 ******************************************************************/
-add_action( 'wp_ajax_nopriv_sw_bitly_oauth', 'sw_bitly_oauth_callback' );
-function sw_bitly_oauth_callback() {
+add_action( 'wp_ajax_nopriv_swp_bitly_oauth', 'swp_bitly_oauth_callback' );
+function swp_bitly_oauth_callback() {
 
 	// Fetch the User's Options Array
-	$sw_user_options = sw_get_user_options();
+	$swp_user_options = swp_get_user_options();
 
 	// Set the premium code to null
-	$sw_user_options['bitly_access_token'] = $_GET['access_token'];
+	$swp_user_options['bitly_access_token'] = $_GET['access_token'];
 
 	// Update the options array with the premium code nulled
-	update_option('socialWarfareOptions',$sw_user_options);
+	update_option('socialWarfareOptions',$swp_user_options);
 
 	echo admin_url( 'admin.php?page=social-warfare' );
 

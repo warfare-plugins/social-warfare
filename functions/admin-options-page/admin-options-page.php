@@ -7,22 +7,22 @@
 ***************************************************************/
 
 // Add the link to the WordPress menu
-add_action( 'admin_menu', 'sw_admin_options_page' );
-function sw_admin_options_page() {
+add_action( 'admin_menu', 'swp_admin_options_page' );
+function swp_admin_options_page() {
 
 	// Declare the menu link
-	$sw_menu = add_menu_page(
+	$swp_menu = add_menu_page(
 		'Social Warfare',
 		'Social Warfare',
 		'manage_options',
 		'social-warfare',
-		'sw_plugin_options',
-		SW_PLUGIN_DIR.'/functions/admin-options-page/images/socialwarfare-20x20.png'
+		'swp_plugin_options',
+		swp_PLUGIN_DIR.'/functions/admin-options-page/images/socialwarfare-20x20.png'
 	);
 	
 	// Hook into the CSS and Javascript Enqueue process for this specific page
-	add_action( 'admin_print_styles-' . $sw_menu, 'sw_admin_options_css' );
-	add_action( 'admin_print_scripts-'. $sw_menu, 'sw_admin_options_js' );
+	add_action( 'admin_print_styles-' . $swp_menu, 'swp_admin_options_css' );
+	add_action( 'admin_print_scripts-'. $swp_menu, 'swp_admin_options_js' );
 }
 
 /***************************************************************
@@ -32,20 +32,20 @@ function sw_admin_options_page() {
 ***************************************************************/
 
 // Enqueue the Admin Options CSS
-function sw_admin_options_css() {
-    wp_enqueue_style( 'sw_admin_options_css', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.css' , array() , SW_VERSION );
-    wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() , SW_VERSION );
+function swp_admin_options_css() {
+    wp_enqueue_style( 'swp_admin_options_css', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.css' , array() , swp_VERSION );
+    wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() , swp_VERSION );
 }
 
 // Enqueue the Admin Options JS
-function sw_admin_options_js() {
+function swp_admin_options_js() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script( 'jquery-effects-core' );
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'jquery-ui-tooltip' );
 	wp_enqueue_media();
-    wp_enqueue_script( 'sw_admin_options_js', SW_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , SW_VERSION );
+    wp_enqueue_script( 'swp_admin_options_js', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , swp_VERSION );
 }
 
 /***************************************************************
@@ -55,14 +55,14 @@ function sw_admin_options_js() {
 ***************************************************************/
 
 // We'll build the form here
-function sw_plugin_options() {
+function swp_plugin_options() {
 	
 	// Make sure the person accessing this link has proper permissions to access it
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 	
-	sw_build_options_page();
+	swp_build_options_page();
 	
 }
 
@@ -71,12 +71,12 @@ function sw_plugin_options() {
 	A Function to Parse the Array & Builg the Options Page
 
 ***************************************************************/
-function sw_build_options_page() {
+function swp_build_options_page() {
 	
-	$sw_user_options = get_option('socialWarfareOptions');
+	$swp_user_options = get_option('socialWarfareOptions');
 
 	// Create all of the options in one giant array
-	$sw_options_page = array(
+	$swp_options_page = array(
 
 		// A List of Options Page Tabs and Their Titles
 		'tabs' => array(
@@ -90,8 +90,8 @@ function sw_build_options_page() {
 
 
 	// Fetch the global options array
-	// global $sw_options_page;
-	$sw_options_page = apply_filters( 'sw_options' , $sw_options_page );
+	// global $swp_options_page;
+	$swp_options_page = apply_filters( 'swp_options' , $swp_options_page );
 	
 /***************************************************************
 
@@ -104,9 +104,9 @@ function sw_build_options_page() {
 
 	echo '<div class="sw-grid sw-col-940 sw-top-menu">';
 	echo '<div class="sw-grid sw-col-700">';
-    echo '<img class="sw-header-logo" src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/social-warfare-light.png" />';
+    echo '<img class="sw-header-logo" src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/social-warfare-light.png" />';
 	echo '<ul class="sw-header-menu">';
-	$i=0; foreach ( $sw_options_page['tabs']['links'] as $key => $value): ++$i;
+	$i=0; foreach ( $swp_options_page['tabs']['links'] as $key => $value): ++$i;
 		echo '<li'.($i == 1 ? ' class="sw-active-tab"' : '').'><a class="sw-tab-selector" href="#" data-link="'.$key.'"><span>'.$value.'</span></a></li>';
 	endforeach;
 	echo '</ul>';
@@ -124,7 +124,7 @@ function sw_build_options_page() {
 
 ***************************************************************/
 
-	echo '<div class="sw-admin-wrapper" sw-registered="'.is_sw_registered().'">';
+	echo '<div class="sw-admin-wrapper" sw-registered="'.is_swp_registered().'">';
 
 	echo '<form class="sw-admin-settings-form">';
 	
@@ -132,7 +132,7 @@ function sw_build_options_page() {
 	echo '<div class="sw-tabs-container sw-grid sw-col-700">';
 
 	// Loop through the options tabs and build the options page
-	foreach($sw_options_page['options'] as $tab_name => $tab_options):
+	foreach($swp_options_page['options'] as $tab_name => $tab_options):
 		
 		// Individual Tab Container - Full Width
 		echo '<div id="'.$tab_name.'" class="sw-admin-tab sw-grid sw-col-940">';
@@ -185,8 +185,8 @@ function sw_build_options_page() {
 			if($option['type'] == 'image_upload'):
 			
 				// Fetch the value
-				if(isset($sw_user_options[$key])):
-					$value = $sw_user_options[$key];
+				if(isset($swp_user_options[$key])):
+					$value = $swp_user_options[$key];
 				else:
 					$value = $option['default'];
 				endif;
@@ -202,8 +202,8 @@ function sw_build_options_page() {
 				// Button goes in the middle
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<label for="upload_image">
-						<input class="sw_upload_image_field" type="text" size="36" name="'.$key.'" value="'.$value.'" /> 
-						<a class="sw_upload_image_button button sw-navy-button" for="'.$key.'" type="button" value="Upload Image" />Upload Image</a>
+						<input class="swp_upload_image_field" type="text" size="36" name="'.$key.'" value="'.$value.'" /> 
+						<a class="swp_upload_image_button button sw-navy-button" for="'.$key.'" type="button" value="Upload Image" />Upload Image</a>
 					</label>';
 				echo '</div>';
 				
@@ -239,10 +239,10 @@ function sw_build_options_page() {
 				echo '<div class="sw-active sw-buttons-sort">';
 				
 				// Check if we have saved settings to use
-				if( isset($sw_user_options['newOrderOfIcons'] ) ):
+				if( isset($swp_user_options['newOrderOfIcons'] ) ):
 				
 					// Loop through each active button
-					foreach($sw_user_options['newOrderOfIcons'] as $key => $value):
+					foreach($swp_user_options['newOrderOfIcons'] as $key => $value):
 						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 					endforeach;				
 				
@@ -272,11 +272,11 @@ function sw_build_options_page() {
 				echo '<div class="sw-inactive sw-buttons-sort">';
 
 				// Check if we have saved settings to use
-				if( isset($sw_user_options['newOrderOfIcons'] ) ):
+				if( isset($swp_user_options['newOrderOfIcons'] ) ):
 		
 					// Loop through each active button
 					foreach($option['content'] as $key => $value):
-						if(!isset($sw_user_options['newOrderOfIcons'][$key])):
+						if(!isset($swp_user_options['newOrderOfIcons'][$key])):
 							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 						endif;
 					endforeach;	
@@ -328,10 +328,10 @@ function sw_build_options_page() {
 			if($option['type'] == 'checkbox'):
 			
 				// Check for a default value
-				if(isset($sw_user_options[$key]) && $sw_user_options[$key] == true):
+				if(isset($swp_user_options[$key]) && $swp_user_options[$key] == true):
 					$status = 'on'; 
 					$selected = 'checked';
-				elseif(isset($sw_user_options[$key]) && $sw_user_options[$key] == false):
+				elseif(isset($swp_user_options[$key]) && $swp_user_options[$key] == false):
 					$status = 'off'; 
 					$selected = '';
 				elseif($option['default'] == true):
@@ -418,8 +418,8 @@ function sw_build_options_page() {
 ***************************************************************/
 			if($option['type'] == 'input' && $option['size'] == 'two-thirds'):
 
-				if(isset($sw_user_options[$key])):
-					$value = $sw_user_options[$key];
+				if(isset($swp_user_options[$key])):
+					$value = $swp_user_options[$key];
 				else:
 					$value = $option['default'];
 				endif;
@@ -434,8 +434,8 @@ function sw_build_options_page() {
 				
 			elseif($option['type'] == 'input' && $option['size'] == 'two-fourths'):
 
-				if(isset($sw_user_options[$key])):
-					$value = $sw_user_options[$key];
+				if(isset($swp_user_options[$key])):
+					$value = $swp_user_options[$key];
 				else:
 					$value = $option['default'];
 				endif;
@@ -463,14 +463,14 @@ function sw_build_options_page() {
 
 			if($option['type'] == 'select' && isset($option['secondary'])):
 
-				if(isset($sw_user_options[$option['primary']])):
-					$value = $sw_user_options[$option['primary']];
+				if(isset($swp_user_options[$option['primary']])):
+					$value = $swp_user_options[$option['primary']];
 				else:
 					$value = $option['default'];
 				endif;
 
-				if(isset($sw_user_options[$option['secondary']])):
-					$value2 = $sw_user_options[$option['secondary']];
+				if(isset($swp_user_options[$option['secondary']])):
+					$value2 = $swp_user_options[$option['secondary']];
 				else:
 					$value2 = $option['default_2'];
 				endif;
@@ -504,8 +504,8 @@ function sw_build_options_page() {
 				
 			elseif( $option['type'] == 'select' && $option['size'] == 'two-fourths' ):
 
-				if(isset($sw_user_options[$key])):
-					$value = $sw_user_options[$key];
+				if(isset($swp_user_options[$key])):
+					$value = $swp_user_options[$key];
 				else:
 					$value = $option['default'];
 				endif;
@@ -533,8 +533,8 @@ function sw_build_options_page() {
 				
 			elseif( $option['type'] == 'select' && $option['size'] == 'two-thirds' ):
 
-				if(isset($sw_user_options[$key])):
-					$value = $sw_user_options[$key];
+				if(isset($swp_user_options[$key])):
+					$value = $swp_user_options[$key];
 				else:
 					$value = $option['default'];
 				endif;
@@ -608,7 +608,7 @@ function sw_build_options_page() {
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				if(isset($sw_user_options[$option['dependant']]) && $sw_user_options[$option['dependant']] != ''):
+				if(isset($swp_user_options[$option['dependant']]) && $swp_user_options[$option['dependant']] != ''):
 					echo '<a class="button sw-green-button" href="'.$option['link'].'">Connected</a>';
 				else: 
 					echo '<a class="button sw-navy-button" href="'.$option['link'].'">Authenticate</a>';
@@ -628,13 +628,13 @@ function sw_build_options_page() {
 			if($option['type'] == 'plugin_registration'):
 				
 				// Begin Registration Wrapper
-				echo '<div class="registration-wrapper" registration="'.(is_sw_registered() ? '1' : '0').'">';
+				echo '<div class="registration-wrapper" registration="'.(is_swp_registered() ? '1' : '0').'">';
 				
 				// Registration Title
 				echo '<h2>Premium Registration</h2>';
 				
 				// Open the IS NOT REGISTERED container
-				echo '<div class="sw-grid sw-col-940 sw_is_not_registered">';
+				echo '<div class="sw-grid sw-col-940 swp_is_not_registered">';
 				
 				// The Warning Notice & Instructions
 				echo '<div class="sw-red-notice">This copy of Social Warfare is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.</div>';
@@ -643,14 +643,14 @@ function sw_build_options_page() {
 				
 				$homeURL = get_home_url();
 				$regCode = md5($homeURL);
-				if(isset($sw_user_options['emailAddress'])):
-					$email = $sw_user_options['emailAddress'];
+				if(isset($swp_user_options['emailAddress'])):
+					$email = $swp_user_options['emailAddress'];
 				else:
 					$email = '';
 				endif;
 				
-				if(isset($sw_user_options['premiumCode'])):
-					$premiumCode = $sw_user_options['premiumCode'];
+				if(isset($swp_user_options['premiumCode'])):
+					$premiumCode = $swp_user_options['premiumCode'];
 				else:
 					$premiumCode = '';
 				endif;
@@ -677,7 +677,7 @@ function sw_build_options_page() {
 
 
 				// Open the IS NOT REGISTERED container
-				echo '<div class="sw-grid sw-col-940 sw_is_registered">';
+				echo '<div class="sw-grid sw-col-940 swp_is_registered">';
 				
 				// The Warning Notice & Instructions
 				echo '<div class="sw-green-notice">This copy of Social Warfare is registered. Wah-hoo!</div>';
@@ -712,10 +712,10 @@ function sw_build_options_page() {
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
 
 				// Check for a default value
-				if(isset($sw_user_options['twitter_shares']) && $sw_user_options['twitter_shares'] == true):
+				if(isset($swp_user_options['twitter_shares']) && $swp_user_options['twitter_shares'] == true):
 					$status = 'on'; 
 					$selected = 'checked';
-				elseif(isset($sw_user_options['twitter_shares']) && $sw_user_options['twitter_shares'] == false):
+				elseif(isset($swp_user_options['twitter_shares']) && $swp_user_options['twitter_shares'] == false):
 					$status = 'off'; 
 					$selected = '';
 				else:
@@ -730,11 +730,11 @@ function sw_build_options_page() {
 				echo '<h2>Tweet Count Registration</h2>';
 				
 				// Open the IS NOT Activated container
-				echo '<div class="sw-grid sw-col-940 sw_tweets_not_activated" dep="twitter_shares" dep_val="[false]">';
+				echo '<div class="sw-grid sw-col-940 swp_tweets_not_activated" dep="twitter_shares" dep_val="[false]">';
 				
 				// The Warning Notice & Instructions
 				echo '<p class="sw-subtitle sw-registration-text">In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.</p>';
-				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
 				
 				
 				// Close the IS NOT ACTIVATED container
@@ -821,7 +821,7 @@ function sw_build_options_page() {
 			<tr><td><b>WordPress Version</b></td><td>'.get_bloginfo('version').'</td></tr>
 			<tr><td><b>PHP Version</b></td><td>'.phpversion().'</td></tr>
 			<tr><td><b>WP Memory Limit</b></td><td>'.WP_MEMORY_LIMIT.'</td></tr>
-			<tr><td><b>Social Warfare Version</b></td><td>'.SW_VERSION.'</td></tr>
+			<tr><td><b>Social Warfare Version</b></td><td>'.swp_VERSION.'</td></tr>
 			<tr><td><h2>Connection Statuses</h2></td><td></td></tr>
 			<tr><td><b>fsockopen</b></td><td>'.$fsockopen.'</td></tr>
 			<tr><td><b>cURL</b></td><td>'.$curl_status.'</td></tr>
@@ -842,9 +842,9 @@ function sw_build_options_page() {
 ***************************************************************/
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
-	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
-	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/starter-guide-300x150.jpg"></a>';
-	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="'.SW_PLUGIN_DIR.'/functions/admin-options-page/images/measure-roi-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/starter-guide-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/measure-roi-300x150.jpg"></a>';
 	echo '<p class="sw-support-notice sw-italic">Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.</a></p>';
 	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
 	echo '<a href="#" class="button sw-blue-button sw-system-status">Get System Status</a>';
@@ -869,8 +869,8 @@ function sw_build_options_page() {
 
 *********************************************************/
 
-add_action( 'wp_ajax_sw_store_settings', 'sw_store_the_settings' );
-function sw_store_the_settings() {
+add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
+function swp_store_the_settings() {
 	
 	// Access the database
 	global $wpdb;
@@ -909,8 +909,8 @@ function sw_store_the_settings() {
 
 *********************************************************/
 
-add_action( 'wp_ajax_sw_store_registration', 'sw_store_the_registration' );
-function sw_store_the_registration() {
+add_action( 'wp_ajax_swp_store_registration', 'swp_store_the_registration' );
+function swp_store_the_registration() {
 	
 	// Access the database
 	global $wpdb;
@@ -937,8 +937,8 @@ function sw_store_the_registration() {
 
 *********************************************************/
 
-add_action( 'wp_ajax_sw_delete_registration', 'sw_delete_the_registration' );
-function sw_delete_the_registration() {
+add_action( 'wp_ajax_swp_delete_registration', 'swp_delete_the_registration' );
+function swp_delete_the_registration() {
 	
 	// Access the database
 	global $wpdb;
@@ -957,11 +957,11 @@ function sw_delete_the_registration() {
 	
 }
 
-add_action( 'wp_ajax_sw_ajax_passthrough', 'sw_ajax_passthrough' );
-function sw_ajax_passthrough() {
+add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
+function swp_ajax_passthrough() {
 
 	// Pass the URL request via cURL	
-	$response = sw_file_get_contents_curl($_POST['url']);
+	$response = swp_file_get_contents_curl($_POST['url']);
 
 	// Echo the response to the screen
 	echo $response;

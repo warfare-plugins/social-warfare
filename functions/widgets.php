@@ -5,10 +5,10 @@
 	POPULAR POSTS WIDGET CLASS
 
 **************************************************************/
-class sw_popular_posts_widget extends WP_Widget {
+class swp_popular_posts_widget extends WP_Widget {
 
 	// Class Constructor
-	function sw_popular_posts_widget() {
+	function swp_popular_posts_widget() {
 		parent::__construct(false, $name = 'Social Warfare: Popular Posts' );
 	}
 	
@@ -72,13 +72,13 @@ class sw_popular_posts_widget extends WP_Widget {
 	} else {								$custom_link 	= '#000000'; }	
 		
 	// Fetch the Social Warfare Options
-	$options = sw_get_user_options();
+	$options = swp_get_user_options();
 	
 	// Fetch the networks that are active on this blog
 	$availableNetworks = $options['newOrderOfIcons'];
 
 	// Build the Widget Form
-	$form = '<div class="sw_popular_post_options">';	
+	$form = '<div class="swp_popular_post_options">';	
 	
 	// The Widget Title Field
 	$form .= '<p class="title">';
@@ -319,7 +319,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		
 		// Begin output of the widget html
 		echo $before_widget;
-		echo '<div class="widget-text sw_widget_box" style="'.$styles[$style]['wrapper'].'">';
+		echo '<div class="widget-text swp_widget_box" style="'.$styles[$style]['wrapper'].'">';
 		
 		// Check if title is set
 		if ( $title ) {
@@ -330,7 +330,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		if( $timeframe == 0 ):
 		
 			// Create the arguments for a query without a timeframe
-			$sw_args = array(
+			$swp_args = array(
 				'posts_per_page' 	=> $count,
 				'post_type' 		=> 'post',
 				'meta_key' 			=> '_'.$network,
@@ -342,7 +342,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		else:
 		
 			// Create the arguments for a query with a timeframe
-			$sw_args = array(
+			$swp_args = array(
 				'posts_per_page' 	=> $count,
 				'post_type' 		=> 'post',
 				'meta_key' 			=> '_'.$network,
@@ -359,7 +359,7 @@ class sw_popular_posts_widget extends WP_Widget {
 		wp_reset_postdata();
 		
 		// Query and fetch the posts
-		$swq = new WP_Query( $sw_args );
+		$swq = new WP_Query( $swp_args );
 		
 		// Begin the loop
 		if( $swq->have_posts() ) :
@@ -372,7 +372,7 @@ class sw_popular_posts_widget extends WP_Widget {
 				if($showCount == 'true'):
 					$postID = get_the_ID();
 					$shares = get_post_meta($postID,'_'.$network,true);
-					$share_html = '<span class="sw_pop_count">'.kilomega($shares).' '.$countLabel.'</span>';
+					$share_html = '<span class="swp_pop_count">'.swp_kilomega($shares).' '.$countLabel.'</span>';
 					
 				// If we are not supposed to show count numbers
 				else:
@@ -384,7 +384,7 @@ class sw_popular_posts_widget extends WP_Widget {
 					$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
 					$thumbnail_html = '';
 					$thumbnail_html .= '<a href="'.get_the_permalink().'">';
-					$thumbnail_html .= '<img style="width:'.$thumb_size.'px;height:'.$thumb_size.'px;" class="sw_pop_thumb" src="'.$thumbnail_url[0].'">';
+					$thumbnail_html .= '<img style="width:'.$thumb_size.'px;height:'.$thumb_size.'px;" class="swp_pop_thumb" src="'.$thumbnail_url[0].'">';
 					$thumbnail_html .= '</a>';
 					
 				// If we are not supposed to show thumbnails
@@ -393,11 +393,11 @@ class sw_popular_posts_widget extends WP_Widget {
 				endif;
 
 				// Generate the HTML for a link
-				$link_html = '<a style="font-size:'.$font_size.'%;'.$styles[$style]['links'].'" class="sw_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
+				$link_html = '<a style="font-size:'.$font_size.'%;'.$styles[$style]['links'].'" class="swp_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
 				
 				// Output the post to the site
-				echo '<div class="sw_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
-				echo '<div class="sw_clearfix"></div>';
+				echo '<div class="swp_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
+				echo '<div class="swp_clearfix"></div>';
 				
 			// End the loop
 			endwhile;
@@ -411,5 +411,5 @@ class sw_popular_posts_widget extends WP_Widget {
 }
 
 // Register the Widget
-add_action('widgets_init', create_function('', 'return register_widget("sw_popular_posts_widget");'));
+add_action('widgets_init', create_function('', 'return register_widget("swp_popular_posts_widget");'));
 

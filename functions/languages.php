@@ -7,7 +7,7 @@
 *																						*
 *****************************************************************************************/
 
-add_filter('sw_languages','sw_en_language',0);
+add_filter('swp_languages','swp_en_language',0);
 
 /****************************************************************************************
 *																						*
@@ -15,7 +15,7 @@ add_filter('sw_languages','sw_en_language',0);
 *																						*
 *****************************************************************************************/
 
-function sw_en_language($language) {
+function swp_en_language($language) {
 		
 	$language['googlePlus'] 	= '+1';
 	$language['twitter'] 		= 'Tweet';
@@ -44,9 +44,9 @@ function sw_en_language($language) {
 *****************************************************************************************/
 
 // Add the terms to the buttons
-add_filter('sw_languages','sw_de_language');
-function sw_de_language($language) {
-	if(sw_get_single_option('language') == 'de'):
+add_filter('swp_languages','swp_de_language');
+function swp_de_language($language) {
+	if(swp_get_single_option('language') == 'de'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Twittern';
 		$language['facebook']		= 'Teilen';
@@ -64,9 +64,9 @@ function sw_de_language($language) {
 *****************************************************************************************/
 
 // Add the terms to the buttons
-add_filter('sw_languages','sw_ru_language');
-function sw_ru_language($language) {
-	if(sw_get_single_option('language') == 'ru'):
+add_filter('swp_languages','swp_ru_language');
+function swp_ru_language($language) {
+	if(swp_get_single_option('language') == 'ru'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tвитнуть';
 		$language['facebook']		= 'Поделиться';
@@ -84,9 +84,9 @@ function sw_ru_language($language) {
 *****************************************************************************************/
 
 // Add the terms to the buttons
-add_filter('sw_languages','sw_uk_language');
-function sw_uk_language($language) {
-	if(sw_get_single_option('language') == 'uk'):
+add_filter('swp_languages','swp_uk_language');
+function swp_uk_language($language) {
+	if(swp_get_single_option('language') == 'uk'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tвітнути';
 		$language['facebook']		= 'Поділитися';
@@ -104,9 +104,9 @@ function sw_uk_language($language) {
 *****************************************************************************************/
 
 // Add the terms to the buttons
-add_filter('sw_languages','sw_nl_language');
-function sw_nl_language($language) {
-	if(sw_get_single_option('language') == 'nl'):
+add_filter('swp_languages','swp_nl_language');
+function swp_nl_language($language) {
+	if(swp_get_single_option('language') == 'nl'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Twitteren';
 		$language['facebook']		= 'Delen';
@@ -124,9 +124,9 @@ function sw_nl_language($language) {
 *****************************************************************************************/
 
 // Add the terms to the buttons
-add_filter('sw_languages','sw_fr_language');
-function sw_fr_language($language) {
-	if(sw_get_single_option('language') == 'fr'):
+add_filter('swp_languages','swp_fr_language');
+function swp_fr_language($language) {
+	if(swp_get_single_option('language') == 'fr'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tweetez';
 		$language['facebook']		= 'Partagez';
@@ -144,9 +144,9 @@ function sw_fr_language($language) {
 *****************************************************************************************/
 
 // Add the terms to the buttons
-add_filter('sw_languages','sw_pt_language');
-function sw_pt_language($language) {
-	if(sw_get_single_option('language') == 'pt'):
+add_filter('swp_languages','swp_pt_language');
+function swp_pt_language($language) {
+	if(swp_get_single_option('language') == 'pt'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tweetar';
 		$language['facebook']		= 'Partilhar';
@@ -169,9 +169,9 @@ function sw_pt_language($language) {
 *																						*
 *****************************************************************************************/
 // Add the terms to the buttons
-add_filter('sw_languages','sw_da_language');
-function sw_da_language($language) {
-	if(sw_get_single_option('language') == 'da'):
+add_filter('swp_languages','swp_da_language');
+function swp_da_language($language) {
+	if(swp_get_single_option('language') == 'da'):
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tweet';
 		$language['facebook']		= 'Del';
@@ -194,9 +194,9 @@ function sw_da_language($language) {
 *																						*
 *****************************************************************************************/
 // Add the terms to the buttons
-add_filter('sw_languages','sw_it_language');
-function sw_it_language($language) {
-	if(sw_get_single_option('language') == 'it'):
+add_filter('swp_languages','swp_it_language');
+function swp_it_language($language) {
+	if(swp_get_single_option('language') == 'it'):
 		$language['googlePlus'] 	= '+1'; 
 		$language['twitter'] 		= 'Twitta'; 
 		$language['facebook']		= 'Condividi'; 

@@ -35,14 +35,14 @@ function recursive_array_search($needle,$haystack) {
 *          CACHe CHECKING FUNCTION         			 			 *
 *                                                                *
 ******************************************************************/
-function sw_is_cache_fresh( $postID , $output=false , $ajax=false ) {
+function swp_is_cache_fresh( $postID , $output=false , $ajax=false ) {
 
 	// Fetch the Options
-	$options 			= sw_get_user_options();
+	$options 			= swp_get_user_options();
 
 	// Check if output is being forced or if legacy caching is enabled
 	if($output == false && $options['cacheMethod'] != 'legacy'):
-		if(isset($_GET['sw_cache']) && $_GET['sw_cache'] == 'rebuild'):
+		if(isset($_GET['swp_cache']) && $_GET['swp_cache'] == 'rebuild'):
 			$freshCache = false;
 		else:
 			$freshCache = true;
@@ -55,7 +55,7 @@ function sw_is_cache_fresh( $postID , $output=false , $ajax=false ) {
 		else { $hours = 12; }
 
 		$time = floor(((date('U')/60)/60));
-		$lastChecked = get_post_meta($postID,'sw_cache_timestamp',true);
+		$lastChecked = get_post_meta($postID,'swp_cache_timestamp',true);
 
 		// Check if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED
 		if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])):
@@ -74,7 +74,7 @@ function sw_is_cache_fresh( $postID , $output=false , $ajax=false ) {
 }
 
 
-function sw_disable_subs() { return false; };
+function swp_disable_subs() { return false; };
 /*****************************************************************
 
 THE SHARE BUTTONS FUNCTION:
@@ -111,7 +111,7 @@ function social_warfare_buttons($array = array()) {
 		$postID = get_the_ID();
 	endif;
 
-	$options = sw_get_user_options();
+	$options = swp_get_user_options();
 
 	// Check to see if display location was specifically defined for this post
 	$specWhere = get_post_meta($postID,'nc_postLocation',true);
@@ -180,16 +180,16 @@ function social_warfare_buttons($array = array()) {
 			// Fetch the share counts
 			$buttonsArray['shares'] = get_social_warfare_shares($postID);
 
-			// Pass the sw_options into the array so we can pass it into the filter
+			// Pass the swp_options into the array so we can pass it into the filter
 			$buttonsArray['options'] = $options;
 
 			// Customize which buttosn we're going to display
 			if( isset ( $array['buttons'] ) ):
 			
 				// Fetch the global names and keys
-				$sw_options = array();
-				$sw_available_options = apply_filters('sw_options',$sw_options);
-				$available_buttons = $sw_available_options['options']['sw_display']['buttons']['content'];
+				$swp_options = array();
+				$swp_available_options = apply_filters('swp_options',$swp_options);
+				$available_buttons = $swp_available_options['options']['swp_display']['buttons']['content'];
 
 				// Split the comma separated list into an array
 				$button_set_array = explode(',', $array['buttons']);
@@ -214,7 +214,7 @@ function social_warfare_buttons($array = array()) {
 				if(array_search('Total',$button_set_array)) $buttonsArray['buttons']['totes'] = 'Total';
 			endif;
 			
-			// Setup the buttons array to pass into the 'sw_network_buttons' hook
+			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
 			if( 	( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] && !isset($array['buttons']) )
@@ -230,17 +230,17 @@ function social_warfare_buttons($array = array()) {
 			endif;
 
 			// This array will contain the HTML for all of the individual buttons
-			$buttonsArray = apply_filters( 'sw_network_buttons' , $buttonsArray );
+			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 			
 			// Create the social panel
-			$assets = '<div class="nc_socialPanel sw_'.$options['visualTheme'].' sw_d_'.$options['dColorSet'].' sw_i_'.$options['iColorSet'].' sw_o_'.$options['oColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
+			$assets = '<div class="nc_socialPanel swp_'.$options['visualTheme'].' swp_d_'.$options['dColorSet'].' swp_i_'.$options['iColorSet'].' swp_o_'.$options['oColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
 
 			// Setup the total shares count if it's on the left
 			if( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($array['buttons'] ) ) 
 			|| 	($options['swTotesFormat'] == 'totesAltLeft' && isset($array['buttons']) && isset($array['buttons']['totes']) && $buttonsArray['totes'] >= $options['minTotes'] ) ):
 				++$buttonsArray['count'];
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="'.$buttonsArray['count'].'" >';
-				$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.__('Shares','social-warfare').'</span></span>';
+				$assets .= '<span class="swp_count">'.swp_kilomega($buttonsArray['totes']).' <span class="swp_label">'.__('Shares','social-warfare').'</span></span>';
 				$assets .= '</div>';
 			endif;
 
@@ -272,11 +272,11 @@ function social_warfare_buttons($array = array()) {
 				++$buttonsArray['count'];
 				if($options['swTotesFormat'] == 'totes'):
 					$assets .= '<div class="nc_tweetContainer totes" data-id="'.$buttonsArray['count'].'" >';
-					$assets .= '<span class="sw_count">'.kilomega($buttonsArray['totes']).' <span class="sw_label">'.__('Shares','social-warfare').'</span></span>';
+					$assets .= '<span class="swp_count">'.swp_kilomega($buttonsArray['totes']).' <span class="swp_label">'.__('Shares','social-warfare').'</span></span>';
 					$assets .= '</div>';
 				else:
 					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="'.$buttonsArray['count'].'" >';
-					$assets .= '<span class="sw_count"><span class="sw_label">'.__('Shares','social-warfare').'</span> '.kilomega($buttonsArray['totes']).'</span>';
+					$assets .= '<span class="swp_count"><span class="swp_label">'.__('Shares','social-warfare').'</span> '.swp_kilomega($buttonsArray['totes']).'</span>';
 					$assets .= '</div>';
 				endif;
 			endif;
@@ -285,9 +285,9 @@ function social_warfare_buttons($array = array()) {
 			$assets .= '</div>';
 
 			// Reset the cache timestamp if needed
-			if(sw_is_cache_fresh($postID) == false):
-				delete_post_meta($postID,'sw_cache_timestamp');
-				update_post_meta($postID,'sw_cache_timestamp',floor(((date('U')/60)/60)));
+			if(swp_is_cache_fresh($postID) == false):
+				delete_post_meta($postID,'swp_cache_timestamp');
+				update_post_meta($postID,'swp_cache_timestamp',floor(((date('U')/60)/60)));
 			endif;
 			
 			if($array['genesis']):
