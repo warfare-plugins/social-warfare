@@ -487,6 +487,16 @@ p.sw-subtitle.sw-registration-text {
 	background-color: #6bcce9;
 	border-color: #6bcce9;
 }
+.sw-hacker_news-icon:before { content: 'D'; }
+.sw-s.sw-hacker_news-icon {
+	background-color: #f16522;
+	border-color: #d85623;
+}
+.sw-flipboard-icon:before { content: 'C'; }
+.sw-s.sw-flipboard-icon {
+	background-color: #e02828;
+	border-color: #bf2626;
+}
 @media screen and (max-width: 1350px) {
 	.sw-header-menu li {
 		font-size:12px;

@@ -25,7 +25,7 @@ jQuery(document).on('click','.nc_tweet, a.swp_CTT',function(event) {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 		href = jQuery(this).attr("data-link");
 		href = href.replace("’","'");
-		if (jQuery(this).hasClass("pinterest") || jQuery(this).hasClass("buffer_link"))
+		if (jQuery(this).hasClass("pinterest") || jQuery(this).hasClass("buffer_link") || jQuery(this).hasClass("flipboard"))
 		{
 			height = 550;
 			width = 775;
@@ -793,7 +793,7 @@ jQuery(document).ready(function() {
 })(jQuery);
 jQuery(document).ready( function() {
 	setTimeout( function() {
-		if(swp_pinit == true) {
+		if(typeof swp_pinit != 'undefined' && swp_pinit == true) {
 			jQuery('.sw-content-locator').parent().find('img').each( function() {
 				if( !jQuery(this).parent('a').length ) {
 					jQuery(this).pinit();	

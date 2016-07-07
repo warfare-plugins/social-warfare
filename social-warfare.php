@@ -61,6 +61,8 @@ require_once $pluginDir  . '/functions/social-networks/email.php';
 require_once $pluginDir  . '/functions/social-networks/whatsapp.php';
 require_once $pluginDir  . '/functions/social-networks/pocket.php';
 require_once $pluginDir  . '/functions/social-networks/buffer.php';
+require_once $pluginDir  . '/functions/social-networks/hackernews.php';
+require_once $pluginDir  . '/functions/social-networks/flipboard.php';
 
 
 /*****************************************************************

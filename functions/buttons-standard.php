@@ -36,7 +36,7 @@ function recursive_array_search($needle,$haystack) {
 *                                                                *
 ******************************************************************/
 function swp_is_cache_fresh( $postID , $output=false , $ajax=false ) {
-
+	return false;
 	// Fetch the Options
 	$options 			= swp_get_user_options();
 
