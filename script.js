@@ -697,7 +697,7 @@ function swp_init_share_buttons() {
 
 jQuery(document).ready(function() {
 	jQuery(window).resize(function() {
-		if(jQuery('.nc_socialPanel:hover').length) { } else {
+		if(jQuery('.nc_socialPanel').length && jQuery('.nc_socialPanel:hover').length !== 0) { } else {
 			setTimeout( function() {
 				window.swp_adjust = 1;
 				swp_init_share_buttons();

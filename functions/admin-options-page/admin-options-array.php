@@ -367,12 +367,12 @@
 				'default' => 'fullColor',
 				'premium'	=> true
 			),
-			'maximum_width' => array(
-				'type'		=> 'input',
-				'size'		=> 'two-fourths',
-				'name'		=> 'Maximum Width',
-				'premium'	=> true
-			),
+			//'maximum_width' => array(
+			//	'type'		=> 'input',
+			//	'size'		=> 'two-fourths',
+			//	'name'		=> 'Maximum Width',
+			//	'premium'	=> true
+			//),
 			'customColor' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-fourths',
