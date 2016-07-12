@@ -151,13 +151,13 @@
 
 		$swp_options['options']['swp_display']['pinit_title'] = array(
 			'type' 		=> 'title',
-			'content' 	=> 'Image Hover Pinit Button',
+			'content' 	=> 'Image Hover Pin Button',
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_description'] = array(
 			'type' 		=> 'paragraph',
-			'content' 	=> 'If you would like a "Pin It" button to appear on images when users hover over them, activate this.',
+			'content' 	=> 'If you would like a "Pin" button to appear on images when users hover over them, activate this.',
 			'premium'	=> true
 		);
 		
@@ -659,6 +659,7 @@
 			'social_identity_divider' => array(
 				'type'		=> 'divider'
 			),
+			/*
 			'social_authentication_title' => array(
 				'type' 		=> 'title',
 				'content'	=> 'Social Authentication'
@@ -681,7 +682,7 @@
 				'type'		=> 'authentication',
 				'link'		=> '#',
 				'name'		=> 'Connect Your Google Account'
-			)
+			) */
 			
 		);
 		
