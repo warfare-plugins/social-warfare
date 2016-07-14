@@ -960,8 +960,7 @@ add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
 function swp_ajax_passthrough() {
 
 	// Pass the URL request via cURL	
-	$response = swp_file_get_contents_curl($_POST['url']);
-
+	$response = swp_file_get_contents_curl(urldecode($_POST['url']));
 	// Echo the response to the screen
 	echo $response;
 

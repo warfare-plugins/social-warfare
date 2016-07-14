@@ -87,8 +87,3 @@
 		return $array;
 
 	};
-
-
-
-
-https://share.flipboard.com/bookmarklet/popout?v=2&title=Tools%20-%20Flipboard&url=

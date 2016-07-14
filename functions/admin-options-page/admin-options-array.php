@@ -234,14 +234,18 @@
 		);
 		
 		$raw_tags = get_terms( array('taxonomy' => 'post_tag' , 'hide_empty' => false ) );
-		foreach ( $raw_tags as $tag ):
-			$tags[$tag->slug] = $tag->name;
-		endforeach;
+		if( !empty( $raw_tags ) ):
+			foreach ( $raw_tags as $tag ):
+				$tags[$tag->slug] = $tag->name;
+			endforeach;
+		endif;
 		
 		$raw_cats = get_terms( array('taxonomy' => 'category' , 'hide_empty' => false ) );
-		foreach ( $raw_cats as $cat ):
-			$cats[$cat->slug] = $cat->name;
-		endforeach;
+		if( !empty ( $raw_cats ) ):
+			foreach ( $raw_cats as $cat ):
+				$cats[$cat->slug] = $cat->name;
+			endforeach;
+		endif;
 		
 		$swp_options['options']['swp_display']['yummly_terms'] = array(
 			'type'		=> 'select',
