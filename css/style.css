@@ -209,10 +209,10 @@ a.sw-pinit-button{background:#cd2029;color:#fff;border:1px solid #aa1b29;font-si
 a.sw-pinit-button:before{color:#fff;font-family:sw-icon-font;content:'b';margin-right:10px;margin-left:-5px;font-size:24px;float:left;line-height:1;}
 a.sw-pinit-button:hover{background:#aa1b29;}
 .sw-pinit-left{left:30px;}
-.sw-pinit-center{left:50%;margin-left:-40px;}
+.sw-pinit-center{left:50%;margin-left:-60px;}
 .sw-pinit-right{right:30px;}
 .sw-pinit-top{top:30px;}
-.sw-pinit-middle{top:50%;margin-top:-16px;}
+.sw-pinit-middle{top:50%;margin-top:-25px;}
 .sw-pinit-bottom{bottom:30px;}
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-last-child(1),.mobile .nc_tweetContainer:nth-last-child(2),.nc_tweetContainer.totes:nth-last-child(1){margin-right:0;}
 .nc_socialPanel.swp_d_fullColor a,html body .nc_socialPanel.swp_i_fullColor .nc_tweetContainer:hover a,body .nc_socialPanel.swp_o_fullColor:hover a,.nc_socialPanel.swp_d_lightGray a,html body .nc_socialPanel.swp_i_lightGray .nc_tweetContainer:hover a,body .nc_socialPanel.swp_o_lightGray:hover a,.nc_socialPanel.swp_d_mediumGray a,html body .nc_socialPanel.swp_i_mediumGray a:hover,body .nc_socialPanel.swp_o_mediumGray:hover a,.nc_socialPanel.swp_d_darkGray a,html body .nc_socialPanel.swp_i_darkGray a:hover,body .nc_socialPanel.swp_o_darkGray:hover a{color:white;}

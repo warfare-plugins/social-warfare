@@ -69,22 +69,28 @@
 			endif;
 
 			$i = 0;
-			if($options['orderOfIconsSelect'] == 'manual'):
-				foreach($options['newOrderOfIcons'] as $thisIcon => $status):
-					if(isset($buttonsArray['resource'][$thisIcon])):
-						$assets .= $buttonsArray['resource'][$thisIcon];
-						++$i;
+			// Sort the buttons according to the user's preferences
+			if(isset($buttonsArray) && isset($buttonsArray['buttons'])):
+				foreach($buttonsArray['buttons'] as $key=>$value):
+					if(isset($buttonsArray['resource'][$key]) && $i < 5):
+						$assets .= $buttonsArray['resource'][$key];
 					endif;
-					if ($i == 5) break;
+					++$i;
 				endforeach;
-			elseif($options['orderOfIconsSelect'] == 'dynamicCount'):
+			elseif($options['orderOfIconsSelect'] == 'manual'):
+				foreach($options['newOrderOfIcons'] as $key => $value):
+					if(isset($buttonsArray['resource'][$key]) && $i < 5):
+						$assets .= $buttonsArray['resource'][$key];
+					endif;
+					++$i;
+				endforeach;
+			elseif($options['orderOfIconsSelect'] == 'dynamic'):
 				arsort($buttonsArray['shares']);
 				foreach($buttonsArray['shares'] as $thisIcon => $status):
-					if(isset($buttonsArray['resource'][$thisIcon])):
+					if(isset($buttonsArray['resource'][$thisIcon]) && $i < 5):
 						$assets .= $buttonsArray['resource'][$thisIcon];
-						++$i;
 					endif;
-					if ($i == 5) break;
+					++$i;
 				endforeach;
 			endif;
 

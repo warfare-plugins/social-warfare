@@ -1,3 +1,4 @@
+jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
 (function(jQuery) {
     var uniqueCntr = 0;
     jQuery.fn.scrolled = function (waitTime, fn) {
@@ -40,7 +41,7 @@ jQuery(document).on('click','.nc_tweet, a.swp_CTT',function(event) {
 	};
 });
 function isOdd(num) { return num % 2;}
-jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
+
 
 // Function to check if the buttons are on one line or two
 
@@ -79,7 +80,8 @@ function swp_button_size_check() {
 			}
 		
 		});
-		if(not_inline == true) {
+		if (typeof window.swp_adjust == 'undefined') { window.swp_adjust = 0 }
+		if(not_inline == true && window.swp_adjust <= 20) {
 			swSetWidths(true,true);	
 		} else {
 			jQuery('.nc_socialPanel').css({opacity:1});	
@@ -706,7 +708,9 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery( document.body ).on( 'post-load', function () {
-    	swp_init_share_buttons();
+		setTimeout( function() {
+    		swp_init_share_buttons();
+		} , 100 );
 	} );
 
 	if(jQuery('.nc_socialPanelSide').length) {
@@ -716,7 +720,9 @@ jQuery(document).ready(function() {
 		jQuery('.nc_socialPanelSide').css({'top':newPosition+'px'});
 	}
 
-	swp_init_share_buttons();
+	setTimeout( function() {
+		swp_init_share_buttons();
+	} , 100 );
 
 	// Reset the cache
 	if (typeof swp_cache_url != 'undefined') {
@@ -763,6 +769,8 @@ jQuery(document).ready(function() {
              		pi_desc = e.attr('title') ? e.attr('title') : e.attr('alt'),
              		pi_isvideo = 'false';
              		bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + encodeURI(pi_desc);
+					css = jQuery(this).css(["float","margin","padding","height","width"]);
+					console.log(css);
 					
 				var eHeight = e.outerHeight();
 				var eWidth = e.outerWidth();
@@ -770,6 +778,8 @@ jQuery(document).ready(function() {
 				if(eHeight > 200 && eWidth > 100) {
 				
 						e.wrap(o.wrap);
+						e.parent('.sw-pinit').css(css);
+						e.css({"margin":0});
 						e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
 					
 					jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
@@ -794,10 +804,10 @@ jQuery(document).ready(function() {
 jQuery(document).ready( function() {
 	setTimeout( function() {
 		if(typeof swp_pinit != 'undefined' && swp_pinit == true) {
-			jQuery('.sw-content-locator').parent().find('img').each( function() {
-				if( !jQuery(this).parent('a').length ) {
+			jQuery('.swp-content-locator').parent().find('img').each( function() {
+				//if( !jQuery(this).parent('a').length ) {
 					jQuery(this).pinit();	
-				};
+				//};
 			});
 		};
 	} , 1000 );

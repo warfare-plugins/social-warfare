@@ -22,7 +22,7 @@ function swp_admin_options_page() {
 	
 	// Hook into the CSS and Javascript Enqueue process for this specific page
 	add_action( 'admin_print_styles-' . $swp_menu, 'swp_admin_options_css' );
-	add_action( 'admin_print_scripts-'. $swp_menu, 'swp_admin_options_js' );
+	add_action( 'admin_print_scripts-'. $swp_menu, 'swp_admin_options_js');
 }
 
 /***************************************************************
@@ -44,7 +44,7 @@ function swp_admin_options_js() {
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'jquery-ui-tooltip' );
 	wp_enqueue_media();
-    wp_enqueue_script( 'swp_admin_options_js', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array() , swp_VERSION );
+    wp_enqueue_script( 'swp_admin_options_js', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array('jquery') , swp_VERSION );
 }
 
 /***************************************************************
@@ -146,7 +146,7 @@ function swp_build_options_page() {
 ***************************************************************/
 			
 			if($option['type'] == 'title'):
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<h2>'.$option['content'].'</h2>';
 				echo '<div class="sw-premium-blocker" title="test"></div>';
 				echo '</div>';
@@ -159,7 +159,7 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'paragraph'):
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<p class="sw-subtitle">'.$option['content'].'</p>';
 				echo '<div class="sw-premium-blocker no-icon"></div>';
 				echo '</div>';
@@ -191,7 +191,7 @@ function swp_build_options_page() {
 				endif;
 			
 				// Create a whole parent container
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				
 				// Title goes on the left
 				echo '<div class="sw-grid sw-col-300">';
@@ -353,7 +353,7 @@ function swp_build_options_page() {
 				// Check for three-fourths-advanced size
 				elseif($option['size'] == 'two-thirds-advanced'):
 
-					echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+					echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 
 					echo '<div class="two-thirds-advanced">';
 					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['title'].'</h2><p class="sw-subtext-label">'.$option['description'].'</p></div>';
@@ -390,9 +390,9 @@ function swp_build_options_page() {
 				// All others
 				else:
 					
-					echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+					echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
 						
-					if($options['header'] == true):
+					if(isset($option['header']) && $option['header'] == true):
 						echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['content'].'</h2></div>';
 					else:
 						echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';
@@ -423,9 +423,9 @@ function swp_build_options_page() {
 					$value = $option['default'];
 				endif;
 
-				echo '<div class="sw-grid sw-col-940 sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="'.$option['default'].'" value="'.$value.'" /></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" '.(isset($option['default']) ? 'placeholder="'.$option['default'].'"' : '').' value="'.$value.'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '<div class="sw-clearfix"></div>';
@@ -447,7 +447,7 @@ function swp_build_options_page() {
 					$fit = '';
 				endif;
 
-				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$value.'" /></div>';
 				echo '<div class="sw-premium-blocker"></div>';
@@ -474,7 +474,7 @@ function swp_build_options_page() {
 					$value2 = $option['default_2'];
 				endif;
 				
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 							
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
@@ -517,7 +517,7 @@ function swp_build_options_page() {
 					$fit = '';
 				endif;
 			
-				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-460 sw-fit"><select name="'.$key.'">';
 				if(!isset($option['default'])):
@@ -538,7 +538,7 @@ function swp_build_options_page() {
 					$value = $option['default'];
 				endif;
 
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 
 
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
@@ -564,7 +564,7 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'column_labels'):
-				if($option['columns'] == 3):echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				if($option['columns'] == 3):echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">'.$option['column_1'].'</p></div>';
 					echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">'.$option['column_2'].'</p></div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short sw-no-padding">'.$option['column_3'].'</p></div>';
@@ -591,7 +591,7 @@ function swp_build_options_page() {
 
 			if($option['type'] == 'html'):
 			
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo $option['content'];
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '<div class="sw-clearfix"></div></div>';
@@ -604,7 +604,7 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'authentication'):
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
 				if(isset($swp_user_options[$option['dependant']]) && $swp_user_options[$option['dependant']] != ''):
@@ -708,7 +708,7 @@ function swp_build_options_page() {
 
 			if($option['type'] == 'tweet_counts'):
 
-				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 
 				// Check for a default value
 				if(isset($swp_user_options['twitter_shares']) && $swp_user_options['twitter_shares'] == true):
@@ -763,11 +763,11 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			// Add a divider element if necessary
-			if($option['divider'] == true):
+			if(isset($option['divider']) && $option['divider'] == true):
 				echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
 			endif;
 
-			if($option['size'] != 'two-fourths'):
+			if(isset($option['size']) && $option['size'] != 'two-fourths'):
 				$last_size = '';
 			endif;
 

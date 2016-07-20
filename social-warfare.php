@@ -3,7 +3,7 @@
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 2.0.2
+Version: 2.0.3
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 Text Domain: social-warfare
@@ -13,7 +13,7 @@ Text Domain: social-warfare
 *   VERSION AND DIRECTORIES							             *
 *                                                                *
 ******************************************************************/
-$pluginVersion = '2.0.2';
+$pluginVersion = '2.0.3';
 define( 'swp_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
@@ -132,34 +132,19 @@ function swp_localize_admin_scripts() {
 add_action('admin_enqueue_scripts', 'swp_localize_admin_scripts');
 
 // Add the Social Warfare Content Filter
-$theme = wp_get_theme();
-if($theme->get('Name') == 'Genesis' || $theme->parent()->Name == 'Genesis'):
-	add_action('genesis_entry_content','social_warfare_genesis_wrapper_top');
-	add_action('genesis_entry_footer','social_warfare_genesis_wrapper_bottom');
-else:
-	add_filter('the_content','social_warfare_wrapper',200);
-	add_filter('the_excerpt','social_warfare_wrapper');
-endif;
+add_filter('the_content','social_warfare_wrapper',200);
+add_filter('the_excerpt','social_warfare_wrapper');
 
 function social_warfare_wrapper($content) {
 	$array['content'] = $content;
 	$content = social_warfare_buttons($array);
-	$content .= '<div class="sw-content-locator"></div>';
+	$content .= '<div class="swp-content-locator"></div>';
 	return $content;
-}
-function social_warfare_genesis_wrapper_top() {
-	$array['genesis'] = 'above';
-	echo social_warfare_buttons($array);
-	echo '<div class="sw-content-locator"></div>';
-}
-function social_warfare_genesis_wrapper_bottom() {
-	$array['genesis'] = 'below';
-	echo social_warfare_buttons($array);
 }
 function social_warfare($array = array()) {
 	$array['devs'] = true;
 	$content = social_warfare_buttons($array);
-	$content .= '<div class="sw-content-locator"></div>';
+	$content .= '<div class="swp-content-locator"></div>';
 	return $content;
 }
 
@@ -268,10 +253,10 @@ function swp_activate_registration_cron() {
 }
 
 // Deactivate the Cron Job
-function socal_warfare_deactivation() {
-	wp_clear_scheduled_hook('swp_check_registration_event');
-}
-register_deactivation_hook(__FILE__, 'social_warfare_deactivation');
+//function socal_warfare_deactivation() {
+//	wp_clear_scheduled_hook('swp_check_registration_event');
+//}
+//register_deactivation_hook(__FILE__, 'social_warfare_deactivation');
 
 // Dump the cache timestamp when the post is saved
 function swp_reset_cache_timestamp( $post_id ) {

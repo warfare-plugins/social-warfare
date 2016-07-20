@@ -36,7 +36,7 @@ function recursive_array_search($needle,$haystack) {
 *                                                                *
 ******************************************************************/
 function swp_is_cache_fresh( $postID , $output=false , $ajax=false ) {
-	return false;
+	
 	// Fetch the Options
 	$options 			= swp_get_user_options();
 
@@ -290,7 +290,7 @@ function social_warfare_buttons($array = array()) {
 				update_post_meta($postID,'swp_cache_timestamp',floor(((date('U')/60)/60)));
 			endif;
 			
-			if($array['genesis']):
+			if(isset($array['genesis'])):
 				if($array['where']	== 'below' && $array['genesis'] == 'below'):
 					return $assets;
 				elseif($array['where'] 	== 'above' && $array['genesis'] == 'above'):

@@ -1006,7 +1006,7 @@ jQuery(document).ready(function() {
 
 	// Register the plugin
 
-	jQuery('#register-plugin').on('click',function(e) {
+	jQuery('#register-plugin').on('click',function(event) {
 
 		
 
@@ -1138,12 +1138,11 @@ jQuery(document).ready(function() {
 
 *******************************************************/
 
-	jQuery('#unregister-plugin').on('click',function(e) {
+	jQuery('#unregister-plugin').on('click',function(event) {
 
 		
 
 		// Block the default action
-
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
 

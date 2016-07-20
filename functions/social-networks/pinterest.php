@@ -69,7 +69,7 @@
 			$array['resource']['pinterest'] = $_GLOBALS['sw']['buttons'][$array['postID']]['pinterest'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif( ($array['options']['newOrderOfIcons']['pinterest'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['pinterest']))  ):
+		elseif( (isset($array['options']['newOrderOfIcons']['pinterest']) && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['pinterest']))  ):
 
 			$array['totes'] += $array['shares']['pinterest'];
 			++$array['count'];

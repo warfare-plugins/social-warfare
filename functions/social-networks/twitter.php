@@ -111,7 +111,7 @@
 			$array['resource']['twitter'] = $_GLOBALS['sw']['buttons'][$array['postID']]['twitter'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif( ($array['options']['newOrderOfIcons']['twitter'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['twitter']))  ):
+		elseif( (isset($array['options']['newOrderOfIcons']['twitter']) && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['twitter']))  ):
 
 			$array['totes'] += $array['shares']['twitter'];
 			++$array['count'];

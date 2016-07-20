@@ -85,7 +85,7 @@
 			$array['resource']['reddit'] = $_GLOBALS['sw']['buttons'][$array['postID']]['reddit'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif( ($array['options']['newOrderOfIcons']['reddit'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['reddit']))  ):
+		elseif( (isset($array['options']['newOrderOfIcons']['reddit']) && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['reddit']))  ):
 			
 			if(isset($array['shares']['reddit'])):
 				$array['totes'] += $array['shares']['reddit'];

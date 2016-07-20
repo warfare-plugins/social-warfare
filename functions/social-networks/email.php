@@ -60,7 +60,7 @@
 	add_filter('swp_network_buttons', 'swp_email_button_html',10);
 	function swp_email_button_html($array) {
 
-		if( ($array['options']['newOrderOfIcons']['email'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['email']))  ):
+		if( (isset($array['options']['newOrderOfIcons']['email']) && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['email']))  ):
 
 			// Collect the Title
 			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );

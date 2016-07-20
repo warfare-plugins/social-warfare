@@ -20,7 +20,29 @@ function swp_cache_rebuild() {
 		$_GET['swp_cache'] = 'rebuild';
 
 		// Fetch new shares
-		$shares = get_social_warfare_shares( $post_id );
+		$shares 		= get_social_warfare_shares( $post_id );
+		
+		// Update Bitly links
+		foreach ( $shares as $key => $value):
+			swp_process_url( get_permalink($post_id) , $key , $post_id );
+		endforeach;
+
+		// Update the Pinterest image
+		$array['imageID'] = get_post_meta( $post_id , 'nc_pinterestImage' , true );
+		if($array['imageID']):
+			$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
+			delete_post_meta($post_id,'swp_pinterest_image_url');
+			update_post_meta($post_id,'swp_pinterest_image_url',$array['imageURL']);
+		endif;
+
+		// Update the Twitter username
+		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , swp_get_author($post_id));
+		if($user_twitter_handle):
+			delete_post_meta($post_id,'swp_twitter_username');
+			update_post_meta($post_id,'swp_twitter_username',$user_twitter_handle);
+		else:
+			delete_post_meta($post_id,'swp_twitter_username');
+		endif;
 
 		// Update the cache timestamp
 		delete_post_meta( $post_id , 'swp_cache_timestamp' );

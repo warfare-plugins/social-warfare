@@ -60,7 +60,7 @@
 	add_filter('swp_network_buttons', 'swp_flipboard_button_html',10);
 	function swp_flipboard_button_html($array) {
 
-		if( ($array['options']['newOrderOfIcons']['flipboard'] && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['flipboard']))  ):
+		if( (isset($array['options']['newOrderOfIcons']['flipboard']) && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['flipboard']))  ):
 
 			// Collect the Title
 			$title = get_post_meta( $array['postID'] , 'nc_ogTitle' , true );

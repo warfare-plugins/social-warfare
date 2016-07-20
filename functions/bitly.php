@@ -110,10 +110,10 @@ function swp_bitly_shortener( $array ) {
 
 			// If Google Analytics is NOT activated....
 			else:
-
 				// If the cache is fresh or if the API has failed already....
 				if(swp_is_cache_fresh($postID) == true || (isset($_GLOBALS['bitly_status']) && $_GLOBALS['bitly_status'] == 'failure')):
 
+				
 					// If we have a shortened URL in the cache....
 					$existingURL = get_post_meta($postID,'bitly_link',true);
 					if($existingURL):
