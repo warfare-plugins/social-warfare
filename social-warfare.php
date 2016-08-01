@@ -47,6 +47,7 @@ require_once $pluginDir  . '/functions/share-count-function.php';
 require_once $pluginDir  . '/functions/cache-rebuild.php';
 require_once $pluginDir  . '/functions/header-meta-tags.php';
 require_once $pluginDir  . '/functions/profile-fields.php';
+require_once $pluginDir  . '/functions/media-options.php';
 // Networks
 require_once $pluginDir  . '/functions/social-networks/googlePlus.php';
 require_once $pluginDir  . '/functions/social-networks/twitter.php';

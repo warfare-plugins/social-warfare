@@ -773,8 +773,8 @@ jQuery(document).ready(function() {
 					
 				var eHeight = e.outerHeight();
 				var eWidth = e.outerWidth();
-				
-				if(eHeight > 200 && eWidth > 100) {
+				console.log(sw_pinit_min_width);
+				if(eHeight >= sw_pinit_min_height && eWidth >= sw_pinit_min_width) {
 				
 						e.wrap(o.wrap);
 						e.parent('.sw-pinit').css(css).css({display:"block"});

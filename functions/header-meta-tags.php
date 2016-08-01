@@ -694,7 +694,7 @@ function swp_footer_functions() {
 ******************************************************************/
 function swp_pinit($info) {
 	if($info['swp_user_options']['pinit_toggle'] == true && is_swp_registered()):
-		$info['footer_output'] .= 'swp_pinit=true;swp_pinit_h_location="'.$info['swp_user_options']['pinit_location_horizontal'].'";swp_pinit_v_location="'.$info['swp_user_options']['pinit_location_vertical'].'";';
+		$info['footer_output'] .= 'swp_pinit=true; swp_pinit_h_location="'.$info['swp_user_options']['pinit_location_horizontal'].'"; swp_pinit_v_location="'.$info['swp_user_options']['pinit_location_vertical'].'"; sw_pinit_min_width='.str_replace('px','',$info['swp_user_options']['pinit_min_width']).'; sw_pinit_min_height='.str_replace('px','',$info['swp_user_options']['pinit_min_height']).';';
 	else:
 		$info['footer_output'] .= 'swp_pinit=false;';
 	endif;

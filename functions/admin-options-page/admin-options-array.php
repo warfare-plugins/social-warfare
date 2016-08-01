@@ -178,7 +178,17 @@
 				'right' 	=> 'Right'
 			),
 			'default'	=> 'center',
-			'size'		=> 'two-thirds',
+			'size'		=> 'two-fourths',
+			'premium'	=> true,
+			'dep' 		=> 'pinit_toggle',
+			'dep_val'	=> array(true)
+		);
+		
+		$swp_options['options']['swp_display']['pinit_min_width'] = array(
+			'type'		=> 'input',
+			'name'		=> 'Min Width',
+			'default'	=> '200',
+			'size'		=> 'two-fourths',
 			'premium'	=> true,
 			'dep' 		=> 'pinit_toggle',
 			'dep_val'	=> array(true)
@@ -193,7 +203,17 @@
 				'bottom' 	=> 'Bottom'
 			),
 			'default'	=> 'top',
-			'size'		=> 'two-thirds',
+			'size'		=> 'two-fourths',
+			'premium'	=> true,
+			'dep' 		=> 'pinit_toggle',
+			'dep_val'	=> array(true)
+		);
+		
+		$swp_options['options']['swp_display']['pinit_min_height'] = array(
+			'type'		=> 'input',
+			'name'		=> 'Min Height',
+			'default'	=> '200',
+			'size'		=> 'two-fourths',
 			'premium'	=> true,
 			'dep' 		=> 'pinit_toggle',
 			'dep_val'	=> array(true)
