@@ -240,6 +240,9 @@ add_action( 'pre_get_posts', 'swp_social_shares_orderby' );
 add_filter('manage_edit-post_sortable_columns', 'makeSocialSharesSortable');
 add_filter('manage_posts_columns', 'createSocialSharesColumn');
 add_action('manage_posts_custom_column', 'populateSocialSharesColumn', 10, 2);
+add_filter('manage_edit-page_sortable_columns', 'makeSocialSharesSortable');
+add_filter('manage_page_posts_columns', 'createSocialSharesColumn');
+add_action('manage_page_posts_custom_column', 'populateSocialSharesColumn', 10, 2);
 /*****************************************************************
 *                                                                *
 *   REGISTRATION CRON JOBS										 *
