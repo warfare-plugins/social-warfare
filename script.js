@@ -770,7 +770,6 @@ jQuery(document).ready(function() {
              		pi_isvideo = 'false';
              		bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + encodeURI(pi_desc);
 					css = jQuery(this).css(["float","margin","padding","height","width"]);
-					console.log(css);
 					
 				var eHeight = e.outerHeight();
 				var eWidth = e.outerWidth();
@@ -778,7 +777,7 @@ jQuery(document).ready(function() {
 				if(eHeight > 200 && eWidth > 100) {
 				
 						e.wrap(o.wrap);
-						e.parent('.sw-pinit').css(css);
+						e.parent('.sw-pinit').css(css).css({display:"block"});
 						e.css({"margin":0});
 						e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
 					
