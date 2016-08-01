@@ -452,6 +452,30 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$value.'" /></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
+				
+			elseif($option['type'] == 'input' && isset($option['secondary'])):
+
+				if(isset($swp_user_options[$option['primary']])):
+					$value = $swp_user_options[$option['primary']];
+				elseif(isset($option['default'])):
+					$value = $option['default'];
+				endif;
+
+				if(isset($swp_user_options[$option['secondary']])):
+					$value2 = $swp_user_options[$option['secondary']];
+				elseif(isset($option['default'])):
+					$value2 = $option['default_2'];
+				endif;
+				
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
+							
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="'.$key.'" type="text" class="sw-admin-input" '.(isset($option['default']) ? 'placeholder="'.$option['default'].'"' : '').' value="'.$value.'" /></div>';
+				echo '<div class="sw-grid sw-col-300 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" '.(isset($option['default2']) ? 'placeholder="'.$option['default2'].'"' : '').' value="'.$value2.'" /></div>';
+				
+				echo '<div class="sw-premium-blocker"></div>';
+				echo '</div>';
+				
 			endif;
 
 /***************************************************************
