@@ -93,7 +93,11 @@ $swp_user_options = swp_get_user_options();
 add_action( 'wp_enqueue_scripts', 'enqueueSocialWarfareScripts' );
 function enqueueSocialWarfareScripts() {
 	global $swp_user_options;
-	wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),swp_VERSION);
+	if(isset($_GET['swp_script']) && $_GET['swp_script'] == 'Full'):
+		wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.js',array( 'jquery' ),swp_VERSION);
+	else:
+		wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),swp_VERSION);
+	endif;
 	wp_register_style( 'social_warfare', swp_PLUGIN_DIR.'/css/style.css',array(),swp_VERSION );
 	wp_enqueue_style( 'social_warfare' );
 }
