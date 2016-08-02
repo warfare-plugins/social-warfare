@@ -772,7 +772,8 @@ function swp_pinit_button() {
 				e.wrap(o.wrap);
 				e.parent('.sw-pinit').css(css).css({display:"block"});
 				e.css({"margin":0});
-				e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
+				e.before('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
+				e.css({position:'absolute'});
 			
 			jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
 				window.open(jQuery(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');				
@@ -780,9 +781,9 @@ function swp_pinit_button() {
 			});
 			
 			jQuery('.sw-pinit').mouseenter(function () {
-				jQuery(this).children('.sw-pinit-overlay').fadeIn(200);
+				jQuery(this).children('.sw-pinit-overlay').show();
 			}).mouseleave(function () {
-				jQuery(this).children('.sw-pinit-overlay').fadeOut(200);
+				jQuery(this).children('.sw-pinit-overlay').hide();
 			});
 		};
 		

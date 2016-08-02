@@ -456,7 +456,7 @@
 				'description' 	=> 'If you would like to activate floating share buttons, turn this on.',
 				'size'			=> 'four-fourths'
 			),
-			'total_counts_description' => array(
+			'total_floating_description' => array(
 				'type' 		=> 'paragraph',
 				'content' 	=> 'If you would like to activate floating share buttons, turn this on.'
 			),
