@@ -206,8 +206,8 @@ span.swp_pop_count{font-size:70%;display:block;}
 .sw-pinit{position:relative;display:inline-block;padding:0;}
 .sw-pinit:hover img {opacity:0.5;transition:all 0.5s;}
 .sw-pinit .sw-pinit-overlay{position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background:#000000;display:none;padding:0;}
-a.sw-pinit-button{background:#cd2029;color:#fff;border:1px solid #aa1b29;font-size:20px;border-radius:4px;position:absolute;line-height:1;padding:10px 30px;z-index:200;}
-a.sw-pinit-button:before{color:#fff;font-family:sw-icon-font;content:'b';margin-right:10px;margin-left:-5px;font-size:24px;float:left;line-height:1;}
+a.sw-pinit-button{background:#cd2029;color:#fff;border:1px solid #aa1b29;font-size:20px;border-radius:4px;position:absolute;line-height:1;padding:10px 30px;z-index:200;height:50px;line-height:25px;}
+a.sw-pinit-button:before{color:#fff;font-family:sw-icon-font;content:'b';margin-right:10px;margin-left:-5px;font-size:24px;float:left;line-height:30px}
 a.sw-pinit-button:hover{background:#aa1b29;}
 .sw-pinit-left{left:30px;}
 .sw-pinit-center{left:50%;margin-left:-60px;}

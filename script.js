@@ -772,7 +772,7 @@ function swp_pinit_button() {
 				e.wrap(o.wrap);
 				e.parent('.sw-pinit').css(css).css({display:"block"});
 				e.css({"margin":0});
-				e.before('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
+				e.before('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Save</a></span>');
 				e.css({position:'absolute'});
 			
 			jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
