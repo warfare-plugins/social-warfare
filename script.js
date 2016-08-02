@@ -74,7 +74,6 @@ function swp_button_size_check() {
 				last_label = 'Second Last';
 			}
 			
-			// console.log(first_label+': '+first_button.top +' <=> '+ last_label+': '+last_button.top);
 			if(first_button.top != last_button.top) {
 				not_inline = true;	
 			}
@@ -139,8 +138,7 @@ function swSetWidths(resize,adjust,secondary) {
 				window.swp_adjust = 0;	
 			};
 			var totalWidth  = jQuery(this).width() - window.swp_adjust;
-			// console.log(window.swp_adjust);
-			// console.log('Total Width: '+totalWidth);
+
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
 
@@ -745,69 +743,57 @@ jQuery(document).ready(function() {
 
 ****************************************************************************/
 
-(function(jQuery){
-	
-    //Attach this new method to jQuery
-    jQuery.fn.extend({ 
-         
-        pinit: function(options) {
+function swp_pinit_button() {
  
-			var defaults = {
-				wrap: '<span class="sw-pinit"/>',
-				pageURL: document.URL
-			} ;
- 			
- 			var options = jQuery.extend(defaults, options);
-			var o = options; 
+	var defaults = {
+		wrap: '<span class="sw-pinit"/>',
+		pageURL: document.URL
+	} ;
+	
+	var options = jQuery.extend(defaults, options);
+	var o = options; 
+	
+	//Iterate over the current set of matched elements
+	jQuery('.swp-content-locator').parent().find('img').each( function() {
+		
+		var e = jQuery(this),
+			pi_media = e.data('media') ? e.data('media') : e[0].src,
+			pi_url = o.pageURL,
+			pi_desc = e.attr('title') ? e.attr('title') : e.attr('alt'),
+			pi_isvideo = 'false';
+			bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + encodeURI(pi_desc);
+			css = jQuery(this).css(["float","margin","padding","height","width"]);
 			
-            //Iterate over the current set of matched elements
-            return this.each(function() {
-				
-             	var e = jQuery(this),
-             		pi_media = e.data('media') ? e.data('media') : e[0].src,
-             		pi_url = o.pageURL,
-             		pi_desc = e.attr('title') ? e.attr('title') : e.attr('alt'),
-             		pi_isvideo = 'false';
-             		bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + encodeURI(pi_desc);
-					css = jQuery(this).css(["float","margin","padding","height","width"]);
-					
-				var eHeight = e.outerHeight();
-				var eWidth = e.outerWidth();
-				console.log(sw_pinit_min_width);
-				if(eHeight >= sw_pinit_min_height && eWidth >= sw_pinit_min_width) {
-				
-						e.wrap(o.wrap);
-						e.parent('.sw-pinit').css(css).css({display:"block"});
-						e.css({"margin":0});
-						e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
-					
-					jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
-						window.open(jQuery(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');				
-						return false;
-					});
-					
-					jQuery('.sw-pinit').mouseenter(function () {
-						jQuery(this).children('.sw-pinit-overlay').fadeIn(200);
-					}).mouseleave(function () {
-						jQuery(this).children('.sw-pinit-overlay').fadeOut(200);
-					});
-				};
-				
-            });
-      
-        }
-        
-    });
+		var eHeight = e.outerHeight();
+		var eWidth = e.outerWidth();
+		
+		if(eHeight >= sw_pinit_min_height && eWidth >= sw_pinit_min_width) {
+		
+				e.wrap(o.wrap);
+				e.parent('.sw-pinit').css(css).css({display:"block"});
+				e.css({"margin":0});
+				e.after('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Pin</a></span>');
+			
+			jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
+				window.open(jQuery(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');				
+				return false;
+			});
+			
+			jQuery('.sw-pinit').mouseenter(function () {
+				jQuery(this).children('.sw-pinit-overlay').fadeIn(200);
+			}).mouseleave(function () {
+				jQuery(this).children('.sw-pinit-overlay').fadeOut(200);
+			});
+		};
+		
+	});
 
-})(jQuery);
+}
+
 jQuery(document).ready( function() {
 	setTimeout( function() {
 		if(typeof swp_pinit != 'undefined' && swp_pinit == true) {
-			jQuery('.swp-content-locator').parent().find('img').each( function() {
-				//if( !jQuery(this).parent('a').length ) {
-					jQuery(this).pinit();	
-				//};
-			});
+			swp_pinit_button();
 		};
 	} , 1000 );
 });
