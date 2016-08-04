@@ -796,5 +796,5 @@ jQuery(document).ready( function() {
 		if(typeof swp_pinit != 'undefined' && swp_pinit == true) {
 			swp_pinit_button();
 		};
-	} , 1000 );
+	} , 500 );
 });

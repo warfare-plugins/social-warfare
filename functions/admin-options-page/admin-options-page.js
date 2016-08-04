@@ -1008,70 +1008,68 @@ jQuery(document).ready(function() {
 
 	jQuery('#register-plugin').on('click',function(event) {
 
-		
-
 		// Block the default action
-
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-
-
 		// The loading screen
-
 		swp_loading_screen();
 
 
 
 		// Fetch all the registration values
-
 		var regCode = jQuery('input[name="regCode"]').val();
-
 		var email = jQuery('input[name="emailAddress"]').val();
-
 		var domain = jQuery('input[name="domain"]').val();
 
-		
-
 		// Create the ajax URL
-
 		url = 'https://warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 
-		
-
 		ajax_data = {
-
 			'action':'swp_ajax_passthrough',
-
 			'url':url
-
 		}
 
-		
-
 		// Ping the home server to create a registration log
-
 		jQuery.post( ajaxurl, ajax_data, function( data ) {
 
-			
-
 			// Parse the JSON response
-
 			var object = jQuery.parseJSON(data);
-
 			
+			// If the cURL request failed, let's attempt CORS
+			if(object == 0) {
+			
+				console.log('cURL request failed. Attempting CORS request.');
+				jQuery.get( url , function( data ) {
+					
+					var object = jQuery.parseJSON(data);
+					console.log('CORS request status: '+object['status']);
+					jQuery('input[name="premiumCode"]').val(object['premiumCode']);
 
+					// Prepare data
+					var data = {
+						action: 'swp_store_registration',
+						premiumCode: object['premiumCode']
+					};
+	
+					// Send the response to admin-ajax.php
+					jQuery.post(ajaxurl, data, function(response) {
+	
+						// Clear the loading screen
+						swp_clear_loading_screen();
+	
+						// Toggle the registration display
+						jQuery('.registration-wrapper').attr('registration','1');
+						jQuery('.sw-admin-wrapper').attr('sw-registered','1');
+	
+					});
+				});
+			
 			// If the response was a failure...
-
-			if(object['status'] == 'failure') {
-
-				
+			} else if(object['status'] == 'failure') {
 
 				// Alert the failure status
-
 				alert('Failure: '+object['message']);
-
-				
-
+		
 				// Clear the loading screen
 
 				swp_clear_loading_screen();

@@ -11,7 +11,13 @@
 		$swp_user_options = get_option('socialWarfareOptions');
 		
 		// Create a Registration Code from the Domain Name
-		$regCode = md5(get_home_url());
+		if ( function_exists('icl_get_home_url') ) :
+			$domain = icl_get_home_url();
+		else:
+			$domain = get_home_url();
+		endif;
+		
+		$regCode = md5($domain);
 		
 		// If the Premium Code is currently set....
 		if(isset($swp_user_options['premiumCode']) && md5($regCode) == $swp_user_options['premiumCode']):

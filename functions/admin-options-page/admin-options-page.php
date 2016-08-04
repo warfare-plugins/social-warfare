@@ -664,7 +664,11 @@ function swp_build_options_page() {
 				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
 				
-				$homeURL = get_home_url();
+				if ( function_exists('icl_get_home_url') ) :
+					$homeURL = icl_get_home_url();
+				else:
+					$homeURL = get_home_url();
+				endif;
 				$regCode = md5($homeURL);
 				if(isset($swp_user_options['emailAddress'])):
 					$email = $swp_user_options['emailAddress'];
