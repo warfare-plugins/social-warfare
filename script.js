@@ -716,7 +716,7 @@ jQuery(document).ready(function() {
 		var windowHeight = jQuery(window).height();
 		var newPosition = (windowHeight / 2) - (buttonsHeight / 2);
 		jQuery('.nc_socialPanelSide').css({'top':newPosition+'px'});
-	}
+	};
 
 	setTimeout( function() {
 		swp_init_share_buttons();
@@ -732,9 +732,9 @@ jQuery(document).ready(function() {
 		// If the URL does not contain a question mark already
 		} else {
 			var url_params = '?swp_cache=rebuild';
-		}
+		};
 		jQuery.get(swp_cache_url + url_params);
-	}
+	};
 });
 
 /****************************************************************************
