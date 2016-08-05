@@ -69,47 +69,77 @@
 		// If not, let's check if Yummly is activated and create the button HTML
 		elseif( (isset($array['options']['newOrderOfIcons']['yummly']) && !isset($array['buttons'])) || (isset($array['buttons']) && isset($array['buttons']['yummly']))  ):
 
-			$array['totes'] += $array['shares']['yummly'];
-			++$array['count'];
+			if( 
+				
+				// If a category is set and this post is in that category
+				(
+					isset($array['options']['yummly_categories']) 
+					&& $array['options']['yummly_categories'] != '' 
+					&& in_category($array['options']['yummly_categories'] , $array['postID'])
+				)
+				
+				||
+				
+				// If a tag is set and this post is in that tag
+				(
+					isset($array['options']['yummly_tags']) 
+					&& $array['options']['yummly_tags'] != '' 
+					&& has_tag($array['options']['yummly_tags'] , $array['postID'])
+				)
+				
+				||
+				
+				// If no tags or categories have been set
+				( 
+					!isset($array['options']['yummly_tags']) && !isset($array['options']['yummly_categories']) ||
+				 	$array['options']['yummly_categories'] == '' && $array['options']['yummly_tags'] == ''
+				)
+				
+				):
 
-			// Let's create a title
-			if(get_post_meta( $array['postID'] , 'nc_ogTitle' , true )):
-
-				// If the user defined an social media title, let's use it.
-				$title = urlencode(urldecode(get_post_meta( $array['postID'] , 'nc_ogTitle' , true )));
-
-			else:
-
-				// Otherwise we'll use the default post title
-				$title = urlencode(urldecode(get_the_title()));
+				$array['totes'] += $array['shares']['yummly'];
+				++$array['count'];
+	
+				// Let's create a title
+				if(get_post_meta( $array['postID'] , 'nc_ogTitle' , true )):
+	
+					// If the user defined an social media title, let's use it.
+					$title = urlencode(urldecode(get_post_meta( $array['postID'] , 'nc_ogTitle' , true )));
+	
+				else:
+	
+					// Otherwise we'll use the default post title
+					$title = urlencode(urldecode(get_the_title()));
+	
+				endif;
+	
+				if(get_post_meta($array['postID'],'swp_open_graph_image_url')):
+					$image = urlencode(urldecode(get_post_meta($array['postID'],'swp_open_graph_image_url',true)));
+				else:
+					$image = urlencode(urldecode(get_post_meta($array['postID'],'swp_open_thumbnail_url',true)));
+				endif;
+	
+				$array['resource']['yummly'] = '<div class="nc_tweetContainer swp_yummly" data-id="'.$array['count'].'" data-network="yummly">';
+				// $link = urlencode(urldecode(swp_process_url( $array['url'] , 'yummly' , $array['postID'] )));
+				$link = $array['url'];
+				$array['resource']['yummly'] .= '<a target="_blank" href="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" data-link="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" class="nc_tweet">';
+				if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['yummly'] > 0):
+					$array['resource']['yummly'] .= '<span class="iconFiller">';
+					$array['resource']['yummly'] .= '<span class="spaceManWilly">';
+					$array['resource']['yummly'] .= '<i class="sw sw-yummly"></i>';
+					$array['resource']['yummly'] .= '<span class="swp_share"> '.__('Yum','social-warfare').'</span>';
+					$array['resource']['yummly'] .= '</span></span>';
+					$array['resource']['yummly'] .= '<span class="swp_count">'.swp_kilomega($array['shares']['yummly']).'</span>';
+				else:
+					$array['resource']['yummly'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="swp_share"> '.__('Yum','social-warfare').'</span></span></span></span>';
+				endif;
+				$array['resource']['yummly'] .= '</a>';
+				$array['resource']['yummly'] .= '</div>';
+	
+				// Store these buttons so that we don't have to generate them for each set
+				$_GLOBALS['sw']['buttons'][$array['postID']]['yummly'] = $array['resource']['yummly'];
 
 			endif;
-
-			if(get_post_meta($array['postID'],'swp_open_graph_image_url')):
-				$image = urlencode(urldecode(get_post_meta($array['postID'],'swp_open_graph_image_url',true)));
-			else:
-				$image = urlencode(urldecode(get_post_meta($array['postID'],'swp_open_thumbnail_url',true)));
-			endif;
-
-			$array['resource']['yummly'] = '<div class="nc_tweetContainer swp_yummly" data-id="'.$array['count'].'" data-network="yummly">';
-			// $link = urlencode(urldecode(swp_process_url( $array['url'] , 'yummly' , $array['postID'] )));
-			$link = $array['url'];
-			$array['resource']['yummly'] .= '<a target="_blank" href="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" data-link="http://www.yummly.com/urb/verify?url='.$link.'&title='.$title.'&image='.$image.'&yumtype=button" class="nc_tweet">';
-			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['yummly'] > 0):
-				$array['resource']['yummly'] .= '<span class="iconFiller">';
-				$array['resource']['yummly'] .= '<span class="spaceManWilly">';
-				$array['resource']['yummly'] .= '<i class="sw sw-yummly"></i>';
-				$array['resource']['yummly'] .= '<span class="swp_share"> '.__('Yum','social-warfare').'</span>';
-				$array['resource']['yummly'] .= '</span></span>';
-				$array['resource']['yummly'] .= '<span class="swp_count">'.swp_kilomega($array['shares']['yummly']).'</span>';
-			else:
-				$array['resource']['yummly'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-yummly"></i><span class="swp_share"> '.__('Yum','social-warfare').'</span></span></span></span>';
-			endif;
-			$array['resource']['yummly'] .= '</a>';
-			$array['resource']['yummly'] .= '</div>';
-
-			// Store these buttons so that we don't have to generate them for each set
-			$_GLOBALS['sw']['buttons'][$array['postID']]['yummly'] = $array['resource']['yummly'];
 
 		endif;
 

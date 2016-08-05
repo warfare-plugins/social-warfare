@@ -240,7 +240,7 @@
 
 		$swp_options['options']['swp_display']['yummly_cat_description'] = array(
 			'type' 		=> 'paragraph',
-			'content' 	=> 'If you would like the Yummly to display on a specific category or tag, choose it below.',
+			'content' 	=> 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.',
 			'premium'	=> true
 		);
 		

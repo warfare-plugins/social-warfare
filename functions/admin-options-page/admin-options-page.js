@@ -252,7 +252,7 @@ function swp_fetch_all_options() {
 
 	});
 
-		
+	console.log(values);
 
 	return values;
 
