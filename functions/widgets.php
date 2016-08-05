@@ -8,7 +8,7 @@
 class swp_popular_posts_widget extends WP_Widget {
 
 	// Class Constructor
-	function swp_popular_posts_widget() {
+	function __construct() {
 		parent::__construct(false, $name = 'Social Warfare: Popular Posts' );
 	}
 	
