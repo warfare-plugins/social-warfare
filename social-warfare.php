@@ -3,7 +3,7 @@
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 2.0.3
+Version: 2.0.4
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 Text Domain: social-warfare
@@ -13,7 +13,7 @@ Text Domain: social-warfare
 *   VERSION AND DIRECTORIES							             *
 *                                                                *
 ******************************************************************/
-$pluginVersion = '2.0.3';
+$pluginVersion = '2.0.4';
 define( 'swp_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
@@ -47,7 +47,7 @@ require_once $pluginDir  . '/functions/share-count-function.php';
 require_once $pluginDir  . '/functions/cache-rebuild.php';
 require_once $pluginDir  . '/functions/header-meta-tags.php';
 require_once $pluginDir  . '/functions/profile-fields.php';
-require_once $pluginDir  . '/functions/media-options.php';
+// require_once $pluginDir  . '/functions/media-options.php';
 // Networks
 require_once $pluginDir  . '/functions/social-networks/googlePlus.php';
 require_once $pluginDir  . '/functions/social-networks/twitter.php';
