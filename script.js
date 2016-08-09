@@ -456,9 +456,9 @@ function floatingBarReveal() {
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if(floatOption == 'floatBottom') {
-					jQuery('body').animate({'padding-bottom': body_padding_bottom+'px'}, 0);
+					jQuery('body').animate({'padding-bottom': window.body_padding_bottom+'px'}, 0);
 				} else if (floatOption == 'floatTop') {
-					jQuery('body').animate({'padding-top': body_padding_top+'px'}, 0);
+					jQuery('body').animate({'padding-top': window.body_padding_top+'px'}, 0);
 				};
 
 			} else {
@@ -468,10 +468,10 @@ function floatingBarReveal() {
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if(floatOption == 'floatBottom') {
-					new_padding = body_padding_bottom + 50;
+					new_padding = window.body_padding_bottom + 50;
 					jQuery('body').animate({'padding-bottom': new_padding+'px'}, 0);
 				} else if (floatOption == 'floatTop') {
-					new_padding = body_padding_top + 50;
+					new_padding = window.body_padding_top + 50;
 					jQuery('body').animate({'padding-top': new_padding+'px'}, 0);
 				};
 			};
@@ -675,9 +675,6 @@ function swApplyScale() {
 
 function swp_init_share_buttons() {
 
-	// Fetch the padding amount to make space later for the floating bars
-	window['body_padding_top'] = jQuery('body').css('padding-top').replace('px','');
-	window['body_padding_bottom'] = jQuery('body').css('padding-bottom').replace('px','');
 	if(jQuery('.nc_socialPanel').length) {
 		swApplyScale();
 		jQuery.when( 
@@ -696,6 +693,11 @@ function swp_init_share_buttons() {
 }
 
 jQuery(document).ready(function() {
+
+	// Fetch the padding amount to make space later for the floating bars
+	window.body_padding_top = parseInt(jQuery('body').css('padding-top').replace('px',''));
+	window.body_padding_bottom = parseInt(jQuery('body').css('padding-bottom').replace('px',''));
+
 	jQuery(window).resize(function() {
 		if(jQuery('.nc_socialPanel').length && jQuery('.nc_socialPanel:hover').length !== 0) { } else {
 			setTimeout( function() {
