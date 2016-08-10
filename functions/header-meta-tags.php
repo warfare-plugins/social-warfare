@@ -307,17 +307,20 @@
 
 							// If the user defined an image, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$info['imageURL'].'" />';
+							$image_output = true;
 
 						elseif(isset($yoast_og_image) && $yoast_og_image):
 
 							// If the user defined an image over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$yoast_og_image.'" />';
-
+							$image_output = true;
+							
 						else:
 
 							// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
 							$og_image = get_post_meta( $info['postID'] , 'swp_open_thumbnail_url' , true );
 							if($og_image):
+								$image_output = true;
 								$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$og_image.'" />';
 							endif;
 
@@ -327,12 +330,12 @@
 						*     OPEN GRAPH IMAGE DIMENSIONS						         *
 						*                                                                *
 						******************************************************************/
-						if($info['image_data']):
+						if($info['image_data'] && isset($image_output) && $image_output == true):
 						
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
 						
-						elseif(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true )):
+						elseif(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) && isset($image_output) && $image_output == true):
 						
 							$info['image_data'] = json_decode(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ));
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
