@@ -763,9 +763,10 @@ function swp_pinit_button() {
 		var e = jQuery(this),
 			pi_media = e.data('media') ? e.data('media') : e[0].src,
 			pi_url = o.pageURL,
-			pi_desc = e.attr('title') ? e.attr('title') : e.attr('alt'),
+			pi_desc = e.attr('title') ? encodeURIComponent(e.attr('title')) : encodeURIComponent(e.attr('alt')),
 			pi_isvideo = 'false';
-			bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + encodeURI(pi_desc);
+			console.log(pi_desc);
+			bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + pi_desc;
 			css = jQuery(this).css(["float","margin","padding","height","width"]);
 			
 		var eHeight = e.outerHeight();
