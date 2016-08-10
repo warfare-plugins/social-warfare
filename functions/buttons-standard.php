@@ -196,6 +196,11 @@ function social_warfare_buttons($array = array()) {
 				
 				// Match the names in the list to their appropriate system-wide keys
 				foreach($button_set_array as $button):
+				
+					// Trim the network name in case of white space
+					$button = trim($button);
+					
+					// Convert the names to their systme-wide keys
 					if( recursive_array_search( $button , $available_buttons ) ) :
 						$key = recursive_array_search( $button , $available_buttons );
 						
