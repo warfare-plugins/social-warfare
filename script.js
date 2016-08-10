@@ -138,7 +138,7 @@ function swSetWidths(resize,adjust,secondary) {
 				window.swp_adjust = 0;	
 			};
 			var totalWidth  = jQuery(this).width() - window.swp_adjust;
-
+			
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
 
@@ -272,6 +272,7 @@ function swSetWidths(resize,adjust,secondary) {
 				if(jQuery(this).hasClass('nc_floater')) {
 					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
 					var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
+					float_index_origin = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
 					jQuery(this).replaceWith(firstSocialPanel.outerHTML());
 					width = firstSocialPanel.outerWidth(true);
 					offset = firstSocialPanel.offset();
@@ -281,7 +282,7 @@ function swSetWidths(resize,adjust,secondary) {
 							'left':offset.left
 						});
 					activateHoverStates();
-					window.origSets['float'] = window.origSets[0];
+					window.origSets['float'] = window.origSets[float_index_origin];
 				} else {
 					jQuery(this).find('.nc_tweetContainer').not('.totesalt').each(function() {
 
@@ -367,7 +368,7 @@ function swSetWidths(resize,adjust,secondary) {
 
 function createFloatBar() {
 	if(!jQuery('.nc_wrapper .nc_socialPanel').length && !jQuery('.nc_socialPanelSide').length) {
-		var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first(); console.log(firstSocialPanel);
+		var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
 		var index = jQuery('.nc_socialPanel').index(firstSocialPanel);
 		var floatOption = firstSocialPanel.attr('data-float');
 		if(floatOption) {
