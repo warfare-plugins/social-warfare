@@ -185,3 +185,25 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 2.0.4 (9 August 2016) =
+
+*Added:*
+
+* Image Hover Pin Button applies to linked images.
+* Added minimum dimensions for Image Hover Pin Button.
+* Pinterest image and Twitter handles now included in cache rebuild process.
+* Social shares column to Pages tab in WordPress.
+* Changing Pin button to "Save" and added Pin icon on hover.
+* Yummly Category and Tags function now operational.
+* PHP7 compatibility.
+
+*Bugs:*
+
+* Button ordering on floating buttons now able to sort dynamically again.
+* Image Hover Pin Button image alignment fix.
+* Cleaned out false PHP error and undefined index notices.
+* Image Hover Pin Button no longer hinders image saving.
+* WPML compatibility.
+* Abracadabra and your invisible buttons have reappeared!
+* Extra whitespace issue being seen by some sites resolved.
