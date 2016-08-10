@@ -32,6 +32,20 @@ function recursive_array_search($needle,$haystack) {
 }
 /*****************************************************************
 *                                                                *
+*          A Function to get the current URL of a page 			 *
+*                                                                *
+******************************************************************/
+function swp_get_current_url() {
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+    $pageURL .= "://";
+    $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+
+    return $pageURL;
+}
+
+/*****************************************************************
+*                                                                *
 *          CACHe CHECKING FUNCTION         			 			 *
 *                                                                *
 ******************************************************************/
@@ -118,29 +132,37 @@ function social_warfare_buttons($array = array()) {
 	if( !$specWhere ) { $specWhere = 'default'; };
 	
 	if($array['where'] == 'default'):
-		if($specWhere == 'default' || $specWhere == ''):
-			if( is_singular() ):
-				$postType = get_post_type($postID);
-				if(isset($options['location_'.$postType])):
-					$array['where'] = $options['location_'.$postType];
+	
+		// If we are on a single page or post
+		if( is_singular() && !is_home() && !is_archive() ):
+		
+			// Make sure this is the main loop
+			if( get_permalink( $postID ) == swp_get_current_url() ) :
+		
+				// Check if a specific display value has not been set for this specific post
+				if($specWhere == 'default' || $specWhere == ''):
+					$postType = get_post_type($postID);
+					if(isset($options['location_'.$postType])):
+						$array['where'] = $options['location_'.$postType];
+					else:
+						$array['where'] = 'none';
+					endif;
 				else:
-					$array['where'] = 'none';
+					$array['where'] = $specWhere;
 				endif;
+		
+			// If it's not the main loop
 			else:
-				//$postType = get_post_type($postID);
-				//if(isset($options['location_'.$postType])):
-				//	$array['where'] = $options['location_'.$postType];
-				//elseif($postType == 'post' || $postType == 'page'):
-					$array['where'] = $options['locationSite'];
-				//else:
-				//	$array['where'] = 'none';
-				//endif;
+				$array['where'] = 'none';
+			
 			endif;
+			
+		// If we are on an archive or home page
 		else:
-			$array['where'] = $specWhere;
+			$array['where'] = $options['locationSite'];
 		endif;
 	endif;
-	
+
 	// Disable the buttons on Buddy Press pages
 	if(function_exists('is_buddypress') && is_buddypress()):
 		return $array['content'];
@@ -288,7 +310,7 @@ function social_warfare_buttons($array = array()) {
 
 			// Close the Social Panel
 			$assets .= '</div>';
-
+			
 			// Reset the cache timestamp if needed
 			if(swp_is_cache_fresh($postID) == false):
 				delete_post_meta($postID,'swp_cache_timestamp');
