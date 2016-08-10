@@ -271,7 +271,7 @@ function swSetWidths(resize,adjust,secondary) {
 				window.origSets[index] = [];
 				if(jQuery(this).hasClass('nc_floater')) {
 					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
-					var firstSocialPanel = jQuery('.nc_socialPanel').first();
+					var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
 					jQuery(this).replaceWith(firstSocialPanel.outerHTML());
 					width = firstSocialPanel.outerWidth(true);
 					offset = firstSocialPanel.offset();
@@ -367,7 +367,8 @@ function swSetWidths(resize,adjust,secondary) {
 
 function createFloatBar() {
 	if(!jQuery('.nc_wrapper .nc_socialPanel').length && !jQuery('.nc_socialPanelSide').length) {
-		var firstSocialPanel = jQuery('.nc_socialPanel').first();
+		var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first(); console.log(firstSocialPanel);
+		var index = jQuery('.nc_socialPanel').index(firstSocialPanel);
 		var floatOption = firstSocialPanel.attr('data-float');
 		if(floatOption) {
 			backgroundColor = jQuery('.nc_socialPanel').attr('data-floatColor');
@@ -386,7 +387,7 @@ function createFloatBar() {
 			jQuery('.nc_socialPanel').eq(0).addClass('swp_one');
 			jQuery('.nc_socialPanel').eq(2).addClass('swp_two');
 			jQuery('.nc_socialPanel').eq(1).addClass('swp_three');
-			window.origSets['float'] = window.origSets[0];
+			window.origSets['float'] = window.origSets[index];
 			swSetWidths();
 		};
 	}
@@ -423,7 +424,7 @@ function floatingBar() {
 function floatingBarReveal() {
 		// Adjust the floating bar
 		var panels = jQuery('.nc_socialPanel');
-		var floatOption = panels.eq(0).attr('data-float');
+		var floatOption = panels.not('[data-float="float_ignore"]').eq(0).attr('data-float');
 		var windowElement = jQuery(window);
 		var windowHeight = windowElement.height();
 		var ncWrapper = jQuery('.nc_wrapper');

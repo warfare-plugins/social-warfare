@@ -194,6 +194,7 @@ function social_warfareShortcode( $array ){
 	if(!isset($array['where'])) { $array['where'] = 'after'; }
 	if(!isset($array['echo'])) { $array['echo'] = false; }
 	if(!isset($array['content'])) { $array['content'] = false; }
+	$array['shortcode'] = true;
 	$array['devs'] = true;
 	return social_warfare($array);
 }

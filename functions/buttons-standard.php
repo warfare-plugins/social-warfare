@@ -36,12 +36,13 @@ function recursive_array_search($needle,$haystack) {
 *                                                                *
 ******************************************************************/
 function swp_get_current_url() {
-    $pageURL = 'http';
-    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
-    $pageURL .= "://";
-    $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    $page_url = 'http';
+    if ($_SERVER["HTTPS"] == "on") {$page_url .= "s";}
+    $page_url .= "://";
+    $page_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	$page_url = strtok($page_url, '?');
 
-    return $pageURL;
+    return $page_url;
 }
 
 /*****************************************************************
@@ -183,7 +184,9 @@ function social_warfare_buttons($array = array()) {
 	else:
 
 		// Set the options for the horizontal floating bar
-		if($options['float'] && is_singular()):
+		if($array['shortcode'] == true):
+			$floatOption = 'float_ignore';
+		elseif($options['float'] && is_singular()):
 			$floatOption = 'float'.ucfirst($options['floatOption']);
 		else:
 			$floatOption = 'floatNone';
