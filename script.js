@@ -655,6 +655,7 @@ function createTotal() {
 */
 function swApplyScale() {
 	jQuery('.nc_socialPanel').each( function() {
+		jQuery(this).css({width:'100%'});
 		var width = jQuery(this).width();
 		var scale = jQuery(this).attr('data-scale');
 		var align = jQuery(this).attr('data-align');
