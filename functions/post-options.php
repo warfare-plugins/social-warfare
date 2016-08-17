@@ -165,7 +165,7 @@
 						 'std'	 => 'default'
 					),
 					array(
-						 'name'  => '<span class="dashicons dashicons-randomize"></span> '.__('Side Floating Buttons Location','social-warfare'),
+						 'name'  => '<span class="dashicons dashicons-randomize"></span> '.__('Floating Buttons','social-warfare'),
 						 'id'    => $prefix . 'floatLocation',
 						 'class' => $prefix . 'floatLocationWrapper',
 						 'type'  => 'select',

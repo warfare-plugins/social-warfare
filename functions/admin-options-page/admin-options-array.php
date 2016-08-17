@@ -90,7 +90,7 @@
 				'columns'	=> 3,
 				'column_1'	=> 'Post Type',
 				'column_2'	=> 'Static Buttons',
-				'column_3'	=> 'Side Floating Buttons (If Activated)'
+				'column_3'	=> 'Floating Buttons (If Activated)'
 			)
 		);
 		

@@ -184,14 +184,18 @@ function social_warfare_buttons($array = array()) {
 	else:
 
 		// Set the options for the horizontal floating bar
+		$postType = get_post_type($postID);
+		$spec_float_where = get_post_meta( $postID , 'nc_floatLocation' , true );
 		if($array['shortcode'] == true):
 			$floatOption = 'float_ignore';
-		elseif($options['float'] && is_singular()):
+		elseif($spec_float_where == 'off' && $options['buttonFloat'] != 'float_ignore'):
+				$floatOption = 'floatNone';
+		elseif($options['float'] && is_singular() && $options['float_location_'.$postType] == 'on'):
 			$floatOption = 'float'.ucfirst($options['floatOption']);
 		else:
 			$floatOption = 'floatNone';
 		endif;
-
+			
 		// Disable the plugin on feeds, search results, and non-published content
 		if (!is_feed() && !is_search() && get_post_status($postID) == 'publish' ):
 
