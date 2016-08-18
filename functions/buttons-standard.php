@@ -267,7 +267,7 @@ function social_warfare_buttons($array = array()) {
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 			
 			// Create the social panel
-			$assets = '<div class="nc_socialPanel swp_'.$options['visualTheme'].' swp_d_'.$options['dColorSet'].' swp_i_'.$options['iColorSet'].' swp_o_'.$options['oColorSet'].'" data-position="'.$options['locationPost'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
+			$assets = '<div class="nc_socialPanel swp_'.$options['visualTheme'].' swp_d_'.$options['dColorSet'].' swp_i_'.$options['iColorSet'].' swp_o_'.$options['oColorSet'].'" data-position="'.$options['location_post'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
 
 			// Setup the total shares count if it's on the left
 			if( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($array['buttons'] ) ) 
