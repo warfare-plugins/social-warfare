@@ -186,7 +186,7 @@ function social_warfare_buttons($array = array()) {
 		// Set the options for the horizontal floating bar
 		$postType = get_post_type($postID);
 		$spec_float_where = get_post_meta( $postID , 'nc_floatLocation' , true );
-		if($array['shortcode'] == true):
+		if(isset($array['shortcode']) && $array['shortcode'] == true):
 			$floatOption = 'float_ignore';
 		elseif($spec_float_where == 'off' && $options['buttonFloat'] != 'float_ignore'):
 				$floatOption = 'floatNone';
