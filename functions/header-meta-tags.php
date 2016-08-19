@@ -330,7 +330,7 @@
 						*     OPEN GRAPH IMAGE DIMENSIONS						         *
 						*                                                                *
 						******************************************************************/
-						if($info['image_data'] && isset($image_output) && $image_output == true):
+						if(isset($info['image_data']) && $info['image_data'] && isset($image_output) && $image_output == true):
 						
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';

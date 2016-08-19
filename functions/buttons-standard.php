@@ -138,7 +138,7 @@ function social_warfare_buttons($array = array()) {
 		if( is_singular() && !is_home() && !is_archive() ):
 		
 			// Make sure this is the main loop
-			if( get_permalink( $postID ) == swp_get_current_url() ) :
+			//if( get_permalink( $postID ) == swp_get_current_url() ) :
 		
 				// Check if a specific display value has not been set for this specific post
 				if($specWhere == 'default' || $specWhere == ''):
@@ -153,10 +153,10 @@ function social_warfare_buttons($array = array()) {
 				endif;
 		
 			// If it's not the main loop
-			else:
-				$array['where'] = 'none';
+			//else:
+			//	$array['where'] = 'none';
 			
-			endif;
+			//endif;
 			
 		// If we are on an archive or home page
 		else:
@@ -186,7 +186,7 @@ function social_warfare_buttons($array = array()) {
 		// Set the options for the horizontal floating bar
 		$postType = get_post_type($postID);
 		$spec_float_where = get_post_meta( $postID , 'nc_floatLocation' , true );
-		if(isset($array['shortcode']) && $array['shortcode'] == true):
+		if(isset($array['shortcode']) && $array['shortcode'] == true ):
 			$floatOption = 'float_ignore';
 		elseif($spec_float_where == 'off' && $options['buttonFloat'] != 'float_ignore'):
 				$floatOption = 'floatNone';

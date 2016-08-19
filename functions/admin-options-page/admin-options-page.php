@@ -415,7 +415,7 @@ function swp_build_options_page() {
 	Input Module
 
 ***************************************************************/
-			if($option['type'] == 'input' && isset($options['size']) && $option['size'] == 'two-thirds'):
+			if($option['type'] == 'input' && isset($option['size']) && $option['size'] == 'two-thirds'):
 
 				if(isset($swp_user_options[$key])):
 					$value = $swp_user_options[$key];
@@ -431,7 +431,7 @@ function swp_build_options_page() {
 				echo '<div class="sw-clearfix"></div>';
 				echo '</div>';
 				
-			elseif($option['type'] == 'input' && isset($options['size']) && $option['size'] == 'two-fourths'):
+			elseif($option['type'] == 'input' && isset($option['size']) && $option['size'] == 'two-fourths'):
 
 				if(isset($swp_user_options[$key])):
 					$value = $swp_user_options[$key];
