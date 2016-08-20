@@ -272,14 +272,15 @@ function swSetWidths(resize,adjust,secondary) {
 				if(jQuery(this).hasClass('nc_floater')) {
 					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
 					var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
-					float_index_origin = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
+					float_index_origin = jQuery('.nc_socialPanel').index(firstSocialPanel);
 					jQuery(this).replaceWith(firstSocialPanel.outerHTML());
 					width = firstSocialPanel.outerWidth(true);
 					offset = firstSocialPanel.offset();
+					parent_offset = firstSocialPanel.parent().offset();
 					jQuery('.nc_socialPanel').last().addClass('nc_floater').css(
 						{
 							'width':width,
-							'left':offset.left
+							'left':parent_offset.left
 						});
 					activateHoverStates();
 					window.origSets['float'] = window.origSets[float_index_origin];
@@ -371,6 +372,7 @@ function createFloatBar() {
 		var firstSocialPanel = jQuery('.nc_socialPanel').not('[data-float="float_ignore"]').first();
 		var index = jQuery('.nc_socialPanel').index(firstSocialPanel);
 		var floatOption = firstSocialPanel.attr('data-float');
+		var alignment = firstSocialPanel.attr('data-align');
 		if(floatOption) {
 			backgroundColor = jQuery('.nc_socialPanel').attr('data-floatColor');
 			jQuery('<div class="nc_wrapper" style="background-color:'+backgroundColor+'"></div>').appendTo('body');
@@ -382,7 +384,7 @@ function createFloatBar() {
 			jQuery('.nc_socialPanel').last().addClass('nc_floater').css(
 				{
 					'width':width,
-					'left':offset.left
+					'left':(alignment == 'center' ? 0 : offset.left)
 				});
 			jQuery('.nc_socialPanel .swp_count').css({transition : 'padding .1s linear'});
 			jQuery('.nc_socialPanel').eq(0).addClass('swp_one');
@@ -766,7 +768,6 @@ function swp_pinit_button() {
 			pi_url = o.pageURL,
 			pi_desc = e.attr('title') ? encodeURIComponent(e.attr('title')) : encodeURIComponent(e.attr('alt')),
 			pi_isvideo = 'false';
-			console.log(pi_desc);
 			bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + pi_desc;
 			css = jQuery(this).css(["float","margin","padding","height","width"]);
 			

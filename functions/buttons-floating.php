@@ -8,6 +8,9 @@
 
 	function socialWarfareSideFloat() {
 
+		// Get the options...or create them if they don't exist
+		wp_reset_query();
+
 		$postID = get_the_ID();
 		$options = swp_get_user_options();
 		$postType = get_post_type($postID);
@@ -24,9 +27,6 @@
 		endif;
 
 		if( is_singular() && get_post_status($postID) == 'publish' && get_post_meta( $postID , 'nc_floatLocation' , true ) != 'off' && $visibility == 'on' && !is_home()):
-
-			// Get the options...or create them if they don't exist
-			wp_reset_query();
 
 			// Acquire the social stats from the networks
 			// Acquire the social stats from the networks
