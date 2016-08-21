@@ -42,7 +42,7 @@
 *                                                                *
 ******************************************************************/
 	function swp_facebook_request_link($url) {
-		$request_url = 'https://api.facebook.com/restserver.php?method=links.getStats&format=json&urls='.$url;
+		$request_url = 'http://graph.facebook.com/?id='.$url;
 		return $request_url;
 	}
 /*****************************************************************
@@ -52,7 +52,7 @@
 ******************************************************************/
 	function swp_format_facebook_response($response) {
 		$response = json_decode($response, true);
-		return isset($response[0]['total_count'])?intval($response[0]['total_count']):0;
+		return isset($response['share']['share_count'])?intval($response['share']['share_count']):0;
 	}
 /*****************************************************************
 *                                                                *

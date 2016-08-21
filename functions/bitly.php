@@ -215,19 +215,19 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 	$bitly_lookup_response = json_decode( $bitly_lookup_response , true );
 
 	// If the lookup returned a valid, previously generated short link....
-	if( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) && true == false ):
+	if( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) ):
 
 		// Store the short url to return to the plugin
 		$short_url = $bitly_lookup_response['data']['link_lookup'][0]['link'];
 
 	// If the lookup did not return a valid short link....
-	else:*/
+	else: */
 
 		// Set the format to json
 		$format='json';
 
 		// Create a link to reach the Bitly API
-		$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token='.$access_token.'&uri='.urlencode($url).'&format='.$format;
+		$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token='.$access_token.'&longUrl='.urlencode($url).'&format='.$format;
 
 		// Fetch a response from the Bitly Shortening API
 		$data = swp_file_get_contents_curl($bitly_api);
