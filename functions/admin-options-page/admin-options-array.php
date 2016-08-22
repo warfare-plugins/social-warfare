@@ -31,7 +31,7 @@
 				'size'		=> 'two-thirds',
 				'content'	=> array(
 					'manual' 	=> 'Sort Manually Using Drag & Drop Above',
-					'dynamic' 	=> 'Sort Dyanamically By Order Of Most Shares'
+					'dynamic' 	=> 'Sort Dynamically By Order Of Most Shares'
 				),
 				'default'	=> 'manual',
 				'name'		=> 'Button Ordering',

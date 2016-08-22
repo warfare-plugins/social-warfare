@@ -1,5 +1,5 @@
 .nc_socialPanel{clear:both;margin-top:20px!important;margin-bottom:20px!important;height:30px;line-height:1;padding:0;}
-.nc_socialPanel:not(.nc_floater) {width:100%!important;}
+.nc_socialPanel:not(.nc_floater):not(.nc_socialPanelSide) {width:100%!important;}
 .nc_wrapper .nc_socialPanel{margin-top:10px!important;margin-bottom:10px!important;}
 div.nc_socialPanel .nc_tweetContainer{float:left;cursor:pointer;height:32px;font-family:Lato;border-radius:2px;transition:all .1s linear;border-size:1px;margin:0 5px;border:none!important}
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,.nc_socialPanel .totes .swp_count{display:block;font-size:18px!important;font-family:Lato, sans-serif;font-weight:bold;text-decoration:none;height:30px;text-transform:none;}

@@ -661,7 +661,7 @@ function swApplyScale() {
 		var width = jQuery(this).width();
 		var scale = jQuery(this).attr('data-scale');
 		var align = jQuery(this).attr('data-align');
-		if((align == 'fullWidth' && scale != 1) || scale > 1) {
+		if((align == 'fullWidth' && scale != 1) || scale > 1 || jQuery(this).hasClass('nc_socialPanelSide')) {
 			newWidth = width / scale;
 			jQuery(this).css('cssText', 'width:'+newWidth+'px!important;');
 			jQuery(this).css({
