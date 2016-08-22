@@ -2,7 +2,7 @@
 Contributors: holas84, dustinwstout, webinator, warfareplugins
 Tags: addthis, addtoany, analytics, bitly, buffer, button, click to tweet, digg, email, emailbutton, facebook, facebookbutton, facebooklike, facebookshare, flipboard, floatingbuttons, floatingsharebuttons, followbuttons, frameblocker, framebuster, google+1, googleanalyticsintegration, googleplus, googleplusone, googleplusshare, hackernews, iframeblocker, iframebuster, likebutton, linkshortening, linkedin, mobilesharebar, mobilesharing, opengraph, pin, pinbutton, pinit, pinterest, pinterestsave, pinterestshare, plusone, pocket, reddit, richpins, share, sharebutton, sharebuttonsplugin, sharecountrecovery, sharecounts, sharefacebook, shareimage, sharenow, sharethis, sharebar, shareholic, sharify, sharingbuttons, social, socialbookmark, socialbuttons, socialicons, socialmedia, socialmediashare, socialmediasharing, socialmediawidget, socialplugin, socialshare, socialsharebuttons, socialsharing, socialize, stumbleupon, sumome, tumblr, tweet, tweetbutton, tweetcount, twitter, twitterbutton, twittercards, twittercounts, utm, utmtracking, whatsapp, yumbutton, yummly
 Requires at least: 3.5.1
-Tested up to: 4.5.3
+Tested up to: 4.6
 Stable tag: 2.3.0
 License: GNU General Public License v2.0 or later
 
@@ -185,6 +185,27 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 2.0.5 (22 Aug 2016) =
+
+*New:*
+
+* Updated to Facebook’s new share API
+* Shortcode parameters for buttons=“” now supports spaces
+* Better detection of content location for some themes
+* Floating buttons now ignore shortcode (to avoid wonky behavior)
+* Updated floating position settings to apply to both side and horizontal instances
+* Added Greek translation
+
+*Fixes:*
+
+* Cleaned up some outdated javascript
+* URL encoding fixed for special characters in Pin button descriptions
+* Fixed OG width/height output from showing when no image was uploaded
+* Fixed a bug with the scale/resizing feature
+* Got rid of a few minor notices
+* Fixed a hover bug
+* Fixed alignment issue with side floating share buttons (Thanks Peg!)
 
 = 2.0.4 (9 August 2016) =
 
