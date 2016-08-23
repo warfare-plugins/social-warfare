@@ -437,16 +437,28 @@ function floatingBarReveal() {
 		offsetOne = panels.eq(0).offset();
 		scrollPos = windowElement.scrollTop();
 		var st = jQuery(window).scrollTop();
+		if ( typeof window.swp_offsets == 'undefined' ){
+			window.swp_offsets = {};
+		}
 		if(floatOption == 'floatBottom' || floatOption == "floatTop") {
 
 			var visible = false;
 			jQuery('.nc_socialPanel').not('.nc_socialPanelSide, .nc_wrapper .nc_socialPanel').each(function() {
-
-				// Fetch our base numbers
-				var thisOffset 		= jQuery(this).offset();
-				var thisHeight 		= jQuery(this).height();
-				var screenBottom 	= thisOffset + thisHeight;
-
+				
+				index = jQuery('.nc_socialPanel').index(jQuery(this));
+				
+				// Fetch our base numbers 
+				if(typeof window.swp_offsets[index] == 'undefined') {
+					var thisOffset 		= jQuery(this).offset();
+					var thisHeight 		= jQuery(this).height();
+					var screenBottom 	= thisOffset + thisHeight;
+					window.swp_offsets[index] = thisOffset;
+				} else {
+					var thisOffset 		= window.swp_offsets[index];
+					var thisHeight 		= jQuery(this).height();
+					var screenBottom 	= thisOffset + thisHeight;
+				} 
+			
 				// Check if it's visible
 				if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
 					visible = true;
@@ -475,8 +487,12 @@ function floatingBarReveal() {
 					new_padding = window.body_padding_bottom + 50;
 					jQuery('body').animate({'padding-bottom': new_padding+'px'}, 0);
 				} else if (floatOption == 'floatTop') {
-					new_padding = window.body_padding_top + 50;
-					jQuery('body').animate({'padding-top': new_padding+'px'}, 0);
+					first_offset = jQuery('.nc_socialPanel').not('.nc_socialPanelSide, .nc_wrapper .nc_socialPanel').first().offset();
+					console.log(first_offset);
+					if(first_offset.top > scrollPos + windowHeight){
+						new_padding = window.body_padding_top + 50;
+						jQuery('body').animate({'padding-top': new_padding+'px'}, 0);
+					}
 				};
 			};
 
@@ -553,7 +569,7 @@ function floatingBarReveal() {
 			*/
 		};
 		lst = st;
-
+	
 }
 
 function activateHoverStates() {

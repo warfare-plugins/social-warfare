@@ -1036,7 +1036,7 @@ jQuery(document).ready(function() {
 			var object = jQuery.parseJSON(data);
 			
 			// If the cURL request failed, let's attempt CORS
-			if(object == 0) {
+			if(object == 0 || object == null) {
 			
 				console.log('cURL request failed. Attempting CORS request.');
 				jQuery.get( url , function( data ) {

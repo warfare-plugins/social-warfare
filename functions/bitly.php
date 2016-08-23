@@ -46,6 +46,10 @@ function swp_google_analytics( $array ) {
 // The Bitly Shortener Function called by the filter hook
 function swp_bitly_shortener( $array ) {
 
+	if($array['network'] == 'totes'):
+		return $array['url'];
+	endif;
+
 	$url = $array['url'];
 	$network = $array['network'];
 	$postID = $array['postID'];
@@ -205,7 +209,7 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 	// Fetch the user's options
 	$options = swp_get_user_options();
 
-	/* Create a link to check if the permalink has already been shortened.
+	// Create a link to check if the permalink has already been shortened.
 	$bitly_lookup_url = 'https://api-ssl.bitly.com/v3/user/link_lookup?url='.urlencode($url).'&access_token='.$access_token;
 
 	// Fetch a response from the Bitly Lookup API
@@ -221,8 +225,8 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 		$short_url = $bitly_lookup_response['data']['link_lookup'][0]['link'];
 
 	// If the lookup did not return a valid short link....
-	else: */
-
+	else:
+		
 		// Set the format to json
 		$format='json';
 
@@ -249,7 +253,7 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 
 		endif;
 
-	// endif;
+	endif;
 
 	return $short_url;
 
