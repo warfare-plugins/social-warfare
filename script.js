@@ -715,6 +715,7 @@ function swp_init_share_buttons() {
 
 jQuery(document).ready(function() {
 
+
 	// Fetch the padding amount to make space later for the floating bars
 	window.body_padding_top = parseInt(jQuery('body').css('padding-top').replace('px',''));
 	window.body_padding_bottom = parseInt(jQuery('body').css('padding-bottom').replace('px',''));
@@ -733,12 +734,13 @@ jQuery(document).ready(function() {
     		swp_init_share_buttons();
 		} , 100 );
 	} );
-
-	if(jQuery('.nc_socialPanelSide').length) {
+	if(jQuery('.nc_socialPanelSide').length) { 
 		var buttonsHeight = jQuery('.nc_socialPanelSide').height();
 		var windowHeight = jQuery(window).height();
-		var newPosition = (windowHeight / 2) - (buttonsHeight / 2);
-		jQuery('.nc_socialPanelSide').css({'top':newPosition+'px'});
+		var newPosition = parseInt( (windowHeight / 2) - (buttonsHeight / 2) );
+		setTimeout( function() {
+			jQuery('.nc_socialPanelSide').animate({top:newPosition},0); console.log(newPosition);
+		} , 105);
 	};
 
 	setTimeout( function() {
@@ -760,6 +762,34 @@ jQuery(document).ready(function() {
 	};
 });
 
+/****************************************************************************
+
+	Fetch and Store Facebook Counts
+
+****************************************************************************/
+
+function swp_fetch_facebook_shares() {
+	var request_url = 'https://graph.facebook.com/?id='+swp_post_url;
+	jQuery.get(request_url , function(response) {
+		//response = jQuery.parseJSON(data);
+		var request_url_two = 'https://graph.facebook.com/?id='+swp_post_url+'&fields=og_object{likes.summary(true),comments.summary(true)}';
+		jQuery.get(request_url_two , function(response_two) {
+			//response_two = jQuery.parseJSON(data);
+			shares = parseInt(response['share']['share_count']);
+			likes = parseInt(response_two['og_object']['likes']['summary']['total_count']);
+			comments = parseInt(response_two['og_object']['comments']['summary']['total_count']);
+			activity = shares + likes + comments;
+			console.log(activity);
+			
+			swp_post_data = {"action":"swp_facebook_shares_update","post_id":swp_post_id,"activity":activity};
+			jQuery.post(swp_admin_ajax, swp_post_data, function(response) {
+				console.log(response);
+			});
+			
+			
+		});
+	});
+}
 /****************************************************************************
 
 	Pin It Hover Effect

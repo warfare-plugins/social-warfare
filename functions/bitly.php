@@ -91,7 +91,7 @@ function swp_bitly_shortener( $array ) {
 					// If the API provides a shortened URL...
 					$shortURL = swp_make_bitly_url( urldecode($url) , $network , $access_token );
 					if($shortURL):
-
+						
 						// Store the link in the cache and return it to the buttons
 						delete_post_meta($postID,'bitly_link_'.$network);
 						update_post_meta($postID,'bitly_link_'.$network,$shortURL);
@@ -210,16 +210,16 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 	$options = swp_get_user_options();
 
 	// Create a link to check if the permalink has already been shortened.
-	$bitly_lookup_url = 'https://api-ssl.bitly.com/v3/user/link_lookup?url='.urlencode($url).'&access_token='.$access_token;
+	// $bitly_lookup_url = 'https://api-ssl.bitly.com/v3/user/link_lookup?url='.urlencode($url).'&access_token='.$access_token;
 
 	// Fetch a response from the Bitly Lookup API
-	$bitly_lookup_response = swp_file_get_contents_curl( $bitly_lookup_url );
+	// $bitly_lookup_response = swp_file_get_contents_curl( $bitly_lookup_url );
 
 	// Parse the JSON formatted response from the Bitly Lookup API
-	$bitly_lookup_response = json_decode( $bitly_lookup_response , true );
-
+	// $bitly_lookup_response = json_decode( $bitly_lookup_response , true );
+	
 	// If the lookup returned a valid, previously generated short link....
-	if( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) ):
+	if( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) && true == false):
 
 		// Store the short url to return to the plugin
 		$short_url = $bitly_lookup_response['data']['link_lookup'][0]['link'];
@@ -232,7 +232,7 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 
 		// Create a link to reach the Bitly API
 		$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token='.$access_token.'&longUrl='.urlencode($url).'&format='.$format;
-
+		
 		// Fetch a response from the Bitly Shortening API
 		$data = swp_file_get_contents_curl($bitly_api);
 

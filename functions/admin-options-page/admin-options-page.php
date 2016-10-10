@@ -664,10 +664,10 @@ function swp_build_options_page() {
 				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
 				
-				if ( function_exists('icl_get_home_url') ) :
-					$homeURL = icl_get_home_url();
+				if(is_multisite()):
+					$homeURL = network_site_url();
 				else:
-					$homeURL = get_home_url();
+					$homeURL = site_url();
 				endif;
 				$regCode = md5($homeURL);
 				if(isset($swp_user_options['emailAddress'])):
@@ -944,12 +944,14 @@ function swp_store_the_registration() {
 
 	// Fetch the settings from the POST submission
 	$premiumCode = $_POST['premiumCode'];
+	$emailAddress = $_POST['email'];
 
 	// Fetch the existing options set
 	$options = get_option('socialWarfareOptions');
 	
 	// Loop and check for checkbox values, convert them to boolean 
 	$options['premiumCode'] = $premiumCode;
+	$options['emailAddress'] = $emailAddress;
 	
 	// Store the values back in the database
 	return update_option('socialWarfareOptions',$options);

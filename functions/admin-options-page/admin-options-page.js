@@ -1048,7 +1048,8 @@ jQuery(document).ready(function() {
 					// Prepare data
 					var data = {
 						action: 'swp_store_registration',
-						premiumCode: object['premiumCode']
+						premiumCode: object['premiumCode'],
+						email: email
 					};
 	
 					// Send the response to admin-ajax.php
@@ -1090,7 +1091,9 @@ jQuery(document).ready(function() {
 
 					action: 'swp_store_registration',
 
-					premiumCode: object['premiumCode']
+					premiumCode: object['premiumCode'],
+					
+					email: email
 
 				};
 

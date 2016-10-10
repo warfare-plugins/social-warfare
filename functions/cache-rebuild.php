@@ -1,5 +1,11 @@
 <?php
 
+/*****************************************************************
+*                                                                *
+*          REBUILD THE CACHE						             *
+*                                                                *
+******************************************************************/
+
 // Hook into the admin-ajax request
 add_action( 'wp_ajax_swp_cache_trigger', 'swp_cache_rebuild' );
 add_action( 'wp_ajax_nopriv_swp_cache_trigger', 'swp_cache_rebuild' );
@@ -20,7 +26,7 @@ function swp_cache_rebuild() {
 		$_GET['swp_cache'] = 'rebuild';
 
 		// Fetch new shares
-		$shares 		= get_social_warfare_shares( $post_id );
+		$shares = get_social_warfare_shares( $post_id );
 		
 		// Update Bitly links
 		foreach ( $shares as $key => $value):
@@ -54,5 +60,27 @@ function swp_cache_rebuild() {
 	endif;
 
 	// Kill off all the WordPress functions
+	wp_die();
+}
+/*****************************************************************
+*                                                                *
+*         UPDATE FACEBOOK SHARES					             *
+*                                                                *
+******************************************************************/
+// Hook into the admin-ajax request
+add_action( 'wp_ajax_swp_facebook_shares_update', 'swp_facebook_shares_update' );
+add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', 'swp_facebook_shares_update' );
+
+// A function to rebuild the cache
+function swp_facebook_shares_update() {
+	$post_id = $_POST['post_id'];
+	$activity = $_POST['activity'];
+	
+	$previous_activity = get_post_meta($post_id,'_facebook_shares',true);
+	if($activity > $previous_activity):
+		delete_post_meta($post_id,'_facebook_shares');
+		update_post_meta($post_id,'_facebook_shares',$activity);
+	endif;
+	echo $activity;
 	wp_die();
 }

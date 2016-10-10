@@ -784,7 +784,7 @@
 			),
 			'share_recovery_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them.',
+				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them. See <a target="_blank" href="https://warfareplugins.com/support/recover-social-share-counts-after-changing-permalink-settings/">this guide</a> for more detailed instructions on how to use this feature.',
 				'premium'	=> true
 			),
 			'recover_shares' => array(
@@ -853,9 +853,36 @@
 				'size'		=> 'two-thirds',
 				'name' 		=> 'Subdomain',
 				'default' 	=> '',
+				'divider'	=> false,
+				'dep'		=> 'recover_shares',
+				'dep_val'	=> array(true),
+				'premium'	=> true
+			),
+			'cross_domain_recovery_description' => array(
+				'type'		=> 'paragraph',
+				'content'	=> 'If you\'ve migrated your website from one domain to another, fill in these two fields to activate cross-domain share recovery.',
+				'premium'	=> true,
+				'dep'		=> 'recover_shares',
+				'dep_val'	=> array(true)
+			),
+			'former_domain' => array(
+				'type' 		=> 'input',
+				'size'		=> 'two-thirds',
+				'name' 		=> 'Former Domain',
+				'default' 	=> '',
+				'divider'	=> false,
+				'dep'		=> 'recover_shares',
+				'dep_val'	=> array(true),
+				'premium'	=> true
+			),
+			'current_domain' => array(
+				'type' 		=> 'input',
+				'size'		=> 'two-thirds',
+				'name' 		=> 'Current Domain',
+				'default' 	=> '',
 				'divider'	=> true,
-				'dep'				=> 'recover_shares',
-				'dep_val'			=> array(true),
+				'dep'		=> 'recover_shares',
+				'dep_val'	=> array(true),
 				'premium'	=> true
 			),
 			'caching_method_title' => array(

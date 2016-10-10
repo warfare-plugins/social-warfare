@@ -1,5 +1,5 @@
 === Social Warfare ===
-Contributors: holas84, dustinwstout, webinator, warfareplugins
+Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia
 Tags: addthis, addtoany, analytics, bitly, buffer, button, click to tweet, digg, email, emailbutton, facebook, facebookbutton, facebooklike, facebookshare, flipboard, floatingbuttons, floatingsharebuttons, followbuttons, frameblocker, framebuster, google+1, googleanalyticsintegration, googleplus, googleplusone, googleplusshare, hackernews, iframeblocker, iframebuster, likebutton, linkshortening, linkedin, mobilesharebar, mobilesharing, opengraph, pin, pinbutton, pinit, pinterest, pinterestsave, pinterestshare, plusone, pocket, reddit, richpins, share, sharebutton, sharebuttonsplugin, sharecountrecovery, sharecounts, sharefacebook, shareimage, sharenow, sharethis, sharebar, shareholic, sharify, sharingbuttons, social, socialbookmark, socialbuttons, socialicons, socialmedia, socialmediashare, socialmediasharing, socialmediawidget, socialplugin, socialshare, socialsharebuttons, socialsharing, socialize, stumbleupon, sumome, tumblr, tweet, tweetbutton, tweetcount, twitter, twitterbutton, twittercards, twittercounts, utm, utmtracking, whatsapp, yumbutton, yummly
 Requires at least: 3.5.1
 Tested up to: 4.6
@@ -185,6 +185,24 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 2.0.7 (10 OCT 2016) =
+
+Made some more major updates in response to Facebook's API changes. We've tested this on a dozen sites and we're experiencing a 100% success rate with the fix so far. If you're experiencing inaccurate share counts, install this update, ensure that the Cache Method is set to Advanced Page Caching on the Advanced Tab of the Social Warfare option page, then wait a few hours. Within a few hours (24 at the very, very latest) all of your Facebook shares counts should be 100% fully recovered.
+
+= 2.0.6 (21 SEP 2016) =
+
+*New:*
+
+* Made some major updates in response to Facebook's API changes. Hopefully all the shares will count accurately once again.
+* Added cross domain share recovery
+* Updated the way Bitly functions shorten the URL's. Custom domain short links should now be fully supported.
+* Added a metabox priority filter hook for folks who want to change the order of the metaboxes on the post editor screen.
+
+*Fixes:*
+
+* Fixed a couple minor PHP notices
+* Made some updates to the registration function
 
 = 2.0.5 (22 Aug 2016) =
 

@@ -711,7 +711,7 @@ function swp_pinit($info) {
 ******************************************************************/
 function swp_output_cache_trigger($info) {
 	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
-	if(is_singular() && swp_is_cache_fresh( get_the_ID() , true ) == false && $info['swp_user_options']['cacheMethod'] != 'legacy'):
+	if((is_singular() && swp_is_cache_fresh( get_the_ID() , true ) == false && $info['swp_user_options']['cacheMethod'] != 'legacy') || (isset($_GET['swp_cache']) && $_GET['swp_cache'] == 'rebuild')):
 
 		// Make sure we're not on a WooCommerce Account Page
 		if(is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page()):
@@ -721,7 +721,7 @@ function swp_output_cache_trigger($info) {
 		else:
 			$url = get_permalink();
 			$admin_ajax = admin_url( 'admin-ajax.php' );
-			$info['footer_output'] .= PHP_EOL.'var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).on( "ready" , function() { var swp_admin_ajax = "'.$admin_ajax.'";var swp_cache_data = {"action":"swp_cache_trigger","post_id":'.$info['postID'].'};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});}';
+			$info['footer_output'] .= PHP_EOL.'swp_admin_ajax = "'.$admin_ajax.'"; var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).ready( function() { var swp_cache_data = {"action":"swp_cache_trigger","post_id":'.$info['postID'].'};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});} swp_post_id="'.$info['postID'].'"; swp_post_url="'.$url.'"; swp_fetch_facebook_shares(); ';
 		endif;
 	endif;
 	// Return the array so the world doesn't explode

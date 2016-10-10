@@ -10,11 +10,10 @@
 		// Fetch the User's Options Array
 		$swp_user_options = get_option('socialWarfareOptions');
 		
-		// Create a Registration Code from the Domain Name
-		if ( function_exists('icl_get_home_url') ) :
-			$domain = icl_get_home_url();
+		if(is_multisite()):
+			$domain = network_site_url();
 		else:
-			$domain = get_home_url();
+			$domain = site_url();
 		endif;
 		
 		$regCode = md5($domain);
@@ -52,16 +51,23 @@
                                                                 
 ******************************************************************/
 
+	if(isset($_GET['reg_check']) && $_GET['reg_check'] == true):
+		var_dump(swp_check_registration_status());
+	endif;
+
 	// A function to check if the site is registered at our server
 	function swp_check_registration_status() {
-	
 		
 		// Fetch the User's Options Array
-		$swp_user_options = swp_get_user_options();
+		$swp_user_options = get_option('socialWarfareOptions');
 		
 		// Fetch URL of the home page
-		$homeURL = get_home_url();
-			
+		if(is_multisite()):
+			$homeURL = network_site_url();
+		else:
+			$homeURL = site_url();
+		endif;
+
 		// Create a Registration Code from the Domain Name
 		$regCode = md5($homeURL);	
 
@@ -75,13 +81,19 @@
 			$response = swp_file_get_contents_curl($url);
 			
 			// If the response is negative, unregister the plugin....
-			if($response == 'false'):
+			if($response === 'false'):
 			
 				// Set the premium code to null
 				$swp_user_options['premiumCode'] = '';
 				
 				// Update the options array with the premium code nulled
 				update_option('socialWarfareOptions',$swp_user_options);
+				
+				return false;
+			
+			else:
+			
+				return true;
 			
 			endif;
 		

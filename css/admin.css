@@ -110,7 +110,7 @@
 }
 #socialWarfare .rwmb-label, #socialWarfare .rwmb-input {width:100%;}
 #socialWarfare .rwmb-field {margin-top:10px;}
-#socialWarfare .rwmb-image-item, #socialWarfare .rwmb-media-preview, #socialWarfare .rwmb-media-content .centered, #socialWarfare .rwmb-media-content img {width:100%;height:auto;max-height:none;}
+#socialWarfare .rwmb-image-item, #socialWarfare .rwmb-media-preview, #socialWarfare .rwmb-media-content .centered, #socialWarfare .rwmb-media-content img {width:100%;height:auto;max-height:none;transform: none;}
 .wp-core-ui #socialWarfare a.rwmb-add-media.button {
    display: block;
    background: #30394f;

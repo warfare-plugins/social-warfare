@@ -366,38 +366,41 @@ class swp_popular_posts_widget extends WP_Widget {
 			$i = 1;
 			while( $swq->have_posts() ):
 				
-				$swq->the_post();
-				
-				// If we are supposed to show count numbers....
-				if($showCount == 'true'):
-					$postID = get_the_ID();
-					$shares = get_post_meta($postID,'_'.$network,true);
-					$share_html = '<span class="swp_pop_count">'.swp_kilomega($shares).' '.$countLabel.'</span>';
+				if($i <= $count):
+					$swq->the_post();
 					
-				// If we are not supposed to show count numbers
-				else:
-					$share_html = '';
-				endif;
-
-				// If we are supposed to show thumbnails
-				if($thumbnails == 'true' && has_post_thumbnail()):
-					$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
-					$thumbnail_html = '';
-					$thumbnail_html .= '<a href="'.get_the_permalink().'">';
-					$thumbnail_html .= '<img style="width:'.$thumb_size.'px;height:'.$thumb_size.'px;" class="swp_pop_thumb" src="'.$thumbnail_url[0].'">';
-					$thumbnail_html .= '</a>';
+					// If we are supposed to show count numbers....
+					if($showCount == 'true'):
+						$postID = get_the_ID();
+						$shares = get_post_meta($postID,'_'.$network,true);
+						$share_html = '<span class="swp_pop_count">'.swp_kilomega($shares).' '.$countLabel.'</span>';
+						
+					// If we are not supposed to show count numbers
+					else:
+						$share_html = '';
+					endif;
+	
+					// If we are supposed to show thumbnails
+					if($thumbnails == 'true' && has_post_thumbnail()):
+						$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
+						$thumbnail_html = '';
+						$thumbnail_html .= '<a href="'.get_the_permalink().'">';
+						$thumbnail_html .= '<img style="width:'.$thumb_size.'px;height:'.$thumb_size.'px;" class="swp_pop_thumb" src="'.$thumbnail_url[0].'">';
+						$thumbnail_html .= '</a>';
+						
+					// If we are not supposed to show thumbnails
+					else:
+						$thumbnail_html = '';
+					endif;
+	
+					// Generate the HTML for a link
+					$link_html = '<a style="font-size:'.$font_size.'%;'.$styles[$style]['links'].'" class="swp_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
 					
-				// If we are not supposed to show thumbnails
-				else:
-					$thumbnail_html = '';
-				endif;
-
-				// Generate the HTML for a link
-				$link_html = '<a style="font-size:'.$font_size.'%;'.$styles[$style]['links'].'" class="swp_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
+					// Output the post to the site
+					echo '<div class="swp_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
+					echo '<div class="swp_clearfix"></div>';
 				
-				// Output the post to the site
-				echo '<div class="swp_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
-				echo '<div class="swp_clearfix"></div>';
+				endif;
 				
 			// End the loop
 			endwhile;

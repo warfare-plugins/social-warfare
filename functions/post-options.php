@@ -71,12 +71,14 @@
 ******************************************************************/
 
 		 // Setup our meta box using an array
+		 $priority = 'high';
+		 $priority = apply_filters( 'swp_metabox_priority' , $priority );
 		 $meta_boxes[0] = array(
 			  'id'       => 'socialWarfare',
 			  'title'    => __('Social Warfare Custom Options','social-warfare'),
 			  'pages'    => $postType,
 			  'context'  => 'normal',
-			  'priority' => 'high',
+			  'priority' => $priority,
 			  'fields' => array(
 			  
 			  		// Setup the social media image

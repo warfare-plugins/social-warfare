@@ -135,7 +135,7 @@ function social_warfare_buttons($array = array()) {
 	if($array['where'] == 'default'):
 	
 		// If we are on a single page or post
-		if( is_singular() && !is_home() && !is_archive() ):
+		if( is_singular() && !is_home() && !is_archive() && !is_front_page() ):
 		
 			// Make sure this is the main loop
 			//if( get_permalink( $postID ) == swp_get_current_url() ) :
@@ -205,6 +205,12 @@ function social_warfare_buttons($array = array()) {
 			else:
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
+			
+			if(isset($array['scale'])):
+				$scale = $array['scale'];
+			else:
+				$scale = $options['buttonSize'];
+			endif;
 
 			// Fetch the share counts
 			$buttonsArray['shares'] = get_social_warfare_shares($postID);
@@ -224,11 +230,12 @@ function social_warfare_buttons($array = array()) {
 				$button_set_array = explode(',', $array['buttons']);
 				
 				// Match the names in the list to their appropriate system-wide keys
+				$i = 0;
 				foreach($button_set_array as $button):
 				
 					// Trim the network name in case of white space
 					$button = trim($button);
-					
+						
 					// Convert the names to their systme-wide keys
 					if( recursive_array_search( $button , $available_buttons ) ) :
 						$key = recursive_array_search( $button , $available_buttons );
@@ -242,10 +249,14 @@ function social_warfare_buttons($array = array()) {
 						endif;
 						
 					endif;
+				
+					$button_set_array[$i] = $button;	
+					++$i;
 				endforeach;
 				
 				// Manually turn the total shares on or off
-				if(array_search('Total',$button_set_array)) $buttonsArray['buttons']['totes'] = 'Total';
+				if(array_search('Total',$button_set_array)) { $buttonsArray['buttons']['totes'] = 'Total' ;}
+				
 			endif;
 			
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
@@ -267,7 +278,7 @@ function social_warfare_buttons($array = array()) {
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 			
 			// Create the social panel
-			$assets = '<div class="nc_socialPanel swp_'.$options['visualTheme'].' swp_d_'.$options['dColorSet'].' swp_i_'.$options['iColorSet'].' swp_o_'.$options['oColorSet'].'" data-position="'.$options['location_post'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$options['buttonSize'].'" data-align="'.$options['buttonFloat'].'">';
+			$assets = '<div class="nc_socialPanel swp_'.$options['visualTheme'].' swp_d_'.$options['dColorSet'].' swp_i_'.$options['iColorSet'].' swp_o_'.$options['oColorSet'].'" data-position="'.$options['location_post'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$scale.'" data-align="'.$options['buttonFloat'].'">';
 
 			// Setup the total shares count if it's on the left
 			if( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($array['buttons'] ) ) 

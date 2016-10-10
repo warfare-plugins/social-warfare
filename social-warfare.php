@@ -3,7 +3,7 @@
 Plugin Name: Social Warfare
 Plugin URI: http://warfareplugins.com
 Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
-Version: 2.0.5
+Version: 2.0.7
 Author: Warfare Plugins
 Author URI: http://warfareplugins.com
 Text Domain: social-warfare
@@ -13,7 +13,7 @@ Text Domain: social-warfare
 *   VERSION AND DIRECTORIES							             *
 *                                                                *
 ******************************************************************/
-$pluginVersion = '2.0.5';
+$pluginVersion = '2.0.7';
 define( 'swp_VERSION' , $pluginVersion);
 $pluginUrl = rtrim(plugin_dir_url( __FILE__ ),'/');
 $pluginDir = dirname(__FILE__);
@@ -47,6 +47,7 @@ require_once $pluginDir  . '/functions/share-count-function.php';
 require_once $pluginDir  . '/functions/cache-rebuild.php';
 require_once $pluginDir  . '/functions/header-meta-tags.php';
 require_once $pluginDir  . '/functions/profile-fields.php';
+require_once $pluginDir  . '/functions/shortcodes.php';
 // require_once $pluginDir  . '/functions/media-options.php';
 // Networks
 require_once $pluginDir  . '/functions/social-networks/googlePlus.php';
@@ -182,25 +183,7 @@ function social_warfare($array = array()) {
 
 	add_filter('the_excerpt', 'socialWarfare', 20);
 */
-/*****************************************************************
-*                                                                *
-*   SHORTCODES: <---- THAT										 *
-*                                                                *
-******************************************************************/
-function socialWarfareShortcode( $atts ){
-	return socialWarfare(false,'after',false);
-}
-function social_warfareShortcode( $array ){
-	if(!isset($array['where'])) { $array['where'] = 'after'; }
-	if(!isset($array['echo'])) { $array['echo'] = false; }
-	if(!isset($array['content'])) { $array['content'] = false; }
-	$array['shortcode'] = true;
-	$array['devs'] = true;
-	return social_warfare($array);
-}
 
-add_shortcode( 'socialWarfare', 'socialWarfareShortcode' );
-add_shortcode( 'social_warfare', 'social_warfareShortcode' );
 /*****************************************************************
 *                                                                *
 *   SIDE FLOATER: 												 *
@@ -254,11 +237,21 @@ add_action('manage_page_posts_custom_column', 'populateSocialSharesColumn', 10, 
 *   REGISTRATION CRON JOBS										 *
 *                                                                *
 ******************************************************************/
+// Ad a custom schedule
+function swp_add_monthly_schedule( $schedules ) {
+	// add a 'weekly' schedule to the existing set
+	$schedules['swp_monthly'] = array(
+		'interval' => 2635200,
+		'display' => __('Once Monthly')
+	);
+	return $schedules;
+}
+add_filter( 'cron_schedules', 'swp_add_monthly_schedule' ); 
 // Activate the Cron Job
 register_activation_hook(__FILE__, 'swp_activate_registration_cron');
 add_action('swp_check_registration_event', 'swp_check_registration_status');
 function swp_activate_registration_cron() {
-	wp_schedule_event(time(), 'daily', 'swp_check_registration_event');
+	wp_schedule_event(time(), 'swp_monthly', 'swp_check_registration_event');
 }
 
 // Deactivate the Cron Job
