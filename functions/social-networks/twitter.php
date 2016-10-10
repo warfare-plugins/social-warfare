@@ -16,7 +16,7 @@
 			'premium' => false
 		);
 
-		return $options;		 
+		return $options;
 
 	};
 /*****************************************************************
@@ -144,7 +144,7 @@
 			else:
 				$viaText = '';
 			endif;
-			
+
 			$array['resource']['twitter'] = '<div class="nc_tweetContainer twitter" data-id="'.$array['count'].'" data-network="twitter">';
 			$array['resource']['twitter'] .= '<a href="https://twitter.com/share?original_referer=/&text='.$ct.''.$urlParam.''.$viaText.'" data-link="https://twitter.com/share?original_referer=/&text='.$ct.''.$urlParam.''.$viaText.'" class="nc_tweet">';
 			if($array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['twitter'] > 0):

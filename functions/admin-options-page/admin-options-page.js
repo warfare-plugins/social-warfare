@@ -48,7 +48,7 @@ jQuery(document).ready(function() {
 
 		jQuery('.sw-admin-wrapper').css('padding-top', '75px');
 
-		
+
 
 	});
 
@@ -150,11 +150,11 @@ jQuery(document).ready(function() {
 
 	});
 
-	
+
 
 	default_options = swp_fetch_all_options();
 
-	
+
 
 // End the Document Ready Trigger
 
@@ -182,7 +182,7 @@ function save_color_toggle() {
 
 	} else {
 
-		jQuery('.sw-save-settings').removeClass('sw-red-button').addClass('sw-navy-button');	
+		jQuery('.sw-save-settings').removeClass('sw-red-button').addClass('sw-navy-button');
 
 	}
 
@@ -204,29 +204,29 @@ function save_color_toggle() {
 
 function swp_fetch_all_options() {
 
-	
+
 
 	// Create an object
 
 	values = {};
 
-	
+
 
 	// Loop through all the inputs
 
 	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').each( function() {
 
-		
+
 
 		var name = jQuery(this).attr('name');
 
 		if(jQuery(this).attr('type') == 'checkbox') {
 
-			var value = jQuery(this).prop('checked');	
+			var value = jQuery(this).prop('checked');
 
 		} else {
 
-			var value = jQuery(this).val();		
+			var value = jQuery(this).val();
 
 		}
 
@@ -234,13 +234,13 @@ function swp_fetch_all_options() {
 
 	});
 
-	
+
 
 	// Create the objects
 
 	values.newOrderOfIcons = {};
 
-	
+
 
 	// Loop through each active network
 
@@ -256,7 +256,7 @@ function swp_fetch_all_options() {
 
 	return values;
 
-	
+
 
 }
 
@@ -280,25 +280,25 @@ jQuery(document).ready(function() {
 
 	jQuery('.sw-save-settings').on('click',function(event) {
 
-		
+
 
 		// Block the default action
 
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-		
+
 
 		// The loading screen
 
 		swp_loading_screen();
 
-		
+
 
 		// Fetch all the settings
 
 		settings = swp_fetch_all_options();
 
-				
+
 
 		// Prepare date
 
@@ -316,13 +316,13 @@ jQuery(document).ready(function() {
 
 		jQuery.post(ajaxurl, data, function(response) {
 
-			
+
 
 			// Clear the loading screen
 
 			swp_clear_loading_screen();
 
-				
+
 
 			// Reset the default options variable
 
@@ -330,11 +330,11 @@ jQuery(document).ready(function() {
 
 			save_color_toggle();
 
-			
+
 
 		});
 
-		
+
 
 	});
 
@@ -344,7 +344,7 @@ jQuery(document).ready(function() {
 
 function swp_loading_screen() {
 
-	jQuery('body').append('<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>');	
+	jQuery('body').append('<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>');
 
 }
 
@@ -360,7 +360,7 @@ function swp_clear_loading_screen() {
 
 		jQuery('.sw-loading-bg').remove();
 
-	} , 2000);	
+	} , 2000);
 
 }
 
@@ -432,7 +432,7 @@ jQuery(document).ready( function() {
 
 		},
 
-		pill: {	
+		pill: {
 
 			fullColor 		: 'Full Color',
 
@@ -518,13 +518,13 @@ jQuery(document).ready( function() {
 
 	};
 
-	
+
 
 	// Check if we are on the admin page
 
 	if(jQuery('select[name="visualTheme"]').length) {
 
-		
+
 
 		// Update the items and previews on the initial page load
 
@@ -570,31 +570,31 @@ jQuery(document).ready( function() {
 
 			};
 
-			
 
-			
 
-			if(	dColorSet == 'customColor' 
 
-				|| dColorSet == 'ccOutlines' 
 
-				|| iColorSet == 'customColor' 
+			if(	dColorSet == 'customColor'
 
-				|| iColorSet == 'ccOutlines' 
+				|| dColorSet == 'ccOutlines'
 
-				|| oColorSet == 'customColor' 
+				|| iColorSet == 'customColor'
 
-				|| oColorSet == 'ccOutlines' ) 
+				|| iColorSet == 'ccOutlines'
+
+				|| oColorSet == 'customColor'
+
+				|| oColorSet == 'ccOutlines' )
 
 				{
 
-				
+
 
 				jQuery('.customColor_wrapper').slideDown();
 
 				updateCustomColor();
 
-				
+
 
 			} else {
 
@@ -604,7 +604,7 @@ jQuery(document).ready( function() {
 
 		});
 
-		
+
 
 		// A function for updating the preview
 
@@ -636,13 +636,13 @@ jQuery(document).ready( function() {
 
 				jQuery('.customColor_wrapper').slideDown();
 
-				
+
 
 				updateCustomColor();
 
-				
 
-				
+
+
 
 			} else {
 
@@ -654,19 +654,19 @@ jQuery(document).ready( function() {
 
 		setTimeout( updateTheme , 2000 );
 
-		
+
 
 		// If the color set changes, update the preview with the function
 
 		jQuery('select[name="dColorSet"], select[name="iColorSet"], select[name="oColorSet"]').on('change', updateTheme);
 
-		
+
 
 		// If the visual theme is updated, update the preview manually
 
 		jQuery('select[name="visualTheme"]').on('change', function() {
 
-			
+
 
 			var visualTheme  = jQuery('select[name="visualTheme"]').val();
 
@@ -676,13 +676,13 @@ jQuery(document).ready( function() {
 
 			var oColorSet    = jQuery('select[name="oColorSet"]').val();
 
-			
+
 
 			var i = 0;
 
 			var array = availableOptions[visualTheme];
 
-			
+
 
 			var dColor = array.hasOwnProperty(dColorSet);
 
@@ -690,7 +690,7 @@ jQuery(document).ready( function() {
 
 			var oColor = array.hasOwnProperty(oColorSet);
 
-			
+
 
 			jQuery('select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option').remove();
 
@@ -758,7 +758,7 @@ jQuery(document).ready( function() {
 
 	function updateCustomColor() {
 
-		
+
 
 		var visualTheme  = jQuery('select[name="visualTheme"]').val();
 
@@ -768,7 +768,7 @@ jQuery(document).ready( function() {
 
 		var oColorSet    = jQuery('select[name="oColorSet"]').val();
 
-			
+
 
 		jQuery('style.swp_customColorStuff').remove();
 
@@ -784,13 +784,13 @@ jQuery(document).ready( function() {
 
 			if(dColorSet == 'ccOutlines' || iColorSet == 'ccOutlines' || oColorSet == 'ccOutlines' ) {
 
-				var customCSS = customCSS+' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:'+colorCode+'; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '+colorCode+'; }';	
+				var customCSS = customCSS+' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:'+colorCode+'; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '+colorCode+'; }';
 
 			}
 
-			
 
-			jQuery('head').append('<style type="text/css" class="swp_customColorStuff">'+customCSS+'</style>');	
+
+			jQuery('head').append('<style type="text/css" class="swp_customColorStuff">'+customCSS+'</style>');
 
 	};
 
@@ -828,7 +828,7 @@ jQuery(document).ready( function() {
 
 				'transform':'scale('+scale+')',
 
-				'transform-origin':'left'	
+				'transform-origin':'left'
 
 			});
 
@@ -840,7 +840,7 @@ jQuery(document).ready( function() {
 
 				'transform':'scale('+scale+')',
 
-				'transform-origin':align	
+				'transform-origin':align
 
 			});
 
@@ -852,11 +852,11 @@ jQuery(document).ready( function() {
 
 	}
 
-	
+
 
 jQuery(document).ready( function() {
 
-	
+
 
 	scale = jQuery('select[name="buttonSize"]').val();
 
@@ -906,7 +906,7 @@ jQuery(document).ready(function($) {
 
 	});
 
-	
+
 
 });
 
@@ -930,7 +930,7 @@ jQuery(document).ready(function() {
 
 	jQuery('[name="float"]')
 
-	
+
 
 });
 
@@ -938,13 +938,13 @@ jQuery(document).ready(function() {
 
 function swp_conditional_fields() {
 
-	
+
 
 	// Loop through all the fields that have dependancies
 
 	jQuery('div[dep]').each( function() {
 
-		
+
 
 		// Fetch the conditional values
 
@@ -952,17 +952,17 @@ function swp_conditional_fields() {
 
 		var con_dep_val = jQuery.parseJSON(jQuery(this).attr('dep_val'));
 
-		
+
 
 		// Fetch the value of checkboxes or other input types
 
 		if(jQuery('[name="'+con_dep+'"]').attr('type') == 'checkbox') {
 
-			var value = jQuery('[name="'+con_dep+'"]').prop('checked');	
+			var value = jQuery('[name="'+con_dep+'"]').prop('checked');
 
 		} else {
 
-			var value = jQuery('[name="'+con_dep+'"]').val();		
+			var value = jQuery('[name="'+con_dep+'"]').val();
 
 		}
 
@@ -976,9 +976,9 @@ function swp_conditional_fields() {
 
 		} else {
 
-			jQuery(this).hide();			
+			jQuery(this).hide();
 
-		}		
+		}
 
 	});
 
@@ -1034,13 +1034,13 @@ jQuery(document).ready(function() {
 
 			// Parse the JSON response
 			var object = jQuery.parseJSON(data);
-			
+
 			// If the cURL request failed, let's attempt CORS
 			if(object == 0 || object == null) {
-			
+
 				console.log('cURL request failed. Attempting CORS request.');
 				jQuery.get( url , function( data ) {
-					
+
 					var object = jQuery.parseJSON(data);
 					console.log('CORS request status: '+object['status']);
 					jQuery('input[name="premiumCode"]').val(object['premiumCode']);
@@ -1051,33 +1051,33 @@ jQuery(document).ready(function() {
 						premiumCode: object['premiumCode'],
 						email: email
 					};
-	
+
 					// Send the response to admin-ajax.php
 					jQuery.post(ajaxurl, data, function(response) {
-	
+
 						// Clear the loading screen
 						swp_clear_loading_screen();
-	
+
 						// Toggle the registration display
 						jQuery('.registration-wrapper').attr('registration','1');
 						jQuery('.sw-admin-wrapper').attr('sw-registered','1');
-	
+
 					});
 				});
-			
+
 			// If the response was a failure...
 			} else if(object['status'] == 'failure') {
 
 				// Alert the failure status
 				alert('Failure: '+object['message']);
-		
+
 				// Clear the loading screen
 
 				swp_clear_loading_screen();
 
-				
 
-			// If the response was a success	
+
+			// If the response was a success
 
 			} else {
 
@@ -1092,24 +1092,24 @@ jQuery(document).ready(function() {
 					action: 'swp_store_registration',
 
 					premiumCode: object['premiumCode'],
-					
+
 					email: email
 
 				};
 
-					
+
 
 				// Send the response to admin-ajax.php
 
 				jQuery.post(ajaxurl, data, function(response) {
 
-					
+
 
 					// Clear the loading screen
 
 					swp_clear_loading_screen();
 
-					
+
 
 					// Toggle the registration display
 
@@ -1117,7 +1117,7 @@ jQuery(document).ready(function() {
 
 					jQuery('.sw-admin-wrapper').attr('sw-registered','1');
 
-					
+
 
 				});
 
@@ -1127,7 +1127,7 @@ jQuery(document).ready(function() {
 
 	});
 
-	
+
 
 /*******************************************************
 
@@ -1141,7 +1141,7 @@ jQuery(document).ready(function() {
 
 	jQuery('#unregister-plugin').on('click',function(event) {
 
-		
+
 
 		// Block the default action
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -1152,7 +1152,7 @@ jQuery(document).ready(function() {
 
 		swp_loading_screen();
 
-		
+
 
 		// Fetch the registration values
 
@@ -1162,13 +1162,13 @@ jQuery(document).ready(function() {
 
 		var domain = jQuery('input[name="domain"]').val();
 
-		
+
 
 		// Assemble the link for the Ajax request
 
 		url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 
-		
+
 
 		// Create the ajax object
 
@@ -1180,19 +1180,19 @@ jQuery(document).ready(function() {
 
 		}
 
-		
+
 
 		// Ping the home server for the registration log
 
 		jQuery.post( ajaxurl, ajax_data, function( data ) {
 
-			
+
 
 			// Parse the JSON response
 
 			var object = jQuery.parseJSON(data);
 
-			
+
 
 			// Clear out the premium code and the email address field
 
@@ -1214,19 +1214,19 @@ jQuery(document).ready(function() {
 
 				};
 
-					
+
 
 				// Send the response to admin-ajax.php
 
 				jQuery.post(ajaxurl, data, function(response) {
 
-					
+
 
 					// Clear the loading screen
 
 					swp_clear_loading_screen();
 
-					
+
 
 					// Toggle the registration display
 
@@ -1234,11 +1234,11 @@ jQuery(document).ready(function() {
 
 					jQuery('.sw-admin-wrapper').attr('sw-registered','0');
 
-					
 
-				});			
 
-			
+				});
+
+
 
 		});
 
@@ -1280,7 +1280,7 @@ jQuery(document).ready(function() {
 
 	if (jQuery('input[name="premiumCode"]').val() != '' && jQuery('input[name="premiumCode"]').val() != premcode) {
 
-		
+
 
 		// Fetch our variables
 
@@ -1290,13 +1290,13 @@ jQuery(document).ready(function() {
 
 		var domain = jQuery('input[name="domain"]').val();
 
-		
+
 
 		// Create the unregister url
 
 		url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&premiumCode='+jQuery('input[name="premiumCode"]').val();
 
-		
+
 
 		// Create the ajax object
 
@@ -1308,19 +1308,19 @@ jQuery(document).ready(function() {
 
 		}
 
-		
+
 
 		// Pass the URL to the admin-ajax.php passthrough function
 
 		jQuery.get( ajaxurl, ajax_data , function(data) {
 
-			
+
 
 			// Create the register URL
 
 			url = 'https//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
 
-			
+
 
 			// Create the ajax object
 
@@ -1332,25 +1332,25 @@ jQuery(document).ready(function() {
 
 			}
 
-			
+
 
 			// Pass the URL to the admin-ajax.php passthrough function
 
 			jQuery.post( ajaxurl, ajax_data , function(subdata) {
 
-				
+
 
 				// Parse the response
 
 				var info = jQuery.parseJSON(subdata);
 
-				
+
 
 				// If the rearm was successful
 
 				if(info['status'] == 'success') {
 
-					
+
 
 					// Prepare data
 
@@ -1362,13 +1362,13 @@ jQuery(document).ready(function() {
 
 					};
 
-					
+
 
 					// Send the response to admin-ajax.php
 
 					jQuery.post(ajaxurl, data, function(response) {
 
-						
+
 
 						// Toggle the registration display
 
@@ -1376,19 +1376,19 @@ jQuery(document).ready(function() {
 
 						jQuery('.sw-admin-wrapper').attr('sw-registered','1');
 
-						
+
 
 					});
 
-					
+
 
 					jQuery('input[name="premiumCode"]').val(info['premiumCode']);
 
-					
+
 
 				} else {
 
-					
+
 
 					// Prepare data
 
@@ -1402,13 +1402,13 @@ jQuery(document).ready(function() {
 
 					};
 
-						
+
 
 					// Send the response to admin-ajax.php
 
 					jQuery.post(ajaxurl, data, function(response) {
 
-												
+
 
 						// Toggle the registration display
 
@@ -1416,19 +1416,19 @@ jQuery(document).ready(function() {
 
 						jQuery('.sw-admin-wrapper').attr('sw-registered','0');
 
-						
+
 
 					});
 
-					
+
 
 				}
 
 			});
 
-				
 
-		
+
+
 
 		} );
 
@@ -1504,7 +1504,7 @@ jQuery.fn.selectText = function(){
 
     } else if (window.getSelection) {
 
-        selection = window.getSelection();        
+        selection = window.getSelection();
 
         range = document.createRange();
 
@@ -1524,19 +1524,19 @@ jQuery(document).ready( function() {
 
 	jQuery('.sw-system-status').on('click', function() {
 
-				
+
 
 		// Block the default action
 
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-		
+
 
 		jQuery('.system-status-wrapper').slideToggle();
 
 		jQuery('.system-status-container').selectText();
 
-		
+
 
 	});
 
@@ -1574,17 +1574,17 @@ jQuery(document).ready( function() {
 
 			}
 
-	
+
 
 			var $id = jQuery(ui.tooltip).attr('id');
 
-	
+
 
 			// close any lingering tooltips
 
 			jQuery('div.ui-tooltip').not('#' + $id).remove();
 
-	
+
 
 			// ajax function to pull in data and add it to the tooltip goes here
 
@@ -1598,7 +1598,7 @@ jQuery(document).ready( function() {
 
 			{
 
-				jQuery(this).stop(true).fadeTo(400, 1); 
+				jQuery(this).stop(true).fadeTo(400, 1);
 
 			},
 
@@ -1638,27 +1638,27 @@ jQuery(document).ready( function() {
 
 jQuery(document).ready(function($){
 
- 
 
- 
+
+
 
     var custom_uploader;
 
- 
 
- 
+
+
 
     jQuery('.swp_upload_image_button').click(function(e) {
 
- 
+
 
         e.preventDefault();
 
-		
+
 
 		input_field = jQuery(this).attr('for');
 
- 
+
 
         //If the uploader object has already been created, reopen the dialog
 
@@ -1670,7 +1670,7 @@ jQuery(document).ready(function($){
 
         }
 
- 
+
 
         //Extend the wp.media object
 
@@ -1688,7 +1688,7 @@ jQuery(document).ready(function($){
 
         });
 
- 
+
 
         //When a file is selected, grab the URL and set it as the text field's value
 
@@ -1700,18 +1700,18 @@ jQuery(document).ready(function($){
 
         });
 
- 
+
 
         //Open the uploader dialog
 
         custom_uploader.open();
 
- 
+
 
     });
 
- 
 
- 
+
+
 
 });

@@ -8,7 +8,7 @@
 					title: 'Insert Social Warfare Buttons',
 					body: [
 						{
-							type: 'listbox',   
+							type: 'listbox',
 							name: 'reflection',
 							label: 'Should the buttons reflect this post or another one?',
 							'values': [
@@ -40,7 +40,7 @@
 						{
 							type: 'label',
 							name: 'someHelpText',
-							onPostRender : function() {				
+							onPostRender : function() {
 								this.getEl().innerHTML =
 								   '<span style="float:right;">Comma separated list of social network (e.g. "Facebook,Twitter,Total"). Leave blank to use site-wide defaults.</span>';},
 							text: ''},

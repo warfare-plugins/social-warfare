@@ -1,16 +1,16 @@
 <?php
 
 /*****************************************************************
-                                                                
-           SETUP THE POST EDITOR OPTIONS         
-                                                                
+
+           SETUP THE POST EDITOR OPTIONS
+
 ******************************************************************/
 
 	function swp_get_post_types() {
 
 		// Get the post Types
 		$postTypes = get_post_types();
-		
+
 		// Unset the post types that don't matter
 		if(isset($postTypes['post'])) 				unset($postTypes['post']);
 		if(isset($postTypes['page'])) 				unset($postTypes['page']);
@@ -22,7 +22,7 @@
 		if(isset($postTypes['shop_order_refund'])) 	unset($postTypes['shop_order_refund']);
 		if(isset($postTypes['shop_coupon'])) 		unset($postTypes['shop_coupon']);
 		if(isset($postTypes['shop_webhook'])) 		unset($postTypes['shop_webhook']);
-	
+
 		return $postTypes;
 
 	};
@@ -30,7 +30,7 @@
 	add_filter( 'rwmb_meta_boxes', 'swp_register_meta_boxes' );
 	function swp_register_meta_boxes( $meta_boxes )
 	{
-		
+
 		// Setup the prefix to avoid conflicts
 		 $prefix = 'nc_';
 		 $options = swp_get_user_options();
@@ -42,9 +42,9 @@
 		 $postType[] = 'post';
 
 /*****************************************************************
-                                                                
-           FETCH THE TWITTER HANDLE FOR TWEET COUNTS         
-                                                                
+
+           FETCH THE TWITTER HANDLE FOR TWEET COUNTS
+
 ******************************************************************/
 
 		 // Fetch the Twitter handle for the Post Author if it exists
@@ -52,22 +52,22 @@
 		 	$post_id = $_GET['post'];
 			$author_id 			= swp_get_author($post_id);
 			$twitter_handle 	= get_the_author_meta( 'swp_twitter' , $author_id);
-		 
+
 		 // Fetch the Twitter handle for the logged in user if the above fails
 		 else:
 			 $logged_in_user 	= get_current_user_id();
 			 $twitter_handle 	= get_the_author_meta( 'swp_twitter' , $logged_in_user);
 		 endif;
-		 
+
 		 // Fetch the site-wide Twitter Handle if both of the above fail
 		 if(!$twitter_handle):
 		 	$twitter_handle = $options['twitterID'];
 		 endif;
 
 /*****************************************************************
-                                                                
-           BUILD THE OPTIONS FIELDS         
-                                                                
+
+           BUILD THE OPTIONS FIELDS
+
 ******************************************************************/
 
 		 // Setup our meta box using an array
@@ -80,7 +80,7 @@
 			  'context'  => 'normal',
 			  'priority' => $priority,
 			  'fields' => array(
-			  
+
 			  		// Setup the social media image
 					array(
 						 'name'  => '<span class="dashicons dashicons-share"></span> '.__('Social Media Image','social-warfare'),
@@ -91,7 +91,7 @@
 						 'class' => $prefix . 'ogImageWrapper',
 						 'max_file_uploads' => 1
 					),
-					
+
 					// Setup the social media title
 					array(
 						 'name'  => '<span class="dashicons dashicons-share"></span> '. __('Social Media Title','social-warfare'),
@@ -101,7 +101,7 @@
 						 'class' => $prefix . 'ogTitleWrapper',
 						 'clone' => false,
 					),
-					
+
 					// Setup the social media description
 					array(
 						 'name'  => '<span class="dashicons dashicons-share"></span> '.__('Social Media Description','social-warfare'),
@@ -111,14 +111,14 @@
 						 'type'  => 'textarea',
 						 'clone' => false,
 					),
-					
+
 					// Divider
 					array(
 						 'name'  => 'divider',
 						 'id'    => 'divider',
 						 'type'  => 'divider'
 					),
-					
+
 					// Setup the pinterest optimized image
 					array(
 						 'name'  => '<i class="sw sw-pinterest"></i> '.__('Pinterest Image','social-warfare'),
@@ -129,7 +129,7 @@
 						 'clone' => false,
 						 'max_file_uploads' => 1
 					),
-					
+
 					// Setup the pinterest description
 					array(
 						 'name'  => '<i class="sw sw-pinterest"></i>'. __('Pinterest Description','social-warfare'),
@@ -139,7 +139,7 @@
 						 'type'  => 'textarea',
 						 'clone' => false,
 					),
-					
+
 					// Setup the Custom Tweet box
 					array(
 						 'name'  => '<i class="sw sw-twitter"></i> '.__('Custom Tweet','social-warfare'),
@@ -149,7 +149,7 @@
 						 'type'  => 'textarea',
 						 'clone' => false,
 					),
-					
+
 					// Set up the location on post options
 					array(
 						 'name'  => '<span class="dashicons dashicons-randomize"></span> '.__('Horizontal Buttons Location','social-warfare'),
@@ -178,7 +178,7 @@
 						 ),
 						 'clone' => false,
 						 'std'	=> 'default',
-		 
+
 		 			),
 					array(
 						 'name'  => 'divider2',
@@ -201,7 +201,7 @@
 					)
 			  )
 		 );
-		 
+
 		 // Return the meta boxes
 		 return $meta_boxes;
 	}

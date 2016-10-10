@@ -16,7 +16,7 @@
 			'premium' => false
 		);
 
-		return $options;		 
+		return $options;
 
 	};
 /*****************************************************************
@@ -51,12 +51,12 @@
 *                                                                *
 ******************************************************************/
 	function swp_format_facebook_response($response) {
-		
+
 		$url = get_permalink( get_the_ID() );
-		
+
 		// Parse the original request for shares
 		$response = json_decode($response, true);
-		
+
 		// Create a second request for likes and comments
 		$request_url = 'https://graph.facebook.com/?id='.$url.'&fields=og_object{likes.summary(true),comments.summary(true)}';
 		$next_response = swp_file_get_contents_curl($request_url);
@@ -67,7 +67,7 @@
 		$likes = isset($next_response['og_object']['likes']['summary']['total_count'])?intval($next_response['og_object']['likes']['summary']['total_count']):0;
 		$comments = isset($next_response['og_object']['comments']['summary']['total_count'])?intval($next_response['og_object']['comments']['summary']['total_count']):0;
 		$total_activity = $shares + $likes + $comments;
-		
+
 		if(isset($_GET['swp_facebook_debug'])):
 			var_dump($facebook_id);
 			var_dump($response);

@@ -1,7 +1,7 @@
 <?php
 	$swp_user_options = get_option('socialWarfareOptions');
 	function swp_get_user_options( $admin = false ) {
-		
+
 		// Fetch the global options array
 		global $swp_user_options;
 
@@ -73,7 +73,7 @@
 			if(!isset($swp_user_options['pinit_location_vertical']))	{ $swp_user_options['pinit_location_vertical'] = 'top'; };
 			if(!isset($swp_user_options['pinit_min_width']))			{ $swp_user_options['pinit_min_width'] 		= '200'; };
 			if(!isset($swp_user_options['pinit_min_height']))			{ $swp_user_options['pinit_min_height'] 	= '200'; };
-		
+
 		// If it's not registered
 		else:
 			if(!isset($swp_user_options['locationSite'])) 				{ $swp_user_options['locationSite'] 		= 'both'; 	};
@@ -125,9 +125,9 @@
 			$swp_user_options['pinit_toggle'] = false;
 			$swp_user_options['pinit_location_horizontal'] = 'center';
 			$swp_user_options['pinit_location_vertical'] = 'top';
-		
+
 		endif;
-		
+
 		if(!isset($swp_user_options['newOrderOfIcons'])):
 			$swp_user_options['newOrderOfIcons']['active'] = array(
 				"twitter" => "Twitter",
@@ -151,10 +151,10 @@
 				endif;
 			endforeach;
 		endif;
-		
+
 		return $swp_user_options;
 	}
-	
+
 	function swp_get_single_option($key) {
 		$option = swp_get_user_options();
 		return $option[$key];

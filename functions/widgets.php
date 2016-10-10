@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*************************************************************
 
@@ -11,93 +11,93 @@ class swp_popular_posts_widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(false, $name = 'Social Warfare: Popular Posts' );
 	}
-	
+
 /*************************************************************
 
 	FUNCTION - CREATE THE WIDGET FORM
 
-**************************************************************/	
+**************************************************************/
 
 	function form($instance) {
-	
+
 	// Default Title
-	if( isset($instance['title'] )) { 		$title 			= esc_attr($instance['title']);		
+	if( isset($instance['title'] )) { 		$title 			= esc_attr($instance['title']);
 	} else {								$title 			= 'Popular Posts'; }
 
 	// Default Count
-	if( isset($instance['count'] )) { 		$count 			= esc_attr($instance['count']);		
+	if( isset($instance['count'] )) { 		$count 			= esc_attr($instance['count']);
 	} else {								$count 			= '10'; }
 
 	// Default Timeframe
-	if( isset($instance['timeframe'] )) { 	$timeframe 		= esc_attr($instance['timeframe']);		
+	if( isset($instance['timeframe'] )) { 	$timeframe 		= esc_attr($instance['timeframe']);
 	} else {								$timeframe 		= '0'; }
 
 	// Default Title
-	if( isset($instance['network'] )) { 	$network 		= esc_attr($instance['network']);		
+	if( isset($instance['network'] )) { 	$network 		= esc_attr($instance['network']);
 	} else {								$network 		= 'totes'; }
 
 	// Default showCount
-	if( isset($instance['showCount'] )) { 	$showCount 		= esc_attr($instance['showCount']);		
+	if( isset($instance['showCount'] )) { 	$showCount 		= esc_attr($instance['showCount']);
 	} else {								$showCount 		= 'true'; }
 
 
 	// Default countLabel
-	if( isset($instance['countLabel'] )) { 	$countLabel 	= esc_attr($instance['countLabel']);		
+	if( isset($instance['countLabel'] )) { 	$countLabel 	= esc_attr($instance['countLabel']);
 	} else {								$countLabel 	= 'Total Shares'; }
 
 
 	// Default Style
-	if( isset($instance['style'] )) { 		$style 			= esc_attr($instance['style']);		
+	if( isset($instance['style'] )) { 		$style 			= esc_attr($instance['style']);
 	} else {								$style 			= 'style_01'; }
 
 
 	// Default Thumbnails toggle
-	if( isset($instance['thumbnails'] )) { 	$thumbnails 	= esc_attr($instance['thumbnails']);		
+	if( isset($instance['thumbnails'] )) { 	$thumbnails 	= esc_attr($instance['thumbnails']);
 	} else {								$thumbnails 	= 'true'; }
 
 	// Default Thumbnail size
-	if( isset($instance['thumb_size'] )) { 	$thumb_size 	= esc_attr($instance['thumb_size']);		
+	if( isset($instance['thumb_size'] )) { 	$thumb_size 	= esc_attr($instance['thumb_size']);
 	} else {								$thumb_size 	= '100'; }
-	
+
 	// Default Font Size
-	if( isset($instance['font_size'] )) { 	$font_size 		= esc_attr($instance['font_size']);		
-	} else {								$font_size 		= '100'; }	
-	
+	if( isset($instance['font_size'] )) { 	$font_size 		= esc_attr($instance['font_size']);
+	} else {								$font_size 		= '100'; }
+
 	// Default Custom Background
-	if( isset($instance['custom_bg'] )) { 	$custom_bg 		= esc_attr($instance['custom_bg']);		
-	} else {								$custom_bg 		= '#ffffff'; }	
-	
+	if( isset($instance['custom_bg'] )) { 	$custom_bg 		= esc_attr($instance['custom_bg']);
+	} else {								$custom_bg 		= '#ffffff'; }
+
 	// Default Custom Link
-	if( isset($instance['custom_link'] )) { $custom_link 	= esc_attr($instance['custom_link']);		
-	} else {								$custom_link 	= '#000000'; }	
-		
+	if( isset($instance['custom_link'] )) { $custom_link 	= esc_attr($instance['custom_link']);
+	} else {								$custom_link 	= '#000000'; }
+
 	// Fetch the Social Warfare Options
 	$options = swp_get_user_options();
-	
+
 	// Fetch the networks that are active on this blog
 	$availableNetworks = $options['newOrderOfIcons'];
 
 	// Build the Widget Form
-	$form = '<div class="swp_popular_post_options">';	
-	
+	$form = '<div class="swp_popular_post_options">';
+
 	// The Widget Title Field
 	$form .= '<p class="title">';
 	$form .= '<label for="'.$this->get_field_id('title').'">Widget Title</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('title').'" name="'.$this->get_field_name('title').'" type="text" value="'.$title.'" />';
 	$form .= '</p>';
-	
+
 	// Number of Posts to Display Field
 	$form .= '<p class="count">';
 	$form .= '<label for="'.$this->get_field_id('count').'">How many posts would you like to display?</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('count').'" name="'.$this->get_field_name('count').'" type="number" value="'.$count.'" min="0" />';
 	$form .= '</p>';
-	
+
 	// Age of the pots to display field
 	$form .= '<p class="timeframe">';
 	$form .= '<label for="'.$this->get_field_id('timeframe').'">What is maximum age of a post (in days) that you would like to include (0 = Unlimited)?</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('timeframe').'" name="'.$this->get_field_name('timeframe').'" value="'.$timeframe.'" type="number" min="0">';
 	$form .= '</p>';
-    
+
 	// Which networks to use as the basis field
     $form .= '<p class="network">';
 	$form .= '<label for="'.$this->get_field_id('network').'">Which network would you like to base your posts popularity on?</label>';
@@ -114,7 +114,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		endforeach;
 	$form .= '</select>';
 	$form .= '</p>';
-    
+
 	// Display the share count toggle field
     $form .= '<p class="showCount">';
 	$form .= '<label for="'.$this->get_field_id('showCount').'">Would you like to show the count?</label>';
@@ -123,13 +123,13 @@ class swp_popular_posts_widget extends WP_Widget {
     $form .= '<option value="false" '.( $showCount == 'false' ? 'selected' : '').'>No</option>';
     $form .= '</select>';
 	$form .= '</p>';
-    
+
 	// Count Label Field
     $form .= '<p '.( $showCount == 'false' ? 'style="display:none;"' : '' ).' class="countLabel">';
 	$form .= '<label for="'.$this->get_field_id('countLabel').'">Count Number Label</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('countLabel').'" name="'.$this->get_field_name('countLabel').'" type="text" value="'.$countLabel.'" />';
 	$form .= '</p>';
-	
+
 	// Post thumbnails toggle field
     $form .= '<p class="thumbnails">';
 	$form .= '<label for="'.$this->get_field_id('thumbnails').'">Would you like to display thumbnails?</label>';
@@ -174,7 +174,7 @@ class swp_popular_posts_widget extends WP_Widget {
     $form .= '<option value="150" '.( $font_size == '150' ? 'selected' : '').'>150%</option>';
     $form .= '</select>';
 	$form .= '</p>';
-	
+
 	// Color Scheme Field
 	$form .= '<p class="style">';
 	$form .= '<label for="'.$this->get_field_id('style').'">Which color scheme would you like to use?</label>';
@@ -191,36 +191,36 @@ class swp_popular_posts_widget extends WP_Widget {
     $form .= '<option value="custom" '.( $style == 'custom' ? 'selected' : '' ) .'>Custom</option>';
     $form .= '</select>';
 	$form .= '</p>';
-	
+
 	// Custom Background Color Field
     $form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_bg">';
 	$form .= '<label for="'.$this->get_field_id('custom_bg').'">Custom Background Color</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_bg').'" name="'.$this->get_field_name('custom_bg').'" type="text" value="'.$custom_bg.'" />';
 	$form .= '</p>';
-	
+
 	// Custom Link Color Field
     $form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_link">';
 	$form .= '<label for="'.$this->get_field_id('custom_link').'">Custom Link Color</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_link').'" name="'.$this->get_field_name('custom_link').'" type="text" value="'.$custom_link.'" />';
 	$form .= '</p>';
-	
+
 	// Close the Div
 	$form .= '</div>';
-	
+
 	// Output the form fields
 	echo $form;
-	
+
 	}
 
 /*************************************************************
 
 	FUNCTION - UPDATE VALUES FROM THE FORM
 
-**************************************************************/	
-	
+**************************************************************/
+
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
-		
+
 		// Fetch the values from the form
 		$instance['title'] 			= strip_tags($new_instance['title']);
 		$instance['count'] 			= strip_tags($new_instance['count']);
@@ -241,11 +241,11 @@ class swp_popular_posts_widget extends WP_Widget {
 
 	FUNCTION - OUTPUT THE WIDGET TO THE SITE
 
-**************************************************************/	
+**************************************************************/
 
 	function widget($args, $instance) {
 		extract( $args );
-		
+
 		// Fetch the field values from the form
 		(isset($instance['title'] ) 		? $title 		= $instance['title'] 		: $title 		= 'Popular Posts');
 		(isset($instance['count'] ) 		? $count 		= $instance['count'] 		: $count 		= '10');
@@ -259,76 +259,76 @@ class swp_popular_posts_widget extends WP_Widget {
 		(isset($instance['font_size'] ) 	? $font_size 	= $instance['font_size'] 	: $font_size 	= '100');
 		(isset($instance['custom_bg'] ) 	? $custom_bg 	= $instance['custom_bg'] 	: $custom_bg 	= '#ffffff');
 		(isset($instance['custom_link'] ) 	? $custom_link 	= $instance['custom_link'] 	: $custom_link 	= '#000000');
-		
+
 		// Correct the previous style with the new version if it is present on the site
 		if( $style == 'first_style' || $style == 'second_style' ):
 			$style = 'style_01';
 		endif;
-		
+
 		/*************************************************************
 
 			STYLES - CREATE AN ARRAY OF BACKGROUNDS AND LINK COLORS
 
-		**************************************************************/	
-		
+		**************************************************************/
+
 		// Vanilla (No Styling)
 		$styles['style_01']['wrapper'] 	= 'background:transparent;';
 		$styles['style_01']['links']	= '';
-		
+
 		// Inspired by Twitter
 		$styles['style_02']['wrapper'] 	= 'padding:15px;background:#429cd6;';
 		$styles['style_02']['links']	= 'color:#ffffff;';
-		
+
 		// Inspired by Facebook
 		$styles['style_03']['wrapper'] 	= 'padding:15px;background:#3a589e;';
 		$styles['style_03']['links']	= 'color:#ffffff;';
-		
+
 		// Inspired by Google Plus
 		$styles['style_04']['wrapper'] 	= 'padding:15px;background:#df4b37;';
 		$styles['style_04']['links']	= 'color:#ffffff;';
-		
+
 		// Inspired by LinkedIn
 		$styles['style_05']['wrapper'] 	= 'padding:15px;background:#0d77b7;';
 		$styles['style_05']['links']	= 'color:#ffffff;';
-		
+
 		// Inspired by Pinterest
 		$styles['style_06']['wrapper'] 	= 'padding:15px;background:#cd2029;';
 		$styles['style_06']['links']	= 'color:#ffffff;';
-		
+
 		// Don't Stop Believin'
 		$styles['style_07']['wrapper'] 	= 'padding:15px;background:#333333;';
 		$styles['style_07']['links']	= 'color:#ffffff;';
-		
+
 		// Thunderstruck
 		$styles['style_08']['wrapper'] 	= 'padding:15px;background:#30394F;';
 		$styles['style_08']['links']	= 'color:#ffffff;';
-		
+
 		// Livin' On A Prayer
 		$styles['style_09']['wrapper'] 	= 'padding:15px;background:#EEEEEE;';
 		$styles['style_09']['links']	= 'color:#30394F;';
-		
+
 		// Custom
 		$styles['custom']['wrapper'] 	= 'padding:15px;background:'.$custom_bg.';';
 		$styles['custom']['links']		= 'color:'.$custom_link.';';
-		
+
 		/*************************************************************
 
 			BUILD OUT THE WIDGET
 
-		**************************************************************/	
-		
+		**************************************************************/
+
 		// Begin output of the widget html
 		echo $before_widget;
 		echo '<div class="widget-text swp_widget_box" style="'.$styles[$style]['wrapper'].'">';
-		
+
 		// Check if title is set
 		if ( $title ) {
 			echo '<h3 class="widgettitle widget-title" style="'.$styles[$style]['links'].'">'.$title.'</h3>';
 		}
-	
+
 		// If a custom timeframe is not being used....
 		if( $timeframe == 0 ):
-		
+
 			// Create the arguments for a query without a timeframe
 			$swp_args = array(
 				'posts_per_page' 	=> $count,
@@ -337,10 +337,10 @@ class swp_popular_posts_widget extends WP_Widget {
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
 			);
-		
+
 		// If a custom timeframe is being used....
 		else:
-		
+
 			// Create the arguments for a query with a timeframe
 			$swp_args = array(
 				'posts_per_page' 	=> $count,
@@ -354,32 +354,32 @@ class swp_popular_posts_widget extends WP_Widget {
 				)
 			);
 		endif;
-		
+
 		// Reset the main query
 		wp_reset_postdata();
-		
+
 		// Query and fetch the posts
 		$swq = new WP_Query( $swp_args );
-		
+
 		// Begin the loop
 		if( $swq->have_posts() ) :
 			$i = 1;
 			while( $swq->have_posts() ):
-				
+
 				if($i <= $count):
 					$swq->the_post();
-					
+
 					// If we are supposed to show count numbers....
 					if($showCount == 'true'):
 						$postID = get_the_ID();
 						$shares = get_post_meta($postID,'_'.$network,true);
 						$share_html = '<span class="swp_pop_count">'.swp_kilomega($shares).' '.$countLabel.'</span>';
-						
+
 					// If we are not supposed to show count numbers
 					else:
 						$share_html = '';
 					endif;
-	
+
 					// If we are supposed to show thumbnails
 					if($thumbnails == 'true' && has_post_thumbnail()):
 						$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
@@ -387,25 +387,25 @@ class swp_popular_posts_widget extends WP_Widget {
 						$thumbnail_html .= '<a href="'.get_the_permalink().'">';
 						$thumbnail_html .= '<img style="width:'.$thumb_size.'px;height:'.$thumb_size.'px;" class="swp_pop_thumb" src="'.$thumbnail_url[0].'">';
 						$thumbnail_html .= '</a>';
-						
+
 					// If we are not supposed to show thumbnails
 					else:
 						$thumbnail_html = '';
 					endif;
-	
+
 					// Generate the HTML for a link
 					$link_html = '<a style="font-size:'.$font_size.'%;'.$styles[$style]['links'].'" class="swp_popularity" href="'.get_the_permalink().'"><b>'.get_the_title().'</b>'.$share_html.'</a>';
-					
+
 					// Output the post to the site
 					echo '<div class="swp_popular_post">'.$thumbnail_html.''.$link_html.'</div>';
 					echo '<div class="swp_clearfix"></div>';
-				
+
 				endif;
-				
+
 			// End the loop
 			endwhile;
 		endif;
-		
+
 		// Reset the main query
 		wp_reset_postdata();
 		echo '</div>';
@@ -415,4 +415,3 @@ class swp_popular_posts_widget extends WP_Widget {
 
 // Register the Widget
 add_action('widgets_init', create_function('', 'return register_widget("swp_popular_posts_widget");'));
-

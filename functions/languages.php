@@ -16,7 +16,7 @@ add_filter('swp_languages','swp_en_language',0);
 *****************************************************************************************/
 
 function swp_en_language($language) {
-		
+
 	$language['googlePlus'] 	= '+1';
 	$language['twitter'] 		= 'Tweet';
 	$language['facebook']		= 'Share';
@@ -31,7 +31,7 @@ function swp_en_language($language) {
 	$language['pocket']			= 'Pocket';
 	$language['buffer']			= 'Buffer';
 	$language['total']			= 'Shares';
-	
+
 	// Return the Languages Array or the world will explode
 	return $language;
 }
@@ -197,19 +197,19 @@ function swp_da_language($language) {
 add_filter('swp_languages','swp_it_language');
 function swp_it_language($language) {
 	if(swp_get_single_option('language') == 'it'):
-		$language['googlePlus'] 	= '+1'; 
-		$language['twitter'] 		= 'Twitta'; 
-		$language['facebook']		= 'Condividi'; 
-		$language['pinterest']		= 'Pin'; 
-		$language['linkedIn']		= 'Condividi'; 
-		$language['tumblr']			= 'Condividi'; 
-		$language['stumbleupon']	= 'Stumble'; 
-		$language['reddit']			= 'Reddit'; 
-		$language['email']			= 'Email'; 
-		$language['yummly']			= 'Yum'; 
-		$language['whatsapp']		= 'WhatsApp'; 
-		$language['pocket']			= 'Pocket'; 
-		$language['buffer']			= 'Buffer'; 
+		$language['googlePlus'] 	= '+1';
+		$language['twitter'] 		= 'Twitta';
+		$language['facebook']		= 'Condividi';
+		$language['pinterest']		= 'Pin';
+		$language['linkedIn']		= 'Condividi';
+		$language['tumblr']			= 'Condividi';
+		$language['stumbleupon']	= 'Stumble';
+		$language['reddit']			= 'Reddit';
+		$language['email']			= 'Email';
+		$language['yummly']			= 'Yum';
+		$language['whatsapp']		= 'WhatsApp';
+		$language['pocket']			= 'Pocket';
+		$language['buffer']			= 'Buffer';
 		$language['total']			= 'Condivisioni';
 	endif;
 	return $language;

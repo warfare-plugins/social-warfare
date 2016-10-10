@@ -16,7 +16,7 @@
 			'premium' => true
 		);
 
-		return $options;		 
+		return $options;
 
 	};
 /*****************************************************************
@@ -68,7 +68,7 @@
 			$array['resource']['whatsapp'] = $_GLOBALS['sw']['buttons'][$array['postID']]['whatsapp'];
 
 		// If not, let's check if WhatsApp is activated and create the button HTML
-		elseif( (isset($array['options']['newOrderOfIcons']['whatsapp']) && swp_mobile_detection() && !isset($array['buttons'])) 
+		elseif( (isset($array['options']['newOrderOfIcons']['whatsapp']) && swp_mobile_detection() && !isset($array['buttons']))
 				|| (isset($array['buttons']) && isset($array['buttons']['whatsapp']))  ):
 
 			$array['totes'] += $array['shares']['whatsapp'];

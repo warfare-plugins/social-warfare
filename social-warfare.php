@@ -246,7 +246,7 @@ function swp_add_monthly_schedule( $schedules ) {
 	);
 	return $schedules;
 }
-add_filter( 'cron_schedules', 'swp_add_monthly_schedule' ); 
+add_filter( 'cron_schedules', 'swp_add_monthly_schedule' );
 // Activate the Cron Job
 register_activation_hook(__FILE__, 'swp_activate_registration_cron');
 add_action('swp_check_registration_event', 'swp_check_registration_status');

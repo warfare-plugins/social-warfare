@@ -16,7 +16,7 @@
 			'premium' => false
 		);
 
-		return $options;		 
+		return $options;
 
 	};
 /*****************************************************************
@@ -75,7 +75,7 @@
 			++$array['count'];
 
 			$pi = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true);
-			
+
 			// Pinterest Username
 			$pinterest_username = $array['options']['pinterestID'];
 			if(isset($pinterest_username) && $pinterest_username != ''):

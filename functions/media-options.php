@@ -1,9 +1,9 @@
 <?php
 
 /*****************************************************************
-                                                                
-	Mechanism for Opting an Image Out of Having a Pin Button       
-                                                                
+
+	Mechanism for Opting an Image Out of Having a Pin Button
+
 ******************************************************************/
 add_filter( 'attachment_fields_to_edit', 'swp_add_media_options' , null, 2);
 

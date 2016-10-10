@@ -56,7 +56,7 @@ function swp_bitly_shortener( $array ) {
 
 	// Fetch the User's Options
 	$options = swp_get_user_options();
-	
+
 	// If Link shortening is activated....
 	if($options['linkShortening'] == true) :
 
@@ -91,7 +91,7 @@ function swp_bitly_shortener( $array ) {
 					// If the API provides a shortened URL...
 					$shortURL = swp_make_bitly_url( urldecode($url) , $network , $access_token );
 					if($shortURL):
-						
+
 						// Store the link in the cache and return it to the buttons
 						delete_post_meta($postID,'bitly_link_'.$network);
 						update_post_meta($postID,'bitly_link_'.$network,$shortURL);
@@ -117,7 +117,7 @@ function swp_bitly_shortener( $array ) {
 				// If the cache is fresh or if the API has failed already....
 				if(swp_is_cache_fresh($postID) == true || (isset($_GLOBALS['bitly_status']) && $_GLOBALS['bitly_status'] == 'failure')):
 
-				
+
 					// If we have a shortened URL in the cache....
 					$existingURL = get_post_meta($postID,'bitly_link',true);
 					if($existingURL):
@@ -217,7 +217,7 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 
 	// Parse the JSON formatted response from the Bitly Lookup API
 	// $bitly_lookup_response = json_decode( $bitly_lookup_response , true );
-	
+
 	// If the lookup returned a valid, previously generated short link....
 	if( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) && true == false):
 
@@ -226,19 +226,19 @@ function swp_make_bitly_url( $url , $network , $access_token) {
 
 	// If the lookup did not return a valid short link....
 	else:
-		
+
 		// Set the format to json
 		$format='json';
 
 		// Create a link to reach the Bitly API
 		$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token='.$access_token.'&longUrl='.urlencode($url).'&format='.$format;
-		
+
 		// Fetch a response from the Bitly Shortening API
 		$data = swp_file_get_contents_curl($bitly_api);
 
 		// Parse the JSON formated response into an array
 		$data = json_decode( $data , true);
-		
+
 		// If the shortening succeeded....
 		if( isset ( $data['data']['url'] ) ) :
 

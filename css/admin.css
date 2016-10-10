@@ -59,7 +59,7 @@
 	margin: 1em 0;
 }
 .notAvailable {
- 	opacity:0.3;  
+ 	opacity:0.3;
 }
 .swp_CountDown {
 	background-color: #CCC;
@@ -150,7 +150,7 @@
 #socialWarfare .sw-premium-blocker {
 	position:absolute;
 	width:100%;
-	height:100%;	
+	height:100%;
 	top:0;
 	left:0;
 }

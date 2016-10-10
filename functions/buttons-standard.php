@@ -51,7 +51,7 @@ function swp_get_current_url() {
 *                                                                *
 ******************************************************************/
 function swp_is_cache_fresh( $postID , $output=false , $ajax=false ) {
-	
+
 	// Fetch the Options
 	$options 			= swp_get_user_options();
 
@@ -131,15 +131,15 @@ function social_warfare_buttons($array = array()) {
 	// Check to see if display location was specifically defined for this post
 	$specWhere = get_post_meta($postID,'nc_postLocation',true);
 	if( !$specWhere ) { $specWhere = 'default'; };
-	
+
 	if($array['where'] == 'default'):
-	
+
 		// If we are on a single page or post
 		if( is_singular() && !is_home() && !is_archive() && !is_front_page() ):
-		
+
 			// Make sure this is the main loop
 			//if( get_permalink( $postID ) == swp_get_current_url() ) :
-		
+
 				// Check if a specific display value has not been set for this specific post
 				if($specWhere == 'default' || $specWhere == ''):
 					$postType = get_post_type($postID);
@@ -151,13 +151,13 @@ function social_warfare_buttons($array = array()) {
 				else:
 					$array['where'] = $specWhere;
 				endif;
-		
+
 			// If it's not the main loop
 			//else:
 			//	$array['where'] = 'none';
-			
+
 			//endif;
-			
+
 		// If we are on an archive or home page
 		else:
 			$array['where'] = $options['locationSite'];
@@ -195,7 +195,7 @@ function social_warfare_buttons($array = array()) {
 		else:
 			$floatOption = 'floatNone';
 		endif;
-			
+
 		// Disable the plugin on feeds, search results, and non-published content
 		if (!is_feed() && !is_search() && get_post_status($postID) == 'publish' ):
 
@@ -205,7 +205,7 @@ function social_warfare_buttons($array = array()) {
 			else:
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
-			
+
 			if(isset($array['scale'])):
 				$scale = $array['scale'];
 			else:
@@ -220,7 +220,7 @@ function social_warfare_buttons($array = array()) {
 
 			// Customize which buttosn we're going to display
 			if( isset ( $array['buttons'] ) ):
-			
+
 				// Fetch the global names and keys
 				$swp_options = array();
 				$swp_available_options = apply_filters('swp_options',$swp_options);
@@ -228,18 +228,18 @@ function social_warfare_buttons($array = array()) {
 
 				// Split the comma separated list into an array
 				$button_set_array = explode(',', $array['buttons']);
-				
+
 				// Match the names in the list to their appropriate system-wide keys
 				$i = 0;
 				foreach($button_set_array as $button):
-				
+
 					// Trim the network name in case of white space
 					$button = trim($button);
-						
+
 					// Convert the names to their systme-wide keys
 					if( recursive_array_search( $button , $available_buttons ) ) :
 						$key = recursive_array_search( $button , $available_buttons );
-						
+
 						// Store the result in the array that gets passed to the HTML generator
 						$buttonsArray['buttons'][$key] = $button;
 
@@ -247,18 +247,18 @@ function social_warfare_buttons($array = array()) {
 						if(!isset($buttonsArray['shares'][$key])):
 							$buttonsArray['shares'][$key] = 0;
 						endif;
-						
+
 					endif;
-				
-					$button_set_array[$i] = $button;	
+
+					$button_set_array[$i] = $button;
 					++$i;
 				endforeach;
-				
+
 				// Manually turn the total shares on or off
 				if(array_search('Total',$button_set_array)) { $buttonsArray['buttons']['totes'] = 'Total' ;}
-				
+
 			endif;
-			
+
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['count'] = 0;
 			$buttonsArray['totes'] = 0;
@@ -276,12 +276,12 @@ function social_warfare_buttons($array = array()) {
 
 			// This array will contain the HTML for all of the individual buttons
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
-			
+
 			// Create the social panel
 			$assets = '<div class="nc_socialPanel swp_'.$options['visualTheme'].' swp_d_'.$options['dColorSet'].' swp_i_'.$options['iColorSet'].' swp_o_'.$options['oColorSet'].'" data-position="'.$options['location_post'].'" data-float="'.$floatOption.'" data-count="'.$buttonsArray['count'].'" data-floatColor="'.$options['floatBgColor'].'" data-scale="'.$scale.'" data-align="'.$options['buttonFloat'].'">';
 
 			// Setup the total shares count if it's on the left
-			if( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($array['buttons'] ) ) 
+			if( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($array['buttons'] ) )
 			|| 	($options['swTotesFormat'] == 'totesAltLeft' && isset($array['buttons']) && isset($array['buttons']['totes']) && $buttonsArray['totes'] >= $options['minTotes'] ) ):
 				++$buttonsArray['count'];
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="'.$buttonsArray['count'].'" >';
@@ -312,7 +312,7 @@ function social_warfare_buttons($array = array()) {
 			endif;
 
 			// Create the Total Shares Box if it's on the right
-			if( ( $options['totes'] && $options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($buttonsArray['buttons'] ) ) 
+			if( ( $options['totes'] && $options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && !isset($buttonsArray['buttons'] ) )
 			|| 	( $options['swTotesFormat'] != 'totesAltLeft' && isset($buttonsArray['buttons']) && isset($buttonsArray['buttons']['totes']) && $buttonsArray['totes'] >= $options['minTotes'] ) ):
 				++$buttonsArray['count'];
 				if($options['swTotesFormat'] == 'totes'):
@@ -328,13 +328,13 @@ function social_warfare_buttons($array = array()) {
 
 			// Close the Social Panel
 			$assets .= '</div>';
-			
+
 			// Reset the cache timestamp if needed
 			if(swp_is_cache_fresh($postID) == false):
 				delete_post_meta($postID,'swp_cache_timestamp');
 				update_post_meta($postID,'swp_cache_timestamp',floor(((date('U')/60)/60)));
 			endif;
-			
+
 			if(isset($array['genesis'])):
 				if($array['where']	== 'below' && $array['genesis'] == 'below'):
 					return $assets;

@@ -173,7 +173,7 @@ p.sw-checkbox-label, p.sw-input-label, p.sw-select-label, p.sw-authenticate-labe
 	padding-left:10%;
 }
 .sw-select-label.sw-no-padding {
-	padding-left:0;	
+	padding-left:0;
 }
 p.sw-short {
 	margin:1em 0 0 0;
@@ -185,7 +185,7 @@ p.sw-subtext-label {
     margin: 5px 0 10px 0;
 }
 .system-status-wrapper {
-	display:none;	
+	display:none;
 }
 .system-status-container {
     width: 90%;
@@ -225,14 +225,14 @@ h3.sw-buttons-toggle {
 	position:absolute;
 	top:0;
 	width:50%;
-	height:100%;	
+	height:100%;
 }
 .sw-checkbox-toggle[status="on"] .sw-checkbox-on {
     left: 0;
     background-color:#71C069;
 }
 .sw-checkbox-toggle[status="on"] .sw-checkbox-off, .sw-checkbox-toggle[status="off"] .sw-checkbox-on {
-	display:none;	
+	display:none;
 }
 .sw-checkbox-toggle[status="off"] .sw-checkbox-off {
     right: 0;
@@ -300,7 +300,7 @@ a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hov
 }
 .sw-save-settings {
 	width:100%;
-	text-align:center;	
+	text-align:center;
 }
 .sw-red-notice,
 .sw-green-notice {
@@ -319,7 +319,7 @@ a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hov
 	left:0;
 	height:100%;
 	background:rgba(0,0,0,0.8);
-	z-index:999999999999;	
+	z-index:999999999999;
 }
 
 .sw-loading-message:before,
@@ -334,7 +334,7 @@ a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hov
 	font-family:'sw-icon-font';
 	font-size: 26px;
 	margin: 0 15px 0 0;
-	vertical-align: middle;	
+	vertical-align: middle;
 	content:'E';
 }
 .sw-red-notice a {
@@ -500,12 +500,12 @@ p.sw-subtitle.sw-registration-text {
 @media screen and (max-width: 1350px) {
 	.sw-header-menu li {
 		font-size:12px;
-		margin:0 10px;	
+		margin:0 10px;
 	}
 }
 @media screen and (max-width: 1080px) {
 	.sw-header-logo {
-		display:none;	
+		display:none;
 	}
 }
 /*********************************************************
@@ -514,15 +514,15 @@ p.sw-subtitle.sw-registration-text {
 
 *********************************************************/
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] {
-	opacity:0.3;	
+	opacity:0.3;
 }
 .sw-admin-wrapper[sw-registered="0"] .sw-option-container {
-	position:relative;	
+	position:relative;
 }
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] .sw-premium-blocker {
 	position:absolute;
 	width:100%;
-	height:100%;	
+	height:100%;
 	top:0;
 	left:0;
 }
@@ -534,13 +534,13 @@ p.sw-subtitle.sw-registration-text {
 	margin:20px 20px 0 0;
 }
 .sw-admin-wrapper[sw-registered="0"] i[premium-button="1"] {
-	display:none;	
+	display:none;
 }
 .sw-admin-wrapper[sw-registered="1"] .sw-premium-buttons {
 	display:none;
 }
 .sw-admin-wrapper[sw-registered="1"] .sw-premium-blocker {
-	display:none;	
+	display:none;
 }
 .ui-tooltip.sw-admin-hover-notice {
    background: #ee464f;
@@ -563,7 +563,7 @@ p.sw-subtitle.sw-registration-text {
    font-style:normal;
 }
 .swp_upload_image_field {
-	display:none;	
+	display:none;
 }
 .sw-admin-image-preview {
 	max-height:50px;

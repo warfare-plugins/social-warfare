@@ -1,9 +1,9 @@
 <?php
 
 /*****************************************************************
-                                                                
-          CHECK FOR ALTERNATE VERSION OF THE PERMALINK       
-                                                                
+
+          CHECK FOR ALTERNATE VERSION OF THE PERMALINK
+
 ******************************************************************/
 	function get_alternate_permalink($format) {
 
@@ -44,11 +44,11 @@
 		return $url;
 
 	}
-	
+
 /*****************************************************************
-                                                                
-	GENERATE THE ALTERNATE PERMALINK      
-                                                                
+
+	GENERATE THE ALTERNATE PERMALINK
+
 ******************************************************************/
 	function swp_get_alternate_permalink($format,$protocol,$id,$prefix) {
 
@@ -103,16 +103,16 @@
 			$url = str_replace('http://www.','http://',$url);
 			$url = str_replace('https://www.','https://',$url);
 		endif;
-		
+
 		return $url;
 
 	}
-	
+
 	function swp_get_alt_permalink( $post = 0, $leavename = false ) {
-		
+
 		// Fetch the Social Warfare user's options
 		$swp_user_options = swp_get_user_options();
-		
+
 		$rewritecode = array(
 			'%year%',
 			'%monthnum%',
@@ -126,27 +126,27 @@
 			'%author%',
 			$leavename? '' : '%pagename%',
 		);
-	
+
 		if ( is_object( $post ) && isset( $post->filter ) && 'sample' == $post->filter ) {
 			$sample = true;
 		} else {
 			$post = get_post( $post );
 			$sample = false;
 		}
-	
+
 		if ( empty($post->ID) )
 			return false;
-	
+
 		if ( $post->post_type == 'page' )
 			return get_page_link($post, $leavename, $sample);
 		elseif ( $post->post_type == 'attachment' )
 			return get_attachment_link( $post, $leavename );
 		elseif ( in_array($post->post_type, get_post_types( array('_builtin' => false) ) ) )
 			return get_post_permalink($post, $leavename, $sample);
-		
+
 		// Build the structure
 		$structure = $swp_user_options['recovery_format'];
-		
+
 		if($structure == 'custom'):
 			$permalink = $swp_user_options['recovery_custom_format'];
 		elseif($structure == 'unchanged'):
@@ -164,10 +164,10 @@
 		else:
 			$permalink = get_option('permalink_structure');
 		endif;
-		
-		
-		
-		
+
+
+
+
 		/**
 		 * Filter the permalink structure for a post before token replacement occurs.
 		 *
@@ -180,22 +180,22 @@
 		 * @param bool    $leavename Whether to keep the post name.
 		 */
 		$permalink = apply_filters( 'pre_post_link', $permalink, $post, $leavename );
-	
+
 		// Check if the user has defined a specific custom URL
 		$custom_url = get_post_meta( get_the_ID() , 'swp_recovery_url' , true );
 		if($custom_url):
 			return $custom_url;
 		else:
-	
+
 			if ( '' != $permalink && !in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft', 'future' ) ) ) {
 				$unixtime = strtotime($post->post_date);
-		
+
 				$category = '';
 				if ( strpos($permalink, '%category%') !== false ) {
 					$cats = get_the_category($post->ID);
 					if ( $cats ) {
 						usort($cats, '_usort_terms_by_ID'); // order by ID
-		
+
 						/**
 						 * Filter the category that gets used in the %category% permalink token.
 						 *
@@ -206,7 +206,7 @@
 						 * @param WP_Post  $post The post in question.
 						 */
 						$category_object = apply_filters( 'post_link_category', $cats[0], $cats, $post );
-		
+
 						$category_object = get_term( $category_object, 'category' );
 						$category = $category_object->slug;
 						if ( $parent = $category_object->parent )
@@ -219,13 +219,13 @@
 						$category = is_wp_error( $default_category ) ? '' : $default_category->slug;
 					}
 				}
-		
+
 				$author = '';
 				if ( strpos($permalink, '%author%') !== false ) {
 					$authordata = get_userdata($post->post_author);
 					$author = $authordata->user_nicename;
 				}
-		
+
 				$date = explode(" ",date('Y m d H i s', $unixtime));
 				$rewritereplace =
 				array(
@@ -242,15 +242,15 @@
 					$post->post_name,
 				);
 				$permalink = home_url( str_replace($rewritecode, $rewritereplace, $permalink) );
-					
-				if($structure != 'custom'):	
+
+				if($structure != 'custom'):
 					$permalink = user_trailingslashit($permalink, 'single');
 				endif;
-				
+
 			} else { // if they're not using the fancy permalink option
 				$permalink = home_url('?p=' . $post->ID);
 			}
-		
+
 			/**
 			 * Filter the permalink for a post.
 			 *
@@ -263,20 +263,20 @@
 			 * @param bool    $leavename Whether to keep the post name.
 			 */
 			$url = apply_filters( 'post_link', $permalink, $post, $leavename );
-			
+
 			// Check if they're using cross domain recovery
-			if(isset($swp_user_options['current_domain']) && $swp_user_options['current_domain'] 
-			&& isset($swp_user_options['former_domain']) && $swp_user_options['former_domain']): 
-			   $url = str_replace($swp_user_options['current_domain'],$swp_user_options['former_domain'],$url); 
+			if(isset($swp_user_options['current_domain']) && $swp_user_options['current_domain']
+			&& isset($swp_user_options['former_domain']) && $swp_user_options['former_domain']):
+			   $url = str_replace($swp_user_options['current_domain'],$swp_user_options['former_domain'],$url);
 			endif;
-			
+
 			// Filter the Protocol
 			if($swp_user_options['recovery_protocol'] == 'https' && strpos($url,'https') === false):
 				$url = str_replace('http','https',$url);
 			elseif($swp_user_options['recovery_protocol'] == 'http' && strpos($url,'https') !== false):
 				$url = str_replace('https','http',$url);
 			endif;
-			
+
 			// Filter the prefix
 			if($swp_user_options['recovery_prefix'] == 'unchanged'):
 			elseif($swp_user_options['recovery_prefix'] == 'www' && strpos($url,'www') === false):
@@ -286,14 +286,14 @@
 				$url = str_replace('http://www.','http://',$url);
 				$url = str_replace('https://www.','https://',$url);
 			endif;
-			
+
 			// Filter out the subdomain
 			if(isset($swp_user_options['recovery_subdomain']) && $swp_user_options['recovery_subdomain'] != ''):
 				$url = str_replace($swp_user_options['recovery_subdomain'] . '.' , '' , $url);
 			endif;
-			
+
 			return $url;
-			
+
 		endif;
-		
+
 	}

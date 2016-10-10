@@ -19,7 +19,7 @@ function swp_admin_options_page() {
 		'swp_plugin_options',
 		swp_PLUGIN_DIR.'/functions/admin-options-page/images/socialwarfare-20x20.png'
 	);
-	
+
 	// Hook into the CSS and Javascript Enqueue process for this specific page
 	add_action( 'admin_print_styles-' . $swp_menu, 'swp_admin_options_css' );
 	add_action( 'admin_print_scripts-'. $swp_menu, 'swp_admin_options_js');
@@ -55,14 +55,14 @@ function swp_admin_options_js() {
 
 // We'll build the form here
 function swp_plugin_options() {
-	
+
 	// Make sure the person accessing this link has proper permissions to access it
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
-	
+
 	swp_build_options_page();
-	
+
 }
 
 /***************************************************************
@@ -71,7 +71,7 @@ function swp_plugin_options() {
 
 ***************************************************************/
 function swp_build_options_page() {
-	
+
 	$swp_user_options = get_option('socialWarfareOptions');
 
 	// Create all of the options in one giant array
@@ -91,7 +91,7 @@ function swp_build_options_page() {
 	// Fetch the global options array
 	// global $swp_options_page;
 	$swp_options_page = apply_filters( 'swp_options' , $swp_options_page );
-	
+
 /***************************************************************
 
 	Build the header menu
@@ -126,16 +126,16 @@ function swp_build_options_page() {
 	echo '<div class="sw-admin-wrapper" sw-registered="'.is_swp_registered().'">';
 
 	echo '<form class="sw-admin-settings-form">';
-	
+
 	// Wrapper for the left 3/4 non-sidebar content
 	echo '<div class="sw-tabs-container sw-grid sw-col-700">';
 
 	// Loop through the options tabs and build the options page
 	foreach($swp_options_page['options'] as $tab_name => $tab_options):
-		
+
 		// Individual Tab Container - Full Width
 		echo '<div id="'.$tab_name.'" class="sw-admin-tab sw-grid sw-col-940">';
-		
+
 		// Loop through and output each option module for this tab
 		foreach($tab_options as $key => $option):
 
@@ -144,7 +144,7 @@ function swp_build_options_page() {
 	Title Module
 
 ***************************************************************/
-			
+
 			if($option['type'] == 'title'):
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<h2>'.$option['content'].'</h2>';
@@ -182,30 +182,30 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'image_upload'):
-			
+
 				// Fetch the value
 				if(isset($swp_user_options[$key])):
 					$value = $swp_user_options[$key];
 				else:
 					$value = $option['default'];
 				endif;
-			
+
 				// Create a whole parent container
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
-				
+
 				// Title goes on the left
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<p class="sw-checkbox-label">Custom Button Image</p>';
 				echo '</div>';
-				
+
 				// Button goes in the middle
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<label for="upload_image">
-						<input class="swp_upload_image_field" type="text" size="36" name="'.$key.'" value="'.$value.'" /> 
+						<input class="swp_upload_image_field" type="text" size="36" name="'.$key.'" value="'.$value.'" />
 						<a class="swp_upload_image_button button sw-navy-button" for="'.$key.'" type="button" value="Upload Image" />Upload Image</a>
 					</label>';
 				echo '</div>';
-				
+
 				// Preview goes on the right
 				echo '<div class="sw-grid sw-col-300 sw-fit">';
 					echo '<div class="sw-preview-container">';
@@ -215,7 +215,7 @@ function swp_build_options_page() {
 					endif;
 					echo '</div>';
 				echo '</div>';
-				
+
 				echo '</div>';
 
 			endif;
@@ -228,26 +228,26 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'buttons'):
-			
+
 				// The Active Buttons
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<h3 class="sw-buttons-toggle">Active</h3>';
 				echo '</div>';
-				
+
 				echo '<div class="sw-grid sw-col-620 sw-fit">';
 				echo '<div class="sw-active sw-buttons-sort">';
-				
+
 				// Check if we have saved settings to use
 				if( isset($swp_user_options['newOrderOfIcons'] ) ):
-				
+
 					// Loop through each active button
 					foreach($swp_user_options['newOrderOfIcons'] as $key => $value):
 						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
-					endforeach;				
-				
+					endforeach;
+
 				// Use defaults if nothing is saved
 				else:
-				
+
 					// Loop through the available buttons
 					foreach($option['content'] as $key => $value):
 						if($value['default'] == true):
@@ -272,14 +272,14 @@ function swp_build_options_page() {
 
 				// Check if we have saved settings to use
 				if( isset($swp_user_options['newOrderOfIcons'] ) ):
-		
+
 					// Loop through each active button
 					foreach($option['content'] as $key => $value):
 						if(!isset($swp_user_options['newOrderOfIcons'][$key])):
 							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 						endif;
-					endforeach;	
-				
+					endforeach;
+
 				// Use defaults if nothing is saved
 				else:
 
@@ -289,12 +289,12 @@ function swp_build_options_page() {
 							echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'" premium-button="'.$option['content'][$key]['premium'].'"></i>';
 						endif;
 					endforeach;
-				
+
 				endif;
-				
+
 				echo '</div>';
 				echo '</div>';
-				
+
 				// The Inactive Buttons
 				echo '<div class="sw-grid sw-col-940 sw-premium-buttons sw-option-container" premium="1">';
 				echo '<div class="sw-grid sw-col-300">';
@@ -310,14 +310,14 @@ function swp_build_options_page() {
 						echo '<i class="sw-s sw-'.$key.'-icon" value="'.$key.'"></i>';
 					endif;
 				endforeach;
-				
+
 				echo '</div>';
 				echo '</div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
 
 			endif;
-	
+
 /***************************************************************
 
 	Checkbox Module
@@ -325,22 +325,22 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'checkbox'):
-			
+
 				// Check for a default value
 				if(isset($swp_user_options[$key]) && $swp_user_options[$key] == true):
-					$status = 'on'; 
+					$status = 'on';
 					$selected = 'checked';
 				elseif(isset($swp_user_options[$key]) && $swp_user_options[$key] == false):
-					$status = 'off'; 
+					$status = 'off';
 					$selected = '';
 				elseif($option['default'] == true):
-					$status = 'on'; 
+					$status = 'on';
 					$selected = 'checked';
 				else:
-					$status = 'off'; 
+					$status = 'off';
 					$selected = '';
 				endif;
-						
+
 				// Check for four-fourths size
 				if($option['size'] == 'four-fourths'):
 
@@ -349,7 +349,7 @@ function swp_build_options_page() {
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
-				
+
 				// Check for three-fourths-advanced size
 				elseif($option['size'] == 'two-thirds-advanced'):
 
@@ -366,10 +366,10 @@ function swp_build_options_page() {
 					echo '<div class="sw-clearfix"></div>';
 					echo '<div class="sw-premium-blocker"></div>';
 					echo '</div>';
-				
+
 				// Check for two-fourths size
 				elseif( $option['size'] == 'two-fourths'):
-				
+
 					if($last_size == 'two-fourths'):
 						$last_size = '';
 						$fit = 'sw-fit';
@@ -379,31 +379,31 @@ function swp_build_options_page() {
 					endif;
 
 					echo '<div class="sw-grid sw-col-460 sw-option-container sw-fit '.$key.'_wrapper" '.($option['dep'] ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
-					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';				
+					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';
 					echo '<div class="sw-grid sw-col-460 sw-fit">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 					echo '<div class="sw-premium-blocker"></div>';
 					echo '</div>';
-				
+
 				// All others
 				else:
-					
+
 					echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' premium='.$option['premium'].'>';
-						
+
 					if(isset($option['header']) && $option['header'] == true):
 						echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">'.$option['content'].'</h2></div>';
 					else:
 						echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['content'].'</p></div>';
 					endif;
-					
+
 					echo '<div class="sw-grid sw-col-300">';
 					echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#'.$key.'"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="'.$key.'" id="'.$key.'" '.$selected.'>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-					
+
 					echo '<div class="sw-premium-blocker"></div>';
 					echo '</div>';
 
@@ -430,7 +430,7 @@ function swp_build_options_page() {
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '<div class="sw-clearfix"></div>';
 				echo '</div>';
-				
+
 			elseif($option['type'] == 'input' && isset($option['size']) && $option['size'] == 'two-fourths'):
 
 				if(isset($swp_user_options[$key])):
@@ -452,7 +452,7 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="'.$key.'" type="text" class="sw-admin-input" placeholder="0" value="'.$value.'" /></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
-				
+
 			elseif($option['type'] == 'input' && isset($option['secondary'])):
 
 				if(isset($swp_user_options[$option['primary']])):
@@ -466,16 +466,16 @@ function swp_build_options_page() {
 				elseif(isset($option['default_2'])):
 					$value2 = $option['default_2'];
 				endif;
-				
+
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
-							
+
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="'.$option['primary'].'" type="text" class="sw-admin-input" '.(isset($option['default']) ? 'placeholder="'.$option['default'].'"' : '').' value="'.$value.'" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"><input name="'.$option['secondary'].'" type="text" class="sw-admin-input" '.(isset($option['default_2']) ? 'placeholder="'.$option['default_2'].'"' : '').' value="'.$value2.'" /></div>';
-				
+
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
-				
+
 			endif;
 
 /***************************************************************
@@ -497,14 +497,14 @@ function swp_build_options_page() {
 				else:
 					$value2 = $option['default_2'];
 				endif;
-				
+
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
-							
+
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<select name="'.$option['primary'].'">';
 				if(!isset($option['default'])):
-					echo '<option value="">Select...</option>';					
+					echo '<option value="">Select...</option>';
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
 					echo '<option value="'.$select_key.'" '.($value == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
@@ -514,17 +514,17 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-300 sw-fit">';
 				echo '<select name="'.$option['secondary'].'">';
 				if(!isset($option['default_2'])):
-					echo '<option value="">Select...</option>';					
+					echo '<option value="">Select...</option>';
 				endif;
 				foreach( $option['content_2'] as $select_key => $select_value ) :
 					echo '<option value="'.$select_key.'" '.($value2 == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
 				endforeach;
 				echo '</select>';
 				echo '</div>';
-				
+
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
-				
+
 			elseif( $option['type'] == 'select' && $option['size'] == 'two-fourths' ):
 
 				if(isset($swp_user_options[$key])):
@@ -532,7 +532,7 @@ function swp_build_options_page() {
 				else:
 					$value = $option['default'];
 				endif;
-			
+
 				if($last_size == 'two-fourths'):
 					$last_size = '';
 					$fit = 'sw-fit';
@@ -540,12 +540,12 @@ function swp_build_options_page() {
 					$last_size = 'two-fourths';
 					$fit = '';
 				endif;
-			
+
 				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-460 sw-fit"><select name="'.$key.'">';
 				if(!isset($option['default'])):
-					echo '<option value="">Select...</option>';					
+					echo '<option value="">Select...</option>';
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
 					echo '<option value="'.$select_key.'" '.($value == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
@@ -553,7 +553,7 @@ function swp_build_options_page() {
 				echo '</select></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
-				
+
 			elseif( $option['type'] == 'select' && $option['size'] == 'two-thirds' ):
 
 				if(isset($swp_user_options[$key])):
@@ -568,17 +568,17 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">'.$option['name'].'</p></div>';
 				echo '<div class="sw-grid sw-col-300"><select name="'.$key.'">';
 				if(!isset($option['default'])):
-					echo '<option value="">Select...</option>';					
+					echo '<option value="">Select...</option>';
 				endif;
 				foreach( $option['content'] as $select_key => $select_value ) :
 					echo '<option value="'.$select_key.'" '.($value == $select_key ? 'selected' :'').'>'.$select_value.'</option>';
 				endforeach;
 				echo '</select></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-				
+
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
-			
+
 			endif;
 
 /***************************************************************
@@ -614,7 +614,7 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'html'):
-			
+
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container '.$key.'_wrapper" '.(isset($option['dep']) ? 'dep="'.$option['dep'].'" dep_val=\''.json_encode($option['dep_val']).'\'' : '').' '.(isset($option['premium']) ? 'premium="'.$option['premium'].'"' : '').'>';
 				echo $option['content'];
 				echo '<div class="sw-premium-blocker"></div>';
@@ -633,7 +633,7 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-300">';
 				if(isset($swp_user_options[$option['dependant']]) && $swp_user_options[$option['dependant']] != ''):
 					echo '<a class="button sw-green-button" href="'.$option['link'].'">Connected</a>';
-				else: 
+				else:
 					echo '<a class="button sw-navy-button" href="'.$option['link'].'">Authenticate</a>';
 				endif;
 				echo '</div>';
@@ -649,21 +649,21 @@ function swp_build_options_page() {
 ***************************************************************/
 
 			if($option['type'] == 'plugin_registration'):
-				
+
 				// Begin Registration Wrapper
 				echo '<div class="registration-wrapper" registration="'.(is_swp_registered() ? '1' : '0').'">';
-				
+
 				// Registration Title
 				echo '<h2>Premium Registration</h2>';
-				
+
 				// Open the IS NOT REGISTERED container
 				echo '<div class="sw-grid sw-col-940 swp_is_not_registered">';
-				
+
 				// The Warning Notice & Instructions
 				echo '<div class="sw-red-notice">This copy of Social Warfare is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.</div>';
 				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
-				
+
 				if(is_multisite()):
 					$homeURL = network_site_url();
 				else:
@@ -675,14 +675,14 @@ function swp_build_options_page() {
 				else:
 					$email = '';
 				endif;
-				
+
 				if(isset($swp_user_options['premiumCode'])):
 					$premiumCode = $swp_user_options['premiumCode'];
 				else:
 					$premiumCode = '';
 				endif;
-				
-				
+
+
 				// Email Input Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">Email Address</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="'.$email.'" /></div>';
@@ -698,34 +698,34 @@ function swp_build_options_page() {
 				echo '<a href="#" id="register-plugin" class="button sw-navy-button">Register Plugin</a>';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-				
+
 				// Close the IS NOT REGISTERED container
 				echo '</div>';
 
 
 				// Open the IS NOT REGISTERED container
 				echo '<div class="sw-grid sw-col-940 swp_is_registered">';
-				
+
 				// The Warning Notice & Instructions
 				echo '<div class="sw-green-notice">This copy of Social Warfare is registered. Wah-hoo!</div>';
 				echo '<p class="sw-subtitle sw-registration-text">To unregister your license click the button below to free it up for use on another domain.</p>';
-				
+
 				// Deactivate Plugin Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Deactivate Registration</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<a href="#" id="unregister-plugin" class="button sw-navy-button">Unregister Plugin</a>';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-				
+
 				// Close the IS NOT REGISTERED container
 				echo '</div>';
 
 
 
-				
+
 				// Close the Registration Wrapper
 				echo '</div>';
-				
+
 			endif;
 
 /***************************************************************
@@ -740,47 +740,47 @@ function swp_build_options_page() {
 
 				// Check for a default value
 				if(isset($swp_user_options['twitter_shares']) && $swp_user_options['twitter_shares'] == true):
-					$status = 'on'; 
+					$status = 'on';
 					$selected = 'checked';
 				elseif(isset($swp_user_options['twitter_shares']) && $swp_user_options['twitter_shares'] == false):
-					$status = 'off'; 
+					$status = 'off';
 					$selected = '';
 				else:
-					$status = 'off'; 
+					$status = 'off';
 					$selected = '';
 				endif;
-				
+
 				// Begin Registration Wrapper
 				echo '<div class="tweet-count-wrapper" registration="false">';
-				
+
 				// Registration Title
 				echo '<h2>Tweet Count Registration</h2>';
-				
+
 				// Open the IS NOT Activated container
 				echo '<div class="sw-grid sw-col-940 swp_tweets_not_activated" dep="twitter_shares" dep_val="[false]">';
-				
+
 				// The Warning Notice & Instructions
 				echo '<p class="sw-subtitle sw-registration-text">In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
-				
-				
+
+
 				// Close the IS NOT ACTIVATED container
 				echo '</div>';
 
 				// Checkbox Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';					
+				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<div class="sw-checkbox-toggle" status="'.$status.'" field="#twitter_shares"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
 				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" '.$selected.' />';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-				
+
 				// Close the Registration Wrapper
 				echo '</div>';
-				
+
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
-				
+
 			endif;
 
 
@@ -804,7 +804,7 @@ function swp_build_options_page() {
 
 		// Close the tab container
 		echo '</div>';
-		
+
 	endforeach;
 
 	echo '</form>';
@@ -875,7 +875,7 @@ function swp_build_options_page() {
 	echo '<p class="sw-support-notice sw-italic">Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.</a></p>';
 	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
 	echo '<a href="#" class="button sw-blue-button sw-system-status">Get System Status</a>';
-	
+
 	// Sytem Status Container
 	echo '<div class="sw-clearfix"></div>';
 	echo '<div class="system-status-wrapper">';
@@ -883,9 +883,9 @@ function swp_build_options_page() {
 	echo '<div class="system-status-container">'.$system_status.'</div>';
 
 	echo '</div>';
-	
+
 	echo '</div>';
-	
+
 	echo '</div>';
 
 }
@@ -898,20 +898,20 @@ function swp_build_options_page() {
 
 add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
 function swp_store_the_settings() {
-	
+
 	// Access the database
 	global $wpdb;
 
 	// Fetch the settings from the POST submission
 	$settings = $_POST['settings'];
-	
+
 	// Fetch the existing options set
 	$options = get_option('socialWarfareOptions');
-	
+
 	unset($options['newOrderOfIcons']['active']);
 	unset($options['newOrderOfIcons']['inactive']);
-	
-	// Loop and check for checkbox values, convert them to boolean 
+
+	// Loop and check for checkbox values, convert them to boolean
 	foreach($settings as $key => $value):
 		if($value == 'true'):
 			$options[$key] = true;
@@ -921,7 +921,7 @@ function swp_store_the_settings() {
 			$options[$key] = $value;
 		endif;
 	endforeach;
-	
+
 	// Store the values back in the database
 	return update_option('socialWarfareOptions',$options);
 
@@ -938,7 +938,7 @@ function swp_store_the_settings() {
 
 add_action( 'wp_ajax_swp_store_registration', 'swp_store_the_registration' );
 function swp_store_the_registration() {
-	
+
 	// Access the database
 	global $wpdb;
 
@@ -948,11 +948,11 @@ function swp_store_the_registration() {
 
 	// Fetch the existing options set
 	$options = get_option('socialWarfareOptions');
-	
-	// Loop and check for checkbox values, convert them to boolean 
+
+	// Loop and check for checkbox values, convert them to boolean
 	$options['premiumCode'] = $premiumCode;
 	$options['emailAddress'] = $emailAddress;
-	
+
 	// Store the values back in the database
 	return update_option('socialWarfareOptions',$options);
 
@@ -968,39 +968,33 @@ function swp_store_the_registration() {
 
 add_action( 'wp_ajax_swp_delete_registration', 'swp_delete_the_registration' );
 function swp_delete_the_registration() {
-	
+
 	// Access the database
 	global $wpdb;
 
 	// Fetch the existing options set
 	$options = get_option('socialWarfareOptions');
-	
+
 	$options['premiumCode'] = '';
 	$options['emailAddress'] = '';
-		
+
 	// Store the values back in the database
 	return update_option('socialWarfareOptions',$options);
 
 	// Kill WordPress
 	wp_die();
-	
+
 }
 
 add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
 function swp_ajax_passthrough() {
 
-	// Pass the URL request via cURL	
+	// Pass the URL request via cURL
 	$response = swp_file_get_contents_curl(urldecode($_POST['url']));
 	// Echo the response to the screen
 	echo $response;
 
 	// Kill WordPress
 	wp_die();
-	
+
 }
-
-
-
-
-
-

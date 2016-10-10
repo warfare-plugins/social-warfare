@@ -60,23 +60,23 @@
 			// Check if an image ID has been provided
 			$info['imageID'] = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
 			if($info['imageID']):
-				
+
 				// Cache the image URL
 				$info['imageURL'] = wp_get_attachment_url( $info['imageID'] );
 				delete_post_meta($info['postID'],'swp_open_graph_image_url');
 				update_post_meta($info['postID'],'swp_open_graph_image_url',$info['imageURL']);
-				
+
 				// Cache the height and width
 				$info['image_data'] = wp_get_attachment_image_src( $info['imageID'] , 'full' );
 				delete_post_meta($info['postID'],'swp_open_graph_image_data');
 				update_post_meta($info['postID'],'swp_open_graph_image_data',json_encode($info['image_data']));
-				
+
 			else:
 				$info['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $info['postID'] ) );
 				delete_post_meta($info['postID'],'swp_open_thumbnail_url');
 				update_post_meta($info['postID'],'swp_open_thumbnail_url' , $info['imageURL']);
 				delete_post_meta($info['postID'],'swp_open_graph_image_url');
-				
+
 				// Cache the height and width
 				$info['image_data'] = wp_get_attachment_image_src( get_post_thumbnail_id( $info['postID'] ) , 'full' );
 				delete_post_meta($info['postID'],'swp_open_graph_image_data');
@@ -314,7 +314,7 @@
 							// If the user defined an image over in Yoast, let's use it.
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image" content="'.$yoast_og_image.'" />';
 							$image_output = true;
-							
+
 						else:
 
 							// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
@@ -331,16 +331,16 @@
 						*                                                                *
 						******************************************************************/
 						if(isset($info['image_data']) && $info['image_data'] && isset($image_output) && $image_output == true):
-						
+
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
-						
+
 						elseif(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) && isset($image_output) && $image_output == true):
-						
+
 							$info['image_data'] = json_decode(get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ));
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:width" content="'.$info['image_data'][1].'" />';
 							$info['header_output'] .= PHP_EOL .'<meta property="og:image:height" content="'.$info['image_data'][2].'" />';
-						
+
 						endif;
 						/*****************************************************************
 						*                                                                *
@@ -687,7 +687,7 @@ function swp_footer_functions() {
 			echo $info['footer_output'];
 			echo '</script>';
 		endif;
-		
+
 }
 
 /*****************************************************************
@@ -701,7 +701,7 @@ function swp_pinit($info) {
 	else:
 		$info['footer_output'] .= 'swp_pinit=false;';
 	endif;
-	return $info;	
+	return $info;
 }
 
 /*****************************************************************

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*****************************************************************
 *                                                                *
@@ -26,7 +26,7 @@
 		}
 		return $cont;
 	}
-	
+
 /*****************************************************************
 *                                                                *
 *          Twitter - A Function to Fetch Twitter Shares          *
@@ -94,7 +94,7 @@
 *                                                                *
 ******************************************************************/
 
-	function swp_fetch_linkedIn_shares($url) { 
+	function swp_fetch_linkedIn_shares($url) {
 		$url = rawurlencode($url);
 		$json_string = swp_file_get_contents_curl('https://www.linkedin.com/countserv/count/share?url='.$url.'&format=json');
 		$json = json_decode($json_string, true);

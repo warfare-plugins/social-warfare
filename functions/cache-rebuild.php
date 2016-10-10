@@ -27,7 +27,7 @@ function swp_cache_rebuild() {
 
 		// Fetch new shares
 		$shares = get_social_warfare_shares( $post_id );
-		
+
 		// Update Bitly links
 		foreach ( $shares as $key => $value):
 			swp_process_url( get_permalink($post_id) , $key , $post_id );
@@ -75,7 +75,7 @@ add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', 'swp_facebook_shares_up
 function swp_facebook_shares_update() {
 	$post_id = $_POST['post_id'];
 	$activity = $_POST['activity'];
-	
+
 	$previous_activity = get_post_meta($post_id,'_facebook_shares',true);
 	if($activity > $previous_activity):
 		delete_post_meta($post_id,'_facebook_shares');
