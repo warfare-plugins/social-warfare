@@ -5,22 +5,22 @@
 *                                                                *
 ******************************************************************/
 
-	function swp_fetch_shares_via_curl_multi($data, $options = array()) {
+function swp_fetch_shares_via_curl_multi($data, $options = array()) {
 
-	  // array of curl handles
-	  $curly = array();
-	  // data to be returned
-	  $result = array();
+	// array of curl handles
+	$curly = array();
+	// data to be returned
+	$result = array();
 
-	  // multi handle
-	  $mh = curl_multi_init();
+	// multi handle
+	$mh = curl_multi_init();
 
-	  // loop through $data and create curl handles
-	  // then add them to the multi-handle
+	// loop through $data and create curl handles
+	// then add them to the multi-handle
 
-	  foreach ($data as $id => $d) {
+	foreach ($data as $id => $d) {
 
-	 	if($d !== 0 || $id == 'googlePlus'):
+		 if($d !== 0 || $id == 'googlePlus'):
 
 			$curly[$id] = curl_init();
 

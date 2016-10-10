@@ -1,25 +1,25 @@
 jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
 (function(jQuery) {
-    var uniqueCntr = 0;
-    jQuery.fn.scrolled = function (waitTime, fn) {
-        if (typeof waitTime === "function") {
-            fn = waitTime;
-            waitTime = 500;
-        };
-        var tag = "scrollTimer" + uniqueCntr++;
-        this.scroll(function () {
-            var self = jQuery(this);
-            var timer = self.data(tag);
-            if (timer) {
-                clearTimeout(timer);
-            };
-            timer = setTimeout(function () {
-                self.removeData(tag);
-                fn.call(self[0]);
-            }, waitTime);
-            self.data(tag, timer);
-        });
-    };
+	var uniqueCntr = 0;
+	jQuery.fn.scrolled = function (waitTime, fn) {
+		if (typeof waitTime === "function") {
+			fn = waitTime;
+			waitTime = 500;
+		};
+		var tag = "scrollTimer" + uniqueCntr++;
+		this.scroll(function () {
+			var self = jQuery(this);
+			var timer = self.data(tag);
+			if (timer) {
+				clearTimeout(timer);
+			};
+			timer = setTimeout(function () {
+				self.removeData(tag);
+				fn.call(self[0]);
+			}, waitTime);
+			self.data(tag, timer);
+		});
+	};
 })(jQuery);
 jQuery(document).on('click','.nc_tweet, a.swp_CTT',function(event) {
 	if(jQuery(this).hasClass('noPop') || !jQuery(this).attr("data-link")) {} else {
@@ -403,15 +403,15 @@ function ReplaceNumberWithCommas(nStr) {
   x2 = x.length > 1 ? '.' + x[1] : '';
   var rgx = /(\d+)(\d{3})/;
   while (rgx.test(x1)) {
-    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	x1 = x1.replace(rgx, '$1' + ',' + '$2');
   };
   return x1 + x2;
 };
 function number_format( val ) {
-    if( val < 1000 ){
-	 	return ReplaceNumberWithCommas(val);
+	if( val < 1000 ){
+		 return ReplaceNumberWithCommas(val);
 	 } else {
-	 	val = val/1000;
+		 val = val/1000;
 		val = Math.round(val);
 		return ReplaceNumberWithCommas(val)+'K';
 	 };
@@ -731,7 +731,7 @@ jQuery(document).ready(function() {
 
 	jQuery( document.body ).on( 'post-load', function () {
 		setTimeout( function() {
-    		swp_init_share_buttons();
+			swp_init_share_buttons();
 		} , 100 );
 	} );
 	if(jQuery('.nc_socialPanelSide').length) {

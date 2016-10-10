@@ -1051,27 +1051,27 @@
 function swp_add_option_after($swp_options,$tabName,$optionName,$newOptionArray) {
 
 	// Locate the index of the option you want to insert next to
-    $keyIndex = array_search(
-        $optionName,
-        array_keys( $swp_options['options'][$tabName] )
-    );
+	$keyIndex = array_search(
+		$optionName,
+		array_keys( $swp_options['options'][$tabName] )
+	);
 
-    // Split the array at the location of the option above
-    $first_array = array_splice (
-        $swp_options['options'][$tabName],
-        0,
-        $keyIndex+1
-    );
+	// Split the array at the location of the option above
+	$first_array = array_splice (
+		$swp_options['options'][$tabName],
+		0,
+		$keyIndex+1
+	);
 
-    // Merge the two parts of the split array with your option added in the middle
-    $swp_options['options'][$tabName] = array_merge (
-        $first_array,
-        $newOptionArray,
-        $swp_options['options'][$tabName]
-    );
+	// Merge the two parts of the split array with your option added in the middle
+	$swp_options['options'][$tabName] = array_merge (
+		$first_array,
+		$newOptionArray,
+		$swp_options['options'][$tabName]
+	);
 
-    // Return the option array or the world will explode
-    return $swp_options;
+	// Return the option array or the world will explode
+	return $swp_options;
 
 }
 
@@ -1089,6 +1089,6 @@ function swp_add_network_option($swp_options,$newOptionArray) {
 
 	$swp_options['options']['swp_display']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
 
-    // Return the option array or the world will explode
-    return $swp_options;
+	// Return the option array or the world will explode
+	return $swp_options;
 }

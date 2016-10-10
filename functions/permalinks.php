@@ -2,7 +2,7 @@
 
 /*****************************************************************
 
-          CHECK FOR ALTERNATE VERSION OF THE PERMALINK
+		  CHECK FOR ALTERNATE VERSION OF THE PERMALINK
 
 ******************************************************************/
 	function get_alternate_permalink($format) {
@@ -80,7 +80,7 @@
 		elseif($format == 'post_name'):
 			$domain = get_site_url();
 			$post_data = get_post($id, ARRAY_A);
-    		$slug = $post_data['post_name'];
+			$slug = $post_data['post_name'];
 			$url = $domain.'/'.$slug.'/';
 		elseif($format == 'unchanged'):
 			$url = get_permalink($id);

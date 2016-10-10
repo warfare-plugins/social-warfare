@@ -2,7 +2,7 @@
 
 /*****************************************************************
 
-           SETUP THE POST EDITOR OPTIONS
+		   SETUP THE POST EDITOR OPTIONS
 
 ******************************************************************/
 
@@ -43,13 +43,13 @@
 
 /*****************************************************************
 
-           FETCH THE TWITTER HANDLE FOR TWEET COUNTS
+		   FETCH THE TWITTER HANDLE FOR TWEET COUNTS
 
 ******************************************************************/
 
 		 // Fetch the Twitter handle for the Post Author if it exists
 		 if(isset($_GET['post'])):
-		 	$post_id = $_GET['post'];
+			 $post_id = $_GET['post'];
 			$author_id 			= swp_get_author($post_id);
 			$twitter_handle 	= get_the_author_meta( 'swp_twitter' , $author_id);
 
@@ -61,12 +61,12 @@
 
 		 // Fetch the site-wide Twitter Handle if both of the above fail
 		 if(!$twitter_handle):
-		 	$twitter_handle = $options['twitterID'];
+			 $twitter_handle = $options['twitterID'];
 		 endif;
 
 /*****************************************************************
 
-           BUILD THE OPTIONS FIELDS
+		   BUILD THE OPTIONS FIELDS
 
 ******************************************************************/
 
@@ -81,7 +81,7 @@
 			  'priority' => $priority,
 			  'fields' => array(
 
-			  		// Setup the social media image
+					  // Setup the social media image
 					array(
 						 'name'  => '<span class="dashicons dashicons-share"></span> '.__('Social Media Image','social-warfare'),
 						 'desc'  => __('Add an image that is optimized for maximum exposure on Facebook, Google+ and LinkedIn. We recommend 1,200px by 628px.','social-warfare'),
@@ -157,7 +157,7 @@
 						 'class' => $prefix . 'postLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
-						 	'default'	=> __('Default','social-warfare'),
+							 'default'	=> __('Default','social-warfare'),
 							'above'		=> __('Above the Content','social-warfare'),
 							'below' 	=> __('Below the Content','social-warfare'),
 							'both' 		=> __('Both Above and Below the Content','social-warfare'),
@@ -172,14 +172,14 @@
 						 'class' => $prefix . 'floatLocationWrapper',
 						 'type'  => 'select',
 						 'options' => array(
-						 	'default' 	=> __('Default','social-warfare'),
-						 	'on' 		=> __('On','social-warfare'),
+							 'default' 	=> __('Default','social-warfare'),
+							 'on' 		=> __('On','social-warfare'),
 							'off'		=> __('Off','social-warfare')
 						 ),
 						 'clone' => false,
 						 'std'	=> 'default',
 
-		 			),
+					 ),
 					array(
 						 'name'  => 'divider2',
 						 'id'    => 'divider2',

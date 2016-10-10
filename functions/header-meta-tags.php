@@ -9,12 +9,12 @@
 *                                                                *
 ******************************************************************/
 	function convert_smart_quotes($content) {
-		 $content = str_replace('"', '\'', $content);
-		 $content = str_replace('&#8220;', '\'', $content);
-		 $content = str_replace('&#8221;', '\'', $content);
-		 $content = str_replace('&#8216;', '\'', $content);
-		 $content = str_replace('&#8217;', '\'', $content);
-		 return $content;
+		$content = str_replace('"', '\'', $content);
+		$content = str_replace('&#8220;', '\'', $content);
+		$content = str_replace('&#8221;', '\'', $content);
+		$content = str_replace('&#8216;', '\'', $content);
+		$content = str_replace('&#8217;', '\'', $content);
+		return $content;
 	}
 /*****************************************************************
 *                                                                *
@@ -649,7 +649,7 @@ function swp_output_font_css($info=array()) {
 
 		// Echo it if we're using the Admin Head Hook
 		echo '<style>@font-face {font-family: "sw-icon-font";src:url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.swp_VERSION.'");src:url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.eot?ver='.swp_VERSION.'#iefix") format("embedded-opentype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.woff?ver='.swp_VERSION.'") format("woff"),
-    url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.swp_VERSION.'") format("truetype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.swp_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+	url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.ttf?ver='.swp_VERSION.'") format("truetype"),url("'.swp_PLUGIN_DIR.'/fonts/sw-icon-font.svg?ver='.swp_VERSION.'#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 	else:
 
 		// Add it to our array if we're using the frontend Head Hook
@@ -735,7 +735,7 @@ function swp_output_cache_trigger($info) {
 function swp_click_tracking($info) {
 	$swp_options = swp_get_user_options();
 	if( $swp_options['swp_click_tracking'] == 1 ):
-    	$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "swp_" + network + "_share" );});}';
+		$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "swp_" + network + "_share" );});}';
 	endif;
 	return $info;
 }

@@ -1486,35 +1486,35 @@ jQuery(document).ready( function() {
 
 jQuery.fn.selectText = function(){
 
-    var doc = document
+	var doc = document
 
-        , element = this[0]
+		, element = this[0]
 
-        , range, selection
+		, range, selection
 
-    ;
+	;
 
-    if (doc.body.createTextRange) {
+	if (doc.body.createTextRange) {
 
-        range = document.body.createTextRange();
+		range = document.body.createTextRange();
 
-        range.moveToElementText(element);
+		range.moveToElementText(element);
 
-        range.select();
+		range.select();
 
-    } else if (window.getSelection) {
+	} else if (window.getSelection) {
 
-        selection = window.getSelection();
+		selection = window.getSelection();
 
-        range = document.createRange();
+		range = document.createRange();
 
-        range.selectNodeContents(element);
+		range.selectNodeContents(element);
 
-        selection.removeAllRanges();
+		selection.removeAllRanges();
 
-        selection.addRange(range);
+		selection.addRange(range);
 
-    }
+	}
 
 };
 
@@ -1642,17 +1642,17 @@ jQuery(document).ready(function($){
 
 
 
-    var custom_uploader;
+	var custom_uploader;
 
 
 
 
 
-    jQuery('.swp_upload_image_button').click(function(e) {
+	jQuery('.swp_upload_image_button').click(function(e) {
 
 
 
-        e.preventDefault();
+		e.preventDefault();
 
 
 
@@ -1660,55 +1660,55 @@ jQuery(document).ready(function($){
 
 
 
-        //If the uploader object has already been created, reopen the dialog
+		//If the uploader object has already been created, reopen the dialog
 
-        if (custom_uploader) {
+		if (custom_uploader) {
 
-            custom_uploader.open();
+			custom_uploader.open();
 
-            return;
+			return;
 
-        }
-
-
-
-        //Extend the wp.media object
-
-        custom_uploader = wp.media.frames.file_frame = wp.media({
-
-            title: 'Choose Image',
-
-            button: {
-
-                text: 'Choose Image'
-
-            },
-
-            multiple: false
-
-        });
+		}
 
 
 
-        //When a file is selected, grab the URL and set it as the text field's value
+		//Extend the wp.media object
 
-        custom_uploader.on('select', function() {
+		custom_uploader = wp.media.frames.file_frame = wp.media({
 
-            attachment = custom_uploader.state().get('selection').first().toJSON();
+			title: 'Choose Image',
 
-            jQuery('input[name="'+input_field+'"').val(attachment.url);
+			button: {
 
-        });
+				text: 'Choose Image'
+
+			},
+
+			multiple: false
+
+		});
 
 
 
-        //Open the uploader dialog
+		//When a file is selected, grab the URL and set it as the text field's value
 
-        custom_uploader.open();
+		custom_uploader.on('select', function() {
+
+			attachment = custom_uploader.state().get('selection').first().toJSON();
+
+			jQuery('input[name="'+input_field+'"').val(attachment.url);
+
+		});
 
 
 
-    });
+		//Open the uploader dialog
+
+		custom_uploader.open();
+
+
+
+	});
 
 
 

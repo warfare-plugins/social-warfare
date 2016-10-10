@@ -22,13 +22,13 @@ function socialWarfare( $content = false , $where = 'default' , $echo = true ) {
 *                                                                *
 ******************************************************************/
 function recursive_array_search($needle,$haystack) {
-    foreach($haystack as $key=>$value) {
-        $current_key=$key;
-        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
-            return $current_key;
-        }
-    }
-    return false;
+	foreach($haystack as $key=>$value) {
+		$current_key=$key;
+		if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
+			return $current_key;
+		}
+	}
+	return false;
 }
 /*****************************************************************
 *                                                                *
@@ -36,13 +36,13 @@ function recursive_array_search($needle,$haystack) {
 *                                                                *
 ******************************************************************/
 function swp_get_current_url() {
-    $page_url = 'http';
-    if ($_SERVER["HTTPS"] == "on") {$page_url .= "s";}
-    $page_url .= "://";
-    $page_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	$page_url = 'http';
+	if ($_SERVER["HTTPS"] == "on") {$page_url .= "s";}
+	$page_url .= "://";
+	$page_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 	$page_url = strtok($page_url, '?');
 
-    return $page_url;
+	return $page_url;
 }
 
 /*****************************************************************

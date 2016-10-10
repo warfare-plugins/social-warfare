@@ -92,7 +92,7 @@
 				// If no tags or categories have been set
 				(
 					!isset($array['options']['yummly_tags']) && !isset($array['options']['yummly_categories']) ||
-				 	$array['options']['yummly_categories'] == '' && $array['options']['yummly_tags'] == ''
+					 $array['options']['yummly_categories'] == '' && $array['options']['yummly_tags'] == ''
 				)
 
 				):

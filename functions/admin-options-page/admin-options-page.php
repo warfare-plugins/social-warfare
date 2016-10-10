@@ -33,7 +33,7 @@ function swp_admin_options_page() {
 
 // Enqueue the Admin Options CSS
 function swp_admin_options_css() {
-    wp_enqueue_style( 'swp_admin_options_css', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.css' , array() , swp_VERSION );
+	wp_enqueue_style( 'swp_admin_options_css', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.css' , array() , swp_VERSION );
 }
 
 // Enqueue the Admin Options JS
@@ -44,7 +44,7 @@ function swp_admin_options_js() {
 	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_script( 'jquery-ui-tooltip' );
 	wp_enqueue_media();
-    wp_enqueue_script( 'swp_admin_options_js', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array('jquery') , swp_VERSION );
+	wp_enqueue_script( 'swp_admin_options_js', swp_PLUGIN_DIR.'/functions/admin-options-page/admin-options-page.js' , array('jquery') , swp_VERSION );
 }
 
 /***************************************************************
@@ -103,7 +103,7 @@ function swp_build_options_page() {
 
 	echo '<div class="sw-grid sw-col-940 sw-top-menu">';
 	echo '<div class="sw-grid sw-col-700">';
-    echo '<img class="sw-header-logo" src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/social-warfare-light.png" />';
+	echo '<img class="sw-header-logo" src="'.swp_PLUGIN_DIR.'/functions/admin-options-page/images/social-warfare-light.png" />';
 	echo '<ul class="sw-header-menu">';
 	$i=0; foreach ( $swp_options_page['tabs']['links'] as $key => $value): ++$i;
 		echo '<li'.($i == 1 ? ' class="sw-active-tab"' : '').'><a class="sw-tab-selector" href="#" data-link="'.$key.'"><span>'.$value.'</span></a></li>';

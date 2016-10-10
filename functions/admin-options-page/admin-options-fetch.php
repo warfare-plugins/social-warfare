@@ -7,7 +7,7 @@
 
 		// Reset the Order of Icons Options
 		if (isset($swp_user_options['orderOfIcons'])):
-		 	unset($swp_user_options['orderOfIcons']);
+			unset($swp_user_options['orderOfIcons']);
 			update_option('socialWarfareOptions',$swp_user_options);
 		endif;
 

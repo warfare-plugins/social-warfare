@@ -1,9 +1,9 @@
 (function() {
-    tinymce.PluginManager.add('clickToTweet', function( editor, url ) {
-        editor.addButton( 'clickToTweet', {
-            title: 'Click to Tweet by Social Warfare',
-            icon: 'sw sw sw-twitter',
-            onclick: function() {
+	tinymce.PluginManager.add('clickToTweet', function( editor, url ) {
+		editor.addButton( 'clickToTweet', {
+			title: 'Click to Tweet by Social Warfare',
+			icon: 'sw sw sw-twitter',
+			onclick: function() {
 				editor.windowManager.open( {
 					title: 'Build Your "Click to Tweet"',
 					class: 'swp_ctt',
@@ -77,29 +77,29 @@
 								   '<div style="width:650px;">&nbsp;</div>';},
 							text: ''},
 
-                    {type: 'listbox',
-                    name: 'theme',
-                    label: 'Visual Theme',
-                    'values': [
-                        {text: 'Default', value: 'default'},
-                        {text: 'Send Her My Love', value: 'style1'},
-                        {text: 'Roll With The Changes', value: 'style2'},
-                        {text: 'Free Bird', value: 'style3'},
-                        {text: 'Don\'t Stop Believin\'', value: 'style4'},
-                        {text: 'Thunderstruck', value: 'style5'},
-                        {text: 'Livin\' On A Prayer', value: 'style6'},
-                        ],
-                    },
+					{type: 'listbox',
+					name: 'theme',
+					label: 'Visual Theme',
+					'values': [
+						{text: 'Default', value: 'default'},
+						{text: 'Send Her My Love', value: 'style1'},
+						{text: 'Roll With The Changes', value: 'style2'},
+						{text: 'Free Bird', value: 'style3'},
+						{text: 'Don\'t Stop Believin\'', value: 'style4'},
+						{text: 'Thunderstruck', value: 'style5'},
+						{text: 'Livin\' On A Prayer', value: 'style6'},
+						],
+					},
 					],
 					onsubmit: function( e ) {
 						var value = jQuery('.mce-first textarea').val();
 						var strLength = value.length;
 						var remaining = 117 - strLength;
 						if(e.data.tweet === '' || e.data.quote === '') {
-        					editor.windowManager.alert('Please, fill in both fields.');
+							editor.windowManager.alert('Please, fill in both fields.');
 							return false;
 						} else if(remaining < 0) {
-       		 				editor.windowManager.alert('You have too many characters in your tweet.');
+								editor.windowManager.alert('You have too many characters in your tweet.');
 							return false;
 						}
 						if(e.data.theme == 'default') {
@@ -110,6 +110,6 @@
 					}
 				});
 			}
-        });
-    });
+		});
+	});
 })();

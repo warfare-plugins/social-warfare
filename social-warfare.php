@@ -215,15 +215,15 @@ function makeSocialSharesSortable( $columns ) {
 	return $columns;
 }
 function swp_social_shares_orderby( $query ) {
-    if( ! is_admin() )
-        return;
+	if( ! is_admin() )
+		return;
 
-    $orderby = $query->get( 'orderby');
+	$orderby = $query->get( 'orderby');
 
-    if( 'Social Shares' == $orderby ) {
-        $query->set('meta_key','_totes');
-        $query->set('orderby','meta_value_num');
-    }
+	if( 'Social Shares' == $orderby ) {
+		$query->set('meta_key','_totes');
+		$query->set('orderby','meta_value_num');
+	}
 }
 add_action( 'pre_get_posts', 'swp_social_shares_orderby' );
 add_filter('manage_edit-post_sortable_columns', 'makeSocialSharesSortable');

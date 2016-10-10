@@ -120,9 +120,9 @@ img {
 .sw-header-logo {height:75px;float:left;}
 .sw-header-menu {height:75px;margin:0;}
 .sw-header-menu li {
-    float: left;
-    margin: 0 15px;
-    font-size: 16px;
+	float: left;
+	margin: 0 15px;
+	font-size: 16px;
 	display:table;
 	height:75px;
 }
@@ -179,26 +179,26 @@ p.sw-short {
 	margin:1em 0 0 0;
 }
 p.sw-subtext-label {
-    margin-top: -10px;
+	margin-top: -10px;
 }
 .sw-admin-sidebar img {
-    margin: 5px 0 10px 0;
+	margin: 5px 0 10px 0;
 }
 .system-status-wrapper {
 	display:none;
 }
 .system-status-container {
-    width: 90%;
-    height: 250px;
-    overflow: hidden;
-    border: 1px solid #CED3DC;
-    padding: 5%;
+	width: 90%;
+	height: 250px;
+	overflow: hidden;
+	border: 1px solid #CED3DC;
+	padding: 5%;
 }
 h3.sw-buttons-toggle {
-    width: 100px;
-    float: left;
-    clear: left;
-    margin: 15px 0 30px 0;
+	width: 100px;
+	float: left;
+	clear: left;
+	margin: 15px 0 30px 0;
 	padding-left:10%;
 }
 /*********************************************************
@@ -218,25 +218,25 @@ h3.sw-buttons-toggle {
 	position:relative;
 }
 .sw-checkbox-on, .sw-checkbox-off {
-    color: white;
-    font-size: 15px;
-    text-align: center;
-    line-height: 46px;
+	color: white;
+	font-size: 15px;
+	text-align: center;
+	line-height: 46px;
 	position:absolute;
 	top:0;
 	width:50%;
 	height:100%;
 }
 .sw-checkbox-toggle[status="on"] .sw-checkbox-on {
-    left: 0;
-    background-color:#71C069;
+	left: 0;
+	background-color:#71C069;
 }
 .sw-checkbox-toggle[status="on"] .sw-checkbox-off, .sw-checkbox-toggle[status="off"] .sw-checkbox-on {
 	display:none;
 }
 .sw-checkbox-toggle[status="off"] .sw-checkbox-off {
-    right: 0;
-    background-color:#ee464f;
+	right: 0;
+	background-color:#ee464f;
 }
 input.sw-admin-input {
 	padding: 15px;
@@ -358,9 +358,9 @@ border-bottom: 2px solid #30394f;
 	font-style:italic;
 }
 p.sw-subtitle.sw-registration-text {
-    padding: 20px 0 0 0;
-    font-size: 120%;
-    line-height: 175%;
+	padding: 20px 0 0 0;
+	font-size: 120%;
+	line-height: 175%;
 }
 .registration-wrapper[registration="1"] .swp_is_not_registered {display:none;}
 .registration-wrapper[registration="0"] .swp_is_registered {display:none;}
@@ -368,16 +368,16 @@ p.sw-subtitle.sw-registration-text {
 .sw-tweet-count-demo {margin:20px 0;}
 .sw-loading-message, .sw-loading-complete {
 	position: fixed;
-    top: 50%;
-    left: 50%;
-    border-radius: 3px;
-    padding: 25px;
-    text-align: center;
-    font-size: 20px;
-    color: white;
+	top: 50%;
+	left: 50%;
+	border-radius: 3px;
+	padding: 25px;
+	text-align: center;
+	font-size: 20px;
+	color: white;
 	width:240px;
-    margin-top: -46px;
-    margin-left: -120px;
+	margin-top: -46px;
+	margin-left: -120px;
 }
 /*********************************************************
 
@@ -387,15 +387,15 @@ p.sw-subtitle.sw-registration-text {
 
 .sw-active,
 .sw-inactive {
-    margin: 0 0 5px 0;
-    min-width: 50px;
+	margin: 0 0 5px 0;
+	min-width: 50px;
 	min-height:40px;
-    border: 1px dashed #ced3dc;
-    padding: 0;
-    border-radius: 4px;
-    width: auto;
-    height: auto;
-    display: inline-block;
+	border: 1px dashed #ced3dc;
+	padding: 0;
+	border-radius: 4px;
+	width: auto;
+	height: auto;
+	display: inline-block;
 }
 .sw-s {
 	font-family:'sw-icon-font';
@@ -527,9 +527,9 @@ p.sw-subtitle.sw-registration-text {
 	left:0;
 }
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] .sw-premium-blocker:not(.no-icon):before {
-    font-family: 'sw-icon-font';
-    content: 'E';
-    font-size: 24px;
+	font-family: 'sw-icon-font';
+	content: 'E';
+	font-size: 24px;
 	float:right;
 	margin:20px 20px 0 0;
 }

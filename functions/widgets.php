@@ -99,14 +99,14 @@ class swp_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
 
 	// Which networks to use as the basis field
-    $form .= '<p class="network">';
+	$form .= '<p class="network">';
 	$form .= '<label for="'.$this->get_field_id('network').'">Which network would you like to base your posts popularity on?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('network').'" name="'.$this->get_field_name('network').'">';
-    $form .= '<option value="totes"'. ( $network == 'totes' ? 'selected' : '' ).'>All Networks</option>';
+	$form .= '<option value="totes"'. ( $network == 'totes' ? 'selected' : '' ).'>All Networks</option>';
 		foreach($availableNetworks as $key => $value):
 			if($options[$key]) {
 				if($network == $key.'_shares'):
-        			$form .= '<option value="'.$key.'_shares" selected>'.$value.'</option>';
+					$form .= '<option value="'.$key.'_shares" selected>'.$value.'</option>';
 				else:
 					$form .= '<option value="'.$key.'_shares">'.$value.'</option>';
 				endif;
@@ -116,90 +116,90 @@ class swp_popular_posts_widget extends WP_Widget {
 	$form .= '</p>';
 
 	// Display the share count toggle field
-    $form .= '<p class="showCount">';
+	$form .= '<p class="showCount">';
 	$form .= '<label for="'.$this->get_field_id('showCount').'">Would you like to show the count?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('showCount').'" name="'.$this->get_field_name('showCount').'">';
-    $form .= '<option value="true" '.( $showCount == 'true' ? 'selected' : '').'>Yes</option>';
-    $form .= '<option value="false" '.( $showCount == 'false' ? 'selected' : '').'>No</option>';
-    $form .= '</select>';
+	$form .= '<option value="true" '.( $showCount == 'true' ? 'selected' : '').'>Yes</option>';
+	$form .= '<option value="false" '.( $showCount == 'false' ? 'selected' : '').'>No</option>';
+	$form .= '</select>';
 	$form .= '</p>';
 
 	// Count Label Field
-    $form .= '<p '.( $showCount == 'false' ? 'style="display:none;"' : '' ).' class="countLabel">';
+	$form .= '<p '.( $showCount == 'false' ? 'style="display:none;"' : '' ).' class="countLabel">';
 	$form .= '<label for="'.$this->get_field_id('countLabel').'">Count Number Label</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('countLabel').'" name="'.$this->get_field_name('countLabel').'" type="text" value="'.$countLabel.'" />';
 	$form .= '</p>';
 
 	// Post thumbnails toggle field
-    $form .= '<p class="thumbnails">';
+	$form .= '<p class="thumbnails">';
 	$form .= '<label for="'.$this->get_field_id('thumbnails').'">Would you like to display thumbnails?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('thumbnails').'" name="'.$this->get_field_name('thumbnails').'">';
-    $form .= '<option value="true" '.( $thumbnails == 'true' ? 'selected' : '').'>Yes</option>';
-    $form .= '<option value="false" '.( $thumbnails == 'false' ? 'selected' : '').'>No</option>';
-    $form .= '</select>';
+	$form .= '<option value="true" '.( $thumbnails == 'true' ? 'selected' : '').'>Yes</option>';
+	$form .= '<option value="false" '.( $thumbnails == 'false' ? 'selected' : '').'>No</option>';
+	$form .= '</select>';
 	$form .= '</p>';
 
 	// Thumbnails size field
-    $form .= '<p '.( $thumbnails == 'false' ? 'style="display:none;"' : '' ).' class="thumb_size">';
+	$form .= '<p '.( $thumbnails == 'false' ? 'style="display:none;"' : '' ).' class="thumb_size">';
 	$form .= '<label for="'.$this->get_field_id('thumb_size').'">What size would you like your thumbnails?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('thumb_size').'" name="'.$this->get_field_name('thumb_size').'">';
-    $form .= '<option value="50" '.( $thumb_size == '50' ? 'selected' : '').'>50px</option>';
-    $form .= '<option value="60" '.( $thumb_size == '60' ? 'selected' : '').'>60px</option>';
-    $form .= '<option value="70" '.( $thumb_size == '70' ? 'selected' : '').'>70px</option>';
-    $form .= '<option value="80" '.( $thumb_size == '80' ? 'selected' : '').'>80px</option>';
-    $form .= '<option value="90" '.( $thumb_size == '90' ? 'selected' : '').'>90px</option>';
-    $form .= '<option value="100" '.( $thumb_size == '100' ? 'selected' : '').'>100px</option>';
-    $form .= '<option value="110" '.( $thumb_size == '110' ? 'selected' : '').'>110px</option>';
-    $form .= '<option value="120" '.( $thumb_size == '120' ? 'selected' : '').'>120px</option>';
-    $form .= '<option value="130" '.( $thumb_size == '130' ? 'selected' : '').'>130px</option>';
-    $form .= '<option value="140" '.( $thumb_size == '140' ? 'selected' : '').'>140px</option>';
-    $form .= '<option value="150" '.( $thumb_size == '150' ? 'selected' : '').'>150px</option>';
-    $form .= '</select>';
+	$form .= '<option value="50" '.( $thumb_size == '50' ? 'selected' : '').'>50px</option>';
+	$form .= '<option value="60" '.( $thumb_size == '60' ? 'selected' : '').'>60px</option>';
+	$form .= '<option value="70" '.( $thumb_size == '70' ? 'selected' : '').'>70px</option>';
+	$form .= '<option value="80" '.( $thumb_size == '80' ? 'selected' : '').'>80px</option>';
+	$form .= '<option value="90" '.( $thumb_size == '90' ? 'selected' : '').'>90px</option>';
+	$form .= '<option value="100" '.( $thumb_size == '100' ? 'selected' : '').'>100px</option>';
+	$form .= '<option value="110" '.( $thumb_size == '110' ? 'selected' : '').'>110px</option>';
+	$form .= '<option value="120" '.( $thumb_size == '120' ? 'selected' : '').'>120px</option>';
+	$form .= '<option value="130" '.( $thumb_size == '130' ? 'selected' : '').'>130px</option>';
+	$form .= '<option value="140" '.( $thumb_size == '140' ? 'selected' : '').'>140px</option>';
+	$form .= '<option value="150" '.( $thumb_size == '150' ? 'selected' : '').'>150px</option>';
+	$form .= '</select>';
 	$form .= '</p>';
 
 	// Font size field
-    $form .= '<p class="font_size">';
+	$form .= '<p class="font_size">';
 	$form .= '<label for="'.$this->get_field_id('font_size').'">What size would you like the font?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('font_size').'" name="'.$this->get_field_name('font_size').'">';
-    $form .= '<option value="50" '.( $font_size == '50' ? 'selected' : '').'>50%</option>';
-    $form .= '<option value="60" '.( $font_size == '60' ? 'selected' : '').'>60%</option>';
-    $form .= '<option value="70" '.( $font_size == '70' ? 'selected' : '').'>70%</option>';
-    $form .= '<option value="80" '.( $font_size == '80' ? 'selected' : '').'>80%</option>';
-    $form .= '<option value="90" '.( $font_size == '90' ? 'selected' : '').'>90%</option>';
-    $form .= '<option value="100" '.( $font_size == '100' ? 'selected' : '').'>100%</option>';
-    $form .= '<option value="110" '.( $font_size == '110' ? 'selected' : '').'>110%</option>';
-    $form .= '<option value="120" '.( $font_size == '120' ? 'selected' : '').'>120%</option>';
-    $form .= '<option value="130" '.( $font_size == '130' ? 'selected' : '').'>130%</option>';
-    $form .= '<option value="140" '.( $font_size == '140' ? 'selected' : '').'>140%</option>';
-    $form .= '<option value="150" '.( $font_size == '150' ? 'selected' : '').'>150%</option>';
-    $form .= '</select>';
+	$form .= '<option value="50" '.( $font_size == '50' ? 'selected' : '').'>50%</option>';
+	$form .= '<option value="60" '.( $font_size == '60' ? 'selected' : '').'>60%</option>';
+	$form .= '<option value="70" '.( $font_size == '70' ? 'selected' : '').'>70%</option>';
+	$form .= '<option value="80" '.( $font_size == '80' ? 'selected' : '').'>80%</option>';
+	$form .= '<option value="90" '.( $font_size == '90' ? 'selected' : '').'>90%</option>';
+	$form .= '<option value="100" '.( $font_size == '100' ? 'selected' : '').'>100%</option>';
+	$form .= '<option value="110" '.( $font_size == '110' ? 'selected' : '').'>110%</option>';
+	$form .= '<option value="120" '.( $font_size == '120' ? 'selected' : '').'>120%</option>';
+	$form .= '<option value="130" '.( $font_size == '130' ? 'selected' : '').'>130%</option>';
+	$form .= '<option value="140" '.( $font_size == '140' ? 'selected' : '').'>140%</option>';
+	$form .= '<option value="150" '.( $font_size == '150' ? 'selected' : '').'>150%</option>';
+	$form .= '</select>';
 	$form .= '</p>';
 
 	// Color Scheme Field
 	$form .= '<p class="style">';
 	$form .= '<label for="'.$this->get_field_id('style').'">Which color scheme would you like to use?</label>';
 	$form .= '<select class="widefat" id="'.$this->get_field_id('style').'" name="'.$this->get_field_name('style').'">';
-    $form .= '<option value="style_01" '.( $style == 'style_01' ? 'selected' : '' ) .'>Vanilla (No Styling)</option>';
-    $form .= '<option value="style_02" '.( $style == 'style_02' ? 'selected' : '' ) .'>Inspired by Twitter</option>';
-    $form .= '<option value="style_03" '.( $style == 'style_03' ? 'selected' : '' ) .'>Inspired by Facebook</option>';
-    $form .= '<option value="style_04" '.( $style == 'style_04' ? 'selected' : '' ) .'>Inspired by Google Plus</option>';
-    $form .= '<option value="style_05" '.( $style == 'style_05' ? 'selected' : '' ) .'>Inspired by LinkedIn</option>';
-    $form .= '<option value="style_06" '.( $style == 'style_06' ? 'selected' : '' ) .'>Inspired by Pinterest</option>';
-    $form .= '<option value="style_07" '.( $style == 'style_07' ? 'selected' : '' ) .'>Don\'t Stop Believin\'</option>';
-    $form .= '<option value="style_08" '.( $style == 'style_08' ? 'selected' : '' ) .'>Thunderstruck</option>';
-    $form .= '<option value="style_09" '.( $style == 'style_09' ? 'selected' : '' ) .'>Livin\' On A Prayer</option>';
-    $form .= '<option value="custom" '.( $style == 'custom' ? 'selected' : '' ) .'>Custom</option>';
-    $form .= '</select>';
+	$form .= '<option value="style_01" '.( $style == 'style_01' ? 'selected' : '' ) .'>Vanilla (No Styling)</option>';
+	$form .= '<option value="style_02" '.( $style == 'style_02' ? 'selected' : '' ) .'>Inspired by Twitter</option>';
+	$form .= '<option value="style_03" '.( $style == 'style_03' ? 'selected' : '' ) .'>Inspired by Facebook</option>';
+	$form .= '<option value="style_04" '.( $style == 'style_04' ? 'selected' : '' ) .'>Inspired by Google Plus</option>';
+	$form .= '<option value="style_05" '.( $style == 'style_05' ? 'selected' : '' ) .'>Inspired by LinkedIn</option>';
+	$form .= '<option value="style_06" '.( $style == 'style_06' ? 'selected' : '' ) .'>Inspired by Pinterest</option>';
+	$form .= '<option value="style_07" '.( $style == 'style_07' ? 'selected' : '' ) .'>Don\'t Stop Believin\'</option>';
+	$form .= '<option value="style_08" '.( $style == 'style_08' ? 'selected' : '' ) .'>Thunderstruck</option>';
+	$form .= '<option value="style_09" '.( $style == 'style_09' ? 'selected' : '' ) .'>Livin\' On A Prayer</option>';
+	$form .= '<option value="custom" '.( $style == 'custom' ? 'selected' : '' ) .'>Custom</option>';
+	$form .= '</select>';
 	$form .= '</p>';
 
 	// Custom Background Color Field
-    $form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_bg">';
+	$form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_bg">';
 	$form .= '<label for="'.$this->get_field_id('custom_bg').'">Custom Background Color</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_bg').'" name="'.$this->get_field_name('custom_bg').'" type="text" value="'.$custom_bg.'" />';
 	$form .= '</p>';
 
 	// Custom Link Color Field
-    $form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_link">';
+	$form .= '<p '.( $style != 'custom' ? 'style="display:none;"' : '' ).' class="custom_link">';
 	$form .= '<label for="'.$this->get_field_id('custom_link').'">Custom Link Color</label>';
 	$form .= '<input class="widefat" id="'.$this->get_field_id('custom_link').'" name="'.$this->get_field_name('custom_link').'" type="text" value="'.$custom_link.'" />';
 	$form .= '</p>';

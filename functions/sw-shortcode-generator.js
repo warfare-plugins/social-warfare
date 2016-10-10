@@ -1,9 +1,9 @@
 (function() {
-    tinymce.PluginManager.add('swp_shortcode_generator', function( editor, url ) {
-        editor.addButton( 'swp_shortcode_generator', {
-            title: 'Social Warfare Buttons',
-            icon: 'sw sw sw-social-warfare',
-            onclick: function() {
+	tinymce.PluginManager.add('swp_shortcode_generator', function( editor, url ) {
+		editor.addButton( 'swp_shortcode_generator', {
+			title: 'Social Warfare Buttons',
+			icon: 'sw sw sw-social-warfare',
+			onclick: function() {
 				editor.windowManager.open( {
 					title: 'Insert Social Warfare Buttons',
 					body: [
@@ -67,6 +67,6 @@
 					}
 				});
 			}
-        });
-    });
+		});
+	});
 })();
