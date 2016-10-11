@@ -3,10 +3,11 @@
 		init: function(ed, url) {
 			ed.addButton('tmclicktotweet', {
 				title: 'tmclicktotweet.quickaddd',
-				image: url.replace("/js", "") + '/img/twitter-little-bird-button.png',
+				image: url.replace( "/js", "" ) + '/img/twitter-little-bird-button.png',
 				onclick: function() {
-					var m = prompt("Click To Tweet", "Enter your tweets");
-					if (m != null && m != 'undefined' && m != 'Enter your tweets' && m != '') ed.execCommand('mceInsertContent', false, '[Tweet "' + m + '"]');
+					var m = prompt( "Click To Tweet", "Enter your tweets" );
+					if (m != null && m != 'undefined' && m != 'Enter your tweets' && m != '') { ed.execCommand( 'mceInsertContent', false, '[Tweet "' + m + '"]' );
+					}
 				}
 			});
 		},
@@ -23,5 +24,5 @@
 			};
 		}
 	});
-	tinymce.PluginManager.add('tmclicktotweet', tinymce.plugins.TMClickToTweet);
+	tinymce.PluginManager.add( 'tmclicktotweet', tinymce.plugins.TMClickToTweet );
 })();
