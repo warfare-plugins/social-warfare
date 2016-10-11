@@ -1,96 +1,57 @@
-/*********************************************************
+jQuery( document ).ready(function() {
 
+	jQuery( '.nc_socialPanel' ).animate({
+		opacity:0
+	}, 0 );
 
+	/*********************************************************
+		Header Menu
+	*********************************************************/
 
-	The Admin Options Page
+	offset = jQuery( '.sw-top-menu' ).offset();
 
+	width = jQuery( '.sw-top-menu' ).width();
 
-
-*********************************************************/
-
-
-
-// Document Ready Trigger
-
-jQuery(document).ready(function() {
-
-	jQuery('.nc_socialPanel').animate({opacity:0},0);
-
-/*********************************************************
-
-
-
-	Header Menu
-
-
-
-*********************************************************/
-
-
-
-	jQuery(document).ready(function() {
-
-		offset 	= jQuery('.sw-top-menu').offset();
-
-		width 	= jQuery('.sw-top-menu').width();
-
-		jQuery('.sw-top-menu').css({
-
-			'position':'fixed',
-
-			'left':offset.left,
-
-			'top':offset.top,
-
-			'width':width
-
-		});
-
-		jQuery('.sw-admin-wrapper').css('padding-top', '75px');
-
-
-
+	jQuery( '.sw-top-menu' ).css({
+		'position':'fixed',
+		'left':offset.left,
+		'top':offset.top,
+		'width':width
 	});
 
+	jQuery( '.sw-admin-wrapper' ).css( 'padding-top', '75px' );
 
+	/*********************************************************
+					Tab Navigation
+				*********************************************************/
 
-/*********************************************************
-
-
-
-	Tab Navigation
-
-
-
-*********************************************************/
-
-	jQuery(document).on('click','.sw-tab-selector',function(event) {
+	jQuery( document ).on('click','.sw-tab-selector',function(event) {
 
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-		jQuery("html, body").animate({ scrollTop: 0 }, 0);
+		jQuery( "html, body" ).animate( { scrollTop: 0 }, 0 );
 
-		var tab = jQuery(this).attr('data-link');
+		var tab = jQuery( this ).attr( 'data-link' );
 
-		jQuery('.sw-admin-tab').hide();
+		jQuery( '.sw-admin-tab' ).hide();
 
-		jQuery('.nc_socialPanel').animate({opacity:0},0);
+		jQuery( '.nc_socialPanel' ).animate( {opacity:0},0 );
 
-		jQuery('#'+tab).show();
+		jQuery( '#' + tab ).show();
 
-		jQuery('.sw-header-menu li').removeClass('sw-active-tab');
+		jQuery( '.sw-header-menu li' ).removeClass( 'sw-active-tab' );
 
-		jQuery(this).parents('li').addClass('sw-active-tab');
+		jQuery( this ).parents( 'li' ).addClass( 'sw-active-tab' );
 
-		if(tab == 'swp_styles') {
+		if (tab == 'swp_styles') {
 
-			swSetWidths(true);
+			swSetWidths( true );
 
 			activateHoverStates();
 
 		} else {
 
-			jQuery('.nc_socialPanel').animate({opacity:0},0);
+			jQuery( '.nc_socialPanel' ).animate( {opacity:0},0 );
 
 		}
 
@@ -98,37 +59,29 @@ jQuery(document).ready(function() {
 
 	});
 
+	/*********************************************************
+		Checkboxes
+	*********************************************************/
 
+	jQuery( document ).on('click','.sw-checkbox-toggle',function(event) {
 
-/*********************************************************
+		var status = jQuery( this ).attr( 'status' );
 
+		var elem = jQuery( this ).attr( 'field' );
 
+		if ( status == 'on' ) {
 
-	Checkboxes
+			jQuery( this ).attr( 'status','off' );
 
-
-
-*********************************************************/
-
-	jQuery(document).on('click','.sw-checkbox-toggle',function(event) {
-
-		var status = jQuery(this).attr('status');
-
-		var elem = jQuery(this).attr('field');
-
-		if( status == 'on' ) {
-
-			jQuery(this).attr('status','off');
-
-			jQuery(elem).prop('checked', false);
+			jQuery( elem ).prop( 'checked', false );
 
 		} else {
 
-			jQuery(this).attr('status','on');
+			jQuery( this ).attr( 'status','on' );
 
-			jQuery(elem).prop('checked', true);
+			jQuery( elem ).prop( 'checked', true );
 
-		};
+		}
 
 		swp_fetch_all_options();
 
@@ -138,25 +91,16 @@ jQuery(document).ready(function() {
 
 	});
 
-
-
-	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').on('change' , function() {
+	jQuery( 'form.sw-admin-settings-form input, form.sw-admin-settings-form select' ).on('change' , function() {
 
 		swp_conditional_fields();
 
 		var new_options = swp_fetch_all_options();
 
-		save_color_toggle()
-
+		save_color_toggle();
 	});
 
-
-
 	default_options = swp_fetch_all_options();
-
-
-
-// End the Document Ready Trigger
 
 });
 
@@ -167,22 +111,19 @@ jQuery(document).ready(function() {
 
 
 	A Function to change the color of the save button
-
-
-
-*********************************************************/
+ *********************************************************/
 
 function save_color_toggle() {
 
 	var new_options = swp_fetch_all_options();
 
-	if(JSON.stringify(new_options) != JSON.stringify(default_options)) {
+	if (JSON.stringify( new_options ) != JSON.stringify( default_options )) {
 
-		jQuery('.sw-save-settings').removeClass('sw-navy-button').addClass('sw-red-button');
+		jQuery( '.sw-save-settings' ).removeClass( 'sw-navy-button' ).addClass( 'sw-red-button' );
 
 	} else {
 
-		jQuery('.sw-save-settings').removeClass('sw-red-button').addClass('sw-navy-button');
+		jQuery( '.sw-save-settings' ).removeClass( 'sw-red-button' ).addClass( 'sw-navy-button' );
 
 	}
 
@@ -195,69 +136,38 @@ function save_color_toggle() {
 
 
 	A Function to gather all the settings
-
-
-
-*********************************************************/
+ *********************************************************/
 
 
 
 function swp_fetch_all_options() {
-
-
-
 	// Create an object
-
 	values = {};
 
-
-
 	// Loop through all the inputs
+	jQuery( 'form.sw-admin-settings-form input, form.sw-admin-settings-form select' ).each( function() {
+		var name = jQuery( this ).attr( 'name' );
 
-	jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').each( function() {
-
-
-
-		var name = jQuery(this).attr('name');
-
-		if(jQuery(this).attr('type') == 'checkbox') {
-
-			var value = jQuery(this).prop('checked');
-
+		if (jQuery( this ).attr( 'type' ) == 'checkbox') {
+			var value = jQuery( this ).prop( 'checked' );
 		} else {
-
-			var value = jQuery(this).val();
-
+			var value = jQuery( this ).val();
 		}
-
 		values[name] = value;
-
 	});
-
-
 
 	// Create the objects
-
 	values.newOrderOfIcons = {};
 
-
-
 	// Loop through each active network
-
-	jQuery('.sw-active i').each( function() {
-
-		var network = jQuery(this).attr('value');
-
+	jQuery( '.sw-active i' ).each( function() {
+		var network = jQuery( this ).attr( 'value' );
 		values.newOrderOfIcons[network] = network;
-
 	});
 
-	console.log(values);
+	console.log( values );
 
 	return values;
-
-
-
 }
 
 
@@ -267,41 +177,24 @@ function swp_fetch_all_options() {
 
 
 	A Function send the array of setting to ajax.php
-
-
-
 *********************************************************/
 
 
 
-jQuery(document).ready(function() {
+jQuery( document ).ready(function() {
 
-
-
-	jQuery('.sw-save-settings').on('click',function(event) {
-
-
+	jQuery( '.sw-save-settings' ).on('click',function(event) {
 
 		// Block the default action
-
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-
-
 		// The loading screen
-
 		swp_loading_screen();
 
-
-
 		// Fetch all the settings
-
 		settings = swp_fetch_all_options();
 
-
-
 		// Prepare date
-
 		var data = {
 
 			action: 'swp_store_settings',
@@ -310,31 +203,18 @@ jQuery(document).ready(function() {
 
 		};
 
-
-
 		// Send the POST request
-
 		jQuery.post(ajaxurl, data, function(response) {
 
-
-
 			// Clear the loading screen
-
 			swp_clear_loading_screen();
 
-
-
 			// Reset the default options variable
-
 			default_options = swp_fetch_all_options();
 
 			save_color_toggle();
 
-
-
 		});
-
-
 
 	});
 
@@ -344,7 +224,7 @@ jQuery(document).ready(function() {
 
 function swp_loading_screen() {
 
-	jQuery('body').append('<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>');
+	jQuery( 'body' ).append( '<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>' );
 
 }
 
@@ -352,13 +232,13 @@ function swp_loading_screen() {
 
 function swp_clear_loading_screen() {
 
-	jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete');
+	jQuery( '.sw-loading-message' ).html( 'Success!' ).removeClass( 'sw-loading-message' ).addClass( 'sw-loading-complete' );
 
-	jQuery('.sw-loading-bg').delay(1000).fadeOut(1000);
+	jQuery( '.sw-loading-bg' ).delay( 1000 ).fadeOut( 1000 );
 
 	setTimeout( function() {
 
-		jQuery('.sw-loading-bg').remove();
+		jQuery( '.sw-loading-bg' ).remove();
 
 	} , 2000);
 
@@ -371,16 +251,11 @@ function swp_clear_loading_screen() {
 
 
 	A Function to update the preview buttons
-
-
-
 *********************************************************/
 
 
 
-jQuery(document).ready( function() {
-
-
+jQuery( document ).ready( function() {
 
 	availableOptions = {
 
@@ -518,63 +393,53 @@ jQuery(document).ready( function() {
 
 	};
 
-
-
 	// Check if we are on the admin page
-
-	if(jQuery('select[name="visualTheme"]').length) {
-
-
+	if (jQuery( 'select[name="visualTheme"]' ).length) {
 
 		// Update the items and previews on the initial page load
+		var visualTheme  = jQuery( 'select[name="visualTheme"]' ).val();
 
-		var visualTheme  = jQuery('select[name="visualTheme"]').val();
+		var dColorSet    = jQuery( 'select[name="dColorSet"]' ).val();
 
-		var dColorSet    = jQuery('select[name="dColorSet"]').val();
+		var iColorSet    = jQuery( 'select[name="iColorSet"]' ).val();
 
-		var iColorSet    = jQuery('select[name="iColorSet"]').val();
+		var oColorSet    = jQuery( 'select[name="oColorSet"]' ).val();
 
-		var oColorSet    = jQuery('select[name="oColorSet"]').val();
-
-		jQuery('select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option').remove();
+		jQuery( 'select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option' ).remove();
 
 		jQuery.each(availableOptions[visualTheme], function(index, value) {
 
-			if(index == dColorSet) {
+			if (index == dColorSet) {
 
-				jQuery('select[name="dColorSet"]').append('<option value="'+index+'" selected>'+value+'</option>');
-
-			} else {
-
-				jQuery('select[name="dColorSet"]').append('<option value="'+index+'">'+value+'</option>');
-
-			};
-
-			if(index == iColorSet) {
-
-				jQuery('select[name="iColorSet"]').append('<option value="'+index+'" selected>'+value+'</option>');
+				jQuery( 'select[name="dColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 
 			} else {
 
-				jQuery('select[name="iColorSet"]').append('<option value="'+index+'">'+value+'</option>');
+				jQuery( 'select[name="dColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 
 			};
 
-			if(index == oColorSet) {
+			if (index == iColorSet) {
 
-				jQuery('select[name="oColorSet"]').append('<option value="'+index+'" selected>'+value+'</option>');
+				jQuery( 'select[name="iColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 
 			} else {
 
-				jQuery('select[name="oColorSet"]').append('<option value="'+index+'">'+value+'</option>');
+				jQuery( 'select[name="iColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 
 			};
 
+			if (index == oColorSet) {
 
+				jQuery( 'select[name="oColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 
+			} else {
 
+				jQuery( 'select[name="oColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 
-			if(	dColorSet == 'customColor'
+			};
+
+			if (	dColorSet == 'customColor'
 
 				|| dColorSet == 'ccOutlines'
 
@@ -584,69 +449,54 @@ jQuery(document).ready( function() {
 
 				|| oColorSet == 'customColor'
 
-				|| oColorSet == 'ccOutlines' )
+				|| oColorSet == 'ccOutlines' ) {
 
-				{
-
-
-
-				jQuery('.customColor_wrapper').slideDown();
+				jQuery( '.customColor_wrapper' ).slideDown();
 
 				updateCustomColor();
 
-
-
 			} else {
 
-				jQuery('.customColor_wrapper').slideUp();
+				jQuery( '.customColor_wrapper' ).slideUp();
 
 			};
 
 		});
 
-
-
 		// A function for updating the preview
-
 		function updateTheme() {
 
-			var visualTheme  = jQuery('select[name="visualTheme"]').val();
+			var visualTheme  = jQuery( 'select[name="visualTheme"]' ).val();
 
-			var dColorSet    = jQuery('select[name="dColorSet"]').val();
+			var dColorSet    = jQuery( 'select[name="dColorSet"]' ).val();
 
-			var iColorSet    = jQuery('select[name="iColorSet"]').val();
+			var iColorSet    = jQuery( 'select[name="iColorSet"]' ).val();
 
-			var oColorSet    = jQuery('select[name="oColorSet"]').val();
+			var oColorSet    = jQuery( 'select[name="oColorSet"]' ).val();
 
-			var buttonsClass = 'swp_'+visualTheme+' swp_d_'+dColorSet+' swp_i_'+iColorSet+' swp_o_'+oColorSet;
+			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
 
-			if(typeof lastClass === 'undefined'){
+			if (typeof lastClass === 'undefined') {
 
-				jQuery('.nc_socialPanel').removeClass('swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor').addClass(buttonsClass);
+				jQuery( '.nc_socialPanel' ).removeClass( 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor' ).addClass( buttonsClass );
 
 			} else {
 
-				jQuery('.nc_socialPanel').removeClass(lastClass).addClass(buttonsClass);
+				jQuery( '.nc_socialPanel' ).removeClass( lastClass ).addClass( buttonsClass );
 
 			};
 
 			lastClass = buttonsClass;
 
-			if(dColorSet == 'customColor' || dColorSet == 'ccOutlines' || iColorSet == 'customColor' || iColorSet == 'ccOutlines' || oColorSet == 'customColor' || oColorSet == 'ccOutlines' ) {
+			if (dColorSet == 'customColor' || dColorSet == 'ccOutlines' || iColorSet == 'customColor' || iColorSet == 'ccOutlines' || oColorSet == 'customColor' || oColorSet == 'ccOutlines' ) {
 
-				jQuery('.customColor_wrapper').slideDown();
-
-
+				jQuery( '.customColor_wrapper' ).slideDown();
 
 				updateCustomColor();
 
-
-
-
-
 			} else {
 
-				jQuery('.customColor_wrapper').slideUp();
+				jQuery( '.customColor_wrapper' ).slideUp();
 
 			};
 
@@ -654,75 +504,61 @@ jQuery(document).ready( function() {
 
 		setTimeout( updateTheme , 2000 );
 
-
-
 		// If the color set changes, update the preview with the function
-
-		jQuery('select[name="dColorSet"], select[name="iColorSet"], select[name="oColorSet"]').on('change', updateTheme);
-
-
+		jQuery( 'select[name="dColorSet"], select[name="iColorSet"], select[name="oColorSet"]' ).on( 'change', updateTheme );
 
 		// If the visual theme is updated, update the preview manually
+		jQuery( 'select[name="visualTheme"]' ).on('change', function() {
 
-		jQuery('select[name="visualTheme"]').on('change', function() {
+			var visualTheme  = jQuery( 'select[name="visualTheme"]' ).val();
 
+			var dColorSet    = jQuery( 'select[name="dColorSet"]' ).val();
 
+			var iColorSet    = jQuery( 'select[name="iColorSet"]' ).val();
 
-			var visualTheme  = jQuery('select[name="visualTheme"]').val();
-
-			var dColorSet    = jQuery('select[name="dColorSet"]').val();
-
-			var iColorSet    = jQuery('select[name="iColorSet"]').val();
-
-			var oColorSet    = jQuery('select[name="oColorSet"]').val();
-
-
+			var oColorSet    = jQuery( 'select[name="oColorSet"]' ).val();
 
 			var i = 0;
 
 			var array = availableOptions[visualTheme];
 
+			var dColor = array.hasOwnProperty( dColorSet );
 
+			var iColor = array.hasOwnProperty( iColorSet );
 
-			var dColor = array.hasOwnProperty(dColorSet);
+			var oColor = array.hasOwnProperty( oColorSet );
 
-			var iColor = array.hasOwnProperty(iColorSet);
-
-			var oColor = array.hasOwnProperty(oColorSet);
-
-
-
-			jQuery('select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option').remove();
+			jQuery( 'select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option' ).remove();
 
 			jQuery.each(availableOptions[visualTheme], function(index, value) {
 
-				if(index == dColorSet || (dColor == false && i == 0)) {
+				if (index == dColorSet || (dColor == false && i == 0)) {
 
-					jQuery('select[name="dColorSet"]').append('<option value="'+index+'" selected>'+value+'</option>');
+					jQuery( 'select[name="dColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 
 				} else {
 
-					jQuery('select[name="dColorSet"]').append('<option value="'+index+'">'+value+'</option>');
+					jQuery( 'select[name="dColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 
 				};
 
-				if(index == iColorSet || (iColor == false && i == 0)) {
+				if (index == iColorSet || (iColor == false && i == 0)) {
 
-					jQuery('select[name="iColorSet"]').append('<option value="'+index+'" selected>'+value+'</option>');
+					jQuery( 'select[name="iColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 
 				} else {
 
-					jQuery('select[name="iColorSet"]').append('<option value="'+index+'">'+value+'</option>');
+					jQuery( 'select[name="iColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 
 				};
 
-				if(index == oColorSet || (oColor == false && i == 0)) {
+				if (index == oColorSet || (oColor == false && i == 0)) {
 
-					jQuery('select[name="oColorSet"]').append('<option value="'+index+'" selected>'+value+'</option>');
+					jQuery( 'select[name="oColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 
 				} else {
 
-					jQuery('select[name="oColorSet"]').append('<option value="'+index+'">'+value+'</option>');
+					jQuery( 'select[name="oColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 
 				};
 
@@ -730,17 +566,15 @@ jQuery(document).ready( function() {
 
 			});
 
+			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
 
+			if (typeof lastClass === 'undefined') {
 
-			var buttonsClass = 'swp_'+visualTheme+' swp_d_'+dColorSet+' swp_i_'+iColorSet+' swp_o_'+oColorSet;
-
-			if(typeof lastClass === 'undefined'){
-
-				jQuery('.nc_socialPanel').removeClass('swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor').addClass(buttonsClass);
+				jQuery( '.nc_socialPanel' ).removeClass( 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor' ).addClass( buttonsClass );
 
 			} else {
 
-				jQuery('.nc_socialPanel').removeClass(lastClass).addClass(buttonsClass);
+				jQuery( '.nc_socialPanel' ).removeClass( lastClass ).addClass( buttonsClass );
 
 			};
 
@@ -748,51 +582,43 @@ jQuery(document).ready( function() {
 
 		});
 
-	}
-
-
+	}// End if().
 
 });
 
 
 
-	function updateCustomColor() {
+function updateCustomColor() {
 
+	var visualTheme  = jQuery( 'select[name="visualTheme"]' ).val();
 
+	var dColorSet    = jQuery( 'select[name="dColorSet"]' ).val();
 
-		var visualTheme  = jQuery('select[name="visualTheme"]').val();
+	var iColorSet    = jQuery( 'select[name="iColorSet"]' ).val();
 
-		var dColorSet    = jQuery('select[name="dColorSet"]').val();
+	var oColorSet    = jQuery( 'select[name="oColorSet"]' ).val();
 
-		var iColorSet    = jQuery('select[name="iColorSet"]').val();
+	jQuery( 'style.swp_customColorStuff' ).remove();
 
-		var oColorSet    = jQuery('select[name="oColorSet"]').val();
+	var colorCode = jQuery( 'input[name="customColor"]' ).val();
 
+	customCSS = '';
 
+	if (dColorSet == 'customColor' || iColorSet == 'customColor' || oColorSet == 'customColor') {
 
-		jQuery('style.swp_customColorStuff').remove();
+		var customCSS = '.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:' + colorCode + ';border:1px solid ' + colorCode + ';}';
 
-			var colorCode = jQuery('input[name="customColor"]').val();
+	}
 
-			customCSS = '';
+	if (dColorSet == 'ccOutlines' || iColorSet == 'ccOutlines' || oColorSet == 'ccOutlines' ) {
 
-			if(dColorSet == 'customColor' || iColorSet == 'customColor' || oColorSet == 'customColor') {
+		var customCSS = customCSS + ' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:' + colorCode + '; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' + colorCode + '; }';
 
-				var customCSS = '.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:'+colorCode+';border:1px solid '+colorCode+';}';
+	}
 
-			}
+	jQuery( 'head' ).append( '<style type="text/css" class="swp_customColorStuff">' + customCSS + '</style>' );
 
-			if(dColorSet == 'ccOutlines' || iColorSet == 'ccOutlines' || oColorSet == 'ccOutlines' ) {
-
-				var customCSS = customCSS+' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:'+colorCode+'; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid '+colorCode+'; }';
-
-			}
-
-
-
-			jQuery('head').append('<style type="text/css" class="swp_customColorStuff">'+customCSS+'</style>');
-
-	};
+};
 
 
 
@@ -801,72 +627,65 @@ jQuery(document).ready( function() {
 
 
 	A Function to update the button sizing options
+ *********************************************************/
 
 
 
-*********************************************************/
+function swUpdateScale() {
 
+	jQuery( '.nc_socialPanel' ).css( {width:'100%'} );
 
+	var width = jQuery( '.nc_socialPanel' ).width();
 
-	function swUpdateScale() {
+	scale = jQuery( 'select[name="buttonSize"]' ).val();
 
-		jQuery('.nc_socialPanel').css({width:'100%'});
+	align = jQuery( 'select[name="buttonFloat"]' ).val();
 
-		var width = jQuery('.nc_socialPanel').width();
+	if ((align == 'fullWidth' && scale != 1) || scale >= 1) {
 
-		scale = jQuery('select[name="buttonSize"]').val();
+		newWidth = width / scale;
 
-		align = jQuery('select[name="buttonFloat"]').val();
+		jQuery( '.nc_socialPanel' ).css( 'cssText', 'width:' + newWidth + 'px!important;' );
 
-		if((align == 'fullWidth' && scale != 1) || scale >= 1) {
+		jQuery( '.nc_socialPanel' ).css({
 
-			newWidth = width / scale;
+			'transform':'scale(' + scale + ')',
 
-			jQuery('.nc_socialPanel').css('cssText', 'width:'+newWidth+'px!important;');
+			'transform-origin':'left'
 
-			jQuery('.nc_socialPanel').css({
+		});
 
-				'transform':'scale('+scale+')',
+	} else if (align != 'fullWidth' && scale < 1) {
 
-				'transform-origin':'left'
+		newWidth = width / scale;
 
-			});
+		jQuery( '.nc_socialPanel' ).css({
 
-		} else if(align != 'fullWidth' && scale < 1) {
+			'transform':'scale(' + scale + ')',
 
-			newWidth = width / scale;
+			'transform-origin':align
 
-			jQuery('.nc_socialPanel').css({
-
-				'transform':'scale('+scale+')',
-
-				'transform-origin':align
-
-			});
-
-		}
-
-		swSetWidths(true);
-
-		activateHoverStates();
+		});
 
 	}
 
+	swSetWidths( true );
+
+	activateHoverStates();
+
+}
 
 
-jQuery(document).ready( function() {
 
+jQuery( document ).ready( function() {
 
+	scale = jQuery( 'select[name="buttonSize"]' ).val();
 
-	scale = jQuery('select[name="buttonSize"]').val();
-
-	jQuery('select[name="buttonSize"],select[name="buttonFloat"]').on('change',function() {
+	jQuery( 'select[name="buttonSize"],select[name="buttonFloat"]' ).on('change',function() {
 
 		swUpdateScale();
 
 	});
-
-
 
 });
 
@@ -877,36 +696,29 @@ jQuery(document).ready( function() {
 
 
 	Update the Click To Tweet Demo
-
-
-
-*********************************************************/
+ *********************************************************/
 
 function update_ctt_demo() {
 
-	var current_style 	= jQuery('.swp_CTT').attr('data-style');
+	var current_style 	= jQuery( '.swp_CTT' ).attr( 'data-style' );
 
-	var new_style		= jQuery('select[name="cttTheme"]').val();
+	var new_style		= jQuery( 'select[name="cttTheme"]' ).val();
 
-	jQuery('.swp_CTT').removeClass(current_style).addClass(new_style).attr('data-style',new_style);
+	jQuery( '.swp_CTT' ).removeClass( current_style ).addClass( new_style ).attr( 'data-style',new_style );
 
 }
 
 
 
-jQuery(document).ready(function($) {
-
-
+jQuery( document ).ready(function($) {
 
 	update_ctt_demo();
 
-	jQuery('select[name="cttTheme"]').on('change', function() {
+	jQuery( 'select[name="cttTheme"]' ).on('change', function() {
 
 		update_ctt_demo();
 
 	});
-
-
 
 });
 
@@ -917,20 +729,15 @@ jQuery(document).ready(function($) {
 
 
 	A function to show/hide conditionals
-
-
-
 *********************************************************/
 
 
 
-jQuery(document).ready(function() {
+jQuery( document ).ready(function() {
 
 	swp_conditional_fields();
 
-	jQuery('[name="float"]')
-
-
+	jQuery( '[name="float"]' )
 
 });
 
@@ -938,45 +745,33 @@ jQuery(document).ready(function() {
 
 function swp_conditional_fields() {
 
-
-
 	// Loop through all the fields that have dependancies
-
-	jQuery('div[dep]').each( function() {
-
-
+	jQuery( 'div[dep]' ).each( function() {
 
 		// Fetch the conditional values
+		var con_dep 	= jQuery( this ).attr( 'dep' );
 
-		var con_dep 	= jQuery(this).attr('dep');
-
-		var con_dep_val = jQuery.parseJSON(jQuery(this).attr('dep_val'));
-
-
+		var con_dep_val = jQuery.parseJSON( jQuery( this ).attr( 'dep_val' ) );
 
 		// Fetch the value of checkboxes or other input types
+		if (jQuery( '[name="' + con_dep + '"]' ).attr( 'type' ) == 'checkbox') {
 
-		if(jQuery('[name="'+con_dep+'"]').attr('type') == 'checkbox') {
-
-			var value = jQuery('[name="'+con_dep+'"]').prop('checked');
+			var value = jQuery( '[name="' + con_dep + '"]' ).prop( 'checked' );
 
 		} else {
 
-			var value = jQuery('[name="'+con_dep+'"]').val();
+			var value = jQuery( '[name="' + con_dep + '"]' ).val();
 
 		}
 
-
-
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+		if (jQuery.inArray( value,con_dep_val ) !== -1 && jQuery( '[name="' + con_dep + '"]' ).parent( '.sw-grid' ).is( ':visible' )) {
 
-		if(jQuery.inArray(value,con_dep_val) !== -1 && jQuery('[name="'+con_dep+'"]').parent('.sw-grid').is(':visible')) {
-
-			jQuery(this).show();
+			jQuery( this ).show();
 
 		} else {
 
-			jQuery(this).hide();
+			jQuery( this ).hide();
 
 		}
 
@@ -991,22 +786,15 @@ function swp_conditional_fields() {
 
 
 	Register the Plugin
-
-
-
 *******************************************************/
 
 
 
 // Wait for the DOM to load
-
-jQuery(document).ready(function() {
-
-
+jQuery( document ).ready(function() {
 
 	// Register the plugin
-
-	jQuery('#register-plugin').on('click',function(event) {
+	jQuery( '#register-plugin' ).on('click',function(event) {
 
 		// Block the default action
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -1014,15 +802,13 @@ jQuery(document).ready(function() {
 		// The loading screen
 		swp_loading_screen();
 
-
-
 		// Fetch all the registration values
-		var regCode = jQuery('input[name="regCode"]').val();
-		var email = jQuery('input[name="emailAddress"]').val();
-		var domain = jQuery('input[name="domain"]').val();
+		var regCode = jQuery( 'input[name="regCode"]' ).val();
+		var email = jQuery( 'input[name="emailAddress"]' ).val();
+		var domain = jQuery( 'input[name="domain"]' ).val();
 
 		// Create the ajax URL
-		url = 'https://warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
+		url = 'https://warfareplugins.com/registration-api/?activity=register&emailAddress=' + email + '&domain=' + domain + '&registrationCode=' + regCode;
 
 		ajax_data = {
 			'action':'swp_ajax_passthrough',
@@ -1033,17 +819,17 @@ jQuery(document).ready(function() {
 		jQuery.post( ajaxurl, ajax_data, function( data ) {
 
 			// Parse the JSON response
-			var object = jQuery.parseJSON(data);
+			var object = jQuery.parseJSON( data );
 
 			// If the cURL request failed, let's attempt CORS
-			if(object == 0 || object == null) {
+			if (object == 0 || object == null) {
 
-				console.log('cURL request failed. Attempting CORS request.');
+				console.log( 'cURL request failed. Attempting CORS request.' );
 				jQuery.get( url , function( data ) {
 
-					var object = jQuery.parseJSON(data);
-					console.log('CORS request status: '+object['status']);
-					jQuery('input[name="premiumCode"]').val(object['premiumCode']);
+					var object = jQuery.parseJSON( data );
+					console.log( 'CORS request status: ' + object['status'] );
+					jQuery( 'input[name="premiumCode"]' ).val( object['premiumCode'] );
 
 					// Prepare data
 					var data = {
@@ -1059,34 +845,27 @@ jQuery(document).ready(function() {
 						swp_clear_loading_screen();
 
 						// Toggle the registration display
-						jQuery('.registration-wrapper').attr('registration','1');
-						jQuery('.sw-admin-wrapper').attr('sw-registered','1');
+						jQuery( '.registration-wrapper' ).attr( 'registration','1' );
+						jQuery( '.sw-admin-wrapper' ).attr( 'sw-registered','1' );
 
 					});
 				});
 
-			// If the response was a failure...
-			} else if(object['status'] == 'failure') {
+				// If the response was a failure...
+			} else if (object['status'] == 'failure') {
 
 				// Alert the failure status
-				alert('Failure: '+object['message']);
+				alert( 'Failure: ' + object['message'] );
 
 				// Clear the loading screen
-
 				swp_clear_loading_screen();
 
-
-
-			// If the response was a success
-
+				// If the response was a success
 			} else {
 
-				jQuery('input[name="premiumCode"]').val(object['premiumCode']);
-
-
+				jQuery( 'input[name="premiumCode"]' ).val( object['premiumCode'] );
 
 				// Prepare data
-
 				var data = {
 
 					action: 'swp_store_registration',
@@ -1097,81 +876,48 @@ jQuery(document).ready(function() {
 
 				};
 
-
-
 				// Send the response to admin-ajax.php
-
 				jQuery.post(ajaxurl, data, function(response) {
 
-
-
 					// Clear the loading screen
-
 					swp_clear_loading_screen();
 
-
-
 					// Toggle the registration display
+					jQuery( '.registration-wrapper' ).attr( 'registration','1' );
 
-					jQuery('.registration-wrapper').attr('registration','1');
-
-					jQuery('.sw-admin-wrapper').attr('sw-registered','1');
-
-
+					jQuery( '.sw-admin-wrapper' ).attr( 'sw-registered','1' );
 
 				});
 
-			}
+			}// End if().
 
 		});
 
 	});
 
+	/*******************************************************
+				Unregister the Plugin
+				*******************************************************/
 
-
-/*******************************************************
-
-
-
-	Unregister the Plugin
-
-
-
-*******************************************************/
-
-	jQuery('#unregister-plugin').on('click',function(event) {
-
-
+	jQuery( '#unregister-plugin' ).on('click',function(event) {
 
 		// Block the default action
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-
-
 		// The loading screen
-
 		swp_loading_screen();
 
-
-
 		// Fetch the registration values
+		var regCode = jQuery( 'input[name="regCode"]' ).val();
 
-		var regCode = jQuery('input[name="regCode"]').val();
+		var email = jQuery( 'input[name="emailAddress"]' ).val();
 
-		var email = jQuery('input[name="emailAddress"]').val();
-
-		var domain = jQuery('input[name="domain"]').val();
-
-
+		var domain = jQuery( 'input[name="domain"]' ).val();
 
 		// Assemble the link for the Ajax request
-
-		url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
-
-
+		url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress=' + email + '&domain=' + domain + '&registrationCode=' + regCode;
 
 		// Create the ajax object
-
 		ajax_data = {
 
 			'action':'swp_ajax_passthrough',
@@ -1180,30 +926,18 @@ jQuery(document).ready(function() {
 
 		}
 
-
-
 		// Ping the home server for the registration log
-
 		jQuery.post( ajaxurl, ajax_data, function( data ) {
 
-
-
 			// Parse the JSON response
-
-			var object = jQuery.parseJSON(data);
-
-
+			var object = jQuery.parseJSON( data );
 
 			// Clear out the premium code and the email address field
+			jQuery( 'input[name="premiumCode"]' ).val( '' );
 
-			jQuery('input[name="premiumCode"]').val('');
-
-			jQuery('input[name="emailAddress"]').val('');
-
-
+			jQuery( 'input[name="emailAddress"]' ).val( '' );
 
 				// Prepare data
-
 				var data = {
 
 					action: 'swp_delete_registration',
@@ -1212,41 +946,24 @@ jQuery(document).ready(function() {
 
 					emailAddress: ''
 
-				};
-
-
+			};
 
 				// Send the response to admin-ajax.php
-
 				jQuery.post(ajaxurl, data, function(response) {
 
-
-
 					// Clear the loading screen
-
 					swp_clear_loading_screen();
 
-
-
 					// Toggle the registration display
+					jQuery( '.registration-wrapper' ).attr( 'registration','0' );
 
-					jQuery('.registration-wrapper').attr('registration','0');
-
-					jQuery('.sw-admin-wrapper').attr('sw-registered','0');
-
-
+					jQuery( '.sw-admin-wrapper' ).attr( 'sw-registered','0' );
 
 				});
-
-
 
 		});
 
 	});
-
-
-
-
 
 });
 
@@ -1257,49 +974,32 @@ jQuery(document).ready(function() {
 
 
 	Rearm the Registration if the domain has changed
-
-
-
 *********************************************************/
 
 
 
 // Wait for the DOM to load
+jQuery( document ).ready(function() {
 
-jQuery(document).ready(function() {
+	jQuery( 'input[name="premiumCode"]' ).attr( 'readonly','readonly' );
 
+	jQuery( 'input[name="regCode"]' ).parent( '.swp_field' ).hide();
 
+	var premcode = jQuery( 'input#domain' ).attr( 'data-premcode' );
 
-	jQuery('input[name="premiumCode"]').attr('readonly','readonly');
-
-	jQuery('input[name="regCode"]').parent('.swp_field').hide();
-
-	var premcode = jQuery('input#domain').attr('data-premcode');
-
-
-
-	if (jQuery('input[name="premiumCode"]').val() != '' && jQuery('input[name="premiumCode"]').val() != premcode) {
-
-
+	if (jQuery( 'input[name="premiumCode"]' ).val() != '' && jQuery( 'input[name="premiumCode"]' ).val() != premcode) {
 
 		// Fetch our variables
+		var regCode = jQuery( 'input[name="regCode"]' ).val();
 
-		var regCode = jQuery('input[name="regCode"]').val();
+		var email = jQuery( 'input[name="emailAddress"]' ).val();
 
-		var email = jQuery('input[name="emailAddress"]').val();
-
-		var domain = jQuery('input[name="domain"]').val();
-
-
+		var domain = jQuery( 'input[name="domain"]' ).val();
 
 		// Create the unregister url
-
-		url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress='+email+'&premiumCode='+jQuery('input[name="premiumCode"]').val();
-
-
+		url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress=' + email + '&premiumCode=' + jQuery( 'input[name="premiumCode"]' ).val();
 
 		// Create the ajax object
-
 		ajax_data = {
 
 			'action':'swp_ajax_passthrough',
@@ -1308,22 +1008,13 @@ jQuery(document).ready(function() {
 
 		}
 
-
-
 		// Pass the URL to the admin-ajax.php passthrough function
-
 		jQuery.get( ajaxurl, ajax_data , function(data) {
 
-
-
 			// Create the register URL
-
-			url = 'https//warfareplugins.com/registration-api/?activity=register&emailAddress='+email+'&domain='+domain+'&registrationCode='+regCode;
-
-
+			url = 'https//warfareplugins.com/registration-api/?activity=register&emailAddress=' + email + '&domain=' + domain + '&registrationCode=' + regCode;
 
 			// Create the ajax object
-
 			ajax_data = {
 
 				'action':'swp_ajax_passthrough',
@@ -1332,28 +1023,16 @@ jQuery(document).ready(function() {
 
 			}
 
-
-
 			// Pass the URL to the admin-ajax.php passthrough function
-
 			jQuery.post( ajaxurl, ajax_data , function(subdata) {
 
-
-
 				// Parse the response
-
-				var info = jQuery.parseJSON(subdata);
-
-
+				var info = jQuery.parseJSON( subdata );
 
 				// If the rearm was successful
-
-				if(info['status'] == 'success') {
-
-
+				if (info['status'] == 'success') {
 
 					// Prepare data
-
 					var data = {
 
 						action: 'swp_store_registration',
@@ -1362,36 +1041,21 @@ jQuery(document).ready(function() {
 
 					};
 
-
-
 					// Send the response to admin-ajax.php
-
 					jQuery.post(ajaxurl, data, function(response) {
 
-
-
 						// Toggle the registration display
+						jQuery( '.registration-wrapper' ).attr( 'registration','1' );
 
-						jQuery('.registration-wrapper').attr('registration','1');
-
-						jQuery('.sw-admin-wrapper').attr('sw-registered','1');
-
-
+						jQuery( '.sw-admin-wrapper' ).attr( 'sw-registered','1' );
 
 					});
 
-
-
-					jQuery('input[name="premiumCode"]').val(info['premiumCode']);
-
-
+					jQuery( 'input[name="premiumCode"]' ).val( info['premiumCode'] );
 
 				} else {
 
-
-
 					// Prepare data
-
 					var data = {
 
 						action: 'swp_delete_registration',
@@ -1402,39 +1066,24 @@ jQuery(document).ready(function() {
 
 					};
 
-
-
 					// Send the response to admin-ajax.php
-
 					jQuery.post(ajaxurl, data, function(response) {
 
-
-
 						// Toggle the registration display
+						jQuery( '.registration-wrapper' ).attr( 'registration','0' );
 
-						jQuery('.registration-wrapper').attr('registration','0');
-
-						jQuery('.sw-admin-wrapper').attr('sw-registered','0');
-
-
+						jQuery( '.sw-admin-wrapper' ).attr( 'sw-registered','0' );
 
 					});
 
-
-
-				}
+				}// End if().
 
 			});
 
-
-
-
-
 		} );
 
-	};
-
-
+	}// End if().
+	;
 
 });
 
@@ -1445,14 +1094,11 @@ jQuery(document).ready(function() {
 
 
 	Make the buttons sortable
-
-
-
 *******************************************************/
 
 
 
-jQuery(document).ready( function() {
+jQuery( document ).ready( function() {
 
 	jQuery( '.sw-buttons-sort.sw-active' ).sortable({
 
@@ -1479,9 +1125,6 @@ jQuery(document).ready( function() {
 
 
 	A Function send the array of setting to ajax.php
-
-
-
 *********************************************************/
 
 jQuery.fn.selectText = function(){
@@ -1498,7 +1141,7 @@ jQuery.fn.selectText = function(){
 
 		range = document.body.createTextRange();
 
-		range.moveToElementText(element);
+		range.moveToElementText( element );
 
 		range.select();
 
@@ -1508,11 +1151,11 @@ jQuery.fn.selectText = function(){
 
 		range = document.createRange();
 
-		range.selectNodeContents(element);
+		range.selectNodeContents( element );
 
 		selection.removeAllRanges();
 
-		selection.addRange(range);
+		selection.addRange( range );
 
 	}
 
@@ -1520,23 +1163,16 @@ jQuery.fn.selectText = function(){
 
 
 
-jQuery(document).ready( function() {
+jQuery( document ).ready( function() {
 
-	jQuery('.sw-system-status').on('click', function() {
-
-
+	jQuery( '.sw-system-status' ).on('click', function() {
 
 		// Block the default action
-
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
+		jQuery( '.system-status-wrapper' ).slideToggle();
 
-
-		jQuery('.system-status-wrapper').slideToggle();
-
-		jQuery('.system-status-container').selectText();
-
-
+		jQuery( '.system-status-container' ).selectText();
 
 	});
 
@@ -1544,9 +1180,9 @@ jQuery(document).ready( function() {
 
 
 
-jQuery(document).ready( function() {
+jQuery( document ).ready( function() {
 
-	jQuery('.sw-premium-blocker').tooltip({
+	jQuery( '.sw-premium-blocker' ).tooltip({
 
 		items: '.sw-premium-blocker',
 
@@ -1566,28 +1202,18 @@ jQuery(document).ready( function() {
 
 		{
 
-			if (typeof(event.originalEvent) === 'undefined')
-
-			{
+			if (typeof(event.originalEvent) === 'undefined') {
 
 				return false;
 
 			}
 
-
-
-			var $id = jQuery(ui.tooltip).attr('id');
-
-
+			var $id = jQuery( ui.tooltip ).attr( 'id' );
 
 			// close any lingering tooltips
-
-			jQuery('div.ui-tooltip').not('#' + $id).remove();
-
-
+			jQuery( 'div.ui-tooltip' ).not( '#' + $id ).remove();
 
 			// ajax function to pull in data and add it to the tooltip goes here
-
 		},
 
 		close: function(event, ui)
@@ -1596,25 +1222,24 @@ jQuery(document).ready( function() {
 
 			ui.tooltip.hover(function()
 
-			{
+				{
 
-				jQuery(this).stop(true).fadeTo(400, 1);
+				jQuery( this ).stop( true ).fadeTo( 400, 1 );
 
 			},
-
-			function()
-
-			{
-
-				jQuery(this).fadeOut('400', function()
+				function()
 
 				{
 
-					jQuery(this).remove();
+					jQuery( this ).fadeOut('400', function()
+
+						{
+
+						jQuery( this ).remove();
+
+					});
 
 				});
-
-			});
 
 		}
 
@@ -1629,39 +1254,21 @@ jQuery(document).ready( function() {
 
 
 	A Function for image upload buttons
-
-
-
 *********************************************************/
 
 
 
-jQuery(document).ready(function($){
-
-
-
-
+jQuery( document ).ready(function($){
 
 	var custom_uploader;
 
-
-
-
-
-	jQuery('.swp_upload_image_button').click(function(e) {
-
-
+	jQuery( '.swp_upload_image_button' ).click(function(e) {
 
 		e.preventDefault();
 
+		input_field = jQuery( this ).attr( 'for' );
 
-
-		input_field = jQuery(this).attr('for');
-
-
-
-		//If the uploader object has already been created, reopen the dialog
-
+		// If the uploader object has already been created, reopen the dialog
 		if (custom_uploader) {
 
 			custom_uploader.open();
@@ -1670,10 +1277,7 @@ jQuery(document).ready(function($){
 
 		}
 
-
-
-		//Extend the wp.media object
-
+		// Extend the wp.media object
 		custom_uploader = wp.media.frames.file_frame = wp.media({
 
 			title: 'Choose Image',
@@ -1688,30 +1292,18 @@ jQuery(document).ready(function($){
 
 		});
 
-
-
-		//When a file is selected, grab the URL and set it as the text field's value
-
+		// When a file is selected, grab the URL and set it as the text field's value
 		custom_uploader.on('select', function() {
 
-			attachment = custom_uploader.state().get('selection').first().toJSON();
+			attachment = custom_uploader.state().get( 'selection' ).first().toJSON();
 
-			jQuery('input[name="'+input_field+'"').val(attachment.url);
+			jQuery( 'input[name="' + input_field + '"' ).val( attachment.url );
 
 		});
 
-
-
-		//Open the uploader dialog
-
+		// Open the uploader dialog
 		custom_uploader.open();
 
-
-
 	});
-
-
-
-
 
 });

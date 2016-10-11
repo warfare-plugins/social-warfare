@@ -324,10 +324,10 @@ a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hov
 
 .sw-loading-message:before,
 .sw-green-notice:before, .sw-loading-complete:before {
-   font-family: 'Dashicons';
-   font-size: 26px;
-   margin: 0 15px 0 0;
-   vertical-align: middle;
+	font-family: 'Dashicons';
+	font-size: 26px;
+	margin: 0 15px 0 0;
+	vertical-align: middle;
 }
 
 .sw-red-notice:before, .sw-red-notice:before {
@@ -543,24 +543,24 @@ p.sw-subtitle.sw-registration-text {
 	display:none;
 }
 .ui-tooltip.sw-admin-hover-notice {
-   background: #ee464f;
-   color: #fff;
-   padding: 15px;
-   border-radius: 2px;
-   margin: 15px 0;
-   border:0;
-   box-shadow:none;
-   max-width:none;
-   padding:20px;
+	background: #ee464f;
+	color: #fff;
+	padding: 15px;
+	border-radius: 2px;
+	margin: 15px 0;
+	border:0;
+	box-shadow:none;
+	max-width:none;
+	padding:20px;
 }
 .sw-admin-hover-notice i:before {
-   font-family: 'sw-icon-font';
-   font-size: 26px;
-   margin: 0 15px 0 0;
-   vertical-align: middle;
-   content: 'E';
-   float:left;
-   font-style:normal;
+	font-family: 'sw-icon-font';
+	font-size: 26px;
+	margin: 0 15px 0 0;
+	vertical-align: middle;
+	content: 'E';
+	float:left;
+	font-style:normal;
 }
 .swp_upload_image_field {
 	display:none;
