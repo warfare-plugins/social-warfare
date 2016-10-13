@@ -20,6 +20,7 @@
 		});
 	};
 })( jQuery );
+
 jQuery( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
 	if ( jQuery( this ).hasClass( 'noPop' ) || ! jQuery( this ).attr( 'data-link' ) ) {} else {
 		event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
@@ -32,12 +33,13 @@ jQuery( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
 			height = 270;
 			width = 500;
 		};
+
 		instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
-		// instance.document.write("<meta http-equiv=\"refresh\" content=\"0;url="+href+"\">");
-		// instance.document.close();
+
 		return false;
 	};
 });
+
 function isOdd( num ) {
 	return num % 2;
 }
@@ -114,20 +116,12 @@ function swSetWidths( resize, adjust, secondary ) {
 				window.defaults[index] = [];
 			};
 
-			// Measure the width of the container. Find out how much space is available.
-			// if( resize == true && adjust == false ) {
-			//	window.swp_adjust = 0;
-			// }
-
 			if ( typeof window.swp_adjust === 'undefined' && ! adjust ) {
 				window.swp_adjust = 0;
-				//var totalWidth 	= jQuery(this).width() - 0;
 			} else if ( typeof window.swp_adjust === 'undefined' && adjust == true ) {
 				window.swp_adjust = 1;
-				// var totalWidth  = jQuery(this).width() - 1;
 			} else if ( adjust == true ) {
 				++window.swp_adjust;
-				// var totalWidth  = jQuery(this).width() - window.swp_adjust;
 			} else {
 				window.swp_adjust = 0;
 			};
@@ -228,7 +222,6 @@ function swSetWidths( resize, adjust, secondary ) {
 					jQuery( this ).find( '.swp_count' ).animate({ 'padding-left': 0,'padding-right': 0 }, anim_props );
 					jQuery( this ).find( '.iconFiller' ).animate({ 'margin-left': marginLeft + 'px','margin-right': marginRight + 'px' }, anim_props );
 				});
-			// jQuery('.nc_tweetContainer').css({"padding-left":"4px","padding-right":"4px"});
 			} else {
 				jQuery( this ).addClass( 'notMobile' ).removeClass( 'mobile' );
 				if ( totalWidth > widthNeeded ) {
@@ -519,42 +512,6 @@ function floatingBarReveal() {
 				ncSideFloater.fadeIn( 200 );
 			}
 		}
-		/*
-
-		if(position == 'both') {
-			offsetTwo = panels.eq(1).offset();
-			if(offsetOne.top < (scrollPos) && offsetTwo.top > (scrollPos + windowHeight) && st >= lst) {
-				ncSideFloater.addClass('displayed');
-
-			} else if(offsetOne.top < (scrollPos) && offsetTwo.top > (scrollPos + windowHeight) && st <= lst) {
-				ncSideFloater.addClass('displayed');
-			} else if(offsetTwo.top < (scrollPos + (windowHeight / 2)) && offsetTwo.top > scrollPos ){
-				ncSideFloater.removeClass('displayed');
-			} else if(offsetTwo.top < (scrollPos)) {
-				ncSideFloater.addClass('displayed');
-			} else if(offsetTwo.top < (scrollPos + windowHeight) && st > lst) {
-				ncSideFloater.removeClass('displayed');
-			} else {
-				ncSideFloater.removeClass('displayed');
-			};
-		} else if(position == 'above') {
-			if(offsetOne.top < (scrollPos)) {
-				ncSideFloater.addClass('displayed');
-			} else {
-				ncSideFloater.removeClass('displayed');
-			};
-		} else if(position == 'below') {
-			if(offsetOne.top > (scrollPos + windowHeight)) {
-				ncSideFloater.addClass('displayed');
-			} else if (offsetOne.top < (scrollPos)) {
-				ncSideFloater.addClass('displayed');
-			} else if(offsetOne.top < scrollPos + (windowHeight / 2) ){
-				ncSideFloater.removeClass('displayed');
-			} else {
-				ncSideFloater.removeClass('displayed');
-			};
-		};
-		*/
 	};
 	lst = st;
 }
@@ -649,17 +606,7 @@ function activateHoverStates() {
 		jQuery( '.nc_fade .nc_tweetContainer' ).css({ opacity: 1 });
 	});
 }
-/*
-function createTotal() {
-	var tweets 		= jQuery('.twitter').attr('data-count');
-	var linkshares	= jQuery('.linkedIn').attr('data-count');
-	var pins 		= jQuery('.nc_pinterest').attr('data-count');
-	var shares 		= jQuery('.fb').attr('data-count');
-	var plusses 	= jQuery('.googlePlus').attr('data-count');
-	var total = parseInt(tweets) + parseInt(linkshares) + parseInt(pins) + parseInt(shares) + parseInt(plusses);
-	jQuery('.totes .swp_count').text(number_format(total)+' SHARES');
-}
-*/
+
 function swApplyScale() {
 	jQuery( '.nc_socialPanel' ).each( function() {
 		jQuery( this ).css({ width: '100%' });
