@@ -1,173 +1,167 @@
 <?php
 
-/*****************************************************************
-                                                                
-          CHECK FOR ALTERNATE VERSION OF THE PERMALINK       
-                                                                
-******************************************************************/
-	function get_alternate_permalink($format) {
+/**
+ * CHECK FOR ALTERNATE VERSION OF THE PERMALINK
+ */
+function get_alternate_permalink( $format ) {
 
-		// Setup the Default Permalink Structure
-		if($format == 'Default'):
-			$domain = get_site_url();
-			$id = get_the_ID();
-			$url = $domain.'/?p='.$id;
+	// Setup the Default Permalink Structure
+	if ( $format == 'Default' ) :
+		$domain = get_site_url();
+		$id = get_the_ID();
+		$url = $domain . '/?p=' . $id;
 
-		// Setup the "Day and name" Permalink Structure
-		elseif($format == 'Day and name'):
-			$domain = get_site_url();
-			$date = get_the_date('Y/m/d');
-			$slug = basename(get_permalink());
-			$url = $domain.'/'.$date.'/'.$slug.'/';
+	// Setup the "Day and name" Permalink Structure
+	elseif ( $format == 'Day and name' ) :
+		$domain = get_site_url();
+		$date = get_the_date( 'Y/m/d' );
+		$slug = basename( get_permalink() );
+		$url = $domain . '/' . $date . '/' . $slug . '/';
 
-		// Setup the "Month and name" Permalink Structure
-		elseif($format == 'Month and name'):
-			$domain = get_site_url();
-			$date = get_the_date('Y/m');
-			$slug = basename(get_permalink());
-			$url = $domain.'/'.$date.'/'.$slug.'/';
+	// Setup the "Month and name" Permalink Structure
+	elseif ( $format == 'Month and name' ) :
+		$domain = get_site_url();
+		$date = get_the_date( 'Y/m' );
+		$slug = basename( get_permalink() );
+		$url = $domain . '/' . $date . '/' . $slug . '/';
 
-		// Setup the "Numeric" Permalink Structure
-		elseif($format == 'Numeric'):
-			$domain = get_site_url();
-			$id = get_the_ID();
-			$url = $domain.'/archives/'.$id.'/';
+	// Setup the "Numeric" Permalink Structure
+	elseif ( $format == 'Numeric' ) :
+		$domain = get_site_url();
+		$id = get_the_ID();
+		$url = $domain . '/archives/' . $id . '/';
 
-		// Setup the "Post name" Permalink Structure
-		elseif($format == 'Post Name'):
-			$domain = get_site_url();
-			$slug = basename(get_permalink());
-			$url = $domain.'/'.$slug.'/';
+	// Setup the "Post name" Permalink Structure
+	elseif ( $format == 'Post Name' ) :
+		$domain = get_site_url();
+		$slug = basename( get_permalink() );
+		$url = $domain . '/' . $slug . '/';
 
-		endif;
+	endif;
 
-		return $url;
+	return $url;
+}
 
-	}
-	
-/*****************************************************************
-                                                                
-	GENERATE THE ALTERNATE PERMALINK      
-                                                                
-******************************************************************/
-	function swp_get_alternate_permalink($format,$protocol,$id,$prefix) {
+/**
+ * GENERATE THE ALTERNATE PERMALINK
+ */
+function swp_get_alternate_permalink( $format, $protocol, $id, $prefix ) {
 
-		// Setup the Default Permalink Structure
-		if($format == 'default'):
-			$domain = get_site_url();
-			$url = $domain.'/?p='.$id;
+	// Setup the Default Permalink Structure
+	if ( $format == 'default' ) :
+		$domain = get_site_url();
+		$url = $domain . '/?p=' . $id;
 
 		// Setup the "Day and name" Permalink Structure
-		elseif($format == 'day_and_name'):
+		elseif ( $format == 'day_and_name' ) :
 			$domain = get_site_url();
-			$date = get_the_date('Y/m/d',$id);
-			$slug = basename(get_permalink($id));
-			$url = $domain.'/'.$date.'/'.$slug.'/';
+			$date = get_the_date( 'Y/m/d',$id );
+			$slug = basename( get_permalink( $id ) );
+			$url = $domain . '/' . $date . '/' . $slug . '/';
 
-		// Setup the "Month and name" Permalink Structure
-		elseif($format == 'month_and_name'):
+			// Setup the "Month and name" Permalink Structure
+		elseif ( $format == 'month_and_name' ) :
 			$domain = get_site_url();
-			$date = get_the_date('Y/m',$id);
-			$slug = basename(get_permalink($id));
-			$url = $domain.'/'.$date.'/'.$slug.'/';
+			$date = get_the_date( 'Y/m',$id );
+			$slug = basename( get_permalink( $id ) );
+			$url = $domain . '/' . $date . '/' . $slug . '/';
 
-		// Setup the "Numeric" Permalink Structure
-		elseif($format == 'numeric'):
+			// Setup the "Numeric" Permalink Structure
+		elseif ( $format == 'numeric' ) :
 			$domain = get_site_url();
-			$url = $domain.'/archives/'.$id.'/';
+			$url = $domain . '/archives/' . $id . '/';
 
-		// Setup the "Post name" Permalink Structure
-		elseif($format == 'post_name'):
+			// Setup the "Post name" Permalink Structure
+		elseif ( $format == 'post_name' ) :
 			$domain = get_site_url();
-			$post_data = get_post($id, ARRAY_A);
-    		$slug = $post_data['post_name'];
-			$url = $domain.'/'.$slug.'/';
-		elseif($format == 'unchanged'):
-			$url = get_permalink($id);
+			$post_data = get_post( $id, ARRAY_A );
+			$slug = $post_data['post_name'];
+			$url = $domain . '/' . $slug . '/';
+		elseif ( $format == 'unchanged' ) :
+			$url = get_permalink( $id );
 		endif;
 
 		// Check and Adjust the Protocol setting
-		if($protocol == 'unchanged'):
-		elseif($protocol == 'https' && strpos($url,'https') === false):
-			$url = str_replace('http','https',$url);
-		elseif($protocol == 'http' && strpos($url,'https') !== false):
-			$url = str_replace('https','http',$url);
+		if ( $protocol == 'unchanged' ) :
+		elseif ( $protocol == 'https' && strpos( $url,'https' ) === false ) :
+			$url = str_replace( 'http','https',$url );
+		elseif ( $protocol == 'http' && strpos( $url,'https' ) !== false ) :
+			$url = str_replace( 'https','http',$url );
 		endif;
 
 		// Check and Adjust the Prefix setting
-		if($prefix == 'unchanged'):
-		elseif($prefix == 'www' && strpos($url,'www') === false):
-			$url = str_replace('http://','http://www.',$url);
-			$url = str_replace('https://','https://www.',$url);
-		elseif($prefix == 'nonwww' && strpos($url,'www') !== false):
-			$url = str_replace('http://www.','http://',$url);
-			$url = str_replace('https://www.','https://',$url);
+		if ( $prefix == 'unchanged' ) :
+		elseif ( $prefix == 'www' && strpos( $url,'www' ) === false ) :
+			$url = str_replace( 'http://','http://www.',$url );
+			$url = str_replace( 'https://','https://www.',$url );
+		elseif ( $prefix == 'nonwww' && strpos( $url,'www' ) !== false ) :
+			$url = str_replace( 'http://www.','http://',$url );
+			$url = str_replace( 'https://www.','https://',$url );
 		endif;
-		
+
 		return $url;
 
+}
+
+function swp_get_alt_permalink( $post = 0, $leavename = false ) {
+
+	// Fetch the Social Warfare user's options
+	$swp_user_options = swp_get_user_options();
+
+	$rewritecode = array(
+		'%year%',
+		'%monthnum%',
+		'%day%',
+		'%hour%',
+		'%minute%',
+		'%second%',
+		$leavename? '' : '%postname%',
+		'%post_id%',
+		'%category%',
+		'%author%',
+		$leavename? '' : '%pagename%',
+	);
+
+	if ( is_object( $post ) && isset( $post->filter ) && 'sample' == $post->filter ) {
+		$sample = true;
+	} else {
+		$post = get_post( $post );
+		$sample = false;
 	}
-	
-	function swp_get_alt_permalink( $post = 0, $leavename = false ) {
-		
-		// Fetch the Social Warfare user's options
-		$swp_user_options = swp_get_user_options();
-		
-		$rewritecode = array(
-			'%year%',
-			'%monthnum%',
-			'%day%',
-			'%hour%',
-			'%minute%',
-			'%second%',
-			$leavename? '' : '%postname%',
-			'%post_id%',
-			'%category%',
-			'%author%',
-			$leavename? '' : '%pagename%',
-		);
-	
-		if ( is_object( $post ) && isset( $post->filter ) && 'sample' == $post->filter ) {
-			$sample = true;
-		} else {
-			$post = get_post( $post );
-			$sample = false;
-		}
-	
-		if ( empty($post->ID) )
-			return false;
-	
-		if ( $post->post_type == 'page' )
-			return get_page_link($post, $leavename, $sample);
-		elseif ( $post->post_type == 'attachment' )
-			return get_attachment_link( $post, $leavename );
-		elseif ( in_array($post->post_type, get_post_types( array('_builtin' => false) ) ) )
-			return get_post_permalink($post, $leavename, $sample);
-		
-		// Build the structure
-		$structure = $swp_user_options['recovery_format'];
-		
-		if($structure == 'custom'):
-			$permalink = $swp_user_options['recovery_custom_format'];
-		elseif($structure == 'unchanged'):
-			$permalink = get_option('permalink_structure');
-		elseif($structure == 'default'):
-			$permalink ='';
-		elseif($structure == 'day_and_name'):
-			$permalink ='/%year%/%monthnum%/%day%/%postname%/';
-		elseif($structure == 'month_and_name'):
-			$permalink ='/%year%/%monthnum%/%postname%/';
-		elseif($structure == 'numeric'):
-			$permalink ='/archives/%post_id%';
-		elseif($structure == 'post_name'):
-			$permalink ='/%postname%/';
-		else:
-			$permalink = get_option('permalink_structure');
+
+	if ( empty( $post->ID ) ) {
+		return false;
+	}
+
+	if ( $post->post_type == 'page' ) {
+		return get_page_link( $post, $leavename, $sample );
+	} elseif ( $post->post_type == 'attachment' ) {
+		return get_attachment_link( $post, $leavename );
+	} elseif ( in_array( $post->post_type, get_post_types( array( '_builtin' => false ) ) ) ) {
+		return get_post_permalink( $post, $leavename, $sample );
+	}
+
+	// Build the structure
+	$structure = $swp_user_options['recovery_format'];
+
+	if ( $structure == 'custom' ) :
+		$permalink = $swp_user_options['recovery_custom_format'];
+	elseif ( $structure == 'unchanged' ) :
+		$permalink = get_option( 'permalink_structure' );
+		elseif ( $structure == 'default' ) :
+			$permalink = '';
+		elseif ( $structure == 'day_and_name' ) :
+			$permalink = '/%year%/%monthnum%/%day%/%postname%/';
+		elseif ( $structure == 'month_and_name' ) :
+			$permalink = '/%year%/%monthnum%/%postname%/';
+		elseif ( $structure == 'numeric' ) :
+			$permalink = '/archives/%post_id%';
+		elseif ( $structure == 'post_name' ) :
+			$permalink = '/%postname%/';
+		else :
+			$permalink = get_option( 'permalink_structure' );
 		endif;
-		
-		
-		
-		
+
 		/**
 		 * Filter the permalink structure for a post before token replacement occurs.
 		 *
@@ -180,22 +174,22 @@
 		 * @param bool    $leavename Whether to keep the post name.
 		 */
 		$permalink = apply_filters( 'pre_post_link', $permalink, $post, $leavename );
-	
+
 		// Check if the user has defined a specific custom URL
 		$custom_url = get_post_meta( get_the_ID() , 'swp_recovery_url' , true );
-		if($custom_url):
+		if ( $custom_url ) :
 			return $custom_url;
-		else:
-	
-			if ( '' != $permalink && !in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft', 'future' ) ) ) {
-				$unixtime = strtotime($post->post_date);
-		
+		else :
+
+			if ( '' != $permalink && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft', 'future' ) ) ) {
+				$unixtime = strtotime( $post->post_date );
+
 				$category = '';
-				if ( strpos($permalink, '%category%') !== false ) {
-					$cats = get_the_category($post->ID);
+				if ( strpos( $permalink, '%category%' ) !== false ) {
+					$cats = get_the_category( $post->ID );
 					if ( $cats ) {
-						usort($cats, '_usort_terms_by_ID'); // order by ID
-		
+						usort( $cats, '_usort_terms_by_ID' ); // order by ID
+
 						/**
 						 * Filter the category that gets used in the %category% permalink token.
 						 *
@@ -206,27 +200,28 @@
 						 * @param WP_Post  $post The post in question.
 						 */
 						$category_object = apply_filters( 'post_link_category', $cats[0], $cats, $post );
-		
+
 						$category_object = get_term( $category_object, 'category' );
 						$category = $category_object->slug;
-						if ( $parent = $category_object->parent )
-							$category = get_category_parents($parent, false, '/', true) . $category;
+						if ( $parent = $category_object->parent ) {
+							$category = get_category_parents( $parent, false, '/', true ) . $category;
+						}
 					}
 					// show default category in permalinks, without
 					// having to assign it explicitly
-					if ( empty($category) ) {
+					if ( empty( $category ) ) {
 						$default_category = get_term( get_option( 'default_category' ), 'category' );
 						$category = is_wp_error( $default_category ) ? '' : $default_category->slug;
 					}
 				}
-		
+
 				$author = '';
-				if ( strpos($permalink, '%author%') !== false ) {
-					$authordata = get_userdata($post->post_author);
+				if ( strpos( $permalink, '%author%' ) !== false ) {
+					$authordata = get_userdata( $post->post_author );
 					$author = $authordata->user_nicename;
 				}
-		
-				$date = explode(" ",date('Y m d H i s', $unixtime));
+
+				$date = explode( ' ',date( 'Y m d H i s', $unixtime ) );
 				$rewritereplace =
 				array(
 					$date[0],
@@ -241,16 +236,16 @@
 					$author,
 					$post->post_name,
 				);
-				$permalink = home_url( str_replace($rewritecode, $rewritereplace, $permalink) );
-					
-				if($structure != 'custom'):	
-					$permalink = user_trailingslashit($permalink, 'single');
+				$permalink = home_url( str_replace( $rewritecode, $rewritereplace, $permalink ) );
+
+				if ( $structure != 'custom' ) :
+					$permalink = user_trailingslashit( $permalink, 'single' );
 				endif;
-				
+
 			} else { // if they're not using the fancy permalink option
-				$permalink = home_url('?p=' . $post->ID);
-			}
-		
+				$permalink = home_url( '?p=' . $post->ID );
+			}// End if().
+
 			/**
 			 * Filter the permalink for a post.
 			 *
@@ -263,37 +258,37 @@
 			 * @param bool    $leavename Whether to keep the post name.
 			 */
 			$url = apply_filters( 'post_link', $permalink, $post, $leavename );
-			
+
 			// Check if they're using cross domain recovery
-			if(isset($swp_user_options['current_domain']) && $swp_user_options['current_domain'] 
-			&& isset($swp_user_options['former_domain']) && $swp_user_options['former_domain']): 
-			   $url = str_replace($swp_user_options['current_domain'],$swp_user_options['former_domain'],$url); 
+			if ( isset( $swp_user_options['current_domain'] ) && $swp_user_options['current_domain']
+			&& isset( $swp_user_options['former_domain'] ) && $swp_user_options['former_domain'] ) :
+				$url = str_replace( $swp_user_options['current_domain'],$swp_user_options['former_domain'],$url );
 			endif;
-			
+
 			// Filter the Protocol
-			if($swp_user_options['recovery_protocol'] == 'https' && strpos($url,'https') === false):
-				$url = str_replace('http','https',$url);
-			elseif($swp_user_options['recovery_protocol'] == 'http' && strpos($url,'https') !== false):
-				$url = str_replace('https','http',$url);
+			if ( $swp_user_options['recovery_protocol'] == 'https' && strpos( $url,'https' ) === false ) :
+				$url = str_replace( 'http','https',$url );
+			elseif ( $swp_user_options['recovery_protocol'] == 'http' && strpos( $url,'https' ) !== false ) :
+				$url = str_replace( 'https','http',$url );
 			endif;
-			
+
 			// Filter the prefix
-			if($swp_user_options['recovery_prefix'] == 'unchanged'):
-			elseif($swp_user_options['recovery_prefix'] == 'www' && strpos($url,'www') === false):
-				$url = str_replace('http://','http://www.',$url);
-				$url = str_replace('https://','https://www.',$url);
-			elseif($swp_user_options['recovery_prefix'] == 'nonwww' && strpos($url,'www') !== false):
-				$url = str_replace('http://www.','http://',$url);
-				$url = str_replace('https://www.','https://',$url);
+			if ( $swp_user_options['recovery_prefix'] == 'unchanged' ) :
+			elseif ( $swp_user_options['recovery_prefix'] == 'www' && strpos( $url,'www' ) === false ) :
+				$url = str_replace( 'http://','http://www.',$url );
+				$url = str_replace( 'https://','https://www.',$url );
+			elseif ( $swp_user_options['recovery_prefix'] == 'nonwww' && strpos( $url,'www' ) !== false ) :
+				$url = str_replace( 'http://www.','http://',$url );
+				$url = str_replace( 'https://www.','https://',$url );
 			endif;
-			
+
 			// Filter out the subdomain
-			if(isset($swp_user_options['recovery_subdomain']) && $swp_user_options['recovery_subdomain'] != ''):
-				$url = str_replace($swp_user_options['recovery_subdomain'] . '.' , '' , $url);
+			if ( isset( $swp_user_options['recovery_subdomain'] ) && $swp_user_options['recovery_subdomain'] != '' ) :
+				$url = str_replace( $swp_user_options['recovery_subdomain'] . '.' , '' , $url );
 			endif;
-			
+
 			return $url;
-			
+
 		endif;
-		
-	}
+
+}

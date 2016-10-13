@@ -1,25 +1,25 @@
 jQuery.fn.outerHTML = function(s) { return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html(); };
 (function(jQuery) {
-    var uniqueCntr = 0;
-    jQuery.fn.scrolled = function (waitTime, fn) {
-        if (typeof waitTime === "function") {
-            fn = waitTime;
-            waitTime = 500;
-        };
-        var tag = "scrollTimer" + uniqueCntr++;
-        this.scroll(function () {
-            var self = jQuery(this);
-            var timer = self.data(tag);
-            if (timer) {
-                clearTimeout(timer);
-            };
-            timer = setTimeout(function () {
-                self.removeData(tag);
-                fn.call(self[0]);
-            }, waitTime);
-            self.data(tag, timer);
-        });
-    };
+	var uniqueCntr = 0;
+	jQuery.fn.scrolled = function (waitTime, fn) {
+		if (typeof waitTime === "function") {
+			fn = waitTime;
+			waitTime = 500;
+		};
+		var tag = "scrollTimer" + uniqueCntr++;
+		this.scroll(function () {
+			var self = jQuery(this);
+			var timer = self.data(tag);
+			if (timer) {
+				clearTimeout(timer);
+			};
+			timer = setTimeout(function () {
+				self.removeData(tag);
+				fn.call(self[0]);
+			}, waitTime);
+			self.data(tag, timer);
+		});
+	};
 })(jQuery);
 jQuery(document).on('click','.nc_tweet, a.swp_CTT',function(event) {
 	if(jQuery(this).hasClass('noPop') || !jQuery(this).attr("data-link")) {} else {
@@ -48,14 +48,14 @@ function isOdd(num) { return num % 2;}
 var swp_check_is_running = false;
 function swp_button_size_check() {
 	if( swp_check_is_running == true ) {
-		return false	
+		return false
 	} else {
 		swp_check_is_running = true;
-			
+
 		// Let's check each iteration of the social panel
 		var not_inline = false;
 		jQuery('.nc_socialPanel:not(.nc_socialPanelSide)').each( function() {
-		
+
 			// Fetch the offset.top of the first element in the panel
 			if(jQuery(this).find('.nc_tweetContainer:nth-child(1)').css('display') != 'none') {
 				first_button = jQuery(this).find('.nc_tweetContainer:nth-child(1)').offset();
@@ -64,7 +64,7 @@ function swp_button_size_check() {
 				first_button = jQuery(this).find('.nc_tweetContainer:nth-child(2)').offset();
 				first_label = 'Second';
 			}
-			
+
 			// Fetch the offset.top of the last element in the panel
 			if(jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').css('display') != 'none') {
 				last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(1)').offset();
@@ -73,17 +73,17 @@ function swp_button_size_check() {
 				last_button = jQuery(this).find('.nc_tweetContainer:nth-last-child(2)').offset();
 				last_label = 'Second Last';
 			}
-			
+
 			if(first_button.top != last_button.top) {
-				not_inline = true;	
+				not_inline = true;
 			}
-		
+
 		});
 		if (typeof window.swp_adjust == 'undefined') { window.swp_adjust = 0 }
 		if(not_inline == true && window.swp_adjust <= 20) {
-			swSetWidths(true,true);	
+			swSetWidths(true,true);
 		} else {
-			jQuery('.nc_socialPanel').css({opacity:1});	
+			jQuery('.nc_socialPanel').css({opacity:1});
 		}
 		swp_check_is_running = false;
 
@@ -122,9 +122,9 @@ function swSetWidths(resize,adjust,secondary) {
 
 			// Measure the width of the container. Find out how much space is available.
 			// if( resize == true && adjust == false ) {
-			//	window.swp_adjust = 0;	
+			//	window.swp_adjust = 0;
 			// }
-			
+
 			if(typeof window.swp_adjust === 'undefined' && !adjust) {
 				window.swp_adjust = 0;
 				//var totalWidth 	= jQuery(this).width() - 0;
@@ -135,10 +135,10 @@ function swSetWidths(resize,adjust,secondary) {
 				++window.swp_adjust;
 				// var totalWidth  = jQuery(this).width() - window.swp_adjust;
 			} else {
-				window.swp_adjust = 0;	
+				window.swp_adjust = 0;
 			};
 			var totalWidth  = jQuery(this).width() - window.swp_adjust;
-			
+
 			// Count the number of buttons
 			var totalElements	= jQuery(this).attr('data-count');
 
@@ -403,15 +403,15 @@ function ReplaceNumberWithCommas(nStr) {
   x2 = x.length > 1 ? '.' + x[1] : '';
   var rgx = /(\d+)(\d{3})/;
   while (rgx.test(x1)) {
-    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	x1 = x1.replace(rgx, '$1' + ',' + '$2');
   };
   return x1 + x2;
 };
 function number_format( val ) {
-    if( val < 1000 ){
-	 	return ReplaceNumberWithCommas(val);
+	if( val < 1000 ){
+		 return ReplaceNumberWithCommas(val);
 	 } else {
-	 	val = val/1000;
+		 val = val/1000;
 		val = Math.round(val);
 		return ReplaceNumberWithCommas(val)+'K';
 	 };
@@ -444,10 +444,10 @@ function floatingBarReveal() {
 
 			var visible = false;
 			jQuery('.nc_socialPanel').not('.nc_socialPanelSide, .nc_wrapper .nc_socialPanel').each(function() {
-				
+
 				index = jQuery('.nc_socialPanel').index(jQuery(this));
-				
-				// Fetch our base numbers 
+
+				// Fetch our base numbers
 				if(typeof window.swp_offsets[index] == 'undefined') {
 					var thisOffset 		= jQuery(this).offset();
 					var thisHeight 		= jQuery(this).height();
@@ -457,8 +457,8 @@ function floatingBarReveal() {
 					var thisOffset 		= window.swp_offsets[index];
 					var thisHeight 		= jQuery(this).height();
 					var screenBottom 	= thisOffset + thisHeight;
-				} 
-			
+				}
+
 				// Check if it's visible
 				if(thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
 					visible = true;
@@ -569,7 +569,7 @@ function floatingBarReveal() {
 			*/
 		};
 		lst = st;
-	
+
 }
 
 function activateHoverStates() {
@@ -698,8 +698,8 @@ function swp_init_share_buttons() {
 
 	if(jQuery('.nc_socialPanel').length) {
 		swApplyScale();
-		jQuery.when( 
-			swSetWidths(true) 
+		jQuery.when(
+			swSetWidths(true)
 		).done(function() {
 			setTimeout( function() {
 				swSetWidths(true,false,true);
@@ -731,10 +731,10 @@ jQuery(document).ready(function() {
 
 	jQuery( document.body ).on( 'post-load', function () {
 		setTimeout( function() {
-    		swp_init_share_buttons();
+			swp_init_share_buttons();
 		} , 100 );
 	} );
-	if(jQuery('.nc_socialPanelSide').length) { 
+	if(jQuery('.nc_socialPanelSide').length) {
 		var buttonsHeight = jQuery('.nc_socialPanelSide').height();
 		var windowHeight = jQuery(window).height();
 		var newPosition = parseInt( (windowHeight / 2) - (buttonsHeight / 2) );
@@ -780,13 +780,13 @@ function swp_fetch_facebook_shares() {
 			comments = parseInt(response_two['og_object']['comments']['summary']['total_count']);
 			activity = shares + likes + comments;
 			console.log(activity);
-			
+
 			swp_post_data = {"action":"swp_facebook_shares_update","post_id":swp_post_id,"activity":activity};
 			jQuery.post(swp_admin_ajax, swp_post_data, function(response) {
 				console.log(response);
 			});
-			
-			
+
+
 		});
 	});
 }
@@ -797,18 +797,18 @@ function swp_fetch_facebook_shares() {
 ****************************************************************************/
 
 function swp_pinit_button() {
- 
+
 	var defaults = {
 		wrap: '<span class="sw-pinit"/>',
 		pageURL: document.URL
 	} ;
-	
+
 	var options = jQuery.extend(defaults, options);
-	var o = options; 
-	
+	var o = options;
+
 	//Iterate over the current set of matched elements
 	jQuery('.swp-content-locator').parent().find('img').each( function() {
-		
+
 		var e = jQuery(this),
 			pi_media = e.data('media') ? e.data('media') : e[0].src,
 			pi_url = o.pageURL,
@@ -816,30 +816,30 @@ function swp_pinit_button() {
 			pi_isvideo = 'false';
 			bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pi_media) + '&url=' + encodeURI(pi_url) + '&is_video=' + encodeURI(pi_isvideo) + '&description=' + pi_desc;
 			css = jQuery(this).css(["float","margin","padding","height","width"]);
-			
+
 		var eHeight = e.outerHeight();
 		var eWidth = e.outerWidth();
-		
+
 		if(eHeight >= sw_pinit_min_height && eWidth >= sw_pinit_min_width) {
-		
+
 				e.wrap(o.wrap);
 				e.parent('.sw-pinit').css(css).css({display:"block"});
 				e.css({"margin":0});
 				e.before('<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-'+swp_pinit_v_location+' sw-pinit-'+swp_pinit_h_location+'">Save</a></span>');
 				e.css({position:'absolute'});
-			
+
 			jQuery('.sw-pinit .sw-pinit-button').on('click', function () {
-				window.open(jQuery(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');				
+				window.open(jQuery(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 				return false;
 			});
-			
+
 			jQuery('.sw-pinit').mouseenter(function () {
 				jQuery(this).children('.sw-pinit-overlay').show();
 			}).mouseleave(function () {
 				jQuery(this).children('.sw-pinit-overlay').hide();
 			});
 		};
-		
+
 	});
 
 }

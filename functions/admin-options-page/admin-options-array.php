@@ -93,7 +93,7 @@
 				'column_3'	=> 'Floating Buttons (If Activated)'
 			)
 		);
-		
+
 		// Create the content locations
 		$contentLocations = array(
 			'above'=>'Above the Content',
@@ -101,7 +101,7 @@
 			'both' => 'Both Above and Below the Content',
 			'none' => 'None/Manual Placement'
 		);
-				
+
 		// Get the post Types
 		$postTypes = get_post_types();
 
@@ -146,7 +146,7 @@
 		);
 
 		$swp_options['options']['swp_display']['pinit_divider'] = array(
-			'type'		=> 'divider'			
+			'type'		=> 'divider'
 		);
 
 		$swp_options['options']['swp_display']['pinit_title'] = array(
@@ -160,7 +160,7 @@
 			'content' 	=> 'If you would like a "Pin" button to appear on images when users hover over them, activate this.',
 			'premium'	=> true
 		);
-		
+
 		$swp_options['options']['swp_display']['pinit_toggle'] = array(
 			'type'		=> 'checkbox',
 			'size'		=> 'two-thirds',
@@ -168,7 +168,7 @@
 			'default'	=> true,
 			'premium'	=> true
 		);
-		
+
 		$swp_options['options']['swp_display']['pinit_location_horizontal'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Horizontal Location',
@@ -183,7 +183,7 @@
 			'dep' 		=> 'pinit_toggle',
 			'dep_val'	=> array(true)
 		);
-		
+
 		$swp_options['options']['swp_display']['pinit_min_width'] = array(
 			'type'		=> 'input',
 			'name'		=> 'Min Width',
@@ -193,7 +193,7 @@
 			'dep' 		=> 'pinit_toggle',
 			'dep_val'	=> array(true)
 		);
-		
+
 		$swp_options['options']['swp_display']['pinit_location_vertical'] = array(
 			'type'		=> 'select',
 			'name'		=> 'Vertical Location',
@@ -208,7 +208,7 @@
 			'dep' 		=> 'pinit_toggle',
 			'dep_val'	=> array(true)
 		);
-		
+
 		$swp_options['options']['swp_display']['pinit_min_height'] = array(
 			'type'		=> 'input',
 			'name'		=> 'Min Height',
@@ -218,7 +218,7 @@
 			'dep' 		=> 'pinit_toggle',
 			'dep_val'	=> array(true)
 		);
-		
+
 		//$swp_options['options']['swp_display']['pinit_custom_image'] = array(
 		//	'type'		=> 'image_upload',
 		//	'name'		=> 'Custom Image',
@@ -229,7 +229,7 @@
 		//);
 
 		$swp_options['options']['swp_display']['yummly_divider'] = array(
-			'type'		=> 'divider'			
+			'type'		=> 'divider'
 		);
 
 		$swp_options['options']['swp_display']['yummly_cat_title'] = array(
@@ -243,7 +243,7 @@
 			'content' 	=> 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.',
 			'premium'	=> true
 		);
-		
+
 		$swp_options['options']['swp_display']['yummly_column_labels'] = array(
 			'type'		=> 'column_labels',
 			'columns'	=> 3,
@@ -252,7 +252,7 @@
 			'column_3'	=> 'Choose Tag',
 			'premium'	=> true
 		);
-		
+
 		$swp_options['options']['swp_display']['yummly_terms'] = array(
 			'type'		=> 'input',
 			'name'		=> 'Yummly Terms',
@@ -260,7 +260,7 @@
 			'secondary' => 'yummly_tags',
 			'premium'	=> true
 		);
-		
+
 		return $swp_options;
 	}
 
@@ -691,11 +691,11 @@
 				'link'		=> '#',
 				'name'		=> 'Connect Your Google Account'
 			) */
-			
+
 		);
-		
+
 		return $swp_options;
-		
+
 	}
 
 /****************************************************************************************
@@ -904,7 +904,7 @@
 				'default'			=> 'advanced'
 			)
 		);
-		
+
 		return $swp_options;
 	};
 
@@ -930,9 +930,9 @@
 				'premium'		=> true
 			)
 		);
-		
+
 		return $swp_options;
-		
+
 	}
 
 /****************************************************************************************
@@ -1051,27 +1051,27 @@
 function swp_add_option_after($swp_options,$tabName,$optionName,$newOptionArray) {
 
 	// Locate the index of the option you want to insert next to
-    $keyIndex = array_search(
-        $optionName,
-        array_keys( $swp_options['options'][$tabName] )
-    );
+	$keyIndex = array_search(
+		$optionName,
+		array_keys( $swp_options['options'][$tabName] )
+	);
 
-    // Split the array at the location of the option above
-    $first_array = array_splice (
-        $swp_options['options'][$tabName],
-        0,
-        $keyIndex+1
-    );
+	// Split the array at the location of the option above
+	$first_array = array_splice (
+		$swp_options['options'][$tabName],
+		0,
+		$keyIndex+1
+	);
 
-    // Merge the two parts of the split array with your option added in the middle
-    $swp_options['options'][$tabName] = array_merge (
-        $first_array,
-        $newOptionArray,
-        $swp_options['options'][$tabName]
-    );
+	// Merge the two parts of the split array with your option added in the middle
+	$swp_options['options'][$tabName] = array_merge (
+		$first_array,
+		$newOptionArray,
+		$swp_options['options'][$tabName]
+	);
 
-    // Return the option array or the world will explode
-    return $swp_options;
+	// Return the option array or the world will explode
+	return $swp_options;
 
 }
 
@@ -1086,9 +1086,9 @@ function swp_add_language_option($swp_options,$langName,$langCode) {
 }
 */
 function swp_add_network_option($swp_options,$newOptionArray) {
-	
+
 	$swp_options['options']['swp_display']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];
 
-    // Return the option array or the world will explode
-    return $swp_options;
+	// Return the option array or the world will explode
+	return $swp_options;
 }

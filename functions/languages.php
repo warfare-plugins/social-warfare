@@ -1,22 +1,26 @@
 <?php
 
 
-/****************************************************************************************
-*																						*
-*	Enqueue the Filters for the Available Languages										*
-*																						*
-*****************************************************************************************/
+/**
 
-add_filter('swp_languages','swp_en_language',0);
+ * *************************************************************************************
+ *																						*
+ *	Enqueue the Filters for the Available Languages										*
+ *																						*
+ *****************************************************************************************/
 
-/****************************************************************************************
-*																						*
-*	English																				*
-*																						*
-*****************************************************************************************/
+add_filter( 'swp_languages','swp_en_language',0 );
 
-function swp_en_language($language) {
-		
+/**
+
+ * *************************************************************************************
+ *																						*
+ *	English																				*
+ *																						*
+ *****************************************************************************************/
+
+function swp_en_language( $language ) {
+
 	$language['googlePlus'] 	= '+1';
 	$language['twitter'] 		= 'Tweet';
 	$language['facebook']		= 'Share';
@@ -31,22 +35,24 @@ function swp_en_language($language) {
 	$language['pocket']			= 'Pocket';
 	$language['buffer']			= 'Buffer';
 	$language['total']			= 'Shares';
-	
+
 	// Return the Languages Array or the world will explode
 	return $language;
 }
 
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	German																				*
 *																						*
-*****************************************************************************************/
+*/
 
 // Add the terms to the buttons
-add_filter('swp_languages','swp_de_language');
-function swp_de_language($language) {
-	if(swp_get_single_option('language') == 'de'):
+add_filter( 'swp_languages','swp_de_language' );
+function swp_de_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'de' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Twittern';
 		$language['facebook']		= 'Teilen';
@@ -57,16 +63,18 @@ function swp_de_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	Russian																				*
 *																						*
-*****************************************************************************************/
+*/
 
 // Add the terms to the buttons
-add_filter('swp_languages','swp_ru_language');
-function swp_ru_language($language) {
-	if(swp_get_single_option('language') == 'ru'):
+add_filter( 'swp_languages','swp_ru_language' );
+function swp_ru_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'ru' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tвитнуть';
 		$language['facebook']		= 'Поделиться';
@@ -77,16 +85,18 @@ function swp_ru_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	Ukrainian																			*
 *																						*
-*****************************************************************************************/
+*/
 
 // Add the terms to the buttons
-add_filter('swp_languages','swp_uk_language');
-function swp_uk_language($language) {
-	if(swp_get_single_option('language') == 'uk'):
+add_filter( 'swp_languages','swp_uk_language' );
+function swp_uk_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'uk' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tвітнути';
 		$language['facebook']		= 'Поділитися';
@@ -97,16 +107,18 @@ function swp_uk_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	Dutch																				*
 *																						*
-*****************************************************************************************/
+*/
 
 // Add the terms to the buttons
-add_filter('swp_languages','swp_nl_language');
-function swp_nl_language($language) {
-	if(swp_get_single_option('language') == 'nl'):
+add_filter( 'swp_languages','swp_nl_language' );
+function swp_nl_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'nl' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Twitteren';
 		$language['facebook']		= 'Delen';
@@ -117,16 +129,18 @@ function swp_nl_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	French																				*
 *																						*
-*****************************************************************************************/
+*/
 
 // Add the terms to the buttons
-add_filter('swp_languages','swp_fr_language');
-function swp_fr_language($language) {
-	if(swp_get_single_option('language') == 'fr'):
+add_filter( 'swp_languages','swp_fr_language' );
+function swp_fr_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'fr' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tweetez';
 		$language['facebook']		= 'Partagez';
@@ -137,16 +151,18 @@ function swp_fr_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	Portuguese																			*
 *																						*
-*****************************************************************************************/
+*/
 
 // Add the terms to the buttons
-add_filter('swp_languages','swp_pt_language');
-function swp_pt_language($language) {
-	if(swp_get_single_option('language') == 'pt'):
+add_filter( 'swp_languages','swp_pt_language' );
+function swp_pt_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'pt' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tweetar';
 		$language['facebook']		= 'Partilhar';
@@ -163,15 +179,17 @@ function swp_pt_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	Danish																				*
 *																						*
-*****************************************************************************************/
+*/
 // Add the terms to the buttons
-add_filter('swp_languages','swp_da_language');
-function swp_da_language($language) {
-	if(swp_get_single_option('language') == 'da'):
+add_filter( 'swp_languages','swp_da_language' );
+function swp_da_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'da' ) :
 		$language['googlePlus'] 	= '+1';
 		$language['twitter'] 		= 'Tweet';
 		$language['facebook']		= 'Del';
@@ -188,28 +206,30 @@ function swp_da_language($language) {
 	return $language;
 }
 
-/****************************************************************************************
+/**
+
+**************************************************************************************
 *																						*
 *	Italian 																			*
 *																						*
-*****************************************************************************************/
+*/
 // Add the terms to the buttons
-add_filter('swp_languages','swp_it_language');
-function swp_it_language($language) {
-	if(swp_get_single_option('language') == 'it'):
-		$language['googlePlus'] 	= '+1'; 
-		$language['twitter'] 		= 'Twitta'; 
-		$language['facebook']		= 'Condividi'; 
-		$language['pinterest']		= 'Pin'; 
-		$language['linkedIn']		= 'Condividi'; 
-		$language['tumblr']			= 'Condividi'; 
-		$language['stumbleupon']	= 'Stumble'; 
-		$language['reddit']			= 'Reddit'; 
-		$language['email']			= 'Email'; 
-		$language['yummly']			= 'Yum'; 
-		$language['whatsapp']		= 'WhatsApp'; 
-		$language['pocket']			= 'Pocket'; 
-		$language['buffer']			= 'Buffer'; 
+add_filter( 'swp_languages','swp_it_language' );
+function swp_it_language( $language ) {
+	if ( swp_get_single_option( 'language' ) == 'it' ) :
+		$language['googlePlus'] 	= '+1';
+		$language['twitter'] 		= 'Twitta';
+		$language['facebook']		= 'Condividi';
+		$language['pinterest']		= 'Pin';
+		$language['linkedIn']		= 'Condividi';
+		$language['tumblr']			= 'Condividi';
+		$language['stumbleupon']	= 'Stumble';
+		$language['reddit']			= 'Reddit';
+		$language['email']			= 'Email';
+		$language['yummly']			= 'Yum';
+		$language['whatsapp']		= 'WhatsApp';
+		$language['pocket']			= 'Pocket';
+		$language['buffer']			= 'Buffer';
 		$language['total']			= 'Condivisioni';
 	endif;
 	return $language;
