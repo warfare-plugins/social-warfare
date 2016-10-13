@@ -1,11 +1,8 @@
 <?php
 
 /**
-
- * **********************************************************
-
-	POPULAR POSTS WIDGET CLASS
- **************************************************************/
+ * POPULAR POSTS WIDGET CLASS
+ */
 class swp_popular_posts_widget extends WP_Widget {
 
 	// Class Constructor
@@ -14,11 +11,8 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
 	/**
-	 * **********************************************************
-
-	FUNCTION - CREATE THE WIDGET FORM
-	 **************************************************************/
-
+	 * FUNCTION - CREATE THE WIDGET FORM
+	 */
 	function form( $instance ) {
 
 		// Default Title
@@ -211,11 +205,8 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
 	/**
-	 * **********************************************************
-
-	FUNCTION - UPDATE VALUES FROM THE FORM
-	 **************************************************************/
-
+	 * FUNCTION - UPDATE VALUES FROM THE FORM
+	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
@@ -235,12 +226,10 @@ class swp_popular_posts_widget extends WP_Widget {
 
 		return $instance;
 	}
+
 	/**
-	 * **********************************************************
-
-	FUNCTION - OUTPUT THE WIDGET TO THE SITE
-	 **************************************************************/
-
+	 * FUNCTION - OUTPUT THE WIDGET TO THE SITE
+	 */
 	function widget( $args, $instance ) {
 		extract( $args );
 
@@ -264,10 +253,8 @@ class swp_popular_posts_widget extends WP_Widget {
 		endif;
 
 		/**
-		***********************************************************
-
-			STYLES - CREATE AN ARRAY OF BACKGROUNDS AND LINK COLORS
-		*/
+		 * STYLES - CREATE AN ARRAY OF BACKGROUNDS AND LINK COLORS
+		 */
 
 		// Vanilla (No Styling)
 		$styles['style_01']['wrapper'] 	= 'background:transparent;';
@@ -310,10 +297,8 @@ class swp_popular_posts_widget extends WP_Widget {
 		$styles['custom']['links']		= 'color:' . $custom_link . ';';
 
 		/**
-		***********************************************************
-
-			BUILD OUT THE WIDGET
-		*/
+		 * BUILD OUT THE WIDGET
+		 */
 
 		// Begin output of the widget html
 		echo $before_widget;
@@ -411,5 +396,13 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 }
 
-// Register the Widget
-add_action( 'widgets_init', create_function( '', 'return register_widget("swp_popular_posts_widget");' ) );
+add_action( 'widgets_init', 'swp_register_widgets' );
+/**
+ * Register widgets.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function swp_register_widgets() {
+	register_widget( 'swp_popular_posts_widget' );
+}
