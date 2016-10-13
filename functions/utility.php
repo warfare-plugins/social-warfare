@@ -147,7 +147,7 @@ function _swp_is_debug( $type = 'all' ) {
 		$debug = sanitize_key( $_GET['swp_debug'] );
 	}
 
-	if ( 'all' === $type || $debug === $type ) {
+	if ( ( $debug && 'all' === $type ) || $debug === $type ) {
 		$debug = true;
 	} else {
 		$debug = false;
