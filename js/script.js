@@ -1,33 +1,17 @@
 (function( window, $, undefined ) {
 	'use strict';
 
-	$( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
-		if ( $( this ).hasClass( 'noPop' ) || ! $( this ).attr( 'data-link' ) ) {} else {
-			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
-			href = $( this ).attr( 'data-link' );
-			href = href.replace( '’', '\'' );
-			if ( $( this ).hasClass( 'pinterest' ) || $( this ).hasClass( 'buffer_link' ) || $( this ).hasClass( 'flipboard' ) ) {
-				height = 550;
-				width = 775;
-			} else {
-				height = 270;
-				width = 500;
-			}
-
-			instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
-
-			return false;
-		}
-	});
+	var swpCheckIsRunning = false;
 
 	function isOdd( num ) {
 		return num % 2;
 	}
 
+	function absint( $int ) {
+		return parseInt( $int, 10 );
+	}
+
 	// Function to check if the buttons are on one line or two
-
-	var swpCheckIsRunning = false;
-
 	function swpButtonSizeCheck() {
 		if ( true === swpCheckIsRunning ) {
 			return false;
@@ -89,7 +73,7 @@
 			// Declare the variable for saving original measurements
 			if ( typeof window.defaults === 'undefined' ) {
 				window.defaults = [];
-			};
+			}
 
 			// Loop through each set of buttons
 			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
@@ -115,19 +99,19 @@
 				var totalElements	= $( this ).attr( 'data-count' );
 
 				// The average shows us how wide each button needs to become
-				var average = parseInt( totalWidth ) / parseInt( totalElements );
-				var space = parseInt( totalWidth ) - parseInt( totalElements );
+				var average = absint( totalWidth ) / absint( totalElements );
+				var space = absint( totalWidth ) - absint( totalElements );
 
 				// Check how much space is on the left so we can show or hide the floating buttons if they exist
 				var offset = $( '.nc_socialPanel:not(.nc_socialPanelSide)' ).offset();
-				var min_screen_width = $( '.nc_socialPanelSide' ).attr( 'data-screen-width' );
+				var minScreenWidth = $( '.nc_socialPanelSide' ).attr( 'data-screen-width' );
 
 				// If we have 100px, show the side floaters. If not, hide it.
-				if ( offset.left < 100 || $( window ).width() < min_screen_width ) {
+				if ( offset.left < 100 || $( window ).width() < minScreenWidth ) {
 					$( '.nc_socialPanelSide' ).addClass( 'mobile' );
 				} else {
 					$( '.nc_socialPanelSide' ).removeClass( 'mobile' );
-				};
+				}
 
 				// Declare some variables for use later
 				var widthNeeded = 0;
@@ -151,9 +135,9 @@
 						widthNeeded += $( this ).width() + extraSpace;
 
 						var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
-						paddingLeft = parseInt( paddingLeft.replace( 'px', '' ) );
+						paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
 						var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
-						paddingRight = parseInt( paddingRight.replace( 'px', '' ) );
+						paddingRight = absint( paddingRight.replace( 'px', '' ) );
 						padding = paddingLeft + paddingRight;
 						widthNeeded = widthNeeded - padding;
 					});
@@ -174,16 +158,16 @@
 				if ( ( totalWidth ) <= ( widthNeeded - totesWidth + 25 ) && ! $( this ).hasClass( 'nc_floater' ) ) {
 					if ( $( this ).find( '.totes' ).length ) {
 						if ( $( this ).hasClass( 'connected' ) ) {
-							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) - 1 ) );
+							var average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) );
 						} else {
-							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) - 1 ) ) - 10;
+							var average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) ) - 10;
 						}
 						var oddball = average * ( totalElements - 1 );
 					} else {
 						if ( $( this ).hasClass( 'connected' ) ) {
-							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) ) );
+							var average = ( absint( totalWidth ) / ( absint( totalElements ) ) );
 						} else {
-							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) ) ) - 11;
+							var average = ( absint( totalWidth ) / ( absint( totalElements ) ) ) - 11;
 						}
 						var oddball = average * totalElements;
 					}
@@ -220,7 +204,7 @@
 					if ( $( this ).find( '.totesalt' ).length ) {
 						var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
 						var newTotalWidth = totalWidth - totes;
-						average = parseInt( newTotalWidth ) / parseInt( totalElements - 1 );
+						average = absint( newTotalWidth ) / absint( totalElements - 1 );
 						average = Math.floor( average );
 						oddball = average * ( totalElements - 1 );
 						oddball = newTotalWidth - oddball;
@@ -228,7 +212,7 @@
 						var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
 						if ( totes > average ) {
 							newTotalWidth = totalWidth - totes;
-							average = parseInt( newTotalWidth ) / parseInt( totalElements - 1 );
+							average = absint( newTotalWidth ) / absint( totalElements - 1 );
 							average = Math.floor( average );
 							oddball = average * ( totalElements - 1 );
 							oddball = newTotalWidth - oddball;
@@ -261,11 +245,11 @@
 
 							++count;
 							var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
-							paddingLeft = parseInt( paddingLeft.replace( 'px', '' ) );
+							paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
 							var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
-							paddingRight = parseInt( paddingRight.replace( 'px', '' ) );
+							paddingRight = absint( paddingRight.replace( 'px', '' ) );
 							var dataId = $( this ).attr( 'data-id' );
-							dataId = parseInt( dataId );
+							dataId = absint( dataId );
 							if ( count > totalElements ) {
 								count = 1;
 							}
@@ -332,7 +316,7 @@
 					index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
 				}
 
-				var dataId = parseInt( $( this ).attr( 'data-id' ) );
+				var dataId = absint( $( this ).attr( 'data-id' ) );
 
 				if ( 'undefined' !== typeof window.origSets[index] ) {
 					$( this ).find( '.iconFiller' ).animate({
@@ -425,21 +409,25 @@
 		if ( typeof window.swpOffsets == 'undefined' ) {
 			window.swpOffsets = {};
 		}
+
+		var visible = false;
+
 		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
-			var visible = false;
 			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).each(function() {
+				var thisOffset, thisHeight, screenBottom;
+
 				index = $( '.nc_socialPanel' ).index( $( this ) );
 
 				// Fetch our base numbers
 				if ( typeof window.swpOffsets[index] == 'undefined' ) {
-					var thisOffset   = $( this ).offset();
-					var thisHeight   = $( this ).height();
-					var screenBottom = thisOffset + thisHeight;
+					thisOffset   = $( this ).offset();
+					thisHeight   = $( this ).height();
+					screenBottom = thisOffset + thisHeight;
 					window.swpOffsets[index] = thisOffset;
 				} else {
-					var thisOffset   = window.swpOffsets[index];
-					var thisHeight   = $( this ).height();
-					var screenBottom = thisOffset + thisHeight;
+					thisOffset   = window.swpOffsets[index];
+					thisHeight   = $( this ).height();
+					screenBottom = thisOffset + thisHeight;
 				}
 
 				// Check if it's visible
@@ -456,7 +444,7 @@
 					$( 'body' ).animate({ 'padding-bottom': window.body_padding_bottom + 'px' }, 0 );
 				} else if ( floatOption == 'floatTop' ) {
 					$( 'body' ).animate({ 'padding-top': window.body_padding_top + 'px' }, 0 );
-				};
+				}
 			} else {
 				// Show the floating bar
 				ncWrapper.show();
@@ -472,23 +460,23 @@
 						newPadding = window.body_padding_top + 50;
 						$( 'body' ).animate({ 'padding-top': newPadding + 'px' }, 0 );
 					}
-				};
-			};
+				}
+			}
 		} else if ( floatOption == 'floatLeft' ) {
-			var visible = false;
+			visible = false;
 			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
 				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).each(function() {
 						var thisOffset = $( this ).offset();
 						var thisHeight = $( this ).height();
 						if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
 							visible = true; ncSideFloaterDisplay = true;
-						};
+						}
 					});
 				if ( visible || $( '.nc_socialPanelSide' ).hasClass( 'mobile' ) ) {
 					visible = true;
 				} else {
 					visible = false;
-				};
+				}
 			} else {
 				if ( $( window ).width() > minWidth ) {
 					visible = false;
@@ -511,7 +499,7 @@
 					ncSideFloater.fadeIn( 200 );
 				}
 			}
-		};
+		}
 
 		var lst = st;
 	}
@@ -527,16 +515,16 @@
 					var tote         = wrapper;
 					var dif          = wrapper - icon;
 					var origDif      = dif;
-					var orig         = parseInt( tote ) - parseInt( dif );
+					var orig         = absint( tote ) - absint( dif );
 					var ele          = $( this ).parents( '.nc_socialPanel' ).attr( 'data-count' );
 					var average, oddball, index;
 
 					if ( $( this ).siblings( '.totes' ).length ) {
-						average = ( parseInt( dif ) / ( ( parseInt( ele ) -2 ) ) );
+						average = ( absint( dif ) / ( ( absint( ele ) -2 ) ) );
 						average = Math.floor( average );
 						oddball = dif % ( ele - 2 );
 					} else {
-						average = ( parseInt( dif ) / ( ( parseInt( ele ) -1 ) ) );
+						average = ( absint( dif ) / ( ( absint( ele ) -1 ) ) );
 						average = Math.floor( average );
 						oddball = dif % ( ele - 1 );
 					}
@@ -547,7 +535,7 @@
 						index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
 					}
 
-					var dataId = parseInt( $( this ).attr( 'data-id' ) );
+					var dataId = absint( $( this ).attr( 'data-id' ) );
 
 					$( this ).find( '.iconFiller' ).css({ width: wrapper });
 
@@ -564,7 +552,7 @@
 
 					if ( $( this ).hasClass( 'totes' ) ) {
 						$( this ).siblings( '.nc_tweetContainer' ).each(function() {
-							dataId = parseInt( $( this ).attr( 'data-id' ) );
+							dataId = absint( $( this ).attr( 'data-id' ) );
 							$( this ).find( '.iconFiller' ).css({
 								width: window.origSets[index][dataId].fil
 							});
@@ -577,24 +565,24 @@
 						$( this ).siblings( '.nc_tweetContainer' ).not( '.totes' ).each(function() {
 							++count;
 							var ave = average;
-							var offsetL, offsetR
+							var offsetL, offsetR;
 
 							if ( count <= oddball ) {
 								ave = ave + 1;
 							}
 
-							dataId = parseInt( $( this ).attr( 'data-id' ) );
+							dataId = absint( $( this ).attr( 'data-id' ) );
 							if ( isOdd( ave ) ) {
 								offsetL = ( ( ( ave - 1 ) / 2 ) + 1 );
 								offsetR = ( ( ave - 1 ) / 2 );
-								pl = parseInt( window.origSets[index][dataId].pl ) - offsetL;
-								pr = parseInt( window.origSets[index][dataId].pr ) - offsetR;
+								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
+								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
 							} else {
 								offsetL = ( ave / 2 );
 								offsetR = ( ave / 2 );
-								pl = parseInt( window.origSets[index][dataId].pl ) - offsetL;
-								pr = parseInt( window.origSets[index][dataId].pr ) - offsetR;
-							};
+								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
+								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
+							}
 
 							$( this ).find( '.iconFiller' ).css({ width: origSets[index][dataId].fil });
 							$( this ).find( '.swp_count' ).css({
@@ -602,14 +590,14 @@
 								'padding-right': pr + 'px'
 							});
 						});
-					};
-				};
+					}
+				}
 			}
 		);
 		$( '.nc_socialPanel' ).on( 'mouseleave click', function() {
 			if ( ! $( this ).hasClass( 'mobile' ) ) {
 				swSetWidths();
-			};
+			}
 		});
 		$( '.nc_fade .nc_tweetContainer' ).on( 'mouseenter', function() {
 			$( this ).css({ opacity: 1 }).siblings( '.nc_tweetContainer' ).css({ opacity: 0.5 });
@@ -655,58 +643,12 @@
 				}, 200 );
 			});
 			createFloatBar();
-			var lst = $( window ).scrollTop();
+			$( window ).scrollTop();
 			floatingBar();
 			floatingBarReveal();
 			activateHoverStates();
 		}
 	}
-
-	$( document ).ready(function() {
-		// Fetch the padding amount to make space later for the floating bars
-		window.body_padding_top = parseInt( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
-		window.body_padding_bottom = parseInt( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
-
-		$( window ).resize(function() {
-			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
-				setTimeout( function() {
-					window.swpAdjust = 1;
-					swpInitShareButtons();
-				}, 100 );
-			};
-		});
-
-		$( document.body ).on( 'post-load', function() {
-			setTimeout( function() {
-				swpInitShareButtons();
-			}, 100 );
-		} );
-		if ( $( '.nc_socialPanelSide' ).length ) {
-			var buttonsHeight = $( '.nc_socialPanelSide' ).height();
-			var windowHeight = $( window ).height();
-			var newPosition = parseInt( ( windowHeight / 2 ) - ( buttonsHeight / 2 ) );
-			setTimeout( function() {
-				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 ); console.log( newPosition );
-			}, 105 );
-		};
-
-		setTimeout( function() {
-			swpInitShareButtons();
-		}, 100 );
-
-		// Reset the cache
-		if ( typeof swp_cache_url != 'undefined' ) {
-			// If the URL Contains a question mark already
-			if ( swp_cache_url.indexOf( '?' ) != -1 ) {
-				var url_params = '&swp_cache=rebuild';
-
-			// If the URL does not contain a question mark already
-			} else {
-				var url_params = '?swp_cache=rebuild';
-			};
-			$.get( swp_cache_url + url_params );
-		};
-	});
 
 	/****************************************************************************
 
@@ -715,20 +657,27 @@
 	****************************************************************************/
 
 	function swp_fetch_facebook_shares() {
-		var request_url = 'https://graph.facebook.com/?id=' + swp_post_url;
-		$.get( request_url, function( response ) {
+		var requestUrl = 'https://graph.facebook.com/?id=' + swp_post_url;
+		$.get( requestUrl, function( response ) {
 			//response = $.parseJSON(data);
-			var request_url_two = 'https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}';
-			$.get( request_url_two, function( response_two ) {
-				//response_two = $.parseJSON(data);
-				shares = parseInt( response['share']['share_count'] );
-				likes = parseInt( response_two['og_object']['likes']['summary']['total_count'] );
-				comments = parseInt( response_two['og_object']['comments']['summary']['total_count'] );
+			var requestUrTwo = 'https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}';
+			$.get( requestUrTwo, function( responseTwo ) {
+				var shares, likes, comments, activity;
+
+				//responseTwo = $.parseJSON(data);
+				shares = absint( response.share.share_count );
+				likes = absint( responseTwo.og_object.likes.summary.total_count );
+				comments = absint( responseTwo.og_object.comments.summary.total_count );
 				activity = shares + likes + comments;
 				console.log( activity );
 
-				swp_post_data = { action: 'swp_facebook_shares_update',post_id: swp_post_id,activity: activity };
-				$.post( swp_admin_ajax, swp_post_data, function( response ) {
+				swpPostData = {
+					action: 'swp_facebook_shares_update',
+					post_id: swp_post_id,
+					activity: activity
+				};
+
+				$.post( swp_admin_ajax, swpPostData, function( response ) {
 					console.log( response );
 				});
 			});
@@ -744,7 +693,7 @@
 		var defaults = {
 			wrap: '<span class="sw-pinit"/>',
 			pageURL: document.URL
-		} ;
+		};
 
 		var options = $.extend( defaults, options );
 		var o = options;
@@ -779,16 +728,79 @@
 				}).mouseleave(function() {
 					$( this ).children( '.sw-pinit-overlay' ).hide();
 				});
-			};
+			}
 		});
 	}
 
 	$( document ).ready( function() {
+		$( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
+			if ( $( this ).hasClass( 'noPop' ) || ! $( this ).attr( 'data-link' ) ) {} else {
+				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
+				href = $( this ).attr( 'data-link' );
+				href = href.replace( '’', '\'' );
+				if ( $( this ).hasClass( 'pinterest' ) || $( this ).hasClass( 'buffer_link' ) || $( this ).hasClass( 'flipboard' ) ) {
+					height = 550;
+					width = 775;
+				} else {
+					height = 270;
+					width = 500;
+				}
+
+				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
+
+				return false;
+			}
+		});
+
+		// Fetch the padding amount to make space later for the floating bars
+		window.body_padding_top = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
+		window.body_padding_bottom = absint( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
+
+		$( window ).resize(function() {
+			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
+				setTimeout( function() {
+					window.swpAdjust = 1;
+					swpInitShareButtons();
+				}, 100 );
+			}
+		});
+
+		$( document.body ).on( 'post-load', function() {
+			setTimeout( function() {
+				swpInitShareButtons();
+			}, 100 );
+		} );
+		if ( $( '.nc_socialPanelSide' ).length ) {
+			var buttonsHeight = $( '.nc_socialPanelSide' ).height();
+			var windowHeight = $( window ).height();
+			var newPosition = absint( ( windowHeight / 2 ) - ( buttonsHeight / 2 ) );
+			setTimeout( function() {
+				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 ); console.log( newPosition );
+			}, 105 );
+		}
+
+		setTimeout( function() {
+			swpInitShareButtons();
+		}, 100 );
+
+		// Reset the cache
+		if ( 'undefined' !== typeof swpCacheURL ) {
+			var urlParams;
+
+			// If the URL Contains a question mark already
+			if ( swpCacheURL.indexOf( '?' ) != -1 ) {
+				urlParams = '&swp_cache=rebuild';
+			} else {
+				urlParams = '?swp_cache=rebuild';
+			}
+
+			$.get( swpCacheURL + urlParams );
+		}
+
 		setTimeout( function() {
 			if ( typeof swp_pinit != 'undefined' && swp_pinit == true ) {
 				swp_pinit_button();
-			};
+			}
 		}, 500 );
 	});
-
 })( this, jQuery );
