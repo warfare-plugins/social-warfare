@@ -26,53 +26,54 @@
 
 	// Function to check if the buttons are on one line or two
 
-	var swp_check_is_running = false;
-	function swp_button_size_check() {
-		if ( swp_check_is_running == true ) {
-			return false
+	var swpCheckIsRunning = false;
+
+	function swpButtonSizeCheck() {
+		if ( true === swpCheckIsRunning ) {
+			return false;
 		} else {
-			swp_check_is_running = true;
+			swpCheckIsRunning = true;
 
 			// Let's check each iteration of the social panel
-			var not_inline = false;
+			var notInline = false;
 			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
 				// Fetch the offset.top of the first element in the panel
-				if ( $( this ).find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) != 'none' ) {
-					first_button = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
-					first_label = 'First';
+				if ( $( this ).find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) !== 'none' ) {
+					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
+					firstLabel = 'First';
 				} else {
-					first_button = $( this ).find( '.nc_tweetContainer:nth-child(2)' ).offset();
-					first_label = 'Second';
+					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(2)' ).offset();
+					firstLabel = 'Second';
 				}
 
 				// Fetch the offset.top of the last element in the panel
-				if ( $( this ).find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) != 'none' ) {
-					last_button = $( this ).find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
-					last_label = 'Last';
+				if ( $( this ).find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) !== 'none' ) {
+					lastButton = $( this ).find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
+					lastLabel = 'Last';
 				} else {
-					last_button = $( this ).find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
-					last_label = 'Second Last';
+					lastButton = $( this ).find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
+					lastLabel = 'Second Last';
 				}
 
-				if ( first_button.top != last_button.top ) {
-					not_inline = true;
+				if ( firstButton.top !== lastButton.top ) {
+					notInline = true;
 				}
 			});
-			if ( typeof window.swp_adjust == 'undefined' ) {
-				window.swp_adjust = 0
+			if ( 'undefined' === typeof window.swpAdjust ) {
+				window.swpAdjust = 0;
 			}
-			if ( not_inline == true && window.swp_adjust <= 20 ) {
+			if ( true === notInline && window.swpAdjust <= 20 ) {
 				swSetWidths( true, true );
 			} else {
 				$( '.nc_socialPanel' ).css({ opacity: 1 });
 			}
-			swp_check_is_running = false;
+			swpCheckIsRunning = false;
 		}
 	}
 
 	// Function to set or reset the button sizes to fit their respective container area
 	function swSetWidths( resize, adjust, secondary ) {
-		var anim_props = {
+		var animProps = {
 			duration: 0,
 			easing: 'linear',
 			queue: false
@@ -96,17 +97,17 @@
 					window.defaults[index] = [];
 				}
 
-				if ( typeof window.swp_adjust === 'undefined' && ! adjust ) {
-					window.swp_adjust = 0;
-				} else if ( typeof window.swp_adjust === 'undefined' && adjust == true ) {
-					window.swp_adjust = 1;
+				if ( typeof window.swpAdjust === 'undefined' && ! adjust ) {
+					window.swpAdjust = 0;
+				} else if ( typeof window.swpAdjust === 'undefined' && adjust == true ) {
+					window.swpAdjust = 1;
 				} else if ( adjust == true ) {
-					++window.swp_adjust;
+					++window.swpAdjust;
 				} else {
-					window.swp_adjust = 0;
+					window.swpAdjust = 0;
 				}
 
-				var totalWidth  = $( this ).width() - window.swp_adjust;
+				var totalWidth  = $( this ).width() - window.swpAdjust;
 
 				// Count the number of buttons
 				var totalElements	= $( this ).attr( 'data-count' );
@@ -132,7 +133,7 @@
 				var totesWidth = 0;
 
 				// Check if we already have a widthNeeded saved from earlier
-				if ( typeof window.defaults[index].default_width_needed === 'undefined' ) {
+				if ( typeof window.defaults[index].defaultWidthNeeded === 'undefined' ) {
 					// Loop through each button
 					$( this ).find( '.nc_tweetContainer' ).each( function() {
 						// Make sure we add extra space for expansions and whatnot
@@ -153,11 +154,11 @@
 						widthNeeded = widthNeeded - padding;
 					});
 					// Save the width needed for later use
-					window.defaults[index].default_width_needed = widthNeeded;
+					window.defaults[index].defaultWidthNeeded = widthNeeded;
 
 				// If we already have it, use it
 				} else {
-					widthNeeded = window.defaults[index].default_width_needed;
+					widthNeeded = window.defaults[index].defaultWidthNeeded;
 				}
 
 				// Check if we have enough room to display the total shares
@@ -172,16 +173,16 @@
 							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) - 1 ) );
 						} else {
 							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) - 1 ) ) - 10;
-						};
+						}
 						var oddball = average * ( totalElements - 1 );
 					} else {
 						if ( $( this ).hasClass( 'connected' ) ) {
 							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) ) );
 						} else {
 							var average = ( parseInt( totalWidth ) / ( parseInt( totalElements ) ) ) - 11;
-						};
+						}
 						var oddball = average * totalElements;
-					};
+					}
 					var oddball = totalWidth - oddball;
 					$( this ).addClass( 'mobile' ).removeClass( 'notMobile' );
 					$( '.spaceManWilly' ).css({ width: 'auto' });
@@ -190,7 +191,7 @@
 						$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).hide();
 					} else {
 						$( this ).find( '.nc_tweetContainer.totes' ).hide();
-					};
+					}
 					$( this ).find( '.nc_tweetContainer' ).each(function() {
 						width = $( this ).find( '.iconFiller' ).width();
 						if ( isOdd( average ) ) {
@@ -199,16 +200,16 @@
 						} else {
 							marginLeft = ( ( average - width ) / 2 ) - 1;
 							marginRight = ( ( average - width ) / 2 ) - 1;
-						};
-						$( this ).find( '.swp_count' ).animate({ 'padding-left': 0,'padding-right': 0 }, anim_props );
-						$( this ).find( '.iconFiller' ).animate({ 'margin-left': marginLeft + 'px','margin-right': marginRight + 'px' }, anim_props );
+						}
+						$( this ).find( '.swp_count' ).animate({ 'padding-left': 0,'padding-right': 0 }, animProps );
+						$( this ).find( '.iconFiller' ).animate({ 'margin-left': marginLeft + 'px','margin-right': marginRight + 'px' }, animProps );
 					});
 				} else {
 					$( this ).addClass( 'notMobile' ).removeClass( 'mobile' );
 					if ( totalWidth > widthNeeded ) {
 						$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).show();
 					}
-					$( this ).find( '.nc_tweetContainer .iconFiller' ).animate({ 'margin-left': '0px','margin-right': '0px' }, anim_props );
+					$( this ).find( '.nc_tweetContainer .iconFiller' ).animate({ 'margin-left': '0px','margin-right': '0px' }, animProps );
 					var average = Math.floor( average );
 					var oddball = average * totalElements;
 					var oddball = totalWidth - oddball;
@@ -227,7 +228,7 @@
 							average = Math.floor( average );
 							oddball = average * ( totalElements - 1 );
 							oddball = newTotalWidth - oddball;
-						};
+						}
 					}
 					count = 0;
 					index = $( '.nc_socialPanel' ).index( $( this ) );
@@ -235,7 +236,7 @@
 					if ( $( this ).hasClass( 'nc_floater' ) ) {
 						// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
 						var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
-						float_index_origin = $( '.nc_socialPanel' ).index( firstSocialPanel );
+						floatIndexOrigin = $( '.nc_socialPanel' ).index( firstSocialPanel );
 						$( this ).replaceWith( firstSocialPanel.prop( 'outerHTML' ) );
 						width = firstSocialPanel.outerWidth( true );
 						offset = firstSocialPanel.offset();
@@ -246,13 +247,13 @@
 								left: parent_offset.left
 							});
 						activateHoverStates();
-						window.origSets['float'] = window.origSets[float_index_origin];
+						window.origSets['float'] = window.origSets[floatIndexOrigin];
 					} else {
 						$( this ).find( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
-							icon 		= $( this ).find( 'i.sw' ).outerWidth() + 14;
-							shareTerm 	= $( this ).find( '.swp_share' ).outerWidth();
-							tote		= icon + shareTerm + 3;
-							$( this ).find( '.spaceManWilly' ).animate({ width: tote + 'px' }, anim_props );
+							icon      = $( this ).find( 'i.sw' ).outerWidth() + 14;
+							shareTerm = $( this ).find( '.swp_share' ).outerWidth();
+							tote      = icon + shareTerm + 3;
+							$( this ).find( '.spaceManWilly' ).animate({ width: tote + 'px' }, animProps );
 
 							++count;
 							var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
@@ -268,50 +269,51 @@
 								add = 1;
 							} else {
 								add = 0;
-							};
+							}
 							curWidth = $( this ).outerWidth( true );
 							curWidth = curWidth - paddingLeft;
 							curWidth = curWidth - paddingRight;
 							dif = average - curWidth;
-							window.origSets[index][dataId] = new Array();
+							window.origSets[index][dataId] = [];
 							if ( isOdd( dif ) ) {
 								dif = dif - 1;
 								dif = dif / 2;
 								pl = dif + 1 + average;
 								pr = dif + average;
-								window.origSets[index][dataId]['pl'] = dif + 1 + 'px';
-								window.origSets[index][dataId]['pr'] = dif + 'px';
-								window.origSets[index][dataId]['fil'] = $( this ).find( '.iconFiller' ).width() + 'px';
+								window.origSets[index][dataId].pl = dif + 1 + 'px';
+								window.origSets[index][dataId].pr = dif + 'px';
+								window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
 								$( this ).find( '.swp_count' ).animate({
-									'padding-left': window.origSets[index][dataId]['pl'],
-									'padding-right': window.origSets[index][dataId]['pr']
+									'padding-left': window.origSets[index][dataId].pl,
+									'padding-right': window.origSets[index][dataId].pr
 								}, 0, 'linear', function() {
 									$( this ).css({ transition: 'padding .1s linear'
-								});
+									});
 								});
 							} else {
 								dif = dif / 2;
 								pl = dif + average;
 								pr = dif + average;
-								window.origSets[index][dataId]['pl'] = dif + 'px';
-								window.origSets[index][dataId]['pr'] = dif + 'px';
-								window.origSets[index][dataId]['fil'] = $( this ).find( '.iconFiller' ).width() + 'px';
+								window.origSets[index][dataId].pl = dif + 'px';
+								window.origSets[index][dataId].pr = dif + 'px';
+								window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
 								$( this ).find( '.swp_count' ).animate({
-									'padding-left': window.origSets[index][dataId]['pl'],
-									'padding-right': window.origSets[index][dataId]['pr']
+									'padding-left': window.origSets[index][dataId].pl,
+									'padding-right': window.origSets[index][dataId].pr
 								}, 0, 'linear', function() {
 										$( this ).css({ transition: 'padding .1s linear' });
 									});
-							};
+							}
 							window.resized = true;
 						});
-					};
-				};
+					}
+				}
 			});
-			if ( secondary == true || window.swp_secondary == true ) {
-				window.swp_secondary = true;
+
+			if ( true === secondary || true === window.swpSecondary ) {
+				window.swpSecondary = true;
 				setTimeout( function() {
-					swp_button_size_check();
+					swpButtonSizeCheck();
 				}, 200 );
 			}
 		// If we already have sizes, just reuse them
@@ -321,18 +323,21 @@
 					index = 'float';
 				} else {
 					index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
-				};
+				}
 				dataId = parseInt( $( this ).attr( 'data-id' ) );
-				if ( typeof window.origSets[index] === 'undefined' ) { } else {
-					$( this ).find( '.iconFiller' ).animate({ width: window.origSets[index][dataId]['fil'] }, anim_props );
+				if ( 'undefined' !== typeof window.origSets[index] ) {
+					$( this ).find( '.iconFiller' ).animate({
+						width: window.origSets[index][dataId].fil
+					}, animProps );
+
 					$( this ).find( '.swp_count' ).animate({
-						'padding-left': window.origSets[index][dataId]['pl'],
-						'padding-right':  window.origSets[index][dataId]['pr']
-					}, anim_props );
-				};
+						'padding-left': window.origSets[index][dataId].pl,
+						'padding-right':  window.origSets[index][dataId].pr
+					}, animProps );
+				}
 			});
-		};
-	};
+		}
+	}
 
 	function createFloatBar() {
 		if ( ! $( '.nc_wrapper .nc_socialPanel' ).length && ! $( '.nc_socialPanelSide' ).length ) {
@@ -359,31 +364,33 @@
 				$( '.nc_socialPanel' ).eq( 1 ).addClass( 'swp_three' );
 				window.origSets['float'] = window.origSets[index];
 				swSetWidths();
-			};
+			}
 		}
-	};
+	}
 
 	// Format Number functions
 	function ReplaceNumberWithCommas( nStr ) {
 		nStr += '';
-		x = nStr.split( '.' );
-		x1 = x[0];
-		x2 = x.length > 1 ? '.' + x[1] : '';
+		var x = nStr.split( '.' );
+		var x1 = x[0];
+		var x2 = x.length > 1 ? '.' + x[1] : '';
 		var rgx = /(\d+)(\d{3})/;
+
 		while ( rgx.test( x1 ) ) {
 			x1 = x1.replace( rgx, '$1' + ',' + '$2' );
-		};
+		}
+
 		return x1 + x2;
 	}
 
 	function number_format( val ) {
 		if ( val < 1000 ) {
-			 return ReplaceNumberWithCommas( val );
-		 } else {
-			 val = val / 1000;
+			return ReplaceNumberWithCommas( val );
+		} else {
+			val = val / 1000;
 			val = Math.round( val );
 			return ReplaceNumberWithCommas( val ) + 'K';
-		 };
+		}
 	}
 
 	// Twitter Shares Count
@@ -406,8 +413,8 @@
 		offsetOne = panels.eq( 0 ).offset();
 		scrollPos = windowElement.scrollTop();
 		var st = $( window ).scrollTop();
-		if ( typeof window.swp_offsets == 'undefined' ) {
-			window.swp_offsets = {};
+		if ( typeof window.swpOffsets == 'undefined' ) {
+			window.swpOffsets = {};
 		}
 		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
 			var visible = false;
@@ -415,15 +422,15 @@
 				index = $( '.nc_socialPanel' ).index( $( this ) );
 
 				// Fetch our base numbers
-				if ( typeof window.swp_offsets[index] == 'undefined' ) {
-					var thisOffset 		= $( this ).offset();
-					var thisHeight 		= $( this ).height();
-					var screenBottom 	= thisOffset + thisHeight;
-					window.swp_offsets[index] = thisOffset;
+				if ( typeof window.swpOffsets[index] == 'undefined' ) {
+					var thisOffset   = $( this ).offset();
+					var thisHeight   = $( this ).height();
+					var screenBottom = thisOffset + thisHeight;
+					window.swpOffsets[index] = thisOffset;
 				} else {
-					var thisOffset 		= window.swp_offsets[index];
-					var thisHeight 		= $( this ).height();
-					var screenBottom 	= thisOffset + thisHeight;
+					var thisOffset   = window.swpOffsets[index];
+					var thisHeight   = $( this ).height();
+					var screenBottom = thisOffset + thisHeight;
 				}
 
 				// Check if it's visible
@@ -447,14 +454,14 @@
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if ( floatOption == 'floatBottom' ) {
-					new_padding = window.body_padding_bottom + 50;
-					$( 'body' ).animate({ 'padding-bottom': new_padding + 'px' }, 0 );
+					newPadding = window.body_padding_bottom + 50;
+					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
 				} else if ( floatOption == 'floatTop' ) {
-					first_offset = $( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).first().offset();
-					console.log( first_offset );
-					if ( first_offset.top > scrollPos + windowHeight ) {
-						new_padding = window.body_padding_top + 50;
-						$( 'body' ).animate({ 'padding-top': new_padding + 'px' }, 0 );
+					firstOffset = $( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).first().offset();
+					console.log( firstOffset );
+					if ( firstOffset.top > scrollPos + windowHeight ) {
+						newPadding = window.body_padding_top + 50;
+						$( 'body' ).animate({ 'padding-top': newPadding + 'px' }, 0 );
 					}
 				};
 			};
@@ -639,7 +646,7 @@
 		$( window ).resize(function() {
 			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
 				setTimeout( function() {
-					window.swp_adjust = 1;
+					window.swpAdjust = 1;
 					swp_init_share_buttons();
 				}, 100 );
 			};
