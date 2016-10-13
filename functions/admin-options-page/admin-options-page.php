@@ -1,11 +1,7 @@
 <?php
-
 /**
-
- * ************************************************************
-
-	Enqueue the Menu Item
- ***************************************************************/
+ * Enqueue the Menu Item
+ */
 
 // Add the link to the WordPress menu
 add_action( 'admin_menu', 'swp_admin_options_page' );
@@ -27,11 +23,8 @@ function swp_admin_options_page() {
 }
 
 /**
-
- * ************************************************************
-
-	Enqueue the Settings Page CSS & Javascript
- ***************************************************************/
+ * Enqueue the Settings Page CSS & Javascript
+ */
 
 // Enqueue the Admin Options CSS
 function swp_admin_options_css() {
@@ -50,11 +43,8 @@ function swp_admin_options_js() {
 }
 
 /**
-
- * ************************************************************
-
-	Build the Settings Page Form
- ***************************************************************/
+ * Build the Settings Page Form
+ */
 
 // We'll build the form here
 function swp_plugin_options() {
@@ -69,11 +59,8 @@ function swp_plugin_options() {
 }
 
 /**
-
- * ************************************************************
-
-	A Function to Parse the Array & Builg the Options Page
- ***************************************************************/
+ * A Function to Parse the Array & Builg the Options Page
+ */
 function swp_build_options_page() {
 
 	$swp_user_options = get_option( 'socialWarfareOptions' );
@@ -95,10 +82,8 @@ function swp_build_options_page() {
 	$swp_options_page = apply_filters( 'swp_options' , $swp_options_page );
 
 	/**
-	*************************************************************
-
-	Build the header menu
-	*/
+	 * Build the header menu
+	 */
 
 	// Wrapper for the entire content area
 	echo '<div class="sw-header-wrapper">';
@@ -121,10 +106,8 @@ function swp_build_options_page() {
 	echo '</div>';
 
 	/**
-	*************************************************************
-
-	Build the Tab Container
-	*/
+	 * Build the Tab Container
+	 */
 
 	echo '<div class="sw-admin-wrapper" sw-registered="' . is_swp_registered() . '">';
 
@@ -143,10 +126,8 @@ function swp_build_options_page() {
 		foreach ( $tab_options as $key => $option ) :
 
 			/**
-			*************************************************************
-
-			Title Module
-			*/
+			 * Title Module
+			 */
 
 			if ( $option['type'] == 'title' ) :
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
@@ -156,10 +137,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Description Module
-			*/
+			 * Description Module
+			 */
 
 			if ( $option['type'] == 'paragraph' ) :
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
@@ -169,20 +148,16 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Image Module
-			*/
+			 * Image Module
+			 */
 
 			if ( $option['type'] == 'image' ) :
 				echo '<img src="' . $option['content'] . '">';
 			endif;
 
 			/**
-			*************************************************************
-
-			Image Upload Module
-			*/
+			 * Image Upload Module
+			 */
 
 			if ( $option['type'] == 'image_upload' ) :
 
@@ -224,10 +199,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Buttons Module
-			*/
+			 * Buttons Module
+			 */
 
 			if ( $option['type'] == 'buttons' ) :
 
@@ -321,10 +294,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Checkbox Module
-			*/
+			 * Checkbox Module
+			 */
 
 			if ( $option['type'] == 'checkbox' ) :
 
@@ -413,10 +384,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Input Module
-			*/
+			 * Input Module
+			 */
 			if ( $option['type'] == 'input' && isset( $option['size'] ) && $option['size'] == 'two-thirds' ) :
 
 				if ( isset( $swp_user_options[ $key ] ) ) :
@@ -481,10 +450,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Select Module
-			*/
+			 * Select Module
+			 */
 
 			if ( $option['type'] == 'select' && isset( $option['secondary'] ) ) :
 
@@ -583,10 +550,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Three-Wide Column Labels Module
-			*/
+			 * Three-Wide Column Labels Module
+			 */
 
 			if ( $option['type'] == 'column_labels' ) :
 				if ( $option['columns'] == 3 ) :echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
@@ -599,20 +564,16 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Divider Module
-			*/
+			 * Divider Module
+			 */
 
 			if ( $option['type'] == 'divider' ) :
 				echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
 			endif;
 
 			/**
-			*************************************************************
-
-			HTML Module
-			*/
+			 * HTML Module
+			 */
 
 			if ( $option['type'] == 'html' ) :
 
@@ -623,10 +584,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Authentication / Button Module
-			*/
+			 * Authentication / Button Module
+			 */
 
 			if ( $option['type'] == 'authentication' ) :
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
@@ -644,10 +603,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Plugin Registration Module
-			*/
+			 * Plugin Registration Module
+			 */
 
 			if ( $option['type'] == 'plugin_registration' ) :
 
@@ -725,10 +682,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Twitter Registration Module
-			*/
+			 * Twitter Registration Module
+			 */
 
 			if ( $option['type'] == 'tweet_counts' ) :
 
@@ -779,10 +734,8 @@ function swp_build_options_page() {
 			endif;
 
 			/**
-			*************************************************************
-
-			Close the Tab Container
-			*/
+			 * Close the Tab Container
+			 */
 
 			// Add a divider element if necessary
 			if ( isset( $option['divider'] ) && $option['divider'] == true ) :
@@ -805,10 +758,8 @@ function swp_build_options_page() {
 	echo '</div>';
 
 	/**
-	*************************************************************
-
-	System Status Generator
-	*/
+	 * System Status Generator
+	 */
 
 	if ( ! function_exists( 'get_plugins' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -857,10 +808,8 @@ function swp_build_options_page() {
 		';
 
 	/**
-	*************************************************************
-
-	The Right Sidebar
-	*/
+	 * The Right Sidebar
+	 */
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
 	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="' . swp_PLUGIN_DIR . '/functions/admin-options-page/images/affiliate-300x150.jpg"></a>';
@@ -885,11 +834,8 @@ function swp_build_options_page() {
 }
 
 /**
-
-*******************************************************
-
-	A Function to handle the request inside of admin-ajax.php
-*/
+ * A Function to handle the request inside of admin-ajax.php
+ */
 
 add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
 function swp_store_the_settings() {
@@ -926,11 +872,8 @@ function swp_store_the_settings() {
 
 
 /**
-
-*******************************************************
-
-	A Function to store the registration code
-*/
+ * A Function to store the registration code
+ */
 
 add_action( 'wp_ajax_swp_store_registration', 'swp_store_the_registration' );
 function swp_store_the_registration() {
@@ -957,11 +900,8 @@ function swp_store_the_registration() {
 }
 
 /**
-
-*******************************************************
-
-	A Function to delete the registration code
-*/
+ * A Function to delete the registration code
+ */
 
 add_action( 'wp_ajax_swp_delete_registration', 'swp_delete_the_registration' );
 function swp_delete_the_registration() {

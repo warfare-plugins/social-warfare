@@ -1,11 +1,8 @@
 <?php
 
 /**
-
- * **************************************************************
-
-		  CHECK FOR PREMIUM ACTIVATION
- ******************************************************************/
+ * CHECK FOR PREMIUM ACTIVATION
+ */
 function is_swp_registered() {
 
 	// Fetch the User's Options Array
@@ -35,23 +32,18 @@ function is_swp_registered() {
 }
 
 /**
-
- * **************************************************************
-
-	 ADMIN NOTICE
- ******************************************************************/
+ * ADMIN NOTICE
+ */
 function swp_admin_notice() {
 	if ( ! is_swp_registered() ) :
 		echo '<div class="notice is-dismissable swp_register_admin_notice"><p>Your copy of Social Warfare is not registered. Navigate to the <a href="/wp-admin/admin.php?page=social-warfare"><b>Social Warfare Settings Page</b></a> and select the "Register" tab to register now! You can view and manage your purchased licences on the <a target="_blank" href="https://warfareplugins.com/my-account/">My Account</a> page of the Warfare Plugins website. If you have any issues, please contact us and we\'ll be happy to help.</p></div>';
 		endif;
 }
-	// add_action( 'admin_notices', 'swp_admin_notice' );
+// add_action( 'admin_notices', 'swp_admin_notice' );
+
 /**
-
-***************************************************************
-
-	CHECK WARFARE PLUGINS SERVER
-*/
+ * CHECK WARFARE PLUGINS SERVER
+ */
 
 if ( isset( $_GET['reg_check'] ) && $_GET['reg_check'] == true ) :
 	var_dump( swp_check_registration_status() );

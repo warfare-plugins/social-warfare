@@ -1,11 +1,8 @@
 <?php
 
 /**
-
- * **************************************************************
-
-		  CHECK FOR ALTERNATE VERSION OF THE PERMALINK
- ******************************************************************/
+ * CHECK FOR ALTERNATE VERSION OF THE PERMALINK
+ */
 function get_alternate_permalink( $format ) {
 
 	// Setup the Default Permalink Structure
@@ -14,44 +11,40 @@ function get_alternate_permalink( $format ) {
 		$id = get_the_ID();
 		$url = $domain . '/?p=' . $id;
 
-		// Setup the "Day and name" Permalink Structure
-		elseif ( $format == 'Day and name' ) :
-			$domain = get_site_url();
-			$date = get_the_date( 'Y/m/d' );
-			$slug = basename( get_permalink() );
-			$url = $domain . '/' . $date . '/' . $slug . '/';
+	// Setup the "Day and name" Permalink Structure
+	elseif ( $format == 'Day and name' ) :
+		$domain = get_site_url();
+		$date = get_the_date( 'Y/m/d' );
+		$slug = basename( get_permalink() );
+		$url = $domain . '/' . $date . '/' . $slug . '/';
 
-			// Setup the "Month and name" Permalink Structure
-		elseif ( $format == 'Month and name' ) :
-			$domain = get_site_url();
-			$date = get_the_date( 'Y/m' );
-			$slug = basename( get_permalink() );
-			$url = $domain . '/' . $date . '/' . $slug . '/';
+	// Setup the "Month and name" Permalink Structure
+	elseif ( $format == 'Month and name' ) :
+		$domain = get_site_url();
+		$date = get_the_date( 'Y/m' );
+		$slug = basename( get_permalink() );
+		$url = $domain . '/' . $date . '/' . $slug . '/';
 
-			// Setup the "Numeric" Permalink Structure
-		elseif ( $format == 'Numeric' ) :
-			$domain = get_site_url();
-			$id = get_the_ID();
-			$url = $domain . '/archives/' . $id . '/';
+	// Setup the "Numeric" Permalink Structure
+	elseif ( $format == 'Numeric' ) :
+		$domain = get_site_url();
+		$id = get_the_ID();
+		$url = $domain . '/archives/' . $id . '/';
 
-			// Setup the "Post name" Permalink Structure
-		elseif ( $format == 'Post Name' ) :
-			$domain = get_site_url();
-			$slug = basename( get_permalink() );
-			$url = $domain . '/' . $slug . '/';
+	// Setup the "Post name" Permalink Structure
+	elseif ( $format == 'Post Name' ) :
+		$domain = get_site_url();
+		$slug = basename( get_permalink() );
+		$url = $domain . '/' . $slug . '/';
 
-		endif;
+	endif;
 
-		return $url;
-
+	return $url;
 }
 
 /**
-
- * **************************************************************
-
-	GENERATE THE ALTERNATE PERMALINK
- ******************************************************************/
+ * GENERATE THE ALTERNATE PERMALINK
+ */
 function swp_get_alternate_permalink( $format, $protocol, $id, $prefix ) {
 
 	// Setup the Default Permalink Structure
@@ -116,17 +109,17 @@ function swp_get_alt_permalink( $post = 0, $leavename = false ) {
 	$swp_user_options = swp_get_user_options();
 
 	$rewritecode = array(
-	'%year%',
-	'%monthnum%',
-	'%day%',
-	'%hour%',
-	'%minute%',
-	'%second%',
-	$leavename? '' : '%postname%',
-	'%post_id%',
-	'%category%',
-	'%author%',
-	$leavename? '' : '%pagename%',
+		'%year%',
+		'%monthnum%',
+		'%day%',
+		'%hour%',
+		'%minute%',
+		'%second%',
+		$leavename? '' : '%postname%',
+		'%post_id%',
+		'%category%',
+		'%author%',
+		$leavename? '' : '%pagename%',
 	);
 
 	if ( is_object( $post ) && isset( $post->filter ) && 'sample' == $post->filter ) {

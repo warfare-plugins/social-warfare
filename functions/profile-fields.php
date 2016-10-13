@@ -1,12 +1,12 @@
 <?php
 
-	// Queue up our profile field functions
-	add_action( 'show_user_profile', 'swp_show_user_profile_fields' );
-	add_action( 'edit_user_profile', 'swp_show_user_profile_fields' );
-	add_action( 'personal_options_update', 'swp_save_user_profile_fields' );
-	add_action( 'edit_user_profile_update', 'swp_save_user_profile_fields' );
+// Queue up our profile field functions
+add_action( 'show_user_profile', 'swp_show_user_profile_fields' );
+add_action( 'edit_user_profile', 'swp_show_user_profile_fields' );
+add_action( 'personal_options_update', 'swp_save_user_profile_fields' );
+add_action( 'edit_user_profile_update', 'swp_save_user_profile_fields' );
 
-	// Display the new option on the user profile edit page
+// Display the new option on the user profile edit page
 function swp_show_user_profile_fields( $user ) {
 	echo '<h3>Social Warfare Fields</h3>';
 	echo '<table class="form-table">';
@@ -28,7 +28,7 @@ function swp_show_user_profile_fields( $user ) {
 	echo '</table>';
 }
 
-	// Save our fields when the page is udpated
+// Save our fields when the page is udpated
 function swp_save_user_profile_fields( $user_id ) {
 
 	if ( ! current_user_can( 'edit_user', $user_id ) ) {

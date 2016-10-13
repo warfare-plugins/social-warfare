@@ -99,28 +99,26 @@ function swp_is_cache_fresh( $postID, $output = false, $ajax = false ) {
 
 function swp_disable_subs() {
 	return false;
-};
+}
+
 /**
-
- * **************************************************************
-
-THE SHARE BUTTONS FUNCTION:
-
-This function accepts an array of parameters resulting in the
-outputting of the Social Warfare Buttons.
-
-
-ACCEPTED PARAMETERS :
-
-content 	: The post content to which we append the buttons
-			: (string)
-
-where   	: Used to overwrite the default location in relation to the content
-			: ( above | below | both | none )
-
-echo    	: Used to print or store the variables.
-			: ( true | false )
- ******************************************************************/
+ * THE SHARE BUTTONS FUNCTION:
+ *
+ * This function accepts an array of parameters resulting in the outputting of
+ * the Social Warfare Buttons.
+ *
+ *
+ * ACCEPTED PARAMETERS :
+ *
+ * content : The post content to which we append the buttons
+ *         : (string)
+ *
+ * where   : Used to overwrite the default location in relation to the content
+ *         : ( above | below | both | none )
+ *
+ * echo    : Used to print or store the variables.
+ *         : ( true | false )
+ */
 function social_warfare_buttons( $array = array() ) {
 
 	// Setup the default Array parameters
