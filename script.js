@@ -1,26 +1,3 @@
-(function( jQuery ) {
-	var uniqueCntr = 0;
-	jQuery.fn.scrolled = function( waitTime, fn ) {
-		if ( typeof waitTime === 'function' ) {
-			fn = waitTime;
-			waitTime = 500;
-		};
-		var tag = 'scrollTimer' + uniqueCntr++;
-		this.scroll(function() {
-			var self = jQuery( this );
-			var timer = self.data( tag );
-			if ( timer ) {
-				clearTimeout( timer );
-			};
-			timer = setTimeout(function() {
-				self.removeData( tag );
-				fn.call( self[0] );
-			}, waitTime );
-			self.data( tag, timer );
-		});
-	};
-})( jQuery );
-
 jQuery( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
 	if ( jQuery( this ).hasClass( 'noPop' ) || ! jQuery( this ).attr( 'data-link' ) ) {} else {
 		event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
@@ -32,12 +9,12 @@ jQuery( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
 		} else {
 			height = 270;
 			width = 500;
-		};
+		}
 
 		instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
 
 		return false;
-	};
+	}
 });
 
 function isOdd( num ) {
@@ -114,7 +91,7 @@ function swSetWidths( resize, adjust, secondary ) {
 			var index = jQuery( '.nc_socialPanel' ).index( jQuery( this ) );
 			if ( typeof window.defaults[index] === 'undefined' ) {
 				window.defaults[index] = [];
-			};
+			}
 
 			if ( typeof window.swp_adjust === 'undefined' && ! adjust ) {
 				window.swp_adjust = 0;
@@ -124,7 +101,8 @@ function swSetWidths( resize, adjust, secondary ) {
 				++window.swp_adjust;
 			} else {
 				window.swp_adjust = 0;
-			};
+			}
+
 			var totalWidth  = jQuery( this ).width() - window.swp_adjust;
 
 			// Count the number of buttons
@@ -381,6 +359,7 @@ function createFloatBar() {
 		};
 	}
 };
+
 // Format Number functions
 function ReplaceNumberWithCommas( nStr ) {
 	nStr += '';
@@ -392,7 +371,8 @@ function ReplaceNumberWithCommas( nStr ) {
 		x1 = x1.replace( rgx, '$1' + ',' + '$2' );
 	};
 	return x1 + x2;
-};
+}
+
 function number_format( val ) {
 	if ( val < 1000 ) {
 		 return ReplaceNumberWithCommas( val );
@@ -401,14 +381,14 @@ function number_format( val ) {
 		val = Math.round( val );
 		return ReplaceNumberWithCommas( val ) + 'K';
 	 };
-};
-// Twitter Shares Count
+}
 
+// Twitter Shares Count
 function floatingBar() {
 	jQuery( window ).on( 'scroll', function() {
 		floatingBarReveal();
 	});
-};
+}
 
 function floatingBarReveal() {
 	// Adjust the floating bar
