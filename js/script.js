@@ -37,6 +37,8 @@
 			// Let's check each iteration of the social panel
 			var notInline = false;
 			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
+				var firstButton, firstLabel, lastButton, lastLabel;
+
 				// Fetch the offset.top of the first element in the panel
 				if ( $( this ).find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) !== 'none' ) {
 					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
@@ -136,12 +138,14 @@
 				if ( typeof window.defaults[index].defaultWidthNeeded === 'undefined' ) {
 					// Loop through each button
 					$( this ).find( '.nc_tweetContainer' ).each( function() {
+						var extraSpace = 0;
+
 						// Make sure we add extra space for expansions and whatnot
 						if ( totalElements > 3 ) {
 							extraSpace = ( totalElements - 1 ) * 5;
 						} else {
 							extraSpace = ( totalElements - 1 ) * 15;
-						};
+						}
 
 						// Check how wide it must be to fit
 						widthNeeded += $( this ).width() + extraSpace;
@@ -215,7 +219,7 @@
 					var oddball = totalWidth - oddball;
 					if ( $( this ).find( '.totesalt' ).length ) {
 						var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
-						newTotalWidth = totalWidth - totes;
+						var newTotalWidth = totalWidth - totes;
 						average = parseInt( newTotalWidth ) / parseInt( totalElements - 1 );
 						average = Math.floor( average );
 						oddball = average * ( totalElements - 1 );
@@ -230,29 +234,29 @@
 							oddball = newTotalWidth - oddball;
 						}
 					}
-					count = 0;
+					var count = 0;
 					index = $( '.nc_socialPanel' ).index( $( this ) );
 					window.origSets[index] = [];
 					if ( $( this ).hasClass( 'nc_floater' ) ) {
 						// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
 						var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
-						floatIndexOrigin = $( '.nc_socialPanel' ).index( firstSocialPanel );
+						var floatIndexOrigin = $( '.nc_socialPanel' ).index( firstSocialPanel );
 						$( this ).replaceWith( firstSocialPanel.prop( 'outerHTML' ) );
-						width = firstSocialPanel.outerWidth( true );
+						var width = firstSocialPanel.outerWidth( true );
 						offset = firstSocialPanel.offset();
-						parent_offset = firstSocialPanel.parent().offset();
+						var parentOffset = firstSocialPanel.parent().offset();
 						$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css(
 							{
 								width: width,
-								left: parent_offset.left
+								left: parentOffset.left
 							});
 						activateHoverStates();
 						window.origSets['float'] = window.origSets[floatIndexOrigin];
 					} else {
 						$( this ).find( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
-							icon      = $( this ).find( 'i.sw' ).outerWidth() + 14;
-							shareTerm = $( this ).find( '.swp_share' ).outerWidth();
-							tote      = icon + shareTerm + 3;
+							var icon      = $( this ).find( 'i.sw' ).outerWidth() + 14;
+							var shareTerm = $( this ).find( '.swp_share' ).outerWidth();
+							var tote      = icon + shareTerm + 3;
 							$( this ).find( '.spaceManWilly' ).animate({ width: tote + 'px' }, animProps );
 
 							++count;
@@ -260,20 +264,19 @@
 							paddingLeft = parseInt( paddingLeft.replace( 'px', '' ) );
 							var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
 							paddingRight = parseInt( paddingRight.replace( 'px', '' ) );
-							dataId = $( this ).attr( 'data-id' );
+							var dataId = $( this ).attr( 'data-id' );
 							dataId = parseInt( dataId );
 							if ( count > totalElements ) {
 								count = 1;
 							}
+							var add = 0;
 							if ( count <= oddball ) {
 								add = 1;
-							} else {
-								add = 0;
 							}
-							curWidth = $( this ).outerWidth( true );
+							var curWidth = $( this ).outerWidth( true );
 							curWidth = curWidth - paddingLeft;
 							curWidth = curWidth - paddingRight;
-							dif = average - curWidth;
+							var dif = average - curWidth;
 							window.origSets[index][dataId] = [];
 							if ( isOdd( dif ) ) {
 								dif = dif - 1;
@@ -292,8 +295,8 @@
 								});
 							} else {
 								dif = dif / 2;
-								pl = dif + average;
-								pr = dif + average;
+								var pl = dif + average;
+								var pr = dif + average;
 								window.origSets[index][dataId].pl = dif + 'px';
 								window.origSets[index][dataId].pr = dif + 'px';
 								window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
@@ -301,7 +304,9 @@
 									'padding-left': window.origSets[index][dataId].pl,
 									'padding-right': window.origSets[index][dataId].pr
 								}, 0, 'linear', function() {
-										$( this ).css({ transition: 'padding .1s linear' });
+										$( this ).css({
+											transition: 'padding .1s linear'
+										});
 									});
 							}
 							window.resized = true;
@@ -319,12 +324,16 @@
 		// If we already have sizes, just reuse them
 		} else {
 			$( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
+				var index;
+
 				if ( $( this ).parents( '.nc_wrapper' ).length ) {
 					index = 'float';
 				} else {
 					index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
 				}
-				dataId = parseInt( $( this ).attr( 'data-id' ) );
+
+				var dataId = parseInt( $( this ).attr( 'data-id' ) );
+
 				if ( 'undefined' !== typeof window.origSets[index] ) {
 					$( this ).find( '.iconFiller' ).animate({
 						width: window.origSets[index][dataId].fil
@@ -346,13 +355,13 @@
 			var floatOption = firstSocialPanel.attr( 'data-float' );
 			var alignment = firstSocialPanel.attr( 'data-align' );
 			if ( floatOption ) {
-				backgroundColor = $( '.nc_socialPanel' ).attr( 'data-floatColor' );
+				var backgroundColor = $( '.nc_socialPanel' ).attr( 'data-floatColor' );
 				$( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' ).appendTo( 'body' );
-				position = firstSocialPanel.attr( 'data-float' );
+				var position = firstSocialPanel.attr( 'data-float' );
 				firstSocialPanel.clone().appendTo( '.nc_wrapper' );
 				$( '.nc_wrapper' ).hide().addClass( position );
-				width = firstSocialPanel.outerWidth( true );
-				offset = firstSocialPanel.offset();
+				var width = firstSocialPanel.outerWidth( true );
+				var offset = firstSocialPanel.offset();
 				$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css(
 					{
 						width: width,
@@ -410,8 +419,8 @@
 		var ncSideFloater = $( '.nc_socialPanelSide' ).filter( ':not(.mobile)' );
 		var position = $( '.nc_socialPanel' ).attr( 'data-position' );
 		var minWidth = ncSideFloater.attr( 'data-screen-width' );
-		offsetOne = panels.eq( 0 ).offset();
-		scrollPos = windowElement.scrollTop();
+		var offsetOne = panels.eq( 0 ).offset();
+		var scrollPos = windowElement.scrollTop();
 		var st = $( window ).scrollTop();
 		if ( typeof window.swpOffsets == 'undefined' ) {
 			window.swpOffsets = {};
@@ -436,7 +445,7 @@
 				// Check if it's visible
 				if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
 					visible = true;
-				};
+				}
 			});
 			if ( visible ) {
 				// Hide the Floating bar
@@ -503,77 +512,91 @@
 				}
 			}
 		};
-		lst = st;
+
+		var lst = st;
 	}
 
 	function activateHoverStates() {
 		$( '.nc_tweetContainer' ).not( '.totesalt, .nc_socialPanelSide .nc_tweetContainer' ).on( 'mouseenter',
 			function() {
 				if ( ! $( this ).parents( '.nc_socialPanel' ).hasClass( 'mobile' ) ) {
-					thisElem 	= $( this );
-					icon 		= thisElem.find( '.iconFiller' ).width();
-					shareTerm 	= thisElem.find( '.swp_share' ).outerWidth();
-					wrapper		= thisElem.find( '.spaceManWilly' ).outerWidth();
-					tote		= wrapper;
-					dif			= wrapper - icon;
-					origDif		= dif;
-					orig		= parseInt( tote ) - parseInt( dif );
-					ele			= $( this ).parents( '.nc_socialPanel' ).attr( 'data-count' );
+					var thisElem = $( this );
+					var icon         = thisElem.find( '.iconFiller' ).width();
+					var shareTerm    = thisElem.find( '.swp_share' ).outerWidth();
+					var wrapper      = thisElem.find( '.spaceManWilly' ).outerWidth();
+					var tote         = wrapper;
+					var dif          = wrapper - icon;
+					var origDif      = dif;
+					var orig         = parseInt( tote ) - parseInt( dif );
+					var ele          = $( this ).parents( '.nc_socialPanel' ).attr( 'data-count' );
+					var average, oddball, index;
+
 					if ( $( this ).siblings( '.totes' ).length ) {
-						average 	= ( parseInt( dif ) / ( ( parseInt( ele ) -2 ) ) );
-						average 	= Math.floor( average );
-						oddball 	= dif % ( ele - 2 );
+						average = ( parseInt( dif ) / ( ( parseInt( ele ) -2 ) ) );
+						average = Math.floor( average );
+						oddball = dif % ( ele - 2 );
 					} else {
-						average 	= ( parseInt( dif ) / ( ( parseInt( ele ) -1 ) ) );
-						average 	= Math.floor( average );
-						oddball 	= dif % ( ele - 1 );
-					};
+						average = ( parseInt( dif ) / ( ( parseInt( ele ) -1 ) ) );
+						average = Math.floor( average );
+						oddball = dif % ( ele - 1 );
+					}
+
 					if ( $( this ).parents( '.nc_wrapper' ).length ) {
 						index = 'float';
 					} else {
 						index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
-					};
-					dataId = parseInt( $( this ).attr( 'data-id' ) );
+					}
+
+					var dataId = parseInt( $( this ).attr( 'data-id' ) );
+
 					$( this ).find( '.iconFiller' ).css({ width: wrapper });
-					pl = window.origSets[index][dataId]['pl'];
-					pr = window.origSets[index][dataId]['pr'];
+
+					var pl = window.origSets[index][dataId].pl;
+					var pr = window.origSets[index][dataId].pr;
+
 					$( this ).find( '.swp_count' ).css({
-							'padding-left': window.origSets[index][dataId]['pl'],
-							'padding-right': window.origSets[index][dataId]['pr']
-						});
+						'padding-left': window.origSets[index][dataId].pl,
+						'padding-right': window.origSets[index][dataId].pr
+					});
+
 					dataId = $( this ).attr( 'data-id' );
-					count = 0;
+					var count = 0;
+
 					if ( $( this ).hasClass( 'totes' ) ) {
 						$( this ).siblings( '.nc_tweetContainer' ).each(function() {
 							dataId = parseInt( $( this ).attr( 'data-id' ) );
-							$( this ).find( '.iconFiller' ).css({ width: window.origSets[index][dataId]['fil'] });
+							$( this ).find( '.iconFiller' ).css({
+								width: window.origSets[index][dataId].fil
+							});
 							$( this ).find( '.swp_count' ).css({
-								'padding-left': window.origSets[index][dataId]['pl'],
-								'padding-right': window.origSets[index][dataId]['pr']
+								'padding-left': window.origSets[index][dataId].pl,
+								'padding-right': window.origSets[index][dataId].pr
 							});
 						});
 					} else {
 						$( this ).siblings( '.nc_tweetContainer' ).not( '.totes' ).each(function() {
 							++count;
+							var ave = average;
+							var offsetL, offsetR
+
 							if ( count <= oddball ) {
-								ave = average + 1;
-							} else {
-								ave = average;
-							};
+								ave = ave + 1;
+							}
+
 							dataId = parseInt( $( this ).attr( 'data-id' ) );
 							if ( isOdd( ave ) ) {
 								offsetL = ( ( ( ave - 1 ) / 2 ) + 1 );
 								offsetR = ( ( ave - 1 ) / 2 );
-								pl = parseInt( window.origSets[index][dataId]['pl'] ) - offsetL;
-								pr = parseInt( window.origSets[index][dataId]['pr'] ) - offsetR;
+								pl = parseInt( window.origSets[index][dataId].pl ) - offsetL;
+								pr = parseInt( window.origSets[index][dataId].pr ) - offsetR;
 							} else {
 								offsetL = ( ave / 2 );
 								offsetR = ( ave / 2 );
-								pl = parseInt( window.origSets[index][dataId]['pl'] ) - offsetL;
-								pr = parseInt( window.origSets[index][dataId]['pr'] ) - offsetR;
+								pl = parseInt( window.origSets[index][dataId].pl ) - offsetL;
+								pr = parseInt( window.origSets[index][dataId].pr ) - offsetR;
 							};
 
-							$( this ).find( '.iconFiller' ).css({ width: origSets[index][dataId]['fil'] });
+							$( this ).find( '.iconFiller' ).css({ width: origSets[index][dataId].fil });
 							$( this ).find( '.swp_count' ).css({
 								'padding-left': pl + 'px',
 								'padding-right': pr + 'px'
@@ -603,6 +626,7 @@
 			var width = $( this ).width();
 			var scale = $( this ).attr( 'data-scale' );
 			var align = $( this ).attr( 'data-align' );
+			var newWidth;
 			if ( ( align == 'fullWidth' && scale != 1 ) || scale > 1 || $( this ).hasClass( 'nc_socialPanelSide' ) ) {
 				newWidth = width / scale;
 				$( this ).css( 'cssText', 'width:' + newWidth + 'px!important;' );
@@ -620,7 +644,7 @@
 		});
 	}
 
-	function swp_init_share_buttons() {
+	function swpInitShareButtons() {
 		if ( $( '.nc_socialPanel' ).length ) {
 			swApplyScale();
 			$.when(
@@ -631,7 +655,7 @@
 				}, 200 );
 			});
 			createFloatBar();
-			lst = $( window ).scrollTop();
+			var lst = $( window ).scrollTop();
 			floatingBar();
 			floatingBarReveal();
 			activateHoverStates();
@@ -647,14 +671,14 @@
 			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
 				setTimeout( function() {
 					window.swpAdjust = 1;
-					swp_init_share_buttons();
+					swpInitShareButtons();
 				}, 100 );
 			};
 		});
 
 		$( document.body ).on( 'post-load', function() {
 			setTimeout( function() {
-				swp_init_share_buttons();
+				swpInitShareButtons();
 			}, 100 );
 		} );
 		if ( $( '.nc_socialPanelSide' ).length ) {
@@ -667,7 +691,7 @@
 		};
 
 		setTimeout( function() {
-			swp_init_share_buttons();
+			swpInitShareButtons();
 		}, 100 );
 
 		// Reset the cache
