@@ -20,7 +20,7 @@ defined( 'WPINC' ) || die;
 function swp_get_suffix() {
 	$debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 
-	if ( 'script' === get_query_var( 'swp_debug', false ) ) {
+	if ( _swp_is_debug( 'script' ) ) {
 		$debug = true;
 	}
 

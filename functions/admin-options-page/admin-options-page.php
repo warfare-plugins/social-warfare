@@ -608,6 +608,10 @@ function swp_build_options_page() {
 
 			if ( $option['type'] == 'plugin_registration' ) :
 
+				if ( _swp_is_debug( 'register' ) ) {
+					var_dump( swp_check_registration_status() );
+				}
+
 				// Begin Registration Wrapper
 				echo '<div class="registration-wrapper" registration="' . (is_swp_registered() ? '1' : '0') . '">';
 

@@ -76,13 +76,14 @@ function swp_format_facebook_response( $response ) {
 	$comments = isset( $next_response['og_object']['comments']['summary']['total_count'] )?intval( $next_response['og_object']['comments']['summary']['total_count'] ):0;
 	$total_activity = $shares + $likes + $comments;
 
-	if ( isset( $_GET['swp_facebook_debug'] ) ) :
+	if ( _swp_is_debug( 'facebook' ) ) {
 		var_dump( $facebook_id );
 		var_dump( $response );
 		var_dump( $next_response );
 		var_dump( $shares );
 		var_dump( $total_activity );
-		endif;
+	}
+
 	return $total_activity;
 }
 /**

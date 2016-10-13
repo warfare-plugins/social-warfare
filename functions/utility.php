@@ -1,12 +1,21 @@
 <?php
+/**
+ * General utility helper functions.
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     2.1.0
+ */
 
 /**
-
- * **************************************************************
- *                                                                *
- *          ROUND TO THE APPROPRATE THOUSANDS                     *
- *                                                                *
- ******************************************************************/
+ *  Round a number to the appropriate thousands.
+ *
+ * @since  unknown
+ * @access public
+ * @param  float $val The float to be rounded.
+ * @return float A rounded number.
+ */
 function swp_kilomega( $val ) {
 
 	// Fetch the user assigned options
@@ -63,23 +72,19 @@ function swp_kilomega( $val ) {
 
 		endif;
 
-		// If there is no value, return a zero
-	else :
-
-		return 0;
-
 	endif;
+
+	return 0;
 }
 
 /**
-
- * **************************************************************
- *                                                                *
- *          AN EXCERPT FUNCTION							         *
- *                                                                *
- ******************************************************************/
-
-	// A function to process the excerpts for descriptions
+ *  Process the excerpts for descriptions
+ *
+ * @since  unknown
+ * @access public
+ * @param  int $post_id The post ID to use when getting an exceprt.
+ * @return string The excerpt.
+ */
 function swp_get_excerpt_by_id( $post_id ) {
 
 	// Check if the post has an excerpt
@@ -113,15 +118,40 @@ function swp_get_excerpt_by_id( $post_id ) {
 		return $the_excerpt;
 }
 
-/**
-
- * ****************************************************
- *                                                      *
- *	Mobile device detection                            *
- *                                                      *
- ********************************************************/
 if ( ! function_exists( 'swp_mobile_detection' ) ) {
+	/**
+	 * Check to see if the user is using a mobile device.
+	 *
+	 * @since  unknown
+	 * @access public
+	 * @todo   Replace this with a more reliable method, probably client-side.
+	 * @return bool true if a mobile user agent.
+	 */
 	function swp_mobile_detection() {
 		return preg_match( '/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i', $_SERVER['HTTP_USER_AGENT'] );
 	}
+}
+
+/**
+ * Check to see if debugging has been enabled.
+ *
+ * @since  2.1.0
+ * @access private
+ * @param  string $type The type of debugging to check for.
+ * @return bool true if debugging is enabled.
+ */
+function _swp_is_debug( $type = 'all' ) {
+	$debug = false;
+
+	if ( ! empty( $_GET['swp_debug'] ) ) {
+		$debug = sanitize_key( $_GET['swp_debug'] );
+	}
+
+	if ( 'all' === $type || $debug === $type ) {
+		$debug = true;
+	} else {
+		$debug = false;
+	}
+
+	return (bool) apply_filters( 'swp_is_debug', $debug );
 }
