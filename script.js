@@ -1,6 +1,3 @@
-jQuery.fn.outerHTML = function( s ) {
-	return s ? this.before( s ).remove() : jQuery( '<p>' ).append( this.eq( 0 ).clone() ).html();
- };
 (function( jQuery ) {
 	var uniqueCntr = 0;
 	jQuery.fn.scrolled = function( waitTime, fn ) {
@@ -265,7 +262,7 @@ function swSetWidths( resize, adjust, secondary ) {
 					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
 					var firstSocialPanel = jQuery( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
 					float_index_origin = jQuery( '.nc_socialPanel' ).index( firstSocialPanel );
-					jQuery( this ).replaceWith( firstSocialPanel.outerHTML() );
+					jQuery( this ).replaceWith( firstSocialPanel.prop( 'outerHTML' ) );
 					width = firstSocialPanel.outerWidth( true );
 					offset = firstSocialPanel.offset();
 					parent_offset = firstSocialPanel.parent().offset();
