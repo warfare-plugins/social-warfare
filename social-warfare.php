@@ -117,7 +117,6 @@ add_filter( 'query_vars', 'swp_add_query_vars' );
  */
 function swp_add_query_vars( $vars ) {
 	$vars[] = 'swp_cache';
-	$vars[] = 'swp_debug';
 
 	return $vars;
 }
