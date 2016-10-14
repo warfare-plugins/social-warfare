@@ -65,9 +65,20 @@ add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
  *
  * @since  1.0.0
  * @access public
+ * @param  string $screen The ID of the current admin screen.
  * @return void
  */
-function enqueueSocialWarfareAdminScripts() {
+function enqueueSocialWarfareAdminScripts( $screen ) {
+	$screens = array(
+		'toplevel_page_social-warfare',
+		'post.php',
+		'post-new.php',
+	);
+
+	if ( ! in_array( $screen, $screens, true ) ) {
+		return;
+	}
+
 	enqueueSocialWarfareScripts();
 
 	$suffix = swp_get_suffix();
