@@ -1,3 +1,5 @@
+var socialWarfarePlugin = socialWarfarePlugin || {};
+
 (function( window, $, undefined ) {
 	'use strict';
 
@@ -11,6 +13,401 @@
 		return parseInt( $int, 10 );
 	}
 
+	socialWarfarePlugin.reuseWidths = function( animation ) {
+		$( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
+			var index;
+
+			if ( $( this ).parents( '.nc_wrapper' ).length ) {
+				index = 'float';
+			} else {
+				index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
+			}
+
+			var dataId = absint( $( this ).attr( 'data-id' ) );
+
+			if ( 'undefined' !== typeof window.origSets[index] ) {
+				$( this ).find( '.iconFiller' ).animate({
+					width: window.origSets[index][dataId].fil
+				}, animation );
+
+				$( this ).find( '.swp_count' ).animate({
+					'padding-left': window.origSets[index][dataId].pl,
+					'padding-right':  window.origSets[index][dataId].pr
+				}, animation );
+			}
+		});
+	};
+
+	// Function to set or reset the button sizes to fit their respective container area
+	socialWarfarePlugin.setWidths = function( resize, adjust, secondary ) {
+		var animProps = {
+			duration: 0,
+			easing: 'linear',
+			queue: false
+		};
+
+		// Check if this is the first or a forced resize
+		if ( 'undefined' !== typeof window.origSets && ! resize ) {
+			socialWarfarePlugin.reuseWidths( animProps );
+			return;
+		}
+
+		// Declare the variable for saving presets
+		window.origSets = [];
+
+		// Declare the variable for saving original measurements
+		if ( 'undefined' === typeof window.defaults ) {
+			window.defaults = [];
+		}
+
+		// Loop through each set of buttons
+		$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
+			// Declare a global so we can save the sizes for faster processing later
+			var index = $( '.nc_socialPanel' ).index( $( this ) );
+			if ( 'undefined' === typeof window.defaults[index] ) {
+				window.defaults[index] = [];
+			}
+
+			if ( 'undefined' === typeof window.swpAdjust && ! adjust ) {
+				window.swpAdjust = 0;
+			} else if ( 'undefined' === typeof window.swpAdjust && true === adjust ) {
+				window.swpAdjust = 1;
+			} else if ( true === adjust ) {
+				++window.swpAdjust;
+			} else {
+				window.swpAdjust = 0;
+			}
+
+			var totalWidth  = $( this ).width() - window.swpAdjust;
+
+			// Count the number of buttons
+			var totalElements	= $( this ).attr( 'data-count' );
+
+			// The average shows us how wide each button needs to become
+			var average = absint( totalWidth ) / absint( totalElements );
+
+			// Check how much space is on the left so we can show or hide the floating buttons if they exist
+			var offset = $( '.nc_socialPanel:not(.nc_socialPanelSide)' ).offset();
+			var minScreenWidth = $( '.nc_socialPanelSide' ).attr( 'data-screen-width' );
+
+			// If we have 100px, show the side floaters. If not, hide it.
+			if ( offset.left < 100 || $( window ).width() < minScreenWidth ) {
+				$( '.nc_socialPanelSide' ).addClass( 'mobile' );
+			} else {
+				$( '.nc_socialPanelSide' ).removeClass( 'mobile' );
+			}
+
+			// Declare some variables for use later
+			var widthNeeded = 0;
+			var padding = 0;
+			var totesWidth = 0;
+
+			// Check if we already have a widthNeeded saved from earlier
+			if ( 'undefined' === typeof window.defaults[index].defaultWidthNeeded ) {
+				// Loop through each button
+				$( this ).find( '.nc_tweetContainer' ).each( function() {
+					var extraSpace = 0;
+
+					// Make sure we add extra space for expansions and whatnot
+					if ( totalElements > 3 ) {
+						extraSpace = ( totalElements - 1 ) * 5;
+					} else {
+						extraSpace = ( totalElements - 1 ) * 15;
+					}
+
+					// Check how wide it must be to fit
+					widthNeeded += $( this ).width() + extraSpace;
+
+					var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
+					paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
+					var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
+					paddingRight = absint( paddingRight.replace( 'px', '' ) );
+					padding = paddingLeft + paddingRight;
+					widthNeeded = widthNeeded - padding;
+				});
+				// Save the width needed for later use
+				window.defaults[index].defaultWidthNeeded = widthNeeded;
+
+			// If we already have it, use it
+			} else {
+				widthNeeded = window.defaults[index].defaultWidthNeeded;
+			}
+
+			// Check if we have enough room to display the total shares
+			totesWidth = $( this ).find( '.nc_tweetContainer.totes' ).width();
+
+			if ( totalWidth < widthNeeded && ! $( this ).hasClass( 'nc_floater' ) ) {
+				$( this ).find( '.nc_tweetContainer.totes' ).hide();
+			}
+
+			var oddball, marginLeft, marginRight;
+
+			if ( ( totalWidth ) <= ( widthNeeded - totesWidth + 25 ) && ! $( this ).hasClass( 'nc_floater' ) ) {
+				if ( $( this ).find( '.totes' ).length ) {
+					if ( $( this ).hasClass( 'connected' ) ) {
+						average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) );
+					} else {
+						average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) ) - 10;
+					}
+					oddball = average * ( totalElements - 1 );
+				} else {
+					if ( $( this ).hasClass( 'connected' ) ) {
+						average = ( absint( totalWidth ) / ( absint( totalElements ) ) );
+					} else {
+						average = ( absint( totalWidth ) / ( absint( totalElements ) ) ) - 11;
+					}
+					oddball = average * totalElements;
+				}
+
+				oddball = totalWidth - oddball;
+
+				$( this ).addClass( 'mobile' ).removeClass( 'notMobile' );
+				$( '.spaceManWilly' ).css({ width: 'auto' });
+
+				if ( ! $( '.swp_count .iconFiller' ).length ) {
+					$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).hide();
+				} else {
+					$( this ).find( '.nc_tweetContainer.totes' ).hide();
+				}
+				$( this ).find( '.nc_tweetContainer' ).each(function() {
+					width = $( this ).find( '.iconFiller' ).width();
+					if ( isOdd( average ) ) {
+						marginLeft = Math.floor( ( average - width ) / 2 ) - 1;
+						marginRight = Math.floor( ( average - width ) / 2 ) - 1;
+					} else {
+						marginLeft = ( ( average - width ) / 2 ) - 1;
+						marginRight = ( ( average - width ) / 2 ) - 1;
+					}
+					$( this ).find( '.swp_count' ).animate({ 'padding-left': 0,'padding-right': 0 }, animProps );
+					$( this ).find( '.iconFiller' ).animate({ 'margin-left': marginLeft + 'px','margin-right': marginRight + 'px' }, animProps );
+				});
+			} else {
+				$( this ).addClass( 'notMobile' ).removeClass( 'mobile' );
+
+				if ( totalWidth > widthNeeded ) {
+					$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).show();
+				}
+
+				$( this ).find( '.nc_tweetContainer .iconFiller' ).animate({ 'margin-left': '0px','margin-right': '0px' }, animProps );
+
+				average = Math.floor( average );
+				oddball = average * totalElements;
+				oddball = totalWidth - oddball;
+
+				if ( $( this ).find( '.totesalt' ).length ) {
+					var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
+					var newTotalWidth = totalWidth - totes;
+					average = absint( newTotalWidth ) / absint( totalElements - 1 );
+					average = Math.floor( average );
+					oddball = average * ( totalElements - 1 );
+					oddball = newTotalWidth - oddball;
+				} else {
+					var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
+					if ( totes > average ) {
+						newTotalWidth = totalWidth - totes;
+						average = absint( newTotalWidth ) / absint( totalElements - 1 );
+						average = Math.floor( average );
+						oddball = average * ( totalElements - 1 );
+						oddball = newTotalWidth - oddball;
+					}
+				}
+
+				var count = 0;
+				index = $( '.nc_socialPanel' ).index( $( this ) );
+				window.origSets[index] = [];
+
+				if ( $( this ).hasClass( 'nc_floater' ) ) {
+					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
+					var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
+					var floatIndexOrigin = $( '.nc_socialPanel' ).index( firstSocialPanel );
+					$( this ).replaceWith( firstSocialPanel.prop( 'outerHTML' ) );
+					var width = firstSocialPanel.outerWidth( true );
+					offset = firstSocialPanel.offset();
+					var parentOffset = firstSocialPanel.parent().offset();
+					$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css(
+						{
+							width: width,
+							left: parentOffset.left
+						});
+					socialWarfarePlugin.activateHoverStates();
+					window.origSets['float'] = window.origSets[floatIndexOrigin];
+				} else {
+					$( this ).find( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
+						var icon      = $( this ).find( 'i.sw' ).outerWidth() + 14;
+						var shareTerm = $( this ).find( '.swp_share' ).outerWidth();
+						var tote      = icon + shareTerm + 3;
+						$( this ).find( '.spaceManWilly' ).animate({ width: tote + 'px' }, animProps );
+
+						++count;
+						var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
+						paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
+						var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
+						paddingRight = absint( paddingRight.replace( 'px', '' ) );
+						var dataId = $( this ).attr( 'data-id' );
+						dataId = absint( dataId );
+						if ( count > totalElements ) {
+							count = 1;
+						}
+						var add = 0;
+						if ( count <= oddball ) {
+							add = 1;
+						}
+						var curWidth = $( this ).outerWidth( true );
+						curWidth = curWidth - paddingLeft;
+						curWidth = curWidth - paddingRight;
+						var dif = average - curWidth;
+						window.origSets[index][dataId] = [];
+						if ( isOdd( dif ) ) {
+							dif = dif - 1;
+							dif = dif / 2;
+							pl = dif + 1 + average;
+							pr = dif + average;
+							window.origSets[index][dataId].pl = dif + 1 + 'px';
+							window.origSets[index][dataId].pr = dif + 'px';
+							window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
+							$( this ).find( '.swp_count' ).animate({
+								'padding-left': window.origSets[index][dataId].pl,
+								'padding-right': window.origSets[index][dataId].pr
+							}, 0, 'linear', function() {
+								$( this ).css({ transition: 'padding .1s linear'
+								});
+							});
+						} else {
+							dif = dif / 2;
+							var pl = dif + average;
+							var pr = dif + average;
+							window.origSets[index][dataId].pl = dif + 'px';
+							window.origSets[index][dataId].pr = dif + 'px';
+							window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
+							$( this ).find( '.swp_count' ).animate({
+								'padding-left': window.origSets[index][dataId].pl,
+								'padding-right': window.origSets[index][dataId].pr
+							}, 0, 'linear', function() {
+									$( this ).css({
+										transition: 'padding .1s linear'
+									});
+								});
+						}
+						window.resized = true;
+					});
+				}
+			}
+		});
+
+		if ( true === secondary || true === window.swpSecondary ) {
+			window.swpSecondary = true;
+			setTimeout( function() {
+				swpButtonSizeCheck();
+			}, 200 );
+		}
+	};
+
+	socialWarfarePlugin.activateHoverStates = function() {
+		$( '.nc_tweetContainer' ).not( '.totesalt, .nc_socialPanelSide .nc_tweetContainer' ).on( 'mouseenter',
+			function() {
+				if ( ! $( this ).parents( '.nc_socialPanel' ).hasClass( 'mobile' ) ) {
+					var thisElem = $( this );
+					var icon         = thisElem.find( '.iconFiller' ).width();
+					var shareTerm    = thisElem.find( '.swp_share' ).outerWidth();
+					var wrapper      = thisElem.find( '.spaceManWilly' ).outerWidth();
+					var tote         = wrapper;
+					var dif          = wrapper - icon;
+					var origDif      = dif;
+					var orig         = absint( tote ) - absint( dif );
+					var ele          = $( this ).parents( '.nc_socialPanel' ).attr( 'data-count' );
+					var average, oddball, index;
+
+					if ( $( this ).siblings( '.totes' ).length ) {
+						average = ( absint( dif ) / ( ( absint( ele ) -2 ) ) );
+						average = Math.floor( average );
+						oddball = dif % ( ele - 2 );
+					} else {
+						average = ( absint( dif ) / ( ( absint( ele ) -1 ) ) );
+						average = Math.floor( average );
+						oddball = dif % ( ele - 1 );
+					}
+
+					if ( $( this ).parents( '.nc_wrapper' ).length ) {
+						index = 'float';
+					} else {
+						index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
+					}
+
+					var dataId = absint( $( this ).attr( 'data-id' ) );
+
+					$( this ).find( '.iconFiller' ).css({ width: wrapper });
+
+					var pl = window.origSets[index][dataId].pl;
+					var pr = window.origSets[index][dataId].pr;
+
+					$( this ).find( '.swp_count' ).css({
+						'padding-left': window.origSets[index][dataId].pl,
+						'padding-right': window.origSets[index][dataId].pr
+					});
+
+					dataId = $( this ).attr( 'data-id' );
+					var count = 0;
+
+					if ( $( this ).hasClass( 'totes' ) ) {
+						$( this ).siblings( '.nc_tweetContainer' ).each(function() {
+							dataId = absint( $( this ).attr( 'data-id' ) );
+							$( this ).find( '.iconFiller' ).css({
+								width: window.origSets[index][dataId].fil
+							});
+							$( this ).find( '.swp_count' ).css({
+								'padding-left': window.origSets[index][dataId].pl,
+								'padding-right': window.origSets[index][dataId].pr
+							});
+						});
+					} else {
+						$( this ).siblings( '.nc_tweetContainer' ).not( '.totes' ).each(function() {
+							++count;
+							var ave = average;
+							var offsetL, offsetR;
+
+							if ( count <= oddball ) {
+								ave = ave + 1;
+							}
+
+							dataId = absint( $( this ).attr( 'data-id' ) );
+							if ( isOdd( ave ) ) {
+								offsetL = ( ( ( ave - 1 ) / 2 ) + 1 );
+								offsetR = ( ( ave - 1 ) / 2 );
+								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
+								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
+							} else {
+								offsetL = ( ave / 2 );
+								offsetR = ( ave / 2 );
+								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
+								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
+							}
+
+							$( this ).find( '.iconFiller' ).css({ width: origSets[index][dataId].fil });
+							$( this ).find( '.swp_count' ).css({
+								'padding-left': pl + 'px',
+								'padding-right': pr + 'px'
+							});
+						});
+					}
+				}
+			}
+		);
+
+		$( '.nc_socialPanel' ).on( 'mouseleave click', function() {
+			if ( ! $( this ).hasClass( 'mobile' ) ) {
+				socialWarfarePlugin.setWidths();
+			}
+		});
+
+		$( '.nc_fade .nc_tweetContainer' ).on( 'mouseenter', function() {
+			$( this ).css({ opacity: 1 }).siblings( '.nc_tweetContainer' ).css({ opacity: 0.5 });
+		});
+
+		$( '.nc_fade' ).on( 'mouseleave', function() {
+			$( '.nc_fade .nc_tweetContainer' ).css({ opacity: 1 });
+		});
+	};
+
 	// Function to check if the buttons are on one line or two
 	function swpButtonSizeCheck() {
 		if ( true === swpCheckIsRunning ) {
@@ -21,23 +418,24 @@
 			// Let's check each iteration of the social panel
 			var notInline = false;
 			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
+				var $that = $( this );
 				var firstButton, firstLabel, lastButton, lastLabel;
 
 				// Fetch the offset.top of the first element in the panel
-				if ( $( this ).find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) !== 'none' ) {
+				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) ) {
 					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
 					firstLabel = 'First';
 				} else {
-					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(2)' ).offset();
+					firstButton = $that.find( '.nc_tweetContainer:nth-child(2)' ).offset();
 					firstLabel = 'Second';
 				}
 
 				// Fetch the offset.top of the last element in the panel
-				if ( $( this ).find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) !== 'none' ) {
-					lastButton = $( this ).find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
+				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) ) {
+					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
 					lastLabel = 'Last';
 				} else {
-					lastButton = $( this ).find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
+					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
 					lastLabel = 'Second Last';
 				}
 
@@ -49,286 +447,11 @@
 				window.swpAdjust = 0;
 			}
 			if ( true === notInline && window.swpAdjust <= 20 ) {
-				swSetWidths( true, true );
+				socialWarfarePlugin.setWidths( true, true );
 			} else {
 				$( '.nc_socialPanel' ).css({ opacity: 1 });
 			}
 			swpCheckIsRunning = false;
-		}
-	}
-
-	// Function to set or reset the button sizes to fit their respective container area
-	function swSetWidths( resize, adjust, secondary ) {
-		var animProps = {
-			duration: 0,
-			easing: 'linear',
-			queue: false
-		};
-
-		// Check if this is the first or a forced resize
-		if ( typeof window.origSets === 'undefined' || resize ) {
-			// Declare the variable for saving presets
-			window.origSets = [];
-
-			// Declare the variable for saving original measurements
-			if ( typeof window.defaults === 'undefined' ) {
-				window.defaults = [];
-			}
-
-			// Loop through each set of buttons
-			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
-				// Declare a global so we can save the sizes for faster processing later
-				var index = $( '.nc_socialPanel' ).index( $( this ) );
-				if ( typeof window.defaults[index] === 'undefined' ) {
-					window.defaults[index] = [];
-				}
-
-				if ( typeof window.swpAdjust === 'undefined' && ! adjust ) {
-					window.swpAdjust = 0;
-				} else if ( typeof window.swpAdjust === 'undefined' && adjust == true ) {
-					window.swpAdjust = 1;
-				} else if ( adjust == true ) {
-					++window.swpAdjust;
-				} else {
-					window.swpAdjust = 0;
-				}
-
-				var totalWidth  = $( this ).width() - window.swpAdjust;
-
-				// Count the number of buttons
-				var totalElements	= $( this ).attr( 'data-count' );
-
-				// The average shows us how wide each button needs to become
-				var average = absint( totalWidth ) / absint( totalElements );
-				var space = absint( totalWidth ) - absint( totalElements );
-
-				// Check how much space is on the left so we can show or hide the floating buttons if they exist
-				var offset = $( '.nc_socialPanel:not(.nc_socialPanelSide)' ).offset();
-				var minScreenWidth = $( '.nc_socialPanelSide' ).attr( 'data-screen-width' );
-
-				// If we have 100px, show the side floaters. If not, hide it.
-				if ( offset.left < 100 || $( window ).width() < minScreenWidth ) {
-					$( '.nc_socialPanelSide' ).addClass( 'mobile' );
-				} else {
-					$( '.nc_socialPanelSide' ).removeClass( 'mobile' );
-				}
-
-				// Declare some variables for use later
-				var widthNeeded = 0;
-				var padding = 0;
-				var totesWidth = 0;
-
-				// Check if we already have a widthNeeded saved from earlier
-				if ( typeof window.defaults[index].defaultWidthNeeded === 'undefined' ) {
-					// Loop through each button
-					$( this ).find( '.nc_tweetContainer' ).each( function() {
-						var extraSpace = 0;
-
-						// Make sure we add extra space for expansions and whatnot
-						if ( totalElements > 3 ) {
-							extraSpace = ( totalElements - 1 ) * 5;
-						} else {
-							extraSpace = ( totalElements - 1 ) * 15;
-						}
-
-						// Check how wide it must be to fit
-						widthNeeded += $( this ).width() + extraSpace;
-
-						var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
-						paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
-						var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
-						paddingRight = absint( paddingRight.replace( 'px', '' ) );
-						padding = paddingLeft + paddingRight;
-						widthNeeded = widthNeeded - padding;
-					});
-					// Save the width needed for later use
-					window.defaults[index].defaultWidthNeeded = widthNeeded;
-
-				// If we already have it, use it
-				} else {
-					widthNeeded = window.defaults[index].defaultWidthNeeded;
-				}
-
-				// Check if we have enough room to display the total shares
-				totesWidth = $( this ).find( '.nc_tweetContainer.totes' ).width();
-				if ( totalWidth < widthNeeded && ! $( this ).hasClass( 'nc_floater' ) ) {
-					$( this ).find( '.nc_tweetContainer.totes' ).hide();
-				}
-
-				if ( ( totalWidth ) <= ( widthNeeded - totesWidth + 25 ) && ! $( this ).hasClass( 'nc_floater' ) ) {
-					if ( $( this ).find( '.totes' ).length ) {
-						if ( $( this ).hasClass( 'connected' ) ) {
-							var average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) );
-						} else {
-							var average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) ) - 10;
-						}
-						var oddball = average * ( totalElements - 1 );
-					} else {
-						if ( $( this ).hasClass( 'connected' ) ) {
-							var average = ( absint( totalWidth ) / ( absint( totalElements ) ) );
-						} else {
-							var average = ( absint( totalWidth ) / ( absint( totalElements ) ) ) - 11;
-						}
-						var oddball = average * totalElements;
-					}
-					var oddball = totalWidth - oddball;
-					$( this ).addClass( 'mobile' ).removeClass( 'notMobile' );
-					$( '.spaceManWilly' ).css({ width: 'auto' });
-					buttonWidths = 0;
-					if ( ! $( '.swp_count .iconFiller' ).length ) {
-						$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).hide();
-					} else {
-						$( this ).find( '.nc_tweetContainer.totes' ).hide();
-					}
-					$( this ).find( '.nc_tweetContainer' ).each(function() {
-						width = $( this ).find( '.iconFiller' ).width();
-						if ( isOdd( average ) ) {
-							marginLeft = Math.floor( ( average - width ) / 2 ) - 1;
-							marginRight = Math.floor( ( average - width ) / 2 ) - 1;
-						} else {
-							marginLeft = ( ( average - width ) / 2 ) - 1;
-							marginRight = ( ( average - width ) / 2 ) - 1;
-						}
-						$( this ).find( '.swp_count' ).animate({ 'padding-left': 0,'padding-right': 0 }, animProps );
-						$( this ).find( '.iconFiller' ).animate({ 'margin-left': marginLeft + 'px','margin-right': marginRight + 'px' }, animProps );
-					});
-				} else {
-					$( this ).addClass( 'notMobile' ).removeClass( 'mobile' );
-					if ( totalWidth > widthNeeded ) {
-						$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).show();
-					}
-					$( this ).find( '.nc_tweetContainer .iconFiller' ).animate({ 'margin-left': '0px','margin-right': '0px' }, animProps );
-					var average = Math.floor( average );
-					var oddball = average * totalElements;
-					var oddball = totalWidth - oddball;
-					if ( $( this ).find( '.totesalt' ).length ) {
-						var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
-						var newTotalWidth = totalWidth - totes;
-						average = absint( newTotalWidth ) / absint( totalElements - 1 );
-						average = Math.floor( average );
-						oddball = average * ( totalElements - 1 );
-						oddball = newTotalWidth - oddball;
-					} else {
-						var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
-						if ( totes > average ) {
-							newTotalWidth = totalWidth - totes;
-							average = absint( newTotalWidth ) / absint( totalElements - 1 );
-							average = Math.floor( average );
-							oddball = average * ( totalElements - 1 );
-							oddball = newTotalWidth - oddball;
-						}
-					}
-					var count = 0;
-					index = $( '.nc_socialPanel' ).index( $( this ) );
-					window.origSets[index] = [];
-					if ( $( this ).hasClass( 'nc_floater' ) ) {
-						// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
-						var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
-						var floatIndexOrigin = $( '.nc_socialPanel' ).index( firstSocialPanel );
-						$( this ).replaceWith( firstSocialPanel.prop( 'outerHTML' ) );
-						var width = firstSocialPanel.outerWidth( true );
-						offset = firstSocialPanel.offset();
-						var parentOffset = firstSocialPanel.parent().offset();
-						$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css(
-							{
-								width: width,
-								left: parentOffset.left
-							});
-						activateHoverStates();
-						window.origSets['float'] = window.origSets[floatIndexOrigin];
-					} else {
-						$( this ).find( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
-							var icon      = $( this ).find( 'i.sw' ).outerWidth() + 14;
-							var shareTerm = $( this ).find( '.swp_share' ).outerWidth();
-							var tote      = icon + shareTerm + 3;
-							$( this ).find( '.spaceManWilly' ).animate({ width: tote + 'px' }, animProps );
-
-							++count;
-							var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
-							paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
-							var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
-							paddingRight = absint( paddingRight.replace( 'px', '' ) );
-							var dataId = $( this ).attr( 'data-id' );
-							dataId = absint( dataId );
-							if ( count > totalElements ) {
-								count = 1;
-							}
-							var add = 0;
-							if ( count <= oddball ) {
-								add = 1;
-							}
-							var curWidth = $( this ).outerWidth( true );
-							curWidth = curWidth - paddingLeft;
-							curWidth = curWidth - paddingRight;
-							var dif = average - curWidth;
-							window.origSets[index][dataId] = [];
-							if ( isOdd( dif ) ) {
-								dif = dif - 1;
-								dif = dif / 2;
-								pl = dif + 1 + average;
-								pr = dif + average;
-								window.origSets[index][dataId].pl = dif + 1 + 'px';
-								window.origSets[index][dataId].pr = dif + 'px';
-								window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
-								$( this ).find( '.swp_count' ).animate({
-									'padding-left': window.origSets[index][dataId].pl,
-									'padding-right': window.origSets[index][dataId].pr
-								}, 0, 'linear', function() {
-									$( this ).css({ transition: 'padding .1s linear'
-									});
-								});
-							} else {
-								dif = dif / 2;
-								var pl = dif + average;
-								var pr = dif + average;
-								window.origSets[index][dataId].pl = dif + 'px';
-								window.origSets[index][dataId].pr = dif + 'px';
-								window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
-								$( this ).find( '.swp_count' ).animate({
-									'padding-left': window.origSets[index][dataId].pl,
-									'padding-right': window.origSets[index][dataId].pr
-								}, 0, 'linear', function() {
-										$( this ).css({
-											transition: 'padding .1s linear'
-										});
-									});
-							}
-							window.resized = true;
-						});
-					}
-				}
-			});
-
-			if ( true === secondary || true === window.swpSecondary ) {
-				window.swpSecondary = true;
-				setTimeout( function() {
-					swpButtonSizeCheck();
-				}, 200 );
-			}
-		// If we already have sizes, just reuse them
-		} else {
-			$( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
-				var index;
-
-				if ( $( this ).parents( '.nc_wrapper' ).length ) {
-					index = 'float';
-				} else {
-					index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
-				}
-
-				var dataId = absint( $( this ).attr( 'data-id' ) );
-
-				if ( 'undefined' !== typeof window.origSets[index] ) {
-					$( this ).find( '.iconFiller' ).animate({
-						width: window.origSets[index][dataId].fil
-					}, animProps );
-
-					$( this ).find( '.swp_count' ).animate({
-						'padding-left': window.origSets[index][dataId].pl,
-						'padding-right':  window.origSets[index][dataId].pr
-					}, animProps );
-				}
-			});
 		}
 	}
 
@@ -346,17 +469,16 @@
 				$( '.nc_wrapper' ).hide().addClass( position );
 				var width = firstSocialPanel.outerWidth( true );
 				var offset = firstSocialPanel.offset();
-				$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css(
-					{
-						width: width,
-						left: ( alignment == 'center' ? 0 : offset.left )
-					});
+				$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css({
+					width: width,
+					left: ( alignment == 'center' ? 0 : offset.left )
+				});
 				$( '.nc_socialPanel .swp_count' ).css({ transition: 'padding .1s linear' });
 				$( '.nc_socialPanel' ).eq( 0 ).addClass( 'swp_one' );
 				$( '.nc_socialPanel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.nc_socialPanel' ).eq( 1 ).addClass( 'swp_three' );
 				window.origSets['float'] = window.origSets[index];
-				swSetWidths();
+				socialWarfarePlugin.setWidths();
 			}
 		}
 	}
@@ -504,110 +626,6 @@
 		var lst = st;
 	}
 
-	function activateHoverStates() {
-		$( '.nc_tweetContainer' ).not( '.totesalt, .nc_socialPanelSide .nc_tweetContainer' ).on( 'mouseenter',
-			function() {
-				if ( ! $( this ).parents( '.nc_socialPanel' ).hasClass( 'mobile' ) ) {
-					var thisElem = $( this );
-					var icon         = thisElem.find( '.iconFiller' ).width();
-					var shareTerm    = thisElem.find( '.swp_share' ).outerWidth();
-					var wrapper      = thisElem.find( '.spaceManWilly' ).outerWidth();
-					var tote         = wrapper;
-					var dif          = wrapper - icon;
-					var origDif      = dif;
-					var orig         = absint( tote ) - absint( dif );
-					var ele          = $( this ).parents( '.nc_socialPanel' ).attr( 'data-count' );
-					var average, oddball, index;
-
-					if ( $( this ).siblings( '.totes' ).length ) {
-						average = ( absint( dif ) / ( ( absint( ele ) -2 ) ) );
-						average = Math.floor( average );
-						oddball = dif % ( ele - 2 );
-					} else {
-						average = ( absint( dif ) / ( ( absint( ele ) -1 ) ) );
-						average = Math.floor( average );
-						oddball = dif % ( ele - 1 );
-					}
-
-					if ( $( this ).parents( '.nc_wrapper' ).length ) {
-						index = 'float';
-					} else {
-						index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
-					}
-
-					var dataId = absint( $( this ).attr( 'data-id' ) );
-
-					$( this ).find( '.iconFiller' ).css({ width: wrapper });
-
-					var pl = window.origSets[index][dataId].pl;
-					var pr = window.origSets[index][dataId].pr;
-
-					$( this ).find( '.swp_count' ).css({
-						'padding-left': window.origSets[index][dataId].pl,
-						'padding-right': window.origSets[index][dataId].pr
-					});
-
-					dataId = $( this ).attr( 'data-id' );
-					var count = 0;
-
-					if ( $( this ).hasClass( 'totes' ) ) {
-						$( this ).siblings( '.nc_tweetContainer' ).each(function() {
-							dataId = absint( $( this ).attr( 'data-id' ) );
-							$( this ).find( '.iconFiller' ).css({
-								width: window.origSets[index][dataId].fil
-							});
-							$( this ).find( '.swp_count' ).css({
-								'padding-left': window.origSets[index][dataId].pl,
-								'padding-right': window.origSets[index][dataId].pr
-							});
-						});
-					} else {
-						$( this ).siblings( '.nc_tweetContainer' ).not( '.totes' ).each(function() {
-							++count;
-							var ave = average;
-							var offsetL, offsetR;
-
-							if ( count <= oddball ) {
-								ave = ave + 1;
-							}
-
-							dataId = absint( $( this ).attr( 'data-id' ) );
-							if ( isOdd( ave ) ) {
-								offsetL = ( ( ( ave - 1 ) / 2 ) + 1 );
-								offsetR = ( ( ave - 1 ) / 2 );
-								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
-								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
-							} else {
-								offsetL = ( ave / 2 );
-								offsetR = ( ave / 2 );
-								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
-								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
-							}
-
-							$( this ).find( '.iconFiller' ).css({ width: origSets[index][dataId].fil });
-							$( this ).find( '.swp_count' ).css({
-								'padding-left': pl + 'px',
-								'padding-right': pr + 'px'
-							});
-						});
-					}
-				}
-			}
-		);
-		$( '.nc_socialPanel' ).on( 'mouseleave click', function() {
-			if ( ! $( this ).hasClass( 'mobile' ) ) {
-				swSetWidths();
-			}
-		});
-		$( '.nc_fade .nc_tweetContainer' ).on( 'mouseenter', function() {
-			$( this ).css({ opacity: 1 }).siblings( '.nc_tweetContainer' ).css({ opacity: 0.5 });
-		});
-		$( '.nc_fade' ).on( 'mouseleave',
-		function() {
-			$( '.nc_fade .nc_tweetContainer' ).css({ opacity: 1 });
-		});
-	}
-
 	function swApplyScale() {
 		$( '.nc_socialPanel' ).each( function() {
 			$( this ).css({ width: '100%' });
@@ -636,17 +654,17 @@
 		if ( $( '.nc_socialPanel' ).length ) {
 			swApplyScale();
 			$.when(
-				swSetWidths( true )
+				socialWarfarePlugin.setWidths( true )
 			).done(function() {
 				setTimeout( function() {
-					swSetWidths( true, false, true );
+					socialWarfarePlugin.setWidths( true, false, true );
 				}, 200 );
 			});
 			createFloatBar();
 			$( window ).scrollTop();
 			floatingBar();
 			floatingBarReveal();
-			activateHoverStates();
+			socialWarfarePlugin.activateHoverStates();
 		}
 	}
 
@@ -769,7 +787,8 @@
 			setTimeout( function() {
 				swpInitShareButtons();
 			}, 100 );
-		} );
+		});
+
 		if ( $( '.nc_socialPanelSide' ).length ) {
 			var buttonsHeight = $( '.nc_socialPanelSide' ).height();
 			var windowHeight = $( window ).height();
