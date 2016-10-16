@@ -1,7 +1,7 @@
 <?php
 
-	// Queue up our hook function
-	add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
+// Queue up our hook function
+add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
 
 /**
 
@@ -152,19 +152,20 @@ function swp_add_header_meta() {
 *                                                                *
 */
 
-			// Queue up our header hook function
+// Queue up our header hook function
 if ( is_swp_registered() ) :
 	add_filter( 'swp_meta_tags' , 'swp_open_graph_tags' , 1 );
 	add_filter( 'swp_meta_tags' , 'swp_add_twitter_card' , 2 );
-			endif;
-			add_filter( 'swp_meta_tags' , 'swp_frame_buster' , 3 );
-			add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
-			add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
-			// add_filter( 'swp_meta_tags' , 'swp_output_cache_trigger' , 6 );
-			add_filter( 'swp_meta_tags' , 'swp_cache_rebuild_rel_canonical' , 7 );
-			add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
+endif;
 
-			// Disable Simple Podcast Press Open Graph tags
+add_filter( 'swp_meta_tags' , 'swp_frame_buster' , 3 );
+add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
+add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
+// add_filter( 'swp_meta_tags' , 'swp_output_cache_trigger' , 6 );
+add_filter( 'swp_meta_tags' , 'swp_cache_rebuild_rel_canonical' , 7 );
+add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
+
+// Disable Simple Podcast Press Open Graph tags
 if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
 	global $ob_wp_simplepodcastpress;
 	remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress, 'spp_open_graph' ) , 1 );
@@ -692,75 +693,4 @@ function swp_output_font_css( $info = array() ) {
 
 		return $info;
 	endif;
-}
-/**
-
-***************************************************************
-*                                                                *
-*          FOOTER HOOKS & SCRIPTS					             *
-*                                                                *
-*/
-// Queue up our hook function
-add_action( 'wp_footer' , 'swp_footer_functions' , 99 );
-
-// Queue up our footer hook function
-add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
-add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
-
-function swp_footer_functions() {
-
-	// Fetch a few variables
-	$info['postID']           = get_the_ID();
-	$info['swp_user_options'] = swp_get_user_options();
-	$info['footer_output']    = '';
-
-	// Pass the array through our custom filters
-	$info = apply_filters( 'swp_footer_scripts' , $info );
-
-		// If we have output, output it
-	if ( $info['footer_output'] ) {
-		echo '<script type="text/javascript">';
-		echo $info['footer_output'];
-		echo '</script>';
-	}
-}
-
-/**
-
- * **************************************************************
- *                                                                *
- *          CACHE REBUILD TRIGGER					             *
- *                                                                *
- ******************************************************************/
-function swp_output_cache_trigger( $info ) {
-	// Check if we're on a single post page, the cache is expired, and they're using the updated cache rebuild method
-	if ( (is_singular() && swp_is_cache_fresh( get_the_ID() , true ) == false && $info['swp_user_options']['cacheMethod'] != 'legacy') || (isset( $_GET['swp_cache'] ) && $_GET['swp_cache'] == 'rebuild') ) :
-
-		// Make sure we're not on a WooCommerce Account Page
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_account_page() ) :
-			return $info;
-
-			// Trigger the cache rebuild
-		else :
-			$url = get_permalink();
-			$admin_ajax = admin_url( 'admin-ajax.php' );
-			$info['footer_output'] .= 'swp_admin_ajax = "' . $admin_ajax . '"; var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).ready( function() { var swp_cache_data = {"action":"swp_cache_trigger","post_id":' . $info['postID'] . '};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});} swp_post_id="' . $info['postID'] . '"; swp_post_url="' . $url . '"; socialWarfarePlugin.fetchFacebookShares();';
-		endif;
-	endif;
-	// Return the array so the world doesn't explode
-	return $info;
-}
-/**
-
- * **************************************************************
- *                                                                *
- *          Click Tracking							             *
- *                                                                *
- ******************************************************************/
-function swp_click_tracking( $info ) {
-	$swp_options = swp_get_user_options();
-	if ( $swp_options['swp_click_tracking'] == 1 ) :
-		$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "swp_" + network + "_share" );});}';
-	endif;
-	return $info;
 }
