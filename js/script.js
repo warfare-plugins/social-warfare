@@ -1,3 +1,4 @@
+/* global swpPinIt */
 var socialWarfarePlugin = socialWarfarePlugin || {};
 
 (function( window, $, undefined ) {
@@ -696,7 +697,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		$( '.swp-content-locator' ).parent().find( 'img' ).each( function() {
 			var $image = $( this );
 
-			if ( $image.outerHeight() < sw_pinit_min_height || $image.outerWidth() < sw_pinit_min_width ) {
+			if ( $image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth ) {
 				return;
 			}
 
@@ -727,7 +728,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			$image.removeClass().attr( 'style', '' ).wrap( options.wrap );
 
-			$image.after( '<a href="' + encodeURI( bookmark ) + '" class="sw-pinit-button sw-pinit-' + swp_pinit_v_location + ' sw-pinit-' + swp_pinit_h_location + '">Save</a>' );
+			$image.after( '<a href="' + encodeURI( bookmark ) + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>' );
 
 			$image.parent( '.sw-pinit' ).addClass( imageClasses ).attr( 'style', imageStyle );
 
@@ -804,7 +805,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$.get( swpCacheURL + urlParams );
 		}
 
-		if ( typeof swp_pinit != 'undefined' && swp_pinit == true ) {
+		if ( swpPinIt.enabled ) {
 			pinitButton();
 		}
 	});

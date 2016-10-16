@@ -57,6 +57,23 @@ function enqueueSocialWarfareScripts() {
 		swp_VERSION,
 		true
 	);
+
+	$pin_vars = array(
+		'enabled' => false,
+	);
+
+	if ( is_swp_registered() ) {
+
+		if ( $swp_user_options['pinit_toggle'] ) {
+			$pin_vars['enabled']   = true;
+			$pin_vars['hLocation'] = $swp_user_options['pinit_location_horizontal'];
+			$pin_vars['vLocation'] = $swp_user_options['pinit_location_vertical'];
+			$pin_vars['minWidth']  = str_replace( 'px', '', $swp_user_options['pinit_min_width'] );
+			$pin_vars['minHeight'] = str_replace( 'px', '', $swp_user_options['pinit_min_height'] );
+		}
+	}
+
+	wp_localize_script( 'social_warfare_script', 'swpPinIt', $pin_vars );
 }
 
 add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
