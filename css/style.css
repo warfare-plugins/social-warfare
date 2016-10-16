@@ -1309,43 +1309,35 @@ span.swp_pop_count {
 	border-radius: 3px;
 }
 
-.sw-pinit {
-	position: relative;
-	display: inline-block;
-	padding: 0;
+div.sw-pinit {
+	display: table !important;
+	line-height: 0;
+	position: relative !important;
 }
 
-.sw-pinit:hover img {
-	opacity: 0.5;
-	transition: all 0.5s;
-}
-
-.sw-pinit .sw-pinit-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	background: #000000;
-	display: none;
-	padding: 0;
-}
-
-a.sw-pinit-button {
+div.sw-pinit a.sw-pinit-button,
+div.sw-pinit a.sw-pinit-button:visited {
 	background: #cd2029;
 	color: #fff;
 	border: 1px solid #aa1b29;
 	font-size: 20px;
 	border-radius: 4px;
 	position: absolute;
-	padding: 0px 30px;
+	padding: 0 30px;
+	opacity: 0;
 	z-index: 200;
 	line-height: 45px;
 	height: 50px;
+	transition: opacity 0.5s;
+	text-decoration: none;
 }
 
-a.sw-pinit-button:before {
+div.sw-pinit:hover a.sw-pinit-button,
+div.sw-pinit:focus a.sw-pinit-button {
+	opacity: 1;
+}
+
+div.sw-pinit a.sw-pinit-button::before {
 	color: #fff;
 	font-family: sw-icon-font;
 	content: 'b';
@@ -1356,38 +1348,40 @@ a.sw-pinit-button:before {
 	line-height: 50px
 }
 
-a.sw-pinit-button:hover:before {
+div.sw-pinit a.sw-pinit-button:hover::before {
 	content: 'F';
 }
 
-a.sw-pinit-button:hover {
+div.sw-pinit a.sw-pinit-button::hover,
+div.sw-pinit a.sw-pinit-button::focus {
 	background: #aa1b29;
 	color: #fff;
+	text-decoration: none;
 }
 
-.sw-pinit-left {
+div.sw-pinit .sw-pinit-left {
 	left: 30px;
 }
 
-.sw-pinit-center {
+div.sw-pinit .sw-pinit-center {
 	left: 50%;
 	margin-left: -60px;
 }
 
-.sw-pinit-right {
+div.sw-pinit .sw-pinit-right {
 	right: 30px;
 }
 
-.sw-pinit-top {
+div.sw-pinit .sw-pinit-top {
 	top: 30px;
 }
 
-.sw-pinit-middle {
+div.sw-pinit .sw-pinit-middle {
 	top: 50%;
 	margin-top: -25px;
 }
 
-.sw-pinit-bottom {
+div.sw-pinit .sw-pinit-bottom {
 	bottom: 30px;
 }
 

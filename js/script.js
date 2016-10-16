@@ -686,44 +686,55 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 	function pinitButton() {
 		var defaults = {
-			wrap: '<span class="sw-pinit"/>',
+			wrap: '<div class="sw-pinit" />',
 			pageURL: document.URL
 		};
 
 		var options = $.extend( defaults, options );
-		var o = options;
 
-		//Iterate over the current set of matched elements
+		// Iterate over the current set of matched elements.
 		$( '.swp-content-locator' ).parent().find( 'img' ).each( function() {
-			var e = $( this ),
-				pi_media = e.data( 'media' ) ? e.data( 'media' ) : e[0].src,
-				pi_url = o.pageURL,
-				pi_desc = e.attr( 'title' ) ? encodeURIComponent( e.attr( 'title' ) ) : encodeURIComponent( e.attr( 'alt' ) ),
-				pi_isvideo = 'false';
-			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pi_media ) + '&url=' + encodeURI( pi_url ) + '&is_video=' + encodeURI( pi_isvideo ) + '&description=' + pi_desc;
-			var css = $( this ).css([ 'float','margin','padding','height','width' ]);
+			var $image = $( this );
 
-			var eHeight = e.outerHeight();
-			var eWidth = e.outerWidth();
-
-			if ( eHeight >= sw_pinit_min_height && eWidth >= sw_pinit_min_width ) {
-				e.wrap( o.wrap );
-				e.parent( '.sw-pinit' ).css( css ).css({ display: 'block' });
-				e.css({ margin: 0 });
-				e.before( '<span class="sw-pinit-overlay" style="height: ' + eHeight + 'px"><a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swp_pinit_v_location + ' sw-pinit-' + swp_pinit_h_location + '">Save</a></span>' );
-				e.css({ position: 'absolute' });
-
-				$( '.sw-pinit .sw-pinit-button' ).on( 'click', function() {
-					window.open( $( this ).attr( 'href' ), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' );
-					return false;
-				});
-
-				$( '.sw-pinit' ).mouseenter(function() {
-					$( this ).children( '.sw-pinit-overlay' ).show();
-				}).mouseleave(function() {
-					$( this ).children( '.sw-pinit-overlay' ).hide();
-				});
+			if ( $image.outerHeight() < sw_pinit_min_height || $image.outerWidth() < sw_pinit_min_width ) {
+				return;
 			}
+
+			var pinMedia = false;
+
+			if ( $image.data( 'media' ) ) {
+				pinMedia = $image.data( 'media' );
+			} else if ( $image[0].src ) {
+				pinMedia = $image[0].src;
+			}
+
+			// Bail if we don't have any media to pin.
+			if ( ! pinMedia ) {
+				return;
+			}
+
+			var pinDesc = '';
+
+			if ( $image.attr( 'title' ) ) {
+				pinDesc = $image.attr( 'title' );
+			} else if ( $image.attr( 'alt' ) ) {
+				pinDesc = $image.attr( 'alt' );
+			}
+
+			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + pinMedia + '&url=' + options.pageURL + '&is_video=false' + '&description=' + encodeURIComponent( pinDesc );
+			var imageClasses = $image.attr( 'class' );
+			var imageStyle = $image.attr( 'style' );
+
+			$image.removeClass().attr( 'style', '' ).wrap( options.wrap );
+
+			$image.after( '<a href="' + encodeURI( bookmark ) + '" class="sw-pinit-button sw-pinit-' + swp_pinit_v_location + ' sw-pinit-' + swp_pinit_h_location + '">Save</a>' );
+
+			$image.parent( '.sw-pinit' ).addClass( imageClasses ).attr( 'style', imageStyle );
+
+			$( '.sw-pinit .sw-pinit-button' ).on( 'click', function() {
+				window.open( $( this ).attr( 'href' ), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' );
+				return false;
+			});
 		});
 	}
 
@@ -793,10 +804,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$.get( swpCacheURL + urlParams );
 		}
 
-		setTimeout( function() {
-			if ( typeof swp_pinit != 'undefined' && swp_pinit == true ) {
-				pinitButton();
-			}
-		}, 500 );
+		if ( typeof swp_pinit != 'undefined' && swp_pinit == true ) {
+			pinitButton();
+		}
 	});
 })( this, jQuery );
