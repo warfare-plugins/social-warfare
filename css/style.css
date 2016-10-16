@@ -1344,6 +1344,7 @@ div.sw-pinit a.sw-pinit-button::before {
 	margin-right: 10px;
 	margin-left: -5px;
 	font-size: 24px;
+	font-weight: normal;
 	float: left;
 	line-height: 50px
 }
