@@ -688,7 +688,7 @@ function swp_output_font_css( $info = array() ) {
 	else :
 
 		// Add it to our array if we're using the frontend Head Hook
-		$info['header_output'] .= PHP_EOL . '<style>@font-face {font-family: "sw-icon-font";src:url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.eot?ver=' . swp_VERSION . '");src:url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.eot?ver=' . swp_VERSION . '#iefix") format("embedded-opentype"),url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.woff?ver=' . swp_VERSION . '") format("woff"), url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.ttf?ver=' . swp_VERSION . '") format("truetype"),url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.svg?ver=' . swp_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+		$info['header_output'] .= '<style>@font-face {font-family: "sw-icon-font";src:url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.eot?ver=' . swp_VERSION . '");src:url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.eot?ver=' . swp_VERSION . '#iefix") format("embedded-opentype"),url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.woff?ver=' . swp_VERSION . '") format("woff"), url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.ttf?ver=' . swp_VERSION . '") format("truetype"),url("' . swp_PLUGIN_DIR . '/fonts/sw-icon-font.svg?ver=' . swp_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
 		return $info;
 	endif;
@@ -701,7 +701,7 @@ function swp_output_font_css( $info = array() ) {
 *                                                                *
 */
 // Queue up our hook function
-add_action( 'wp_footer' , 'swp_footer_functions' , 1 );
+add_action( 'wp_footer' , 'swp_footer_functions' , 99 );
 
 // Queue up our footer hook function
 add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
@@ -710,21 +710,20 @@ add_filter( 'swp_footer_scripts' , 'swp_pinit' );
 
 function swp_footer_functions() {
 
-		// Fetch a few variables
-		$info['postID'] 				= get_the_ID();
-		$info['swp_user_options'] 		= swp_get_user_options();
-		$info['footer_output']			= '';
+	// Fetch a few variables
+	$info['postID']           = get_the_ID();
+	$info['swp_user_options'] = swp_get_user_options();
+	$info['footer_output']    = '';
 
-		// Pass the array through our custom filters
-		$info = apply_filters( 'swp_footer_scripts' , $info );
+	// Pass the array through our custom filters
+	$info = apply_filters( 'swp_footer_scripts' , $info );
 
 		// If we have output, output it
-	if ( $info['footer_output'] ) :
+	if ( $info['footer_output'] ) {
 		echo '<script type="text/javascript">';
 		echo $info['footer_output'];
 		echo '</script>';
-		endif;
-
+	}
 }
 
 /**
@@ -762,7 +761,7 @@ function swp_output_cache_trigger( $info ) {
 		else :
 			$url = get_permalink();
 			$admin_ajax = admin_url( 'admin-ajax.php' );
-			$info['footer_output'] .= PHP_EOL . 'swp_admin_ajax = "' . $admin_ajax . '"; var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).ready( function() { var swp_cache_data = {"action":"swp_cache_trigger","post_id":' . $info['postID'] . '};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});} swp_post_id="' . $info['postID'] . '"; swp_post_url="' . $url . '"; swp_fetch_facebook_shares(); ';
+			$info['footer_output'] .= 'swp_admin_ajax = "' . $admin_ajax . '"; var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).ready( function() { var swp_cache_data = {"action":"swp_cache_trigger","post_id":' . $info['postID'] . '};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});} swp_post_id="' . $info['postID'] . '"; swp_post_url="' . $url . '"; socialWarfarePlugin.fetchFacebookShares();';
 		endif;
 	endif;
 	// Return the array so the world doesn't explode

@@ -13,7 +13,54 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		return parseInt( $int, 10 );
 	}
 
-	socialWarfarePlugin.reuseWidths = function( animation ) {
+	// Function to check if the buttons are on one line or two
+	function buttonSizeCheck() {
+		if ( true === swpCheckIsRunning ) {
+			return false;
+		} else {
+			swpCheckIsRunning = true;
+
+			// Let's check each iteration of the social panel
+			var notInline = false;
+			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
+				var $that = $( this );
+				var firstButton, firstLabel, lastButton, lastLabel;
+
+				// Fetch the offset.top of the first element in the panel
+				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) ) {
+					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
+					firstLabel = 'First';
+				} else {
+					firstButton = $that.find( '.nc_tweetContainer:nth-child(2)' ).offset();
+					firstLabel = 'Second';
+				}
+
+				// Fetch the offset.top of the last element in the panel
+				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) ) {
+					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
+					lastLabel = 'Last';
+				} else {
+					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
+					lastLabel = 'Second Last';
+				}
+
+				if ( firstButton.top !== lastButton.top ) {
+					notInline = true;
+				}
+			});
+			if ( 'undefined' === typeof window.swpAdjust ) {
+				window.swpAdjust = 0;
+			}
+			if ( true === notInline && window.swpAdjust <= 20 ) {
+				socialWarfarePlugin.setWidths( true, true );
+			} else {
+				$( '.nc_socialPanel' ).css({ opacity: 1 });
+			}
+			swpCheckIsRunning = false;
+		}
+	}
+
+	function reuseWidths( animation ) {
 		$( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
 			var index;
 
@@ -36,7 +83,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}, animation );
 			}
 		});
-	};
+	}
 
 	// Function to set or reset the button sizes to fit their respective container area
 	socialWarfarePlugin.setWidths = function( resize, adjust, secondary ) {
@@ -48,7 +95,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 		// Check if this is the first or a forced resize
 		if ( 'undefined' !== typeof window.origSets && ! resize ) {
-			socialWarfarePlugin.reuseWidths( animProps );
+			reuseWidths( animProps );
 			return;
 		}
 
@@ -297,7 +344,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		if ( true === secondary || true === window.swpSecondary ) {
 			window.swpSecondary = true;
 			setTimeout( function() {
-				swpButtonSizeCheck();
+				buttonSizeCheck();
 			}, 200 );
 		}
 	};
@@ -408,51 +455,38 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	};
 
-	// Function to check if the buttons are on one line or two
-	function swpButtonSizeCheck() {
-		if ( true === swpCheckIsRunning ) {
-			return false;
-		} else {
-			swpCheckIsRunning = true;
+	/****************************************************************************
 
-			// Let's check each iteration of the social panel
-			var notInline = false;
-			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
-				var $that = $( this );
-				var firstButton, firstLabel, lastButton, lastLabel;
+		Fetch and Store Facebook Counts
 
-				// Fetch the offset.top of the first element in the panel
-				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) ) {
-					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
-					firstLabel = 'First';
-				} else {
-					firstButton = $that.find( '.nc_tweetContainer:nth-child(2)' ).offset();
-					firstLabel = 'Second';
-				}
+	****************************************************************************/
 
-				// Fetch the offset.top of the last element in the panel
-				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) ) {
-					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
-					lastLabel = 'Last';
-				} else {
-					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
-					lastLabel = 'Second Last';
-				}
+	socialWarfarePlugin.fetchFacebookShares = function() {
+		var requestUrl = 'https://graph.facebook.com/?id=' + swp_post_url;
+		$.get( requestUrl, function( response ) {
+			//response = $.parseJSON(data);
+			var requestUrTwo = 'https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}';
+			$.get( requestUrTwo, function( responseTwo ) {
+				var shares, likes, comments, activity;
 
-				if ( firstButton.top !== lastButton.top ) {
-					notInline = true;
-				}
+				//responseTwo = $.parseJSON(data);
+				shares = absint( response.share.share_count );
+				likes = absint( responseTwo.og_object.likes.summary.total_count );
+				comments = absint( responseTwo.og_object.comments.summary.total_count );
+				activity = shares + likes + comments;
+				console.log( activity );
+
+				swpPostData = {
+					action: 'swp_facebook_shares_update',
+					post_id: swp_post_id,
+					activity: activity
+				};
+
+				$.post( swp_admin_ajax, swpPostData, function( response ) {
+					console.log( response );
+				});
 			});
-			if ( 'undefined' === typeof window.swpAdjust ) {
-				window.swpAdjust = 0;
-			}
-			if ( true === notInline && window.swpAdjust <= 20 ) {
-				socialWarfarePlugin.setWidths( true, true );
-			} else {
-				$( '.nc_socialPanel' ).css({ opacity: 1 });
-			}
-			swpCheckIsRunning = false;
-		}
+		});
 	}
 
 	function createFloatBar() {
@@ -481,38 +515,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				socialWarfarePlugin.setWidths();
 			}
 		}
-	}
-
-	// Format Number functions
-	function ReplaceNumberWithCommas( nStr ) {
-		nStr += '';
-		var x = nStr.split( '.' );
-		var x1 = x[0];
-		var x2 = x.length > 1 ? '.' + x[1] : '';
-		var rgx = /(\d+)(\d{3})/;
-
-		while ( rgx.test( x1 ) ) {
-			x1 = x1.replace( rgx, '$1' + ',' + '$2' );
-		}
-
-		return x1 + x2;
-	}
-
-	function number_format( val ) {
-		if ( val < 1000 ) {
-			return ReplaceNumberWithCommas( val );
-		} else {
-			val = val / 1000;
-			val = Math.round( val );
-			return ReplaceNumberWithCommas( val ) + 'K';
-		}
-	}
-
-	// Twitter Shares Count
-	function floatingBar() {
-		$( window ).on( 'scroll', function() {
-			floatingBarReveal();
-		});
 	}
 
 	function floatingBarReveal() {
@@ -626,7 +628,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		var lst = st;
 	}
 
-	function swApplyScale() {
+	// Twitter Shares Count
+	function floatingBar() {
+		$( window ).on( 'scroll', function() {
+			floatingBarReveal();
+		});
+	}
+
+	function applyScale() {
 		$( '.nc_socialPanel' ).each( function() {
 			$( this ).css({ width: '100%' });
 			var width = $( this ).width();
@@ -650,9 +659,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	function swpInitShareButtons() {
+	function initShareButtons() {
 		if ( $( '.nc_socialPanel' ).length ) {
-			swApplyScale();
+			applyScale();
 			$.when(
 				socialWarfarePlugin.setWidths( true )
 			).done(function() {
@@ -670,44 +679,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 	/****************************************************************************
 
-		Fetch and Store Facebook Counts
-
-	****************************************************************************/
-
-	function swp_fetch_facebook_shares() {
-		var requestUrl = 'https://graph.facebook.com/?id=' + swp_post_url;
-		$.get( requestUrl, function( response ) {
-			//response = $.parseJSON(data);
-			var requestUrTwo = 'https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}';
-			$.get( requestUrTwo, function( responseTwo ) {
-				var shares, likes, comments, activity;
-
-				//responseTwo = $.parseJSON(data);
-				shares = absint( response.share.share_count );
-				likes = absint( responseTwo.og_object.likes.summary.total_count );
-				comments = absint( responseTwo.og_object.comments.summary.total_count );
-				activity = shares + likes + comments;
-				console.log( activity );
-
-				swpPostData = {
-					action: 'swp_facebook_shares_update',
-					post_id: swp_post_id,
-					activity: activity
-				};
-
-				$.post( swp_admin_ajax, swpPostData, function( response ) {
-					console.log( response );
-				});
-			});
-		});
-	}
-	/****************************************************************************
-
 		Pin It Hover Effect
 
 	****************************************************************************/
 
-	function swp_pinit_button() {
+	function pinitButton() {
 		var defaults = {
 			wrap: '<span class="sw-pinit"/>',
 			pageURL: document.URL
@@ -778,14 +754,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
 				setTimeout( function() {
 					window.swpAdjust = 1;
-					swpInitShareButtons();
+					initShareButtons();
 				}, 100 );
 			}
 		});
 
 		$( document.body ).on( 'post-load', function() {
 			setTimeout( function() {
-				swpInitShareButtons();
+				initShareButtons();
 			}, 100 );
 		});
 
@@ -799,7 +775,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		setTimeout( function() {
-			swpInitShareButtons();
+			initShareButtons();
 		}, 100 );
 
 		// Reset the cache
@@ -818,7 +794,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 		setTimeout( function() {
 			if ( typeof swp_pinit != 'undefined' && swp_pinit == true ) {
-				swp_pinit_button();
+				pinitButton();
 			}
 		}, 500 );
 	});
