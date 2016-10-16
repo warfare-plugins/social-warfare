@@ -540,7 +540,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).each(function() {
 				var thisOffset, thisHeight, screenBottom;
 
-				index = $( '.nc_socialPanel' ).index( $( this ) );
+				var index = $( '.nc_socialPanel' ).index( $( this ) );
 
 				// Fetch our base numbers
 				if ( typeof window.swpOffsets[index] == 'undefined' ) {
@@ -570,6 +570,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					$( 'body' ).animate({ 'padding-top': window.body_padding_top + 'px' }, 0 );
 				}
 			} else {
+				var newPadding, firstOffset;
 				// Show the floating bar
 				ncWrapper.show();
 
@@ -593,7 +594,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 						var thisOffset = $( this ).offset();
 						var thisHeight = $( this ).height();
 						if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
-							visible = true; ncSideFloaterDisplay = true;
+							visible = true;
 						}
 					});
 				if ( visible || $( '.nc_socialPanelSide' ).hasClass( 'mobile' ) ) {
@@ -699,8 +700,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				pi_url = o.pageURL,
 				pi_desc = e.attr( 'title' ) ? encodeURIComponent( e.attr( 'title' ) ) : encodeURIComponent( e.attr( 'alt' ) ),
 				pi_isvideo = 'false';
-			bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pi_media ) + '&url=' + encodeURI( pi_url ) + '&is_video=' + encodeURI( pi_isvideo ) + '&description=' + pi_desc;
-			css = $( this ).css([ 'float','margin','padding','height','width' ]);
+			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pi_media ) + '&url=' + encodeURI( pi_url ) + '&is_video=' + encodeURI( pi_isvideo ) + '&description=' + pi_desc;
+			var css = $( this ).css([ 'float','margin','padding','height','width' ]);
 
 			var eHeight = e.outerHeight();
 			var eWidth = e.outerWidth();
