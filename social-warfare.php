@@ -32,13 +32,12 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once swp_META_DIR . 'meta-box.php';
 require_once $pluginDir . '/functions/admin-options-page/admin-options-array.php';
 require_once $pluginDir . '/functions/admin-options-page/admin-options-page.php';
-require_once $pluginDir . '/functions/kilomega.php';
-require_once $pluginDir . '/functions/excerpt.php';
-require_once $pluginDir . '/functions/mobile-detection.php';
+require_once $pluginDir . '/functions/utility.php';
 require_once $pluginDir . '/functions/curl_functions.php';
 require_once $pluginDir . '/functions/admin-options-page/admin-options-fetch.php';
 require_once $pluginDir . '/functions/registration.php';
 require_once $pluginDir . '/functions/widgets.php';
+require_once $pluginDir . '/functions/scripts.php';
 // require_once $pluginDir  . '/functions/updates/plugin-update-checker.php';
 require_once $pluginDir . '/functions/bitly.php';
 require_once $pluginDir . '/functions/click-to-tweet/clickToTweet.php';
@@ -52,6 +51,7 @@ require_once $pluginDir . '/functions/cache-rebuild.php';
 require_once $pluginDir . '/functions/header-meta-tags.php';
 require_once $pluginDir . '/functions/profile-fields.php';
 require_once $pluginDir . '/functions/shortcodes.php';
+require_once $pluginDir . '/functions/deprecated.php';
 // require_once $pluginDir  . '/functions/media-options.php';
 // Networks
 require_once $pluginDir . '/functions/social-networks/googlePlus.php';
@@ -70,6 +70,9 @@ require_once $pluginDir . '/functions/social-networks/buffer.php';
 require_once $pluginDir . '/functions/social-networks/hackernews.php';
 require_once $pluginDir . '/functions/social-networks/flipboard.php';
 
+global $swp_user_options;
+
+$swp_user_options = swp_get_user_options();
 
 /**
 
@@ -90,41 +93,7 @@ function swp_settings_link( $links ) {
 }
 $plugin = plugin_basename( __FILE__ );
 add_filter( "plugin_action_links_$plugin", 'swp_settings_link' );
-/**
 
-***************************************************************
-*                                                                *
-*   ENQUEUE: SCRIPTS AND STYLES									 *
-*                                                                *
-*/
-$swp_user_options = swp_get_user_options();
-
-add_action( 'wp_enqueue_scripts', 'enqueueSocialWarfareScripts' );
-function enqueueSocialWarfareScripts() {
-	global $swp_user_options;
-	if ( isset( $_GET['swp_script'] ) && $_GET['swp_script'] == 'Full' ) :
-		wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.js',array( 'jquery' ),swp_VERSION );
-	else :
-		wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),swp_VERSION );
-	endif;
-	wp_register_style( 'social_warfare', swp_PLUGIN_DIR . '/css/style.css',array(),swp_VERSION );
-	wp_enqueue_style( 'social_warfare' );
-}
-
-// Enqueue admin and Click to Tweet Styles
-add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
-function enqueueSocialWarfareAdminScripts() {
-	wp_register_style( 'social_warfare', swp_PLUGIN_DIR . '/css/style.css',array(),swp_VERSION );
-	wp_enqueue_style( 'social_warfare' );
-	wp_register_style( 'social_warfare_admin', swp_PLUGIN_DIR . '/css/admin.css',array(),swp_VERSION );
-	wp_enqueue_style( 'social_warfare_admin' );
-	wp_enqueue_script( 'social_warfare_script', swp_PLUGIN_DIR . '/script.min.js',array( 'jquery' ),swp_VERSION );
-	wp_enqueue_script( 'social_warfare_admin_script', swp_PLUGIN_DIR . '/admin.js',array( 'jquery' ),swp_VERSION );
-	if ( ! is_swp_registered() ) :
-		wp_enqueue_script( 'jquery-ui-tooltip' );
-		wp_enqueue_style( 'jquery-ui-tooltip-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' , array() );
-	endif;
-}
 /**
 
  * **************************************************************
@@ -138,13 +107,20 @@ function swp_localization_init() {
 }
 add_action( 'plugins_loaded', 'swp_localization_init' );
 
-function swp_localize_admin_scripts() {
-	wp_localize_script('social_warfare_admin_script', 'swp_localize_admin', array(
-			'swp_characters_remaining' => __( 'Characters Remaining', 'social-warfare' ),
-		)
-	);
-};
-add_action( 'admin_enqueue_scripts', 'swp_localize_admin_scripts' );
+add_filter( 'query_vars', 'swp_add_query_vars' );
+/**
+ * Register custom query vars.
+ *
+ * @since  2.1.0
+ * @access public
+ * @param  array $vars The current query vars.
+ * @return array $vars The modified query vars.
+ */
+function swp_add_query_vars( $vars ) {
+	$vars[] = 'swp_cache';
+
+	return $vars;
+}
 
 // Add the Social Warfare Content Filter
 add_filter( 'the_content','social_warfare_wrapper',200 );

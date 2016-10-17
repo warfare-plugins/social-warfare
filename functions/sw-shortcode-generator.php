@@ -53,7 +53,7 @@ if ( ! class_exists( 'swp_shortcode_generator' ) ) {
 		}
 
 		public function tinymce_register_plugin( $plugin_array ) {
-			$plugin_array['swp_shortcode_generator'] = plugins_url( '/sw-shortcode-generator.js', __FILE__ );
+			$plugin_array['swp_shortcode_generator'] = swp_PLUGIN_DIR . '/js/sw-shortcode-generator.js';
 			return $plugin_array;
 		}
 

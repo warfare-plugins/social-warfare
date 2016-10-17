@@ -59,9 +59,9 @@ function swp_twitter_request_link( $url ) {
 		$request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
 
 		// Debugging
-		if ( isset( $_GET['swp_twitter_debug'] ) && $_GET['swp_twitter_debug'] == true ) :
+		if ( _swp_is_debug( 'twitter' ) ) {
 			echo '<b>Request URL:</b> ' . $request_url . '<br />';
-			endif;
+		}
 
 		return $request_url;
 
@@ -89,9 +89,9 @@ function swp_format_twitter_response( $response ) {
 	if ( $swp_user_options['twitter_shares'] ) :
 
 		// Debugging
-		if ( isset( $_GET['swp_twitter_debug'] ) && $_GET['swp_twitter_debug'] == true ) :
+		if ( _swp_is_debug( 'twitter' ) ) {
 			echo '<b>Response:</b> ' . $response . '<br />';
-			endif;
+		}
 
 		// Parse the response to get the actual number
 		$response = json_decode( $response, true );

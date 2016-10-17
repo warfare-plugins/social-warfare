@@ -4,7 +4,6 @@
  * CHECK FOR PREMIUM ACTIVATION
  */
 function is_swp_registered() {
-
 	// Fetch the User's Options Array
 	$swp_user_options = get_option( 'socialWarfareOptions' );
 
@@ -45,11 +44,7 @@ function swp_admin_notice() {
  * CHECK WARFARE PLUGINS SERVER
  */
 
-if ( isset( $_GET['reg_check'] ) && $_GET['reg_check'] == true ) :
-	var_dump( swp_check_registration_status() );
-	endif;
-
-	// A function to check if the site is registered at our server
+// A function to check if the site is registered at our server
 function swp_check_registration_status() {
 
 	// Fetch the User's Options Array

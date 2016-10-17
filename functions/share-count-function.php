@@ -69,9 +69,9 @@ function get_social_warfare_shares( $postID ) {
 		$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
 
 		// Debug the Alternate URL being checked
-		if ( isset( $_GET['swp_recovery_debug'] ) && $_GET['swp_recovery_debug'] == true ) :
+		if ( _swp_is_debug( 'recovery' ) ) {
 			echo $alternateURL;
-			endif;
+		}
 
 		foreach ( $networks as $network ) :
 
