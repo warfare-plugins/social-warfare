@@ -1,460 +1,111 @@
+/*!
+ * jQuery throttle / debounce - v1.1 - 3/7/2010
+ * http://benalman.com/projects/jquery-throttle-debounce-plugin/
+ *
+ * Copyright (c) 2010 "Cowboy" Ben Alman
+ * Dual licensed under the MIT and GPL licenses.
+ * http://benalman.com/about/license/
+ */
+
+(function( window, undefined ) {
+	'$:nomunge'; // Used by YUI compressor.
+
+	// Since jQuery really isn't required for this plugin, use `jQuery` as the
+	// namespace only if it already exists, otherwise use the `Cowboy` namespace,
+	// creating it if necessary.
+	var $ = window.jQuery || window.Cowboy || ( window.Cowboy = {} ),
+
+	// Internal method reference.
+	jq_throttle;
+
+	$.swpThrottle = jq_throttle = function( delay, no_trailing, callback, debounce_mode ) {
+		// After wrapper has stopped being called, this timeout ensures that
+		// `callback` is executed at the proper times in `throttle` and `end`
+		// debounce modes.
+		var timeout_id,
+
+		// Keep track of the last time `callback` was executed.
+		last_exec = 0;
+
+		// `no_trailing` defaults to falsy.
+		if ( typeof no_trailing !== 'boolean' ) {
+			debounce_mode = callback;
+			callback = no_trailing;
+			no_trailing = undefined;
+		}
+
+		// The `wrapper` function encapsulates all of the throttling / debouncing
+		// functionality and when executed will limit the rate at which `callback`
+		// is executed.
+		function wrapper() {
+			var that = this,
+			elapsed = +new Date() - last_exec,
+			args = arguments;
+
+			// Execute `callback` and update the `last_exec` timestamp.
+			function exec() {
+				last_exec = +new Date();
+				callback.apply( that, args );
+			}
+
+			// If `debounce_mode` is true (at_begin) this is used to clear the flag
+			// to allow future `callback` executions.
+			function clear() {
+				timeout_id = undefined;
+			}
+
+			if ( debounce_mode && ! timeout_id ) {
+				// Since `wrapper` is being called for the first time and
+				// `debounce_mode` is true (at_begin), execute `callback`.
+				exec();
+			}
+
+			// Clear any existing timeout.
+			timeout_id && clearTimeout( timeout_id );
+
+			if ( debounce_mode === undefined && elapsed > delay ) {
+				// In throttle mode, if `delay` time has been exceeded, execute
+				// `callback`.
+				exec();
+			} else if ( no_trailing !== true ) {
+				// In trailing throttle mode, since `delay` time has not been
+				// exceeded, schedule `callback` to execute `delay` ms after most
+				// recent execution.
+				//
+				// If `debounce_mode` is true (at_begin), schedule `clear` to execute
+				// after `delay` ms.
+				//
+				// If `debounce_mode` is false (at end), schedule `callback` to
+				// execute after `delay` ms.
+				timeout_id = setTimeout( debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay );
+			}
+		}
+
+		// Set the guid of `wrapper` function to the same of original callback, so
+		// it can be removed in jQuery 1.4+ .unbind or .die by using the original
+		// callback as a reference.
+		if ( $.guid ) {
+			wrapper.guid = callback.guid = callback.guid || $.guid++;
+		}
+
+		// Return the wrapper function.
+		return wrapper;
+	};
+
+	$.swpDebounce = function( delay, at_begin, callback ) {
+		return callback === undefined ? jq_throttle( delay, at_begin, false ) : jq_throttle( delay, callback, at_begin !== false );
+	};
+})( this );
+
 /* global swpPinIt */
 var socialWarfarePlugin = socialWarfarePlugin || {};
 
 (function( window, $, undefined ) {
 	'use strict';
 
-	var swpCheckIsRunning = false;
-
-	function isOdd( num ) {
-		return num % 2;
-	}
-
 	function absint( $int ) {
 		return parseInt( $int, 10 );
 	}
-
-	// Function to check if the buttons are on one line or two
-	function buttonSizeCheck() {
-		if ( true === swpCheckIsRunning ) {
-			return false;
-		} else {
-			swpCheckIsRunning = true;
-
-			// Let's check each iteration of the social panel
-			var notInline = false;
-			$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
-				var $that = $( this );
-				var firstButton, firstLabel, lastButton, lastLabel;
-
-				// Fetch the offset.top of the first element in the panel
-				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-child(1)' ).css( 'display' ) ) {
-					firstButton = $( this ).find( '.nc_tweetContainer:nth-child(1)' ).offset();
-					firstLabel = 'First';
-				} else {
-					firstButton = $that.find( '.nc_tweetContainer:nth-child(2)' ).offset();
-					firstLabel = 'Second';
-				}
-
-				// Fetch the offset.top of the last element in the panel
-				if ( 'none' !== $that.find( '.nc_tweetContainer:nth-last-child(1)' ).css( 'display' ) ) {
-					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(1)' ).offset();
-					lastLabel = 'Last';
-				} else {
-					lastButton = $that.find( '.nc_tweetContainer:nth-last-child(2)' ).offset();
-					lastLabel = 'Second Last';
-				}
-
-				if ( firstButton.top !== lastButton.top ) {
-					notInline = true;
-				}
-			});
-			if ( 'undefined' === typeof window.swpAdjust ) {
-				window.swpAdjust = 0;
-			}
-			if ( true === notInline && window.swpAdjust <= 20 ) {
-				socialWarfarePlugin.setWidths( true, true );
-			} else {
-				$( '.nc_socialPanel' ).css({ opacity: 1 });
-			}
-			swpCheckIsRunning = false;
-		}
-	}
-
-	function reuseWidths( animation ) {
-		$( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
-			var index;
-
-			if ( $( this ).parents( '.nc_wrapper' ).length ) {
-				index = 'float';
-			} else {
-				index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
-			}
-
-			var dataId = absint( $( this ).attr( 'data-id' ) );
-
-			if ( 'undefined' !== typeof window.origSets[index] ) {
-				$( this ).find( '.iconFiller' ).animate({
-					width: window.origSets[index][dataId].fil
-				}, animation );
-
-				$( this ).find( '.swp_count' ).animate({
-					'padding-left': window.origSets[index][dataId].pl,
-					'padding-right':  window.origSets[index][dataId].pr
-				}, animation );
-			}
-		});
-	}
-
-	// Function to set or reset the button sizes to fit their respective container area
-	socialWarfarePlugin.setWidths = function( resize, adjust, secondary ) {
-		var animProps = {
-			duration: 0,
-			easing: 'linear',
-			queue: false
-		};
-
-		// Check if this is the first or a forced resize
-		if ( 'undefined' !== typeof window.origSets && ! resize ) {
-			reuseWidths( animProps );
-			return;
-		}
-
-		// Declare the variable for saving presets
-		window.origSets = [];
-
-		// Declare the variable for saving original measurements
-		if ( 'undefined' === typeof window.defaults ) {
-			window.defaults = [];
-		}
-
-		// Loop through each set of buttons
-		$( '.nc_socialPanel:not(.nc_socialPanelSide)' ).each( function() {
-			// Declare a global so we can save the sizes for faster processing later
-			var index = $( '.nc_socialPanel' ).index( $( this ) );
-			if ( 'undefined' === typeof window.defaults[index] ) {
-				window.defaults[index] = [];
-			}
-
-			if ( 'undefined' === typeof window.swpAdjust && ! adjust ) {
-				window.swpAdjust = 0;
-			} else if ( 'undefined' === typeof window.swpAdjust && true === adjust ) {
-				window.swpAdjust = 1;
-			} else if ( true === adjust ) {
-				++window.swpAdjust;
-			} else {
-				window.swpAdjust = 0;
-			}
-
-			var totalWidth  = $( this ).width() - window.swpAdjust;
-
-			// Count the number of buttons
-			var totalElements	= $( this ).attr( 'data-count' );
-
-			// The average shows us how wide each button needs to become
-			var average = absint( totalWidth ) / absint( totalElements );
-
-			// Check how much space is on the left so we can show or hide the floating buttons if they exist
-			var offset = $( '.nc_socialPanel:not(.nc_socialPanelSide)' ).offset();
-			var minScreenWidth = $( '.nc_socialPanelSide' ).attr( 'data-screen-width' );
-
-			// If we have 100px, show the side floaters. If not, hide it.
-			if ( offset.left < 100 || $( window ).width() < minScreenWidth ) {
-				$( '.nc_socialPanelSide' ).addClass( 'mobile' );
-			} else {
-				$( '.nc_socialPanelSide' ).removeClass( 'mobile' );
-			}
-
-			// Declare some variables for use later
-			var widthNeeded = 0;
-			var padding = 0;
-			var totesWidth = 0;
-
-			// Check if we already have a widthNeeded saved from earlier
-			if ( 'undefined' === typeof window.defaults[index].defaultWidthNeeded ) {
-				// Loop through each button
-				$( this ).find( '.nc_tweetContainer' ).each( function() {
-					var extraSpace = 0;
-
-					// Make sure we add extra space for expansions and whatnot
-					if ( totalElements > 3 ) {
-						extraSpace = ( totalElements - 1 ) * 5;
-					} else {
-						extraSpace = ( totalElements - 1 ) * 15;
-					}
-
-					// Check how wide it must be to fit
-					widthNeeded += $( this ).width() + extraSpace;
-
-					var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
-					paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
-					var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
-					paddingRight = absint( paddingRight.replace( 'px', '' ) );
-					padding = paddingLeft + paddingRight;
-					widthNeeded = widthNeeded - padding;
-				});
-				// Save the width needed for later use
-				window.defaults[index].defaultWidthNeeded = widthNeeded;
-
-			// If we already have it, use it
-			} else {
-				widthNeeded = window.defaults[index].defaultWidthNeeded;
-			}
-
-			// Check if we have enough room to display the total shares
-			totesWidth = $( this ).find( '.nc_tweetContainer.totes' ).width();
-
-			if ( totalWidth < widthNeeded && ! $( this ).hasClass( 'nc_floater' ) ) {
-				$( this ).find( '.nc_tweetContainer.totes' ).hide();
-			}
-
-			var oddball, marginLeft, marginRight;
-
-			if ( ( totalWidth ) <= ( widthNeeded - totesWidth + 25 ) && ! $( this ).hasClass( 'nc_floater' ) ) {
-				if ( $( this ).find( '.totes' ).length ) {
-					if ( $( this ).hasClass( 'connected' ) ) {
-						average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) );
-					} else {
-						average = ( absint( totalWidth ) / ( absint( totalElements ) - 1 ) ) - 10;
-					}
-					oddball = average * ( totalElements - 1 );
-				} else {
-					if ( $( this ).hasClass( 'connected' ) ) {
-						average = ( absint( totalWidth ) / ( absint( totalElements ) ) );
-					} else {
-						average = ( absint( totalWidth ) / ( absint( totalElements ) ) ) - 11;
-					}
-					oddball = average * totalElements;
-				}
-
-				oddball = totalWidth - oddball;
-
-				$( this ).addClass( 'mobile' ).removeClass( 'notMobile' );
-				$( '.spaceManWilly' ).css({ width: 'auto' });
-
-				if ( ! $( '.swp_count .iconFiller' ).length ) {
-					$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).hide();
-				} else {
-					$( this ).find( '.nc_tweetContainer.totes' ).hide();
-				}
-				$( this ).find( '.nc_tweetContainer' ).each(function() {
-					width = $( this ).find( '.iconFiller' ).width();
-					if ( isOdd( average ) ) {
-						marginLeft = Math.floor( ( average - width ) / 2 ) - 1;
-						marginRight = Math.floor( ( average - width ) / 2 ) - 1;
-					} else {
-						marginLeft = ( ( average - width ) / 2 ) - 1;
-						marginRight = ( ( average - width ) / 2 ) - 1;
-					}
-					$( this ).find( '.swp_count' ).animate({ 'padding-left': 0,'padding-right': 0 }, animProps );
-					$( this ).find( '.iconFiller' ).animate({ 'margin-left': marginLeft + 'px','margin-right': marginRight + 'px' }, animProps );
-				});
-			} else {
-				$( this ).addClass( 'notMobile' ).removeClass( 'mobile' );
-
-				if ( totalWidth > widthNeeded ) {
-					$( this ).find( '.nc_tweetContainer.totes,.nc_tweetContainer .swp_count' ).show();
-				}
-
-				$( this ).find( '.nc_tweetContainer .iconFiller' ).animate({ 'margin-left': '0px','margin-right': '0px' }, animProps );
-
-				average = Math.floor( average );
-				oddball = average * totalElements;
-				oddball = totalWidth - oddball;
-
-				if ( $( this ).find( '.totesalt' ).length ) {
-					var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
-					var newTotalWidth = totalWidth - totes;
-					average = absint( newTotalWidth ) / absint( totalElements - 1 );
-					average = Math.floor( average );
-					oddball = average * ( totalElements - 1 );
-					oddball = newTotalWidth - oddball;
-				} else {
-					var totes = $( this ).find( '.totes:visible' ).outerWidth( true );
-					if ( totes > average ) {
-						newTotalWidth = totalWidth - totes;
-						average = absint( newTotalWidth ) / absint( totalElements - 1 );
-						average = Math.floor( average );
-						oddball = average * ( totalElements - 1 );
-						oddball = newTotalWidth - oddball;
-					}
-				}
-
-				var count = 0;
-				index = $( '.nc_socialPanel' ).index( $( this ) );
-				window.origSets[index] = [];
-
-				if ( $( this ).hasClass( 'nc_floater' ) ) {
-					// If this is the floating bar, don't size it independently. Just clone the settings from the other one.
-					var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
-					var floatIndexOrigin = $( '.nc_socialPanel' ).index( firstSocialPanel );
-					$( this ).replaceWith( firstSocialPanel.prop( 'outerHTML' ) );
-					var width = firstSocialPanel.outerWidth( true );
-					offset = firstSocialPanel.offset();
-					var parentOffset = firstSocialPanel.parent().offset();
-					$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css(
-						{
-							width: width,
-							left: parentOffset.left
-						});
-					socialWarfarePlugin.activateHoverStates();
-					window.origSets['float'] = window.origSets[floatIndexOrigin];
-				} else {
-					$( this ).find( '.nc_tweetContainer' ).not( '.totesalt' ).each(function() {
-						var icon      = $( this ).find( 'i.sw' ).outerWidth() + 14;
-						var shareTerm = $( this ).find( '.swp_share' ).outerWidth();
-						var tote      = icon + shareTerm + 3;
-						$( this ).find( '.spaceManWilly' ).animate({ width: tote + 'px' }, animProps );
-
-						++count;
-						var paddingLeft = $( this ).find( '.swp_count' ).css( 'padding-left' );
-						paddingLeft = absint( paddingLeft.replace( 'px', '' ) );
-						var paddingRight = $( this ).find( '.swp_count' ).css( 'padding-right' );
-						paddingRight = absint( paddingRight.replace( 'px', '' ) );
-						var dataId = $( this ).attr( 'data-id' );
-						dataId = absint( dataId );
-						if ( count > totalElements ) {
-							count = 1;
-						}
-						var add = 0;
-						if ( count <= oddball ) {
-							add = 1;
-						}
-						var curWidth = $( this ).outerWidth( true );
-						curWidth = curWidth - paddingLeft;
-						curWidth = curWidth - paddingRight;
-						var dif = average - curWidth;
-						window.origSets[index][dataId] = [];
-						if ( isOdd( dif ) ) {
-							dif = dif - 1;
-							dif = dif / 2;
-							pl = dif + 1 + average;
-							pr = dif + average;
-							window.origSets[index][dataId].pl = dif + 1 + 'px';
-							window.origSets[index][dataId].pr = dif + 'px';
-							window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
-							$( this ).find( '.swp_count' ).animate({
-								'padding-left': window.origSets[index][dataId].pl,
-								'padding-right': window.origSets[index][dataId].pr
-							}, 0, 'linear', function() {
-								$( this ).css({ transition: 'padding .1s linear'
-								});
-							});
-						} else {
-							dif = dif / 2;
-							var pl = dif + average;
-							var pr = dif + average;
-							window.origSets[index][dataId].pl = dif + 'px';
-							window.origSets[index][dataId].pr = dif + 'px';
-							window.origSets[index][dataId].fil = $( this ).find( '.iconFiller' ).width() + 'px';
-							$( this ).find( '.swp_count' ).animate({
-								'padding-left': window.origSets[index][dataId].pl,
-								'padding-right': window.origSets[index][dataId].pr
-							}, 0, 'linear', function() {
-									$( this ).css({
-										transition: 'padding .1s linear'
-									});
-								});
-						}
-						window.resized = true;
-					});
-				}
-			}
-		});
-
-		if ( true === secondary || true === window.swpSecondary ) {
-			window.swpSecondary = true;
-			setTimeout( function() {
-				buttonSizeCheck();
-			}, 200 );
-		}
-	};
-
-	socialWarfarePlugin.activateHoverStates = function() {
-		$( '.nc_tweetContainer' ).not( '.totesalt, .nc_socialPanelSide .nc_tweetContainer' ).on( 'mouseenter',
-			function() {
-				if ( ! $( this ).parents( '.nc_socialPanel' ).hasClass( 'mobile' ) ) {
-					var thisElem = $( this );
-					var icon         = thisElem.find( '.iconFiller' ).width();
-					var shareTerm    = thisElem.find( '.swp_share' ).outerWidth();
-					var wrapper      = thisElem.find( '.spaceManWilly' ).outerWidth();
-					var tote         = wrapper;
-					var dif          = wrapper - icon;
-					var origDif      = dif;
-					var orig         = absint( tote ) - absint( dif );
-					var ele          = $( this ).parents( '.nc_socialPanel' ).attr( 'data-count' );
-					var average, oddball, index;
-
-					if ( $( this ).siblings( '.totes' ).length ) {
-						average = ( absint( dif ) / ( ( absint( ele ) -2 ) ) );
-						average = Math.floor( average );
-						oddball = dif % ( ele - 2 );
-					} else {
-						average = ( absint( dif ) / ( ( absint( ele ) -1 ) ) );
-						average = Math.floor( average );
-						oddball = dif % ( ele - 1 );
-					}
-
-					if ( $( this ).parents( '.nc_wrapper' ).length ) {
-						index = 'float';
-					} else {
-						index = $( '.nc_socialPanel' ).index( $( this ).parent( '.nc_socialPanel' ) );
-					}
-
-					var dataId = absint( $( this ).attr( 'data-id' ) );
-
-					$( this ).find( '.iconFiller' ).css({ width: wrapper });
-
-					var pl = window.origSets[index][dataId].pl;
-					var pr = window.origSets[index][dataId].pr;
-
-					$( this ).find( '.swp_count' ).css({
-						'padding-left': window.origSets[index][dataId].pl,
-						'padding-right': window.origSets[index][dataId].pr
-					});
-
-					dataId = $( this ).attr( 'data-id' );
-					var count = 0;
-
-					if ( $( this ).hasClass( 'totes' ) ) {
-						$( this ).siblings( '.nc_tweetContainer' ).each(function() {
-							dataId = absint( $( this ).attr( 'data-id' ) );
-							$( this ).find( '.iconFiller' ).css({
-								width: window.origSets[index][dataId].fil
-							});
-							$( this ).find( '.swp_count' ).css({
-								'padding-left': window.origSets[index][dataId].pl,
-								'padding-right': window.origSets[index][dataId].pr
-							});
-						});
-					} else {
-						$( this ).siblings( '.nc_tweetContainer' ).not( '.totes' ).each(function() {
-							++count;
-							var ave = average;
-							var offsetL, offsetR;
-
-							if ( count <= oddball ) {
-								ave = ave + 1;
-							}
-
-							dataId = absint( $( this ).attr( 'data-id' ) );
-							if ( isOdd( ave ) ) {
-								offsetL = ( ( ( ave - 1 ) / 2 ) + 1 );
-								offsetR = ( ( ave - 1 ) / 2 );
-								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
-								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
-							} else {
-								offsetL = ( ave / 2 );
-								offsetR = ( ave / 2 );
-								pl = absint( window.origSets[index][dataId].pl ) - offsetL;
-								pr = absint( window.origSets[index][dataId].pr ) - offsetR;
-							}
-
-							$( this ).find( '.iconFiller' ).css({ width: origSets[index][dataId].fil });
-							$( this ).find( '.swp_count' ).css({
-								'padding-left': pl + 'px',
-								'padding-right': pr + 'px'
-							});
-						});
-					}
-				}
-			}
-		);
-
-		$( '.nc_socialPanel' ).on( 'mouseleave click', function() {
-			if ( ! $( this ).hasClass( 'mobile' ) ) {
-				socialWarfarePlugin.setWidths();
-			}
-		});
-
-		$( '.nc_fade .nc_tweetContainer' ).on( 'mouseenter', function() {
-			$( this ).css({ opacity: 1 }).siblings( '.nc_tweetContainer' ).css({ opacity: 0.5 });
-		});
-
-		$( '.nc_fade' ).on( 'mouseleave', function() {
-			$( '.nc_fade .nc_tweetContainer' ).css({ opacity: 1 });
-		});
-	};
 
 	/****************************************************************************
 
@@ -512,8 +163,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.nc_socialPanel' ).eq( 0 ).addClass( 'swp_one' );
 				$( '.nc_socialPanel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.nc_socialPanel' ).eq( 1 ).addClass( 'swp_three' );
-				window.origSets['float'] = window.origSets[index];
-				socialWarfarePlugin.setWidths();
 			}
 		}
 	}
@@ -566,9 +215,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if ( floatOption == 'floatBottom' ) {
-					$( 'body' ).animate({ 'padding-bottom': window.body_padding_bottom + 'px' }, 0 );
+					$( 'body' ).animate({ 'padding-bottom': window.bodyPaddingBottom + 'px' }, 0 );
 				} else if ( floatOption == 'floatTop' ) {
-					$( 'body' ).animate({ 'padding-top': window.body_padding_top + 'px' }, 0 );
+					$( 'body' ).animate({ 'padding-top': window.bodyPaddingTop + 'px' }, 0 );
 				}
 			} else {
 				var newPadding, firstOffset;
@@ -577,13 +226,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if ( floatOption == 'floatBottom' ) {
-					newPadding = window.body_padding_bottom + 50;
+					newPadding = window.bodyPaddingBottom + 50;
 					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
 				} else if ( floatOption == 'floatTop' ) {
 					firstOffset = $( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).first().offset();
 					console.log( firstOffset );
 					if ( firstOffset.top > scrollPos + windowHeight ) {
-						newPadding = window.body_padding_top + 50;
+						newPadding = window.bodyPaddingTop + 50;
 						$( 'body' ).animate({ 'padding-top': newPadding + 'px' }, 0 );
 					}
 				}
@@ -626,56 +275,17 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}
 			}
 		}
-
-		var lst = st;
-	}
-
-	// Twitter Shares Count
-	function floatingBar() {
-		$( window ).on( 'scroll', function() {
-			floatingBarReveal();
-		});
-	}
-
-	function applyScale() {
-		$( '.nc_socialPanel' ).each( function() {
-			$( this ).css({ width: '100%' });
-			var width = $( this ).width();
-			var scale = $( this ).attr( 'data-scale' );
-			var align = $( this ).attr( 'data-align' );
-			var newWidth;
-			if ( ( align == 'fullWidth' && scale != 1 ) || scale > 1 || $( this ).hasClass( 'nc_socialPanelSide' ) ) {
-				newWidth = width / scale;
-				$( this ).css( 'cssText', 'width:' + newWidth + 'px!important;' );
-				$( this ).css({
-					transform: 'scale(' + scale + ')',
-					'transform-origin': 'left'
-				});
-			} else if ( align != 'fullWidth' && scale < 1 ) {
-				newWidth = width / scale;
-				$( this ).css({
-					transform: 'scale(' + scale + ')',
-					'transform-origin': align
-				});
-			}
-		});
 	}
 
 	function initShareButtons() {
-		if ( $( '.nc_socialPanel' ).length ) {
-			applyScale();
-			$.when(
-				socialWarfarePlugin.setWidths( true )
-			).done(function() {
-				setTimeout( function() {
-					socialWarfarePlugin.setWidths( true, false, true );
-				}, 200 );
-			});
+		if ( 0 !== $( '.nc_socialPanel' ).length ) {
 			createFloatBar();
 			$( window ).scrollTop();
-			floatingBar();
-			floatingBarReveal();
-			socialWarfarePlugin.activateHoverStates();
+			$( window ).scroll( $.swpThrottle( 250, function() {
+				floatingBarReveal();
+			}));
+
+			$( window ).trigger( 'scroll' );
 		}
 	}
 
@@ -739,58 +349,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	$( document ).ready( function() {
-		$( document ).on( 'click', '.nc_tweet, a.swp_CTT', function( event ) {
-			if ( $( this ).hasClass( 'noPop' ) || ! $( this ).attr( 'data-link' ) ) {} else {
-				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
-				href = $( this ).attr( 'data-link' );
-				href = href.replace( '’', '\'' );
-				if ( $( this ).hasClass( 'pinterest' ) || $( this ).hasClass( 'buffer_link' ) || $( this ).hasClass( 'flipboard' ) ) {
-					height = 550;
-					width = 775;
-				} else {
-					height = 270;
-					width = 500;
-				}
-
-				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
-
-				return false;
-			}
-		});
-
-		// Fetch the padding amount to make space later for the floating bars
-		window.body_padding_top = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
-		window.body_padding_bottom = absint( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
-
-		$( window ).resize(function() {
-			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
-				setTimeout( function() {
-					window.swpAdjust = 1;
-					initShareButtons();
-				}, 100 );
-			}
-		});
-
-		$( document.body ).on( 'post-load', function() {
-			setTimeout( function() {
-				initShareButtons();
-			}, 100 );
-		});
-
-		if ( $( '.nc_socialPanelSide' ).length ) {
-			var buttonsHeight = $( '.nc_socialPanelSide' ).height();
-			var windowHeight = $( window ).height();
-			var newPosition = absint( ( windowHeight / 2 ) - ( buttonsHeight / 2 ) );
-			setTimeout( function() {
-				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 ); console.log( newPosition );
-			}, 105 );
-		}
-
-		setTimeout( function() {
-			initShareButtons();
-		}, 100 );
-
+	function resetCache() {
 		// Reset the cache
 		if ( 'undefined' !== typeof swpCacheURL ) {
 			var urlParams;
@@ -804,6 +363,68 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			$.get( swpCacheURL + urlParams );
 		}
+	}
+
+	function handleWindowOpens() {
+		$( '.nc_tweet, a.swp_CTT' ).on( 'click', function( event ) {
+			if ( $( this ).hasClass( 'noPop' ) ) {
+				return false;
+			}
+
+			if( $( this ).attr( 'data-link' ) ) {
+				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
+
+				var href = $( this ).attr( 'data-link' );
+				var height, width, instance;
+
+				href = href.replace( '’', '\'' );
+
+				if ( $( this ).hasClass( 'pinterest' ) || $( this ).hasClass( 'buffer_link' ) || $( this ).hasClass( 'flipboard' ) ) {
+					height = 550;
+					width = 775;
+				} else {
+					height = 270;
+					width = 500;
+				}
+
+				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
+
+				return false;
+			}
+		});
+	}
+
+	$( document ).ready( function() {
+		handleWindowOpens();
+
+		// Fetch the padding amount to make space later for the floating bars
+		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
+		window.bodyPaddingBottom = absint( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
+
+		$( window ).resize( $.swpDebounce( 250, function() {
+			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
+				window.swpAdjust = 1;
+				initShareButtons();
+			}
+		}));
+
+		$( window ).trigger( 'resize' );
+
+		$( document.body ).on( 'post-load', function() {
+			initShareButtons();
+		});
+
+		if ( 0 !==  $( '.nc_socialPanelSide' ).length ) {
+			var buttonsHeight = $( '.nc_socialPanelSide' ).height();
+			var windowHeight = $( window ).height();
+			var newPosition = absint( ( windowHeight / 2 ) - ( buttonsHeight / 2 ) );
+			setTimeout( function() {
+				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 );
+				console.log( newPosition );
+			}, 105 );
+		}
+
+		resetCache();
 
 		if ( swpPinIt.enabled ) {
 			pinitButton();

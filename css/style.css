@@ -1,5 +1,9 @@
 .nc_socialPanel {
 	clear: both;
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: center;
 	margin-top: 20px!important;
 	margin-bottom: 20px!important;
 	height: 30px;
@@ -22,9 +26,15 @@ div.nc_socialPanel .nc_tweetContainer {
 	height: 32px;
 	font-family: Lato;
 	border-radius: 2px;
+	text-align: center;
 	transition: all .1s linear;
 	border-size: 1px;
 	margin: 0 5px;
+	flex: 1;
+}
+
+div.nc_socialPanel .nc_tweetContainer:hover {
+	flex: 2;
 }
 
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,
@@ -52,11 +62,6 @@ div.nc_socialPanel .nc_tweetContainer {
 	line-height: 30px;
 }
 
-.nc_socialPanel .spaceManWilly {
-	display: block;
-	max-width: none!important;
-}
-
 .nc_socialPanel span.swp_count {
 	font-size: 14px;
 }
@@ -70,7 +75,6 @@ div.nc_socialPanel .nc_tweetContainer {
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) {
-	opacity: 0;
 	transition: opacity .2s ease-in-out;
 }
 
@@ -111,13 +115,18 @@ span.swp_share {
 .iconFiller {
 	display: block;
 	float: left;
-	transition: width .1s linear;
+	transition: width 0.5s linear;
 	overflow: hidden;
 	height: 30px;
 }
 
 .nc_socialPanel .iconFiller {
 	width: 30px;
+}
+
+.nc_socialPanel .nc_tweetContainer:hover .iconFiller,
+.nc_socialPanel .nc_tweetContainer:focus .iconFiller {
+	width: auto;
 }
 
 .nc_socialPanel .totes {
@@ -782,6 +791,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_socialPanelSide {
+	flex-direction: column;
 	z-index: 9999999;
 	top: 200px;
 	transition: all .2s linear;
