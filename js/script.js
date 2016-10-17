@@ -429,5 +429,18 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		if ( swpPinIt.enabled ) {
 			pinitButton();
 		}
+
+		$('.nc_tweetContainer').mouseenter(function(){
+			var term_width = $(this).find('.swp_share').width();
+			var icon_width = $(this).find('i.sw').outerWidth();
+			var container_width = $(this).width();
+			var percentage_change = 1 + ((term_width + 35) / container_width);
+			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+			$(this).css({flex:percentage_change + ' 1 0%'});
+		});
+		$('.nc_tweetContainer').mouseleave(function(){
+			$(this).find('.iconFiller').width('30px');
+			$(this).css({flex:'1'});
+		});
 	});
 })( this, jQuery );

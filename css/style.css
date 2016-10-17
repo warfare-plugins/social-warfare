@@ -34,7 +34,7 @@ div.nc_socialPanel .nc_tweetContainer {
 }
 
 div.nc_socialPanel .nc_tweetContainer:hover {
-	flex: 2;
+	flex: 1.5;
 }
 
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,
@@ -46,6 +46,14 @@ div.nc_socialPanel .nc_tweetContainer:hover {
 	text-decoration: none;
 	height: 30px;
 	text-transform: none;
+}
+
+.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:nth-child(1) {
+	margin-left:0;
+}
+
+.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:nth-last-child(1) {
+	margin-right:0px;
 }
 
 .nc_socialPanel a .swp_count {
@@ -102,6 +110,7 @@ span.swp_share {
 	line-height: 30px;
 	float: right;
 	max-width: none!important;
+	float: left;
 }
 
 .nc_socialPanel .sw {
@@ -110,18 +119,23 @@ span.swp_share {
 	text-shadow: none!important;
 	width: 20px;
 	margin: 0 7px;
+	float:left;
 }
 
 .iconFiller {
 	display: block;
 	float: left;
-	transition: width 0.5s linear;
+	transition: width 0.1s linear;
 	overflow: hidden;
 	height: 30px;
 }
 
 .nc_socialPanel .iconFiller {
 	width: 30px;
+}
+span.spaceManWilly {
+	width:120px;
+	display:block;
 }
 
 .nc_socialPanel .nc_tweetContainer:hover .iconFiller,
@@ -138,6 +152,7 @@ span.swp_share {
 	border: 1px solid #e08a0f;
 	border-radius: 2px;
 	padding: 0 10px;
+	flex: none!important;
 }
 
 .nc_socialPanel div.totes.totesalt,
