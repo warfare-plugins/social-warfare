@@ -42,7 +42,6 @@ jQuery( document ).ready(function() {
 		jQuery( this ).parents( 'li' ).addClass( 'sw-active-tab' );
 
 		if ( tab == 'swp_styles' ) {
-			socialWarfarePlugin.setWidths( true );
 			socialWarfarePlugin.activateHoverStates();
 		} else {
 			jQuery( '.nc_socialPanel' ).animate( { opacity: 0 }, 0 );
@@ -548,9 +547,7 @@ function swUpdateScale() {
 		});
 	}
 
-	socialWarfarePlugin.setWidths( true );
-
-	activateHoverStates();
+	socialWarfarePlugin.activateHoverStates();
 }
 
 jQuery( document ).ready( function() {
