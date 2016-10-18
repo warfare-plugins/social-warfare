@@ -284,6 +284,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		if ( 0 !== $( '.nc_socialPanel' ).length ) {
 			createFloatBar();
 			swp_activate_hover_states();
+			handleWindowOpens();
 			$( window ).scrollTop();
 			$( window ).scroll( $.swpThrottle( 250, function() {
 				floatingBarReveal();
@@ -401,7 +402,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	/**
 	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
 	 * @since 2.1.0
-	 * @todo Made the mouseenter/mouseleave events detect the hovering of the floating buttons on the bottom
 	 * @param none
 	 * @return none
 	 */
