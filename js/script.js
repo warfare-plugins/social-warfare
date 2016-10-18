@@ -354,22 +354,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	function resetCache() {
-		// Reset the cache
-		if ( 'undefined' !== typeof swpCacheURL ) {
-			var urlParams;
-
-			// If the URL Contains a question mark already
-			if ( swpCacheURL.indexOf( '?' ) != -1 ) {
-				urlParams = '&swp_cache=rebuild';
-			} else {
-				urlParams = '?swp_cache=rebuild';
-			}
-
-			$.get( swpCacheURL + urlParams );
-		}
-	}
-
 	function handleWindowOpens() {
 		$( '.nc_tweet, a.swp_CTT' ).on( 'click', function( event ) {
 			if ( $( this ).hasClass( 'noPop' ) ) {
@@ -450,8 +434,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				console.log( newPosition );
 			}, 105 );
 		}
-
-		resetCache();
 
 		if ( swpPinIt.enabled ) {
 			pinitButton();
