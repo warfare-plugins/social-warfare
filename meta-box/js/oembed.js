@@ -2,13 +2,13 @@ jQuery( function( $ )
 {
 	'use strict';
 
-	$( '.rwmb-oembed-wrapper .spinner' ).hide();
+	$( '.swpmb-oembed-wrapper .spinner' ).hide();
 
-	$( 'body' ).on( 'click', '.rwmb-oembed-wrapper .show-embed', function() {
+	$( 'body' ).on( 'click', '.swpmb-oembed-wrapper .show-embed', function() {
 		var $this = $( this ),
 			$spinner = $this.siblings( '.spinner' ),
 			data = {
-				action: 'rwmb_get_embed',
+				action: 'swpmb_get_embed',
 				url: $this.siblings( 'input' ).val()
 			};
 

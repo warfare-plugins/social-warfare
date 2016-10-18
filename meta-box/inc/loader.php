@@ -10,7 +10,7 @@
  * Plugin loader class.
  * @package Meta Box
  */
-class RWMB_Loader
+class SWPMB_Loader
 {
 	/**
 	 * Class constructor.
@@ -27,7 +27,7 @@ class RWMB_Loader
 		 * @link https://github.com/rilwis/meta-box/issues/810
 		 */
 		spl_autoload_register( array( $this, 'autoload' ) );
-		if ( ! class_exists( 'RWMB_Core' ) )
+		if ( ! class_exists( 'SWPMB_Core' ) )
 		{
 			$this->autoload_fallback();
 		}
@@ -41,19 +41,19 @@ class RWMB_Loader
 	public function constants()
 	{
 		// Script version, used to add version for scripts and styles
-		define( 'RWMB_VER', '4.8.5' );
+		define( 'SWPMB_VER', '4.8.5' );
 
 		list( $path, $url ) = self::get_path();
 
 		// Plugin URLs, for fast enqueuing scripts and styles
-		define( 'RWMB_URL', $url );
-		define( 'RWMB_JS_URL', trailingslashit( RWMB_URL . 'js' ) );
-		define( 'RWMB_CSS_URL', trailingslashit( RWMB_URL . 'css' ) );
+		define( 'SWPMB_URL', $url );
+		define( 'SWPMB_JS_URL', trailingslashit( SWPMB_URL . 'js' ) );
+		define( 'SWPMB_CSS_URL', trailingslashit( SWPMB_URL . 'css' ) );
 
 		// Plugin paths, for including files
-		define( 'RWMB_DIR', $path );
-		define( 'RWMB_INC_DIR', trailingslashit( RWMB_DIR . 'inc' ) );
-		define( 'RWMB_FIELDS_DIR', trailingslashit( RWMB_INC_DIR . 'fields' ) );
+		define( 'SWPMB_DIR', $path );
+		define( 'SWPMB_INC_DIR', trailingslashit( SWPMB_DIR . 'inc' ) );
+		define( 'SWPMB_FIELDS_DIR', trailingslashit( SWPMB_INC_DIR . 'fields' ) );
 	}
 
 	/**
@@ -97,16 +97,16 @@ class RWMB_Loader
 	public function autoload( $class )
 	{
 		// Only load plugin's classes
-		if ( 'RW_Meta_Box' != $class && 0 !== strpos( $class, 'RWMB_' ) )
+		if ( 'SWP_Meta_Box' != $class && 0 !== strpos( $class, 'SWPMB_' ) )
 		{
 			return;
 		}
 
 		// Get file name
 		$file = 'meta-box';
-		if ( 'RW_Meta_Box' != $class )
+		if ( 'SWP_Meta_Box' != $class )
 		{
-			// Remove prefix 'RWMB_'
+			// Remove prefix 'SWPMB_'
 			$file = substr( $class, 5 );
 
 			// Optional '_Field'
@@ -115,7 +115,7 @@ class RWMB_Loader
 
 		$file = strtolower( str_replace( '_', '-', $file ) ) . '.php';
 
-		$dirs = array( RWMB_INC_DIR, RWMB_FIELDS_DIR, trailingslashit( RWMB_INC_DIR . 'walkers' ) );
+		$dirs = array( SWPMB_INC_DIR, SWPMB_FIELDS_DIR, trailingslashit( SWPMB_INC_DIR . 'walkers' ) );
 		foreach ( $dirs as $dir )
 		{
 			if ( file_exists( $dir . $file ) )
@@ -210,7 +210,7 @@ class RWMB_Loader
 		);
 		foreach ( $files as $file )
 		{
-			require RWMB_INC_DIR . "$file.php";
+			require SWPMB_INC_DIR . "$file.php";
 		}
 	}
 
@@ -220,15 +220,15 @@ class RWMB_Loader
 	public function init()
 	{
 		// Plugin core
-		new RWMB_Core;
+		new SWPMB_Core;
 
 		if ( is_admin() )
 		{
 			// Validation module
-			new RWMB_Validation;
+			new SWPMB_Validation;
 		}
 
 		// Public functions
-		require RWMB_INC_DIR . 'functions.php';
+		require SWPMB_INC_DIR . 'functions.php';
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * Taxonomy field class which set post terms when saving.
  */
-class RWMB_Taxonomy_Field extends RWMB_Object_Choice_Field
+class SWPMB_Taxonomy_Field extends SWPMB_Object_Choice_Field
 {
 	/**
 	 * Add default value for 'taxonomy' field
@@ -44,11 +44,11 @@ class RWMB_Taxonomy_Field extends RWMB_Object_Choice_Field
 		 */
 		if ( empty( $field['placeholder'] ) )
 		{
-			$field['placeholder'] = __( 'Select a term', 'meta-box' );
+			$field['placeholder'] = __( 'Select a term', 'social-warfare' );
 			if ( is_string( $field['taxonomy'] ) && taxonomy_exists( $field['taxonomy'] ) )
 			{
 				$taxonomy_object      = get_taxonomy( $field['taxonomy'] );
-				$field['placeholder'] = sprintf( __( 'Select a %s', 'meta-box' ), $taxonomy_object->labels->singular_name );
+				$field['placeholder'] = sprintf( __( 'Select a %s', 'social-warfare' ), $taxonomy_object->labels->singular_name );
 			}
 		}
 

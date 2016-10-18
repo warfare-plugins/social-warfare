@@ -2,7 +2,7 @@
 /**
  * HTML5 URL field class.
  */
-class RWMB_URL_Field extends RWMB_Text_Field
+class SWPMB_URL_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Get the attributes for a field

@@ -2,7 +2,7 @@
 /**
  * Text list field class.
  */
-class RWMB_Text_List_Field extends RWMB_Multiple_Values_Field
+class SWPMB_Text_List_Field extends SWPMB_Multiple_Values_Field
 {
 	/**
 	 * Get field HTML
@@ -15,7 +15,7 @@ class RWMB_Text_List_Field extends RWMB_Multiple_Values_Field
 	static function html( $meta, $field )
 	{
 		$html  = array();
-		$input = '<label><input type="text" class="rwmb-text-list" name="%s" value="%s" placeholder="%s"> %s</label>';
+		$input = '<label><input type="text" class="swpmb-text-list" name="%s" value="%s" placeholder="%s"> %s</label>';
 
 		$count = 0;
 		foreach ( $field['options'] as $placeholder => $label )

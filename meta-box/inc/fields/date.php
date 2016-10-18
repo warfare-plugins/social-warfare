@@ -2,7 +2,7 @@
 /**
  * Date field class.
  */
-class RWMB_Date_Field extends RWMB_Datetime_Field
+class SWPMB_Date_Field extends SWPMB_Datetime_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -13,7 +13,7 @@ class RWMB_Date_Field extends RWMB_Datetime_Field
 	{
 		parent::admin_register_scripts();
 		wp_enqueue_style( 'jquery-ui-datepicker' );
-		wp_enqueue_script( 'rwmb-date' );
+		wp_enqueue_script( 'swpmb-date' );
 	}
 
 	/**

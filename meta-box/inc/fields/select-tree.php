@@ -2,7 +2,7 @@
 /**
  * Select tree field class.
  */
-class RWMB_Select_Tree_Field extends RWMB_Select_Field
+class SWPMB_Select_Tree_Field extends SWPMB_Select_Field
 {
 	/**
 	 * Walk options
@@ -16,7 +16,7 @@ class RWMB_Select_Tree_Field extends RWMB_Select_Field
 	 */
 	public static function walk( $options, $db_fields, $meta, $field )
 	{
-		$walker = new RWMB_Select_Tree_Walker( $db_fields, $field, $meta );
+		$walker = new SWPMB_Select_Tree_Walker( $db_fields, $field, $meta );
 		return $walker->walk( $options );
 	}
 
@@ -26,8 +26,8 @@ class RWMB_Select_Tree_Field extends RWMB_Select_Field
 	public static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'rwmb-select-tree', RWMB_CSS_URL . 'select-tree.css', array( 'rwmb-select' ), RWMB_VER );
-		wp_enqueue_script( 'rwmb-select-tree', RWMB_JS_URL . 'select-tree.js', array( 'rwmb-select' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-select-tree', SWPMB_CSS_URL . 'select-tree.css', array( 'swpmb-select' ), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-select-tree', SWPMB_JS_URL . 'select-tree.js', array( 'swpmb-select' ), SWPMB_VER, true );
 	}
 
 	/**

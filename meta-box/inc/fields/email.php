@@ -2,7 +2,7 @@
 /**
  * Email field class.
  */
-class RWMB_Email_Field extends RWMB_Text_Field
+class SWPMB_Email_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Normalize parameters for field

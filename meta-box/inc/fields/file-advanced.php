@@ -2,7 +2,7 @@
 /**
  * File advanced field class which users WordPress media popup to upload and select files.
  */
-class RWMB_File_Advanced_Field extends RWMB_Media_Field
+class SWPMB_File_Advanced_Field extends SWPMB_Media_Field
 {
 	/**
 	 * Get the field value.
@@ -13,7 +13,7 @@ class RWMB_File_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function get_value( $field, $args = array(), $post_id = null )
 	{
-		return RWMB_File_Field::get_value( $field, $args, $post_id );
+		return SWPMB_File_Field::get_value( $field, $args, $post_id );
 	}
 
 	/**
@@ -25,7 +25,7 @@ class RWMB_File_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function the_value( $field, $args = array(), $post_id = null )
 	{
-		return RWMB_File_Field::the_value( $field, $args, $post_id );
+		return SWPMB_File_Field::the_value( $field, $args, $post_id );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class RWMB_File_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function file_info( $file_id, $args = array() )
 	{
-		return RWMB_File_Field::file_info( $file_id, $args );
+		return SWPMB_File_Field::file_info( $file_id, $args );
 	}
 
 }

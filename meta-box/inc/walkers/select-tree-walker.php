@@ -1,9 +1,9 @@
 <?php
 /**
  * Select Tree Walker for cascading select fields.
- * @uses RWMB_Select_Walker
+ * @uses SWPMB_Select_Walker
  */
-class RWMB_Select_Tree_Walker
+class SWPMB_Select_Tree_Walker
 {
 	/**
 	 * Field data.
@@ -46,16 +46,16 @@ class RWMB_Select_Tree_Walker
 		$id          = $this->db_fields['id'];
 		$field       = $this->field;
 		$meta        = $this->meta;
-		$walker      = new RWMB_Select_Walker( $this->db_fields, $this->field, $this->meta );
-		$field_class = RW_Meta_Box::get_class_name( $field );
+		$walker      = new SWPMB_Select_Walker( $this->db_fields, $this->field, $this->meta );
+		$field_class = SWP_Meta_Box::get_class_name( $field );
 		$attributes  = call_user_func( array( $field_class, 'get_attributes' ), $field, $meta );
 
 		$children = $options[$parent_id];
 		$output   = sprintf(
-			'<div class="rwmb-select-tree %s" data-parent-id="%s"><select %s>',
+			'<div class="swpmb-select-tree %s" data-parent-id="%s"><select %s>',
 			$active ? '' : 'hidden',
 			$parent_id,
-			RWMB_Field::render_attributes( $attributes )
+			SWPMB_Field::render_attributes( $attributes )
 		);
 		$output .= isset( $field['placeholder'] ) ? "<option value=''>{$field['placeholder']}</option>" : '<option></option>';
 		$output .= $walker->walk( $children, - 1 );

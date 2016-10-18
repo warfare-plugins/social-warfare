@@ -3,7 +3,7 @@
 /**
  * Image field class which uses <input type="file"> to upload.
  */
-class RWMB_Image_Field extends RWMB_File_Field
+class SWPMB_Image_Field extends SWPMB_File_Field
 {
 	/**
 	 * Enqueue scripts and styles.
@@ -13,8 +13,8 @@ class RWMB_Image_Field extends RWMB_File_Field
 		// Enqueue same scripts and styles as for file field
 		parent::admin_enqueue_scripts();
 
-		wp_enqueue_style( 'rwmb-image', RWMB_CSS_URL . 'image.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-image', RWMB_JS_URL . 'image.js', array( 'jquery-ui-sortable' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-image', SWPMB_CSS_URL . 'image.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-image', SWPMB_JS_URL . 'image.js', array( 'jquery-ui-sortable' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -26,7 +26,7 @@ class RWMB_Image_Field extends RWMB_File_Field
 		parent::add_actions();
 
 		// Reorder images via Ajax
-		add_action( 'wp_ajax_rwmb_reorder_images', array( __CLASS__, 'wp_ajax_reorder_images' ) );
+		add_action( 'wp_ajax_swpmb_reorder_images', array( __CLASS__, 'wp_ajax_reorder_images' ) );
 	}
 
 	/**
@@ -38,7 +38,7 @@ class RWMB_Image_Field extends RWMB_File_Field
 		$field_id = (string) filter_input( INPUT_POST, 'field_id' );
 		$order    = (string) filter_input( INPUT_POST, 'order' );
 
-		check_ajax_referer( "rwmb-reorder-images_{$field_id}" );
+		check_ajax_referer( "swpmb-reorder-images_{$field_id}" );
 		parse_str( $order, $items );
 		delete_post_meta( $post_id, $field_id );
 		foreach ( $items['item'] as $item )
@@ -58,8 +58,8 @@ class RWMB_Image_Field extends RWMB_File_Field
 	 */
 	static function html( $meta, $field )
 	{
-		$i18n_title = apply_filters( 'rwmb_image_upload_string', _x( 'Upload Images', 'image upload', 'meta-box' ), $field );
-		$i18n_more  = apply_filters( 'rwmb_image_add_string', _x( '+ Add new image', 'image upload', 'meta-box' ), $field );
+		$i18n_title = apply_filters( 'swpmb_image_upload_string', _x( 'Upload Images', 'image upload', 'social-warfare' ), $field );
+		$i18n_more  = apply_filters( 'swpmb_image_add_string', _x( '+ Add new image', 'image upload', 'social-warfare' ), $field );
 
 		// Uploaded images
 		$html = self::get_uploaded_images( $meta, $field );
@@ -69,7 +69,7 @@ class RWMB_Image_Field extends RWMB_File_Field
 			'<h4>%s</h4>
 			<div class="new-files">
 				<div class="file-input"><input type="file" name="%s[]" /></div>
-				<a class="rwmb-add-file" href="#"><strong>%s</strong></a>
+				<a class="swpmb-add-file" href="#"><strong>%s</strong></a>
 			</div>',
 			$i18n_title,
 			$field['id'],
@@ -89,9 +89,9 @@ class RWMB_Image_Field extends RWMB_File_Field
 	 */
 	static function get_uploaded_images( $images, $field )
 	{
-		$reorder_nonce = wp_create_nonce( "rwmb-reorder-images_{$field['id']}" );
-		$delete_nonce  = wp_create_nonce( "rwmb-delete-file_{$field['id']}" );
-		$classes       = array( 'rwmb-images', 'rwmb-uploaded' );
+		$reorder_nonce = wp_create_nonce( "swpmb-reorder-images_{$field['id']}" );
+		$delete_nonce  = wp_create_nonce( "swpmb-delete-file_{$field['id']}" );
+		$classes       = array( 'swpmb-images', 'swpmb-uploaded' );
 		if ( count( $images ) <= 0 )
 			$classes[] = 'hidden';
 		$list = '<ul class="%s" data-field_id="%s" data-delete_nonce="%s" data-reorder_nonce="%s" data-force_delete="%s" data-max_file_uploads="%s">';
@@ -121,14 +121,14 @@ class RWMB_Image_Field extends RWMB_File_Field
 	 */
 	static function img_html( $image )
 	{
-		$i18n_delete = apply_filters( 'rwmb_image_delete_string', _x( 'Delete', 'image upload', 'meta-box' ) );
-		$i18n_edit   = apply_filters( 'rwmb_image_edit_string', _x( 'Edit', 'image upload', 'meta-box' ) );
+		$i18n_delete = apply_filters( 'swpmb_image_delete_string', _x( 'Delete', 'image upload', 'social-warfare' ) );
+		$i18n_edit   = apply_filters( 'swpmb_image_edit_string', _x( 'Edit', 'image upload', 'social-warfare' ) );
 		$item        = '
 			<li id="item_%s">
 				<img src="%s" />
-				<div class="rwmb-image-bar">
-					<a title="%s" class="rwmb-edit-file" href="%s" target="_blank">%s</a> |
-					<a title="%s" class="rwmb-delete-file" href="#" data-attachment_id="%s">&times;</a>
+				<div class="swpmb-image-bar">
+					<a title="%s" class="swpmb-edit-file" href="%s" target="_blank">%s</a> |
+					<a title="%s" class="swpmb-delete-file" href="#" data-attachment_id="%s">&times;</a>
 				</div>
 			</li>
 		';

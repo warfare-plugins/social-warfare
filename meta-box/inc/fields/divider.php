@@ -2,7 +2,7 @@
 /**
  * Divider field class.
  */
-class RWMB_Divider_Field extends RWMB_Field
+class SWPMB_Divider_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -11,7 +11,7 @@ class RWMB_Divider_Field extends RWMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-divider', RWMB_CSS_URL . 'divider.css', array(), RWMB_VER );
+		wp_enqueue_style( 'swpmb-divider', SWPMB_CSS_URL . 'divider.css', array(), SWPMB_VER );
 	}
 
 	/**

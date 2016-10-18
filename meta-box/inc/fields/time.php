@@ -2,7 +2,7 @@
 /**
  * Time field class.
  */
-class RWMB_Time_Field extends RWMB_Datetime_Field
+class SWPMB_Time_Field extends SWPMB_Datetime_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -13,7 +13,7 @@ class RWMB_Time_Field extends RWMB_Datetime_Field
 	{
 		parent::admin_register_scripts();
 		wp_enqueue_style( 'jquery-ui-timepicker' );
-		wp_enqueue_script( 'rwmb-time' );
+		wp_enqueue_script( 'swpmb-time' );
 	}
 
 	/**

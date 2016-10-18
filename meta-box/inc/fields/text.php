@@ -2,7 +2,7 @@
 /**
  * Text field class.
  */
-class RWMB_Text_Field extends RWMB_Input_Field
+class SWPMB_Text_Field extends SWPMB_Input_Field
 {
 	/**
 	 * Normalize parameters for field

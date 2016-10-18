@@ -7,7 +7,7 @@ jQuery( function( $ )
 		var $this = $( this ),
 			val = $this.val(),
 			$selected = $this.siblings( "[data-parent-id='" + val + "']" ),
-			$notSelected = $this.parent().find( '.rwmb-select-tree' ).not( $selected );
+			$notSelected = $this.parent().find( '.swpmb-select-tree' ).not( $selected );
 
 		$selected.removeClass( 'hidden' );
 		$notSelected
@@ -16,7 +16,7 @@ jQuery( function( $ )
 			.prop( 'selectedIndex', 0 );
 	}
 
-	$( '.rwmb-input' )
-		.on( 'change', '.rwmb-select-tree select', update )
-		.on( 'clone', '.rwmb-select-tree select', update );
+	$( '.swpmb-input' )
+		.on( 'change', '.swpmb-select-tree select', update )
+		.on( 'clone', '.swpmb-select-tree select', update );
 } );

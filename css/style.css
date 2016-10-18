@@ -1,14 +1,29 @@
 .nc_socialPanel {
 	clear: both;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
 	display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-	align-content: center;
-	margin-top: 20px!important;
-	margin-bottom: 20px!important;
 	height: 30px;
 	line-height: 1;
+	margin-bottom: 20px!important;
+	margin-top: 20px!important;
 	padding: 0;
+
+	-webkit-align-content: center;
+	align-content: center;
+	-webkit-align-items: stretch;
+	align-items: stretch;
+	-webkit-box-align: stretch;
+	-moz-box-align: stretch;
+	-webkit-box-pack: justify;
+	-moz-box-pack: justify;
+	-ms-flex-align: stretch;
+	-ms-flex-line-pack: center;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
 }
 
 .nc_socialPanel:not(.nc_floater):not(.nc_socialPanelSide) {
@@ -16,45 +31,52 @@
 }
 
 .nc_wrapper .nc_socialPanel {
-	margin-top: 10px!important;
 	margin-bottom: 10px!important;
+	margin-top: 10px!important;
 }
 
 div.nc_socialPanel .nc_tweetContainer {
-	float: left;
-	cursor: pointer;
-	height: 32px;
-	font-family: Lato;
+	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	text-align: center;
-	transition: all .1s linear;
-	border-size: 1px;
+	cursor: pointer;
+	float: left;
+	font-family: Lato;
+	height: 32px;
 	margin: 0 5px;
+	text-align: center;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+
+	border-size: 1px;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
 	flex: 1;
 }
 
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,
 .nc_socialPanel .totes .swp_count {
 	display: block;
-	font-size: 18px!important;
 	font-family: Lato, sans-serif;
+	font-size: 18px!important;
 	font-weight: bold;
-	text-decoration: none;
 	height: 30px;
+	text-decoration: none;
 	text-transform: none;
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:nth-child(1) {
-	margin-left:0;
+	margin-left: 0;
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:nth-last-child(1) {
-	margin-right:0px;
+	margin-right: 0;
 }
 
 .nc_socialPanel a .swp_count {
-	line-height: 32px;
 	display: inline-block;
+	line-height: 32px;
 	padding: 0;
 }
 
@@ -79,13 +101,14 @@ div.nc_socialPanel .nc_tweetContainer {
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) {
-	transition: opacity .2s ease-in-out;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) div.totes.totesalt:nth-child(1) {
 	margin-left: 0;
-	padding-left: 0;
 	margin-right: 15px;
+	padding-left: 0;
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) div.totes.totesalt:nth-last-child(1) {
@@ -98,32 +121,33 @@ a.swp_CTT {
 }
 
 span.swp_share {
-	font-weight: normal;
-	font-size: 14px;
 	display: block;
-	height: 30px;
-	vertical-align: middle;
-	line-height: 30px;
 	float: right;
-	max-width: none!important;
 	float: left;
+	font-size: 14px;
+	font-weight: normal;
+	height: 30px;
+	line-height: 30px;
+	max-width: none!important;
+	vertical-align: middle;
 }
 
 .nc_socialPanel .sw {
+	float: left;
 	height: 30px;
 	line-height: 32px;
+	margin: 0 7px;
 	text-shadow: none!important;
 	width: 20px;
-	margin: 0 7px;
-	float:left;
 }
 
 .iconFiller {
 	display: block;
 	float: left;
-	transition: width 0.1s linear;
-	overflow: hidden;
 	height: 30px;
+	overflow: hidden;
+	-webkit-transition: width 0.1s linear;
+	transition: width 0.1s linear;
 }
 
 .nc_socialPanel .iconFiller {
@@ -131,39 +155,45 @@ span.swp_share {
 }
 
 span.spaceManWilly {
-	width:120px;
-	display:block;
+	display: block;
+	width: 120px;
 }
 
 .nc_socialPanel .totes {
-	color: white;
-	display: block;
-	font-size: 19px;
-	cursor: default;
 	background: #c4c4c4;
 	border: 1px solid #e08a0f;
+	-webkit-border-radius: 2px;
 	border-radius: 2px;
+	color: white;
+	cursor: default;
+	display: block;
+	font-size: 19px;
 	padding: 0 10px;
+
+	-webkit-box-flex: 0!important;
+	-moz-box-flex: 0!important;
+	-webkit-flex: none!important;
+	-ms-flex: none!important;
 	flex: none!important;
 }
 
 .nc_socialPanel div.totes.totesalt,
 .nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {
 	background: transparent!important;
-	color: #474B4D;
 	border: none;
+	color: #474b4d;
 	margin-left: 0!important;
 }
 
 div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {
 	background: transparent;
-	color: #474B4D;
+	color: #474b4d;
 	margin-left: 10px;
 }
 
 .nc_socialPanel .totes.totesalt .swp_label {
+	color: #474b4d;
 	font-size: 10px;
-	color: #474B4D;
 	vertical-align: middle;
 }
 
@@ -173,7 +203,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {
 }
 
 .nc_socialPanel .totes.totesalt .swp_count {
-	color: #474B4D;
+	color: #474b4d;
 	font-size: 24px;
 }
 
@@ -186,28 +216,28 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {
 
 .nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer.totes.totesalt:before {
 	content: "o";
-	font-family: sw-icon-font;
 	display: inline-block;
-	vertical-align: top;
+	font-family: sw-icon-font;
 	margin-top: 7px;
+	vertical-align: top;
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) .totes.totesalt .swp_count {
-	line-height: 0;
-	margin-top: 12px;
 	display: inline-block;
-	vertical-align: middle;
+	line-height: 0;
 	margin-left: 10px;
+	margin-top: 12px;
 	min-width: 35px;
+	vertical-align: middle;
 }
 
 span.swp_label {
 	display: block;
-	position: absolute;
-	margin-top: 13px;
-	text-transform: uppercase;
 	font-size: 9px!important;
+	margin-top: 13px;
+	position: absolute;
 	text-align: center!important;
+	text-transform: uppercase;
 }
 
 .nc_socialPanelSide span.swp_label {
@@ -215,31 +245,34 @@ span.swp_label {
 }
 
 .nc_socialPanel.swp_leaf .nc_tweetContainer {
+	-webkit-border-radius: 15px 0;
 	border-radius: 15px 0;
 	border-width: 1px;
 }
 
 .nc_socialPanel.swp_pill .nc_tweetContainer {
+	-webkit-border-radius: 50px;
 	border-radius: 50px;
 	border-width: 1px;
 }
 
 .nc_socialPanel.swp_shift .nc_tweetContainer:not(.totes) {
-	-webkit-transform: skew(-25deg);
+	border-width: 1px;
 	-moz-transform: skew(-25deg);
 	-o-transform: skew(-25deg);
-	border-width: 1px;
+	-webkit-transform: skew(-25deg);
 }
 
 .nc_socialPanel.swp_shift .nc_tweetContainer a {
-	-webkit-transform: skew(25deg);
 	-moz-transform: skew(25deg);
 	-o-transform: skew(25deg);
+	-webkit-transform: skew(25deg);
 }
 
 .swp_connected .nc_tweetContainer,
 .swp_connected:hover .nc_tweetContainer,
 .swp_connected .nc_tweetContainer:hover {
+	-webkit-border-radius: 0!important;
 	border-radius: 0!important;
 	border-width: 1px;
 	margin: 0!important;
@@ -799,82 +832,97 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide {
 	flex-direction: column;
-	z-index: 9999999;
-	top: 200px;
-	transition: all .2s linear;
 	height: auto;
-	width: 100px!important;
 	overflow: visible;
+	top: 200px;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+	width: 100px!important;
+	z-index: 9999999;
+
+	-webkit-box-direction: normal;
+	-moz-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
 }
 
 .nc_socialPanelSide.slide {
 	position: fixed;
 	left: -100px;
-	transition: all .2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
 }
 
 .nc_socialPanelSide.fade {
+	display: none;
 	position: fixed;
 	left: 5px;
-	display: none;
-	transition: all .2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
 }
 
 .nc_socialPanelSide .nc_tweetContainer {
-	height: 32px;
-	background: #DD4B38;
+	background: #dd4b38;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	clear: both;
 	display: block;
 	font-family: Lato, sans-serif;
-	clear: both;
+	height: 32px;
+	margin: 3px 0!important;
+	overflow: hidden;
+	padding: 0;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
 	vertical-align: top;
 	width: 90px;
-	transition: all .1s linear;
-	overflow: hidden;
-	border-radius: 3px;
-	margin: 3px 0!important;
-	padding: 0;
 }
 
 .nc_socialPanelSide .nc_tweetContainer .iconFiller {
 	display: inline-block;
-	width: 21px;
 	height: 40px;
-	vertical-align: middle;
-	transition: all .1s linear;
 	margin: 0 6px;
 	padding: 0;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: middle;
+	width: 21px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer .swp_count {
 	display: inline-block;
-	width: 0;
-	overflow: hidden;
-	line-height: 35px;
-	text-align: right;
 	font-size: 14px;
 	height: 32px;
-	vertical-align: top;
-	transition: all .1s linear;
+	line-height: 35px;
 	margin: 0;
+	overflow: hidden;
 	padding: 0;
+	text-align: right;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: top;
+	width: 0;
 }
 
 .nc_socialPanelSide .nc_tweetContainer a {
-	display: block;
-	text-decoration: none;
-	vertical-align: top;
-	height: 36px;
 	cursor: pointer;
-	transition: all .1s linear;
+	display: block;
 	font-weight: 500;
+	height: 36px;
 	margin: 0;
 	padding: 0;
+	text-decoration: none;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: top;
 }
 
 .nc_socialPanelSide .nc_tweetContainer .sw,
 .nc_socialPanelSide .nc_tweetContainer .swp_share {
-	line-height: 34px;
 	float: left;
+	line-height: 34px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer .swp_share {
@@ -884,10 +932,13 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide .nc_tweetContainer:hover,
 .nc_socialPanelSide .nc_tweetContainer:hover .iconFiller,
 .nc_socialPanelSide .nc_tweetContainer:hover .swp_count {
-	transition: all .1s linear;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
 }
 
 .nc_socialPanelSide.swp_boxed {
+	-ms-transform: scale(0.9);
+	-webkit-transform: scale(0.9);
 	transform: scale(0.9);
 }
 
@@ -898,37 +949,38 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer,
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer a {
 	height: 75px;
-	width: 75px;
 	position: relative;
+	width: 75px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer i.sw {
-	width: 60px;
-	text-align: center;
-	padding-top: 10px;
 	font-size: 27px;
 	height: 40px;
+	padding-top: 10px;
+	text-align: center;
+	width: 60px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) span.swp_share {
+	height: 35px;
+	opacity: 0;
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	width: 75px;
 	text-align: center;
-	height: 35px;
-	opacity: 0;
+	width: 75px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) span.swp_count {
-	transition: padding .1s linear;
+	height: 35px;
+	padding: 0;
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	width: 75px;
 	text-align: center;
-	height: 35px;
-	padding: 0;
+	-webkit-transition: padding 0.1s linear;
+	transition: padding 0.1s linear;
+	width: 75px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) span.swp_count.swp_hide,
@@ -939,8 +991,8 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer span.iconFiller {
-	width: 75px;
 	height: 40px;
+	width: 75px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes):hover span.swp_count:not(.swp_hide) {
@@ -948,8 +1000,8 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_socialPanelSide.swp_boxed .totes {
-	width: 75px!important;
 	padding: 0;
+	width: 75px!important;
 }
 
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) {
@@ -957,13 +1009,13 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .iconFiller {
-	width: 30px;
 	margin-left: 2px;
+	width: 30px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .swp_count {
-	width: 48px;
 	padding: 0 8px;
+	width: 48px;
 }
 
 .nc_socialPanelSide:not(.swp_boxed) .nc_tweetContainer:not(.totes):hover {
@@ -977,40 +1029,41 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide .nc_tweetContainer.totes {
 	background: rgba(0, 0, 0, 0);
-	height: 45px;
-	font-weight: 500;
-	text-align: center;
-	width: 90px;
 	border: 0!important;
+	font-weight: 500;
+	height: 45px;
 	margin: 0;
 	padding: 0;
+	text-align: center;
+	width: 90px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer.totes .swp_count {
-	font-family: Lato, sans-serif;
 	color: #444;
-	font-weight: 500;
 	display: block;
-	width: 100%;
-	text-align: center;
+	font-family: Lato, sans-serif;
+	font-weight: 500;
 	height: 28px;
+	text-align: center;
+	width: 100%;
 }
 
 .nc_socialPanelSide .nc_tweetContainer.totes .swp_label {
-	font-family: Lato, sans-serif;
-	display: block;
-	width: 100%;
-	text-align: center;
-	font-size: 50%;
 	color: #444;
+	display: block;
+	font-family: Lato, sans-serif;
+	font-size: 50%;
 	font-weight: 500;
+	text-align: center;
+	width: 100%;
 }
 
 .nc_wrapper {
-	position: fixed;
 	background: white;
+	position: fixed;
+	-webkit-transition: top 0.5s bottom 0.5s;
+	transition: top 0.5s bottom 0.5s;
 	width: 100%;
-	transition: top .5s bottom .5s;
 	z-index: 99999;
 }
 
@@ -1025,10 +1078,10 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_floater {
-	width: 740px;
-	left: 304px;
-	position: relative;
 	margin: 10px 0;
+	position: relative;
+	left: 304px;
+	width: 740px;
 }
 
 .nc_socialPanelSide.hideCounts a {
@@ -1044,12 +1097,14 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	display: inline-block;
 	font-family: sw-icon-font!important;
 	font-size: inherit;
-	text-rendering: auto;
-	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	transform: translate(0, 0);
+	-webkit-font-smoothing: antialiased;
 	font-style: normal;
 	font-weight: normal;
+	text-rendering: auto;
+	-ms-transform: translate(0, 0);
+	-webkit-transform: translate(0, 0);
+	transform: translate(0, 0);
 }
 
 .sw:before {
@@ -1066,10 +1121,10 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .mce-container .sw-social-warfare {
-	font-size: 20px;
-	vertical-align: middle;
-	margin-right: 15px;
 	color: #ee464f;
+	font-size: 20px;
+	margin-right: 15px;
+	vertical-align: middle;
 }
 
 .sw-google-plus:before {
@@ -1145,157 +1200,172 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .sw-tweet-clear:after {
-	display: block;
-	visibility: hidden;
-	height: 0;
 	clear: both;
 	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
 }
 
 .sw-click-to-tweet {
 	display: block;
-	position: relative;
 	margin: 15px 0;
 	padding: 15px 30px;
+	position: relative;
 }
 
 .sw-click-to-tweet:after {
+	clear: both;
 	content: ".";
 	display: block;
-	clear: both;
-	visibility: hidden;
-	line-height: 0;
 	height: 0;
+	line-height: 0;
+	visibility: hidden;
 }
 
 .sw-click-to-tweet .sw-ctt-text {
-	position: relative;
-	word-wrap: break-word;
 	margin: 0 0 10px;
 	padding: 0;
+	position: relative;
+	word-wrap: break-word;
 }
 
 a .sw-click-to-tweet .sw-ctt-text {
-	position: relative;
-	font-size: 24px;
-	line-height: 140%;
-	font-weight: 500;
-	text-decoration: none;
-	text-transform: none;
 	display: block;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 140%;
 	margin: 0;
 	padding: 0;
+	position: relative;
+	text-decoration: none;
+	text-transform: none;
 }
 
 .sw-click-to-tweet .sw-ctt-btn {
-	position: relative;
 	display: block;
-	text-transform: uppercase;
+	float: right;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 100%;
-	float: right;
-	text-decoration: none;
 	margin: 10px 0 0;
 	padding: 3px 5px 3px 3px;
+	position: relative;
+	text-decoration: none;
+	text-transform: uppercase;
 }
 
 .sw-click-to-tweet i.sw-twitter {
 	float: right;
 	font-size: 21px;
 	margin-left: 15px;
-	text-transform: none;
 	margin-top: 2px;
+	text-transform: none;
 }
 
 a.swp_CTT.style1 .sw-click-to-tweet {
 	background-color: #fff;
-	border: 1px solid #dddddd;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
 
 a.swp_CTT.style2 .sw-click-to-tweet {
 	background-color: #fff;
-	border: 4px double #dddddd;
+	border: 4px double #ddd;
+	-webkit-border-radius: 0;
 	border-radius: 0;
 }
 
 a.style2 .sw-click-to-tweet .sw-ctt-text {
-	text-decoration: none;
-	color: #666666;
+	color: #666;
 	font-style: italic;
+	text-decoration: none;
 }
 
 a.swp_CTT.style3:hover .sw-click-to-tweet {
 	border-left: 10px solid #3c87b2;
 	padding-right: 20px;
-	transition: all .25s linear;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.swp_CTT.style3 .sw-click-to-tweet {
+	background-color: #429cd6;
 	border: none;
 	border-left: 10px solid #429cd6;
-	background-color: #429cd6;
+	-webkit-border-radius: 0;
 	border-radius: 0;
 	padding-right: 20px;
-	transition: all .25s linear;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.style3 .sw-click-to-tweet .sw-ctt-text {
-	text-decoration: none;
-	color: #FFFFFF;
+	color: #fff;
 	font-style: italic;
+	text-decoration: none;
 }
 
 a.swp_CTT.style4:hover .sw-click-to-tweet {
 	border-left: 10px solid #3c87b2;
-	transition: all .25s linear;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.swp_CTT.style4 .sw-click-to-tweet {
 	background-color: #333;
-	border-left: 10px solid #C33;
+	border-left: 10px solid #c33;
+	-webkit-border-radius: 0;
 	border-radius: 0;
-	transition: all .25s linear;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.swp_CTT.style5:hover .sw-click-to-tweet {
-	border-left: 10px solid #30394F;
-	transition: all .25s linear;
-	background-color: #D34250;
+	background-color: #d34250;
+	border-left: 10px solid #30394f;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.swp_CTT.style5 .sw-click-to-tweet {
-	background-color: #30394F;
-	border-left: 10px solid #D34250;
+	background-color: #30394f;
+	border-left: 10px solid #d34250;
+	-webkit-border-radius: 0;
 	border-radius: 0;
-	transition: all .25s linear;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.swp_CTT.style6:hover .sw-click-to-tweet {
-	border-left: 10px solid #D34250;
-	transition: all .25s linear;
-	background-color: #CED3DC;
+	background-color: #ced3dc;
+	border-left: 10px solid #d34250;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.swp_CTT.style6 .sw-click-to-tweet {
-	background-color: #EEEEEE;
-	border-left: 10px solid #D34250;
+	background-color: #eee;
+	border-left: 10px solid #d34250;
+	-webkit-border-radius: 0;
 	border-radius: 0;
-	transition: all .25s linear;
+	-webkit-transition: all 0.25s linear;
+	transition: all 0.25s linear;
 }
 
 a.style6 .sw-click-to-tweet i.sw-twitter {
-	color: #30394F;
+	color: #30394f;
 }
 
 .swp_pop_thumb {
-	float: left;
-	width: 100px;
-	height: 100px;
+	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	float: left;
+	height: 100px;
 	margin: 5px 25px 5px 0;
+	width: 100px;
 }
 
 .swp_popular_post {
@@ -1303,26 +1373,27 @@ a.style6 .sw-click-to-tweet i.sw-twitter {
 }
 
 .swp_clearfix:after {
+	clear: both;
 	content: " ";
-	visibility: hidden;
 	display: block;
 	height: 0;
-	clear: both;
+	visibility: hidden;
 }
 
 .swp_popular_post a.swp_popularity {
-	display: block;
 	border: none;
+	display: block;
 	line-height: 1.5;
 	margin: 20px 0;
 }
 
 span.swp_pop_count {
-	font-size: 70%;
 	display: block;
+	font-size: 70%;
 }
 
 .swp_widget_box {
+	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
 
@@ -1335,18 +1406,20 @@ div.sw-pinit {
 div.sw-pinit a.sw-pinit-button,
 div.sw-pinit a.sw-pinit-button:visited {
 	background: #cd2029;
-	color: #fff;
 	border: 1px solid #aa1b29;
-	font-size: 20px;
+	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	position: absolute;
-	padding: 0 30px;
-	opacity: 0;
-	z-index: 200;
-	line-height: 45px;
+	color: #fff;
+	font-size: 20px;
 	height: 50px;
-	transition: opacity 0.5s;
+	line-height: 45px;
+	opacity: 0;
+	padding: 0 30px;
+	position: absolute;
 	text-decoration: none;
+	-webkit-transition: opacity 0.5s;
+	transition: opacity 0.5s;
+	z-index: 200;
 }
 
 div.sw-pinit:hover a.sw-pinit-button,
@@ -1356,18 +1429,18 @@ div.sw-pinit:focus a.sw-pinit-button {
 
 div.sw-pinit a.sw-pinit-button::before {
 	color: #fff;
+	content: "b";
+	float: left;
 	font-family: sw-icon-font;
-	content: 'b';
-	margin-right: 10px;
-	margin-left: -5px;
 	font-size: 24px;
 	font-weight: normal;
-	float: left;
-	line-height: 50px
+	line-height: 50px;
+	margin-left: -5px;
+	margin-right: 10px;
 }
 
 div.sw-pinit a.sw-pinit-button:hover::before {
-	content: 'F';
+	content: "F";
 }
 
 div.sw-pinit a.sw-pinit-button::hover,
@@ -1382,8 +1455,8 @@ div.sw-pinit .sw-pinit-left {
 }
 
 div.sw-pinit .sw-pinit-center {
-	left: 50%;
 	margin-left: -60px;
+	left: 50%;
 }
 
 div.sw-pinit .sw-pinit-right {
@@ -1395,8 +1468,8 @@ div.sw-pinit .sw-pinit-top {
 }
 
 div.sw-pinit .sw-pinit-middle {
-	top: 50%;
 	margin-top: -25px;
+	top: 50%;
 }
 
 div.sw-pinit .sw-pinit-bottom {
@@ -1438,15 +1511,15 @@ a.style2 .sw-click-to-tweet i.sw-twitter {
 	opacity: 1;
 }
 
-.nc_socialPanel.mobile .iconFiller~.swp_count,
+.nc_socialPanel.mobile .iconFiller ~ .swp_count,
 .sw-content-locator {
 	display: none;
 }
 
 a.style1 .sw-click-to-tweet .sw-ctt-text,
 a.style1 .sw-click-to-tweet .sw-ctt-btn {
+	color: #999;
 	text-decoration: none;
-	color: #999999;
 }
 
 a.style1:hover .sw-click-to-tweet .sw-ctt-text,
@@ -1454,8 +1527,8 @@ a.style1:hover .sw-click-to-tweet .sw-ctt-btn,
 a.style2:hover .sw-click-to-tweet .sw-ctt-text,
 a.style2 .sw-click-to-tweet .sw-ctt-btn,
 a.style2:hover .sw-click-to-tweet .sw-ctt-btn {
+	color: #666;
 	text-decoration: none;
-	color: #666666;
 }
 
 a.style3:hover .sw-click-to-tweet .sw-ctt-text,
@@ -1470,24 +1543,24 @@ a.style5 .sw-click-to-tweet .sw-ctt-text,
 a.style5:hover .sw-click-to-tweet .sw-ctt-text,
 a.style5 .sw-click-to-tweet .sw-ctt-btn,
 a.style5:hover .sw-click-to-tweet .sw-ctt-btn {
+	color: #fff;
 	text-decoration: none;
-	color: #FFFFFF;
 }
 
 a.style4 .sw-click-to-tweet i.sw-twitter,
 a.style5 .sw-click-to-tweet i.sw-twitter {
-	color: #FFFFFF;
+	color: #fff;
 }
 
 a.style6 .sw-click-to-tweet .sw-ctt-text,
 a.style6 .sw-click-to-tweet .sw-ctt-btn {
+	color: #30394f;
 	text-decoration: none;
-	color: #30394F;
 }
 
 a.style6:hover .sw-click-to-tweet .sw-ctt-text,
 a.style6:hover .sw-click-to-tweet .sw-ctt-btn,
 a.style6:hover .sw-click-to-tweet i.sw-twitter {
+	color: #2a2d34;
 	text-decoration: none;
-	color: #2A2D34;
 }

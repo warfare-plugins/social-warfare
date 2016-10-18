@@ -3,7 +3,7 @@
  * Select Walker
  * For generating Select fields
  */
-class RWMB_Select_Walker extends RWMB_Walker
+class SWPMB_Select_Walker extends SWPMB_Walker
 {
 	/**
 	 * @see Walker::start_el()

@@ -236,7 +236,7 @@ function swp_add_monthly_schedule( $schedules ) {
 	// add a 'weekly' schedule to the existing set
 	$schedules['swp_monthly'] = array(
 		'interval' => 2635200,
-		'display' => __( 'Once Monthly' ),
+		'display' => __( 'Once Monthly', 'social-warfare' ),
 	);
 	return $schedules;
 }

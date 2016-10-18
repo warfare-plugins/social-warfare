@@ -3,7 +3,7 @@
  * Input List Walker
  * For checkbox and radio list fields
  */
-class RWMB_Input_List_Walker extends RWMB_Walker
+class SWPMB_Input_List_Walker extends SWPMB_Walker
 {
 	/**
 	 * @see Walker::start_lvl()
@@ -14,7 +14,7 @@ class RWMB_Input_List_Walker extends RWMB_Walker
 	 */
 	public function start_lvl( &$output, $depth = 0, $args = array() )
 	{
-		$output .= "<ul class='rwmb-input-list'>";
+		$output .= "<ul class='swpmb-input-list'>";
 	}
 
 	/**
@@ -44,12 +44,12 @@ class RWMB_Input_List_Walker extends RWMB_Walker
 		$id          = $this->db_fields['id'];
 		$meta        = $this->meta;
 		$field       = $this->field;
-		$field_class = RW_Meta_Box::get_class_name( $field );
+		$field_class = SWP_Meta_Box::get_class_name( $field );
 		$attributes  = call_user_func( array( $field_class, 'get_attributes' ), $field, $object->$id );
 
 		$output .= sprintf(
 			'<li><label><input %s %s>%s</label>',
-			RWMB_Field::render_attributes( $attributes ),
+			SWPMB_Field::render_attributes( $attributes ),
 			checked( in_array( $object->$id, $meta ), 1, false ),
 			$object->$label
 		);

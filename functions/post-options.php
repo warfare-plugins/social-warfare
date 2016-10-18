@@ -51,7 +51,7 @@ function _swp_get_twitter_handle( $fallback = false ) {
 	return $twitter_handle;
 }
 
-add_filter( 'rwmb_meta_boxes', 'swp_register_meta_boxes' );
+add_filter( 'swpmb_meta_boxes', 'swp_register_meta_boxes' );
 /**
  * Build the options fields.
  *

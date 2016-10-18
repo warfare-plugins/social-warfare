@@ -2,7 +2,7 @@
 /**
  * File advanced field class which users WordPress media popup to upload and select files.
  */
-class RWMB_File_Upload_Field extends RWMB_File_Advanced_Field
+class SWPMB_File_Upload_Field extends SWPMB_File_Advanced_Field
 {
 	/**
 	 * Add actions
@@ -24,8 +24,8 @@ class RWMB_File_Upload_Field extends RWMB_File_Advanced_Field
 	static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'rwmb-upload', RWMB_CSS_URL . 'upload.css', array( 'rwmb-media' ), RWMB_VER );
-		wp_enqueue_script( 'rwmb-file-upload', RWMB_JS_URL . 'file-upload.js', array( 'rwmb-media' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-upload', SWPMB_CSS_URL . 'upload.css', array( 'swpmb-media' ), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-file-upload', SWPMB_JS_URL . 'file-upload.js', array( 'swpmb-media' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -34,6 +34,6 @@ class RWMB_File_Upload_Field extends RWMB_File_Advanced_Field
 	 */
 	static function print_templates()
 	{
-		require_once( RWMB_INC_DIR . 'templates/upload.php' );
+		require_once( SWPMB_INC_DIR . 'templates/upload.php' );
 	}
 }

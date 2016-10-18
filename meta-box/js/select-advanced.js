@@ -15,9 +15,9 @@ jQuery( function ( $ )
 		$this.siblings( '.select2-container' ).remove();
 		$this.show().select2( options );
 
-		rwmbSelect.bindEvents( $this );
+		swpmbSelect.bindEvents( $this );
 	}
 
-	$( ':input.rwmb-select_advanced' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-select_advanced', update );
+	$( ':input.swpmb-select_advanced' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-select_advanced', update );
 } );

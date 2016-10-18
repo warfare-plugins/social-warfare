@@ -2,7 +2,7 @@
 /**
  * Taxonomy advanced field class which saves terms' IDs in the post meta.
  */
-class RWMB_Taxonomy_Advanced_Field extends RWMB_Taxonomy_Field
+class SWPMB_Taxonomy_Advanced_Field extends SWPMB_Taxonomy_Field
 {
 	/**
 	 * Get meta values to save

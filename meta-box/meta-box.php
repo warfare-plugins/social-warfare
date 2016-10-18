@@ -1,7 +1,7 @@
 <?php
 
-if ( defined( 'ABSPATH' ) && ! class_exists( 'RWMB_Loader' ) )
+if ( defined( 'ABSPATH' ) && ! class_exists( 'SWPMB_Loader' ) )
 {
 	require plugin_dir_path( __FILE__ ) . 'inc/loader.php';
-	new RWMB_Loader;
+	new SWPMB_Loader;
 }

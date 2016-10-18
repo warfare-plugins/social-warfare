@@ -2,7 +2,7 @@
 /**
  * Password field class.
  */
-class RWMB_Password_Field extends RWMB_Text_Field
+class SWPMB_Password_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Get the attributes for a field

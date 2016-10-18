@@ -68,7 +68,8 @@
 	display: inline-block;
 	float: right;
 	padding: 5px 15px;
-	border-radius: 3px 3px 0 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	        border-radius: 3px 3px 0 0;
 	color: #FFF;
 	font-weight: bold;
 	margin-top: -27px;
@@ -86,61 +87,65 @@
 	width: 100%;
 }
 
-#socialWarfare ul.rwmb-media-list.ui-sortable {
+#socialWarfare ul.swpmb-media-list.ui-sortable {
 	display: block;
 	width: 100%;
-	background-size: contain;
+	-webkit-background-size: contain;
+	        background-size: contain;
 	background-position-x: center;
 	background-repeat: no-repeat;
 	background-color: #ccc;
-	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	        border-radius: 4px;
 	padding: 0;
 }
 
-#socialWarfare .nc_ogImageWrapper ul.rwmb-media-list {
+#socialWarfare .nc_ogImageWrapper ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-og.jpg');
 }
 
-#socialWarfare .nc_pinterestImageWrapper ul.rwmb-media-list {
+#socialWarfare .nc_pinterestImageWrapper ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 
-.rwmb-field.rwmb-textarea-wrapper.nc_ogTitleWrapper,
-.rwmb-field.rwmb-textarea-wrapper.nc_ogDescriptionWrapper,
-.rwmb-field.rwmb-textarea-wrapper.nc_pinterestDescriptionWrapper,
-.rwmb-field.rwmb-textarea-wrapper.nc_customTweetWrapper,
-.rwmb-field.rwmb-select-wrapper.nc_postLocationWrapper,
-.rwmb-field.rwmb-select-wrapper.nc_floatLocationWrapper {
+.swpmb-field.swpmb-textarea-wrapper.nc_ogTitleWrapper,
+.swpmb-field.swpmb-textarea-wrapper.nc_ogDescriptionWrapper,
+.swpmb-field.swpmb-textarea-wrapper.nc_pinterestDescriptionWrapper,
+.swpmb-field.swpmb-textarea-wrapper.nc_customTweetWrapper,
+.swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper,
+.swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper {
 	width: 63%;
 	float: left;
 }
 
-.rwmb-field.rwmb-image_advanced-wrapper.nc_ogImageWrapper,
-.rwmb-field.rwmb-image_advanced-wrapper.nc_pinterestImageWrapper {
+.swpmb-field.swpmb-image_advanced-wrapper.nc_ogImageWrapper,
+.swpmb-field.swpmb-image_advanced-wrapper.nc_pinterestImageWrapper {
 	width: 30%;
 	float: left;
 	margin-right: 3%;
 }
 
-#socialWarfare .rwmb-label, #socialWarfare .rwmb-input {
+#socialWarfare .swpmb-label, #socialWarfare .swpmb-input {
 	width: 100%;
 }
 
-#socialWarfare .rwmb-field {
+#socialWarfare .swpmb-field {
 	margin-top: 10px;
 }
 
-#socialWarfare .rwmb-image-item,
-#socialWarfare .rwmb-media-preview,
-#socialWarfare .rwmb-media-content .centered,
-#socialWarfare .rwmb-media-content img {
+#socialWarfare .swpmb-image-item,
+#socialWarfare .swpmb-media-preview,
+#socialWarfare .swpmb-media-content .centered,
+#socialWarfare .swpmb-media-content img {
 	width: 100%;
 	height: auto;
 	max-height: none;
-	transform: none;
+	-webkit-transform: none;
+	    -ms-transform: none;
+	        transform: none;
 }
 
-.wp-core-ui #socialWarfare a.rwmb-add-media.button {
+.wp-core-ui #socialWarfare a.swpmb-add-media.button {
 	display: block;
 	background: #30394f;
 	color: #fff;
@@ -150,49 +155,50 @@
 	vertical-align: middle;
 	padding: 15px 25px;
 	margin: 0;
-	box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
 	border: none;
 	height: auto;
 }
 
-.wp-core-ui #socialWarfare a.rwmb-add-media.button:hover {
+.wp-core-ui #socialWarfare a.swpmb-add-media.button:hover {
 	background: #EE464F;
 }
 
-#socialWarfare .rwmb-media-content img {
+#socialWarfare .swpmb-media-content img {
 	-webkit-transform: translate(0%, 0%);
 	-ms-transform: translate(0%, 0%);
 	transform: translate(0%, 0%);
 }
 
-#socialWarfare .rwmb-media-content {
+#socialWarfare .swpmb-media-content {
 	overflow: visible;
 }
 
-#socialWarfare .rwmb-media-preview:before {
+#socialWarfare .swpmb-media-preview:before {
 	padding-top: 0px;
 }
 
-#socialWarfare .rwmb-media-content {
+#socialWarfare .swpmb-media-content {
 	position: inherit;
 }
 
-#socialWarfare .rwmb-divider-wrapper hr {
+#socialWarfare .swpmb-divider-wrapper hr {
 	border: none!important
 }
 
-#socialWarfare .rwmb-label label {
+#socialWarfare .swpmb-label label {
 	font-weight: bold;
 	color: #30394f;
 	font-size: 18px;
 }
 
-#socialWarfare .rwmb-divider-wrapper {
+#socialWarfare .swpmb-divider-wrapper {
 	max-height: 1px;
 	clear: both;
 }
 
-#socialWarfare .rwmb-label {
+#socialWarfare .swpmb-label {
 	margin-bottom: 10px;
 }
 
@@ -229,10 +235,12 @@
 	background: #ee464f;
 	color: #fff;
 	padding: 15px;
-	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	        border-radius: 2px;
 	margin: 15px 0;
 	border: 0;
-	box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
 	max-width: none;
 	padding: 20px;
 }

@@ -2,7 +2,7 @@
 /**
  * Key-value field class.
  */
-abstract class RWMB_Key_Value_Field extends RWMB_Text_Field
+abstract class SWPMB_Key_Value_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Get field HTML
@@ -16,13 +16,13 @@ abstract class RWMB_Key_Value_Field extends RWMB_Text_Field
 		// Key
 		$key                       = isset( $meta[0] ) ? $meta[0] : '';
 		$attributes                = self::get_attributes( $field, $key );
-		$attributes['placeholder'] = esc_attr__( 'Key', 'meta-box' );
+		$attributes['placeholder'] = esc_attr__( 'Key', 'social-warfare' );
 		$html                      = sprintf( '<input %s>', self::render_attributes( $attributes ) );
 
 		// Value
 		$val                       = isset( $meta[1] ) ? $meta[1] : '';
 		$attributes                = self::get_attributes( $field, $val );
-		$attributes['placeholder'] = esc_attr__( 'Value', 'meta-box' );
+		$attributes['placeholder'] = esc_attr__( 'Value', 'social-warfare' );
 		$html .= sprintf( '<input %s>', self::render_attributes( $attributes ) );
 
 		return $html;
@@ -40,13 +40,13 @@ abstract class RWMB_Key_Value_Field extends RWMB_Text_Field
 		$desc = $field['desc'] ? "<p id='{$field['id']}_description' class='description'>{$field['desc']}</p>" : '';
 
 		if ( empty( $field['name'] ) )
-			return '<div class="rwmb-input">' . $desc;
+			return '<div class="swpmb-input">' . $desc;
 
 		return sprintf(
-			'<div class="rwmb-label">
+			'<div class="swpmb-label">
 				<label for="%s">%s</label>
 			</div>
-			<div class="rwmb-input">
+			<div class="swpmb-input">
 			%s',
 			$field['id'],
 			$field['name'],
@@ -124,7 +124,7 @@ abstract class RWMB_Key_Value_Field extends RWMB_Text_Field
 	 * Display unordered list of key - value pairs
 	 *
 	 * @use self::get_value()
-	 * @see rwmb_the_value()
+	 * @see swpmb_the_value()
 	 *
 	 * @param  array    $field   Field parameters
 	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details

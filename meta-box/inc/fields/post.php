@@ -2,7 +2,7 @@
 /**
  * Post field class.
  */
-class RWMB_Post_Field extends RWMB_Object_Choice_Field
+class SWPMB_Post_Field extends SWPMB_Object_Choice_Field
 {
 	/**
 	 * Normalize parameters for field
@@ -31,11 +31,11 @@ class RWMB_Post_Field extends RWMB_Object_Choice_Field
 		 */
 		if ( empty( $field['placeholder'] ) )
 		{
-			$field['placeholder'] = __( 'Select a post', 'meta-box' );
+			$field['placeholder'] = __( 'Select a post', 'social-warfare' );
 			if ( is_string( $field['query_args']['post_type'] ) && post_type_exists( $field['query_args']['post_type'] ) )
 			{
 				$post_type_object     = get_post_type_object( $field['query_args']['post_type'] );
-				$field['placeholder'] = sprintf( __( 'Select a %s', 'meta-box' ), $post_type_object->labels->singular_name );
+				$field['placeholder'] = sprintf( __( 'Select a %s', 'social-warfare' ), $post_type_object->labels->singular_name );
 			}
 		}
 

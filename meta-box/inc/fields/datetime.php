@@ -3,7 +3,7 @@
 /**
  * Datetime field class.
  */
-class RWMB_Datetime_Field extends RWMB_Text_Field
+class SWPMB_Datetime_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Translate date format from jQuery UI date picker to PHP date()
@@ -32,15 +32,15 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 	 */
 	public static function admin_register_scripts()
 	{
-		$url = RWMB_CSS_URL . 'jqueryui';
+		$url = SWPMB_CSS_URL . 'jqueryui';
 		wp_register_style( 'jquery-ui-core', "{$url}/jquery.ui.core.css", array(), '1.8.17' );
 		wp_register_style( 'jquery-ui-theme', "{$url}/jquery.ui.theme.css", array(), '1.8.17' );
-		wp_register_style( 'wp-datepicker', RWMB_CSS_URL . 'datepicker.css', array( 'jquery-ui-core', 'jquery-ui-theme' ), '1.8.17' );
+		wp_register_style( 'wp-datepicker', SWPMB_CSS_URL . 'datepicker.css', array( 'jquery-ui-core', 'jquery-ui-theme' ), '1.8.17' );
 		wp_register_style( 'jquery-ui-datepicker', "{$url}/jquery.ui.datepicker.css", array( 'wp-datepicker' ), '1.8.17' );
 		wp_register_style( 'jquery-ui-slider', "{$url}/jquery.ui.slider.css", array( 'jquery-ui-core', 'jquery-ui-theme' ), '1.8.17' );
 		wp_register_style( 'jquery-ui-timepicker', "{$url}/jquery-ui-timepicker-addon.min.css", array( 'jquery-ui-datepicker', 'jquery-ui-slider', 'wp-datepicker' ), '1.5.0' );
 
-		$url = RWMB_JS_URL . 'jqueryui';
+		$url = SWPMB_JS_URL . 'jqueryui';
 		wp_register_script( 'jquery-ui-timepicker', "{$url}/jquery-ui-timepicker-addon.min.js", array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), '1.5.0', true );
 		wp_register_script( 'jquery-ui-timepicker-i18n', "{$url}/jquery-ui-timepicker-addon-i18n.min.js", array( 'jquery-ui-timepicker' ), '1.5.0', true );
 
@@ -64,22 +64,22 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 		$deps = array( 'jquery-ui-timepicker-i18n' );
 		foreach ( $date_paths as $date_path )
 		{
-			if ( file_exists( RWMB_DIR . 'js/' . $date_path ) )
+			if ( file_exists( SWPMB_DIR . 'js/' . $date_path ) )
 			{
-				wp_register_script( 'jquery-ui-datepicker-i18n', RWMB_JS_URL . $date_path, array( 'jquery-ui-datepicker' ), '1.8.17', true );
+				wp_register_script( 'jquery-ui-datepicker-i18n', SWPMB_JS_URL . $date_path, array( 'jquery-ui-datepicker' ), '1.8.17', true );
 				$deps[] = 'jquery-ui-datepicker-i18n';
 				break;
 			}
 		}
 
-		wp_register_script( 'rwmb-datetime', RWMB_JS_URL . 'datetime.js', $deps, RWMB_VER, true );
-		wp_register_script( 'rwmb-date', RWMB_JS_URL . 'date.js', $deps, RWMB_VER, true );
-		wp_register_script( 'rwmb-time', RWMB_JS_URL . 'time.js', array( 'jquery-ui-timepicker-i18n' ), RWMB_VER, true );
-		wp_localize_script( 'rwmb-datetime', 'RWMB_Datetimepicker', array(
+		wp_register_script( 'swpmb-datetime', SWPMB_JS_URL . 'datetime.js', $deps, SWPMB_VER, true );
+		wp_register_script( 'swpmb-date', SWPMB_JS_URL . 'date.js', $deps, SWPMB_VER, true );
+		wp_register_script( 'swpmb-time', SWPMB_JS_URL . 'time.js', array( 'jquery-ui-timepicker-i18n' ), SWPMB_VER, true );
+		wp_localize_script( 'swpmb-datetime', 'SWPMB_Datetimepicker', array(
 			'locale'      => $locale,
 			'localeShort' => $locale_short,
 		) );
-		wp_localize_script( 'rwmb-time', 'RWMB_Timepicker', array(
+		wp_localize_script( 'swpmb-time', 'SWPMB_Timepicker', array(
 			'locale'      => $locale,
 			'localeShort' => $locale_short,
 		) );
@@ -92,7 +92,7 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 	{
 		self::admin_register_scripts();
 		wp_enqueue_style( 'jquery-ui-timepicker' );
-		wp_enqueue_script( 'rwmb-datetime' );
+		wp_enqueue_script( 'swpmb-datetime' );
 	}
 
 	/**
@@ -112,7 +112,7 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 			$name  = $field['field_name'];
 			$field = wp_parse_args( array( 'field_name' => $name . '[formatted]' ), $field );
 			$output .= sprintf(
-				'<input type="hidden" name="%s" class="rwmb-datetime-timestamp" value="%s">',
+				'<input type="hidden" name="%s" class="swpmb-datetime-timestamp" value="%s">',
 				esc_attr( $name . '[timestamp]' ),
 				isset( $meta['timestamp'] ) ? intval( $meta['timestamp'] ) : ''
 			);
@@ -123,7 +123,7 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 
 		if ( $field['inline'] )
 		{
-			$output .= '<div class="rwmb-datetime-inline"></div>';
+			$output .= '<div class="swpmb-datetime-inline"></div>';
 		}
 
 		return $output;
@@ -173,7 +173,7 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 		{
 			return $meta;
 		}
-		$method = array( RW_Meta_Box::get_class_name( $field ), 'translate_format' );
+		$method = array( SWP_Meta_Box::get_class_name( $field ), 'translate_format' );
 		if ( is_array( $meta ) )
 		{
 			foreach ( $meta as $key => $value )
@@ -224,7 +224,7 @@ class RWMB_Datetime_Field extends RWMB_Text_Field
 			) );
 		}
 
-		$field = RWMB_Text_Field::normalize( $field );
+		$field = SWPMB_Text_Field::normalize( $field );
 
 		return $field;
 	}

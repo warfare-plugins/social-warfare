@@ -2,7 +2,7 @@
 /**
  * Fieldset text class.
  */
-class RWMB_Fieldset_Text_Field extends RWMB_Text_Field
+class SWPMB_Fieldset_Text_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Get field HTML

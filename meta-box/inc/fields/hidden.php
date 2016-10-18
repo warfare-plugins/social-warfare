@@ -2,7 +2,7 @@
 /**
  * Hidden field class.
  */
-class RWMB_Hidden_Field extends RWMB_Input_Field
+class SWPMB_Hidden_Field extends SWPMB_Input_Field
 {
 	/**
 	 * Get the attributes for a field

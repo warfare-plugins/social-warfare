@@ -2,7 +2,7 @@
 /**
  * Custom HTML field class.
  */
-class RWMB_Custom_Html_Field extends RWMB_Field
+class SWPMB_Custom_Html_Field extends SWPMB_Field
 {
 	/**
 	 * Get field HTML

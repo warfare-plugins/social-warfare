@@ -24,9 +24,9 @@
 		// Initialize DOM elements
 		initDomElements   : function ()
 		{
-			this.canvas = this.$container.find( '.rwmb-map-canvas' )[0];
-			this.$coordinate = this.$container.find( '.rwmb-map-coordinate' );
-			this.$findButton = this.$container.find( '.rwmb-map-goto-address-button' );
+			this.canvas = this.$container.find( '.swpmb-map-canvas' )[0];
+			this.$coordinate = this.$container.find( '.swpmb-map-coordinate' );
+			this.$findButton = this.$container.find( '.swpmb-map-goto-address-button' );
 			this.addressField = this.$findButton.val();
 		},
 
@@ -99,7 +99,7 @@
 			 * @see https://developers.google.com/maps/documentation/javascript/reference
 			 *      ('resize' Event)
 			 */
-			$( window ).on( 'rwmb_map_refresh', function()
+			$( window ).on( 'swpmb_map_refresh', function()
 			{
 				that.refreshMap();
 			} );
@@ -203,7 +203,7 @@
 
 	$( function ()
 	{
-		$( '.rwmb-map-field' ).each( function ()
+		$( '.swpmb-map-field' ).each( function ()
 		{
 			var field = new MapField( $( this ) );
 			field.init();
@@ -212,9 +212,9 @@
 
 		} );
 
-		$( '.rwmb-input' ).on( 'clone', function ()
+		$( '.swpmb-input' ).on( 'clone', function ()
 		{
-			$( '.rwmb-map-field' ).each( function ()
+			$( '.swpmb-map-field' ).each( function ()
 			{
 				var field = new MapField( $( this ) );
 				field.init();

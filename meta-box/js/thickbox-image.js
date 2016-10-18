@@ -2,10 +2,10 @@ jQuery( function ( $ )
 {
 	'use strict';
 
-	$( 'body' ).on( 'click', '.rwmb-thickbox-upload', function ()
+	$( 'body' ).on( 'click', '.swpmb-thickbox-upload', function ()
 	{
 		var $this = $( this ),
-			$holder = $this.siblings( '.rwmb-images' ),
+			$holder = $this.siblings( '.swpmb-images' ),
 			post_id = $( '#post_ID' ).val(),
 			field_id = $this.data( 'field_id' ),
 			backup = window.send_to_editor;
@@ -19,8 +19,8 @@ jQuery( function ( $ )
 
 			html = '<li id="item_' + id + '">';
 			html += '<img src="' + url + '">';
-			html += '<div class="rwmb-image-bar">';
-			html += '<a class="rwmb-delete-file" href="#" data-attachment_id="' + id + '">×</a>';
+			html += '<div class="swpmb-image-bar">';
+			html += '<a class="swpmb-delete-file" href="#" data-attachment_id="' + id + '">×</a>';
 			html += '</div>';
 			html += '<input type="hidden" name="' + field_id + '[]" value="' + id + '">';
 			html += '</li>';

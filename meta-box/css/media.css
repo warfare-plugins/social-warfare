@@ -1,22 +1,22 @@
-.rwmb-media-list {
+.swpmb-media-list {
 	margin: 0 0 5px;
 	overflow: hidden;
 }
-.rwmb-media-item {
+.swpmb-media-item {
 	overflow: hidden;
 	margin-bottom: 10px;
 }
-.rwmb-media-preview {
+.swpmb-media-preview {
 	width: 60px;
 	float: left;
 	position: relative;
 }
-.rwmb-media-preview:before {
+.swpmb-media-preview:before {
 	content: '';
 	display: block;
 	padding-top: 100%;
 }
-.rwmb-media-content {
+.swpmb-media-content {
 	position: absolute;
 	overflow: hidden;
 	top: 0;
@@ -24,7 +24,7 @@
 	bottom: 0;
 	right: 0;
 }
-.rwmb-media-content .centered {
+.swpmb-media-content .centered {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -34,7 +34,7 @@
 	-ms-transform: translate(50%, 50%);
 	transform: translate(50%, 50%);
 }
-.rwmb-media-content img {
+.swpmb-media-content img {
 	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
@@ -42,23 +42,23 @@
 	max-width: 100%;
 	border-radius: 3px;
 }
-.rwmb-media-info {
+.swpmb-media-info {
 	margin-left: 65px;
 }
-.rwmb-media-info a {
+.swpmb-media-info a {
 	text-decoration: none;
 }
-.rwmb-media-info p,
-.rwmb-media-info h4 {
+.swpmb-media-info p,
+.swpmb-media-info h4 {
 	margin: 0 0 2px;
 }
-.rwmb-edit-media,
-.rwmb-remove-media {
+.swpmb-edit-media,
+.swpmb-remove-media {
 	font-size: 11px;
 	color: inherit;
 }
-.rwmb-edit-media .dashicons,
-.rwmb-remove-media .dashicons {
+.swpmb-edit-media .dashicons,
+.swpmb-remove-media .dashicons {
 	font-size: 12px;
 	width: 12px;
 	height: 12px;
@@ -66,13 +66,13 @@
 }
 
 /* Add more button */
-.rwmb-media-view .rwmb-add-media {
+.swpmb-media-view .swpmb-add-media {
 	padding-left: 5px;
 	margin-right: 5px;
 }
 
 /* Status */
-.rwmb-media-status {
+.swpmb-media-status {
 	display: inline-block;
 	text-decoration: none;
 	font-size: 13px;

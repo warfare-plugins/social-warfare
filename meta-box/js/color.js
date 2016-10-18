@@ -9,7 +9,7 @@ jQuery( function ( $ )
 	function update()
 	{
 		var $this = $( this ),
-			$container = $this.closest( '.rwmb-color-clone' ),
+			$container = $this.closest( '.swpmb-color-clone' ),
 			data = $.extend(
 				{
 					change: function()
@@ -33,6 +33,6 @@ jQuery( function ( $ )
 		$this.wpColorPicker( data );
 	}
 
-	$( ':input.rwmb-color' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', 'input.rwmb-color', update );
+	$( ':input.swpmb-color' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', 'input.swpmb-color', update );
 } );

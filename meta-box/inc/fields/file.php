@@ -2,18 +2,18 @@
 /**
  * File field class which uses HTML <input type="file"> to upload file.
  */
-class RWMB_File_Field extends RWMB_Field
+class SWPMB_File_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-file', RWMB_CSS_URL . 'file.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-file', RWMB_JS_URL . 'file.js', array( 'jquery' ), RWMB_VER, true );
-		wp_localize_script( 'rwmb-file', 'rwmbFile', array(
-			'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', 'meta-box' ),
-			'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', 'meta-box' ),
+		wp_enqueue_style( 'swpmb-file', SWPMB_CSS_URL . 'file.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-file', SWPMB_JS_URL . 'file.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_localize_script( 'swpmb-file', 'swpmbFile', array(
+			'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', 'social-warfare' ),
+			'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', 'social-warfare' ),
 		) );
 	}
 
@@ -26,10 +26,10 @@ class RWMB_File_Field extends RWMB_Field
 		add_action( 'post_edit_form_tag', array( __CLASS__, 'post_edit_form_tag' ) );
 
 		// Delete file via Ajax
-		add_action( 'wp_ajax_rwmb_delete_file', array( __CLASS__, 'wp_ajax_delete_file' ) );
+		add_action( 'wp_ajax_swpmb_delete_file', array( __CLASS__, 'wp_ajax_delete_file' ) );
 
 		// Allow reordering files
-		add_action( 'wp_ajax_rwmb_reorder_files', array( __CLASS__, 'wp_ajax_reorder_files' ) );
+		add_action( 'wp_ajax_swpmb_reorder_files', array( __CLASS__, 'wp_ajax_reorder_files' ) );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class RWMB_File_Field extends RWMB_Field
 		$field_id = (string) filter_input( INPUT_POST, 'field_id' );
 		$order    = (string) filter_input( INPUT_POST, 'order' );
 
-		check_ajax_referer( "rwmb-reorder-files_{$field_id}" );
+		check_ajax_referer( "swpmb-reorder-files_{$field_id}" );
 		parse_str( $order, $items );
 		delete_post_meta( $post_id, $field_id );
 		foreach ( $items['item'] as $item )
@@ -73,14 +73,14 @@ class RWMB_File_Field extends RWMB_Field
 		$attachment_id = (int) filter_input( INPUT_POST, 'attachment_id', FILTER_SANITIZE_NUMBER_INT );
 		$force_delete  = (int) filter_input( INPUT_POST, 'force_delete', FILTER_SANITIZE_NUMBER_INT );
 
-		check_ajax_referer( "rwmb-delete-file_{$field_id}" );
+		check_ajax_referer( "swpmb-delete-file_{$field_id}" );
 		delete_post_meta( $post_id, $field_id, $attachment_id );
 		$success = $force_delete ? wp_delete_attachment( $attachment_id ) : true;
 
 		if ( $success )
 			wp_send_json_success();
 		else
-			wp_send_json_error( __( 'Error: Cannot delete file', 'meta-box' ) );
+			wp_send_json_error( __( 'Error: Cannot delete file', 'social-warfare' ) );
 	}
 
 	/**
@@ -93,8 +93,8 @@ class RWMB_File_Field extends RWMB_Field
 	 */
 	static function html( $meta, $field )
 	{
-		$i18n_title = apply_filters( 'rwmb_file_upload_string', _x( 'Upload Files', 'file upload', 'meta-box' ), $field );
-		$i18n_more  = apply_filters( 'rwmb_file_add_string', _x( '+ Add new file', 'file upload', 'meta-box' ), $field );
+		$i18n_title = apply_filters( 'swpmb_file_upload_string', _x( 'Upload Files', 'file upload', 'social-warfare' ), $field );
+		$i18n_more  = apply_filters( 'swpmb_file_add_string', _x( '+ Add new file', 'file upload', 'social-warfare' ), $field );
 
 		// Uploaded files
 		$html             = self::get_uploaded_files( $meta, $field );
@@ -107,7 +107,7 @@ class RWMB_File_Field extends RWMB_Field
 			'<div class="%s">
 				<h4>%s</h4>
 				<div class="file-input"><input type="file" name="%s[]" /></div>
-				<a class="rwmb-add-file" href="#"><strong>%s</strong></a>
+				<a class="swpmb-add-file" href="#"><strong>%s</strong></a>
 			</div>',
 			implode( ' ', $new_file_classes ),
 			$i18n_title,
@@ -120,10 +120,10 @@ class RWMB_File_Field extends RWMB_Field
 
 	static function get_uploaded_files( $files, $field )
 	{
-		$reorder_nonce = wp_create_nonce( "rwmb-reorder-files_{$field['id']}" );
-		$delete_nonce  = wp_create_nonce( "rwmb-delete-file_{$field['id']}" );
+		$reorder_nonce = wp_create_nonce( "swpmb-reorder-files_{$field['id']}" );
+		$delete_nonce  = wp_create_nonce( "swpmb-delete-file_{$field['id']}" );
 
-		$classes = array( 'rwmb-file', 'rwmb-uploaded' );
+		$classes = array( 'swpmb-file', 'swpmb-uploaded' );
 		if ( count( $files ) <= 0 )
 			$classes[] = 'hidden';
 		$list = '<ul class="%s" data-field_id="%s" data-delete_nonce="%s" data-reorder_nonce="%s" data-force_delete="%s" data-max_file_uploads="%s" data-mime_type="%s">';
@@ -150,16 +150,16 @@ class RWMB_File_Field extends RWMB_Field
 
 	static function file_html( $attachment_id )
 	{
-		$i18n_delete = apply_filters( 'rwmb_file_delete_string', _x( 'Delete', 'file upload', 'meta-box' ) );
-		$i18n_edit   = apply_filters( 'rwmb_file_edit_string', _x( 'Edit', 'file upload', 'meta-box' ) );
+		$i18n_delete = apply_filters( 'swpmb_file_delete_string', _x( 'Delete', 'file upload', 'social-warfare' ) );
+		$i18n_edit   = apply_filters( 'swpmb_file_edit_string', _x( 'Edit', 'file upload', 'social-warfare' ) );
 		$item        = '
 		<li id="item_%s">
-			<div class="rwmb-icon">%s</div>
-			<div class="rwmb-info">
+			<div class="swpmb-icon">%s</div>
+			<div class="swpmb-info">
 				<a href="%s" target="_blank">%s</a>
 				<p>%s</p>
 				<a title="%s" href="%s" target="_blank">%s</a> |
-				<a title="%s" class="rwmb-delete-file" href="#" data-attachment_id="%s">%s</a>
+				<a title="%s" class="swpmb-delete-file" href="#" data-attachment_id="%s">%s</a>
 			</div>
 		</li>';
 
@@ -301,7 +301,7 @@ class RWMB_File_Field extends RWMB_Field
 		$value = array();
 		foreach ( (array) $file_ids as $file_id )
 		{
-			if ( $file_info = call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'file_info' ), $file_id, $args ) )
+			if ( $file_info = call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'file_info' ), $file_id, $args ) )
 			{
 				$value[$file_id] = $file_info;
 			}

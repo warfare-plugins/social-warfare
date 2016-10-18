@@ -2,15 +2,15 @@
 /**
  * Color field class.
  */
-class RWMB_Color_Field extends RWMB_Text_Field
+class SWPMB_Color_Field extends SWPMB_Text_Field
 {
 	/**
 	 * Enqueue scripts and styles
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-color', RWMB_CSS_URL . 'color.css', array( 'wp-color-picker' ), RWMB_VER );
-		wp_enqueue_script( 'rwmb-color', RWMB_JS_URL . 'color.js', array( 'wp-color-picker' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-color', SWPMB_CSS_URL . 'color.css', array( 'wp-color-picker' ), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-color', SWPMB_JS_URL . 'color.js', array( 'wp-color-picker' ), SWPMB_VER, true );
 	}
 
 	/**

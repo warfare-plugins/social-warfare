@@ -2,7 +2,7 @@
 /**
  * Button field class.
  */
-class RWMB_Button_Field extends RWMB_Field
+class SWPMB_Button_Field extends SWPMB_Field
 {
 	/**
 	 * Get field HTML
@@ -26,7 +26,7 @@ class RWMB_Button_Field extends RWMB_Field
 	static function normalize( $field )
 	{
 		$field        = parent::normalize( $field );
-		$field['std'] = $field['std'] ? $field['std'] : __( 'Click me', 'meta-box' );
+		$field['std'] = $field['std'] ? $field['std'] : __( 'Click me', 'social-warfare' );
 		return $field;
 	}
 

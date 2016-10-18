@@ -53,11 +53,11 @@ jQuery( function ( $ )
 	 */
 	function getOriginalId( $el )
 	{
-		var $clones = $el.closest( '.rwmb-clone' ).siblings( '.rwmb-clone' ),
+		var $clones = $el.closest( '.swpmb-clone' ).siblings( '.swpmb-clone' ),
 			id = '';
 		$clones.each( function ()
 		{
-			var currentId = $( this ).find( '.rwmb-wysiwyg' ).attr( 'id' );
+			var currentId = $( this ).find( '.swpmb-wysiwyg' ).attr( 'id' );
 			if ( tinyMCEPreInit.mceInit.hasOwnProperty( currentId ) )
 			{
 				id = currentId;
@@ -95,6 +95,6 @@ jQuery( function ( $ )
 			.find( '.quicktags-toolbar' ).attr( 'id', 'qt_' + id + '_toolbar' ).html( '' );
 	}
 
-	$( ':input.rwmb-date' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-wysiwyg', update );
+	$( ':input.swpmb-date' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-wysiwyg', update );
 } );

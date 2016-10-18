@@ -1,10 +1,10 @@
-window.rwmb = window.rwmb || {};
+window.swpmb = window.swpmb || {};
 
 jQuery( function ( $ )
 {
 	'use strict';
 
-	var views = rwmb.views = rwmb.views || {},
+	var views = swpmb.views = swpmb.views || {},
 		ImageField = views.ImageField,
 		ImageUploadField,
 		UploadButton = views.UploadButton;
@@ -22,10 +22,10 @@ jQuery( function ( $ )
 	 */
 	function init()
 	{
-		new ImageUploadField( { input: this, el: $( this ).siblings( 'div.rwmb-media-view' ) } );
+		new ImageUploadField( { input: this, el: $( this ).siblings( 'div.swpmb-media-view' ) } );
 		console.log('win');
 	}
-	$( ':input.rwmb-image_upload, :input.rwmb-plupload_image' ).each( init );
-	$( '.rwmb-input' )
-		.on( 'clone', ':input.rwmb-image_upload, :input.rwmb-plupload_image', init )
+	$( ':input.swpmb-image_upload, :input.swpmb-plupload_image' ).each( init );
+	$( '.swpmb-input' )
+		.on( 'clone', ':input.swpmb-image_upload, :input.swpmb-plupload_image', init )
 } );

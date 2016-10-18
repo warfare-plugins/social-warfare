@@ -1,5 +1,5 @@
 /* Image */
-.rwmb-image-item {
+.swpmb-image-item {
 	position: relative;
 	float: left;
 	padding: 0;
@@ -7,15 +7,15 @@
 	box-sizing: border-box;
 	width: 150px;
 }
-.rwmb-image-item .rwmb-media-preview {
+.swpmb-image-item .swpmb-media-preview {
 	width: 150px;
 }
-.rwmb-image-item .dashicons {
+.swpmb-image-item .dashicons {
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
 }
-.rwmb-media-bar {
+.swpmb-media-bar {
 	position: absolute;
 	z-index: 10;
 	display: none;
@@ -23,11 +23,11 @@
 	top: 5px;
 	color: #fff;
 }
-.rwmb-media-bar a {
+.swpmb-media-bar a {
 	text-decoration: none;
 	color: inherit;
 }
-.rwmb-overlay {
+.swpmb-overlay {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -36,8 +36,8 @@
 	background: rgba(0, 0, 0, .6);
 	display: none;
 }
-.rwmb-image-item:hover .rwmb-media-bar,
-.rwmb-image-item:hover .rwmb-overlay {
+.swpmb-image-item:hover .swpmb-media-bar,
+.swpmb-image-item:hover .swpmb-overlay {
 	display: block;
 	cursor: move;
 }

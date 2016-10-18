@@ -1,8 +1,8 @@
 /* Uploaded image */
-.rwmb-images {
+.swpmb-images {
 	overflow: hidden;
 }
-.rwmb-images li {
+.swpmb-images li {
 	margin: 0 10px 10px 0;
 	float: left;
 	width: 150px;
@@ -13,11 +13,11 @@
 	-webkit-transition: width .25s, opacity .25s, -webkit-opacity .25s;
 	        transition: width .25s, opacity .25s;
 }
-.rwmb-images img {
+.swpmb-images img {
 	width: 150px;
 	height: 150px;
 }
-.rwmb-image-bar {
+.swpmb-image-bar {
 	color: #fff;
 	font-weight: bold;
 	background: #000;
@@ -29,21 +29,21 @@
 	display: none;
 	text-align: center;
 }
-li:hover .rwmb-image-bar {
+li:hover .swpmb-image-bar {
 	display: block;
 }
-.rwmb-image-bar a {
+.swpmb-image-bar a {
 	color: #fff;
 	font-weight: bold;
 	text-decoration: none;
 	vertical-align: middle;
 }
-.rwmb-image-bar a.rwmb-delete-file {
+.swpmb-image-bar a.swpmb-delete-file {
 	font-size: 23px;
 	width: 18px;
 	font-weight: normal;
 }
-.rwmb-images li.removed {
+.swpmb-images li.removed {
 	width: 0;
 	margin: 0;
 	        opacity: 0;
@@ -51,7 +51,7 @@ li:hover .rwmb-image-bar {
 	   -moz-opacity: 0;
 	     -o-opacity: 0;
 }
-.rwmb-images li.removed:after {
+.swpmb-images li.removed:after {
 	content: ' ';
 	position: absolute;
 	top: 0;
@@ -62,6 +62,6 @@ li:hover .rwmb-image-bar {
 	opacity: .4;
 	background-color: #f00;
 }
-.rwmb-images li.ui-state-highlight {
+.swpmb-images li.ui-state-highlight {
 	background: #ddd;
 }
