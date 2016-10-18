@@ -142,7 +142,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 	function createFloatBar() {
-		if ( ! $( '.nc_wrapper .nc_socialPanel' ).length && ! $( '.nc_socialPanelSide' ).length ) {
+		if ( ! $( '.nc_socialPanelSide' ).length ) {
+			if( $( '.nc_wrapper' ).length ) {
+				$( '.nc_wrapper' ).remove();
+			}
 			var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
 			var index = $( '.nc_socialPanel' ).index( firstSocialPanel );
 			var floatOption = firstSocialPanel.attr( 'data-float' );
@@ -429,8 +432,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		if ( swpPinIt.enabled ) {
 			pinitButton();
 		}
-
-		$('.nc_tweetContainer').mouseenter(function(){
+		/**
+		 * Trigger the resizes to the proper widths for the expansion on hover effect
+		 * @since 2.1.0
+		 * @todo Made the mouseenter/mouseleave events detect the hovering of the floating buttons on the bottom
+		 */
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
+			console.log('hello world');
 			var term_width = $(this).find('.swp_share').width();
 			var icon_width = $(this).find('i.sw').outerWidth();
 			var container_width = $(this).width();
@@ -438,7 +446,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
 			$(this).css({flex:percentage_change + ' 1 0%'});
 		});
-		$('.nc_tweetContainer').mouseleave(function(){
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseleave',function(){
 			$(this).find('.iconFiller').width('30px');
 			$(this).css({flex:'1'});
 		});

@@ -33,10 +33,6 @@ div.nc_socialPanel .nc_tweetContainer {
 	flex: 1;
 }
 
-div.nc_socialPanel .nc_tweetContainer:hover {
-	flex: 1.5;
-}
-
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,
 .nc_socialPanel .totes .swp_count {
 	display: block;
@@ -133,14 +129,10 @@ span.swp_share {
 .nc_socialPanel .iconFiller {
 	width: 30px;
 }
+
 span.spaceManWilly {
 	width:120px;
 	display:block;
-}
-
-.nc_socialPanel .nc_tweetContainer:hover .iconFiller,
-.nc_socialPanel .nc_tweetContainer:focus .iconFiller {
-	width: auto;
 }
 
 .nc_socialPanel .totes {
