@@ -68,7 +68,8 @@
 	display: inline-block;
 	float: right;
 	padding: 5px 15px;
-	border-radius: 3px 3px 0 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	        border-radius: 3px 3px 0 0;
 	color: #FFF;
 	font-weight: bold;
 	margin-top: -27px;
@@ -89,11 +90,13 @@
 #socialWarfare ul.rwmb-media-list.ui-sortable {
 	display: block;
 	width: 100%;
-	background-size: contain;
+	-webkit-background-size: contain;
+	        background-size: contain;
 	background-position-x: center;
 	background-repeat: no-repeat;
 	background-color: #ccc;
-	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	        border-radius: 4px;
 	padding: 0;
 }
 
@@ -137,7 +140,9 @@
 	width: 100%;
 	height: auto;
 	max-height: none;
-	transform: none;
+	-webkit-transform: none;
+	    -ms-transform: none;
+	        transform: none;
 }
 
 .wp-core-ui #socialWarfare a.rwmb-add-media.button {
@@ -150,7 +155,8 @@
 	vertical-align: middle;
 	padding: 15px 25px;
 	margin: 0;
-	box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
 	border: none;
 	height: auto;
 }
@@ -229,10 +235,12 @@
 	background: #ee464f;
 	color: #fff;
 	padding: 15px;
-	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	        border-radius: 2px;
 	margin: 15px 0;
 	border: 0;
-	box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
 	max-width: none;
 	padding: 20px;
 }

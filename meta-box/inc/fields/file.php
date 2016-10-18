@@ -12,8 +12,8 @@ class RWMB_File_Field extends RWMB_Field
 		wp_enqueue_style( 'rwmb-file', RWMB_CSS_URL . 'file.css', array(), RWMB_VER );
 		wp_enqueue_script( 'rwmb-file', RWMB_JS_URL . 'file.js', array( 'jquery' ), RWMB_VER, true );
 		wp_localize_script( 'rwmb-file', 'rwmbFile', array(
-			'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', 'meta-box' ),
-			'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', 'meta-box' ),
+			'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', 'social-warfare' ),
+			'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', 'social-warfare' ),
 		) );
 	}
 
@@ -80,7 +80,7 @@ class RWMB_File_Field extends RWMB_Field
 		if ( $success )
 			wp_send_json_success();
 		else
-			wp_send_json_error( __( 'Error: Cannot delete file', 'meta-box' ) );
+			wp_send_json_error( __( 'Error: Cannot delete file', 'social-warfare' ) );
 	}
 
 	/**
@@ -93,8 +93,8 @@ class RWMB_File_Field extends RWMB_Field
 	 */
 	static function html( $meta, $field )
 	{
-		$i18n_title = apply_filters( 'rwmb_file_upload_string', _x( 'Upload Files', 'file upload', 'meta-box' ), $field );
-		$i18n_more  = apply_filters( 'rwmb_file_add_string', _x( '+ Add new file', 'file upload', 'meta-box' ), $field );
+		$i18n_title = apply_filters( 'rwmb_file_upload_string', _x( 'Upload Files', 'file upload', 'social-warfare' ), $field );
+		$i18n_more  = apply_filters( 'rwmb_file_add_string', _x( '+ Add new file', 'file upload', 'social-warfare' ), $field );
 
 		// Uploaded files
 		$html             = self::get_uploaded_files( $meta, $field );
@@ -150,8 +150,8 @@ class RWMB_File_Field extends RWMB_Field
 
 	static function file_html( $attachment_id )
 	{
-		$i18n_delete = apply_filters( 'rwmb_file_delete_string', _x( 'Delete', 'file upload', 'meta-box' ) );
-		$i18n_edit   = apply_filters( 'rwmb_file_edit_string', _x( 'Edit', 'file upload', 'meta-box' ) );
+		$i18n_delete = apply_filters( 'rwmb_file_delete_string', _x( 'Delete', 'file upload', 'social-warfare' ) );
+		$i18n_edit   = apply_filters( 'rwmb_file_edit_string', _x( 'Edit', 'file upload', 'social-warfare' ) );
 		$item        = '
 		<li id="item_%s">
 			<div class="rwmb-icon">%s</div>

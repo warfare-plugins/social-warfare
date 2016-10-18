@@ -193,7 +193,7 @@ abstract class RWMB_Field
 	 */
 	static function add_clone_button( $field )
 	{
-		$text = apply_filters( 'rwmb_add_clone_button_text', __( '+ Add more', 'meta-box' ), $field );
+		$text = apply_filters( 'rwmb_add_clone_button_text', __( '+ Add more', 'social-warfare' ), $field );
 		return "<a href='#' class='rwmb-button button-primary add-clone'>$text</a>";
 	}
 

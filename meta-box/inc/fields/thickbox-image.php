@@ -50,7 +50,7 @@ class RWMB_Thickbox_Image_Field extends RWMB_Image_Field
 	 */
 	public static function html( $meta, $field )
 	{
-		$i18n_title = apply_filters( 'rwmb_thickbox_image_upload_string', _x( 'Upload Images', 'image upload', 'meta-box' ), $field );
+		$i18n_title = apply_filters( 'rwmb_thickbox_image_upload_string', _x( 'Upload Images', 'image upload', 'social-warfare' ), $field );
 
 		// Uploaded images
 		$html = parent::get_uploaded_images( $meta, $field );

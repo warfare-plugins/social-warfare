@@ -15,17 +15,17 @@ class RWMB_Media_Field extends RWMB_Field
 		wp_enqueue_style( 'rwmb-media', RWMB_CSS_URL . 'media.css', array(), RWMB_VER );
 		wp_enqueue_script( 'rwmb-media', RWMB_JS_URL . 'media.js', array( 'jquery-ui-sortable', 'underscore', 'backbone' ), RWMB_VER, true );
 		wp_localize_script( 'rwmb-media', 'i18nRwmbMedia', array(
-			'add'                => apply_filters( 'rwmb_media_add_string', __( 'Add Media', 'default' ) ),
-			'single'             => apply_filters( 'rwmb_media_single_files_string', _x( ' file', 'media', 'meta-box' ) ),
-			'multiple'           => apply_filters( 'rwmb_media_multiple_files_string', _x( ' files', 'media', 'meta-box' ) ),
-			'remove'             => apply_filters( 'rwmb_media_remove_string', __( 'Remove', 'default' ) ),
-			'edit'               => apply_filters( 'rwmb_media_edit_string', __( 'Edit', 'default' ) ),
-			'view'               => apply_filters( 'rwmb_media_view_string', __( 'View', 'default' ) ),
-			'noTitle'            => _x( 'No Title', 'media', 'meta-box' ),
+			'add'                => apply_filters( 'rwmb_media_add_string', __( 'Add Media', 'social-warfare' ) ),
+			'single'             => apply_filters( 'rwmb_media_single_files_string', _x( ' file', 'media', 'social-warfare' ) ),
+			'multiple'           => apply_filters( 'rwmb_media_multiple_files_string', _x( ' files', 'media', 'social-warfare' ) ),
+			'remove'             => apply_filters( 'rwmb_media_remove_string', __( 'Remove', 'social-warfare' ) ),
+			'edit'               => apply_filters( 'rwmb_media_edit_string', __( 'Edit', 'social-warfare' ) ),
+			'view'               => apply_filters( 'rwmb_media_view_string', __( 'View', 'social-warfare' ) ),
+			'noTitle'            => _x( 'No Title', 'media', 'social-warfare' ),
 			'loadingUrl'         => RWMB_URL . 'img/loader.gif',
 			'extensions'         => self::get_mime_extensions(),
-			'select'             => _x( 'Select Files', 'media', 'meta-box' ),
-			'uploadInstructions' => _x( 'Drop files here to upload', 'media', 'meta-box' )
+			'select'             => _x( 'Select Files', 'media', 'social-warfare' ),
+			'uploadInstructions' => _x( 'Drop files here to upload', 'media', 'social-warfare' )
 		) );
 	}
 

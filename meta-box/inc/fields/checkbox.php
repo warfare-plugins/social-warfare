@@ -82,6 +82,6 @@ class RWMB_Checkbox_Field extends RWMB_Input_Field
 	static function the_value( $field, $args = array(), $post_id = null )
 	{
 		$value = self::get_value( $field, $args, $post_id );
-		return $value ? __( 'Yes', 'meta-box' ) : __( 'No', 'meta-box' );
+		return $value ? __( 'Yes', 'social-warfare' ) : __( 'No', 'social-warfare' );
 	}
 }

@@ -61,7 +61,7 @@ function swp_plugin_options() {
 
 	// Make sure the person accessing this link has proper permissions to access it
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'social-warfare' ) );
 	}
 
 	swp_build_options_page();

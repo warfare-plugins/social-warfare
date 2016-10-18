@@ -62,7 +62,7 @@ class RWMB_OEmbed_Field extends RWMB_URL_Field
 			$embed = $GLOBALS['wp_embed']->shortcode( $args, $url );
 		}
 
-		return $embed ? $embed : __( 'Embed HTML not available.', 'meta-box' );
+		return $embed ? $embed : __( 'Embed HTML not available.', 'social-warfare' );
 	}
 
 	/**
@@ -81,7 +81,7 @@ class RWMB_OEmbed_Field extends RWMB_URL_Field
 			<span class="spinner"></span>
 			<div class="embed-code">%s</div>',
 			self::render_attributes( $attributes ),
-			__( 'Preview', 'meta-box' ),
+			__( 'Preview', 'social-warfare' ),
 			$meta ? self::get_embed( $meta ) : ''
 		);
 	}

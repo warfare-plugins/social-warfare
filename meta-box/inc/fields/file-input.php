@@ -15,7 +15,7 @@ class RWMB_File_Input_Field extends RWMB_Field
 		wp_enqueue_media();
 		wp_enqueue_script( 'rwmb-file-input', RWMB_JS_URL . 'file-input.js', array( 'jquery' ), RWMB_VER, true );
 		wp_localize_script( 'rwmb-file-input', 'rwmbFileInput', array(
-			'frameTitle' => __( 'Select File', 'meta-box' ),
+			'frameTitle' => __( 'Select File', 'social-warfare' ),
 		) );
 	}
 
@@ -38,9 +38,9 @@ class RWMB_File_Input_Field extends RWMB_Field
 			$meta,
 			$field['placeholder'],
 			$field['size'],
-			__( 'Select', 'meta-box' ),
+			__( 'Select', 'social-warfare' ),
 			$meta ? '' : 'hidden',
-			__( 'Remove', 'meta-box' )
+			__( 'Remove', 'social-warfare' )
 		);
 	}
 
