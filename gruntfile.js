@@ -161,20 +161,20 @@ module.exports = function( grunt ) {
 				options: {
 					patterns: [
 						{
-							match: /RWMB_/g,
-							replacement: 'SWPMB_'
+							match: /RWMB/g,
+							replacement: 'SWPMB'
 						},
 						{
-							match: /rwmb_/g,
-							replacement: 'swpmb_'
+							match: /Rwmb/g,
+							replacement: 'Swpmb'
 						},
 						{
 							match: /RW_/g,
 							replacement: 'SWP_'
 						},
 						{
-							match: /rwmb-/g,
-							replacement: 'swpmb-'
+							match: /rwmb/g,
+							replacement: 'swpmb'
 						}
 					]
 				},
@@ -184,7 +184,8 @@ module.exports = function( grunt ) {
 						src: [
 							'meta-box/**',
 							'meta-box/.*',
-							'!meta-box/img/*'
+							'!meta-box/img/*',
+							'!meta-box/lang/*'
 						]
 					}
 				]
