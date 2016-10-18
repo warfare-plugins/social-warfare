@@ -2,7 +2,7 @@
 /**
  * Radio field class.
  */
-class RWMB_Radio_Field extends RWMB_Input_List_Field
+class SWPMB_Radio_Field extends SWPMB_Input_List_Field
 {
 	/**
 	 * Normalize parameters for field

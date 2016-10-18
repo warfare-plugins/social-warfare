@@ -8,7 +8,7 @@
  * - If field is cloneable, value is saved as a single entry in the database
  * - Otherwise value is saved as multiple entries
  */
-abstract class RWMB_Multiple_Values_Field extends RWMB_Field
+abstract class SWPMB_Multiple_Values_Field extends SWPMB_Field
 {
 	/**
 	 * Normalize parameters for field

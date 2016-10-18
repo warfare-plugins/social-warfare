@@ -1,4 +1,4 @@
-/* global jQuery, rwmb_cloneable_editors */
+/* global jQuery, swpmb_cloneable_editors */
 
 jQuery( function ( $ )
 {
@@ -7,13 +7,13 @@ jQuery( function ( $ )
 	// Object holds all methods related to fields' index when clone
 	var cloneIndex = {
 		/**
-		 * Set index for fields in a .rwmb-clone
-		 * @param $clone .rwmb-clone element
+		 * Set index for fields in a .swpmb-clone
+		 * @param $clone .swpmb-clone element
 		 * @param index Index value
 		 */
 		set: function ( $clone, index )
 		{
-			$clone.find( ':input[class|="rwmb"]' ).each( function ()
+			$clone.find( ':input[class|="swpmb"]' ).each( function ()
 			{
 				var $field = $( this );
 
@@ -33,7 +33,7 @@ jQuery( function ( $ )
 			} );
 
 			// Address button's value attribute
-			var $address = $clone.find( '.rwmb-map-goto-address-button' );
+			var $address = $clone.find( '.swpmb-map-goto-address-button' );
 			if ( $address.length )
 			{
 				var value = $address.attr( 'value' );
@@ -75,7 +75,7 @@ jQuery( function ( $ )
 
 		/**
 		 * Helper function to create next index for clones
-		 * @param $container .rwmb-input container
+		 * @param $container .swpmb-input container
 		 * @return integer
 		 */
 		nextIndex: function ( $container )
@@ -93,9 +93,9 @@ jQuery( function ( $ )
 	 */
 	function clone( $container )
 	{
-		var $last = $container.children( '.rwmb-clone:last' ),
+		var $last = $container.children( '.swpmb-clone:last' ),
 			$clone = $last.clone(),
-			$input = $clone.find( ':input[class|="rwmb"]' ),
+			$input = $clone.find( ':input[class|="swpmb"]' ),
 			nextIndex = cloneIndex.nextIndex( $container );
 
 		// Reset value for fields
@@ -131,7 +131,7 @@ jQuery( function ( $ )
 	/**
 	 * Hide remove buttons when there's only 1 of them
 	 *
-	 * @param $container .rwmb-input container
+	 * @param $container .swpmb-input container
 	 *
 	 * @return void
 	 */
@@ -145,7 +145,7 @@ jQuery( function ( $ )
 	 * Toggle add button
 	 * Used with [data-max-clone] attribute. When max clone is reached, the add button is hid and vice versa
 	 *
-	 * @param $container .rwmb-input container
+	 * @param $container .swpmb-input container
 	 *
 	 * @return void
 	 */
@@ -153,7 +153,7 @@ jQuery( function ( $ )
 	{
 		var $button = $container.find( '.add-clone' ),
 			maxClone = parseInt( $container.data( 'max-clone' ) ),
-			numClone = $container.find( '.rwmb-clone' ).length;
+			numClone = $container.find( '.swpmb-clone' ).length;
 
 		$button.toggle( isNaN( maxClone ) || ( maxClone && numClone < maxClone ) );
 	}
@@ -164,7 +164,7 @@ jQuery( function ( $ )
 		{
 			e.preventDefault();
 
-			var $container = $( this ).closest( '.rwmb-input' );
+			var $container = $( this ).closest( '.swpmb-input' );
 			clone( $container );
 
 			toggleRemoveButtons( $container );
@@ -176,10 +176,10 @@ jQuery( function ( $ )
 			e.preventDefault();
 
 			var $this = $( this ),
-				$container = $this.closest( '.rwmb-input' );
+				$container = $this.closest( '.swpmb-input' );
 
 			// Remove clone only if there are 2 or more of them
-			if ( $container.find( '.rwmb-clone' ).length < 2 )
+			if ( $container.find( '.swpmb-clone' ).length < 2 )
 			{
 				return;
 			}
@@ -189,18 +189,18 @@ jQuery( function ( $ )
 			toggleAddButton( $container )
 		} );
 
-	$( '.rwmb-input' ).each( function ()
+	$( '.swpmb-input' ).each( function ()
 	{
 		var $container = $( this );
 		toggleRemoveButtons( $container );
 		toggleAddButton( $container );
 
 		$container
-			.data( 'next-index', $container.children( '.rwmb-clone' ).length )
+			.data( 'next-index', $container.children( '.swpmb-clone' ).length )
 			.sortable( {
-				handle     : '.rwmb-clone-icon',
-				placeholder: ' rwmb-clone rwmb-clone-placeholder',
-				items      : '.rwmb-clone',
+				handle     : '.swpmb-clone-icon',
+				placeholder: ' swpmb-clone swpmb-clone-placeholder',
+				items      : '.swpmb-clone',
 				start      : function ( event, ui )
 				{
 					// Make the placeholder has the same height as dragged item

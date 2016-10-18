@@ -2,7 +2,7 @@
 /**
  * HTML5 range field class.
  */
-class RWMB_Range_Field extends RWMB_Number_Field
+class SWPMB_Range_Field extends SWPMB_Number_Field
 {
 	/**
 	 * Get field HTML
@@ -14,7 +14,7 @@ class RWMB_Range_Field extends RWMB_Number_Field
 	static function html( $meta, $field )
 	{
 		$output  = parent::html( $meta, $field );
-		$output .= sprintf( '<span class="rwmb-output">%s</span>', $meta );
+		$output .= sprintf( '<span class="swpmb-output">%s</span>', $meta );
 		return $output;
 	}
 
@@ -23,8 +23,8 @@ class RWMB_Range_Field extends RWMB_Number_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-range', RWMB_CSS_URL . 'range.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-range', RWMB_JS_URL . 'range.js', array(), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-range', SWPMB_CSS_URL . 'range.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-range', SWPMB_JS_URL . 'range.js', array(), SWPMB_VER, true );
 	}
 
 	/**

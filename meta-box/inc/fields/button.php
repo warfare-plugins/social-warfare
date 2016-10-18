@@ -2,7 +2,7 @@
 /**
  * Button field class.
  */
-class RWMB_Button_Field extends RWMB_Field
+class SWPMB_Button_Field extends SWPMB_Field
 {
 	/**
 	 * Get field HTML

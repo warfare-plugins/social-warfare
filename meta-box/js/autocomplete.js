@@ -9,8 +9,8 @@ jQuery( function ( $ )
 	function updateAutocomplete( e )
 	{
 		var $this = $( this ),
-			$search = $this.siblings( '.rwmb-autocomplete-search'),
-			$result = $this.siblings( '.rwmb-autocomplete-results' ),
+			$search = $this.siblings( '.swpmb-autocomplete-search'),
+			$result = $this.siblings( '.swpmb-autocomplete-results' ),
 			name = $this.attr( 'name' );
 
 		// If the function is called on cloning, then change the field name and clear all results
@@ -28,10 +28,10 @@ jQuery( function ( $ )
 			select   : function ( event, ui )
 			{
 				$result.append(
-					'<div class="rwmb-autocomplete-result">' +
+					'<div class="swpmb-autocomplete-result">' +
 					'<div class="label">' + ( typeof ui.item.excerpt !== 'undefined' ? ui.item.excerpt : ui.item.label ) + '</div>' +
-					'<div class="actions">' + RWMB_Autocomplete.delete + '</div>' +
-					'<input type="hidden" class="rwmb-autocomplete-value" name="' + name + '" value="' + ui.item.value + '">' +
+					'<div class="actions">' + SWPMB_Autocomplete.delete + '</div>' +
+					'<input type="hidden" class="swpmb-autocomplete-value" name="' + name + '" value="' + ui.item.value + '">' +
 					'</div>'
 				);
 
@@ -43,11 +43,11 @@ jQuery( function ( $ )
 		} );
 	}
 
-	$( '.rwmb-autocomplete-wrapper input[type="hidden"]' ).each( updateAutocomplete );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-autocomplete', updateAutocomplete );
+	$( '.swpmb-autocomplete-wrapper input[type="hidden"]' ).each( updateAutocomplete );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-autocomplete', updateAutocomplete );
 
 	// Handle remove action
-	$( document ).on( 'click', '.rwmb-autocomplete-result .actions', function ()
+	$( document ).on( 'click', '.swpmb-autocomplete-result .actions', function ()
 	{
 		// remove result
 		$( this ).parent().remove();

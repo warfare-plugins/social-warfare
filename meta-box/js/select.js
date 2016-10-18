@@ -6,7 +6,7 @@ jQuery( function ( $ )
 	 * Object stores all necessary methods for select All/None actions
 	 * Assign to global variable so we can access to this object from select advanced field
 	 */
-	var select = window.rwmbSelect = {
+	var select = window.swpmbSelect = {
 		/**
 		 * Select all/none for select tag
 		 *
@@ -18,7 +18,7 @@ jQuery( function ( $ )
 		{
 			var $element = $input.find( 'select' );
 
-			$input.on( 'click', '.rwmb-select-all-none a', function ( e )
+			$input.on( 'click', '.swpmb-select-all-none a', function ( e )
 			{
 				e.preventDefault();
 				if ( 'all' == $( this ).data( 'type' ) )
@@ -51,8 +51,8 @@ jQuery( function ( $ )
 		 */
 		bindEvents: function ( $el )
 		{
-			var $input = $el.closest( '.rwmb-input' ),
-				$clone = $input.find( '.rwmb-clone' );
+			var $input = $el.closest( '.swpmb-input' ),
+				$clone = $input.find( '.swpmb-clone' );
 
 			if ( $clone.length )
 			{
@@ -79,6 +79,6 @@ jQuery( function ( $ )
 	}
 
 	// Run for select field
-	$( ':input.rwmb-select' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-select', update );
+	$( ':input.swpmb-select' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-select', update );
 } );

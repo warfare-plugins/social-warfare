@@ -3,7 +3,7 @@
  * Base field class which defines all necessary methods.
  * Fields must inherit this class and overwrite methods with its own.
  */
-abstract class RWMB_Field
+abstract class SWPMB_Field
 {
 	/**
 	 * Add actions
@@ -39,12 +39,12 @@ abstract class RWMB_Field
 		$post    = get_post();
 		$post_id = isset( $post->ID ) ? $post->ID : 0;
 
-		$field_class = RW_Meta_Box::get_class_name( $field );
+		$field_class = SWP_Meta_Box::get_class_name( $field );
 		$meta        = call_user_func( array( $field_class, 'meta' ), $post_id, $saved, $field );
-		$meta        = RWMB_Core::filter( 'field_meta', $meta, $field, $saved );
+		$meta        = SWPMB_Core::filter( 'field_meta', $meta, $field, $saved );
 
 		$begin = call_user_func( array( $field_class, 'begin_html' ), $meta, $field );
-		$begin = RWMB_Core::filter( 'begin_html', $begin, $field, $meta );
+		$begin = SWPMB_Core::filter( 'begin_html', $begin, $field, $meta );
 
 		// Separate code for cloneable and non-cloneable fields to make easy to maintain
 
@@ -70,19 +70,19 @@ abstract class RWMB_Field
 				if ( $field['multiple'] )
 					$sub_field['field_name'] .= '[]';
 
-				// Wrap field HTML in a div with class="rwmb-clone" if needed
-				$class     = "rwmb-clone rwmb-{$field['type']}-clone";
+				// Wrap field HTML in a div with class="swpmb-clone" if needed
+				$class     = "swpmb-clone swpmb-{$field['type']}-clone";
 				$sort_icon = '';
 				if ( $field['sort_clone'] )
 				{
-					$class .= ' rwmb-sort-clone';
-					$sort_icon = "<a href='javascript:;' class='rwmb-clone-icon'></a>";
+					$class .= ' swpmb-sort-clone';
+					$sort_icon = "<a href='javascript:;' class='swpmb-clone-icon'></a>";
 				}
 				$input_html = "<div class='$class'>" . $sort_icon;
 
 				// Call separated methods for displaying each type of field
 				$input_html .= call_user_func( array( $field_class, 'html' ), $sub_meta, $sub_field );
-				$input_html = RWMB_Core::filter( 'html', $input_html, $sub_field, $sub_meta );
+				$input_html = SWPMB_Core::filter( 'html', $input_html, $sub_field, $sub_meta );
 
 				// Remove clone button
 				$input_html .= call_user_func( array( $field_class, 'remove_clone_button' ), $sub_field );
@@ -97,16 +97,16 @@ abstract class RWMB_Field
 		{
 			// Call separated methods for displaying each type of field
 			$field_html = call_user_func( array( $field_class, 'html' ), $meta, $field );
-			$field_html = RWMB_Core::filter( 'html', $field_html, $field, $meta );
+			$field_html = SWPMB_Core::filter( 'html', $field_html, $field, $meta );
 		}
 
 		$end = call_user_func( array( $field_class, 'end_html' ), $meta, $field );
-		$end = RWMB_Core::filter( 'end_html', $end, $field, $meta );
+		$end = SWPMB_Core::filter( 'end_html', $end, $field, $meta );
 
-		$html = RWMB_Core::filter( 'wrapper_html', "$begin$field_html$end", $field, $meta );
+		$html = SWPMB_Core::filter( 'wrapper_html', "$begin$field_html$end", $field, $meta );
 
 		// Display label and input in DIV and allow user-defined classes to be appended
-		$classes = "rwmb-field rwmb-{$field['type']}-wrapper " . $field['class'] ;
+		$classes = "swpmb-field swpmb-{$field['type']}-wrapper " . $field['class'] ;
 		if ( 'hidden' === $field['type'] )
 			$classes .= ' hidden';
 		if ( ! empty( $field['required'] ) )
@@ -117,7 +117,7 @@ abstract class RWMB_Field
 			trim( $classes ),
 			$html
 		);
-		$outer_html = RWMB_Core::filter( 'outer_html', $outer_html, $field, $meta );
+		$outer_html = SWPMB_Core::filter( 'outer_html', $outer_html, $field, $meta );
 
 		echo $outer_html;
 	}
@@ -149,7 +149,7 @@ abstract class RWMB_Field
 		if ( $field['name'] )
 		{
 			$field_label = sprintf(
-				'<div class="rwmb-label"><label for="%s">%s</label></div>',
+				'<div class="swpmb-label"><label for="%s">%s</label></div>',
 				$field['id'],
 				$field['name']
 			);
@@ -158,7 +158,7 @@ abstract class RWMB_Field
 		$data_max_clone = is_numeric( $field['max_clone'] ) && $field['max_clone'] > 1 ? ' data-max-clone=' . $field['max_clone'] : '';
 
 		$input_open = sprintf(
-			'<div class="rwmb-input"%s>',
+			'<div class="swpmb-input"%s>',
 			$data_max_clone
 		);
 
@@ -175,7 +175,7 @@ abstract class RWMB_Field
 	 */
 	static function end_html( $meta, $field )
 	{
-		$button = $field['clone'] ? call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'add_clone_button' ), $field ) : '';
+		$button = $field['clone'] ? call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'add_clone_button' ), $field ) : '';
 		$desc   = $field['desc'] ? "<p id='{$field['id']}_description' class='description'>{$field['desc']}</p>" : '';
 
 		// Closes the container
@@ -193,8 +193,8 @@ abstract class RWMB_Field
 	 */
 	static function add_clone_button( $field )
 	{
-		$text = apply_filters( 'rwmb_add_clone_button_text', __( '+ Add more', 'social-warfare' ), $field );
-		return "<a href='#' class='rwmb-button button-primary add-clone'>$text</a>";
+		$text = apply_filters( 'swpmb_add_clone_button_text', __( '+ Add more', 'social-warfare' ), $field );
+		return "<a href='#' class='swpmb-button button-primary add-clone'>$text</a>";
 	}
 
 	/**
@@ -207,8 +207,8 @@ abstract class RWMB_Field
 	static function remove_clone_button( $field )
 	{
 		$icon = '<i class="dashicons dashicons-minus"></i>';
-		$text = apply_filters( 'rwmb_remove_clone_button_text', $icon, $field );
-		return "<a href='#' class='rwmb-button remove-clone'>$text</a>";
+		$text = apply_filters( 'swpmb_remove_clone_button_text', $icon, $field );
+		return "<a href='#' class='swpmb-button remove-clone'>$text</a>";
 	}
 
 	/**
@@ -236,7 +236,7 @@ abstract class RWMB_Field
 		$meta = ( ! $saved && '' === $meta || array() === $meta ) ? $field['std'] : $meta;
 
 		// Escape attributes
-		$meta = call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'esc_meta' ), $meta );
+		$meta = call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'esc_meta' ), $meta );
 
 		// Make sure meta value is an array for clonable and multiple fields
 		if ( $field['clone'] || $field['multiple'] )
@@ -382,7 +382,7 @@ abstract class RWMB_Field
 		$attributes = wp_parse_args( $field['attributes'], array(
 			'disabled' => $field['disabled'],
 			'required' => $field['required'],
-			'class'    => "rwmb-{$field['type']}",
+			'class'    => "swpmb-{$field['type']}",
 			'id'       => $field['id'],
 			'name'     => $field['field_name'],
 		) );
@@ -466,10 +466,10 @@ abstract class RWMB_Field
 	 * See specific field classes for details.
 	 *
 	 * Note: we don't echo the field value directly. We return the output HTML of field, which will be used in
-	 * rwmb_the_field function later.
+	 * swpmb_the_field function later.
 	 *
 	 * @use self::get_value()
-	 * @see rwmb_the_value()
+	 * @see swpmb_the_value()
 	 *
 	 * @param  array    $field   Field parameters
 	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details
@@ -479,7 +479,7 @@ abstract class RWMB_Field
 	 */
 	static function the_value( $field, $args = array(), $post_id = null )
 	{
-		$value  = call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'get_value' ), $field, $args, $post_id );
+		$value  = call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'get_value' ), $field, $args, $post_id );
 		$output = $value;
 		if ( is_array( $value ) )
 		{

@@ -2,7 +2,7 @@
 /**
  * Map field class.
  */
-class RWMB_Map_Field extends RWMB_Field
+class SWPMB_Map_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -15,10 +15,10 @@ class RWMB_Map_Field extends RWMB_Field
 		 * Allows developers load more libraries via a filter.
 		 * @link https://developers.google.com/maps/documentation/javascript/libraries
 		 */
-		$google_maps_url = apply_filters( 'rwmb_google_maps_url', 'https://maps.google.com/maps/api/js?sensor=false' );
+		$google_maps_url = apply_filters( 'swpmb_google_maps_url', 'https://maps.google.com/maps/api/js?sensor=false' );
 		wp_register_script( 'google-maps', esc_url_raw( $google_maps_url ), array(), '', true );
-		wp_enqueue_style( 'rwmb-map', RWMB_CSS_URL . 'map.css' );
-		wp_enqueue_script( 'rwmb-map', RWMB_JS_URL . 'map.js', array( 'jquery-ui-autocomplete', 'google-maps' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-map', SWPMB_CSS_URL . 'map.css' );
+		wp_enqueue_script( 'swpmb-map', SWPMB_JS_URL . 'map.js', array( 'jquery-ui-autocomplete', 'google-maps' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -31,11 +31,11 @@ class RWMB_Map_Field extends RWMB_Field
 	 */
 	static function html( $meta, $field )
 	{
-		$html = '<div class="rwmb-map-field">';
+		$html = '<div class="swpmb-map-field">';
 
 		$html .= sprintf(
-			'<div class="rwmb-map-canvas" data-default-loc="%s"></div>
-			<input type="hidden" name="%s" class="rwmb-map-coordinate" value="%s">',
+			'<div class="swpmb-map-canvas" data-default-loc="%s"></div>
+			<input type="hidden" name="%s" class="swpmb-map-coordinate" value="%s">',
 			esc_attr( $field['std'] ),
 			esc_attr( $field['field_name'] ),
 			esc_attr( $meta )
@@ -44,7 +44,7 @@ class RWMB_Map_Field extends RWMB_Field
 		if ( $address = $field['address_field'] )
 		{
 			$html .= sprintf(
-				'<button class="button rwmb-map-goto-address-button" value="%s">%s</button>',
+				'<button class="button swpmb-map-goto-address-button" value="%s">%s</button>',
 				is_array( $address ) ? implode( ',', $address ) : $address,
 				__( 'Find Address', 'social-warfare' )
 			);
@@ -121,9 +121,9 @@ class RWMB_Map_Field extends RWMB_Field
 		 * Allows developers load more libraries via a filter.
 		 * @link https://developers.google.com/maps/documentation/javascript/libraries
 		 */
-		$google_maps_url = apply_filters( 'rwmb_google_maps_url', 'https://maps.google.com/maps/api/js?sensor=false' );
+		$google_maps_url = apply_filters( 'swpmb_google_maps_url', 'https://maps.google.com/maps/api/js?sensor=false' );
 		wp_register_script( 'google-maps', esc_url_raw( $google_maps_url ), array(), '', true );
-		wp_enqueue_script( 'rwmb-map-frontend', RWMB_JS_URL . 'map-frontend.js', array( 'google-maps' ), '', true );
+		wp_enqueue_script( 'swpmb-map-frontend', SWPMB_JS_URL . 'map-frontend.js', array( 'google-maps' ), '', true );
 
 		// Map parameters
 		$args = wp_parse_args( $args, array(
@@ -152,7 +152,7 @@ class RWMB_Map_Field extends RWMB_Field
 		) );
 
 		$output = sprintf(
-			'<div class="rwmb-map-canvas" data-map_options="%s" style="width:%s;height:%s"></div>',
+			'<div class="swpmb-map-canvas" data-map_options="%s" style="width:%s;height:%s"></div>',
 			esc_attr( wp_json_encode( $args ) ),
 			esc_attr( $args['width'] ),
 			esc_attr( $args['height'] )

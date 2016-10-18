@@ -2,7 +2,7 @@
 /**
  * Textarea field class.
  */
-class RWMB_Textarea_Field extends RWMB_Field
+class SWPMB_Textarea_Field extends SWPMB_Field
 {
 	/**
 	 * Get field HTML

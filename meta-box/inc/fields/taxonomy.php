@@ -2,7 +2,7 @@
 /**
  * Taxonomy field class which set post terms when saving.
  */
-class RWMB_Taxonomy_Field extends RWMB_Object_Choice_Field
+class SWPMB_Taxonomy_Field extends SWPMB_Object_Choice_Field
 {
 	/**
 	 * Add default value for 'taxonomy' field

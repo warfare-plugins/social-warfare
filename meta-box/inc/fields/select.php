@@ -2,15 +2,15 @@
 /**
  * Select field class.
  */
-class RWMB_Select_Field extends RWMB_Choice_Field
+class SWPMB_Select_Field extends SWPMB_Choice_Field
 {
 	/**
 	 * Enqueue scripts and styles
 	 */
 	public static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-select', RWMB_CSS_URL . 'select.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-select', RWMB_JS_URL . 'select.js', array(), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-select', SWPMB_CSS_URL . 'select.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-select', SWPMB_JS_URL . 'select.js', array(), SWPMB_VER, true );
 	}
 
 	/**
@@ -25,8 +25,8 @@ class RWMB_Select_Field extends RWMB_Choice_Field
 	 */
 	public static function walk( $options, $db_fields, $meta, $field )
 	{
-		$attributes = call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'get_attributes' ), $field, $meta );
-		$walker     = new RWMB_Select_Walker( $db_fields, $field, $meta );
+		$attributes = call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'get_attributes' ), $field, $meta );
+		$walker     = new SWPMB_Select_Walker( $db_fields, $field, $meta );
 		$output     = sprintf(
 			'<select %s>',
 			self::render_attributes( $attributes )
@@ -52,7 +52,7 @@ class RWMB_Select_Field extends RWMB_Choice_Field
 	public static function normalize( $field )
 	{
 		$field = parent::normalize( $field );
-		$field = $field['multiple'] ? RWMB_Multiple_Values_Field::normalize( $field ) : $field;
+		$field = $field['multiple'] ? SWPMB_Multiple_Values_Field::normalize( $field ) : $field;
 		$field = wp_parse_args( $field, array(
 			'size'            => $field['multiple'] ? 5 : 0,
 			'select_all_none' => false,
@@ -90,7 +90,7 @@ class RWMB_Select_Field extends RWMB_Choice_Field
 	{
 		if ( $field['multiple'] && $field['select_all_none'] )
 		{
-			return '<div class="rwmb-select-all-none">' . __( 'Select', 'social-warfare' ) . ': <a data-type="all" href="#">' . __( 'All', 'social-warfare' ) . '</a> | <a data-type="none" href="#">' . __( 'None', 'social-warfare' ) . '</a></div>';
+			return '<div class="swpmb-select-all-none">' . __( 'Select', 'social-warfare' ) . ': <a data-type="all" href="#">' . __( 'All', 'social-warfare' ) . '</a> | <a data-type="none" href="#">' . __( 'None', 'social-warfare' ) . '</a></div>';
 		}
 		return '';
 	}

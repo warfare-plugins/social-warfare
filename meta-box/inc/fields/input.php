@@ -2,7 +2,7 @@
 /**
  * Abstract input field class which is used for all <input> fields.
  */
-abstract class RWMB_Input_Field extends RWMB_Field
+abstract class SWPMB_Input_Field extends SWPMB_Field
 {
 	/**
 	 * Get field HTML
@@ -13,7 +13,7 @@ abstract class RWMB_Input_Field extends RWMB_Field
 	 */
 	static function html( $meta, $field )
 	{
-		$attributes = call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'get_attributes' ), $field, $meta );
+		$attributes = call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'get_attributes' ), $field, $meta );
 		return sprintf( '<input %s>%s', self::render_attributes( $attributes ), self::datalist_html( $field ) );
 	}
 

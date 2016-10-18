@@ -2,14 +2,14 @@
 /**
  * Checkbox field class.
  */
-class RWMB_Checkbox_Field extends RWMB_Input_Field
+class SWPMB_Checkbox_Field extends SWPMB_Input_Field
 {
 	/**
 	 * Enqueue scripts and styles.
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-checkbox', RWMB_CSS_URL . 'checkbox.css', array(), RWMB_VER );
+		wp_enqueue_style( 'swpmb-checkbox', SWPMB_CSS_URL . 'checkbox.css', array(), SWPMB_VER );
 	}
 
 	/**
@@ -68,10 +68,10 @@ class RWMB_Checkbox_Field extends RWMB_Input_Field
 	 * Display 'Yes' or 'No' instead of '1' and '0'
 	 *
 	 * Note: we don't echo the field value directly. We return the output HTML of field, which will be used in
-	 * rwmb_the_field function later.
+	 * swpmb_the_field function later.
 	 *
 	 * @use self::get_value()
-	 * @see rwmb_the_value()
+	 * @see swpmb_the_value()
 	 *
 	 * @param  array    $field   Field parameters
 	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details

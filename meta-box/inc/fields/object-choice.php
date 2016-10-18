@@ -2,7 +2,7 @@
 /**
  * Abstract field to select an object: post, user, taxonomy, etc.
  */
-abstract class RWMB_Object_Choice_Field extends RWMB_Choice_Field
+abstract class SWPMB_Object_Choice_Field extends SWPMB_Choice_Field
 {
 	/**
 	 * Get field HTML
@@ -19,17 +19,17 @@ abstract class RWMB_Object_Choice_Field extends RWMB_Choice_Field
 		{
 			case 'checkbox_list':
 			case 'radio_list':
-				return RWMB_Input_List_Field::walk( $options, $db_fields, $meta, $field );
+				return SWPMB_Input_List_Field::walk( $options, $db_fields, $meta, $field );
 				break;
 			case 'select_tree':
-				return RWMB_Select_Tree_Field::walk( $options, $db_fields, $meta, $field );
+				return SWPMB_Select_Tree_Field::walk( $options, $db_fields, $meta, $field );
 				break;
 			case 'select_advanced':
-				return RWMB_Select_Advanced_Field::walk( $options, $db_fields, $meta, $field );
+				return SWPMB_Select_Advanced_Field::walk( $options, $db_fields, $meta, $field );
 				break;
 			case 'select':
 			default:
-				return RWMB_Select_Field::walk( $options, $db_fields, $meta, $field );
+				return SWPMB_Select_Field::walk( $options, $db_fields, $meta, $field );
 				break;
 		}
 	}
@@ -61,17 +61,17 @@ abstract class RWMB_Object_Choice_Field extends RWMB_Choice_Field
 			case 'checkbox_list':
 			case 'radio_list':
 				$field['multiple'] = 'radio_list' === $field['field_type'] ? false : true;
-				return RWMB_Input_List_Field::normalize( $field );
+				return SWPMB_Input_List_Field::normalize( $field );
 				break;
 			case 'select_advanced':
-				return RWMB_Select_Advanced_Field::normalize( $field );
+				return SWPMB_Select_Advanced_Field::normalize( $field );
 				break;
 			case 'select_tree':
-				return RWMB_Select_Tree_Field::normalize( $field );
+				return SWPMB_Select_Tree_Field::normalize( $field );
 				break;
 			case 'select':
 			default:
-				return RWMB_Select_Field::normalize( $field );
+				return SWPMB_Select_Field::normalize( $field );
 				break;
 		}
 	}
@@ -90,19 +90,19 @@ abstract class RWMB_Object_Choice_Field extends RWMB_Choice_Field
 		{
 			case 'checkbox_list':
 			case 'radio_list':
-				return RWMB_Input_List_Field::get_attributes( $field, $value );
+				return SWPMB_Input_List_Field::get_attributes( $field, $value );
 				break;
 			case 'select_advanced':
-				$attributes = RWMB_Select_Advanced_Field::get_attributes( $field, $value );
-				$attributes['class'] .= ' rwmb-select_advanced';
+				$attributes = SWPMB_Select_Advanced_Field::get_attributes( $field, $value );
+				$attributes['class'] .= ' swpmb-select_advanced';
 				return $attributes;
 				break;
 			case 'select_tree':
-				return RWMB_Select_Tree_Field::get_attributes( $field, $value );
+				return SWPMB_Select_Tree_Field::get_attributes( $field, $value );
 				break;
 			case 'select':
 			default:
-				return RWMB_Select_Field::get_attributes( $field, $value );
+				return SWPMB_Select_Field::get_attributes( $field, $value );
 				break;
 		}
 	}
@@ -139,10 +139,10 @@ abstract class RWMB_Object_Choice_Field extends RWMB_Choice_Field
 	 */
 	public static function admin_enqueue_scripts()
 	{
-		RWMB_Input_List_Field::admin_enqueue_scripts();
-		RWMB_Select_Field::admin_enqueue_scripts();
-		RWMB_Select_Tree_Field::admin_enqueue_scripts();
-		RWMB_Select_Advanced_Field::admin_enqueue_scripts();
+		SWPMB_Input_List_Field::admin_enqueue_scripts();
+		SWPMB_Select_Field::admin_enqueue_scripts();
+		SWPMB_Select_Tree_Field::admin_enqueue_scripts();
+		SWPMB_Select_Advanced_Field::admin_enqueue_scripts();
 	}
 
 	/**

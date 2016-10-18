@@ -6,7 +6,7 @@
 /**
  * Wrapper class for helper functions.
  */
-class RWMB_Helper
+class SWPMB_Helper
 {
 	/**
 	 * Stores all registered fields
@@ -22,10 +22,10 @@ class RWMB_Helper
 	{
 		self::$fields[$post_type] = array();
 
-		$meta_boxes = RWMB_Core::get_meta_boxes();
+		$meta_boxes = SWPMB_Core::get_meta_boxes();
 		foreach ( $meta_boxes as $meta_box )
 		{
-			$meta_box = RW_Meta_Box::normalize( $meta_box );
+			$meta_box = SWP_Meta_Box::normalize( $meta_box );
 			if ( ! in_array( $post_type, $meta_box['post_types'] ) )
 			{
 				continue;
@@ -42,7 +42,7 @@ class RWMB_Helper
 
 	/**
 	 * Find field by field ID.
-	 * This function finds field in meta boxes registered by 'rwmb_meta_boxes' filter.
+	 * This function finds field in meta boxes registered by 'swpmb_meta_boxes' filter.
 	 *
 	 * @param string $field_id Field ID
 	 * @param int    $post_id
@@ -61,7 +61,7 @@ class RWMB_Helper
 			return false;
 		}
 		$field = $fields[$field_id];
-		return call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'normalize' ), $field );
+		return call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'normalize' ), $field );
 	}
 
 	/**
@@ -93,7 +93,7 @@ class RWMB_Helper
 			'clone'    => $args['clone'],
 			'multiple' => $args['multiple'],
 		);
-		$class = RW_Meta_Box::get_class_name( $field );
+		$class = SWP_Meta_Box::get_class_name( $field );
 
 		switch ( $args['type'] )
 		{
@@ -121,15 +121,15 @@ class RWMB_Helper
 					'multiple' => false,
 					'clone'    => false,
 				);
-				$meta  = RWMB_Map_Field::the_value( $field, $args, $post_id );
+				$meta  = SWPMB_Map_Field::the_value( $field, $args, $post_id );
 				break;
 			case 'oembed':
-				$meta = RWMB_OEmbed_Field::the_value( $field, $args, $post_id );
+				$meta = SWPMB_OEmbed_Field::the_value( $field, $args, $post_id );
 				break;
 			default:
 				$meta = call_user_func( array( $class, 'get_value' ), $field, $args, $post_id );
 				break;
 		}
-		return apply_filters( 'rwmb_meta', $meta, $key, $args, $post_id );
+		return apply_filters( 'swpmb_meta', $meta, $key, $args, $post_id );
 	}
 }

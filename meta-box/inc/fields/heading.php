@@ -2,7 +2,7 @@
 /**
  * Heading field class.
  */
-class RWMB_Heading_Field extends RWMB_Field
+class SWPMB_Heading_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -11,7 +11,7 @@ class RWMB_Heading_Field extends RWMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-heading', RWMB_CSS_URL . 'heading.css', array(), RWMB_VER );
+		wp_enqueue_style( 'swpmb-heading', SWPMB_CSS_URL . 'heading.css', array(), SWPMB_VER );
 	}
 
 	/**

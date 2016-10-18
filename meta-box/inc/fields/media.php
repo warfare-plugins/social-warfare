@@ -2,7 +2,7 @@
 /**
  * Media field class which users WordPress media popup to upload and select files.
  */
-class RWMB_Media_Field extends RWMB_Field
+class SWPMB_Media_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -12,17 +12,17 @@ class RWMB_Media_Field extends RWMB_Field
 	static function admin_enqueue_scripts()
 	{
 		wp_enqueue_media();
-		wp_enqueue_style( 'rwmb-media', RWMB_CSS_URL . 'media.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-media', RWMB_JS_URL . 'media.js', array( 'jquery-ui-sortable', 'underscore', 'backbone' ), RWMB_VER, true );
-		wp_localize_script( 'rwmb-media', 'i18nRwmbMedia', array(
-			'add'                => apply_filters( 'rwmb_media_add_string', __( 'Add Media', 'social-warfare' ) ),
-			'single'             => apply_filters( 'rwmb_media_single_files_string', _x( ' file', 'media', 'social-warfare' ) ),
-			'multiple'           => apply_filters( 'rwmb_media_multiple_files_string', _x( ' files', 'media', 'social-warfare' ) ),
-			'remove'             => apply_filters( 'rwmb_media_remove_string', __( 'Remove', 'social-warfare' ) ),
-			'edit'               => apply_filters( 'rwmb_media_edit_string', __( 'Edit', 'social-warfare' ) ),
-			'view'               => apply_filters( 'rwmb_media_view_string', __( 'View', 'social-warfare' ) ),
+		wp_enqueue_style( 'swpmb-media', SWPMB_CSS_URL . 'media.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-media', SWPMB_JS_URL . 'media.js', array( 'jquery-ui-sortable', 'underscore', 'backbone' ), SWPMB_VER, true );
+		wp_localize_script( 'swpmb-media', 'i18nSwpmbMedia', array(
+			'add'                => apply_filters( 'swpmb_media_add_string', __( 'Add Media', 'social-warfare' ) ),
+			'single'             => apply_filters( 'swpmb_media_single_files_string', _x( ' file', 'media', 'social-warfare' ) ),
+			'multiple'           => apply_filters( 'swpmb_media_multiple_files_string', _x( ' files', 'media', 'social-warfare' ) ),
+			'remove'             => apply_filters( 'swpmb_media_remove_string', __( 'Remove', 'social-warfare' ) ),
+			'edit'               => apply_filters( 'swpmb_media_edit_string', __( 'Edit', 'social-warfare' ) ),
+			'view'               => apply_filters( 'swpmb_media_view_string', __( 'View', 'social-warfare' ) ),
 			'noTitle'            => _x( 'No Title', 'media', 'social-warfare' ),
-			'loadingUrl'         => RWMB_URL . 'img/loader.gif',
+			'loadingUrl'         => SWPMB_URL . 'img/loader.gif',
 			'extensions'         => self::get_mime_extensions(),
 			'select'             => _x( 'Select Files', 'media', 'social-warfare' ),
 			'uploadInstructions' => _x( 'Drop files here to upload', 'media', 'social-warfare' )
@@ -56,7 +56,7 @@ class RWMB_Media_Field extends RWMB_Field
 
 		$html = sprintf(
 			'<input %s>
-			<div class="rwmb-media-view" data-mime-type="%s" data-max-files="%s" data-force-delete="%s"></div>',
+			<div class="swpmb-media-view" data-mime-type="%s" data-max-files="%s" data-force-delete="%s"></div>',
 			self::render_attributes( $attributes ),
 			$field['mime_type'],
 			$field['max_file_uploads'],
@@ -148,6 +148,6 @@ class RWMB_Media_Field extends RWMB_Field
 	 */
 	static function print_templates()
 	{
-		require_once( RWMB_INC_DIR . 'templates/media.php' );
+		require_once( SWPMB_INC_DIR . 'templates/media.php' );
 	}
 }

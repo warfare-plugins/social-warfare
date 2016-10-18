@@ -18,8 +18,8 @@ jQuery( function( $ )
     }
   }
 
-  $( '.rwmb-input' )
-    .on( 'change', '.rwmb-input-list.collapse :checkbox', update )
-    .on( 'clone', '.rwmb-input-list.collapse :checkbox', update );
-  $( '.rwmb-input-list.collapse :checkbox' ).each( update );
+  $( '.swpmb-input' )
+    .on( 'change', '.swpmb-input-list.collapse :checkbox', update )
+    .on( 'clone', '.swpmb-input-list.collapse :checkbox', update );
+  $( '.swpmb-input-list.collapse :checkbox' ).each( update );
 } );

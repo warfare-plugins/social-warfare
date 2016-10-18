@@ -1,16 +1,16 @@
-window.rwmb = window.rwmb || {};
+window.swpmb = window.swpmb || {};
 
 jQuery( function ( $ )
 {
 	'use strict';
 
-	var views = rwmb.views = rwmb.views || {},
+	var views = swpmb.views = swpmb.views || {},
 		MediaField, MediaList, MediaItem, MediaButton, MediaStatus;
-		rwmb.test = 'spoon';
+		swpmb.test = 'spoon';
 
 	MediaList = views.MediaList = Backbone.View.extend( {
 		tagName       	: 'ul',
-		className     	: 'rwmb-media-list',
+		className     	: 'swpmb-media-list',
 		addItemView: function ( item )
 		{
 			if( ! this.itemViews[item.cid] )
@@ -147,8 +147,8 @@ jQuery( function ( $ )
 
 	MediaStatus = views.MediaStatus = Backbone.View.extend( {
 		tagName   : 'span',
-		className : 'rwmb-media-status',
-		template  : wp.template( 'rwmb-media-status' ),
+		className : 'swpmb-media-status',
+		template  : wp.template( 'swpmb-media-status' ),
 		initialize: function ( options )
 		{
 			this.props = options.props;
@@ -169,7 +169,7 @@ jQuery( function ( $ )
 	} );
 
 	MediaButton = views.MediaButton = Backbone.View.extend( {
-		className: 'rwmb-add-media button',
+		className: 'swpmb-add-media button',
 		tagName  : 'a',
 		events   : {
 			click: function ()
@@ -184,7 +184,7 @@ jQuery( function ( $ )
 				}
 
 				this._frame = wp.media( {
-					className: 'media-frame rwmb-media-frame',
+					className: 'media-frame swpmb-media-frame',
 					multiple : true,
 					title    : 'Select Media',
 					editing  : true,
@@ -204,7 +204,7 @@ jQuery( function ( $ )
 		},
 		render   : function ()
 		{
-			this.$el.text( i18nRwmbMedia.add );
+			this.$el.text( i18nSwpmbMedia.add );
 			return this;
 		},
 
@@ -227,8 +227,8 @@ jQuery( function ( $ )
 
 	MediaItem = views.MediaItem = Backbone.View.extend( {
 		tagName   : 'li',
-		className : 'rwmb-media-item',
-		template  : wp.template( 'rwmb-media-item' ),
+		className : 'swpmb-media-item',
+		template  : wp.template( 'swpmb-media-item' ),
 		initialize: function ( options )
 		{
 			this.props = options.props;
@@ -244,7 +244,7 @@ jQuery( function ( $ )
 		},
 
 		events: {
-			'click .rwmb-remove-media': function ( e )
+			'click .swpmb-remove-media': function ( e )
 			{
 				this.collection.remove( this.model );
 				if ( this.props.get( 'forceDelete' ) )
@@ -272,11 +272,11 @@ jQuery( function ( $ )
 	 */
 	function initMediaField()
 	{
-		new MediaField( { input: this, el: $( this ).siblings( 'div.rwmb-media-view' ) } );
+		new MediaField( { input: this, el: $( this ).siblings( 'div.swpmb-media-view' ) } );
 	}
 
 
-	$( ':input.rwmb-file_advanced' ).each( initMediaField );
-	$( '.rwmb-input' )
-		.on( 'clone', ':input.rwmb-file_advanced', initMediaField );
+	$( ':input.swpmb-file_advanced' ).each( initMediaField );
+	$( '.swpmb-input' )
+		.on( 'clone', ':input.swpmb-file_advanced', initMediaField );
 } );

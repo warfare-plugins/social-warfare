@@ -2,60 +2,60 @@
 -------------------------------------------------------------- */
 
 /* Clearfix for field */
-.rwmb-field:before,
-.rwmb-field:after {
+.swpmb-field:before,
+.swpmb-field:after {
 	content: " ";
 	display: table;
 }
-.rwmb-field:after {
+.swpmb-field:after {
 	clear: both;
 }
-.rwmb-field {
+.swpmb-field {
 	*zoom: 1;
 
 	margin: 0 0 10px;
 }
-.rwmb-label,
-.rwmb-input {
+.swpmb-label,
+.swpmb-input {
 	vertical-align: top;
 	float: left;
 }
-.rwmb-label {
+.swpmb-label {
 	width: 25%;
 }
-.rwmb-label.required > span {
+.swpmb-label.required > span {
 	color: #c00;
 	font-weight: bold;
 	margin-left: 3px;
 }
 
 /* 75% if field has label, 100% if no label */
-.rwmb-input {
+.swpmb-input {
 	width: 100%;
 }
-.rwmb-label ~ .rwmb-input {
+.swpmb-label ~ .swpmb-input {
 	width: 75%;
 }
-.rwmb-input h4 {
+.swpmb-input h4 {
 	margin: 0;
 }
-.rwmb-textarea {
+.swpmb-textarea {
 	resize: vertical;
 }
 
 /* Clone */
-.rwmb-clone {
+.swpmb-clone {
 	min-height: 24px;
 	margin-bottom: 10px;
 	position: relative;
 	clear: both;
 	background: #fff;
 }
-.rwmb-clone > input[type='radio'],
-.rwmb-clone > input[type='checkbox'] {
+.swpmb-clone > input[type='radio'],
+.swpmb-clone > input[type='checkbox'] {
 	margin: 6px 0 0 4px;
 }
-.rwmb-button.remove-clone {
+.swpmb-button.remove-clone {
 	text-decoration: none;
 	color: #fff;
 	background: #c00;
@@ -69,10 +69,10 @@
 	outline: 0;
 	box-shadow: none;
 }
-.rwmb-button.add-clone {
+.swpmb-button.add-clone {
 	margin-top: 5px;
 }
-.rwmb-clone-icon {
+.swpmb-clone-icon {
 	cursor: move;
 	background: url(../img/drag_icon.gif) no-repeat;
 	height: 23px;
@@ -83,12 +83,12 @@
 	left: 0;
 	top: 0;
 }
-.rwmb-clone-placeholder {
+.swpmb-clone-placeholder {
 	background: #fcf8e3;
 	border: 1px solid #faebcc;
 	display: block;
 }
-.rwmb-sort-clone {
+.swpmb-sort-clone {
 	padding-left: 15px;
 }
 
@@ -108,7 +108,7 @@ select.error {
 /* =Styles for 'side' meta boxes
 -------------------------------------------------------------- */
 
-#side-sortables .rwmb-label,
-#side-sortables .rwmb-input {
+#side-sortables .swpmb-label,
+#side-sortables .swpmb-input {
 	width: 100%;
 }

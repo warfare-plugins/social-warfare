@@ -2,16 +2,16 @@
 /**
  * Autocomplete field class.
  */
-class RWMB_Autocomplete_Field extends RWMB_Multiple_Values_Field
+class SWPMB_Autocomplete_Field extends SWPMB_Multiple_Values_Field
 {
 	/**
 	 * Enqueue scripts and styles.
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-autocomplete', RWMB_CSS_URL . 'autocomplete.css', array( 'wp-admin' ), RWMB_VER );
-		wp_enqueue_script( 'rwmb-autocomplete', RWMB_JS_URL . 'autocomplete.js', array( 'jquery-ui-autocomplete' ), RWMB_VER, true );
-		wp_localize_script( 'rwmb-autocomplete', 'RWMB_Autocomplete', array( 'delete' => __( 'Delete', 'social-warfare' ) ) );
+		wp_enqueue_style( 'swpmb-autocomplete', SWPMB_CSS_URL . 'autocomplete.css', array( 'wp-admin' ), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-autocomplete', SWPMB_JS_URL . 'autocomplete.js', array( 'jquery-ui-autocomplete' ), SWPMB_VER, true );
+		wp_localize_script( 'swpmb-autocomplete', 'SWPMB_Autocomplete', array( 'delete' => __( 'Delete', 'social-warfare' ) ) );
 	}
 
 	/**
@@ -26,7 +26,7 @@ class RWMB_Autocomplete_Field extends RWMB_Multiple_Values_Field
 		if ( ! is_array( $meta ) )
 			$meta = array( $meta );
 
-		$field   = apply_filters( 'rwmb_autocomplete_field', $field, $meta );
+		$field   = apply_filters( 'swpmb_autocomplete_field', $field, $meta );
 		$options = $field['options'];
 
 		if ( ! is_string( $field['options'] ) )
@@ -46,22 +46,22 @@ class RWMB_Autocomplete_Field extends RWMB_Multiple_Values_Field
 		// This field doesn't store field values, so it doesn't have "name" attribute.
 		// The value(s) of the field is store in hidden input(s). See below.
 		$html = sprintf(
-			'<input type="text" class="rwmb-autocomplete-search" size="%s">
-			<input type="hidden" name="%s" class="rwmb-autocomplete" data-options="%s" disabled>',
+			'<input type="text" class="swpmb-autocomplete-search" size="%s">
+			<input type="hidden" name="%s" class="swpmb-autocomplete" data-options="%s" disabled>',
 			$field['size'],
 			$field['field_name'],
 			esc_attr( $options )
 		);
 
-		$html .= '<div class="rwmb-autocomplete-results">';
+		$html .= '<div class="swpmb-autocomplete-results">';
 
 		// Each value is displayed with label and 'Delete' option
-		// The hidden input has to have ".rwmb-*" class to make clone work
+		// The hidden input has to have ".swpmb-*" class to make clone work
 		$tpl = '
-			<div class="rwmb-autocomplete-result">
+			<div class="swpmb-autocomplete-result">
 				<div class="label">%s</div>
 				<div class="actions">%s</div>
-				<input type="hidden" class="rwmb-autocomplete-value" name="%s" value="%s">
+				<input type="hidden" class="swpmb-autocomplete-value" name="%s" value="%s">
 			</div>
 		';
 
@@ -87,7 +87,7 @@ class RWMB_Autocomplete_Field extends RWMB_Multiple_Values_Field
 			{
 				if ( empty( $value ) )
 					continue;
-				$label = apply_filters( 'rwmb_autocomplete_result_label', $value, $field );
+				$label = apply_filters( 'swpmb_autocomplete_result_label', $value, $field );
 				$html .= sprintf(
 					$tpl,
 					$label,
@@ -98,7 +98,7 @@ class RWMB_Autocomplete_Field extends RWMB_Multiple_Values_Field
 			}
 		}
 
-		$html .= '</div>'; // .rwmb-autocomplete-results
+		$html .= '</div>'; // .swpmb-autocomplete-results
 
 		return $html;
 	}

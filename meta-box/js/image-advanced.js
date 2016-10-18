@@ -1,10 +1,10 @@
-window.rwmb = window.rwmb || {};
+window.swpmb = window.swpmb || {};
 
 jQuery( function ( $ )
 {
 	'use strict';
 
-	var views = rwmb.views = rwmb.views || {},
+	var views = swpmb.views = swpmb.views || {},
 		MediaField = views.MediaField,
 		MediaItem = views.MediaItem,
 		MediaList = views.MediaList,
@@ -18,8 +18,8 @@ jQuery( function ( $ )
 	} );
 
 	ImageItem = views.ImageItem = MediaItem.extend( {
-		className: 'rwmb-image-item',
-		template : wp.template( 'rwmb-image-item' )
+		className: 'swpmb-image-item',
+		template : wp.template( 'swpmb-image-item' )
 	} );
 
 	/**
@@ -28,9 +28,9 @@ jQuery( function ( $ )
 	 */
 	function initImageField()
 	{
-		new ImageField( { input: this, el: $( this ).siblings( 'div.rwmb-media-view' ) } );
+		new ImageField( { input: this, el: $( this ).siblings( 'div.swpmb-media-view' ) } );
 	}
-	$( ':input.rwmb-image_advanced' ).each( initImageField );
-	$( '.rwmb-input' )
-		.on( 'clone', ':input.rwmb-image_advanced', initImageField )
+	$( ':input.swpmb-image_advanced' ).each( initImageField );
+	$( '.swpmb-input' )
+		.on( 'clone', ':input.swpmb-image_advanced', initImageField )
 } );

@@ -2,7 +2,7 @@
 /**
  * Post field class.
  */
-class RWMB_Post_Field extends RWMB_Object_Choice_Field
+class SWPMB_Post_Field extends SWPMB_Object_Choice_Field
 {
 	/**
 	 * Normalize parameters for field

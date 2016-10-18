@@ -1,10 +1,10 @@
-window.rwmb = window.rwmb || {};
+window.swpmb = window.swpmb || {};
 
 jQuery( function ( $ )
 {
 	'use strict';
 
-	var views = rwmb.views = rwmb.views || {},
+	var views = swpmb.views = swpmb.views || {},
 		MediaField = views.MediaField,
 		FileUploadField, UploadButton;
 
@@ -16,9 +16,9 @@ jQuery( function ( $ )
 	} );
 
 	UploadButton = views.UploadButton = Backbone.View.extend( {
-		className: 'rwmb-upload-area',
+		className: 'swpmb-upload-area',
 		tagName  : 'div',
-		template: wp.template( 'rwmb-upload-area' ),
+		template: wp.template( 'swpmb-upload-area' ),
 		render   : function ()
 		{
 			this.$el.html( this.template( {} ) );
@@ -28,12 +28,12 @@ jQuery( function ( $ )
 		initialize: function ( options )
 		{
 			this.props = options.props;
-			this.el.id = _.uniqueId( 'rwmb-upload-area-');
+			this.el.id = _.uniqueId( 'swpmb-upload-area-');
 			this.render();
 
 			//Areas
 			this.dropzone = this.el;
-			this.browser  = this.$('.rwmb-browse-button')[0];
+			this.browser  = this.$('.swpmb-browse-button')[0];
 
 			this.supports = {
 				upload: wp.Uploader.browser.supported
@@ -72,7 +72,7 @@ jQuery( function ( $ )
 					filters:{}}, wp.Uploader.defaults );
 
 			if( extensions )
-				this.plupload.filters.mime_types = [ { title: i18nRwmbMedia.select, extensions: extensions } ];
+				this.plupload.filters.mime_types = [ { title: i18nSwpmbMedia.select, extensions: extensions } ];
 
 			// Make sure flash sends cookies (seems in IE it does without switching to urlstream mode)
 			if ( ! isIE && 'flash' === plupload.predictRuntime( this.plupload ) &&
@@ -106,7 +106,7 @@ jQuery( function ( $ )
 						filename:    file.name,
 						menuOrder:   0,
 						uploadedTo:  wp.media.model.settings.post.id,
-						icon:        i18nRwmbMedia.loadingUrl
+						icon:        i18nSwpmbMedia.loadingUrl
 					}, _.pick( file, 'loaded', 'size', 'percent' ) );
 
 					// Handle early mime type scanning for images.
@@ -178,8 +178,8 @@ jQuery( function ( $ )
 
 			_.each( mimeTypes, function( current, index )
 			{
-				if( i18nRwmbMedia.extensions[ current ] )
-					exts = exts.concat( i18nRwmbMedia.extensions[ current ] );
+				if( i18nSwpmbMedia.extensions[ current ] )
+					exts = exts.concat( i18nSwpmbMedia.extensions[ current ] );
 			});
 			return exts;
 		}
@@ -191,9 +191,9 @@ jQuery( function ( $ )
 	 */
 	function init()
 	{
-		new FileUploadField( { input: this, el: $( this ).siblings( 'div.rwmb-media-view' ) } );
+		new FileUploadField( { input: this, el: $( this ).siblings( 'div.swpmb-media-view' ) } );
 	}
-	$( ':input.rwmb-file_upload' ).each( init );
-	$( '.rwmb-input' )
-		.on( 'clone', ':input.rwmb-file_upload', init )
+	$( ':input.swpmb-file_upload' ).each( init );
+	$( '.swpmb-input' )
+		.on( 'clone', ':input.swpmb-file_upload', init )
 } );

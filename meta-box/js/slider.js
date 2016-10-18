@@ -2,11 +2,11 @@ jQuery( function( $ )
 {
 	'use strict';	
 
-	function rwmb_update_slider()
+	function swpmb_update_slider()
 	{
 		var $input = $( this ),
-			$slider = $input.siblings( '.rwmb-slider' ),
-			$valueLabel = $slider.siblings( '.rwmb-slider-value-label' ).find( 'span' ),
+			$slider = $input.siblings( '.swpmb-slider' ),
+			$valueLabel = $slider.siblings( '.swpmb-slider-value-label' ).find( 'span' ),
 			value = $input.val(),
 			options = $slider.data( 'options' );
 
@@ -35,6 +35,6 @@ jQuery( function( $ )
 		$slider.slider( options );
 	}
 
-	$( ':input.rwmb-slider-value' ).each( rwmb_update_slider );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-slider-value', rwmb_update_slider );
+	$( ':input.swpmb-slider-value' ).each( swpmb_update_slider );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-slider-value', swpmb_update_slider );
 } );

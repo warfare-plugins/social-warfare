@@ -2,7 +2,7 @@
 /**
  * User field class.
  */
-class RWMB_User_Field extends RWMB_Object_Choice_Field
+class SWPMB_User_Field extends SWPMB_Object_Choice_Field
 {
 	/**
 	 * Normalize parameters for field

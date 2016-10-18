@@ -8,7 +8,7 @@
  * The Meta Box core class.
  * @package Meta Box
  */
-class RWMB_Core
+class SWPMB_Core
 {
 	/**
 	 * Stores all registered meta boxes
@@ -47,7 +47,7 @@ class RWMB_Core
 	 */
 	public function load_textdomain()
 	{
-		load_plugin_textdomain( 'meta-box', false, plugin_basename( RWMB_DIR ) . '/lang/' );
+		load_plugin_textdomain( 'meta-box', false, plugin_basename( SWPMB_DIR ) . '/lang/' );
 	}
 
 	/**
@@ -61,7 +61,7 @@ class RWMB_Core
 		$meta_boxes = self::get_meta_boxes();
 		foreach ( $meta_boxes as $meta_box )
 		{
-			new RW_Meta_Box( $meta_box );
+			new SWP_Meta_Box( $meta_box );
 		}
 	}
 
@@ -75,7 +75,7 @@ class RWMB_Core
 	{
 		if ( null === self::$meta_boxes )
 		{
-			self::$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
+			self::$meta_boxes = apply_filters( 'swpmb_meta_boxes', array() );
 			self::$meta_boxes = empty( self::$meta_boxes ) || ! is_array( self::$meta_boxes ) ? array() : self::$meta_boxes;
 		}
 		return self::$meta_boxes;
@@ -104,9 +104,9 @@ class RWMB_Core
 	/**
 	 * Apply various filters based on field type, id.
 	 * Filters:
-	 * - rwmb_{$name}
-	 * - rwmb_{$field['type']}_{$name}
-	 * - rwmb_{$field['id']}_{$name}
+	 * - swpmb_{$name}
+	 * - swpmb_{$field['type']}_{$name}
+	 * - swpmb_{$field['id']}_{$name}
 	 * @return mixed
 	 */
 	public static function filter()
@@ -120,12 +120,12 @@ class RWMB_Core
 
 		// List of filters
 		$filters = array(
-			'rwmb_' . $name,
-			'rwmb_' . $field['type'] . '_' . $name,
+			'swpmb_' . $name,
+			'swpmb_' . $field['type'] . '_' . $name,
 		);
 		if ( isset( $field['id'] ) )
 		{
-			$filters[] = 'rwmb_' . $field['id'] . '_' . $name;
+			$filters[] = 'swpmb_' . $field['id'] . '_' . $name;
 		}
 
 		// Filter params: value, field, other params. Note: value is changed after each run.

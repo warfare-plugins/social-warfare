@@ -2,7 +2,7 @@
 /**
  * Checkbox list field class.
  */
-class RWMB_Checkbox_List_Field extends RWMB_Input_List_Field
+class SWPMB_Checkbox_List_Field extends SWPMB_Input_List_Field
 {
 	/**
 	 * Normalize parameters for field

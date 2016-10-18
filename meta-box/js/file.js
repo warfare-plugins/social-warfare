@@ -3,13 +3,13 @@ jQuery( document ).ready( function ( $ )
 	'use strict';
 
 	// Add more file
-	$( '.rwmb-add-file' ).each( function ()
+	$( '.swpmb-add-file' ).each( function ()
 	{
 		var $this = $( this ),
 			$uploads = $this.siblings( '.file-input' ),
 			$first = $uploads.first(),
 			uploadCount = $uploads.length,
-			$fileList = $this.closest( '.rwmb-input' ).find( '.rwmb-uploaded' ),
+			$fileList = $this.closest( '.swpmb-input' ).find( '.swpmb-uploaded' ),
 			fileCount = $fileList.children( 'li' ).length,
 			maxFileUploads = $fileList.data( 'max_file_uploads' );
 
@@ -46,13 +46,13 @@ jQuery( document ).ready( function ( $ )
 	} );
 
 	// Delete file via Ajax
-	$( '.rwmb-uploaded' ).on( 'click', '.rwmb-delete-file', function ()
+	$( '.swpmb-uploaded' ).on( 'click', '.swpmb-delete-file', function ()
 	{
 		var $this = $( this ),
 			$parent = $this.parents( 'li' ),
-			$container = $this.closest( '.rwmb-uploaded' ),
+			$container = $this.closest( '.swpmb-uploaded' ),
 			data = {
-				action       : 'rwmb_delete_file',
+				action       : 'swpmb_delete_file',
 				_ajax_nonce  : $container.data( 'delete_nonce' ),
 				post_id      : $( '#post_ID' ).val(),
 				field_id     : $container.data( 'field_id' ),
@@ -78,13 +78,13 @@ jQuery( document ).ready( function ( $ )
 			)
 			{
 				$parent.remove();
-				$container.trigger( 'update.rwmbFile' );
+				$container.trigger( 'update.swpmbFile' );
 			}
 
-			$( '.rwmb-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
+			$( '.swpmb-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
 			{
 				$( this ).remove();
-				$container.trigger( 'update.rwmbFile' );
+				$container.trigger( 'update.swpmbFile' );
 			} );
 		}, 'json' );
 
@@ -92,12 +92,12 @@ jQuery( document ).ready( function ( $ )
 	} );
 
 	//Remove deleted file
-	$( '.rwmb-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
+	$( '.swpmb-uploaded' ).on( 'transitionend webkitTransitionEnd otransitionend', 'li.removed', function ()
 	{
 		$( this ).remove();
 	} );
 
-	$( 'body' ).on( 'update.rwmbFile', '.rwmb-uploaded', function ()
+	$( 'body' ).on( 'update.swpmbFile', '.swpmb-uploaded', function ()
 	{
 		var $fileList = $( this ),
 			maxFileUploads = $fileList.data( 'max_file_uploads' ),
@@ -133,11 +133,11 @@ jQuery( document ).ready( function ( $ )
 	} );
 
 	// Reorder images
-	$( '.rwmb-file' ).each( function ()
+	$( '.swpmb-file' ).each( function ()
 	{
 		var $this = $( this ),
 			data = {
-				action     : 'rwmb_reorder_files',
+				action     : 'swpmb_reorder_files',
 				_ajax_nonce: $this.data( 'reorder_nonce' ),
 				post_id    : $( '#post_ID' ).val(),
 				field_id   : $this.data( 'field_id' )

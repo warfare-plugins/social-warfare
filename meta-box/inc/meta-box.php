@@ -8,7 +8,7 @@
  * @license GNU GPL2+
  * @package Meta Box
  */
-class RW_Meta_Box
+class SWP_Meta_Box
 {
 	/**
 	 * @var array Meta box information
@@ -50,8 +50,8 @@ class RW_Meta_Box
 		// 1st action applies to all meta boxes
 		// 2nd action applies to only current meta box
 		$show = true;
-		$show = apply_filters( 'rwmb_show', $show, $this->meta_box );
-		$show = apply_filters( "rwmb_show_{$this->meta_box['id']}", $show, $this->meta_box );
+		$show = apply_filters( 'swpmb_show', $show, $this->meta_box );
+		$show = apply_filters( "swpmb_show_{$this->meta_box['id']}", $show, $this->meta_box );
 		if ( ! $show )
 			return;
 
@@ -98,9 +98,9 @@ class RW_Meta_Box
 		if ( ! $this->is_edit_screen() )
 			return;
 
-		wp_enqueue_style( 'rwmb', RWMB_CSS_URL . 'style.css', array(), RWMB_VER );
+		wp_enqueue_style( 'swpmb', SWPMB_CSS_URL . 'style.css', array(), SWPMB_VER );
 		if( is_rtl() )
-			wp_enqueue_style( 'rwmb-rtl', RWMB_CSS_URL . 'style-rtl.css', array(), RWMB_VER );
+			wp_enqueue_style( 'swpmb-rtl', SWPMB_CSS_URL . 'style-rtl.css', array(), SWPMB_VER );
 
 		// Load clone script conditionally
 		$fields = self::get_fields( $this->fields );
@@ -108,7 +108,7 @@ class RW_Meta_Box
 		{
 			if ( $field['clone'] )
 			{
-				wp_enqueue_script( 'rwmb-clone', RWMB_JS_URL . 'clone.js', array( 'jquery-ui-sortable' ), RWMB_VER, true );
+				wp_enqueue_script( 'swpmb-clone', SWPMB_JS_URL . 'clone.js', array( 'jquery-ui-sortable' ), SWPMB_VER, true );
 				break;
 			}
 		}
@@ -121,14 +121,14 @@ class RW_Meta_Box
 
 		// Auto save
 		if ( $this->meta_box['autosave'] )
-			wp_enqueue_script( 'rwmb-autosave', RWMB_JS_URL . 'autosave.js', array( 'jquery' ), RWMB_VER, true );
+			wp_enqueue_script( 'swpmb-autosave', SWPMB_JS_URL . 'autosave.js', array( 'jquery' ), SWPMB_VER, true );
 
 		/**
 		 * Allow developers to enqueue more scripts and styles
 		 *
-		 * @param RW_Meta_Box $object Meta Box object
+		 * @param SWP_Meta_Box $object Meta Box object
 		 */
-		do_action( 'rwmb_enqueue_scripts', $this );
+		do_action( 'swpmb_enqueue_scripts', $this );
 	}
 
 	/**
@@ -204,17 +204,17 @@ class RW_Meta_Box
 
 		// Container
 		printf(
-			'<div class="rwmb-meta-box" data-autosave="%s">',
+			'<div class="swpmb-meta-box" data-autosave="%s">',
 			$this->meta_box['autosave'] ? 'true' : 'false'
 		);
 
-		wp_nonce_field( "rwmb-save-{$this->meta_box['id']}", "nonce_{$this->meta_box['id']}" );
+		wp_nonce_field( "swpmb-save-{$this->meta_box['id']}", "nonce_{$this->meta_box['id']}" );
 
 		// Allow users to add custom code before meta box content
 		// 1st action applies to all meta boxes
 		// 2nd action applies to only current meta box
-		do_action( 'rwmb_before', $this );
-		do_action( "rwmb_before_{$this->meta_box['id']}", $this );
+		do_action( 'swpmb_before', $this );
+		do_action( "swpmb_before_{$this->meta_box['id']}", $this );
 
 		foreach ( $this->fields as $field )
 		{
@@ -224,8 +224,8 @@ class RW_Meta_Box
 		// Allow users to add custom code after meta box content
 		// 1st action applies to all meta boxes
 		// 2nd action applies to only current meta box
-		do_action( 'rwmb_after', $this );
-		do_action( "rwmb_after_{$this->meta_box['id']}", $this );
+		do_action( 'swpmb_after', $this );
+		do_action( "swpmb_after_{$this->meta_box['id']}", $this );
 
 		// End container
 		echo '</div>';
@@ -249,7 +249,7 @@ class RW_Meta_Box
 
 		// Check whether form is submitted properly
 		$nonce = (string) filter_input( INPUT_POST, "nonce_{$this->meta_box['id']}" );
-		if ( ! wp_verify_nonce( $nonce, "rwmb-save-{$this->meta_box['id']}" ) )
+		if ( ! wp_verify_nonce( $nonce, "swpmb-save-{$this->meta_box['id']}" ) )
 			return;
 
 		// Autosave
@@ -261,8 +261,8 @@ class RW_Meta_Box
 			$post_id = $the_post;
 
 		// Before save action
-		do_action( 'rwmb_before_save_post', $post_id );
-		do_action( "rwmb_{$this->meta_box['id']}_before_save_post", $post_id );
+		do_action( 'swpmb_before_save_post', $post_id );
+		do_action( "swpmb_{$this->meta_box['id']}_before_save_post", $post_id );
 
 		foreach ( $this->fields as $field )
 		{
@@ -273,15 +273,15 @@ class RW_Meta_Box
 
 			// Allow field class change the value
 			$new = call_user_func( array( self::get_class_name( $field ), 'value' ), $new, $old, $post_id, $field );
-			$new = RWMB_Core::filter( 'value', $new, $field, $old );
+			$new = SWPMB_Core::filter( 'value', $new, $field, $old );
 
 			// Call defined method to save meta value, if there's no methods, call common one
 			call_user_func( array( self::get_class_name( $field ), 'save' ), $new, $old, $post_id, $field );
 		}
 
 		// After save action
-		do_action( 'rwmb_after_save_post', $post_id );
-		do_action( "rwmb_{$this->meta_box['id']}_after_save_post", $post_id );
+		do_action( 'swpmb_after_save_post', $post_id );
+		do_action( "swpmb_{$this->meta_box['id']}_after_save_post", $post_id );
 	}
 
 	/**************************************************
@@ -323,8 +323,8 @@ class RW_Meta_Box
 		}
 
 		// Allow to add default values for meta box
-		$meta_box = apply_filters( 'rwmb_normalize_meta_box', $meta_box );
-		$meta_box = apply_filters( "rwmb_normalize_{$meta_box['id']}_meta_box", $meta_box );
+		$meta_box = apply_filters( 'swpmb_normalize_meta_box', $meta_box );
+		$meta_box = apply_filters( "swpmb_normalize_{$meta_box['id']}_meta_box", $meta_box );
 
 		return $meta_box;
 	}
@@ -356,9 +356,9 @@ class RW_Meta_Box
 				$field['fields'] = self::normalize_fields( $field['fields'] );
 
 			// Allow to add default values for fields
-			$field = apply_filters( 'rwmb_normalize_field', $field );
-			$field = apply_filters( "rwmb_normalize_{$field['type']}_field", $field );
-			$field = apply_filters( "rwmb_normalize_{$field['id']}_field", $field );
+			$field = apply_filters( 'swpmb_normalize_field', $field );
+			$field = apply_filters( "swpmb_normalize_{$field['type']}_field", $field );
+			$field = apply_filters( "swpmb_normalize_{$field['id']}_field", $field );
 
 			$fields[$k] = $field;
 		}
@@ -375,7 +375,7 @@ class RW_Meta_Box
 	static function get_class_name( $field )
 	{
 		$type  = str_replace( array( '-', '_' ), ' ', $field['type'] );
-		$class = 'RWMB_' . ucwords( $type ) . '_Field';
+		$class = 'SWPMB_' . ucwords( $type ) . '_Field';
 		$class = str_replace( ' ', '_', $class );
 		return $class;
 	}

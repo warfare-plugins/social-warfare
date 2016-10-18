@@ -2,15 +2,15 @@
 /**
  * Image select field class which uses images as radio options.
  */
-class RWMB_Image_Select_Field extends RWMB_Field
+class SWPMB_Image_Select_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-image-select', RWMB_CSS_URL . 'image-select.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-image-select', RWMB_JS_URL . 'image-select.js', array( 'jquery' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-image-select', SWPMB_CSS_URL . 'image-select.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-image-select', SWPMB_JS_URL . 'image-select.js', array( 'jquery' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -23,7 +23,7 @@ class RWMB_Image_Select_Field extends RWMB_Field
 	static function html( $meta, $field )
 	{
 		$html = array();
-		$tpl  = '<label class="rwmb-image-select"><img src="%s"><input type="%s" class="hidden" name="%s" value="%s"%s></label>';
+		$tpl  = '<label class="swpmb-image-select"><img src="%s"><input type="%s" class="hidden" name="%s" value="%s"%s></label>';
 
 		$meta = (array) $meta;
 		foreach ( $field['options'] as $value => $image )

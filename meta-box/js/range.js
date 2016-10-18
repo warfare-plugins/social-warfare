@@ -9,7 +9,7 @@ jQuery( function ( $ )
 	function update()
 	{
 		var $this = $( this ),
-			$output = $this.siblings( '.rwmb-output' );
+			$output = $this.siblings( '.swpmb-output' );
 
     $this.on( 'input propertychange change', function( e )
     {
@@ -18,6 +18,6 @@ jQuery( function ( $ )
 
 	}
 
-	$( ':input.rwmb-range' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', 'input.rwmb-range', update );
+	$( ':input.swpmb-range' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', 'input.swpmb-range', update );
 } );

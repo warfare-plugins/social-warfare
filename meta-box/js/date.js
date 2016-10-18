@@ -10,8 +10,8 @@ jQuery( function ( $ )
 	{
 		var $this = $( this ),
 			options = $this.data( 'options' ),
-			$inline = $this.siblings( '.rwmb-datetime-inline' ),
-			$timestamp = $this.siblings( '.rwmb-datetime-timestamp' ),
+			$inline = $this.siblings( '.swpmb-datetime-inline' ),
+			$timestamp = $this.siblings( '.swpmb-datetime-timestamp' ),
 			current = $this.val();
 
 		$this.siblings( '.ui-datepicker-append' ).remove(); // Remove appended text
@@ -52,6 +52,6 @@ jQuery( function ( $ )
 		return Math.floor( milliseconds / 1000 );
 	}
 
-	$( ':input.rwmb-date' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-date', update );
+	$( ':input.swpmb-date' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-date', update );
 } );

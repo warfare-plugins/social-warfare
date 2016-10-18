@@ -10,13 +10,13 @@ jQuery( function ( $ )
 				$( '#publish' ).removeClass( 'button-primary-disabled' );
 				$( '#ajax-loading' ).attr( 'style', '' );
 				$form.siblings( '#message' ).remove();
-				$form.before( '<div id="message" class="error"><p>' + rwmbValidate.summaryMessage + '</p></div>' );
+				$form.before( '<div id="message" class="error"><p>' + swpmbValidate.summaryMessage + '</p></div>' );
 			},
-			ignore: ':not([class|="rwmb"])'
+			ignore: ':not([class|="swpmb"])'
 		};
 
 	// Gather all validation rules
-	$( '.rwmb-validation-rules' ).each( function ()
+	$( '.swpmb-validation-rules' ).each( function ()
 	{
 		var subRules = $( this ).data( 'rules' );
 		$.extend( true, rules, subRules );
@@ -26,7 +26,7 @@ jQuery( function ( $ )
 		{
 			if ( v['required'] )
 			{
-				$( '#' + k ).parent().siblings( '.rwmb-label' ).addClass( 'required' ).append( '<span>*</span>' );
+				$( '#' + k ).parent().siblings( '.swpmb-label' ).addClass( 'required' ).append( '<span>*</span>' );
 			}
 		} );
 	} );

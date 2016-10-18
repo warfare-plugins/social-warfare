@@ -3,7 +3,7 @@
 /**
  * WYSIWYG (editor) field class.
  */
-class RWMB_Wysiwyg_Field extends RWMB_Field
+class SWPMB_Wysiwyg_Field extends SWPMB_Field
 {
 	/**
 	 * Array of cloneable editors.
@@ -16,8 +16,8 @@ class RWMB_Wysiwyg_Field extends RWMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'rwmb-wysiwyg', RWMB_CSS_URL . 'wysiwyg.css', array(), RWMB_VER );
-		wp_enqueue_script( 'rwmb-wysiwyg', RWMB_JS_URL . 'wysiwyg.js', array( 'jquery' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-wysiwyg', SWPMB_CSS_URL . 'wysiwyg.css', array(), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-wysiwyg', SWPMB_JS_URL . 'wysiwyg.js', array( 'jquery' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -94,12 +94,12 @@ class RWMB_Wysiwyg_Field extends RWMB_Field
 		) );
 
 		$field['options'] = wp_parse_args( $field['options'], array(
-			'editor_class' => 'rwmb-wysiwyg',
+			'editor_class' => 'swpmb-wysiwyg',
 			'dfw'          => true, // Use default WordPress full screen UI
 		) );
 
 		// Keep the filter to be compatible with previous versions
-		$field['options'] = apply_filters( 'rwmb_wysiwyg_settings', $field['options'] );
+		$field['options'] = apply_filters( 'swpmb_wysiwyg_settings', $field['options'] );
 
 		return $field;
 	}

@@ -2,7 +2,7 @@
 /**
  * Image advanced field class which users WordPress media popup to upload and select images.
  */
-class RWMB_Image_Advanced_Field extends RWMB_Media_Field
+class SWPMB_Image_Advanced_Field extends SWPMB_Media_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -12,8 +12,8 @@ class RWMB_Image_Advanced_Field extends RWMB_Media_Field
 	static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'rwmb-image-advanced', RWMB_CSS_URL . 'image-advanced.css', array( 'rwmb-media' ), RWMB_VER );
-		wp_enqueue_script( 'rwmb-image-advanced', RWMB_JS_URL . 'image-advanced.js', array( 'rwmb-media' ), RWMB_VER, true );
+		wp_enqueue_style( 'swpmb-image-advanced', SWPMB_CSS_URL . 'image-advanced.css', array( 'swpmb-media' ), SWPMB_VER );
+		wp_enqueue_script( 'swpmb-image-advanced', SWPMB_JS_URL . 'image-advanced.js', array( 'swpmb-media' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class RWMB_Image_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function get_value( $field, $args = array(), $post_id = null )
 	{
-		return RWMB_Image_Field::get_value( $field, $args, $post_id );
+		return SWPMB_Image_Field::get_value( $field, $args, $post_id );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class RWMB_Image_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function the_value( $field, $args = array(), $post_id = null )
 	{
-		return RWMB_Image_Field::the_value( $field, $args, $post_id );
+		return SWPMB_Image_Field::the_value( $field, $args, $post_id );
 	}
 
 	/**
@@ -76,7 +76,7 @@ class RWMB_Image_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function file_info( $file_id, $args = array() )
 	{
-		return RWMB_Image_Field::file_info( $file_id, $args );
+		return SWPMB_Image_Field::file_info( $file_id, $args );
 	}
 
 	/**
@@ -85,6 +85,6 @@ class RWMB_Image_Advanced_Field extends RWMB_Media_Field
 	 */
 	static function print_templates()
 	{
-		require_once( RWMB_INC_DIR . 'templates/image-advanced.php' );
+		require_once( SWPMB_INC_DIR . 'templates/image-advanced.php' );
 	}
 }

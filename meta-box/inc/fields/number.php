@@ -2,7 +2,7 @@
 /**
  * Number field class.
  */
-class RWMB_Number_Field extends RWMB_Input_Field
+class SWPMB_Number_Field extends SWPMB_Input_Field
 {
 	/**
 	 * Normalize parameters for field

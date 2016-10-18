@@ -2,7 +2,7 @@
 /**
  * File input field class which uses an input for file URL.
  */
-class RWMB_File_Input_Field extends RWMB_Field
+class SWPMB_File_Input_Field extends SWPMB_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -13,8 +13,8 @@ class RWMB_File_Input_Field extends RWMB_Field
 	{
 		// Make sure scripts for new media uploader in WordPress 3.5 is enqueued
 		wp_enqueue_media();
-		wp_enqueue_script( 'rwmb-file-input', RWMB_JS_URL . 'file-input.js', array( 'jquery' ), RWMB_VER, true );
-		wp_localize_script( 'rwmb-file-input', 'rwmbFileInput', array(
+		wp_enqueue_script( 'swpmb-file-input', SWPMB_JS_URL . 'file-input.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_localize_script( 'swpmb-file-input', 'swpmbFileInput', array(
 			'frameTitle' => __( 'Select File', 'social-warfare' ),
 		) );
 	}
@@ -30,9 +30,9 @@ class RWMB_File_Input_Field extends RWMB_Field
 	static function html( $meta, $field )
 	{
 		return sprintf(
-			'<input type="text" class="rwmb-file-input" name="%s" id="%s" value="%s" placeholder="%s" size="%s">
-			<a href="#" class="rwmb-file-input-select button-primary">%s</a>
-			<a href="#" class="rwmb-file-input-remove button %s">%s</a>',
+			'<input type="text" class="swpmb-file-input" name="%s" id="%s" value="%s" placeholder="%s" size="%s">
+			<a href="#" class="swpmb-file-input-select button-primary">%s</a>
+			<a href="#" class="swpmb-file-input-remove button %s">%s</a>',
 			$field['field_name'],
 			$field['id'],
 			$meta,

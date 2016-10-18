@@ -4,7 +4,7 @@ jQuery( function ( $ )
 
 	var frame;
 
-	$( 'body' ).on( 'click', '.rwmb-file-input-select', function ( e )
+	$( 'body' ).on( 'click', '.swpmb-file-input-select', function ( e )
 	{
 		e.preventDefault();
 		var $el = $( this );
@@ -13,9 +13,9 @@ jQuery( function ( $ )
 		if ( !frame )
 		{
 			frame = wp.media( {
-				className: 'media-frame rwmb-file-frame',
+				className: 'media-frame swpmb-file-frame',
 				multiple : false,
-				title    : rwmbFileInput.frameTitle
+				title    : swpmbFileInput.frameTitle
 			} );
 		}
 
@@ -34,7 +34,7 @@ jQuery( function ( $ )
 	} );
 
 	// Clear selected images
-	$( 'body' ).on( 'click', '.rwmb-file-input-remove', function ( e )
+	$( 'body' ).on( 'click', '.swpmb-file-input-remove', function ( e )
 	{
 		e.preventDefault();
 		$( this ).addClass( 'hidden' ).siblings( 'input' ).val( '' );

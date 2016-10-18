@@ -3,7 +3,7 @@
  * Image upload field which uses thickbox library to upload.
  * @deprecated Use image_advanced instead
  */
-class RWMB_Thickbox_Image_Field extends RWMB_Image_Field
+class SWPMB_Thickbox_Image_Field extends SWPMB_Image_Field
 {
 	/**
 	 * Add custom actions for the field.
@@ -37,7 +37,7 @@ class RWMB_Thickbox_Image_Field extends RWMB_Image_Field
 		add_thickbox();
 		wp_enqueue_script( 'media-upload' );
 
-		wp_enqueue_script( 'rwmb-thickbox-image', RWMB_JS_URL . 'thickbox-image.js', array( 'jquery' ), RWMB_VER, true );
+		wp_enqueue_script( 'swpmb-thickbox-image', SWPMB_JS_URL . 'thickbox-image.js', array( 'jquery' ), SWPMB_VER, true );
 	}
 
 	/**
@@ -50,13 +50,13 @@ class RWMB_Thickbox_Image_Field extends RWMB_Image_Field
 	 */
 	public static function html( $meta, $field )
 	{
-		$i18n_title = apply_filters( 'rwmb_thickbox_image_upload_string', _x( 'Upload Images', 'image upload', 'social-warfare' ), $field );
+		$i18n_title = apply_filters( 'swpmb_thickbox_image_upload_string', _x( 'Upload Images', 'image upload', 'social-warfare' ), $field );
 
 		// Uploaded images
 		$html = parent::get_uploaded_images( $meta, $field );
 
 		// Show form upload
-		$html .= "<a href='#' class='button rwmb-thickbox-upload' data-field_id='{$field['id']}'>{$i18n_title}</a>";
+		$html .= "<a href='#' class='button swpmb-thickbox-upload' data-field_id='{$field['id']}'>{$i18n_title}</a>";
 
 		return $html;
 	}

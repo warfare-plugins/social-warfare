@@ -10,8 +10,8 @@ jQuery( function ( $ )
 	{
 		var $this = $( this ),
 			options = $this.data( 'options' ),
-			$inline = $this.siblings( '.rwmb-datetime-inline' ),
-			$timestamp = $this.siblings( '.rwmb-datetime-timestamp' ),
+			$inline = $this.siblings( '.swpmb-datetime-inline' ),
+			$timestamp = $this.siblings( '.swpmb-datetime-timestamp' ),
 			current = $this.val();
 
 		$this.siblings( '.ui-datepicker-append' ).remove(); // Remove appended text
@@ -53,15 +53,15 @@ jQuery( function ( $ )
 	}
 
 	// Set language if available
-	if ( $.timepicker.regional.hasOwnProperty( RWMB_Datetimepicker.locale ) )
+	if ( $.timepicker.regional.hasOwnProperty( SWPMB_Datetimepicker.locale ) )
 	{
-		$.timepicker.setDefaults( $.timepicker.regional[RWMB_Datetimepicker.locale] );
+		$.timepicker.setDefaults( $.timepicker.regional[SWPMB_Datetimepicker.locale] );
 	}
-	else if ( $.timepicker.regional.hasOwnProperty( RWMB_Datetimepicker.localeShort ) )
+	else if ( $.timepicker.regional.hasOwnProperty( SWPMB_Datetimepicker.localeShort ) )
 	{
-		$.timepicker.setDefaults( $.timepicker.regional[RWMB_Datetimepicker.localeShort] );
+		$.timepicker.setDefaults( $.timepicker.regional[SWPMB_Datetimepicker.localeShort] );
 	}
 
-	$( ':input.rwmb-datetime' ).each( update );
-	$( '.rwmb-input' ).on( 'clone', ':input.rwmb-datetime', update );
+	$( ':input.swpmb-datetime' ).each( update );
+	$( '.swpmb-input' ).on( 'clone', ':input.swpmb-datetime', update );
 } );

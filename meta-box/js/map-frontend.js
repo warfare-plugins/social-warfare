@@ -67,5 +67,5 @@ jQuery( function ( $ )
 	}
 
 	// Loop through all map instances and display them
-	$( '.rwmb-map-canvas' ).each( displayMap );
+	$( '.swpmb-map-canvas' ).each( displayMap );
 } );

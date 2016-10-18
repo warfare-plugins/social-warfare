@@ -2,7 +2,7 @@
 /**
  * Select advanced field which uses select2 library.
  */
-class RWMB_Select_Advanced_Field extends RWMB_Select_Field
+class SWPMB_Select_Advanced_Field extends SWPMB_Select_Field
 {
 	/**
 	 * Enqueue scripts and styles
@@ -10,26 +10,26 @@ class RWMB_Select_Advanced_Field extends RWMB_Select_Field
 	public static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'rwmb-select2', RWMB_CSS_URL . 'select2/select2.css', array(), '4.0.1' );
-		wp_enqueue_style( 'rwmb-select-advanced', RWMB_CSS_URL . 'select-advanced.css', array(), RWMB_VER );
+		wp_enqueue_style( 'swpmb-select2', SWPMB_CSS_URL . 'select2/select2.css', array(), '4.0.1' );
+		wp_enqueue_style( 'swpmb-select-advanced', SWPMB_CSS_URL . 'select-advanced.css', array(), SWPMB_VER );
 
-		wp_register_script( 'rwmb-select2', RWMB_JS_URL . 'select2/select2.min.js', array(), '4.0.2', true );
+		wp_register_script( 'swpmb-select2', SWPMB_JS_URL . 'select2/select2.min.js', array(), '4.0.2', true );
 
 		//Localize
-		$deps  = array( 'rwmb-select2', 'rwmb-select' );
-		$dir   = RWMB_JS_URL . 'select2/i18n/';
+		$deps  = array( 'swpmb-select2', 'swpmb-select' );
+		$dir   = SWPMB_JS_URL . 'select2/i18n/';
 		$file  = str_replace( '_', '-', get_locale() );
 		$parts = explode( '-', $file );
-		$file  = file_exists( RWMB_DIR . 'js/select2/i18n/' . $file . '.js' ) ? $file : $parts[0];
+		$file  = file_exists( SWPMB_DIR . 'js/select2/i18n/' . $file . '.js' ) ? $file : $parts[0];
 
-		if ( file_exists( RWMB_DIR . 'js/select2/i18n/' . $file . '.js' ) )
+		if ( file_exists( SWPMB_DIR . 'js/select2/i18n/' . $file . '.js' ) )
 		{
-			wp_register_script( 'rwmb-select2-i18n', $dir . $file . '.js', array( 'rwmb-select2' ), '4.0.2', true );
-			$deps[] = 'rwmb-select2-i18n';
+			wp_register_script( 'swpmb-select2-i18n', $dir . $file . '.js', array( 'swpmb-select2' ), '4.0.2', true );
+			$deps[] = 'swpmb-select2-i18n';
 		}
 
-		wp_enqueue_script( 'rwmb-select', RWMB_JS_URL . 'select.js', array(), RWMB_VER, true );
-		wp_enqueue_script( 'rwmb-select-advanced', RWMB_JS_URL . 'select-advanced.js', $deps, RWMB_VER, true );
+		wp_enqueue_script( 'swpmb-select', SWPMB_JS_URL . 'select.js', array(), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-select-advanced', SWPMB_JS_URL . 'select-advanced.js', $deps, SWPMB_VER, true );
 
 	}
 
@@ -45,8 +45,8 @@ class RWMB_Select_Advanced_Field extends RWMB_Select_Field
 	 */
 	public static function walk( $options, $db_fields, $meta, $field )
 	{
-		$attributes = call_user_func( array( RW_Meta_Box::get_class_name( $field ), 'get_attributes' ), $field, $meta );
-		$walker     = new RWMB_Select_Walker( $db_fields, $field, $meta );
+		$attributes = call_user_func( array( SWP_Meta_Box::get_class_name( $field ), 'get_attributes' ), $field, $meta );
+		$walker     = new SWPMB_Select_Walker( $db_fields, $field, $meta );
 		$output     = sprintf(
 			'<select %s>',
 			self::render_attributes( $attributes )
