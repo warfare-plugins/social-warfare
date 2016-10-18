@@ -141,6 +141,28 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
+	/**
+	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
+	 * @since 2.1.0
+	 * @param none
+	 * @return none
+	 */
+	socialWarfarePlugin.activateHoverStates = function() {
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
+			console.log('hello world');
+			var term_width = $(this).find('.swp_share').width();
+			var icon_width = $(this).find('i.sw').outerWidth();
+			var container_width = $(this).width();
+			var percentage_change = 1 + ((term_width + 35) / container_width);
+			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+			$(this).css({flex:percentage_change + ' 1 0%'});
+		});
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseleave',function(){
+			$(this).find('.iconFiller').width('30px');
+			$(this).css({flex:'1'});
+		});
+	}
+
 	function createFloatBar() {
 		if ( ! $( '.nc_socialPanelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
@@ -283,7 +305,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	function initShareButtons() {
 		if ( 0 !== $( '.nc_socialPanel' ).length ) {
 			createFloatBar();
-			swp_activate_hover_states();
+			socialWarfarePlugin.activateHoverStates();
 			handleWindowOpens();
 			$( window ).scrollTop();
 			$( window ).scroll( $.swpThrottle( 250, function() {
@@ -380,28 +402,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				return false;
 			}
-		});
-	}
-
-	/**
-	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
-	 * @since 2.1.0
-	 * @param none
-	 * @return none
-	 */
-	function swp_activate_hover_states() {
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
-			console.log('hello world');
-			var term_width = $(this).find('.swp_share').width();
-			var icon_width = $(this).find('i.sw').outerWidth();
-			var container_width = $(this).width();
-			var percentage_change = 1 + ((term_width + 35) / container_width);
-			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-			$(this).css({flex:percentage_change + ' 1 0%'});
-		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseleave',function(){
-			$(this).find('.iconFiller').width('30px');
-			$(this).css({flex:'1'});
 		});
 	}
 
