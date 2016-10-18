@@ -743,3 +743,7 @@ p.sw-subtitle.sw-registration-text {
 	max-height: 50px;
 	float: right;
 }
+
+.toplevel_page_social-warfare .notice-error, .toplevel_page_social-warfare .notice-warning, .toplevel_page_social-warfare .notice-success, .toplevel_page_social-warfare .notice-info, .toplevel_page_social-warfare .is-dismissible, .toplevel_page_social-warfare .update-nag {
+	display: none;
+}
