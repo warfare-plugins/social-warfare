@@ -156,7 +156,40 @@ module.exports = function( grunt ) {
 				]
 			}
 		},
-
+		replace: {
+			metabox: {
+				options: {
+					patterns: [
+						{
+							match: /RWMB_/g,
+							replacement: 'SWPMB_'
+						},
+						{
+							match: /rwmb_/g,
+							replacement: 'swpmb_'
+						},
+						{
+							match: /RW_/g,
+							replacement: 'SWP_'
+						},
+						{
+							match: /rwmb-/g,
+							replacement: 'swpmb-'
+						}
+					]
+				},
+				files: [
+					{
+						expand: true,
+						src: [
+							'meta-box/**',
+							'meta-box/.*',
+							'!meta-box/img/*'
+						]
+					}
+				]
+			}
+		},
 		watch: {
 			js: {
 				files: [

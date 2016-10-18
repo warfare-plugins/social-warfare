@@ -17,10 +17,11 @@
 		"grunt-contrib-cssmin": "1.x",
 		"grunt-contrib-uglify": "2.x",
 		"grunt-contrib-watch": "1.x",
+		"grunt-postcss": "0.x",
+		"grunt-replace": "1.x",
 		"grunt-version": "1.x",
 		"grunt-wp-css": "0.x",
 		"grunt-wp-i18n": "0.x",
-		"load-grunt-tasks": "3.x",
-		"grunt-postcss": "0.x"
+		"load-grunt-tasks": "3.x"
 	}
 }
