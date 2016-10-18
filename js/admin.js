@@ -100,8 +100,8 @@
 
 			// Setup an initilazation loop
 			var swpPostInit = setInterval( function() {
-				var swpOgImage  = $( '.nc_ogImageWrapper ul.rwmb-media-list' );
-				var swpPinImage = $( '.nc_pinterestImageWrapper ul.rwmb-media-list' );
+				var swpOgImage  = $( '.nc_ogImageWrapper ul.swpmb-media-list' );
+				var swpPinImage = $( '.nc_pinterestImageWrapper ul.swpmb-media-list' );
 
 				var smWidth, smHeight;
 
