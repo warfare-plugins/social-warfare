@@ -45,16 +45,16 @@ function enqueueSocialWarfareScripts() {
 
 	wp_enqueue_style(
 		'social_warfare',
-		swp_PLUGIN_DIR . "/css/style{$suffix}.css",
+		SWP_PLUGIN_URL . "/css/style{$suffix}.css",
 		array(),
-		swp_VERSION
+		SWP_VERSION
 	);
 
 	wp_enqueue_script(
 		'social_warfare_script',
-		swp_PLUGIN_DIR . "/js/script{$suffix}.js",
+		SWP_PLUGIN_URL . "/js/script{$suffix}.js",
 		array( 'jquery' ),
-		swp_VERSION,
+		SWP_VERSION,
 		true
 	);
 
@@ -102,16 +102,16 @@ function enqueueSocialWarfareAdminScripts( $screen ) {
 
 	wp_enqueue_style(
 		'social_warfare_admin',
-		swp_PLUGIN_DIR . "/css/admin{$suffix}.css",
+		SWP_PLUGIN_URL . "/css/admin{$suffix}.css",
 		array(),
-		swp_VERSION
+		SWP_VERSION
 	);
 
 	wp_enqueue_script(
 		'social_warfare_admin_script',
-		swp_PLUGIN_DIR . "/js/admin{$suffix}.js",
+		SWP_PLUGIN_URL . "/js/admin{$suffix}.js",
 		array( 'jquery' ),
-		swp_VERSION
+		SWP_VERSION
 	);
 
 	wp_localize_script( 'social_warfare_admin_script', 'swp_localize_admin',

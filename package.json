@@ -1,27 +1,27 @@
 {
-	"name" : "SocialWarfare",
-	"slug" : "social-warfare",
-	"download_url" : "https://downloads.wordpress.org/plugin/social-warfare.zip",
-	"version" : "2.0.7",
-	"last_updated" : "2016-06-13 15:10:00",
-	"requires" : "3.0",
-	"tested" : "4.5",
-	"author" : "Warfare Plugins",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/warfare-plugins/social-warfare.git"
-	},
-	"devDependencies": {
-		"autoprefixer": "6.x",
-		"grunt": "1.x",
-		"grunt-contrib-cssmin": "1.x",
-		"grunt-contrib-uglify": "2.x",
-		"grunt-contrib-watch": "1.x",
-		"grunt-postcss": "0.x",
-		"grunt-replace": "1.x",
-		"grunt-version": "1.x",
-		"grunt-wp-css": "0.x",
-		"grunt-wp-i18n": "0.x",
-		"load-grunt-tasks": "3.x"
-	}
+  "name": "SocialWarfare",
+  "slug": "social-warfare",
+  "download_url": "https://downloads.wordpress.org/plugin/social-warfare.zip",
+  "version": "2.0.7",
+  "last_updated": "2016-06-13 15:10:00",
+  "requires": "3.0",
+  "tested": "4.5",
+  "author": "Warfare Plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warfare-plugins/social-warfare.git"
+  },
+  "devDependencies": {
+    "autoprefixer": "6.x",
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "1.x",
+    "grunt-contrib-uglify": "2.x",
+    "grunt-contrib-watch": "1.x",
+    "grunt-postcss": "0.x",
+    "grunt-replace": "1.x",
+    "grunt-version": "1.x",
+    "grunt-wp-css": "0.x",
+    "grunt-wp-i18n": "0.x",
+    "load-grunt-tasks": "3.x"
+  }
 }
