@@ -1,3 +1,5 @@
+/* global swpPinIt */
+
 /*!
  * jQuery throttle / debounce - v1.1 - 3/7/2010
  * http://benalman.com/projects/jquery-throttle-debounce-plugin/
@@ -7,31 +9,28 @@
  * http://benalman.com/about/license/
  */
 
+var socialWarfarePlugin = socialWarfarePlugin || {};
+
 (function( window, undefined ) {
-	'$:nomunge'; // Used by YUI compressor.
-
-	// Since jQuery really isn't required for this plugin, use `jQuery` as the
-	// namespace only if it already exists, otherwise use the `Cowboy` namespace,
-	// creating it if necessary.
-	var $ = window.jQuery || window.Cowboy || ( window.Cowboy = {} ),
-
 	// Internal method reference.
-	jq_throttle;
+	var jqThrottle;
 
-	$.swpThrottle = jq_throttle = function( delay, no_trailing, callback, debounce_mode ) {
+	var swp = window.socialWarfarePlugin;
+
+	swp.throttle = jqThrottle = function( delay, noTrailing, callback, debounceMode ) {
 		// After wrapper has stopped being called, this timeout ensures that
 		// `callback` is executed at the proper times in `throttle` and `end`
 		// debounce modes.
-		var timeout_id,
+		var timeoutID,
 
 		// Keep track of the last time `callback` was executed.
-		last_exec = 0;
+		lastExec = 0;
 
-		// `no_trailing` defaults to falsy.
-		if ( typeof no_trailing !== 'boolean' ) {
-			debounce_mode = callback;
-			callback = no_trailing;
-			no_trailing = undefined;
+		// `noTrailing` defaults to falsy.
+		if ( typeof noTrailing !== 'boolean' ) {
+			debounceMode = callback;
+			callback = noTrailing;
+			noTrailing = undefined;
 		}
 
 		// The `wrapper` function encapsulates all of the throttling / debouncing
@@ -39,69 +38,68 @@
 		// is executed.
 		function wrapper() {
 			var that = this,
-			elapsed = +new Date() - last_exec,
+			elapsed = +new Date() - lastExec,
 			args = arguments;
 
-			// Execute `callback` and update the `last_exec` timestamp.
+			// Execute `callback` and update the `lastExec` timestamp.
 			function exec() {
-				last_exec = +new Date();
+				lastExec = +new Date();
 				callback.apply( that, args );
 			}
 
-			// If `debounce_mode` is true (at_begin) this is used to clear the flag
+			// If `debounceMode` is true (atBegin) this is used to clear the flag
 			// to allow future `callback` executions.
 			function clear() {
-				timeout_id = undefined;
+				timeoutID = undefined;
 			}
 
-			if ( debounce_mode && ! timeout_id ) {
+			if ( debounceMode && ! timeoutID ) {
 				// Since `wrapper` is being called for the first time and
-				// `debounce_mode` is true (at_begin), execute `callback`.
+				// `debounceMode` is true (atBegin), execute `callback`.
 				exec();
 			}
 
 			// Clear any existing timeout.
-			timeout_id && clearTimeout( timeout_id );
+			timeoutID && clearTimeout( timeoutID );
 
-			if ( debounce_mode === undefined && elapsed > delay ) {
+			if ( debounceMode === undefined && elapsed > delay ) {
 				// In throttle mode, if `delay` time has been exceeded, execute
 				// `callback`.
 				exec();
-			} else if ( no_trailing !== true ) {
+			} else if ( noTrailing !== true ) {
 				// In trailing throttle mode, since `delay` time has not been
 				// exceeded, schedule `callback` to execute `delay` ms after most
 				// recent execution.
 				//
-				// If `debounce_mode` is true (at_begin), schedule `clear` to execute
+				// If `debounceMode` is true (atBegin), schedule `clear` to execute
 				// after `delay` ms.
 				//
-				// If `debounce_mode` is false (at end), schedule `callback` to
+				// If `debounceMode` is false (at end), schedule `callback` to
 				// execute after `delay` ms.
-				timeout_id = setTimeout( debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay );
+				timeoutID = setTimeout( debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay );
 			}
 		}
 
 		// Set the guid of `wrapper` function to the same of original callback, so
 		// it can be removed in jQuery 1.4+ .unbind or .die by using the original
 		// callback as a reference.
-		if ( $.guid ) {
-			wrapper.guid = callback.guid = callback.guid || $.guid++;
+		if ( swp.guid ) {
+			wrapper.guid = callback.guid = callback.guid || swp.guid++;
 		}
 
 		// Return the wrapper function.
 		return wrapper;
 	};
 
-	$.swpDebounce = function( delay, at_begin, callback ) {
-		return callback === undefined ? jq_throttle( delay, at_begin, false ) : jq_throttle( delay, callback, at_begin !== false );
+	swp.debounce = function( delay, atBegin, callback ) {
+		return callback === undefined ? jqThrottle( delay, atBegin, false ) : jqThrottle( delay, callback, atBegin !== false );
 	};
 })( this );
 
-/* global swpPinIt */
-var socialWarfarePlugin = socialWarfarePlugin || {};
-
 (function( window, $, undefined ) {
 	'use strict';
+
+	var swp = window.socialWarfarePlugin;
 
 	function absint( $int ) {
 		return parseInt( $int, 10 );
@@ -113,7 +111,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 	****************************************************************************/
 
-	socialWarfarePlugin.fetchFacebookShares = function() {
+	swp.fetchFacebookShares = function() {
 		var requestUrl = 'https://graph.facebook.com/?id=' + swp_post_url;
 		$.get( requestUrl, function( response ) {
 			//response = $.parseJSON(data);
@@ -138,6 +136,28 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					console.log( response );
 				});
 			});
+		});
+	}
+
+	/**
+	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
+	 * @since 2.1.0
+	 * @param none
+	 * @return none
+	 */
+	swp.activateHoverStates = function() {
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
+			console.log('hello world');
+			var term_width = $(this).find('.swp_share').width();
+			var icon_width = $(this).find('i.sw').outerWidth();
+			var container_width = $(this).width();
+			var percentage_change = 1 + ((term_width + 35) / container_width);
+			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+			$(this).css({flex:percentage_change + ' 1 0%'});
+		});
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseleave',function(){
+			$(this).find('.iconFiller').width('30px');
+			$(this).css({flex:'1'});
 		});
 	}
 
@@ -283,10 +303,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	function initShareButtons() {
 		if ( 0 !== $( '.nc_socialPanel' ).length ) {
 			createFloatBar();
-			swp_activate_hover_states();
+			swp.activateHoverStates();
 			handleWindowOpens();
 			$( window ).scrollTop();
-			$( window ).scroll( $.swpThrottle( 250, function() {
+			$( window ).scroll( swp.throttle( 250, function() {
 				floatingBarReveal();
 			}));
 
@@ -354,22 +374,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	function resetCache() {
-		// Reset the cache
-		if ( 'undefined' !== typeof swpCacheURL ) {
-			var urlParams;
-
-			// If the URL Contains a question mark already
-			if ( swpCacheURL.indexOf( '?' ) != -1 ) {
-				urlParams = '&swp_cache=rebuild';
-			} else {
-				urlParams = '?swp_cache=rebuild';
-			}
-
-			$.get( swpCacheURL + urlParams );
-		}
-	}
-
 	function handleWindowOpens() {
 		$( '.nc_tweet, a.swp_CTT' ).on( 'click', function( event ) {
 			if ( $( this ).hasClass( 'noPop' ) ) {
@@ -399,28 +403,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	/**
-	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
-	 * @since 2.1.0
-	 * @param none
-	 * @return none
-	 */
-	function swp_activate_hover_states() {
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
-			console.log('hello world');
-			var term_width = $(this).find('.swp_share').width();
-			var icon_width = $(this).find('i.sw').outerWidth();
-			var container_width = $(this).width();
-			var percentage_change = 1 + ((term_width + 35) / container_width);
-			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-			$(this).css({flex:percentage_change + ' 1 0%'});
-		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseleave',function(){
-			$(this).find('.iconFiller').width('30px');
-			$(this).css({flex:'1'});
-		});
-	}
-
 	$( document ).ready( function() {
 		handleWindowOpens();
 
@@ -428,7 +410,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
 		window.bodyPaddingBottom = absint( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
 
-		$( window ).resize( $.swpDebounce( 250, function() {
+		$( window ).resize( swp.debounce( 250, function() {
 			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
 				window.swpAdjust = 1;
 				initShareButtons();
@@ -450,8 +432,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				console.log( newPosition );
 			}, 105 );
 		}
-
-		resetCache();
 
 		if ( swpPinIt.enabled ) {
 			pinitButton();
