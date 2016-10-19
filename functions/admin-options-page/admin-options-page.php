@@ -28,9 +28,11 @@ function swp_admin_options_page() {
 
 // Enqueue the Admin Options CSS
 function swp_admin_options_css() {
+	$suffix = swp_get_suffix();
+
 	wp_enqueue_style(
 		'swp_admin_options_css',
-		swp_PLUGIN_DIR . '/css/admin-options-page.css',
+		swp_PLUGIN_DIR . "/css/admin-options-page{$suffix}.css",
 		array(),
 		swp_VERSION
 	);
@@ -38,6 +40,8 @@ function swp_admin_options_css() {
 
 // Enqueue the Admin Options JS
 function swp_admin_options_js() {
+	$suffix = swp_get_suffix();
+
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-effects-core' );
 	wp_enqueue_script( 'jquery-ui-core' );
@@ -46,7 +50,7 @@ function swp_admin_options_js() {
 	wp_enqueue_media();
 	wp_enqueue_script(
 		'swp_admin_options_js',
-		swp_PLUGIN_DIR . '/js/admin-options-page.js',
+		swp_PLUGIN_DIR . "/js/admin-options-page{$suffix}.js",
 		array( 'jquery' ),
 		swp_VERSION
 	);
