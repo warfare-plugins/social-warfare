@@ -231,7 +231,7 @@ function swp_build_options_page() {
 
 					// Loop through each active button
 					foreach ( $swp_user_options['newOrderOfIcons'] as $key => $value ) :
-						echo '<i class="sw-s sw-' . $key . '-icon" value="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+						echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
 					endforeach;
 
 					// Use defaults if nothing is saved
@@ -240,7 +240,7 @@ function swp_build_options_page() {
 					// Loop through the available buttons
 					foreach ( $option['content'] as $key => $value ) :
 						if ( $value['default'] == true ) :
-							echo '<i class="sw-s sw-' . $key . '-icon" value="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
 						endif;
 					endforeach;
 
@@ -265,7 +265,7 @@ function swp_build_options_page() {
 					// Loop through each active button
 					foreach ( $option['content'] as $key => $value ) :
 						if ( ! isset( $swp_user_options['newOrderOfIcons'][ $key ] ) ) :
-							echo '<i class="sw-s sw-' . $key . '-icon" value="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
 						endif;
 					endforeach;
 
@@ -275,7 +275,7 @@ function swp_build_options_page() {
 					// Loop through the available buttons
 					foreach ( $option['content'] as $key => $value ) :
 						if ( $value['default'] == false ) :
-							echo '<i class="sw-s sw-' . $key . '-icon" value="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
 						endif;
 					endforeach;
 
@@ -296,7 +296,7 @@ function swp_build_options_page() {
 				// Loop through the available buttons
 				foreach ( $option['content'] as $key => $value ) :
 					if ( $option['content'][ $key ]['premium'] == true ) :
-						echo '<i class="sw-s sw-' . $key . '-icon" value="' . $key . '"></i>';
+						echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '"></i>';
 					endif;
 				endforeach;
 
