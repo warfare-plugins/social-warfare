@@ -1,10 +1,11 @@
 <?php
 
-/****************************************************************************************
-*																						*
-*	The Social Warfare Display Settings													*
-*																						*
-*****************************************************************************************/
+	/**
+	 * swp_options_display An array of options for the display tab of the options page
+	 * @since 	2.0.0
+	 * @param  	array $swp_options The array of options
+	 * @return 	array $swp_options The modified array of options
+	 */
 	function swp_options_display($swp_options) {
 
 		$icons_array = array(
@@ -264,12 +265,12 @@
 		return $swp_options;
 	}
 
-/****************************************************************************************
-*																						*
-*	The Styles Tab																		*
-*																						*
-*****************************************************************************************/
-
+	/**
+	 * swp_options_styles An array of options for the styles tab of the options page
+	 * @since 	2.0.0
+	 * @param  	array $swp_options The array of options
+	 * @return 	array $swp_options The modified array of options
+	 */
 	function swp_options_styles($swp_options) {
 
 		// Declare the Display Settings tab and tab name
@@ -624,11 +625,12 @@
 	}
 
 
-/****************************************************************************************
-*																						*
-*	Queue up the Options Filters														*
-*																						*
-*****************************************************************************************/
+	/**
+	 * swp_options_social_identity An array of options for the social identity tab of the options page
+	 * @since 	2.0.0
+	 * @param  	array $swp_options The array of options
+	 * @return 	array $swp_options The modified array of options
+	 */
 
 	function swp_options_social_identity($swp_options) {
 
@@ -698,11 +700,12 @@
 
 	}
 
-/****************************************************************************************
-*																						*
-*	The Advanced Tab																	*
-*																						*
-*****************************************************************************************/
+	/**
+	 * swp_options_advanced An array of options for the advanced tab of the options page
+	 * @since 	2.0.0
+	 * @param  	array $swp_options The array of options
+	 * @return 	array $swp_options The modified array of options
+	 */
 
 	function swp_options_advanced($swp_options) {
 
@@ -908,11 +911,12 @@
 		return $swp_options;
 	};
 
-/****************************************************************************************
-*																						*
-*	The Advanced Tab																	*
-*																						*
-*****************************************************************************************/
+	/**
+	 * swp_options_registration An array of options for the registration tab of the options page
+	 * @since 	2.0.0
+	 * @param  	array $swp_options The array of options
+	 * @return 	array $swp_options The modified array of options
+	 */
 
 	function swp_options_registration($swp_options) {
 
@@ -935,156 +939,24 @@
 
 	}
 
-/****************************************************************************************
-*																						*
-*	Queue up the Options Filters														*
-*																						*
-*****************************************************************************************/
+	/**
+	 * Queue up the options filter functions
+	 * @since 2.0.0
+	 */
 
 	add_filter('swp_options', 'swp_options_display' 			, 1 );
-	add_filter('swp_options', 'swp_options_styles' 			, 2 );
-	add_filter('swp_options', 'swp_options_social_identity'	, 3 );
+	add_filter('swp_options', 'swp_options_styles' 				, 2 );
+	add_filter('swp_options', 'swp_options_social_identity'		, 3 );
 	add_filter('swp_options', 'swp_options_advanced'			, 4 );
 	add_filter('swp_options', 'swp_options_registration'		, 5 );
 
-/****************************************************************************************
-*																						*
-*	The Social Warfare Options Function	- Process the Options Array!					*
-*																						*
-*****************************************************************************************
-
-	// Queue up the Social Warfare options hook
-	// add_action('init' , 'swp_optionsClass' , 20);
-
-	// The Options Function which relies on the Options Array above
-	function swp_optionsClass() {
-
-		// Fetch the Options Array - This is the swp_options filter hook
-		global $swp_options;
-		$swp_options = apply_filters('swp_options',$swp_options);
-
-		// Initiate the Options Class with the config settings in the array
-		$options_panel = new BF_Admin_Page_Class($swp_options['config']);
-
-		// Open the Options Tabs Container
-		$options_panel->OpenTabs_container('');
-
-		// Execute the list of options tabs
-		$options_panel->TabsListing($swp_options['tabs']);
-
-		// Loop through the options tabs and build the options page
-		foreach($swp_options['options'] as $tabName => $tabOptions):
-			$options_panel->OpenTab($tabName);
-
-			// Loop through and output the options for this tab
-			foreach($tabOptions as $key => $option):
-
-				// TITLE - Add a Title
-				if($option['type'] == 'title'):
-					$options_panel->Title($option['content']);
-				endif;
-
-				// PARAGRAPH - Add a Paragraph of Information
-				if($option['type'] == 'paragraph'):
-					$options_panel->addParagraph($option['content']);
-				endif;
-
-				// TEXTBOX - Add a Textbox option
-				if($option['type'] == 'textbox'):
-					if(isset($option['default'])):
-						$options_panel->addText($key,array('name' => $option['content'], 'std' => $option['default']));
-					else:
-						$options_panel->addText($key,array('name' => $option['content']));
-					endif;
-				endif;
-
-				// CHECKBOX - Add a checkbox option
-				if($option['type'] == 'checkbox'):
-					$options_panel->addCheckbox($key,array('name' => $option['content'], $key => $key, 'std' => $option['default']));
-				endif;
-
-				// SORTABLE - Add a sortable option
-				if($option['type'] == 'sortable'):
-					$options_panel->addSortable(
-						$key,
-						$option['content'],
-						array('name' => $option['name'])
-					);
-				endif;
-
-				// SELECT - Add a select option
-				if($option['type'] == 'select'):
-					$options_panel->addSelect(
-						$key,
-						$option['content'],
-						array(
-							'name' 	=> $option['name'],
-							'std'	=> $option['default']
-						)
-					);
-				endif;
-
-				// COLOROPTION - Add a color picker
-				if($option['type'] == 'colorselect'):
-					$options_panel->addColor(
-						$key,
-						array(
-							'name'=> $option['name'],
-							'std' => $option['default']
-						)
-					);
-				endif;
-
-			endforeach;
-
-			// Close the tab and move on to the next one
-			$options_panel->CloseTab();
-		endforeach;
-	};
-
-/****************************************************************************************
-*																						*
-*	The Social Warfare Add Option(s) After Hook	Function								*
-*																						*
-*****************************************************************************************
-
-function swp_add_option_after($swp_options,$tabName,$optionName,$newOptionArray) {
-
-	// Locate the index of the option you want to insert next to
-	$keyIndex = array_search(
-		$optionName,
-		array_keys( $swp_options['options'][$tabName] )
-	);
-
-	// Split the array at the location of the option above
-	$first_array = array_splice (
-		$swp_options['options'][$tabName],
-		0,
-		$keyIndex+1
-	);
-
-	// Merge the two parts of the split array with your option added in the middle
-	$swp_options['options'][$tabName] = array_merge (
-		$first_array,
-		$newOptionArray,
-		$swp_options['options'][$tabName]
-	);
-
-	// Return the option array or the world will explode
-	return $swp_options;
-
-}
-
-function swp_add_language_option($swp_options,$langName,$langCode) {
-
-	// Add our new language to the options page
-	$swp_options['options']['displaySettings']['language']['content'][$langCode] = $langName;
-
-	// Return the option array or the world will explode
-	return $swp_options;
-
-}
-*/
+/**
+ * swp_add_network_option A function for easily adding networks to the avialable options
+ * @since 2.0.0
+ * @param array $swp_options 	The array of available options
+ * @param array $newOptionArray An array containing information about the new option we're adding
+ * @return array $swp_options 	The modified array of available options
+ */
 function swp_add_network_option($swp_options,$newOptionArray) {
 
 	$swp_options['options']['swp_display']['newOrderOfIcons']['content'][$key] = $newOptionArray[$key]['content'];

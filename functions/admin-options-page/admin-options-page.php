@@ -1,9 +1,11 @@
 <?php
-/**
- * Enqueue the Menu Item
- */
 
-// Add the link to the WordPress menu
+/**
+ * Enqueue the admin menu page
+ * @since 	1.0.0
+ * @param 	none
+ * @return 	none
+ */
 add_action( 'admin_menu', 'swp_admin_options_page' );
 function swp_admin_options_page() {
 
@@ -25,8 +27,6 @@ function swp_admin_options_page() {
 /**
  * Enqueue the Settings Page CSS & Javascript
  */
-
-// Enqueue the Admin Options CSS
 function swp_admin_options_css() {
 	$suffix = swp_get_suffix();
 
@@ -38,7 +38,12 @@ function swp_admin_options_css() {
 	);
 }
 
-// Enqueue the Admin Options JS
+/**
+ * swp_admin_options_js Enqueue the admin javascript
+ * @since 	2.0.0
+ * @param 	none
+ * @return 	none
+ */
 function swp_admin_options_js() {
 	$suffix = swp_get_suffix();
 
@@ -59,8 +64,6 @@ function swp_admin_options_js() {
 /**
  * Build the Settings Page Form
  */
-
-// We'll build the form here
 function swp_plugin_options() {
 
 	// Make sure the person accessing this link has proper permissions to access it
@@ -73,7 +76,7 @@ function swp_plugin_options() {
 }
 
 /**
- * A Function to Parse the Array & Builg the Options Page
+ * A Function to Parse the Array & Build the Options Page
  */
 function swp_build_options_page() {
 
@@ -941,6 +944,12 @@ function swp_delete_the_registration() {
 
 }
 
+/**
+ * A function to pss ajax responses to a remote curl request
+ * @since 	2.0.0
+ * @param 	none
+ * @return 	none
+ */
 add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
 function swp_ajax_passthrough() {
 

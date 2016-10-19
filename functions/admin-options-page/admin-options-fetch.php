@@ -1,5 +1,16 @@
 <?php
-	$swp_user_options = get_option( 'socialWarfareOptions' );
+
+/**
+ * $swp_user_options Fetch the available options that the user has set
+ * @var array An array of available options from the options page
+ */
+$swp_user_options = get_option( 'socialWarfareOptions' );
+
+/**
+ * swp_get_user_options A function to adjust the options and ensure that defaults are set
+ * @param  boolean $admin A boolean value to determine if it's being called in the admin or elsewhere
+ * @return array $swp_user_options The modified options array
+ */
 function swp_get_user_options( $admin = false ) {
 
 	// Fetch the global options array
@@ -9,7 +20,7 @@ function swp_get_user_options( $admin = false ) {
 	if ( isset( $swp_user_options['orderOfIcons'] ) ) :
 		unset( $swp_user_options['orderOfIcons'] );
 		update_option( 'socialWarfareOptions',$swp_user_options );
-		endif;
+	endif;
 
 	// Force the plugin off on certain post types
 	$swp_user_options['locationattachment'] 		= 'none';
@@ -231,7 +242,11 @@ function swp_get_user_options( $admin = false ) {
 
 		return $swp_user_options;
 }
-
+/**
+ * swp_get_single_option A function for fetching a single option
+ * @param  string $key 		The key to pull from the array of options
+ * @return mixed $options 	The value of the desired option
+ */
 function swp_get_single_option( $key ) {
 	$option = swp_get_user_options();
 	return $option[ $key ];
