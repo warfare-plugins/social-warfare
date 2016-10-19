@@ -284,7 +284,9 @@
 	/*********************************************************
 		A Function to update the preview buttons
 	*********************************************************/
+
 	function updateButtonPreviews() {
+
 		var availableOptions = {
 			flatFresh: {
 				fullColor: 'Full Color',
@@ -433,16 +435,13 @@
 
 				++i;
 			});
-
-			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
-
-			if ( 'undefined' === typeof lastClass ) {
-				$( '.nc_socialPanel' ).removeClass( 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor' ).addClass( buttonsClass );
-			} else {
-				$( '.nc_socialPanel' ).removeClass( lastClass ).addClass( buttonsClass );
+			if('undefined' === typeof socialWarfarePlugin.lastClass){
+				socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
 			}
-
-			var lastClass = buttonsClass;
+			console.log(socialWarfarePlugin.lastClass);
+			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
+			$( '.nc_socialPanel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
+			socialWarfarePlugin.lastClass = buttonsClass;
 		});
 	}
 
