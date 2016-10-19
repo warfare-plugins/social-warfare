@@ -1,7 +1,4 @@
 jQuery( document ).ready(function() {
-	jQuery( '.nc_socialPanel' ).animate({
-		opacity: 0
-	}, 0 );
 
 	/*********************************************************
 		Header Menu
@@ -33,8 +30,6 @@ jQuery( document ).ready(function() {
 
 		jQuery( '.sw-admin-tab' ).hide();
 
-		jQuery( '.nc_socialPanel' ).animate( { opacity: 0 }, 0 );
-
 		jQuery( '#' + tab ).show();
 
 		jQuery( '.sw-header-menu li' ).removeClass( 'sw-active-tab' );
@@ -43,8 +38,6 @@ jQuery( document ).ready(function() {
 
 		if ( tab == 'swp_styles' ) {
 			socialWarfarePlugin.activateHoverStates();
-		} else {
-			jQuery( '.nc_socialPanel' ).animate( { opacity: 0 }, 0 );
 		}
 
 		swp_conditional_fields();
