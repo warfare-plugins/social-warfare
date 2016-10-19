@@ -14,7 +14,7 @@ function swp_admin_options_page() {
 		'manage_options',
 		'social-warfare',
 		'swp_plugin_options',
-		swp_PLUGIN_DIR . '/images/admin-options-page/socialwarfare-20x20.png'
+		SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
 	);
 
 	// Hook into the CSS and Javascript Enqueue process for this specific page
@@ -32,9 +32,9 @@ function swp_admin_options_css() {
 
 	wp_enqueue_style(
 		'swp_admin_options_css',
-		swp_PLUGIN_DIR . "/css/admin-options-page{$suffix}.css",
+		SWP_PLUGIN_URL . "/css/admin-options-page{$suffix}.css",
 		array(),
-		swp_VERSION
+		SWP_VERSION
 	);
 }
 
@@ -50,9 +50,9 @@ function swp_admin_options_js() {
 	wp_enqueue_media();
 	wp_enqueue_script(
 		'swp_admin_options_js',
-		swp_PLUGIN_DIR . "/js/admin-options-page{$suffix}.js",
+		SWP_PLUGIN_URL . "/js/admin-options-page{$suffix}.js",
 		array( 'jquery' ),
-		swp_VERSION
+		SWP_VERSION
 	);
 }
 
@@ -104,7 +104,7 @@ function swp_build_options_page() {
 
 	echo '<div class="sw-grid sw-col-940 sw-top-menu">';
 	echo '<div class="sw-grid sw-col-700">';
-	echo '<img class="sw-header-logo" src="' . swp_PLUGIN_DIR . '/images/admin-options-page/social-warfare-light.png" />';
+	echo '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-light.png" />';
 	echo '<ul class="sw-header-menu">';
 	$i = 0;
 	foreach ( $swp_options_page['tabs']['links'] as $key => $value ) : ++$i;
@@ -730,7 +730,7 @@ function swp_build_options_page() {
 
 				// The Warning Notice & Instructions
 				echo '<p class="sw-subtitle sw-registration-text">In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.</p>';
-				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="' . swp_PLUGIN_DIR . '/images/admin-options-page/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
 
 				// Close the IS NOT ACTIVATED container
 				echo '</div>';
@@ -811,7 +811,7 @@ function swp_build_options_page() {
 			<tr><td><b>WordPress Version</b></td><td>' . get_bloginfo( 'version' ) . '</td></tr>
 			<tr><td><b>PHP Version</b></td><td>' . phpversion() . '</td></tr>
 			<tr><td><b>WP Memory Limit</b></td><td>' . WP_MEMORY_LIMIT . '</td></tr>
-			<tr><td><b>Social Warfare Version</b></td><td>' . swp_VERSION . '</td></tr>
+			<tr><td><b>Social Warfare Version</b></td><td>' . SWP_VERSION . '</td></tr>
 			<tr><td><h2>Connection Statuses</h2></td><td></td></tr>
 			<tr><td><b>fsockopen</b></td><td>' . $fsockopen . '</td></tr>
 			<tr><td><b>cURL</b></td><td>' . $curl_status . '</td></tr>
@@ -830,9 +830,9 @@ function swp_build_options_page() {
 	 */
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
-	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="' . swp_PLUGIN_DIR . '/images/admin-options-page/affiliate-300x150.jpg"></a>';
-	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="' . swp_PLUGIN_DIR . '/images/admin-options-page/starter-guide-300x150.jpg"></a>';
-	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="' . swp_PLUGIN_DIR . '/images/admin-options-page/measure-roi-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/affiliate-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/starter-guide-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/measure-roi-300x150.jpg"></a>';
 	echo '<p class="sw-support-notice sw-italic">Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.</a></p>';
 	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
 	echo '<a href="#" class="button sw-blue-button sw-system-status">Get System Status</a>';
