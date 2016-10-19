@@ -59,8 +59,6 @@
 			values.newOrderOfIcons[network] = network;
 		});
 
-		console.log( values );
-
 		return values;
 	}
 
@@ -264,11 +262,15 @@
 		var oColorSet    = $( 'select[name="oColorSet"]' ).val();
 		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
 
-		if ( typeof lastClass === 'undefined' ) {
-			$( '.nc_socialPanel' ).removeClass( 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor' ).addClass( buttonsClass );
-		} else {
-			$( '.nc_socialPanel' ).removeClass( lastClass ).addClass( buttonsClass );
+		// Declare a default lastClass based on the default HTML if we haven't declared one
+		if('undefined' === typeof socialWarfarePlugin.lastClass){
+			console.log('boom');
+			socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
 		}
+		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
+		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
+		$( '.nc_socialPanel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
+		socialWarfarePlugin.lastClass = buttonsClass;
 
 		var lastClass = buttonsClass;
 
@@ -435,10 +437,12 @@
 
 				++i;
 			});
+			// Declare a default lastClass based on the default HTML if we haven't declared one
 			if('undefined' === typeof socialWarfarePlugin.lastClass){
+				console.log('boom');
 				socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
 			}
-			console.log(socialWarfarePlugin.lastClass);
+			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
 			$( '.nc_socialPanel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
 			socialWarfarePlugin.lastClass = buttonsClass;

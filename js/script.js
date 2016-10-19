@@ -147,7 +147,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 */
 	swp.activateHoverStates = function() {
 		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
-			console.log('hello world');
 			var term_width = $(this).find('.swp_share').width();
 			var icon_width = $(this).find('i.sw').outerWidth();
 			var container_width = $(this).width();
