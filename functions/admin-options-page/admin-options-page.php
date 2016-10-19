@@ -882,7 +882,7 @@ function swp_store_the_settings() {
 	endforeach;
 
 	// Store the values back in the database
-	return update_option( 'socialWarfareOptions',$options );
+	update_option( 'socialWarfareOptions',$options );
 
 	// Kill WordPress
 	wp_die();
@@ -911,7 +911,7 @@ function swp_store_the_registration() {
 	$options['emailAddress'] = $emailAddress;
 
 	// Store the values back in the database
-	return update_option( 'socialWarfareOptions',$options );
+	update_option( 'socialWarfareOptions',$options );
 
 	// Kill WordPress
 	wp_die();
@@ -934,7 +934,7 @@ function swp_delete_the_registration() {
 	$options['emailAddress'] = '';
 
 	// Store the values back in the database
-	return update_option( 'socialWarfareOptions',$options );
+	update_option( 'socialWarfareOptions',$options );
 
 	// Kill WordPress
 	wp_die();
