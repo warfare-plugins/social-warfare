@@ -59,12 +59,21 @@ div.nc_socialPanel .nc_tweetContainer {
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,
 .nc_socialPanel .totes .swp_count {
 	display: block;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
 	font-family: Lato, sans-serif;
 	font-size: 18px!important;
 	font-weight: bold;
 	height: 30px;
 	text-decoration: none;
 	text-transform: none;
+
+	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
 }
 
 .nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:nth-child(1) {
@@ -79,6 +88,12 @@ div.nc_socialPanel .nc_tweetContainer {
 	display: inline-block;
 	line-height: 32px;
 	padding: 0;
+
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 
 .nc_socialPanel span:before {
@@ -95,6 +110,7 @@ div.nc_socialPanel .nc_tweetContainer {
 
 .nc_socialPanel span.iconFiller {
 	font-size: 18px;
+	margin: 0 auto;
 }
 
 .nc_socialPanel.notMobile .nc_tweetContainer:nth-child(1) {
