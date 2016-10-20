@@ -283,7 +283,7 @@ function social_warfare_buttons( $array = array() ) {
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
 			// Create the social panel
-			$assets = '<div class="nc_socialPanel swp_' . $options['visualTheme'] . ' swp_d_' . $options['dColorSet'] . ' swp_i_' . $options['iColorSet'] . ' swp_o_' . $options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $options['buttonFloat'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '">';
+			$assets = '<div class="nc_socialPanel swp_' . $options['visualTheme'] . ' swp_d_' . $options['dColorSet'] . ' swp_i_' . $options['iColorSet'] . ' swp_o_' . $options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $options['buttonFloat'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-emphasize="'.$options['emphasize_icons'].'">';
 
 			// Setup the total shares count if it's on the left
 			if ( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && ! isset( $array['buttons'] ) )

@@ -46,13 +46,13 @@ div.nc_socialPanel .nc_tweetContainer {
 	text-align: center;
 	-webkit-transition: all 0.1s linear;
 	transition: all 0.1s linear;
-
 	border-size: 1px;
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	-webkit-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
+	overflow:hidden;
 }
 
 .nc_socialPanel .nc_tweetContainer a.nc_tweet,
@@ -1654,4 +1654,7 @@ a.style6:hover .sw-click-to-tweet i.sw-twitter {
 	-ms-transform-origin: center;
 	-webkit-transform-origin: center;
 	transform-origin: center;
+}
+div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
+	flex:2;
 }

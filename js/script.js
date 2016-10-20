@@ -146,7 +146,18 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 * @return none
 	 */
 	swp.activateHoverStates = function() {
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
+		var emphasize_icons = $('.nc_socialPanel:not(.nc_socialPanelSide)').attr('data-emphasize');
+		var i = 1;
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').each(function(){
+			if(i <= emphasize_icons) {
+				$(this).addClass('swp_emphasize');
+				var term_width = $(this).find('.swp_share').width();
+				var icon_width = $(this).find('i.sw').outerWidth();
+				$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+			}
+			++i;
+		});
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
 			var term_width = $(this).find('.swp_share').width();
 			var icon_width = $(this).find('i.sw').outerWidth();
 			var container_width = $(this).width();
@@ -154,7 +165,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
 			$(this).css({flex:percentage_change + ' 1 0%'});
 		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseleave',function(){
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseleave',function(){
 			$(this).find('.iconFiller').width('30px');
 			$(this).css({flex:'1'});
 		});

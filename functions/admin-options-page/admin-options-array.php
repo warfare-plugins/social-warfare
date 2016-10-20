@@ -36,6 +36,19 @@
 				),
 				'default'	=> 'manual',
 				'name'		=> 'Button Ordering',
+				'divider'	=> false,
+				'premium'	=> true
+			),
+			'emphasize_icons' => array(
+				'type'		=> 'select',
+				'size'		=> 'two-thirds',
+				'content'	=> array(
+					'0' 	=> '0',
+					'1' 	=> '1',
+					'2' 	=> '2'
+				),
+				'default'	=> '0',
+				'name'		=> 'Emphasize Icons',
 				'divider'	=> true,
 				'premium'	=> true
 			),
