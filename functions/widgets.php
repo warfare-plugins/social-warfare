@@ -368,7 +368,7 @@ class swp_popular_posts_widget extends WP_Widget {
 						$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
 						$thumbnail_html = '';
 						$thumbnail_html .= '<a href="' . get_the_permalink() . '">';
-						$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '">';
+						$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '">';
 						$thumbnail_html .= '</a>';
 
 						// If we are not supposed to show thumbnails
