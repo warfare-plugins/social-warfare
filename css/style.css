@@ -84,7 +84,7 @@ div.nc_socialPanel .nc_tweetContainer {
 	margin-right: 0;
 }
 
-.nc_socialPanel a .swp_count {
+.nc_socialPanel a .swp_count:not(.swp_hide) {
 	display: inline-block;
 	line-height: 32px;
 	padding: 0;
@@ -94,6 +94,10 @@ div.nc_socialPanel .nc_tweetContainer {
 	-webkit-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
+}
+
+.nc_socialPanel a .swp_count.swp_hide {
+	margin: 0 auto;
 }
 
 .nc_socialPanel span:before {
