@@ -951,6 +951,14 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	line-height: 34px;
 }
 
+.nc_socialPanelSide.swp_default .nc_tweetContainer .sw {
+	line-height: 32px;
+}
+
+.nc_socialPanelSide.swp_default .nc_tweetContainer .swp_share {
+	line-height: 30px;
+}
+
 .nc_socialPanelSide .nc_tweetContainer .swp_share {
 	font-size: 13px;
 }
@@ -1042,6 +1050,17 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .swp_count {
 	padding: 0 8px;
 	width: 48px;
+}
+
+.nc_socialPanelSide .nc_tweetContainer:not(.totes) .swp_count.swp_hide {
+	padding: 0;
+	width: 100%;
+}
+
+.nc_socialPanelSide .nc_tweetContainer:not(.totes) .swp_hide .iconFiller {
+	display: block;
+	float: none;
+	margin: 0 auto;
 }
 
 .nc_socialPanelSide:not(.swp_boxed) .nc_tweetContainer:not(.totes):hover {
