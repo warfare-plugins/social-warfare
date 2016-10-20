@@ -62,7 +62,7 @@ function socialWarfareSideFloat() {
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
 			// Create the social panel
-			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_' . $options['floatStyle'] . ' swp_d_' . $options['sideDColorSet'] . ' swp_i_' . $options['sideIColorSet'] . ' swp_o_' . $options['sideOColorSet'] . ' ' . $options['sideReveal'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-screen-width="' . $options['swp_float_scr_sz'] . '" data-transition="' . $options['sideReveal'] . '">';
+			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_' . $options['floatStyle'] . ' swp_d_' . $options['sideDColorSet'] . ' swp_i_' . $options['sideIColorSet'] . ' swp_o_' . $options['sideOColorSet'] . ' ' . $options['sideReveal'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-screen-width="' . $options['swp_float_scr_sz'] . '" data-transition="' . $options['sideReveal'] . '" data-mobileFloat="'.$options['floatLeftMobile'].'">';
 
 			// Display Total Shares if the Threshold has been met
 			if ( $options['totes'] && $buttonsArray['totes'] >= $options['minTotes'] ) :

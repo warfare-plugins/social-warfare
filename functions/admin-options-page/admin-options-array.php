@@ -507,6 +507,19 @@
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('left')
 			),
+			'floatLeftMobile' => array(
+				'type' => 'select',
+				'name' => 'On Mobile',
+				'size' => 'two-fourths',
+				'content' => array(
+					'bottom' 	=> 'Bottom of Screen',
+					'off' 		=> 'Off'
+				),
+				'default' => 'bottom',
+				'dep' 		=> 'floatOption',
+				'dep_val'	=> array('left'),
+				'premium'	=> true
+			),
 			'floatStyle' => array(
 				'type' => 'select',
 				'name' => 'Button Shape',

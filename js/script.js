@@ -220,7 +220,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		var visible = false;
 		if ( floatOption == 'floatLeft' ) {
 			visible = false;
-			console.log(floatOption);
+			var floatLeftMobile = $( '.nc_socialPanelSide' ).attr( 'data-mobileFloat' );
 			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
 				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).each(function() {
 						var thisOffset = $( this ).offset();
@@ -229,8 +229,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 							visible = true;
 						}
 					});
-				if ( offsetOne.left < 100 || $( window ).width() < minWidth) {
-					floatOption = 'floatBottom';
+				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
+					visible = true;
+					if ( floatLeftMobile == 'bottom' ) {
+						floatOption = 'floatBottom';
+					}
 				} else {
 					visible = false;
 				}
@@ -239,7 +242,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					visible = false;
 				} else {
 					visible = true;
-					floatOption = 'floatBottom';
+					if(floatLeftMobile == 'bottom') {
+						floatOption = 'floatBottom';
+					}
 				}
 			}
 

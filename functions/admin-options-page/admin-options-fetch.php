@@ -137,6 +137,8 @@ function swp_get_user_options( $admin = false ) {
 		};
 		if ( ! isset( $swp_user_options['emphasize_icons'] ) ) { $swp_user_options['emphasize_icons'] 		= 0;
 		};
+		if ( ! isset( $swp_user_options['floatLeftMobile'] ) ) { $swp_user_options['floatLeftMobile'] 		= 'bottom';
+		};
 
 		// If it's not registered
 		else :
@@ -217,6 +219,7 @@ function swp_get_user_options( $admin = false ) {
 			$swp_user_options['pinit_location_horizontal'] = 'center';
 			$swp_user_options['pinit_location_vertical'] = 'top';
 			$swp_user_options['emphasize_icons'] = 0;
+			$swp_user_options['floatLeftMobile'] = 'off';
 
 		endif;
 
