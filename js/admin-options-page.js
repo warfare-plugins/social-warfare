@@ -130,6 +130,9 @@
 			if ( 'swp_styles' === tab ) {
 				socialWarfarePlugin.activateHoverStates();
 			}
+
+			conditionalFields();
+
 		});
 	}
 
