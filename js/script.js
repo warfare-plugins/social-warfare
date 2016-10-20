@@ -219,21 +219,23 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 		var visible = false;
 		if ( floatOption == 'floatLeft' ) {
-			visible = false;
 			var floatLeftMobile = $( '.nc_socialPanelSide' ).attr( 'data-mobileFloat' );
 			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
-				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).each(function() {
+				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
 						var thisOffset = $( this ).offset();
 						var thisHeight = $( this ).height();
 						if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
 							visible = true;
 						}
 					});
+					console.log(visible);
 				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 					visible = true;
 					if ( floatLeftMobile == 'bottom' ) {
 						floatOption = 'floatBottom';
 					}
+				} else if (visible) {
+					visible == true;
 				} else {
 					visible = false;
 				}
