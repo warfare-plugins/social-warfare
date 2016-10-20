@@ -154,6 +154,10 @@ span.swp_share {
 	vertical-align: middle;
 }
 
+.nc_socialPanelSide span.swp_share {
+	margin: 0;
+}
+
 .nc_socialPanel .sw {
 	float: left;
 	height: 30px;
@@ -1052,7 +1056,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide .nc_tweetContainer.totes {
 	background: rgba(0, 0, 0, 0);
 	border: 0!important;
-	font-weight: 500;
+	font-weight: 800;
 	height: 45px;
 	margin: 0;
 	padding: 0;
@@ -1064,7 +1068,6 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	color: #444;
 	display: block;
 	font-family: Lato, sans-serif;
-	font-weight: 500;
 	height: 28px;
 	text-align: center;
 	width: 100%;
@@ -1075,7 +1078,6 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	display: block;
 	font-family: Lato, sans-serif;
 	font-size: 50%;
-	font-weight: 500;
 	text-align: center;
 	width: 100%;
 }
