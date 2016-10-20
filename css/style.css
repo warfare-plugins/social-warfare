@@ -145,6 +145,7 @@ span.swp_share {
 	font-weight: normal;
 	height: 30px;
 	line-height: 30px;
+	margin: 0 0 0 6px;
 	max-width: none!important;
 	vertical-align: middle;
 }
@@ -153,7 +154,7 @@ span.swp_share {
 	float: left;
 	height: 30px;
 	line-height: 32px;
-	margin: 0 7px;
+	margin: 0 5px;
 	text-shadow: none!important;
 	width: 20px;
 }

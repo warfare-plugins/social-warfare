@@ -151,7 +151,7 @@ function swp_pinterest_button_html( $array ) {
 			$array['resource']['pinterest'] .= $a;
 			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['pinterest'] > 0 ) :
 				$array['resource']['pinterest'] .= '<span class="iconFiller">';
-				$array['resource']['pinterest'] .= '<span class="spaceManWilly" style="width:55px;">';
+				$array['resource']['pinterest'] .= '<span class="spaceManWilly">';
 				$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';
 				$array['resource']['pinterest'] .= '<span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span>';
 				$array['resource']['pinterest'] .= '</span></span>';
