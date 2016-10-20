@@ -172,7 +172,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 	function createFloatBar() {
-		if ( ! $( '.nc_socialPanelSide' ).length ) {
+		//if ( ! $( '.nc_socialPanelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
 				$( '.nc_wrapper' ).remove();
 			}
@@ -185,7 +185,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' ).appendTo( 'body' );
 				var position = firstSocialPanel.attr( 'data-float' );
 				firstSocialPanel.clone().appendTo( '.nc_wrapper' );
-				$( '.nc_wrapper' ).hide().addClass( position );
+				$( '.nc_wrapper' ).hide().addClass( (position == 'floatLeft' ? 'floatBottom' : position) );
 				var width = firstSocialPanel.outerWidth( true );
 				var offset = firstSocialPanel.offset();
 				$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css({
@@ -197,7 +197,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.nc_socialPanel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.nc_socialPanel' ).eq( 1 ).addClass( 'swp_three' );
 			}
-		}
+		//}
 	}
 
 	function floatingBarReveal() {
@@ -218,8 +218,48 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		var visible = false;
+		if ( floatOption == 'floatLeft' ) {
+			visible = false;
+			console.log(floatOption);
+			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
+				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).each(function() {
+						var thisOffset = $( this ).offset();
+						var thisHeight = $( this ).height();
+						if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
+							visible = true;
+						}
+					});
+				if ( offsetOne.left < 100 || $( window ).width() < minWidth) {
+					floatOption = 'floatBottom';
+				} else {
+					visible = false;
+				}
+			} else {
+				if ( $( window ).width() > minWidth ) {
+					visible = false;
+				} else {
+					visible = true;
+					floatOption = 'floatBottom';
+				}
+			}
 
+			var transition = ncSideFloater.attr( 'data-transition' );
+			if ( transition == 'slide' ) {
+				if ( visible == true ) {
+					ncSideFloater.css({ left: '-100px' }, 200 );
+				} else {
+					ncSideFloater.css({ left: '5px' });
+				}
+			} else if ( transition == 'fade' ) {
+				if ( visible == true ) {
+					ncSideFloater.fadeOut( 200 );
+				} else {
+					ncSideFloater.fadeIn( 200 );
+				}
+			}
+		}
 		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
+			visible = false;
 			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).each(function() {
 				var thisOffset, thisHeight, screenBottom;
 
@@ -258,6 +298,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				ncWrapper.show();
 
 				// Add some padding to the page so it fits nicely at the top or bottom
+				console.log(floatOption);
 				if ( floatOption == 'floatBottom' ) {
 					newPadding = window.bodyPaddingBottom + 50;
 					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
@@ -268,43 +309,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 						newPadding = window.bodyPaddingTop + 50;
 						$( 'body' ).animate({ 'padding-top': newPadding + 'px' }, 0 );
 					}
-				}
-			}
-		} else if ( floatOption == 'floatLeft' ) {
-			visible = false;
-			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
-				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).each(function() {
-						var thisOffset = $( this ).offset();
-						var thisHeight = $( this ).height();
-						if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
-							visible = true;
-						}
-					});
-				if ( visible || $( '.nc_socialPanelSide' ).hasClass( 'mobile' ) ) {
-					visible = true;
-				} else {
-					visible = false;
-				}
-			} else {
-				if ( $( window ).width() > minWidth ) {
-					visible = false;
-				} else {
-					visible = true;
-				}
-			}
-
-			var transition = ncSideFloater.attr( 'data-transition' );
-			if ( transition == 'slide' ) {
-				if ( visible == true ) {
-					ncSideFloater.css({ left: '-100px' }, 200 );
-				} else {
-					ncSideFloater.css({ left: '5px' });
-				}
-			} else if ( transition == 'fade' ) {
-				if ( visible == true ) {
-					ncSideFloater.fadeOut( 200 );
-				} else {
-					ncSideFloater.fadeIn( 200 );
 				}
 			}
 		}
