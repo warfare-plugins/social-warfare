@@ -1564,3 +1564,94 @@ a.style6:hover .sw-click-to-tweet i.sw-twitter {
 	color: #2a2d34;
 	text-decoration: none;
 }
+
+.scale-70 {
+	-ms-transform: scale(0.7);
+	-webkit-transform: scale(0.7);
+	transform: scale(0.7);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-70.scale-fullWidth {
+	width: 142.8571428571429%!important;
+}
+
+.scale-80 {
+	-ms-transform: scale(0.8);
+	-webkit-transform: scale(0.8);
+	transform: scale(0.8);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-80.scale-fullWidth {
+	width: 125%!important;
+}
+
+.scale-90 {
+	-ms-transform: scale(0.9);
+	-webkit-transform: scale(0.9);
+	transform: scale(0.9);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-90.scale-fullWidth {
+	width: 111.111111111111%!important;
+}
+
+.scale-110 {
+	-ms-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-110.scale-fullWidth {
+	width: 90.90909090909091%!important;
+}
+
+.scale-120 {
+	-ms-transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-120.scale-fullWidth {
+	width: 83.33333333333333%!important;
+}
+
+.scale-130 {
+	-ms-transform: scale(1.3);
+	-webkit-transform: scale(1.3);
+	transform: scale(1.3);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-130.scale-fullWidth {
+	width: 76.92307692307692%!important;
+}
+
+.scale-140 {
+	-ms-transform: scale(1.4);
+	-webkit-transform: scale(1.4);
+	transform: scale(1.4);
+}
+
+.nc_socialPanel:not(.nc_floater).scale-140.scale-fullWidth {
+	width: 71.42857142857143%!important;
+}
+
+.scale-fullWidth,
+.scale-left,
+.nc_floater.scale-center,
+.nc_floater.scale-right {
+	-ms-transform-origin: left;
+	-webkit-transform-origin: left;
+	transform-origin: left;
+}
+
+.scale-right {
+	-ms-transform-origin: right;
+	-webkit-transform-origin: right;
+	transform-origin: right;
+}
+
+.scale-center {
+	-ms-transform-origin: center;
+	-webkit-transform-origin: center;
+	transform-origin: center;
+}
