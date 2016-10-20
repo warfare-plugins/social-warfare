@@ -135,6 +135,8 @@ function swp_get_user_options( $admin = false ) {
 		};
 		if ( ! isset( $swp_user_options['pinit_min_height'] ) ) { $swp_user_options['pinit_min_height'] 	= '200';
 		};
+		if ( ! isset( $swp_user_options['emphasize_icons'] ) ) { $swp_user_options['emphasize_icons'] 		= 0;
+		};
 
 		// If it's not registered
 		else :
@@ -214,6 +216,7 @@ function swp_get_user_options( $admin = false ) {
 			$swp_user_options['pinit_toggle'] = false;
 			$swp_user_options['pinit_location_horizontal'] = 'center';
 			$swp_user_options['pinit_location_vertical'] = 'top';
+			$swp_user_options['emphasize_icons'] = 0;
 
 		endif;
 
