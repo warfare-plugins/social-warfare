@@ -14,28 +14,28 @@
 		$icons_array = apply_filters( 'swp_button_options' , $icons_array );
 
 		// Declare the Options Tab and Tab Name
-		$swp_options['tabs']['links']['swp_display'] = __( 'Display' );
+		$swp_options['tabs']['links']['swp_display'] = __( 'Display' ,'social-warfare' );
 
 		// Declare the content that goes on this options page
 		$swp_options['options']['swp_display'] = array(
 			'social_networks_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> __( 'Social Networks' )
+				'content' 	=> __( 'Social Networks' ,'social-warfare' )
 			),
 			'social_networks_subtitle' => array(
 				'type'		=> 'paragraph',
-				'content'	=> __( 'Drag & Drop to activate and order your share buttons.' )
+				'content'	=> __( 'Drag & Drop to activate and order your share buttons.' ,'social-warfare' )
 			),
 			'buttons' => $icons_array,
 			'orderOfIconsSelect' => array(
 				'type'		=> 'select',
 				'size'		=> 'two-thirds',
 				'content'	=> array(
-					'manual' 	=> __( 'Sort Manually Using Drag & Drop Above' ),
-					'dynamic' 	=> __( 'Sort Dynamically By Order Of Most Shares' )
+					'manual' 	=> __( 'Sort Manually Using Drag & Drop Above' ,'social-warfare' ),
+					'dynamic' 	=> __( 'Sort Dynamically By Order Of Most Shares' ,'social-warfare' )
 				),
 				'default'	=> 'manual',
-				'name'		=> __( 'Button Ordering' ),
+				'name'		=> __( 'Button Ordering' ,'social-warfare' ),
 				'divider'	=> false,
 				'premium'	=> true
 			),
@@ -43,41 +43,41 @@
 				'type'		=> 'select',
 				'size'		=> 'two-thirds',
 				'content'	=> array(
-					'0' 	=> __( 'Don\'t Emphasize Any Buttons' ),
-					'1' 	=> __( 'Emphasize the First Button' ),
-					'2' 	=> __( 'Emphasize the First Two Buttons' )
+					'0' 	=> __( 'Don\'t Emphasize Any Buttons' ,'social-warfare' ),
+					'1' 	=> __( 'Emphasize the First Button' ,'social-warfare' ),
+					'2' 	=> __( 'Emphasize the First Two Buttons' ,'social-warfare' )
 				),
 				'default'	=> '0',
-				'name'		=> __( 'Emphasize Buttons' ),
+				'name'		=> __( 'Emphasize Buttons' ,'social-warfare' ),
 				'divider'	=> true,
 				'premium'	=> true
 			),
 			'share_counts_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> __( 'Share Counts' )
+				'content' 	=> __( 'Share Counts' ,'social-warfare' )
 			),
 			'share_counts_subtitle' => array(
 				'type'		=> 'paragraph',
-				'content'	=> __( 'Use the toggles below to determine how to display your social proof.' )
+				'content'	=> __( 'Use the toggles below to determine how to display your social proof.' ,'social-warfare' )
 			),
 			'totesEach' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> __( 'Button Counts' ),
+				'content'	=> __( 'Button Counts' ,'social-warfare' ),
 				'default'	=> true,
 				'premium'	=> false
 			),
 			'totes' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> __( 'Total Counts' ),
+				'content'	=> __( 'Total Counts' ,'social-warfare' ),
 				'default'	=> true,
 				'premium'	=> false
 			),
 			'minTotes' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> __( 'Minimum Shares' ),
+				'name'		=> __( 'Minimum Shares' ,'social-warfare' ),
 				'default'	=> 0,
 				'divider'	=> true,
 				'premium'	=> true
@@ -85,7 +85,7 @@
 			'swp_twitter_card' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> __( 'Twitter Cards' ),
+				'content'	=> __( 'Twitter Cards' ,'social-warfare' ),
 				'header'	=> true,
 				'divider'	=> true,
 				'default'	=> true,
@@ -93,27 +93,27 @@
 			),
 			'position_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> __( 'Position Share Buttons' )
+				'content' 	=> __( 'Position Share Buttons' ,'social-warfare' )
 			),
 			'position_subtitle' => array(
 				'type'		=> 'paragraph',
-				'content'	=> __( 'The options below will allow you to customize the positioning of share buttons for each post type.' )
+				'content'	=> __( 'The options below will allow you to customize the positioning of share buttons for each post type.' ,'social-warfare' )
 			),
 			'location_column_labels' => array(
 				'type'		=> 'column_labels',
 				'columns'	=> 3,
-				'column_1'	=> __( 'Post Type' ),
-				'column_2'	=> __( 'Static Buttons' ),
-				'column_3'	=> __( 'Floating Buttons (If Activated)' )
+				'column_1'	=> __( 'Post Type' ,'social-warfare' ),
+				'column_2'	=> __( 'Static Buttons' ,'social-warfare' ),
+				'column_3'	=> __( 'Floating Buttons (If Activated)' ,'social-warfare' )
 			)
 		);
 
 		// Create the content locations
 		$contentLocations = array(
-			'above'=> __( 'Above the Content' ),
-			'below' => __( 'Below the Content' ),
-			'both' => __( 'Both Above and Below the Content' ),
-			'none' => __( 'None/Manual Placement' )
+			'above'=> __( 'Above the Content' ,'social-warfare' ),
+			'below' => __( 'Below the Content' ,'social-warfare' ),
+			'both' => __( 'Both Above and Below the Content' ,'social-warfare' ),
+			'none' => __( 'None/Manual Placement' ,'social-warfare' )
 		);
 
 		// Get the post Types
@@ -142,8 +142,8 @@
 					'secondary' => 'float_location_'.$postType,
 					'content'	=> $contentLocations,
 					'content_2'	=> array(
-						'on'	=> __( 'On' ),
-						'off'	=> __( 'Off' ),
+						'on'	=> __( 'On' ,'social-warfare' ),
+						'off'	=> __( 'Off' ,'social-warfare' ),
 					),
 					'default'	=> 'both',
 					'default_2' => 'on'
@@ -153,7 +153,7 @@
 
 		$swp_options['options']['swp_display']['locationSite'] = array(
 			'type'		=> 'select',
-			'name'		=> __( 'Archive & Categories' ),
+			'name'		=> __( 'Archive & Categories' ,'social-warfare' ),
 			'content'	=> $contentLocations,
 			'default'	=> 'below',
 			'size'		=> 'two-thirds'
@@ -165,31 +165,31 @@
 
 		$swp_options['options']['swp_display']['pinit_title'] = array(
 			'type' 		=> 'title',
-			'content' 	=> __( 'Image Hover Pin Button' ),
+			'content' 	=> __( 'Image Hover Pin Button' ,'social-warfare' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_description'] = array(
 			'type' 		=> 'paragraph',
-			'content' 	=> __( 'If you would like a "Pin" button to appear on images when users hover over them, activate this.' ),
+			'content' 	=> __( 'If you would like a "Pin" button to appear on images when users hover over them, activate this.' ,'social-warfare' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_toggle'] = array(
 			'type'		=> 'checkbox',
 			'size'		=> 'two-thirds',
-			'content'	=> __( 'Pinit Button' ),
+			'content'	=> __( 'Pinit Button' ,'social-warfare' ),
 			'default'	=> true,
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_location_horizontal'] = array(
 			'type'		=> 'select',
-			'name'		=> __( 'Horizontal Location' ),
+			'name'		=> __( 'Horizontal Location' ,'social-warfare' ),
 			'content'	=> array(
-				'left' 		=> __( 'Left' ),
-				'center'	=> __( 'Center' ),
-				'right' 	=> __( 'Right' )
+				'left' 		=> __( 'Left' ,'social-warfare' ),
+				'center'	=> __( 'Center' ,'social-warfare' ),
+				'right' 	=> __( 'Right' ,'social-warfare' )
 			),
 			'default'	=> 'center',
 			'size'		=> 'two-fourths',
@@ -200,7 +200,7 @@
 
 		$swp_options['options']['swp_display']['pinit_min_width'] = array(
 			'type'		=> 'input',
-			'name'		=> __( 'Min Width' ),
+			'name'		=> __( 'Min Width' ,'social-warfare' ),
 			'default'	=> '200',
 			'size'		=> 'two-fourths',
 			'premium'	=> true,
@@ -210,11 +210,11 @@
 
 		$swp_options['options']['swp_display']['pinit_location_vertical'] = array(
 			'type'		=> 'select',
-			'name'		=> __( 'Vertical Location' ),
+			'name'		=> __( 'Vertical Location' ,'social-warfare' ),
 			'content'	=> array(
-				'top' 		=> __( 'Top' ),
-				'middle'	=> __( 'Middle' ),
-				'bottom' 	=> __( 'Bottom' )
+				'top' 		=> __( 'Top' ,'social-warfare' ),
+				'middle'	=> __( 'Middle' ,'social-warfare' ),
+				'bottom' 	=> __( 'Bottom' ,'social-warfare' )
 			),
 			'default'	=> 'top',
 			'size'		=> 'two-fourths',
@@ -225,7 +225,7 @@
 
 		$swp_options['options']['swp_display']['pinit_min_height'] = array(
 			'type'		=> 'input',
-			'name'		=> __( 'Min Height' ),
+			'name'		=> __( 'Min Height' ,'social-warfare' ),
 			'default'	=> '200',
 			'size'		=> 'two-fourths',
 			'premium'	=> true,
@@ -248,7 +248,7 @@
 
 		$swp_options['options']['swp_display']['yummly_cat_title'] = array(
 			'type' 		=> 'title',
-			'content' 	=> __( 'Yummly Display Control' ),
+			'content' 	=> __( 'Yummly Display Control' ,'social-warfare' ),
 			'premium'	=> true
 		);
 
@@ -262,14 +262,14 @@
 			'type'		=> 'column_labels',
 			'columns'	=> 3,
 			'column_1'	=> '',
-			'column_2'	=> __( 'Choose Category' ),
-			'column_3'	=> __( 'Choose Tag' ),
+			'column_2'	=> __( 'Choose Category' ,'social-warfare' ),
+			'column_3'	=> __( 'Choose Tag' ,'social-warfare' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['yummly_terms'] = array(
 			'type'		=> 'input',
-			'name'		=> __( 'Yummly Terms' ),
+			'name'		=> __( 'Yummly Terms' ,'social-warfare' ),
 			'primary'	=> 'yummly_categories',
 			'secondary' => 'yummly_tags',
 			'premium'	=> true
@@ -287,30 +287,30 @@
 	function swp_options_styles($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$swp_options['tabs']['links']['swp_styles'] = __( 'Styles' );
+		$swp_options['tabs']['links']['swp_styles'] = __( 'Styles' ,'social-warfare' );
 
 		$swp_options['options']['swp_styles'] = array(
 			'visual_options_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> __( 'Visual Options' ),
+				'content' 	=> __( 'Visual Options' ,'social-warfare' ),
 				'premium'	=> true
 			),
 			'visual_options_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> __( 'Use the settings below to customize the look of your share buttons.' ),
+				'content' 	=> __( 'Use the settings below to customize the look of your share buttons.' ,'social-warfare' ),
 				'premium'	=> true
 			),
 			'visualTheme' => array(
 				'type'		=> 'select',
 				'size'		=> 'two-fourths',
-				'name'		=> __( 'Button Shape' ),
+				'name'		=> __( 'Button Shape' ,'social-warfare' ),
 				'content'	=> array(
-					'flatFresh' 	=> __( 'Flat & Fresh' ),
-					'leaf' 			=> __( 'A Leaf on the Wind' ),
-					'shift' 		=> __( 'Shift' ),
-					'pill' 			=> __( 'Pills' ),
-					'threeDee' 		=> __( 'Three-Dee' ),
-					'connected' 	=> __( 'Connected' )
+					'flatFresh' 	=> __( 'Flat & Fresh' ,'social-warfare' ),
+					'leaf' 			=> __( 'A Leaf on the Wind' ,'social-warfare' ),
+					'shift' 		=> __( 'Shift' ,'social-warfare' ),
+					'pill' 			=> __( 'Pills' ,'social-warfare' ),
+					'threeDee' 		=> __( 'Three-Dee' ,'social-warfare' ),
+					'connected' 	=> __( 'Connected' ,'social-warfare' )
 				),
 				'default' => 'flatFresh',
 				'premium'	=> true
@@ -318,16 +318,16 @@
 			'buttonSize' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Button Size' ),
+				'name' => __( 'Button Size' ,'social-warfare' ),
 				'content' => array(
-					'1.4' => __( '140%' ),
-					'1.3' => __( '130%' ),
-					'1.2' => __( '120%' ),
-					'1.1' => __( '110%' ),
-					'1'   => __( '100%' ),
-					'0.9' => __( '90%' ),
-					'0.8' => __( '80%' ),
-					'0.7' => __( '70%' )
+					'1.4' => __( '140%' ,'social-warfare' ),
+					'1.3' => __( '130%' ,'social-warfare' ),
+					'1.2' => __( '120%' ,'social-warfare' ),
+					'1.1' => __( '110%' ,'social-warfare' ),
+					'1'   => __( '100%' ,'social-warfare' ),
+					'0.9' => __( '90%' ,'social-warfare' ),
+					'0.8' => __( '80%' ,'social-warfare' ),
+					'0.7' => __( '70%' ,'social-warfare' )
 				),
 				'default' => '1',
 				'premium'	=> true
@@ -335,18 +335,18 @@
 			'dColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Default Color Set' ),
+				'name' => __( 'Default Color Set' ,'social-warfare' ),
 				'content' => array(
-					'fullColor' 		=> __( 'Full Color' ),
-					'lightGray' 		=> __( 'Light Gray' ),
-					'mediumGray'		=> __( 'Medium Gray' ),
-					'darkGray' 			=> __( 'Dark Gray' ),
-					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
-					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
-					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
-					'colorOutlines' 	=> __( 'Color Outlines' ),
-					'customColor' 		=> __( 'Custom Color' ),
-					'ccOutlines' 		=> __( 'Custom Color Outlines' )
+					'fullColor' 		=> __( 'Full Color' ,'social-warfare' ),
+					'lightGray' 		=> __( 'Light Gray' ,'social-warfare' ),
+					'mediumGray'		=> __( 'Medium Gray' ,'social-warfare' ),
+					'darkGray' 			=> __( 'Dark Gray' ,'social-warfare' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ,'social-warfare' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ,'social-warfare' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ,'social-warfare' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ,'social-warfare' ),
+					'customColor' 		=> __( 'Custom Color' ,'social-warfare' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' ,'social-warfare' )
 				),
 				'default' => 'fullColor',
 				'premium'	=> true
@@ -354,18 +354,18 @@
 			'oColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Hover Color Set' ),
+				'name' => __( 'Hover Color Set' ,'social-warfare' ),
 				'content' => array(
-					'fullColor' 		=> __( 'Full Color' ),
-					'lightGray' 		=> __( 'Light Gray' ),
-					'mediumGray'		=> __( 'Medium Gray' ),
-					'darkGray' 			=> __( 'Dark Gray' ),
-					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
-					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
-					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
-					'colorOutlines' 	=> __( 'Color Outlines' ),
-					'customColor' 		=> __( 'Custom Color' ),
-					'ccOutlines' 		=> __( 'Custom Color Outlines' )
+					'fullColor' 		=> __( 'Full Color' ,'social-warfare' ),
+					'lightGray' 		=> __( 'Light Gray' ,'social-warfare' ),
+					'mediumGray'		=> __( 'Medium Gray' ,'social-warfare' ),
+					'darkGray' 			=> __( 'Dark Gray' ,'social-warfare' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ,'social-warfare' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ,'social-warfare' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ,'social-warfare' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ,'social-warfare' ),
+					'customColor' 		=> __( 'Custom Color' ,'social-warfare' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' ,'social-warfare' )
 				),
 				'default' => 'fullColor',
 				'premium'	=> true
@@ -373,18 +373,18 @@
 			'iColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Single Button Hover' ),
+				'name' => __( 'Single Button Hover' ,'social-warfare' ),
 				'content' => array(
-					'fullColor' 		=> __( 'Full Color' ),
-					'lightGray' 		=> __( 'Light Gray' ),
-					'mediumGray'		=> __( 'Medium Gray' ),
-					'darkGray' 			=> __( 'Dark Gray' ),
-					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
-					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
-					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
-					'colorOutlines' 	=> __( 'Color Outlines' ),
-					'customColor' 		=> __( 'Custom Color' ),
-					'ccOutlines' 		=> __( 'Custom Color Outlines' )
+					'fullColor' 		=> __( 'Full Color' ,'social-warfare' ),
+					'lightGray' 		=> __( 'Light Gray' ,'social-warfare' ),
+					'mediumGray'		=> __( 'Medium Gray' ,'social-warfare' ),
+					'darkGray' 			=> __( 'Dark Gray' ,'social-warfare' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ,'social-warfare' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ,'social-warfare' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ,'social-warfare' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ,'social-warfare' ),
+					'customColor' 		=> __( 'Custom Color' ,'social-warfare' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' ,'social-warfare' )
 				),
 				'default' => 'fullColor',
 				'premium'	=> true
@@ -398,19 +398,19 @@
 			'customColor' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-fourths',
-				'name'		=> __( 'Custom Color' ),
+				'name'		=> __( 'Custom Color' ,'social-warfare' ),
 				'default'	=> '#FFFFFF',
 				'premium'	=> true
 			),
 			'buttonFloat' 	=> array(
 				'type' 		=> 'select',
 				'size'		=> 'two-fourths',
-				'name' 		=> __( 'Button Alignment' ),
+				'name' 		=> __( 'Button Alignment' ,'social-warfare' ),
 				'content' 	=> array(
-					'fullWidth' => __( 'Full Width' ),
-					'left' 		=> __( 'Left' ),
-					'right'   	=> __( 'Right' ),
-					'center' 	=> __( 'Center' )
+					'fullWidth' => __( 'Full Width' ,'social-warfare' ),
+					'left' 		=> __( 'Left' ,'social-warfare' ),
+					'right'   	=> __( 'Right' ,'social-warfare' ),
+					'center' 	=> __( 'Center' ,'social-warfare' )
 				),
 				'default' 	=> 'fullWidth',
 				'dep' 		=> 'buttonSize',
@@ -424,40 +424,40 @@
 			),
 			'total_counts_title' => array(
 				'type'	=> 'title',
-				'content' => __( 'Total Counts' )
+				'content' => __( 'Total Counts' ,'social-warfare' )
 			),
 			'total_counts_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> __( 'Customize how the "Total Shares" section of your share buttons look.' )
+				'content' 	=> __( 'Customize how the "Total Shares" section of your share buttons look.' ,'social-warfare' )
 			),
 			'swDecimals' => array(
 				'type' => 'select',
-				'name' => __( 'Decimal Places' ),
+				'name' => __( 'Decimal Places' ,'social-warfare' ),
 				'size' => 'two-fourths',
 				'content' => array(
-					'0' => __( 'Zero' ),
-					'1' => __( 'One' ),
-					'2' => __( 'Two' )
+					'0' => __( 'Zero' ,'social-warfare' ),
+					'1' => __( 'One' ,'social-warfare' ),
+					'2' => __( 'Two' ,'social-warfare' )
 				),
 				'default' => '0'
 			 ),
 			'swp_decimal_separator' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Decimal Separator' ),
+				'name' => __( 'Decimal Separator' ,'social-warfare' ),
 				'content' => array(
-					'period' => __( 'Period' ),
-					'comma' => __( 'Comma' )
+					'period' => __( 'Period' ,'social-warfare' ),
+					'comma' => __( 'Comma' ,'social-warfare' )
 				),
 				'default' => 'period'
 			 ),
 			 'swTotesFormat' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Alignment' ),
+				'name' => __( 'Alignment' ,'social-warfare' ),
 				'content' => array(
-					'totesAlt'		=>	__( 'Right' ),
-					'totesAltLeft'	=>	__( 'Left' )
+					'totesAlt'		=>	__( 'Right' ,'social-warfare' ),
+					'totesAltLeft'	=>	__( 'Left' ,'social-warfare' )
 				),
 				'default' => 'totesAlt'
 			),
@@ -466,22 +466,22 @@
 			),
 			'float' => array(
 				'type'			=> 'checkbox',
-				'title' 		=> __( 'Floating Share Buttons' ),
-				'description' 	=> __( 'If you would like to activate floating share buttons, turn this on.' ),
+				'title' 		=> __( 'Floating Share Buttons' ,'social-warfare' ),
+				'description' 	=> __( 'If you would like to activate floating share buttons, turn this on.' ,'social-warfare' ),
 				'size'			=> 'four-fourths'
 			),
 			'total_floating_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> __( 'If you would like to activate floating share buttons, turn this on.' )
+				'content' 	=> __( 'If you would like to activate floating share buttons, turn this on.' ,'social-warfare' )
 			),
 			'floatOption' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Float Position' ),
+				'name' => __( 'Float Position' ,'social-warfare' ),
 				'content' => array(
-					'top' => __( 'Top of the Page' ),
-					'bottom' => __( 'Bottom of the Page' ),
-					'left' => __( 'On the left side of the page' )
+					'top' => __( 'Top of the Page' ,'social-warfare' ),
+					'bottom' => __( 'Bottom of the Page' ,'social-warfare' ),
+					'left' => __( 'On the left side of the page' ,'social-warfare' )
 				),
 				'default' => 'bottom',
 				'dep' 		=> 'float',
@@ -490,7 +490,7 @@
 			'swp_float_scr_sz' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
-				'name' => __( 'Minimum Screen Width' ),
+				'name' => __( 'Minimum Screen Width' ,'social-warfare' ),
 				'default' => '1100',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('left')
@@ -500,8 +500,8 @@
 				'size' => 'two-fourths',
 				'name' => __( 'Transition' ),
 				'content' => array(
-					'slide' 			=> __( 'Slide In / Slide Out' ),
-					'fade' 				=> __( 'Fade In / Fade Out' )
+					'slide' 			=> __( 'Slide In / Slide Out' ,'social-warfare' ),
+					'fade' 				=> __( 'Fade In / Fade Out' ,'social-warfare' )
 				),
 				'default' => 'slide',
 				'dep' 		=> 'floatOption',
@@ -509,11 +509,11 @@
 			),
 			'floatLeftMobile' => array(
 				'type' => 'select',
-				'name' => __( 'On Mobile' ),
+				'name' => __( 'On Mobile' ,'social-warfare' ),
 				'size' => 'two-fourths',
 				'content' => array(
-					'bottom' 	=> __( 'Bottom of Screen' ),
-					'off' 		=> __( 'Off' )
+					'bottom' 	=> __( 'Bottom of Screen' ,'social-warfare' ),
+					'off' 		=> __( 'Off' ,'social-warfare' )
 				),
 				'default' => 'bottom',
 				'dep' 		=> 'floatOption',
@@ -522,11 +522,11 @@
 			),
 			'floatStyle' => array(
 				'type' => 'select',
-				'name' => __( 'Button Shape' ),
+				'name' => __( 'Button Shape' ,'social-warfare' ),
 				'size' => 'two-fourths',
 				'content' => array(
-					'default' => __( 'Buttons' ),
-					'boxed' => __( 'Boxes' )
+					'default' => __( 'Buttons' ,'social-warfare' ),
+					'boxed' => __( 'Boxes' ,'social-warfare' )
 				),
 				'default' => 'boxed',
 				'dep' 		=> 'floatOption',
@@ -536,7 +536,7 @@
 			'floatStyleSource' => array(
 				'type' => 'checkbox',
 				'size' => 'two-fourths',
-				'content' => __( 'Inherit Visual Options' ),
+				'content' => __( 'Inherit Visual Options' ,'social-warfare' ),
 				'default' => '1',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('left'),
@@ -545,18 +545,18 @@
 			'sideDColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Default Color Set' ),
+				'name' => __( 'Default Color Set' ,'social-warfare' ),
 				'content' => array(
-					'fullColor' 		=> __( 'Full Color' ),
-					'lightGray' 		=> __( 'Light Gray' ),
-					'mediumGray'		=> __( 'Medium Gray' ),
-					'darkGray' 			=> __( 'Dark Gray' ),
-					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
-					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
-					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
-					'colorOutlines' 	=> __( 'Color Outlines' ),
-					'customColor' 		=> __( 'Custom Color' ),
-					'ccOutlines' 		=> __( 'Custom Color Outlines' )
+					'fullColor' 		=> __( 'Full Color' ,'social-warfare' ),
+					'lightGray' 		=> __( 'Light Gray' ,'social-warfare' ),
+					'mediumGray'		=> __( 'Medium Gray' ,'social-warfare' ),
+					'darkGray' 			=> __( 'Dark Gray' ,'social-warfare' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ,'social-warfare' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ,'social-warfare' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ,'social-warfare' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ,'social-warfare' ),
+					'customColor' 		=> __( 'Custom Color' ,'social-warfare' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' ,'social-warfare' )
 				),
 				'default' => 'fullColor',
 				'dep' 		=> 'floatStyleSource',
@@ -565,18 +565,18 @@
 			'sideOColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Hover Color Set' ),
+				'name' => __( 'Hover Color Set' ,'social-warfare' ),
 				'content' => array(
-					'fullColor' 		=> __( 'Full Color' ),
-					'lightGray' 		=> __( 'Light Gray' ),
-					'mediumGray'		=> __( 'Medium Gray' ),
-					'darkGray' 			=> __( 'Dark Gray' ),
-					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
-					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
-					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
-					'colorOutlines' 	=> __( 'Color Outlines' ),
-					'customColor' 		=> __( 'Custom Color' ),
-					'ccOutlines' 		=> __( 'Custom Color Outlines' )
+					'fullColor' 		=> __( 'Full Color' ,'social-warfare' ),
+					'lightGray' 		=> __( 'Light Gray' ,'social-warfare' ),
+					'mediumGray'		=> __( 'Medium Gray' ,'social-warfare' ),
+					'darkGray' 			=> __( 'Dark Gray' ,'social-warfare' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ,'social-warfare' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ,'social-warfare' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ,'social-warfare' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ,'social-warfare' ),
+					'customColor' 		=> __( 'Custom Color' ,'social-warfare' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' ,'social-warfare' )
 				),
 				'default' => 'fullColor',
 				'dep' 		=> 'floatStyleSource',
@@ -585,18 +585,18 @@
 			'sideIColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => __( 'Single Button Hover' ),
+				'name' => __( 'Single Button Hover' ,'social-warfare' ),
 				'content' => array(
-					'fullColor' 		=> __( 'Full Color' ),
-					'lightGray' 		=> __( 'Light Gray' ),
-					'mediumGray'		=> __( 'Medium Gray' ),
-					'darkGray' 			=> __( 'Dark Gray' ),
-					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
-					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
-					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
-					'colorOutlines' 	=> __( 'Color Outlines' ),
-					'customColor' 		=> __( 'Custom Color' ),
-					'ccOutlines' 		=> __( 'Custom Color Outlines' )
+					'fullColor' 		=> __( 'Full Color' ,'social-warfare' ),
+					'lightGray' 		=> __( 'Light Gray' ,'social-warfare' ),
+					'mediumGray'		=> __( 'Medium Gray' ,'social-warfare' ),
+					'darkGray' 			=> __( 'Dark Gray' ,'social-warfare' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ,'social-warfare' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ,'social-warfare' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ,'social-warfare' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ,'social-warfare' ),
+					'customColor' 		=> __( 'Custom Color' ,'social-warfare' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' ,'social-warfare' )
 				),
 				'default' => 'fullColor',
 				'dep' 		=> 'floatStyleSource',
@@ -605,7 +605,7 @@
 			'floatBgColor' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
-				'name' => __( 'Background Color' ),
+				'name' => __( 'Background Color' ,'social-warfare' ),
 				'default' => '#ffffff',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('top','bottom')
@@ -615,26 +615,26 @@
 			),
 			'click_to_tweet_title' => array(
 				'type' => 'title',
-				'content' => __( 'Click-to-Tweet Style' ),
+				'content' => __( 'Click-to-Tweet Style' ,'social-warfare' ),
 				'premium' => true
 			),
 			'click_to_tweet_description' => array(
 				'type' => 'paragraph',
-				'content' => __( 'Select the default visual style for Click-to-Tweets on your site.' ),
+				'content' => __( 'Select the default visual style for Click-to-Tweets on your site.' ,'social-warfare' ),
 				'premium' => true
 			),
 			'cttTheme' => array(
 				'type' => 'select',
 				'size' => 'two-thirds',
-				'name' => __( 'Visual Theme' ),
+				'name' => __( 'Visual Theme' ,'social-warfare' ),
 				'content' => array(
-					'style1' => __( 'Send Her My Love' ),
-					'style2' => __( 'Roll With The Changes' ),
-					'style3' => __( 'Free Bird' ),
-					'style4' => __( 'Don\'t Stop Believin\'' ),
-					'style5' => __( 'Thunderstruck' ),
-					'style6' => __( 'Livin\' On A Prayer' ),
-					'none' => __( 'None - Create Your Own CSS In Your Theme' )
+					'style1' => __( 'Send Her My Love' ,'social-warfare' ),
+					'style2' => __( 'Roll With The Changes' ,'social-warfare' ),
+					'style3' => __( 'Free Bird' ,'social-warfare' ),
+					'style4' => __( 'Don\'t Stop Believin\'' ,'social-warfare' ),
+					'style5' => __( 'Thunderstruck' ,'social-warfare' ),
+					'style6' => __( 'Livin\' On A Prayer' ,'social-warfare' ),
+					'none' => __( 'None - Create Your Own CSS In Your Theme' ,'social-warfare' )
 				),
 				'default' => 'style1',
 				'premium'	=> true
