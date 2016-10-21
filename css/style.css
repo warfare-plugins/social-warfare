@@ -990,9 +990,10 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer i.sw {
 	font-size: 27px;
 	height: 40px;
+	margin: 0;
 	padding-top: 10px;
 	text-align: center;
-	width: 60px;
+	width: 100%;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) span.swp_share {
@@ -1070,6 +1071,11 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide .nc_tweetContainer:not(.totes):hover .iconFiller,
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .spaceManWilly {
 	width: 72px;
+}
+
+.nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes):hover .iconFiller,
+.nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) .spaceManWilly {
+	width: 100%;
 }
 
 .nc_socialPanelSide .nc_tweetContainer.totes {
