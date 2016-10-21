@@ -634,7 +634,7 @@
 					'style4' => __( 'Don\'t Stop Believin\'' ,'social-warfare' ),
 					'style5' => __( 'Thunderstruck' ,'social-warfare' ),
 					'style6' => __( 'Livin\' On A Prayer' ,'social-warfare' ),
-					'none' => __( 'None - Create Your Own CSS In Your Theme' ,'social-warfare' )
+					'none' => __( 'None - Create Your Own CSS In Your Theme' , 'social-warfare' )
 				),
 				'default' => 'style1',
 				'premium'	=> true
@@ -662,36 +662,36 @@
 	function swp_options_social_identity($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$swp_options['tabs']['links']['swp_social_identity'] = 'Social Identity';
+		$swp_options['tabs']['links']['swp_social_identity'] = __( 'Social Identity' , 'social-warfare' );
 
 		$swp_options['options']['swp_social_identity'] = array(
 			'social_identity_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> 'Sitewide Identity'
+				'content' 	=> __( 'Sitewide Identity' , 'social-warfare' )
 			),
 			'social_identity_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> 'If you would like to set sitewide defaults for your social identity, add them below.'
+				'content' 	=> __( 'If you would like to set sitewide defaults for your social identity, add them below.' , 'social-warfare' )
 			),
 			'twitterID' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'Twitter Username'
+				'name'		=> __( 'Twitter Username' , 'social-warfare' )
 			),
 			'pinterestID' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'Pinterest Username'
+				'name'		=> __( 'Pinterest Username' , 'social-warfare' )
 			),
 			'facebookPublisherUrl' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'Facebook Page URL'
+				'name'		=> __( 'Facebook Page URL'  , 'social-warfare' )
 			),
 			'facebookAppID' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'Facebook App ID'
+				'name'		=> __( 'Facebook App ID' , 'social-warfare' )
 			),
 			'social_identity_divider' => array(
 				'type'		=> 'divider'
