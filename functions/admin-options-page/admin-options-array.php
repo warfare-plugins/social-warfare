@@ -737,21 +737,21 @@
 	function swp_options_advanced($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$swp_options['tabs']['links']['swp_advanced'] = 'Advanced';
+		$swp_options['tabs']['links']['swp_advanced'] = __( 'Advanced' , 'social-warfare' );
 
 		$swp_options['options']['swp_advanced'] = array(
 			'sniplyBuster' => array(
 				'type'			=> 'checkbox',
-				'title' 		=> 'Frame Buster',
-				'description' 	=> 'If you want to stop content pirates from framing your content, turn this on.',
+				'title' 		=> __( 'Frame Buster' , 'social-warfare' ),
+				'description' 	=> __( 'If you want to stop content pirates from framing your content, turn this on.' , 'social-warfare' ),
 				'size'			=> 'two-thirds-advanced',
 				'default'		=> true,
 				'divider'		=> true
 			),
 			'linkShortening' => array(
 				'type'			=> 'checkbox',
-				'title' 		=> 'Bitly Link Shortening',
-				'description' 	=> 'If you like to have all of your links automatically shortened, turn this on.',
+				'title' 		=> __( 'Bitly Link Shortening' , 'social-warfare' ),
+				'description' 	=> __( 'If you like to have all of your links automatically shortened, turn this on.' , 'social-warfare' ),
 				'size'			=> 'two-thirds-advanced',
 				'default'		=> false,
 				'premium'		=> true
@@ -759,31 +759,31 @@
 			'bitly_authentication' => array(
 				'type'		=> 'authentication',
 				'link'		=> 'https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state='.admin_url( 'admin-ajax.php' ).'&redirect_uri=https://warfareplugins.com/bitly_oauth.php',
-				'name'		=> 'Connect Your Bitly Account',
+				'name'		=> __( 'Connect Your Bitly Account' , 'social-warfare' ),
 				'divider'	=> true,
 				'dependant'	=> 'bitly_access_token',
 				'premium'	=> true
 			),
 			'analytics_title'	=> array(
 				'type'		=> 'title',
-				'content'	=> 'Analytics Tracking',
+				'content'	=> __( 'Analytics Tracking' , 'social-warfare' ),
 				'premium'	=> true
 			),
 			'analtycis_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If you want to activate UTM tracking for shared URL, turn this on.',
+				'content'	=> __( 'If you want to activate UTM tracking for shared URL, turn this on.' , 'social-warfare' ),
 				'premium'	=> true
 			),
 			'swp_click_tracking' => array(
 				'type'			=> 'checkbox',
-				'content' 		=> 'Button Click Tracking',
+				'content' 		=> __( 'Button Click Tracking' , 'social-warfare' ),
 				'size'			=> 'two-thirds',
 				'default'		=> false,
 				'premium'		=> true
 			),
 			'googleAnalytics' => array(
 				'type'			=> 'checkbox',
-				'content' 		=> 'UTM Link Tracking',
+				'content' 		=> __( 'UTM Link Tracking' , 'social-warfare' ),
 				'size'			=> 'two-thirds',
 				'default'		=> false,
 				'premium'		=> true
@@ -791,7 +791,7 @@
 			'analyticsMedium' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'UTM Medium',
+				'name'		=> __( 'UTM Medium' , 'social-warfare' ),
 				'default'	=> 'Social',
 				'dep'		=> 'googleAnalytics',
 				'dep_val'	=> array(true),
@@ -800,7 +800,7 @@
 			'analyticsCampaign' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'UTM Campaign',
+				'name'		=> __( 'UTM Campaign' , 'social-warfare' ),
 				'divider' 	=> true,
 				'default'	=> 'SocialWarfare',
 				'dep'		=> 'googleAnalytics',
@@ -809,33 +809,33 @@
 			),
 			'share_recovery_title' => array(
 				'type'		=> 'title',
-				'content'	=> 'Share Recovery',
+				'content'	=> __( 'Share Recovery' , 'social-warfare' ),
 				'premium'	=> true
 			),
 			'share_recovery_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them. See <a target="_blank" href="https://warfareplugins.com/support/recover-social-share-counts-after-changing-permalink-settings/">this guide</a> for more detailed instructions on how to use this feature.',
+				'content'	=> __( 'If at any point you have changed permalink structures or have gone from http to https (SSL) then you will have undoubtedly lost all of your share counts. This tool allows you to recover them. See <a target="_blank" href="https://warfareplugins.com/support/recover-social-share-counts-after-changing-permalink-settings/">this guide</a> for more detailed instructions on how to use this feature.' , 'social-warfare' ),
 				'premium'	=> true
 			),
 			'recover_shares' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> 'Activate Share Recovery',
+				'content'	=> __( 'Activate Share Recovery' , 'social-warfare' ),
 				'default'	=> false,
 				'premium'	=> true
 			),
 			'recovery_format' 	=> array(
 				'type' 				=> 'select',
-				'name' 				=> 'Previous URL Format',
+				'name' 				=> __( 'Previous URL Format' , 'social-warfare' ),
 				'size'				=> 'two-thirds',
 				'content' 			=> array(
-					'unchanged'			=> 'Unchanged',
-					'default' 			=> 'Plain',
-					'day_and_name' 		=> 'Day and Name',
-					'month_and_name' 	=> 'Month and Name',
-					'numeric' 			=> 'Numeric',
-					'post_name' 		=> 'Post Name',
-					'custom'			=> 'Custom'
+					'unchanged'			=> __( 'Unchanged' , 'social-warfare' ),
+					'default' 			=> __( 'Plain' , 'social-warfare' ),
+					'day_and_name' 		=> __( 'Day and Name' , 'social-warfare' ),
+					'month_and_name' 	=> __( 'Month and Name' , 'social-warfare' ),
+					'numeric' 			=> __( 'Numeric' , 'social-warfare' ),
+					'post_name' 		=> __( 'Post Name' , 'social-warfare' ),
+					'custom'			=> __( 'Custom' , 'social-warfare' )
 				),
 				'default' 			=> 'unchanged',
 				'dep'				=> 'recover_shares',
@@ -845,7 +845,7 @@
 			'recovery_custom_format' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'		=> 'Custom Permalink Format',
+				'name'		=> __( 'Custom Permalink Format' , 'social-warfare' ),
 				'dep'				=> 'recover_shares',
 				'dep_val'			=> array(true),
 				'premium'	=> true
@@ -853,11 +853,11 @@
 			'recovery_protocol'	=> array(
 				'type'				=> 'select',
 				'size'				=> 'two-thirds',
-				'name'				=> 'Previous Connection Protocol',
+				'name'				=> __( 'Previous Connection Protocol' , 'social-warfare' ),
 				'content'			=> array(
-					'unchanged'			=> 'Unchanged',
-					'http'				=> 'http',
-					'https'				=> 'https'
+					'unchanged'			=> __( 'Unchanged' , 'social-warfare' ),
+					'http'				=> __( 'http' , 'social-warfare' ),
+					'https'				=> __( 'https' , 'social-warfare' )
 				),
 				'default'			=> 'unchanged',
 				'dep'				=> 'recover_shares',
@@ -867,11 +867,11 @@
 			'recovery_prefix'	=> array(
 				'type'				=> 'select',
 				'size'				=> 'two-thirds',
-				'name'				=> 'Previous Domain Prefix',
+				'name'				=> __( 'Previous Domain Prefix' , 'social-warfare' ),
 				'content'			=> array(
-					'unchanged'			=> 'Unchanged',
-					'www'				=> 'www',
-					'nonwww'			=> 'non-www'
+					'unchanged'			=> __( 'Unchanged' , 'social-warfare' ),
+					'www'				=> __( 'www' , 'social-warfare' ),
+					'nonwww'			=> __( 'non-www' , 'social-warfare' )
 				),
 				'default'			=> 'unchanged',
 				'dep'				=> 'recover_shares',
@@ -881,7 +881,7 @@
 			'recovery_subdomain' => array(
 				'type' 		=> 'input',
 				'size'		=> 'two-thirds',
-				'name' 		=> 'Subdomain',
+				'name' 		=> __( 'Subdomain' , 'social-warfare' ),
 				'default' 	=> '',
 				'divider'	=> false,
 				'dep'		=> 'recover_shares',
@@ -890,7 +890,7 @@
 			),
 			'cross_domain_recovery_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If you\'ve migrated your website from one domain to another, fill in these two fields to activate cross-domain share recovery.',
+				'content'	=> __( 'If you\'ve migrated your website from one domain to another, fill in these two fields to activate cross-domain share recovery.' , 'social-warfare' ),
 				'premium'	=> true,
 				'dep'		=> 'recover_shares',
 				'dep_val'	=> array(true)
@@ -898,7 +898,7 @@
 			'former_domain' => array(
 				'type' 		=> 'input',
 				'size'		=> 'two-thirds',
-				'name' 		=> 'Former Domain',
+				'name' 		=> __( 'Former Domain' , 'social-warfare' ),
 				'default' 	=> '',
 				'divider'	=> false,
 				'dep'		=> 'recover_shares',
@@ -908,7 +908,7 @@
 			'current_domain' => array(
 				'type' 		=> 'input',
 				'size'		=> 'two-thirds',
-				'name' 		=> 'Current Domain',
+				'name' 		=> __( 'Current Domain' , 'social-warfare' ),
 				'default' 	=> '',
 				'divider'	=> true,
 				'dep'		=> 'recover_shares',
@@ -917,19 +917,19 @@
 			),
 			'caching_method_title' => array(
 				'type'		=> 'title',
-				'content'	=> 'Caching Method'
+				'content'	=> __( 'Caching Method' , 'social-warfare' )
 			),
 			'caching_method_description' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'If you have advanced knowledge of caching configurations, you may want to choose your own below.'
+				'content'	=> __( 'If you have advanced knowledge of caching configurations, you may want to choose your own below.' , 'social-warfare' )
 			),
 			'cacheMethod'		=> array(
 				'type'				=> 'select',
 				'size'				=> 'two-thirds',
-				'name'				=> 'Cache Rebuild Method',
+				'name'				=> __( 'Cache Rebuild Method' , 'social-warfare' ),
 				'content'			=> array(
-					'advanced'			=> 'Advanced Cache Triggering',
-					'legacy'			=> 'Legacy Cache Rebuilding during Page Loads'
+					'advanced'			=> __( 'Advanced Cache Triggering' , 'social-warfare' ),
+					'legacy'			=> __( 'Legacy Cache Rebuilding during Page Loads' , 'social-warfare' )
 				),
 				'default'			=> 'advanced'
 			)
