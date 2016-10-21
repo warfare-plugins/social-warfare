@@ -948,7 +948,7 @@
 	function swp_options_registration($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$swp_options['tabs']['links']['swp_registration'] = 'Registration';
+		$swp_options['tabs']['links']['swp_registration'] = __( 'Registration' , 'social-warfare' );
 
 		$swp_options['options']['swp_registration'] = array(
 			'plugin_registration' => array(
