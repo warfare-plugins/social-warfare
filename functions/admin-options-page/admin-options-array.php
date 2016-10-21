@@ -287,30 +287,30 @@
 	function swp_options_styles($swp_options) {
 
 		// Declare the Display Settings tab and tab name
-		$swp_options['tabs']['links']['swp_styles'] = 'Styles';
+		$swp_options['tabs']['links']['swp_styles'] = __( 'Styles' );
 
 		$swp_options['options']['swp_styles'] = array(
 			'visual_options_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> 'Visual Options',
+				'content' 	=> __( 'Visual Options' ),
 				'premium'	=> true
 			),
 			'visual_options_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> 'Use the settings below to customize the look of your share buttons.',
+				'content' 	=> __( 'Use the settings below to customize the look of your share buttons.' ),
 				'premium'	=> true
 			),
 			'visualTheme' => array(
 				'type'		=> 'select',
 				'size'		=> 'two-fourths',
-				'name'		=> 'Button Shape',
+				'name'		=> __( 'Button Shape' ),
 				'content'	=> array(
-					'flatFresh' 	=> 'Flat & Fresh',
-					'leaf' 			=> 'A Leaf on the Wind',
-					'shift' 		=> 'Shift',
-					'pill' 			=> 'Pills',
-					'threeDee' 		=> 'Three-Dee',
-					'connected' 	=> 'Connected'
+					'flatFresh' 	=> __( 'Flat & Fresh' ),
+					'leaf' 			=> __( 'A Leaf on the Wind' ),
+					'shift' 		=> __( 'Shift' ),
+					'pill' 			=> __( 'Pills' ),
+					'threeDee' 		=> __( 'Three-Dee' ),
+					'connected' 	=> __( 'Connected' )
 				),
 				'default' => 'flatFresh',
 				'premium'	=> true
@@ -318,16 +318,16 @@
 			'buttonSize' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Button Size',
+				'name' => __( 'Button Size' ),
 				'content' => array(
-					'1.4' => '140%',
-					'1.3' => '130%',
-					'1.2' => '120%',
-					'1.1' => '110%',
-					'1'   => '100%',
-					'0.9' => '90%',
-					'0.8' => '80%',
-					'0.7' => '70%'
+					'1.4' => __( '140%' ),
+					'1.3' => __( '130%' ),
+					'1.2' => __( '120%' ),
+					'1.1' => __( '110%' ),
+					'1'   => __( '100%' ),
+					'0.9' => __( '90%' ),
+					'0.8' => __( '80%' ),
+					'0.7' => __( '70%' )
 				),
 				'default' => '1',
 				'premium'	=> true
@@ -335,18 +335,18 @@
 			'dColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Default Color Set',
+				'name' => __( 'Default Color Set' ),
 				'content' => array(
-					'fullColor' 		=> 'Full Color',
-					'lightGray' 		=> 'Light Gray',
-					'mediumGray'		=> 'Medium Gray',
-					'darkGray' 			=> 'Dark Gray',
-					'lgOutlines' 		=> 'Light Gray Outlines',
-					'mdOutlines'		=> 'Medium Gray Outlines',
-					'dgOutlines' 		=> 'Dark Gray Outlines',
-					'colorOutlines' 	=> 'Color Outlines',
-					'customColor' 		=> 'Custom Color',
-					'ccOutlines' 		=> 'Custom Color Outlines'
+					'fullColor' 		=> __( 'Full Color' ),
+					'lightGray' 		=> __( 'Light Gray' ),
+					'mediumGray'		=> __( 'Medium Gray' ),
+					'darkGray' 			=> __( 'Dark Gray' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ),
+					'customColor' 		=> __( 'Custom Color' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' )
 				),
 				'default' => 'fullColor',
 				'premium'	=> true
@@ -354,18 +354,18 @@
 			'oColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Hover Color Set',
+				'name' => __( 'Hover Color Set' ),
 				'content' => array(
-					'fullColor' 		=> 'Full Color',
-					'lightGray' 		=> 'Light Gray',
-					'mediumGray'		=> 'Medium Gray',
-					'darkGray' 			=> 'Dark Gray',
-					'lgOutlines' 		=> 'Light Gray Outlines',
-					'mdOutlines'		=> 'Medium Gray Outlines',
-					'dgOutlines' 		=> 'Dark Gray Outlines',
-					'colorOutlines' 	=> 'Color Outlines',
-					'customColor' 		=> 'Custom Color',
-					'ccOutlines' 		=> 'Custom Color Outlines'
+					'fullColor' 		=> __( 'Full Color' ),
+					'lightGray' 		=> __( 'Light Gray' ),
+					'mediumGray'		=> __( 'Medium Gray' ),
+					'darkGray' 			=> __( 'Dark Gray' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ),
+					'customColor' 		=> __( 'Custom Color' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' )
 				),
 				'default' => 'fullColor',
 				'premium'	=> true
@@ -373,18 +373,18 @@
 			'iColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Single Button Hover',
+				'name' => __( 'Single Button Hover' ),
 				'content' => array(
-					'fullColor' 		=> 'Full Color',
-					'lightGray' 		=> 'Light Gray',
-					'mediumGray'		=> 'Medium Gray',
-					'darkGray' 			=> 'Dark Gray',
-					'lgOutlines' 		=> 'Light Gray Outlines',
-					'mdOutlines'		=> 'Medium Gray Outlines',
-					'dgOutlines' 		=> 'Dark Gray Outlines',
-					'colorOutlines' 	=> 'Color Outlines',
-					'customColor' 		=> 'Custom Color',
-					'ccOutlines' 		=> 'Custom Color Outlines'
+					'fullColor' 		=> __( 'Full Color' ),
+					'lightGray' 		=> __( 'Light Gray' ),
+					'mediumGray'		=> __( 'Medium Gray' ),
+					'darkGray' 			=> __( 'Dark Gray' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ),
+					'customColor' 		=> __( 'Custom Color' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' )
 				),
 				'default' => 'fullColor',
 				'premium'	=> true
@@ -398,19 +398,19 @@
 			'customColor' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-fourths',
-				'name'		=> 'Custom Color',
+				'name'		=> __( 'Custom Color' ),
 				'default'	=> '#FFFFFF',
 				'premium'	=> true
 			),
 			'buttonFloat' 	=> array(
 				'type' 		=> 'select',
 				'size'		=> 'two-fourths',
-				'name' 		=> 'Button Alignment',
+				'name' 		=> __( 'Button Alignment' ),
 				'content' 	=> array(
-					'fullWidth' => 'Full Width',
-					'left' 		=> 'Left',
-					'right'   	=> 'Right',
-					'center' 	=> 'Center'
+					'fullWidth' => __( 'Full Width' ),
+					'left' 		=> __( 'Left' ),
+					'right'   	=> __( 'Right' ),
+					'center' 	=> __( 'Center' )
 				),
 				'default' 	=> 'fullWidth',
 				'dep' 		=> 'buttonSize',
@@ -420,44 +420,44 @@
 			'buttons_preview' => array(
 				'type' => 'html',
 				'divider' => true,
-				'content' => '<div class="nc_socialPanel swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> +1</span></span></span><span class="swp_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="swp_share"> Tweet</span></span></span><span class="swp_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pinterest"></i><span class="swp_share"> Pin</span></span></span><span class="swp_count">104</span></a></div><div class="nc_tweetContainer swp_fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="swp_share"> Share</span></span></span><span class="swp_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="swp_share"> Share</span></span></span><span class="swp_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="swp_count"><span class="swp_label">Shares</span> 1.8K</span></div></div>'
+				'content' => '<div class="nc_socialPanel swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth"><div class="nc_tweetContainer googlePlus" data-id="2"><a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span></span></span><span class="swp_count">1.2K</span></a></div><div class="nc_tweetContainer twitter" data-id="3"><a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="swp_share"> ' . __( 'Tweet','social-warfare' ) . '</span></span></span><span class="swp_count">280</span></a></div><div class="nc_tweetContainer nc_pinterest" data-id="6"><a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pinterest"></i><span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span></span></span><span class="swp_count">104</span></a></div><div class="nc_tweetContainer swp_fb" data-id="4"><a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-facebook"></i><span class="swp_share"> ' . __( 'Share','social-warfare' ) . '</span></span></span><span class="swp_count">157</span></a></div><div class="nc_tweetContainer linkedIn" data-id="5"><a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-linkedin"></i><span class="swp_share"> ' . __( 'Share','social-warfare' ) . '</span></span></span><span class="swp_count">51</span></a></div><div class="nc_tweetContainer totes totesalt" data-id="6" ><span class="swp_count"><span class="swp_label">Shares</span> 1.8K</span></div></div>'
 			),
 			'total_counts_title' => array(
 				'type'	=> 'title',
-				'content' => 'Total Counts'
+				'content' => __( 'Total Counts' )
 			),
 			'total_counts_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> 'Customize how the "Total Shares" section of your share buttons look.'
+				'content' 	=> __( 'Customize how the "Total Shares" section of your share buttons look.' )
 			),
 			'swDecimals' => array(
 				'type' => 'select',
-				'name' => 'Decimal Places',
+				'name' => __( 'Decimal Places' ),
 				'size' => 'two-fourths',
 				'content' => array(
-					'0' => 'Zero',
-					'1' => 'One',
-					'2' => 'Two'
+					'0' => __( 'Zero' ),
+					'1' => __( 'One' ),
+					'2' => __( 'Two' )
 				),
 				'default' => '0'
 			 ),
 			'swp_decimal_separator' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Decimal Separator',
+				'name' => __( 'Decimal Separator' ),
 				'content' => array(
-					'period' => 'Period',
-					'comma' => 'Comma'
+					'period' => __( 'Period' ),
+					'comma' => __( 'Comma' )
 				),
 				'default' => 'period'
 			 ),
 			 'swTotesFormat' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Alignment',
+				'name' => __( 'Alignment' ),
 				'content' => array(
-					'totesAlt'		=>	'Right',
-					'totesAltLeft'	=>	'Left'
+					'totesAlt'		=>	__( 'Right' ),
+					'totesAltLeft'	=>	__( 'Left' )
 				),
 				'default' => 'totesAlt'
 			),
@@ -466,22 +466,22 @@
 			),
 			'float' => array(
 				'type'			=> 'checkbox',
-				'title' 		=> 'Floating Share Buttons',
-				'description' 	=> 'If you would like to activate floating share buttons, turn this on.',
+				'title' 		=> __( 'Floating Share Buttons' ),
+				'description' 	=> __( 'If you would like to activate floating share buttons, turn this on.' ),
 				'size'			=> 'four-fourths'
 			),
 			'total_floating_description' => array(
 				'type' 		=> 'paragraph',
-				'content' 	=> 'If you would like to activate floating share buttons, turn this on.'
+				'content' 	=> __( 'If you would like to activate floating share buttons, turn this on.' )
 			),
 			'floatOption' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Float Position',
+				'name' => __( 'Float Position' ),
 				'content' => array(
-					'top' => 'Top of the Page',
-					'bottom' => 'Bottom of the Page',
-					'left' => 'On the left side of the page'
+					'top' => __( 'Top of the Page' ),
+					'bottom' => __( 'Bottom of the Page' ),
+					'left' => __( 'On the left side of the page' )
 				),
 				'default' => 'bottom',
 				'dep' 		=> 'float',
@@ -490,7 +490,7 @@
 			'swp_float_scr_sz' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
-				'name' => 'Minimum Screen Width',
+				'name' => __( 'Minimum Screen Width' ),
 				'default' => '1100',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('left')
@@ -498,10 +498,10 @@
 			'sideReveal' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Transition',
+				'name' => __( 'Transition' ),
 				'content' => array(
-					'slide' 			=> 'Slide In / Slide Out',
-					'fade' 				=> 'Fade In / Fade Out'
+					'slide' 			=> __( 'Slide In / Slide Out' ),
+					'fade' 				=> __( 'Fade In / Fade Out' )
 				),
 				'default' => 'slide',
 				'dep' 		=> 'floatOption',
@@ -509,11 +509,11 @@
 			),
 			'floatLeftMobile' => array(
 				'type' => 'select',
-				'name' => 'On Mobile',
+				'name' => __( 'On Mobile' ),
 				'size' => 'two-fourths',
 				'content' => array(
-					'bottom' 	=> 'Bottom of Screen',
-					'off' 		=> 'Off'
+					'bottom' 	=> __( 'Bottom of Screen' ),
+					'off' 		=> __( 'Off' )
 				),
 				'default' => 'bottom',
 				'dep' 		=> 'floatOption',
@@ -522,11 +522,11 @@
 			),
 			'floatStyle' => array(
 				'type' => 'select',
-				'name' => 'Button Shape',
+				'name' => __( 'Button Shape' ),
 				'size' => 'two-fourths',
 				'content' => array(
-					'default' => 'Buttons',
-					'boxed' => 'Boxes'
+					'default' => __( 'Buttons' ),
+					'boxed' => __( 'Boxes' )
 				),
 				'default' => 'boxed',
 				'dep' 		=> 'floatOption',
@@ -536,7 +536,7 @@
 			'floatStyleSource' => array(
 				'type' => 'checkbox',
 				'size' => 'two-fourths',
-				'content' => 'Inherit Visual Options',
+				'content' => __( 'Inherit Visual Options' ),
 				'default' => '1',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('left'),
@@ -545,18 +545,18 @@
 			'sideDColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Default Color Set',
+				'name' => __( 'Default Color Set' ),
 				'content' => array(
-					'fullColor' 		=> 'Full Color',
-					'lightGray' 		=> 'Light Gray',
-					'mediumGray'		=> 'Medium Gray',
-					'darkGray' 			=> 'Dark Gray',
-					'lgOutlines' 		=> 'Light Gray Outlines',
-					'mdOutlines'		=> 'Medium Gray Outlines',
-					'dgOutlines' 		=> 'Dark Gray Outlines',
-					'colorOutlines' 	=> 'Color Outlines',
-					'customColor' 		=> 'Custom Color',
-					'ccOutlines' 		=> 'Custom Color Outlines'
+					'fullColor' 		=> __( 'Full Color' ),
+					'lightGray' 		=> __( 'Light Gray' ),
+					'mediumGray'		=> __( 'Medium Gray' ),
+					'darkGray' 			=> __( 'Dark Gray' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ),
+					'customColor' 		=> __( 'Custom Color' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' )
 				),
 				'default' => 'fullColor',
 				'dep' 		=> 'floatStyleSource',
@@ -565,18 +565,18 @@
 			'sideOColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Hover Color Set',
+				'name' => __( 'Hover Color Set' ),
 				'content' => array(
-					'fullColor' 		=> 'Full Color',
-					'lightGray' 		=> 'Light Gray',
-					'mediumGray'		=> 'Medium Gray',
-					'darkGray' 			=> 'Dark Gray',
-					'lgOutlines' 		=> 'Light Gray Outlines',
-					'mdOutlines'		=> 'Medium Gray Outlines',
-					'dgOutlines' 		=> 'Dark Gray Outlines',
-					'colorOutlines' 	=> 'Color Outlines',
-					'customColor' 		=> 'Custom Color',
-					'ccOutlines' 		=> 'Custom Color Outlines'
+					'fullColor' 		=> __( 'Full Color' ),
+					'lightGray' 		=> __( 'Light Gray' ),
+					'mediumGray'		=> __( 'Medium Gray' ),
+					'darkGray' 			=> __( 'Dark Gray' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ),
+					'customColor' 		=> __( 'Custom Color' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' )
 				),
 				'default' => 'fullColor',
 				'dep' 		=> 'floatStyleSource',
@@ -585,18 +585,18 @@
 			'sideIColorSet' => array(
 				'type' => 'select',
 				'size' => 'two-fourths',
-				'name' => 'Single Button Hover',
+				'name' => __( 'Single Button Hover' ),
 				'content' => array(
-					'fullColor' 		=> 'Full Color',
-					'lightGray' 		=> 'Light Gray',
-					'mediumGray'		=> 'Medium Gray',
-					'darkGray' 			=> 'Dark Gray',
-					'lgOutlines' 		=> 'Light Gray Outlines',
-					'mdOutlines'		=> 'Medium Gray Outlines',
-					'dgOutlines' 		=> 'Dark Gray Outlines',
-					'colorOutlines' 	=> 'Color Outlines',
-					'customColor' 		=> 'Custom Color',
-					'ccOutlines' 		=> 'Custom Color Outlines'
+					'fullColor' 		=> __( 'Full Color' ),
+					'lightGray' 		=> __( 'Light Gray' ),
+					'mediumGray'		=> __( 'Medium Gray' ),
+					'darkGray' 			=> __( 'Dark Gray' ),
+					'lgOutlines' 		=> __( 'Light Gray Outlines' ),
+					'mdOutlines'		=> __( 'Medium Gray Outlines' ),
+					'dgOutlines' 		=> __( 'Dark Gray Outlines' ),
+					'colorOutlines' 	=> __( 'Color Outlines' ),
+					'customColor' 		=> __( 'Custom Color' ),
+					'ccOutlines' 		=> __( 'Custom Color Outlines' )
 				),
 				'default' => 'fullColor',
 				'dep' 		=> 'floatStyleSource',
@@ -605,7 +605,7 @@
 			'floatBgColor' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',
-				'name' => 'Background Color',
+				'name' => __( 'Background Color' ),
 				'default' => '#ffffff',
 				'dep' 		=> 'floatOption',
 				'dep_val'	=> array('top','bottom')
@@ -615,26 +615,27 @@
 			),
 			'click_to_tweet_title' => array(
 				'type' => 'title',
-				'content' => 'Click-to-Tweet Style',
+				'content' => __( 'Click-to-Tweet Style' ),
 				'premium' => true
 			),
 			'click_to_tweet_description' => array(
 				'type' => 'paragraph',
-				'content' => 'Select the default visual style for Click-to-Tweets on your site.',
+				'content' => __( 'Select the default visual style for Click-to-Tweets on your site.' ),
 				'premium' => true
 			),
 			'cttTheme' => array(
 				'type' => 'select',
 				'size' => 'two-thirds',
-				'name' => 'Visual Theme',
+				'name' => __( 'Visual Theme' ),
 				'content' => array(
-					'style1' => 'Send Her My Love',
-					'style2' => 'Roll With The Changes',
-					'style3' => 'Free Bird',
-					'style4' => 'Don\'t Stop Believin\'',
-					'style5' => 'Thunderstruck',
-					'style6' => 'Livin\' On A Prayer',
-					'none' => 'None - Create Your Own CSS In Your Theme'),
+					'style1' => __( 'Send Her My Love' ),
+					'style2' => __( 'Roll With The Changes' ),
+					'style3' => __( 'Free Bird' ),
+					'style4' => __( 'Don\'t Stop Believin\'' ),
+					'style5' => __( 'Thunderstruck' ),
+					'style6' => __( 'Livin\' On A Prayer' ),
+					'none' => __( 'None - Create Your Own CSS In Your Theme' )
+				),
 				'default' => 'style1',
 				'premium'	=> true
 			),
