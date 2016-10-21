@@ -14,28 +14,28 @@
 		$icons_array = apply_filters( 'swp_button_options' , $icons_array );
 
 		// Declare the Options Tab and Tab Name
-		$swp_options['tabs']['links']['swp_display'] = 'Display';
+		$swp_options['tabs']['links']['swp_display'] = __( 'Display' );
 
 		// Declare the content that goes on this options page
 		$swp_options['options']['swp_display'] = array(
 			'social_networks_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> 'Social Networks'
+				'content' 	=> __( 'Social Networks' )
 			),
 			'social_networks_subtitle' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'Drag & Drop to activate and order your share buttons.'
+				'content'	=> __( 'Drag & Drop to activate and order your share buttons.' )
 			),
 			'buttons' => $icons_array,
 			'orderOfIconsSelect' => array(
 				'type'		=> 'select',
 				'size'		=> 'two-thirds',
 				'content'	=> array(
-					'manual' 	=> 'Sort Manually Using Drag & Drop Above',
-					'dynamic' 	=> 'Sort Dynamically By Order Of Most Shares'
+					'manual' 	=> __( 'Sort Manually Using Drag & Drop Above' ),
+					'dynamic' 	=> __( 'Sort Dynamically By Order Of Most Shares' )
 				),
 				'default'	=> 'manual',
-				'name'		=> 'Button Ordering',
+				'name'		=> __( 'Button Ordering' ),
 				'divider'	=> false,
 				'premium'	=> true
 			),
@@ -43,41 +43,41 @@
 				'type'		=> 'select',
 				'size'		=> 'two-thirds',
 				'content'	=> array(
-					'0' 	=> '0',
-					'1' 	=> '1',
-					'2' 	=> '2'
+					'0' 	=> __( 'Don\'t Emphasize Any Buttons' ),
+					'1' 	=> __( 'Emphasize the First Button' ),
+					'2' 	=> __( 'Emphasize the First Two Buttons' )
 				),
 				'default'	=> '0',
-				'name'		=> 'Emphasize Icons',
+				'name'		=> __( 'Emphasize Buttons' ),
 				'divider'	=> true,
 				'premium'	=> true
 			),
 			'share_counts_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> 'Share Counts'
+				'content' 	=> __( 'Share Counts' )
 			),
 			'share_counts_subtitle' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'Use the toggles below to determine how to display your social proof.'
+				'content'	=> __( 'Use the toggles below to determine how to display your social proof.' )
 			),
 			'totesEach' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> 'Button Counts',
+				'content'	=> __( 'Button Counts' ),
 				'default'	=> true,
 				'premium'	=> false
 			),
 			'totes' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> 'Total Counts',
+				'content'	=> __( 'Total Counts' ),
 				'default'	=> true,
 				'premium'	=> false
 			),
 			'minTotes' => array(
 				'type'		=> 'input',
 				'size'		=> 'two-thirds',
-				'name'	=> 'Minimum Shares',
+				'name'		=> __( 'Minimum Shares' ),
 				'default'	=> 0,
 				'divider'	=> true,
 				'premium'	=> true
@@ -85,7 +85,7 @@
 			'swp_twitter_card' => array(
 				'type'		=> 'checkbox',
 				'size'		=> 'two-thirds',
-				'content'	=> 'Twitter Cards',
+				'content'	=> __( 'Twitter Cards' ),
 				'header'	=> true,
 				'divider'	=> true,
 				'default'	=> true,
@@ -93,27 +93,27 @@
 			),
 			'position_title' => array(
 				'type' 		=> 'title',
-				'content' 	=> 'Position Share Buttons'
+				'content' 	=> __( 'Position Share Buttons' )
 			),
 			'position_subtitle' => array(
 				'type'		=> 'paragraph',
-				'content'	=> 'The options below will allow you to customize the positioning of share buttons for each post type.'
+				'content'	=> __( 'The options below will allow you to customize the positioning of share buttons for each post type.' )
 			),
 			'location_column_labels' => array(
 				'type'		=> 'column_labels',
 				'columns'	=> 3,
-				'column_1'	=> 'Post Type',
-				'column_2'	=> 'Static Buttons',
-				'column_3'	=> 'Floating Buttons (If Activated)'
+				'column_1'	=> __( 'Post Type' ),
+				'column_2'	=> __( 'Static Buttons' ),
+				'column_3'	=> __( 'Floating Buttons (If Activated)' )
 			)
 		);
 
 		// Create the content locations
 		$contentLocations = array(
-			'above'=>'Above the Content',
-			'below' => 'Below the Content',
-			'both' => 'Both Above and Below the Content',
-			'none' => 'None/Manual Placement'
+			'above'=> __( 'Above the Content' ),
+			'below' => __( 'Below the Content' ),
+			'both' => __( 'Both Above and Below the Content' ),
+			'none' => __( 'None/Manual Placement' )
 		);
 
 		// Get the post Types
@@ -142,8 +142,8 @@
 					'secondary' => 'float_location_'.$postType,
 					'content'	=> $contentLocations,
 					'content_2'	=> array(
-						'on'	=> 'On',
-						'off'	=> 'Off',
+						'on'	=> __( 'On' ),
+						'off'	=> __( 'Off' ),
 					),
 					'default'	=> 'both',
 					'default_2' => 'on'
@@ -153,7 +153,7 @@
 
 		$swp_options['options']['swp_display']['locationSite'] = array(
 			'type'		=> 'select',
-			'name'		=> 'Archive & Categories',
+			'name'		=> __( 'Archive & Categories' ),
 			'content'	=> $contentLocations,
 			'default'	=> 'below',
 			'size'		=> 'two-thirds'
@@ -165,31 +165,31 @@
 
 		$swp_options['options']['swp_display']['pinit_title'] = array(
 			'type' 		=> 'title',
-			'content' 	=> 'Image Hover Pin Button',
+			'content' 	=> __( 'Image Hover Pin Button' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_description'] = array(
 			'type' 		=> 'paragraph',
-			'content' 	=> 'If you would like a "Pin" button to appear on images when users hover over them, activate this.',
+			'content' 	=> __( 'If you would like a "Pin" button to appear on images when users hover over them, activate this.' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_toggle'] = array(
 			'type'		=> 'checkbox',
 			'size'		=> 'two-thirds',
-			'content'	=> 'Pinit Button',
+			'content'	=> __( 'Pinit Button' ),
 			'default'	=> true,
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['pinit_location_horizontal'] = array(
 			'type'		=> 'select',
-			'name'		=> 'Horizontal Location',
+			'name'		=> __( 'Horizontal Location' ),
 			'content'	=> array(
-				'left' 		=> 'Left',
-				'center'	=> 'Center',
-				'right' 	=> 'Right'
+				'left' 		=> __( 'Left' ),
+				'center'	=> __( 'Center' ),
+				'right' 	=> __( 'Right' )
 			),
 			'default'	=> 'center',
 			'size'		=> 'two-fourths',
@@ -200,7 +200,7 @@
 
 		$swp_options['options']['swp_display']['pinit_min_width'] = array(
 			'type'		=> 'input',
-			'name'		=> 'Min Width',
+			'name'		=> __( 'Min Width' ),
 			'default'	=> '200',
 			'size'		=> 'two-fourths',
 			'premium'	=> true,
@@ -210,11 +210,11 @@
 
 		$swp_options['options']['swp_display']['pinit_location_vertical'] = array(
 			'type'		=> 'select',
-			'name'		=> 'Vertical Location',
+			'name'		=> __( 'Vertical Location' ),
 			'content'	=> array(
-				'top' 		=> 'Top',
-				'middle'	=> 'Middle',
-				'bottom' 	=> 'Bottom'
+				'top' 		=> __( 'Top' ),
+				'middle'	=> __( 'Middle' ),
+				'bottom' 	=> __( 'Bottom' )
 			),
 			'default'	=> 'top',
 			'size'		=> 'two-fourths',
@@ -225,7 +225,7 @@
 
 		$swp_options['options']['swp_display']['pinit_min_height'] = array(
 			'type'		=> 'input',
-			'name'		=> 'Min Height',
+			'name'		=> __( 'Min Height' ),
 			'default'	=> '200',
 			'size'		=> 'two-fourths',
 			'premium'	=> true,
@@ -248,13 +248,13 @@
 
 		$swp_options['options']['swp_display']['yummly_cat_title'] = array(
 			'type' 		=> 'title',
-			'content' 	=> 'Yummly Display Control',
+			'content' 	=> __( 'Yummly Display Control' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['yummly_cat_description'] = array(
 			'type' 		=> 'paragraph',
-			'content' 	=> 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.',
+			'content' 	=> __( 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.' ),
 			'premium'	=> true
 		);
 
@@ -262,14 +262,14 @@
 			'type'		=> 'column_labels',
 			'columns'	=> 3,
 			'column_1'	=> '',
-			'column_2'	=> 'Choose Category',
-			'column_3'	=> 'Choose Tag',
+			'column_2'	=> __( 'Choose Category' ),
+			'column_3'	=> __( 'Choose Tag' ),
 			'premium'	=> true
 		);
 
 		$swp_options['options']['swp_display']['yummly_terms'] = array(
 			'type'		=> 'input',
-			'name'		=> 'Yummly Terms',
+			'name'		=> __( 'Yummly Terms' ),
 			'primary'	=> 'yummly_categories',
 			'secondary' => 'yummly_tags',
 			'premium'	=> true
