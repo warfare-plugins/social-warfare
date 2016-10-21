@@ -223,7 +223,7 @@ function swp_build_options_page() {
 
 				// The Active Buttons
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<h3 class="sw-buttons-toggle">Active</h3>';
+				echo '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
 				echo '</div>';
 
 				echo '<div class="sw-grid sw-col-620 sw-fit">';
@@ -256,7 +256,7 @@ function swp_build_options_page() {
 
 				// The Inactive Buttons
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<h3 class="sw-buttons-toggle">Inactive</h3>';
+				echo '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
 				echo '</div>';
 
 				echo '<div class="sw-grid sw-col-620 sw-fit">';
@@ -336,7 +336,7 @@ function swp_build_options_page() {
 
 					echo '<div class="sw-grid sw-col-620"><h2 class="sw-h-label">' . $option['title'] . '</h2><p class="sw-subtext-label">' . $option['description'] . '</p></div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit">';
-					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
+					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 
@@ -348,7 +348,7 @@ function swp_build_options_page() {
 					echo '<div class="two-thirds-advanced">';
 					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">' . $option['title'] . '</h2><p class="sw-subtext-label">' . $option['description'] . '</p></div>';
 					echo '<div class="sw-grid sw-col-300">';
-					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
+					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -371,7 +371,7 @@ function swp_build_options_page() {
 					echo '<div class="sw-grid sw-col-460 sw-option-container sw-fit ' . $key . '_wrapper" ' . ($option['dep'] ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' premium=' . $option['premium'] . '>';
 					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">' . $option['content'] . '</p></div>';
 					echo '<div class="sw-grid sw-col-460 sw-fit">';
-					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
+					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 					echo '<div class="sw-premium-blocker"></div>';
@@ -389,7 +389,7 @@ function swp_build_options_page() {
 					endif;
 
 					echo '<div class="sw-grid sw-col-300">';
-					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
+					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -609,9 +609,9 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . $option['name'] . '</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
 				if ( isset( $swp_user_options[ $option['dependant'] ] ) && $swp_user_options[ $option['dependant'] ] != '' ) :
-					echo '<a class="button sw-green-button" href="' . $option['link'] . '">Connected</a>';
+					echo '<a class="button sw-green-button" href="' . $option['link'] . '">' . __( 'Connected' , 'social-warfare' ) . '</a>';
 				else :
-					echo '<a class="button sw-navy-button" href="' . $option['link'] . '">Authenticate</a>';
+					echo '<a class="button sw-navy-button" href="' . $option['link'] . '">' . __( 'Authenticated' , 'social-warfare' ) . '</a>';
 				endif;
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -633,15 +633,15 @@ function swp_build_options_page() {
 				echo '<div class="registration-wrapper" registration="' . (is_swp_registered() ? '1' : '0') . '">';
 
 				// Registration Title
-				echo '<h2>Premium Registration</h2>';
+				echo '<h2>' . __( 'Premium Registration' , 'social-warfare' ) . '</h2>';
 
 				// Open the IS NOT REGISTERED container
 				echo '<div class="sw-grid sw-col-940 swp_is_not_registered">';
 
 				// The Warning Notice & Instructions
-				echo '<div class="sw-red-notice">This copy of Social Warfare is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.</div>';
-				echo '<p class="sw-subtitle sw-registration-text">Follow these simple steps to register your Premium License and access all features.</p>';
-				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: Enter your email.<br />Step 2: Click the "Register Plugin" button.<br />Step 3: Watch the magic.</p>';
+				echo '<div class="sw-red-notice">' . __( 'This copy of Social Warfare is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.' , 'social-warfare' ) . '</div>';
+				echo '<p class="sw-subtitle sw-registration-text">' . __( 'Follow these simple steps to register your Premium License and access all features.' , 'social-warfare' ) . '</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">' . __( 'Step 1: Enter your email.' , 'social-warfare' ) . '<br />' . __( 'Step 2: Click the "Register Plugin" button.' , 'social-warfare' ) . '<br />' . __( 'Step 3: Watch the magic.' , 'social-warfare' ) . '</p>';
 
 				if ( is_multisite() ) :
 					$homeURL = network_site_url();
@@ -662,7 +662,7 @@ function swp_build_options_page() {
 				endif;
 
 				// Email Input Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">Email Address</p></div>';
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . __( 'Email Address' , 'social-warfare' ) . '</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="' . $email . '" /></div>';
 				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="' . $premiumCode . '" />';
 				echo '<input name="regCode" type="text" class="sw-admin-input sw-hidden" value="' . $regCode . '" />';
@@ -671,9 +671,9 @@ function swp_build_options_page() {
 				echo '<div class="sw-clearfix"></div>';
 
 				// Activate Plugin Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Activate Registration</p></div>';
+				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . __( 'Activate Registration' , 'social-warfare' ) . '</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<a href="#" id="register-plugin" class="button sw-navy-button">Register Plugin</a>';
+				echo '<a href="#" id="register-plugin" class="button sw-navy-button">' . __( 'Register Plugin' , 'social-warfare' ) . '</a>';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 
@@ -685,12 +685,12 @@ function swp_build_options_page() {
 
 				// The Warning Notice & Instructions
 				echo '<div class="sw-green-notice">This copy of Social Warfare is registered. Wah-hoo!</div>';
-				echo '<p class="sw-subtitle sw-registration-text">To unregister your license click the button below to free it up for use on another domain.</p>';
+				echo '<p class="sw-subtitle sw-registration-text">' . __( 'To unregister your license click the button below to free it up for use on another domain.' , 'social-warfare' ) . '</p>';
 
 				// Deactivate Plugin Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">Deactivate Registration</p></div>';
+				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . __( 'Deactivate Registration' , 'social-warfare' ) . '</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<a href="#" id="unregister-plugin" class="button sw-navy-button">Unregister Plugin</a>';
+				echo '<a href="#" id="unregister-plugin" class="button sw-navy-button">' . __( 'Unregister Plugin' , 'social-warfare' ) . '</a>';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 
@@ -726,14 +726,14 @@ function swp_build_options_page() {
 				echo '<div class="tweet-count-wrapper" registration="false">';
 
 				// Registration Title
-				echo '<h2>Tweet Count Registration</h2>';
+				echo '<h2>' . __( 'Tweet Count Registration' , 'social-warfare' ) . '</h2>';
 
 				// Open the IS NOT Activated container
 				echo '<div class="sw-grid sw-col-940 swp_tweets_not_activated" dep="twitter_shares" dep_val="[false]">';
 
 				// The Warning Notice & Instructions
-				echo '<p class="sw-subtitle sw-registration-text">In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.</p>';
-				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">Click here to visit NewShareCounts.com</a><br />Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.<img class="sw-tweet-count-demo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/new_share_counts.png" /><br />Step 3: Flip the switch below to "ON" and then save changes.</p>';
+				echo '<p class="sw-subtitle sw-registration-text">' . __( 'In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.' , 'social-warfare' ) . '</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">' . __( 'Click here to visit NewShareCounts.com' , 'social-warfare' ) . '</a><br />' . __( 'Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.' , 'social-warfare' ) . '<img class="sw-tweet-count-demo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/new_share_counts.png" /><br />' . __( 'Step 3: Flip the switch below to "ON" and then save changes.' , 'social-warfare' ) . '</p>';
 
 				// Close the IS NOT ACTIVATED container
 				echo '</div>';
@@ -741,7 +741,7 @@ function swp_build_options_page() {
 				// Checkbox Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#twitter_shares"><div class="sw-checkbox-on">ON</div><div class="sw-checkbox-off">OFF</div></div>';
+				echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#twitter_shares"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 				echo '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" ' . $selected . ' />';
 				echo '</div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -836,14 +836,14 @@ function swp_build_options_page() {
 	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/affiliate-300x150.jpg"></a>';
 	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/starter-guide-300x150.jpg"></a>';
 	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/measure-roi-300x150.jpg"></a>';
-	echo '<p class="sw-support-notice sw-italic">Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.</a></p>';
-	echo '<p class="sw-support-notice sw-italic">Opening a support ticket? Copy your System Status by clicking the button below.</p>';
-	echo '<a href="#" class="button sw-blue-button sw-system-status">Get System Status</a>';
+	echo '<p class="sw-support-notice sw-italic">' . __( 'Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.' , 'social-warfare' ) . '</a></p>';
+	echo '<p class="sw-support-notice sw-italic">' . __( 'Opening a support ticket? Copy your System Status by clicking the button below.' , 'social-warfare' ) . '</p>';
+	echo '<a href="#" class="button sw-blue-button sw-system-status">' . __( 'Get System Status' , 'social-warfare' ) . '</a>';
 
 	// Sytem Status Container
 	echo '<div class="sw-clearfix"></div>';
 	echo '<div class="system-status-wrapper">';
-	echo '<h4>Press Ctrl+C to Copy this information.</h4>';
+	echo '<h4>' . __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' ) .'</h4>';
 	echo '<div class="system-status-container">' . $system_status . '</div>';
 
 	echo '</div>';
