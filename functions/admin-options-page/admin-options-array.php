@@ -602,6 +602,13 @@
 				'dep' 		=> 'floatStyleSource',
 				'dep_val'	=> array(false)
 			),
+			'sideCustomColor' => array(
+				'type'		=> 'input',
+				'size'		=> 'two-fourths',
+				'name'		=> __( 'Custom Color' ,'social-warfare' ),
+				'default'	=> '#FFFFFF',
+				'premium'	=> true
+			),
 			'floatBgColor' => array(
 				'type' => 'input',
 				'size' => 'two-fourths',

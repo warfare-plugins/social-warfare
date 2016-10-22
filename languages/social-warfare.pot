@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Social Warfare 2.0.7\n"
 "Report-Msgid-Bugs-To: https://warfareplugins.com/\n"
-"POT-Creation-Date: 2016-10-21 16:24:42+00:00\n"
+"POT-Creation-Date: 2016-10-22 17:33:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -388,6 +388,7 @@ msgstr ""
 #: functions/admin-options-page/admin-options-array.php:558
 #: functions/admin-options-page/admin-options-array.php:578
 #: functions/admin-options-page/admin-options-array.php:598
+#: functions/admin-options-page/admin-options-array.php:608
 msgid "Custom Color"
 msgstr ""
 
@@ -543,133 +544,133 @@ msgstr ""
 msgid "Inherit Visual Options"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:608
+#: functions/admin-options-page/admin-options-array.php:615
 msgid "Background Color"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:618
+#: functions/admin-options-page/admin-options-array.php:625
 msgid "Click-to-Tweet Style"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:623
+#: functions/admin-options-page/admin-options-array.php:630
 msgid "Select the default visual style for Click-to-Tweets on your site."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:629
+#: functions/admin-options-page/admin-options-array.php:636
 msgid "Visual Theme"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:631
+#: functions/admin-options-page/admin-options-array.php:638
 msgid "Send Her My Love"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:632
+#: functions/admin-options-page/admin-options-array.php:639
 msgid "Roll With The Changes"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:633
+#: functions/admin-options-page/admin-options-array.php:640
 msgid "Free Bird"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:634
+#: functions/admin-options-page/admin-options-array.php:641
 msgid "Don't Stop Believin'"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:635
+#: functions/admin-options-page/admin-options-array.php:642
 msgid "Thunderstruck"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:636
+#: functions/admin-options-page/admin-options-array.php:643
 msgid "Livin' On A Prayer"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:637
+#: functions/admin-options-page/admin-options-array.php:644
 msgid "None - Create Your Own CSS In Your Theme"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:665
+#: functions/admin-options-page/admin-options-array.php:672
 msgid "Social Identity"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:670
+#: functions/admin-options-page/admin-options-array.php:677
 msgid "Sitewide Identity"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:674
+#: functions/admin-options-page/admin-options-array.php:681
 msgid ""
 "If you would like to set sitewide defaults for your social identity, add "
 "them below."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:679
+#: functions/admin-options-page/admin-options-array.php:686
 msgid "Twitter Username"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:684
+#: functions/admin-options-page/admin-options-array.php:691
 msgid "Pinterest Username"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:689
+#: functions/admin-options-page/admin-options-array.php:696
 msgid "Facebook Page URL"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:694
+#: functions/admin-options-page/admin-options-array.php:701
 msgid "Facebook App ID"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:740
+#: functions/admin-options-page/admin-options-array.php:747
 msgid "Advanced"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:745
+#: functions/admin-options-page/admin-options-array.php:752
 msgid "Frame Buster"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:746
+#: functions/admin-options-page/admin-options-array.php:753
 msgid "If you want to stop content pirates from framing your content, turn this on."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:753
+#: functions/admin-options-page/admin-options-array.php:760
 msgid "Bitly Link Shortening"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:754
+#: functions/admin-options-page/admin-options-array.php:761
 msgid "If you like to have all of your links automatically shortened, turn this on."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:762
+#: functions/admin-options-page/admin-options-array.php:769
 msgid "Connect Your Bitly Account"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:769
+#: functions/admin-options-page/admin-options-array.php:776
 msgid "Analytics Tracking"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:774
+#: functions/admin-options-page/admin-options-array.php:781
 msgid "If you want to activate UTM tracking for shared URL, turn this on."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:779
+#: functions/admin-options-page/admin-options-array.php:786
 msgid "Button Click Tracking"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:786
+#: functions/admin-options-page/admin-options-array.php:793
 msgid "UTM Link Tracking"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:794
+#: functions/admin-options-page/admin-options-array.php:801
 msgid "UTM Medium"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:803
+#: functions/admin-options-page/admin-options-array.php:810
 msgid "UTM Campaign"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:812
+#: functions/admin-options-page/admin-options-array.php:819
 msgid "Share Recovery"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:817
+#: functions/admin-options-page/admin-options-array.php:824
 msgid ""
 "If at any point you have changed permalink structures or have gone from "
 "http to https (SSL) then you will have undoubtedly lost all of your share "
@@ -679,113 +680,113 @@ msgid ""
 "instructions on how to use this feature."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:823
+#: functions/admin-options-page/admin-options-array.php:830
 msgid "Activate Share Recovery"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:829
+#: functions/admin-options-page/admin-options-array.php:836
 msgid "Previous URL Format"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:832
-#: functions/admin-options-page/admin-options-array.php:858
-#: functions/admin-options-page/admin-options-array.php:872
+#: functions/admin-options-page/admin-options-array.php:839
+#: functions/admin-options-page/admin-options-array.php:865
+#: functions/admin-options-page/admin-options-array.php:879
 msgid "Unchanged"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:833
+#: functions/admin-options-page/admin-options-array.php:840
 msgid "Plain"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:834
+#: functions/admin-options-page/admin-options-array.php:841
 msgid "Day and Name"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:835
+#: functions/admin-options-page/admin-options-array.php:842
 msgid "Month and Name"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:836
+#: functions/admin-options-page/admin-options-array.php:843
 msgid "Numeric"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:837
+#: functions/admin-options-page/admin-options-array.php:844
 msgid "Post Name"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:838
+#: functions/admin-options-page/admin-options-array.php:845
 msgid "Custom"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:848
+#: functions/admin-options-page/admin-options-array.php:855
 msgid "Custom Permalink Format"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:856
+#: functions/admin-options-page/admin-options-array.php:863
 msgid "Previous Connection Protocol"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:859
+#: functions/admin-options-page/admin-options-array.php:866
 msgid "http"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:860
+#: functions/admin-options-page/admin-options-array.php:867
 msgid "https"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:870
+#: functions/admin-options-page/admin-options-array.php:877
 msgid "Previous Domain Prefix"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:873
+#: functions/admin-options-page/admin-options-array.php:880
 msgid "www"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:874
+#: functions/admin-options-page/admin-options-array.php:881
 msgid "non-www"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:884
+#: functions/admin-options-page/admin-options-array.php:891
 msgid "Subdomain"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:893
+#: functions/admin-options-page/admin-options-array.php:900
 msgid ""
 "If you've migrated your website from one domain to another, fill in these "
 "two fields to activate cross-domain share recovery."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:901
+#: functions/admin-options-page/admin-options-array.php:908
 msgid "Former Domain"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:911
+#: functions/admin-options-page/admin-options-array.php:918
 msgid "Current Domain"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:920
+#: functions/admin-options-page/admin-options-array.php:927
 msgid "Caching Method"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:924
+#: functions/admin-options-page/admin-options-array.php:931
 msgid ""
 "If you have advanced knowledge of caching configurations, you may want to "
 "choose your own below."
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:929
+#: functions/admin-options-page/admin-options-array.php:936
 msgid "Cache Rebuild Method"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:931
+#: functions/admin-options-page/admin-options-array.php:938
 msgid "Advanced Cache Triggering"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:932
+#: functions/admin-options-page/admin-options-array.php:939
 msgid "Legacy Cache Rebuilding during Page Loads"
 msgstr ""
 
-#: functions/admin-options-page/admin-options-array.php:951
+#: functions/admin-options-page/admin-options-array.php:958
 msgid "Registration"
 msgstr ""
 

@@ -88,6 +88,22 @@
 				$( this ).hide();
 			}
 		});
+
+		if ( swp_check_val('floatStyleSource') == false && (swp_select_val('sideDColorSet') == 'customColor' || swp_select_val('sideDColorSet') == 'ccOutlines' || swp_select_val('sideIColorSet') == 'customColor' || swp_select_val('sideIColorSet') == 'ccOutlines' || swp_select_val('sideOColorSet') == 'customColor' || swp_select_val('sideOColorSet') == 'ccOutlines') ) {
+			$( '.sideCustomColor_wrapper' ).slideDown();
+		} else {
+			$( '.sideCustomColor_wrapper' ).slideUp();
+		}
+	}
+
+	function swp_select_val(name) {
+		console.log($('select[name="' + name + '"]').val());
+		return $('select[name="' + name + '"]').val();
+	}
+
+	function swp_check_val(name) {
+		console.log($( '[name="' + name + '"]' ).prop( 'checked' ));
+		return $( '[name="' + name + '"]' ).prop( 'checked' );
 	}
 
 	/*********************************************************
