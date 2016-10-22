@@ -648,6 +648,16 @@ function swp_output_custom_color( $info ) {
 .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' . $info['swp_user_options']['customColor'] . '; } </style>';
 
 	endif;
+
+	if ( $info['swp_user_options']['floatStyleSource'] == false && ($info['swp_user_options']['sideDColorSet'] == 'customColor' || $info['swp_user_options']['sideIColorSet'] == 'customColor' || $info['swp_user_options']['sideOColorSet'] == 'customColor') ) :
+		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.nc_socialPanelSide.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.nc_socialPanelSide.swp_o_customColor:hover a {color:white} .nc_socialPanel.nc_socialPanelSide.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.nc_socialPanelSide.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.nc_socialPanelSide.swp_o_customColor:hover .nc_tweetContainer {background-color:' . $info['swp_user_options']['sideCustomColor'] . ';border:1px solid ' . $info['swp_user_options']['sideCustomColor'] . ';} </style>';
+	endif;
+
+	if ( $info['swp_user_options']['floatStyleSource'] == false && ( $info['swp_user_options']['sideDColorSet'] == 'ccOutlines' || $info['swp_user_options']['sideIColorSet'] == 'ccOutlines' || $info['swp_user_options']['sideOColorSet'] == 'ccOutlines' ) ) :
+		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.nc_socialPanelSide.swp_d_ccOutlines a, html body .nc_socialPanel.nc_socialPanelSide.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.nc_socialPanelSide.swp_o_ccOutlines:hover a { color:' . $info['swp_user_options']['sideCustomColor'] . '; }
+.nc_socialPanel.nc_socialPanelSide.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.nc_socialPanelSide.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.nc_socialPanelSide.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' . $info['swp_user_options']['sideCustomColor'] . '; } </style>';
+
+		endif;
 	return $info;
 }
 
