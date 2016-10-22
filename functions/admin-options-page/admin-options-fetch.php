@@ -139,6 +139,8 @@ function swp_get_user_options( $admin = false ) {
 		};
 		if ( ! isset( $swp_user_options['floatLeftMobile'] ) ) { $swp_user_options['floatLeftMobile'] 		= 'bottom';
 		};
+		if ( ! isset( $swp_user_options['sideCustomColor'] ) ) { $swp_user_options['sideCustomColor'] 		= '#ffffff';
+		};
 
 		// If it's not registered
 		else :
@@ -220,6 +222,7 @@ function swp_get_user_options( $admin = false ) {
 			$swp_user_options['pinit_location_vertical'] = 'top';
 			$swp_user_options['emphasize_icons'] = 0;
 			$swp_user_options['floatLeftMobile'] = 'off';
+			if ( ! isset( $swp_user_options['sideCustomColor'] ) ) { $swp_user_options['sideCustomColor'] = '#ffffff'; };
 
 		endif;
 
