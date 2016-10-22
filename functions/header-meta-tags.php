@@ -162,7 +162,6 @@ add_filter( 'swp_meta_tags' , 'swp_frame_buster' , 3 );
 add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
 add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
 // add_filter( 'swp_meta_tags' , 'swp_output_cache_trigger' , 6 );
-add_filter( 'swp_meta_tags' , 'swp_cache_rebuild_rel_canonical' , 7 );
 add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
 
 // Disable Simple Podcast Press Open Graph tags
@@ -651,28 +650,6 @@ function swp_output_custom_color( $info ) {
 	return $info;
 }
 
-/**
-
- * **************************************************************
- *                                                                *
- *          CACHE REBUILD REL CANONICAL				             *
- *                                                                *
- ******************************************************************/
-function swp_cache_rebuild_rel_canonical( $info ) {
-
-	// Fetch the Permalink
-	$url = get_permalink();
-
-	// Check to see if the cache is currently being rebuilt
-	if ( isset( $_GET['swp_cache'] ) && $_GET['swp_cache'] == 'rebuild' ) :
-
-		// Use a rel canonical so everyone knows this is not a real page
-		$info['header_output'] .= '<link rel="canonical" href="' . $url . '">';
-	endif;
-
-	// Return the array so the world doesn't explode
-	return $info;
-}
 /**
 
  * **************************************************************

@@ -51,52 +51,6 @@ function swp_get_current_url() {
 	return $page_url;
 }
 
-/**
-
- * **************************************************************
- *                                                                *
- *          CACHe CHECKING FUNCTION         			 			 *
- *                                                                *
- ******************************************************************/
-function swp_is_cache_fresh( $postID, $output = false, $ajax = false ) {
-
-	// Fetch the Options
-	$options 			= swp_get_user_options();
-
-	// Check if output is being forced or if legacy caching is enabled
-	if ( $output == false && $options['cacheMethod'] != 'legacy' ) :
-		if ( isset( $_GET['swp_cache'] ) && $_GET['swp_cache'] == 'rebuild' ) :
-			$freshCache = false;
-		else :
-			$freshCache = true;
-		endif;
-
-	else :
-		$postAge = floor( date( 'U' ) - get_post_time( 'U' , false , $postID ) );
-		if ( $postAge < (21 * 86400) ) { $hours = 1;
-		} elseif ( $postAge < (60 * 86400) ) { $hours = 4;
-		} else { $hours = 12; }
-
-		$time = floor( ((date( 'U' ) / 60) / 60) );
-		$lastChecked = get_post_meta( $postID,'swp_cache_timestamp',true );
-
-		// Check if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED
-		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) ) :
-			$freshCache = true;
-
-			// Next, check if the cache is fresh or needs rebuilt
-			// Always be TRUE if we're not on a single.php otherwise we could end up
-			// Rebuilding multiple page caches which will cost a lot of time.
-		elseif ( ($lastChecked > ($time - $hours) && $lastChecked > 390000) || ( ! is_singular() && $ajax == false) ) :
-			$freshCache = true;
-		else :
-			$freshCache = false;
-		endif;
-	endif;
-	return $freshCache;
-}
-
-
 function swp_disable_subs() {
 	return false;
 }
