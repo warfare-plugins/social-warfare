@@ -332,6 +332,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}));
 
 			$( window ).trigger( 'scroll' );
+			$( '.nc_socialPanel' ).css( {'opacity':1} );
 		}
 	}
 
