@@ -5,10 +5,10 @@
 	/*********************************************************
 		A Function send the array of setting to ajax.php
 	*********************************************************/
-	$.fn.selectText = function() {
-		var doc = document, element = this[0], range, selection;
+	function selectText( element ) {
+		var	range, selection;
 
-		if ( doc.body.createTextRange ) {
+		if ( document.body.createTextRange ) {
 			range = document.body.createTextRange();
 
 			range.moveToElementText( element );
@@ -25,7 +25,7 @@
 
 			selection.addRange( range );
 		}
-	};
+	}
 
 	/*********************************************************
 		A Function to gather all the settings
@@ -726,13 +726,13 @@
 	}
 
 	function getSystemStatus() {
-		$( '.sw-system-status' ).on( 'click', function() {
+		$( '.sw-system-status' ).on( 'click', function( event ) {
 			// Block the default action
 			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
 
 			$( '.system-status-wrapper' ).slideToggle();
 
-			$( '.system-status-container' ).selectText();
+			selectText( $( '.system-status-container' ).get( 0 ) );
 		});
 	}
 
