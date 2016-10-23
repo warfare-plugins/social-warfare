@@ -538,8 +538,6 @@
 		loadingScreen();
 
 		$.post( ajaxurl, data, function( response ) {
-			console.log( response );
-
 			// If the response was a failure...
 			if ( ! response.success ) {
 				alert( 'Failure: ' + response.data );
@@ -548,9 +546,9 @@
 				toggleRegistration( '1' );
 				registered = true;
 			}
-
-			clearLoadingScreen();
 		});
+
+		clearLoadingScreen();
 
 		return registered;
 	}
@@ -571,10 +569,9 @@
 		loadingScreen();
 
 		// Ping the home server to create a registration log
-		$.post( ajaxurl, ajaxData, function( data ) {
-			console.log( data );
+		$.post( ajaxurl, ajaxData, function( response ) {
 			// If the response was a failure...
-			if ( ! data.success ) {
+			if ( ! response.success ) {
 				alert( 'Failure: ' + response.data );
 			} else {
 				// If the response was a success
@@ -584,8 +581,6 @@
 				unregistered = true;
 			}
 		});
-
-		console.log( unregistered );
 
 		clearLoadingScreen();
 
@@ -621,7 +616,7 @@
 			return false;
 		});
 
-		rearmRegistration();
+		//rearmRegistration();
 	}
 
 	/*******************************************************
