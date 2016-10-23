@@ -33,12 +33,10 @@ function swp_get_registration_key( $domain, $context = 'api' ) {
  * @return bool True if the plugin is registered, false otherwise.
  */
 function is_swp_registered() {
-	global $swp_user_options;
-
 	static $is_registered;
 
 	if ( null === $is_registered ) {
-		$options = $swp_user_options;
+		$options = get_option( 'socialWarfareOptions' );
 
 		$domain = swp_get_site_url();
 		$key = swp_get_registration_key( $domain, 'db' );
@@ -122,30 +120,6 @@ function swp_get_registration_api( $args = array(), $decode = true ) {
 }
 
 /**
- * Attempt to unregister the plugin.
- *
- * @since  2.1.0
- * @param  string $email The email to use during unregistration.
- * @param  string $domain The domain to use during unregistration.
- * @return bool
- */
-function swp_unregister_plugin( $email, $domain ) {
-	$response = swp_get_registration_api( array(
-		'activity'     => 'unregister',
-		'emailAddress' => $email,
-		'premiumCode'  => swp_get_registration_key( $domain, 'db' ),
-	) );
-
-	if ( 'success' === $response['status'] ) {
-		swp_update_option( 'emailAddress', '' );
-		swp_update_option( 'premiumCode', '' );
-		return true;
-	}
-
-	return false;
-}
-
-/**
  * Attempt to register the plugin.
  *
  * @since  2.1.0
@@ -163,6 +137,30 @@ function swp_register_plugin( $email, $domain ) {
 
 	if ( 'success' === $response['status'] ) {
 		swp_update_option( 'premiumCode', $response['premiumCode'] );
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Attempt to unregister the plugin.
+ *
+ * @since  2.1.0
+ * @param  string $email The email to use during unregistration.
+ * @param  string $domain The domain to use during unregistration.
+ * @return bool
+ */
+function swp_unregister_plugin( $email, $domain ) {
+	$response = swp_get_registration_api( array(
+		'activity'     => 'unregister',
+		'emailAddress' => $email,
+		'premiumCode'  => swp_get_registration_key( $domain, 'db' ),
+	) );
+
+	if ( 'success' === $response['status'] ) {
+		swp_update_option( 'emailAddress', '' );
+		swp_update_option( 'premiumCode', '' );
 		return true;
 	}
 
