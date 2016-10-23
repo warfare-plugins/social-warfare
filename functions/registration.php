@@ -219,6 +219,40 @@ function swp_check_license() {
 	set_transient( 'swp_check_license', 'checked', $month );
 }
 
+add_action( 'admin_head-toplevel_page_social-warfare', 'swp_migrate_registration' );
+/**
+ * Attempt to migrate registration to a new domain when the sites domain changes.
+ *
+ * @since  2.1.0
+ * @global $swp_user_options
+ * @return void
+ */
+function swp_migrate_registration() {
+	global $swp_user_options;
+
+	// Bail early if the plugin isn't registered.
+	if ( ! is_swp_registered() ) {
+		return;
+	}
+
+	$options = $swp_user_options;
+
+	// Bail if we don't have the data we need to continue.
+	if ( empty( $options['premiumCode'] ) || empty( $options['emailAddress'] ) ) {
+		return;
+	}
+
+	$url   = swp_get_site_url();
+	$email = $options['emailAddress'];
+	$code  = $options['premiumCode'];
+
+	// Unregister and re-register if our current key doesn't match the database.
+	if ( swp_get_registration_key( $url, 'db' ) !== $code ) {
+		swp_unregister_plugin( $email, $code );
+		swp_register_plugin( $email, $url );
+	}
+}
+
 add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
 /**
  * Pass ajax responses to a remote HTTP request.
