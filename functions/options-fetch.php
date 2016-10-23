@@ -1,4 +1,12 @@
 <?php
+/**
+ * Functions for getting and setting the plugin's options.
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
 
 global $swp_user_options;
 
@@ -6,234 +14,131 @@ global $swp_user_options;
  * $swp_user_options Fetch the available options that the user has set
  * @var array An array of available options from the options page
  */
-$swp_user_options = get_option( 'socialWarfareOptions' );
+$swp_user_options = swp_get_user_options( is_admin() );
 
 /**
- * swp_get_user_options A function to adjust the options and ensure that defaults are set
+ * A function to adjust the options and ensure that defaults are set
+ *
  * @param  boolean $admin A boolean value to determine if it's being called in the admin or elsewhere
- * @return array $swp_user_options The modified options array
+ * @return array $options The modified options array
  */
 function swp_get_user_options( $admin = false ) {
-	global $swp_user_options;
+	$options = get_option( 'socialWarfareOptions' );
 
 	// Reset the Order of Icons Options.
-	if ( isset( $swp_user_options['orderOfIcons'] ) ) :
-		unset( $swp_user_options['orderOfIcons'] );
-		update_option( 'socialWarfareOptions',$swp_user_options );
+	if ( isset( $options['orderOfIcons'] ) ) :
+		unset( $options['orderOfIcons'] );
+		update_option( 'socialWarfareOptions', $options );
 	endif;
 
+	$defaults = array(
+		'locationSite'              => 'both',
+		'totes'                     => true,
+		'totesEach'                 => true,
+		'twitterID'                 => false,
+		'swp_twitter_card'          => true,
+		'visualTheme'               => 'flatFresh',
+		'dColorSet'                 => 'fullColor',
+		'iColorSet'                 => 'fullColor',
+		'oColorSet'                 => 'fullColor',
+		'sideDColorSet'             => 'fullColor',
+		'sideIColorSet'             => 'fullColor',
+		'sideOColorSet'             => 'fullColor',
+		'floatStyleSource'          => true,
+		'buttonSize'                => 1,
+		'buttonFloat'               => 'fullWidth',
+		'sideReveal'                => 'slide',
+		'swp_float_scr_sz'          => 1100,
+		'cttTheme'                  => 'style1',
+		'twitter_shares'            => false,
+		'float'                     => true,
+		'floatOption'               => 'bottom',
+		'floatBgColor'              => '#ffffff',
+		'floatStyle'                => 'default',
+		'customColor'               => '#000000',
+		'recover_shares'            => false,
+		'recovery_format'           => 'unchanged',
+		'recovery_protocol'         => 'unchanged',
+		'recovery_prefix'           => 'unchanged',
+		'swDecimals'                => 0,
+		'swp_decimal_separator'     => 'period',
+		'swTotesFormat'             => 'totesalt',
+		'googleAnalytics'           => false,
+		'dashboardShares'           => true,
+		'linkShortening'            => false,
+		'minTotes'                  => 0,
+		'cacheMethod'               => 'advanced',
+		'rawNumbers'                => false,
+		'notShowing'                => false,
+		'visualEditorBug'           => false,
+		'loopFix'                   => false,
+		'sniplyBuster'              => false,
+		'analyticsMedium'           => 'social',
+		'analyticsCampaign'         => 'SocialWarfare',
+		'swp_click_tracking'        => false,
+		'orderOfIconsSelect'        => 'manual',
+		'pinit_toggle'              => false,
+		'pinit_location_horizontal' => 'center',
+		'pinit_location_vertical'   => 'top',
+		'pinit_min_width'           => '200',
+		'pinit_min_height'          => '200',
+		'emphasize_icons'           => 0,
+		'floatLeftMobile'           => 'bottom',
+	);
+
+	$options = array_merge( $defaults, $options );
+
 	// Force the plugin off on certain post types.
-	$swp_user_options['locationattachment'] = 'none';
-	$swp_user_options['locationrevision']   = 'none';
-	$swp_user_options['nav_menu_item']      = 'none';
-	$swp_user_options['shop_order']         = 'none';
-	$swp_user_options['shop_order_refund']  = 'none';
-	$swp_user_options['shop_coupon']        = 'none';
-	$swp_user_options['shop_webhook']       = 'none';
+	$options['locationattachment'] = 'none';
+	$options['locationrevision']   = 'none';
+	$options['nav_menu_item']      = 'none';
+	$options['shop_order']         = 'none';
+	$options['shop_order_refund']  = 'none';
+	$options['shop_coupon']        = 'none';
+	$options['shop_webhook']       = 'none';
 
-	// If this is the admin page or if the plugin is registered
-	if ( $admin || true === is_swp_registered() ) :
-		if ( ! isset( $swp_user_options['locationSite'] ) ) { $swp_user_options['locationSite'] 		= 'both';
-		};
-		if ( ! isset( $swp_user_options['totes'] ) ) { $swp_user_options['totes'] 				= true;
-		};
-		if ( ! isset( $swp_user_options['totesEach'] ) ) { $swp_user_options['totesEach'] 			= true;
-		};
-		if ( ! isset( $swp_user_options['twitterID'] ) ) { $swp_user_options['twitterID'] 			= false;
-		};
-		if ( ! isset( $swp_user_options['swp_twitter_card'] ) ) { $swp_user_options['swp_twitter_card'] 	= true;
-		};
-		if ( ! isset( $swp_user_options['visualTheme'] ) ) { $swp_user_options['visualTheme'] 			= 'flatFresh';
-		};
-		if ( ! isset( $swp_user_options['dColorSet'] ) ) { $swp_user_options['dColorSet'] 			= 'fullColor';
-		};
-		if ( ! isset( $swp_user_options['iColorSet'] ) ) { $swp_user_options['iColorSet'] 			= 'fullColor';
-		};
-		if ( ! isset( $swp_user_options['oColorSet'] ) ) { $swp_user_options['oColorSet'] 			= 'fullColor';
-		};
-		if ( ! isset( $swp_user_options['sideDColorSet'] ) ) { $swp_user_options['sideDColorSet'] 		= 'fullColor';
-		};
-		if ( ! isset( $swp_user_options['sideIColorSet'] ) ) { $swp_user_options['sideIColorSet'] 		= 'fullColor';
-		};
-		if ( ! isset( $swp_user_options['sideOColorSet'] ) ) { $swp_user_options['sideOColorSet'] 		= 'fullColor';
-		};
-		if ( ! isset( $swp_user_options['floatStyleSource'] ) ) { $swp_user_options['floatStyleSource'] 	= true;
-		};
-		if ( ! isset( $swp_user_options['buttonSize'] ) ) { $swp_user_options['buttonSize'] 			= 1;
-		};
-		if ( ! isset( $swp_user_options['buttonFloat'] ) ) { $swp_user_options['buttonFloat'] 			= 'fullWidth';
-		};
-		if ( ! isset( $swp_user_options['sideReveal'] ) ) { $swp_user_options['sideReveal'] 			= 'slide';
-		};
-		if ( ! isset( $swp_user_options['swp_float_scr_sz'] ) ) { $swp_user_options['swp_float_scr_sz'] 	= 1100;
-		};
-		if ( ! isset( $swp_user_options['cttTheme'] ) ) { $swp_user_options['cttTheme'] 			= 'style1';
-		};
-		if ( ! isset( $swp_user_options['twitter_shares'] ) ) { $swp_user_options['twitter_shares'] 		= false;
-		};
-		if ( ! isset( $swp_user_options['float'] ) ) { $swp_user_options['float'] 				= true;
-		};
-		if ( ! isset( $swp_user_options['floatOption'] ) ) { $swp_user_options['floatOption'] 			= 'bottom';
-		};
-		if ( ! isset( $swp_user_options['floatBgColor'] ) ) { $swp_user_options['floatBgColor'] 		= '#ffffff';
-		};
-		if ( ! isset( $swp_user_options['floatStyle'] ) ) { $swp_user_options['floatStyle'] 			= 'default';
-		};
-		if ( ! isset( $swp_user_options['customColor'] ) ) { $swp_user_options['customColor'] 			= '#000000';
-		};
-		if ( ! isset( $swp_user_options['recover_shares'] ) ) { $swp_user_options['recover_shares'] 		= false;
-		};
-		if ( ! isset( $swp_user_options['recovery_format'] ) ) { $swp_user_options['recovery_format'] 		= 'unchanged';
-		};
-		if ( ! isset( $swp_user_options['recovery_protocol'] ) ) { $swp_user_options['recovery_protocol'] 	= 'unchanged';
-		};
-		if ( ! isset( $swp_user_options['recovery_prefix'] ) ) { $swp_user_options['recovery_prefix'] 		= 'unchanged';
-		};
-		if ( ! isset( $swp_user_options['swDecimals'] ) ) { $swp_user_options['swDecimals'] 			= 0;
-		};
-		if ( ! isset( $swp_user_options['swp_decimal_separator'] ) ) { $swp_user_options['swp_decimal_separator'] = 'period';
-		};
-		if ( ! isset( $swp_user_options['swTotesFormat'] ) ) { $swp_user_options['swTotesFormat'] 		= 'totesalt';
-		};
-		if ( $swp_user_options['swTotesFormat'] == 'totes' ) { $swp_user_options['swTotesFormat']		= 'totesalt';
-		};
-		if ( ! isset( $swp_user_options['googleAnalytics'] ) ) { $swp_user_options['googleAnalytics'] 		= false;
-		};
-		if ( ! isset( $swp_user_options['dashboardShares'] ) ) { $swp_user_options['dashboardShares'] 		= true;
-		};
-		if ( ! isset( $swp_user_options['linkShortening'] ) ) { $swp_user_options['linkShortening'] 		= false;
-		};
-		if ( ! isset( $swp_user_options['minTotes'] ) ) { $swp_user_options['minTotes']				= 0;
-		};
-		if ( ! isset( $swp_user_options['cacheMethod'] ) ) { $swp_user_options['cacheMethod']			= 'advanced';
-		};
-		if ( ! isset( $swp_user_options['rawNumbers'] ) ) { $swp_user_options['rawNumbers']			= false;
-		};
-		if ( ! isset( $swp_user_options['notShowing'] ) ) { $swp_user_options['notShowing']			= false;
-		};
-		if ( ! isset( $swp_user_options['visualEditorBug'] ) ) { $swp_user_options['visualEditorBug']		= false;
-		};
-		if ( ! isset( $swp_user_options['loopFix'] ) ) { $swp_user_options['loopFix']				= false;
-		};
-		if ( ! isset( $swp_user_options['sniplyBuster'] ) ) { $swp_user_options['sniplyBuster']			= false;
-		};
-		if ( ! isset( $swp_user_options['analyticsMedium'] ) ) { $swp_user_options['analyticsMedium']		= 'social';
-		};
-		if ( ! isset( $swp_user_options['analyticsCampaign'] ) ) { $swp_user_options['analyticsCampaign']	= 'SocialWarfare';
-		};
-		if ( ! isset( $swp_user_options['swp_click_tracking'] ) ) { $swp_user_options['swp_click_tracking']	= false;
-		};
-		if ( ! isset( $swp_user_options['orderOfIconsSelect'] ) ) { $swp_user_options['orderOfIconsSelect']	= 'manual';
-		};
-		if ( ! isset( $swp_user_options['pinit_toggle'] ) ) { $swp_user_options['pinit_toggle']			= false;
-		};
-		if ( ! isset( $swp_user_options['pinit_location_horizontal'] ) ) { $swp_user_options['pinit_location_horizontal'] = 'center';
-		};
-		if ( ! isset( $swp_user_options['pinit_location_vertical'] ) ) { $swp_user_options['pinit_location_vertical'] = 'top';
-		};
-		if ( ! isset( $swp_user_options['pinit_min_width'] ) ) { $swp_user_options['pinit_min_width'] 		= '200';
-		};
-		if ( ! isset( $swp_user_options['pinit_min_height'] ) ) { $swp_user_options['pinit_min_height'] 	= '200';
-		};
-		if ( ! isset( $swp_user_options['emphasize_icons'] ) ) { $swp_user_options['emphasize_icons'] 		= 0;
-		};
-		if ( ! isset( $swp_user_options['floatLeftMobile'] ) ) { $swp_user_options['floatLeftMobile'] 		= 'bottom';
-		};
+	if ( $admin || true === is_swp_registered() ) {
+		if ( 'totes' === $options['swTotesFormat'] ) {
+			$options['swTotesFormat'] = 'totesalt';
+		}
+	} else {
+		$options['swp_twitter_card']          = false;
+		$options['visualTheme']               = 'flatFresh';
+		$options['dColorSet']                 = 'fullColor';
+		$options['iColorSet']                 = 'fullColor';
+		$options['oColorSet']                 = 'fullColor';
+		$options['sideDColorSet']             = 'fullColor';
+		$options['sideIColorSet']             = 'fullColor';
+		$options['sideOColorSet']             = 'fullColor';
+		$options['floatStyleSource']          = true;
+		$options['buttonSize']                = 1;
+		$options['buttonFloat']               = 'fullWidth';
+		$options['cttTheme']                  = 'style1';
+		$options['twitter_shares']            = false;
+		$options['recover_shares']            = false;
+		$options['googleAnalytics']           = false;
+		$options['linkShortening']            = false;
+		$options['minTotes']                  = 0;
+		$options['swp_click_tracking']        = false;
+		$options['orderOfIconsSelect']        = 'manual';
+		$options['pinit_toggle']              = false;
+		$options['pinit_location_horizontal'] = 'center';
+		$options['pinit_location_vertical']   = 'top';
+		$options['emphasize_icons']           = 0;
+		$options['floatLeftMobile']           = 'off';
+	}
 
-		// If it's not registered
-		else :
-			if ( ! isset( $swp_user_options['locationSite'] ) ) { $swp_user_options['locationSite'] 		= 'both';
-			};
-			if ( ! isset( $swp_user_options['totes'] ) ) { $swp_user_options['totes'] 				= true;
-			};
-			if ( ! isset( $swp_user_options['totesEach'] ) ) { $swp_user_options['totesEach'] 			= true;
-			};
-			if ( ! isset( $swp_user_options['twitterID'] ) ) { $swp_user_options['twitterID'] 			= false;
-			};
-			$swp_user_options['swp_twitter_card'] = false;
-			$swp_user_options['visualTheme'] = 'flatFresh';
-			$swp_user_options['dColorSet'] 	= 'fullColor';
-			$swp_user_options['iColorSet'] 	= 'fullColor';
-			$swp_user_options['oColorSet'] 	= 'fullColor';
-			$swp_user_options['sideDColorSet'] 	= 'fullColor';
-			$swp_user_options['sideIColorSet'] 	= 'fullColor';
-			$swp_user_options['sideOColorSet'] 	= 'fullColor';
-			$swp_user_options['floatStyleSource'] = true;
-			$swp_user_options['buttonSize'] = 1;
-			$swp_user_options['buttonFloat'] = 'fullWidth';
-			if ( ! isset( $swp_user_options['sideReveal'] ) ) { $swp_user_options['sideReveal'] 			= 'slide';
-			};
-			if ( ! isset( $swp_user_options['swp_float_scr_sz'] ) ) { $swp_user_options['swp_float_scr_sz'] 	= 1100;
-			};
-			$swp_user_options['cttTheme'] = 'style1';
-			$swp_user_options['twitter_shares'] = false;
-			if ( ! isset( $swp_user_options['float'] ) ) { $swp_user_options['float'] 				= true;
-			};
-			if ( ! isset( $swp_user_options['floatOption'] ) ) { $swp_user_options['floatOption'] 			= 'bottom';
-			};
-			if ( ! isset( $swp_user_options['floatBgColor'] ) ) { $swp_user_options['floatBgColor'] 		= '#ffffff';
-			};
-			if ( ! isset( $swp_user_options['floatStyle'] ) ) { $swp_user_options['floatStyle'] 			= 'default';
-			};
-			if ( ! isset( $swp_user_options['customColor'] ) ) { $swp_user_options['customColor'] 			= '#000000';
-			};
-			$swp_user_options['recover_shares'] = false;
-			if ( ! isset( $swp_user_options['recovery_format'] ) ) { $swp_user_options['recovery_format'] 		= 'unchanged';
-			};
-			if ( ! isset( $swp_user_options['recovery_protocol'] ) ) { $swp_user_options['recovery_protocol'] 	= 'unchanged';
-			};
-			if ( ! isset( $swp_user_options['recovery_prefix'] ) ) { $swp_user_options['recovery_prefix'] 		= 'unchanged';
-			};
-			if ( ! isset( $swp_user_options['swDecimals'] ) ) { $swp_user_options['swDecimals'] 			= 0;
-			};
-			if ( ! isset( $swp_user_options['swp_decimal_separator'] ) ) { $swp_user_options['swp_decimal_separator'] = 'period';
-			};
-			if ( ! isset( $swp_user_options['swTotesFormat'] ) ) { $swp_user_options['swTotesFormat'] 		= 'totesalt';
-			};
-			if ( $swp_user_options['swTotesFormat'] == 'totes' ) { $swp_user_options['swTotesFormat']		= 'totesalt';
-			};
-			$swp_user_options['googleAnalytics'] = false;
-			if ( ! isset( $swp_user_options['dashboardShares'] ) ) { $swp_user_options['dashboardShares'] 		= true;
-			};
-			$swp_user_options['linkShortening'] = false;
-			$swp_user_options['minTotes'] = 0;
-			if ( ! isset( $swp_user_options['cacheMethod'] ) ) { $swp_user_options['cacheMethod']			= 'advanced';
-			};
-			if ( ! isset( $swp_user_options['rawNumbers'] ) ) { $swp_user_options['rawNumbers']			= false;
-			};
-			if ( ! isset( $swp_user_options['notShowing'] ) ) { $swp_user_options['notShowing']			= false;
-			};
-			if ( ! isset( $swp_user_options['visualEditorBug'] ) ) { $swp_user_options['visualEditorBug']		= false;
-			};
-			if ( ! isset( $swp_user_options['loopFix'] ) ) { $swp_user_options['loopFix']				= false;
-			};
-			if ( ! isset( $swp_user_options['sniplyBuster'] ) ) { $swp_user_options['sniplyBuster']			= false;
-			};
-			if ( ! isset( $swp_user_options['analyticsMedium'] ) ) { $swp_user_options['analyticsMedium']		= 'social';
-			};
-			if ( ! isset( $swp_user_options['analyticsCampaign'] ) ) { $swp_user_options['analyticsCampaign']	= 'SocialWarfare';
-			};
-			$swp_user_options['swp_click_tracking'] = false;
-			$swp_user_options['orderOfIconsSelect'] = 'manual';
-			$swp_user_options['pinit_toggle'] = false;
-			$swp_user_options['pinit_location_horizontal'] = 'center';
-			$swp_user_options['pinit_location_vertical'] = 'top';
-			$swp_user_options['emphasize_icons'] = 0;
-			$swp_user_options['floatLeftMobile'] = 'off';
+	if ( ! isset( $options['newOrderOfIcons'] ) ) {
+		$options['newOrderOfIcons']['active'] = array(
+			'twitter'    => 'Twitter',
+			'linkedIn'   => 'LinkedIn',
+			'pinterest'  => 'Pinterest',
+			'facebook'   => 'Facebook',
+			'googlePlus' => 'Google Plus',
+		);
+	}
 
-		endif;
-
-		if ( ! isset( $swp_user_options['newOrderOfIcons'] ) ) :
-			$swp_user_options['newOrderOfIcons']['active'] = array(
-				'twitter'    => 'Twitter',
-				'linkedIn'   => 'LinkedIn',
-				'pinterest'  => 'Pinterest',
-				'facebook'   => 'Facebook',
-				'googlePlus' => 'Google Plus',
-			);
-		endif;
-
-		return $swp_user_options;
+	return $options;
 }
 
 /**
