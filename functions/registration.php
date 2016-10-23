@@ -241,8 +241,8 @@ function swp_ajax_passthrough() {
 
 	$message = '';
 
-	if ( 'register' === $data['activity'] && isset( $data['domain'] ) ) {
-		$response = swp_register_plugin( $data['email'], $data['domain'] );
+	if ( 'register' === $data['activity'] ) {
+		$response = swp_register_plugin( $data['email'], swp_get_site_url() );
 
 		if ( ! $response ) {
 			wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
