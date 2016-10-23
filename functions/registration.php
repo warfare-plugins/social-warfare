@@ -101,7 +101,7 @@ function swp_get_registration_api( $args = array(), $decode = true ) {
 	$response = wp_remote_get( esc_url_raw( $url ) );
 
 	if ( is_wp_error( $response ) ) {
-		return 'false';
+		return false;
 	}
 
 	$response = wp_remote_retrieve_body( $response );
@@ -135,6 +135,10 @@ function swp_register_plugin( $email, $domain ) {
 		'registrationCode' => swp_get_registration_key( $domain ),
 	) );
 
+	if ( ! $response ) {
+		return false;
+	}
+
 	if ( 'success' === $response['status'] ) {
 		swp_update_option( 'premiumCode', $response['premiumCode'] );
 		return true;
@@ -157,6 +161,10 @@ function swp_unregister_plugin( $email, $domain ) {
 		'emailAddress' => $email,
 		'premiumCode'  => swp_get_registration_key( $domain, 'db' ),
 	) );
+
+	if ( ! $response ) {
+		return false;
+	}
 
 	if ( 'success' === $response['status'] ) {
 		swp_update_option( 'emailAddress', '' );
@@ -198,7 +206,7 @@ function swp_check_registration_status() {
 	$status = is_swp_registered();
 
 	// If the response is negative, unregister the plugin....
-	if ( 'false' === $response ) {
+	if ( ! $response || 'false' === $response ) {
 		if ( swp_register_plugin( $email, $domain ) ) {
 			$status = true;
 		} else {
