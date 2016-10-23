@@ -587,24 +587,6 @@
 		return unregistered;
 	}
 
-	/*********************************************************
-		Rearm the Registration if the domain has changed
-	*********************************************************/
-	function rearmRegistration() {
-		var premCode = $( 'input#domain' ).attr( 'data-premcode' );
-
-		$( 'input[name="premiumCode"]' ).attr( 'readonly', 'readonly' );
-		$( 'input[name="regCode"]' ).parent( '.swp_field' ).hide();
-
-		if ( '' === $( 'input[name="premiumCode"]' ).val() || premCode === $( 'input[name="premiumCode"]' ).val() ) {
-			return;
-		}
-
-		if ( ! registerPlugin() ) {
-			unregisterPlugin();
-		}
-	}
-
 	function handleRegistration() {
 		$( '#register-plugin' ).on( 'click', function() {
 			registerPlugin();
@@ -615,8 +597,6 @@
 			unregisterPlugin();
 			return false;
 		});
-
-		//rearmRegistration();
 	}
 
 	/*******************************************************
