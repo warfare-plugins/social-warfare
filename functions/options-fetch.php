@@ -1,5 +1,7 @@
 <?php
 
+global $swp_user_options;
+
 /**
  * $swp_user_options Fetch the available options that the user has set
  * @var array An array of available options from the options page
@@ -12,27 +14,25 @@ $swp_user_options = get_option( 'socialWarfareOptions' );
  * @return array $swp_user_options The modified options array
  */
 function swp_get_user_options( $admin = false ) {
-
-	// Fetch the global options array
 	global $swp_user_options;
 
-	// Reset the Order of Icons Options
+	// Reset the Order of Icons Options.
 	if ( isset( $swp_user_options['orderOfIcons'] ) ) :
 		unset( $swp_user_options['orderOfIcons'] );
 		update_option( 'socialWarfareOptions',$swp_user_options );
 	endif;
 
-	// Force the plugin off on certain post types
-	$swp_user_options['locationattachment'] 		= 'none';
-	$swp_user_options['locationrevision'] 			= 'none';
-	$swp_user_options['nav_menu_item'] 				= 'none';
-	$swp_user_options['shop_order'] 				= 'none';
-	$swp_user_options['shop_order_refund'] 			= 'none';
-	$swp_user_options['shop_coupon'] 				= 'none';
-	$swp_user_options['shop_webhook'] 				= 'none';
+	// Force the plugin off on certain post types.
+	$swp_user_options['locationattachment'] = 'none';
+	$swp_user_options['locationrevision']   = 'none';
+	$swp_user_options['nav_menu_item']      = 'none';
+	$swp_user_options['shop_order']         = 'none';
+	$swp_user_options['shop_order_refund']  = 'none';
+	$swp_user_options['shop_coupon']        = 'none';
+	$swp_user_options['shop_webhook']       = 'none';
 
 	// If this is the admin page or if the plugin is registered
-	if ( $admin == true || is_swp_registered() == true ) :
+	if ( $admin || true === is_swp_registered() ) :
 		if ( ! isset( $swp_user_options['locationSite'] ) ) { $swp_user_options['locationSite'] 		= 'both';
 		};
 		if ( ! isset( $swp_user_options['totes'] ) ) { $swp_user_options['totes'] 				= true;
@@ -225,35 +225,46 @@ function swp_get_user_options( $admin = false ) {
 
 		if ( ! isset( $swp_user_options['newOrderOfIcons'] ) ) :
 			$swp_user_options['newOrderOfIcons']['active'] = array(
-				'twitter' => 'Twitter',
-				'linkedIn' => 'LinkedIn',
-				'pinterest' => 'Pinterest',
-				'facebook' => 'Facebook',
+				'twitter'    => 'Twitter',
+				'linkedIn'   => 'LinkedIn',
+				'pinterest'  => 'Pinterest',
+				'facebook'   => 'Facebook',
 				'googlePlus' => 'Google Plus',
 			);
-		elseif ( isset( $swp_user_options['newOrderOfIcons'] ) && is_swp_registered() == false ) :
-			$swp_options_page = array(
-				'tabs' => array(
-					'links' => array(),
-				),
-				'options' => array(),
-			);
-			$swp_options_page = apply_filters( 'swp_options' , $swp_options_page );
-			foreach ( $swp_options_page['options']['swp_display']['buttons']['content'] as $key => $value ) :
-				if ( isset( $swp_user_options['newOrderOfIcons'][ $key ] ) && $value['premium'] == true ) :
-					unset( $swp_user_options['newOrderOfIcons'][ $key ] );
-				endif;
-			endforeach;
 		endif;
 
 		return $swp_user_options;
 }
+
 /**
- * swp_get_single_option A function for fetching a single option
- * @param  string $key 		The key to pull from the array of options
- * @return mixed $options 	The value of the desired option
+ * Fetch a single option
+ *
+ * @since  unknown
+ * @param  string $key The key to pull from the array of options.
+ * @return mixed $options The value of the desired option
  */
 function swp_get_single_option( $key ) {
-	$option = swp_get_user_options();
-	return $option[ $key ];
+	global $swp_user_options;
+
+	if ( isset( $swp_user_options[ $key ] ) ) {
+		return $swp_user_options[ $key ];
+	}
+
+	return false;
+}
+
+/**
+ * Update a single option.
+ *
+ * @since  2.1.0
+ * @param  string $key The key to set in the array of options.
+ * @param  mixed  $value The option value to be set.
+ * @return bool True if the option has been updated.
+ */
+function swp_update_option( $key, $value ) {
+	global $swp_user_options;
+
+	$swp_user_options[ $key ] = $value;
+
+	return update_option( 'socialWarfareOptions', $swp_user_options );
 }

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Functions for loading the admin options page.
+ *
+ * @package   SocialWarfare\Admin\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
 
 /**
  * Enqueue the admin menu page
@@ -39,10 +47,10 @@ function swp_admin_options_css() {
 }
 
 /**
- * swp_admin_options_js Enqueue the admin javascript
- * @since 	2.0.0
- * @param 	none
- * @return 	none
+ * Enqueue the admin javascript
+ *
+ * @since  2.0.0
+ * @return void
  */
 function swp_admin_options_js() {
 	$suffix = swp_get_suffix();
@@ -59,38 +67,35 @@ function swp_admin_options_js() {
 		array( 'jquery' ),
 		SWP_VERSION
 	);
+
+	wp_localize_script( 'swp_admin_options_js', 'swpAdminOptionsData', array(
+		'registerNonce' => wp_create_nonce( 'swp_plugin_registration' ),
+		'optionsNonce'  => wp_create_nonce( 'swp_plugin_options_save' ),
+	));
 }
 
 /**
  * Build the Settings Page Form
  */
 function swp_plugin_options() {
-
-	// Make sure the person accessing this link has proper permissions to access it
-	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'social-warfare' ) );
+	if ( current_user_can( 'manage_options' ) ) {
+		swp_build_options_page();
 	}
-
-	swp_build_options_page();
-
 }
 
 /**
  * A Function to Parse the Array & Build the Options Page
  */
 function swp_build_options_page() {
+	global $swp_user_options;
 
-	$swp_user_options = get_option( 'socialWarfareOptions' );
-
-	// Create all of the options in one giant array
+	// Create all of the options in one giant array.
 	$swp_options_page = array(
-
-		// A List of Options Page Tabs and Their Titles
+		// A List of Options Page Tabs and Their Titles.
 		'tabs' => array(
 			'links' => array(),
 		),
-
-		// A list of options in each of the options tabs
+		// A list of options in each of the options tabs.
 		'options' => array(),
 	);
 
@@ -126,7 +131,7 @@ function swp_build_options_page() {
 	 * Build the Tab Container
 	 */
 
-	echo '<div class="sw-admin-wrapper" sw-registered="' . is_swp_registered() . '">';
+	echo '<div class="sw-admin-wrapper" sw-registered="' . absint( is_swp_registered() ) . '">';
 
 	echo '<form class="sw-admin-settings-form">';
 
@@ -256,7 +261,7 @@ function swp_build_options_page() {
 
 				// The Inactive Buttons
 				echo '<div class="sw-grid sw-col-300">';
-				echo '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
+				echo '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
 				echo '</div>';
 
 				echo '<div class="sw-grid sw-col-620 sw-fit">';
@@ -630,7 +635,7 @@ function swp_build_options_page() {
 				}
 
 				// Begin Registration Wrapper
-				echo '<div class="registration-wrapper" registration="' . (is_swp_registered() ? '1' : '0') . '">';
+				echo '<div class="registration-wrapper" registration="' . absint( is_swp_registered() ) . '">';
 
 				// Registration Title
 				echo '<h2>' . __( 'Premium Registration' , 'social-warfare' ) . '</h2>';
@@ -643,30 +648,25 @@ function swp_build_options_page() {
 				echo '<p class="sw-subtitle sw-registration-text">' . __( 'Follow these simple steps to register your Premium License and access all features.' , 'social-warfare' ) . '</p>';
 				echo '<p class="sw-subtitle sw-registration-text sw-italic">' . __( 'Step 1: Enter your email.' , 'social-warfare' ) . '<br />' . __( 'Step 2: Click the "Register Plugin" button.' , 'social-warfare' ) . '<br />' . __( 'Step 3: Watch the magic.' , 'social-warfare' ) . '</p>';
 
-				if ( is_multisite() ) :
-					$homeURL = network_site_url();
-				else :
-					$homeURL = site_url();
-				endif;
-				$regCode = md5( $homeURL );
+				$home_url = swp_get_site_url();
+				$reg_code = swp_get_registration_key( $home_url );
+				$email = '';
+				$premium_code = '';
+
 				if ( isset( $swp_user_options['emailAddress'] ) ) :
 					$email = $swp_user_options['emailAddress'];
-				else :
-					$email = '';
 				endif;
 
 				if ( isset( $swp_user_options['premiumCode'] ) ) :
-					$premiumCode = $swp_user_options['premiumCode'];
-				else :
-					$premiumCode = '';
+					$premium_code = $swp_user_options['premiumCode'];
 				endif;
 
 				// Email Input Module
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . __( 'Email Address' , 'social-warfare' ) . '</p></div>';
 				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="' . $email . '" /></div>';
-				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="' . $premiumCode . '" />';
-				echo '<input name="regCode" type="text" class="sw-admin-input sw-hidden" value="' . $regCode . '" />';
-				echo '<input type="hidden" class="at-text" name="domain" id="domain" value="' . $homeURL . '" size="30" readonly data-premcode="' . md5( md5( $homeURL ) ) . '">';
+				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="' . $premium_code . '" />';
+				echo '<input name="regCode" type="text" class="sw-admin-input sw-hidden" value="' . $reg_code . '" />';
+				echo '<input type="hidden" class="at-text" name="domain" id="domain" value="' . $home_url . '" size="30" readonly data-premcode="' . swp_get_registration_key( $home_url, 'db' ) . '">';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-clearfix"></div>';
 
@@ -824,7 +824,6 @@ function swp_build_options_page() {
 			<tr><td><b>Active Plugins</b></td><td></td></tr>
 			<tr><td><b>Number of Active Plugins</b></td><td>' . count( $plugins ) . '</td></tr>
 			' . $pluginList . '
-
 		</table>
 		';
 
@@ -854,111 +853,47 @@ function swp_build_options_page() {
 
 }
 
-/**
- * A Function to handle the request inside of admin-ajax.php
- */
-
 add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
+/**
+ * Handle the options save request inside of admin-ajax.php
+ *
+ * @since  unknown
+ * @return void
+ */
 function swp_store_the_settings() {
+	global $swp_user_options;
 
-	// Access the database
-	global $wpdb;
+	if ( ! check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
+		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
+		die;
+	}
 
-	// Fetch the settings from the POST submission
-	$settings = $_POST['settings'];
+	$data = wp_unslash( $_POST );
 
-	// Fetch the existing options set
-	$options = get_option( 'socialWarfareOptions' );
+	if ( empty( $data['settings'] ) ) {
+		wp_send_json_error( esc_html__( 'No settings to save.', 'social-warfare' ) );
+		die;
+	}
+
+	$settings = $data['settings'];
+
+	$options = $swp_user_options;
 
 	unset( $options['newOrderOfIcons']['active'] );
 	unset( $options['newOrderOfIcons']['inactive'] );
 
-	// Loop and check for checkbox values, convert them to boolean
-	foreach ( $settings as $key => $value ) :
-		if ( $value == 'true' ) :
+	// Loop and check for checkbox values, convert them to boolean.
+	foreach ( $settings as $key => $value ) {
+		if ( 'true' == $value ) {
 			$options[ $key ] = true;
-		elseif ( $value == 'false' ) :
+		} elseif ( 'false' == $value ) {
 			$options[ $key ] = false;
-		else :
+		} else {
 			$options[ $key ] = $value;
-		endif;
-	endforeach;
+		}
+	}
 
-	// Store the values back in the database
-	update_option( 'socialWarfareOptions',$options );
+	update_option( 'socialWarfareOptions', $options );
 
-	// Kill WordPress
-	wp_die();
-}
-
-
-/**
- * A Function to store the registration code
- */
-
-add_action( 'wp_ajax_swp_store_registration', 'swp_store_the_registration' );
-function swp_store_the_registration() {
-
-	// Access the database
-	global $wpdb;
-
-	// Fetch the settings from the POST submission
-	$premiumCode = $_POST['premiumCode'];
-	$emailAddress = $_POST['email'];
-
-	// Fetch the existing options set
-	$options = get_option( 'socialWarfareOptions' );
-
-	// Loop and check for checkbox values, convert them to boolean
-	$options['premiumCode'] = $premiumCode;
-	$options['emailAddress'] = $emailAddress;
-
-	// Store the values back in the database
-	update_option( 'socialWarfareOptions',$options );
-
-	// Kill WordPress
-	wp_die();
-}
-
-/**
- * A Function to delete the registration code
- */
-
-add_action( 'wp_ajax_swp_delete_registration', 'swp_delete_the_registration' );
-function swp_delete_the_registration() {
-
-	// Access the database
-	global $wpdb;
-
-	// Fetch the existing options set
-	$options = get_option( 'socialWarfareOptions' );
-
-	$options['premiumCode'] = '';
-	$options['emailAddress'] = '';
-
-	// Store the values back in the database
-	update_option( 'socialWarfareOptions',$options );
-
-	// Kill WordPress
-	wp_die();
-
-}
-
-/**
- * A function to pss ajax responses to a remote curl request
- * @since 	2.0.0
- * @param 	none
- * @return 	none
- */
-add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
-function swp_ajax_passthrough() {
-
-	// Pass the URL request via cURL
-	$response = swp_file_get_contents_curl( urldecode( $_POST['url'] ) );
-	// Echo the response to the screen
-	echo $response;
-
-	// Kill WordPress
-	wp_die();
-
+	die;
 }
