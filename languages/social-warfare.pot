@@ -1025,8 +1025,8 @@ msgstr ""
 msgid "Stumble"
 msgstr ""
 
-#: functions/social-networks/whatsapp.php:94
-#: functions/social-networks/whatsapp.php:98
+#: functions/social-networks/whatsapp.php:77
+#: functions/social-networks/whatsapp.php:81
 msgid "WhatsApp"
 msgstr ""
 
