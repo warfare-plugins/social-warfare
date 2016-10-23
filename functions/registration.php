@@ -1,147 +1,258 @@
 <?php
+/**
+ * Functions for getting and setting the plugin's registration status.
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
 
 /**
- * CHECK FOR PREMIUM ACTIVATION
+ * Check to see if the plugin has been registered once per page load.
+ *
+ * @since  2.1.0
+ * @param  string $domain The current site's domain.
+ * @param  string $context The context where the key will be used.
+ * @return string A registration key based on the site's domain.
+ */
+function swp_get_registration_key( $domain, $context = 'api' ) {
+	$key = md5( $domain );
+
+	if ( 'db' === $context ) {
+		$key = md5( $key );
+	}
+
+	return $key;
+}
+
+/**
+ * Check to see if the plugin has been registered once per page load.
+ *
+ * @since  unknown
+ * @return bool True if the plugin is registered, false otherwise.
  */
 function is_swp_registered() {
-	// Fetch the User's Options Array
-	$swp_user_options = get_option( 'socialWarfareOptions' );
+	static $is_registered;
 
-	if ( is_multisite() ) :
-		$domain = network_site_url();
-		else :
-			$domain = site_url();
-		endif;
+	if ( null === $is_registered ) {
+		$options = get_option( 'socialWarfareOptions' );
 
-		$regCode = md5( $domain );
+		$domain = swp_get_site_url();
+		$key = swp_get_registration_key( $domain, 'db' );
+
+		$is_registered = false;
 
 		// If the Premium Code is currently set....
-		if ( isset( $swp_user_options['premiumCode'] ) && md5( $regCode ) == $swp_user_options['premiumCode'] ) :
+		if ( isset( $options['premiumCode'] ) && $key === $options['premiumCode'] ) {
+			$is_registered = true;
+		}
+	}
 
-			// It's registered
-			return true;
+	return $is_registered;
+}
 
-			// IF the premium code doesn't match....
-		else :
+add_action( 'admin_init', 'swp_delete_cron_jobs' );
+/**
+ * Clear out any leftover cron jobs from previous plugin versions.
+ *
+ * @since  2.1.0
+ * @return void
+ */
+function swp_delete_cron_jobs() {
+	if ( wp_get_schedule( 'swp_check_registration_event' ) ) {
+		wp_clear_scheduled_hook( 'swp_check_registration_event' );
+	}
+}
 
-			// It's not registered
-			return 0;
+add_action( 'admin_init', 'swp_check_license' );
+/**
+ * Check to see if the license is valid once every month.
+ *
+ * @since  2.1.0
+ * @return void
+ */
+function swp_check_license() {
+	if ( 'checked' === get_transient( 'swp_check_license' ) ) {
+		return;
+	}
 
-		endif;
+	if ( defined( 'MONTH_IN_SECONDS' ) ) {
+		$month = MONTH_IN_SECONDS;
+	} else {
+		$month = 30 * DAY_IN_SECONDS;
+	}
+
+	swp_check_registration_status();
+
+	set_transient( 'swp_check_license', 'checked', $month );
 }
 
 /**
- * ADMIN NOTICE
+ * Get a response from the Social Warfare registration API.
+ *
+ * @since  2.1.0
+ * @param  array $args Query arguments to be sent to the API.
+ * @param  bool  $decode Whether or not to decode the API response.
+ * @return array
  */
-function swp_admin_notice() {
-	if ( ! is_swp_registered() ) :
-		echo '<div class="notice is-dismissable swp_register_admin_notice"><p>Your copy of Social Warfare is not registered. Navigate to the <a href="/wp-admin/admin.php?page=social-warfare"><b>Social Warfare Settings Page</b></a> and select the "Register" tab to register now! You can view and manage your purchased licences on the <a target="_blank" href="https://warfareplugins.com/my-account/">My Account</a> page of the Warfare Plugins website. If you have any issues, please contact us and we\'ll be happy to help.</p></div>';
-		endif;
+function swp_get_registration_api( $args = array(), $decode = true ) {
+	$url = add_query_arg( $args, 'https://warfareplugins.com/registration-api/' );
+	$response = wp_remote_get( esc_url_raw( $url ) );
+
+	if ( is_wp_error( $response ) ) {
+		return 'false';
+	}
+
+	$response = wp_remote_retrieve_body( $response );
+
+	if ( $decode ) {
+		$response = json_decode( $response, true );
+
+		if ( isset( $response['status'] ) ) {
+			$response['status'] = strtolower( $response['status'] );
+		} else {
+			$response['status'] = 'failure';
+		}
+	}
+
+	return $response;
 }
-// add_action( 'admin_notices', 'swp_admin_notice' );
 
 /**
- * CHECK WARFARE PLUGINS SERVER
+ * Attempt to unregister the plugin.
+ *
+ * @since  2.1.0
+ * @param  string $email The email to use during unregistration.
+ * @param  string $domain The domain to use during unregistration.
+ * @return bool
  */
+function swp_unregister_plugin( $email, $domain ) {
+	$response = swp_get_registration_api( array(
+		'activity'     => 'unregister',
+		'emailAddress' => $email,
+		'premiumCode'  => swp_get_registration_key( $domain, 'db' ),
+	) );
 
-// A function to check if the site is registered at our server
+	if ( 'success' === $response['status'] ) {
+		swp_update_option( 'emailAddress', '' );
+		swp_update_option( 'premiumCode', '' );
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Attempt to register the plugin.
+ *
+ * @since  2.1.0
+ * @param  string $email The email to use during unregistration.
+ * @param  string $domain The domain to use during unregistration.
+ * @return bool
+ */
+function swp_register_plugin( $email, $domain ) {
+	$response = swp_get_registration_api( array(
+		'activity'         => 'register',
+		'emailAddress'     => $email,
+		'domain'           => $domain,
+		'registrationCode' => swp_get_registration_key( $domain ),
+	) );
+
+	if ( 'success' === $response['status'] ) {
+		swp_update_option( 'premiumCode', $response['premiumCode'] );
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Check if the site is registered at our server.
+ *
+ * @since  unknown
+ * @return bool
+ */
 function swp_check_registration_status() {
+	$options = get_option( 'socialWarfareOptions' );
 
-	// Fetch the User's Options Array
-	$swp_user_options = get_option( 'socialWarfareOptions' );
+	// Bail early if no premium code exists.
+	if ( empty( $options['premiumCode'] ) ) {
+		return false;
+	}
 
-	// Fetch URL of the home page
-	if ( is_multisite() ) :
-		$homeURL = network_site_url();
-		else :
-			$homeURL = site_url();
-		endif;
+	$domain = swp_get_site_url();
+	$email = $options['emailAddress'];
 
-		// Create a Registration Code from the Domain Name
-		$regCode = md5( $homeURL );
+	$args = array(
+		'activity'         => 'check_registration',
+		'emailAddress'     => $email,
+		'domain'           => $domain,
+		'registrationCode' => swp_get_registration_key( $domain ),
+	);
 
-		// IF the plugin thinks that it is already registered....
-		if ( is_swp_registered() ) :
+	$response = swp_get_registration_api( $args, false );
 
-			// Construct the request URL
-			$url = 'https://warfareplugins.com/registration-api/?activity=check_registration&emailAddress=' . $swp_user_options['emailAddress'] . '&domain=' . $homeURL . '&registrationCode=' . md5( $homeURL );
+	$status = is_swp_registered();
 
-			// Send the link and load the response
-			$response = swp_file_get_contents_curl( $url );
+	// If the response is negative, unregister the plugin....
+	if ( 'false' === $response ) {
+		if ( swp_register_plugin( $email, $domain ) ) {
+			$status = true;
+		} else {
+			swp_unregister_plugin( $email, $domain );
+			$status = false;
+		}
+	}
 
-			// If the response is negative, unregister the plugin....
-			if ( $response === 'false' ) :
+	return $status;
+}
 
-				// Set the premium code to null
-				$swp_user_options['premiumCode'] = '';
+add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
+/**
+ * Pass ajax responses to a remote HTTP request.
+ *
+ * @since  2.0.0
+ * @return void
+ */
+function swp_ajax_passthrough() {
+	if ( ! check_ajax_referer( 'swp_plugin_registration', 'security', false ) ) {
+		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
+		die;
+	}
 
-				// Update the options array with the premium code nulled
-				update_option( 'socialWarfareOptions',$swp_user_options );
+	$data = wp_unslash( $_POST ); // Input var okay.
 
-				return false;
+	if ( ! isset( $data['activity'], $data['email'], $data['domain'] ) ) {
+		wp_send_json_error( esc_html__( 'Required fields missing.', 'social-warfare' ) );
+		die;
+	}
 
-			else :
+	$message = '';
 
-				return true;
+	if ( 'register' === $data['activity'] ) {
+		$response = swp_register_plugin( $data['email'], $data['domain'] );
 
-			endif;
+		if ( ! $response ) {
+			wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
+			die;
+		}
 
-			// If the codes didn't match, but a premium code does exist
-		elseif ( isset( $swp_user_options['premiumCode'] ) ) :
+		$message = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
+	}
 
-			// Attemp to unregister this from the Warfare Plugins Server
-			$url = 'https://warfareplugins.com/registration-api/?activity=unregister&emailAddress=' . $swp_user_options['emailAddress'] . '&premiumCode=' . $swp_user_options['premiumCode'];
+	if ( 'unregister' === $data['activity'] ) {
+		$response = swp_unregister_plugin( $data['email'], $data['domain'] );
 
-			// Parse the response
-			$response = swp_file_get_contents_curl( $url );
-			$response = json_decode( $response,true );
+		if ( ! $response ) {
+			wp_send_json_error( esc_html__( 'Plugin could not be unregistered.', 'social-warfare' ) );
+			die;
+		}
 
-			// If it unregistered, let's try to auto-reregister it....
-			if ( $response['status'] == 'Success' ) :
+		$message = esc_html__( 'Plugin successfully unregistered!', 'social-warfare' );
+	}
 
-				// Attempt to reregister it
-				$url = 'https://warfareplugins.com/registration-api/?activity=register&emailAddress=' . $swp_user_options['emailAddress'] . '&domain=' . get_home_url() . '&registrationCode=' . $regCode;
+	wp_send_json_success( array( 'message' => $message ) );
 
-				// Parse the response
-				$response = swp_file_get_contents_curl( $url );
-				$response = json_decode( $response,true );
-
-				// IF the registration attempt was successful....
-				if ( $response['status'] == 'Success' ) :
-
-					// Save our updated options
-					$swp_user_options['premiumCode'] == $response['premiumCode'];
-
-					// Update the options storing in our new updated Premium Code
-					update_option( 'socialWarfareOptions',$swp_user_options );
-
-					return true;
-
-					// IF the registration attempt was NOT successful
-				else :
-
-					// Set the premium code to null
-					$swp_user_options['premiumCode'] = '';
-
-					// Update the options array with the premium code nulled
-					update_option( 'socialWarfareOptions',$swp_user_options );
-
-					return false;
-
-				endif;
-
-				// IF it wasn't able to unregister
-			else :
-
-				// Set the premium code to null
-				$swp_user_options['premiumCode'] = '';
-
-				// Update the options array with the premium code nulled
-				update_option( 'socialWarfareOptions',$swp_user_options );
-
-				return false;
-
-			endif;
-
-		endif;
+	die;
 }
