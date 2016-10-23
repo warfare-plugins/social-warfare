@@ -104,9 +104,7 @@ function swp_get_alternate_permalink( $format, $protocol, $id, $prefix ) {
 }
 
 function swp_get_alt_permalink( $post = 0, $leavename = false ) {
-
-	// Fetch the Social Warfare user's options
-	$swp_user_options = swp_get_user_options();
+	global $swp_user_options;
 
 	$rewritecode = array(
 		'%year%',

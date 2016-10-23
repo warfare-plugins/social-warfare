@@ -50,7 +50,7 @@ function swp_twitter_network( $networks ) {
 function swp_twitter_request_link( $url ) {
 
 	// Fetch the user's options
-	$swp_user_options = swp_get_user_options();
+	global $swp_user_options;
 
 	// If the user has enabled Twitter shares....
 	if ( $swp_user_options['twitter_shares'] ) :
@@ -83,7 +83,7 @@ function swp_twitter_request_link( $url ) {
 function swp_format_twitter_response( $response ) {
 
 	// Fetch the user's options
-	$swp_user_options = swp_get_user_options();
+	global $swp_user_options;
 
 	// If the user has enabled Twitter shares....
 	if ( $swp_user_options['twitter_shares'] ) :

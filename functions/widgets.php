@@ -14,6 +14,7 @@ class swp_popular_posts_widget extends WP_Widget {
 	 * FUNCTION - CREATE THE WIDGET FORM
 	 */
 	function form( $instance ) {
+		global $swp_user_options;
 
 		// Default Title
 		if ( isset( $instance['title'] ) ) { 		$title 			= esc_attr( $instance['title'] );
@@ -64,7 +65,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		} else {								$custom_link 	= '#000000'; }
 
 		// Fetch the Social Warfare Options
-		$options = swp_get_user_options();
+		$options = $swp_user_options;
 
 		// Fetch the networks that are active on this blog
 		$availableNetworks = $options['newOrderOfIcons'];

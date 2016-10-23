@@ -33,9 +33,10 @@ function swp_get_site_url() {
  * @return float A rounded number.
  */
 function swp_kilomega( $val ) {
+	global $swp_user_options;
 
 	// Fetch the user assigned options
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 
 	// Check if we even have a value to format
 	if ( $val ) :

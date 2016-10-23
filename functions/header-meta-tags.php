@@ -57,6 +57,7 @@ function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) 
 
 	// This is the hook function we're adding the header
 function swp_add_header_meta() {
+	global $swp_user_options;
 
 	$info['postID'] = get_the_ID();
 
@@ -131,7 +132,7 @@ function swp_add_header_meta() {
 		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
 		$info['description'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
 		$info['swp_fb_author'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'swp_fb_author' , true ) );
-		$info['swp_user_options'] 		= swp_get_user_options();
+		$info['swp_user_options'] 		= $swp_user_options;
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
 

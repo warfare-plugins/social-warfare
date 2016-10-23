@@ -74,6 +74,7 @@ function swp_disable_subs() {
  *         : ( true | false )
  */
 function social_warfare_buttons( $array = array() ) {
+	global $swp_user_options;
 
 	// Setup the default Array parameters
 	if ( ! isset( $array['where'] ) ) { $array['where'] = 'default'; }
@@ -87,7 +88,7 @@ function social_warfare_buttons( $array = array() ) {
 		$postID = get_the_ID();
 	endif;
 
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 
 	// Check to see if display location was specifically defined for this post
 	$specWhere = get_post_meta( $postID,'nc_postLocation',true );

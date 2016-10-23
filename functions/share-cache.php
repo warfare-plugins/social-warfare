@@ -37,12 +37,14 @@ function swp_cache_rebuild_rel_canonical( $info ) {
  *                                                                *
  ******************************************************************/
 function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
+	global $swp_user_options;
+
 	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 		return true;
 	}
 
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 
 	$fresh_cache = false;
 

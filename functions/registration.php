@@ -33,10 +33,12 @@ function swp_get_registration_key( $domain, $context = 'api' ) {
  * @return bool True if the plugin is registered, false otherwise.
  */
 function is_swp_registered() {
+	global $swp_user_options;
+
 	static $is_registered;
 
 	if ( null === $is_registered ) {
-		$options = get_option( 'socialWarfareOptions' );
+		$options = $swp_user_options;
 
 		$domain = swp_get_site_url();
 		$key = swp_get_registration_key( $domain, 'db' );
@@ -174,7 +176,9 @@ function swp_register_plugin( $email, $domain ) {
  * @return bool
  */
 function swp_check_registration_status() {
-	$options = get_option( 'socialWarfareOptions' );
+	global $swp_user_options;
+
+	$options = $swp_user_options;
 
 	// Bail early if no premium code exists.
 	if ( empty( $options['premiumCode'] ) ) {

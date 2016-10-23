@@ -9,12 +9,13 @@
  ******************************************************************/
 
 function socialWarfareSideFloat() {
+	global $swp_user_options;
 
 	// Get the options...or create them if they don't exist
 	wp_reset_query();
 
 	$postID = get_the_ID();
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 	$postType = get_post_type( $postID );
 
 	if ( is_singular() ) :

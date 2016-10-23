@@ -138,10 +138,11 @@ add_action( 'wp_footer' , 'swp_footer_functions' , 99 );
 add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
 
 function swp_footer_functions() {
+	global $swp_user_options;
 
 	// Fetch a few variables.
 	$info['postID']           = get_the_ID();
-	$info['swp_user_options'] = swp_get_user_options();
+	$info['swp_user_options'] = $swp_user_options;
 	$info['footer_output']    = '';
 
 	// Pass the array through our custom filters.

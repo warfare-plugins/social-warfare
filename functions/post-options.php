@@ -59,8 +59,10 @@ add_filter( 'swpmb_meta_boxes', 'swp_register_meta_boxes' );
  * @return array $meta_boxes The modified meta boxes.
  */
 function swp_register_meta_boxes( $meta_boxes ) {
+	global $swp_user_options;
+
 	$prefix = 'nc_';
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 
 	$twitter_id = isset( $options['twitterID'] ) ? $options['twitterID'] : false;
 
