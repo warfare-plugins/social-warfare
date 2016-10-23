@@ -459,8 +459,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			pinitButton();
 		}
 
-		if( !isMobile.phone ) {
-			$('.swp_whatsapp').css({'display':'none'})
+		if( isMobile.phone ) {
+			$('.swp_whatsapp').show();
 		}
 
 	});

@@ -9,7 +9,6 @@
 	line-height: 1;
 	margin-bottom: 20px!important;
 	margin-top: 20px!important;
-	opacity: 0;
 	padding: 0;
 
 	-webkit-align-content: center;
@@ -1712,4 +1711,8 @@ div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
 	-webkit-flex: 2;
 	-ms-flex: 2;
 	flex: 2;
+}
+
+div.nc_socialPanel .nc_tweetContainer.swp_whatsapp {
+	display: none;
 }
