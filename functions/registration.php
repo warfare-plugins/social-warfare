@@ -52,42 +52,6 @@ function is_swp_registered() {
 	return $is_registered;
 }
 
-add_action( 'admin_init', 'swp_delete_cron_jobs' );
-/**
- * Clear out any leftover cron jobs from previous plugin versions.
- *
- * @since  2.1.0
- * @return void
- */
-function swp_delete_cron_jobs() {
-	if ( wp_get_schedule( 'swp_check_registration_event' ) ) {
-		wp_clear_scheduled_hook( 'swp_check_registration_event' );
-	}
-}
-
-add_action( 'admin_init', 'swp_check_license' );
-/**
- * Check to see if the license is valid once every month.
- *
- * @since  2.1.0
- * @return void
- */
-function swp_check_license() {
-	if ( 'checked' === get_transient( 'swp_check_license' ) ) {
-		return;
-	}
-
-	if ( defined( 'MONTH_IN_SECONDS' ) ) {
-		$month = MONTH_IN_SECONDS;
-	} else {
-		$month = 30 * DAY_IN_SECONDS;
-	}
-
-	swp_check_registration_status();
-
-	set_transient( 'swp_check_license', 'checked', $month );
-}
-
 /**
  * Get a response from the Social Warfare registration API.
  *
@@ -152,14 +116,14 @@ function swp_register_plugin( $email, $domain ) {
  *
  * @since  2.1.0
  * @param  string $email The email to use during unregistration.
- * @param  string $domain The domain to use during unregistration.
+ * @param  string $key The premium key code to be unregistered.
  * @return bool
  */
-function swp_unregister_plugin( $email, $domain ) {
+function swp_unregister_plugin( $email, $key ) {
 	$response = swp_get_registration_api( array(
 		'activity'     => 'unregister',
 		'emailAddress' => $email,
-		'premiumCode'  => swp_get_registration_key( $domain, 'db' ),
+		'premiumCode'  => $key,
 	) );
 
 	if ( ! $response ) {
@@ -179,6 +143,7 @@ function swp_unregister_plugin( $email, $domain ) {
  * Check if the site is registered at our server.
  *
  * @since  unknown
+ * @global $swp_user_options
  * @return bool
  */
 function swp_check_registration_status() {
@@ -210,12 +175,48 @@ function swp_check_registration_status() {
 		if ( swp_register_plugin( $email, $domain ) ) {
 			$status = true;
 		} else {
-			swp_unregister_plugin( $email, $domain );
+			swp_unregister_plugin( $email, $options['premiumCode'] );
 			$status = false;
 		}
 	}
 
 	return $status;
+}
+
+add_action( 'admin_init', 'swp_delete_cron_jobs' );
+/**
+ * Clear out any leftover cron jobs from previous plugin versions.
+ *
+ * @since  2.1.0
+ * @return void
+ */
+function swp_delete_cron_jobs() {
+	if ( wp_get_schedule( 'swp_check_registration_event' ) ) {
+		wp_clear_scheduled_hook( 'swp_check_registration_event' );
+	}
+}
+
+add_action( 'admin_init', 'swp_check_license' );
+/**
+ * Check to see if the license is valid once every month.
+ *
+ * @since  2.1.0
+ * @return void
+ */
+function swp_check_license() {
+	if ( 'checked' === get_transient( 'swp_check_license' ) ) {
+		return;
+	}
+
+	if ( defined( 'MONTH_IN_SECONDS' ) ) {
+		$month = MONTH_IN_SECONDS;
+	} else {
+		$month = 30 * DAY_IN_SECONDS;
+	}
+
+	swp_check_registration_status();
+
+	set_transient( 'swp_check_license', 'checked', $month );
 }
 
 add_action( 'wp_ajax_swp_ajax_passthrough', 'swp_ajax_passthrough' );
@@ -233,14 +234,14 @@ function swp_ajax_passthrough() {
 
 	$data = wp_unslash( $_POST ); // Input var okay.
 
-	if ( ! isset( $data['activity'], $data['email'], $data['domain'] ) ) {
+	if ( ! isset( $data['activity'], $data['email'] ) ) {
 		wp_send_json_error( esc_html__( 'Required fields missing.', 'social-warfare' ) );
 		die;
 	}
 
 	$message = '';
 
-	if ( 'register' === $data['activity'] ) {
+	if ( 'register' === $data['activity'] && isset( $data['domain'] ) ) {
 		$response = swp_register_plugin( $data['email'], $data['domain'] );
 
 		if ( ! $response ) {
@@ -251,8 +252,8 @@ function swp_ajax_passthrough() {
 		$message = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
 	}
 
-	if ( 'unregister' === $data['activity'] ) {
-		$response = swp_unregister_plugin( $data['email'], $data['domain'] );
+	if ( 'unregister' === $data['activity'] && isset( $data['key'] ) ) {
+		$response = swp_unregister_plugin( $data['email'], $data['key'] );
 
 		if ( ! $response ) {
 			wp_send_json_error( esc_html__( 'Plugin could not be unregistered.', 'social-warfare' ) );

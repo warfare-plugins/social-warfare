@@ -563,7 +563,7 @@
 			security: swpAdminOptionsData.registerNonce,
 			activity: 'unregister',
 			email: $( 'input[name="emailAddress"]' ).val(),
-			domain: $( 'input[name="domain"]' ).val()
+			key: $( 'input[name="premiumCode"]' ).val()
 		};
 
 		loadingScreen();
