@@ -25,12 +25,6 @@ $swp_user_options = swp_get_user_options( is_admin() );
 function swp_get_user_options( $admin = false ) {
 	$options = get_option( 'socialWarfareOptions' );
 
-	// Reset the Order of Icons Options.
-	if ( isset( $options['orderOfIcons'] ) ) :
-		unset( $options['orderOfIcons'] );
-		update_option( 'socialWarfareOptions', $options );
-	endif;
-
 	$defaults = array(
 		'locationSite'              => 'both',
 		'totes'                     => true,
@@ -159,6 +153,23 @@ function swp_get_single_option( $key ) {
 }
 
 /**
+ * Update the main plugin options.
+ *
+ * @since  2.1.0
+ * @param  array $options The option values to be set.
+ * @return bool True if the option has been updated.
+ */
+function swp_update_options( $options ) {
+	if ( ! is_array( $options ) ) {
+		return false;
+	}
+
+	unset( $options['orderOfIcons'] );
+
+	return update_option( 'socialWarfareOptions', $options );
+}
+
+/**
  * Update a single option.
  *
  * @since  2.1.0
@@ -167,9 +178,9 @@ function swp_get_single_option( $key ) {
  * @return bool True if the option has been updated.
  */
 function swp_update_option( $key, $value ) {
-	global $swp_user_options;
+	$options = get_option( 'socialWarfareOptions' );
 
-	$swp_user_options[ $key ] = $value;
+	$options[ $key ] = $value;
 
-	return update_option( 'socialWarfareOptions', $swp_user_options );
+	return swp_update_options( $options );
 }

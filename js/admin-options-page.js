@@ -531,8 +531,7 @@
 			action: 'swp_ajax_passthrough',
 			security: swpAdminOptionsData.registerNonce,
 			activity: 'register',
-			email: $( 'input[name="emailAddress"]' ).val(),
-			domain: $( 'input[name="domain"]' ).val()
+			email: $( 'input[name="emailAddress"]' ).val()
 		};
 
 		loadingScreen();
@@ -543,6 +542,7 @@
 				alert( 'Failure: ' + response.data );
 			} else {
 				// If the response was a success
+				$( 'input[name="premiumCode"]' ).val( response.data.premiumCode );
 				toggleRegistration( '1' );
 				registered = true;
 			}
@@ -563,7 +563,7 @@
 			security: swpAdminOptionsData.registerNonce,
 			activity: 'unregister',
 			email: $( 'input[name="emailAddress"]' ).val(),
-			domain: $( 'input[name="domain"]' ).val()
+			key: $( 'input[name="premiumCode"]' ).val()
 		};
 
 		loadingScreen();
@@ -587,24 +587,6 @@
 		return unregistered;
 	}
 
-	/*********************************************************
-		Rearm the Registration if the domain has changed
-	*********************************************************/
-	function rearmRegistration() {
-		var premCode = $( 'input#domain' ).attr( 'data-premcode' );
-
-		$( 'input[name="premiumCode"]' ).attr( 'readonly', 'readonly' );
-		$( 'input[name="regCode"]' ).parent( '.swp_field' ).hide();
-
-		if ( '' === $( 'input[name="premiumCode"]' ).val() || premCode === $( 'input[name="premiumCode"]' ).val() ) {
-			return;
-		}
-
-		if ( ! registerPlugin() ) {
-			unregisterPlugin();
-		}
-	}
-
 	function handleRegistration() {
 		$( '#register-plugin' ).on( 'click', function() {
 			registerPlugin();
@@ -615,8 +597,6 @@
 			unregisterPlugin();
 			return false;
 		});
-
-		//rearmRegistration();
 	}
 
 	/*******************************************************
