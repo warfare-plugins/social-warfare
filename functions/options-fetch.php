@@ -83,6 +83,7 @@ function swp_get_user_options( $admin = false ) {
 		'pinit_min_width'           => '200',
 		'pinit_min_height'          => '200',
 		'emphasize_icons'           => 0,
+		'sideCustomColor'           => '#ffffff',
 		'floatLeftMobile'           => 'bottom',
 	);
 
