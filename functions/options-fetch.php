@@ -85,6 +85,15 @@ function swp_get_user_options( $admin = false ) {
 		'emphasize_icons'           => 0,
 		'sideCustomColor'           => '#ffffff',
 		'floatLeftMobile'           => 'bottom',
+		'newOrderOfIcons' => array(
+			'active' => array(
+				'twitter'    => 'Twitter',
+				'linkedIn'   => 'LinkedIn',
+				'pinterest'  => 'Pinterest',
+				'facebook'   => 'Facebook',
+				'googlePlus' => 'Google Plus',
+			),
+		),
 	);
 
 	$options = array_merge( $defaults, $options );
@@ -127,16 +136,6 @@ function swp_get_user_options( $admin = false ) {
 		$options['pinit_location_vertical']   = 'top';
 		$options['emphasize_icons']           = 0;
 		$options['floatLeftMobile']           = 'off';
-	}
-
-	if ( ! isset( $options['newOrderOfIcons'] ) ) {
-		$options['newOrderOfIcons']['active'] = array(
-			'twitter'    => 'Twitter',
-			'linkedIn'   => 'LinkedIn',
-			'pinterest'  => 'Pinterest',
-			'facebook'   => 'Facebook',
-			'googlePlus' => 'Google Plus',
-		);
 	}
 
 	return $options;
