@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Social Warfare 2.0.7\n"
 "Report-Msgid-Bugs-To: https://warfareplugins.com/\n"
-"POT-Creation-Date: 2016-10-23 02:06:05+00:00\n"
+"POT-Creation-Date: 2016-10-23 02:54:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Press Ctrl+C to Copy this information."
 msgstr ""
 
-#: functions/admin/options-page.php:867 functions/registration.php:220
+#: functions/admin/options-page.php:867 functions/registration.php:224
 msgid "Security failed."
 msgstr ""
 
@@ -162,12 +162,12 @@ msgstr ""
 msgid "No settings to save."
 msgstr ""
 
-#: functions/buttons-floating.php:70 functions/buttons-standard.php:247
-#: functions/buttons-standard.php:279 functions/buttons-standard.php:283
+#: functions/buttons-floating.php:71 functions/buttons-standard.php:248
+#: functions/buttons-standard.php:280 functions/buttons-standard.php:284
 msgid "Shares"
 msgstr ""
 
-#: functions/click-to-tweet/clickToTweet.php:98
+#: functions/click-to-tweet/clickToTweet.php:99
 msgid "Click To Tweet"
 msgstr ""
 
@@ -257,28 +257,28 @@ msgstr ""
 msgid "Floating Buttons (If Activated)"
 msgstr ""
 
-#: functions/options-array.php:113 functions/post-options.php:147
+#: functions/options-array.php:113 functions/post-options.php:149
 msgid "Above the Content"
 msgstr ""
 
-#: functions/options-array.php:114 functions/post-options.php:148
+#: functions/options-array.php:114 functions/post-options.php:150
 msgid "Below the Content"
 msgstr ""
 
-#: functions/options-array.php:115 functions/post-options.php:149
+#: functions/options-array.php:115 functions/post-options.php:151
 msgid "Both Above and Below the Content"
 msgstr ""
 
-#: functions/options-array.php:116 functions/post-options.php:150
+#: functions/options-array.php:116 functions/post-options.php:152
 msgid "None/Manual Placement"
 msgstr ""
 
-#: functions/options-array.php:145 functions/post-options.php:162
+#: functions/options-array.php:145 functions/post-options.php:164
 msgid "On"
 msgstr ""
 
 #: functions/options-array.php:146 functions/options-array.php:516
-#: functions/post-options.php:163
+#: functions/post-options.php:165
 msgid "Off"
 msgstr ""
 
@@ -883,109 +883,109 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: functions/post-options.php:72
+#: functions/post-options.php:74
 msgid "Social Warfare Custom Options"
 msgstr ""
 
-#: functions/post-options.php:79
+#: functions/post-options.php:81
 msgid "Social Media Image"
 msgstr ""
 
-#: functions/post-options.php:80
+#: functions/post-options.php:82
 msgid ""
 "Add an image that is optimized for maximum exposure on Facebook, Google+ "
 "and LinkedIn. We recommend 1,200px by 628px."
 msgstr ""
 
-#: functions/post-options.php:89
+#: functions/post-options.php:91
 msgid "Social Media Title"
 msgstr ""
 
-#: functions/post-options.php:90
+#: functions/post-options.php:92
 msgid ""
 "Add a title that will populate the open graph meta tag which will be used "
 "when users share your content onto Facebook, LinkedIn, and Google+. If "
 "nothing is provided here, we will use the post title as a backup."
 msgstr ""
 
-#: functions/post-options.php:98
+#: functions/post-options.php:100
 msgid "Social Media Description"
 msgstr ""
 
-#: functions/post-options.php:99
+#: functions/post-options.php:101
 msgid ""
 "Add a description that will populate the open graph meta tag which will be "
 "used when users share your content onto Facebook, LinkedIn, and Google Plus."
 msgstr ""
 
-#: functions/post-options.php:113
+#: functions/post-options.php:115
 msgid "Pinterest Image"
 msgstr ""
 
-#: functions/post-options.php:114
+#: functions/post-options.php:116
 msgid ""
 "Add an image that is optimized for maximum exposure on Pinterest. We "
 "recommend using an image that is formatted in a 2:3 aspect ratio like "
 "735x1102."
 msgstr ""
 
-#: functions/post-options.php:123
+#: functions/post-options.php:125
 msgid "Pinterest Description"
 msgstr ""
 
-#: functions/post-options.php:124
+#: functions/post-options.php:126
 msgid ""
 "Craft a customized description that will be used when this post is shared "
 "on Pinterest. Leave this blank to use the title of the post."
 msgstr ""
 
-#: functions/post-options.php:132
+#: functions/post-options.php:134
 msgid "Custom Tweet"
 msgstr ""
 
-#: functions/post-options.php:133
+#: functions/post-options.php:135
 msgid ""
 "If this is left blank your post title will be used. Based on your username "
 "(@%1$s), <span class=\"tweetLinkSection\">a link being added,</span> and "
 "the current content above, your tweet has %2$s characters remaining."
 msgstr ""
 
-#: functions/post-options.php:133
+#: functions/post-options.php:135
 msgid ""
 "If this is left blank your post title will be used. <span "
 "=\"tweetLinkSection\">Based on a link being added, and</span> the current "
 "content above, your tweet has %s characters remaining."
 msgstr ""
 
-#: functions/post-options.php:141
+#: functions/post-options.php:143
 msgid "Horizontal Buttons Location"
 msgstr ""
 
-#: functions/post-options.php:146 functions/post-options.php:161
+#: functions/post-options.php:148 functions/post-options.php:163
 msgid "Default"
 msgstr ""
 
-#: functions/post-options.php:156
+#: functions/post-options.php:158
 msgid "Floating Buttons"
 msgstr ""
 
-#: functions/registration.php:227
+#: functions/registration.php:231
 msgid "Required fields missing."
 msgstr ""
 
-#: functions/registration.php:237
+#: functions/registration.php:241
 msgid "Plugin could not be registered."
 msgstr ""
 
-#: functions/registration.php:241
+#: functions/registration.php:245
 msgid "Plugin successfully registered!"
 msgstr ""
 
-#: functions/registration.php:248
+#: functions/registration.php:252
 msgid "Plugin could not be unregistered."
 msgstr ""
 
-#: functions/registration.php:252
+#: functions/registration.php:256
 msgid "Plugin successfully unregistered!"
 msgstr ""
 
