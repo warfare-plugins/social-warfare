@@ -138,6 +138,10 @@ function swp_build_options_page() {
 	// Wrapper for the left 3/4 non-sidebar content
 	echo '<div class="sw-tabs-container sw-grid sw-col-700">';
 
+	if ( _swp_is_debug( 'register' ) ) {
+		var_dump( swp_check_registration_status() );
+	}
+
 	// Loop through the options tabs and build the options page
 	foreach ( $swp_options_page['options'] as $tab_name => $tab_options ) :
 
@@ -627,79 +631,8 @@ function swp_build_options_page() {
 			/**
 			 * Plugin Registration Module
 			 */
-
-			if ( $option['type'] == 'plugin_registration' ) :
-
-				if ( _swp_is_debug( 'register' ) ) {
-					var_dump( swp_check_registration_status() );
-				}
-
-				// Begin Registration Wrapper
-				echo '<div class="registration-wrapper" registration="' . absint( is_swp_registered() ) . '">';
-
-				// Registration Title
-				echo '<h2>' . __( 'Premium Registration' , 'social-warfare' ) . '</h2>';
-
-				// Open the IS NOT REGISTERED container
-				echo '<div class="sw-grid sw-col-940 swp_is_not_registered">';
-
-				// The Warning Notice & Instructions
-				echo '<div class="sw-red-notice">' . __( 'This copy of Social Warfare is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.' , 'social-warfare' ) . '</div>';
-				echo '<p class="sw-subtitle sw-registration-text">' . __( 'Follow these simple steps to register your Premium License and access all features.' , 'social-warfare' ) . '</p>';
-				echo '<p class="sw-subtitle sw-registration-text sw-italic">' . __( 'Step 1: Enter your email.' , 'social-warfare' ) . '<br />' . __( 'Step 2: Click the "Register Plugin" button.' , 'social-warfare' ) . '<br />' . __( 'Step 3: Watch the magic.' , 'social-warfare' ) . '</p>';
-
-				$home_url = swp_get_site_url();
-				$reg_code = swp_get_registration_key( $home_url );
-				$email = '';
-				$premium_code = '';
-
-				if ( isset( $swp_user_options['emailAddress'] ) ) :
-					$email = $swp_user_options['emailAddress'];
-				endif;
-
-				if ( isset( $swp_user_options['premiumCode'] ) ) :
-					$premium_code = $swp_user_options['premiumCode'];
-				endif;
-
-				// Email Input Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . __( 'Email Address' , 'social-warfare' ) . '</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="' . $email . '" /></div>';
-				echo '<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="' . $premium_code . '" />';
-				echo '<input name="regCode" type="text" class="sw-admin-input sw-hidden" value="' . $reg_code . '" />';
-				echo '<input type="hidden" class="at-text" name="domain" id="domain" value="' . $home_url . '" size="30" readonly data-premcode="' . swp_get_registration_key( $home_url, 'db' ) . '">';
-				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-				echo '<div class="sw-clearfix"></div>';
-
-				// Activate Plugin Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . __( 'Activate Registration' , 'social-warfare' ) . '</p></div>';
-				echo '<div class="sw-grid sw-col-300">';
-				echo '<a href="#" id="register-plugin" class="button sw-navy-button">' . __( 'Register Plugin' , 'social-warfare' ) . '</a>';
-				echo '</div>';
-				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-
-				// Close the IS NOT REGISTERED container
-				echo '</div>';
-
-				// Open the IS NOT REGISTERED container
-				echo '<div class="sw-grid sw-col-940 swp_is_registered">';
-
-				// The Warning Notice & Instructions
-				echo '<div class="sw-green-notice">This copy of Social Warfare is registered. Wah-hoo!</div>';
-				echo '<p class="sw-subtitle sw-registration-text">' . __( 'To unregister your license click the button below to free it up for use on another domain.' , 'social-warfare' ) . '</p>';
-
-				// Deactivate Plugin Module
-				echo '<div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . __( 'Deactivate Registration' , 'social-warfare' ) . '</p></div>';
-				echo '<div class="sw-grid sw-col-300">';
-				echo '<a href="#" id="unregister-plugin" class="button sw-navy-button">' . __( 'Unregister Plugin' , 'social-warfare' ) . '</a>';
-				echo '</div>';
-				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-
-				// Close the IS NOT REGISTERED container
-				echo '</div>';
-
-				// Close the Registration Wrapper
-				echo '</div>';
-
+			if ( 'plugin_registration' === $option['type'] ) :
+				require_once SWP_PLUGIN_DIR . '/functions/admin/views/options-registration.php';
 			endif;
 
 			/**
