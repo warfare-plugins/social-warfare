@@ -9,6 +9,22 @@
  */
 
 /**
+ * Get the current site's URL.
+ *
+ * @since  2.1.0
+ * @return string The current site's URL.
+ */
+function swp_get_site_url() {
+	$domain = site_url();
+
+	if ( is_multisite() ) {
+		$domain = network_site_url();
+	}
+
+	return $domain;
+}
+
+/**
  *  Round a number to the appropriate thousands.
  *
  * @since  unknown
