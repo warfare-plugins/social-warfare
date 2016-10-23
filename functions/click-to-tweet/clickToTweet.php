@@ -76,12 +76,13 @@ if ( ! class_exists( 'clickToTweet' ) ) {
 }// End if().
 
 function clickToTweetShortcode( $atts ) {
+	global $swp_user_options;
 
 	$url = swp_process_url( get_permalink() , 'twitter' , get_the_ID() );
 	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
 	$atts['tweet'] = rtrim( $atts['tweet'] );
 
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
 	if ( ! $user_twitter_handle ) :
 		$user_twitter_handle = $options['twitterID'];
@@ -99,5 +100,3 @@ function clickToTweetShortcode( $atts ) {
 }
 
 add_shortcode( 'clickToTweet', 'clickToTweetShortcode' );
-
-

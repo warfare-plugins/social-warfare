@@ -9,6 +9,22 @@
  */
 
 /**
+ * Get the current site's URL.
+ *
+ * @since  2.1.0
+ * @return string The current site's URL.
+ */
+function swp_get_site_url() {
+	$domain = site_url();
+
+	if ( is_multisite() ) {
+		$domain = network_site_url();
+	}
+
+	return $domain;
+}
+
+/**
  *  Round a number to the appropriate thousands.
  *
  * @since  unknown
@@ -17,9 +33,10 @@
  * @return float A rounded number.
  */
 function swp_kilomega( $val ) {
+	global $swp_user_options;
 
 	// Fetch the user assigned options
-	$options = swp_get_user_options();
+	$options = $swp_user_options;
 
 	// Check if we even have a value to format
 	if ( $val ) :

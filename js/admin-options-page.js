@@ -1,14 +1,14 @@
-/* global ajaxurl, socialWarfarePlugin, wp */
+/* global ajaxurl, swpAdminOptionsData, socialWarfarePlugin, wp */
 (function( window, $, undefined ) {
 	'use strict';
 
 	/*********************************************************
 		A Function send the array of setting to ajax.php
 	*********************************************************/
-	$.fn.selectText = function() {
-		var doc = document, element = this[0], range, selection;
+	function selectText( element ) {
+		var	range, selection;
 
-		if ( doc.body.createTextRange ) {
+		if ( document.body.createTextRange ) {
 			range = document.body.createTextRange();
 
 			range.moveToElementText( element );
@@ -25,7 +25,7 @@
 
 			selection.addRange( range );
 		}
-	};
+	}
 
 	/*********************************************************
 		A Function to gather all the settings
@@ -97,12 +97,10 @@
 	}
 
 	function swp_select_val(name) {
-		console.log($('select[name="' + name + '"]').val());
 		return $('select[name="' + name + '"]').val();
 	}
 
 	function swp_check_val(name) {
-		console.log($( '[name="' + name + '"]' ).prop( 'checked' ));
 		return $( '[name="' + name + '"]' ).prop( 'checked' );
 	}
 
@@ -220,6 +218,7 @@
 			// Prepare date
 			var data = {
 				action: 'swp_store_settings',
+				security: swpAdminOptionsData.optionsNonce,
 				settings: settings
 			};
 
@@ -518,16 +517,7 @@
 		$cttOptions.trigger( 'change' );
 	}
 
-	function getApiUrl( email, domain, regCode ) {
-		email = encodeURIComponent( email );
-		domain = encodeURIComponent( domain );
-		regCode = encodeURIComponent( regCode );
-
-		return 'https://warfareplugins.com/registration-api/?activity=register&emailAddress=' + email + '&domain=' + domain + '&registrationCode=' + regCode;
-	}
-
 	function toggleRegistration( status ) {
-		clearLoadingScreen();
 		$( '.registration-wrapper' ).attr( 'registration', status );
 		$( '.sw-admin-wrapper' ).attr( 'sw-registered', status );
 	}
@@ -536,174 +526,97 @@
 		Register the Plugin
 	*******************************************************/
 	function registerPlugin() {
-		// Register the plugin
-		$( '#register-plugin' ).on( 'click', function( event ) {
-			// Block the default action
-			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
+		var registered = false;
+		var data = {
+			action: 'swp_ajax_passthrough',
+			security: swpAdminOptionsData.registerNonce,
+			activity: 'register',
+			email: $( 'input[name="emailAddress"]' ).val(),
+			domain: $( 'input[name="domain"]' ).val()
+		};
 
-			// The loading screen
-			loadingScreen();
+		loadingScreen();
 
-			// Fetch all the registration values
-			var regCode = $( 'input[name="regCode"]' ).val();
-			var email = $( 'input[name="emailAddress"]' ).val();
-			var domain = $( 'input[name="domain"]' ).val();
-
-			var apiURL = getApiUrl( email, domain, regCode );
-
-			var ajaxData = {
-				action: 'swp_ajax_passthrough',
-				url: apiURL
-			};
-
-			// Ping the home server to create a registration log
-			$.post( ajaxurl, ajaxData, function( data ) {
-				// Parse the JSON response
-				var object = $.parseJSON( data );
-
-				// If the cURL request failed, let's attempt CORS
-				if ( 0 === object || null === object ) {
-					console.log( 'cURL request failed. Attempting CORS request.' );
-
-					$.get( apiURL, function( data ) {
-						var object = $.parseJSON( data );
-						console.log( 'CORS request status: ' + object.status );
-
-						$( 'input[name="premiumCode"]' ).val( object.premiumCode );
-
-						// Send the response to admin-ajax.php
-						$.post( ajaxurl, {
-							action: 'swp_store_registration',
-							premiumCode: object.premiumCode,
-							email: email
-						}, function() {
-							toggleRegistration( '1' );
-						});
-					});
-
-					return;
-				}
-
-				// If the response was a failure...
-				if ( 'failure' === object.status ) {
-					// Alert the failure status
-					alert( 'Failure: ' + object.message );
-
-					// Clear the loading screen
-					clearLoadingScreen();
-
-					return;
-				}
-
+		$.post( ajaxurl, data, function( response ) {
+			// If the response was a failure...
+			if ( ! response.success ) {
+				alert( 'Failure: ' + response.data );
+			} else {
 				// If the response was a success
-				$( 'input[name="premiumCode"]' ).val( object.premiumCode );
-
-				// Send the response to admin-ajax.php
-				$.post( ajaxurl, {
-					action: 'swp_store_registration',
-					premiumCode: object.premiumCode,
-					email: email
-				}, function() {
-					toggleRegistration( '1' );
-				});
-			});
+				toggleRegistration( '1' );
+				registered = true;
+			}
 		});
+
+		clearLoadingScreen();
+
+		return registered;
 	}
 
 	/*******************************************************
 		Unregister the Plugin
 	*******************************************************/
 	function unregisterPlugin() {
-		$( '#unregister-plugin' ).on( 'click', function( event ) {
-			// Block the default action
-			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
+		var unregistered = false;
+		var ajaxData = {
+			action: 'swp_ajax_passthrough',
+			security: swpAdminOptionsData.registerNonce,
+			activity: 'unregister',
+			email: $( 'input[name="emailAddress"]' ).val(),
+			domain: $( 'input[name="domain"]' ).val()
+		};
 
-			// The loading screen
-			loadingScreen();
+		loadingScreen();
 
-			// Fetch the registration values
-			var regCode = $( 'input[name="regCode"]' ).val();
-			var email = $( 'input[name="emailAddress"]' ).val();
-			var domain = $( 'input[name="domain"]' ).val();
-
-			// Create the ajax object
-			var ajaxData = {
-				action: 'swp_ajax_passthrough',
-				url: getApiUrl( email, domain, regCode )
-			};
-
-			// Ping the home server for the registration log
-			$.post( ajaxurl, ajaxData, function( data ) {
-				// Clear out the premium code and the email address field
+		// Ping the home server to create a registration log
+		$.post( ajaxurl, ajaxData, function( response ) {
+			// If the response was a failure...
+			if ( ! response.success ) {
+				alert( 'Failure: ' + response.data );
+			} else {
+				// If the response was a success
 				$( 'input[name="premiumCode"]' ).val( '' );
-
 				$( 'input[name="emailAddress"]' ).val( '' );
-
-				// Prepare data
-				data = {
-					action: 'swp_delete_registration',
-					premiumCode: '',
-					emailAddress: ''
-				};
-
-				// Send the response to admin-ajax.php
-				$.post( ajaxurl, data, function() {
-					toggleRegistration( '0' );
-				});
-			});
+				toggleRegistration( '0' );
+				unregistered = true;
+			}
 		});
+
+		clearLoadingScreen();
+
+		return unregistered;
 	}
 
 	/*********************************************************
 		Rearm the Registration if the domain has changed
 	*********************************************************/
 	function rearmRegistration() {
-		$( 'input[name="premiumCode"]' ).attr( 'readonly', 'readonly' );
-
-		$( 'input[name="regCode"]' ).parent( '.swp_field' ).hide();
-
 		var premCode = $( 'input#domain' ).attr( 'data-premcode' );
+
+		$( 'input[name="premiumCode"]' ).attr( 'readonly', 'readonly' );
+		$( 'input[name="regCode"]' ).parent( '.swp_field' ).hide();
 
 		if ( '' === $( 'input[name="premiumCode"]' ).val() || premCode === $( 'input[name="premiumCode"]' ).val() ) {
 			return;
 		}
 
-		// Fetch our variables
-		var regCode = $( 'input[name="regCode"]' ).val();
-		var email = $( 'input[name="emailAddress"]' ).val();
-		var domain = $( 'input[name="domain"]' ).val();
-		var apiUrl = getApiUrl( email, domain, regCode );
+		if ( ! registerPlugin() ) {
+			unregisterPlugin();
+		}
+	}
 
-		// Pass the URL to the admin-ajax.php passthrough function
-		$.post( ajaxurl, {
-			action: 'swp_ajax_passthrough',
-			url: apiUrl
-		}, function( subdata ) {
-			// Parse the response
-			var info = $.parseJSON( subdata );
-
-			// If the rearm was successful
-			if ( 'success' === info.status ) {
-				// Send the response to admin-ajax.php
-				$.post( ajaxurl, {
-					action: 'swp_store_registration',
-					premiumCode: info.premiumCode
-				}, function() {
-					toggleRegistration( '1' );
-				});
-
-				$( 'input[name="premiumCode"]' ).val( info.premiumCode );
-			} else {
-				// Send the response to admin-ajax.php
-				$.post( ajaxurl, {
-					action: 'swp_delete_registration',
-					premiumCode: '',
-					emailAddress: ''
-				}, function() {
-					toggleRegistration( '0' );
-				});
-			}
+	function handleRegistration() {
+		$( '#register-plugin' ).on( 'click', function() {
+			registerPlugin();
+			return false;
 		});
+
+		$( '#unregister-plugin' ).on( 'click', function() {
+			unregisterPlugin();
+			return false;
+		});
+
+		//rearmRegistration();
 	}
 
 	/*******************************************************
@@ -726,13 +639,13 @@
 	}
 
 	function getSystemStatus() {
-		$( '.sw-system-status' ).on( 'click', function() {
+		$( '.sw-system-status' ).on( 'click', function( event ) {
 			// Block the default action
 			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
 
 			$( '.system-status-wrapper' ).slideToggle();
 
-			$( '.system-status-container' ).selectText();
+			selectText( $( '.system-status-container' ).get( 0 ) );
 		});
 	}
 
@@ -822,9 +735,7 @@
 		conditionalFields();
 		updateCttDemo();
 		updateScale();
-		registerPlugin();
-		unregisterPlugin();
-		rearmRegistration();
+		handleRegistration();
 		sortableInit();
 		getSystemStatus();
 		blockPremiumFeatures();

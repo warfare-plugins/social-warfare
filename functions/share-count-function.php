@@ -8,11 +8,12 @@
  *                                                                *
  ******************************************************************/
 function get_social_warfare_shares( $postID ) {
+	global $swp_user_options;
 
 		// Set the initial options
-		$options 			= swp_get_user_options();
-		$url 				= get_permalink( $postID );
-		// $url				= 'https://youtu.be/jjK1aUU2Dx4';
+		$options = $swp_user_options;
+		$url     = get_permalink( $postID );
+		// $url  = 'https://youtu.be/jjK1aUU2Dx4';
 	/**
 	***************************************************************
 	*                                                                *

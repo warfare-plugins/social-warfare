@@ -57,6 +57,7 @@ function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) 
 
 	// This is the hook function we're adding the header
 function swp_add_header_meta() {
+	global $swp_user_options;
 
 	$info['postID'] = get_the_ID();
 
@@ -131,7 +132,7 @@ function swp_add_header_meta() {
 		$info['title'] 					= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
 		$info['description'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
 		$info['swp_fb_author'] 			= htmlspecialchars( get_post_meta( $info['postID'] , 'swp_fb_author' , true ) );
-		$info['swp_user_options'] 		= swp_get_user_options();
+		$info['swp_user_options'] 		= $swp_user_options;
 		$info['user_twitter_handle'] 	= $user_twitter_handle;
 		$info['header_output']			= '';
 
@@ -162,7 +163,6 @@ add_filter( 'swp_meta_tags' , 'swp_frame_buster' , 3 );
 add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
 add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
 // add_filter( 'swp_meta_tags' , 'swp_output_cache_trigger' , 6 );
-add_filter( 'swp_meta_tags' , 'swp_cache_rebuild_rel_canonical' , 7 );
 add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
 
 // Disable Simple Podcast Press Open Graph tags
@@ -661,28 +661,6 @@ function swp_output_custom_color( $info ) {
 	return $info;
 }
 
-/**
-
- * **************************************************************
- *                                                                *
- *          CACHE REBUILD REL CANONICAL				             *
- *                                                                *
- ******************************************************************/
-function swp_cache_rebuild_rel_canonical( $info ) {
-
-	// Fetch the Permalink
-	$url = get_permalink();
-
-	// Check to see if the cache is currently being rebuilt
-	if ( isset( $_GET['swp_cache'] ) && $_GET['swp_cache'] == 'rebuild' ) :
-
-		// Use a rel canonical so everyone knows this is not a real page
-		$info['header_output'] .= '<link rel="canonical" href="' . $url . '">';
-	endif;
-
-	// Return the array so the world doesn't explode
-	return $info;
-}
 /**
 
  * **************************************************************

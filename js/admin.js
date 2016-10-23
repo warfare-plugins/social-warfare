@@ -1,5 +1,17 @@
+var socialWarfareAdmin = socialWarfareAdmin || {};
+
 (function( window, $, undefined ) {
 	'use strict';
+
+	socialWarfareAdmin.linkLength = function( input ) {
+		var tmp = '';
+
+		for ( var i = 0; i < 23; i++ ) {
+			tmp += 'o';
+		}
+
+		return input.replace( /(http:\/\/[\S]*)/g, tmp ).length;
+	};
 
 	// Function for SM Title Counting
 	function smTitleRemaining() {
@@ -29,16 +41,6 @@
 		$( '#socialWarfare .nc_ogDescriptionWrapper .counterNumber' ).html( remaining );
 	}
 
-	function linkLength( input ) {
-		var tmp = '';
-
-		for ( var i = 0; i < 23; i++ ) {
-			tmp += 'o';
-		}
-
-		return input.replace( /(http:\/\/[\S]*)/g, tmp ).length;
-	}
-
 	// Function for Twitter Box Counting
 	function twitterRemaining() {
 		var smTwitter = $( '#socialWarfare textarea#nc_customTweet' ).val();
@@ -56,9 +58,9 @@
 		var remaining;
 
 		if ( 'undefined' === typeof handle ) {
-			remaining = 140 - linkLength( smTwitter ) - linkSpace;
+			remaining = 140 - socialWarfareAdmin.linkLength( smTwitter ) - linkSpace;
 		} else {
-			remaining = 140 - linkLength( smTwitter ) - handle.length - linkSpace - 6;
+			remaining = 140 - socialWarfareAdmin.linkLength( smTwitter ) - handle.length - linkSpace - 6;
 		}
 
 		if ( smTwitter.length > 0 && remaining >= 0 ) {

@@ -135,14 +135,14 @@ function enqueueSocialWarfareAdminScripts( $screen ) {
 add_action( 'wp_footer' , 'swp_footer_functions' , 99 );
 
 // Queue up our footer hook function
-add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
 add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
 
 function swp_footer_functions() {
+	global $swp_user_options;
 
 	// Fetch a few variables.
 	$info['postID']           = get_the_ID();
-	$info['swp_user_options'] = swp_get_user_options();
+	$info['swp_user_options'] = $swp_user_options;
 	$info['footer_output']    = '';
 
 	// Pass the array through our custom filters.
@@ -154,40 +154,6 @@ function swp_footer_functions() {
 		echo $info['footer_output'];
 		echo '</script>';
 	}
-}
-
-/**
- * Trigger cache rebuild.
- *
- * @since  unknown
- * @access public
- * @param  array $info An array of footer script information.
- * @return array $info A modified array of footer script information.
- */
-function swp_output_cache_trigger( $info ) {
-	// Bail early if we're not on a single page or we have fresh cache.
-	if ( ! is_singular() || swp_is_cache_fresh( get_the_ID(), true ) ) {
-		return $info;
-	}
-
-	// Bail if we're not using the newer cache method.
-	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] ) {
-		return $info;
-	}
-
-	// Bail if we're on a WooCommerce account page.
-	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
-		return $info;
-	}
-
-	// Trigger the cache rebuild.
-	if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-		$url = get_permalink();
-		$admin_ajax = admin_url( 'admin-ajax.php' );
-		$info['footer_output'] .= 'swp_admin_ajax = "' . $admin_ajax . '"; var swp_buttons_exist = !!document.getElementsByClassName("nc_socialPanel");if(swp_buttons_exist) {jQuery(document).ready( function() { var swp_cache_data = {"action":"swp_cache_trigger","post_id":' . $info['postID'] . '};jQuery.post(swp_admin_ajax, swp_cache_data, function(response) {console.log(response);});});} swp_post_id="' . $info['postID'] . '"; swp_post_url="' . $url . '"; socialWarfarePlugin.fetchFacebookShares();';
-	}
-
-	return $info;
 }
 
 /**

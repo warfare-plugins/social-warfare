@@ -1,3 +1,5 @@
+/* globals socialWarfareAdmin */
+
 (function() {
 	tinymce.PluginManager.add('clickToTweet', function( editor, url ) {
 		editor.addButton( 'clickToTweet', {
@@ -26,9 +28,9 @@
 								};
 
 								if (typeof handle === 'undefined') {
-									var remaining = 140 - link_length( value ) - linkSpace;
+									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace;
 								} else {
-									var remaining = 140 - link_length( value ) - linkSpace - handle.length - 6;
+									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
 								}
 								if (remaining > 1 || remaining == 0) {
 									jQuery( '.tweetCounter' ).css( {'color':'green'} ).text( remaining + ' characters' );
@@ -55,9 +57,9 @@
 								};
 
 								if (typeof handle === 'undefined') {
-									var remaining = 140 - link_length( value ) - linkSpace;
+									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace;
 								} else {
-									var remaining = 140 - link_length( value ) - linkSpace - handle.length - 6;
+									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
 								}
 
 								this.getEl().innerHTML =
