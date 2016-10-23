@@ -22,11 +22,11 @@ define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
  */
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once SWP_PLUGIN_DIR . '/meta-box/meta-box.php';
+require_once SWP_PLUGIN_DIR . '/functions/utility.php';
+require_once SWP_PLUGIN_DIR . '/functions/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/options-array.php';
-require_once SWP_PLUGIN_DIR . '/functions/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/curl_functions.php';
-require_once SWP_PLUGIN_DIR . '/functions/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/widgets.php';
 require_once SWP_PLUGIN_DIR . '/functions/scripts.php';
 require_once SWP_PLUGIN_DIR . '/functions/bitly.php';
