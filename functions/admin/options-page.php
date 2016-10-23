@@ -826,7 +826,7 @@ function swp_store_the_settings() {
 		}
 	}
 
-	update_option( 'socialWarfareOptions', $options );
+	swp_update_options( $options );
 
 	die;
 }
