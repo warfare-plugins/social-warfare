@@ -231,11 +231,6 @@ add_action( 'admin_head-toplevel_page_social-warfare', 'swp_migrate_registration
 function swp_migrate_registration() {
 	global $swp_user_options;
 
-	// Bail early if the plugin isn't registered.
-	if ( ! is_swp_registered() ) {
-		return;
-	}
-
 	$options = $swp_user_options;
 
 	// Bail if we don't have the data we need to continue.
