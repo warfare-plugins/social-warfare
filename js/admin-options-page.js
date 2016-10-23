@@ -531,8 +531,7 @@
 			action: 'swp_ajax_passthrough',
 			security: swpAdminOptionsData.registerNonce,
 			activity: 'register',
-			email: $( 'input[name="emailAddress"]' ).val(),
-			domain: $( 'input[name="domain"]' ).val()
+			email: $( 'input[name="emailAddress"]' ).val()
 		};
 
 		loadingScreen();
