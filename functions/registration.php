@@ -104,8 +104,9 @@ function swp_register_plugin( $email, $domain ) {
 	}
 
 	if ( 'success' === $response['status'] ) {
+		swp_update_option( 'emailAddress', $email );
 		swp_update_option( 'premiumCode', $response['premiumCode'] );
-		return true;
+		return $response;
 	}
 
 	return false;
@@ -133,7 +134,7 @@ function swp_unregister_plugin( $email, $key ) {
 	if ( 'success' === $response['status'] ) {
 		swp_update_option( 'emailAddress', '' );
 		swp_update_option( 'premiumCode', '' );
-		return true;
+		return $response;
 	}
 
 	return false;
@@ -273,8 +274,6 @@ function swp_ajax_passthrough() {
 		die;
 	}
 
-	$message = '';
-
 	if ( 'register' === $data['activity'] ) {
 		$response = swp_register_plugin( $data['email'], swp_get_site_url() );
 
@@ -283,7 +282,7 @@ function swp_ajax_passthrough() {
 			die;
 		}
 
-		$message = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
+		$response['message'] = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
 	}
 
 	if ( 'unregister' === $data['activity'] && isset( $data['key'] ) ) {
@@ -294,10 +293,10 @@ function swp_ajax_passthrough() {
 			die;
 		}
 
-		$message = esc_html__( 'Plugin successfully unregistered!', 'social-warfare' );
+		$response['message'] = esc_html__( 'Plugin successfully unregistered!', 'social-warfare' );
 	}
 
-	wp_send_json_success( array( 'message' => $message ) );
+	wp_send_json_success( $response );
 
 	die;
 }

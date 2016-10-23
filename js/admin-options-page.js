@@ -542,6 +542,7 @@
 				alert( 'Failure: ' + response.data );
 			} else {
 				// If the response was a success
+				$( 'input[name="premiumCode"]' ).val( response.data.premiumCode );
 				toggleRegistration( '1' );
 				registered = true;
 			}
