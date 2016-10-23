@@ -9,8 +9,12 @@
  */
 
 $premium_code = '';
+$email = '';
 
-if ( isset( $swp_user_options['premiumCode'] ) ) {
+if ( ! empty( $swp_user_options['emailAddress'] ) ) {
+	$email = $swp_user_options['emailAddress'];
+}
+if ( ! empty( $swp_user_options['premiumCode'] ) ) {
 	$premium_code = $swp_user_options['premiumCode'];
 }
 ?>
@@ -42,7 +46,7 @@ if ( isset( $swp_user_options['premiumCode'] ) ) {
 		</div>
 
 		<div class="sw-grid sw-col-300">
-			<input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="' . $email . '" />
+			<input name="emailAddress" type="text" class="sw-admin-input" placeholder="email@domain.com" value="<?php echo $email; ?>" />
 		</div>
 
 		<input name="premiumCode" type="text" class="sw-admin-input sw-hidden" value="<?php echo $premium_code; ?>" />
