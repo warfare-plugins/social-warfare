@@ -307,14 +307,13 @@ function swp_process_url( $url, $network, $postID ) {
 */
 add_action( 'wp_ajax_nopriv_swp_bitly_oauth', 'swp_bitly_oauth_callback' );
 function swp_bitly_oauth_callback() {
-	global $swp_user_options;
+	$options = swp_get_user_options();
 
 	// Set the premium code to null
-	$swp_user_options['bitly_access_token'] = $_GET['access_token'];
+	$options['bitly_access_token'] = $_GET['access_token'];
 
 	// Update the options array with the premium code nulled
-	update_option( 'socialWarfareOptions',$swp_user_options );
+	swp_update_options( $options );
 
 	echo admin_url( 'admin.php?page=social-warfare' );
-
 };
