@@ -87,7 +87,7 @@ function swp_flipboard_button_html( $array ) {
 
 		$array['resource']['flipboard'] = '<div class="nc_tweetContainer swp_flipboard" data-id="' . $array['count'] . '" data-network="flipboard">';
 		$link = urlencode( urldecode( swp_process_url( $array['url'] , 'flipboard' , $array['postID'] ) ) );
-		$array['resource']['flipboard'] .= '<a href="https://share.flipboard.com/bookmarklet/popout?v=2&title=Tools%20-%20Flipboard&url=' . $link . '" data-link="https://share.flipboard.com/bookmarklet/popout?v=2&title=Tools%20-%20Flipboard&url=' . $link . '" class="nc_tweet flipboard">';
+		$array['resource']['flipboard'] .= '<a rel="nofollow" href="https://share.flipboard.com/bookmarklet/popout?v=2&title=Tools%20-%20Flipboard&url=' . $link . '" data-link="https://share.flipboard.com/bookmarklet/popout?v=2&title=Tools%20-%20Flipboard&url=' . $link . '" class="nc_tweet flipboard">';
 		$array['resource']['flipboard'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-flipboard"></i><span class="swp_share"> ' . __( 'Flip','social-warfare' ) . '</span></span></span></span>';
 		$array['resource']['flipboard'] .= '</a>';
 		$array['resource']['flipboard'] .= '</div>';

@@ -83,7 +83,7 @@ function swp_googlePlus_button_html( $array ) {
 
 			$array['resource']['googlePlus'] = '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="google_plus">';
 			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
-			$array['resource']['googlePlus'] .= '<a target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
+			$array['resource']['googlePlus'] .= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
 			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['googlePlus'] > 0 ) :
 				$array['resource']['googlePlus'] .= '<span class="iconFiller">';
 				$array['resource']['googlePlus'] .= '<span class="spaceManWilly">';

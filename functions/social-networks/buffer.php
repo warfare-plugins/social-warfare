@@ -139,7 +139,7 @@ function swp_buffer_button_html( $array ) {
 
 			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'buffer' , $array['postID'] ) ) );
 
-			$array['resource']['buffer'] .= '<a target="_blank" href="http://bufferapp.com/add?url=' . $link . '&text=' . urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) . '" data-link="http://bufferapp.com/add?url=' . $link . '&text=' . urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) . '" class="nc_tweet buffer_link">';
+			$array['resource']['buffer'] .= '<a rel="nofollow" target="_blank" href="http://bufferapp.com/add?url=' . $link . '&text=' . urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) . '" data-link="http://bufferapp.com/add?url=' . $link . '&text=' . urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) . '" class="nc_tweet buffer_link">';
 
 			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['buffer'] > 0 ) :
 

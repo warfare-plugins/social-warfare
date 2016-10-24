@@ -84,7 +84,7 @@ function swp_linkedIn_button_html( $array ) {
 
 			$array['resource']['linkedIn'] = '<div class="nc_tweetContainer linkedIn" data-id="' . $array['count'] . '" data-network="linked_in">';
 			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'linkedIn' , $array['postID'] ) ) );
-			$array['resource']['linkedIn'] .= '<a target="_blank" href="https://www.linkedin.com/cws/share?url=' . $link . '" data-link="https://www.linkedin.com/cws/share?url=' . $link . '" class="nc_tweet">';
+			$array['resource']['linkedIn'] .= '<a rel="nofollow" target="_blank" href="https://www.linkedin.com/cws/share?url=' . $link . '" data-link="https://www.linkedin.com/cws/share?url=' . $link . '" class="nc_tweet">';
 			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['linkedIn'] > 0 ) :
 				$array['resource']['linkedIn'] .= '<span class="iconFiller">';
 				$array['resource']['linkedIn'] .= '<span class="spaceManWilly">';

@@ -87,7 +87,7 @@ function swp_email_button_html( $array ) {
 
 		$array['resource']['email'] = '<div class="nc_tweetContainer swp_email" data-id="' . $array['count'] . '" data-network="email">';
 		$link = urlencode( urldecode( swp_process_url( $array['url'] , 'email' , $array['postID'] ) ) );
-		$array['resource']['email'] .= '<a href="mailto:?subject=' . str_replace( '&amp;','%26',rawurlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) ) . '&body=' . str_replace( '&amp;','%26',rawurlencode( html_entity_decode( $description, ENT_COMPAT, 'UTF-8' ) ) ) . rawurlencode( ' Read here: ' ) . $link . '" class="nc_tweet noPop">';
+		$array['resource']['email'] .= '<a rel="nofollow" href="mailto:?subject=' . str_replace( '&amp;','%26',rawurlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) ) . '&body=' . str_replace( '&amp;','%26',rawurlencode( html_entity_decode( $description, ENT_COMPAT, 'UTF-8' ) ) ) . rawurlencode( ' Read here: ' ) . $link . '" class="nc_tweet noPop">';
 		$array['resource']['email'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-email"></i><span class="swp_share"> ' . __( 'Email','social-warfare' ) . '</span></span></span></span>';
 		$array['resource']['email'] .= '</a>';
 		$array['resource']['email'] .= '</div>';

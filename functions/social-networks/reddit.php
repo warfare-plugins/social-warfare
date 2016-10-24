@@ -110,7 +110,7 @@ function swp_reddit_button_html( $array ) {
 
 			$array['resource']['reddit'] = '<div class="nc_tweetContainer swp_reddit" data-id="' . $array['count'] . '" data-network="reddit">';
 			$link = $array['url'];
-			$array['resource']['reddit'] .= '<a target="_blank" href="https://www.reddit.com/submit?url=' . $link . '&title=' . urlencode( $title ) . '" data-link="https://www.reddit.com/submit?url=' . $link . '&title=' . urlencode( $title ) . '" class="nc_tweet">';
+			$array['resource']['reddit'] .= '<a rel="nofollow" target="_blank" href="https://www.reddit.com/submit?url=' . $link . '&title=' . urlencode( $title ) . '" data-link="https://www.reddit.com/submit?url=' . $link . '&title=' . urlencode( $title ) . '" class="nc_tweet">';
 			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && isset( $array['shares']['reddit'] ) && $array['shares']['reddit'] > 0 ) :
 				$array['resource']['reddit'] .= '<span class="iconFiller">';
 				$array['resource']['reddit'] .= '<span class="spaceManWilly">';

@@ -82,7 +82,7 @@ function swp_pocket_button_html( $array ) {
 
 		$array['resource']['pocket'] = '<div class="nc_tweetContainer swp_pocket" data-id="' . $array['count'] . '" data-network="pocket">';
 		$link = urlencode( urldecode( swp_process_url( $array['url'] , 'pocket' , $array['postID'] ) ) );
-		$array['resource']['pocket'] .= '<a href="https://getpocket.com/save?url=' . $link . '&title=' . $title . '" data-link="https://getpocket.com/save?url=' . $link . '&title=' . $title . '" class="nc_tweet">';
+		$array['resource']['pocket'] .= '<a rel="nofollow" href="https://getpocket.com/save?url=' . $link . '&title=' . $title . '" data-link="https://getpocket.com/save?url=' . $link . '&title=' . $title . '" class="nc_tweet">';
 		$array['resource']['pocket'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pocket"></i><span class="swp_share"> ' . __( 'Pocket','social-warfare' ) . '</span></span></span></span>';
 		$array['resource']['pocket'] .= '</a>';
 		$array['resource']['pocket'] .= '</div>';
