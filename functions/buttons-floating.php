@@ -60,6 +60,17 @@ function socialWarfareSideFloat() {
 			}
 			$buttonsArray['resource'] = array();
 			$buttonsArray['postID'] = $postID;
+
+			// Filter the premium buttons out of the array if the plugin is not registered
+			if( false === is_swp_registered() ):
+				$icons_array = apply_filters( 'swp_button_options' , $icons_array );
+				foreach($icons_array['content'] as $button => $value):
+					if(true === $value['premium']):
+						unset($buttonsArray['options']['newOrderOfIcons'][$button]);
+					endif;
+				endforeach;
+			endif;
+
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
 			// Create the social panel
