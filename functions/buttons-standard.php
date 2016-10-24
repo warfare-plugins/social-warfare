@@ -251,7 +251,7 @@ function social_warfare_buttons( $array = array() ) {
 			$assets = '<div class="nc_socialPanel swp_' . $options['visualTheme'] . ' swp_d_' . $options['dColorSet'] . ' swp_i_' . $options['iColorSet'] . ' swp_o_' . $options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $options['buttonFloat'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-emphasize="'.$options['emphasize_icons'].'">';
 
 			// Setup the total shares count if it's on the left
-			if ( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && ! isset( $array['buttons'] ) )
+			if ( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && ! isset( $array['buttons'] ) || ( $options['swTotesFormat'] == 'totesAltLeft' && isset( $buttonsArray['buttons'] ) && isset( $buttonsArray['buttons']['totes'] ) && $buttonsArray['totes'] >= $options['minTotes'] ))
 			|| 	($options['swTotesFormat'] == 'totesAltLeft' && isset( $array['buttons'] ) && isset( $array['buttons']['totes'] ) && $buttonsArray['totes'] >= $options['minTotes'] ) ) :
 				++$buttonsArray['count'];
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttonsArray['count'] . '" >';
