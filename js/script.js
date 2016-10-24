@@ -158,7 +158,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			++i;
 		});
 		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
-			var term_width = $(this).find('.swp_share').width();
+			var term_width = $(this).find('.swp_share').outerWidth();
 			var icon_width = $(this).find('i.sw').outerWidth();
 			var container_width = $(this).width();
 			var percentage_change = 1 + ((term_width + 35) / container_width);
@@ -166,8 +166,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$(this).css({flex:percentage_change + ' 1 0%'});
 		});
 		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseleave',function(){
-			$(this).find('.iconFiller').width('30px');
-			$(this).css({flex:'1'});
+			$(this).find('.iconFiller').removeAttr('style');
+			$(this).removeAttr('style');
 		});
 	}
 

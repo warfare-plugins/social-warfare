@@ -234,6 +234,16 @@ function social_warfare_buttons( $array = array() ) {
 				remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
 			endif;
 
+			// Filter the premium buttons out of the array if the plugin is not registered
+			if( false === is_swp_registered() ):
+				$icons_array = apply_filters( 'swp_button_options' , $icons_array );
+				foreach($icons_array['content'] as $button => $value):
+					if(true === $value['premium']):
+						unset($buttonsArray['options']['newOrderOfIcons'][$button]);
+					endif;
+				endforeach;
+			endif;
+
 			// This array will contain the HTML for all of the individual buttons
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
@@ -241,7 +251,7 @@ function social_warfare_buttons( $array = array() ) {
 			$assets = '<div class="nc_socialPanel swp_' . $options['visualTheme'] . ' swp_d_' . $options['dColorSet'] . ' swp_i_' . $options['iColorSet'] . ' swp_o_' . $options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $options['buttonFloat'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-emphasize="'.$options['emphasize_icons'].'">';
 
 			// Setup the total shares count if it's on the left
-			if ( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && ! isset( $array['buttons'] ) )
+			if ( ( $options['totes'] && $options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $options['minTotes'] && ! isset( $array['buttons'] ) || ( $options['swTotesFormat'] == 'totesAltLeft' && isset( $buttonsArray['buttons'] ) && isset( $buttonsArray['buttons']['totes'] ) && $buttonsArray['totes'] >= $options['minTotes'] ))
 			|| 	($options['swTotesFormat'] == 'totesAltLeft' && isset( $array['buttons'] ) && isset( $array['buttons']['totes'] ) && $buttonsArray['totes'] >= $options['minTotes'] ) ) :
 				++$buttonsArray['count'];
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttonsArray['count'] . '" >';

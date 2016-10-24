@@ -308,6 +308,15 @@ h3.sw-buttons-toggle {
 	display: none;
 }
 
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-on {
+	display: none;
+}
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-off {
+	right: 0;
+	background-color: #ee464f;
+	display: block;
+}
+
 .sw-checkbox-toggle[status="off"] .sw-checkbox-off {
 	right: 0;
 	background-color: #ee464f;
