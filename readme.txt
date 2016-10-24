@@ -190,7 +190,8 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 This update has been an intensely focused effort to eliminate bugs and maximize the compatibility of our plugin with all other plugins and themes. We also want to give a big shout out to Rob Neu for helping us audit through the code and make many of these improvements.
 
-*New*
+*New:*
+
 * Added an option to move the side floating buttons to the horizontal bottom floating position when the screen is too small to display the side floating buttons properly (like on mobile).
 * Added a separate custom color option for the side floating buttons.
 * Added nofollow to all the button links.
