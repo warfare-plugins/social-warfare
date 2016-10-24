@@ -157,7 +157,7 @@ function swp_pinterest_button_html( $array ) {
 				$array['resource']['pinterest'] .= '</span></span>';
 				$array['resource']['pinterest'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['pinterest'] ) . '</span>';
 			else :
-				$array['resource']['pinterest'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly" style="width:55px;"><i class="sw sw-pinterest"></i><span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span></span></span></span>';
+				$array['resource']['pinterest'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pinterest"></i><span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span></span></span></span>';
 			endif;
 			$array['resource']['pinterest'] .= '</a>';
 			$array['resource']['pinterest'] .= '</div>';
