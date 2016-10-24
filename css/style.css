@@ -1065,12 +1065,12 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_socialPanelSide:not(.swp_boxed) .nc_tweetContainer:not(.totes):hover {
-	width: 130px;
+	width: 150px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer:not(.totes):hover .iconFiller,
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) .spaceManWilly {
-	width: 72px;
+	width: 90px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes):hover .iconFiller,
