@@ -36,9 +36,10 @@ function swp_options_display($swp_options) {
 			),
 			'default'	=> 'manual',
 			'name'		=> __( 'Button Ordering' ,'social-warfare' ),
-			'divider'	=> false,
+			'divider'	=> true,
 			'premium'	=> true
 		),
+/*
 		'emphasize_icons' => array(
 			'type'		=> 'select',
 			'size'		=> 'two-thirds',
@@ -52,6 +53,7 @@ function swp_options_display($swp_options) {
 			'divider'	=> true,
 			'premium'	=> true
 		),
+*/
 		'share_counts_title' => array(
 			'type' 		=> 'title',
 			'content' 	=> __( 'Share Counts' ,'social-warfare' )
