@@ -23,7 +23,7 @@ $swp_user_options = swp_get_user_options( is_admin() );
  * @return array $options The modified options array
  */
 function swp_get_user_options( $admin = false ) {
-	$options = get_option( 'socialWarfareOptions' );
+	$options = get_option( 'socialWarfareOptions', array() );
 
 	$defaults = array(
 		'locationSite'              => 'both',
@@ -178,7 +178,7 @@ function swp_update_options( $options ) {
  * @return bool True if the option has been updated.
  */
 function swp_update_option( $key, $value ) {
-	$options = get_option( 'socialWarfareOptions' );
+	$options = get_option( 'socialWarfareOptions', array() );
 
 	$options[ $key ] = $value;
 
