@@ -87,6 +87,7 @@ div.nc_socialPanel .nc_tweetContainer {
 .nc_socialPanel a .swp_count:not(.swp_hide) {
 	display: inline-block;
 	line-height: 32px;
+	margin: 0 5px;
 	padding: 0;
 
 	-webkit-box-flex: 1;

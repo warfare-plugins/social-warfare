@@ -397,6 +397,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 	function handleWindowOpens() {
+		$( '.nc_tweet, a.swp_CTT' ).off( 'click' );
 		$( '.nc_tweet, a.swp_CTT' ).on( 'click', function( event ) {
 			if ( $( this ).hasClass( 'noPop' ) ) {
 				return false;
