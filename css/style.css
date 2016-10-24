@@ -1043,7 +1043,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	line-height: 34px;
 }
 
-.nc_socialPanelSide .nc_tweetContainer:not(.totes) .iconFiller {
+.nc_socialPanelSide:not(.swp_boxed) .nc_tweetContainer:not(.totes) .iconFiller {
 	margin-left: 2px;
 	width: 30px;
 }
