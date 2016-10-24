@@ -186,6 +186,41 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.1.0 (24 OCT 2016) =
+
+This update has been an intensely focused effort to eliminate bugs and maximize the compatibility of our plugin with all other plugins and themes. We also want to give a big shout out to Rob Neu for helping us audit through the code and make many of these improvements.
+
+*New*
+* Added an option to move the side floating buttons to the horizontal bottom floating position when the screen is too small to display the side floating buttons properly (like on mobile).
+* Added a separate custom color option for the side floating buttons.
+* Added nofollow to all the button links.
+* Added an alt and title tag to the popular posts widget thumbnails.
+
+*Maintenance:*
+
+* Overhauled / Improved the registration logic.
+* Refactored the options page settings.
+* Deprecated some unused functions .
+* Added a helper function for getting the site URL.
+* Cleaned up the share cache rebuild process.
+* Moved the mobile detection to the client side to avoid caching collisions with the showing/hiding of the WhatsApp button.
+* Removed all custom jQuery functions to avoid collisions.
+* Added translation functions to the admin options page. Translations can now be added for that.
+* Cleaned up some alignment issues with the side floating buttons.
+* Fixed the layout of the button version of the side floating buttons.
+* Changed the sizing of the buttons from JS to FlexBox.
+* Changed all scale properties from JS to pure CSS.
+* Minified all the admin scripts and CSS.
+* Removed the fade in effect from the buttons. They are now properly sized from the start so there's no need to keep them hidden while sizing logic is adjusting them. Instead they can now be visible from page load.
+* Renamed the meta box classes to avoid collisions with other plugins or themes that use the same meta box class.
+* Added throttles and debounces to some of the JS events.
+* Improved the JS and layout of the Image Hover Pin Button.
+* Moved all asset files to a single location.
+* Improved script and style loading.
+* Encapsulated JS within and anonymous function to improve compatibility with other plugins and themes.
+* Removed the outerHTML function.
+* Cleaned up options page and click to tweet assets.
+
 = 2.0.7 (10 OCT 2016) =
 
 Made some more major updates in response to Facebook's API changes. We've tested this on a dozen sites and we're experiencing a 100% success rate with the fix so far. If you're experiencing inaccurate share counts, install this update, ensure that the Cache Method is set to Advanced Page Caching on the Advanced Tab of the Social Warfare option page, then wait a few hours. Within a few hours (24 at the very, very latest) all of your Facebook shares counts should be 100% fully recovered.
