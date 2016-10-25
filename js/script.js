@@ -152,7 +152,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$(this).find('.nc_tweetContainer').each(function(){
 				if(i <= emphasize_icons) {
 					$(this).addClass('swp_emphasize');
-					console.log($(this).find('.swp_share'));
 					var term_width = $(this).find('.swp_share').width();
 					var icon_width = $(this).find('i.sw').outerWidth();
 					$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
@@ -231,7 +230,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 							visible = true;
 						}
 					});
-					console.log(visible);
 				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 					visible = true;
 					if ( floatLeftMobile == 'bottom' ) {
@@ -313,7 +311,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
 				} else if ( floatOption == 'floatTop' ) {
 					firstOffset = $( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).first().offset();
-					console.log( firstOffset );
 					if ( firstOffset.top > scrollPos + windowHeight ) {
 						newPadding = window.bodyPaddingTop + 50;
 						$( 'body' ).animate({ 'padding-top': newPadding + 'px' }, 0 );
@@ -454,7 +451,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			var newPosition = absint( ( windowHeight / 2 ) - ( buttonsHeight / 2 ) );
 			setTimeout( function() {
 				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 );
-				console.log( newPosition );
 			}, 105 );
 		}
 

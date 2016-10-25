@@ -18,7 +18,7 @@ add_filter( 'swp_meta_tags', 'swp_cache_rebuild_rel_canonical', 7 );
 /**
  * Use a rel canonical so search engines know this is not a real page.
  *
- * @since unknown
+ * @since 1.4.0
  * @param array $info Meta tag info.
  * @return array $info Meta tag info.
  */
@@ -192,18 +192,27 @@ function swp_reset_cache_timestamp( $post_id ) {
 		update_post_meta( $post_id,'swp_open_thumbnail_url' , $image_url );
 		delete_post_meta( $post_id,'swp_open_graph_image_url' );
 	endif;
+
+	// Update the Pinterest image
+	$array['imageID'] = get_post_meta( $post_id , 'nc_pinterestImage' , true );
+	if ( $array['imageID'] ) :
+		$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
+		delete_post_meta( $post_id,'swp_pinterest_image_url' );
+		update_post_meta( $post_id,'swp_pinterest_image_url',$array['imageURL'] );
+	endif;
 }
 
 add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
 /**
  * Trigger cache rebuild.
  *
- * @since  unknown
+ * @since  1.4.7
  * @access public
  * @param  array $info An array of footer script information.
  * @return array $info A modified array of footer script information.
  */
 function swp_output_cache_trigger( $info ) {
+
 	// Bail early if we're not on a single page or we have fresh cache.
 	if ( ! is_singular() || swp_is_cache_fresh( get_the_ID(), true ) ) {
 		return $info;
@@ -220,7 +229,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Trigger the cache rebuild.
-	if ( 'rebuild' === get_query_var( 'swp_cache' ) ) {
+	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
 		?>
 		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
