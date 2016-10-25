@@ -1717,3 +1717,7 @@ div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
 div.nc_socialPanel .nc_tweetContainer.swp_whatsapp {
 	display: none;
 }
+
+.swp-pinit .aligncenter {
+	margin: 0 auto;
+}
