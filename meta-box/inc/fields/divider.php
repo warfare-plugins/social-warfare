@@ -11,7 +11,7 @@ class SWPMB_Divider_Field extends SWPMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-divider', SWPMB_CSS_URL . 'divider.css', array(), SWPMB_VER );
+		wp_enqueue_style( 'swpmb-divider', SWPMB_CSS_URL . 'divider.css', array(), SWP_VERSION );
 	}
 
 	/**

@@ -9,8 +9,8 @@ class SWPMB_Image_Select_Field extends SWPMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-image-select', SWPMB_CSS_URL . 'image-select.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-image-select', SWPMB_JS_URL . 'image-select.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-image-select', SWPMB_CSS_URL . 'image-select.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-image-select', SWPMB_JS_URL . 'image-select.js', array( 'jquery' ), SWP_VERSION, true );
 	}
 
 	/**

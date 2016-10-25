@@ -9,7 +9,7 @@ class SWPMB_Checkbox_Field extends SWPMB_Input_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-checkbox', SWPMB_CSS_URL . 'checkbox.css', array(), SWPMB_VER );
+		wp_enqueue_style( 'swpmb-checkbox', SWPMB_CSS_URL . 'checkbox.css', array(), SWP_VERSION );
 	}
 
 	/**

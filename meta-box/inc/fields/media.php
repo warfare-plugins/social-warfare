@@ -12,8 +12,8 @@ class SWPMB_Media_Field extends SWPMB_Field
 	static function admin_enqueue_scripts()
 	{
 		wp_enqueue_media();
-		wp_enqueue_style( 'swpmb-media', SWPMB_CSS_URL . 'media.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-media', SWPMB_JS_URL . 'media.js', array( 'jquery-ui-sortable', 'underscore', 'backbone' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-media', SWPMB_CSS_URL . 'media.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-media', SWPMB_JS_URL . 'media.js', array( 'jquery-ui-sortable', 'underscore', 'backbone' ), SWP_VERSION, true );
 		wp_localize_script( 'swpmb-media', 'i18nSwpmbMedia', array(
 			'add'                => apply_filters( 'swpmb_media_add_string', __( 'Add Media', 'social-warfare' ) ),
 			'single'             => apply_filters( 'swpmb_media_single_files_string', _x( ' file', 'media', 'social-warfare' ) ),

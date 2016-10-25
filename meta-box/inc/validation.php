@@ -36,8 +36,8 @@ class SWPMB_Validation
 	 */
 	public function scripts()
 	{
-		wp_enqueue_script( 'jquery-validate', SWPMB_JS_URL . 'jquery.validate.min.js', array( 'jquery' ), SWPMB_VER, true );
-		wp_enqueue_script( 'swpmb-validate', SWPMB_JS_URL . 'validate.js', array( 'jquery-validate' ), SWPMB_VER, true );
+		wp_enqueue_script( 'jquery-validate', SWPMB_JS_URL . 'jquery.validate.min.js', array( 'jquery' ), SWP_VERSION, true );
+		wp_enqueue_script( 'swpmb-validate', SWPMB_JS_URL . 'validate.js', array( 'jquery-validate' ), SWP_VERSION, true );
 		wp_localize_script( 'swpmb-validate', 'swpmbValidate', array(
 			'summaryMessage' => __( 'Please correct the errors highlighted below and try again.', 'social-warfare' ),
 		) );

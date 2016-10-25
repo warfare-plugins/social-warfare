@@ -11,7 +11,7 @@ class SWPMB_OEmbed_Field extends SWPMB_URL_Field
 	public static function admin_enqueue_scripts()
 	{
 		wp_enqueue_style( 'swpmb-oembed', SWPMB_CSS_URL . 'oembed.css' );
-		wp_enqueue_script( 'swpmb-oembed', SWPMB_JS_URL . 'oembed.js', array(), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-oembed', SWPMB_JS_URL . 'oembed.js', array(), SWP_VERSION, true );
 	}
 
 	/**

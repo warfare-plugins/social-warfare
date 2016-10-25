@@ -13,8 +13,8 @@ class SWPMB_Image_Field extends SWPMB_File_Field
 		// Enqueue same scripts and styles as for file field
 		parent::admin_enqueue_scripts();
 
-		wp_enqueue_style( 'swpmb-image', SWPMB_CSS_URL . 'image.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-image', SWPMB_JS_URL . 'image.js', array( 'jquery-ui-sortable' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-image', SWPMB_CSS_URL . 'image.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-image', SWPMB_JS_URL . 'image.js', array( 'jquery-ui-sortable' ), SWP_VERSION, true );
 	}
 
 	/**

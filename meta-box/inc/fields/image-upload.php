@@ -25,6 +25,6 @@ class SWPMB_Image_Upload_Field extends SWPMB_Image_Advanced_Field
 	{
 		parent::admin_enqueue_scripts();
 		SWPMB_File_Upload_Field::admin_enqueue_scripts();
-		wp_enqueue_script( 'swpmb-image-upload', SWPMB_JS_URL . 'image-upload.js', array( 'swpmb-file-upload', 'swpmb-image-advanced' ), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-image-upload', SWPMB_JS_URL . 'image-upload.js', array( 'swpmb-file-upload', 'swpmb-image-advanced' ), SWP_VERSION, true );
 	}
 }

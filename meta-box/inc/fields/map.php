@@ -18,7 +18,7 @@ class SWPMB_Map_Field extends SWPMB_Field
 		$google_maps_url = apply_filters( 'swpmb_google_maps_url', 'https://maps.google.com/maps/api/js?sensor=false' );
 		wp_register_script( 'google-maps', esc_url_raw( $google_maps_url ), array(), '', true );
 		wp_enqueue_style( 'swpmb-map', SWPMB_CSS_URL . 'map.css' );
-		wp_enqueue_script( 'swpmb-map', SWPMB_JS_URL . 'map.js', array( 'jquery-ui-autocomplete', 'google-maps' ), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-map', SWPMB_JS_URL . 'map.js', array( 'jquery-ui-autocomplete', 'google-maps' ), SWP_VERSION, true );
 	}
 
 	/**

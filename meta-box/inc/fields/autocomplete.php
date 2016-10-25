@@ -9,8 +9,8 @@ class SWPMB_Autocomplete_Field extends SWPMB_Multiple_Values_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-autocomplete', SWPMB_CSS_URL . 'autocomplete.css', array( 'wp-admin' ), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-autocomplete', SWPMB_JS_URL . 'autocomplete.js', array( 'jquery-ui-autocomplete' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-autocomplete', SWPMB_CSS_URL . 'autocomplete.css', array( 'wp-admin' ), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-autocomplete', SWPMB_JS_URL . 'autocomplete.js', array( 'jquery-ui-autocomplete' ), SWP_VERSION, true );
 		wp_localize_script( 'swpmb-autocomplete', 'SWPMB_Autocomplete', array( 'delete' => __( 'Delete', 'social-warfare' ) ) );
 	}
 

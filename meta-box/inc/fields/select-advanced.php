@@ -11,7 +11,7 @@ class SWPMB_Select_Advanced_Field extends SWPMB_Select_Field
 	{
 		parent::admin_enqueue_scripts();
 		wp_enqueue_style( 'swpmb-select2', SWPMB_CSS_URL . 'select2/select2.css', array(), '4.0.1' );
-		wp_enqueue_style( 'swpmb-select-advanced', SWPMB_CSS_URL . 'select-advanced.css', array(), SWPMB_VER );
+		wp_enqueue_style( 'swpmb-select-advanced', SWPMB_CSS_URL . 'select-advanced.css', array(), SWP_VERSION );
 
 		wp_register_script( 'swpmb-select2', SWPMB_JS_URL . 'select2/select2.min.js', array(), '4.0.2', true );
 
@@ -28,8 +28,8 @@ class SWPMB_Select_Advanced_Field extends SWPMB_Select_Field
 			$deps[] = 'swpmb-select2-i18n';
 		}
 
-		wp_enqueue_script( 'swpmb-select', SWPMB_JS_URL . 'select.js', array(), SWPMB_VER, true );
-		wp_enqueue_script( 'swpmb-select-advanced', SWPMB_JS_URL . 'select-advanced.js', $deps, SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-select', SWPMB_JS_URL . 'select.js', array(), SWP_VERSION, true );
+		wp_enqueue_script( 'swpmb-select-advanced', SWPMB_JS_URL . 'select-advanced.js', $deps, SWP_VERSION, true );
 
 	}
 

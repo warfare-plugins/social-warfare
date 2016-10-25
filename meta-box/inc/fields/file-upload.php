@@ -24,8 +24,8 @@ class SWPMB_File_Upload_Field extends SWPMB_File_Advanced_Field
 	static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'swpmb-upload', SWPMB_CSS_URL . 'upload.css', array( 'swpmb-media' ), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-file-upload', SWPMB_JS_URL . 'file-upload.js', array( 'swpmb-media' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-upload', SWPMB_CSS_URL . 'upload.css', array( 'swpmb-media' ), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-file-upload', SWPMB_JS_URL . 'file-upload.js', array( 'swpmb-media' ), SWP_VERSION, true );
 	}
 
 	/**

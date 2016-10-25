@@ -9,8 +9,8 @@ class SWPMB_Color_Field extends SWPMB_Text_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-color', SWPMB_CSS_URL . 'color.css', array( 'wp-color-picker' ), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-color', SWPMB_JS_URL . 'color.js', array( 'wp-color-picker' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-color', SWPMB_CSS_URL . 'color.css', array( 'wp-color-picker' ), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-color', SWPMB_JS_URL . 'color.js', array( 'wp-color-picker' ), SWP_VERSION, true );
 	}
 
 	/**

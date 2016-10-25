@@ -13,7 +13,7 @@ class SWPMB_File_Input_Field extends SWPMB_Field
 	{
 		// Make sure scripts for new media uploader in WordPress 3.5 is enqueued
 		wp_enqueue_media();
-		wp_enqueue_script( 'swpmb-file-input', SWPMB_JS_URL . 'file-input.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-file-input', SWPMB_JS_URL . 'file-input.js', array( 'jquery' ), SWP_VERSION, true );
 		wp_localize_script( 'swpmb-file-input', 'swpmbFileInput', array(
 			'frameTitle' => __( 'Select File', 'social-warfare' ),
 		) );

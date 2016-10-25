@@ -37,7 +37,7 @@ class SWPMB_Thickbox_Image_Field extends SWPMB_Image_Field
 		add_thickbox();
 		wp_enqueue_script( 'media-upload' );
 
-		wp_enqueue_script( 'swpmb-thickbox-image', SWPMB_JS_URL . 'thickbox-image.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-thickbox-image', SWPMB_JS_URL . 'thickbox-image.js', array( 'jquery' ), SWP_VERSION, true );
 	}
 
 	/**

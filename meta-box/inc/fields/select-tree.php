@@ -26,8 +26,8 @@ class SWPMB_Select_Tree_Field extends SWPMB_Select_Field
 	public static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'swpmb-select-tree', SWPMB_CSS_URL . 'select-tree.css', array( 'swpmb-select' ), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-select-tree', SWPMB_JS_URL . 'select-tree.js', array( 'swpmb-select' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-select-tree', SWPMB_CSS_URL . 'select-tree.css', array( 'swpmb-select' ), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-select-tree', SWPMB_JS_URL . 'select-tree.js', array( 'swpmb-select' ), SWP_VERSION, true );
 	}
 
 	/**

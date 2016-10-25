@@ -9,8 +9,8 @@ class SWPMB_Select_Field extends SWPMB_Choice_Field
 	 */
 	public static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-select', SWPMB_CSS_URL . 'select.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-select', SWPMB_JS_URL . 'select.js', array(), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-select', SWPMB_CSS_URL . 'select.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-select', SWPMB_JS_URL . 'select.js', array(), SWP_VERSION, true );
 	}
 
 	/**

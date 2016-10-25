@@ -12,8 +12,8 @@ class SWPMB_Image_Advanced_Field extends SWPMB_Media_Field
 	static function admin_enqueue_scripts()
 	{
 		parent::admin_enqueue_scripts();
-		wp_enqueue_style( 'swpmb-image-advanced', SWPMB_CSS_URL . 'image-advanced.css', array( 'swpmb-media' ), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-image-advanced', SWPMB_JS_URL . 'image-advanced.js', array( 'swpmb-media' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-image-advanced', SWPMB_CSS_URL . 'image-advanced.css', array( 'swpmb-media' ), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-image-advanced', SWPMB_JS_URL . 'image-advanced.js', array( 'swpmb-media' ), SWP_VERSION, true );
 	}
 
 	/**

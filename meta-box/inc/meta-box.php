@@ -98,9 +98,9 @@ class SWP_Meta_Box
 		if ( ! $this->is_edit_screen() )
 			return;
 
-		wp_enqueue_style( 'swpmb', SWPMB_CSS_URL . 'style.css', array(), SWPMB_VER );
+		wp_enqueue_style( 'swpmb', SWPMB_CSS_URL . 'style.css', array(), SWP_VERSION );
 		if( is_rtl() )
-			wp_enqueue_style( 'swpmb-rtl', SWPMB_CSS_URL . 'style-rtl.css', array(), SWPMB_VER );
+			wp_enqueue_style( 'swpmb-rtl', SWPMB_CSS_URL . 'style-rtl.css', array(), SWP_VERSION );
 
 		// Load clone script conditionally
 		$fields = self::get_fields( $this->fields );
@@ -108,7 +108,7 @@ class SWP_Meta_Box
 		{
 			if ( $field['clone'] )
 			{
-				wp_enqueue_script( 'swpmb-clone', SWPMB_JS_URL . 'clone.js', array( 'jquery-ui-sortable' ), SWPMB_VER, true );
+				wp_enqueue_script( 'swpmb-clone', SWPMB_JS_URL . 'clone.js', array( 'jquery-ui-sortable' ), SWP_VERSION, true );
 				break;
 			}
 		}
@@ -121,7 +121,7 @@ class SWP_Meta_Box
 
 		// Auto save
 		if ( $this->meta_box['autosave'] )
-			wp_enqueue_script( 'swpmb-autosave', SWPMB_JS_URL . 'autosave.js', array( 'jquery' ), SWPMB_VER, true );
+			wp_enqueue_script( 'swpmb-autosave', SWPMB_JS_URL . 'autosave.js', array( 'jquery' ), SWP_VERSION, true );
 
 		/**
 		 * Allow developers to enqueue more scripts and styles

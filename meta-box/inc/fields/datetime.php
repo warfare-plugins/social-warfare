@@ -72,9 +72,9 @@ class SWPMB_Datetime_Field extends SWPMB_Text_Field
 			}
 		}
 
-		wp_register_script( 'swpmb-datetime', SWPMB_JS_URL . 'datetime.js', $deps, SWPMB_VER, true );
-		wp_register_script( 'swpmb-date', SWPMB_JS_URL . 'date.js', $deps, SWPMB_VER, true );
-		wp_register_script( 'swpmb-time', SWPMB_JS_URL . 'time.js', array( 'jquery-ui-timepicker-i18n' ), SWPMB_VER, true );
+		wp_register_script( 'swpmb-datetime', SWPMB_JS_URL . 'datetime.js', $deps, SWP_VERSION, true );
+		wp_register_script( 'swpmb-date', SWPMB_JS_URL . 'date.js', $deps, SWP_VERSION, true );
+		wp_register_script( 'swpmb-time', SWPMB_JS_URL . 'time.js', array( 'jquery-ui-timepicker-i18n' ), SWP_VERSION, true );
 		wp_localize_script( 'swpmb-datetime', 'SWPMB_Datetimepicker', array(
 			'locale'      => $locale,
 			'localeShort' => $locale_short,

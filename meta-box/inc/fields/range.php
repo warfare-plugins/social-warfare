@@ -23,8 +23,8 @@ class SWPMB_Range_Field extends SWPMB_Number_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-range', SWPMB_CSS_URL . 'range.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-range', SWPMB_JS_URL . 'range.js', array(), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-range', SWPMB_CSS_URL . 'range.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-range', SWPMB_JS_URL . 'range.js', array(), SWP_VERSION, true );
 	}
 
 	/**

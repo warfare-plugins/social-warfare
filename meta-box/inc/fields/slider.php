@@ -17,7 +17,7 @@ class SWPMB_Slider_Field extends SWPMB_Field
 		wp_enqueue_style( 'jquery-ui-slider', "{$url}/jquery.ui.slider.css", array(), '1.8.17' );
 		wp_enqueue_style( 'swpmb-slider', SWPMB_CSS_URL . 'slider.css' );
 
-		wp_enqueue_script( 'swpmb-slider', SWPMB_JS_URL . 'slider.js', array( 'jquery-ui-slider', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-core' ), SWPMB_VER, true );
+		wp_enqueue_script( 'swpmb-slider', SWPMB_JS_URL . 'slider.js', array( 'jquery-ui-slider', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-core' ), SWP_VERSION, true );
 	}
 
 	/**

@@ -16,8 +16,8 @@ class SWPMB_Wysiwyg_Field extends SWPMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-wysiwyg', SWPMB_CSS_URL . 'wysiwyg.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-wysiwyg', SWPMB_JS_URL . 'wysiwyg.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-wysiwyg', SWPMB_CSS_URL . 'wysiwyg.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-wysiwyg', SWPMB_JS_URL . 'wysiwyg.js', array( 'jquery' ), SWP_VERSION, true );
 	}
 
 	/**

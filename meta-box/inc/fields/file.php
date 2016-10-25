@@ -9,8 +9,8 @@ class SWPMB_File_Field extends SWPMB_Field
 	 */
 	static function admin_enqueue_scripts()
 	{
-		wp_enqueue_style( 'swpmb-file', SWPMB_CSS_URL . 'file.css', array(), SWPMB_VER );
-		wp_enqueue_script( 'swpmb-file', SWPMB_JS_URL . 'file.js', array( 'jquery' ), SWPMB_VER, true );
+		wp_enqueue_style( 'swpmb-file', SWPMB_CSS_URL . 'file.css', array(), SWP_VERSION );
+		wp_enqueue_script( 'swpmb-file', SWPMB_JS_URL . 'file.js', array( 'jquery' ), SWP_VERSION, true );
 		wp_localize_script( 'swpmb-file', 'swpmbFile', array(
 			'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', 'social-warfare' ),
 			'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', 'social-warfare' ),
