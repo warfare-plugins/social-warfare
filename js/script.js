@@ -432,8 +432,17 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
 		window.bodyPaddingBottom = absint( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
 
+		var swp_hover = false;
+		$( '.nc_socialPanel' ).hover(
+		    function () {
+		        swp_hover = true;
+		    },
+		    function () {
+		        swp_hover = false;
+		    }
+		);
 		$( window ).resize( swp.debounce( 250, function() {
-			if ( $( '.nc_socialPanel' ).length && $( '.nc_socialPanel:hover' ).length !== 0 ) { } else {
+			if ( $( '.nc_socialPanel' ).length && false !== swp_hover ) { } else {
 				window.swpAdjust = 1;
 				initShareButtons();
 			}
