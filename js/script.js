@@ -147,15 +147,18 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 */
 	swp.activateHoverStates = function() {
 		var emphasize_icons = $('.nc_socialPanel:not(.nc_socialPanelSide)').attr('data-emphasize');
-		var i = 1;
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').each(function(){
-			if(i <= emphasize_icons) {
-				$(this).addClass('swp_emphasize');
-				var term_width = $(this).find('.swp_share').width();
-				var icon_width = $(this).find('i.sw').outerWidth();
-				$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-			}
-			++i;
+		$('.nc_socialPanel:not(.nc_socialPanelSide)').each(function(){
+			var i = 1;
+			$(this).find('.nc_tweetContainer').each(function(){
+				if(i <= emphasize_icons) {
+					$(this).addClass('swp_emphasize');
+					console.log($(this).find('.swp_share'));
+					var term_width = $(this).find('.swp_share').width();
+					var icon_width = $(this).find('i.sw').outerWidth();
+					$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+				}
+				++i;
+			});
 		});
 		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
 			var term_width = $(this).find('.swp_share').outerWidth();
@@ -305,7 +308,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				ncWrapper.show();
 
 				// Add some padding to the page so it fits nicely at the top or bottom
-				console.log(floatOption);
 				if ( floatOption == 'floatBottom' ) {
 					newPadding = window.bodyPaddingBottom + 50;
 					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
