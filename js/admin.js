@@ -41,6 +41,20 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 		$( '#socialWarfare .nc_ogDescriptionWrapper .counterNumber' ).html( remaining );
 	}
 
+	// Function for SM Description Counting
+	function swpPinterestRemaining() {
+		var pinterestDescription = $( '#socialWarfare textarea#nc_pinterestDescription' ).val();
+		var remaining = 140 - pinterestDescription.length;
+		if ( pinterestDescription.length > 0 && remaining >= 0 ) {
+			$( '#socialWarfare .nc_pinterestDescriptionWrapper .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
+		} else if ( pinterestDescription.length > 0 && remaining < 0 ) {
+			$( '#socialWarfare .nc_pinterestDescriptionWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
+		} else {
+			$( '#socialWarfare .nc_pinterestDescriptionWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
+		}
+		$( '#socialWarfare .nc_pinterestDescriptionWrapper .counterNumber' ).html( remaining );
+	}
+
 	// Function for Twitter Box Counting
 	function twitterRemaining() {
 		var smTwitter = $( '#socialWarfare textarea#nc_customTweet' ).val();
@@ -82,6 +96,9 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 			// Add the CountDown Box for the Social Media Description
 			$( '#socialWarfare #nc_ogDescription' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
+			// Add the CountDown Box for the Pinterest Box
+			$( '#socialWarfare #nc_pinterestDescription' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">140</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+
 			// Add the CountDown Box for the Twitter Box
 			$( '#socialWarfare #nc_customTweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
@@ -93,6 +110,11 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 			smDescriptionRemaining();
 			$( '#socialWarfare textarea#nc_ogDescription' ).on( 'input', function() {
 				smDescriptionRemaining();
+			});
+
+			swpPinterestRemaining();
+			$( '#socialWarfare textarea#nc_pinterestDescription' ).on( 'input', function() {
+				swpPinterestRemaining();
 			});
 
 			twitterRemaining();
