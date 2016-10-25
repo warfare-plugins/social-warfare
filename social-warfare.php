@@ -22,6 +22,7 @@ define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
  */
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once SWP_PLUGIN_DIR . '/meta-box/meta-box.php';
+require_once SWP_PLUGIN_DIR . '/functions/languages.php';
 require_once SWP_PLUGIN_DIR . '/functions/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/options-fetch.php';

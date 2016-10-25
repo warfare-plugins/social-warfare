@@ -110,7 +110,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		Fetch and Store Facebook Counts
 
 	****************************************************************************/
-
+	var swpPostData = {};
 	swp.fetchFacebookShares = function() {
 		var requestUrl = 'https://graph.facebook.com/?id=' + swp_post_url;
 		$.get( requestUrl, function( response ) {
