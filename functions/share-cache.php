@@ -77,7 +77,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
 	if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
-		$fresh_cache = true;
+		$fresh_cache = false;
 	} else {
 		$fresh_cache = false;
 	}
@@ -231,6 +231,14 @@ function swp_output_cache_trigger( $info ) {
 	// Trigger the cache rebuild.
 	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
+
+		if( $info['swp_user_options']['recover_shares'] == true ) {
+			$alternateURL = swp_get_alt_permalink( $info['postID'] );
+			$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
+		} else {
+			$alternateURL = false;
+		}
+
 		?>
 		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
 		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
@@ -247,7 +255,8 @@ function swp_output_cache_trigger( $info ) {
 		}
 		swp_post_id='<?php echo $info['postID']; ?>';
 		swp_post_url='<?php echo get_permalink(); ?>';
-		socialWarfarePlugin.fetchFacebookShares();
+		swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+		socialWarfarePlugin.fetchShares();
 		<?php
 		$info['footer_output'] = ob_get_clean();
 	}

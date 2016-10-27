@@ -186,6 +186,19 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.1.1 (26 OCT 2016) =
+
+The 2.1.0 update fixed a ton of issues, but it also introduced a few bugs as well. We've been getting your reports and working as quickly as possible around the clock to get these fixed. This should fix almost everything that has been reported so far.
+
+*Maintenance:*
+
+* Fixed the share count issue. We had reports that share counts were not updating on some of the sites.
+* Added versioning to the admin scripts and styles. This will prevent users from having to clear browser cache when the files are modified in an update.
+* Added a counter to the Pinterest description field as we've discovered that Pinterest cuts off descriptions around 140 characters on share buttons.
+* Changed the hover detection method to avoid conflicts across different versions of jQuery for when users are manually declaring a version of jQuery different from what is bundled into WordPress core.
+* Added a CSS rule for the aligncenter class so the hover Pinit function will keep centered images centered.
+* Fixed a minor Javascript error in the cache rebuild process.
+
 = 2.1.0 (24 OCT 2016) =
 
 This update has been an intensely focused effort to eliminate bugs and maximize the compatibility of our plugin with all other plugins and themes. We also want to give a big shout out to Rob Neu for helping us audit through the code and make many of these improvements.
