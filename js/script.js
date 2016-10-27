@@ -395,13 +395,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				pinDesc = $image.attr( 'alt' );
 			}
 
-			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + pinMedia + '&url=' + options.pageURL + '&is_video=false' + '&description=' + encodeURIComponent( pinDesc );
+			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pinMedia ) + '&url=' + encodeURI( options.pageURL ) + '&is_video=false' + '&description=' + pinDesc;
 			var imageClasses = $image.attr( 'class' );
 			var imageStyle = $image.attr( 'style' );
 
 			$image.removeClass().attr( 'style', '' ).wrap( options.wrap );
 
-			$image.after( '<a href="' + encodeURI( bookmark ) + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>' );
+			$image.after( '<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>' );
 
 			$image.parent( '.sw-pinit' ).addClass( imageClasses ).attr( 'style', imageStyle );
 
