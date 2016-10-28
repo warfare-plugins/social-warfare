@@ -1719,6 +1719,6 @@ div.nc_socialPanel .nc_tweetContainer.swp_whatsapp {
 	display: none;
 }
 
-.sw-pinit .aligncenter {
+.sw-pinit.aligncenter {
 	margin: 0 auto;
 }
