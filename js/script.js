@@ -141,7 +141,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					} else {
 						var f5 = 0, f6 = 0;
 					}
-					fShares += f4 + f5 + f6;
+					fShares2 = f4 + f5 + f6;
+					if (fShares !== fShares2) {
+						fShares = fShares + fShares2;
+					}
 				}
 				swpPostData = {
 					action: 'swp_facebook_shares_update',
