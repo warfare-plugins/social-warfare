@@ -20,7 +20,9 @@ add_filter( 'the_excerpt','social_warfare_wrapper' );
 function social_warfare_wrapper( $content ) {
 	$array['content'] = $content;
 	$content = social_warfare_buttons( $array );
-	$content .= '<div class="swp-content-locator"></div>';
+	if( false === is_admin() ):
+		$content .= '<div class="swp-content-locator"></div>';
+	endif;
 	return $content;
 }
 
@@ -34,7 +36,9 @@ function social_warfare_wrapper( $content ) {
 function social_warfare( $array = array() ) {
 	$array['devs'] = true;
 	$content = social_warfare_buttons( $array );
-	$content .= '<div class="swp-content-locator"></div>';
+	if( false === is_admin() ):
+		$content .= '<div class="swp-content-locator"></div>';
+	endif;
 	return $content;
 }
 
