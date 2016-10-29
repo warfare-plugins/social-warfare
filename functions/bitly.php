@@ -32,13 +32,13 @@ function swp_google_analytics( $array ) {
 	// Check if Analytics have been enabled or not
 	if ( $options['googleAnalytics'] == true ) :
 		if ( strpos( $url,'?' ) !== false ) :
-			$url = $url . urlencode( '&utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
+			$array['url'] = $url . urlencode( '&utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
 		else :
-			$url = $url . urlencode( '?utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
+			$array['url'] = $url . urlencode( '?utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
 		endif;
-		return $url;
+		return $array;
 	else :
-		return $url;
+		return $array;
 	endif;
 }
 
@@ -83,13 +83,14 @@ function swp_bitly_shortener( $array ) {
 					// If the link has already been shortened....
 					$existingURL 		= get_post_meta( $postID,'bitly_link_' . $network,true );
 					if ( $existingURL && swp_is_cache_fresh( $postID ) == true ) :
-						return $existingURL;
+						$array['url'] = $existingURL;
+						return $array;
 
 						// If the link has NOT already been shortened
 					else :
 
 						// ....Return the normal URL
-						return $url;
+						return $array;
 
 					endif;
 
@@ -103,7 +104,8 @@ function swp_bitly_shortener( $array ) {
 						// Store the link in the cache and return it to the buttons
 						delete_post_meta( $postID,'bitly_link_' . $network );
 						update_post_meta( $postID,'bitly_link_' . $network,$shortURL );
-						return $shortURL;
+						$array['url'] = $shortURL;
+						return $array;
 
 						// If the API does not provide a shortened URL....
 					else :
@@ -112,7 +114,7 @@ function swp_bitly_shortener( $array ) {
 						$_GLOBALS['sw']['bitly_status'] = 'failure';
 
 						// Return the normal URL
-						return $url;
+						return $array;
 
 						// End the check for a shortneing link from the API
 					endif;
@@ -133,13 +135,14 @@ function swp_bitly_shortener( $array ) {
 						$_GLOBALS['sw']['links'][ $postID ] = $existingURL;
 
 						// Return the shortened URL
-						return $existingURL;
+						$array['url'] = $existingURL;
+						return $array;
 
 						// If we don't have a shortlink in the cache....
 					else :
 
 						// Return the normal URL
-						return $url;
+						return $array;
 
 					endif;
 
@@ -169,7 +172,8 @@ function swp_bitly_shortener( $array ) {
 							update_post_meta( $postID,'bitly_link',$shortURL );
 
 							// Return the short URL
-							return $shortURL;
+							$array['url'] = $shortURL;
+							return $array;
 
 							// If didn't get a shortened URL from their API....
 						else :
@@ -178,7 +182,7 @@ function swp_bitly_shortener( $array ) {
 							$_GLOBALS['sw']['bitly_status'] = 'failure';
 
 							// Return the normal URL
-							return $url;
+							return $array;
 
 							// End check for shorte URL from the API
 						endif;
@@ -196,7 +200,7 @@ function swp_bitly_shortener( $array ) {
 		else :
 
 			// Return the normal URL
-			return $url;
+			return $array;
 
 			// End the check for bitly activation and credentials
 		endif;
@@ -205,7 +209,7 @@ function swp_bitly_shortener( $array ) {
 	else :
 
 		// Return the normal URL
-		return $url;
+		return $array;
 
 		// End the check for link shortening being activated
 	endif;
@@ -290,9 +294,9 @@ function swp_process_url( $url, $network, $postID ) {
 		$array['url'] = $url;
 		$array['network'] = $network;
 		$array['postID'] = $postID;
-		$array['url'] = apply_filters( 'swp_analytics' , $array );
-		$url = apply_filters( 'swp_link_shortening' , $array );
-		return $url;
+		$array = apply_filters( 'swp_analytics' , $array );
+		$array = apply_filters( 'swp_link_shortening' , $array );
+		return $array['url'];
 
 	endif;
 
