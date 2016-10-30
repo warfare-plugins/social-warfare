@@ -291,27 +291,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
 			visible = false;
-			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).each(function() {
-				var thisOffset, thisHeight, screenBottom;
-
-				var index = $( '.nc_socialPanel' ).index( $( this ) );
-
-				// Fetch our base numbers
-				if ( typeof window.swpOffsets[index] == 'undefined' ) {
-					thisOffset   = $( this ).offset();
-					thisHeight   = $( this ).height();
-					screenBottom = thisOffset + thisHeight;
-					window.swpOffsets[index] = thisOffset;
-				} else {
-					thisOffset   = window.swpOffsets[index];
-					thisHeight   = $( this ).height();
-					screenBottom = thisOffset + thisHeight;
-				}
-
-				// Check if it's visible
-				if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
-					visible = true;
-				}
+			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
+					var thisOffset = $( this ).offset();
+					var thisHeight = $( this ).height();
+					if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
+						visible = true;
+					}
 			});
 			if ( visible ) {
 				// Hide the Floating bar
