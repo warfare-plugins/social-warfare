@@ -69,6 +69,7 @@ div.nc_socialPanel .nc_tweetContainer {
 	font-weight: bold;
 	height: 30px;
 	text-decoration: none;
+	text-decoration: none!important;
 	text-transform: none;
 
 	-webkit-flex-flow: row wrap;

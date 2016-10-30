@@ -141,7 +141,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					} else {
 						var f5 = 0, f6 = 0;
 					}
-					fShares2 = f4 + f5 + f6;
+					var fShares2 = f4 + f5 + f6;
 					if (fShares !== fShares2) {
 						fShares = fShares + fShares2;
 					}
@@ -180,6 +180,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			});
 		});
 		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
+			swpRestoreSizes();
 			var term_width = $(this).find('.swp_share').outerWidth();
 			var icon_width = $(this).find('i.sw').outerWidth();
 			var container_width = $(this).width();
@@ -187,12 +188,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
 			$(this).css({flex:percentage_change + ' 1 0%'});
 		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseleave',function(){
-			$(this).find('.iconFiller').removeAttr('style');
-			$(this).removeAttr('style');
+		$('.nc_socialPanel:not(.nc_socialPanelSide)').on('mouseleave',function() {
+			swpRestoreSizes();
 		});
 	}
-
+	function swpRestoreSizes() {
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize) .iconFiller').removeAttr('style');
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').removeAttr('style');
+	}
 	function createFloatBar() {
 		//if ( ! $( '.nc_socialPanelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
@@ -447,6 +450,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 	$( document ).ready( function() {
 		handleWindowOpens();
+		initShareButtons();
 
 		// Fetch the padding amount to make space later for the floating bars
 		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
@@ -468,7 +472,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}
 		}));
 
-		$( window ).trigger( 'resize' );
+		// $( window ).trigger( 'resize' );
 
 		$( document.body ).on( 'post-load', function() {
 			initShareButtons();
