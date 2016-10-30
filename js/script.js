@@ -334,7 +334,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			swp.activateHoverStates();
 			handleWindowOpens();
 			$( window ).scrollTop();
-			$( window ).scroll( swp.throttle( 250, function() {
+			$( window ).scroll( swp.throttle( 50, function() {
 				floatingBarReveal();
 			}));
 
