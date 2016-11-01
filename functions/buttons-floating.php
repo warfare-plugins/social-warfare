@@ -63,6 +63,7 @@ function socialWarfareSideFloat() {
 
 			// Filter the premium buttons out of the array if the plugin is not registered
 			if( false === is_swp_registered() ):
+				$icons_array = array( 'type'	=> 'buttons' );
 				$icons_array = apply_filters( 'swp_button_options' , $icons_array );
 				foreach($icons_array['content'] as $button => $value):
 					if(true === $value['premium']):

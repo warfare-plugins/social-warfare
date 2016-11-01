@@ -45,7 +45,7 @@ function is_swp_registered() {
 
 		// If the Premium Code is currently set....
 		// if ( isset( $options['premiumCode'] ) && $key === $options['premiumCode'] ) {
-		if ( isset( $options['premiumCode'] ) ) {
+		if ( isset( $options['premiumCode'] ) && $options['premiumCode'] != '' ) {
 			$is_registered = true;
 		}
 	}
