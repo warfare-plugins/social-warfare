@@ -77,7 +77,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
 	if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
-		$fresh_cache = false;
+		$fresh_cache = true;
 	} else {
 		$fresh_cache = false;
 	}
@@ -182,7 +182,7 @@ function swp_facebook_shares_update() {
 	wp_die();
 }
 
-add_action( 'save_post', 'swp_reset_cache_timestamp' );
+add_action( 'save_post', 'swp_cache_rebuild' );
 /**
  * A function to reset the cache timestamp on a post after the cache is rebuilt.
  *
