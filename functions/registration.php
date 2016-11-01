@@ -138,7 +138,8 @@ function swp_unregister_plugin( $email, $key ) {
 		return $response;
 	}
 
-	return false;
+	swp_update_option( 'premiumCode', '' );
+	return $response['status'];
 }
 
 /**

@@ -133,6 +133,20 @@ function swp_cache_rebuild() {
 		delete_post_meta( $post_id,'swp_twitter_username' );
 	endif;
 
+	// Chache the og_image URL.
+	$image_id = get_post_meta( $post_id , 'nc_ogImage' , true );
+
+	if ( $image_id ) :
+		$image_url = wp_get_attachment_url( $image_id );
+		delete_post_meta( $post_id,'swp_open_graph_image_url' );
+		update_post_meta( $post_id,'swp_open_graph_image_url',$image_url );
+	else :
+		$image_url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
+		delete_post_meta( $post_id,'swp_open_thumbnail_url' );
+		update_post_meta( $post_id,'swp_open_thumbnail_url' , $image_url );
+		delete_post_meta( $post_id,'swp_open_graph_image_url' );
+	endif;
+
 	// Update the cache timestamp
 	delete_post_meta( $post_id , 'swp_cache_timestamp' );
 	update_post_meta( $post_id , 'swp_cache_timestamp' , floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
@@ -229,7 +243,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Trigger the cache rebuild.
-	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
+	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) || 'legacy' === $info['swp_user_options']['cacheMethod'] ) {
 		ob_start();
 
 		if( $info['swp_user_options']['recover_shares'] == true ) {

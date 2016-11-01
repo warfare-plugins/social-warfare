@@ -36,10 +36,8 @@ function swp_google_analytics( $array ) {
 		else :
 			$array['url'] = $url . urlencode( '?utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
 		endif;
-		return $array;
-	else :
-		return $array;
 	endif;
+	return $array;
 }
 
 /**
