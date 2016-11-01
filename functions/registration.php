@@ -44,7 +44,8 @@ function is_swp_registered() {
 		$is_registered = false;
 
 		// If the Premium Code is currently set....
-		if ( isset( $options['premiumCode'] ) && $key === $options['premiumCode'] ) {
+		// if ( isset( $options['premiumCode'] ) && $key === $options['premiumCode'] ) {
+		if ( isset( $options['premiumCode'] ) ) {
 			$is_registered = true;
 		}
 	}
@@ -132,12 +133,20 @@ function swp_unregister_plugin( $email, $key ) {
 	}
 
 	if ( 'success' === $response['status'] ) {
-		swp_update_option( 'emailAddress', '' );
+		// swp_update_option( 'emailAddress', '' );
 		swp_update_option( 'premiumCode', '' );
 		return $response;
 	}
 
 	return false;
+}
+
+/**
+ * Registration debugging
+ */
+if ( true === _swp_is_debug('registration') ) {
+	swp_check_registration_status();
+	echo 'Debugging Registration Complete';
 }
 
 /**
@@ -159,25 +168,35 @@ function swp_check_registration_status() {
 
 	$domain = swp_get_site_url();
 	$email = $options['emailAddress'];
+	$key = swp_get_registration_key( $domain, 'db' );
 
-	$args = array(
-		'activity'         => 'check_registration',
-		'emailAddress'     => $email,
-		'domain'           => $domain,
-		'registrationCode' => swp_get_registration_key( $domain ),
-	);
+	// If the codes don't match the domain, migrate it.
+	if ( isset( $options['premiumCode'] ) && $key !== $options['premiumCode'] ) {
 
-	$response = swp_get_registration_api( $args, false );
+		swp_migrate_registration();
+		return true;
 
-	$status = is_swp_registered();
+	} else {
 
-	// If the response is negative, unregister the plugin....
-	if ( ! $response || 'false' === $response ) {
-		if ( swp_register_plugin( $email, $domain ) ) {
-			$status = true;
-		} else {
-			swp_unregister_plugin( $email, $options['premiumCode'] );
-			$status = false;
+		$args = array(
+			'activity'         => 'check_registration',
+			'emailAddress'     => $email,
+			'domain'           => $domain,
+			'registrationCode' => swp_get_registration_key( $domain ),
+		);
+
+		$response = swp_get_registration_api( $args, false );
+
+		$status = is_swp_registered();
+
+		// If the response is negative, unregister the plugin....
+		if ( ! $response || 'false' === $response ) {
+			if ( swp_register_plugin( $email, $domain ) ) {
+				$status = true;
+			} else {
+				swp_unregister_plugin( $email, $options['premiumCode'] );
+				$status = false;
+			}
 		}
 	}
 
