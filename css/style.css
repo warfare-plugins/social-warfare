@@ -49,6 +49,9 @@ div.nc_socialPanel .nc_tweetContainer {
 	transition: all 0.1s linear;
 
 	border-size: 1px;
+}
+
+div.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	-webkit-flex: 1;
@@ -1106,6 +1109,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	display: block;
 	font-family: Lato, sans-serif;
 	font-size: 50%;
+	position: relative;
 	text-align: center;
 	width: 100%;
 }
