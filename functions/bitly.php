@@ -294,7 +294,8 @@ function swp_process_url( $url, $network, $postID ) {
 		$array['postID'] = $postID;
 		$array = apply_filters( 'swp_analytics' , $array );
 		$array = apply_filters( 'swp_link_shortening' , $array );
-		return $array['url'];
+		$url = $array['url'];
+		return $url;
 
 	endif;
 
