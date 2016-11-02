@@ -182,7 +182,7 @@ function swp_facebook_shares_update() {
 	wp_die();
 }
 
-add_action( 'save_post', 'swp_cache_rebuild' );
+add_action( 'save_post', 'swp_reset_cache_timestamp' );
 /**
  * A function to reset the cache timestamp on a post after the cache is rebuilt.
  *
