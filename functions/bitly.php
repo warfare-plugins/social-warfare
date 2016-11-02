@@ -53,7 +53,7 @@ function swp_bitly_shortener( $array ) {
 	global $swp_user_options;
 
 	if ( $array['network'] == 'totes' ) :
-		return $array['url'];
+		return $array;
 	endif;
 
 	$url = $array['url'];
@@ -150,7 +150,8 @@ function swp_bitly_shortener( $array ) {
 					// If we've already generated this link....
 					if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
 
-						return $_GLOBALS['sw']['links'][ $postID ];
+						$array['url'] = $_GLOBALS['sw']['links'][ $postID ];
+						return $array;
 
 						// If we've don't already have a generated link....
 					else :
@@ -294,8 +295,7 @@ function swp_process_url( $url, $network, $postID ) {
 		$array['postID'] = $postID;
 		$array = apply_filters( 'swp_analytics' , $array );
 		$array = apply_filters( 'swp_link_shortening' , $array );
-		$url = $array['url'];
-		return $url;
+		return $array['url'];
 
 	endif;
 
