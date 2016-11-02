@@ -186,6 +186,22 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.1.2 (2 NOV 2016) =
+
+*Maintenance:*
+
+* Fixed the "New Post" bug.
+* Improved registration logic.
+* Improved the cache rebuild logic.
+* Fixed a CSS alignment bug for IE.
+* Adjusted the debounce frequency for scroll events.
+* Modified how the floating bars hide and reveal.
+* Added compatibility for Grid plugin.
+* Make all the link filters return modified arrays. This allows for multiple hooks to be added.
+* Added the share recovery feature to the Facebook counts.
+* Make the Facebook share recovery detect and filter out exact matches.
+* Updated the alignment of the button icons and labels.
+
 = 2.1.1 (26 OCT 2016) =
 
 The 2.1.0 update fixed a ton of issues, but it also introduced a few bugs as well. We've been getting your reports and working as quickly as possible around the clock to get these fixed. This should fix almost everything that has been reported so far.

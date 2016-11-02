@@ -48,7 +48,8 @@ function get_social_warfare_shares( $postID ) {
 	*                                                                *
 	*/
 
-		// Loop through the networks and fetch their share counts
+	// Loop through the networks and fetch their share counts
+	if(isset($networks['active'])) { unset($networks['active']); }
 	foreach ( $networks as $network ) :
 
 		// Check if we can used the cached share numbers
