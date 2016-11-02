@@ -263,7 +263,7 @@ function swp_migrate_registration() {
 
 	// Unregister and re-register if our current key doesn't match the database.
 	if ( swp_get_registration_key( $url, 'db' ) !== $code ) {
-		swp_unregister_plugin( $email, $code );
+		// swp_unregister_plugin( $email, $code );
 		swp_register_plugin( $email, $url );
 	}
 }
