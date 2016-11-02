@@ -243,7 +243,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Trigger the cache rebuild.
-	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) || 'legacy' === $info['swp_user_options']['cacheMethod'] ) {
+	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
 
 		if( $info['swp_user_options']['recover_shares'] == true ) {

@@ -225,22 +225,21 @@ add_action( 'admin_init', 'swp_check_license' );
  * @return void
  */
 function swp_check_license() {
-	if ( 'checked' === get_transient( 'swp_check_license' ) ) {
-		return;
+
+	// Check if the transient is expired or doesn't exist
+	if ( false === get_transient( 'swp_check_license' ) ) {
+
+		// Check the registration status
+		swp_check_registration_status();
+
+		// Reset the transient for another 30 days
+		$expiration = 30 * 24 * 60 * 60;
+		set_transient( 'swp_check_license', 'checked', $expiration );
+
 	}
-
-	if ( defined( 'MONTH_IN_SECONDS' ) ) {
-		$month = MONTH_IN_SECONDS;
-	} else {
-		$month = 30 * DAY_IN_SECONDS;
-	}
-
-	swp_check_registration_status();
-
-	set_transient( 'swp_check_license', 'checked', $month );
 }
 
-add_action( 'admin_head-toplevel_page_social-warfare', 'swp_migrate_registration' );
+// add_action( 'admin_head-toplevel_page_social-warfare', 'swp_migrate_registration' );
 /**
  * Attempt to migrate registration to a new domain when the sites domain changes.
  *
