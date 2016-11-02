@@ -227,13 +227,29 @@ add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
  */
 function swp_output_cache_trigger( $info ) {
 
-	// Bail early if we're not on a single page or we have fresh cache.
-	if ( ! is_singular() || swp_is_cache_fresh( get_the_ID(), true ) ) {
-		return $info;
+	if( $info['swp_user_options']['recover_shares'] == true ) {
+		$alternateURL = swp_get_alt_permalink( $info['postID'] );
+		$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
+	} else {
+		$alternateURL = false;
 	}
 
 	// Bail if we're not using the newer cache method.
-	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] ) {
+	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
+		ob_start(); ?>
+
+		swp_post_id='<?php echo $info['postID']; ?>';
+		swp_post_url='<?php echo get_permalink(); ?>';
+		swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+		socialWarfarePlugin.fetchShares();
+
+		<?php
+		$info['footer_output'] = ob_get_clean();
+		return $info;
+	}
+
+	// Bail early if we're not on a single page or we have fresh cache.
+	if ( ! is_singular() || swp_is_cache_fresh( get_the_ID(), true ) ) {
 		return $info;
 	}
 
@@ -245,13 +261,6 @@ function swp_output_cache_trigger( $info ) {
 	// Trigger the cache rebuild.
 	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
-
-		if( $info['swp_user_options']['recover_shares'] == true ) {
-			$alternateURL = swp_get_alt_permalink( $info['postID'] );
-			$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
-		} else {
-			$alternateURL = false;
-		}
 
 		?>
 		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
