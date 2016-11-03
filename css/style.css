@@ -1727,3 +1727,10 @@ div.nc_socialPanel .nc_tweetContainer.swp_whatsapp {
 .sw-pinit.aligncenter {
 	margin: 0 auto;
 }
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	div.sw-pinit {
+		display: inline-block!important;
+		max-width: 100%;
+	}
+}
