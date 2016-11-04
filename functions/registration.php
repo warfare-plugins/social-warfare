@@ -187,7 +187,6 @@ function swp_check_registration_status() {
 		);
 
 		$response = swp_get_registration_api( $args, false );
-
 		$status = is_swp_registered();
 
 		// If the response is negative, unregister the plugin....
@@ -226,17 +225,32 @@ add_action( 'admin_init', 'swp_check_license' );
  */
 function swp_check_license() {
 
-	// Check if the transient is expired or doesn't exist
-	if ( false === get_transient( 'swp_check_license' ) ) {
+	// Get the options and create our timestamp variables
+	$options = get_option( 'socialWarfareOptions' );
+	$expiration = 30 * 24 * 60 * 60;
+	$now = time();
+
+
+
+	// If the timestamp exists, and if it's more than 30 days old, check the license.
+	if(isset($options['registration_timestamp']) && $now > ( $options['registration_timestamp'] + $expiration ) ):
 
 		// Check the registration status
 		swp_check_registration_status();
 
-		// Reset the transient for another 30 days
-		$expiration = 30 * 24 * 60 * 60;
-		set_transient( 'swp_check_license', 'checked', $expiration );
+		// Update the timestamp
+		swp_update_option( 'registration_timestamp', $now );
 
-	}
+	// If the timestamp does not exist, create it so we can compare it later.
+	elseif( !isset( $options['registration_timestamp'] ) ) :
+
+		// Create a timestamp
+		swp_update_option( 'registration_timestamp', $now );
+
+	endif;
+
+	var_dump($options['registration_timestamp']);
+
 }
 
 // add_action( 'admin_head-toplevel_page_social-warfare', 'swp_migrate_registration' );
