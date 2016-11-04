@@ -238,10 +238,14 @@ function swp_output_cache_trigger( $info ) {
 	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
 		ob_start(); ?>
 
-		swp_post_id='<?php echo $info['postID']; ?>';
-		swp_post_url='<?php echo get_permalink(); ?>';
-		swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-		socialWarfarePlugin.fetchShares();
+		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
+		if ( swp_buttons_exist ) {
+			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+			swp_post_id='<?php echo $info['postID']; ?>';
+			swp_post_url='<?php echo get_permalink(); ?>';
+			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+			socialWarfarePlugin.fetchShares();
+		}
 
 		<?php
 		$info['footer_output'] = ob_get_clean();
@@ -275,11 +279,11 @@ function swp_output_cache_trigger( $info ) {
 					console.log(response);
 				});
 			});
+			swp_post_id='<?php echo $info['postID']; ?>';
+			swp_post_url='<?php echo get_permalink(); ?>';
+			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+			socialWarfarePlugin.fetchShares();
 		}
-		swp_post_id='<?php echo $info['postID']; ?>';
-		swp_post_url='<?php echo get_permalink(); ?>';
-		swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-		socialWarfarePlugin.fetchShares();
 		<?php
 		$info['footer_output'] = ob_get_clean();
 	}
