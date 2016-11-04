@@ -186,6 +186,14 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.1.3 (4 NOV 2016) =
+
+*Maintenance:*
+
+* Updated how the registration check determines if it's been 30 days since the last check.
+* Fixed an alignment issue with the pin hover button for Internet Explorer.
+* Updated how the facebook cache rebuild works when the plugin is set to the legacy cache rebuild method.
+
 = 2.1.2 (2 NOV 2016) =
 
 *Maintenance:*

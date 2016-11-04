@@ -249,8 +249,6 @@ function swp_check_license() {
 
 	endif;
 
-	var_dump($options['registration_timestamp']);
-
 }
 
 // add_action( 'admin_head-toplevel_page_social-warfare', 'swp_migrate_registration' );
