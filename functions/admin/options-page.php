@@ -103,6 +103,11 @@ function swp_build_options_page() {
 	// global $swp_options_page;
 	$swp_options_page = apply_filters( 'swp_options' , $swp_options_page );
 
+	// Unset the 'active' index if it's set
+	if( isset(	$swp_user_options['newOrderOfIcons']['active'] )):
+		unset(	$swp_user_options['newOrderOfIcons']['active'] );
+	endif;
+
 	/**
 	 * Build the header menu
 	 */
