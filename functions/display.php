@@ -8,6 +8,14 @@
  * @since     1.0.0
  */
 
+/**
+ * A global for storing post ID's to prevent duplicate processing on the same posts
+ * @since 2.1.4
+ * @var array $swp_already_print Array of post ID's that have been processed during this pageload.
+ */
+global $swp_already_print;
+$swp_already_print = array();
+
 add_filter( 'the_content','social_warfare_wrapper',200 );
 add_filter( 'the_excerpt','social_warfare_wrapper' );
 /**
@@ -18,11 +26,28 @@ add_filter( 'the_excerpt','social_warfare_wrapper' );
  * @return String $content The modified content
  */
 function social_warfare_wrapper( $content ) {
+
+	// Fetch our global variables to ensure we haven't already processed this post
+	global $post, $swp_already_print;
+	$post_id = $post->ID;
+
+	// Check if it's already been processed
+	if( in_array( $post_id, $swp_already_print) ){
+		return $content;
+	}
+
+	// Pass the content (in an array) into the buttons function to add the buttons
 	$array['content'] = $content;
 	$content = social_warfare_buttons( $array );
+
+	// Add an invisible div to the content so the image hover pin button finds the content container area
 	if( false === is_admin() ):
 		$content .= '<div class="swp-content-locator"></div>';
 	endif;
+
+	// This post ID to the array so we don't process it again.
+	array_push( $swp_already_print, $post_id);
+
 	return $content;
 }
 

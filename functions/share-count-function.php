@@ -10,31 +10,31 @@
 function get_social_warfare_shares( $postID ) {
 	global $swp_user_options;
 
-		// Set the initial options
-		$options = $swp_user_options;
-		$url     = get_permalink( $postID );
+	// Set the initial options
+	$options = $swp_user_options;
+	$url     = get_permalink( $postID );
 
-		/**
-		 * Check if the cache is fresh or expired
-		 * @var boolean
-		 */
-		$freshCache = swp_is_cache_fresh( $postID );
+	/**
+	 * Check if the cache is fresh or expired
+	 * @var boolean
+	 */
+	$freshCache = swp_is_cache_fresh( $postID );
 
-		/**
-		 * Setup the networks array that we'll loop through
-		 */
+	/**
+	 * Setup the networks array that we'll loop through
+	 */
+	
+	// Initiate the ShareCount variable
+	$shares['totes'] = 0;
 
-		// Initiate the ShareCount variable
-		$shares['totes'] = 0;
-
-		// Queue up the networks that are available
-		$availableNetworks = $options['newOrderOfIcons'];
-		$networks = array();
-		foreach ( $availableNetworks as $key => $value ) :
-			if ( $options['newOrderOfIcons'][ $key ] ) {
-				$networks[] = $key;
-			}
-		endforeach;
+	// Queue up the networks that are available
+	$availableNetworks = $options['newOrderOfIcons'];
+	$networks = array();
+	foreach ( $availableNetworks as $key => $value ) :
+		if ( $options['newOrderOfIcons'][ $key ] ) {
+			$networks[] = $key;
+		}
+	endforeach;
 
 	/**
 	* Loop through the Networks and fetch their share counts
