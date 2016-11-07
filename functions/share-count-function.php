@@ -1,54 +1,44 @@
 <?php
 
 /**
-
- * **************************************************************
- *                                                                *
- *       FUNCTION TO FETCH ALL THE NETWORK SHARES                 *
- *                                                                *
- ******************************************************************/
+ * A function to fetch all the social shares
+ *
+ * @since 	1.0.0
+ * @param  integer $postID The post ID
+ * @return array $shares An array of share data
+ */
 function get_social_warfare_shares( $postID ) {
 	global $swp_user_options;
 
 		// Set the initial options
 		$options = $swp_user_options;
 		$url     = get_permalink( $postID );
-		// $url  = 'https://youtu.be/jjK1aUU2Dx4';
-	/**
-	***************************************************************
-	*                                                                *
-	*        Check the Cache                                         *
-	*                                                                *
-	*/
 
+		/**
+		 * Check if the cache is fresh or expired
+		 * @var boolean
+		 */
 		$freshCache = swp_is_cache_fresh( $postID );
-		// $freshCache = false;
-	/**
-	***************************************************************
-	*                                                                *
-	*       Setup the Networks Array that we'll loop through         *
-	*                                                                *
-	*/
 
-		// Initiate the ShareCount class
-		$shares['totes']	= 0;
+		/**
+		 * Setup the networks array that we'll loop through
+		 */
+
+		// Initiate the ShareCount variable
+		$shares['totes'] = 0;
 
 		// Queue up the networks that are available
 		$availableNetworks = $options['newOrderOfIcons'];
 		$networks = array();
-	foreach ( $availableNetworks as $key => $value ) :
-		if ( $options['newOrderOfIcons'][ $key ] ) { $networks[] = $key;
-		}
+		foreach ( $availableNetworks as $key => $value ) :
+			if ( $options['newOrderOfIcons'][ $key ] ) {
+				$networks[] = $key;
+			}
 		endforeach;
 
 	/**
-	***************************************************************
-	*                                                                *
-	*       Loop through the Networks                                *
-	*                                                                *
+	* Loop through the Networks and fetch their share counts
 	*/
-
-	// Loop through the networks and fetch their share counts
 	if(isset($networks['active'])) { unset($networks['active']); }
 	foreach ( $networks as $network ) :
 
@@ -122,12 +112,8 @@ function get_social_warfare_shares( $postID ) {
 		endif;
 
 		/**
-		***************************************************************
-		*                                                                *
-		*       Update the Cache and Return the Share Counts             *
-		*                                                                *
+		* Update the Cache and Return the Share Counts
 		*/
-
 		if ( $freshCache != true ) :
 
 			// Clean out the previously used custom meta fields

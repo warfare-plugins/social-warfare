@@ -132,6 +132,10 @@ function swp_get_user_options( $admin = false ) {
 		$options['floatLeftMobile']           = 'off';
 	}
 
+	if(isset($options['newOrderOfIcons']['active'])) {
+		unset($options['newOrderOfIcons']['active']);
+	}
+
 	return $options;
 }
 

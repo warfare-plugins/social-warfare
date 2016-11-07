@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Social Warfare 2.1.3\n"
 "Report-Msgid-Bugs-To: https://warfareplugins.com/\n"
-"POT-Creation-Date: 2016-11-04 17:46:41+00:00\n"
+"POT-Creation-Date: 2016-11-07 18:12:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,84 +26,84 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: functions/admin/options-page.php:235
+#: functions/admin/options-page.php:240
 msgid "Active"
 msgstr ""
 
-#: functions/admin/options-page.php:268
+#: functions/admin/options-page.php:273
 msgid "Inactive"
 msgstr ""
 
-#: functions/admin/options-page.php:348 functions/admin/options-page.php:360
-#: functions/admin/options-page.php:383 functions/admin/options-page.php:401
-#: functions/admin/options-page.php:677
+#: functions/admin/options-page.php:353 functions/admin/options-page.php:365
+#: functions/admin/options-page.php:388 functions/admin/options-page.php:406
+#: functions/admin/options-page.php:682
 msgid "ON"
 msgstr ""
 
-#: functions/admin/options-page.php:348 functions/admin/options-page.php:360
-#: functions/admin/options-page.php:383 functions/admin/options-page.php:401
-#: functions/admin/options-page.php:677
+#: functions/admin/options-page.php:353 functions/admin/options-page.php:365
+#: functions/admin/options-page.php:388 functions/admin/options-page.php:406
+#: functions/admin/options-page.php:682
 msgid "OFF"
 msgstr ""
 
-#: functions/admin/options-page.php:621 functions/options-array.php:315
+#: functions/admin/options-page.php:626 functions/options-array.php:315
 msgid "Connected"
 msgstr ""
 
-#: functions/admin/options-page.php:623
+#: functions/admin/options-page.php:628
 msgid "Authenticated"
 msgstr ""
 
-#: functions/admin/options-page.php:662
+#: functions/admin/options-page.php:667
 msgid "Tweet Count Registration"
 msgstr ""
 
-#: functions/admin/options-page.php:668
+#: functions/admin/options-page.php:673
 msgid ""
 "In order to allow Social Warfare to track tweet counts, we've partnered "
 "with NewShareCounts.com. Follow the steps below to register with "
 "NewShareCounts and allow us to track your Twitter shares."
 msgstr ""
 
-#: functions/admin/options-page.php:669
+#: functions/admin/options-page.php:674
 msgid "Click here to visit NewShareCounts.com"
 msgstr ""
 
-#: functions/admin/options-page.php:669
+#: functions/admin/options-page.php:674
 msgid ""
 "Step 2: At NewShareCounts.com, Enter your domain and click the \"Sign In "
 "With Twitter\" button."
 msgstr ""
 
-#: functions/admin/options-page.php:669
+#: functions/admin/options-page.php:674
 msgid "Step 3: Flip the switch below to \"ON\" and then save changes."
 msgstr ""
 
-#: functions/admin/options-page.php:771
+#: functions/admin/options-page.php:776
 msgid ""
 "Need help? Check out our <a href=\"https://warfareplugins.com/support/\" "
 "target=\"_blank\">Knowledgebase."
 msgstr ""
 
-#: functions/admin/options-page.php:772
+#: functions/admin/options-page.php:777
 msgid ""
 "Opening a support ticket? Copy your System Status by clicking the button "
 "below."
 msgstr ""
 
-#: functions/admin/options-page.php:773
+#: functions/admin/options-page.php:778
 msgid "Get System Status"
 msgstr ""
 
-#: functions/admin/options-page.php:778
+#: functions/admin/options-page.php:783
 msgid "Press Ctrl+C to Copy this information."
 msgstr ""
 
-#: functions/admin/options-page.php:800 functions/registration.php:294
+#: functions/admin/options-page.php:805 functions/registration.php:292
 msgid "Security failed."
 msgstr ""
 
-#: functions/admin/options-page.php:807
+#: functions/admin/options-page.php:812
 msgid "No settings to save."
 msgstr ""
 
@@ -957,23 +957,23 @@ msgstr ""
 msgid "Floating Buttons"
 msgstr ""
 
-#: functions/registration.php:301
+#: functions/registration.php:299
 msgid "Required fields missing."
 msgstr ""
 
-#: functions/registration.php:309
+#: functions/registration.php:307
 msgid "Plugin could not be registered."
 msgstr ""
 
-#: functions/registration.php:313
+#: functions/registration.php:311
 msgid "Plugin successfully registered!"
 msgstr ""
 
-#: functions/registration.php:320
+#: functions/registration.php:318
 msgid "Plugin could not be unregistered."
 msgstr ""
 
-#: functions/registration.php:324
+#: functions/registration.php:322
 msgid "Plugin successfully unregistered!"
 msgstr ""
 

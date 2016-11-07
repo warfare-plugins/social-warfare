@@ -173,3 +173,18 @@ function _swp_is_debug( $type = 'all' ) {
 
 	return (bool) apply_filters( 'swp_is_debug', $debug );
 }
+
+/**
+ * A function to clean up the available buttons Array
+ *
+ * @since 2.1.4
+ * @param Array $options The options Array
+ * @return Array $options The modified options array
+ */
+function swp_buttons_cleanup( $options ) {
+	if(isset($options['content']['active'])) {
+		unset($options['content']['active']);
+	}
+	return $options;
+}
+add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
