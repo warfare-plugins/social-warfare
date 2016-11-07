@@ -306,6 +306,10 @@ function social_warfare_buttons( $array = array() ) {
 				update_post_meta( $postID,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
 			endif;
 
+			// Add this post ID to the array so we don't process it again.
+			// global $post, $swp_already_print;
+			// array_push( $swp_already_print, $postID);
+
 			if ( isset( $array['genesis'] ) ) :
 				if ( $array['where'] == 'below' && $array['genesis'] == 'below' ) :
 					return $assets;

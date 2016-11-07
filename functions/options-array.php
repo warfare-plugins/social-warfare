@@ -940,7 +940,24 @@ function swp_options_advanced($swp_options) {
 				'advanced'			=> __( 'Advanced Cache Triggering' , 'social-warfare' ),
 				'legacy'			=> __( 'Legacy Cache Rebuilding during Page Loads' , 'social-warfare' )
 			),
-			'default'			=> 'advanced'
+			'default'			=> 'advanced',
+			'divider'			=> true,
+			'premium'			=> false
+		),
+		'raw_shares_title' => array(
+			'type'		=> 'title',
+			'content'	=> __( 'Raw Share Text' , 'social-warfare' )
+		),
+		'raw_shares_description' => array(
+			'type'		=> 'paragraph',
+			'content'	=> __( 'If you have raw share text appearing in your post excerpts, activate this feature.' , 'social-warfare' )
+		),
+		'raw_shares_fix'		=> array(
+			'type'				=> 'checkbox',
+			'size'				=> 'two-thirds',
+			'content'				=> __( 'Raw Shares Fix' , 'social-warfare' ),
+			'default'			=> false,
+			'premium'			=> false
 		)
 	);
 

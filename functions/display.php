@@ -16,7 +16,7 @@
 global $swp_already_print;
 $swp_already_print = array();
 
-add_filter( 'the_content','social_warfare_wrapper',200 );
+add_filter( 'the_content','social_warfare_wrapper', 11 );
 add_filter( 'the_excerpt','social_warfare_wrapper' );
 /**
  * A wrapper function for adding the buttons the content or excerpt.
@@ -36,6 +36,11 @@ function social_warfare_wrapper( $content ) {
 		return $content;
 	}
 
+	// Ensure it's not an embedded post
+	if(true === is_singular() && $post_id != get_queried_object_id()) {
+		return $content;
+	}
+
 	// Pass the content (in an array) into the buttons function to add the buttons
 	$array['content'] = $content;
 	$content = social_warfare_buttons( $array );
@@ -44,9 +49,6 @@ function social_warfare_wrapper( $content ) {
 	if( false === is_admin() ):
 		$content .= '<div class="swp-content-locator"></div>';
 	endif;
-
-	// This post ID to the array so we don't process it again.
-	array_push( $swp_already_print, $post_id);
 
 	return $content;
 }
@@ -75,3 +77,25 @@ function social_warfare( $array = array() ) {
 if ( in_array( $swp_user_options['floatOption'], array( 'left', 'right' ), true ) ) {
 	add_action( 'wp_footer', 'socialWarfareSideFloat' );
 }
+
+
+/**
+ * A function to fix raw share text in excerpts
+ *
+ * @since 2.1.4
+ * @param none
+ * @return none
+ */
+function swp_remove_raw_text() {
+
+	// Fetch the user's settings
+	global $swp_user_options;
+
+	// If the raw shares fix is enabled and we're not on a single.php, remove the content hook
+    if( false === is_singular() && true === $swp_user_options['raw_shares_fix'] ):
+        remove_filter( 'the_content','social_warfare_wrapper', 200 );
+    endif;
+}
+
+// Hook into the template_redirect so that is_singular() conditionals will be ready
+add_action('template_redirect', 'swp_remove_raw_text');
