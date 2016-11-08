@@ -428,6 +428,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
 
+				if (typeof ga == "function" && true === swpClickTracking) {
+					var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+					console.log(network + " Button Clicked");
+					ga("send", "event", "social_media", "swp_" + network + "_share" );
+				}
+
 				return false;
 			}
 		});

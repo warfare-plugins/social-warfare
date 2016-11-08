@@ -166,7 +166,9 @@ function swp_footer_functions() {
  */
 function swp_click_tracking( $info ) {
 	if ( $info['swp_user_options']['swp_click_tracking'] ) {
-		$info['footer_output'] .= 'if (typeof ga == "function") { jQuery(document).on("click",".nc_tweet",function(event) {var network = jQuery(this).parents(".nc_tweetContainer").attr("data-network");ga("send", "event", "social_media", "swp_" + network + "_share" );});}';
+		$info['footer_output'] .= 'var swpClickTracking = true;';
+	} else {
+		$info['footer_output'] .= 'var swpClickTracking = false;';
 	}
 
 	return $info;
