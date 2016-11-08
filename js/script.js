@@ -433,7 +433,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	$( document ).ready( function() {
+	$( window ).on( 'load' , function() {
 		handleWindowOpens();
 		initShareButtons();
 
