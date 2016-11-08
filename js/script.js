@@ -433,7 +433,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
-	$( window ).on( 'load' , function() {
+	$( window ).on('load' , function() {
+		if ( swpPinIt.enabled ) {
+			pinitButton();
+		}
+	});
+
+	$( document ).ready( function() {
 		handleWindowOpens();
 		initShareButtons();
 
@@ -470,10 +476,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			setTimeout( function() {
 				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 );
 			}, 105 );
-		}
-
-		if ( swpPinIt.enabled ) {
-			pinitButton();
 		}
 
 		if( isMobile.phone ) {
