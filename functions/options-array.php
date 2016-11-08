@@ -944,18 +944,18 @@ function swp_options_advanced($swp_options) {
 			'divider'			=> true,
 			'premium'			=> false
 		),
-		'raw_shares_title' => array(
+		'full_content_title' => array(
 			'type'		=> 'title',
-			'content'	=> __( 'Raw Share Text' , 'social-warfare' )
+			'content'	=> __( 'Full Content vs. Excerpts' , 'social-warfare' )
 		),
-		'raw_shares_description' => array(
+		'full_content_description' => array(
 			'type'		=> 'paragraph',
-			'content'	=> __( 'If you have raw share text appearing in your post excerpts, activate this feature.' , 'social-warfare' )
+			'content'	=> __( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.' , 'social-warfare' )
 		),
-		'raw_shares_fix'		=> array(
+		'full_content'		=> array(
 			'type'				=> 'checkbox',
 			'size'				=> 'two-thirds',
-			'content'				=> __( 'Raw Shares Fix' , 'social-warfare' ),
+			'content'				=> __( 'Full Content?' , 'social-warfare' ),
 			'default'			=> false,
 			'premium'			=> false
 		)

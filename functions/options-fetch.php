@@ -62,6 +62,7 @@ function swp_get_user_options( $admin = false ) {
 		'linkShortening'            => false,
 		'minTotes'                  => 0,
 		'cacheMethod'               => 'advanced',
+		'full_content'				=> false,
 		'rawNumbers'                => false,
 		'notShowing'                => false,
 		'visualEditorBug'           => false,

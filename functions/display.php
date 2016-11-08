@@ -28,8 +28,8 @@ function swp_activate_buttons() {
 	// Fetch the user's settings
 	global $swp_user_options;
 
-	// If the raw shares fix is enabled, only output this on the_content hook on single.php
-    if( true === is_singular() || false === $swp_user_options['raw_shares_fix'] ):
+	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
+    if( true === is_singular() || true === $swp_user_options['full_content'] ):
         add_filter( 'the_content','social_warfare_wrapper', 10 );
     endif;
 
