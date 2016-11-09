@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Register and output header meta tags
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
+
+defined( 'WPINC' ) || die;
+
 add_filter( 'query_vars', 'swp_add_query_vars' );
 /**
  * Register custom query vars.
@@ -31,11 +42,15 @@ function swp_cache_rebuild_rel_canonical( $info ) {
 }
 
 /**
- * **************************************************************
- *                                                                *
- *          CACHe CHECKING FUNCTION         			 			 *
- *                                                                *
- ******************************************************************/
+ * Cache checking function
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  integer  $post_id The post ID
+ * @param  boolean $output  Does the caller require a response output
+ * @param  boolean $ajax    Is this being called from Ajax
+ * @return boolean true/false The status of wether the cache is fresh or not
+ */
 function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	global $swp_user_options;
 
@@ -87,10 +102,11 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 
 add_action( 'wp_ajax_swp_cache_trigger', 'swp_cache_rebuild' );
 add_action( 'wp_ajax_nopriv_swp_cache_trigger', 'swp_cache_rebuild' );
+
 /**
  * Rebuild the share cache.
  *
- * @since  unkown
+ * @since  1.0.0
  * @global $wpdb
  * @return void
  */
@@ -160,10 +176,11 @@ function swp_cache_rebuild() {
 
 add_action( 'wp_ajax_swp_facebook_shares_update', 'swp_facebook_shares_update' );
 add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', 'swp_facebook_shares_update' );
+
 /**
  * Update Facebook share counts.
  *
- * @since  unknown
+ * @since  2.1.0
  * @return void
  */
 function swp_facebook_shares_update() {
@@ -183,6 +200,7 @@ function swp_facebook_shares_update() {
 }
 
 add_action( 'save_post', 'swp_reset_cache_timestamp' );
+
 /**
  * A function to reset the cache timestamp on a post after the cache is rebuilt.
  *
@@ -217,6 +235,7 @@ function swp_reset_cache_timestamp( $post_id ) {
 }
 
 add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
+
 /**
  * Trigger cache rebuild.
  *
