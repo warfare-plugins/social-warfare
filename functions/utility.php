@@ -188,3 +188,46 @@ function swp_buttons_cleanup( $options ) {
 	return $options;
 }
 add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
+
+/**
+ * A function to recursively search arrays
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  string $needle   The needle
+ * @param  string $haystack The haystack
+ * @return string/bool Return the key if found or false if nothing is found
+ */
+function recursive_array_search( $needle, $haystack ) {
+	foreach ( $haystack as $key => $value ) {
+		$current_key = $key;
+		if ( $needle === $value or (is_array( $value ) && recursive_array_search( $needle,$value ) !== false) ) {
+			return $current_key;
+		}
+	}
+	return false;
+}
+
+/**
+ * A function to gethe current URL of a page
+ *
+ * @since  1.0.0
+ * @return string The URL of the current page
+ */
+function swp_get_current_url() {
+	$page_url = 'http';
+	if ( $_SERVER['HTTPS'] == 'on' ) {$page_url .= 's';}
+	$page_url .= '://';
+	$page_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+	$page_url = strtok( $page_url, '?' );
+
+	return $page_url;
+}
+/**
+ * A function to disable the buttons on subtitles
+ *
+ * @return bool false
+ */
+function swp_disable_subs() {
+	return false;
+}

@@ -152,6 +152,14 @@ function swp_options_display($swp_options) {
 			);
 		endforeach;
 	endif;
+	
+	$swp_options['options']['swp_display']['locationHome'] = array(
+		'type'		=> 'select',
+		'name'		=> __( 'Home Page' ,'social-warfare' ),
+		'content'	=> $contentLocations,
+		'default'	=> 'below',
+		'size'		=> 'two-thirds'
+	);
 
 	$swp_options['options']['swp_display']['locationSite'] = array(
 		'type'		=> 'select',

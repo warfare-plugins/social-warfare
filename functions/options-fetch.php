@@ -26,7 +26,8 @@ function swp_get_user_options( $admin = false ) {
 	$options = get_option( 'socialWarfareOptions', array() );
 
 	$defaults = array(
-		'locationSite'              => 'both',
+		'locationSite'              => 'below',
+		'locationHome'				=> 'below',
 		'totes'                     => true,
 		'totesEach'                 => true,
 		'twitterID'                 => false,

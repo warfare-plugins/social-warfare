@@ -1,12 +1,29 @@
 <?php
 
 /**
+ * Register and output header meta tags
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
 
- * **************************************************************
- *                                                                *
- *          THE SOCIAL WARFARE WRAPPER FUNCTION         			 *
- *                                                                *
- ******************************************************************/
+defined( 'WPINC' ) || die;
+
+/**
+ * A wrapper for the legacy version of the function
+ *
+ * This version accepted 3 parameters, but was scrapped for a
+ * new version that now accepts an array of unlimited parameters
+ *
+ * @since  1.4.0
+ * @access public
+ * @param  boolean $content The content to which the buttons will be added
+ * @param  string  $where   Where the buttons should appear (above, below, both, none)
+ * @param  boolean $echo    Echo the content or return it
+ * @return string 			Returns the modified content
+ */
 function socialWarfare( $content = false, $where = 'default', $echo = true ) {
 
 	// Collect the deprecated fields and place them into an array
@@ -17,42 +34,6 @@ function socialWarfare( $content = false, $where = 'default', $echo = true ) {
 
 	// Pass the array into the new function
 	return social_warfare( $array );
-}
-/**
-
- * **************************************************************
- *                                                                *
- *          A RECURSIVE ARRAY SEARCH FUNCTION         			 *
- *                                                                *
- ******************************************************************/
-function recursive_array_search( $needle, $haystack ) {
-	foreach ( $haystack as $key => $value ) {
-		$current_key = $key;
-		if ( $needle === $value or (is_array( $value ) && recursive_array_search( $needle,$value ) !== false) ) {
-			return $current_key;
-		}
-	}
-	return false;
-}
-/**
-
- * **************************************************************
- *                                                                *
- *          A Function to get the current URL of a page 			 *
- *                                                                *
- ******************************************************************/
-function swp_get_current_url() {
-	$page_url = 'http';
-	if ( $_SERVER['HTTPS'] == 'on' ) {$page_url .= 's';}
-	$page_url .= '://';
-	$page_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-	$page_url = strtok( $page_url, '?' );
-
-	return $page_url;
-}
-
-function swp_disable_subs() {
-	return false;
 }
 
 /**
@@ -72,6 +53,10 @@ function swp_disable_subs() {
  *
  * echo    : Used to print or store the variables.
  *         : ( true | false )
+ *
+ * @since 1.0.0
+ * @access public
+ * @return string $content The modified content
  */
 function social_warfare_buttons( $array = array() ) {
 	global $swp_user_options;
@@ -97,28 +82,24 @@ function social_warfare_buttons( $array = array() ) {
 
 	if ( $array['where'] == 'default' ) :
 
-		// If we are on a single page or post
-		if ( is_singular() && ! is_home() && ! is_archive() && ! is_front_page() ) :
+		// If we are on the home page
+		if( is_home() || is_front_page() ):
+			$array['where'] = $options['locationHome'];
 
-			// Make sure this is the main loop
-			// if( get_permalink( $postID ) == swp_get_current_url() ) :
-				// Check if a specific display value has not been set for this specific post
+		// If we are on a singular page
+		elseif ( is_singular() && ! is_home() && ! is_archive() && ! is_front_page() ) :
 			if ( $specWhere == 'default' || $specWhere == '' ) :
 				$postType = get_post_type( $postID );
 				if ( isset( $options[ 'location_' . $postType ] ) ) :
 					$array['where'] = $options[ 'location_' . $postType ];
-					else :
-						$array['where'] = 'none';
-					endif;
 				else :
-					$array['where'] = $specWhere;
+					$array['where'] = 'none';
 				endif;
+			else :
+				$array['where'] = $specWhere;
+			endif;
 
-				// If it's not the main loop
-				// else:
-				// $array['where'] = 'none';
-				// endif;
-				// If we are on an archive or home page
+		// If we are anywhere else besides the home page or a singular
 		else :
 			$array['where'] = $options['locationSite'];
 		endif;
