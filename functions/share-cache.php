@@ -285,7 +285,7 @@ function swp_output_cache_trigger( $info ) {
 			socialWarfarePlugin.fetchShares();
 		}
 		<?php
-		$info['footer_output'] = ob_get_clean();
+		$info['footer_output'] .= ob_get_clean();
 	}
 
 	return $info;
