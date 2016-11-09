@@ -30,6 +30,7 @@ require_once SWP_PLUGIN_DIR . '/functions/options-array.php';
 require_once SWP_PLUGIN_DIR . '/functions/curl_functions.php';
 require_once SWP_PLUGIN_DIR . '/functions/widgets.php';
 require_once SWP_PLUGIN_DIR . '/functions/scripts.php';
+// require_once SWP_PLUGIN_DIR . '/functions/media-options.php';
 require_once SWP_PLUGIN_DIR . '/functions/bitly.php';
 require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 require_once SWP_PLUGIN_DIR . '/functions/sw-shortcode-generator.php';

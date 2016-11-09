@@ -58,22 +58,6 @@ function enqueueSocialWarfareScripts() {
 		true
 	);
 
-	$pin_vars = array(
-		'enabled' => false,
-	);
-
-	if ( is_swp_registered() ) {
-
-		if ( $swp_user_options['pinit_toggle'] ) {
-			$pin_vars['enabled']   = true;
-			$pin_vars['hLocation'] = $swp_user_options['pinit_location_horizontal'];
-			$pin_vars['vLocation'] = $swp_user_options['pinit_location_vertical'];
-			$pin_vars['minWidth']  = str_replace( 'px', '', $swp_user_options['pinit_min_width'] );
-			$pin_vars['minHeight'] = str_replace( 'px', '', $swp_user_options['pinit_min_height'] );
-		}
-	}
-
-	wp_localize_script( 'social_warfare_script', 'swpPinIt', $pin_vars );
 }
 
 add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
@@ -131,12 +115,12 @@ function enqueueSocialWarfareAdminScripts( $screen ) {
 	}
 }
 
-// Queue up our hook function
-add_action( 'wp_footer' , 'swp_footer_functions' , 99 );
-
-// Queue up our footer hook function
-add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
-
+/**
+ * Queue up our javscript for options and whatnot
+ * @since 1.4.0
+ * @param Void
+ * @return Void. Echo results directly to the screen.
+ */
 function swp_footer_functions() {
 	global $swp_user_options;
 
@@ -156,10 +140,13 @@ function swp_footer_functions() {
 	}
 }
 
+// Queue up our hook function
+add_action( 'wp_footer' , 'swp_footer_functions' , 99 );
+
 /**
  * Enable click tracking in Google Analytics.
  *
- * @since  unknown
+ * @since  1.4
  * @access public
  * @param  array $info An array of footer script information.
  * @return array $info A modified array of footer script information.
@@ -173,3 +160,55 @@ function swp_click_tracking( $info ) {
 
 	return $info;
 }
+
+// Queue up our footer hook function
+add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
+
+/**
+ * Create a nonce for added security
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  array $info An array of footer script information.
+ * @return array $info A modified array of footer script information.
+ */
+function swp_nonce( $info ) {
+
+	// Create a nonce
+	$info['footer_output'] .= ' var swp_nonce = "'.wp_create_nonce().'";';
+	return $info;
+}
+
+// Queue up our footer hook function
+add_filter( 'swp_footer_scripts' , 'swp_nonce' );
+
+/**
+ * A function to output the Pin Button option controls
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  array $info An array of footer script information.
+ * @return array $info A modified array of footer script information.
+ */
+function swp_pinit_controls_output($info){
+
+	global $swp_user_options;
+	$pin_vars = array(
+		'enabled' => false,
+	);
+	if ( is_swp_registered() ) {
+
+		if ( $swp_user_options['pinit_toggle'] ) {
+			$pin_vars['enabled']   = true;
+			$pin_vars['hLocation'] = $swp_user_options['pinit_location_horizontal'];
+			$pin_vars['vLocation'] = $swp_user_options['pinit_location_vertical'];
+			$pin_vars['minWidth']  = str_replace( 'px', '', $swp_user_options['pinit_min_width'] );
+			$pin_vars['minHeight'] = str_replace( 'px', '', $swp_user_options['pinit_min_height'] );
+		}
+	}
+	$info['footer_output'] .= ' swpPinIt='.json_encode($pin_vars);
+	return $info;
+}
+
+// Queue up out footer hook function
+add_filter( 'swp_footer_scripts', 'swp_pinit_controls_output');

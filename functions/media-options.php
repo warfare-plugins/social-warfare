@@ -9,10 +9,7 @@ function swp_add_media_options( $form_fields, $post ) {
 	$form_fields['swp_pin_button_opt_out'] = array(
 		'label' => 'Pin Opt Out',
 		'input' => 'html',
-		'html'  => "<input type=\"checkbox\"
-			name=\"attachments[{$post->ID}][swp_pin_button_opt_out]\"
-			id=\"attachments[{$post->ID}][swp_pin_button_opt_out]\"
-,			value=\"1\" {$checked}/><br />",
+		'html'  => '<input type="checkbox" name="attachments[{$post->ID}][swp_pin_button_opt_out]" id="attachments[{$post->ID}][swp_pin_button_opt_out]" value="1" {$checked} /><br />',
 	);
 	return $form_fields;
 }

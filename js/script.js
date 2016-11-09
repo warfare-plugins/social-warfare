@@ -149,7 +149,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				swpPostData = {
 					action: 'swp_facebook_shares_update',
 					post_id: swp_post_id,
-					activity: fShares
+					activity: fShares,
+					_wpnonce: swp_nonce
 				};
 
 			$.post( swp_admin_ajax, swpPostData, function( response ) {
