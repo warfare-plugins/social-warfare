@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * An Array of options to pass over to the option page
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
+
+defined( 'WPINC' ) || die;
+
+/**
  * swp_options_display An array of options for the display tab of the options page
  * @since 	2.0.0
  * @param  	array $swp_options The array of options
@@ -152,7 +163,7 @@ function swp_options_display($swp_options) {
 			);
 		endforeach;
 	endif;
-	
+
 	$swp_options['options']['swp_display']['locationHome'] = array(
 		'type'		=> 'select',
 		'name'		=> __( 'Home Page' ,'social-warfare' ),
