@@ -129,20 +129,8 @@ function swp_options_display($swp_options) {
 		'none' => __( 'None/Manual Placement' ,'social-warfare' )
 	);
 
-	// Get the post Types
-	$postTypes = get_post_types();
-
-	// Unset the post types that don't matter
-	// if(isset($postTypes['post'])) 				unset($postTypes['post']);
-	// if(isset($postTypes['page'])) 				unset($postTypes['page']);
-	if(isset($postTypes['attachment'])) 		unset($postTypes['attachment']);
-	if(isset($postTypes['revision'])) 			unset($postTypes['revision']);
-	if(isset($postTypes['nav_menu_item'])) 		unset($postTypes['nav_menu_item']);
-	if(isset($postTypes['nf_sub'])) 			unset($postTypes['nf_sub']);
-	if(isset($postTypes['shop_order'])) 		unset($postTypes['shop_order']);
-	if(isset($postTypes['shop_order_refund'])) 	unset($postTypes['shop_order_refund']);
-	if(isset($postTypes['shop_coupon'])) 		unset($postTypes['shop_coupon']);
-	if(isset($postTypes['shop_webhook'])) 		unset($postTypes['shop_webhook']);
+	// Get the public post Types
+	$postTypes = swp_get_post_types($args);
 
 	if(!empty($postTypes)):
 
@@ -166,7 +154,7 @@ function swp_options_display($swp_options) {
 
 	$swp_options['options']['swp_display']['locationHome'] = array(
 		'type'		=> 'select',
-		'name'		=> __( 'Home Page*' ,'social-warfare' ),
+		'name'		=> __( 'Home Page' ,'social-warfare' ),
 		'content'	=> $contentLocations,
 		'default'	=> 'none',
 		'size'		=> 'two-thirds'
