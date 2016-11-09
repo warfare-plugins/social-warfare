@@ -1,15 +1,25 @@
 <?php
+/**
+ * Register and output header meta tags
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
+
+defined( 'WPINC' ) || die;
 
 // Queue up our hook function
 add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
 
 /**
-
- * **************************************************************
- *                                                                *
- *          Curly Quote Converter						         *
- *                                                                *
- ******************************************************************/
+ * Convert curly quotes to straight quotes
+ *
+ * @since  1.4.0
+ * @param  string $content A string of text to be filtered
+ * @return string $content The modified string of text
+ */
 function convert_smart_quotes( $content ) {
 	$content = str_replace( '"', '\'', $content );
 	$content = str_replace( '&#8220;', '\'', $content );
@@ -18,13 +28,17 @@ function convert_smart_quotes( $content ) {
 	$content = str_replace( '&#8217;', '\'', $content );
 	return $content;
 }
-/**
 
- * **************************************************************
- *                                                                *
- *          Easy Hook Remover							         *
- *                                                                *
- ******************************************************************/
+/**
+ * A function to make removing hooks easier
+ *
+ * @since  1.4.0
+ * @access public
+ * @param  string  $hook_name   The name of the hook
+ * @param  string  $method_name The name of the method
+ * @param  integer $priority    The hook priority
+ * @return boolean false
+ */
 function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 
@@ -48,14 +62,16 @@ function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) 
 }
 
 /**
-
- * **************************************************************
- *                                                                *
- *          HEADER META DATA								         *
- *                                                                *
- ******************************************************************/
-
-	// This is the hook function we're adding the header
+ * The function that we're hooking into the header
+ *
+ * All other items being added to the header will be hooked into
+ * swp_meta_tags which we will call and print via this function.
+ *
+ * @since 1.4.0
+ * @access public
+ * @param  none
+ * @return none
+ */
 function swp_add_header_meta() {
 	global $swp_user_options;
 
@@ -146,14 +162,8 @@ function swp_add_header_meta() {
 }
 
 /**
-
-***************************************************************
-*                                                                *
-*          Queue Up our Open Graph Hooks				         *
-*                                                                *
-*/
-
-// Queue up our header hook function
+ * Quote up all of our header functions via swp_meta_tags
+ */
 if ( is_swp_registered() ) :
 	add_filter( 'swp_meta_tags' , 'swp_open_graph_tags' , 1 );
 	add_filter( 'swp_meta_tags' , 'swp_add_twitter_card' , 2 );
@@ -164,20 +174,21 @@ add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
 add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
 
 /**
-
- * **************************************************************
- *                                                                *
- *   Open Graph Tags										         *
- *                                                                *
- * 	Dev Notes: If the user specifies an Open Graph tag,			 *
- *	we're going to develop a complete set of tags. Order		 *
- *	of preference for each tag is as follows:					 *
- *	1. Did they fill out our open graph field?					 *
- *	2. Did they fill out Yoast's social field?					 *
- *	3. Did they fill out Yoast's SEO field?						 *
- *	4. We'll just auto-generate the field from the post.		 *
- ******************************************************************/
-
+ * Open Graph Tags
+ *
+ * Notes: If the user specifies an Open Graph tag,
+ * we're going to develop a complete set of tags. Order
+ * of preference for each tag is as follows:
+ * 1. Did they fill out our open graph field?
+ * 2. Did they fill out Yoast's social field?
+ * 3. Did they fill out Yoast's SEO field?
+ * 4. We'll just auto-generate the field from the post.
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $info An array of data about the post
+ * @return array $info The modified array
+ */
 function swp_open_graph_tags( $info ) {
 
 	// We only modify the Open Graph tags on single blog post pages
@@ -200,11 +211,8 @@ function swp_open_graph_tags( $info ) {
 		) :
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     YOAST SEO: It rocks, so let's coordinate with it           *
-			*                                                                *
-			*/
+			 * YOAST SEO: It rocks, so let's coordinate with it
+			 */
 
 			// Check if Yoast Exists so we can coordinate output with their plugin accordingly
 			if ( defined( 'WPSEO_VERSION' ) ) :
@@ -231,11 +239,8 @@ function swp_open_graph_tags( $info ) {
 			$info['header_output'] .= PHP_EOL . '<meta property="og:type" content="article" /> ';
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     JETPACK: If ours are enabled, disable theirs               *
-			*                                                                *
-			*/
+			 * Disable Jetpack's Open Graph tags
+			 */
 
 			if ( class_exists( 'JetPack' ) ) :
 				add_filter( 'jetpack_enable_opengraph', '__return_false', 99 );
@@ -243,11 +248,9 @@ function swp_open_graph_tags( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH TITLE                                           *
-			*                                                                *
-			*/
+			 * Open Graph title
+			 *
+			 */
 
 			// Open Graph Title: Create an open graph title meta tag
 			if ( $info['title'] ) :
@@ -273,11 +276,9 @@ function swp_open_graph_tags( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH DESCRIPTION                                     *
-			*                                                                *
-			*/
+			 * Open Graph Description
+			 *
+			 */
 
 			// Open Graph Description: Create an open graph description meta tag
 			if ( $info['description'] ) :
@@ -303,11 +304,9 @@ function swp_open_graph_tags( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH IMAGE                                           *
-			*                                                                *
-			*/
+			 * Open Graph image
+			 *
+			 */
 
 			// Open Graph Image: Create an open graph image meta tag
 			if ( $info['imageURL'] ) :
@@ -333,11 +332,9 @@ function swp_open_graph_tags( $info ) {
 
 			endif;
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH IMAGE DIMENSIONS                                *
-			*                                                                *
-			*/
+			 * Open Graph Dimensions
+			 *
+			 */
 			if ( isset( $info['image_data'] ) && $info['image_data'] && isset( $image_output ) && $image_output == true ) :
 
 				$info['header_output'] .= PHP_EOL . '<meta property="og:image:width" content="' . $info['image_data'][1] . '" />';
@@ -351,21 +348,17 @@ function swp_open_graph_tags( $info ) {
 
 			endif;
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH URL & Site Name                                 *
-			*                                                                *
-			*/
+			 * Open Graph URL and Site name
+			 *
+			 */
 
 			$info['header_output'] .= PHP_EOL . '<meta property="og:url" content="' . get_permalink() . '" />';
 			$info['header_output'] .= PHP_EOL . '<meta property="og:site_name" content="' . get_bloginfo( 'name' ) . '" />';
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH AUTHOR                                          *
-			*                                                                *
-			*/
+			 * Facebook Author
+			 *
+			 */
 
 			// Add the Facebook Author URL
 			if ( get_the_author_meta( 'swp_fb_author' , swp_get_author( $info['postID'] ) ) ) :
@@ -383,11 +376,9 @@ function swp_open_graph_tags( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH PUBLISHER                                       *
-			*                                                                *
-			*/
+			 * Open Graph Publisher
+			 *
+			 */
 
 			// If they have a Facebook Publisher URL in our settings...
 			if ( isset( $info['swp_user_options']['facebookPublisherUrl'] ) && $info['swp_user_options']['facebookPublisherUrl'] != '' ) :
@@ -407,11 +398,9 @@ function swp_open_graph_tags( $info ) {
 			$info['header_output'] .= PHP_EOL . '<meta property="og:updated_time" content="' . get_post_modified_time( 'c' ) . '" />';
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     OPEN GRAPH APP ID                                          *
-			*                                                                *
-			*/
+			 * Open Graph App ID
+			 *
+			 */
 
 			// If the Facebook APP ID is in our settings...
 			if ( isset( $info['swp_user_options']['facebookAppID'] ) && $info['swp_user_options']['facebookAppID'] != '' ) :
@@ -441,33 +430,31 @@ function swp_open_graph_tags( $info ) {
 }
 
 /**
-
- * **************************************************************
- *                                                                *
- *   TWITTER CARDS		 							             *
- *                                                                *
- *	Dev Notes: If the user has Twitter cards turned on, we		 *
- *	need to generate them, but we also like Yoast so we'll		 *
- *	pay attention to their settings as well. Here's the order	 *
- *	of preference for each field:								 *
- *	1. Did the user fill out the Social Media field?			 *
- *	2. Did the user fill out the Yoast Twitter Field?			 *
- *	3. Did the user fill out the Yoast SEO field?				 *
- *	4. We'll auto generate something logical from the post.		 *
- *																 *
- ******************************************************************/
-
+ * Twitter cards
+ *
+ *	Notes: If the user has Twitter cards turned on, we
+ *	need to generate them, but we also like Yoast so we'll
+ *	pay attention to their settings as well. Here's the order
+ *	of preference for each field:
+ *	1. Did the user fill out the Social Media field?
+ *	2. Did the user fill out the Yoast Twitter Field?
+ *	3. Did the user fill out the Yoast SEO field?
+ *	4. We'll auto generate something logical from the post.
+ *
+ * @since 1.4.0
+ * @access public
+ * @param array $info An array of information about the post
+ * @return array $info The modified array
+ */
 function swp_add_twitter_card( $info ) {
 	if ( is_singular() ) :
 		// Check if Twitter Cards are Activated
 		if ( $info['swp_user_options']['swp_twitter_card'] ) :
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     YOAST SEO: It rocks, so let's coordinate with it           *
-			*                                                                *
-			*/
+			 * YOAST SEO: It rocks, so let's coordinate with it
+			 *
+			 */
 
 			// Check if Yoast Exists so we can coordinate output with their plugin accordingly
 			if ( defined( 'WPSEO_VERSION' ) ) :
@@ -487,11 +474,9 @@ function swp_add_twitter_card( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     JET PACK: If ours are activated, disable theirs            *
-			*                                                                *
-			*/
+			 * JET PACK: If ours are activated, disable theirs
+			 *
+			 */
 
 			if ( class_exists( 'JetPack' ) ) :
 
@@ -500,11 +485,9 @@ function swp_add_twitter_card( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     TWITTER TITLE                                              *
-			*                                                                *
-			*/
+			 * TWITTER TITLE
+			 *
+			 */
 
 			// If the user defined a Social Media title, use it, otherwise check for Yoast's
 			if ( ! $info['title'] && isset( $yoast_twitter_title ) && $yoast_twitter_title ) :
@@ -524,11 +507,8 @@ function swp_add_twitter_card( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     TWITTER DESCRIPTION                                        *
-			*                                                                *
-			*/
+			 * TWITTER DESCRIPTION
+			 */
 
 			// Open Graph Description
 			if ( ! $info['description'] && isset( $yoast_twitter_description ) && $yoast_twitter_description ) :
@@ -548,11 +528,8 @@ function swp_add_twitter_card( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     TWITTER IMAGE                                      *
-			*                                                                *
-			*/
+			 * TWITTER IMAGE
+			 */
 
 			// Open Graph Description
 			if ( ! $info['imageURL'] && isset( $yoast_twitter_image ) && $yoast_twitter_image ) :
@@ -570,11 +547,9 @@ function swp_add_twitter_card( $info ) {
 			endif;
 
 			/**
-			***************************************************************
-			*                                                                *
-			*     PUT IT ALL TOGETHER                                        *
-			*                                                                *
-			*/
+			 * Put all the values into html
+			 *
+			 */
 
 			// Check if we have everything we need for a large image summary card
 			if ( $info['imageURL'] ) :
@@ -608,15 +583,13 @@ function swp_add_twitter_card( $info ) {
 }
 
 /**
-
-
-/**
- * **************************************************************
- *                                                                *
- *          CUSTOM COLORS 							             *
- *                                                                *
- ******************************************************************/
-
+ * Output the CSS for custom selected colors
+ *
+ * @since  1.4.0
+ * @access public
+ * @param  array $info The array of information about the post
+ * @return array $info The modified array
+ */
 function swp_output_custom_color( $info ) {
 	if ( $info['swp_user_options']['dColorSet'] == 'customColor' || $info['swp_user_options']['iColorSet'] == 'customColor' || $info['swp_user_options']['oColorSet'] == 'customColor' ) :
 		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:' . $info['swp_user_options']['customColor'] . ';border:1px solid ' . $info['swp_user_options']['customColor'] . ';} </style>';
@@ -641,12 +614,17 @@ function swp_output_custom_color( $info ) {
 }
 
 /**
-
- * **************************************************************
- *                                                                *
- *          ICON FONT CSS							             *
- *                                                                *
- ******************************************************************/
+ * Output the CSS to include the icon font.
+ *
+ * Note: This is done in the header rather than in a CSS file to
+ * avoid having the fonts called from a CDN, 95% of which do not
+ * support the necessary mime types to render them.
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array  $info An array of information about the post
+ * @return array  $info The modified array
+ */
 function swp_output_font_css( $info = array() ) {
 	if ( is_admin() ) :
 
