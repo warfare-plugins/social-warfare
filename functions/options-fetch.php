@@ -27,7 +27,7 @@ function swp_get_user_options( $admin = false ) {
 
 	$defaults = array(
 		'locationSite'              => 'below',
-		'locationHome'				=> 'below',
+		'locationHome'				=> 'none',
 		'totes'                     => true,
 		'totesEach'                 => true,
 		'twitterID'                 => false,

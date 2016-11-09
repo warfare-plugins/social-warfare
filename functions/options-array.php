@@ -168,7 +168,7 @@ function swp_options_display($swp_options) {
 		'type'		=> 'select',
 		'name'		=> __( 'Home Page' ,'social-warfare' ),
 		'content'	=> $contentLocations,
-		'default'	=> 'below',
+		'default'	=> 'none',
 		'size'		=> 'two-thirds'
 	);
 
