@@ -253,7 +253,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Bail early if we're not on a single page or we have fresh cache.
-	if ( ! is_singular() || swp_is_cache_fresh( get_the_ID(), true ) ) {
+	if ( (! is_singular() || swp_is_cache_fresh( get_the_ID(), true )) && 'rebuild' !== get_query_var( 'swp_cache' ) ) {
 		return $info;
 	}
 
