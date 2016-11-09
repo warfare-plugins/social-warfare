@@ -9,6 +9,8 @@
  * Text Domain: social-warfare
  */
 
+defined( 'WPINC' ) || die;
+
 /**
  * Define plugin constants for use throughout the plugin (Version and Directories)
  */
