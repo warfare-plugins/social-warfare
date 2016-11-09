@@ -159,10 +159,8 @@ if ( is_swp_registered() ) :
 	add_filter( 'swp_meta_tags' , 'swp_add_twitter_card' , 2 );
 endif;
 
-add_filter( 'swp_meta_tags' , 'swp_frame_buster' , 3 );
 add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
 add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
-// add_filter( 'swp_meta_tags' , 'swp_output_cache_trigger' , 6 );
 add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
 
 // Disable Simple Podcast Press Open Graph tags
@@ -617,21 +615,8 @@ function swp_add_twitter_card( $info ) {
 
 /**
 
- * **************************************************************
- *                                                                *
- *          Frame Buster 							             *
- *                                                                *
- ******************************************************************/
-
-function swp_frame_buster( $info ) {
-	if ( $info['swp_user_options']['sniplyBuster'] == true ) :
-		$info['header_output'] .= PHP_EOL . '<script type="text/javascript">function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "' . get_permalink() . '";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};</script>';
-	endif;
-	return $info;
-}
 
 /**
-
  * **************************************************************
  *                                                                *
  *          CUSTOM COLORS 							             *

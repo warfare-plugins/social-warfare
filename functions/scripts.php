@@ -30,6 +30,7 @@ function swp_get_suffix() {
 }
 
 add_action( 'wp_enqueue_scripts', 'enqueueSocialWarfareScripts' );
+
 /**
  * Load front end scripts and styles.
  *
@@ -61,6 +62,7 @@ function enqueueSocialWarfareScripts() {
 }
 
 add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
+
 /**
  * Load admin scripts and styles.
  *
@@ -212,3 +214,24 @@ function swp_pinit_controls_output($info){
 
 // Queue up out footer hook function
 add_filter( 'swp_footer_scripts', 'swp_pinit_controls_output');
+
+/**
+ * The Frame Buster Option
+ *
+ * @since  1.4.0
+ * @access public
+ * @param  array $info An array of footer script information.
+ * @return array $info A modified array of footer script information.
+ */
+function swp_frame_buster( $info ) {
+
+	global $swp_user_options;
+
+	if ( true === $swp_user_options['sniplyBuster'] ) :
+		$info['footer_output'] .= PHP_EOL . 'function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "' . get_permalink() . '";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};';
+	endif;
+
+	return $info;
+}
+
+add_filter( 'swp_footer_scripts' , 'swp_frame_buster' );
