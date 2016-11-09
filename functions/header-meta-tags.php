@@ -163,12 +163,6 @@ add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
 add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
 add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
 
-// Disable Simple Podcast Press Open Graph tags
-if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
-	global $ob_wp_simplepodcastpress;
-	remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress, 'spp_open_graph' ) , 1 );
-}
-
 /**
 
  * **************************************************************

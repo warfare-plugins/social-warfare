@@ -45,7 +45,7 @@ require_once SWP_PLUGIN_DIR . '/functions/header-meta-tags.php';
 require_once SWP_PLUGIN_DIR . '/functions/profile-fields.php';
 require_once SWP_PLUGIN_DIR . '/functions/shortcodes.php';
 require_once SWP_PLUGIN_DIR . '/functions/deprecated.php';
-
+require_once SWP_PLUGIN_DIR . '/functions/compatibility.php';
 /**
  * Include the plugin's admin files.
  */
