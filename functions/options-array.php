@@ -130,7 +130,7 @@ function swp_options_display($swp_options) {
 	);
 
 	// Get the public post Types
-	$postTypes = swp_get_post_types($args);
+	$postTypes = swp_get_post_types();
 
 	if(!empty($postTypes)):
 
