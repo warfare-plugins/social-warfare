@@ -206,7 +206,7 @@ function swp_pinit_controls_output($info){
 			$pin_vars['minHeight'] = str_replace( 'px', '', $swp_user_options['pinit_min_height'] );
 		}
 	}
-	$info['footer_output'] .= ' swpPinIt='.json_encode($pin_vars);
+	$info['footer_output'] .= ' swpPinIt='.json_encode($pin_vars).';';
 	return $info;
 }
 
