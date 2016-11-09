@@ -166,7 +166,7 @@ function swp_options_display($swp_options) {
 
 	$swp_options['options']['swp_display']['locationHome'] = array(
 		'type'		=> 'select',
-		'name'		=> __( 'Home Page' ,'social-warfare' ),
+		'name'		=> __( 'Home Page*' ,'social-warfare' ),
 		'content'	=> $contentLocations,
 		'default'	=> 'none',
 		'size'		=> 'two-thirds'

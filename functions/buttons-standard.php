@@ -83,7 +83,7 @@ function social_warfare_buttons( $array = array() ) {
 	if ( $array['where'] == 'default' ) :
 
 		// If we are on the home page
-		if( is_home() || is_front_page() ):
+		if( is_front_page() ):
 			$array['where'] = $options['locationHome'];
 
 		// If we are on a singular page
