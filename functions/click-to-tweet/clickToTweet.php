@@ -1,5 +1,18 @@
 <?php
+/**
+ * Functions for creating click to tweets
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
 
+defined( 'WPINC' ) || die;
+
+/**
+ * clickToTweet class
+ */
 if ( ! class_exists( 'clickToTweet' ) ) {
 
 	class clickToTweet {
@@ -75,6 +88,11 @@ if ( ! class_exists( 'clickToTweet' ) ) {
 
 }// End if().
 
+/**
+ * The function to build the click to tweets
+ * @param  array $atts An array of attributes
+ * @return string The html of a click to tweet
+ */
 function clickToTweetShortcode( $atts ) {
 	global $swp_user_options;
 

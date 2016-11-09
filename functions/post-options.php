@@ -8,6 +8,8 @@
  * @since     1.0.0
  */
 
+defined( 'WPINC' ) || die;
+
 /**
  * Get the SWP supported post types.
  *

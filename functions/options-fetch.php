@@ -8,6 +8,9 @@
  * @since     1.0.0
  */
 
+defined( 'WPINC' ) || die;
+
+// Set the global options variable
 global $swp_user_options;
 
 /**
