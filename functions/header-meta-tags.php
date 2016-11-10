@@ -17,9 +17,9 @@ add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
 add_filter( 'swp_header_values' , 'swp_open_graph_values' , 5 );
 add_filter( 'swp_header_values' , 'swp_twitter_card_values' , 10);
 add_filter( 'swp_header_html' , 'swp_twitter_card_html' , 10);
-add_filter( 'swp_header_html' , 'swp_output_custom_color' , 4 );
-add_filter( 'swp_header_html' , 'swp_output_font_css' , 5 );
-add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
+add_filter( 'swp_header_html' , 'swp_output_custom_color' , 15 );
+add_filter( 'swp_header_html' , 'swp_output_font_css' , 20 );
+add_action( 'admin_head'   , 'swp_output_font_css' , 20 );
 
 /**
  * The function that we're hooking into the header
@@ -459,7 +459,7 @@ function swp_output_font_css( $info = array() ) {
 	else :
 
 		// Add it to our array if we're using the frontend Head Hook
-		$info['header_output'] .= '<style>@font-face {font-family: "sw-icon-font";src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"), url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+		$info['html_output'] .= PHP_EOL . '<style>@font-face {font-family: "sw-icon-font";src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"), url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
 		return $info;
 	endif;
