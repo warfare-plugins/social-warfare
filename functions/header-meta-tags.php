@@ -16,6 +16,10 @@ defined( 'WPINC' ) || die;
 add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
 add_filter( 'swp_header_values' , 'swp_open_graph_values' , 5 );
 add_filter( 'swp_header_values' , 'swp_twitter_card_values' , 10);
+add_filter( 'swp_header_html' , 'swp_twitter_card_html' , 10);
+add_filter( 'swp_header_html' , 'swp_output_custom_color' , 4 );
+add_filter( 'swp_header_html' , 'swp_output_font_css' , 5 );
+add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
 
 /**
  * The function that we're hooking into the header
@@ -69,7 +73,7 @@ function swp_add_header_meta() {
 	 * @return array $info The modified array with the 'meta_tag_values' index populated
 	 */
 	$info = apply_filters( 'swp_header_values' , $info );
-	var_dump($info);
+
 	/**
 	 * A filter to take the values from above and compile them into their html format
 	 *
@@ -384,168 +388,19 @@ function swp_twitter_card_values($info) {
 	return $info;
 }
 
-/**
- * Quote up all of our header functions via swp_meta_tags
- */
-// if ( is_swp_registered() ) :
-//	add_filter( 'swp_meta_tags' , 'swp_open_graph_tags' , 1 );
-//	add_filter( 'swp_meta_tags' , 'swp_add_twitter_card' , 2 );
-// endif;
+function swp_twitter_card_html($info) {
 
-add_filter( 'swp_meta_tags' , 'swp_output_custom_color' , 4 );
-add_filter( 'swp_meta_tags' , 'swp_output_font_css' , 5 );
-add_action( 'admin_head'   , 'swp_output_font_css' , 10 );
-
-/**
- * Twitter cards
- *
- *	Notes: If the user has Twitter cards turned on, we
- *	need to generate them, but we also like Yoast so we'll
- *	pay attention to their settings as well. Here's the order
- *	of preference for each field:
- *	1. Did the user fill out the Social Media field?
- *	2. Did the user fill out the Yoast Twitter Field?
- *	3. Did the user fill out the Yoast SEO field?
- *	4. We'll auto generate something logical from the post.
- *
- * @since 1.4.0
- * @access public
- * @param array $info An array of information about the post
- * @return array $info The modified array
- */
-function swp_add_twitter_card( $info ) {
-	if ( is_singular() ) :
-		// Check if Twitter Cards are Activated
-		if ( $info['swp_user_options']['swp_twitter_card'] ) :
-
-			/**
-			 * YOAST SEO: It rocks, so let's coordinate with it
-			 *
-			 */
-
-			// Check if Yoast Exists so we can coordinate output with their plugin accordingly
-			if ( defined( 'WPSEO_VERSION' ) ) :
-
-				// Collect their Social Descriptions as backups if they're not defined in ours
-				$yoast_twitter_title 		= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-title' , true );
-				$yoast_twitter_description 	= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-description' , true );
-				$yoast_twitter_image 		= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-image' , true );
-
-				// Collect their SEO fields as 3rd string backups in case we need them
-				$yoast_seo_title			= get_post_meta( $info['postID'] , '_yoast_wpseo_title' , true );
-				$yoast_seo_description		= get_post_meta( $info['postID'] , '_yoast_wpseo_metadesc' , true );
-
-				// Cancel their output if ours have been defined so we don't have two sets of tags
-				remove_action( 'wpseo_head' , array( 'WPSEO_Twitter', 'get_instance' ) , 40 );
-
-			endif;
-
-			/**
-			 * JET PACK: If ours are activated, disable theirs
-			 *
-			 */
-
-			if ( class_exists( 'JetPack' ) ) :
-
-				add_filter( 'jetpack_disable_twitter_cards', '__return_true', 99 );
-
-			endif;
-
-			/**
-			 * TWITTER TITLE
-			 *
-			 */
-
-			// If the user defined a Social Media title, use it, otherwise check for Yoast's
-			if ( ! $info['title'] && isset( $yoast_twitter_title ) && $yoast_twitter_title ) :
-
-				$info['title'] = $yoast_twitter_title;
-
-				// If not title has been defined, let's check the SEO description as a 3rd string option
-			elseif ( ! $info['title'] && isset( $yoast_seo_title ) && $yoast_seo_title ) :
-
-				$info['title'] = $yoast_seo_title;
-
-				// If not title has been defined, let's use the post title
-			elseif ( ! $info['title'] ) :
-
-				$info['title'] = convert_smart_quotes( htmlspecialchars_decode( get_the_title() ) );
-
-			endif;
-
-			/**
-			 * TWITTER DESCRIPTION
-			 */
-
-			// Open Graph Description
-			if ( ! $info['description'] && isset( $yoast_twitter_description ) && $yoast_twitter_description ) :
-
-				$info['description'] = $yoast_twitter_description;
-
-				// If not title has been defined, let's check the SEO description as a 3rd string option
-			elseif ( ! $info['description'] && isset( $yoast_seo_description ) && $yoast_seo_description ) :
-
-				$info['description'] = $yoast_seo_description;
-
-				// If not, then let's use the excerpt
-			elseif ( ! $info['description'] ) :
-
-				$info['description'] = convert_smart_quotes( htmlspecialchars_decode( swp_get_excerpt_by_id( $info['postID'] ) ) );
-
-			endif;
-
-			/**
-			 * TWITTER IMAGE
-			 */
-
-			// Open Graph Description
-			if ( ! $info['imageURL'] && isset( $yoast_twitter_image ) && $yoast_twitter_image ) :
-
-				$info['imageURL'] = $yoast_twitter_image;
-
-			else :
-
-				// If nothing else is defined, let's use the post Thumbnail as long as we have the URL cached
-				$twitter_image = get_post_meta( $info['postID'] , 'swp_open_thumbnail_url' , true );
-				if ( $twitter_image ) :
-					$info['imageURL'] = $twitter_image;
-				endif;
-
-			endif;
-
-			/**
-			 * Put all the values into html
-			 *
-			 */
-
-			// Check if we have everything we need for a large image summary card
-			if ( $info['imageURL'] ) :
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:card" content="summary_large_image">';
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:title" content="' . trim( $info['title'] ) . '">';
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:description" content="' . $info['description'] . '">';
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:image" content="' . $info['imageURL'] . '">';
-				if ( $info['swp_user_options']['twitterID'] ) :
-					$info['header_output'] .= PHP_EOL . '<meta name="twitter:site" content="@' . str_replace( '@','',$info['swp_user_options']['twitterID'] ) . '">';
-				endif;
-				if ( $info['user_twitter_handle'] ) :
-					$info['header_output'] .= PHP_EOL . '<meta name="twitter:creator" content="@' . str_replace( '@','',$info['user_twitter_handle'] ) . '">';
-				endif;
-
-				// Otherwise create a small summary card
-			else :
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:card" content="summary">';
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:title" content="' . str_replace( '"','\'',$info['title'] ) . '">';
-				$info['header_output'] .= PHP_EOL . '<meta name="twitter:description" content="' . str_replace( '"','\'',$info['description'] ) . '">';
-				if ( $info['swp_user_options']['twitterID'] ) :
-					$info['header_output'] .= PHP_EOL . '<meta name="twitter:site" content="@' . str_replace( '@','',$info['swp_user_options']['twitterID'] ) . '">';
-				endif;
-				if ( $info['user_twitter_handle'] ) :
-					$info['header_output'] .= PHP_EOL . '<meta name="twitter:creator" content="@' . str_replace( '@','',$info['user_twitter_handle'] ) . '">';
-				endif;
-			endif;
-
-		endif;
+	$info['html_output'] .= PHP_EOL . '<meta name="twitter:card" content="'.$info['meta_tag_values']['twitter_card'].'">';
+	$info['html_output'] .= PHP_EOL . '<meta name="twitter:title" content="' . trim( $info['meta_tag_values']['twitter_title'] ) . '">';
+	$info['html_output'] .= PHP_EOL . '<meta name="twitter:description" content="' . $info['meta_tag_values']['twitter_description'] . '">';
+	$info['html_output'] .= PHP_EOL . '<meta name="twitter:image" content="' . $info['meta_tag_values']['twitter_image'] . '">';
+	if ( $info['meta_tag_values']['twitter_site'] ) :
+		$info['html_output'] .= PHP_EOL . '<meta name="twitter:site" content="' . $info['meta_tag_values']['twitter_site'] . '">';
 	endif;
+	if ( $info['meta_tag_values']['twitter_creator'] ) :
+		$info['html_output'] .= PHP_EOL . '<meta name="twitter:creator" content="' . $info['meta_tag_values']['twitter_creator'] . '">';
+	endif;
+
 	return $info;
 }
 
@@ -558,22 +413,25 @@ function swp_add_twitter_card( $info ) {
  * @return array $info The modified array
  */
 function swp_output_custom_color( $info ) {
-	if ( $info['swp_user_options']['dColorSet'] == 'customColor' || $info['swp_user_options']['iColorSet'] == 'customColor' || $info['swp_user_options']['oColorSet'] == 'customColor' ) :
-		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:' . $info['swp_user_options']['customColor'] . ';border:1px solid ' . $info['swp_user_options']['customColor'] . ';} </style>';
+
+	global $swp_user_options;
+
+	if ( $swp_user_options['dColorSet'] == 'customColor' || $swp_user_options['iColorSet'] == 'customColor' || $swp_user_options['oColorSet'] == 'customColor' ) :
+		$info['html_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:' . $info['swp_user_options']['customColor'] . ';border:1px solid ' . $info['swp_user_options']['customColor'] . ';} </style>';
 	endif;
 
-	if ( $info['swp_user_options']['dColorSet'] == 'ccOutlines' || $info['swp_user_options']['iColorSet'] == 'ccOutlines' || $info['swp_user_options']['oColorSet'] == 'ccOutlines' ) :
-		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:' . $info['swp_user_options']['customColor'] . '; }
+	if ( $swp_user_options['dColorSet'] == 'ccOutlines' || $swp_user_options['iColorSet'] == 'ccOutlines' || $swp_user_options['oColorSet'] == 'ccOutlines' ) :
+		$info['html_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:' . $info['swp_user_options']['customColor'] . '; }
 .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' . $info['swp_user_options']['customColor'] . '; } </style>';
 
 	endif;
 
-	if ( $info['swp_user_options']['floatStyleSource'] == false && ($info['swp_user_options']['sideDColorSet'] == 'customColor' || $info['swp_user_options']['sideIColorSet'] == 'customColor' || $info['swp_user_options']['sideOColorSet'] == 'customColor') ) :
-		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.nc_socialPanelSide.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.nc_socialPanelSide.swp_o_customColor:hover a {color:white} .nc_socialPanel.nc_socialPanelSide.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.nc_socialPanelSide.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.nc_socialPanelSide.swp_o_customColor:hover .nc_tweetContainer {background-color:' . $info['swp_user_options']['sideCustomColor'] . ';border:1px solid ' . $info['swp_user_options']['sideCustomColor'] . ';} </style>';
+	if ( $swp_user_options['floatStyleSource'] == false && ($swp_user_options['sideDColorSet'] == 'customColor' || $swp_user_options['sideIColorSet'] == 'customColor' || $swp_user_options['sideOColorSet'] == 'customColor') ) :
+		$info['html_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.nc_socialPanelSide.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.nc_socialPanelSide.swp_o_customColor:hover a {color:white} .nc_socialPanel.nc_socialPanelSide.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.nc_socialPanelSide.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.nc_socialPanelSide.swp_o_customColor:hover .nc_tweetContainer {background-color:' . $info['swp_user_options']['sideCustomColor'] . ';border:1px solid ' . $info['swp_user_options']['sideCustomColor'] . ';} </style>';
 	endif;
 
-	if ( $info['swp_user_options']['floatStyleSource'] == false && ( $info['swp_user_options']['sideDColorSet'] == 'ccOutlines' || $info['swp_user_options']['sideIColorSet'] == 'ccOutlines' || $info['swp_user_options']['sideOColorSet'] == 'ccOutlines' ) ) :
-		$info['header_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.nc_socialPanelSide.swp_d_ccOutlines a, html body .nc_socialPanel.nc_socialPanelSide.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.nc_socialPanelSide.swp_o_ccOutlines:hover a { color:' . $info['swp_user_options']['sideCustomColor'] . '; }
+	if ( $swp_user_options['floatStyleSource'] == false && ( $swp_user_options['sideDColorSet'] == 'ccOutlines' || $swp_user_options['sideIColorSet'] == 'ccOutlines' || $swp_user_options['sideOColorSet'] == 'ccOutlines' ) ) :
+		$info['html_output'] .= PHP_EOL . '<style type="text/css">.nc_socialPanel.nc_socialPanelSide.swp_d_ccOutlines a, html body .nc_socialPanel.nc_socialPanelSide.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.nc_socialPanelSide.swp_o_ccOutlines:hover a { color:' . $info['swp_user_options']['sideCustomColor'] . '; }
 .nc_socialPanel.nc_socialPanelSide.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.nc_socialPanelSide.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.nc_socialPanelSide.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' . $info['swp_user_options']['sideCustomColor'] . '; } </style>';
 
 		endif;
