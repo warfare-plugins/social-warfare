@@ -15,8 +15,9 @@ defined( 'WPINC' ) || die;
  */
 add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
 add_filter( 'swp_header_values' , 'swp_open_graph_values' , 5 );
-add_filter( 'swp_header_values' , 'swp_twitter_card_values' , 10);
-add_filter( 'swp_header_html' , 'swp_twitter_card_html' , 10);
+add_filter( 'swp_header_values' , 'swp_twitter_card_values' , 10 );
+add_filter( 'swp_header_html' , 'swp_open_graph_html' , 5 );
+add_filter( 'swp_header_html' , 'swp_twitter_card_html' , 10 );
 add_filter( 'swp_header_html' , 'swp_output_custom_color' , 15 );
 add_filter( 'swp_header_html' , 'swp_output_font_css' , 20 );
 add_action( 'admin_head'   , 'swp_output_font_css' , 20 );
@@ -269,6 +270,37 @@ function swp_open_graph_values($info){
 	return $info;
 }
 
+function swp_open_graph_html($info) {
+
+	$info['html_output'] .= PHP_EOL . '<meta property="og:type" content="'.$info['meta_tag_values']['og_type'].'" />';
+	$info['html_output'] .= PHP_EOL . '<meta property="og:title" content="'.$info['meta_tag_values']['og_title'].'" />';
+	$info['html_output'] .= PHP_EOL . '<meta property="og:description" content="'.$info['meta_tag_values']['og_description'].'" />';
+
+	if( isset( $info['meta_tag_values']['og_image'] ) ):
+		$info['html_output'] .= PHP_EOL . '<meta property="og:image" content="'.$info['meta_tag_values']['og_image'].'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:image:width" content="'.$info['meta_tag_values']['og_image_width'].'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:image:height" content="'.$info['meta_tag_values']['og_image_height'].'" />';
+	endif;
+
+	$info['html_output'] .= PHP_EOL . '<meta property="og:url" content="'.$info['meta_tag_values']['og_url'].'" />';
+	$info['html_output'] .= PHP_EOL . '<meta property="og:site_name" content="'.$info['meta_tag_values']['og_site_name'].'" />';
+
+	if( isset( $info['meta_tag_values']['article_author'] ) ):
+		$info['html_output'] .= PHP_EOL . '<meta property="article:author" content="'.$info['meta_tag_values']['article_author'].'" />';
+	endif;
+
+	if( isset( $info['meta_tag_values']['article_publisher'] ) ):
+		$info['html_output'] .= PHP_EOL . '<meta property="article:publisher" content="'.$info['meta_tag_values']['article_publisher'].'" />';
+	endif;
+
+	$info['html_output'] .= PHP_EOL . '<meta property="article:published_time" content="'.$info['meta_tag_values']['article_published_time'].'" />';
+	$info['html_output'] .= PHP_EOL . '<meta property="article:modified_time" content="'.$info['meta_tag_values']['article_modified_time'].'" />';
+	$info['html_output'] .= PHP_EOL . '<meta property="og:updated_time" content="'.$info['meta_tag_values']['og_modified_time'].'" />';
+	$info['html_output'] .= PHP_EOL . '<meta property="fb:app_id" content="'.$info['meta_tag_values']['fb_app_id'].'" />';
+
+	return $info;
+}
+
 /**
  *  Generate the Twitter Card fields
  *
@@ -281,7 +313,7 @@ function swp_open_graph_values($info){
  *	3. Did the user fill out the Yoast SEO field?
  *	4. We'll auto generate something logical from the post.
  *
- * @since 1.4.0
+ * @since 2.1.4
  * @access public
  * @param array $info An array of information about the post
  * @return array $info The modified array
