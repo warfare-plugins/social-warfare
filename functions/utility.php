@@ -231,3 +231,51 @@ function swp_get_current_url() {
 function swp_disable_subs() {
 	return false;
 }
+
+/**
+ * Convert curly quotes to straight quotes
+ *
+ * @since  1.4.0
+ * @param  string $content A string of text to be filtered
+ * @return string $content The modified string of text
+ */
+function convert_smart_quotes( $content ) {
+	$content = str_replace( '"', '\'', $content );
+	$content = str_replace( '&#8220;', '\'', $content );
+	$content = str_replace( '&#8221;', '\'', $content );
+	$content = str_replace( '&#8216;', '\'', $content );
+	$content = str_replace( '&#8217;', '\'', $content );
+	return $content;
+}
+
+/**
+ * A function to make removing hooks easier
+ *
+ * @since  1.4.0
+ * @access public
+ * @param  string  $hook_name   The name of the hook
+ * @param  string  $method_name The name of the method
+ * @param  integer $priority    The hook priority
+ * @return boolean false
+ */
+function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) {
+	global $wp_filter;
+
+	// Take only filters on right hook name and priority
+	if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
+		return false;
+	}
+
+	// Loop on filters registered
+	foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
+		// Test if filter is an array ! (always for class/method)
+		if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
+			// Test if object is a class and method is equal to param !
+			if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && $filter_array['function'][1] == $method_name ) {
+				unset( $wp_filter[ $hook_name ][ $priority ][ $unique_id ] );
+			}
+		}
+	}
+
+	return false;
+}
