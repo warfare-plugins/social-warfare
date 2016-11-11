@@ -13,14 +13,14 @@ defined( 'WPINC' ) || die;
 /**
  *  Queue up our hook function which will in turn call all of Social Warfare's custom hooks
  */
-add_action( 'wp_head' , 'swp_add_header_meta' , 1 );
-add_filter( 'swp_header_values' , 'swp_open_graph_values' , 5 );
-add_filter( 'swp_header_values' , 'swp_twitter_card_values' , 10 );
-add_filter( 'swp_header_html' , 'swp_open_graph_html' , 5 );
-add_filter( 'swp_header_html' , 'swp_twitter_card_html' , 10 );
-add_filter( 'swp_header_html' , 'swp_output_custom_color' , 15 );
-add_filter( 'swp_header_html' , 'swp_output_font_css' , 20 );
-add_action( 'admin_head'   , 'swp_output_font_css' , 20 );
+add_action( 'wp_head'           , 'swp_add_header_meta'      , 1 );
+add_filter( 'swp_header_values' , 'swp_open_graph_values'    , 5 );
+add_filter( 'swp_header_values' , 'swp_twitter_card_values'  , 10 );
+add_filter( 'swp_header_html'   , 'swp_open_graph_html'      , 5 );
+add_filter( 'swp_header_html'   , 'swp_twitter_card_html'    , 10 );
+add_filter( 'swp_header_html'   , 'swp_output_custom_color'  , 15 );
+add_filter( 'swp_header_html'   , 'swp_output_font_css'      , 20 );
+add_action( 'admin_head'        , 'swp_output_font_css'      , 20 );
 
 /**
  * The function that we're hooking into the header
@@ -38,35 +38,36 @@ function swp_add_header_meta() {
 	// Get the global options and the post ID
 	global $swp_user_options;
 	$info['postID'] = get_the_ID();
+	$info['html_output'] = '';
 
 	/**
-	 * Create and return the values to be used in the header meta tags SAMConnection
+	 * Create and return the values to be used in the header meta tags
 	 *
 	 * All meta values will be returned in the $info['meta_tag_values'] array.
 	 *
 	 * The following values will be returned from the function swp_open_graph_values():
-	 * Open Graph Type:			$info['meta_tag_values']['og_type']
-	 * Open Graph Title: 		$info['meta_tag_values']['og_title']
-	 * Open Graph Description: 	$info['meta_tag_values']['og_description']
-	 * Open Graph Image:		$info['meta_tag_values']['og_image']
-	 * Open Graph Image Width:	$info['meta_tag_values']['og_image_width']
-	 * Open Graph Image Height:	$info['meta_tag_values']['og_image_height']
-	 * Open Graph URL:			$info['meta_tag_values']['og_url']
-	 * Open Graph Site Name:	$info['meta_tag_values']['og_site_name']
-	 * Article Author: 			$info['meta_tag_values']['article_author']
-	 * Article Publisher: 		$info['meta_tag_values']['article_publisher']
-	 * Article Published Time:	$info['meta_tag_values']['article_published_time']
-	 * Article Modified Time:	$info['meta_tag_values']['article_modified_time']
-	 * OG Modified Time:		$info['meta_tag_values']['og_modified_time']
-	 * Facebook App ID			$info['meta_tag_values']['fb_app_id']
+	 * Open Graph Type          $info['meta_tag_values']['og_type']
+	 * Open Graph Title         $info['meta_tag_values']['og_title']
+	 * Open Graph Description   $info['meta_tag_values']['og_description']
+	 * Open Graph Image         $info['meta_tag_values']['og_image']
+	 * Open Graph Image Width   $info['meta_tag_values']['og_image_width']
+	 * Open Graph Image Height  $info['meta_tag_values']['og_image_height']
+	 * Open Graph URL           $info['meta_tag_values']['og_url']
+	 * Open Graph Site Name     $info['meta_tag_values']['og_site_name']
+	 * Article Author           $info['meta_tag_values']['article_author']
+	 * Article Publisher        $info['meta_tag_values']['article_publisher']
+	 * Article Published Time   $info['meta_tag_values']['article_published_time']
+	 * Article Modified Time    $info['meta_tag_values']['article_modified_time']
+	 * OG Modified Time         $info['meta_tag_values']['og_modified_time']
+	 * Facebook App ID          $info['meta_tag_values']['fb_app_id']
 	 *
 	 * The following values will be returned from the function swp_twitter_card_values():
-	 * Twitter Card type		$info['meta_tag_values']['twitter_card']
-	 * Twitter Title			$info['meta_tag_values']['twitter_title']
-	 * Twitter Description		$info['meta_tag_values']['twitter_description']
-	 * Twitter Image			$info['meta_tag_values']['twitter_image']
-	 * Twitter Site				$info['meta_tag_values']['twitter_site']
-	 * Twitter creator			$info['meta_tag_values']['twitter_creator']
+	 * Twitter Card type        $info['meta_tag_values']['twitter_card']
+	 * Twitter Title            $info['meta_tag_values']['twitter_title']
+	 * Twitter Description      $info['meta_tag_values']['twitter_description']
+	 * Twitter Image            $info['meta_tag_values']['twitter_image']
+	 * Twitter Site             $info['meta_tag_values']['twitter_site']
+	 * Twitter creator          $info['meta_tag_values']['twitter_creator']
 	 *
 	 * @since 2.1.4
 	 * @access public
@@ -89,7 +90,6 @@ function swp_add_header_meta() {
 	 * @var array $info An array of information
 	 * @return array $info The modified array with the 'html_output' index populated.
 	 */
-	$info['html_output'] = '';
 	$info = apply_filters( 'swp_header_html' , $info );
 
 	if ( $info['html_output'] ) :
@@ -123,22 +123,22 @@ function swp_open_graph_values($info){
 	 * Begin by fetching the user's default custom settings
 	 *
 	 */
-	$custom_og_title 		= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
-	$custom_og_description 	= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
-	$custom_og_image_id		= get_post_meta( $info['postID'] , 'nc_ogImage' , true );
-	$custom_og_image_url 	= get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
-	$custom_og_image_data 	= json_decode( get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) );
+	$custom_og_title        = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
+	$custom_og_description  = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
+	$custom_og_image_id     = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
+	$custom_og_image_url    = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
+	$custom_og_image_data   = json_decode( get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) );
 
 	/**
 	 * Open Graph Tags (The Easy Ones That Don't Need Conditional Fallbacks)
 	 *
 	 */
-	$info['meta_tag_values']['og_url'] 					= get_permalink();
-	$info['meta_tag_values']['og_site_name']			= get_bloginfo( 'name' );
-	$info['meta_tag_values']['og_type'] 				= 'article';
-	$info['meta_tag_values']['article_published_time'] 	= get_post_time( 'c' );
-	$info['meta_tag_values']['article_modified_time']  	= get_post_modified_time( 'c' );
-	$info['meta_tag_values']['og_modified_time']  		= get_post_modified_time( 'c' );
+	$info['meta_tag_values']['og_url']                  = get_permalink();
+	$info['meta_tag_values']['og_site_name']            = get_bloginfo( 'name' );
+	$info['meta_tag_values']['og_type']                 = 'article';
+	$info['meta_tag_values']['article_published_time']  = get_post_time( 'c' );
+	$info['meta_tag_values']['article_modified_time']   = get_post_modified_time( 'c' );
+	$info['meta_tag_values']['og_modified_time']        = get_post_modified_time( 'c' );
 
 	/**
 	 * Disable Jetpack's Open Graph tags
@@ -167,11 +167,11 @@ function swp_open_graph_values($info){
 		 */
 
 		// Collect their Social Descriptions as backups if they're not defined in ours
-		$yoast_og_title 		= get_post_meta( $info['postID'] , '_yoast_wpseo_opengraph-title' , true );
-		$yoast_og_description 	= get_post_meta( $info['postID'] , '_yoast_wpseo_opengraph-description' , true );
-		$yoast_og_image 		= get_post_meta( $info['postID'] , '_yoast_wpseo_opengraph-image' , true );
-		$yoast_seo_title		= get_post_meta( $info['postID'] , '_yoast_wpseo_title' , true );
-		$yoast_seo_description	= get_post_meta( $info['postID'] , '_yoast_wpseo_metadesc' , true );
+		$yoast_og_title         = get_post_meta( $info['postID'] , '_yoast_wpseo_opengraph-title' , true );
+		$yoast_og_description   = get_post_meta( $info['postID'] , '_yoast_wpseo_opengraph-description' , true );
+		$yoast_og_image         = get_post_meta( $info['postID'] , '_yoast_wpseo_opengraph-image' , true );
+		$yoast_seo_title        = get_post_meta( $info['postID'] , '_yoast_wpseo_title' , true );
+		$yoast_seo_description  = get_post_meta( $info['postID'] , '_yoast_wpseo_metadesc' , true );
 
 		// Cancel their output if ours have been defined so we don't have two sets of tags
 		global $wpseo_og;
@@ -328,22 +328,22 @@ function swp_twitter_card_values($info) {
 		 * Begin by fetching the user's default custom settings
 		 *
 		 */
-		$custom_og_title 		= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
-		$custom_og_description 	= htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
-		$custom_og_image_id		= get_post_meta( $info['postID'] , 'nc_ogImage' , true );
-		$custom_og_image_url 	= get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
-		$user_twitter_handle 	= get_post_meta( $info['postID'] , 'swp_twitter_username' , true );
+		$custom_og_title        = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
+		$custom_og_description  = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
+		$custom_og_image_id     = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
+		$custom_og_image_url    = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
+		$user_twitter_handle    = get_post_meta( $info['postID'] , 'swp_twitter_username' , true );
 
 		/**
 		 * YOAST SEO: It rocks, so if it's installed, let's coordinate with it
 		 *
 		 */
 		if ( defined( 'WPSEO_VERSION' ) ) :
-			$yoast_twitter_title 		= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-title' , true );
-			$yoast_twitter_description 	= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-description' , true );
-			$yoast_twitter_image 		= get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-image' , true );
-			$yoast_seo_title			= get_post_meta( $info['postID'] , '_yoast_wpseo_title' , true );
-			$yoast_seo_description		= get_post_meta( $info['postID'] , '_yoast_wpseo_metadesc' , true );
+			$yoast_twitter_title        = get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-title' , true );
+			$yoast_twitter_description  = get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-description' , true );
+			$yoast_twitter_image        = get_post_meta( $info['postID'] , '_yoast_wpseo_twitter-image' , true );
+			$yoast_seo_title            = get_post_meta( $info['postID'] , '_yoast_wpseo_title' , true );
+			$yoast_seo_description      = get_post_meta( $info['postID'] , '_yoast_wpseo_metadesc' , true );
 
 			// Cancel their output if ours have been defined so we don't have two sets of tags
 			remove_action( 'wpseo_head' , array( 'WPSEO_Twitter', 'get_instance' ) , 40 );
