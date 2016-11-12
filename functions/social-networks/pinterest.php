@@ -94,40 +94,14 @@ function swp_pinterest_button_html( $array ) {
 				$pu = '';
 			endif;
 
-			if ( swp_is_cache_fresh( $array['postID'] ) == false ) :
-
-				// Check if an image ID has been provided
-				$array['imageID'] = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
-				if ( $array['imageID'] ) :
-					$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
-					delete_post_meta( $array['postID'],'swp_pinterest_image_url' );
-					update_post_meta( $array['postID'],'swp_pinterest_image_url',$array['imageURL'] );
-					// else:
-					// $array['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-					// delete_post_meta($array['postID'],'swp_pinterest_image_url');
-				endif;
-
-			else :
-
-				// Check if we have a cached Open Graph Image URL
-				$array['imageURL'] = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
-
-				// If not, let's check to see if we have an ID to generate one
-				if ( ! $array['imageURL'] ) :
-
-					// Check for an Open Graph Image ID
-					$array['imageID'] = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
-					if ( $array['imageID'] ) :
-
-						// If we find one, let's convert it to a link and cache it for next time
-						$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
-						delete_post_meta( $array['postID'],'swp_pinterest_image_url' );
-						update_post_meta( $array['postID'],'swp_pinterest_image_url',$array['imageURL'] );
-					else :
-
-						// If we don't find one, let's see if we can use a post thumbnail
-						$array['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-					endif;
+			$array['imageURL'] = false;
+			$image_url = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
+			if( $image_url ):
+				$array['imageURL'] = $image_url;
+			else:
+				$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
+				if( $thumbnail_url ):
+					$array['imageURL'] = $thumbnail_url;
 				endif;
 			endif;
 
