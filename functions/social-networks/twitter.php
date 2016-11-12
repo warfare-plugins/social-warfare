@@ -133,49 +133,39 @@ function swp_twitter_button_html( $array ) {
 			$ct = ($ct != '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ));
 			$twitterLink = swp_process_url( $array['url'] , 'twitter' , $array['postID'] );
 			if ( strpos( $ct,'http' ) !== false ) : $urlParam = '&url=/';
-else : $urlParam = '&url=' . $twitterLink;
-endif;
-
-if ( swp_is_cache_fresh( $array['postID'] ) == false ) :
-	$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , swp_get_author( $array['postID'] ) );
-	if ( $user_twitter_handle ) :
-		delete_post_meta( $array['postID'],'swp_twitter_username' );
-		update_post_meta( $array['postID'],'swp_twitter_username',$user_twitter_handle );
-	else :
-		delete_post_meta( $array['postID'],'swp_twitter_username' );
-	endif;
-			else :
-				$user_twitter_handle = get_post_meta( $array['postID'] , 'swp_twitter_username' , true );
-			endif;
-
-			if ( $user_twitter_handle ) :
-				$viaText = '&via=' . str_replace( '@','',$user_twitter_handle );
-			elseif ( $array['options']['twitterID'] ) :
-				$viaText = '&via=' . str_replace( '@','',$array['options']['twitterID'] );
-			else :
-				$viaText = '';
-			endif;
-
-			$array['resource']['twitter'] = '<div class="nc_tweetContainer twitter" data-id="' . $array['count'] . '" data-network="twitter">';
-			$array['resource']['twitter'] .= '<a rel="nofollow" target="_blank" href="https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText . '" data-link="https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText . '" class="nc_tweet">';
-			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['twitter'] > 0 ) :
-				$array['resource']['twitter'] .= '<span class="iconFiller">';
-				$array['resource']['twitter'] .= '<span class="spaceManWilly">';
-				$array['resource']['twitter'] .= '<i class="sw sw-twitter"></i>';
-				$array['resource']['twitter'] .= '<span class="swp_share"> ' . __( 'Tweet','social-warfare' ) . '</span>';
-				$array['resource']['twitter'] .= '</span></span>';
-				$array['resource']['twitter'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['twitter'] ) . '</span>';
-			else :
-				$array['resource']['twitter'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="swp_share"> ' . __( 'Tweet','social-warfare' ) . '</span></span></span></span>';
-			endif;
-			$array['resource']['twitter'] .= '</a>';
-			$array['resource']['twitter'] .= '</div>';
-
-			// Store these buttons so that we don't have to generate them for each set
-			$_GLOBALS['sw']['buttons'][ $array['postID'] ]['twitter'] = $array['resource']['twitter'];
-
+		else :
+			$urlParam = '&url=' . $twitterLink;
 		endif;
 
-		return $array;
+		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , swp_get_author( $array['postID'] ) );
+		if ( $user_twitter_handle ) :
+			$viaText = '&via=' . str_replace( '@','',$user_twitter_handle );
+		elseif ( $array['options']['twitterID'] ) :
+			$viaText = '&via=' . str_replace( '@','',$array['options']['twitterID'] );
+		else :
+			$viaText = '';
+		endif;
+
+		$array['resource']['twitter'] = '<div class="nc_tweetContainer twitter" data-id="' . $array['count'] . '" data-network="twitter">';
+		$array['resource']['twitter'] .= '<a rel="nofollow" target="_blank" href="https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText . '" data-link="https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText . '" class="nc_tweet">';
+		if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['twitter'] > 0 ) :
+			$array['resource']['twitter'] .= '<span class="iconFiller">';
+			$array['resource']['twitter'] .= '<span class="spaceManWilly">';
+			$array['resource']['twitter'] .= '<i class="sw sw-twitter"></i>';
+			$array['resource']['twitter'] .= '<span class="swp_share"> ' . __( 'Tweet','social-warfare' ) . '</span>';
+			$array['resource']['twitter'] .= '</span></span>';
+			$array['resource']['twitter'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['twitter'] ) . '</span>';
+		else :
+			$array['resource']['twitter'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-twitter"></i><span class="swp_share"> ' . __( 'Tweet','social-warfare' ) . '</span></span></span></span>';
+		endif;
+		$array['resource']['twitter'] .= '</a>';
+		$array['resource']['twitter'] .= '</div>';
+
+		// Store these buttons so that we don't have to generate them for each set
+		$_GLOBALS['sw']['buttons'][ $array['postID'] ]['twitter'] = $array['resource']['twitter'];
+
+	endif;
+
+	return $array;
 
 };

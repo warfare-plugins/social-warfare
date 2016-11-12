@@ -338,11 +338,11 @@ function swp_twitter_card_values($info) {
 		 * Begin by fetching the user's default custom settings
 		 *
 		 */
-		$custom_og_title        = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
-		$custom_og_description  = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
-		$custom_og_image_id     = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
-		$custom_og_image_url    = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
-		$user_twitter_handle    = get_post_meta( $info['postID'] , 'swp_twitter_username' , true );
+		$custom_og_title       = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
+		$custom_og_description = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
+		$custom_og_image_id    = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
+		$custom_og_image_url   = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
+		$user_twitter_handle   = get_the_author_meta( 'swp_twitter' , swp_get_author( $info['postID'] ) );
 
 		/**
 		 * YOAST SEO: It rocks, so if it's installed, let's coordinate with it

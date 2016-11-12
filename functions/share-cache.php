@@ -146,12 +146,11 @@ function swp_cache_rebuild() {
 	endforeach;
 
 	/**
-	 * Recheck the image URL's and Twitter handle. Then store the values
+	 * Recheck the image URL's and then store the values
 	 * in the meta fields so that they are autoloaded with the postID
 	 * to prevent the extra queries during page loads.
 	 */
 	swp_cache_rebuild_pin_image($post_id);
-	swp_cache_rebuild_twitter_handle($post_id);
 	swp_cache_rebuild_og_image($post_id);
 
 	// Reset the timestamp
@@ -199,7 +198,6 @@ function swp_cache_store_autoloads() {
 	$post_id = get_the_ID();
 	if( 'publish' === get_post_status( $post_id ) ):
 		swp_cache_rebuild_pin_image($post_id);
-		swp_cache_rebuild_twitter_handle($post_id);
 		swp_cache_rebuild_og_image($post_id);
 	endif;
 }
@@ -264,34 +262,6 @@ function swp_cache_rebuild_pin_image($post_id) {
 			delete_post_meta( $post_id,'swp_pinterest_image_url' );
 			update_post_meta( $post_id,'swp_pinterest_image_url' , $pin_image_url );
 		endif;
-	endif;
-}
-/**
- * Twitter Username
- *
- * Store the user's twitter handle in a meta field because
- * then the it will be autoloaded with the post preventing the
- * need for an additional database query during page loads.
- *
- * @since  2.1.4
- * @access public
- * @param  integer $post_id The ID of the post
- * @return void
- */
-function swp_cache_rebuild_twitter_handle($post_id) {
-
-	// Check if a twitter handle exists on the user profile
-	$user_twitter_handle = get_the_author_meta( 'swp_twitter' , swp_get_author( $post_id ) );
-	if ( $user_twitter_handle ) :
-		$cur_handle = get_post_meta( $post_id , 'swp_twitter_username' , true );
-
-		// No need to update the database if the user's handle hasn't changed
-		if( $user_twitter_handle !== $cur_handle ):
-			delete_post_meta( $post_id,'swp_twitter_username' );
-			update_post_meta( $post_id,'swp_twitter_username',$user_twitter_handle );
-		endif;
-	else :
-		delete_post_meta( $post_id,'swp_twitter_username' );
 	endif;
 }
 
