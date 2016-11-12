@@ -230,7 +230,7 @@ function swp_open_graph_values($info){
 	elseif ( !empty( $yoast_og_image ) ) :
 		$info['meta_tag_values']['og_image'] = $yoast_og_image;
 	else :
-		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
+		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $info['postID'] ) );
 		if ( $thumbnail_url ) :
 			$info['meta_tag_values']['og_image'] = $thumbnail_url;
 		endif;

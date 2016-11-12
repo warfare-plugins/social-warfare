@@ -176,7 +176,17 @@ function swp_cache_reset_timestamp($post_id) {
 	delete_post_meta( $post_id , 'swp_cache_timestamp' );
 	update_post_meta( $post_id , 'swp_cache_timestamp' , floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
 }
-add_action( 'save_post', 'swp_cache_reset_timestamp' );
+
+/**
+ * A function to delete the current timestamp
+ *
+ * @since 2.1.4
+ * @return void
+ */
+function swp_cache_delete_timestamp() {
+	delete_post_meta( get_the_ID() , 'swp_cache_timestamp' );
+}
+add_action( 'save_post', 'swp_cache_delete_timestamp' );
 add_action( 'save_post', 'swp_cache_store_autoloads' );
 
 /**
@@ -216,8 +226,14 @@ function swp_cache_rebuild_og_image($post_id) {
 
 		// No need to update the DB if the url hasn't changed
 		if( $cur_image_url !== $new_image_url ):
+
+			$image_data = wp_get_attachment_image_src( $image_id , 'full' );
+			delete_post_meta( $post_id , 'swp_open_graph_image_data' );
+			update_post_meta( $post_id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+
 			delete_post_meta( $post_id,'swp_open_graph_image_url' );
-			update_post_meta( $post_id,'swp_open_graph_image_url',$image_url );
+			update_post_meta( $post_id,'swp_open_graph_image_url' , $new_image_url );
+
 		endif;
 	else:
 		delete_post_meta( $post_id,'swp_open_graph_image_url' );
