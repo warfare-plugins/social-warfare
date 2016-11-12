@@ -703,8 +703,15 @@ p.sw-subtitle.sw-registration-text {
 
 *********************************************************/
 
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container:nth-child(n+2) h2 {
+	border-top:1px solid #CED3DC;
+	padding-top:45px;
+}
+.sw-admin-wrapper[sw-registered="0"] .sw-admin-divider {
+	display:none;
+}
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] {
-	opacity: 0.3;
+	display:none!important;
 }
 
 .sw-admin-wrapper[sw-registered="0"] .sw-option-container {
