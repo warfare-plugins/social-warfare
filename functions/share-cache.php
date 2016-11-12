@@ -153,6 +153,9 @@ function swp_cache_rebuild() {
 	swp_cache_rebuild_pin_image($post_id);
 	swp_cache_rebuild_og_image($post_id);
 
+	// Remove any meta fields that we used to use, but no longer use.
+	swp_cache_remove_unused_fields($post_id);
+
 	// Reset the timestamp
 	swp_cache_reset_timestamp($post_id);
 
@@ -364,4 +367,22 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	return $info;
+}
+
+/**
+ * A function to remove fields that we no longer use
+ *
+ * @since  2.1.4
+ * @param  integer $post_id The post ID
+ * @return void
+ */
+function swp_cache_remove_unused_fields($post_id){
+	delete_post_meta( $post_id, 'sw_fb_author' );
+	delete_post_meta( $post_id, 'sw_open_graph_image_url' );
+	delete_post_meta( $post_id, 'sw_open_graph_image_data' );
+	delete_post_meta( $post_id, 'sw_open_thumbnail_url' );
+	delete_post_meta( $post_id, 'swp_open_thumbnail_url' );
+	delete_post_meta( $post_id, 'sw_pinterest_image_url' );
+	delete_post_meta( $post_id, '_facebook_shares' );
+	delete_post_meta( $post_id, 'swp_twitter_username' );
 }
