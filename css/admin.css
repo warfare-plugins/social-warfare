@@ -90,8 +90,8 @@
 #socialWarfare ul.swpmb-media-list.ui-sortable {
 	display: block;
 	width: 100%;
-	-webkit-background-size: contain;
-	        background-size: contain;
+	-webkit-background-size: cover;
+	        background-size: cover;
 	background-position-x: center;
 	background-repeat: no-repeat;
 	background-color: #ccc;
