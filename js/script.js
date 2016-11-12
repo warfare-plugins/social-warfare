@@ -441,7 +441,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 	$( window ).on('load' , function() {
-		if ( swpPinIt.enabled ) {
+		if ( 'undefined' !== typeof swpPinIt && swpPinIt.enabled ) {
 			pinitButton();
 		}
 	});
