@@ -615,7 +615,7 @@ function swp_options_styles($swp_options) {
 			'type'		=> 'input',
 			'size'		=> 'two-fourths',
 			'name'		=> __( 'Custom Color' ,'social-warfare' ),
-			'default'	=> '#FFFFFF',
+			'default'	=> '#CED3DC',
 			'premium'	=> true
 		),
 		'floatBgColor' => array(

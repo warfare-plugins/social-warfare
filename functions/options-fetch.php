@@ -97,6 +97,11 @@ function swp_get_user_options( $admin = false ) {
 
 	$options = array_merge( $defaults, $options );
 
+	// Make the side custom absorbe the main custom color if they haven't set one yet.
+	if(empty($options['sideCustomColor']) ):
+		$options['sideCustomColor'] = $options['customColor'];
+	endif;
+
 	// Force the plugin off on certain post types.
 	$options['locationattachment'] = 'none';
 	$options['locationrevision']   = 'none';
