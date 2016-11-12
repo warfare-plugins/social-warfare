@@ -46,28 +46,28 @@ function swp_add_header_meta() {
 	 * All meta values will be returned in the $info['meta_tag_values'] array.
 	 *
 	 * The following values will be returned from the function swp_open_graph_values():
-	 * Open Graph Type          $info['meta_tag_values']['og_type']
-	 * Open Graph Title         $info['meta_tag_values']['og_title']
-	 * Open Graph Description   $info['meta_tag_values']['og_description']
-	 * Open Graph Image         $info['meta_tag_values']['og_image']
-	 * Open Graph Image Width   $info['meta_tag_values']['og_image_width']
-	 * Open Graph Image Height  $info['meta_tag_values']['og_image_height']
-	 * Open Graph URL           $info['meta_tag_values']['og_url']
-	 * Open Graph Site Name     $info['meta_tag_values']['og_site_name']
-	 * Article Author           $info['meta_tag_values']['article_author']
-	 * Article Publisher        $info['meta_tag_values']['article_publisher']
-	 * Article Published Time   $info['meta_tag_values']['article_published_time']
-	 * Article Modified Time    $info['meta_tag_values']['article_modified_time']
-	 * OG Modified Time         $info['meta_tag_values']['og_modified_time']
-	 * Facebook App ID          $info['meta_tag_values']['fb_app_id']
+	 *     Open Graph Type          $info['meta_tag_values']['og_type']
+	 *     Open Graph Title         $info['meta_tag_values']['og_title']
+	 *     Open Graph Description   $info['meta_tag_values']['og_description']
+	 *     Open Graph Image         $info['meta_tag_values']['og_image']
+	 *     Open Graph Image Width   $info['meta_tag_values']['og_image_width']
+	 *     Open Graph Image Height  $info['meta_tag_values']['og_image_height']
+	 *     Open Graph URL           $info['meta_tag_values']['og_url']
+	 *     Open Graph Site Name     $info['meta_tag_values']['og_site_name']
+	 *     Article Author           $info['meta_tag_values']['article_author']
+	 *     Article Publisher        $info['meta_tag_values']['article_publisher']
+	 *     Article Published Time   $info['meta_tag_values']['article_published_time']
+	 *     Article Modified Time    $info['meta_tag_values']['article_modified_time']
+	 *     OG Modified Time         $info['meta_tag_values']['og_modified_time']
+	 *     Facebook App ID          $info['meta_tag_values']['fb_app_id']
 	 *
 	 * The following values will be returned from the function swp_twitter_card_values():
-	 * Twitter Card type        $info['meta_tag_values']['twitter_card']
-	 * Twitter Title            $info['meta_tag_values']['twitter_title']
-	 * Twitter Description      $info['meta_tag_values']['twitter_description']
-	 * Twitter Image            $info['meta_tag_values']['twitter_image']
-	 * Twitter Site             $info['meta_tag_values']['twitter_site']
-	 * Twitter creator          $info['meta_tag_values']['twitter_creator']
+	 *     Twitter Card type        $info['meta_tag_values']['twitter_card']
+	 *     Twitter Title            $info['meta_tag_values']['twitter_title']
+	 *     Twitter Description      $info['meta_tag_values']['twitter_description']
+	 *     Twitter Image            $info['meta_tag_values']['twitter_image']
+	 *     Twitter Site             $info['meta_tag_values']['twitter_site']
+	 *     Twitter creator          $info['meta_tag_values']['twitter_creator']
 	 *
 	 * @since 2.1.4
 	 * @access public
@@ -83,7 +83,7 @@ function swp_add_header_meta() {
 	 * them into html stored in the $info['html_output'] index. This index will be
 	 * a string that gets added to by each hook (.=), not an array.
 	 *
-	 * Note: Each meta tag should end with PHP_EOL for clean structured HTML output
+	 * Note: Each meta tag should begin with PHP_EOL for clean structured HTML output
 	 *
 	 * @since 2.1.4
 	 * @access public
@@ -123,22 +123,21 @@ function swp_open_graph_values($info){
 	 * Begin by fetching the user's default custom settings
 	 *
 	 */
-	$custom_og_title        = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
-	$custom_og_description  = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
-	$custom_og_image_id     = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
-	$custom_og_image_url    = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
-	$custom_og_image_data   = json_decode( get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) );
+	$custom_og_title       = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogTitle' , true ) );
+	$custom_og_description = htmlspecialchars( get_post_meta( $info['postID'] , 'nc_ogDescription' , true ) );
+	$custom_og_image_id    = get_post_meta( $info['postID'] , 'nc_ogImage' , true );
+	$custom_og_image_url   = get_post_meta( $info['postID'] , 'swp_open_graph_image_url' , true );
+	$custom_og_image_data  = json_decode( get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) );
 
 	/**
 	 * Open Graph Tags (The Easy Ones That Don't Need Conditional Fallbacks)
 	 *
 	 */
-	$info['meta_tag_values']['og_url']                  = get_permalink();
-	$info['meta_tag_values']['og_site_name']            = get_bloginfo( 'name' );
-	$info['meta_tag_values']['og_type']                 = 'article';
-	$info['meta_tag_values']['article_published_time']  = get_post_time( 'c' );
-	$info['meta_tag_values']['article_modified_time']   = get_post_modified_time( 'c' );
-	$info['meta_tag_values']['og_modified_time']        = get_post_modified_time( 'c' );
+	$info['meta_tag_values']['og_url']                 = get_permalink();
+	$info['meta_tag_values']['og_site_name']           = get_bloginfo( 'name' );
+	$info['meta_tag_values']['article_published_time'] = get_post_time( 'c' );
+	$info['meta_tag_values']['article_modified_time']  = get_post_modified_time( 'c' );
+	$info['meta_tag_values']['og_modified_time']       = get_post_modified_time( 'c' );
 
 	/**
 	 * Disable Jetpack's Open Graph tags
@@ -184,6 +183,17 @@ function swp_open_graph_values($info){
 	endif;
 
 	/**
+	 * Open Graph Type
+	 *
+	 */
+	$og_type = get_post_meta( $info['postID'] , 'swp_og_type' , true );
+	if( $og_type ):
+		$info['meta_tag_values']['og_type'] = $og_type;
+	else:
+ 		$info['meta_tag_values']['og_type'] = 'article';
+	endif;
+
+	/**
 	 *  Open Graph Title: Create an open graph title meta tag
 	 *
 	 */
@@ -220,7 +230,7 @@ function swp_open_graph_values($info){
 	elseif ( !empty( $yoast_og_image ) ) :
 		$info['meta_tag_values']['og_image'] = $yoast_og_image;
 	else :
-		$thumbnail_url = get_post_meta( $info['postID'] , 'swp_open_thumbnail_url' , true );
+		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 		if ( $thumbnail_url ) :
 			$info['meta_tag_values']['og_image'] = $thumbnail_url;
 		endif;
@@ -231,8 +241,8 @@ function swp_open_graph_values($info){
 	 *
 	 */
 	if ( !empty( $custom_og_image_data ) ) :
-		$info['meta_tag_values']['og_image_width'] 	= $custom_og_image_data[1];
-		$info['meta_tag_values']['og_image_height']	= $custom_og_image_data[2];
+		$info['meta_tag_values']['og_image_width']   = $custom_og_image_data[1];
+		$info['meta_tag_values']['og_image_height']	 = $custom_og_image_data[2];
 	endif;
 
 	/**
@@ -475,7 +485,7 @@ function swp_output_custom_color( $info ) {
  *
  * Note: This is done in the header rather than in a CSS file to
  * avoid having the fonts called from a CDN, 95% of which do not
- * support the necessary mime types to render them.
+ * support the necessary mime & cross-origin access types to deliver them.
  *
  * @since  1.0.0
  * @access public
