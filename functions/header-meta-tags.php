@@ -436,10 +436,10 @@ function swp_twitter_card_html($info) {
 	$info['html_output'] .= PHP_EOL . '<meta name="twitter:title" content="' . trim( $info['meta_tag_values']['twitter_title'] ) . '">';
 	$info['html_output'] .= PHP_EOL . '<meta name="twitter:description" content="' . $info['meta_tag_values']['twitter_description'] . '">';
 	$info['html_output'] .= PHP_EOL . '<meta name="twitter:image" content="' . $info['meta_tag_values']['twitter_image'] . '">';
-	if ( $info['meta_tag_values']['twitter_site'] ) :
+	if ( !empty( $info['meta_tag_values']['twitter_site'] ) ) :
 		$info['html_output'] .= PHP_EOL . '<meta name="twitter:site" content="' . $info['meta_tag_values']['twitter_site'] . '">';
 	endif;
-	if ( $info['meta_tag_values']['twitter_creator'] ) :
+	if ( !empty( $info['meta_tag_values']['twitter_creator'] ) ) :
 		$info['html_output'] .= PHP_EOL . '<meta name="twitter:creator" content="' . $info['meta_tag_values']['twitter_creator'] . '">';
 	endif;
 
