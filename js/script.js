@@ -121,10 +121,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?id=' + swp_post_recovery_url) : ''),
 			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?id=' + swp_post_recovery_url + '&fields=og_object{likes.summary(true),comments.summary(true)}') : '')
 		)
-			.then( function(a, b, c, d) {
-				/**
-				 * Parse the responses, add up the activity, send the results to admin_ajax
-				 */
+		.then( function(a, b, c, d) {
+			/**
+			 * Parse the responses, add up the activity, send the results to admin_ajax
+			 */
+			if( 'undefined' !== typeof a[0].share && 'undefined' !== typeof b[0].og_object ) {
 				var f1 = absint( a[0].share.share_count);
 				var f2 = absint( b[0].og_object.likes.summary.total_count );
 				var f3 = absint( b[0].og_object.comments.summary.total_count );
@@ -153,11 +154,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					_wpnonce: swp_nonce
 				};
 
-			$.post( swp_admin_ajax, swpPostData, function( response ) {
-				console.log( response );
-			});
+				$.post( swp_admin_ajax, swpPostData, function( response ) {
+					console.log( 'Facebook Shares Response: ' + response );
+				});
+			}
 		});
-
 	}
 
 	/**
