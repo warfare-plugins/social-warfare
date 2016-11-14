@@ -158,7 +158,7 @@ function swp_open_graph_values($info){
 	endif;
 
 	// Check if the user has filled out at least one of the custom fields
-	if ( defined( 'WPSEO_VERSION' ) && ( !empty( $custom_og_title ) || !empty( $custom_og_description ) || !empty( $custom_og_image ) ) ):
+	if ( defined( 'WPSEO_VERSION' ) && ( !empty( $custom_og_title ) || !empty( $custom_og_description ) || !empty( $custom_og_image_url ) ) ):
 
 		/**
 		 * YOAST SEO: It rocks, so if it's installed, let's coordinate with it
