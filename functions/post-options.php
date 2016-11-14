@@ -53,7 +53,14 @@ function _swp_get_twitter_handle( $fallback = false ) {
 	return $twitter_handle;
 }
 
-add_filter( 'swpmb_meta_boxes', 'swp_register_meta_boxes' );
+/**
+ * Output the meta boxes on the posts page if the plugin is registered
+ *
+ */
+if( true === is_swp_registered() ):
+	add_filter( 'swpmb_meta_boxes', 'swp_register_meta_boxes' );
+endif;
+
 /**
  * Build the options fields.
  *
