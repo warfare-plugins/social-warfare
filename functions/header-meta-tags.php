@@ -130,16 +130,6 @@ function swp_open_graph_values($info){
 	$custom_og_image_data  = json_decode( get_post_meta( $info['postID'] , 'swp_open_graph_image_data' , true ) );
 
 	/**
-	 * Open Graph Tags (The Easy Ones That Don't Need Conditional Fallbacks)
-	 *
-	 */
-	$info['meta_tag_values']['og_url']                 = get_permalink();
-	$info['meta_tag_values']['og_site_name']           = get_bloginfo( 'name' );
-	$info['meta_tag_values']['article_published_time'] = get_post_time( 'c' );
-	$info['meta_tag_values']['article_modified_time']  = get_post_modified_time( 'c' );
-	$info['meta_tag_values']['og_modified_time']       = get_post_modified_time( 'c' );
-
-	/**
 	 * Disable Jetpack's Open Graph tags
 	 *
 	 */
@@ -152,9 +142,9 @@ function swp_open_graph_values($info){
 	 */
 	if ( defined( 'WPSEO_VERSION' ) ) :
 		global $wpseo_og;
-		$yoast_og_setting = has_action( 'wpseo_head', array( $wpseo_og, 'opengraph' ) );
+		$info['yoast_og_setting'] = has_action( 'wpseo_head', array( $wpseo_og, 'opengraph' ) );
 	else :
-		$yoast_og_setting = false;
+		$info['yoast_og_setting'] = false;
 	endif;
 
 	// Check if the user has filled out at least one of the custom fields
@@ -175,12 +165,23 @@ function swp_open_graph_values($info){
 		// Cancel their output if ours have been defined so we don't have two sets of tags
 		global $wpseo_og;
 		remove_action( 'wpseo_head', array( $wpseo_og, 'opengraph' ), 30 );
+		$info['yoast_og_setting'] = false;
 
 		// Fetch the WPSEO_SOCIAL Values
 		$wpseo_social = get_option( 'wpseo_social' );
 
 	// End of the Yoast Conditional
 	endif;
+
+	/**
+	 * Open Graph Tags (The Easy Ones That Don't Need Conditional Fallbacks)
+	 *
+	 */
+	$info['meta_tag_values']['og_url']                 = get_permalink();
+	$info['meta_tag_values']['og_site_name']           = get_bloginfo( 'name' );
+	$info['meta_tag_values']['article_published_time'] = get_post_time( 'c' );
+	$info['meta_tag_values']['article_modified_time']  = get_post_modified_time( 'c' );
+	$info['meta_tag_values']['og_modified_time']       = get_post_modified_time( 'c' );
 
 	/**
 	 * Open Graph Type
@@ -280,33 +281,42 @@ function swp_open_graph_values($info){
 	return $info;
 }
 
+/**
+ * A function to compile the meta tags into HTML
+ * @param  array $info The info array
+ * @return array $info The modified info array
+ */
 function swp_open_graph_html($info) {
 
-	$info['html_output'] .= PHP_EOL . '<meta property="og:type" content="'. trim( $info['meta_tag_values']['og_type'] ).'" />';
-	$info['html_output'] .= PHP_EOL . '<meta property="og:title" content="'. trim( $info['meta_tag_values']['og_title'] ).'" />';
-	$info['html_output'] .= PHP_EOL . '<meta property="og:description" content="'. trim( $info['meta_tag_values']['og_description'] ).'" />';
+	// Check to ensure that we don't need to defer to Yoast
+	if(false === $info['yoast_og_setting']):
 
-	if( !empty( $info['meta_tag_values']['og_image'] ) ):
-		$info['html_output'] .= PHP_EOL . '<meta property="og:image" content="'. trim( $info['meta_tag_values']['og_image'] ).'" />';
-		$info['html_output'] .= PHP_EOL . '<meta property="og:image:width" content="'. trim( $info['meta_tag_values']['og_image_width'] ).'" />';
-		$info['html_output'] .= PHP_EOL . '<meta property="og:image:height" content="'. trim( $info['meta_tag_values']['og_image_height'] ).'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:type" content="'. trim( $info['meta_tag_values']['og_type'] ).'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:title" content="'. trim( $info['meta_tag_values']['og_title'] ).'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:description" content="'. trim( $info['meta_tag_values']['og_description'] ).'" />';
+
+		if( !empty( $info['meta_tag_values']['og_image'] ) ):
+			$info['html_output'] .= PHP_EOL . '<meta property="og:image" content="'. trim( $info['meta_tag_values']['og_image'] ).'" />';
+			$info['html_output'] .= PHP_EOL . '<meta property="og:image:width" content="'. trim( $info['meta_tag_values']['og_image_width'] ).'" />';
+			$info['html_output'] .= PHP_EOL . '<meta property="og:image:height" content="'. trim( $info['meta_tag_values']['og_image_height'] ).'" />';
+		endif;
+
+		$info['html_output'] .= PHP_EOL . '<meta property="og:url" content="'. trim( $info['meta_tag_values']['og_url'] ).'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:site_name" content="'. trim( $info['meta_tag_values']['og_site_name'] ).'" />';
+
+		if( !empty( $info['meta_tag_values']['article_author'] ) ):
+			$info['html_output'] .= PHP_EOL . '<meta property="article:author" content="'. trim( $info['meta_tag_values']['article_author'] ).'" />';
+		endif;
+
+		if( !empty( $info['meta_tag_values']['article_publisher'] ) ):
+			$info['html_output'] .= PHP_EOL . '<meta property="article:publisher" content="'. trim( $info['meta_tag_values']['article_publisher'] ) .'" />';
+		endif;
+
+		$info['html_output'] .= PHP_EOL . '<meta property="article:published_time" content="'. trim( $info['meta_tag_values']['article_published_time'] ) .'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="article:modified_time" content="'. trim( $info['meta_tag_values']['article_modified_time'] ) .'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="og:updated_time" content="'. trim( $info['meta_tag_values']['og_modified_time'] ) .'" />';
+		$info['html_output'] .= PHP_EOL . '<meta property="fb:app_id" content="'. trim( $info['meta_tag_values']['fb_app_id'] ).'" />';
 	endif;
-
-	$info['html_output'] .= PHP_EOL . '<meta property="og:url" content="'. trim( $info['meta_tag_values']['og_url'] ).'" />';
-	$info['html_output'] .= PHP_EOL . '<meta property="og:site_name" content="'. trim( $info['meta_tag_values']['og_site_name'] ).'" />';
-
-	if( !empty( $info['meta_tag_values']['article_author'] ) ):
-		$info['html_output'] .= PHP_EOL . '<meta property="article:author" content="'. trim( $info['meta_tag_values']['article_author'] ).'" />';
-	endif;
-
-	if( !empty( $info['meta_tag_values']['article_publisher'] ) ):
-		$info['html_output'] .= PHP_EOL . '<meta property="article:publisher" content="'. trim( $info['meta_tag_values']['article_publisher'] ) .'" />';
-	endif;
-
-	$info['html_output'] .= PHP_EOL . '<meta property="article:published_time" content="'. trim( $info['meta_tag_values']['article_published_time'] ) .'" />';
-	$info['html_output'] .= PHP_EOL . '<meta property="article:modified_time" content="'. trim( $info['meta_tag_values']['article_modified_time'] ) .'" />';
-	$info['html_output'] .= PHP_EOL . '<meta property="og:updated_time" content="'. trim( $info['meta_tag_values']['og_modified_time'] ) .'" />';
-	$info['html_output'] .= PHP_EOL . '<meta property="fb:app_id" content="'. trim( $info['meta_tag_values']['fb_app_id'] ).'" />';
 
 	return $info;
 }
