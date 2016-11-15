@@ -95,11 +95,11 @@ function swp_pinterest_button_html( $array ) {
 
 			$array['imageURL'] = false;
 			$image_url = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
-			if( $image_url ):
+			if( !empty( $image_url ) ):
 				$array['imageURL'] = $image_url;
 			else:
-				$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
-				if( $thumbnail_url ):
+				$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
+				if( !empty( $thumbnail_url ) ):
 					$array['imageURL'] = $thumbnail_url;
 				endif;
 			endif;

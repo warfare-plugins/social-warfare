@@ -441,16 +441,19 @@ function swp_twitter_card_values($info) {
 }
 
 function swp_twitter_card_html($info) {
+	global $swp_user_options;
 
-	$info['html_output'] .= PHP_EOL . '<meta name="twitter:card" content="'. trim( $info['meta_tag_values']['twitter_card'] ) .'">';
-	$info['html_output'] .= PHP_EOL . '<meta name="twitter:title" content="' . trim( $info['meta_tag_values']['twitter_title'] ) . '">';
-	$info['html_output'] .= PHP_EOL . '<meta name="twitter:description" content="' . trim( $info['meta_tag_values']['twitter_description'] ) . '">';
-	$info['html_output'] .= PHP_EOL . '<meta name="twitter:image" content="' . trim( $info['meta_tag_values']['twitter_image'] ) . '">';
-	if ( !empty( $info['meta_tag_values']['twitter_site'] ) ) :
-		$info['html_output'] .= PHP_EOL . '<meta name="twitter:site" content="' . trim( $info['meta_tag_values']['twitter_site'] ) . '">';
-	endif;
-	if ( !empty( $info['meta_tag_values']['twitter_creator'] ) ) :
-		$info['html_output'] .= PHP_EOL . '<meta name="twitter:creator" content="' . trim( $info['meta_tag_values']['twitter_creator'] ) . '">';
+	if ( is_singular() && $swp_user_options['swp_twitter_card'] ) :
+		$info['html_output'] .= PHP_EOL . '<meta name="twitter:card" content="'. trim( $info['meta_tag_values']['twitter_card'] ) .'">';
+		$info['html_output'] .= PHP_EOL . '<meta name="twitter:title" content="' . trim( $info['meta_tag_values']['twitter_title'] ) . '">';
+		$info['html_output'] .= PHP_EOL . '<meta name="twitter:description" content="' . trim( $info['meta_tag_values']['twitter_description'] ) . '">';
+		$info['html_output'] .= PHP_EOL . '<meta name="twitter:image" content="' . trim( $info['meta_tag_values']['twitter_image'] ) . '">';
+		if ( !empty( $info['meta_tag_values']['twitter_site'] ) ) :
+			$info['html_output'] .= PHP_EOL . '<meta name="twitter:site" content="' . trim( $info['meta_tag_values']['twitter_site'] ) . '">';
+		endif;
+		if ( !empty( $info['meta_tag_values']['twitter_creator'] ) ) :
+			$info['html_output'] .= PHP_EOL . '<meta name="twitter:creator" content="' . trim( $info['meta_tag_values']['twitter_creator'] ) . '">';
+		endif;
 	endif;
 
 	return $info;
