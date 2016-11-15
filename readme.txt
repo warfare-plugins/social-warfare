@@ -186,6 +186,30 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.1.4 (14 NOV 2016) =
+
+*Maintenance:*
+
+* Refactored all of the Open Graph and Twitter Card output logic.
+* Broke the meta tags into two filters. One creates the values. The second compiles them into HTML for output. This can allow people to hook in and change specific values on the fly via an add_filter() call.
+* Refactored all of the cache functions.
+* Added a function to clean out meta fields that are no longer used or needed.
+* Added a check for invalid responses from Facebook's API
+* Adjusted the default logic and fallback color system for the side custom color option.
+* Refactored the Pinterest image logic.
+* Add an undefined check for swpPinit to avoid JS notices in the admin area.
+* Fixed an undefined index notice.
+* Removed all non-public post types from the display locations settings.
+* Added a homepage specific location setting.
+* Added a function to make the plugin not duplicate share counts when duplicating a post via the Duplicate Post plugin.
+* Consolidated some functions and files for more consistent organization.
+* Fixed Google Click/Event Tracking
+* Modify the hover pin so it's not created until after all images have finished loading.
+* Fixed the raw share text from sometimes showing up in excerpts.
+* Make the buttons not output on posts embedded into other posts (like embedded recipes).
+* Patch to prevent buttons from being added to a post more than once.
+* Remove the "active" index to prevent certain notices.
+
 = 2.1.3 (4 NOV 2016) =
 
 *Maintenance:*

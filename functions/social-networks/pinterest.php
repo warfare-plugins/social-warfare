@@ -87,9 +87,8 @@ function swp_pinterest_button_html( $array ) {
 			$pi = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
 
 			// Pinterest Username
-			$pinterest_username = $array['options']['pinterestID'];
-			if ( isset( $pinterest_username ) && $pinterest_username != '' ) :
-				$pu = ' via @' . str_replace( '@','',$pinterest_username );
+			if ( !empty( $array['options']['pinterestID'] ) ) :
+				$pu = ' via @' . str_replace( '@' , '' , $array['options']['pinterestID'] );
 			else :
 				$pu = '';
 			endif;
