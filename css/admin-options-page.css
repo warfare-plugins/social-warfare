@@ -707,9 +707,7 @@ p.sw-subtitle.sw-registration-text {
 	border-top:1px solid #CED3DC;
 	padding-top:45px;
 }
-.sw-admin-wrapper[sw-registered="0"] .sw-admin-divider {
-	display:none;
-}
+
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] {
 	display:none!important;
 }
