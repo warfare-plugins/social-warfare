@@ -580,7 +580,11 @@ function swp_build_options_page() {
 			 */
 
 			if ( $option['type'] == 'divider' ) :
-				echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
+				if( !empty($option['premium']) && true === $option['premium'] ):
+					echo '<div class="sw-clearfix" premium="1"></div><div class="sw-admin-divider sw-clearfix" premium="1"></div>';
+				else:
+					echo '<div class="sw-clearfix"></div><div class="sw-admin-divider sw-clearfix"></div>';
+				endif;
 			endif;
 
 			/**
