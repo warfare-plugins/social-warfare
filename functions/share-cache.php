@@ -383,6 +383,5 @@ function swp_cache_remove_unused_fields($post_id){
 	delete_post_meta( $post_id, 'sw_open_thumbnail_url' );
 	delete_post_meta( $post_id, 'swp_open_thumbnail_url' );
 	delete_post_meta( $post_id, 'sw_pinterest_image_url' );
-	delete_post_meta( $post_id, '_facebook_shares' );
 	delete_post_meta( $post_id, 'swp_twitter_username' );
 }
