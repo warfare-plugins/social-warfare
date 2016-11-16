@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Social Warfare package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Social Warfare 2.1.3\n"
+"Project-Id-Version: Social Warfare 2.1.4\n"
 "Report-Msgid-Bugs-To: https://warfareplugins.com/\n"
-"POT-Creation-Date: 2016-11-13 20:26:59+00:00\n"
+"POT-Creation-Date: 2016-11-16 19:25:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,148 +26,89 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: functions/admin/options-page.php:240
+#: functions/admin/options-page.php:242
 msgid "Active"
 msgstr ""
 
-#: functions/admin/options-page.php:273
+#: functions/admin/options-page.php:275
 msgid "Inactive"
 msgstr ""
 
-#: functions/admin/options-page.php:353 functions/admin/options-page.php:365
-#: functions/admin/options-page.php:388 functions/admin/options-page.php:406
-#: functions/admin/options-page.php:682
+#: functions/admin/options-page.php:334 functions/admin/options-page.php:346
+#: functions/admin/options-page.php:369 functions/admin/options-page.php:387
+#: functions/admin/options-page.php:663
 msgid "ON"
 msgstr ""
 
-#: functions/admin/options-page.php:353 functions/admin/options-page.php:365
-#: functions/admin/options-page.php:388 functions/admin/options-page.php:406
-#: functions/admin/options-page.php:682
+#: functions/admin/options-page.php:334 functions/admin/options-page.php:346
+#: functions/admin/options-page.php:369 functions/admin/options-page.php:387
+#: functions/admin/options-page.php:663
 msgid "OFF"
 msgstr ""
 
-#: functions/admin/options-page.php:626 functions/options-array.php:322
+#: functions/admin/options-page.php:607
 msgid "Connected"
 msgstr ""
 
-#: functions/admin/options-page.php:628
+#: functions/admin/options-page.php:609
 msgid "Authenticated"
 msgstr ""
 
-#: functions/admin/options-page.php:667
+#: functions/admin/options-page.php:648
 msgid "Tweet Count Registration"
 msgstr ""
 
-#: functions/admin/options-page.php:673
+#: functions/admin/options-page.php:654
 msgid ""
 "In order to allow Social Warfare to track tweet counts, we've partnered "
 "with NewShareCounts.com. Follow the steps below to register with "
 "NewShareCounts and allow us to track your Twitter shares."
 msgstr ""
 
-#: functions/admin/options-page.php:674
+#: functions/admin/options-page.php:655
 msgid "Click here to visit NewShareCounts.com"
 msgstr ""
 
-#: functions/admin/options-page.php:674
+#: functions/admin/options-page.php:655
 msgid ""
 "Step 2: At NewShareCounts.com, Enter your domain and click the \"Sign In "
 "With Twitter\" button."
 msgstr ""
 
-#: functions/admin/options-page.php:674
+#: functions/admin/options-page.php:655
 msgid "Step 3: Flip the switch below to \"ON\" and then save changes."
 msgstr ""
 
-#: functions/admin/options-page.php:776
+#: functions/admin/options-page.php:757
 msgid ""
 "Need help? Check out our <a href=\"https://warfareplugins.com/support/\" "
 "target=\"_blank\">Knowledgebase."
 msgstr ""
 
-#: functions/admin/options-page.php:777
+#: functions/admin/options-page.php:758
 msgid ""
 "Opening a support ticket? Copy your System Status by clicking the button "
 "below."
 msgstr ""
 
-#: functions/admin/options-page.php:778
+#: functions/admin/options-page.php:759
 msgid "Get System Status"
 msgstr ""
 
-#: functions/admin/options-page.php:783
+#: functions/admin/options-page.php:764
 msgid "Press Ctrl+C to Copy this information."
 msgstr ""
 
-#: functions/admin/options-page.php:805 functions/registration.php:292
+#: functions/admin/options-page.php:786
 msgid "Security failed."
 msgstr ""
 
-#: functions/admin/options-page.php:812
+#: functions/admin/options-page.php:793
 msgid "No settings to save."
 msgstr ""
 
-#: functions/admin/views/options-registration.php:24
-msgid "Premium Registration"
-msgstr ""
-
-#: functions/admin/views/options-registration.php:29
-msgid ""
-"This copy of Social Warfare is NOT registered. <a target=\"_blank\" "
-"href=\"https://warfareplugins.com\">Click here</a> to purchase a license or "
-"add your account info below."
-msgstr ""
-
-#: functions/admin/views/options-registration.php:33
-msgid ""
-"Follow these simple steps to register your Premium License and access all "
-"features."
-msgstr ""
-
-#: functions/admin/views/options-registration.php:37
-msgid "Step 1: Enter your email."
-msgstr ""
-
-#: functions/admin/views/options-registration.php:38
-msgid "Step 2: Click the \"Register Plugin\" button."
-msgstr ""
-
-#: functions/admin/views/options-registration.php:39
-msgid "Step 3: Watch the magic."
-msgstr ""
-
-#: functions/admin/views/options-registration.php:44
-msgid "Email Address"
-msgstr ""
-
-#: functions/admin/views/options-registration.php:60
-msgid "Activate Registration"
-msgstr ""
-
-#: functions/admin/views/options-registration.php:66
-msgid "Register Plugin"
-msgstr ""
-
-#: functions/admin/views/options-registration.php:77
-msgid "This copy of Social Warfare is registered. Wah-hoo!"
-msgstr ""
-
-#: functions/admin/views/options-registration.php:81
-msgid ""
-"To unregister your license click the button below to free it up for use on "
-"another domain."
-msgstr ""
-
-#: functions/admin/views/options-registration.php:86
-msgid "Deactivate Registration"
-msgstr ""
-
-#: functions/admin/views/options-registration.php:92
-msgid "Unregister Plugin"
-msgstr ""
-
-#: functions/buttons-floating.php:83 functions/buttons-standard.php:240
-#: functions/buttons-standard.php:272 functions/buttons-standard.php:276
+#: functions/buttons-floating.php:72 functions/buttons-standard.php:229
+#: functions/buttons-standard.php:261 functions/buttons-standard.php:265
 msgid "Shares"
 msgstr ""
 
@@ -187,844 +128,266 @@ msgstr ""
 msgid "Drag & Drop to activate and order your share buttons."
 msgstr ""
 
-#: functions/options-array.php:45
-msgid "Sort Manually Using Drag & Drop Above"
-msgstr ""
-
-#: functions/options-array.php:46
-msgid "Sort Dynamically By Order Of Most Shares"
-msgstr ""
-
-#: functions/options-array.php:49
-msgid "Button Ordering"
-msgstr ""
-
-#: functions/options-array.php:70
+#: functions/options-array.php:61
 msgid "Share Counts"
 msgstr ""
 
-#: functions/options-array.php:74
+#: functions/options-array.php:65
 msgid "Use the toggles below to determine how to display your social proof."
 msgstr ""
 
-#: functions/options-array.php:79
+#: functions/options-array.php:70
 msgid "Button Counts"
 msgstr ""
 
-#: functions/options-array.php:86 functions/options-array.php:436
+#: functions/options-array.php:77 functions/options-array.php:166
 msgid "Total Counts"
 msgstr ""
 
-#: functions/options-array.php:93
-msgid "Minimum Shares"
-msgstr ""
-
-#: functions/options-array.php:101
-msgid "Twitter Cards"
-msgstr ""
-
-#: functions/options-array.php:109
+#: functions/options-array.php:86
 msgid "Position Share Buttons"
 msgstr ""
 
-#: functions/options-array.php:113
+#: functions/options-array.php:90
 msgid ""
 "The options below will allow you to customize the positioning of share "
 "buttons for each post type."
 msgstr ""
 
-#: functions/options-array.php:118
+#: functions/options-array.php:95
 msgid "Post Type"
 msgstr ""
 
-#: functions/options-array.php:119
+#: functions/options-array.php:96
 msgid "Static Buttons"
 msgstr ""
 
-#: functions/options-array.php:120
+#: functions/options-array.php:97
 msgid "Floating Buttons (If Activated)"
 msgstr ""
 
-#: functions/options-array.php:126 functions/post-options.php:151
+#: functions/options-array.php:103
 msgid "Above the Content"
 msgstr ""
 
-#: functions/options-array.php:127 functions/post-options.php:152
+#: functions/options-array.php:104
 msgid "Below the Content"
 msgstr ""
 
-#: functions/options-array.php:128 functions/post-options.php:153
+#: functions/options-array.php:105
 msgid "Both Above and Below the Content"
 msgstr ""
 
-#: functions/options-array.php:129 functions/post-options.php:154
+#: functions/options-array.php:106
 msgid "None/Manual Placement"
 msgstr ""
 
-#: functions/options-array.php:146 functions/post-options.php:166
+#: functions/options-array.php:123
 msgid "On"
 msgstr ""
 
-#: functions/options-array.php:147 functions/options-array.php:525
-#: functions/post-options.php:167
+#: functions/options-array.php:124
 msgid "Off"
 msgstr ""
 
-#: functions/options-array.php:157
+#: functions/options-array.php:134
 msgid "Home Page"
 msgstr ""
 
-#: functions/options-array.php:165
+#: functions/options-array.php:142
 msgid "Archive & Categories"
 msgstr ""
 
-#: functions/options-array.php:177
-msgid "Image Hover Pin Button"
-msgstr ""
-
-#: functions/options-array.php:183
-msgid ""
-"If you would like a \"Pin\" button to appear on images when users hover "
-"over them, activate this."
-msgstr ""
-
-#: functions/options-array.php:190
-msgid "Pinit Button"
-msgstr ""
-
-#: functions/options-array.php:197
-msgid "Horizontal Location"
-msgstr ""
-
-#: functions/options-array.php:199 functions/options-array.php:420
-#: functions/options-array.php:469
-msgid "Left"
-msgstr ""
-
-#: functions/options-array.php:200 functions/options-array.php:422
-msgid "Center"
-msgstr ""
-
-#: functions/options-array.php:201 functions/options-array.php:421
-#: functions/options-array.php:468
-msgid "Right"
-msgstr ""
-
-#: functions/options-array.php:212
-msgid "Min Width"
-msgstr ""
-
-#: functions/options-array.php:222
-msgid "Vertical Location"
-msgstr ""
-
-#: functions/options-array.php:224
-msgid "Top"
-msgstr ""
-
-#: functions/options-array.php:225
-msgid "Middle"
-msgstr ""
-
-#: functions/options-array.php:226
-msgid "Bottom"
-msgstr ""
-
-#: functions/options-array.php:237
-msgid "Min Height"
-msgstr ""
-
-#: functions/options-array.php:260
-msgid "Yummly Display Control"
-msgstr ""
-
-#: functions/options-array.php:266
-msgid ""
-"If you would like the Yummly button to only display on posts of a specific "
-"category or tag, enter the category or tag name below (e.g \"Recipe\"). "
-"Leave blank to display the button on all posts."
-msgstr ""
-
-#: functions/options-array.php:274
-msgid "Choose Category"
-msgstr ""
-
-#: functions/options-array.php:275
-msgid "Choose Tag"
-msgstr ""
-
-#: functions/options-array.php:281
-msgid "Yummly Terms"
-msgstr ""
-
-#: functions/options-array.php:299
+#: functions/options-array.php:160
 msgid "Styles"
 msgstr ""
 
-#: functions/options-array.php:304
-msgid "Visual Options"
-msgstr ""
-
-#: functions/options-array.php:309
-msgid "Use the settings below to customize the look of your share buttons."
-msgstr ""
-
-#: functions/options-array.php:315 functions/options-array.php:534
-msgid "Button Shape"
-msgstr ""
-
-#: functions/options-array.php:317
-msgid "Flat & Fresh"
-msgstr ""
-
-#: functions/options-array.php:318
-msgid "A Leaf on the Wind"
-msgstr ""
-
-#: functions/options-array.php:319
-msgid "Shift"
-msgstr ""
-
-#: functions/options-array.php:320
-msgid "Pills"
-msgstr ""
-
-#: functions/options-array.php:321
-msgid "Three-Dee"
-msgstr ""
-
-#: functions/options-array.php:330
-msgid "Button Size"
-msgstr ""
-
-#: functions/options-array.php:332
-msgid "140%"
-msgstr ""
-
-#: functions/options-array.php:333
-msgid "130%"
-msgstr ""
-
-#: functions/options-array.php:334
-msgid "120%"
-msgstr ""
-
-#: functions/options-array.php:335
-msgid "110%"
-msgstr ""
-
-#: functions/options-array.php:336
-msgid "100%"
-msgstr ""
-
-#: functions/options-array.php:337
-msgid "90%"
-msgstr ""
-
-#: functions/options-array.php:338
-msgid "80%"
-msgstr ""
-
-#: functions/options-array.php:339
-msgid "70%"
-msgstr ""
-
-#: functions/options-array.php:347 functions/options-array.php:557
-msgid "Default Color Set"
-msgstr ""
-
-#: functions/options-array.php:349 functions/options-array.php:368
-#: functions/options-array.php:387 functions/options-array.php:559
-#: functions/options-array.php:579 functions/options-array.php:599
-msgid "Full Color"
-msgstr ""
-
-#: functions/options-array.php:350 functions/options-array.php:369
-#: functions/options-array.php:388 functions/options-array.php:560
-#: functions/options-array.php:580 functions/options-array.php:600
-msgid "Light Gray"
-msgstr ""
-
-#: functions/options-array.php:351 functions/options-array.php:370
-#: functions/options-array.php:389 functions/options-array.php:561
-#: functions/options-array.php:581 functions/options-array.php:601
-msgid "Medium Gray"
-msgstr ""
-
-#: functions/options-array.php:352 functions/options-array.php:371
-#: functions/options-array.php:390 functions/options-array.php:562
-#: functions/options-array.php:582 functions/options-array.php:602
-msgid "Dark Gray"
-msgstr ""
-
-#: functions/options-array.php:353 functions/options-array.php:372
-#: functions/options-array.php:391 functions/options-array.php:563
-#: functions/options-array.php:583 functions/options-array.php:603
-msgid "Light Gray Outlines"
-msgstr ""
-
-#: functions/options-array.php:354 functions/options-array.php:373
-#: functions/options-array.php:392 functions/options-array.php:564
-#: functions/options-array.php:584 functions/options-array.php:604
-msgid "Medium Gray Outlines"
-msgstr ""
-
-#: functions/options-array.php:355 functions/options-array.php:374
-#: functions/options-array.php:393 functions/options-array.php:565
-#: functions/options-array.php:585 functions/options-array.php:605
-msgid "Dark Gray Outlines"
-msgstr ""
-
-#: functions/options-array.php:356 functions/options-array.php:375
-#: functions/options-array.php:394 functions/options-array.php:566
-#: functions/options-array.php:586 functions/options-array.php:606
-msgid "Color Outlines"
-msgstr ""
-
-#: functions/options-array.php:357 functions/options-array.php:376
-#: functions/options-array.php:395 functions/options-array.php:410
-#: functions/options-array.php:567 functions/options-array.php:587
-#: functions/options-array.php:607 functions/options-array.php:617
-msgid "Custom Color"
-msgstr ""
-
-#: functions/options-array.php:358 functions/options-array.php:377
-#: functions/options-array.php:396 functions/options-array.php:568
-#: functions/options-array.php:588 functions/options-array.php:608
-msgid "Custom Color Outlines"
-msgstr ""
-
-#: functions/options-array.php:366 functions/options-array.php:577
-msgid "Hover Color Set"
-msgstr ""
-
-#: functions/options-array.php:385 functions/options-array.php:597
-msgid "Single Button Hover"
-msgstr ""
-
-#: functions/options-array.php:417
-msgid "Button Alignment"
-msgstr ""
-
-#: functions/options-array.php:419
-msgid "Full Width"
-msgstr ""
-
-#: functions/options-array.php:432 functions/social-networks/googlePlus.php:91
-#: functions/social-networks/googlePlus.php:95
-msgid "+1"
-msgstr ""
-
-#: functions/options-array.php:432 functions/social-networks/twitter.php:155
-#: functions/social-networks/twitter.php:159
-msgid "Tweet"
-msgstr ""
-
-#: functions/options-array.php:432 functions/social-networks/pinterest.php:130
-#: functions/social-networks/pinterest.php:134
-msgid "Pin"
-msgstr ""
-
-#: functions/options-array.php:432 functions/social-networks/facebook.php:116
-#: functions/social-networks/facebook.php:120
-#: functions/social-networks/linkedIn.php:92
-#: functions/social-networks/linkedIn.php:96
-#: functions/social-networks/tumblr.php:101
-#: functions/social-networks/tumblr.php:105
-msgid "Share"
-msgstr ""
-
-#: functions/options-array.php:440
+#: functions/options-array.php:170
 msgid "Customize how the \"Total Shares\" section of your share buttons look."
 msgstr ""
 
-#: functions/options-array.php:444
+#: functions/options-array.php:174
 msgid "Decimal Places"
 msgstr ""
 
-#: functions/options-array.php:447
+#: functions/options-array.php:177
 msgid "Zero"
 msgstr ""
 
-#: functions/options-array.php:448
+#: functions/options-array.php:178
 msgid "One"
 msgstr ""
 
-#: functions/options-array.php:449
+#: functions/options-array.php:179
 msgid "Two"
 msgstr ""
 
-#: functions/options-array.php:456
+#: functions/options-array.php:186
 msgid "Decimal Separator"
 msgstr ""
 
-#: functions/options-array.php:458
+#: functions/options-array.php:188
 msgid "Period"
 msgstr ""
 
-#: functions/options-array.php:459
+#: functions/options-array.php:189
 msgid "Comma"
 msgstr ""
 
-#: functions/options-array.php:466
+#: functions/options-array.php:196
 msgid "Alignment"
 msgstr ""
 
-#: functions/options-array.php:478
+#: functions/options-array.php:198
+msgid "Right"
+msgstr ""
+
+#: functions/options-array.php:199
+msgid "Left"
+msgstr ""
+
+#: functions/options-array.php:208
 msgid "Floating Share Buttons"
 msgstr ""
 
-#: functions/options-array.php:479 functions/options-array.php:484
+#: functions/options-array.php:209 functions/options-array.php:214
 msgid "If you would like to activate floating share buttons, turn this on."
 msgstr ""
 
-#: functions/options-array.php:489
+#: functions/options-array.php:219
 msgid "Float Position"
 msgstr ""
 
-#: functions/options-array.php:491
+#: functions/options-array.php:221
 msgid "Top of the Page"
 msgstr ""
 
-#: functions/options-array.php:492
+#: functions/options-array.php:222
 msgid "Bottom of the Page"
 msgstr ""
 
-#: functions/options-array.php:493
+#: functions/options-array.php:223
 msgid "On the left side of the page"
 msgstr ""
 
-#: functions/options-array.php:502
+#: functions/options-array.php:232
 msgid "Minimum Screen Width"
 msgstr ""
 
-#: functions/options-array.php:510
+#: functions/options-array.php:240
 msgid "Transition"
 msgstr ""
 
-#: functions/options-array.php:512
+#: functions/options-array.php:242
 msgid "Slide In / Slide Out"
 msgstr ""
 
-#: functions/options-array.php:513
+#: functions/options-array.php:243
 msgid "Fade In / Fade Out"
 msgstr ""
 
-#: functions/options-array.php:521
-msgid "On Mobile"
-msgstr ""
-
-#: functions/options-array.php:524
-msgid "Bottom of Screen"
-msgstr ""
-
-#: functions/options-array.php:537
-msgid "Buttons"
-msgstr ""
-
-#: functions/options-array.php:538
-msgid "Boxes"
-msgstr ""
-
-#: functions/options-array.php:548
-msgid "Inherit Visual Options"
-msgstr ""
-
-#: functions/options-array.php:624
+#: functions/options-array.php:252
 msgid "Background Color"
 msgstr ""
 
-#: functions/options-array.php:634
-msgid "Click-to-Tweet Style"
-msgstr ""
-
-#: functions/options-array.php:639
-msgid "Select the default visual style for Click-to-Tweets on your site."
-msgstr ""
-
-#: functions/options-array.php:645
-msgid "Visual Theme"
-msgstr ""
-
-#: functions/options-array.php:647
-msgid "Send Her My Love"
-msgstr ""
-
-#: functions/options-array.php:648
-msgid "Roll With The Changes"
-msgstr ""
-
-#: functions/options-array.php:649
-msgid "Free Bird"
-msgstr ""
-
-#: functions/options-array.php:650
-msgid "Don't Stop Believin'"
-msgstr ""
-
-#: functions/options-array.php:651
-msgid "Thunderstruck"
-msgstr ""
-
-#: functions/options-array.php:652
-msgid "Livin' On A Prayer"
-msgstr ""
-
-#: functions/options-array.php:653
-msgid "None - Create Your Own CSS In Your Theme"
-msgstr ""
-
-#: functions/options-array.php:681
+#: functions/options-array.php:275
 msgid "Social Identity"
 msgstr ""
 
-#: functions/options-array.php:686
+#: functions/options-array.php:280
 msgid "Sitewide Identity"
 msgstr ""
 
-#: functions/options-array.php:690
+#: functions/options-array.php:284
 msgid ""
 "If you would like to set sitewide defaults for your social identity, add "
 "them below."
 msgstr ""
 
-#: functions/options-array.php:695
+#: functions/options-array.php:289
 msgid "Twitter Username"
 msgstr ""
 
-#: functions/options-array.php:700
+#: functions/options-array.php:294
 msgid "Pinterest Username"
 msgstr ""
 
-#: functions/options-array.php:705
+#: functions/options-array.php:299
 msgid "Facebook Page URL"
 msgstr ""
 
-#: functions/options-array.php:710
+#: functions/options-array.php:304
 msgid "Facebook App ID"
 msgstr ""
 
-#: functions/options-array.php:756
+#: functions/options-array.php:326
 msgid "Advanced"
 msgstr ""
 
-#: functions/options-array.php:761
+#: functions/options-array.php:331
 msgid "Frame Buster"
 msgstr ""
 
-#: functions/options-array.php:762
+#: functions/options-array.php:332
 msgid "If you want to stop content pirates from framing your content, turn this on."
 msgstr ""
 
-#: functions/options-array.php:769
-msgid "Bitly Link Shortening"
-msgstr ""
-
-#: functions/options-array.php:770
-msgid "If you like to have all of your links automatically shortened, turn this on."
-msgstr ""
-
-#: functions/options-array.php:778
-msgid "Connect Your Bitly Account"
-msgstr ""
-
-#: functions/options-array.php:785
-msgid "Analytics Tracking"
-msgstr ""
-
-#: functions/options-array.php:790
-msgid "If you want to activate UTM tracking for shared URL, turn this on."
-msgstr ""
-
-#: functions/options-array.php:795
-msgid "Button Click Tracking"
-msgstr ""
-
-#: functions/options-array.php:802
-msgid "UTM Link Tracking"
-msgstr ""
-
-#: functions/options-array.php:810
-msgid "UTM Medium"
-msgstr ""
-
-#: functions/options-array.php:819
-msgid "UTM Campaign"
-msgstr ""
-
-#: functions/options-array.php:828
-msgid "Share Recovery"
-msgstr ""
-
-#: functions/options-array.php:833
-msgid ""
-"If at any point you have changed permalink structures or have gone from "
-"http to https (SSL) then you will have undoubtedly lost all of your share "
-"counts. This tool allows you to recover them. See <a target=\"_blank\" "
-"href=\"https://warfareplugins.com/support/recover-social-share-counts-after-"
-"changing-permalink-settings/\">this guide</a> for more detailed "
-"instructions on how to use this feature."
-msgstr ""
-
-#: functions/options-array.php:839
-msgid "Activate Share Recovery"
-msgstr ""
-
-#: functions/options-array.php:845
-msgid "Previous URL Format"
-msgstr ""
-
-#: functions/options-array.php:848 functions/options-array.php:874
-#: functions/options-array.php:888
-msgid "Unchanged"
-msgstr ""
-
-#: functions/options-array.php:849
-msgid "Plain"
-msgstr ""
-
-#: functions/options-array.php:850
-msgid "Day and Name"
-msgstr ""
-
-#: functions/options-array.php:851
-msgid "Month and Name"
-msgstr ""
-
-#: functions/options-array.php:852
-msgid "Numeric"
-msgstr ""
-
-#: functions/options-array.php:853
-msgid "Post Name"
-msgstr ""
-
-#: functions/options-array.php:854
-msgid "Custom"
-msgstr ""
-
-#: functions/options-array.php:864
-msgid "Custom Permalink Format"
-msgstr ""
-
-#: functions/options-array.php:872
-msgid "Previous Connection Protocol"
-msgstr ""
-
-#: functions/options-array.php:875
-msgid "http"
-msgstr ""
-
-#: functions/options-array.php:876
-msgid "https"
-msgstr ""
-
-#: functions/options-array.php:886
-msgid "Previous Domain Prefix"
-msgstr ""
-
-#: functions/options-array.php:889
-msgid "www"
-msgstr ""
-
-#: functions/options-array.php:890
-msgid "non-www"
-msgstr ""
-
-#: functions/options-array.php:900
-msgid "Subdomain"
-msgstr ""
-
-#: functions/options-array.php:909
-msgid ""
-"If you've migrated your website from one domain to another, fill in these "
-"two fields to activate cross-domain share recovery."
-msgstr ""
-
-#: functions/options-array.php:917
-msgid "Former Domain"
-msgstr ""
-
-#: functions/options-array.php:927
-msgid "Current Domain"
-msgstr ""
-
-#: functions/options-array.php:936
+#: functions/options-array.php:339
 msgid "Caching Method"
 msgstr ""
 
-#: functions/options-array.php:940
+#: functions/options-array.php:343
 msgid ""
 "If you have advanced knowledge of caching configurations, you may want to "
 "choose your own below."
 msgstr ""
 
-#: functions/options-array.php:945
+#: functions/options-array.php:348
 msgid "Cache Rebuild Method"
 msgstr ""
 
-#: functions/options-array.php:947
+#: functions/options-array.php:350
 msgid "Advanced Cache Triggering"
 msgstr ""
 
-#: functions/options-array.php:948
+#: functions/options-array.php:351
 msgid "Legacy Cache Rebuilding during Page Loads"
 msgstr ""
 
-#: functions/options-array.php:956
+#: functions/options-array.php:359
 msgid "Full Content vs. Excerpts"
 msgstr ""
 
-#: functions/options-array.php:960
+#: functions/options-array.php:363
 msgid ""
 "If your theme does not use excerpts, but instead displays the full post "
 "content on archive, category, and home pages, activate this toggle to allow "
 "the buttons to appear in those areas."
 msgstr ""
 
-#: functions/options-array.php:965
+#: functions/options-array.php:368
 msgid "Full Content?"
-msgstr ""
-
-#: functions/options-array.php:984
-msgid "Registration"
-msgstr ""
-
-#: functions/post-options.php:76
-msgid "Social Warfare Custom Options"
-msgstr ""
-
-#: functions/post-options.php:83
-msgid "Social Media Image"
-msgstr ""
-
-#: functions/post-options.php:84
-msgid ""
-"Add an image that is optimized for maximum exposure on Facebook, Google+ "
-"and LinkedIn. We recommend 1,200px by 628px."
-msgstr ""
-
-#: functions/post-options.php:93
-msgid "Social Media Title"
-msgstr ""
-
-#: functions/post-options.php:94
-msgid ""
-"Add a title that will populate the open graph meta tag which will be used "
-"when users share your content onto Facebook, LinkedIn, and Google+. If "
-"nothing is provided here, we will use the post title as a backup."
-msgstr ""
-
-#: functions/post-options.php:102
-msgid "Social Media Description"
-msgstr ""
-
-#: functions/post-options.php:103
-msgid ""
-"Add a description that will populate the open graph meta tag which will be "
-"used when users share your content onto Facebook, LinkedIn, and Google Plus."
-msgstr ""
-
-#: functions/post-options.php:117
-msgid "Pinterest Image"
-msgstr ""
-
-#: functions/post-options.php:118
-msgid ""
-"Add an image that is optimized for maximum exposure on Pinterest. We "
-"recommend using an image that is formatted in a 2:3 aspect ratio like "
-"735x1102."
-msgstr ""
-
-#: functions/post-options.php:127
-msgid "Pinterest Description"
-msgstr ""
-
-#: functions/post-options.php:128
-msgid ""
-"Craft a customized description that will be used when this post is shared "
-"on Pinterest. Leave this blank to use the title of the post."
-msgstr ""
-
-#: functions/post-options.php:136
-msgid "Custom Tweet"
-msgstr ""
-
-#: functions/post-options.php:137
-msgid ""
-"If this is left blank your post title will be used. Based on your username "
-"(@%1$s), <span class=\"tweetLinkSection\">a link being added,</span> and "
-"the current content above, your tweet has %2$s characters remaining."
-msgstr ""
-
-#: functions/post-options.php:137
-msgid ""
-"If this is left blank your post title will be used. <span "
-"=\"tweetLinkSection\">Based on a link being added, and</span> the current "
-"content above, your tweet has %s characters remaining."
-msgstr ""
-
-#: functions/post-options.php:145
-msgid "Horizontal Buttons Location"
-msgstr ""
-
-#: functions/post-options.php:150 functions/post-options.php:165
-msgid "Default"
-msgstr ""
-
-#: functions/post-options.php:160
-msgid "Floating Buttons"
-msgstr ""
-
-#: functions/registration.php:299
-msgid "Required fields missing."
-msgstr ""
-
-#: functions/registration.php:307
-msgid "Plugin could not be registered."
-msgstr ""
-
-#: functions/registration.php:311
-msgid "Plugin successfully registered!"
-msgstr ""
-
-#: functions/registration.php:318
-msgid "Plugin could not be unregistered."
-msgstr ""
-
-#: functions/registration.php:322
-msgid "Plugin successfully unregistered!"
 msgstr ""
 
 #: functions/scripts.php:105
 msgid "Characters Remaining"
 msgstr ""
 
-#: functions/social-networks/buffer.php:152
-#: functions/social-networks/buffer.php:160
-msgid "Buffer"
+#: functions/social-networks/facebook.php:116
+#: functions/social-networks/facebook.php:120
+#: functions/social-networks/linkedIn.php:92
+#: functions/social-networks/linkedIn.php:96
+msgid "Share"
 msgstr ""
 
-#: functions/social-networks/email.php:91
-msgid "Email"
+#: functions/social-networks/googlePlus.php:91
+#: functions/social-networks/googlePlus.php:95
+msgid "+1"
 msgstr ""
 
-#: functions/social-networks/flipboard.php:91
-msgid "Flip"
-msgstr ""
-
-#: functions/social-networks/hackernews.php:91
-#: functions/social-networks/hackernews.php:95
-msgid "Vote"
-msgstr ""
-
-#: functions/social-networks/pocket.php:86
-msgid "Pocket"
-msgstr ""
-
-#: functions/social-networks/reddit.php:118
-#: functions/social-networks/reddit.php:122
-msgid "Reddit"
+#: functions/social-networks/pinterest.php:135
+#: functions/social-networks/pinterest.php:139
+msgid "Pin"
 msgstr ""
 
 #: functions/social-networks/stumbleupon.php:100
@@ -1032,128 +395,9 @@ msgstr ""
 msgid "Stumble"
 msgstr ""
 
-#: functions/social-networks/whatsapp.php:77
-#: functions/social-networks/whatsapp.php:81
-msgid "WhatsApp"
-msgstr ""
-
-#: functions/social-networks/yummly.php:140
-#: functions/social-networks/yummly.php:144
-msgid "Yum"
-msgstr ""
-
-#: meta-box/inc/core.php:40
-msgid "Documentation"
-msgstr ""
-
-#: meta-box/inc/core.php:41
-msgid "Extensions"
-msgstr ""
-
-#: meta-box/inc/field.php:196
-msgid "+ Add more"
-msgstr ""
-
-#: meta-box/inc/fields/autocomplete.php:14
-#: meta-box/inc/fields/autocomplete.php:77
-#: meta-box/inc/fields/autocomplete.php:94
-msgid "Delete"
-msgstr ""
-
-#: meta-box/inc/fields/button.php:29
-msgid "Click me"
-msgstr ""
-
-#: meta-box/inc/fields/checkbox.php:85
-msgid "Yes"
-msgstr ""
-
-#: meta-box/inc/fields/checkbox.php:85
-msgid "No"
-msgstr ""
-
-#: meta-box/inc/fields/file-input.php:18
-msgid "Select File"
-msgstr ""
-
-#: meta-box/inc/fields/file-input.php:41 meta-box/inc/fields/select.php:93
-msgid "Select"
-msgstr ""
-
-#: meta-box/inc/fields/file-input.php:43 meta-box/inc/fields/media.php:21
-msgid "Remove"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:15
-msgid "You may only upload maximum %d file"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:16
-msgid "You may only upload maximum %d files"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:83
-msgid "Error: Cannot delete file"
-msgstr ""
-
-#: meta-box/inc/fields/key-value.php:19
-msgid "Key"
-msgstr ""
-
-#: meta-box/inc/fields/key-value.php:25
-msgid "Value"
-msgstr ""
-
-#: meta-box/inc/fields/map.php:49
-msgid "Find Address"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:18
-msgid "Add Media"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:22
-msgid "Edit"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:23
-msgid "View"
-msgstr ""
-
-#: meta-box/inc/fields/oembed.php:65
-msgid "Embed HTML not available."
-msgstr ""
-
-#: meta-box/inc/fields/oembed.php:84
-msgid "Preview"
-msgstr ""
-
-#: meta-box/inc/fields/post.php:34
-msgid "Select a post"
-msgstr ""
-
-#: meta-box/inc/fields/post.php:38 meta-box/inc/fields/taxonomy.php:51
-msgid "Select a %s"
-msgstr ""
-
-#: meta-box/inc/fields/select.php:93
-msgid "All"
-msgstr ""
-
-#: meta-box/inc/fields/select.php:93
-msgid "None"
-msgstr ""
-
-#: meta-box/inc/fields/taxonomy.php:47
-msgid "Select a term"
-msgstr ""
-
-#: meta-box/inc/fields/user.php:34
-msgid "Select an user"
-msgstr ""
-
-#: meta-box/inc/validation.php:42
-msgid "Please correct the errors highlighted below and try again."
+#: functions/social-networks/twitter.php:155
+#: functions/social-networks/twitter.php:159
+msgid "Tweet"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -1174,69 +418,4 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Warfare Plugins"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:96
-msgctxt "file upload"
-msgid "Upload Files"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:97
-msgctxt "file upload"
-msgid "+ Add new file"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:153
-msgctxt "file upload"
-msgid "Delete"
-msgstr ""
-
-#: meta-box/inc/fields/file.php:154
-msgctxt "file upload"
-msgid "Edit"
-msgstr ""
-
-#: meta-box/inc/fields/image.php:61 meta-box/inc/fields/thickbox-image.php:53
-msgctxt "image upload"
-msgid "Upload Images"
-msgstr ""
-
-#: meta-box/inc/fields/image.php:62
-msgctxt "image upload"
-msgid "+ Add new image"
-msgstr ""
-
-#: meta-box/inc/fields/image.php:124
-msgctxt "image upload"
-msgid "Delete"
-msgstr ""
-
-#: meta-box/inc/fields/image.php:125
-msgctxt "image upload"
-msgid "Edit"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:19
-msgctxt "media"
-msgid " file"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:20
-msgctxt "media"
-msgid " files"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:24
-msgctxt "media"
-msgid "No Title"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:27
-msgctxt "media"
-msgid "Select Files"
-msgstr ""
-
-#: meta-box/inc/fields/media.php:28
-msgctxt "media"
-msgid "Drop files here to upload"
 msgstr ""
