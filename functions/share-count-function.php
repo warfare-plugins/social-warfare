@@ -23,7 +23,7 @@ function get_social_warfare_shares( $postID ) {
 	/**
 	 * Setup the networks array that we'll loop through
 	 */
-	
+
 	// Initiate the ShareCount variable
 	$shares['totes'] = 0;
 
@@ -35,6 +35,10 @@ function get_social_warfare_shares( $postID ) {
 			$networks[] = $key;
 		}
 	endforeach;
+
+	$icons_array = array(
+		'type'		=> 'buttons'
+	);
 
 	/**
 	* Loop through the Networks and fetch their share counts

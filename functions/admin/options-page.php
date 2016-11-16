@@ -136,16 +136,18 @@ function swp_build_options_page() {
 	 * Build the Tab Container
 	 */
 
-	echo '<div class="sw-admin-wrapper" sw-registered="' . absint( is_swp_registered() ) . '">';
+	if( function_exists('is_swp_registered') ):
+		$swp_registration = is_swp_registered();
+	else:
+		$swp_registration = false;
+	endif;
+
+	echo '<div class="sw-admin-wrapper" sw-registered="' . absint( $swp_registration ) . '">';
 
 	echo '<form class="sw-admin-settings-form">';
 
 	// Wrapper for the left 3/4 non-sidebar content
 	echo '<div class="sw-tabs-container sw-grid sw-col-700">';
-
-	if ( _swp_is_debug( 'register' ) ) {
-		var_dump( swp_check_registration_status() );
-	}
 
 	// Loop through the options tabs and build the options page
 	foreach ( $swp_options_page['options'] as $tab_name => $tab_options ) :
@@ -299,27 +301,6 @@ function swp_build_options_page() {
 				endif;
 
 				echo '</div>';
-				echo '</div>';
-
-				// The Inactive Buttons
-				echo '<div class="sw-grid sw-col-940 sw-premium-buttons sw-option-container" premium="1">';
-				echo '<div class="sw-grid sw-col-300">';
-				echo '<h3 class="sw-buttons-toggle">Premium</h3>';
-				echo '</div>';
-
-				echo '<div class="sw-grid sw-col-620 sw-fit">';
-				echo '<div class="sw-inactive sw-buttons-sort">';
-
-				// Loop through the available buttons
-				foreach ( $option['content'] as $key => $value ) :
-					if ( $option['content'][ $key ]['premium'] == true ) :
-						echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '"></i>';
-					endif;
-				endforeach;
-
-				echo '</div>';
-				echo '</div>';
-				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
 
 			endif;
@@ -636,8 +617,8 @@ function swp_build_options_page() {
 			/**
 			 * Plugin Registration Module
 			 */
-			if ( 'plugin_registration' === $option['type'] ) :
-				require_once SWP_PLUGIN_DIR . '/functions/admin/views/options-registration.php';
+			if ( defined('SWPP_PLUGIN_DIR') && 'plugin_registration' === $option['type'] ) :
+				require_once SWPP_PLUGIN_DIR . '/functions/admin/views/options-registration.php';
 			endif;
 
 			/**

@@ -215,17 +215,6 @@ function social_warfare_buttons( $array = array() ) {
 				remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
 			endif;
 
-			// Filter the premium buttons out of the array if the plugin is not registered
-			if( false === is_swp_registered() ):
-				$icons_array = array( 'type'	=> 'buttons' );
-				$icons_array = apply_filters( 'swp_button_options' , $icons_array );
-				foreach($icons_array['content'] as $button => $value):
-					if(true === $value['premium']):
-						unset($buttonsArray['options']['newOrderOfIcons'][$button]);
-					endif;
-				endforeach;
-			endif;
-
 			// This array will contain the HTML for all of the individual buttons
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 

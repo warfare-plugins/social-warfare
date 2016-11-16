@@ -115,7 +115,13 @@ function swp_pinterest_button_html( $array ) {
 			$title = strip_tags( get_the_title( $array['postID'] ) );
 			$title = str_replace( '|','',$title );
 
-			if ( $pi != '' && is_swp_registered() ) :
+			if( function_exists('is_swp_registered') ):
+				$swp_registration = is_swp_registered();
+			else:
+				$swp_registration = false;
+			endif;
+
+			if ( $pi != '' && true === $swp_registration ) :
 				$a = '<a rel="nofollow" data-link="https://pinterest.com/pin/create/button/?url=' . $pinterestLink . '' . $pi . '&description=' . ($pd != '' ? urlencode( html_entity_decode( $pd . $pu, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title . $pu, ENT_COMPAT, 'UTF-8' ) )) . '" class="nc_tweet" data-count="0">';
 			else :
 				$a = '<a rel="nofollow" onClick="var e=document.createElement(\'script\');e.setAttribute(\'type\',\'text/javascript\');e.setAttribute(\'charset\',\'UTF-8\');e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);document.body.appendChild(e);" class="nc_tweet noPop">';

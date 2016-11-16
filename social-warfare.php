@@ -20,27 +20,33 @@ define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
 
 /**
+ * Include the plugin's network files.
+ */
+require_once SWP_PLUGIN_DIR . '/functions/social-networks/googlePlus.php';
+require_once SWP_PLUGIN_DIR . '/functions/social-networks/twitter.php';
+require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
+require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
+require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
+require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
+
+/**
  * Include the plugin's necessary functions files.
  */
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-require_once SWP_PLUGIN_DIR . '/meta-box/meta-box.php';
 require_once SWP_PLUGIN_DIR . '/functions/languages.php';
+require_once SWP_PLUGIN_DIR . '/functions/url_processing.php';
 require_once SWP_PLUGIN_DIR . '/functions/utility.php';
-require_once SWP_PLUGIN_DIR . '/functions/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/options-array.php';
 require_once SWP_PLUGIN_DIR . '/functions/curl_functions.php';
 require_once SWP_PLUGIN_DIR . '/functions/widgets.php';
 require_once SWP_PLUGIN_DIR . '/functions/scripts.php';
-// require_once SWP_PLUGIN_DIR . '/functions/media-options.php';
-require_once SWP_PLUGIN_DIR . '/functions/bitly.php';
 require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 require_once SWP_PLUGIN_DIR . '/functions/sw-shortcode-generator.php';
 require_once SWP_PLUGIN_DIR . '/functions/buttons-standard.php';
 require_once SWP_PLUGIN_DIR . '/functions/buttons-floating.php';
 require_once SWP_PLUGIN_DIR . '/functions/display.php';
 require_once SWP_PLUGIN_DIR . '/functions/permalinks.php';
-require_once SWP_PLUGIN_DIR . '/functions/post-options.php';
 require_once SWP_PLUGIN_DIR . '/functions/share-count-function.php';
 require_once SWP_PLUGIN_DIR . '/functions/share-cache.php';
 require_once SWP_PLUGIN_DIR . '/functions/header-meta-tags.php';
@@ -56,22 +62,3 @@ if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/misc.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
 }
-
-/**
- * Include the plugin's network files.
- */
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/googlePlus.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/twitter.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/tumblr.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/reddit.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/yummly.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/email.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/whatsapp.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/pocket.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/buffer.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/hackernews.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/flipboard.php';

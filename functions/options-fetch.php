@@ -112,7 +112,13 @@ function swp_get_user_options( $admin = false ) {
 	$options['shop_coupon']        = 'none';
 	$options['shop_webhook']       = 'none';
 
-	if ( $admin || true === is_swp_registered() ) {
+	if( function_exists('is_swp_registered') ):
+		$swp_registration = is_swp_registered();
+	else:
+		$swp_registration = false;
+	endif;
+
+	if ( $admin || true === $swp_registration ) {
 		if ( 'totes' === $options['swTotesFormat'] ) {
 			$options['swTotesFormat'] = 'totesalt';
 		}
@@ -146,6 +152,20 @@ function swp_get_user_options( $admin = false ) {
 	if(isset($options['newOrderOfIcons']['active'])) {
 		unset($options['newOrderOfIcons']['active']);
 	}
+
+	/**
+	 * Unset any buttons that may have been put into the options but are no longer actually available
+	 *
+	 */
+	$icons_array = array(
+		'type'		=> 'buttons'
+	);
+	$icons_array = apply_filters( 'swp_button_options' , $icons_array );
+	foreach($options['newOrderOfIcons'] as $icon):
+		if(!isset($icons_array['content'][$icon])):
+			unset($options['newOrderOfIcons'][$icon]);
+		endif;
+	endforeach;
 
 	return $options;
 }

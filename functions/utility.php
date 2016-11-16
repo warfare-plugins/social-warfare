@@ -8,22 +8,6 @@
  * @since     2.1.0
  */
 
-/**
- * Get the current site's URL.
- *
- * @since  2.1.0
- * @return string The current site's URL.
- */
-function swp_get_site_url() {
-
-	$domain = get_option( 'siteurl' );
-
-	if ( is_multisite() ) {
-		$domain = network_site_url();
-	}
-
-	return $domain;
-}
 
 /**
  *  Round a number to the appropriate thousands.
@@ -279,3 +263,59 @@ function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) 
 
 	return false;
 }
+
+/**
+ * Get the SWP supported post types.
+ *
+ * @return array $types A list of post type names.
+ */
+function swp_get_post_types() {
+	$types = get_post_types(
+		array(
+			'public'   => true,
+			'_builtin' => false,
+		),
+		'names'
+	);
+
+	$types[] = 'page';
+	$types[] = 'post';
+
+	return (array) apply_filters( 'swp_post_types', $types );
+}
+
+/**
+ * A function to add options to the admin options page
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  array  $sw_options The array of current options
+ * @param  string $tabName    The name of the tab being modified
+ * @param  string $optionName The name of the option that the new option will be inserted next to.
+ * @param  array  $option     The array of information about the new option being added
+ * @param  string $position   Add the new option 'before' or 'after' the needle. Default => 'after'
+ * @return array  $sw_options The modified array of options
+ */
+ function swp_insert_option( $sw_options , $tabName , $optionName , $newOptionArray , $position = 'after' ) {
+
+ 	// Locate the index of the option you want to insert next to
+     $keyIndex = array_search( $optionName, array_keys( $sw_options['options'][$tabName] ) );
+
+	 if('after' === $position) {
+		 ++$keyIndex;
+	 }
+
+     // Split the array at the location of the option above
+     $first_array = array_splice ( $sw_options['options'][$tabName] , 0 , $keyIndex );
+
+     // Merge the two parts of the split array with your option added in the middle
+     $sw_options['options'][$tabName] = array_merge (
+         $first_array,
+         $newOptionArray,
+         $sw_options['options'][$tabName]
+     );
+
+     // Return the option array or the world will explode
+     return $sw_options;
+
+ }
