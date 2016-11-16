@@ -37,33 +37,7 @@ function swp_add_header_meta() {
 
 	/**
 	 * Create and return the values to be used in the header meta tags
-	 *
-	 * All meta values will be returned in the $info['meta_tag_values'] array.
-	 *
-	 * The following values will be returned from the function swp_open_graph_values():
-	 *     Open Graph Type          $info['meta_tag_values']['og_type']
-	 *     Open Graph Title         $info['meta_tag_values']['og_title']
-	 *     Open Graph Description   $info['meta_tag_values']['og_description']
-	 *     Open Graph Image         $info['meta_tag_values']['og_image']
-	 *     Open Graph Image Width   $info['meta_tag_values']['og_image_width']
-	 *     Open Graph Image Height  $info['meta_tag_values']['og_image_height']
-	 *     Open Graph URL           $info['meta_tag_values']['og_url']
-	 *     Open Graph Site Name     $info['meta_tag_values']['og_site_name']
-	 *     Article Author           $info['meta_tag_values']['article_author']
-	 *     Article Publisher        $info['meta_tag_values']['article_publisher']
-	 *     Article Published Time   $info['meta_tag_values']['article_published_time']
-	 *     Article Modified Time    $info['meta_tag_values']['article_modified_time']
-	 *     OG Modified Time         $info['meta_tag_values']['og_modified_time']
-	 *     Facebook App ID          $info['meta_tag_values']['fb_app_id']
-	 *
-	 * The following values will be returned from the function swp_twitter_card_values():
-	 *     Twitter Card type        $info['meta_tag_values']['twitter_card']
-	 *     Twitter Title            $info['meta_tag_values']['twitter_title']
-	 *     Twitter Description      $info['meta_tag_values']['twitter_description']
-	 *     Twitter Image            $info['meta_tag_values']['twitter_image']
-	 *     Twitter Site             $info['meta_tag_values']['twitter_site']
-	 *     Twitter creator          $info['meta_tag_values']['twitter_creator']
-	 *
+	 * 
 	 * @since 2.1.4
 	 * @access public
 	 * @var array $info An array of information
