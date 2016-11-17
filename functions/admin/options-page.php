@@ -817,6 +817,7 @@ function swp_store_the_settings() {
 	}
 
 	swp_update_options( $options );
+	echo json_encode($options);
 
 	die;
 }

@@ -319,3 +319,18 @@ function swp_get_post_types() {
      return $sw_options;
 
  }
+
+/**
+ * A function to notify premium users about installing the pro addon
+ *
+ * @since  2.2.0
+ * @return void
+ */
+function swp_premium_update_notification() {
+	global $swp_user_options;
+
+    if(!empty($swp_user_options['premiumCode']) && !defined('SWPP_PLUGIN_DIR')):
+		echo '<div class="update-nag notice is-dismissable"><p>' . __( '<b>Important:</b> We’ve made <a href="#" target="_blank">some changes</a> to how your Social Warfare premium license is applied. In order to continue getting all the Pro features you love, please <a href="#">download the Social Warfare - Pro</a> plugin. Once installed, all of your premium features will be immediately restored.', 'social_warfare' ) . '</p></div>';
+	endif;
+ }
+ add_action( 'admin_notices', 'swp_premium_update_notification' );

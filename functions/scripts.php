@@ -194,3 +194,26 @@ function swp_frame_buster( $info ) {
 }
 
 add_filter( 'swp_footer_scripts' , 'swp_frame_buster' );
+
+/**
+ * A function to output the Pin Button option controls
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  array $info An array of footer script information.
+ * @return array $info A modified array of footer script information.
+ */
+function swp_pinit_controls_output($info){
+
+	if( !defined('SWPP_PLUGIN_DIR')):
+		global $swp_user_options;
+		$pin_vars = array(
+			'enabled' => false,
+		);
+		$info['footer_output'] .= ' swpPinIt='.json_encode($pin_vars).';';
+	endif;
+	return $info;
+}
+
+// Queue up out footer hook function
+add_filter( 'swp_footer_scripts', 'swp_pinit_controls_output');

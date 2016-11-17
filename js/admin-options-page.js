@@ -214,6 +214,7 @@
 
 			// Fetch all the settings
 			var settings = fetchAllOptions();
+			console.log(settings);
 
 			// Prepare date
 			var data = {
@@ -223,9 +224,10 @@
 			};
 
 			// Send the POST request
-			$.post( ajaxurl, data, function() {
+			$.post( ajaxurl, data, function(response) {
 				// Clear the loading screen
 				clearLoadingScreen();
+				console.log($.parseJSON(response));
 
 				// Reset the default options variable
 				socialWarfarePlugin.defaultOptions = fetchAllOptions();
