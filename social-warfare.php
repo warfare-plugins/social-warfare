@@ -56,7 +56,7 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/deprecated.php';
 	require_once SWP_PLUGIN_DIR . '/functions/compatibility.php';
 }
-add_action( 'plugins_loaded' , 'swp_initiate_plugin');
+add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 /**
  * Include the plugin's admin files.
  */
