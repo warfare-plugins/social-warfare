@@ -32,28 +32,31 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
 /**
  * Include the plugin's necessary functions files.
  */
-require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-require_once SWP_PLUGIN_DIR . '/functions/languages.php';
-require_once SWP_PLUGIN_DIR . '/functions/url_processing.php';
-require_once SWP_PLUGIN_DIR . '/functions/utility.php';
-require_once SWP_PLUGIN_DIR . '/functions/options-fetch.php';
-require_once SWP_PLUGIN_DIR . '/functions/options-array.php';
-require_once SWP_PLUGIN_DIR . '/functions/curl_functions.php';
-require_once SWP_PLUGIN_DIR . '/functions/widgets.php';
-require_once SWP_PLUGIN_DIR . '/functions/scripts.php';
-require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
-require_once SWP_PLUGIN_DIR . '/functions/sw-shortcode-generator.php';
-require_once SWP_PLUGIN_DIR . '/functions/buttons-standard.php';
-require_once SWP_PLUGIN_DIR . '/functions/buttons-floating.php';
-require_once SWP_PLUGIN_DIR . '/functions/display.php';
-require_once SWP_PLUGIN_DIR . '/functions/permalinks.php';
-require_once SWP_PLUGIN_DIR . '/functions/share-count-function.php';
-require_once SWP_PLUGIN_DIR . '/functions/share-cache.php';
-require_once SWP_PLUGIN_DIR . '/functions/header-meta-tags.php';
-require_once SWP_PLUGIN_DIR . '/functions/profile-fields.php';
-require_once SWP_PLUGIN_DIR . '/functions/shortcodes.php';
-require_once SWP_PLUGIN_DIR . '/functions/deprecated.php';
-require_once SWP_PLUGIN_DIR . '/functions/compatibility.php';
+function swp_initiate_plugin() {
+	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	require_once SWP_PLUGIN_DIR . '/functions/languages.php';
+	require_once SWP_PLUGIN_DIR . '/functions/url_processing.php';
+	require_once SWP_PLUGIN_DIR . '/functions/utility.php';
+	require_once SWP_PLUGIN_DIR . '/functions/options-fetch.php';
+	require_once SWP_PLUGIN_DIR . '/functions/options-array.php';
+	require_once SWP_PLUGIN_DIR . '/functions/curl_functions.php';
+	require_once SWP_PLUGIN_DIR . '/functions/widgets.php';
+	require_once SWP_PLUGIN_DIR . '/functions/scripts.php';
+	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
+	require_once SWP_PLUGIN_DIR . '/functions/sw-shortcode-generator.php';
+	require_once SWP_PLUGIN_DIR . '/functions/buttons-standard.php';
+	require_once SWP_PLUGIN_DIR . '/functions/buttons-floating.php';
+	require_once SWP_PLUGIN_DIR . '/functions/display.php';
+	require_once SWP_PLUGIN_DIR . '/functions/permalinks.php';
+	require_once SWP_PLUGIN_DIR . '/functions/share-count-function.php';
+	require_once SWP_PLUGIN_DIR . '/functions/share-cache.php';
+	require_once SWP_PLUGIN_DIR . '/functions/header-meta-tags.php';
+	require_once SWP_PLUGIN_DIR . '/functions/profile-fields.php';
+	require_once SWP_PLUGIN_DIR . '/functions/shortcodes.php';
+	require_once SWP_PLUGIN_DIR . '/functions/deprecated.php';
+	require_once SWP_PLUGIN_DIR . '/functions/compatibility.php';
+}
+add_action( 'plugins_loaded' , 'swp_initiate_plugin');
 /**
  * Include the plugin's admin files.
  */
