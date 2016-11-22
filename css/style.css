@@ -487,7 +487,7 @@ body .nc_socialPanel.swp_o_fullColor:hover .swp_pocket {
 html body .nc_socialPanel.swp_i_fullColor .swp_buffer:hover,
 body .nc_socialPanel.swp_o_fullColor:hover .swp_buffer {
 	background: #323b43;
-	border: 1px solid #59626a;
+	border: 1px solid #000;
 }
 
 .nc_socialPanel.swp_d_fullColor .swp_hacker_news,
@@ -579,7 +579,7 @@ body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .swp_pocket {
 .nc_socialPanel.swp_threeDee.swp_d_fullColor .swp_buffer,
 html body .nc_socialPanel.swp_threeDee.swp_i_fullColor .swp_buffer:hover,
 body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .swp_buffer {
-	border-bottom: 3px solid #59626a;
+	border-bottom: 3px solid #000;
 }
 
 .nc_socialPanel.swp_threeDee.swp_d_fullColor .swp_hacker_news,
