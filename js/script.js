@@ -412,10 +412,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				return false;
 			}
 
+			console.log($(this));
+
 			if( $( this ).attr( 'data-link' ) ) {
 				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
 
 				var href = $( this ).attr( 'data-link' );
+				console.log(href);
 				var height, width, instance;
 
 				href = href.replace( '’', '\'' );
@@ -435,7 +438,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					console.log(network + " Button Clicked");
 					ga("send", "event", "social_media", "swp_" + network + "_share" );
 				}
-
+				
 				return false;
 			}
 		});
@@ -487,7 +490,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		if( isMobile.phone ) {
-			$('.swp_whatsapp').show();
+			$('.swp_whatsapp').addClass('mobile');
 		}
 
 	});

@@ -1720,7 +1720,7 @@ div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
 	flex: 2;
 }
 
-div.nc_socialPanel .nc_tweetContainer.swp_whatsapp {
+div.nc_socialPanel .nc_tweetContainer.swp_whatsapp:not(.mobile) {
 	display: none;
 }
 
