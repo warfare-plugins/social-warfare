@@ -438,7 +438,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					console.log(network + " Button Clicked");
 					ga("send", "event", "social_media", "swp_" + network + "_share" );
 				}
-				
+
 				return false;
 			}
 		});
@@ -492,6 +492,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		if( isMobile.phone ) {
 			$('.swp_whatsapp').addClass('mobile');
 		}
+
+		// Hide empty containers
+	    if( 1 === $('.swp-content-locator').parent().children().length ) {
+	        $('.swp-content-locator').parent().hide();
+	    }
 
 	});
 })( this, jQuery );
