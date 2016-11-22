@@ -131,14 +131,6 @@ function swp_get_alt_permalink( $post = 0, $leavename = false ) {
 		return false;
 	}
 
-	if ( $post->post_type == 'page' ) {
-		return get_page_link( $post, $leavename, $sample );
-	} elseif ( $post->post_type == 'attachment' ) {
-		return get_attachment_link( $post, $leavename );
-	} elseif ( in_array( $post->post_type, get_post_types( array( '_builtin' => false ) ) ) ) {
-		return get_post_permalink( $post, $leavename, $sample );
-	}
-
 	// Build the structure
 	$structure = $swp_user_options['recovery_format'];
 
