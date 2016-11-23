@@ -181,7 +181,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					++i;
 				});
 			});
-		} , 50 );
+		} , 500 );
 		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
 			swpRestoreSizes();
 			var term_width = $(this).find('.swp_share').outerWidth();
