@@ -105,6 +105,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		return parseInt( $int, 10 );
 	}
 
+	function swp_trigger_events(event) {
+		var evt = $.Event(event);
+		$(window).trigger(evt);
+	}
+
 	/****************************************************************************
 
 		Fetch and Store Facebook Counts
@@ -167,24 +172,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 * @return none
 	 */
 	swp.activateHoverStates = function() {
-		var emphasize_icons = $('.nc_socialPanel:not(.nc_socialPanelSide)').attr('data-emphasize');
-		if( ! isMobile.phone ) {
-			setTimeout( function () {
-				$('.nc_socialPanel:not(.nc_socialPanelSide)').each(function(){
-					var i = 1;
-					$(this).find('.nc_tweetContainer:not(.totes)').each(function(){
-						if(i <= emphasize_icons) {
-							$(this).addClass('swp_emphasize');
-							var term_width = $(this).find('.swp_share').width();
-							var icon_width = $(this).find('i.sw').outerWidth();
-							$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-						}
-						++i;
-					});
-				});
-			} , 500 );
-		}
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
+		swp_trigger_events('pre_activate_buttons');
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover)').on('mouseenter',function(){
 			swpRestoreSizes();
 			var term_width = $(this).find('.swp_share').outerWidth();
 			var icon_width = $(this).find('i.sw').outerWidth();
@@ -198,8 +187,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 	function swpRestoreSizes() {
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize) .iconFiller').removeAttr('style');
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').removeAttr('style');
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller').removeAttr('style');
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
 	}
 	function createFloatBar() {
 		//if ( ! $( '.nc_socialPanelSide' ).length ) {
@@ -317,6 +306,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				var newPadding, firstOffset;
 				// Show the floating bar
 				ncWrapper.show();
+				swp_trigger_events('floating_bar_revealed');
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if ( floatOption == 'floatBottom' ) {
