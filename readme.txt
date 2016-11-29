@@ -186,7 +186,11 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
-= 2.1.4 (14 NOV 2016) =
+= 2.2.0 (14 NOV 2016) =
+
+*Important:*
+
+* Social Warfare has been developed into a core free plugin with the ability to install addons for additional functionality. If you are a a premium user, you'll need to <a href="https://warfareplugins.com/updates/social-warfare-pro/social-warfare-pro.zip" target="_blank">download</a> and install the Social Warfare - Pro addon to immediately regain access to all premium features. Additional addons are currently under development and will be released in the near future.
 
 *Maintenance:*
 
@@ -209,6 +213,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 * Make the buttons not output on posts embedded into other posts (like embedded recipes).
 * Patch to prevent buttons from being added to a post more than once.
 * Remove the "active" index to prevent certain notices.
+* Fixed custom color outlines on hover.
+* Fixed an issue with double dividers on the admin options page.
+* Fixed an issue that would sometimes cause Facebook counts to disappear.
+* Fixed the http/https share recovery for pages.
 
 = 2.1.3 (4 NOV 2016) =
 
