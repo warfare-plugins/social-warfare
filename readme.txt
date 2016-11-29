@@ -186,7 +186,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
-= 2.2.0 (14 NOV 2016) =
+= 2.2.0 (29 NOV 2016) =
 
 *Important:*
 
