@@ -311,91 +311,91 @@ span.swp_label {
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .googlePlus,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .googlePlus:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .googlePlus {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .googlePlus:not(:hover) {
 	border: 1px solid #df4b37;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .twitter,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .twitter:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .twitter {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .twitter:not(:hover) {
 	border: 1px solid #429cd6;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_fb,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_fb:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_fb {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_fb:not(:hover) {
 	border: 1px solid #3a589e;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .nc_pinterest,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .nc_pinterest:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .nc_pinterest {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .nc_pinterest:not(:hover) {
 	border: 1px solid #cd2029;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .linkedIn,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .linkedIn:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .linkedIn {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .linkedIn:not(:hover) {
 	border: 1px solid #0d77b7;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_tumblr,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_tumblr:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_tumblr {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_tumblr:not(:hover) {
 	border: 1px solid #39475d;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_stumbleupon,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_stumbleupon:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_stumbleupon {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_stumbleupon:not(:hover) {
 	border: 1px solid #ef5025;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_yummly,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_yummly:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_yummly {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_yummly:not(:hover) {
 	border: 1px solid #e26426;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_reddit,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_reddit:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_reddit {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_reddit:not(:hover) {
 	border: 1px solid #f04b23;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_email,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_email:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_email {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_email:not(:hover) {
 	border: 1px solid #6bcce9;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_whatsapp,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_whatsapp:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_whatsapp {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_whatsapp:not(:hover) {
 	border: 1px solid #71c169;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_pocket,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_pocket:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_pocket {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_pocket:not(:hover) {
 	border: 1px solid #ef4056;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_buffer,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_buffer:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_buffer {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_buffer:not(:hover) {
 	border: 1px solid #323b43;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_hacker_news,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_hacker_news:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_hacker_news {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_hacker_news:not(:hover) {
 	border: 1px solid #d85623;
 }
 
 .nc_socialPanel.swp_flatFresh.swp_d_fullColor .swp_flipboard,
 html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .swp_flipboard:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_flipboard {
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_flipboard:not(:hover) {
 	border: 1px solid #bf2626;
 }
 
