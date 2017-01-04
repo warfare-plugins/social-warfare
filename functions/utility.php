@@ -334,3 +334,18 @@ function swp_premium_update_notification() {
 	endif;
  }
  add_action( 'admin_notices', 'swp_premium_update_notification' );
+
+/**
+ * A function to remove the screen options tab from our admin page
+ * @since 2.2.1
+ */
+function swp_remove_screen_options( $display_boolean, $wp_screen_object ){
+ 	$blacklist = array('admin.php?page=social-warfare');
+ 	if ( in_array( $GLOBALS['pagenow'], $blacklist ) ) {
+ 		$wp_screen_object->render_screen_layout();
+ 		$wp_screen_object->render_per_page_options();
+ 		return false;
+     }
+ 	return true;
+ }
+ add_filter( 'screen_options_show_screen', 'swp_remove_screen_options', 10, 2 );

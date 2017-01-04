@@ -123,7 +123,7 @@ function swp_twitter_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['twitter'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['twitter'] ))  ) :
 
-			$array['totes'] += $array['shares']['twitter'];
+			$array['totes'] += intval( $array['shares']['twitter'] );
 			++$array['count'];
 
 			$title = strip_tags( get_the_title( $array['postID'] ) );

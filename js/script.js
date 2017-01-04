@@ -363,6 +363,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			if ( $image.data( 'media' ) ) {
 				pinMedia = $image.data( 'media' );
+			} else if ( $image[0].data-lazy-src ) {
+			        pinMedia = $image[0].data-lazy-src;
 			} else if ( $image[0].src ) {
 				pinMedia = $image[0].src;
 			}

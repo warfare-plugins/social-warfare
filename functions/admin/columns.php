@@ -13,7 +13,7 @@
  *
  * @since 1.4.0
  */
-add_filter( 'manage_posts_columns', 'createSocialSharesColumn' );
+add_filter( 'manage_posts_posts_columns', 'createSocialSharesColumn' );
 add_filter( 'manage_page_posts_columns', 'createSocialSharesColumn' );
 function createSocialSharesColumn( $defaults ) {
 	$defaults['swSocialShares'] = 'Social Shares';

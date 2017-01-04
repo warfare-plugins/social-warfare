@@ -92,8 +92,7 @@ div.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer {
 	display: inline-block;
 	line-height: 32px;
 	margin: 0;
-	padding: 0;
-
+	padding: 0 5px;
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	-webkit-flex: 1;

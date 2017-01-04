@@ -78,7 +78,7 @@ function swp_googlePlus_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['googlePlus'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['googlePlus'] ))  ) :
 
-			$array['totes'] += $array['shares']['googlePlus'];
+			$array['totes'] += intval( $array['shares']['googlePlus'] );
 			++$array['count'];
 
 			$array['resource']['googlePlus'] = '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="google_plus">';

@@ -103,7 +103,7 @@ function swp_facebook_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['facebook'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['facebook'] ))  ) :
 
-			$array['totes'] += $array['shares']['facebook'];
+			$array['totes'] += intval( $array['shares']['facebook'] );
 			++$array['count'];
 
 			$array['resource']['facebook'] = '<div class="nc_tweetContainer swp_fb" data-id="' . $array['count'] . '" data-network="facebook">';

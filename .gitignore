@@ -4,3 +4,4 @@
 # Development files
 node_modules
 bower_components
+.remote-sync.json

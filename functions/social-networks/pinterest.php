@@ -81,7 +81,7 @@ function swp_pinterest_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['pinterest'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['pinterest'] ))  ) :
 
-			$array['totes'] += $array['shares']['pinterest'];
+			$array['totes'] += intval( $array['shares']['pinterest'] );
 			++$array['count'];
 
 			$pi = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );

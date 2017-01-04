@@ -79,7 +79,7 @@ function swp_linkedIn_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['linkedIn'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['linkedIn'] ))  ) :
 
-			$array['totes'] += $array['shares']['linkedIn'];
+			$array['totes'] += intval( $array['shares']['linkedIn'] );
 			++$array['count'];
 
 			$array['resource']['linkedIn'] = '<div class="nc_tweetContainer linkedIn" data-id="' . $array['count'] . '" data-network="linked_in">';

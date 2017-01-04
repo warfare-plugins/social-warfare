@@ -80,7 +80,7 @@ function swp_stumbleupon_button_html( $array ) {
 		elseif ( (isset( $array['options']['newOrderOfIcons']['stumbleupon'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['stumbleupon'] ))  ) :
 
 			if ( isset( $array['shares']['stumbleupon'] ) ) :
-				$array['totes'] += $array['shares']['stumbleupon'];
+				$array['totes'] += intval( $array['shares']['stumbleupon'] );
 			endif;
 			++$array['count'];
 
