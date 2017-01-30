@@ -182,7 +182,7 @@ add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
  * @param  string $haystack The haystack
  * @return string/bool Return the key if found or false if nothing is found
  */
-function recursive_array_search( $needle, $haystack ) {
+function swp_recursive_array_search( $needle, $haystack ) {
 	foreach ( $haystack as $key => $value ) {
 		$current_key = $key;
 		if ( $needle === $value or (is_array( $value ) && recursive_array_search( $needle,$value ) !== false) ) {

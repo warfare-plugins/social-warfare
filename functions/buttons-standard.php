@@ -178,8 +178,8 @@ function social_warfare_buttons( $array = array() ) {
 					$button = trim( $button );
 
 					// Convert the names to their systme-wide keys
-					if ( recursive_array_search( $button , $available_buttons ) ) :
-						$key = recursive_array_search( $button , $available_buttons );
+					if ( swp_recursive_array_search( $button , $available_buttons ) ) :
+						$key = swp_recursive_array_search( $button , $available_buttons );
 
 						// Store the result in the array that gets passed to the HTML generator
 						$buttonsArray['buttons'][ $key ] = $button;
