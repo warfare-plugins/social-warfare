@@ -288,7 +288,7 @@ function swp_facebook_shares_update() {
 		update_post_meta( $post_id, '_facebook_shares', $activity );
 	endif;
 
-	echo $activity;
+	echo true;
 
 	wp_die();
 }
