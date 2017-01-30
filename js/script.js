@@ -483,7 +483,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}, 105 );
 		}
 
-		if( isMobile.phone ) {
+		if( swp_isMobile.phone ) {
 			$('.swp_whatsapp').addClass('mobile');
 		}
 
@@ -615,9 +615,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         module.exports = instantiate();
     } else if (typeof define === 'function' && define.amd) {
         //AMD
-        define('isMobile', [], global.isMobile = instantiate());
+        define('swp_isMobile', [], global.swp_isMobile = instantiate());
     } else {
-        global.isMobile = instantiate();
+        global.swp_isMobile = instantiate();
     }
 
 })(this);
