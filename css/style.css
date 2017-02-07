@@ -75,6 +75,10 @@ div.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer {
 	text-decoration: none!important;
 	text-transform: none;
 
+	-webkit-box-direction: normal;
+	-moz-box-direction: normal;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
 	-webkit-flex-flow: row wrap;
 	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
@@ -93,6 +97,7 @@ div.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer {
 	line-height: 32px;
 	margin: 0;
 	padding: 0 5px;
+
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	-webkit-flex: 1;

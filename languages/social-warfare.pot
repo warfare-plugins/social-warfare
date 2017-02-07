@@ -1,14 +1,14 @@
-# Copyright (C) 2016 Warfare Plugins
+# Copyright (C) 2017 Warfare Plugins
 # This file is distributed under the same license as the Social Warfare package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Social Warfare 2.2.0\n"
+"Project-Id-Version: Social Warfare 2.2.1\n"
 "Report-Msgid-Bugs-To: https://warfareplugins.com/\n"
-"POT-Creation-Date: 2016-11-30 22:39:15+00:00\n"
+"POT-Creation-Date: 2017-02-07 20:11:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Warfare Plugins (https://warfareplugins.com)\n"
 "Language-Team: Warfare Plugins (https://warfareplugins.com)\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
@@ -250,122 +250,122 @@ msgstr ""
 msgid "Floating Share Buttons"
 msgstr ""
 
-#: functions/options-array.php:209 functions/options-array.php:214
+#: functions/options-array.php:209
 msgid "If you would like to activate floating share buttons, turn this on."
 msgstr ""
 
-#: functions/options-array.php:219
+#: functions/options-array.php:215
 msgid "Float Position"
 msgstr ""
 
-#: functions/options-array.php:221
+#: functions/options-array.php:217
 msgid "Top of the Page"
 msgstr ""
 
-#: functions/options-array.php:222
+#: functions/options-array.php:218
 msgid "Bottom of the Page"
 msgstr ""
 
-#: functions/options-array.php:223
+#: functions/options-array.php:219
 msgid "On the left side of the page"
 msgstr ""
 
-#: functions/options-array.php:232
+#: functions/options-array.php:228
 msgid "Minimum Screen Width"
 msgstr ""
 
-#: functions/options-array.php:240
+#: functions/options-array.php:236
 msgid "Transition"
 msgstr ""
 
-#: functions/options-array.php:242
+#: functions/options-array.php:238
 msgid "Slide In / Slide Out"
 msgstr ""
 
-#: functions/options-array.php:243
+#: functions/options-array.php:239
 msgid "Fade In / Fade Out"
 msgstr ""
 
-#: functions/options-array.php:252
+#: functions/options-array.php:248
 msgid "Background Color"
 msgstr ""
 
-#: functions/options-array.php:275
+#: functions/options-array.php:271
 msgid "Social Identity"
 msgstr ""
 
-#: functions/options-array.php:280
+#: functions/options-array.php:276
 msgid "Sitewide Identity"
 msgstr ""
 
-#: functions/options-array.php:284
+#: functions/options-array.php:280
 msgid ""
 "If you would like to set sitewide defaults for your social identity, add "
 "them below."
 msgstr ""
 
-#: functions/options-array.php:289
+#: functions/options-array.php:285
 msgid "Twitter Username"
 msgstr ""
 
-#: functions/options-array.php:294
+#: functions/options-array.php:290
 msgid "Pinterest Username"
 msgstr ""
 
-#: functions/options-array.php:299
+#: functions/options-array.php:295
 msgid "Facebook Page URL"
 msgstr ""
 
-#: functions/options-array.php:304
+#: functions/options-array.php:300
 msgid "Facebook App ID"
 msgstr ""
 
-#: functions/options-array.php:326
+#: functions/options-array.php:322
 msgid "Advanced"
 msgstr ""
 
-#: functions/options-array.php:331
+#: functions/options-array.php:327
 msgid "Frame Buster"
 msgstr ""
 
-#: functions/options-array.php:332
+#: functions/options-array.php:328
 msgid "If you want to stop content pirates from framing your content, turn this on."
 msgstr ""
 
-#: functions/options-array.php:339
+#: functions/options-array.php:335
 msgid "Caching Method"
 msgstr ""
 
-#: functions/options-array.php:343
+#: functions/options-array.php:339
 msgid ""
 "If you have advanced knowledge of caching configurations, you may want to "
 "choose your own below."
 msgstr ""
 
-#: functions/options-array.php:348
+#: functions/options-array.php:344
 msgid "Cache Rebuild Method"
 msgstr ""
 
-#: functions/options-array.php:350
+#: functions/options-array.php:346
 msgid "Advanced Cache Triggering"
 msgstr ""
 
-#: functions/options-array.php:351
+#: functions/options-array.php:347
 msgid "Legacy Cache Rebuilding during Page Loads"
 msgstr ""
 
-#: functions/options-array.php:359
+#: functions/options-array.php:355
 msgid "Full Content vs. Excerpts"
 msgstr ""
 
-#: functions/options-array.php:363
+#: functions/options-array.php:359
 msgid ""
 "If your theme does not use excerpts, but instead displays the full post "
 "content on archive, category, and home pages, activate this toggle to allow "
 "the buttons to appear in those areas."
 msgstr ""
 
-#: functions/options-array.php:368
+#: functions/options-array.php:364
 msgid "Full Content?"
 msgstr ""
 
