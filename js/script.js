@@ -363,14 +363,16 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			if ( $image.data( 'media' ) ) {
 				pinMedia = $image.data( 'media' );
-			} else if ( $image[0].attr('data-lazy-src') ) {
-			        pinMedia = $image[0].attr('data-lazy-src');
+			} else if ( $(this).attr('data-lazy-src') ) {
+			        pinMedia = $(this).attr('data-lazy-src');
 			} else if ( $image[0].src ) {
 				pinMedia = $image[0].src;
 			}
 
 			// Bail if we don't have any media to pin.
-			if ( ! pinMedia ) {
+			if ( false === pinMedia ) {
+				return;
+			} else if ( $(this).hasClass('no_pin')) {
 				return;
 			}
 
