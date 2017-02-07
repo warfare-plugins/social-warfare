@@ -90,3 +90,21 @@ function swp_remove_fields($id) {
 
 }
 add_action( "dp_duplicate_post", "swp_remove_fields" );
+
+/**
+ * A function to fix the share recovery conflict with Really Simple SSL plugin
+ * @param  string $html A string of html to be filtered
+ * @return string $html The filtered string of html
+ * @access public
+ * @since 2.2.2
+ *
+ */
+function swp_rsssl_fix_compatibility($html) {
+    //replace the https back to http
+    $html = str_replace(
+         "swp_post_recovery_url = 'https://",
+         "swp_post_recovery_url = 'http://",
+         $html);
+    return $html;
+}
+add_filter("rsssl_fixer_output","swp_rsssl_fix_compatibility");
