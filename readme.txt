@@ -186,6 +186,22 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.2 (21 FEB 2017) =
+
+*Maintenance:*
+
+* Changed the widget titles from h3's to h4's to be more consistent with how other widgets work in WordPress plugins and themes.
+* Removed the Pinterest character counter. Pinterest has now fixed the bug that was causing descriptions in shares to get truncated which means that once again we no longer need to count characters. In fact, longer descriptions are usually better over there so have fun!
+* Add a "no_pin" class to the pin it hover button. If you add the class "no_pin" to an image, it will not get a pin hover button attached to it.
+* Fixed the pin hover button. We refactored a couple of pieces of the javascript that control the hover button so it should work properly under most circumstances.
+* Fixed the Really Simple SSL compatibility issue. You should now be able to use share recovery without Really Simple SSL forcing the recovery URL to be https when trying to recover from HTTP.
+* Removed a description on the admin settings page that was written on there twice. Now it's only written on there once.
+* Updated the information returned by the Facebook share count function.
+* Renamed recursive_array_search to swp_recursive_array_search to avoid conflicts with other plugins that may have a function with the same name.
+* Renamed isMobile to swp_isMobil to avoid conflicts with other plugins that may have a function with the same name.
+* Fixed the Pin it hover button on legacy cache mode.
+* Fixed the missing share counts on the all posts admin screen.
+
 = 2.2.1 (05 JAN 2017) =
 
 *Maintenance:*
