@@ -307,7 +307,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
 		// Check if title is set
 		if ( $title ) {
-			echo '<h3 class="widgettitle widget-title" style="' . $styles[ $style ]['links'] . '">' . $title . '</h3>';
+			echo '<h4 class="widgettitle widget-title" style="' . $styles[ $style ]['links'] . '">' . $title . '</h4>';
 		}
 
 		// If a custom timeframe is not being used....
