@@ -185,7 +185,7 @@ add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
 function swp_recursive_array_search( $needle, $haystack ) {
 	foreach ( $haystack as $key => $value ) {
 		$current_key = $key;
-		if ( $needle === $value or (is_array( $value ) && recursive_array_search( $needle,$value ) !== false) ) {
+		if ( $needle === $value or (is_array( $value ) && swp_recursive_array_search( $needle,$value ) !== false) ) {
 			return $current_key;
 		}
 	}

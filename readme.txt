@@ -186,6 +186,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.3 (22 FEB 2017) =
+
+*Maintenance:*
+
+* Fixed a misnamed function that was causing a "Call to undefined function" error when using the shortcode that specifically names which network buttons to show. For example, this was fine: [social_warfare], while this would throw the error: [social_warfare buttons="Twitter,Facebook,Google Plus,Pinterest,Total"]. This update fixes it so that it no longer throws any errors.
+
 = 2.2.2 (21 FEB 2017) =
 
 *Maintenance:*
