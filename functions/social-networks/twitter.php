@@ -141,7 +141,7 @@ function swp_twitter_button_html( $array ) {
 		 * A function to allow custom mentions of a Twitter user when link is shared on Twitter
 		 */
 		$twitter_mention = get_post_meta( $array['postID'] , 'swp_twitter_mention' , true );
-		if(false !== $twitter_mention):
+		if(false != $twitter_mention):
 			$ct .= ' @'.str_replace('@','',$twitter_mention);
 		endif;
 
