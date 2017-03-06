@@ -80,7 +80,7 @@ function swp_kilomega( $val ) {
 }
 /**
  * This is a function for removing tags and all of their containing html like inline style or script tags in the excerpt.
- * @since  2.2.4 | 6 March 2017 | Function Created
+ * @since  2.2.4 | Created | 6 March 2017
  * @access public
  * @param  string $tag_name The name of the tag to search and destroy
  * @param  object $document The HTML dom object
@@ -97,8 +97,8 @@ function swp_remove_elements_by_tag_name($tag_name, $document) {
 /**
  *  Process the excerpts for descriptions
  *
- * @since  unknown | Function created
- * @since  2.2.4 | 6 March 2017 | Added the filter to remove the script and style tags
+ * @since  1.0.0 | Created | Unknown
+ * @since  2.2.4 | Updated | 6 March 2017 | Added the filter to remove the script and style tags
  * @access public
  * @param  int $post_id The post ID to use when getting an exceprt.
  * @return string The excerpt.
