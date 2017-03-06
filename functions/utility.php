@@ -78,11 +78,27 @@ function swp_kilomega( $val ) {
 
 	return 0;
 }
+/**
+ * This is a function for removing tags and all of their containing html like inline style or script tags in the excerpt.
+ * @since  2.2.4 | 6 March 2017 | Function Created
+ * @access public
+ * @param  string $tag_name The name of the tag to search and destroy
+ * @param  object $document The HTML dom object
+ * @return none
+ */
+function swp_remove_elements_by_tag_name($tag_name, $document) {
+	$nodeList = $document->getElementsByTagName($tag_name);
+	for ($nodeIdx = $nodeList->length; --$nodeIdx >= 0; ) {
+		$node = $nodeList->item($nodeIdx);
+		$node->parentNode->removeChild($node);
+	}
+}
 
 /**
  *  Process the excerpts for descriptions
  *
- * @since  unknown
+ * @since  unknown | Function created
+ * @since  2.2.4 | 6 March 2017 | Added the filter to remove the script and style tags
  * @access public
  * @param  int $post_id The post ID to use when getting an exceprt.
  * @return string The excerpt.
@@ -101,6 +117,14 @@ function swp_get_excerpt_by_id( $post_id ) {
 		endif;
 
 		$excerpt_length = 100; // Sets excerpt length by word count
+
+		// Filter out any inline script or style tags as well as their content
+		$html = new DOMDocument();
+		$html->loadHTML($the_excerpt);
+		swp_remove_elements_by_tag_name('script', $html);
+		swp_remove_elements_by_tag_name('style', $html);
+		$the_excerpt = $html->saveHtml();
+
 		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
 
 		$the_excerpt = str_replace( ']]>', ']]&gt;', $the_excerpt );
