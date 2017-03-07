@@ -71,7 +71,7 @@ function swp_format_pinterest_response( $response ) {
 *   #5: Create the Button HTML				  		             *
 *                                                                *
 */
-	add_filter( 'swp_network_buttons', 'swp_pinterest_button_html',10 );
+add_filter( 'swp_network_buttons', 'swp_pinterest_button_html',10 );
 function swp_pinterest_button_html( $array ) {
 
 	// If we've already generated this button, just use our existing html
@@ -97,7 +97,7 @@ function swp_pinterest_button_html( $array ) {
 			$image_url = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
 			if( !empty( $image_url ) ):
 				$array['imageURL'] = $image_url;
-			else:
+			elseif(isset($array['options']['advanced_pinterest_fallback']) && $array['options']['advanced_pinterest_fallback'] == 'featured'):
 				$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
 				if( !empty( $thumbnail_url ) ):
 					$array['imageURL'] = $thumbnail_url;

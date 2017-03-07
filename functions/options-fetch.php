@@ -150,9 +150,9 @@ function swp_get_user_options( $admin = false ) {
 		$options['pinit_location_vertical']           = 'top';
 		$options['emphasize_icons']                   = 0;
 		$options['floatLeftMobile']                   = 'off';
-		$options['advanced_pinterest_image']          = false,
-		$options['advanced_pinterest_image_location'] = 'hidden',
-		$options['advanced_pinterest_fallback']       = 'all',
+		$options['advanced_pinterest_image']          = false;
+		$options['advanced_pinterest_image_location'] = 'hidden';
+		$options['advanced_pinterest_fallback']       = 'all';
 	}
 
 	if(isset($options['newOrderOfIcons']['active'])) {
