@@ -6,7 +6,14 @@ add_action( 'edit_user_profile', 'swp_show_user_profile_fields' );
 add_action( 'personal_options_update', 'swp_save_user_profile_fields' );
 add_action( 'edit_user_profile_update', 'swp_save_user_profile_fields' );
 
-// Display the new option on the user profile edit page
+/**
+ * swp_show_user_profile_fields( $user )   | Display the new options on the user profile edit page
+ * @param  object $user The user object
+ * @since  Unknown | Created | Unknown     | A function to output fields on each user's profile page
+ * @since  2.2.4   | Updated | 07 MAR 2017 | Added translation gettext calls to each title and description
+ * @access public
+ * @return none
+ */
 function swp_show_user_profile_fields( $user ) {
 	echo '<h3>Social Warfare Fields</h3>';
 	echo '<table class="form-table">';
@@ -29,6 +36,13 @@ function swp_show_user_profile_fields( $user ) {
 }
 
 // Save our fields when the page is udpated
+/**
+ * swp_save_user_profile_fields( $user_id )| Save our fields when the page is updated
+ * @param  integer $user_id The user ID
+ * @since  Unknown | Created | Unknown | A function to save the profile fields
+ * @access public
+ * @return none
+ */
 function swp_save_user_profile_fields( $user_id ) {
 
 	if ( ! current_user_can( 'edit_user', $user_id ) ) {
