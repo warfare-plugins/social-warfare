@@ -11,17 +11,17 @@ function swp_show_user_profile_fields( $user ) {
 	echo '<h3>Social Warfare Fields</h3>';
 	echo '<table class="form-table">';
 	echo '<tr>';
-	echo '<th><label for="twitter">Twitter Username</label></th>';
+	echo '<th><label for="twitter">' . __( 'Twitter Username','social-warfare' ) . '</label></th>';
 	echo '<td>';
 	echo '<input type="text" name="swp_twitter" id="swp_twitter" value="' . esc_attr( get_the_author_meta( 'swp_twitter' , $user->ID ) ) . '" class="regular-text" />';
-	echo '<br /><span class="description">Please enter your Twitter username.</span>';
+	echo '<br /><span class="description">' . __( 'Please enter your Twitter username.','social-warfare' ) . '</span>';
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<th><label for="facebook_author">Facebook Author URL</label></th>';
+	echo '<th><label for="facebook_author">' . __( 'Facebook Author URL','social-warfare' ) . '</label></th>';
 	echo '<td>';
 	echo '<input type="text" name="swp_fb_author" id="swp_fb_author" value="' . esc_attr( get_the_author_meta( 'swp_fb_author' , $user->ID ) ) . '" class="regular-text" />';
-	echo '<br /><span class="description">Please enter the URL of your Facebok profile.</span>';
+	echo '<br /><span class="description">' . __( 'Please enter the URL of your Facebok profile.','social-warfare' ) . '</span>';
 	echo '</td>';
 	echo '</tr>';
 
