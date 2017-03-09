@@ -111,11 +111,24 @@
 .swpmb-field.swpmb-textarea-wrapper.nc_ogTitleWrapper,
 .swpmb-field.swpmb-textarea-wrapper.nc_ogDescriptionWrapper,
 .swpmb-field.swpmb-textarea-wrapper.nc_pinterestDescriptionWrapper,
-.swpmb-field.swpmb-textarea-wrapper.nc_customTweetWrapper,
-.swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper,
-.swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper {
+.swpmb-field.swpmb-textarea-wrapper.nc_customTweetWrapper {
 	width: 63%;
 	float: left;
+}
+
+.swpmb-field.swpmb-select-wrapper.nc_advanced_pinterest_imageWrapper,
+.swpmb-field.swpmb-select-wrapper.nc_advanced_pinterest_image_locationWrapper,
+.swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper,
+.swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper {
+	width:32%;
+	float:left;
+	min-width:320px;
+}
+.swpmb-field.swpmb-select-wrapper.nc_advanced_pinterest_imageWrapper select,
+.swpmb-field.swpmb-select-wrapper.nc_advanced_pinterest_image_locationWrapper select,
+.swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper select,
+.swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper select {
+	width:90%;
 }
 
 .swpmb-field.swpmb-image_advanced-wrapper.nc_ogImageWrapper,
