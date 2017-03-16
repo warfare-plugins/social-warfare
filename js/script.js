@@ -364,7 +364,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( $image.data( 'media' ) ) {
 				pinMedia = $image.data( 'media' );
 			} else if ( $(this).attr('data-lazy-src') ) {
-			        pinMedia = $(this).attr('data-lazy-src');
+			    pinMedia = $(this).attr('data-lazy-src');
 			} else if ( $image[0].src ) {
 				pinMedia = $image[0].src;
 			}
@@ -384,7 +384,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				pinDesc = $image.attr( 'alt' );
 			}
 
-			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pinMedia ) + '&url=' + encodeURI( options.pageURL ) + '&is_video=false' + '&description=' + pinDesc;
+			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pinMedia ) + '&url=' + encodeURI( options.pageURL ) + '&is_video=false' + '&description=' +  encodeURIComponent( pinDesc );
 			var imageClasses = $image.attr( 'class' );
 			var imageStyle = $image.attr( 'style' );
 
