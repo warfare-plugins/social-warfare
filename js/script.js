@@ -372,7 +372,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			// Bail if we don't have any media to pin.
 			if ( false === pinMedia ) {
 				return;
-			} else if ( $(this).hasClass('no_pin')) {
+			}
+
+			if ( $image.hasClass('no_pin')) {
 				return;
 			}
 

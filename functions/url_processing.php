@@ -10,7 +10,7 @@
 
 // Enqueue the Bitly Shortener Hook
 add_filter( 'swp_link_shortening'  	, 'swp_bitly_shortener' );
-add_filter( 'swp_analytics' 			, 'swp_google_analytics' );
+add_filter( 'swp_analytics' 		, 'swp_google_analytics' );
 
 
 /**
@@ -289,12 +289,19 @@ function swp_process_url( $url, $network, $postID ) {
 		return $_GLOBALS['sw']['links'][ $postID ];
 	else :
 
-		// $options = swp_get_user_options();
+
+		// Fetch the parameters into an array for use by the filters
 		$array['url'] = $url;
 		$array['network'] = $network;
 		$array['postID'] = $postID;
+
+		// Run the anaylitcs hook filters
 		$array = apply_filters( 'swp_analytics' , $array );
-		$array = apply_filters( 'swp_link_shortening' , $array );
+
+		// Run the link shortening hook filters, but not on Pinterest 
+		if($network !== 'pinterest'):
+			$array = apply_filters( 'swp_link_shortening' , $array );
+		endif;
 		return $array['url'];
 
 	endif;
