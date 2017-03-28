@@ -21,7 +21,7 @@ function swp_show_user_profile_fields( $user ) {
 	echo '<th><label for="facebook_author">Facebook Author URL</label></th>';
 	echo '<td>';
 	echo '<input type="text" name="swp_fb_author" id="swp_fb_author" value="' . esc_attr( get_the_author_meta( 'swp_fb_author' , $user->ID ) ) . '" class="regular-text" />';
-	echo '<br /><span class="description">Please enter the URL of your Facebok profile.</span>';
+	echo '<br /><span class="description">Please enter the URL of your Facebook profile.</span>';
 	echo '</td>';
 	echo '</tr>';
 
