@@ -29,6 +29,7 @@ function swp_show_user_profile_fields( $user ) {
 	echo '<td>';
 	echo '<input type="text" name="swp_fb_author" id="swp_fb_author" value="' . esc_attr( get_the_author_meta( 'swp_fb_author' , $user->ID ) ) . '" class="regular-text" />';
 	echo '<br /><span class="description">' . __( 'Please enter the URL of your Facebok profile.','social-warfare' ) . '</span>';
+
 	echo '</td>';
 	echo '</tr>';
 

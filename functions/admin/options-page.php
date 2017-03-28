@@ -402,8 +402,10 @@ function swp_build_options_page() {
 
 				if ( isset( $swp_user_options[ $key ] ) ) :
 					$value = $swp_user_options[ $key ];
-				else :
+				elseif ( isset( $option['default'] ) ):
 					$value = $option['default'];
+				else :
+					$value = '';
 				endif;
 
 				echo '<div class="sw-grid sw-col-940 sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
