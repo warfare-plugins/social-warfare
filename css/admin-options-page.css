@@ -115,7 +115,34 @@ img {
 .sw-hidden {
 	display: none!important;
 }
-
+.swp_support_link {
+	border: 1px solid #ccc;
+	font-size: 18px;
+	line-height: 20px;
+	text-decoration: none;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
+	width: 20px;
+	display: block;
+	float: right;
+	text-align: center;
+	color: #ccc;
+	margin-right: 20px;
+	margin-top: 4px;
+	padding: 2px;
+	font-weight: bold;
+}
+.swp_support_link:hover {
+	color:#6BCCE9;
+	border-color:#6BCCE9;
+}
+.swp_support_link.swp_four_fourths {
+	margin-left: 20px;
+	margin-top: 13px;
+}
+#screen-meta-links .screen-meta-toggle {
+	display:none!important;
+}
 
 /*********************************************************
 

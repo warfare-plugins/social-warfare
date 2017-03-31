@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Social Warfare 2.2.3\n"
 "Report-Msgid-Bugs-To: https://warfareplugins.com/\n"
-"POT-Creation-Date: 2017-03-09 20:51:04+00:00\n"
+"POT-Creation-Date: 2017-03-31 20:37:06+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,84 +26,84 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: functions/admin/options-page.php:242
+#: functions/admin/options-page.php:246
 msgid "Active"
 msgstr ""
 
-#: functions/admin/options-page.php:275
+#: functions/admin/options-page.php:279
 msgid "Inactive"
 msgstr ""
 
-#: functions/admin/options-page.php:334 functions/admin/options-page.php:346
-#: functions/admin/options-page.php:369 functions/admin/options-page.php:387
-#: functions/admin/options-page.php:667
+#: functions/admin/options-page.php:341 functions/admin/options-page.php:353
+#: functions/admin/options-page.php:381 functions/admin/options-page.php:399
+#: functions/admin/options-page.php:685
 msgid "ON"
 msgstr ""
 
-#: functions/admin/options-page.php:334 functions/admin/options-page.php:346
-#: functions/admin/options-page.php:369 functions/admin/options-page.php:387
-#: functions/admin/options-page.php:667
+#: functions/admin/options-page.php:341 functions/admin/options-page.php:353
+#: functions/admin/options-page.php:381 functions/admin/options-page.php:399
+#: functions/admin/options-page.php:685
 msgid "OFF"
 msgstr ""
 
-#: functions/admin/options-page.php:611
+#: functions/admin/options-page.php:629
 msgid "Connected"
 msgstr ""
 
-#: functions/admin/options-page.php:613
+#: functions/admin/options-page.php:631
 msgid "Authenticated"
 msgstr ""
 
-#: functions/admin/options-page.php:652
+#: functions/admin/options-page.php:670
 msgid "Tweet Count Registration"
 msgstr ""
 
-#: functions/admin/options-page.php:658
+#: functions/admin/options-page.php:676
 msgid ""
 "In order to allow Social Warfare to track tweet counts, we've partnered "
 "with NewShareCounts.com. Follow the steps below to register with "
 "NewShareCounts and allow us to track your Twitter shares."
 msgstr ""
 
-#: functions/admin/options-page.php:659
+#: functions/admin/options-page.php:677
 msgid "Click here to visit NewShareCounts.com"
 msgstr ""
 
-#: functions/admin/options-page.php:659
+#: functions/admin/options-page.php:677
 msgid ""
 "Step 2: At NewShareCounts.com, Enter your domain and click the \"Sign In "
 "With Twitter\" button."
 msgstr ""
 
-#: functions/admin/options-page.php:659
+#: functions/admin/options-page.php:677
 msgid "Step 3: Flip the switch below to \"ON\" and then save changes."
 msgstr ""
 
-#: functions/admin/options-page.php:761
+#: functions/admin/options-page.php:779
 msgid ""
 "Need help? Check out our <a href=\"https://warfareplugins.com/support/\" "
 "target=\"_blank\">Knowledgebase."
 msgstr ""
 
-#: functions/admin/options-page.php:762
+#: functions/admin/options-page.php:780
 msgid ""
 "Opening a support ticket? Copy your System Status by clicking the button "
 "below."
 msgstr ""
 
-#: functions/admin/options-page.php:763
+#: functions/admin/options-page.php:781
 msgid "Get System Status"
 msgstr ""
 
-#: functions/admin/options-page.php:768
+#: functions/admin/options-page.php:786
 msgid "Press Ctrl+C to Copy this information."
 msgstr ""
 
-#: functions/admin/options-page.php:790
+#: functions/admin/options-page.php:808
 msgid "Security failed."
 msgstr ""
 
-#: functions/admin/options-page.php:797
+#: functions/admin/options-page.php:815
 msgid "No settings to save."
 msgstr ""
 

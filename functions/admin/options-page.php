@@ -164,7 +164,11 @@ function swp_build_options_page() {
 
 			if ( $option['type'] == 'title' ) :
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
-				echo '<h2>' . $option['content'] . '</h2>';
+				if(!empty($option['support'])):
+					echo '<h2><a target="_blank" class="swp_support_link" href="'.$option['support'].'" title="Click here to learn more about these options.">i</a>' . $option['content'] . '</h2>';
+				else:
+					echo '<h2>' . $option['content'] . '</h2>';
+				endif;
 				echo '<div class="sw-premium-blocker" title="test"></div>';
 				echo '</div>';
 			endif;
@@ -331,6 +335,9 @@ function swp_build_options_page() {
 
 					echo '<div class="sw-grid sw-col-620"><h2 class="sw-h-label">' . $option['title'] . '</h2><p class="sw-subtext-label">' . $option['description'] . '</p></div>';
 					echo '<div class="sw-grid sw-col-300 sw-fit">';
+					if(!empty($option['support'])):
+						echo '<a target="_blank" class="swp_support_link swp_four_fourths" href="'.$option['support'].'" title="Click here to learn more about these options.">i</a>';
+					endif;
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
@@ -346,7 +353,12 @@ function swp_build_options_page() {
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
-					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+
+					if(!empty($option['support'])):
+						echo '<div class="sw-grid sw-col-300 sw-fit"><a target="_blank" class="swp_support_link" href="'.$option['support'].'" title="Click here to learn more about these options.">i</a></div>';
+					else:
+						echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+					endif;
 					echo '</div>';
 					echo '<div class="sw-clearfix"></div>';
 					echo '<div class="sw-premium-blocker"></div>';
@@ -387,7 +399,11 @@ function swp_build_options_page() {
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
 					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
-					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+					if(!empty($option['support'])):
+						echo '<div class="sw-grid sw-col-300 sw-fit"><a target="_blank" class="swp_support_link" href="'.$option['support'].'" title="Click here to learn more about these options.">i</a></div>';
+					else:
+						echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+					endif;
 
 					echo '<div class="sw-premium-blocker"></div>';
 					echo '</div>';
@@ -758,7 +774,7 @@ function swp_build_options_page() {
 
 	echo '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
 	echo '<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/affiliate-300x150.jpg"></a>';
-	echo '<a href="https://warfareplugins.com/walkthrough/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/starter-guide-300x150.jpg"></a>';
+	echo '<a href="https://warfareplugins.com/support-categories/getting-started/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/starter-guide-300x150.jpg"></a>';
 	echo '<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="' . SWP_PLUGIN_URL . '/images/admin-options-page/measure-roi-300x150.jpg"></a>';
 	echo '<p class="sw-support-notice sw-italic">' . __( 'Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.' , 'social-warfare' ) . '</a></p>';
 	echo '<p class="sw-support-notice sw-italic">' . __( 'Opening a support ticket? Copy your System Status by clicking the button below.' , 'social-warfare' ) . '</p>';
