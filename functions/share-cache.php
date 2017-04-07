@@ -351,7 +351,8 @@ function swp_output_cache_trigger( $info ) {
 			jQuery( document ).ready( function() {
 				var swp_cache_data = {
 					'action': 'swp_cache_trigger',
-					'post_id': <?php echo $info['postID']; ?>
+					'post_id': <?php echo $info['postID']; ?>,
+                    'timestamp': <?php echo time(); ?>
 				};
 				jQuery.post( swp_admin_ajax, swp_cache_data, function( response ) {
 					console.log(response);
