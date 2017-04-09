@@ -345,22 +345,45 @@ function swp_output_cache_trigger( $info ) {
 		ob_start();
 
 		?>
+        var within_timelimit;
 		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
 		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
 		if ( swp_buttons_exist ) {
 			jQuery( document ).ready( function() {
 				var swp_cache_data = {
 					'action': 'swp_cache_trigger',
-					'post_id': <?php echo $info['postID']; ?>
+					'post_id': <?php echo $info['postID']; ?>,
+                    'timestamp': <?php echo time(); ?>
 				};
-				jQuery.post( swp_admin_ajax, swp_cache_data, function( response ) {
-					console.log(response);
-				});
+                // if( !swp_cache_data.timestamp ){ // error handling}
+                console.log( "Server Timestamp is " + swp_cache_data.timestamp );
+                var browser_date = Date.now();
+                if( !browser_date )
+                    browser_date = new Date().getTime();
+                browser_date = Math.floor( browser_date / 1000 );
+                console.log( "Browser Timestamp is " + browser_date );
+                var elapsed_time = ( swp_cache_data.timestamp - browser_date );
+                if( elapsed_time > 60 ){
+                    console.log( "Elapsed time since server timestamp is greater than 60 seconds -- " + elapsed_time + "seconds" );
+                    within_timelimit = false;
+                } else {
+                    console.log( "Elapsed time since server timestamp is less than 60 seconds -- " + elapsed_time + "seconds"  );
+                    within_timelimit = true;
+                }
+
+                if( within_timelimit === true ){
+				    jQuery.post( swp_admin_ajax, swp_cache_data, function( response ) {
+					    console.log(response);
+				    });
+
+                    socialWarfarePlugin.fetchShares();
+                }
 			});
 			swp_post_id='<?php echo $info['postID']; ?>';
 			swp_post_url='<?php echo get_permalink(); ?>';
 			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-			socialWarfarePlugin.fetchShares();
+
+			//    socialWarfarePlugin.fetchShares();
 		}
 		<?php
 		$info['footer_output'] .= ob_get_clean();
