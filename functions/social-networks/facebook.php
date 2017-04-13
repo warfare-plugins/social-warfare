@@ -108,7 +108,7 @@ function swp_facebook_button_html( $array ) {
 
 			$array['resource']['facebook'] = '<div class="nc_tweetContainer swp_fb" data-id="' . $array['count'] . '" data-network="facebook">';
 			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'facebook' , $array['postID'] ) ) );
-			$array['resource']['facebook'] .= '<a rel="nofollow" target="_blank" href="http://www.facebook.com/share.php?u=' . $link . '" data-link="http://www.facebook.com/share.php?u=' . $link . '" class="nc_tweet">';
+			$array['resource']['facebook'] .= '<a rel="nofollow" target="_blank" href="https://www.facebook.com/share.php?u=' . $link . '" data-link="http://www.facebook.com/share.php?u=' . $link . '" class="nc_tweet">';
 			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['facebook'] > 0 ) :
 				$array['resource']['facebook'] .= '<span class="iconFiller">';
 				$array['resource']['facebook'] .= '<span class="spaceManWilly">';
