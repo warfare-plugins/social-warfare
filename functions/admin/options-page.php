@@ -144,6 +144,10 @@ function swp_build_options_page() {
 
 	echo '<div class="sw-admin-wrapper" sw-registered="' . absint( $swp_registration ) . '">';
 
+	// Runs a full system check, printing errors found if any
+	if( class_exists( 'swp_system_checker' ) )
+		swp_system_checker::full_system_check();
+
 	echo '<form class="sw-admin-settings-form">';
 
 	// Wrapper for the left 3/4 non-sidebar content
