@@ -217,8 +217,8 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( 'default', [ 'watch' ] );
 	grunt.registerTask( 'build', [
-		'addtextdomain',
-		'makepot',
+		//'addtextdomain',
+		//'makepot',
 		'postcss',
 		'wpcss',
 		'cssmin',
