@@ -72,19 +72,14 @@ class swp_system_checker
     		return FALSE;
         }
 
-    	echo '<div class="sw-red-notice">';
-
     	foreach( swp_system_checker::$custom_checks as $custom_check )
     	{
     		if( $custom_check->check_passed ) {
     			continue;
             }
 
-    		echo '<br><p style="font-weight:bold">A problem has been found:</p>' . $custom_check->whats_wrong;
-    		echo '<br><p style="font-weight:bold">Here is how to resolve the problem:</p>' . $custom_check->how_to_fix;
+        	echo '<div class="sw-red-notice">' . $custom_check->whats_wrong . $custom_check->how_to_fix . '</div>';
     	}
-
-    	echo '</div>';
     }
 }
 
@@ -111,7 +106,7 @@ class swp_php_check extends swp_custom_check
 		else
 		{
 			$this->check_passed = false;
-			$this->whats_wrong = 'Your server is currently using PHP version 5.2 (or whatever version it is). In order for our plugin to fetch share counts properly, you must be using PHP 5.3 or newer.';
+			$this->whats_wrong = 'Your server is currently using PHP version '.PHP_VERSION.'. In order for our plugin to fetch share counts properly, you must be using PHP 5.3 or newer.';
 			$this->how_to_fix = 'To fix this, simply contact your hosting provider and ask them to update your server to the latest stable version of PHP.';
 		}
 
