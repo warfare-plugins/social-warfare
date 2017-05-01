@@ -1,5 +1,40 @@
 <?php
+/**
+ * A series of classes to check the user's system for minimum system requirements
+ *
+ * @package   social-warfare\functions\admin
+ * @copyright Copyright (c) 2017, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     2.2.4 | Created | 1 MAY 2017
+ */
 
+ /**
+  * A class for initializing the system checks
+  *
+  * @since  2.2.4 | Created | 1 MAY 2017
+  * @access public
+  */
+ abstract class swp_custom_check
+ {
+ 	public $name = "";
+ 	public $whats_wrong = "";
+ 	public $how_to_fix= "";
+ 	public $check_passed = null;
+ 	public $additional_message = null;
+
+ 	/**
+ 	 * Force children to have an executable run method.
+ 	 */
+ 	abstract public function run();
+ }
+
+/**
+ * A series of classes to check the user's system for minimum system requirements
+ *
+ * @since  2.2.4 | Created | 6 March 2017
+ * @access public
+ * @return string The HTML for an error notice if triggered
+ */
 class swp_system_checker
 {
     public static $custom_checks = array();
@@ -49,6 +84,13 @@ class swp_system_checker
     }
 }
 
+/**
+ * A class to detect if the user is using a compatible version of PHP (5.3+) on their server
+ *
+ * @since  2.2.4 | Created | 1 MAY 2017
+ * @access public
+ * @return string The HTML for an error notice if triggered
+ */
 class swp_php_check extends swp_custom_check
 {
 	public function __construct()
@@ -66,13 +108,20 @@ class swp_php_check extends swp_custom_check
 		{
 			$this->check_passed = false;
 			$this->whats_wrong = 'Your server is currently using PHP version 5.2 (or whatever version it is). In order for our plugin to fetch share counts properly, you must be using PHP 5.3 or newer.';
-			$this->how_to_fix = 'To fix this, simply contact your hosting provider and ask them to update your server to the latest stable version of PHP.  If possible, test your website on a newer version before updating to avoid errors that could cause problems on a live site.';
+			$this->how_to_fix = 'To fix this, simply contact your hosting provider and ask them to update your server to the latest stable version of PHP.';
 		}
 
 		return $this->check_passed;
 	}
 }
 
+/**
+ * A class to detect if the user has cURL enabled on their server. cURL is a requirement of the plugin.
+ *
+ * @since  2.2.4 | Created | 1 MAY 2017
+ * @access public
+ * @return string The HTML for an error notice if triggered
+ */
 class swp_curl_check extends swp_custom_check
 {
 	public function __construct()
@@ -97,19 +146,3 @@ class swp_curl_check extends swp_custom_check
 		return $this->check_passed;
 	}
 }
-
-abstract class swp_custom_check
-{
-	public $name = "";
-	public $whats_wrong = "";
-	public $how_to_fix= "";
-	public $check_passed = null;
-	public $additional_message = null;
-
-	/**
-	 * Force children to have an executable run method.
-	 */
-	abstract public function run();
-}
-
-?>
