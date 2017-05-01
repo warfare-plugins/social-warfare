@@ -61,9 +61,6 @@ add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
  * Include the plugin's admin files.
  */
 if ( is_admin() ) {
-	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_custom_check.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_curl_check.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_php_check.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/columns.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/misc.php';
