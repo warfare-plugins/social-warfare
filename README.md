@@ -1,6 +1,8 @@
 # Warfare Plugins / Social Warfare Repository and Issue Tracker
 This is a public repository for the Social Warfare WordPress plugin created primarily for the purpose of publishing and maintaining a public list of bugs, known issues, and feature requests with the community at large. Please use the "Issues" link above to track or add information to existing issues or to submit new issues altogether.
 
+***
+
 ## Guidelines & Standards for Creating & Updating Code on This Project
 
 Coding Standards are an important factor for achieving a high code quality. A common visual style, naming conventions and other technical settings allow us to produce a homogenous code which is easy to read and maintain.
@@ -12,6 +14,8 @@ While this project has used various coding standards over time, this guide shoul
 **Variables and Class Names:** All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. All names will use the Snake Case nomenclature and be preceded with the swp_ prefix (e.g. swp_my_variable_name).
 
 **Docblocking:** Each file should begin with a docblock, as well as each function and class should be preceded with a docblock to explain it's purpose and functionality. There is no such thing as too much documentation on this project. The purpose is that any developer or non-developer should be able to easily browser each file and know exactly what is happening in that file.
+
+***
 
 ## Guidelines for Submitting Issues to this GitHub Issue Tracker
 Before submitting an issue to the issue tracker, please be sure of a few things. By following these guidelines, you maximize the possibility of our development team being able to find a solution to the issue in a quick and thorough manner.
