@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Register and output header meta tags
+ * Control the cache rebuild processes for share counts
  *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2016, Warfare Plugins, LLC
