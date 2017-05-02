@@ -1,75 +1,88 @@
 <?php
 
 /**
+ * Functions to add a LinkedIn share button to the available buttons
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2017, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0 | CREATED | Unknown
+ * @since     2.2.4 | UPDATED | 2 MAY 2017 | Refactored functions & updated docblocking
+ */
 
- * **************************************************************
- *                                                                *
- *   #1: Add the On / Off Switch	and Sortable Option				 *
- *                                                                *
- ******************************************************************/
-	add_filter( 'swp_button_options', 'swp_linkedIn_options_function',20 );
+defined( 'WPINC' ) || die;
+
+/**
+ * #1: Add the On/Off Switch and Sortable Option
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $options The array of available plugin options
+ * @return array $options The modified array of available plugin options
+ */
+add_filter( 'swp_button_options', 'swp_linkedIn_options_function',20 );
 function swp_linkedIn_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
 	$options['content']['linkedIn'] = array(
-	'type' => 'checkbox',
-	'content' => 'LinkedIn',
-	'default' => true,
-	'premium' => false,
+		'type' => 'checkbox',
+		'content' => 'LinkedIn',
+		'default' => true,
+		'premium' => false,
 	);
 
 	return $options;
-
 };
+
 /**
-
-***************************************************************
-*                                                                *
-*   #2: Add it to global network array	         				 *
-*                                                                *
-*/
-	// Queue up your filter to be ran on the swp_options hook.
-	add_filter( 'swp_add_networks', 'swp_linkedIn_network' );
-
-	// Create the function that will filter the options
+ * #2: Add it to the global network array
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $networks The array of available plugin social networks
+ * @return array $networks The modified array of available plugin social networks
+ */
+add_filter( 'swp_add_networks', 'swp_linkedIn_network' );
 function swp_linkedIn_network( $networks ) {
-
-	// Add your network to the existing network array
 	$networks[] = 'linkedIn';
-
-	// Be sure to return the modified options array or the world will explode
 	return $networks;
 };
-/**
 
- * **************************************************************
- *                                                                *
- *   #3: Generate the API Share Count Request URL	             *
- *                                                                *
- ******************************************************************/
+/**
+ * #3: Generate the API Share Count Request URL
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  string $url The permalink of the page or post for which to fetch share counts
+ * @return string $request_url The complete URL to be used to access share counts via the API
+ */
 function swp_linkedIn_request_link( $url ) {
 	$request_url = 'https://www.linkedin.com/countserv/count/share?url=' . $url . '&format=json';
 	return $request_url;
 }
-/**
 
- * **************************************************************
- *                                                                *
- *   #4: Parse the Response to get the share count	             *
- *                                                                *
- ******************************************************************/
+/**
+ * #4: Parse the response to get the share count
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  string $response The raw response returned from the API request
+ * @return int $total_activity The number of shares reported from the API
+ */
 function swp_format_linkedIn_response( $response ) {
 	$response = json_decode( $response, true );
 	return isset( $response['count'] )?intval( $response['count'] ):0;
 }
-/**
 
-***************************************************************
-*                                                                *
-*   #5: Create the Button HTML				  		             *
-*                                                                *
-*/
-	add_filter( 'swp_network_buttons', 'swp_linkedIn_button_html',10 );
+/**
+ * #5: Create the HTML to display the share button
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $array The array of information used to create and display each social panel of buttons
+ * @return array $array The modified array which will now contain the html for this button
+ */
+add_filter( 'swp_network_buttons' , 'swp_linkedIn_button_html' , 10 );
 function swp_linkedIn_button_html( $array ) {
 
 	// If we've already generated this button, just use our existing html
