@@ -11,7 +11,7 @@
 
 defined( 'WPINC' ) || die;
 
-add_filter( 'query_vars', 'swp_add_query_vars' );
+
 /**
  * Register custom query vars.
  *
@@ -24,6 +24,25 @@ function swp_add_query_vars( $vars ) {
 	$vars[] = 'swp_cache';
 	return $vars;
 }
+add_filter( 'query_vars', 'swp_add_query_vars' );
+
+/**
+ * Force our swp_cache variable to not be part of the query
+ *
+ * @since  2.2.4 | CREATED | 2 MAY 2017
+ * @access public
+ * @param  array $request The current query request.
+ * @return array $request The modified query request.
+ */
+add_filter( 'request', 'swp_alter_the_query' );
+function swp_alter_the_query( $request ) {
+    $dummy_query = new WP_Query();  // the query isn't run if we don't pass any query vars
+    $dummy_query->parse_query( $request );
+	if(isset($request['swp_cache'])) {
+		unset($request['swp_cache']);
+	}
+    return $request;
+}
 
 add_filter( 'swp_meta_tags', 'swp_cache_rebuild_rel_canonical', 7 );
 /**
@@ -34,7 +53,7 @@ add_filter( 'swp_meta_tags', 'swp_cache_rebuild_rel_canonical', 7 );
  * @return array $info Meta tag info.
  */
 function swp_cache_rebuild_rel_canonical( $info ) {
-	if ( 'rebuild' === get_query_var( 'swp_cache' ) ) {
+	if ( 'rebuild' === $_GET['swp_cache'] ) {
 		$info['header_output'] .= '<link rel="canonical" href="' . get_permalink() . '">';
 	}
 
@@ -65,7 +84,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 
 	// Bail if output isn't being forced and legacy caching isn't enabled.
 	if ( ! $output && 'legacy' !== $options['cacheMethod'] ) {
-		if ( 'rebuild' !== get_query_var( 'swp_cache' ) ) {
+		if ( empty( $_GET['swp_cache'] ) ) {
 			$fresh_cache = true;
 		}
 
@@ -331,7 +350,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Bail early if we're not on a single page or we have fresh cache.
-	if ( (! is_singular() || swp_is_cache_fresh( get_the_ID(), true )) && 'rebuild' !== get_query_var( 'swp_cache' ) ) {
+	if ( (! is_singular() || swp_is_cache_fresh( get_the_ID(), true )) && empty( $_GET['swp_cache'] ) ) {
 		return $info;
 	}
 
@@ -341,7 +360,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Trigger the cache rebuild.
-	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
+	if ( 'rebuild' === $_GET['swp_cache'] || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
 
 		?>
