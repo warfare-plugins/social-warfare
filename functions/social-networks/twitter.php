@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2017, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0 | CREATED | Unknown
- * @since     2.2.4 | UPDATED | 2 MAY 2017 | Refactored functions & updated docblocking
+ * @since     2.2.4 | UPDATED | 3 MAY 2017 | Refactored functions & updated docblocking
  */
 
 defined( 'WPINC' ) || die;
