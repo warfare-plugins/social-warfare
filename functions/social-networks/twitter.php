@@ -1,52 +1,61 @@
 <?php
 
 /**
+ * Functions to add a Twitter share button to the available buttons
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2017, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0 | CREATED | Unknown
+ * @since     2.2.4 | UPDATED | 2 MAY 2017 | Refactored functions & updated docblocking
+ */
 
- * **************************************************************
- *                                                                *
- *   #1: Add the On / Off Switch	and Sortable Option				 *
- *                                                                *
- ******************************************************************/
-	add_filter( 'swp_button_options', 'swp_twitter_options_function',20 );
+defined( 'WPINC' ) || die;
+
+/**
+ * #1: Add the On/Off Switch and Sortable Option
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $options The array of available plugin options
+ * @return array $options The modified array of available plugin options
+ */
+add_filter( 'swp_button_options', 'swp_twitter_options_function',20 );
 function swp_twitter_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
 	$options['content']['twitter'] = array(
-	'type' => 'checkbox',
-	'content' => 'Twitter',
-	'default' => true,
-	'premium' => false,
+		'type' => 'checkbox',
+		'content' => 'Twitter',
+		'default' => true,
+		'premium' => false,
 	);
 
 	return $options;
-
 };
+
 /**
-
-***************************************************************
-*                                                                *
-*   #2: Add it to global network array	         				 *
-*                                                                *
-*/
-	// Queue up your filter to be ran on the swp_options hook.
-	add_filter( 'swp_add_networks', 'swp_twitter_network' );
-
-	// Create the function that will filter the options
+ * #2: Add it to the global network array
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $networks The array of available plugin social networks
+ * @return array $networks The modified array of available plugin social networks
+ */
+add_filter( 'swp_add_networks', 'swp_twitter_network' );
 function swp_twitter_network( $networks ) {
-
-	// Add your network to the existing network array
 	$networks[] = 'twitter';
-
-	// Be sure to return the modified options array or the world will explode
 	return $networks;
 };
-/**
 
- * **************************************************************
- *                                                                *
- *   #3: Generate the API Share Count Request URL	             *
- *                                                                *
- ******************************************************************/
+/**
+ * #3: Generate the API Share Count Request URL
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  string $url The permalink of the page or post for which to fetch share counts
+ * @return string $request_url The complete URL to be used to access share counts via the API
+ */
 function swp_twitter_request_link( $url ) {
 
 	// Fetch the user's options
@@ -73,13 +82,15 @@ function swp_twitter_request_link( $url ) {
 
 		endif;
 }
-/**
 
- * **************************************************************
- *                                                                *
- *   #4: Parse the Response to get the share count	             *
- *                                                                *
- ******************************************************************/
+/**
+ * #4: Parse the response to get the share count
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  string $response The raw response returned from the API request
+ * @return int $total_activity The number of shares reported from the API
+ */
 function swp_format_twitter_response( $response ) {
 
 	// Fetch the user's options
@@ -106,33 +117,36 @@ function swp_format_twitter_response( $response ) {
 
 		endif;
 }
-/**
 
-***************************************************************
-*                                                                *
-*   #5: Create the Button HTML				  		             *
-*                                                                *
-*/
-	add_filter( 'swp_network_buttons', 'swp_twitter_button_html',10 );
+/**
+ * #5: Create the HTML to display the share button
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  array $array The array of information used to create and display each social panel of buttons
+ * @return array $array The modified array which will now contain the html for this button
+ */
+add_filter( 'swp_network_buttons', 'swp_twitter_button_html',10 );
 function swp_twitter_button_html( $array ) {
 
 	// If we've already generated this button, just use our existing html
 	if ( isset( $_GLOBALS['sw']['buttons'][ $array['postID'] ]['twitter'] ) ) :
 		$array['resource']['twitter'] = $_GLOBALS['sw']['buttons'][ $array['postID'] ]['twitter'];
 
-		// If not, let's check if Facebook is activated and create the button HTML
-		elseif ( (isset( $array['options']['newOrderOfIcons']['twitter'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['twitter'] ))  ) :
+	// If not, let's check if Facebook is activated and create the button HTML
+	elseif ( (isset( $array['options']['newOrderOfIcons']['twitter'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['twitter'] ))  ) :
 
-			$array['totes'] += intval( $array['shares']['twitter'] );
-			++$array['count'];
+		$array['totes'] += intval( $array['shares']['twitter'] );
+		++$array['count'];
 
-			$title = strip_tags( get_the_title( $array['postID'] ) );
-			$title = str_replace( '|','',$title );
-			$ct = get_post_meta( $array['postID'] , 'nc_customTweet' , true );
+		$title = strip_tags( get_the_title( $array['postID'] ) );
+		$title = str_replace( '|','',$title );
+		$ct = get_post_meta( $array['postID'] , 'nc_customTweet' , true );
 
-			$ct = ($ct != '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ));
-			$twitterLink = swp_process_url( $array['url'] , 'twitter' , $array['postID'] );
-			if ( strpos( $ct,'http' ) !== false ) : $urlParam = '&url=/';
+		$ct = ($ct != '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ));
+		$twitterLink = swp_process_url( $array['url'] , 'twitter' , $array['postID'] );
+		if ( strpos( $ct,'http' ) !== false ) :
+			$urlParam = '&url=/';
 		else :
 			$urlParam = '&url=' . $twitterLink;
 		endif;
