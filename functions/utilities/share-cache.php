@@ -361,7 +361,7 @@ function swp_output_cache_trigger( $info ) {
 	}
 
 	// Trigger the cache rebuild.
-	if ( 'rebuild' === $_GET['swp_cache'] || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
+	if ( ( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
 
 		?>
