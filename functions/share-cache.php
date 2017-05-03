@@ -4,9 +4,10 @@
  * Control the cache rebuild processes for share counts
  *
  * @package   SocialWarfare\Functions
- * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2017, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0
+ * @since     1.0.0 | CREATED | UNKNOWN
+ * @since     2.2.4 | UPDATED | 02 MAY 2017 | Added a function to remove the cache rebuild URL parameter from WP's query
  */
 
 defined( 'WPINC' ) || die;
@@ -29,7 +30,7 @@ add_filter( 'query_vars', 'swp_add_query_vars' );
 /**
  * Force our swp_cache variable to not be part of the query
  *
- * @since  2.2.4 | CREATED | 2 MAY 2017
+ * @since  2.2.4 | CREATED | 02 MAY 2017
  * @access public
  * @param  array $request The current query request.
  * @return array $request The modified query request.
