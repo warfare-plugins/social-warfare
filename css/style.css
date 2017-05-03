@@ -5,14 +5,13 @@
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: flex;
-	height: 30px;
+	height: 32px;
 	line-height: 1;
 	margin-bottom: 20px!important;
 	margin-top: 20px!important;
+	overflow: hidden;
 	padding: 0;
 
-	-webkit-align-content: center;
-	align-content: center;
 	-webkit-align-items: stretch;
 	align-items: stretch;
 	-webkit-box-align: stretch;
@@ -22,6 +21,9 @@
 	-ms-flex-align: stretch;
 	-ms-flex-line-pack: center;
 	-ms-flex-pack: justify;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
 }
@@ -43,6 +45,7 @@ div.nc_socialPanel .nc_tweetContainer {
 	font-family: Lato;
 	height: 32px;
 	margin: 0 5px;
+	min-width: 34px;
 	overflow: hidden;
 	text-align: center;
 	-webkit-transition: all 0.1s linear;
@@ -263,6 +266,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {
 	margin-left: 10px;
 	margin-top: 12px;
 	min-width: 35px;
+	position: relative;
 	vertical-align: middle;
 }
 
