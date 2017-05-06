@@ -3,7 +3,7 @@
  * Functions for getting and setting the plugin's options.
  *
  * @package   SocialWarfare\Functions
- * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2017, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
  */
@@ -99,9 +99,20 @@ function swp_get_user_options( $admin = false ) {
 		),
 	);
 
+	/**
+	 * Set the default og:type values for each post type
+	 *
+	 */
+	$swp_post_types = swp_get_post_types();
+	if(!empty($swp_post_types)):
+		foreach($swp_post_types as $swp_post_type):
+			$defaults['swp_og_type_'.$swp_post_type] = 'article';
+		endforeach;
+	endif;
+
 	$options = array_merge( $defaults, $options );
 
-	// Make the side custom absorbe the main custom color if they haven't set one yet.
+	// Make the side custom absorb the main custom color if they haven't set one yet.
 	if(empty($options['sideCustomColor']) ):
 		$options['sideCustomColor'] = $options['customColor'];
 	endif;
@@ -121,11 +132,11 @@ function swp_get_user_options( $admin = false ) {
 		$swp_registration = false;
 	endif;
 
-	if ( $admin || true === $swp_registration ) {
-		if ( 'totes' === $options['swTotesFormat'] ) {
+	if ( $admin || true === $swp_registration ) :
+		if ( 'totes' === $options['swTotesFormat'] ) :
 			$options['swTotesFormat'] = 'totesalt';
-		}
-	} else {
+		endif;
+	else:
 		$options['swp_twitter_card']                  = false;
 		$options['visualTheme']                       = 'flatFresh';
 		$options['dColorSet']                         = 'fullColor';
@@ -153,7 +164,7 @@ function swp_get_user_options( $admin = false ) {
 		$options['advanced_pinterest_image']          = false;
 		$options['advanced_pinterest_image_location'] = 'hidden';
 		$options['advanced_pinterest_fallback']       = 'all';
-	}
+	endif;
 
 	if(isset($options['newOrderOfIcons']['active'])) {
 		unset($options['newOrderOfIcons']['active']);
