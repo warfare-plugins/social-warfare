@@ -795,6 +795,6 @@ p.sw-subtitle.sw-registration-text {
 	float: right;
 }
 
-.toplevel_page_social-warfare .notice-error, .toplevel_page_social-warfare .notice-warning, .toplevel_page_social-warfare .notice-success, .toplevel_page_social-warfare .notice-info, .toplevel_page_social-warfare .is-dismissible, .toplevel_page_social-warfare .update-nag, .toplevel_page_social-warfare #notice-error, .toplevel_page_social-warfare #notice-warning, .toplevel_page_social-warfare #notice-success, .toplevel_page_social-warfare #notice-info, .toplevel_page_social-warfare #is-dismissible, .toplevel_page_social-warfare #update-nag {
+.toplevel_page_social-warfare .notice-error, .toplevel_page_social-warfare .notice-warning, .toplevel_page_social-warfare .notice-success, .toplevel_page_social-warfare .notice-info, .toplevel_page_social-warfare .is-dismissible, .toplevel_page_social-warfare .update-nag, .toplevel_page_social-warfare #notice-error, .toplevel_page_social-warfare #notice-warning, .toplevel_page_social-warfare #notice-success, .toplevel_page_social-warfare #notice-info, .toplevel_page_social-warfare #is-dismissible, .toplevel_page_social-warfare #update-nag, div.error {
 	display: none;
 }
