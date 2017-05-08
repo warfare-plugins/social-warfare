@@ -110,8 +110,9 @@ function get_social_warfare_shares( $postID ) {
 					delete_post_meta( $postID,'_' . $network . '_shares' );
 					update_post_meta( $postID,'_' . $network . '_shares',$shares[ $network ] );
 				endif;
-				$shares['totes'] += $shares[ $network ];
-
+				if (is_numeric( $shares[ $network ] ) ):
+					$shares['totes'] += $shares[ $network ];
+				endif;		
 			endforeach;
 		endif;
 
