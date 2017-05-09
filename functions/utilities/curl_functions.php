@@ -18,49 +18,51 @@ function swp_fetch_shares_via_curl_multi( $data, $options = array() ) {
 
 	// loop through $data and create curl handles
 	// then add them to the multi-handle
-	foreach ( $data as $id => $d ) {
+	if( is_array( $data ) ):
+		foreach ( $data as $id => $d ) :
 
-		if ( $d !== 0 || $id == 'googlePlus' ) :
+			if ( $d !== 0 || $id == 'googlePlus' ) :
 
-			$curly[ $id ] = curl_init();
+				$curly[ $id ] = curl_init();
 
-			if ( $id == 'googlePlus' ) :
+				if ( $id == 'googlePlus' ) :
 
-				curl_setopt( $curly[ $id ], CURLOPT_URL, 'https://clients6.google.com/rpc' );
-				curl_setopt( $curly[ $id ], CURLOPT_POST, true );
-				curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYPEER, false );
-				curl_setopt( $curly[ $id ], CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . rawurldecode( $d ) . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]' );
-				curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER, true );
-				curl_setopt( $curly[ $id ], CURLOPT_HTTPHEADER, array( 'Content-type: application/json' ) );
+					curl_setopt( $curly[ $id ], CURLOPT_URL, 'https://clients6.google.com/rpc' );
+					curl_setopt( $curly[ $id ], CURLOPT_POST, true );
+					curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYPEER, false );
+					curl_setopt( $curly[ $id ], CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . rawurldecode( $d ) . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]' );
+					curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER, true );
+					curl_setopt( $curly[ $id ], CURLOPT_HTTPHEADER, array( 'Content-type: application/json' ) );
 
-			else :
+				else :
 
-				$url = (is_array( $d ) && ! empty( $d['url'] )) ? $d['url'] : $d;
-				curl_setopt( $curly[ $id ], CURLOPT_URL,            $url );
-				curl_setopt( $curly[ $id ], CURLOPT_HEADER,         0 );
-				curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER, 1 );
-				curl_setopt( $curly[ $id ], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
-				curl_setopt( $curly[ $id ], CURLOPT_FAILONERROR, 0 );
-				curl_setopt( $curly[ $id ], CURLOPT_FOLLOWLOCATION, 0 );
-				curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER,1 );
-				curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYPEER, false );
-				curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYHOST, false );
-				curl_setopt( $curly[ $id ], CURLOPT_TIMEOUT, 5 );
-				curl_setopt( $curly[ $id ], CURLOPT_CONNECTTIMEOUT, 5 );
-				curl_setopt( $curly[ $id ], CURLOPT_NOSIGNAL, 1 );
-				curl_setopt( $curly[ $id ], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
-				// curl_setopt($curly[$id], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
+					$url = (is_array( $d ) && ! empty( $d['url'] )) ? $d['url'] : $d;
+					curl_setopt( $curly[ $id ], CURLOPT_URL,            $url );
+					curl_setopt( $curly[ $id ], CURLOPT_HEADER,         0 );
+					curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER, 1 );
+					curl_setopt( $curly[ $id ], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
+					curl_setopt( $curly[ $id ], CURLOPT_FAILONERROR, 0 );
+					curl_setopt( $curly[ $id ], CURLOPT_FOLLOWLOCATION, 0 );
+					curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER,1 );
+					curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYPEER, false );
+					curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYHOST, false );
+					curl_setopt( $curly[ $id ], CURLOPT_TIMEOUT, 5 );
+					curl_setopt( $curly[ $id ], CURLOPT_CONNECTTIMEOUT, 5 );
+					curl_setopt( $curly[ $id ], CURLOPT_NOSIGNAL, 1 );
+					curl_setopt( $curly[ $id ], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+					// curl_setopt($curly[$id], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
+				endif;
+
+				// extra options?
+				if ( ! empty( $options ) ) {
+					curl_setopt_array( $curly[ $id ], $options );
+				}
+
+				curl_multi_add_handle( $mh, $curly[ $id ] );
+
 			endif;
-
-			// extra options?
-			if ( ! empty( $options ) ) {
-				curl_setopt_array( $curly[ $id ], $options );
-			}
-
-			curl_multi_add_handle( $mh, $curly[ $id ] );
-
-		endif;
-	}// End foreach().
+		endforeach;
+	endif;
 
 	  // execute the handles
 	  $running = null;
