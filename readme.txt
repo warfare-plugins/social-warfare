@@ -186,6 +186,24 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.4 (09 MAY 2017) =
+
+* Added a feature to set og:type values for all post types with individual post control via the swp_og_type custom field.
+* Added information links for all options sets on the admin options page.
+* Added a feature to add a Pinterest image that is picked up by the Pinterest browser extensions.
+* Added better support for buttons being displayed on very tiny screens.
+* Added system checks to ensure that the site is using a compatible version of PHP, WordPress, cURL, etc.
+* Added a filter to remove script and style tags from meta descriptions. They will now only be text. No HTML allowed.
+* Added UTM parameters to the Pinterest share links.
+* Update lots of in-file code documentation.
+* Updated the functionality of the ?swp_cache=rebuild URL parameter.
+* Updated Facebook share link from http to https.
+* Updated Italian and French translations to 100%.
+* Reorganized all file and folder organization structures.
+* Refactored and reorganized the code in all of the social network files.
+* Fixed the no_pin class. You can now add a class of no_pin to an image to opt it out from having a Pinterest hover share button.
+* Fixed a few random PHP warnings and errors.
+
 = 2.2.3 (22 FEB 2017) =
 
 *Maintenance:*
