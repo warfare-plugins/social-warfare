@@ -186,6 +186,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.5 (10 MAY 2017) =
+
+* Fixed a PHP warning that appeared on some user's websites: "Warning: DOMDocument::loadHTML(): Empty string supplied as input"
+
 = 2.2.4 (09 MAY 2017) =
 
 * Added a feature to set og:type values for all post types with individual post control via the swp_og_type custom field.
