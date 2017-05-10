@@ -119,11 +119,13 @@ function swp_get_excerpt_by_id( $post_id ) {
 		$excerpt_length = 100; // Sets excerpt length by word count
 
 		// Filter out any inline script or style tags as well as their content
-		$html = new DOMDocument();
-		$html->loadHTML($the_excerpt);
-		swp_remove_elements_by_tag_name('script', $html);
-		swp_remove_elements_by_tag_name('style', $html);
-		$the_excerpt = $html->saveHtml();
+		if( !empty( $the_excerpt ) ):
+			$html = new DOMDocument();
+			$html->loadHTML($the_excerpt);
+			swp_remove_elements_by_tag_name('script', $html);
+			swp_remove_elements_by_tag_name('style', $html);
+			$the_excerpt = $html->saveHtml();
+		endif;
 
 		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
 
