@@ -112,7 +112,7 @@ function get_social_warfare_shares( $postID ) {
 				endif;
 				if (is_numeric( $shares[ $network ] ) ):
 					$shares['totes'] += $shares[ $network ];
-				endif;		
+				endif;
 			endforeach;
 		endif;
 
