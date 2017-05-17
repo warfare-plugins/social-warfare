@@ -8,6 +8,7 @@
  * @license   GPL-3.0+
  * @since     1.0.0 | CREATED | UNKNOWN
  * @since     2.2.4 | UPDATED | 02 MAY 2017 | Added a function to remove the cache rebuild URL parameter from WP's query
+ * @since     2.2.6 | UPDATED | 11 MAY 2017 | Added a "force" parameter to force cache rebuild when using URL parameters
  */
 
 defined( 'WPINC' ) || die;
@@ -139,7 +140,7 @@ function swp_cache_rebuild() {
 	 *  Bail if we already have fresh cache and this request is invalid.
 	 *
 	 */
-	if ( swp_is_cache_fresh( $post_id , true , true ) ) {
+	if ( swp_is_cache_fresh( $post_id , true , true ) && !isset($_POST['force']) ) {
 		wp_send_json_error();
 		die();
 	}
@@ -370,11 +371,20 @@ function swp_output_cache_trigger( $info ) {
 		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
 		if ( swp_buttons_exist ) {
 			jQuery( document ).ready( function() {
+				<?php if( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ): ?>
+				var swp_cache_data = {
+					'action': 'swp_cache_trigger',
+					'post_id': <?php echo $info['postID']; ?>,
+                    'timestamp': <?php echo time(); ?>,
+					'force':true
+				};
+				<?php else: ?>
 				var swp_cache_data = {
 					'action': 'swp_cache_trigger',
 					'post_id': <?php echo $info['postID']; ?>,
                     'timestamp': <?php echo time(); ?>
 				};
+				<?php endif; ?>
                 // if( !swp_cache_data.timestamp ){ // error handling}
                 console.log( "Server Timestamp is " + swp_cache_data.timestamp );
                 var browser_date = Date.now();

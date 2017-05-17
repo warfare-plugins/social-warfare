@@ -48,58 +48,60 @@ function get_alternate_permalink( $format ) {
 function swp_get_alternate_permalink( $format, $protocol, $id, $prefix ) {
 
 	// Setup the Default Permalink Structure
-	if ( $format == 'default' ) :
+	if( is_front_page() ):
+		$url = get_site_url();
+	elseif ( $format == 'default' ) :
 		$domain = get_site_url();
 		$url = $domain . '/?p=' . $id;
 
-		// Setup the "Day and name" Permalink Structure
-		elseif ( $format == 'day_and_name' ) :
-			$domain = get_site_url();
-			$date = get_the_date( 'Y/m/d',$id );
-			$slug = basename( get_permalink( $id ) );
-			$url = $domain . '/' . $date . '/' . $slug . '/';
+	// Setup the "Day and name" Permalink Structure
+	elseif ( $format == 'day_and_name' ) :
+		$domain = get_site_url();
+		$date = get_the_date( 'Y/m/d',$id );
+		$slug = basename( get_permalink( $id ) );
+		$url = $domain . '/' . $date . '/' . $slug . '/';
 
-			// Setup the "Month and name" Permalink Structure
-		elseif ( $format == 'month_and_name' ) :
-			$domain = get_site_url();
-			$date = get_the_date( 'Y/m',$id );
-			$slug = basename( get_permalink( $id ) );
-			$url = $domain . '/' . $date . '/' . $slug . '/';
+		// Setup the "Month and name" Permalink Structure
+	elseif ( $format == 'month_and_name' ) :
+		$domain = get_site_url();
+		$date = get_the_date( 'Y/m',$id );
+		$slug = basename( get_permalink( $id ) );
+		$url = $domain . '/' . $date . '/' . $slug . '/';
 
-			// Setup the "Numeric" Permalink Structure
-		elseif ( $format == 'numeric' ) :
-			$domain = get_site_url();
-			$url = $domain . '/archives/' . $id . '/';
+		// Setup the "Numeric" Permalink Structure
+	elseif ( $format == 'numeric' ) :
+		$domain = get_site_url();
+		$url = $domain . '/archives/' . $id . '/';
 
-			// Setup the "Post name" Permalink Structure
-		elseif ( $format == 'post_name' ) :
-			$domain = get_site_url();
-			$post_data = get_post( $id, ARRAY_A );
-			$slug = $post_data['post_name'];
-			$url = $domain . '/' . $slug . '/';
-		elseif ( $format == 'unchanged' ) :
-			$url = get_permalink( $id );
-		endif;
+		// Setup the "Post name" Permalink Structure
+	elseif ( $format == 'post_name' ) :
+		$domain = get_site_url();
+		$post_data = get_post( $id, ARRAY_A );
+		$slug = $post_data['post_name'];
+		$url = $domain . '/' . $slug . '/';
+	elseif ( $format == 'unchanged' ) :
+		$url = get_permalink( $id );
+	endif;
 
-		// Check and Adjust the Protocol setting
-		if ( $protocol == 'unchanged' ) :
-		elseif ( $protocol == 'https' && strpos( $url,'https' ) === false ) :
-			$url = str_replace( 'http','https',$url );
-		elseif ( $protocol == 'http' && strpos( $url,'https' ) !== false ) :
-			$url = str_replace( 'https','http',$url );
-		endif;
+	// Check and Adjust the Protocol setting
+	if ( $protocol == 'unchanged' ) :
+	elseif ( $protocol == 'https' && strpos( $url,'https' ) === false ) :
+		$url = str_replace( 'http','https',$url );
+	elseif ( $protocol == 'http' && strpos( $url,'https' ) !== false ) :
+		$url = str_replace( 'https','http',$url );
+	endif;
 
-		// Check and Adjust the Prefix setting
-		if ( $prefix == 'unchanged' ) :
-		elseif ( $prefix == 'www' && strpos( $url,'www' ) === false ) :
-			$url = str_replace( 'http://','http://www.',$url );
-			$url = str_replace( 'https://','https://www.',$url );
-		elseif ( $prefix == 'nonwww' && strpos( $url,'www' ) !== false ) :
-			$url = str_replace( 'http://www.','http://',$url );
-			$url = str_replace( 'https://www.','https://',$url );
-		endif;
+	// Check and Adjust the Prefix setting
+	if ( $prefix == 'unchanged' ) :
+	elseif ( $prefix == 'www' && strpos( $url,'www' ) === false ) :
+		$url = str_replace( 'http://','http://www.',$url );
+		$url = str_replace( 'https://','https://www.',$url );
+	elseif ( $prefix == 'nonwww' && strpos( $url,'www' ) !== false ) :
+		$url = str_replace( 'http://www.','http://',$url );
+		$url = str_replace( 'https://www.','https://',$url );
+	endif;
 
-		return $url;
+	return $url;
 
 }
 
@@ -248,6 +250,11 @@ function swp_get_alt_permalink( $post = 0, $leavename = false ) {
 			 * @param bool    $leavename Whether to keep the post name.
 			 */
 			$url = apply_filters( 'post_link', $permalink, $post, $leavename );
+
+			// Ignore all filters and just start with the site url on the home page
+			if( is_front_page() ):
+				$url = get_site_url();
+			endif;
 
 			// Check if they're using cross domain recovery
 			if ( isset( $swp_user_options['current_domain'] ) && $swp_user_options['current_domain']
