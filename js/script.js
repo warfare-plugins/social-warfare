@@ -398,6 +398,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			$( '.sw-pinit .sw-pinit-button' ).on( 'click', function() {
 				window.open( $( this ).attr( 'href' ), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' );
+				// Record the event if Google Analytics Click tracking is enabled
+				if (typeof ga == "function" && true === swpClickTracking) {
+					var network = 'pin_image';
+					console.log(network + " Button Clicked");
+					ga("send", "event", "social_media", "swp_" + network + "_share" );
+				}
 				return false;
 			});
 		});
@@ -432,7 +438,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
 
 				if (typeof ga == "function" && true === swpClickTracking) {
-					var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+					if($(this).hasClass('nc_tweet')) {
+						var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+					} else if ($(this).hasClass('swp_CTT') ) {
+						var network = 'ctt';
+					}
 					console.log(network + " Button Clicked");
 					ga("send", "event", "social_media", "swp_" + network + "_share" );
 				}
