@@ -267,7 +267,7 @@ div.nc_socialPanel:hover div.totes.totesalt:not(:nth-child(1)) {
 	line-height: 0;
 	margin-left: 8px;
 	margin-top: 12px;
-	min-width: 40px;
+	min-width: 45px;
 	position: relative;
 	vertical-align: middle;
 }
