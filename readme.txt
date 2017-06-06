@@ -186,6 +186,13 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.6 (24 MAY 2017) =
+
+* Added Event Tracking for Click-to-Tweets and Image Pins.
+* Fixed the CSS for the total shares in non-English foreign languages.
+* Fixed a notice that would sometimes appear on attachment pages.
+* Fixed an error that caused share counts to not update for some users.
+
 = 2.2.5 (10 MAY 2017) =
 
 * Fixed a PHP warning that appeared on some user's websites: "Warning: DOMDocument::loadHTML(): Empty string supplied as input"

@@ -118,7 +118,7 @@ function social_warfare_buttons( $array = array() ) {
 		return $array['content'];
 
 		// Don't do anything if we're in the admin section
-	elseif ( is_admin() ) :
+	elseif ( is_admin() || is_attachment() ) :
 		return $array['content'];
 
 		// If all the checks pass, let's make us some buttons!
@@ -271,7 +271,7 @@ function social_warfare_buttons( $array = array() ) {
 			$assets .= '</div>';
 
 			// Reset the cache timestamp if needed
-			if ( swp_is_cache_fresh( $postID ) == false ) :
+			if ( swp_is_cache_fresh( $postID ) == false  && 'legacy' === $options['cacheMethod'] ) :
 				delete_post_meta( $postID,'swp_cache_timestamp' );
 				update_post_meta( $postID,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
 			endif;
