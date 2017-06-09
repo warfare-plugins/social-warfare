@@ -120,13 +120,7 @@ function swp_get_excerpt_by_id( $post_id ) {
 
 	// Filter out any inline script or style tags as well as their content
 	if( !empty( $the_excerpt ) ):
-		libxml_use_internal_errors(true);
-		$html = new DOMDocument();
-		@$html->loadHTML($the_excerpt);
-		swp_remove_elements_by_tag_name('script', $html);
-		swp_remove_elements_by_tag_name('style', $html);
-		$the_excerpt = $html->saveHtml();
-		libxml_use_internal_errors(false);
+		$the_excerpt = preg_replace('/(<script[^>]*>.+?<\/script>|<style[^>]*>.+?<\/style>)/s', '', $the_excerpt);
 	endif;
 
 	$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
