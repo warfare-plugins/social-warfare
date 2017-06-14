@@ -90,7 +90,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 			$fresh_cache = true;
 		}
 
-		// return $fresh_cache;
+		return $fresh_cache;
 	}
 
 	// Always be TRUE if we're not on a single.php otherwise we could end up
