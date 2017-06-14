@@ -58,8 +58,7 @@ function swp_facebook_network( $networks ) {
  * @return string $request_url The complete URL to be used to access share counts via the API
  */
 function swp_facebook_request_link( $url ) {
-	$request_url = 'https://graph.facebook.com/?id=' . $url;
-	return $request_url;
+	return 0;
 }
 
 /**
@@ -71,32 +70,7 @@ function swp_facebook_request_link( $url ) {
  * @return int $total_activity The number of shares reported from the API
  */
 function swp_format_facebook_response( $response ) {
-
-	$url = get_permalink( get_the_ID() );
-
-	// Parse the original request for shares
-	$response = json_decode( $response, true );
-
-	// Create a second request for likes and comments
-	$request_url = 'https://graph.facebook.com/?id=' . $url . '&fields=og_object{likes.summary(true),comments.summary(true)}';
-	$next_response = swp_file_get_contents_curl( $request_url );
-	$next_response = json_decode( $next_response, true );
-
-	// Fetch our counts for all three
-	$shares = isset( $response['share']['share_count'] )?intval( $response['share']['share_count'] ):0;
-	$likes = isset( $next_response['og_object']['likes']['summary']['total_count'] )?intval( $next_response['og_object']['likes']['summary']['total_count'] ):0;
-	$comments = isset( $next_response['og_object']['comments']['summary']['total_count'] )?intval( $next_response['og_object']['comments']['summary']['total_count'] ):0;
-	$total_activity = $shares + $likes + $comments;
-
-	if ( _swp_is_debug( 'facebook' ) ) {
-		var_dump( $facebook_id );
-		var_dump( $response );
-		var_dump( $next_response );
-		var_dump( $shares );
-		var_dump( $total_activity );
-	}
-
-	return $total_activity;
+	return 0;
 }
 
 /**
