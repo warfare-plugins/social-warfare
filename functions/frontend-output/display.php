@@ -70,7 +70,7 @@ function social_warfare_wrapper( $content ) {
 	$content = social_warfare_buttons( $array );
 
 	// Add an invisible div to the content so the image hover pin button finds the content container area
-	if( false === is_admin() ):
+	if( false === is_admin() && false == is_feed() ):
 		$content .= '<div class="swp-content-locator"></div>';
 	endif;
 
