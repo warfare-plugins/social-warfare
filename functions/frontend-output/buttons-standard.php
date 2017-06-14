@@ -271,7 +271,7 @@ function social_warfare_buttons( $array = array() ) {
 			$assets .= '</div>';
 
 			// Reset the cache timestamp if needed
-			if ( swp_is_cache_fresh( $postID ) == false  && 'legacy' === $options['cacheMethod'] ) :
+			if ( swp_is_cache_fresh( $postID ) == false  && isset($options['cacheMethod']) && 'legacy' === $options['cacheMethod'] ) :
 				delete_post_meta( $postID,'swp_cache_timestamp' );
 				update_post_meta( $postID,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
 			endif;
