@@ -118,7 +118,7 @@ function social_warfare_buttons( $array = array() ) {
 		return $array['content'];
 
 		// Don't do anything if we're in the admin section
-	elseif ( is_admin() || is_attachment() ) :
+	elseif ( is_admin() ) :
 		return $array['content'];
 
 		// If all the checks pass, let's make us some buttons!
