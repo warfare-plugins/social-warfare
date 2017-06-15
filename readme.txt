@@ -186,6 +186,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.7 (15 JUN 2017) =
+
+* Fixed a 500 internal server error.
+* Fixed a CSS bug that would sometimes cut off the bottom pixel of the button's border.
+* Added HTML Entity Decode function to ensure foreign characters are populated correctly in open graph tags.
+
 = 2.2.6 (24 MAY 2017) =
 
 * Added Event Tracking for Click-to-Tweets and Image Pins.
