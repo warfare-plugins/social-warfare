@@ -363,6 +363,22 @@ function swp_options_advanced($swp_options) {
 			'size'				=> 'two-thirds',
 			'content'				=> __( 'Full Content?' , 'social-warfare' ),
 			'default'			=> false,
+			'premium'			=> false,
+			'divider'			=> true
+		),
+		'force_new_shares_title' => array(
+			'type'		=> 'title',
+			'content'	=> __( 'Force New Shares' , 'social-warfare' )
+		),
+		'force_new_shares_description' => array(
+			'type'		=> 'paragraph',
+			'content'	=> __( 'If the API share count request returns a lower number than previously recorded, we ignore the new number and retain the original higher number from the previous request. Activating this will force the new share number to be accepted even if it is a lower number than previously recorded.' , 'social-warfare' )
+		),
+		'force_new_shares'		=> array(
+			'type'				=> 'checkbox',
+			'size'				=> 'two-thirds',
+			'content'				=> __( 'Full Content?' , 'social-warfare' ),
+			'default'			=> false,
 			'premium'			=> false
 		)
 	);

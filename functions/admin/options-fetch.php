@@ -88,6 +88,7 @@ function swp_get_user_options( $admin = false ) {
 		'advanced_pinterest_fallback'       => 'all',
 		'emphasize_icons'                   => 0,
 		'floatLeftMobile'                   => 'bottom',
+		'force_new_shares'                  => false,
 		'newOrderOfIcons' => array(
 			'active' => array(
 				'twitter'    => 'Twitter',
