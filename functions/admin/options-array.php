@@ -377,7 +377,7 @@ function swp_options_advanced($swp_options) {
 		'force_new_shares'		=> array(
 			'type'				=> 'checkbox',
 			'size'				=> 'two-thirds',
-			'content'				=> __( 'Full Content?' , 'social-warfare' ),
+			'content'				=> __( 'Force New Shares?' , 'social-warfare' ),
 			'default'			=> false,
 			'premium'			=> false
 		)
