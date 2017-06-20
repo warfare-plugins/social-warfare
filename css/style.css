@@ -44,7 +44,7 @@ div.nc_socialPanel .nc_tweetContainer {
 	float: left;
 	font-family: Lato;
 	height: 32px;
-	margin: 0 5px;
+	margin: 0 5px 3px 5px;
 	min-width: 34px;
 	overflow: hidden;
 	text-align: center;
