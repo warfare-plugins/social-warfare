@@ -304,7 +304,7 @@ function swp_facebook_shares_update() {
 
 	$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
-	if ( $activity > $previous_activity ) :
+	if ( $activity > $previous_activity || (isset($options['force_new_shares']) && true === $options['force_new_shares']) ) :
 		delete_post_meta( $post_id, '_facebook_shares' );
 		update_post_meta( $post_id, '_facebook_shares', $activity );
 	endif;
