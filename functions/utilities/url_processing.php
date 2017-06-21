@@ -80,7 +80,7 @@ function swp_bitly_shortener( $array ) {
 
 					// If the link has already been shortened....
 					$existingURL 		= get_post_meta( $postID,'bitly_link_' . $network,true );
-					if ( $existingURL && swp_is_cache_fresh( $postID ) == true ) :
+					if ( $existingURL ) :
 						$array['url'] = $existingURL;
 						return $array;
 
@@ -153,7 +153,7 @@ function swp_bitly_shortener( $array ) {
 						$array['url'] = $_GLOBALS['sw']['links'][ $postID ];
 						return $array;
 
-						// If we've don't already have a generated link....
+					// If we've don't already have a generated link....
 					else :
 
 						// Use the bitly function to construct a shortened link
@@ -298,7 +298,7 @@ function swp_process_url( $url, $network, $postID ) {
 		// Run the anaylitcs hook filters
 		$array = apply_filters( 'swp_analytics' , $array );
 
-		// Run the link shortening hook filters, but not on Pinterest 
+		// Run the link shortening hook filters, but not on Pinterest
 		if($network !== 'pinterest'):
 			$array = apply_filters( 'swp_link_shortening' , $array );
 		endif;
