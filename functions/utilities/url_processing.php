@@ -78,17 +78,18 @@ function swp_bitly_shortener( $array ) {
 			// If Google Analytics is Activated....
 			if ( $options['googleAnalytics'] == true ) :
 
-				// If the Cache is still fresh or a previous API request failed....
-				if ( swp_is_cache_fresh( $postID ) == true || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+				// If the link has already been shortened....
+				$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );
 
-					// If the link has already been shortened....
-					$existingURL 		= get_post_meta( $postID,'bitly_link_' . $network,true );
+				// If the Cache is still fresh or a previous API request failed....
+				if ( ( swp_is_cache_fresh( $postID ) == true && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+
 					if ( $existingURL ) :
 						if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 						$array['url'] = $existingURL;
 						return $array;
 
-						// If the link has NOT already been shortened
+					// If the link has NOT already been shortened
 					else :
 						if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 						// ....Return the normal URL
