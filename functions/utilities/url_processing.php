@@ -60,6 +60,9 @@ function swp_bitly_shortener( $array ) {
 	$network = $array['network'];
 	$postID = $array['postID'];
 
+
+	if( true === _swp_is_debug('bitly') ){ echo swp_is_cache_fresh( $postID ); }
+
 	// Fetch the User's Options
 	$options = $swp_user_options;
 

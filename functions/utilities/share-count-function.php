@@ -106,7 +106,7 @@ function get_social_warfare_shares( $postID ) {
 				endif;
 				if ( $shares[ $network ] <= $old_shares[ $network ] && (!isset($options['force_new_shares']) || false === $options['force_new_shares']) ) :
 					$shares[ $network ] = $old_shares[ $network ];
-				else :
+				elseif($shares[$network] > 0) :
 					delete_post_meta( $postID,'_' . $network . '_shares' );
 					update_post_meta( $postID,'_' . $network . '_shares',$shares[ $network ] );
 				endif;
