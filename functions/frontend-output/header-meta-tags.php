@@ -37,7 +37,7 @@ function swp_add_header_meta() {
 
 	/**
 	 * Create and return the values to be used in the header meta tags
-	 * 
+	 *
 	 * @since 2.1.4
 	 * @access public
 	 * @var array $info An array of information
@@ -62,9 +62,9 @@ function swp_add_header_meta() {
 	$info = apply_filters( 'swp_header_html' , $info );
 
 	if ( $info['html_output'] ) :
-		echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' http://warfareplugins.com -->';
+		echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->';
 		echo $info['html_output'];
-		echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' http://warfareplugins.com -->' . PHP_EOL . PHP_EOL;
+		echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->' . PHP_EOL . PHP_EOL;
 	endif;
 }
 
