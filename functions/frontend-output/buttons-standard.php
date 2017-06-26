@@ -295,16 +295,16 @@ function social_warfare_buttons( $array = array() ) {
 					return $assets;
 				elseif ( $array['content'] === false ) :
 					echo $assets;
-				elseif ( $array['where'] == 'below' ) :
+				elseif ( isset( $array['where'] ) && $array['where'] == 'below' ) :
 					$content = $array['content'] . '' . $assets;
 					return $content;
-				elseif ( $array['where'] == 'above' ) :
+				elseif ( isset( $array['where'] ) && $array['where'] == 'above' ) :
 					$content = $assets . '' . $array['content'];
 					return $content;
-				elseif ( $array['where'] == 'both' ) :
+				elseif ( isset( $array['where'] ) && $array['where'] == 'both' ) :
 					$content = $assets . '' . $array['content'] . '' . $assets;
 					return $content;
-				elseif ( $array['where'] == 'none' ) :
+				elseif ( isset( $array['where'] ) && $array['where'] == 'none' ) :
 					return $array['content'];
 				endif;
 			endif;
