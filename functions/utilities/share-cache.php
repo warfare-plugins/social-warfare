@@ -211,6 +211,8 @@ function swp_cache_delete_timestamp() {
 }
 add_action( 'save_post', 'swp_cache_delete_timestamp' );
 add_action( 'save_post', 'swp_cache_store_autoloads' );
+add_action( 'publish_post', 'swp_cache_delete_timestamp' );
+add_action( 'publish_post', 'swp_cache_store_autoloads' );
 
 /**
  * A function to store all the fields for autoloading
