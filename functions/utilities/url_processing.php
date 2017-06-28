@@ -291,6 +291,8 @@ function swp_make_bitly_url( $url, $network, $access_token ) {
 
 function swp_process_url( $url, $network, $postID ) {
 
+	global $swp_user_options;
+
 	// $bitly_api = 'https://api-ssl.bitly.com/v3/link/lookup?url='.urlencode($url).'&login='.$login.'&apiKey='.$appkey;
 	// $data = swp_file_get_contents_curl($bitly_api);
 	// $data = json_decode($data);
@@ -310,10 +312,12 @@ function swp_process_url( $url, $network, $postID ) {
 		$array['postID'] = $postID;
 
 		// Run the anaylitcs hook filters
-		$array = apply_filters( 'swp_analytics' , $array );
+		if( !isset( $swp_user_options['utm_on_pins']) || (false === $swp_user_options['utm_on_pins'] && $network !== 'pinterest') ):
+			$array = apply_filters( 'swp_analytics' , $array );
+		endif;
 
 		// Run the link shortening hook filters, but not on Pinterest
-		if($network !== 'pinterest'):
+		if( $network !== 'pinterest' ):
 			$array = apply_filters( 'swp_link_shortening' , $array );
 		endif;
 		return $array['url'];

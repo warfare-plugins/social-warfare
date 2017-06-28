@@ -361,7 +361,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			var pinMedia = false;
 
-			if ( $image.data( 'media' ) ) {
+			if ( 'undefined' !== typeof swpPinIt.image_source ) {
+				pinMedia = swpPinIt.image_source;
+			} else if ( $image.data( 'media' ) ) {
 				pinMedia = $image.data( 'media' );
 			} else if ( $(this).attr('data-lazy-src') ) {
 			    pinMedia = $(this).attr('data-lazy-src');
@@ -380,7 +382,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			var pinDesc = '';
 
-			if ( $image.attr( 'title' ) ) {
+			if ( 'undefined' !== typeof swpPinIt.image_description){
+				pinDesc = swpPinIt.image_description;
+			} else if ( $image.attr( 'title' ) ) {
 				pinDesc = $image.attr( 'title' );
 			} else if ( $image.attr( 'alt' ) ) {
 				pinDesc = $image.attr( 'alt' );
