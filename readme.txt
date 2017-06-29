@@ -186,6 +186,19 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.8 (29 JUN 2017) =
+
+* Added the option to use the custom Pinterest image for the image hover pin buttons rather than the image being hovered.
+* Added the option to use the custom Pinterest description for the image hover pin buttons rather than the alt text of the image.
+* Added the option to turn off UTM tracking for Pinterest since Pinterest seems to tally pin counts separately when UTM is used.
+* Added an option to force new shares. Normally the plugin ignores new share counts if the count is lower than the count that we previously fetched from the API's. If you activate this feature, it will go with the new count even if it is lower than previously reported by the API's.
+* Fixed an issue that was affecting share counts being fetched on some sites.
+* Fixed an issue that was affecting the open graph image on some sites when posts were scheduled.
+* Fixed an issue that was causing some sites not to generate Bitly links on new posts.
+* Added some debugging tools to make it easier to diagnose any future issues with Bitly links.
+* Added a conditional to catch an undefined index warning.
+* Changed the link in the head html comment to be https.
+
 = 2.2.7 (15 JUN 2017) =
 
 * Fixed a 500 internal server error.
