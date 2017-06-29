@@ -186,6 +186,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.9 (29 JUN 2017) =
+
+* Added Brazilian Portuguese to available languages
+* Fixed some formatting and functionality of the email button.
+* Fixed an unusual HTML issue in the OG title tag.
+
 = 2.2.8 (29 JUN 2017) =
 
 * Added the option to use the custom Pinterest image for the image hover pin buttons rather than the image being hovered.
