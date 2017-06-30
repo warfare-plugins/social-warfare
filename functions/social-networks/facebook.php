@@ -58,7 +58,8 @@ function swp_facebook_network( $networks ) {
  * @return string $request_url The complete URL to be used to access share counts via the API
  */
 function swp_facebook_request_link( $url ) {
-	return 0;
+	$link = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id='.$url;
+	return $link;
 }
 
 /**
@@ -70,7 +71,12 @@ function swp_facebook_request_link( $url ) {
  * @return int $total_activity The number of shares reported from the API
  */
 function swp_format_facebook_response( $response ) {
-	return 0;
+	$formatted_response = json_decode( $response , true);
+	$likes = $formatted_response['og_object']['likes']['summary']['total_count'];
+	$comments = $formatted_response['share']['comment_count'];
+	$shares = $formatted_response['share']['share_count'];
+	$total = $likes + $comments + $shares;
+	return $total;
 }
 
 /**

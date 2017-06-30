@@ -121,31 +121,31 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		 * Run all the API calls
 		 */
 		$.when(
-			$.get('https://graph.facebook.com/?id=' + swp_post_url) ,
-			$.get('https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}') ,
-			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?id=' + swp_post_recovery_url) : ''),
-			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?id=' + swp_post_recovery_url + '&fields=og_object{likes.summary(true),comments.summary(true)}') : '')
+			$.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url) ,
+			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url) : '')
 		)
-		.then( function(a, b, c, d) {
+		.then( function( a, b ) {
 			/**
 			 * Parse the responses, add up the activity, send the results to admin_ajax
 			 */
-			if( 'undefined' !== typeof a[0].share && 'undefined' !== typeof b[0].og_object ) {
+			if( 'undefined' !== typeof a[0].share ) {
+				console.log(a);
 				var f1 = absint( a[0].share.share_count);
-				var f2 = absint( b[0].og_object.likes.summary.total_count );
-				var f3 = absint( b[0].og_object.comments.summary.total_count );
+				var f2 = absint( a[0].share.comment_count );
+				var f3 = absint( a[0].og_object.likes.summary.total_count );
 				var fShares = f1 + f2 + f3;
 				if(swp_post_recovery_url) {
-					if (typeof c[0].share !== 'undefined') {
-						var f4 = absint( c[0].share.share_count);
+					console.log(b);
+					if (typeof b[0].share !== 'undefined') {
+						var f4 = absint( b[0].share.share_count);
+						var f5 = absint( b[0].share.comment_count);
 					} else {
-						var f4 = 0;
+						var f4 = 0, f5 = 0;
 					}
-					if (typeof d[0].og_object !== 'undefined') {
-						var f5 = absint( d[0].og_object.likes.summary.total_count );
-						var f6 = absint( d[0].og_object.comments.summary.total_count );
+					if (typeof b[0].og_object !== 'undefined') {
+						var f6 = absint( b[0].og_object.likes.summary.total_count );
 					} else {
-						var f5 = 0, f6 = 0;
+						var f6 = 0
 					}
 					var fShares2 = f4 + f5 + f6;
 					if (fShares !== fShares2) {
@@ -159,7 +159,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				};
 
 				$.post( swp_admin_ajax, swpPostData, function( response ) {
-					console.log( 'Facebook Shares Response: ' + response );
+					console.log( 'Facebook Shares Response: ' + fShares );
 				});
 			}
 		});
