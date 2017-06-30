@@ -18,7 +18,7 @@
 	-moz-box-align: stretch;
 	-webkit-box-pack: justify;
 	-moz-box-pack: justify;
-	direction: rtl;
+	direction: ltr;
 	-ms-flex-align: stretch;
 	-ms-flex-line-pack: center;
 	-ms-flex-pack: justify;
