@@ -8,20 +8,20 @@
  * @since     1.0.0
  */
 
-add_action( 'plugins_loaded', 'swp_localization_init' );
+//add_action( 'plugins_loaded', 'swp_localization_init' );
 /**
  * Load up the text domain for translations
  *
  * @since  1.0.0
  * @return void
  */
-function swp_localization_init() {
+//function swp_localization_init() {
 	load_plugin_textdomain(
 		'social-warfare',
 		false,
 		dirname( plugin_basename( SWP_PLUGIN_FILE ) ) . '/languages'
 	);
-}
+//}
 
 /**
  * Remove translations from memory.
