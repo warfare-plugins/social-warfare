@@ -9,7 +9,7 @@
  ******************************************************************/
 
 // Enqueue the Bitly Shortener Hook
-add_filter( 'swp_link_shortening'  	, 'swp_bitly_shortener' );
+add_filter( 'swp_link_shortening'  	, 'swp_link_shortener' );
 add_filter( 'swp_analytics' 		, 'swp_google_analytics' );
 
 
@@ -49,7 +49,7 @@ function swp_google_analytics( $array ) {
  ******************************************************************/
 
 // The Bitly Shortener Function called by the filter hook
-function swp_bitly_shortener( $array ) {
+function swp_link_shortener( $array ) {
 	global $swp_user_options;
 
 	if ( $array['network'] == 'totes' ) :
@@ -129,11 +129,13 @@ function swp_bitly_shortener( $array ) {
 
 				// If Google Analytics is NOT activated....
 			else :
+
+				$existingURL = get_post_meta( $postID,'bitly_link',true );
+
 				// If the cache is fresh or if the API has failed already....
-				if ( swp_is_cache_fresh( $postID ) == true || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+				if ( (swp_is_cache_fresh( $postID ) == true && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 					// If we have a shortened URL in the cache....
-					$existingURL = get_post_meta( $postID,'bitly_link',true );
 					if ( $existingURL ) :
 						if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
