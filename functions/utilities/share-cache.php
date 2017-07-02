@@ -211,8 +211,24 @@ function swp_cache_delete_timestamp() {
 }
 add_action( 'save_post', 'swp_cache_delete_timestamp' );
 add_action( 'save_post', 'swp_cache_store_autoloads' );
+add_action( 'save_post', 'swp_clear_bitly_cache' );
 add_action( 'publish_post', 'swp_cache_delete_timestamp' );
 add_action( 'publish_post', 'swp_cache_store_autoloads' );
+add_action( 'publish_post', 'swp_clear_bitly_cache' );
+
+/**
+ * A function to clear Bitly's cache when the post is UPDATED. This way if they change the permalink, it will fetch new links.
+ *
+ * @since  2.2.10 | 02 JUL 2017 | Created
+ * @return null
+ */
+function swp_clear_bitly_cache() {
+	$networks = apply_filters( 'swp_button_options' , $icons_array );
+	foreach($networks['content'] as $network=>$data):
+		delete_post_meta( get_the_ID() ,'bitly_link_' . $network );
+	endforeach;
+	delete_post_meta( get_the_ID() ,'bitly_link' );
+}
 
 /**
  * A function to store all the fields for autoloading
