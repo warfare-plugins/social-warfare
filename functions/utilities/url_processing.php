@@ -82,7 +82,7 @@ function swp_link_shortener( $array ) {
 				$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );
 
 				// If the Cache is still fresh or a previous API request failed....
-				if ( ( swp_is_cache_fresh( $postID ) == true && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+				if ( ( true === swp_is_cache_fresh( $postID , true ) && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 					if ( $existingURL ) :
 						if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
@@ -133,7 +133,7 @@ function swp_link_shortener( $array ) {
 				$existingURL = get_post_meta( $postID,'bitly_link',true );
 
 				// If the cache is fresh or if the API has failed already....
-				if ( (swp_is_cache_fresh( $postID ) == true && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+				if ( (true === swp_is_cache_fresh( $postID , true ) && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 					// If we have a shortened URL in the cache....
 					if ( $existingURL ) :
