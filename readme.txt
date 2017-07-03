@@ -186,6 +186,15 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.10 (03 JUL 2017) =
+
+* Fixed the way languages are loaded.
+* Fixed the way Pin image sources and pin description image sources are loaded.
+* Adjusted how the Bitly functions fetch links and determine when the cache is expired.
+* Set the Bitly cache to be deleted when a post is updated in case the permalink has changed.
+* Fixed the way that the buttons appear on Right-to-Left direction sites.
+* Adjusted how share counts are updated. They should be far more reliable now.
+
 = 2.2.9 (29 JUN 2017) =
 
 * Added Brazilian Portuguese to available languages
