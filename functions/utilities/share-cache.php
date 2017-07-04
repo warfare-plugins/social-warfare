@@ -140,16 +140,17 @@ function swp_cache_rebuild() {
 	 *  Bail if we already have fresh cache and this request is invalid.
 	 *
 	 */
-	if ( swp_is_cache_fresh( $post_id , true , true ) && !isset($_POST['force']) ) {
-		wp_send_json_error();
-		die();
-	}
+	//if ( swp_is_cache_fresh( $post_id , true , true ) && !isset($_POST['force']) ) {
+	//	wp_send_json_error();
+	//	die();
+	//}
 
 	/**
 	 *  Force the cache trigger on.
 	 *
 	 */
 	set_query_var( 'swp_cache', 'rebuild' );
+	$_POST['swp_cache'] = 'rebuild';
 
 	/**
 	 * Fetch new share counts via the various API's
