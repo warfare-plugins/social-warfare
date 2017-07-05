@@ -228,6 +228,9 @@ add_action( 'publish_post', 'swp_clear_bitly_cache' );
  * @return null
  */
 function swp_clear_bitly_cache() {
+	$icons_array = array(
+		'type'		=> 'buttons'
+	);
 	$networks = apply_filters( 'swp_button_options' , $icons_array );
 	foreach($networks['content'] as $network=>$data):
 		delete_post_meta( get_the_ID() ,'bitly_link_' . $network );
