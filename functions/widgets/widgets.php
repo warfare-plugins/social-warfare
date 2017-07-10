@@ -320,6 +320,9 @@ class swp_popular_posts_widget extends WP_Widget {
 				'meta_key' 			=> '_' . $network,
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
+				'update_post_meta_cache' => false,
+				'cache_results'     => false,
+				'ignore_sticky_posts' => 1
 			);
 
 			// If a custom timeframe is being used....
@@ -332,6 +335,9 @@ class swp_popular_posts_widget extends WP_Widget {
 				'meta_key' 			=> '_' . $network,
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
+				'update_post_meta_cache' => false,
+				'cache_results'     => false,
+				'ignore_sticky_posts' => 1,
 				'date_query'    	=> array(
 					'column'  		=> 'post_date',
 					'after'   		=> '- ' . $timeframe . ' days',
