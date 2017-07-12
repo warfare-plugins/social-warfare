@@ -51,8 +51,8 @@ function swp_save_user_profile_fields( $user_id ) {
 	}
 
 	/* Copy and paste this line for additional fields. Make sure to change 'twitter' to the field ID. */
-	update_usermeta( $user_id, 'swp_twitter', $_POST['swp_twitter'] );
-	update_usermeta( $user_id, 'swp_fb_author', $_POST['swp_fb_author'] );
+	update_user_meta( $user_id, 'swp_twitter', $_POST['swp_twitter'] );
+	update_user_meta( $user_id, 'swp_fb_author', $_POST['swp_fb_author'] );
 }
 
 function swp_get_author( $post_id = 0 ) {
