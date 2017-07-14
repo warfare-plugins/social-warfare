@@ -368,6 +368,6 @@ function swp_remove_screen_options( $display_boolean, $wp_screen_object ){
  		$wp_screen_object->render_per_page_options();
  		return false;
      }
- 	return true;
+ 	return $display_boolean;
  }
  add_filter( 'screen_options_show_screen', 'swp_remove_screen_options', 10, 2 );
