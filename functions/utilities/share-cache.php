@@ -421,7 +421,7 @@ function swp_output_cache_trigger( $info ) {
 		                    browser_date = new Date().getTime();
 		                browser_date = Math.floor( browser_date / 1000 );
 		                console.log( "Browser Timestamp is " + browser_date );
-		                var elapsed_time = ( swp_cache_data.timestamp - browser_date );
+		                var elapsed_time = ( browser_date - swp_cache_data.timestamp );
 		                if( elapsed_time > 60 ){
 		                    console.log( "Elapsed time since server timestamp is greater than 60 seconds -- " + elapsed_time + "seconds" );
 		                    within_timelimit = false;
