@@ -132,7 +132,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				console.log(a);
 				var f1 = absint( a[0].share.share_count);
 				var f2 = absint( a[0].share.comment_count );
-				var f3 = absint( a[0].og_object.likes.summary.total_count );
+				if( 'undefined' !== typeof a[0].og_object ){
+					var f3 = absint( a[0].og_object.likes.summary.total_count );
+				} else {
+					var f3 = 0;
+				}
 				var fShares = f1 + f2 + f3;
 				if(swp_post_recovery_url) {
 					console.log(b);
