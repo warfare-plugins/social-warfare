@@ -303,7 +303,7 @@ function swp_cache_rebuild_pin_image($post_id) {
 
 	// Check if a custom pinterest image has been declared
 	$pin_image_id = get_post_meta( $post_id , 'nc_pinterestImage' , true );
-	if ( $pin_image_id ) :
+	if ( false !== $pin_image_id ) :
 		$pin_image_url = wp_get_attachment_url( $pin_image_id );
 		$cur_image_url = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
 
@@ -312,6 +312,8 @@ function swp_cache_rebuild_pin_image($post_id) {
 			delete_post_meta( $post_id,'swp_pinterest_image_url' );
 			update_post_meta( $post_id,'swp_pinterest_image_url' , $pin_image_url );
 		endif;
+	else:
+		delete_post_meta( $post_id , 'swp_pinterest_image_url' );
 	endif;
 }
 
