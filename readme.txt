@@ -186,6 +186,16 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.11 (27 JUL 2017) =
+
+* Updated the Pinterest cache rebuild logic.
+* Fixed a CSS bug on iOS mobile display.
+* Updated the screen options function to return $display_boolean instead of always returning true.
+* Fixed a Facebook API Javascript error.
+* Updated the logic for the Popular posts widget.
+* Fixed an undefined index error on the bitly cache reset.
+* Modified the way the cache trigger is validated.
+
 = 2.2.10 (03 JUL 2017) =
 
 * Fixed the way languages are loaded.
