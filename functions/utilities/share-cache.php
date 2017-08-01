@@ -246,10 +246,8 @@ function swp_clear_bitly_cache() {
  */
 function swp_cache_store_autoloads() {
 	$post_id = get_the_ID();
-	if( 'publish' === get_post_status( $post_id ) ):
-		swp_cache_rebuild_pin_image($post_id);
-		swp_cache_rebuild_og_image($post_id);
-	endif;
+	swp_cache_rebuild_pin_image($post_id);
+	swp_cache_rebuild_og_image($post_id);
 }
 /**
  * Open Graph Image
