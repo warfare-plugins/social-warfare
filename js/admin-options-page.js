@@ -530,27 +530,31 @@
 	function registerPlugin() {
 		var registered = false;
 		var data = {
-			action: 'swp_ajax_passthrough',
+			action: 'swp_register_plugin',
 			security: swpAdminOptionsData.registerNonce,
 			activity: 'register',
-			email: $( 'input[name="emailAddress"]' ).val()
+			pro_license_key: $( 'input[name="pro_license_key"]' ).val()
 		};
 
 		loadingScreen();
 
+		console.log(data);
+
 		$.post( ajaxurl, data, function( response ) {
 			// If the response was a failure...
-			if ( ! response.success ) {
+
+			response = JSON.parse(response);
+
+			console.log(response);
+			if ( !response.success ) {
 				alert( 'Failure: ' + response.data );
 			} else {
-				// If the response was a success
-				$( 'input[name="premiumCode"]' ).val( response.data.premiumCode );
 				toggleRegistration( '1' );
 				registered = true;
 			}
-		});
 
-		clearLoadingScreen();
+			clearLoadingScreen();
+		});
 
 		return registered;
 	}
@@ -561,11 +565,9 @@
 	function unregisterPlugin() {
 		var unregistered = false;
 		var ajaxData = {
-			action: 'swp_ajax_passthrough',
+			action: 'swp_unregister_plugin',
 			security: swpAdminOptionsData.registerNonce,
-			activity: 'unregister',
-			email: $( 'input[name="emailAddress"]' ).val(),
-			key: $( 'input[name="premiumCode"]' ).val()
+			activity: 'unregister'
 		};
 
 		loadingScreen();
@@ -573,18 +575,21 @@
 		// Ping the home server to create a registration log
 		$.post( ajaxurl, ajaxData, function( response ) {
 			// If the response was a failure...
-			if ( ! response.success ) {
+			//
+			response = JSON.parse(response);
+			console.log(response);
+			if ( !response.success ) {
 				alert( 'Failure: ' + response.data );
 			} else {
 				// If the response was a success
-				$( 'input[name="premiumCode"]' ).val( '' );
-				$( 'input[name="emailAddress"]' ).val( '' );
+				$( 'input[name="pro_license_key"]' ).val( '' );
 				toggleRegistration( '0' );
 				unregistered = true;
 			}
+
+			clearLoadingScreen();
 		});
 
-		clearLoadingScreen();
 
 		return unregistered;
 	}
