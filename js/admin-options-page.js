@@ -522,6 +522,7 @@
 	function toggleRegistration( status ) {
 		$( '.registration-wrapper' ).attr( 'registration', status );
 		$( '.sw-admin-wrapper' ).attr( 'sw-registered', status );
+		$( '.sw-top-menu' ).attr( 'sw-registered', status );
 	}
 
 	/*******************************************************

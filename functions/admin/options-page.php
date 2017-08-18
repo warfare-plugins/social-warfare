@@ -112,12 +112,19 @@ function swp_build_options_page() {
 	 * Build the header menu
 	 */
 
+ 	if( function_exists('is_swp_registered') ):
+ 		$swp_registration = is_swp_registered();
+ 	else:
+ 		$swp_registration = false;
+ 	endif;
+
 	// Wrapper for the entire content area
 	echo '<div class="sw-header-wrapper">';
 
-	echo '<div class="sw-grid sw-col-940 sw-top-menu">';
+	echo '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . absint( $swp_registration ) . '">';
 	echo '<div class="sw-grid sw-col-700">';
 	echo '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-light.png" />';
+	echo '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-pro-light.png" />';
 	echo '<ul class="sw-header-menu">';
 	$i = 0;
 	foreach ( $swp_options_page['tabs']['links'] as $key => $value ) : ++$i;
@@ -135,12 +142,6 @@ function swp_build_options_page() {
 	/**
 	 * Build the Tab Container
 	 */
-
-	if( function_exists('is_swp_registered') ):
-		$swp_registration = is_swp_registered();
-	else:
-		$swp_registration = false;
-	endif;
 
 	echo '<div class="sw-admin-wrapper" sw-registered="' . absint( $swp_registration ) . '">';
 

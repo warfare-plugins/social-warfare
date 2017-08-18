@@ -186,6 +186,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.3.0 (18 AUG 2017) =
+
+* Migrated the registration system from WooCommerce to EDD (THIS IS HUGE!)
+* Fixed some CSS for the button icon and count alignment.
+* Updated the share cache function for pin and OG stuff.
+
 = 2.2.11 (27 JUL 2017) =
 
 * Updated the Pinterest cache rebuild logic.

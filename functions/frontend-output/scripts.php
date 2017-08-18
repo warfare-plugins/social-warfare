@@ -72,6 +72,7 @@ add_action( 'admin_enqueue_scripts', 'enqueueSocialWarfareAdminScripts' );
  * @return void
  */
 function enqueueSocialWarfareAdminScripts( $screen ) {
+/**
 	$screens = array(
 		'toplevel_page_social-warfare',
 		'post.php',
@@ -81,7 +82,7 @@ function enqueueSocialWarfareAdminScripts( $screen ) {
 	if ( ! in_array( $screen, $screens, true ) ) {
 		return;
 	}
-
+*/
 	enqueueSocialWarfareScripts();
 
 	$suffix = swp_get_suffix();

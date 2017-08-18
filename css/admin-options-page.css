@@ -164,9 +164,21 @@ img {
 	margin: 0;
 }
 
-.sw-header-logo {
+.sw-top-menu[sw-registered="0"] .sw-header-logo {
 	height: 75px;
 	float: left;
+}
+
+.sw-top-menu[sw-registered="1"] .sw-header-logo-pro {
+	height: 75px;
+	float: left;
+}
+.sw-top-menu[sw-registered="1"] .sw-header-logo {
+	display:none;
+}
+
+.sw-top-menu[sw-registered="0"] .sw-header-logo-pro {
+	display:none;
 }
 
 .sw-header-menu {
