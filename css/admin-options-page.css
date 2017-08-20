@@ -571,6 +571,7 @@ p.sw-subtitle.sw-registration-text {
 	width: auto;
 	height: auto;
 	display: inline-block;
+	max-width:520px;
 }
 
 .sw-s {
