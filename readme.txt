@@ -186,6 +186,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.3.1 (20 AUG 2017) =
+
+* Fixed some issues with the registration system.
+* Fixed the CSS that controls the layout of the plugin logo on the options page.
+* Adjusted some CSS for the options on the options page.
+
 = 2.3.0 (18 AUG 2017) =
 
 * Migrated the registration system from WooCommerce to EDD (THIS IS HUGE!)
