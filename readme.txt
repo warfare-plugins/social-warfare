@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: addthis, addtoany, analytics, bitly, buffer, button, click to tweet, digg, email, emailbutton, facebook, facebookbutton, facebooklike, facebookshare, flipboard, floatingbuttons, floatingsharebuttons, followbuttons, frameblocker, framebuster, google+1, googleanalyticsintegration, googleplus, googleplusone, googleplusshare, hackernews, iframeblocker, iframebuster, likebutton, linkshortening, linkedin, mobilesharebar, mobilesharing, opengraph, pin, pinbutton, pinit, pinterest, pinterestsave, pinterestshare, plusone, pocket, reddit, richpins, share, sharebutton, sharebuttonsplugin, sharecountrecovery, sharecounts, sharefacebook, shareimage, sharenow, sharethis, sharebar, shareholic, sharify, sharingbuttons, social, socialbookmark, socialbuttons, socialicons, socialmedia, socialmediashare, socialmediasharing, socialmediawidget, socialplugin, socialshare, socialsharebuttons, socialsharing, socialize, stumbleupon, sumome, tumblr, tweet, tweetbutton, tweetcount, twitter, twitterbutton, twittercards, twittercounts, utm, utmtracking, whatsapp, yumbutton, yummly
 Requires at least: 3.5.1
 Tested up to: 4.8
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GNU General Public License v2.0 or later
 
 The most beautiful, lightning fast social sharing buttons built to boost shares and drive more traffic without slowing down your site.
