@@ -9,14 +9,12 @@
 function socialWarfareShortcode( $atts ) {
 	return socialWarfare( false,'after',false );
 }
-function social_warfareShortcode( $atts ) {
+function social_warfareShortcode( $array ) {
 
-	$array = shortcode_atts( array(
-	        'where' => 'after',
-	        'echo' => false,
-			'content' => false
-	    ), $atts );
-	
+	if ( ! isset( $array['where'] ) ) { $array['where'] = 'after'; }
+	if ( ! isset( $array['echo'] ) ) { $array['echo'] = false; }
+	if ( ! isset( $array['content'] ) ) { $array['content'] = false; }
+
 	$array['shortcode'] = true;
 	$array['devs'] = true;
 	return social_warfare( $array );
