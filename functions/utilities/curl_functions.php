@@ -99,7 +99,7 @@ function swp_file_get_contents_curl( $url ) {
 	$curl_errno = curl_errno( $ch );
 	curl_close( $ch );
 	if ( $curl_errno > 0 ) {
-		return 0;
+		return false;
 	}
 	return $cont;
 }
