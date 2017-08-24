@@ -1,29 +1,23 @@
 === Social Warfare ===
 Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia
-Tags: addthis, addtoany, analytics, bitly, buffer, button, click to tweet, digg, email, emailbutton, facebook, facebookbutton, facebooklike, facebookshare, flipboard, floatingbuttons, floatingsharebuttons, followbuttons, frameblocker, framebuster, google+1, googleanalyticsintegration, googleplus, googleplusone, googleplusshare, hackernews, iframeblocker, iframebuster, likebutton, linkshortening, linkedin, mobilesharebar, mobilesharing, opengraph, pin, pinbutton, pinit, pinterest, pinterestsave, pinterestshare, plusone, pocket, reddit, richpins, share, sharebutton, sharebuttonsplugin, sharecountrecovery, sharecounts, sharefacebook, shareimage, sharenow, sharethis, sharebar, shareholic, sharify, sharingbuttons, social, socialbookmark, socialbuttons, socialicons, socialmedia, socialmediashare, socialmediasharing, socialmediawidget, socialplugin, socialshare, socialsharebuttons, socialsharing, socialize, stumbleupon, sumome, tumblr, tweet, tweetbutton, tweetcount, twitter, twitterbutton, twittercards, twittercounts, utm, utmtracking, whatsapp, yumbutton, yummly
+Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
 Requires at least: 3.5.1
 Tested up to: 4.8
 Stable tag: 2.3.1
 License: GNU General Public License v2.0 or later
 
-The most beautiful, lightning fast social sharing buttons built to boost shares and drive more traffic without slowing down your site.
+The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
 
 == Description ==
 
-Social Warfare helps you get your content shared the way you want it to be shared. Get more shares and drive more traffic now with the best sharing plugin for WordPress!
+Get more social media shares which can lead to more website traffic with the best sharing plugin for WordPress! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="http://https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
 
 = WordPress Sharing Plugin =
-Did you know that <em>how</em> your content is shared is more important than <em>if</em> it's shared? Why? Because if it's shared in a way that doesn't drive traffic back to your site, it's worthless. What if you could make sure that every time your content is shared, it's shared in the most optimal way? That's where <a href="http://warfareplugins.com" rel="friend" title="Social Warfare">Social Warfare</a> can help. Social Warfare helps you customize how your content is shared and get more out of every single share that takes place on your website.
-
-> <strong>Social Warfare</strong><br>
-> Social Warfare is a premium WordPress plugin that has a limited set of free features. To access premium features and support you will need an active Social Warfare license. <a href="http://warfareplugins.com/" rel="friend" title="Social Warfare Plans">Click here to purchase your license.</a>
-
-= Free Social Sharing Options =
-Social Warfare is a lightning fast and highly customizable social share plugin with loads of features that make it the most effective sharing plugin on the market.
+Most social sharing plugins for WordPress slow down your site, are not attractive, and don't work the way you would hope. Social Warfare is both lightning fast and beautiful.
 
 Not only will it never slow down your website like other sharing plugins, we give you the most attractive buttons available that look great no matter what screen size or resolution.
 
-> Social Warfare has boosted social shares by <strong>300%</strong> without slowing down my blog.<br>
+> Social Warfare has boosted social shares by **300%** without slowing down my blog.<br>
 > Eddie Gear - Professional Blogger
 
 You can choose from the top social networks sharing buttons, including:
@@ -33,6 +27,7 @@ You can choose from the top social networks sharing buttons, including:
 * Google+
 * Pinterest
 * LinkedIn
+* StumbleUpon
 
 You can also choose where you want the buttons to show up. Choose from the following placement options:
 
@@ -41,15 +36,20 @@ You can also choose where you want the buttons to show up. Choose from the follo
 * Both above and below the post content
 * None (or) Manual placement
 
-We also give you the ability to have floating share buttons follow your readers down the screen when static (non-floating) buttons are not in view. This way the reader will always have easy access to your share buttons, no matter where they scroll on your page.
+We also give you the ability to have **floating share buttons** follow your readers down the screen when static (non-floating) buttons are not in view. This way the reader will always have easy access to your share buttons, no matter where they scroll on your page.
+
+> "This is by far the best looking social sharing plugin I have seen on the net!"<br>
+> David Foster, Online Personality
 
 = Social Proof =
-Proudly display how many times your content has been shared-- <strong>even tweet counts (with a Premium license)<strong>! Social Proof is a powerful psychological tool that has been proven to influence even more shares.
+Proudly display how many times your content has been shared-- **even tweet counts (with a _Social Warfare - Pro_ license)**! Social Proof is a powerful psychological tool that has been proven to influence even more shares.
+
+We use the social network API endpoints to ensure that the most accurate share counts are always displayed.
 
 = Popular Posts Widget based on Social Share Counts =
 Wouldn't you love to show what your most popular posts are based on the number of social shares's they've received? Social Warfare allows you to do just that.
 
-You can even choose to display most popular posts on a specific social network!
+You can even choose to display most your popular posts based on which social network they were popular on!
 
 Social Warfare's Popular Posts widget allows you to display and customize the look with:
 
@@ -62,20 +62,21 @@ Social Warfare's Popular Posts widget allows you to display and customize the lo
 A simple and effective way to create tweetable quotes right inside your posts or pages. This has proven to increase the average number of tweets per article dramatically.
 
 = Use Shortcodes to Manually Place Share Buttons Anywhere =
-If you want to place buttons in the middle of an article, you can with our shortcode. How about adding share buttons in a page that actually share out a different page altogether (like a "Thank You" page with share buttons that share the "Subscribe" page)? You can do that as well!
+If you want to place buttons in the middle of an article, you can with our `[social_warfare]` shortcode.
 
-If you're experienced with PHP, you can also easily hook Social Warfare into your theme templates for hyper customization.
+What if you wanted to add share buttons to a page but actually have them share out a different page altogether (like being able to share your “Sign-up” page from your “Thank You” page)? Social Warfare allows you to do this!
+
+If you're experienced with PHP, you can also hook Social Warfare into your theme templates for hyper customization.
 
 = Content Protection =
-We've built our highly demanded <a href="https://wordpress.org/plugins/frame-buster/" rel="friend" title="Frame Buster">Frame Buster</a> right into Social Warfare so that you are protected from content hijackers seeking to place their advertisements on top of your content without your permission.
+We've built our highly demanded <a href="https://wordpress.org/plugins/frame-buster/">Frame Buster</a> right into Social Warfare so that you are protected from content hijackers seeking to place their advertisements on top of your content without your permission.
 
-> <strong>Social Warfare</strong><br>
-> Social Warfare is a premium WordPress plugin that has a limited set of free features. To access premium features and support you will need an active Social Warfare license. <a href="http://warfareplugins.com/" rel="friend" title="Social Warfare Plans">Click here to purchase your license.</a>
+> Social Warfare is by far the best social sharing plugin I’ve ever used. I recommend it to all of my clients.<br>
+> Andrew Wilder, Marketing Consultant
 
 = Premium Social Sharing Options =
-Premium license holders also get access to the following social network share buttons:
+_Social Warfare - Pro_ license holders also get access to the following social network share buttons:
 
-* StumbleUpon
 * Reddit
 * Tumblr
 * Yummly
@@ -86,27 +87,27 @@ Premium license holders also get access to the following social network share bu
 * Flipboard
 * Email
 
-In addition to the extra social networks, you can also reactivate, track and display <strong>Twitter tweet counts</strong>!
+In addition to the extra social networks, you can also reactivate, track and display **Twitter tweet counts**!
 
 = Pin All the Images =
 Enabling the Image Hover Pin Button will place a "Pin" button over top of every image inside of your content when a reader hovers their mouse over it. This makes every image on your page highly sharable to Pinterest!
 
 = Powerful Share Customization =
-> "I use Social Warfare because how things are shared when I’m not there to do it is important!"<br>
+> "I use Social Warfare - Pro because how things are shared when I’m not there to do it is important!"<br>
 > Peg Fitzpatrick, author of The Art and Science of Social Media
 
-Social Warfare is among the pioneers of customizing how your content is shared, particularly with Pinterest. It allows you to decide exactly which image, title and description appears when your content is shared on sites like Facebook and Google+. This also applies to any other networks that use Open Graph data for social shares.
+Social Warfare is among the pioneers of customizing how your content is shared, particularly with Pinterest. The _Social Warfare - Pro_ add-on allows you to decide exactly which image, title and description appears when your content is shared on sites like Facebook and Google+. This also applies to any other networks that use Open Graph data for social shares.
 
-On top of that, you can upload a <strong>custom Pinterest image</strong> and write a custom description so that when someone clicks the pin button, the exact image you've chosen shows up with exactly the description you've written. No more hoping that your readers choose the best image and write an optimal description for you!
+On top of that, you can upload a **custom Pinterest image** and write a custom description so that when someone clicks the pin button, the exact image you've chosen shows up with exactly the description you've written. No more hoping that your readers choose the best image and write an optimal description for you!
 
 In addition to that, you can also write a custom tweet for when someone clicks on the Twitter button. The exact tweet you wrote will be displayed in the Twitter share box and Social Warfare will automatically add the link to your content and your @username to the end of it.
 
 These capabilities are what professional social media marketers and bloggers have been waiting for.
 
-= Social Warfare Sharing Options, Custom Design and Placements =
+= Social Warfare - Pro Sharing Options, Custom Design and Placements =
 Customize which sharing networks you display, how your buttons look and where they show up.
 
-You can choose from 6 different button shapes, 8 different color themes <strong>plus</strong> the ability to choose custom colors for your buttons. The design combinations are <em>unlimited</em>.
+You can choose from 6 different button shapes, 8 different color themes **plus** the ability to choose custom colors for your buttons. The design combinations are _unlimited_.
 
 You will also get 6 different Click to Tweet styles and an option to create your own style via your theme's CSS.
 
@@ -114,9 +115,9 @@ You will also get 6 different Click to Tweet styles and an option to create your
 If you would prefer to only show counts after a certain minimum number of shares has been met (to avoid "negative social proof"), you can do that as well. Or if you'd rather just have no counts showing at all, just turn them off altogether.
 
 = Share Recovery: Your Lost Share Counts Returned! =
-Have you ever changed permalink structures, domain prefixes, connection protocols (http-https) or just flat out changed domains and ended up <strong>losing all your social share counts?</strong>
+Have you ever changed permalink structures, domain prefixes, connection protocols (http-https) or just flat out changed domains and ended up **losing all your social share counts?**
 
-We've built a tool right into Social Warfare called <a href="https://warfareplugins.com/support/recover-social-share-counts-after-changing-permalink-settings/" rel="friend" title="Share Recovery">Share Recovery</a> which allows you to get back your lost share counts if you've ever had to modify your permalink settings.
+We've built a tool right into Social Warfare called <a href="https://warfareplugins.com/support/recover-social-share-counts-after-changing-permalink-settings/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" target="_blank" rel="friend">Share Recovery</a> which allows you to get back your lost share counts if you've ever had to modify your permalink settings.
 
 = Social Authorship, Twitter Cards, Rich Pins and More =
 It nice to have your stuff shared on social media, it's even nicer when you get mentioned in the social share! With Social Warfare you can ensure that your authorship is always in place, including:
@@ -150,9 +151,9 @@ This section describes how to install the plugin.
 
 == Frequently Asked Questions ==
 
-= I downloaded this plugin but don't have an Social Warfare premium license. How can I get one? =
+= I downloaded this plugin but don't have an Social Warfare - Pro license. How can I get one? =
 
-You can sign up for an Social Warfare premium license by <a href="https://warfareplugins.com/" rel="friend" title="Social Warfare Plans and Pricing">visiting our website</a> and choosing the package that best suits your needs.
+You can sign up for an Social Warfare premium license by <a href="https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_faq" rel="friend" title="Social Warfare Plans and Pricing">visiting our website</a> and choosing the package that best suits your needs.
 
 = How do I use the shortcodes? =
 
@@ -160,7 +161,7 @@ Shortcodes are used like so: [social_warfare]. If you would like to specify a di
 
 = Something isn't working as expected. How can I get support? =
 
-We have a growing archive of <a href="https://warfareplugins.com/support" rel="friend" title="Warfare Plugins Support">Support Articles</a> to help you address most questions and troubleshooting. If you wish to recieve email support, you will need a Premium license.
+We have a growing archive of <a href="https://warfareplugins.com/support/" rel="friend" title="Warfare Plugins Support">Support Articles</a> to help you address most questions and troubleshooting. If you wish to receive email support, you will need a Pro license.
 
 == Screenshots ==
 
@@ -169,11 +170,17 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 = Testimonial =
 
-> I use Social Warfare because how things are shared when I’m not there to do it is important!<br>
+> I use Social Warfare - Pro because how things are shared when I’m not there to do it is important!<br>
 > Peg Fitzpatrick, Social Media Strategist
+
+> Social Warfare is by far the best social-sharing-button plugin I’ve ever used. I recommend it to all of my clients.<br>
+> Andrew Wilder, Consultant
 
 > It's a beautiful, super lightweight, and highly customizable plugin. I love everything about it!<br>
 > Rebekah Radice, Social Media Strategist
+
+> "This is BY FAR the best looking social sharing plugin I have seen on the net!"<br>
+> David Foster, Online Personality
 
 > I use Social Warfare because it's the only sharing plugin that can be customized to blend seamlessly with my branding.<br>
 > Andrea Beltrami, Visual Marketer
