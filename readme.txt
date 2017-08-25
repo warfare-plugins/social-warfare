@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
 Requires at least: 3.5.1
 Tested up to: 4.8
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GNU General Public License v2.0 or later
 
 The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,13 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 2.3.2 (25 AUG 2017) =
+
+* Updated the verbiage on the readme.txt
+* Fixed an error that was causing a handful of sites to lock up.
+* More improvements to the registration functions.
+* Fixed the shortcode parameters.
 
 = 2.3.1 (20 AUG 2017) =
 
