@@ -519,22 +519,26 @@
 		$cttOptions.trigger( 'change' );
 	}
 
-	function toggleRegistration( status ) {
-		$( '.registration-wrapper' ).attr( 'registration', status );
-		$( '.sw-admin-wrapper' ).attr( 'sw-registered', status );
-		$( '.sw-top-menu' ).attr( 'sw-registered', status );
+	function toggleRegistration( status , key ) {
+		$( '.registration-wrapper.'+key ).attr( 'registration', status );
+		if('pro' == key) {
+			$( '.sw-admin-wrapper' ).attr( 'sw-registered', status );
+			$( '.sw-top-menu' ).attr( 'sw-registered', status );
+		}
 	}
 
 	/*******************************************************
 		Register the Plugin
 	*******************************************************/
-	function registerPlugin() {
+	function registerPlugin(key,item_id) {
 		var registered = false;
 		var data = {
 			action: 'swp_register_plugin',
 			security: swpAdminOptionsData.registerNonce,
 			activity: 'register',
-			pro_license_key: $( 'input[name="pro_license_key"]' ).val()
+			name_key: key,
+			item_id: item_id,
+			license_key: $( 'input[name="'+key+'_license_key"]' ).val()
 		};
 
 		loadingScreen();
@@ -550,7 +554,7 @@
 			if ( !response.success ) {
 				alert( 'Failure: ' + response.data );
 			} else {
-				toggleRegistration( '1' );
+				toggleRegistration( '1' , key);
 				registered = true;
 			}
 
@@ -563,28 +567,30 @@
 	/*******************************************************
 		Unregister the Plugin
 	*******************************************************/
-	function unregisterPlugin() {
+	function unregisterPlugin(key,item_id) {
 		var unregistered = false;
 		var ajaxData = {
 			action: 'swp_unregister_plugin',
 			security: swpAdminOptionsData.registerNonce,
-			activity: 'unregister'
+			activity: 'unregister',
+			name_key: key,
+			item_id: item_id,
 		};
-
+		console.log(ajaxData);
 		loadingScreen();
 
 		// Ping the home server to create a registration log
 		$.post( ajaxurl, ajaxData, function( response ) {
 			// If the response was a failure...
 			//
-			response = JSON.parse(response);
 			console.log(response);
+			response = JSON.parse(response);
 			if ( !response.success ) {
 				alert( 'Failure: ' + response.data );
 			} else {
 				// If the response was a success
-				$( 'input[name="pro_license_key"]' ).val( '' );
-				toggleRegistration( '0' );
+				$( 'input[name="'+key+'_license_key"]' ).val( '' );
+				toggleRegistration( '0' , key );
 				unregistered = true;
 			}
 
@@ -597,12 +603,18 @@
 
 	function handleRegistration() {
 		$( '#register-plugin' ).on( 'click', function() {
-			registerPlugin();
+			var key = $(this).attr('swp-addon');
+			var item_id = $(this).attr('swp-item-id');
+			console.log(key);
+			registerPlugin(key,item_id);
 			return false;
 		});
 
 		$( '#unregister-plugin' ).on( 'click', function() {
-			unregisterPlugin();
+			var key = $(this).attr('swp-addon');
+			var item_id = $(this).attr('swp-item-id');
+			console.log(key);
+			unregisterPlugin(key,item_id);
 			return false;
 		});
 	}

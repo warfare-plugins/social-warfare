@@ -645,8 +645,8 @@ function swp_build_options_page() {
 			/**
 			 * Plugin Registration Module
 			 */
-			if ( defined('SWPP_PLUGIN_DIR') && 'plugin_registration' === $option['type'] ) :
-				require_once SWPP_PLUGIN_DIR . '/functions/admin/options-registration.php';
+			if ( defined('SWP_PLUGIN_DIR') && 'plugin_registration' === $option['type'] ) :
+				require_once SWP_PLUGIN_DIR . '/functions/admin/options-registration.php';
 			endif;
 
 			/**
