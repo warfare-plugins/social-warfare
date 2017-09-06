@@ -78,7 +78,7 @@ function get_social_warfare_shares( $postID ) {
 			$old_share_links[ $network ] = call_user_func( 'swp_' . $network . '_request_link',$alternateURL );
 
 			if(!empty($altURLs)):
-				$altURLs_share_links[$network] = call_user_func( 'swp_' . $network . '_request_link',$alternateURL );
+				$altURLs_share_links[$network] = call_user_func( 'swp_' . $network . '_request_link' , $altURLs );
 			endif;
 
 		endforeach;
@@ -119,7 +119,7 @@ function get_social_warfare_shares( $postID ) {
 						$shares[ $network ] = $shares[ $network ] + $recovered_shares[ $network ];
 					endif;
 					if(!empty($altURLs)):
-						$shares[$network] = $shares['network'] + $altURLs_recovered_shares[$network];
+						$shares[$network] = $shares[$network] + $altURLs_recovered_shares[$network];
 					endif;
 				endif;
 				if ( $shares[ $network ] <= $old_shares[ $network ] && (!isset($options['force_new_shares']) || false === $options['force_new_shares']) ) :
