@@ -64,17 +64,25 @@ function get_social_warfare_shares( $postID ) {
 		$alternateURL = swp_get_alt_permalink( $postID );
 		$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
 
+		$altURLs = '';
+		$altURLs = apply_filters('swp_additional_url_to_check' , $altURLs );
+
 		// Debug the Alternate URL being checked
 		if ( _swp_is_debug( 'recovery' ) ) {
 			echo $alternateURL;
+			echo $altURLs;
 		}
 
 		foreach ( $networks as $network ) :
 
 			$old_share_links[ $network ] = call_user_func( 'swp_' . $network . '_request_link',$alternateURL );
 
-			endforeach;
-		endif;
+			if(!empty($altURLs)):
+				$altURLs_share_links[$network] = call_user_func( 'swp_' . $network . '_request_link',$alternateURL );
+			endif;
+
+		endforeach;
+	endif;
 
 	if ( $freshCache == true ) :
 		if ( get_post_meta( $postID,'_totes',true ) ) :
@@ -88,6 +96,9 @@ function get_social_warfare_shares( $postID ) {
 			$raw_shares_array = swp_fetch_shares_via_curl_multi( $share_links );
 			if ( $options['recover_shares'] == true ) :
 				$old_raw_shares_array = swp_fetch_shares_via_curl_multi( $old_share_links );
+				if(!empty($altURLs)):
+					$altURLs_raw_shares_array = swp_fetch_shares_via_curl_multi( $altURLs_share_links );
+				endif;
 			endif;
 
 			foreach ( $networks as $network ) :
@@ -100,8 +111,15 @@ function get_social_warfare_shares( $postID ) {
 				$shares[ $network ] = call_user_func( 'swp_format_' . $network . '_response',$raw_shares_array[ $network ] );
 				if ( $options['recover_shares'] == true ) :
 					$recovered_shares[ $network ] = call_user_func( 'swp_format_' . $network . '_response',$old_raw_shares_array[ $network ] );
+					if(!empty($altURLs)):
+						$altURLs_recovered_shares[ $network ] = call_user_func( 'swp_format_' . $network . '_response',$altURLs_raw_shares_array[ $network ] );
+					endif;
+
 					if ( $shares[ $network ] != $recovered_shares[ $network ] ) :
 						$shares[ $network ] = $shares[ $network ] + $recovered_shares[ $network ];
+					endif;
+					if(!empty($altURLs)):
+						$shares[$network] = $shares['network'] + $altURLs_recovered_shares[$network];
 					endif;
 				endif;
 				if ( $shares[ $network ] <= $old_shares[ $network ] && (!isset($options['force_new_shares']) || false === $options['force_new_shares']) ) :
