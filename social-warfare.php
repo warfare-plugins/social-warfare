@@ -30,6 +30,7 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
+require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
 /**
  * Include the plugin's necessary functions files.

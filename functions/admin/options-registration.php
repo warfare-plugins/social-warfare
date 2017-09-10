@@ -11,24 +11,6 @@
 $premium_code = '';
 $email = '';
 
-// Add a registration key for the plugin to track this registration
-add_filter('swp_registrations' , 'social_warfare_pro_registration_key');
-function social_warfare_pro_registration_key($array) {
-    $array[] = array(
-        'plugin_name' => 'Social Warfare - Pro',
-        'key' => 'pro',
-        'product_id' => 63157
-    );
-
-    $array[] = array(
-        'plugin_name' => 'Social Warfare - Test Addon',
-        'key' => 'test',
-        'product_id' => 555
-    );
-
-    return $array;
-}
-
 // Fetch the registration keys from pro and all other addons
 $array = array();
 $registrations = apply_filters('swp_registrations' , $array);
