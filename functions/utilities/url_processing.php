@@ -314,7 +314,7 @@ function swp_process_url( $url, $network, $postID ) {
 		$array['postID'] = $postID;
 
 		// Run the anaylitcs hook filters
-		if( !isset( $swp_user_options['utm_on_pins']) || (false === $swp_user_options['utm_on_pins'] && $network !== 'pinterest') ):
+		if( ( $network === 'pinterest' && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
 			$array = apply_filters( 'swp_analytics' , $array );
 		endif;
 
