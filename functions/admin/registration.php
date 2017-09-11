@@ -55,18 +55,14 @@ function swp_get_registration_key( $domain, $context = 'api' ) {
 }
 
 /**
- * Check to see if the plugin has been registered once per page load.
+ * Check to see if an addon has been registered once per page load.
  * Once per week, we'll ping our server to ask if the license key is still valid.
  *
- * @since  unknown
+ * @since  2.3.3 - Created the function to work for all addons, not just the pro addon
+ * @param string The unique key for the addon
  * @return bool True if the plugin is registered, false otherwise.
  */
-function is_swp_registered($timeline = false) {
-
-	// Check if we have a constant so we don't recheck every time the function is called
-	if( defined('IS_SWP_REGISTERED') ){
-		return IS_SWP_REGISTERED;
-	}
+function is_swp_addon_registered($key) {
 
 	// Get the plugin options from the database
 	$options = get_option( 'socialWarfareOptions' );
@@ -74,26 +70,37 @@ function is_swp_registered($timeline = false) {
 
 	// Get the timestamps setup for comparison to see if a week has passed since our last check
 	$current_time = time();
-	if(!isset($options['pro_license_key_timestamp'])):
+	if(!isset($options[$key.'_license_key_timestamp'])):
 		$timestamp = 0;
 	else:
-		$timestamp = $options['pro_license_key_timestamp'];
+		$timestamp = $options[$key.'_license_key_timestamp'];
 	endif;
 	$time_to_recheck = $timestamp + 604800;
 
 	// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
-	if( !empty($options['pro_license_key']) && $current_time < $time_to_recheck ) {
+	if( !empty($options[$key.'_license_key']) && $current_time < $time_to_recheck ) {
 
 		$is_registered = true;
 
 	// If a week has indeed passed since the last check, ping our API to check the validity of the license key
-	} elseif( !empty($options['pro_license_key']) ){
+    } elseif( !empty($options[$key.'_license_key']) ){
 
 		// Setup the API parameters
-		$license = $options['pro_license_key'];
+		$license = $options[$key.'_license_key'];
+        $site_url = swp_get_site_url();
+        $store_url = 'https://warfareplugins.com';
+        $registration_array = array();
+        $registration_array = apply_filters( 'swp_registrations' , $registration_array );
+        $item_id = $registration_array[$key]['product_id'];
 
-		$url ='https://warfareplugins.com/?edd_action=check_license&item_id=63157&license='.$license.'&url='.swp_get_site_url();
-		$response = swpp_file_get_contents_curl( $url );
+        $api_params = array(
+            'edd_action' => 'check_license',
+            'item_id' => $item_id,
+            'license' => $license,
+            'url' => $site_url,
+        );
+
+        $response = wp_remote_retrieve_body( wp_remote_post( $store_url , array('body' => $api_params, 'timeout' => 10 ) ) );
 
 		if( false != $response ) {
 
@@ -103,30 +110,41 @@ function is_swp_registered($timeline = false) {
 			// If the license was invalid
 			if( isset($license_data->license) && 'invalid' == $license_data->license) {
 				$is_registered = false;
-				$options['pro_license_key'] = '';
-				$options['pro_license_key_timestamp'] = $current_time;
+				$options[$key.'_license_key'] = '';
+				$options[$key.'_license_key_timestamp'] = $current_time;
 				update_option( 'socialWarfareOptions' , $options );
 
 			// If the property is some other status, just go with it.
 			} else {
-				$options['pro_license_key_timestamp'] = $current_time;
+				$options[$key.'_license_key_timestamp'] = $current_time;
 				update_option( 'socialWarfareOptions' , $options );
 				$is_registered = true;
 			}
 
 		// If we recieved no response from the server, we'll just check again next week
 		} else {
-			$options['pro_license_key_timestamp'] = $current_time;
+			$options[$key.'_license_key_timestamp'] = $current_time;
 			update_option( 'socialWarfareOptions' , $options );
 			$is_registered = true;
 		}
 	}
 
-	// Add this to a constant so we don't recheck every time this function is called
-	define('IS_SWP_REGISTERED' , $is_registered );
-
 	// Return the registration value true/false
 	return $is_registered;
+}
+
+/**
+ * Check to see if the plugin has been registered once per page load.
+ * Once per week, we'll ping our server to ask if the license key is still valid.
+ *
+ * @since  unknown
+ * @since 2.3.3 Forward the request to the is_swp_addon_registered() function.
+ * @return bool True if the plugin is registered, false otherwise.
+ */
+function is_swp_registered($timeline = false) {
+
+    return is_swp_addon_registered('pro');
+
 }
 
 /**
@@ -222,9 +240,12 @@ function swp_register_plugin() {
 add_action( 'wp_ajax_swp_unregister_plugin', 'swp_unregister_plugin' );
 function swp_unregister_plugin() {
 
+    // Setup the variables needed for processing
 	$options = get_option( 'socialWarfareOptions' );
 	$name_key = $_POST['name_key'];
 	$item_id = $_POST['item_id'];
+    $site_url = swp_get_site_url();
+    $store_url = 'https://warfareplugins.com';
 
 	// Check to see if the license key is even in the options
 	if(empty($options[$name_key.'_license_key'])) {
@@ -235,11 +256,17 @@ function swp_unregister_plugin() {
 		// Grab the license key so we can use it below
 		$license = $options[$name_key.'_license_key'];
 
-		// Setup the API URL and send the HTTP request via our in house cURL function
-		$url ='https://warfareplugins.com/?edd_action=deactivate_license&item_id='.$item_id.'&license='.$license.'&url='.swp_get_site_url();
-		$response = swpp_file_get_contents_curl( $url );
+        // Setup the API request parameters
+        $api_params = array(
+            'edd_action' => 'deactivate_license',
+            'item_id' => $item_id,
+            'license' => $license,
+            'url' => $site_url,
+        );
 
-		// Parse the response into an object
+        $response =  wp_remote_retrieve_body( wp_remote_post( $store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+
+        // Parse the response into an object
 		$license_data = json_decode( $response );
 
 		// If the deactivation was valid update the database
