@@ -547,7 +547,7 @@
 
 		$.post( ajaxurl, data, function( response ) {
 			// If the response was a failure...
-
+			console.log(response);
 			response = JSON.parse(response);
 
 			console.log(response);

@@ -91,6 +91,7 @@ function is_swp_registered($timeline = false) {
 
 		// Setup the API parameters
 		$license = $options['pro_license_key'];
+
 		$url ='https://warfareplugins.com/?edd_action=check_license&item_id=63157&license='.$license.'&url='.swp_get_site_url();
 		$response = swpp_file_get_contents_curl( $url );
 
@@ -147,9 +148,20 @@ function swp_register_plugin() {
 		$name_key = $_POST['name_key'];
 		$license = $_POST['license_key'];
 		$item_id = $_POST['item_id'];
+        $site_url = swp_get_site_url();
+        $store_url = 'https://warfareplugins.com';
 
-		$url ='https://warfareplugins.com/?edd_action=activate_license&item_id='.$item_id.'&license='.$license.'&url='.swp_get_site_url();
-		$response = swpp_file_get_contents_curl( $url );
+        $api_params = array(
+            'edd_action' => 'activate_license',
+            'item_id' => $item_id,
+            'license' => $license,
+            'url' => $site_url
+        );
+
+        $response =  wp_remote_retrieve_body( wp_remote_post( $store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+
+		// $url ='https://warfareplugins.com/?edd_action=activate_license&item_id='.$item_id.'&license='.$license.'&url='.swp_get_site_url();
+		// $response = swpp_file_get_contents_curl( $url );
 
 		if(false != $response){
 
