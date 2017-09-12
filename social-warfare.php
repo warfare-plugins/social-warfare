@@ -19,6 +19,7 @@ define( 'SWP_VERSION' , '2.3.2' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
 define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
 
 /**
  * Include the plugin's network files.
