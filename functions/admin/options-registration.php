@@ -50,7 +50,7 @@ foreach($registrations as $registration):
     		</div>
 
     		<div class="sw-grid sw-col-300 sw-fit register_button_grid">
-    			<a href="#" id="register-plugin" class="button sw-navy-button" swp-addon="<?php echo $registration['key']; ?>"  swp-item-id="<?php echo $registration["product_id"]; ?>">
+    			<a href="#" class="register-plugin button sw-navy-button" swp-addon="<?php echo $registration['key']; ?>"  swp-item-id="<?php echo $registration["product_id"]; ?>">
     				<?php esc_html_e( 'Register Plugin' , 'social-warfare' ); ?>
     			</a>
     		</div>
@@ -75,7 +75,7 @@ foreach($registrations as $registration):
     		</div>
 
     		<div class="sw-grid sw-col-300">
-    			<a href="#" id="unregister-plugin" class="button sw-navy-button" swp-addon="<?php echo $registration['key']; ?>"  swp-item-id="<?php echo $registration["product_id"]; ?>">
+    			<a href="#" class="unregister-plugin button sw-navy-button" swp-addon="<?php echo $registration['key']; ?>"  swp-item-id="<?php echo $registration["product_id"]; ?>">
     				<?php esc_html_e( 'Unregister Plugin' , 'social-warfare' ); ?>
     			</a>
     		</div>

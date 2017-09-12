@@ -30,6 +30,8 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/update-checker.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
 /**
@@ -41,7 +43,6 @@ function swp_initiate_plugin() {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/languages.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/curl_functions.php';

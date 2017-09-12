@@ -356,3 +356,19 @@ function swp_remove_screen_options( $display_boolean, $wp_screen_object ){
  	return $display_boolean;
  }
  add_filter( 'screen_options_show_screen', 'swp_remove_screen_options', 10, 2 );
+
+
+function swp_get_license_key($key) {
+
+	if(is_swp_addon_registered($key)):
+
+		$options = get_option( 'socialWarfareOptions' );
+		$license = $options[$key.'_license_key'];
+		return $license;
+
+	else:
+
+		return false;
+
+	endif;
+}

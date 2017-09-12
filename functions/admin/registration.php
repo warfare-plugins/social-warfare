@@ -93,6 +93,7 @@ function is_swp_addon_registered($key) {
         $registration_array = apply_filters( 'swp_registrations' , $registration_array );
         $item_id = $registration_array[$key]['product_id'];
 
+
         $api_params = array(
             'edd_action' => 'check_license',
             'item_id' => $item_id,

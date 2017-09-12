@@ -602,7 +602,7 @@
 	}
 
 	function handleRegistration() {
-		$( '#register-plugin' ).on( 'click', function() {
+		$( '.register-plugin' ).on( 'click', function() {
 			var key = $(this).attr('swp-addon');
 			var item_id = $(this).attr('swp-item-id');
 			console.log(key);
@@ -610,7 +610,7 @@
 			return false;
 		});
 
-		$( '#unregister-plugin' ).on( 'click', function() {
+		$( '.unregister-plugin' ).on( 'click', function() {
 			var key = $(this).attr('swp-addon');
 			var item_id = $(this).attr('swp-item-id');
 			console.log(key);
