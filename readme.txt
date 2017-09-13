@@ -10,7 +10,7 @@ The most beautiful, lightning fast social media sharing buttons built to boost s
 
 == Description ==
 
-Get more social media shares which can lead to more website traffic with the best sharing plugin for WordPress! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="http://https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
+Get more social media shares which can lead to more website traffic with the best sharing plugin for WordPress! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
 
 = WordPress Sharing Plugin =
 Most social sharing plugins for WordPress slow down your site, are not attractive, and don't work the way you would hope. Social Warfare is both lightning fast and beautiful.
