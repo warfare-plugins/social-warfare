@@ -61,6 +61,11 @@ function socialWarfare( $content = false, $where = 'default', $echo = true ) {
 function social_warfare_buttons( $array = array() ) {
 	global $swp_user_options;
 
+	// Make sure that $array really is an array
+	if(!is_array($array)){
+		$array = array();
+	}
+
 	// Setup the default Array parameters
 	if ( ! isset( $array['where'] ) ) { $array['where'] = 'default'; }
 	if ( ! isset( $array['echo'] ) ) { $array['echo'] = true; }
