@@ -177,14 +177,19 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 */
 	swp.activateHoverStates = function() {
 		swp_trigger_events('pre_activate_buttons');
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover)').on('mouseenter',function(){
-			swpRestoreSizes();
-			var term_width = $(this).find('.swp_share').outerWidth();
-			var icon_width = $(this).find('i.sw').outerWidth();
-			var container_width = $(this).width();
-			var percentage_change = 1 + ((term_width + 35) / container_width);
-			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-			$(this).css({flex:percentage_change + ' 1 0%'});
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
+			if($(this).hasClass('swp_nohover')){
+
+			} else {
+				console.log('fired');
+				swpRestoreSizes();
+				var term_width = $(this).find('.swp_share').outerWidth();
+				var icon_width = $(this).find('i.sw').outerWidth();
+				var container_width = $(this).width();
+				var percentage_change = 1 + ((term_width + 35) / container_width);
+				$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+				$(this).css({flex:percentage_change + ' 1 0%'});
+			}
 		});
 		$('.nc_socialPanel:not(.nc_socialPanelSide)').on('mouseleave',function() {
 			swpRestoreSizes();
