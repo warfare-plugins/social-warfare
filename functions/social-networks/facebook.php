@@ -72,9 +72,21 @@ function swp_facebook_request_link( $url ) {
  */
 function swp_format_facebook_response( $response ) {
 	$formatted_response = json_decode( $response , true);
-	$likes = $formatted_response['og_object']['likes']['summary']['total_count'];
-	$comments = $formatted_response['share']['comment_count'];
-	$shares = $formatted_response['share']['share_count'];
+
+	if( !empty( $formatted_response['og_object'] ) ) {
+		$likes = $formatted_response['og_object']['likes']['summary']['total_count'];
+	} else {
+		$likes = 0;
+	}
+
+	if( !empty( $formatted_response['share'] ) ){
+		$comments = $formatted_response['share']['comment_count'];
+		$shares = $formatted_response['share']['share_count'];
+	} else {
+		$comments = 0;
+		$shares = 0;
+	}
+
 	$total = $likes + $comments + $shares;
 	return $total;
 }
