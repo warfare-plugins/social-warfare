@@ -676,11 +676,11 @@ function swp_build_options_page() {
 				echo '<h2>' . __( 'Tweet Count Registration' , 'social-warfare' ) . '</h2>';
 
 				// Open the IS NOT Activated container
-				echo '<div class="sw-grid sw-col-940 swp_tweets_not_activated" dep="twitter_shares" dep_val="[false]">';
+				echo '<div class="sw-grid sw-col-940 swp_tweets_not_activated">';
 
 				// The Warning Notice & Instructions
-				echo '<p class="sw-subtitle sw-registration-text">' . __( 'In order to allow Social Warfare to track tweet counts, we\'ve partnered with NewShareCounts.com. Follow the steps below to register with NewShareCounts and allow us to track your Twitter shares.' , 'social-warfare' ) . '</p>';
-				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">' . __( 'Click here to visit NewShareCounts.com' , 'social-warfare' ) . '</a><br />' . __( 'Step 2: At NewShareCounts.com, Enter your domain and click the "Sign In With Twitter" button.' , 'social-warfare' ) . '<img class="sw-tweet-count-demo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/new_share_counts.png" /><br />' . __( 'Step 3: Flip the switch below to "ON" and then save changes.' , 'social-warfare' ) . '</p>';
+				echo '<p class="sw-subtitle sw-registration-text">' . __( 'In order to allow Social Warfare to track tweet counts, we\'ve partnered with a couple of third-party share counting tools. Follow the steps below to register with one of these platforms and allow us to track your Twitter shares.' , 'social-warfare' ) . '</p>';
+				echo '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="https://opensharecounts.com" target="_blank">' . __( 'Click here to visit OpenShareCount.com (Recommended)' , 'social-warfare' ) . '</a>&nbsp;<a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">' . __( 'Click here to visit NewShareCounts.com' , 'social-warfare' ) . '</a><br />' . __( 'Step 2: Follow the prompts on their website to create an account and add your domain to be tracked for share counts.' , 'social-warfare' ) . '<br />' . __( 'Step 3: Flip the switch below to "ON", select which tracking service the plugin should use, then save your changes.' , 'social-warfare' ) . '</p>';
 
 				// Close the IS NOT ACTIVATED container
 				echo '</div>';

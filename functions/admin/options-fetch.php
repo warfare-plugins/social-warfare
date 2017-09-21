@@ -28,6 +28,10 @@ $swp_user_options = swp_get_user_options( is_admin() );
 function swp_get_user_options( $admin = false ) {
 	$options = get_option( 'socialWarfareOptions', array() );
 
+	if(isset($options['activate_tweet_counts']) & true == $options['activate_tweet_counts'] & !isset($options['tweet_count_source']) {
+		$options['tweet_count_source'] = 'newsharecounts';
+	}
+
 	$defaults = array(
 		'locationSite'                      => 'below',
 		'locationHome'				        => 'none',
