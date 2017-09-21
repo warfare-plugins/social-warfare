@@ -122,7 +122,7 @@ function get_social_warfare_shares( $postID ) {
 						$shares[$network] = $shares[$network] + $altURLs_recovered_shares[$network];
 					endif;
 				endif;
-				if ( $shares[ $network ] <= $old_shares[ $network ] && (!isset($options['force_new_shares']) || false === $options['force_new_shares']) ) :
+				if ( $shares[ $network ] <= $old_shares[ $network ] && false === _swp_is_debug('force_new_shares']) ) :
 					$shares[ $network ] = $old_shares[ $network ];
 				elseif($shares[$network] > 0) :
 					delete_post_meta( $postID,'_' . $network . '_shares' );
