@@ -89,6 +89,10 @@ function swp_plugin_options() {
 function swp_build_options_page() {
 	global $swp_user_options;
 
+	if(isset($swp_user_options['activate_tweet_counts']) && true == $swp_user_options['activate_tweet_counts'] && !isset($swp_user_options['tweet_count_source']) ) {
+		$swp_user_options['tweet_count_source'] = 'newsharecounts';
+	}
+
 	// Create all of the options in one giant array.
 	$swp_options_page = array(
 		// A List of Options Page Tabs and Their Titles.
