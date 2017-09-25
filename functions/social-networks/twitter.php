@@ -65,8 +65,11 @@ function swp_twitter_request_link( $url ) {
 	if ( $swp_user_options['twitter_shares'] ) :
 
 		// Return the correct Twitter JSON endpoint URL
-		$request_url = 'https://opensharecount.com/count.json?url='. $url;
-		// $request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
+		if('opensharecount' == $swp_user_options['tweet_count_source']){
+			$request_url = 'https://opensharecount.com/count.json?url='. $url;
+		} else {
+			$request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
+		}
 
 		// Debugging
 		if ( _swp_is_debug( 'twitter' ) ) {
