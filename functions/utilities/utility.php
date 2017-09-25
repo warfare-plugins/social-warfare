@@ -372,3 +372,18 @@ function swp_get_license_key($key) {
 
 	endif;
 }
+
+/**
+ * A function to return the URL of the website or network
+ *
+ * @since 2.3.3 | 25 SEP 2017 | Created
+ * @return String The URL of the site
+ *
+ */
+function swp_get_site_url() {
+	if( true == is_multisite() ) {
+		return network_site_url();
+	} else {
+		return get_site_url();
+	}
+}
