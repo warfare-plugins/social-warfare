@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
 Requires at least: 3.5.1
 Tested up to: 4.8
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GNU General Public License v2.0 or later
 
 The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,18 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 2.3.3 (27 SEP 2017) =
+
+* Added "OpenShareCount.com" as an alternative source for Twitter share counts.
+* Moved some functions and classes from the Pro addon into core so that they can be used by all addons.
+* Updated the style of the image hover Pin button to be more consistent with the rest of the buttons.
+* Fixed the UTM tracking parameters from a bug that would turn them off if they were turned on for the pin button.
+* Fixed some typos in the readme.txt.
+* Moved all registration functions to use the WordPress HTTP API instead of cURL.
+* Setup the update checker to check for updates through Easy Digital Downloads (our store) rather than through GitHub.
+* Changed the registration functions to be hookable allowing it to track multiple registration (like addons) rather than only one single registration.
+* Added a hook to allow for additional URL's to be checked for share recovery functionality.
 
 = 2.3.2 (25 AUG 2017) =
 
