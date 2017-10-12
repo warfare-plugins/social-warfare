@@ -352,103 +352,109 @@ add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
  */
 function swp_output_cache_trigger( $info ) {
 
-	if( $info['swp_user_options']['recover_shares'] == true ) {
-		$alternateURL = swp_get_alt_permalink( $info['postID'] );
-		$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
-	} else {
-		$alternateURL = false;
-	}
+	// Make sure the post is published, otherwise don't attempt to update counts
+	if('publish' == get_post_status($info['postID']) ):
 
-	// Bail if we're not using the newer cache method.
-	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
-		ob_start(); ?>
+		// Fetch the alternate URL if share recovery is turned on
+		if( $info['swp_user_options']['recover_shares'] == true ) {
+			$alternateURL = swp_get_alt_permalink( $info['postID'] );
+			$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
+		} else {
+			$alternateURL = false;
+		}
 
-		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
-		if ( swp_buttons_exist ) {
+		// Bail if we're not using the newer cache method.
+		if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
+			ob_start(); ?>
+
+			var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
+			if ( swp_buttons_exist ) {
+				swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+				swp_post_id='<?php echo $info['postID']; ?>';
+				swp_post_url='<?php echo get_permalink(); ?>';
+				swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+				socialWarfarePlugin.fetchShares();
+			}
+
+			<?php
+			$info['footer_output'] .= ob_get_clean();
+			return $info;
+		}
+
+		// Bail early if we're not on a single page or we have fresh cache.
+		if ( (! is_singular() || swp_is_cache_fresh( get_the_ID(), true )) && empty( $_GET['swp_cache'] ) ) {
+			return $info;
+		}
+
+		// Bail if we're on a WooCommerce account page.
+		if ( function_exists( 'is_account_page' ) && is_account_page() ) {
+			return $info;
+		}
+
+		// Trigger the cache rebuild.
+		if ( ( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
+			ob_start();
+
+			?>
+	        var within_timelimit;
 			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-			swp_post_id='<?php echo $info['postID']; ?>';
-			swp_post_url='<?php echo get_permalink(); ?>';
-			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-			socialWarfarePlugin.fetchShares();
+			var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
+			if ( swp_buttons_exist ) {
+				jQuery( document ).ready( function() {
+					var swp_check_for_js = setInterval( function() {
+						if( 'undefined' !== typeof socialWarfarePlugin) {
+							clearInterval(swp_check_for_js);
+							<?php if( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ): ?>
+							var swp_cache_data = {
+								'action': 'swp_cache_trigger',
+								'post_id': <?php echo $info['postID']; ?>,
+			                    'timestamp': <?php echo time(); ?>,
+								'force':true
+							};
+							<?php else: ?>
+							var swp_cache_data = {
+								'action': 'swp_cache_trigger',
+								'post_id': <?php echo $info['postID']; ?>,
+			                    'timestamp': <?php echo time(); ?>
+							};
+							<?php endif; ?>
+			                // if( !swp_cache_data.timestamp ){ // error handling}
+			                console.log( "Server Timestamp is " + swp_cache_data.timestamp );
+			                var browser_date = Date.now();
+			                if( !browser_date )
+			                    browser_date = new Date().getTime();
+			                browser_date = Math.floor( browser_date / 1000 );
+			                console.log( "Browser Timestamp is " + browser_date );
+			                var elapsed_time = ( browser_date - swp_cache_data.timestamp );
+			                if( elapsed_time > 60 ){
+			                    console.log( "Elapsed time since server timestamp is greater than 60 seconds -- " + elapsed_time + "seconds" );
+			                    within_timelimit = false;
+			                } else {
+			                    console.log( "Elapsed time since server timestamp is less than 60 seconds -- " + elapsed_time + "seconds"  );
+			                    within_timelimit = true;
+			                }
+
+			                if( within_timelimit === true ){
+							    jQuery.post( swp_admin_ajax, swp_cache_data, function( response ) {
+								    console.log(response);
+							    });
+
+			                    socialWarfarePlugin.fetchShares();
+			                }
+						}
+					} , 250 );
+				});
+				swp_post_id='<?php echo $info['postID']; ?>';
+				swp_post_url='<?php echo get_permalink(); ?>';
+				swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+
+				//    socialWarfarePlugin.fetchShares();
+			}
+			<?php
+			$info['footer_output'] .= ob_get_clean();
 		}
 
-		<?php
-		$info['footer_output'] .= ob_get_clean();
-		return $info;
-	}
-
-	// Bail early if we're not on a single page or we have fresh cache.
-	if ( (! is_singular() || swp_is_cache_fresh( get_the_ID(), true )) && empty( $_GET['swp_cache'] ) ) {
-		return $info;
-	}
-
-	// Bail if we're on a WooCommerce account page.
-	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
-		return $info;
-	}
-
-	// Trigger the cache rebuild.
-	if ( ( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
-		ob_start();
-
-		?>
-        var within_timelimit;
-		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
-		if ( swp_buttons_exist ) {
-			jQuery( document ).ready( function() {
-				var swp_check_for_js = setInterval( function() {
-					if( 'undefined' !== typeof socialWarfarePlugin) {
-						clearInterval(swp_check_for_js);
-						<?php if( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ): ?>
-						var swp_cache_data = {
-							'action': 'swp_cache_trigger',
-							'post_id': <?php echo $info['postID']; ?>,
-		                    'timestamp': <?php echo time(); ?>,
-							'force':true
-						};
-						<?php else: ?>
-						var swp_cache_data = {
-							'action': 'swp_cache_trigger',
-							'post_id': <?php echo $info['postID']; ?>,
-		                    'timestamp': <?php echo time(); ?>
-						};
-						<?php endif; ?>
-		                // if( !swp_cache_data.timestamp ){ // error handling}
-		                console.log( "Server Timestamp is " + swp_cache_data.timestamp );
-		                var browser_date = Date.now();
-		                if( !browser_date )
-		                    browser_date = new Date().getTime();
-		                browser_date = Math.floor( browser_date / 1000 );
-		                console.log( "Browser Timestamp is " + browser_date );
-		                var elapsed_time = ( browser_date - swp_cache_data.timestamp );
-		                if( elapsed_time > 60 ){
-		                    console.log( "Elapsed time since server timestamp is greater than 60 seconds -- " + elapsed_time + "seconds" );
-		                    within_timelimit = false;
-		                } else {
-		                    console.log( "Elapsed time since server timestamp is less than 60 seconds -- " + elapsed_time + "seconds"  );
-		                    within_timelimit = true;
-		                }
-
-		                if( within_timelimit === true ){
-						    jQuery.post( swp_admin_ajax, swp_cache_data, function( response ) {
-							    console.log(response);
-						    });
-
-		                    socialWarfarePlugin.fetchShares();
-		                }
-					}
-				} , 250 );
-			});
-			swp_post_id='<?php echo $info['postID']; ?>';
-			swp_post_url='<?php echo get_permalink(); ?>';
-			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-
-			//    socialWarfarePlugin.fetchShares();
-		}
-		<?php
-		$info['footer_output'] .= ob_get_clean();
-	}
+	endif;
 
 	return $info;
 }
