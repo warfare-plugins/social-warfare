@@ -400,7 +400,7 @@ function swp_output_cache_trigger( $info ) {
 			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
 			var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
 			if ( swp_buttons_exist ) {
-				jQuery( document ).ready( function() {
+				document.addEventListener('DOMContentLoaded', function() {
 					var swp_check_for_js = setInterval( function() {
 						if( 'undefined' !== typeof socialWarfarePlugin) {
 							clearInterval(swp_check_for_js);
