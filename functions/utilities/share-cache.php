@@ -367,13 +367,15 @@ function swp_output_cache_trigger( $info ) {
 		if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
 			ob_start(); ?>
 
-			var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
+			var swp_buttons_exist = (document.getElementsByClassName( 'nc_socialPanel' ).length > 0);
 			if ( swp_buttons_exist ) {
-				swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-				swp_post_id='<?php echo $info['postID']; ?>';
-				swp_post_url='<?php echo get_permalink(); ?>';
-				swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-				socialWarfarePlugin.fetchShares();
+				document.addEventListener('DOMContentLoaded', function() {
+					swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+					swp_post_id='<?php echo $info['postID']; ?>';
+					swp_post_url='<?php echo get_permalink(); ?>';
+					swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+					socialWarfarePlugin.fetchShares();
+				});
 			}
 
 			<?php
@@ -398,7 +400,7 @@ function swp_output_cache_trigger( $info ) {
 			?>
 	        var within_timelimit;
 			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-			var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
+			var swp_buttons_exist = (document.getElementsByClassName( 'nc_socialPanel' ).length > 0);
 			if ( swp_buttons_exist ) {
 				document.addEventListener('DOMContentLoaded', function() {
 					var swp_check_for_js = setInterval( function() {
