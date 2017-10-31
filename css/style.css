@@ -287,8 +287,8 @@ span.swp_label {
 }
 
 .nc_socialPanel.swp_leaf .nc_tweetContainer {
-	-webkit-border-radius: 15px 0;
-	border-radius: 15px 0;
+	-webkit-border-radius: 15px 0!important;
+	border-radius: 15px 0!important;
 	border-width: 1px;
 }
 
