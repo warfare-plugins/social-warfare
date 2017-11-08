@@ -58,9 +58,9 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 		var remaining;
 
 		if ( 'undefined' === typeof handle ) {
-			remaining = 140 - socialWarfareAdmin.linkLength( smTwitter ) - linkSpace;
+			remaining = 280 - socialWarfareAdmin.linkLength( smTwitter ) - linkSpace;
 		} else {
-			remaining = 140 - socialWarfareAdmin.linkLength( smTwitter ) - handle.length - linkSpace - 6;
+			remaining = 280 - socialWarfareAdmin.linkLength( smTwitter ) - handle.length - linkSpace - 6;
 		}
 
 		if ( smTwitter.length > 0 && remaining >= 0 ) {
