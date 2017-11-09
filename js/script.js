@@ -510,9 +510,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}, 105 );
 		}
 
-		if( swp_isMobile.phone ) {
-			$('.swp_whatsapp').addClass('mobile');
-		}
+		//if( swp_isMobile.phone ) {
+		//	$('.swp_whatsapp').addClass('mobile');
+		//}
 
 		// Hide empty containers
 	    if( 1 === $('.swp-content-locator').parent().children().length ) {
