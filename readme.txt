@@ -193,6 +193,13 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+
+= 2.3.4 (16 NOV 2017) =
+
+* Changed the Twitter counter from 140 characters to 280 characters
+* Changed the WhatsApp button to also appear on desktop since their are now desktop apps for it.
+* Various CSS and minor bugfixes.
+
 = 2.3.3 (27 SEP 2017) =
 
 * Added "OpenShareCount.com" as an alternative source for Twitter share counts.
