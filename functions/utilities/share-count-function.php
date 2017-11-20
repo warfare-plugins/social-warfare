@@ -13,6 +13,7 @@ function get_social_warfare_shares( $postID ) {
 	// Set the initial options
 	$options = $swp_user_options;
 	$url     = get_permalink( $postID );
+	$url     = apply_filters( 'swp_url_filter_function' , $url );
 
 	/**
 	 * Check if the cache is fresh or expired
