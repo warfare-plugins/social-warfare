@@ -17,15 +17,35 @@
 add_action( 'admin_menu', 'swp_admin_options_page' );
 function swp_admin_options_page() {
 
-	// Declare the menu link
-	$swp_menu = add_menu_page(
-		'Social Warfare',
-		'Social Warfare',
-		'manage_options',
-		'social-warfare',
-		'swp_plugin_options',
-		SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
-	);
+	$swp_top_level_menu = true;
+	$swp_top_level_menu = apply_filters( 'swp_top_level_menu' , $swp_top_level_menu );
+
+	// Make the menu item top level
+	if ( (bool) apply_filters( 'swp_top_level_menu', true ) ) {
+
+		// Declare the menu link
+		$swp_menu = add_menu_page(
+			'Social Warfare',
+			'Social Warfare',
+			'manage_options',
+			'social-warfare',
+			'swp_plugin_options',
+			SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
+		);
+
+	// Make the menu a submenu page of the settings menu
+	} else {
+
+		// Declare the menu link
+		$swp_menu = add_submenu_page(
+			'options-general.php',
+			'Social Warfare',
+			'Social Warfare',
+			'manage_options',
+			'social-warfare',
+			'swp_plugin_options'
+		);
+	}
 
 	// Hook into the CSS and Javascript Enqueue process for this specific page
 	add_action( 'admin_print_styles-' . $swp_menu, 'swp_admin_options_css' );
