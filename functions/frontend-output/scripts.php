@@ -167,6 +167,16 @@ add_filter( 'swp_footer_scripts' , 'swp_click_tracking' );
  */
 function swp_nonce( $info ) {
 
+	// To make sure LSCWP ESI is on
+	if( method_exists( 'LiteSpeed_Cache_API', 'esi_enabled' ) && LiteSpeed_Cache_API::esi_enabled() ) {
+		// To make sure is using the compatible API version
+		if ( method_exists( 'LiteSpeed_Cache_API', 'v' ) && LiteSpeed_Cache_API::v( '1.3' ) ) {
+			// Let's turn this block to ESI and return
+			$info['footer_output'] .= LiteSpeed_Cache_API::esi_url( 'swp_esi', 'Social Warfare', array(), 'default', true );
+			return $info;
+		}
+	}
+
 	// Create a nonce
 	$info['footer_output'] .= ' var swp_nonce = "'.wp_create_nonce().'";';
 	return $info;
@@ -174,6 +184,21 @@ function swp_nonce( $info ) {
 
 // Queue up our footer hook function
 add_filter( 'swp_footer_scripts' , 'swp_nonce' );
+
+// Add liteSpeed ESI nonce support for cache
+if ( method_exists( 'LiteSpeed_Cache_API', 'esi_enabled' ) && LiteSpeed_Cache_API::esi_enabled() ) {
+	LiteSpeed_Cache_API::hook_tpl_esi('swp_esi', 'swp_hook_esi' );
+
+	/**
+	 * Add LiteSpeed ESI hook for nonce cache
+	 *
+	 * @access public
+	 */
+	function swp_hook_esi() {
+		echo ' var swp_nonce = "'.wp_create_nonce().'";';
+		exit;
+	}
+}
 
 /**
  * The Frame Buster Option
