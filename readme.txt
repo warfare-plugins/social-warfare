@@ -194,10 +194,18 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 
-= 2.3.4 (16 NOV 2017) =
+= 2.3.4 (06 DEC 2017) =
 
 * Changed the Twitter counter from 140 characters to 280 characters
 * Changed the WhatsApp button to also appear on desktop since their are now desktop apps for it.
+* Added a hook to change the location of the menu link in the dashboard.
+* Adjusted a filter to stop nonce's from being cached with certain caching plugins.
+* Add filter for adjusting the share recovery URL especially on development sites.
+* Refined the pin image hover button layout.
+* Adjust the radius on the "Leaf on the Wind" layout's CSS.
+* Force text-transform to none on icons so that the icons do not show up as text.
+* Only output the cache trigger on published posts.
+* Adjust the DOM loaded event to use native JS rather than jQuery.
 * Various CSS and minor bugfixes.
 
 = 2.3.3 (27 SEP 2017) =
