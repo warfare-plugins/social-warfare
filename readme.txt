@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
 Requires at least: 3.5.1
 Tested up to: 4.8
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GNU General Public License v2.0 or later
 
 The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
