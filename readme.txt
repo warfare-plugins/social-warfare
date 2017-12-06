@@ -2,7 +2,7 @@
 Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
 Requires at least: 3.5.1
-Tested up to: 4.8
+Tested up to: 4.9
 Stable tag: 2.3.4
 License: GNU General Public License v2.0 or later
 
