@@ -97,7 +97,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<select class="widefat" id="' . $this->get_field_id( 'network' ) . '" name="' . $this->get_field_name( 'network' ) . '">';
 		$form .= '<option value="totes"' . ( $network == 'totes' ? 'selected' : '' ) . '>All Networks</option>';
 		foreach ( $availableNetworks as $key => $value ) :
-			if ( $options[ $key ] ) {
+			if ( isset( $options[ $key ] ) ) {
 				if ( $network == $key . '_shares' ) :
 					$form .= '<option value="' . $key . '_shares" selected>' . $value . '</option>';
 				else :
