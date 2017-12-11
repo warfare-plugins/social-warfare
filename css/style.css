@@ -1743,10 +1743,6 @@ div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
 	flex: 2;
 }
 
-div.nc_socialPanel .nc_tweetContainer.swp_whatsapp:not(.mobile) {
-	display: none;
-}
-
 .sw-pinit.aligncenter {
 	margin: 0 auto;
 }
