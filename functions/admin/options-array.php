@@ -387,6 +387,32 @@ function swp_options_advanced($swp_options) {
 };
 
 /**
+ * swp_options_registration An array of options for the registration tab of the options page
+ * @since 	2.0.0
+ * @since   2.3.5 | DEC 18, 2017 | Moved this function into core so all premium addons can activate and use the Registration tab
+ * @param  	array $swp_options The array of options
+ * @return 	array $swp_options The modified array of options
+ */
+
+function swp_options_registration_tab($swp_options) {
+
+	// Declare the Display Settings tab and tab name
+	$swp_options['tabs']['links']['swp_registration'] = __( 'Registration' , 'social-warfare' );
+
+	// The registration section/data will be filled dynamically via a hook
+	$swp_options['options']['swp_registration']['plugin_registration'] = array(
+		'type'			=> 'plugin_registration'
+	);
+	$swp_options['options']['swp_registration']['registration_divider'] = array(
+		'type'	  => 'divider',
+		'premium' => true
+	);
+
+	return $swp_options;
+
+}
+
+/**
  * Queue up the options filter functions
  * @since 2.0.0
  */
@@ -395,6 +421,11 @@ add_filter('swp_options', 'swp_options_display' 			, 1 );
 add_filter('swp_options', 'swp_options_styles' 				, 2 );
 add_filter('swp_options', 'swp_options_social_identity'		, 3 );
 add_filter('swp_options', 'swp_options_advanced'			, 4 );
+
+// SWP_ACTIVATE_REGISTRATION_TAB - Only queue the registration tab if a plugin has defined this constant
+if( defined( 'SWP_ACTIVATE_REGISTRATION_TAB' ) ) {
+	add_filter('swp_options', 'swp_options_registration_tab'    , 5 );
+}
 
 /**
  * swp_add_network_option A function for easily adding networks to the avialable options
