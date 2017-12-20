@@ -28,9 +28,9 @@
 								};
 
 								if (typeof handle === 'undefined') {
-									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace;
+									var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace;
 								} else {
-									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
+									var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
 								}
 								if (remaining > 1 || remaining == 0) {
 									jQuery( '.tweetCounter' ).css( {'color':'green'} ).text( remaining + ' characters' );
@@ -57,13 +57,16 @@
 								};
 
 								if (typeof handle === 'undefined') {
-									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace;
+									var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace;
 								} else {
-									var remaining = 140 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
+									var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
 								}
-
-								this.getEl().innerHTML =
-								   '<span style="float:right;">You have <span class="tweetCounter" style="color:green">' + remaining + ' characters</span> remaining.</span>';},
+								if ( 'undefined' === typeof handle ) {
+									this.getEl().innerHTML = '<span style="float:right;">Based on a link being added and the current content above, you have <span class="tweetCounter" style="color:green">' + remaining + ' characters</span> remaining.</span>';
+								} else {
+									this.getEl().innerHTML = '<span style="float:right;">Based on your username (' + handle + '), a link being added, and the current content above, you have <span class="tweetCounter" style="color:green">' + remaining + ' characters</span> remaining.</span>';
+								}
+							},
 							text: ''},
 						{
 							type: 'textbox',
