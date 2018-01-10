@@ -52,6 +52,7 @@ add_action('template_redirect', 'swp_activate_buttons');
 function social_warfare_wrapper( $content ) {
 
 	// Fetch our global variables to ensure we haven't already processed this post
+	global $swp_user_options;
 	global $post, $swp_already_print;
 	$post_id = $post->ID;
 
@@ -70,7 +71,7 @@ function social_warfare_wrapper( $content ) {
 	$content = social_warfare_buttons( $array );
 
 	// Add an invisible div to the content so the image hover pin button finds the content container area
-	if( false === is_admin() && false == is_feed() ):
+	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
 		$content .= '<p class="swp-content-locator"></p>';
 	endif;
 
@@ -87,7 +88,7 @@ function social_warfare_wrapper( $content ) {
 function social_warfare( $array = array() ) {
 	$array['devs'] = true;
 	$content = social_warfare_buttons( $array );
-	if( false === is_admin() && false == is_feed() ):
+	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle']):
 		$content .= '<p class="swp-content-locator"></p>';
 	endif;
 	return $content;
