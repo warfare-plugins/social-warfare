@@ -97,9 +97,23 @@
 					},
 					],
 					onsubmit: function( e ) {
+
 						var value = jQuery( '.mce-first textarea' ).val();
 						var strLength = value.length;
-						var remaining = 117 - strLength;
+						var handle = jQuery( '#socialWarfare .twitterIDWrapper label' ).html();
+
+						if (value.indexOf( 'http' ) > -1 || value.indexOf( 'https' ) > -1) {
+							linkSpace = 0;
+						} else {
+							linkSpace = 23;
+						};
+
+						if (typeof handle === 'undefined') {
+							var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace;
+						} else {
+							var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
+						}
+						
 						if (e.data.tweet === '' || e.data.quote === '') {
 							editor.windowManager.alert( 'Please, fill in both fields.' );
 							return false;
