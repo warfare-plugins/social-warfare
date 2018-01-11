@@ -313,15 +313,19 @@ function swp_process_url( $url, $network, $postID ) {
 		$array['network'] = $network;
 		$array['postID'] = $postID;
 
-		// Run the anaylitcs hook filters
-		if( ( $network === 'pinterest' && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
-			$array = apply_filters( 'swp_analytics' , $array );
-		endif;
+		if( !is_attachment() ):
 
-		// Run the link shortening hook filters, but not on Pinterest
-		if( $network !== 'pinterest' ):
-			$array = apply_filters( 'swp_link_shortening' , $array );
+			// Run the anaylitcs hook filters
+			if( ( $network === 'pinterest' && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
+				$array = apply_filters( 'swp_analytics' , $array );
+			endif;
+
+			// Run the link shortening hook filters, but not on Pinterest
+			if( $network !== 'pinterest' ):
+				$array = apply_filters( 'swp_link_shortening' , $array );
+			endif;
 		endif;
+		
 		return $array['url'];
 
 	endif;
