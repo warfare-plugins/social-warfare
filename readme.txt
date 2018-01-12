@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
 Requires at least: 3.5.1
 Tested up to: 4.9
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GNU General Public License v2.0 or later
 
 The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
@@ -194,7 +194,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 
-= 2.3.4 (06 DEC 2017) =
+= 2.3.5 (12 JAN 2017) =
 
 * Changed the Twitter counter from 140 characters to 280 characters
 * Changed the WhatsApp button to also appear on desktop since their are now desktop apps for it.
@@ -207,6 +207,9 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * Only output the cache trigger on published posts.
 * Adjust the DOM loaded event to use native JS rather than jQuery.
 * Various CSS and minor bugfixes.
+* Update to block shortlinks on attachments
+* Change the counter error message on the CTT generator.
+* Fixed a CSS conflict with UI Tabs
 
 = 2.3.3 (27 SEP 2017) =
 
