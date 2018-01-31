@@ -1,21 +1,21 @@
-=== Social Warfare ===
+=== WordPress Social Sharing Plugin - Social Warfare ===
 Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia
-Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
+Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 3.5.1
 Tested up to: 4.9
-Stable tag: 2.3.5
+Stable tag: 2.3.4
 License: GNU General Public License v2.0 or later
 
-The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
+The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
 
 == Description ==
 
-Get more social media shares which can lead to more website traffic with the best sharing plugin for WordPress! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
+Get more social shares which can lead to more website traffic with the best WordPress social sharing plugin! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
 
 = WordPress Sharing Plugin =
-Most social sharing plugins for WordPress slow down your site, are not attractive, and don't work the way you would hope. Social Warfare is both lightning fast and beautiful.
+Most WordPress social sharing plugins slow down your site, are not attractive, and don't work the way you would hope. Social Warfareâ€™s share buttons are both lightning fast and beautiful.
 
-Not only will it never slow down your website like other sharing plugins, we give you the most attractive buttons available that look great no matter what screen size or resolution.
+Not only will it never slow down your website like other sharing plugins, we give you the most attractive share buttons available that look great no matter what screen size or resolution.
 
 > Social Warfare has boosted social shares by **300%** without slowing down my blog.<br>
 > Eddie Gear - Professional Blogger
@@ -29,7 +29,7 @@ You can choose from the top social networks sharing buttons, including:
 * LinkedIn
 * StumbleUpon
 
-You can also choose where you want the buttons to show up. Choose from the following placement options:
+You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
 * Above the post content
 * Below the post content
@@ -47,7 +47,7 @@ Proudly display how many times your content has been shared-- **even tweet count
 We use the social network API endpoints to ensure that the most accurate share counts are always displayed.
 
 = Popular Posts Widget based on Social Share Counts =
-Wouldn't you love to show what your most popular posts are based on the number of social shares's they've received? Social Warfare allows you to do just that.
+Wouldn't you love to show what your most popular posts are based on the number of social shares they've received? Social Warfare allows you to do just that.
 
 You can even choose to display most your popular posts based on which social network they were popular on!
 
@@ -61,17 +61,17 @@ Social Warfare's Popular Posts widget allows you to display and customize the lo
 = Click to Tweet Quotes =
 A simple and effective way to create tweetable quotes right inside your posts or pages. This has proven to increase the average number of tweets per article dramatically.
 
-= Use Shortcodes to Manually Place Share Buttons Anywhere =
+= Use Shortcodes to Manually Place Social Share Buttons Anywhere =
 If you want to place buttons in the middle of an article, you can with our `[social_warfare]` shortcode.
 
-What if you wanted to add share buttons to a page but actually have them share out a different page altogether (like being able to share your “Sign-up” page from your “Thank You” page)? Social Warfare allows you to do this!
+What if you wanted to add share buttons to a page but actually have them share out a different page altogether (like being able to share your â€œSign-upâ€ page from your â€œThank Youâ€ page)? Social Warfare allows you to do this!
 
 If you're experienced with PHP, you can also hook Social Warfare into your theme templates for hyper customization.
 
 = Content Protection =
 We've built our highly demanded <a href="https://wordpress.org/plugins/frame-buster/">Frame Buster</a> right into Social Warfare so that you are protected from content hijackers seeking to place their advertisements on top of your content without your permission.
 
-> Social Warfare is by far the best social sharing plugin I’ve ever used. I recommend it to all of my clients.<br>
+> Social Warfare is by far the best social sharing plugin Iâ€™ve ever used. I recommend it to all of my clients.<br>
 > Andrew Wilder, Marketing Consultant
 
 = Premium Social Sharing Options =
@@ -93,7 +93,7 @@ In addition to the extra social networks, you can also reactivate, track and dis
 Enabling the Image Hover Pin Button will place a "Pin" button over top of every image inside of your content when a reader hovers their mouse over it. This makes every image on your page highly sharable to Pinterest!
 
 = Powerful Share Customization =
-> "I use Social Warfare - Pro because how things are shared when I’m not there to do it is important!"<br>
+> "I use Social Warfare - Pro because how things are shared when Iâ€™m not there to do it is important!"<br>
 > Peg Fitzpatrick, author of The Art and Science of Social Media
 
 Social Warfare is among the pioneers of customizing how your content is shared, particularly with Pinterest. The _Social Warfare - Pro_ add-on allows you to decide exactly which image, title and description appears when your content is shared on sites like Facebook and Google+. This also applies to any other networks that use Open Graph data for social shares.
@@ -139,7 +139,7 @@ Additionally, if you're a Google Analytics user, you can set up Analytics tracki
 
 You can also activate Event Tracking so that you can also see in Google Analytics exactly how many times your buttons are clicked.
 
-It is without question that Social Warfare is the most powerful sharing plugin available for WordPress. You get all these premium features while still benefitting form a super-fast, light-weight code base.
+It is without question that Social Warfare is the most powerful social sharing plugin available for WordPress. You get all these premium features while still benefitting from a super-fast, light-weight code base.
 
 == Installation ==
 
@@ -170,10 +170,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 = Testimonial =
 
-> I use Social Warfare - Pro because how things are shared when I’m not there to do it is important!<br>
+> I use Social Warfare - Pro because how things are shared when Iâ€™m not there to do it is important!<br>
 > Peg Fitzpatrick, Social Media Strategist
 
-> Social Warfare is by far the best social-sharing-button plugin I’ve ever used. I recommend it to all of my clients.<br>
+> Social Warfare is by far the best social-sharing-button plugin Iâ€™ve ever used. I recommend it to all of my clients.<br>
 > Andrew Wilder, Consultant
 
 > It's a beautiful, super lightweight, and highly customizable plugin. I love everything about it!<br>
@@ -194,7 +194,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 
-= 2.3.5 (12 JAN 2017) =
+= 2.3.4 (06 DEC 2017) =
 
 * Changed the Twitter counter from 140 characters to 280 characters
 * Changed the WhatsApp button to also appear on desktop since their are now desktop apps for it.
@@ -207,9 +207,6 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * Only output the cache trigger on published posts.
 * Adjust the DOM loaded event to use native JS rather than jQuery.
 * Various CSS and minor bugfixes.
-* Update to block shortlinks on attachments
-* Change the counter error message on the CTT generator.
-* Fixed a CSS conflict with UI Tabs
 
 = 2.3.3 (27 SEP 2017) =
 
@@ -477,8 +474,8 @@ Made some more major updates in response to Facebook's API changes. We've tested
 
 *New:*
 
-* Updated to Facebook’s new share API
-* Shortcode parameters for buttons=“” now supports spaces
+* Updated to Facebookâ€™s new share API
+* Shortcode parameters for buttons=â€œâ€ now supports spaces
 * Better detection of content location for some themes
 * Floating buttons now ignore shortcode (to avoid wonky behavior)
 * Updated floating position settings to apply to both side and horizontal instances
