@@ -531,11 +531,11 @@ function swp_build_options_page() {
 					echo '</div>';
 			*/
 
-			if ($option['type'] === 'textarea'):
+			if ('textarea' === $option['type']):
 
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . $option['name'] . '</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="' . $option['primary'] . '" type="textarea" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
+				echo '<div class="sw-grid sw-col-300"><textarea name="' . $key . '" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" ></textarea></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
 
