@@ -435,8 +435,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
 
 				var href = $( this ).attr( 'data-link' );
-				console.log(href);
-				var height, width, instance;
+				var height, width, top, left, instance, windowFeatures;
 
 				href = href.replace( '’', '\'' );
 
@@ -448,7 +447,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					width = 500;
 				}
 
-				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
+
+                top = window.screenY + (window.innerHeight - height) / 2;
+                left = window.screenX + (window.innerWidth - width) / 2;
+
+                windowFeatures = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+				instance = window.open( href, '_blank', windowFeatures );
 
 				if (typeof ga == "function" && true === swpClickTracking) {
 					if($(this).hasClass('nc_tweet')) {
