@@ -51,8 +51,6 @@ div.nc_socialPanel .nc_tweetContainer {
 	text-align: center;
 	-webkit-transition: all 0.1s linear;
 	transition: all 0.1s linear;
-
-	border-size: 1px;
 }
 
 div.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer {
@@ -1522,8 +1520,8 @@ div.sw-pinit a.sw-pinit-button:hover::before {
 	content: "F";
 }
 
-div.sw-pinit a.sw-pinit-button::hover,
-div.sw-pinit a.sw-pinit-button::focus {
+div.sw-pinit a.sw-pinit-button:hover,
+div.sw-pinit a.sw-pinit-button:focus {
 	background: #aa1b29;
 	color: #fff;
 	text-decoration: none;
