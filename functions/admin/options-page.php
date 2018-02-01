@@ -279,12 +279,14 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-620 sw-fit">';
 				echo '<div class="sw-active sw-buttons-sort">';
 
+
+
 				// Check if we have saved settings to use
 				if ( isset( $swp_user_options['newOrderOfIcons'] ) ) :
 
 					// Loop through each active button
 					foreach ( $swp_user_options['newOrderOfIcons'] as $key => $value ) :
-						echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+						echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '" tabindex="0" role="button" aria-label="' . $key . '"></i>';
 					endforeach;
 
 					// Use defaults if nothing is saved
@@ -293,7 +295,7 @@ function swp_build_options_page() {
 					// Loop through the available buttons
 					foreach ( $option['content'] as $key => $value ) :
 						if ( $value['default'] == true ) :
-							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '" tabindex="0" role="button" aria-label="' . $key . '"></i>';
 						endif;
 					endforeach;
 
@@ -318,7 +320,7 @@ function swp_build_options_page() {
 					// Loop through each active button
 					foreach ( $option['content'] as $key => $value ) :
 						if ( ! isset( $swp_user_options['newOrderOfIcons'][ $key ] ) ) :
-							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '" tabindex="0" role="button" aria-label="' . $key . '"></i>';
 						endif;
 					endforeach;
 
@@ -328,7 +330,7 @@ function swp_build_options_page() {
 					// Loop through the available buttons
 					foreach ( $option['content'] as $key => $value ) :
 						if ( $value['default'] == false ) :
-							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '"></i>';
+							echo '<i class="sw-s sw-' . $key . '-icon" data-network="' . $key . '" premium-button="' . $option['content'][ $key ]['premium'] . '" tabindex="0" role="button" aria-label="' . $key . '"></p></i>';
 						endif;
 					endforeach;
 
@@ -504,6 +506,36 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-300"><input name="' . $option['primary'] . '" type="text" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"><input name="' . $option['secondary'] . '" type="text" class="sw-admin-input" ' . (isset( $option['default_2'] ) ? 'placeholder="' . $option['default_2'] . '"' : '') . ' value="' . $value2 . '" /></div>';
 
+				echo '<div class="sw-premium-blocker"></div>';
+				echo '</div>';
+
+			endif;
+
+			/*
+				if ( $option['type'] == 'input' && isset( $option['size'] ) && $option['size'] == 'two-thirds' ) :
+
+					if ( isset( $swp_user_options[ $key ] ) ) :
+						$value = $swp_user_options[ $key ];
+					elseif ( isset( $option['default'] ) ):
+						$value = $option['default'];
+					else :
+						$value = '';
+					endif;
+
+					echo '<div class="sw-grid sw-col-940 sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
+					echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . $option['name'] . '</p></div>';
+					echo '<div class="sw-grid sw-col-300"><input name="' . $key . '" type="text" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
+					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
+					echo '<div class="sw-premium-blocker"></div>';
+					echo '<div class="sw-clearfix"></div>';
+					echo '</div>';
+			*/
+
+			if ($option['type'] === 'textarea'):
+
+				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
+				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . $option['name'] . '</p></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="' . $option['primary'] . '" type="textarea" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
 
