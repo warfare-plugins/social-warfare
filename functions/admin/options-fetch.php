@@ -54,6 +54,7 @@ function swp_get_user_options( $admin = false ) {
 		'sideReveal'                        => 'slide',
 		'swp_float_scr_sz'                  => 1100,
 		'cttTheme'                          => 'style1',
+		'cttCSS'							=> "",
 		'twitter_shares'                    => false,
 		'float'                             => true,
 		'floatOption'                       => 'bottom',
