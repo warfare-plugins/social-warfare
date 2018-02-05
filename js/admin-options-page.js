@@ -35,7 +35,7 @@
 		var values = {};
 
 		// Loop through all the inputs
-		$( 'form.sw-admin-settings-form input, form.sw-admin-settings-form select' ).each( function() {
+		$( 'form.sw-admin-settings-form input, form.sw-admin-settings-form select, form.sw-admin-settings-form textarea' ).each( function() {
 			var $field = $( this );
 
 			var name = $field.attr( 'name' );
