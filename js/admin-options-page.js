@@ -31,7 +31,6 @@
 		A Function to gather all the settings
 	 *********************************************************/
 	function fetchAllOptions() {
-		console.log("In fetchAllOptions()");
 		// Create an object
 		var values = {};
 
@@ -60,9 +59,6 @@
 			var network = $( this ).data( 'network' );
 			values.newOrderOfIcons[network] = network;
 		});
-
-		console.log("Values is:");
-		console.log(values);
 
 		return values;
 	}
@@ -730,6 +726,37 @@
 		});
 	}
 
+	function set_ctt_preview() {
+		console.log("set_ctt_preview()");
+        var preview = $("#ctt_preview");
+        var select = $("select[name=cttTheme]");
+
+        if (!preview.length) {
+        	preview = $('<style id="ctt_preview"></style>');
+        	$("head").append(preview);
+        }
+
+        if (select.value === 'none') {
+        	update_ctt_preview();
+        }
+
+        $(select).on("change", function(e) {
+        	if (e.target.value === 'none') {
+        		update_ctt_preview();
+        	}
+        });
+
+        $("textarea").on("keyup", update_ctt_preview);
+	}
+
+	function update_ctt_preview() {
+		console.log("update_ctt_preview()");
+		var preview = $("#ctt_preview");
+        var textarea = $("textarea[name=cttCSS]");
+
+        $(preview).text($(textarea).val());
+	}
+
 	$( document ).ready(function() {
 		handleSettingSave();
 		populateOptions();
@@ -745,5 +772,8 @@
 		getSystemStatus();
 		blockPremiumFeatures();
 		customUploaderInit();
+		set_ctt_preview();
 	});
+
+
 })( this, jQuery );
