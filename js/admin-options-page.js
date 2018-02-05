@@ -31,6 +31,7 @@
 		A Function to gather all the settings
 	 *********************************************************/
 	function fetchAllOptions() {
+		console.log("In fetchAllOptions()");
 		// Create an object
 		var values = {};
 
@@ -47,6 +48,7 @@
 				value = $field.val();
 			}
 
+
 			values[name] = value;
 		});
 
@@ -58,6 +60,9 @@
 			var network = $( this ).data( 'network' );
 			values.newOrderOfIcons[network] = network;
 		});
+
+		console.log("Values is:");
+		console.log(values);
 
 		return values;
 	}

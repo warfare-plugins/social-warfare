@@ -511,27 +511,20 @@ function swp_build_options_page() {
 
 			endif;
 
-			/*
-				if ( $option['type'] == 'input' && isset( $option['size'] ) && $option['size'] == 'two-thirds' ) :
 
-					if ( isset( $swp_user_options[ $key ] ) ) :
-						$value = $swp_user_options[ $key ];
-					elseif ( isset( $option['default'] ) ):
-						$value = $option['default'];
-					else :
-						$value = '';
-					endif;
-
-					echo '<div class="sw-grid sw-col-940 sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
-					echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . $option['name'] . '</p></div>';
-					echo '<div class="sw-grid sw-col-300"><input name="' . $key . '" type="text" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
-					echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
-					echo '<div class="sw-premium-blocker"></div>';
-					echo '<div class="sw-clearfix"></div>';
-					echo '</div>';
-			*/
+            /**
+             * Textarea module
+            */
 
 			if ('textarea' === $option['type'] ):
+
+				if ( isset( $swp_user_options[ $key ] ) ) :
+					$value = $swp_user_options[ $key ];
+				elseif ( isset( $option['default'] ) ):
+					$value = $option['default'];
+				else :
+					$value = '';
+				endif;
 
                 // Open wrapper
 				echo '<div class="sw-grid sw-col-940 sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';

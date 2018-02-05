@@ -158,6 +158,7 @@ function swp_get_user_options( $admin = false ) {
 		$options['buttonSize']                        = 1;
 		$options['buttonFloat']                       = 'fullWidth';
 		$options['cttTheme']                          = 'style1';
+		$options['cttCSS'] 							  = "";
 		$options['twitter_shares']                    = false;
 		$options['recover_shares']                    = false;
 		$options['googleAnalytics']                   = false;
