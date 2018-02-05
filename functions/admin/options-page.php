@@ -541,7 +541,7 @@ function swp_build_options_page() {
 				        </div>';
 
 				echo   '<div class="sw-grid sw-col-620 sw-fit ">
-				            <textarea name="' . $key . '" class="sw-grid-textarea" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" ></textarea>
+				            <textarea name="' . $key . '" class="sw-grid-textarea" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . '>'. $value. '</textarea>
 				        </div>';
 
 				echo '<div class="sw-premium-blocker"></div>';
