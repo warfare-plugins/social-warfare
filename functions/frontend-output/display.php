@@ -31,10 +31,13 @@ function swp_activate_buttons() {
 	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
     if( true === is_singular() || true === $swp_user_options['full_content'] ):
         add_filter( 'the_content','social_warfare_wrapper', 10 );
+
     endif;
 
-	// Add the buttons to the excerpts
-	add_filter( 'the_excerpt','social_warfare_wrapper' );
+    if (false === is_singular()) {
+		// Add the buttons to the excerpts
+		add_filter( 'the_excerpt','social_warfare_wrapper' );
+    }
 
 }
 
