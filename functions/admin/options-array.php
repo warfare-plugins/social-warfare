@@ -229,7 +229,7 @@ function swp_options_styles($swp_options) {
 			'name' => __( 'Minimum Screen Width' ,'social-warfare' ),
 			'default' => '1100',
 			'dep' 		=> 'floatOption',
-			'dep_val'	=> array('left')
+			'dep_val'	=> array('left', 'right')
 		),
 		'sideReveal' => array(
 			'type' => 'select',
