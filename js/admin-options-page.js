@@ -727,7 +727,6 @@
 	}
 
 	function set_ctt_preview() {
-		console.log("set_ctt_preview()");
         var preview = $("#ctt_preview");
         var select = $("select[name=cttTheme]");
 
@@ -736,7 +735,7 @@
         	$("head").append(preview);
         }
 
-        if (select.value === 'none') {
+        if ($(select).val() === "none") {
         	update_ctt_preview();
         }
 
@@ -750,7 +749,6 @@
 	}
 
 	function update_ctt_preview() {
-		console.log("update_ctt_preview()");
 		var preview = $("#ctt_preview");
         var textarea = $("textarea[name=cttCSS]");
 
