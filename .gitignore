@@ -1,8 +1,0 @@
-.DS_Store
-.sass-cache
-
-# Development files
-node_modules
-bower_components
-.remote-sync.json
-package.json
