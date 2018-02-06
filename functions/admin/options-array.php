@@ -216,7 +216,8 @@ function swp_options_styles($swp_options) {
 			'content' => array(
 				'top' => __( 'Top of the Page' ,'social-warfare' ),
 				'bottom' => __( 'Bottom of the Page' ,'social-warfare' ),
-				'left' => __( 'On the left side of the page' ,'social-warfare' )
+				'left' => __( 'On the left side of the page' ,'social-warfare' ),
+				'right' => __('On the right side of the page', 'social-warfare'),
 			),
 			'default' => 'bottom',
 			'dep' 		=> 'float',
