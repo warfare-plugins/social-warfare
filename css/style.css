@@ -894,7 +894,6 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide.slide {
 	position: fixed;
-	left: -100px;
 	-webkit-transition: all 0.2s linear;
 	transition: all 0.2s linear;
 }
