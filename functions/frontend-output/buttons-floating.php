@@ -2,9 +2,9 @@
 
 /**
 
- * **************************************************************
+ * ***************************************************************
  *                                                                *
- *          Side Fixed Floater Function				             *
+ *          Side Fixed Floater Function				              *
  *                                                                *
  ******************************************************************/
 
@@ -31,7 +31,8 @@ function socialWarfareSideFloat() {
 
 		if ( is_singular() && get_post_status( $postID ) == 'publish' && get_post_meta( $postID , 'nc_floatLocation' , true ) != 'off' && $visibility == 'on' && ! is_home() ) :
 
-			// Acquire the social stats from the networks
+			$class = "";
+
 			// Acquire the social stats from the networks
 			if ( isset( $array['url'] ) ) :
 				$buttonsArray['url'] = $array['url'];
@@ -41,6 +42,7 @@ function socialWarfareSideFloat() {
 
 			if ( $options['float'] && is_singular() ) :
 				$floatOption = 'float' . ucfirst( $options['floatOption'] );
+				$class = "swp_float_" . $options['floatOption'];
 			else :
 				$floatOption = 'floatNone';
 			endif;
@@ -64,7 +66,7 @@ function socialWarfareSideFloat() {
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
 			// Create the social panel
-			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_' . $options['floatStyle'] . ' swp_d_' . $options['sideDColorSet'] . ' swp_i_' . $options['sideIColorSet'] . ' swp_o_' . $options['sideOColorSet'] . ' ' . $options['sideReveal'] . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-screen-width="' . $options['swp_float_scr_sz'] . '" data-transition="' . $options['sideReveal'] . '" data-mobileFloat="'.$options['floatLeftMobile'].'">';
+			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_' . $options['floatStyle'] . ' swp_d_' . $options['sideDColorSet'] . ' swp_i_' . $options['sideIColorSet'] . ' swp_o_' . $options['sideOColorSet'] . ' ' . $options['sideReveal'] . ' ' . $class . ' ' . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-screen-width="' . $options['swp_float_scr_sz'] . '" data-transition="' . $options['sideReveal'] . '" data-mobileFloat="'.$options['floatLeftMobile'].'">';
 
 			// Display Total Shares if the Threshold has been met
 			if ( $options['totes'] && $buttonsArray['totes'] >= $options['minTotes'] ) :
