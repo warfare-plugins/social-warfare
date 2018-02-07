@@ -1,6 +1,16 @@
 <?php
 
 /**
+* An Array of options to pass over to the option page
+*
+* @package   SocialWarfare\Functions
+* @copyright Copyright (c) 2017, Warfare Plugins, LLC
+* @license   GPL-3.0+
+* @since     1.0.0 | Created | Unknown
+* @since     2.3.5 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
+*/
+
+/**
  * POPULAR POSTS WIDGET CLASS
  */
 class swp_popular_posts_widget extends WP_Widget {
@@ -147,7 +157,20 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<option value="130" ' . ( $thumb_size == '130' ? 'selected' : '') . '>130px</option>';
 		$form .= '<option value="140" ' . ( $thumb_size == '140' ? 'selected' : '') . '>140px</option>';
 		$form .= '<option value="150" ' . ( $thumb_size == '150' ? 'selected' : '') . '>150px</option>';
+		$form .= '<option value="custom" ' . selected($thumb_size, 'custom') . '>Custom</option>';
 		$form .= '</select>';
+		$form .= '</p>';
+
+		//  If $thumb_size, show the custom height/width fields.
+		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
+		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail height</label>';
+		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_width' ) . '" name="' . $this->get_field_name( 'thumb_width' ) . '">';
+		$form .= '</p>';
+
+		//  If $thumb_size, show the custom height/width fields.
+		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
+		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail width</label>';
+		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_height' ) . '" name="' . $this->get_field_name( 'thumb_height' ) . '">';
 		$form .= '</p>';
 
 		// Font size field
@@ -221,6 +244,8 @@ class swp_popular_posts_widget extends WP_Widget {
 		$instance['style'] 			= strip_tags( $new_instance['style'] );
 		$instance['thumbnails'] 	= strip_tags( $new_instance['thumbnails'] );
 		$instance['thumb_size'] 	= strip_tags( $new_instance['thumb_size'] );
+		$instance['thumb_width']    = strip_tags( $new_instance['thumb_width'] );
+		$instance['thumb_height']   = strip_tags( $new_instance['thumb_height'] );
 		$instance['font_size'] 		= strip_tags( $new_instance['font_size'] );
 		$instance['custom_bg'] 		= strip_tags( $new_instance['custom_bg'] );
 		$instance['custom_link'] 	= strip_tags( $new_instance['custom_link'] );
@@ -246,6 +271,8 @@ class swp_popular_posts_widget extends WP_Widget {
 		(isset( $instance['thumb_size'] ) 	? $thumb_size 	= $instance['thumb_size'] 	: $thumb_size 	= '100');
 		(isset( $instance['font_size'] ) 	? $font_size 	= $instance['font_size'] 	: $font_size 	= '100');
 		(isset( $instance['custom_bg'] ) 	? $custom_bg 	= $instance['custom_bg'] 	: $custom_bg 	= '#ffffff');
+		(isset( $instance['thumb_width'] )  ? $thumb_width  = $instance['thumb_width']  : $thumb_width  =  $thumb_size);
+		(isset( $instance['thumb_height'] ) ? $thumb_height = $instance['thumb_height'] : $thumb_height =  $thumb_size);
 		(isset( $instance['custom_link'] ) 	? $custom_link 	= $instance['custom_link'] 	: $custom_link 	= '#000000');
 
 		// Correct the previous style with the new version if it is present on the site
