@@ -892,7 +892,8 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	-ms-flex-direction: column;
 }
 
-.nc_socialPanelSide.slide {
+.nc_socialPanelSide.slide,
+.nc_socialPanelSide.fade  {
 	position: fixed;
 	-webkit-transition: all 0.2s linear;
 	transition: all 0.2s linear;
@@ -900,10 +901,14 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide.fade {
 	display: none;
-	position: fixed;
+}
+
+.nc_socialPanelSide.fade.swp_float_left {
 	left: 5px;
-	-webkit-transition: all 0.2s linear;
-	transition: all 0.2s linear;
+}
+
+.nc_socialPanelSide.fade.swp_float_right {
+	right: 5px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer {
