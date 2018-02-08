@@ -175,13 +175,12 @@ class swp_popular_posts_widget extends WP_Widget {
 
 		//  If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
-		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail height</label>';
+		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
 		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_width' ) . '" name="' . $this->get_field_name( 'thumb_width' ) . '" value="' . $thumb_width . '">';
 		$form .= '</p>';
 
-		//  If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
-		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail width</label>';
+		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail height</label>';
 		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_height' ) . '" name="' . $this->get_field_name( 'thumb_height' ) . '" value="' . $thumb_height . '">';
 		$form .= '</p>';
 
@@ -412,9 +411,17 @@ class swp_popular_posts_widget extends WP_Widget {
 					// If we are supposed to show thumbnails
 					if ( $thumbnails == 'true' && has_post_thumbnail() ) :
 						$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
-						$thumbnail_html = '';
-						$thumbnail_html .= '<a href="' . get_the_permalink() . '">';
-						$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
+						$thumbnail_html = '<a href="' . get_the_permalink() . '">';
+
+						if ($thumb_size === 'custom') {
+                            $thumb_width = preg_replace("/[^0-9]/", "", $thumb_width);
+                            $thumb_height = preg_replace("/[^0-9]/", "", $thumb_height);
+
+							$thumbnail_html .= '<img style="width:' . $thumb_width . 'px;height:' . $thumb_height . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
+						} else {
+							$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
+						}
+
 						$thumbnail_html .= '</a>';
 
 						// If we are not supposed to show thumbnails
