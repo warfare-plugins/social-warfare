@@ -21,8 +21,7 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
 
-    function swp_name( $name ) {
-        $name = ucfirst($name);
+    private function swp_name( $name ) {
         return " data-swp-name='$name' ";
     }
 
@@ -164,17 +163,13 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<p ' . ( $thumbnails == 'false' ? 'style="display:none;"' : '' ) . ' class="thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
 		$form .= '<select class="widefat" id="' . $this->get_field_id( 'thumb_size' ) . '" name="' . $this->get_field_name( 'thumb_size' ) . '"' . $this->swp_name('thumb_size') . '>';
-		$form .= '<option value="50" ' . ( $thumb_size == '50' ? 'selected' : '') . '>50px</option>';
-		$form .= '<option value="60" ' . ( $thumb_size == '60' ? 'selected' : '') . '>60px</option>';
-		$form .= '<option value="70" ' . ( $thumb_size == '70' ? 'selected' : '') . '>70px</option>';
-		$form .= '<option value="80" ' . ( $thumb_size == '80' ? 'selected' : '') . '>80px</option>';
-		$form .= '<option value="90" ' . ( $thumb_size == '90' ? 'selected' : '') . '>90px</option>';
-		$form .= '<option value="100" ' . ( $thumb_size == '100' ? 'selected' : '') . '>100px</option>';
-		$form .= '<option value="110" ' . ( $thumb_size == '110' ? 'selected' : '') . '>110px</option>';
-		$form .= '<option value="120" ' . ( $thumb_size == '120' ? 'selected' : '') . '>120px</option>';
-		$form .= '<option value="130" ' . ( $thumb_size == '130' ? 'selected' : '') . '>130px</option>';
-		$form .= '<option value="140" ' . ( $thumb_size == '140' ? 'selected' : '') . '>140px</option>';
-		$form .= '<option value="150" ' . ( $thumb_size == '150' ? 'selected' : '') . '>150px</option>';
+
+        for ($i = 5; $i < 15; $i++) {
+            $val = $i * 10;
+            $selected = selected($thumb_size, $val, false);
+            $form .= "<option value=\"$val\" $selected>${val}px</option>";
+        }
+
 		$form .= '<option value="custom" ' . selected($thumb_size, 'custom') . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
@@ -194,33 +189,46 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<p class="font_size">';
 		$form .= '<label for="' . $this->get_field_id( 'font_size' ) . '">What size would you like the font?</label>';
 		$form .= '<select class="widefat" id="' . $this->get_field_id( 'font_size' ) . '" name="' . $this->get_field_name( 'font_size' ) . '"' . $this->swp_name('font_size') . '>';
-		$form .= '<option value="50" ' . ( $font_size == '50' ? 'selected' : '') . '>50%</option>';
-		$form .= '<option value="60" ' . ( $font_size == '60' ? 'selected' : '') . '>60%</option>';
-		$form .= '<option value="70" ' . ( $font_size == '70' ? 'selected' : '') . '>70%</option>';
-		$form .= '<option value="80" ' . ( $font_size == '80' ? 'selected' : '') . '>80%</option>';
-		$form .= '<option value="90" ' . ( $font_size == '90' ? 'selected' : '') . '>90%</option>';
-		$form .= '<option value="100" ' . ( $font_size == '100' ? 'selected' : '') . '>100%</option>';
-		$form .= '<option value="110" ' . ( $font_size == '110' ? 'selected' : '') . '>110%</option>';
-		$form .= '<option value="120" ' . ( $font_size == '120' ? 'selected' : '') . '>120%</option>';
-		$form .= '<option value="130" ' . ( $font_size == '130' ? 'selected' : '') . '>130%</option>';
-		$form .= '<option value="140" ' . ( $font_size == '140' ? 'selected' : '') . '>140%</option>';
-		$form .= '<option value="150" ' . ( $font_size == '150' ? 'selected' : '') . '>150%</option>';
+
+        for ($i = 5; $i < 15; $i++) {
+            $val = $i * 10;
+            $selected = selected($font_size, $val, false);
+            $form .= "<option value=\"$val\" $selected>${val}%</option>";
+        }
+
 		$form .= '</select>';
 		$form .= '</p>';
 
 		// Color Scheme Field
+        $ctt_styles = array(
+            "Vanilla",
+            "Inspired by Twitter",
+            "Inspired by Facebook",
+            "Inspired by Google Plus",
+            "Don't Stop Believin'",
+            "Thunderstruck",
+            "Livin' On A Prayer"
+        );
+
 		$form .= '<p class="style">';
 		$form .= '<label for="' . $this->get_field_id( 'style' ) . '">Which color scheme would you like to use?</label>';
 		$form .= '<select class="widefat" id="' . $this->get_field_id( 'style' ) . '" name="' . $this->get_field_name( 'style' ) . '"' . $this->swp_name('style') . '>';
-		$form .= '<option value="style_01" ' . ( $style == 'style_01' ? 'selected' : '' ) . '>Vanilla (No Styling)</option>';
-		$form .= '<option value="style_02" ' . ( $style == 'style_02' ? 'selected' : '' ) . '>Inspired by Twitter</option>';
-		$form .= '<option value="style_03" ' . ( $style == 'style_03' ? 'selected' : '' ) . '>Inspired by Facebook</option>';
-		$form .= '<option value="style_04" ' . ( $style == 'style_04' ? 'selected' : '' ) . '>Inspired by Google Plus</option>';
-		$form .= '<option value="style_05" ' . ( $style == 'style_05' ? 'selected' : '' ) . '>Inspired by LinkedIn</option>';
-		$form .= '<option value="style_06" ' . ( $style == 'style_06' ? 'selected' : '' ) . '>Inspired by Pinterest</option>';
-		$form .= '<option value="style_07" ' . ( $style == 'style_07' ? 'selected' : '' ) . '>Don\'t Stop Believin\'</option>';
-		$form .= '<option value="style_08" ' . ( $style == 'style_08' ? 'selected' : '' ) . '>Thunderstruck</option>';
-		$form .= '<option value="style_09" ' . ( $style == 'style_09' ? 'selected' : '' ) . '>Livin\' On A Prayer</option>';
+
+        foreach($ctt_styles as $idx => $ctt_style) {
+
+            // *Accounting for 0 offset
+            $idx += 1;
+
+            if ($idx < 10) {
+                $val = "style_0{$idx}";
+            } else {
+                $val = "style_{$idx}";
+            }
+
+            $selected = selected($val, $style, false);
+            $form .= "<option value=\"$val\" $selected>${ctt_style}</option>";
+        }
+
 		$form .= '<option value="custom" ' . ( $style == 'custom' ? 'selected' : '' ) . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
