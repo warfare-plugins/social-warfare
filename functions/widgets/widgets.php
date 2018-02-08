@@ -1,5 +1,7 @@
 <?php
 
+add_action( 'widgets_init', 'swp_register_widgets' );
+
 /**
 * An Array of options to pass over to the option page
 *
@@ -8,11 +10,27 @@
 * @license   GPL-3.0+
 * @since     1.0.0 | Created | Unknown
 * @since     2.4.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
+* @since     2.4.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
 */
 
+
+
 /**
- * POPULAR POSTS WIDGET CLASS
+ * Register widgets.
+ *
+ * @since  1.0.0
+ * @return void
  */
+function swp_register_widgets() {
+    register_widget( 'swp_popular_posts_widget' );
+}
+
+/**
+* Popular Posts Widget.
+*
+* Allows users to show most popular posts by share count.
+* Settings include widget title, network selections, thumbnail options, styles, and more.
+*/
 class swp_popular_posts_widget extends WP_Widget {
 
 	/**
@@ -83,7 +101,6 @@ class swp_popular_posts_widget extends WP_Widget {
 		// Fetch the networks that are active on this blog
 		$availableNetworks = $options['newOrderOfIcons'];
 
-
 		// Build the Widget Form
 		$form = '<div class="swp_popular_post_options">';
 
@@ -116,13 +133,13 @@ class swp_popular_posts_widget extends WP_Widget {
         $form .= "<option value=\"totes\" {selected($network, 'totes')}>All Networks</option>";
 
 		foreach ( $availableNetworks as $key => $value ) :
-			if ( isset( $options[ $key ] ) && $options[ $key ] ) {
-				if ( $network == $key . '_shares' ) :
-					$form .= '<option value="' . $key . '_shares" selected>' . $value . '</option>';
-				else :
-					$form .= '<option value="' . $key . '_shares">' . $value . '</option>';
-				endif;
-			};
+            $opt = $key . '_shares';
+            $selected = selected($network, $opt, false);
+
+            // *Would rather have this expanded in the string, but that doesn't work for whatever reason.
+            $net = ucfirst($value);
+
+            $form .= "<option value=\"$opt\" $selected>$net</option>";
 		endforeach;
 
 		$form .= '</select>';
@@ -253,7 +270,11 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
 	/**
-	 * FUNCTION - UPDATE VALUES FROM THE FORM
+	 * Update widget form values.
+     *
+     * @param array $new_instance Updated values.
+     * @param array $old_instance Previously set values.
+     * @return array Sanitized array of final values.
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -277,9 +298,12 @@ class swp_popular_posts_widget extends WP_Widget {
 		return $instance;
 	}
 
-	/**
-	 * FUNCTION - OUTPUT THE WIDGET TO THE SITE
-	 */
+    /**
+    * Output the HTML to the widgets screen.
+    *
+    * @param array $args // *I don't know what this is.
+    * @param array $instance The selected options
+    */
 	function widget( $args, $instance ) {
 		extract( $args );
 
@@ -462,13 +486,3 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 }
 
-add_action( 'widgets_init', 'swp_register_widgets' );
-/**
- * Register widgets.
- *
- * @since  1.0.0
- * @return void
- */
-function swp_register_widgets() {
-	register_widget( 'swp_popular_posts_widget' );
-}
