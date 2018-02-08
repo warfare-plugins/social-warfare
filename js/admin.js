@@ -73,6 +73,17 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 		$( '#socialWarfare .nc_customTweetWrapper .counterNumber' ).html( remaining );
 	}
 
+	function toggleCustomThumbnailFields( show = true) {
+		console.log("toggleCustomThumbnailFields()");
+		console.log(show);
+		if (show) {
+			$(".custom_thumb_size").show();
+		}
+        else {
+        	$(".custom_thumb_size").hide();
+        }
+	}
+
 	$( document ).ready( function() {
 		if ( $( '#socialWarfare.postbox' ).length ) {
 			// Add the CountDown Box for the Social Media Title
@@ -203,5 +214,21 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 				});
 			}
 		}
+
+		var customThumbailSelect = $("#widget-swp_popular_posts_widget-2-thumb_size");
+		console.log(customThumbailSelect);
+		console.log(customThumbailSelect.value);
+
+		if (customThumbailSelect.value === 'custom') {
+			toggleCustomThumbnailFields();
+		}
+
+		$(customThumbailSelect).on("change", function(e) {
+            if (e.target.value === 'custom') {
+            	toggleCustomThumbnailFields();
+            } else {
+            	toggleCustomThumbnailFields(false);
+            }
+		});
 	});
 })( this, jQuery );
