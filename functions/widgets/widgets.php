@@ -25,71 +25,97 @@ class swp_popular_posts_widget extends WP_Widget {
         return " data-swp-name='$name' ";
     }
 
+
 	/**
 	 * FUNCTION - CREATE THE WIDGET FORM
 	 */
 	function form( $instance ) {
 		global $swp_user_options;
 
-		// Default Title
-		if ( isset( $instance['title'] ) ) { 		$title 			= esc_attr( $instance['title'] );
-		} else {								$title 			= 'Popular Posts'; }
+        $instances = [
+            'title'         => "Popular Posts",
+            'count'         => "10",
+            'timeframe'     => "0",
+            'network'       => "totes",
+            'showCount'     => "true",
+            'countLabel'    => "Total Shares",
+            'style'         => "style_01",
+            'thumbnails'    => "true",
+            'thumb_size'    => "100",
+            'thumb_width'   => "thumb_size",
+            'thumb_height'  => "thumb_size",
+            'font_size'     => "100",
+            'custom_bg'     => "#ffffff",
+            'custom_link'   => "#000000"
+        ];
 
-		// Default Count
-		if ( isset( $instance['count'] ) ) { 		$count 			= esc_attr( $instance['count'] );
-		} else {								$count 			= '10'; }
+        foreach($instances as $var => $display) {
+            if (isset ($instance[$var])) {
+                $$var = esc_attr ($instance[$var]);
+            } else {
+                $$var = $display;
+            }
+        }
 
-		// Default Timeframe
-		if ( isset( $instance['timeframe'] ) ) { 	$timeframe 		= esc_attr( $instance['timeframe'] );
-		} else {								$timeframe 		= '0'; }
+		// // Default Title
+		// if ( isset( $instance['title'] ) ) { 		$title 			= esc_attr( $instance['title'] );
+		// } else {								$title 			= 'Popular Posts'; }
 
-		// Default Title
-		if ( isset( $instance['network'] ) ) { 	$network 		= esc_attr( $instance['network'] );
-		} else {								$network 		= 'totes'; }
+		// // Default Count
+		// if ( isset( $instance['count'] ) ) { 		$count 			= esc_attr( $instance['count'] );
+		// } else {								$count 			= '10'; }
 
-		// Default showCount
-		if ( isset( $instance['showCount'] ) ) { 	$showCount 		= esc_attr( $instance['showCount'] );
-		} else {								$showCount 		= 'true'; }
+		// // Default Timeframe
+		// if ( isset( $instance['timeframe'] ) ) { 	$timeframe 		= esc_attr( $instance['timeframe'] );
+		// } else {								$timeframe 		= '0'; }
 
-		// Default countLabel
-		if ( isset( $instance['countLabel'] ) ) { 	$countLabel 	= esc_attr( $instance['countLabel'] );
-		} else {								$countLabel 	= 'Total Shares'; }
+		// // Default Title
+		// if ( isset( $instance['network'] ) ) { 	$network 		= esc_attr( $instance['network'] );
+		// } else {								$network 		= 'totes'; }
 
-		// Default Style
-		if ( isset( $instance['style'] ) ) { 		$style 			= esc_attr( $instance['style'] );
-		} else {								$style 			= 'style_01'; }
+		// // Default showCount
+		// if ( isset( $instance['showCount'] ) ) { 	$showCount 		= esc_attr( $instance['showCount'] );
+		// } else {								$showCount 		= 'true'; }
 
-		// Default Thumbnails toggle
-		if ( isset( $instance['thumbnails'] ) ) { 	$thumbnails 	= esc_attr( $instance['thumbnails'] );
-		} else {								$thumbnails 	= 'true'; }
+		// // Default countLabel
+		// if ( isset( $instance['countLabel'] ) ) { 	$countLabel 	= esc_attr( $instance['countLabel'] );
+		// } else {								$countLabel 	= 'Total Shares'; }
 
-		// Default Thumbnail size
-		if ( isset( $instance['thumb_size'] ) ) { 	$thumb_size 	= esc_attr( $instance['thumb_size'] );
-		} else {								$thumb_size 	= '100'; }
+		// // Default Style
+		// if ( isset( $instance['style'] ) ) { 		$style 			= esc_attr( $instance['style'] );
+		// } else {								$style 			= 'style_01'; }
 
-		if ( isset( $instance['thumb_width']) ) {
-			$thumb_width = esc_attr( $instance['thumb_width'] );
-		} else {
-            $thumb_width = $thumb_size;
-		}
+		// // Default Thumbnails toggle
+		// if ( isset( $instance['thumbnails'] ) ) { 	$thumbnails 	= esc_attr( $instance['thumbnails'] );
+		// } else {								$thumbnails 	= 'true'; }
 
-		if ( isset( $instance['thumb_height']) ) {
-			$thumb_height = esc_attr( $instance['thumb_height'] );
-		} else {
-            $thumb_height = $thumb_size;
-		}
+		// // Default Thumbnail size
+		// if ( isset( $instance['thumb_size'] ) ) { 	$thumb_size 	= esc_attr( $instance['thumb_size'] );
+		// } else {								$thumb_size 	= '100'; }
 
-		// Default Font Size
-		if ( isset( $instance['font_size'] ) ) { 	$font_size 		= esc_attr( $instance['font_size'] );
-		} else {								$font_size 		= '100'; }
+		// if ( isset( $instance['thumb_width']) ) {
+		// 	$thumb_width = esc_attr( $instance['thumb_width'] );
+		// } else {
+  //           $thumb_width = $thumb_size;
+		// }
 
-		// Default Custom Background
-		if ( isset( $instance['custom_bg'] ) ) { 	$custom_bg 		= esc_attr( $instance['custom_bg'] );
-		} else {								$custom_bg 		= '#ffffff'; }
+		// if ( isset( $instance['thumb_height']) ) {
+		// 	$thumb_height = esc_attr( $instance['thumb_height'] );
+		// } else {
+  //           $thumb_height = $thumb_size;
+		// }
 
-		// Default Custom Link
-		if ( isset( $instance['custom_link'] ) ) { $custom_link 	= esc_attr( $instance['custom_link'] );
-		} else {								$custom_link 	= '#000000'; }
+		// // Default Font Size
+		// if ( isset( $instance['font_size'] ) ) { 	$font_size 		= esc_attr( $instance['font_size'] );
+		// } else {								$font_size 		= '100'; }
+
+		// // Default Custom Background
+		// if ( isset( $instance['custom_bg'] ) ) { 	$custom_bg 		= esc_attr( $instance['custom_bg'] );
+		// } else {								$custom_bg 		= '#ffffff'; }
+
+		// // Default Custom Link
+		// if ( isset( $instance['custom_link'] ) ) { $custom_link 	= esc_attr( $instance['custom_link'] );
+		// } else {								$custom_link 	= '#000000'; }
 
 		// Fetch the Social Warfare Options
 		$options = $swp_user_options;
@@ -164,7 +190,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
 		$form .= '<select class="widefat" id="' . $this->get_field_id( 'thumb_size' ) . '" name="' . $this->get_field_name( 'thumb_size' ) . '"' . $this->swp_name('thumb_size') . '>';
 
-        for ($i = 5; $i < 15; $i++) {
+        for ($i = 5; $i < 16; $i++) {
             $val = $i * 10;
             $selected = selected($thumb_size, $val, false);
             $form .= "<option value=\"$val\" $selected>${val}px</option>";
@@ -190,7 +216,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<label for="' . $this->get_field_id( 'font_size' ) . '">What size would you like the font?</label>';
 		$form .= '<select class="widefat" id="' . $this->get_field_id( 'font_size' ) . '" name="' . $this->get_field_name( 'font_size' ) . '"' . $this->swp_name('font_size') . '>';
 
-        for ($i = 5; $i < 15; $i++) {
+        for ($i = 5; $i < 16; $i++) {
             $val = $i * 10;
             $selected = selected($font_size, $val, false);
             $form .= "<option value=\"$val\" $selected>${val}%</option>";
