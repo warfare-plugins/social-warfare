@@ -73,9 +73,9 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 		$( '#socialWarfare .nc_customTweetWrapper .counterNumber' ).html( remaining );
 	}
 
-	function toggleCustomThumbnailFields( show = true) {
-		console.log("toggleCustomThumbnailFields()");
-		console.log(show);
+	function toggleCustomThumbnailFields(show) {
+		if (typeof show === 'undefined') show = true;
+
 		if (show) {
 			$(".custom_thumb_size").show();
 		}

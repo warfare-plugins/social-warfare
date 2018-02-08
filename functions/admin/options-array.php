@@ -241,7 +241,7 @@ function swp_options_styles($swp_options) {
 			),
 			'default' => 'slide',
 			'dep' 		=> 'floatOption',
-			'dep_val'	=> array('left')
+			'dep_val'	=> array('left', 'right')
 		),
 		'floatBgColor' => array(
 			'type' => 'input',
