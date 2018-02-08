@@ -215,15 +215,15 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 			}
 		}
 
-		var customThumbailSelect = $("#widget-swp_popular_posts_widget-2-thumb_size");
-		console.log(customThumbailSelect);
-		console.log(customThumbailSelect.value);
+		var customThumbnailSelect = $("#widget-swp_popular_posts_widget-2-thumb_size");
 
-		if (customThumbailSelect.value === 'custom') {
+		if (customThumbnailSelect.value === 'custom') {
 			toggleCustomThumbnailFields();
 		}
 
-		$(customThumbailSelect).on("change", function(e) {
+		$(customThumbnailSelect).on("change", function(e) {
+			console.log("changing");
+			console.log(e.target.value);
             if (e.target.value === 'custom') {
             	toggleCustomThumbnailFields();
             } else {

@@ -7,7 +7,7 @@
 * @copyright Copyright (c) 2017, Warfare Plugins, LLC
 * @license   GPL-3.0+
 * @since     1.0.0 | Created | Unknown
-* @since     2.3.5 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
+* @since     2.4.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
 */
 
 /**
@@ -61,6 +61,18 @@ class swp_popular_posts_widget extends WP_Widget {
 		// Default Thumbnail size
 		if ( isset( $instance['thumb_size'] ) ) { 	$thumb_size 	= esc_attr( $instance['thumb_size'] );
 		} else {								$thumb_size 	= '100'; }
+
+		if ( isset( $instance['thumb_width']) ) {
+			$thumb_width = esc_attr( $instance['thumb_width'] );
+		} else {
+            $thumb_width = $thumb_size;
+		}
+
+		if ( isset( $instance['thumb_height']) ) {
+			$thumb_height = esc_attr( $instance['thumb_height'] );
+		} else {
+            $thumb_height = $thumb_size;
+		}
 
 		// Default Font Size
 		if ( isset( $instance['font_size'] ) ) { 	$font_size 		= esc_attr( $instance['font_size'] );
@@ -164,13 +176,13 @@ class swp_popular_posts_widget extends WP_Widget {
 		//  If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail height</label>';
-		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_width' ) . '" name="' . $this->get_field_name( 'thumb_width' ) . '">';
+		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_width' ) . '" name="' . $this->get_field_name( 'thumb_width' ) . '" value="' . $thumb_width . '">';
 		$form .= '</p>';
 
 		//  If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail width</label>';
-		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_height' ) . '" name="' . $this->get_field_name( 'thumb_height' ) . '">';
+		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_height' ) . '" name="' . $this->get_field_name( 'thumb_height' ) . '" value="' . $thumb_height . '">';
 		$form .= '</p>';
 
 		// Font size field
