@@ -15,14 +15,31 @@
  */
 class swp_popular_posts_widget extends WP_Widget {
 
-	// Class Constructor
+	/**
+    * Class constructor.
+    */
 	function __construct() {
 		parent::__construct( false, $name = 'Social Warfare: Popular Posts' );
 	}
 
+    /**
+    * Sets commonly applie dattributes.
+    *
+    * @since 2.4.0 | 08 Feb 2018
+    *
+    * @param string $name The name to be called.
+    * @param string $class The CSS class to be applied.
+    * @param string $value The default value for the element.
+    * @return string The string filled with attribute/value pairs.
+    */
+    private function set_attributes( $name, $class, $value) {
+        $attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
 
-    private function swp_name( $name ) {
-        return " data-swp-name='$name' ";
+        if ( isset( $value) ) {
+            $attributes .= " value=\"{$value}\" ";
+        }
+
+        return $attributes;
     }
 
 
@@ -49,6 +66,8 @@ class swp_popular_posts_widget extends WP_Widget {
             'custom_link'   => "#000000"
         ];
 
+        // *If the user set their value for $var, set it to that.
+        // *Otherwise set it to the default display value.
         foreach($instances as $var => $display) {
             if (isset ($instance[$var])) {
                 $$var = esc_attr ($instance[$var]);
@@ -57,98 +76,45 @@ class swp_popular_posts_widget extends WP_Widget {
             }
         }
 
-		// // Default Title
-		// if ( isset( $instance['title'] ) ) { 		$title 			= esc_attr( $instance['title'] );
-		// } else {								$title 			= 'Popular Posts'; }
-
-		// // Default Count
-		// if ( isset( $instance['count'] ) ) { 		$count 			= esc_attr( $instance['count'] );
-		// } else {								$count 			= '10'; }
-
-		// // Default Timeframe
-		// if ( isset( $instance['timeframe'] ) ) { 	$timeframe 		= esc_attr( $instance['timeframe'] );
-		// } else {								$timeframe 		= '0'; }
-
-		// // Default Title
-		// if ( isset( $instance['network'] ) ) { 	$network 		= esc_attr( $instance['network'] );
-		// } else {								$network 		= 'totes'; }
-
-		// // Default showCount
-		// if ( isset( $instance['showCount'] ) ) { 	$showCount 		= esc_attr( $instance['showCount'] );
-		// } else {								$showCount 		= 'true'; }
-
-		// // Default countLabel
-		// if ( isset( $instance['countLabel'] ) ) { 	$countLabel 	= esc_attr( $instance['countLabel'] );
-		// } else {								$countLabel 	= 'Total Shares'; }
-
-		// // Default Style
-		// if ( isset( $instance['style'] ) ) { 		$style 			= esc_attr( $instance['style'] );
-		// } else {								$style 			= 'style_01'; }
-
-		// // Default Thumbnails toggle
-		// if ( isset( $instance['thumbnails'] ) ) { 	$thumbnails 	= esc_attr( $instance['thumbnails'] );
-		// } else {								$thumbnails 	= 'true'; }
-
-		// // Default Thumbnail size
-		// if ( isset( $instance['thumb_size'] ) ) { 	$thumb_size 	= esc_attr( $instance['thumb_size'] );
-		// } else {								$thumb_size 	= '100'; }
-
-		// if ( isset( $instance['thumb_width']) ) {
-		// 	$thumb_width = esc_attr( $instance['thumb_width'] );
-		// } else {
-  //           $thumb_width = $thumb_size;
-		// }
-
-		// if ( isset( $instance['thumb_height']) ) {
-		// 	$thumb_height = esc_attr( $instance['thumb_height'] );
-		// } else {
-  //           $thumb_height = $thumb_size;
-		// }
-
-		// // Default Font Size
-		// if ( isset( $instance['font_size'] ) ) { 	$font_size 		= esc_attr( $instance['font_size'] );
-		// } else {								$font_size 		= '100'; }
-
-		// // Default Custom Background
-		// if ( isset( $instance['custom_bg'] ) ) { 	$custom_bg 		= esc_attr( $instance['custom_bg'] );
-		// } else {								$custom_bg 		= '#ffffff'; }
-
-		// // Default Custom Link
-		// if ( isset( $instance['custom_link'] ) ) { $custom_link 	= esc_attr( $instance['custom_link'] );
-		// } else {								$custom_link 	= '#000000'; }
-
 		// Fetch the Social Warfare Options
 		$options = $swp_user_options;
+
 
 		// Fetch the networks that are active on this blog
 		$availableNetworks = $options['newOrderOfIcons'];
 
+
 		// Build the Widget Form
 		$form = '<div class="swp_popular_post_options">';
+
 
 		// The Widget Title Field
 		$form .= '<p class="title">';
 		$form .= '<label for="' . $this->get_field_id( 'title' ) . '">Widget Title</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '"' . $this->swp_name('title') . ' />';
+        $form .= "<input type=\"text\" {$this->set_attributes("title", "widefat", $title)} />";
 		$form .= '</p>';
+
 
 		// Number of Posts to Display Field
 		$form .= '<p class="count">';
 		$form .= '<label for="' . $this->get_field_id( 'count' ) . '">How many posts would you like to display?</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'count' ) . '" name="' . $this->get_field_name( 'count' ) . '" type="number" value="' . $count . '" min="0" ' . $this->swp_name('count') . '/>';
+        $form .= "<input type=\"text\" {$this->set_attributes("count", "widefat", $count)} />";
 		$form .= '</p>';
+
 
 		// Age of the pots to display field
 		$form .= '<p class="timeframe">';
 		$form .= '<label for="' . $this->get_field_id( 'timeframe' ) . '">What is maximum age of a post (in days) that you would like to include (0 = Unlimited)?</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'timeframe' ) . '" name="' . $this->get_field_name( 'timeframe' ) . '" value="' . $timeframe . '" type="number" min="0"' . $this->swp_name('timeframe') . '>';
+		$form .= "<input type=\"number\" {$this->set_attributes("timeframe", "widefat", $timeframe)} min=\"0\" />";
 		$form .= '</p>';
+
 
 		// Which networks to use as the basis field
 		$form .= '<p class="network">';
 		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts popularity on?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'network' ) . '" name="' . $this->get_field_name( 'network' ) . '"' . $this->swp_name('network') . '>';
-		$form .= '<option value="totes"' . ( $network == 'totes' ? 'selected' : '' ) . '>All Networks</option>';
+        $form .= "<select {$this->set_attributes('network', 'widefat', null)}>";
+        $form .= "<option value=\"totes\" {selected($network, 'totes')}>All Networks</option>";
+
 		foreach ( $availableNetworks as $key => $value ) :
 			if ( isset( $options[ $key ] ) && $options[ $key ] ) {
 				if ( $network == $key . '_shares' ) :
@@ -158,37 +124,41 @@ class swp_popular_posts_widget extends WP_Widget {
 				endif;
 			};
 		endforeach;
+
 		$form .= '</select>';
 		$form .= '</p>';
 
 		// Display the share count toggle field
 		$form .= '<p class="showCount">';
 		$form .= '<label for="' . $this->get_field_id( 'showCount' ) . '">Would you like to show the count?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'showCount' ) . '" name="' . $this->get_field_name( 'showCount' ) . '"' . $this->swp_name('showCount') . '>';
-		$form .= '<option value="true" ' . ( $showCount == 'true' ? 'selected' : '') . '>Yes</option>';
-		$form .= '<option value="false" ' . ( $showCount == 'false' ? 'selected' : '') . '>No</option>';
+        $form .= "<select {$this->set_attributes( 'showCount', 'widefat', null )}>";
+		$form .= '<option value="true" ' . selected($showCount, 'true', false) . '>Yes</option>';
+		$form .= '<option value="false" ' . selected($showCount, 'false', false) . '>No</option>';
 		$form .= '</select>';
 		$form .= '</p>';
+
 
 		// Count Label Field
 		$form .= '<p ' . ( $showCount == 'false' ? 'style="display:none;"' : '' ) . ' class="countLabel">';
 		$form .= '<label for="' . $this->get_field_id( 'countLabel' ) . '">Count Number Label</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'countLabel' ) . '" name="' . $this->get_field_name( 'countLabel' ) . '" type="text" value="' . $countLabel . '" ' . $this->swp_name('countLabel') . '/>';
+        $form .= "<input type=\"text\" {$this->set_attributes( 'countLabel', 'widefat', $countLabel)} />";
 		$form .= '</p>';
+
 
 		// Post thumbnails toggle field
 		$form .= '<p class="thumbnails">';
 		$form .= '<label for="' . $this->get_field_id( 'thumbnails' ) . '">Would you like to display thumbnails?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'thumbnails' ) . '" name="' . $this->get_field_name( 'thumbnails' ) . '"' . $this->swp_name('thumbnails') . '>';
-		$form .= '<option value="true" ' . ( $thumbnails == 'true' ? 'selected' : '') . '>Yes</option>';
-		$form .= '<option value="false" ' . ( $thumbnails == 'false' ? 'selected' : '') . '>No</option>';
+        $form .= "<select {$this->set_attributes( 'thumbnails', 'widefat', null)} />";
+		$form .= '<option value="true" ' . selected($thumbnails, 'true', false) . '>Yes</option>';
+		$form .= '<option value="false" ' . selected($thumbnails, 'false', false) . '>No</option>';
 		$form .= '</select>';
 		$form .= '</p>';
+
 
 		// Thumbnails size field
 		$form .= '<p ' . ( $thumbnails == 'false' ? 'style="display:none;"' : '' ) . ' class="thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'thumb_size' ) . '" name="' . $this->get_field_name( 'thumb_size' ) . '"' . $this->swp_name('thumb_size') . '>';
+        $form .= "<select {$this->set_attributes( 'thumb_size', 'widefat', null )} >";
 
         for ($i = 5; $i < 16; $i++) {
             $val = $i * 10;
@@ -200,21 +170,23 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '</select>';
 		$form .= '</p>';
 
+
 		//  If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
-		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_width' ) . '" name="' . $this->get_field_name( 'thumb_width' ) . '" value="' . $thumb_width . '"' . $this->swp_name('thumb_width') . '>';
-		$form .= '</p>';
+		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_width', 'widefat', $thumb_width)} />";
+        $form .= '</p>';
 
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail height</label>';
-		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_height' ) . '" name="' . $this->get_field_name( 'thumb_height' ) . '" value="' . $thumb_height . '"' . $this->swp_name('thumb_height') . '>';
+        $form .= "<input type=\"number\" {$this->set_attributes( 'thumb_height', 'widefat', $thumb_height)} />";
 		$form .= '</p>';
+
 
 		// Font size field
 		$form .= '<p class="font_size">';
 		$form .= '<label for="' . $this->get_field_id( 'font_size' ) . '">What size would you like the font?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'font_size' ) . '" name="' . $this->get_field_name( 'font_size' ) . '"' . $this->swp_name('font_size') . '>';
+        $form .= "<select {$this->set_attributes( 'font_size', 'widefat', null )}>";
 
         for ($i = 5; $i < 16; $i++) {
             $val = $i * 10;
@@ -224,6 +196,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
 		$form .= '</select>';
 		$form .= '</p>';
+
 
 		// Color Scheme Field
         $ctt_styles = array(
@@ -238,7 +211,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
 		$form .= '<p class="style">';
 		$form .= '<label for="' . $this->get_field_id( 'style' ) . '">Which color scheme would you like to use?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'style' ) . '" name="' . $this->get_field_name( 'style' ) . '"' . $this->swp_name('style') . '>';
+        $form .= "<select {$this->set_attributes( 'style', 'widefat', null )}>";
 
         foreach($ctt_styles as $idx => $ctt_style) {
 
@@ -255,20 +228,20 @@ class swp_popular_posts_widget extends WP_Widget {
             $form .= "<option value=\"$val\" $selected>${ctt_style}</option>";
         }
 
-		$form .= '<option value="custom" ' . ( $style == 'custom' ? 'selected' : '' ) . '>Custom</option>';
+		$form .= '<option value="custom" ' . selected($style, 'custom') . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
 
 		// Custom Background Color Field
 		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' class="custom_bg">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_bg' ) . '">Custom Background Color</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'custom_bg' ) . '" name="' . $this->get_field_name( 'custom_bg' ) . '" type="text" value="' . $custom_bg . '"' . $this->swp_name('custom_bg') . ' />';
+        $form .= "<input type=\"text\" {$this->set_attributes( 'custom_bg', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Custom Link Color Field
 		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' class="custom_link">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_link' ) . '">Custom Link Color</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'custom_link' ) . '" name="' . $this->get_field_name( 'custom_link' ) . '" type="text" value="' . $custom_link . '" ' . $this->swp_name('custom_link') . '/>';
+        $form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Close the Div
