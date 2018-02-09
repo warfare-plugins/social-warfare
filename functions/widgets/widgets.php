@@ -40,16 +40,16 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
     /**
-     * Sets commonly applied dattributes.
-     *
-     * @since 2.4.0 | 08 Feb 2018
-     * @access private
-     *
-     * @param string $name The name to be called.
-     * @param string $class The CSS class to be applied.
-     * @param string $value The default value for the element.
-     * @return string The string filled with attribute/value pairs.
-     */
+    * Sets commonly applied attributes.
+    *
+    * @since 2.4.0 | 08 Feb 2018
+    * @access private
+    *
+    * @param string $name The name to be called.
+    * @param string $class The CSS class to be applied.
+    * @param string $value The default value for the element.
+    * @return string The string filled with attribute/value pairs.
+    */
     private function set_attributes( $name, $class, $value) {
         $attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
 
@@ -59,6 +59,56 @@ class swp_popular_posts_widget extends WP_Widget {
 
         return $attributes;
     }
+
+    // *While it would be helpful to use this function in both form() and widget(),
+    // *we need to find a way to set the scope of the $$var variables to the calling function (form()/widget()).
+    // *Right now it will set the defaults, but can not make the previously set and adjusted default values available ot the calling parent.
+
+    // /**
+    // * Set the default values for widget settings.
+    // *
+    // * @since 2.4.0 | 10 Feb 2018
+    // * @access private
+    // *
+    // * @param array $instance The current instance settings.
+    // * @return array The instance values updated with default settings if not previously defined.
+    // */
+    // private function set_instance_defaults( $instance ) {
+    //     $vars = [];
+
+    //     $defaults = [
+    //         'title'         => "Popular Posts",
+    //         'count'         => "10",
+    //         'timeframe'     => "0",
+    //         'post_type'     => "post",
+    //         'network'       => "totes",
+    //         'showCount'     => "true",
+    //         'countLabel'    => "Total Shares",
+    //         'style'         => "style_01",
+    //         'thumbnails'    => "true",
+    //         'thumb_size'    => "100",
+    //         'thumb_width'   => "thumb_size",
+    //         'thumb_height'  => "thumb_size",
+    //         'font_size'     => "100",
+    //         'custom_bg'     => "#ffffff",
+    //         'custom_link'   => "#000000"
+    //     ];
+
+    //     // *If the user set their value for $var, set it to that.
+    //     // *Otherwise set it to the default display value.
+    //     foreach($defaults as $var => $display):
+    //         if (isset ($instance[$var])) {
+    //             $$var = esc_attr ($instance[$var]);
+    //         } else {
+    //             $$var = $display;
+    //         }
+
+    //         $vars[] = $$var;
+
+    //     endforeach;
+
+    //     return $vars;
+    // }
 
 
 	/**
@@ -73,11 +123,11 @@ class swp_popular_posts_widget extends WP_Widget {
 	function form( $instance ) {
 		global $swp_user_options;
 
-        $instances = [
+        $defaults = [
             'title'         => "Popular Posts",
             'count'         => "10",
             'timeframe'     => "0",
-			'post_type'     => "post",
+            'post_type'     => "post",
             'network'       => "totes",
             'showCount'     => "true",
             'countLabel'    => "Total Shares",
@@ -93,13 +143,14 @@ class swp_popular_posts_widget extends WP_Widget {
 
         // *If the user set their value for $var, set it to that.
         // *Otherwise set it to the default display value.
-        foreach($instances as $var => $display) {
+        foreach($defaults as $var => $display):
             if (isset ($instance[$var])) {
                 $$var = esc_attr ($instance[$var]);
             } else {
                 $$var = $display;
             }
-        }
+
+        endforeach;
 
 		// Fetch the Social Warfare Options
 		$options = $swp_user_options;
@@ -126,7 +177,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '</p>';
 
 
-		// Age of the pots to display field
+		// Age of the posts to display field
 		$form .= '<p class="timeframe">';
 		$form .= '<label for="' . $this->get_field_id( 'timeframe' ) . '">What is maximum age of a post (in days) that you would like to include (0 = Unlimited)?</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes("timeframe", "widefat", $timeframe)} min=\"0\" />";
@@ -151,20 +202,21 @@ class swp_popular_posts_widget extends WP_Widget {
     		$form .= '</p>';
 
 		endif;
+
 		// Which networks to use as the basis field
 		$form .= '<p class="network">';
-		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts popularity on?</label>';
+		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts\' popularity on?</label>';
         $form .= "<select {$this->set_attributes('network', 'widefat', null)}>";
-        $form .= "<option value=\"totes\" {selected($network, 'totes')}>All Networks</option>";
+        $form .= "<option value=\"totes\" {selected($network, 'totes', false)}>All Networks</option>";
 
-		foreach ( $availableNetworks as $key => $value ) :
+		foreach( $availableNetworks as $key => $value ) :
+
             $opt = $key . '_shares';
             $selected = selected($network, $opt, false);
-
-            // *Would rather have this expanded in the string, but that doesn't work for whatever reason.
             $net = ucfirst($value);
 
             $form .= "<option value=\"$opt\" $selected>$net</option>";
+
 		endforeach;
 
 		$form .= '</select>';
@@ -208,7 +260,7 @@ class swp_popular_posts_widget extends WP_Widget {
             $form .= "<option value=\"$val\" $selected>${val}px</option>";
         }
 
-		$form .= '<option value="custom" ' . selected($thumb_size, 'custom') . '>Custom</option>';
+		$form .= '<option value="custom" ' . selected($thumb_size, 'custom', false) . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
 
@@ -255,7 +307,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '<label for="' . $this->get_field_id( 'style' ) . '">Which color scheme would you like to use?</label>';
         $form .= "<select {$this->set_attributes( 'style', 'widefat', null )}>";
 
-        foreach($ctt_styles as $idx => $ctt_style) {
+        foreach($ctt_styles as $idx => $ctt_style):
 
             // *Accounting for 0 offset
             $idx += 1;
@@ -268,7 +320,8 @@ class swp_popular_posts_widget extends WP_Widget {
 
             $selected = selected($val, $style, false);
             $form .= "<option value=\"$val\" $selected>${ctt_style}</option>";
-        }
+
+        endforeach;
 
 		$form .= '<option value="custom" ' . selected($style, 'custom', false) . '>Custom</option>';
 		$form .= '</select>';
@@ -294,15 +347,15 @@ class swp_popular_posts_widget extends WP_Widget {
 
 	}
 
-	/**
-	 * Update widget form values.
-     *
-     * @since 1.0.0
-     * @access public
-     * @param array $new_instance Updated values as input by the user in WP_Widget::form()
-     * @param array $old_instance Previously set values.
-     * @return array Sanitized array of final values.
-	 */
+    /**
+    * Update widget form values.
+    *
+    * @since 1.0.0
+    * @access public
+    * @param array $new_instance Updated values as input by the user in WP_Widget::form()
+    * @param array $old_instance Previously set values.
+    * @return array Sanitized array of final values.
+    */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
@@ -362,9 +415,7 @@ class swp_popular_posts_widget extends WP_Widget {
 			$style = 'style_01';
 		endif;
 
-		/**
-		 * STYLES - CREATE AN ARRAY OF BACKGROUNDS AND LINK COLORS
-		 */
+		//  Define the array of background links and clors.
 
 		// Vanilla (No Styling)
 		$styles['style_01']['wrapper'] 	= 'background:transparent;';
