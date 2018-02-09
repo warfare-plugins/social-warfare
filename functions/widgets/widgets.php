@@ -144,12 +144,13 @@ class swp_popular_posts_widget extends WP_Widget {
 
     		// Loop through the Custom Post Type Options
     		    foreach($post_types as $post_type):
-    	        	$form .= '<option value="{$post_type}" ' . selected($post_type, 'true', false) . '>{$post_type}</option>';
+    	        	$form .= '<option value="' . $post_type . '" ' . selected($post_type, 'true', false) . '>' . $post_type . '</option>';
                 endforeach;
 
     		$form .= '</select>';
     		$form .= '</p>';
 
+		endif;
 		// Which networks to use as the basis field
 		$form .= '<p class="network">';
 		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts popularity on?</label>';
