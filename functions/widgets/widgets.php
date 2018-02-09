@@ -190,7 +190,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		// Post thumbnails toggle field
 		$form .= '<p class="thumbnails">';
 		$form .= '<label for="' . $this->get_field_id( 'thumbnails' ) . '">Would you like to display thumbnails?</label>';
-        $form .= "<select {$this->set_attributes( 'thumbnails', 'widefat', null)} />";
+        $form .= "<select {$this->set_attributes( 'thumbnails', 'widefat', null)} >";
 		$form .= '<option value="true" ' . selected($thumbnails, 'true', false) . '>Yes</option>';
 		$form .= '<option value="false" ' . selected($thumbnails, 'false', false) . '>No</option>';
 		$form .= '</select>';
