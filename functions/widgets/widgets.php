@@ -440,7 +440,7 @@ class swp_popular_posts_widget extends WP_Widget {
 			// Create the arguments for a query without a timeframe
 			$swp_args = array(
 				'posts_per_page' 	=> $count,
-				'post_type' 		=> 'post',
+				'post_type' 		=> $post_type,
 				'meta_key' 			=> '_' . $network,
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
@@ -455,7 +455,7 @@ class swp_popular_posts_widget extends WP_Widget {
 			// Create the arguments for a query with a timeframe
 			$swp_args = array(
 				'posts_per_page' 	=> $count,
-				'post_type' 		=> 'post',
+				'post_type' 		=> $post_type,
 				'meta_key' 			=> '_' . $network,
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
