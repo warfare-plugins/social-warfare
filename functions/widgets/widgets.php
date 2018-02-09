@@ -11,9 +11,8 @@ add_action( 'widgets_init', 'swp_register_widgets' );
 * @since     1.0.0 | Created | Unknown
 * @since     2.4.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
 * @since     2.4.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
+* @since     2.4.0 | Updated | 09 Feb 2018 | Added the post type selector
 */
-
-
 
 /**
  * Register widgets.
@@ -78,6 +77,7 @@ class swp_popular_posts_widget extends WP_Widget {
             'title'         => "Popular Posts",
             'count'         => "10",
             'timeframe'     => "0",
+			'post_type'     => "post",
             'network'       => "totes",
             'showCount'     => "true",
             'countLabel'    => "Total Shares",
@@ -132,6 +132,23 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= "<input type=\"number\" {$this->set_attributes("timeframe", "widefat", $timeframe)} min=\"0\" />";
 		$form .= '</p>';
 
+        // Get the public post Types
+    	$post_types = swp_get_post_types();
+
+    	if( !empty( $post_types ) ):
+
+            // Display the share count toggle field
+    		$form .= '<p class="post_type">';
+    		$form .= '<label for="' . $this->get_field_id( 'post_type' ) . '">What post type would you like to display?</label>';
+            $form .= "<select {$this->set_attributes( 'post_type', 'widefat', null )}>";
+
+    		// Loop through the Custom Post Type Options
+    		    foreach($post_types as $post_type):
+    	        	$form .= '<option value="{$post_type}" ' . selected($post_type, 'true', false) . '>{$post_type}</option>';
+                endforeach;
+
+    		$form .= '</select>';
+    		$form .= '</p>';
 
 		// Which networks to use as the basis field
 		$form .= '<p class="network">';
@@ -292,6 +309,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$instance['title'] 			= strip_tags( $new_instance['title'] );
 		$instance['count'] 			= strip_tags( $new_instance['count'] );
 		$instance['timeframe'] 		= strip_tags( $new_instance['timeframe'] );
+		$instance['post_type'] 		= strip_tags( $new_instance['post_type'] );
 		$instance['network'] 		= strip_tags( $new_instance['network'] );
 		$instance['showCount'] 		= strip_tags( $new_instance['showCount'] );
 		$instance['countLabel'] 	= strip_tags( $new_instance['countLabel'] );
@@ -325,6 +343,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		(isset( $instance['title'] ) 		? $title 		= $instance['title'] 		: $title 		= 'Popular Posts');
 		(isset( $instance['count'] ) 		? $count 		= $instance['count'] 		: $count 		= '10');
 		(isset( $instance['timeframe'] ) 	? $timeframe 	= $instance['timeframe'] 	: $timeframe 	= '0');
+		(isset( $instance['post_type'] ) 	? $post_type 	= $instance['post_type'] 	: $post_type 	= 'post');
 		(isset( $instance['network'] ) 		? $network 		= $instance['network'] 		: $network 		= 'totes');
 		(isset( $instance['showCount'] ) 	? $showCount 	= $instance['showCount'] 	: $showCount 	= 'true');
 		(isset( $instance['countLabel'] ) 	? $countLabel 	= $instance['countLabel'] 	: $countLabel 	= 'Total Shares');
