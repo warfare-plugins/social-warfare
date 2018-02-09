@@ -270,7 +270,7 @@ class swp_popular_posts_widget extends WP_Widget {
             $form .= "<option value=\"$val\" $selected>${ctt_style}</option>";
         }
 
-		$form .= '<option value="custom" ' . selected($style, 'custom') . '>Custom</option>';
+		$form .= '<option value="custom" ' . selected($style, 'custom', false) . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
 
