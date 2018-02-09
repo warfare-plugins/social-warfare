@@ -283,7 +283,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		// Custom Link Color Field
 		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' class="custom_link">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_link' ) . '">Custom Link Color</label>';
-        $form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_bg )} />";
+        $form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_link )} />";
 		$form .= '</p>';
 
 		// Close the Div
