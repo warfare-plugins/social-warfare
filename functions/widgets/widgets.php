@@ -144,7 +144,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
     		// Loop through the Custom Post Type Options
     		    foreach($post_types as $post_type):
-    	        	$form .= '<option value="' . $post_type . '" ' . selected($post_type, 'true', false) . '>' . $post_type . '</option>';
+    	        	$form .= '<option value="' . $post_type . '" ' . selected($post_type, $post_type, false) . '>' . ucfirst( $post_type ) . '</option>';
                 endforeach;
 
     		$form .= '</select>';
