@@ -1,5 +1,7 @@
 <?php
 
+add_action( 'widgets_init', 'swp_register_widgets' );
+
 /**
 * An Array of options to pass over to the option page
 *
@@ -8,86 +10,100 @@
 * @license   GPL-3.0+
 * @since     1.0.0 | Created | Unknown
 * @since     2.4.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
+* @since     2.4.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
+* @since     2.4.0 | Updated | 09 Feb 2018 | Added the post type selector
 */
 
 /**
- * POPULAR POSTS WIDGET CLASS
+ * Register widgets.
+ *
+ * @since  1.0.0
+ * @return void
  */
+function swp_register_widgets() {
+    register_widget( 'swp_popular_posts_widget' );
+}
+
+/**
+* Popular Posts Widget.
+*
+* Allows users to show most popular posts by share count.
+* Settings include widget title, network selections, thumbnail options, styles, and more.
+*/
 class swp_popular_posts_widget extends WP_Widget {
 
-	// Class Constructor
+	/**
+    * Class constructor.
+    */
 	function __construct() {
 		parent::__construct( false, $name = 'Social Warfare: Popular Posts' );
 	}
 
+    /**
+     * Sets commonly applied dattributes.
+     *
+     * @since 2.4.0 | 08 Feb 2018
+     * @access private
+     *
+     * @param string $name The name to be called.
+     * @param string $class The CSS class to be applied.
+     * @param string $value The default value for the element.
+     * @return string The string filled with attribute/value pairs.
+     */
+    private function set_attributes( $name, $class, $value) {
+        $attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
+
+        if ( isset( $value) ) {
+            $attributes .= " value=\"{$value}\" ";
+        }
+
+        return $attributes;
+    }
+
+
 	/**
-	 * FUNCTION - CREATE THE WIDGET FORM
+	 * Outputs the Settings Update form
+	 *
+	 * @since 1.0.0
+	 * @since 2.4.0 | Refactored using loops, $this->set_attributes(), and added custom thumb sizes
+	 *
+	 * @param array $instance Current settings.
+	 * @return none Output is echoed directly to the screen
 	 */
 	function form( $instance ) {
 		global $swp_user_options;
 
-		// Default Title
-		if ( isset( $instance['title'] ) ) { 		$title 			= esc_attr( $instance['title'] );
-		} else {								$title 			= 'Popular Posts'; }
+        $instances = [
+            'title'         => "Popular Posts",
+            'count'         => "10",
+            'timeframe'     => "0",
+			'post_type'     => "post",
+            'network'       => "totes",
+            'showCount'     => "true",
+            'countLabel'    => "Total Shares",
+            'style'         => "style_01",
+            'thumbnails'    => "true",
+            'thumb_size'    => "100",
+            'thumb_width'   => "thumb_size",
+            'thumb_height'  => "thumb_size",
+            'font_size'     => "100",
+            'custom_bg'     => "#ffffff",
+            'custom_link'   => "#000000"
+        ];
 
-		// Default Count
-		if ( isset( $instance['count'] ) ) { 		$count 			= esc_attr( $instance['count'] );
-		} else {								$count 			= '10'; }
-
-		// Default Timeframe
-		if ( isset( $instance['timeframe'] ) ) { 	$timeframe 		= esc_attr( $instance['timeframe'] );
-		} else {								$timeframe 		= '0'; }
-
-		// Default Title
-		if ( isset( $instance['network'] ) ) { 	$network 		= esc_attr( $instance['network'] );
-		} else {								$network 		= 'totes'; }
-
-		// Default showCount
-		if ( isset( $instance['showCount'] ) ) { 	$showCount 		= esc_attr( $instance['showCount'] );
-		} else {								$showCount 		= 'true'; }
-
-		// Default countLabel
-		if ( isset( $instance['countLabel'] ) ) { 	$countLabel 	= esc_attr( $instance['countLabel'] );
-		} else {								$countLabel 	= 'Total Shares'; }
-
-		// Default Style
-		if ( isset( $instance['style'] ) ) { 		$style 			= esc_attr( $instance['style'] );
-		} else {								$style 			= 'style_01'; }
-
-		// Default Thumbnails toggle
-		if ( isset( $instance['thumbnails'] ) ) { 	$thumbnails 	= esc_attr( $instance['thumbnails'] );
-		} else {								$thumbnails 	= 'true'; }
-
-		// Default Thumbnail size
-		if ( isset( $instance['thumb_size'] ) ) { 	$thumb_size 	= esc_attr( $instance['thumb_size'] );
-		} else {								$thumb_size 	= '100'; }
-
-		if ( isset( $instance['thumb_width']) ) {
-			$thumb_width = esc_attr( $instance['thumb_width'] );
-		} else {
-            $thumb_width = $thumb_size;
-		}
-
-		if ( isset( $instance['thumb_height']) ) {
-			$thumb_height = esc_attr( $instance['thumb_height'] );
-		} else {
-            $thumb_height = $thumb_size;
-		}
-
-		// Default Font Size
-		if ( isset( $instance['font_size'] ) ) { 	$font_size 		= esc_attr( $instance['font_size'] );
-		} else {								$font_size 		= '100'; }
-
-		// Default Custom Background
-		if ( isset( $instance['custom_bg'] ) ) { 	$custom_bg 		= esc_attr( $instance['custom_bg'] );
-		} else {								$custom_bg 		= '#ffffff'; }
-
-		// Default Custom Link
-		if ( isset( $instance['custom_link'] ) ) { $custom_link 	= esc_attr( $instance['custom_link'] );
-		} else {								$custom_link 	= '#000000'; }
+        // *If the user set their value for $var, set it to that.
+        // *Otherwise set it to the default display value.
+        foreach($instances as $var => $display) {
+            if (isset ($instance[$var])) {
+                $$var = esc_attr ($instance[$var]);
+            } else {
+                $$var = $display;
+            }
+        }
 
 		// Fetch the Social Warfare Options
 		$options = $swp_user_options;
+
 
 		// Fetch the networks that are active on this blog
 		$availableNetworks = $options['newOrderOfIcons'];
@@ -95,140 +111,179 @@ class swp_popular_posts_widget extends WP_Widget {
 		// Build the Widget Form
 		$form = '<div class="swp_popular_post_options">';
 
+
 		// The Widget Title Field
 		$form .= '<p class="title">';
 		$form .= '<label for="' . $this->get_field_id( 'title' ) . '">Widget Title</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" />';
+        $form .= "<input type=\"text\" {$this->set_attributes("title", "widefat", $title)} />";
 		$form .= '</p>';
+
 
 		// Number of Posts to Display Field
 		$form .= '<p class="count">';
 		$form .= '<label for="' . $this->get_field_id( 'count' ) . '">How many posts would you like to display?</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'count' ) . '" name="' . $this->get_field_name( 'count' ) . '" type="number" value="' . $count . '" min="0" />';
+        $form .= "<input type=\"text\" {$this->set_attributes("count", "widefat", $count)} />";
 		$form .= '</p>';
+
 
 		// Age of the pots to display field
 		$form .= '<p class="timeframe">';
 		$form .= '<label for="' . $this->get_field_id( 'timeframe' ) . '">What is maximum age of a post (in days) that you would like to include (0 = Unlimited)?</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'timeframe' ) . '" name="' . $this->get_field_name( 'timeframe' ) . '" value="' . $timeframe . '" type="number" min="0">';
+		$form .= "<input type=\"number\" {$this->set_attributes("timeframe", "widefat", $timeframe)} min=\"0\" />";
 		$form .= '</p>';
 
+        // Get the public post Types
+    	$post_types = swp_get_post_types();
+
+    	if( !empty( $post_types ) ):
+
+            // Display the share count toggle field
+    		$form .= '<p class="post_type">';
+    		$form .= '<label for="' . $this->get_field_id( 'post_type' ) . '">What post type would you like to display?</label>';
+            $form .= "<select {$this->set_attributes( 'post_type', 'widefat', null )}>";
+
+    		// Loop through the Custom Post Type Options
+    		    foreach($post_types as $post_type):
+    	        	$form .= '<option value="' . $post_type . '" ' . selected($post_type, $post_type, false) . '>' . ucfirst( $post_type ) . '</option>';
+                endforeach;
+
+    		$form .= '</select>';
+    		$form .= '</p>';
+
+		endif;
 		// Which networks to use as the basis field
 		$form .= '<p class="network">';
 		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts popularity on?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'network' ) . '" name="' . $this->get_field_name( 'network' ) . '">';
-		$form .= '<option value="totes"' . ( $network == 'totes' ? 'selected' : '' ) . '>All Networks</option>';
+        $form .= "<select {$this->set_attributes('network', 'widefat', null)}>";
+        $form .= "<option value=\"totes\" {selected($network, 'totes')}>All Networks</option>";
+
 		foreach ( $availableNetworks as $key => $value ) :
-			if ( isset( $options[ $key ] ) && $options[ $key ] ) {
-				if ( $network == $key . '_shares' ) :
-					$form .= '<option value="' . $key . '_shares" selected>' . $value . '</option>';
-				else :
-					$form .= '<option value="' . $key . '_shares">' . $value . '</option>';
-				endif;
-			};
+            $opt = $key . '_shares';
+            $selected = selected($network, $opt, false);
+
+            // *Would rather have this expanded in the string, but that doesn't work for whatever reason.
+            $net = ucfirst($value);
+
+            $form .= "<option value=\"$opt\" $selected>$net</option>";
 		endforeach;
+
 		$form .= '</select>';
 		$form .= '</p>';
 
 		// Display the share count toggle field
 		$form .= '<p class="showCount">';
 		$form .= '<label for="' . $this->get_field_id( 'showCount' ) . '">Would you like to show the count?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'showCount' ) . '" name="' . $this->get_field_name( 'showCount' ) . '">';
-		$form .= '<option value="true" ' . ( $showCount == 'true' ? 'selected' : '') . '>Yes</option>';
-		$form .= '<option value="false" ' . ( $showCount == 'false' ? 'selected' : '') . '>No</option>';
+        $form .= "<select {$this->set_attributes( 'showCount', 'widefat', null )}>";
+		$form .= '<option value="true" ' . selected($showCount, 'true', false) . '>Yes</option>';
+		$form .= '<option value="false" ' . selected($showCount, 'false', false) . '>No</option>';
 		$form .= '</select>';
 		$form .= '</p>';
+
 
 		// Count Label Field
 		$form .= '<p ' . ( $showCount == 'false' ? 'style="display:none;"' : '' ) . ' class="countLabel">';
 		$form .= '<label for="' . $this->get_field_id( 'countLabel' ) . '">Count Number Label</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'countLabel' ) . '" name="' . $this->get_field_name( 'countLabel' ) . '" type="text" value="' . $countLabel . '" />';
+        $form .= "<input type=\"text\" {$this->set_attributes( 'countLabel', 'widefat', $countLabel)} />";
 		$form .= '</p>';
+
 
 		// Post thumbnails toggle field
 		$form .= '<p class="thumbnails">';
 		$form .= '<label for="' . $this->get_field_id( 'thumbnails' ) . '">Would you like to display thumbnails?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'thumbnails' ) . '" name="' . $this->get_field_name( 'thumbnails' ) . '">';
-		$form .= '<option value="true" ' . ( $thumbnails == 'true' ? 'selected' : '') . '>Yes</option>';
-		$form .= '<option value="false" ' . ( $thumbnails == 'false' ? 'selected' : '') . '>No</option>';
+        $form .= "<select {$this->set_attributes( 'thumbnails', 'widefat', null)} >";
+		$form .= '<option value="true" ' . selected($thumbnails, 'true', false) . '>Yes</option>';
+		$form .= '<option value="false" ' . selected($thumbnails, 'false', false) . '>No</option>';
 		$form .= '</select>';
 		$form .= '</p>';
+
 
 		// Thumbnails size field
 		$form .= '<p ' . ( $thumbnails == 'false' ? 'style="display:none;"' : '' ) . ' class="thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'thumb_size' ) . '" name="' . $this->get_field_name( 'thumb_size' ) . '">';
-		$form .= '<option value="50" ' . ( $thumb_size == '50' ? 'selected' : '') . '>50px</option>';
-		$form .= '<option value="60" ' . ( $thumb_size == '60' ? 'selected' : '') . '>60px</option>';
-		$form .= '<option value="70" ' . ( $thumb_size == '70' ? 'selected' : '') . '>70px</option>';
-		$form .= '<option value="80" ' . ( $thumb_size == '80' ? 'selected' : '') . '>80px</option>';
-		$form .= '<option value="90" ' . ( $thumb_size == '90' ? 'selected' : '') . '>90px</option>';
-		$form .= '<option value="100" ' . ( $thumb_size == '100' ? 'selected' : '') . '>100px</option>';
-		$form .= '<option value="110" ' . ( $thumb_size == '110' ? 'selected' : '') . '>110px</option>';
-		$form .= '<option value="120" ' . ( $thumb_size == '120' ? 'selected' : '') . '>120px</option>';
-		$form .= '<option value="130" ' . ( $thumb_size == '130' ? 'selected' : '') . '>130px</option>';
-		$form .= '<option value="140" ' . ( $thumb_size == '140' ? 'selected' : '') . '>140px</option>';
-		$form .= '<option value="150" ' . ( $thumb_size == '150' ? 'selected' : '') . '>150px</option>';
+        $form .= "<select {$this->set_attributes( 'thumb_size', 'widefat', null )} >";
+
+        for ($i = 5; $i < 16; $i++) {
+            $val = $i * 10;
+            $selected = selected($thumb_size, $val, false);
+            $form .= "<option value=\"$val\" $selected>${val}px</option>";
+        }
+
 		$form .= '<option value="custom" ' . selected($thumb_size, 'custom') . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
 
+
 		//  If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
-		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_width' ) . '" name="' . $this->get_field_name( 'thumb_width' ) . '" value="' . $thumb_width . '">';
-		$form .= '</p>';
+		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_width', 'widefat', $thumb_width)} />";
+        $form .= '</p>';
 
 		$form .= '<p ' . ($thumb_size !== 'custom' ? 'style="display: none"' : '') . ' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail height</label>';
-		$form .= '<input type="number" class="widefat" id="' . $this->get_field_id( 'thumb_height' ) . '" name="' . $this->get_field_name( 'thumb_height' ) . '" value="' . $thumb_height . '">';
+        $form .= "<input type=\"number\" {$this->set_attributes( 'thumb_height', 'widefat', $thumb_height)} />";
 		$form .= '</p>';
+
 
 		// Font size field
 		$form .= '<p class="font_size">';
 		$form .= '<label for="' . $this->get_field_id( 'font_size' ) . '">What size would you like the font?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'font_size' ) . '" name="' . $this->get_field_name( 'font_size' ) . '">';
-		$form .= '<option value="50" ' . ( $font_size == '50' ? 'selected' : '') . '>50%</option>';
-		$form .= '<option value="60" ' . ( $font_size == '60' ? 'selected' : '') . '>60%</option>';
-		$form .= '<option value="70" ' . ( $font_size == '70' ? 'selected' : '') . '>70%</option>';
-		$form .= '<option value="80" ' . ( $font_size == '80' ? 'selected' : '') . '>80%</option>';
-		$form .= '<option value="90" ' . ( $font_size == '90' ? 'selected' : '') . '>90%</option>';
-		$form .= '<option value="100" ' . ( $font_size == '100' ? 'selected' : '') . '>100%</option>';
-		$form .= '<option value="110" ' . ( $font_size == '110' ? 'selected' : '') . '>110%</option>';
-		$form .= '<option value="120" ' . ( $font_size == '120' ? 'selected' : '') . '>120%</option>';
-		$form .= '<option value="130" ' . ( $font_size == '130' ? 'selected' : '') . '>130%</option>';
-		$form .= '<option value="140" ' . ( $font_size == '140' ? 'selected' : '') . '>140%</option>';
-		$form .= '<option value="150" ' . ( $font_size == '150' ? 'selected' : '') . '>150%</option>';
+        $form .= "<select {$this->set_attributes( 'font_size', 'widefat', null )}>";
+
+        for ($i = 5; $i < 16; $i++) {
+            $val = $i * 10;
+            $selected = selected($font_size, $val, false);
+            $form .= "<option value=\"$val\" $selected>${val}%</option>";
+        }
+
 		$form .= '</select>';
 		$form .= '</p>';
 
+
 		// Color Scheme Field
+        $ctt_styles = array(
+            "Vanilla",
+            "Inspired by Twitter",
+            "Inspired by Facebook",
+            "Inspired by Google Plus",
+            "Don't Stop Believin'",
+            "Thunderstruck",
+            "Livin' On A Prayer"
+        );
+
 		$form .= '<p class="style">';
 		$form .= '<label for="' . $this->get_field_id( 'style' ) . '">Which color scheme would you like to use?</label>';
-		$form .= '<select class="widefat" id="' . $this->get_field_id( 'style' ) . '" name="' . $this->get_field_name( 'style' ) . '">';
-		$form .= '<option value="style_01" ' . ( $style == 'style_01' ? 'selected' : '' ) . '>Vanilla (No Styling)</option>';
-		$form .= '<option value="style_02" ' . ( $style == 'style_02' ? 'selected' : '' ) . '>Inspired by Twitter</option>';
-		$form .= '<option value="style_03" ' . ( $style == 'style_03' ? 'selected' : '' ) . '>Inspired by Facebook</option>';
-		$form .= '<option value="style_04" ' . ( $style == 'style_04' ? 'selected' : '' ) . '>Inspired by Google Plus</option>';
-		$form .= '<option value="style_05" ' . ( $style == 'style_05' ? 'selected' : '' ) . '>Inspired by LinkedIn</option>';
-		$form .= '<option value="style_06" ' . ( $style == 'style_06' ? 'selected' : '' ) . '>Inspired by Pinterest</option>';
-		$form .= '<option value="style_07" ' . ( $style == 'style_07' ? 'selected' : '' ) . '>Don\'t Stop Believin\'</option>';
-		$form .= '<option value="style_08" ' . ( $style == 'style_08' ? 'selected' : '' ) . '>Thunderstruck</option>';
-		$form .= '<option value="style_09" ' . ( $style == 'style_09' ? 'selected' : '' ) . '>Livin\' On A Prayer</option>';
-		$form .= '<option value="custom" ' . ( $style == 'custom' ? 'selected' : '' ) . '>Custom</option>';
+        $form .= "<select {$this->set_attributes( 'style', 'widefat', null )}>";
+
+        foreach($ctt_styles as $idx => $ctt_style) {
+
+            // *Accounting for 0 offset
+            $idx += 1;
+
+            if ($idx < 10) {
+                $val = "style_0{$idx}";
+            } else {
+                $val = "style_{$idx}";
+            }
+
+            $selected = selected($val, $style, false);
+            $form .= "<option value=\"$val\" $selected>${ctt_style}</option>";
+        }
+
+		$form .= '<option value="custom" ' . selected($style, 'custom') . '>Custom</option>';
 		$form .= '</select>';
 		$form .= '</p>';
 
 		// Custom Background Color Field
 		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' class="custom_bg">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_bg' ) . '">Custom Background Color</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'custom_bg' ) . '" name="' . $this->get_field_name( 'custom_bg' ) . '" type="text" value="' . $custom_bg . '" />';
+        $form .= "<input type=\"text\" {$this->set_attributes( 'custom_bg', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Custom Link Color Field
 		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' class="custom_link">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_link' ) . '">Custom Link Color</label>';
-		$form .= '<input class="widefat" id="' . $this->get_field_id( 'custom_link' ) . '" name="' . $this->get_field_name( 'custom_link' ) . '" type="text" value="' . $custom_link . '" />';
+        $form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Close the Div
@@ -240,7 +295,13 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
 	/**
-	 * FUNCTION - UPDATE VALUES FROM THE FORM
+	 * Update widget form values.
+     *
+     * @since 1.0.0
+     * @access public
+     * @param array $new_instance Updated values as input by the user in WP_Widget::form()
+     * @param array $old_instance Previously set values.
+     * @return array Sanitized array of final values.
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -249,6 +310,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		$instance['title'] 			= strip_tags( $new_instance['title'] );
 		$instance['count'] 			= strip_tags( $new_instance['count'] );
 		$instance['timeframe'] 		= strip_tags( $new_instance['timeframe'] );
+		$instance['post_type'] 		= strip_tags( $new_instance['post_type'] );
 		$instance['network'] 		= strip_tags( $new_instance['network'] );
 		$instance['showCount'] 		= strip_tags( $new_instance['showCount'] );
 		$instance['countLabel'] 	= strip_tags( $new_instance['countLabel'] );
@@ -264,9 +326,17 @@ class swp_popular_posts_widget extends WP_Widget {
 		return $instance;
 	}
 
-	/**
-	 * FUNCTION - OUTPUT THE WIDGET TO THE SITE
-	 */
+    /**
+    * Echoes the widget content.
+    *
+    * This sub-class over-rides this function from the parent class to generate the widget code.
+    *
+    * @since 1.0.0
+    * @since 2.4.0 | 09 FEB 2018 | Refactored and added the $args array output
+    * @access public
+    * @param array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
+    * @param array $instance The settings for the particular instance of the widget.
+    */
 	function widget( $args, $instance ) {
 		extract( $args );
 
@@ -274,6 +344,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		(isset( $instance['title'] ) 		? $title 		= $instance['title'] 		: $title 		= 'Popular Posts');
 		(isset( $instance['count'] ) 		? $count 		= $instance['count'] 		: $count 		= '10');
 		(isset( $instance['timeframe'] ) 	? $timeframe 	= $instance['timeframe'] 	: $timeframe 	= '0');
+		(isset( $instance['post_type'] ) 	? $post_type 	= $instance['post_type'] 	: $post_type 	= 'post');
 		(isset( $instance['network'] ) 		? $network 		= $instance['network'] 		: $network 		= 'totes');
 		(isset( $instance['showCount'] ) 	? $showCount 	= $instance['showCount'] 	: $showCount 	= 'true');
 		(isset( $instance['countLabel'] ) 	? $countLabel 	= $instance['countLabel'] 	: $countLabel 	= 'Total Shares');
@@ -339,13 +410,28 @@ class swp_popular_posts_widget extends WP_Widget {
 		 * BUILD OUT THE WIDGET
 		 */
 
+        // Output the "Before Widget" content
+        if( isset( $args['before_widget'] ) ) {
+            echo $args['before_widget'];
+        }
+
 		// Begin output of the widget html
-		echo $before_widget;
 		echo '<div class="widget-text swp_widget_box" style="' . $styles[ $style ]['wrapper'] . '">';
 
 		// Check if title is set
 		if ( $title ) {
+
+            // Output the "Before Title" content
+            if( isset( $args['before_title'] ) ) {
+                echo $args['before_title'];
+            }
+
 			echo '<h4 class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</h4>';
+
+            // Output the "After Title" content
+            if( isset( $args['after_title'] ) ) {
+                echo $args['after_title'];
+            }
 		}
 
 		// If a custom timeframe is not being used....
@@ -354,7 +440,7 @@ class swp_popular_posts_widget extends WP_Widget {
 			// Create the arguments for a query without a timeframe
 			$swp_args = array(
 				'posts_per_page' 	=> $count,
-				'post_type' 		=> 'post',
+				'post_type' 		=> $post_type,
 				'meta_key' 			=> '_' . $network,
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
@@ -369,7 +455,7 @@ class swp_popular_posts_widget extends WP_Widget {
 			// Create the arguments for a query with a timeframe
 			$swp_args = array(
 				'posts_per_page' 	=> $count,
-				'post_type' 		=> 'post',
+				'post_type' 		=> $post_type,
 				'meta_key' 			=> '_' . $network,
 				'orderby' 			=> 'meta_value_num',
 				'order' 			=> 'DESC',
@@ -403,7 +489,7 @@ class swp_popular_posts_widget extends WP_Widget {
 						$shares = get_post_meta( $postID,'_' . $network,true );
 						$share_html = '<span class="swp_pop_count">' . swp_kilomega( $shares ) . ' ' . $countLabel . '</span>';
 
-						// If we are not supposed to show count numbers
+					// If we are not supposed to show count numbers
 					else :
 						$share_html = '';
 					endif;
@@ -438,24 +524,17 @@ class swp_popular_posts_widget extends WP_Widget {
 
 				endif;
 
-				// End the loop
+			// End the loop
 			endwhile;
 		endif;
 
-		// Reset the main query
+		// Reset the main query so as not to interfere with other queries on the same page
 		wp_reset_postdata();
 		echo '</div>';
-		echo $after_widget;
-	}
-}
 
-add_action( 'widgets_init', 'swp_register_widgets' );
-/**
- * Register widgets.
- *
- * @since  1.0.0
- * @return void
- */
-function swp_register_widgets() {
-	register_widget( 'swp_popular_posts_widget' );
+        // Output the "After Widget" content
+        if( isset( $args['after_widget'] ) ) {
+            echo $args['after_widget'];
+        }
+	}
 }
