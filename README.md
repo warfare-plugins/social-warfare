@@ -1,5 +1,5 @@
-# Warfare Plugins / Social Warfare Repository and Issue Tracker
-This is a public repository for the Social Warfare WordPress plugin created primarily for the purpose of publishing and maintaining a public list of bugs, known issues, and feature requests with the community at large. Please use the "Issues" link above to track or add information to existing issues or to submit new issues altogether.
+# Social Warfare Repository and Issue Tracker
+This is a public repository for the Social Warfare WordPress plugin created primarily for the purpose of publishing and maintaining a public list of bugs, known issues, and feature requests with the community at large. Please use the "Issues" link above to track or add information to existing issues or to submit new issues altogether (see the guidelines below prior to adding a new issue).
 
 ***
 
@@ -9,13 +9,23 @@ Coding Standards are an important factor for achieving a high code quality. A co
 
 While this project has used various coding standards over time, this guide should provide the framework for all new code additions and to updates made to existing code.
 
-**WordPress Coding Standards:** All WordPress coding standards should be followed. Anything not specifically defined here should defer to WordPress's recommended coding standards found here: [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards).
+###WordPress Coding Standards
+All WordPress coding standards should be followed. Anything not specifically defined here should defer to WordPress's recommended coding standards found here: [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards).
 
-**Variables and Class Names:** All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. All names in PHP will use the Snake Case nomenclature. Independent function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix. In Javascript, we will use the camelCase nomenclature. 
+###Variables and Class Names
+All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. 
 
-**Conditionals and Loops:** No inline/same-line conditionals or loops will be used, nor will we continue to use brace syntax. Rather we will use the colin/endif syntax.
+**PHP:** All names in PHP will use the Snake Case nomenclature. Independent function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix. 
 
-**Docblocking:** Each file should begin with a docblock, as well as each function and class should be preceded with a docblock to explain it's purpose and functionality. There is no such thing as too much documentation on this project. The purpose is that any developer or non-developer should be able to easily browser each file and know exactly what is happening in that file.
+**Javascript:** In Javascript, we will use the camelCase nomenclature. 
+
+**CSS:** CSS selectors will use the snake_case nomenclature just as in our PHP code.
+
+###Conditionals and Loops
+No inline/same-line conditionals or loops will be used, nor will we continue to use brace syntax. Rather we will use the colin/endif syntax.
+
+###Docblocking
+Each file should begin with a docblock, as well as each function and class should be preceded with a docblock to explain it's purpose and functionality. There is no such thing as too much documentation on this project. The purpose is that any developer or even a non-developer should be able to easily browse each file and know exactly what is happening in that file.
 
 ***
 
