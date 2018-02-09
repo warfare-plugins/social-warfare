@@ -791,8 +791,10 @@ function swp_build_options_page() {
 	if ( ! function_exists( 'get_plugins' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
+
 	$plugins = get_plugins();
 	$pluginList = '';
+
 	foreach ( $plugins as $plugin ) :
 		$pluginList .= '<tr><td><b>' . $plugin['Name'] . '</b></td><td>' . $plugin['Version'] . '</td></tr>';
 	endforeach;
@@ -812,6 +814,8 @@ function swp_build_options_page() {
 
 	$theme = wp_get_theme();
 
+	$og_output = $swp_user_options['swp_og_output'] ? "On" : "Off";
+
 	$system_status = '
 		<table style="width:100%;">
 			<tr><td><h2>Environment Statuses</h2></td><td></td></tr>
@@ -827,6 +831,8 @@ function swp_build_options_page() {
 			<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
 			<tr><td><b>Theme Name</b></td><td>' . $theme['Name'] . '</td></tr>
 			<tr><td><b>Theme Version</b></td><td>' . $theme['Version'] . '</td></tr>
+			<tr><td><b>Caching Method</b></td><td>' . ucfirst($swp_user_options['cacheMethod']) . '</td></tr>
+			<tr><td><b>Open Graph Toggle Status</b></td><td>' . $og_output . '</td></tr>
 			<tr><td><b>Active Plugins</b></td><td></td></tr>
 			<tr><td><b>Number of Active Plugins</b></td><td>' . count( $plugins ) . '</td></tr>
 			' . $pluginList . '
