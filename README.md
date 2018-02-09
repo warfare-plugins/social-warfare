@@ -11,7 +11,9 @@ While this project has used various coding standards over time, this guide shoul
 
 **WordPress Coding Standards:** All WordPress coding standards should be followed. Anything not specifically defined here should defer to WordPress's recommended coding standards found here: [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards).
 
-**Variables and Class Names:** All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. All names will use the Snake Case nomenclature and be preceded with the swp_ prefix (e.g. swp_my_variable_name).
+**Variables and Class Names:** All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. All names in PHP will use the Snake Case nomenclature. Independent function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix. In Javascript, we will use the camelCase nomenclature. 
+
+**Conditionals and Loops:** No inline/same-line conditionals or loops will be used, nor will we continue to use brace syntax. Rather we will use the colin/endif syntax.
 
 **Docblocking:** Each file should begin with a docblock, as well as each function and class should be preceded with a docblock to explain it's purpose and functionality. There is no such thing as too much documentation on this project. The purpose is that any developer or non-developer should be able to easily browser each file and know exactly what is happening in that file.
 
