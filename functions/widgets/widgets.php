@@ -312,11 +312,11 @@ class swp_popular_posts_widget extends WP_Widget {
             // *Accounting for 0 offset
             $idx += 1;
 
-            if ($idx < 10) {
+            if ($idx < 10) :
                 $val = "style_0{$idx}";
-            } else {
+            else:
                 $val = "style_{$idx}";
-            }
+            endif;
 
             $selected = selected($val, $style, false);
             $form .= "<option value=\"$val\" $selected>${ctt_style}</option>";
@@ -462,28 +462,28 @@ class swp_popular_posts_widget extends WP_Widget {
 		 */
 
         // Output the "Before Widget" content
-        if( isset( $args['before_widget'] ) ) {
+        if( isset( $args['before_widget'] ) ) :
             echo $args['before_widget'];
-        }
+        endif;
 
 		// Begin output of the widget html
 		echo '<div class="widget-text swp_widget_box" style="' . $styles[ $style ]['wrapper'] . '">';
 
 		// Check if title is set
-		if ( $title ) {
+		if ( $title ) :
 
             // Output the "Before Title" content
-            if( isset( $args['before_title'] ) ) {
+            if( isset( $args['before_title'] ) ) :
                 echo $args['before_title'];
-            }
+            endif;
 
 			echo '<h4 class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</h4>';
 
             // Output the "After Title" content
-            if( isset( $args['after_title'] ) ) {
+            if( isset( $args['after_title'] ) ) :
                 echo $args['after_title'];
-            }
-		}
+            endif;
+		endif;
 
 		// If a custom timeframe is not being used....
 		if ( $timeframe == 0 ) :
@@ -550,14 +550,14 @@ class swp_popular_posts_widget extends WP_Widget {
 						$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
 						$thumbnail_html = '<a href="' . get_the_permalink() . '">';
 
-						if ($thumb_size === 'custom') {
+						if ($thumb_size === 'custom') :
                             $thumb_width = preg_replace("/[^0-9]/", "", $thumb_width);
                             $thumb_height = preg_replace("/[^0-9]/", "", $thumb_height);
 
 							$thumbnail_html .= '<img style="width:' . $thumb_width . 'px;height:' . $thumb_height . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
-						} else {
+						else:
 							$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
-						}
+						endif;
 
 						$thumbnail_html .= '</a>';
 
@@ -584,8 +584,8 @@ class swp_popular_posts_widget extends WP_Widget {
 		echo '</div>';
 
         // Output the "After Widget" content
-        if( isset( $args['after_widget'] ) ) {
+        if( isset( $args['after_widget'] ) ) :
             echo $args['after_widget'];
-        }
+        endif;
 	}
 }
