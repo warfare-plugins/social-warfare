@@ -41,15 +41,16 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
     /**
-    * Sets commonly applie dattributes.
-    *
-    * @since 2.4.0 | 08 Feb 2018
-    *
-    * @param string $name The name to be called.
-    * @param string $class The CSS class to be applied.
-    * @param string $value The default value for the element.
-    * @return string The string filled with attribute/value pairs.
-    */
+     * Sets commonly applied dattributes.
+     *
+     * @since 2.4.0 | 08 Feb 2018
+     * @access private
+     *
+     * @param string $name The name to be called.
+     * @param string $class The CSS class to be applied.
+     * @param string $value The default value for the element.
+     * @return string The string filled with attribute/value pairs.
+     */
     private function set_attributes( $name, $class, $value) {
         $attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
 
@@ -62,7 +63,13 @@ class swp_popular_posts_widget extends WP_Widget {
 
 
 	/**
-	 * FUNCTION - CREATE THE WIDGET FORM
+	 * Outputs the Settings Update form
+	 *
+	 * @since 1.0.0
+	 * @since 2.4.0 | Refactored using loops, $this->set_attributes(), and added custom thumb sizes
+	 *
+	 * @param array $instance Current settings.
+	 * @return none Output is echoed directly to the screen
 	 */
 	function form( $instance ) {
 		global $swp_user_options;
@@ -272,7 +279,9 @@ class swp_popular_posts_widget extends WP_Widget {
 	/**
 	 * Update widget form values.
      *
-     * @param array $new_instance Updated values.
+     * @since 1.0.0
+     * @access public
+     * @param array $new_instance Updated values as input by the user in WP_Widget::form()
      * @param array $old_instance Previously set values.
      * @return array Sanitized array of final values.
 	 */
@@ -299,10 +308,15 @@ class swp_popular_posts_widget extends WP_Widget {
 	}
 
     /**
-    * Output the HTML to the widgets screen.
+    * Echoes the widget content.
     *
-    * @param array $args // *I don't know what this is.
-    * @param array $instance The selected options
+    * This sub-class over-rides this function from the parent class to generate the widget code.
+    *
+    * @since 1.0.0
+    * @since 2.4.0 | 09 FEB 2018 | Refactored and added the $args array output
+    * @access public
+    * @param array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
+    * @param array $instance The settings for the particular instance of the widget.
     */
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -376,13 +390,28 @@ class swp_popular_posts_widget extends WP_Widget {
 		 * BUILD OUT THE WIDGET
 		 */
 
+        // Output the "Before Widget" content
+        if( isset( $args['before_widget'] ) ) {
+            echo $args['before_widget'];
+        }
+
 		// Begin output of the widget html
-		echo $before_widget;
 		echo '<div class="widget-text swp_widget_box" style="' . $styles[ $style ]['wrapper'] . '">';
 
 		// Check if title is set
 		if ( $title ) {
+
+            // Output the "Before Title" content
+            if( isset( $args['before_title'] ) ) {
+                echo $args['before_title'];
+            }
+
 			echo '<h4 class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</h4>';
+
+            // Output the "After Title" content
+            if( isset( $args['after_title'] ) ) {
+                echo $args['after_title'];
+            }
 		}
 
 		// If a custom timeframe is not being used....
@@ -440,7 +469,7 @@ class swp_popular_posts_widget extends WP_Widget {
 						$shares = get_post_meta( $postID,'_' . $network,true );
 						$share_html = '<span class="swp_pop_count">' . swp_kilomega( $shares ) . ' ' . $countLabel . '</span>';
 
-						// If we are not supposed to show count numbers
+					// If we are not supposed to show count numbers
 					else :
 						$share_html = '';
 					endif;
@@ -475,14 +504,17 @@ class swp_popular_posts_widget extends WP_Widget {
 
 				endif;
 
-				// End the loop
+			// End the loop
 			endwhile;
 		endif;
 
-		// Reset the main query
+		// Reset the main query so as not to interfere with other queries on the same page
 		wp_reset_postdata();
 		echo '</div>';
-		echo $after_widget;
+
+        // Output the "After Widget" content
+        if( isset( $args['after_widget'] ) ) {
+            echo $args['after_widget'];
+        }
 	}
 }
-
