@@ -246,7 +246,7 @@ function swp_build_options_page() {
 				// Button goes in the middle
 				echo '<div class="sw-grid sw-col-300">';
 				echo '<label for="upload_image">
-						<input class="swp_upload_image_field" type="text" size="36" name="' . $key . '" value="' . $value . '" />
+						<input class="swp_upload_image_field" type="text" size="36" name="' . $key . '" data-swp-name="' . $key . '"  value="' . $value . '" />
 						<a class="swp_upload_image_button button sw-navy-button" for="' . $key . '" type="button" value="Upload Image" />Upload Image</a>
 					</label>';
 				echo '</div>';
@@ -371,7 +371,7 @@ function swp_build_options_page() {
 						echo '<a target="_blank" class="swp_support_link swp_four_fourths" href="'.$option['support'].'" title="Click here to learn more about these options.">i</a>';
 					endif;
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
+					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" data-swp-name="' . $key . '"  id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 
 					// Check for three-fourths-advanced size
@@ -383,7 +383,7 @@ function swp_build_options_page() {
 					echo '<div class="sw-grid sw-col-300"><h2 class="sw-h-label">' . $option['title'] . '</h2><p class="sw-subtext-label">' . $option['description'] . '</p></div>';
 					echo '<div class="sw-grid sw-col-300">';
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
+					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" data-swp-name="' . $key . '"  id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 
 					if(!empty($option['support'])):
@@ -411,7 +411,7 @@ function swp_build_options_page() {
 					echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">' . $option['content'] . '</p></div>';
 					echo '<div class="sw-grid sw-col-460 sw-fit">';
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
+					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" data-swp-name="' . $key . '"  id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 					echo '<div class="sw-premium-blocker"></div>';
 					echo '</div>';
@@ -429,7 +429,7 @@ function swp_build_options_page() {
 
 					echo '<div class="sw-grid sw-col-300">';
 					echo '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $key . '"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
-					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" id="' . $key . '" ' . $selected . '>';
+					echo '<input type="checkbox" class="sw-hidden" name="' . $key . '" data-swp-name="' . $key . '"  id="' . $key . '" ' . $selected . '>';
 					echo '</div>';
 					if(!empty($option['support'])):
 						echo '<div class="sw-grid sw-col-300 sw-fit"><a target="_blank" class="swp_support_link" href="'.$option['support'].'" title="Click here to learn more about these options.">i</a></div>';
@@ -458,7 +458,7 @@ function swp_build_options_page() {
 
 				echo '<div class="sw-grid sw-col-940 sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
 				echo '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . $option['name'] . '</p></div>';
-				echo '<div class="sw-grid sw-col-300"><input name="' . $key . '" type="text" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
+				echo '<div class="sw-grid sw-col-300"><input name="' . $key . '" data-swp-name="' . $key . '"  type="text" class="sw-admin-input" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . ' value="' . $value . '" /></div>';
 				echo '<div class="sw-grid sw-col-300 sw-fit"></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '<div class="sw-clearfix"></div>';
@@ -482,7 +482,7 @@ function swp_build_options_page() {
 
 				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-input-label">' . $option['name'] . '</p></div>';
-				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="' . $key . '" type="text" class="sw-admin-input" placeholder="0" value="' . $value . '" /></div>';
+				echo '<div class="sw-grid sw-col-460 sw-fit"><input name="' . $key . '" data-swp-name="' . $key . '"  type="text" class="sw-admin-input" placeholder="0" value="' . $value . '" /></div>';
 				echo '<div class="sw-premium-blocker"></div>';
 				echo '</div>';
 
@@ -534,7 +534,7 @@ function swp_build_options_page() {
 				        </div>';
 
 				echo   '<div class="sw-grid sw-col-620 sw-fit ">
-				            <textarea name="' . $key . '" class="sw-grid-textarea" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . '>'. $value. '</textarea>
+				            <textarea name="' . $key . '" data-swp-name="' . $key . '"  class="sw-grid-textarea" ' . (isset( $option['default'] ) ? 'placeholder="' . $option['default'] . '"' : '') . '>'. $value. '</textarea>
 				        </div>';
 
 				echo '<div class="sw-premium-blocker"></div>';
@@ -607,7 +607,7 @@ function swp_build_options_page() {
 
 				echo '<div class="sw-grid sw-col-460 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
 				echo '<div class="sw-grid sw-col-460"><p class="sw-checkbox-label">' . $option['name'] . '</p></div>';
-				echo '<div class="sw-grid sw-col-460 sw-fit"><select name="' . $key . '">';
+				echo '<div class="sw-grid sw-col-460 sw-fit"><select name="' . $key . '" data-swp-name="' . $key . '" >';
 				if ( ! isset( $option['default'] ) ) :
 					echo '<option value="">Select...</option>';
 				endif;
@@ -629,7 +629,7 @@ function swp_build_options_page() {
 				echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'dep="' . $option['dep'] . '" dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
 
 				echo '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">' . $option['name'] . '</p></div>';
-				echo '<div class="sw-grid sw-col-300"><select name="' . $key . '">';
+				echo '<div class="sw-grid sw-col-300"><select name="' . $key . '" data-swp-name="' . $key . '" >';
 				if ( ! isset( $option['default'] ) ) :
 					echo '<option value="">Select...</option>';
 				endif;

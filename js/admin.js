@@ -1,4 +1,49 @@
 var socialWarfareAdmin = socialWarfareAdmin || {};
+$ = jQuery;
+
+/*********************************************************
+	A function to show/hide conditionals
+*********************************************************/
+function conditionalFields() {
+
+	// Loop through all the fields that have dependancies
+	$( 'div[dep],p[dep]' ).each( function() {
+		// Fetch the conditional values
+		var conDep = $( this ).attr( 'dep' );
+
+		var conDepVal = $.parseJSON( $( this ).attr( 'dep_val' ) );
+		var value;
+
+		// Fetch the value of checkboxes or other input types
+		if ( $( '[data-swp-name="' + conDep + '"]' ).attr( 'type' ) == 'checkbox' ) {
+			value = $( '[data-swp-name="' + conDep + '"]' ).prop( 'checked' );
+		} else {
+			value = $( '[data-swp-name="' + conDep + '"]' ).val();
+		}
+		// console.log(value);
+		console.log(value+':'+conDepVal);
+		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+		if ( $.inArray( value, conDepVal ) !== -1 && $( '[data-swp-name="' + conDep + '"]' ).parent( '.sw-grid,p' ).is( ':visible' ) ) {
+			$( this ).show();
+		} else {
+			$( this ).hide();
+		}
+	});
+
+	if ( swp_check_val('floatStyleSource') == false && (swp_select_val('sideDColorSet') == 'customColor' || swp_select_val('sideDColorSet') == 'ccOutlines' || swp_select_val('sideIColorSet') == 'customColor' || swp_select_val('sideIColorSet') == 'ccOutlines' || swp_select_val('sideOColorSet') == 'customColor' || swp_select_val('sideOColorSet') == 'ccOutlines') ) {
+		$( '.sideCustomColor_wrapper' ).slideDown();
+	} else {
+		$( '.sideCustomColor_wrapper' ).slideUp();
+	}
+}
+
+function swp_select_val(name) {
+	return $('select[name="' + name + '"]').val();
+}
+
+function swp_check_val(name) {
+	return $( '[name="' + name + '"]' ).prop( 'checked' );
+}
 
 (function( window, $, undefined ) {
 	'use strict';
@@ -86,6 +131,7 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 
 	$( document ).ready( function() {
 		if ( $( '#socialWarfare.postbox' ).length ) {
+
 			// Add the CountDown Box for the Social Media Title
 			$( '#socialWarfare #nc_ogTitle' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
@@ -144,34 +190,9 @@ var socialWarfareAdmin = socialWarfareAdmin || {};
 			}, 1000 );
 		}
 
-		// Show and Hide the Count Label based on if we're showing counts
-		$( '.swp_popular_post_options .showCount select' ).on( 'change', function() {
-			var value = $( this ).val();
-			if ( value = true ) {
-				$( '.swp_popular_post_options .countLabel' ).slideDown( 'slow' );
-			} else {
-				$( '.swp_popular_post_options .countLabel' ).slideUp( 'slow' );
-			}
-		});
-
-		// Show and Hide the Thumbnail size based on if we're showing thmbnails
-		$( '.swp_popular_post_options .thumbnails select' ).on( 'change', function() {
-			var value = $( this ).val();
-			if ( value = true ) {
-				$( '.swp_popular_post_options .thumb_size' ).slideDown( 'slow' );
-			} else {
-				$( '.swp_popular_post_options .thumb_size' ).slideUp( 'slow' );
-			}
-		});
-
-		// Show and Hide the Custom fields based on if we're using a custom color scheme
-		$( '.swp_popular_post_options .style select' ).on( 'change', function() {
-			var value = $( this ).val();
-			if ( value = 'custom' ) {
-				$( '.swp_popular_post_options .custom_bg, .swp_popular_post_options .custom_link' ).slideDown( 'slow' );
-			} else {
-				$( '.swp_popular_post_options .custom_bg, .swp_popular_post_options .custom_link' ).slideUp( 'slow' );
-			}
+		conditionalFields();
+		$( '.swp_popular_post_options select' ).on( 'change', function() {
+			conditionalFields();
 		});
 
 		if ( $( '.postbox#socialWarfare' ).length ) {
