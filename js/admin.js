@@ -5,45 +5,52 @@ $ = jQuery;
 	A function to show/hide conditionals
 *********************************************************/
 function conditionalFields() {
+	function swp_selected(name) {
+		return $('select[name="' + name + '"]').val();
+	}
+
+	function swp_checked(name) {
+		return $( '[name="' + name + '"]' ).prop( 'checked' );
+	}
 
 	// Loop through all the fields that have dependancies
-	$( 'div[dep],p[dep]' ).each( function() {
+	$( '[data-dep]' ).each( function() {
 		// Fetch the conditional values
-		var conDep = $( this ).attr( 'dep' );
-
-		var conDepVal = $.parseJSON( $( this ).attr( 'dep_val' ) );
+		var condition = $( this ).data( 'dep' );
+		var required = $.parseJSON( $( this ).data( 'dep_val' ) );
+		var conditionlEl = $( '[data-swp-name="' + condition + '"]');
 		var value;
 
 		// Fetch the value of checkboxes or other input types
-		if ( $( '[data-swp-name="' + conDep + '"]' ).attr( 'type' ) == 'checkbox' ) {
-			value = $( '[data-swp-name="' + conDep + '"]' ).prop( 'checked' );
+		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
+			value = $( conditionEl ).prop( 'checked' );
 		} else {
-			value = $( '[data-swp-name="' + conDep + '"]' ).val();
+			value = $( conditionEl ).val();
 		}
-		// console.log(value);
-		console.log(value+':'+conDepVal);
+
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-		if ( $.inArray( value, conDepVal ) !== -1 && $( '[data-swp-name="' + conDep + '"]' ).parent( '.sw-grid,p' ).is( ':visible' ) ) {
+		if ( $.inArray( value, required ) !== -1 && $( conditionEl ).parent( '.sw-grid,p' ).is( ':visible' ) ) {
 			$( this ).show();
 		} else {
 			$( this ).hide();
 		}
 	});
 
-	if ( swp_check_val('floatStyleSource') == false && (swp_select_val('sideDColorSet') == 'customColor' || swp_select_val('sideDColorSet') == 'ccOutlines' || swp_select_val('sideIColorSet') == 'customColor' || swp_select_val('sideIColorSet') == 'ccOutlines' || swp_select_val('sideOColorSet') == 'customColor' || swp_select_val('sideOColorSet') == 'ccOutlines') ) {
+	if ( false === swp_checked('floatStyleSource') &&
+	       'customColor' === swp_selected('sideDColorSet')
+	    || 'ccOutlines'  === swp_selected('sideDColorSet')
+	    || 'customColor' === swp_selected('sideIColorSet')
+	    || 'ccOutlines'  === swp_selected('sideIColorSet')
+	    || 'customColor' === swp_selected('sideOColorSet')
+        || 'ccOutlines'  === swp_selected('sideOColorSet') ) {
 		$( '.sideCustomColor_wrapper' ).slideDown();
+
 	} else {
 		$( '.sideCustomColor_wrapper' ).slideUp();
 	}
 }
 
-function swp_select_val(name) {
-	return $('select[name="' + name + '"]').val();
-}
 
-function swp_check_val(name) {
-	return $( '[name="' + name + '"]' ).prop( 'checked' );
-}
 
 (function( window, $, undefined ) {
 	'use strict';
