@@ -44,7 +44,14 @@ function conditionalFields() {
 		var condition = $(this).data( 'dep' );
 		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
 		var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
+
+		if (typeof conditionEl === 'undefined') {
+			conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
+		}
+
 		var value;
+
+
 
 		// Fetch the value of checkboxes or other input types
 		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
@@ -52,6 +59,15 @@ function conditionalFields() {
 		} else {
 			value = $( conditionEl ).val();
 		}
+
+				if (condition === 'cttTheme') {
+			console.log($(this));
+			console.log(condition);
+			console.log(required);
+			console.log(conditionEl);
+			console.log(value);
+		}
+
 
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 		if ( $.inArray( value, required.map(String) ) !== -1  ) {
