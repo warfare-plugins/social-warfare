@@ -24,52 +24,51 @@ if (typeof $ === 'undefined') {
 * @see admin-options-page.js
 * @return none
 */
-function conditionalFields() {
-	console.log("conditionalFields()");
-	function swp_selected(name) {
-		return $('select[name="' + name + '"]').val();
-	}
-
-	function swp_checked(name) {
-		return $( '[name="' + name + '"]' ).prop( 'checked' );
-	}
-
-	// Loop through all the fields that have dependancies
-	$( '[data-dep]' ).each( function() {
-		// Fetch the conditional values
-		var condition = $( this ).data( 'dep' );
-		var required = JSON.parse( JSON.stringify( $( this ).data( 'dep_val' ) ) );
-		var conditionEl = $( '[data-swp-name="' + condition + '"]');
-		var value;
-
-		// Fetch the value of checkboxes or other input types
-		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
-			value = $( conditionEl ).prop( 'checked' );
-		} else {
-			value = $( conditionEl ).val();
+	function conditionalFields() {
+		function swp_selected(name) {
+			return $('select[name="' + name + '"]').val();
 		}
 
-		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-		if ( $.inArray( value, required ) !== -1 && $( conditionEl ).parent( '.sw-grid,p' ).is( ':visible' ) ) {
-			$( this ).show();
-		} else {
-			$( this ).hide();
+		function swp_checked(name) {
+			return $( '[name="' + name + '"]' ).prop( 'checked' );
 		}
-	});
 
-	if ( false === swp_checked('floatStyleSource') &&
-	       'customColor' === swp_selected('sideDColorSet')
-	    || 'ccOutlines'  === swp_selected('sideDColorSet')
-	    || 'customColor' === swp_selected('sideIColorSet')
-	    || 'ccOutlines'  === swp_selected('sideIColorSet')
-	    || 'customColor' === swp_selected('sideOColorSet')
-        || 'ccOutlines'  === swp_selected('sideOColorSet') ) {
-		$( '.sideCustomColor_wrapper' ).slideDown();
+		// Loop through all the fields that have dependancies
+		$( '[data-dep]' ).each( function() {
+			// Fetch the conditional values
+			var condition = $( this ).data( 'dep' );
+			var required = JSON.parse( JSON.stringify( $( this ).data( 'dep_val' ) ) );
+			var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
+			var value;
 
-	} else {
-		$( '.sideCustomColor_wrapper' ).slideUp();
+			// Fetch the value of checkboxes or other input types
+			if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
+				value = $( conditionEl ).prop( 'checked' );
+			} else {
+				value = $( conditionEl ).val();
+			}
+
+			// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+			if ( $.inArray( value, required.map(String) ) !== -1 ) { //   && $( conditionEl ).parent( '.sw-grid,p' ).is( ':visible' )
+				$( this ).show();
+			} else {
+				$( this ).hide();
+			}
+		});
+
+		if ( false === swp_checked('floatStyleSource') &&
+		       'customColor' === swp_selected('sideDColorSet')
+		    || 'ccOutlines'  === swp_selected('sideDColorSet')
+		    || 'customColor' === swp_selected('sideIColorSet')
+		    || 'ccOutlines'  === swp_selected('sideIColorSet')
+		    || 'customColor' === swp_selected('sideOColorSet')
+	        || 'ccOutlines'  === swp_selected('sideOColorSet') ) {
+			$( '.sideCustomColor_wrapper' ).slideDown();
+
+		} else {
+			$( '.sideCustomColor_wrapper' ).slideUp();
+		}
 	}
-}
 
 
 
