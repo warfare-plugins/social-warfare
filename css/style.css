@@ -1766,3 +1766,6 @@ div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
 .fl-module-content .uabb-blog-posts .uabb-post-thumbnail .sw-pinit.lazyloaded {
 	display: block !important;
 }
+
+/*In FF, the "Shares" is cutoff */
+@-moz-document url-prefix() { .nc_socialPanel .totes .swp_label { margin-top: 8px; } }
