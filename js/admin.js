@@ -1,10 +1,31 @@
-var socialWarfareAdmin = socialWarfareAdmin || {};
-$ = jQuery;
+/**
+*
+* Functions for widgets and global utility functions.
+*
+* @since 1.0.0
+* @package   SocialWarfare\Admin\Functions
+* @copyright Copyright (c) 2018, Warfare Plugins, LLC
+* @license   GPL-3.0+
+*/
 
-/*********************************************************
-	A function to show/hide conditionals
-*********************************************************/
+var socialWarfareAdmin = socialWarfareAdmin || {};
+
+if (typeof $ === 'undefined') {
+	$ = jQuery;
+}
+
+/**
+* Show and hide input fields based on conditional values.
+*
+* This function iterates over each element with the "dep" data attribute. For each
+* such dependant element, its parent element controls whether the dependant is shown or hidden
+* if the parent's value matches the condition.
+*
+* @see admin-options-page.js
+* @return none
+*/
 function conditionalFields() {
+	console.log("conditionalFields()");
 	function swp_selected(name) {
 		return $('select[name="' + name + '"]').val();
 	}
@@ -17,8 +38,8 @@ function conditionalFields() {
 	$( '[data-dep]' ).each( function() {
 		// Fetch the conditional values
 		var condition = $( this ).data( 'dep' );
-		var required = $.parseJSON( $( this ).data( 'dep_val' ) );
-		var conditionlEl = $( '[data-swp-name="' + condition + '"]');
+		var required = JSON.parse( JSON.stringify( $( this ).data( 'dep_val' ) ) );
+		var conditionEl = $( '[data-swp-name="' + condition + '"]');
 		var value;
 
 		// Fetch the value of checkboxes or other input types
