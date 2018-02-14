@@ -9,6 +9,7 @@
 */
 
 var socialWarfareAdmin = socialWarfareAdmin || {};
+var swpWidget, widgetSubmit;
 
 if (typeof $ === 'undefined') {
 	$ = jQuery;
@@ -21,56 +22,79 @@ if (typeof $ === 'undefined') {
 * such dependant element, its parent element controls whether the dependant is shown or hidden
 * if the parent's value matches the condition.
 *
+* @since 2.4.0 Feb 12 2018 | Updated variable names for semantics, switched to Yoda condietionals.
+* @since 2.4.0 Feb 14 2018 | Mapped the required array from variable types to string.
+*
 * @see admin-options-page.js
 * @return none
 */
-	function conditionalFields() {
-		function swp_selected(name) {
-			return $('select[name="' + name + '"]').val();
-		}
 
-		function swp_checked(name) {
-			return $( '[name="' + name + '"]' ).prop( 'checked' );
-		}
 
-		// Loop through all the fields that have dependancies
-		$( '[data-dep]' ).each( function() {
-			// Fetch the conditional values
-			var condition = $( this ).data( 'dep' );
-			var required = JSON.parse( JSON.stringify( $( this ).data( 'dep_val' ) ) );
-			var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
-			var value;
-
-			// Fetch the value of checkboxes or other input types
-			if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
-				value = $( conditionEl ).prop( 'checked' );
-			} else {
-				value = $( conditionEl ).val();
-			}
-
-			// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-			if ( $.inArray( value, required.map(String) ) !== -1 ) { //   && $( conditionEl ).parent( '.sw-grid,p' ).is( ':visible' )
-				$( this ).show();
-			} else {
-				$( this ).hide();
-			}
-		});
-
-		if ( false === swp_checked('floatStyleSource') &&
-		       'customColor' === swp_selected('sideDColorSet')
-		    || 'ccOutlines'  === swp_selected('sideDColorSet')
-		    || 'customColor' === swp_selected('sideIColorSet')
-		    || 'ccOutlines'  === swp_selected('sideIColorSet')
-		    || 'customColor' === swp_selected('sideOColorSet')
-	        || 'ccOutlines'  === swp_selected('sideOColorSet') ) {
-			$( '.sideCustomColor_wrapper' ).slideDown();
-
-		} else {
-			$( '.sideCustomColor_wrapper' ).slideUp();
-		}
+function conditionalFields() {
+	console.log("conditionalFields()");
+	function swp_selected(name) {
+		return $('select[name="' + name + '"]').val();
 	}
 
+	function swp_checked(name) {
+		return $( '[name="' + name + '"]' ).prop( 'checked' );
+	}
 
+	// Loop through all the fields that have dependancies
+	$( '[data-dep]' ).each( function() {
+		// Fetch the conditional values
+		var condition = $(this).data( 'dep' );
+		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
+		var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
+		var value;
+
+		// Fetch the value of checkboxes or other input types
+		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
+			value = $( conditionEl ).prop( 'checked' );
+		} else {
+			value = $( conditionEl ).val();
+		}
+
+		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+		if ( $.inArray( value, required.map(String) ) !== -1  ) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+	});
+
+	if ( false === swp_checked('floatStyleSource') &&
+	       'customColor' === swp_selected('sideDColorSet')
+	    || 'ccOutlines'  === swp_selected('sideDColorSet')
+	    || 'customColor' === swp_selected('sideIColorSet')
+	    || 'ccOutlines'  === swp_selected('sideIColorSet')
+	    || 'customColor' === swp_selected('sideOColorSet')
+        || 'ccOutlines'  === swp_selected('sideOColorSet') ) {
+		$( '.sideCustomColor_wrapper' ).slideDown();
+
+	} else {
+		$( '.sideCustomColor_wrapper' ).slideUp();
+	}
+}
+
+// *Only run on widgets.php
+if (window.location.href.indexOf("widgets.php")) {
+
+	// *Make sure the elements exist before trying to read them.
+	var widgetFinder = setInterval(function() {
+		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
+
+		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
+		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
+
+        // *Force conditionalFields to run when the widget is opened or saved.
+		$(swpWidget).on("click", conditionalFields);
+		$(widgetSubmit).on("click", function() {
+			setTimeout(conditionalFields, 600);
+		});
+
+	}, 50);
+}
 
 (function( window, $, undefined ) {
 	'use strict';
@@ -251,11 +275,11 @@ if (typeof $ === 'undefined') {
 					},
 					close: function( event, ui ) {
 						ui.tooltip.hover(function() {
-							$( this ).stop( true ).fadeTo( 400, 1 );
+							$(this).stop( true ).fadeTo( 400, 1 );
 						},
 						function() {
-							$( this ).fadeOut( '400', function() {
-								$( this ).remove();
+							$(this).fadeOut( '400', function() {
+								$(this).remove();
 							});
 						});
 					}
