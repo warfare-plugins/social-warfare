@@ -29,56 +29,59 @@ if (typeof $ === 'undefined') {
 * @return none
 */
 function swpConditionalFields() {
-	console.log("swpConditionalFields()");
+
 	function swp_selected(name) {
-		return $('select[name="' + name + '"]').val();
+		return $('select[data-swp-name="' + name + '"]').val();
 	}
 
 	function swp_checked(name) {
-		return $( '[name="' + name + '"]' ).prop( 'checked' );
+		return $( '[data-swp-name="' + name + '"]' ).prop( 'checked' );
 	}
 
 	// Loop through all the fields that have dependancies
-	$( '[data-dep]' ).each( function() {
-		// Fetch the conditional values
-		var condition = $(this).data( 'dep' );
-		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
-		var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
-		var value;
-
-
-		if (typeof conditionEl === 'undefined') {
-			conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
+	setTimeout(function() {
+		$( '[data-dep]' ).each( function() {
+			console.log($(this));
+			// Fetch the conditional values
+			var condition = $(this).data( 'dep' );
+			var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
+			var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
+			var value;
 
 			if (typeof conditionEl === 'undefined') {
-				console.log(condition);
-				conditionEl = $( '[field$=' + condition + ']' )[0];
-				console.log(conditionEl);
+				conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
+
+				if (typeof conditionEl === 'undefined') {
+					// console.log(condition);
+					conditionEl = $( '[field$=' + condition + ']' )[0];
+					// console.log(conditionEl);
+				}
 			}
-		}
 
-		// Fetch the value of checkboxes or other input types
-		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
-			value = $( conditionEl ).prop( 'checked' );
-		} else {
-			value = $( conditionEl ).val();
-		}
+			// Fetch the value of checkboxes or other input types
+			if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
+				value = $( conditionEl ).prop( 'checked' );
+			} else {
+				value = $( conditionEl ).val();
+			}
 
-				if (condition == 'float') {
-			console.log("required value:\n", required);
-			console.log("conditional element:\n",  conditionEl);
-			console.log("value:\n", value);
-		}
+			if (condition == 'float') {
+			//	console.log("required value:\n", required[0]);
+			//	console.log("conditional element:\n",  conditionEl);
+			//	console.log("value:\n", value);
+			}
 
 
-		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-		if ( $.inArray( value, required.map(String) ) !== -1  ) {
-			console.log($(this));
-			$(this).show();
-		} else {
-			$(this).hide();
-		}
-	});
+			// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+			if ( $.inArray( value, required ) !== -1  ) {
+				console.log('matched');
+				$(this).show();
+			} else {
+				console.log('not matched');
+				$(this).hide();
+			}
+		});
+	} , 100 );
 
 	if ( false === swp_checked('floatStyleSource') &&
 	       'customColor' === swp_selected('sideDColorSet')
