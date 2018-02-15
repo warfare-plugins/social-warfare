@@ -1,6 +1,11 @@
 <?php
 
 /**
+*
+* @since 2.4.0 Feb 14 2018 | Added check for is_attachment() to swp_google_analtyics
+*/
+
+/**
 
  * **************************************************************
  *                                                                *
@@ -12,7 +17,6 @@
 add_filter( 'swp_link_shortening'  	, 'swp_link_shortener' );
 add_filter( 'swp_analytics' 		, 'swp_google_analytics' );
 
-
 /**
 
  * **************************************************************
@@ -23,6 +27,10 @@ add_filter( 'swp_analytics' 		, 'swp_google_analytics' );
 
 function swp_google_analytics( $array ) {
 	global $swp_user_options;
+
+	if ( true === is_attachment() ) {
+		return $array;
+	}
 
 	// Fetch the user options
 	$options = $swp_user_options;
@@ -292,7 +300,6 @@ function swp_make_bitly_url( $url, $network, $access_token ) {
  ******************************************************************/
 
 function swp_process_url( $url, $network, $postID ) {
-
 	global $swp_user_options;
 
 	// $bitly_api = 'https://api-ssl.bitly.com/v3/link/lookup?url='.urlencode($url).'&login='.$login.'&apiKey='.$appkey;
@@ -325,7 +332,7 @@ function swp_process_url( $url, $network, $postID ) {
 				$array = apply_filters( 'swp_link_shortening' , $array );
 			endif;
 		endif;
-		
+
 		return $array['url'];
 
 	endif;

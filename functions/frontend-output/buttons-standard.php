@@ -110,23 +110,27 @@ function social_warfare_buttons( $array = array() ) {
 		endif;
 	endif;
 
+	// *Do not show on attachement pages.
+	if ( true === is_attachment() ) :
+		return $array['content'];
+
 	// Disable the buttons on Buddy Press pages
-	if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
+	elseif ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
 		return $array['content'];
 
-		// Disable the buttons if the location is set to "None / Manual"
-	elseif ( $array['where'] == 'none' && ! isset( $array['devs'] ) ) :
+	// Disable the buttons if the location is set to "None / Manual"
+	elseif ( 'none' === $array['where'] && ! isset( $array['devs'] ) ) :
 		return $array['content'];
 
-		// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
+	// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
 	elseif ( ( ! is_main_query() || ! in_the_loop()) && ! isset( $array['devs'] ) ) :
 		return $array['content'];
 
-		// Don't do anything if we're in the admin section
+	// Don't do anything if we're in the admin section
 	elseif ( is_admin() ) :
 		return $array['content'];
 
-		// If all the checks pass, let's make us some buttons!
+	// If all the checks pass, let's make us some buttons!
 	else :
 
 		// Set the options for the horizontal floating bar
