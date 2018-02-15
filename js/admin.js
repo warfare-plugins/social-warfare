@@ -74,7 +74,7 @@ function swpConditionalFields() {
 
             // *Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
 			// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-			if (window.location.href.indexOf("plugins.php")) {
+			if (window.location.href.indexOf("page=social-warfare")) {
 				if ($.inArray( value, required ) !== -1 && $( conditionEl ).parent( '.sw-grid' ).is( ':visible' )  ) {
 					$(this).show();
 				} else {
