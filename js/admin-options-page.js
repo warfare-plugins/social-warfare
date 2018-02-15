@@ -104,7 +104,7 @@
 				socialWarfarePlugin.activateHoverStates();
 			}
 
-			conditionalFields();
+			swpConditionalFields();
 
 		});
 	}
@@ -131,13 +131,13 @@
 
 			saveColorToggle();
 
-			conditionalFields();
+			swpConditionalFields();
 		});
 	}
 
 	function populateOptions() {
 		$( 'form.sw-admin-settings-form input, form.sw-admin-settings-form select' ).on( 'change', function() {
-			conditionalFields();
+			swpConditionalFields();
 
 			socialWarfarePlugin.newOptions = fetchAllOptions();
 
@@ -720,7 +720,7 @@
 		tabNavInit();
 		checkboxesInit();
 		updateButtonPreviews();
-		conditionalFields();
+		swpConditionalFields();
 		updateCttDemo();
 		updateScale();
 		handleRegistration();

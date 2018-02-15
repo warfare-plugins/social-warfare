@@ -28,8 +28,8 @@ if (typeof $ === 'undefined') {
 * @see admin-options-page.js
 * @return none
 */
-function conditionalFields() {
-	console.log("conditionalFields()");
+function swpConditionalFields() {
+	console.log("swpConditionalFields()");
 	function swp_selected(name) {
 		return $('select[name="' + name + '"]').val();
 	}
@@ -44,14 +44,18 @@ function conditionalFields() {
 		var condition = $(this).data( 'dep' );
 		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
 		var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
-
-		if (typeof conditionEl === 'undefined') {
-			conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
-		}
-
 		var value;
 
 
+		if (typeof conditionEl === 'undefined') {
+			conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
+
+			if (typeof conditionEl === 'undefined') {
+				console.log(condition);
+				conditionEl = $( '[field$=' + condition + ']' )[0];
+				console.log(conditionEl);
+			}
+		}
 
 		// Fetch the value of checkboxes or other input types
 		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
@@ -60,17 +64,16 @@ function conditionalFields() {
 			value = $( conditionEl ).val();
 		}
 
-				if (condition === 'cttTheme') {
-			console.log($(this));
-			console.log(condition);
-			console.log(required);
-			console.log(conditionEl);
-			console.log(value);
+				if (condition == 'float') {
+			console.log("required value:\n", required);
+			console.log("conditional element:\n",  conditionEl);
+			console.log("value:\n", value);
 		}
 
 
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 		if ( $.inArray( value, required.map(String) ) !== -1  ) {
+			console.log($(this));
 			$(this).show();
 		} else {
 			$(this).hide();
@@ -101,10 +104,10 @@ if (window.location.href.indexOf("widgets.php")) {
 		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
 		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
 
-        // *Force conditionalFields to run when the widget is opened or saved.
-		$(swpWidget).on("click", conditionalFields);
+        // *Force swpConditionalFields to run when the widget is opened or saved.
+		$(swpWidget).on("click", swpConditionalFields);
 		$(widgetSubmit).on("click", function() {
-			setTimeout(conditionalFields, 600);
+			setTimeout(swpConditionalFields, 600);
 		});
 
 	}, 50);
@@ -255,9 +258,9 @@ if (window.location.href.indexOf("widgets.php")) {
 			}, 1000 );
 		}
 
-		conditionalFields();
+		swpConditionalFields();
 		$( '.swp_popular_post_options select' ).on( 'change', function() {
-			conditionalFields();
+			swpConditionalFields();
 		});
 
 		if ( $( '.postbox#socialWarfare' ).length ) {
