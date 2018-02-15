@@ -18,7 +18,7 @@ function socialWarfareSideFloat() {
 	$options = $swp_user_options;
 	$postType = get_post_type( $postID );
 
-	if ( is_singular() ) :
+	if ( is_singular() && ! is_attachement() ) :
 		$postType = get_post_type( $postID );
 		if ( isset( $options[ 'float_location_' . $postType ] ) ) :
 			$visibility = $options[ 'float_location_' . $postType ];
