@@ -43,7 +43,7 @@ function swpConditionalFields() {
 		if( string === 'false') { string = false };
 		return string;
 	}
-	console.log('test');
+
 	// Loop through all the fields that have dependancies
 	$( '[data-dep]' ).each( function() {
 
@@ -52,7 +52,7 @@ function swpConditionalFields() {
 		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
 
 		// Check if we're on the options page or somewhere else
-		if (window.location.href.indexOf("page=social-warfare")) {
+		if (window.location.href.indexOf("page=social-warfare") === -1) {
 			var conditionEl = $(this).parents('.widgets-holder-wrap').find( '[data-swp-name="' + condition + '"]' );
 		} else {
 			var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
