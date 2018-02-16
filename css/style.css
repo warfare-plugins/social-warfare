@@ -917,7 +917,8 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 }
 
 .nc_socialPanelSide.swp_side_bottom {
-	bottom: 10px;
+	bottom: 0px;
+	margin-bottom: 0 !important;
 }
 
 .nc_socialPanelSide .nc_tweetContainer {
