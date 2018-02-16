@@ -286,12 +286,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( transition == 'slide' ) {
 
 				if ( visible == true ) {
-					// ncSideFloater.css({ direction: '-100px' }, 200 );
 					ncSideFloater.css(direction, "-100px");
 				} else {
-					// ncSideFloater.css({ left: '5px' });
 					ncSideFloater.css(direction, "5px");
 				}
+
 			} else if ( transition == 'fade' ) {
 				if ( visible == true ) {
 					ncSideFloater.fadeOut( 200 );
@@ -301,7 +300,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}
 		}
 
-		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
+		else if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
 			visible = false;
 			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
 					var thisOffset = $( this ).offset();
@@ -487,6 +486,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	$( document ).ready( function() {
 		handleWindowOpens();
 		initShareButtons();
+		var sidePanel = $( '.nc_socialPanelSide' );
 
 		// Fetch the padding amount to make space later for the floating bars
 		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
@@ -514,12 +514,15 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			initShareButtons();
 		});
 
-		if ( 0 !==  $( '.nc_socialPanelSide' ).length ) {
-			var buttonsHeight = $( '.nc_socialPanelSide' ).height();
+		if ( 0 !==  sidePanel.length ) {
+			// *If using top or bottom vertical positions, let CSS position the element.
+			if ( $(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
+
+			var buttonsHeight = $( sidePanel ).height();
 			var windowHeight = $( window ).height();
 			var newPosition = absint( ( windowHeight / 2 ) - ( buttonsHeight / 2 ) );
 			setTimeout( function() {
-				$( '.nc_socialPanelSide' ).animate({ top: newPosition }, 0 );
+				$( sidePanel ).animate({ top: newPosition }, 0 );
 			}, 105 );
 		}
 
