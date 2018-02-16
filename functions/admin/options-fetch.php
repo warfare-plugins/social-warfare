@@ -60,6 +60,7 @@ function swp_get_user_options( $admin = false ) {
 		'floatOption'                       => 'bottom',
 		'floatBgColor'                      => '#ffffff',
 		'floatStyle'                        => 'default',
+		'float_vertical'					=> 'center',
 		'customColor'                       => '#000000',
 		'recover_shares'                    => false,
 		'recovery_format'                   => 'unchanged',
