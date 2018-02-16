@@ -878,7 +878,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	flex-direction: column;
 	height: auto;
 	overflow: visible;
-	top: 200px;
+	/*top: 200px;*/
 	-webkit-transition: all 0.2s linear;
 	transition: all 0.2s linear;
 	width: 100px!important;
@@ -909,6 +909,15 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide.fade.swp_float_right {
 	right: 5px;
+}
+
+
+.nc_socialPanelSide.swp_side_top {
+	top: 10px;
+}
+
+.nc_socialPanelSide.swp_side_bottom {
+	bottom: 10px;
 }
 
 .nc_socialPanelSide .nc_tweetContainer {
