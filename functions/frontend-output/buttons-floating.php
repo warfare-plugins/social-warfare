@@ -18,7 +18,7 @@ function socialWarfareSideFloat() {
 	$options = $swp_user_options;
 	$postType = get_post_type( $postID );
 
-	if ( is_singular() && ! is_attachement() ) :
+	if ( is_singular() && ! is_attachment() ) :
 		$postType = get_post_type( $postID );
 		if ( isset( $options[ 'float_location_' . $postType ] ) ) :
 			$visibility = $options[ 'float_location_' . $postType ];
@@ -52,6 +52,11 @@ function socialWarfareSideFloat() {
 				$options['sideIColorSet'] = $options['iColorSet'];
 				$options['sideOColorSet'] = $options['oColorSet'];
 			endif;
+
+			// *Get the vertical position
+			if (isset($options['float_vertical'])) {
+				$class .= " swp_float_${options['float_vertical']} ";
+			}
 
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares( $postID );
