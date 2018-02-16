@@ -54,9 +54,9 @@ function socialWarfareSideFloat() {
 			endif;
 
 			// *Get the vertical position
-			if (isset($options['float_vertical'])) {
-				$class .= " swp_float_${options['float_vertical']} ";
-			}
+			if ($vertical = $options['float_vertical'] && $options['float_vertical'] !== 'center' ) :
+				$class .= " swp_side_${options['float_vertical']} ";
+			endif;
 
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares( $postID );
