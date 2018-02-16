@@ -38,56 +38,75 @@ function swpConditionalFields() {
 		return $( '[data-swp-name="' + name + '"]' ).prop( 'checked' );
 	}
 
+	function string_to_bool(string) {
+		if( string === 'true') { string = true };
+		if( string === 'false') { string = false };
+		return string;
+	}
+	console.log('test');
 	// Loop through all the fields that have dependancies
-	setTimeout(function() {
-		$( '[data-dep]' ).each( function() {
-			console.log($(this));
-			// Fetch the conditional values
-			var condition = $(this).data( 'dep' );
-			var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
+	$( '[data-dep]' ).each( function() {
+
+		// Fetch the conditional values
+		var condition = $(this).data( 'dep' );
+		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
+
+		// Check if we're on the options page or somewhere else
+		if (window.location.href.indexOf("page=social-warfare")) {
+			var conditionEl = $(this).parents('.widgets-holder-wrap').find( '[data-swp-name="' + condition + '"]' );
+		} else {
 			var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
-			var value;
+		}
+
+		var value;
+
+		if (typeof conditionEl === 'undefined') {
+			conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
 
 			if (typeof conditionEl === 'undefined') {
-				conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
-
-				if (typeof conditionEl === 'undefined') {
-					// console.log(condition);
-					conditionEl = $( '[field$=' + condition + ']' )[0];
-					// console.log(conditionEl);
-				}
+				// console.log(condition);
+				conditionEl = $( '[field$=' + condition + ']' )[0];
+				// console.log(conditionEl);
 			}
+		}
 
-			// Fetch the value of checkboxes or other input types
-			if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
-				value = $( conditionEl ).prop( 'checked' );
+		// Fetch the value of checkboxes or other input types
+		if ( $( conditionEl ).attr( 'type' ) == 'checkbox' ) {
+			value = $( conditionEl ).prop( 'checked' );
+		} else {
+			value = $( conditionEl ).val();
+		}
+		value = string_to_bool(value);
+
+		if ( $(this).hasClass('custom_thumb_size') ) {
+			console.log(conditionEl);
+			console.log(typeof required);
+			console.log(required);
+			console.log(typeof value);
+			console.log(value);
+		}
+
+        // *Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
+		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+
+		if (window.location.href.indexOf("page=social-warfare") !== -1) {
+
+			// If the required value matches and it's parent is also being shown, show this conditional field
+			if ($.inArray( value, required ) !== -1 && $( conditionEl ).parent( '.sw-grid' ).is( ':visible' )  ) {
+				$(this).show();
 			} else {
-				value = $( conditionEl ).val();
+				$(this).hide();
 			}
+		} else {
 
-			if (condition == 'float') {
-			//	console.log("required value:\n", required[0]);
-			//	console.log("conditional element:\n",  conditionEl);
-			//	console.log("value:\n", value);
-			}
-
-
-            // *Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
-			// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-			if (window.location.href.indexOf("page=social-warfare")) {
-				if ($.inArray( value, required ) !== -1 && $( conditionEl ).parent( '.sw-grid' ).is( ':visible' )  ) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
+			// If the required value matches, show this conditional field
+			if ($.inArray( value, required ) !== -1 || value === required ) {
+				$(this).show();
 			} else {
-				if ($.inArray( value, required ) !== -1) {
-				} else {
-					$(this).hide();
-				}
+				$(this).hide();
 			}
-		});
-	} , 100 );
+		}
+	});
 
 	if ( false === swp_checked('floatStyleSource') &&
 	       'customColor' === swp_selected('sideDColorSet')
@@ -313,6 +332,7 @@ if (window.location.href.indexOf("widgets.php")) {
 			}
 		}
 
+		/*
 		var customThumbnailSelect = $("#widget-swp_popular_posts_widget-2-thumb_size");
 
 		if (customThumbnailSelect.value === 'custom') {
@@ -328,5 +348,6 @@ if (window.location.href.indexOf("widgets.php")) {
             	toggleCustomThumbnailFields(false);
             }
 		});
+		*/
 	});
 })( this, jQuery );

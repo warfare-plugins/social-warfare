@@ -173,7 +173,6 @@
 
 			// Fetch all the settings
 			var settings = fetchAllOptions();
-			console.log(settings);
 
 			// Prepare date
 			var data = {
@@ -243,7 +242,6 @@
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
 		if('undefined' === typeof socialWarfarePlugin.lastClass){
-			console.log('boom');
 			socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
 		}
 		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
@@ -418,7 +416,6 @@
 			});
 			// Declare a default lastClass based on the default HTML if we haven't declared one
 			if('undefined' === typeof socialWarfarePlugin.lastClass){
-				console.log('boom');
 				socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
 			}
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
