@@ -233,7 +233,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
 
 		// Count Label Field
-		$form .= '<p data-dep="showCount" data-dep_val=\'' . json_encode( array(true) ) . '\' class="countLabel">';
+		$form .= '<p ' . ( $showCount != true ? 'style="display:none;"' : '' ) . ' data-dep="showCount" data-dep_val=\'' . json_encode( array(true) ) . '\' class="countLabel">';
 		$form .= '<label for="' . $this->get_field_id( 'countLabel' ) . '">Count Number Label</label>';
         $form .= "<input type=\"text\" {$this->set_attributes( 'countLabel', 'widefat', $countLabel)} />";
 		$form .= '</p>';
@@ -250,7 +250,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
 
 		// Thumbnails size field
-		$form .= '<p data-dep="thumbnails" data-dep_val=\'' . json_encode( array(true) ) . '\' class="thumb_size">';
+		$form .= '<p ' . ( $thumbnails != true ? 'style="display:none;"' : '' ) . ' data-dep="thumbnails" data-dep_val=\'' . json_encode( array(true) ) . '\' class="thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
         $form .= "<select {$this->set_attributes( 'thumb_size', 'widefat', null )} >";
 
@@ -266,12 +266,12 @@ class swp_popular_posts_widget extends WP_Widget {
 
 
 		//  If $thumb_size, show the custom height/width fields.
-		$form .= '<p data-dep="thumb_size" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_thumb_size">';
+		$form .= '<p ' . ( $thumb_size != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_width', 'widefat', $thumb_width)} />";
         $form .= '</p>';
 
-		$form .= '<p data-dep="thumb_size" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_thumb_size">';
+		$form .= '<p ' . ( $thumb_size != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail height</label>';
         $form .= "<input type=\"number\" {$this->set_attributes( 'thumb_height', 'widefat', $thumb_height)} />";
 		$form .= '</p>';
@@ -328,13 +328,13 @@ class swp_popular_posts_widget extends WP_Widget {
 		$form .= '</p>';
 
 		// Custom Background Color Field
-		$form .= '<p data-dep="style" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_bg">';
+		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_bg">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_bg' ) . '">Custom Background Color</label>';
         $form .= "<input type=\"text\" {$this->set_attributes( 'custom_bg', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Custom Link Color Field
-		$form .= '<p data-dep="style" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_link">';
+		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array('custom') ) . '\' class="custom_link">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_link' ) . '">Custom Link Color</label>';
         $form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_link )} />";
 		$form .= '</p>';
