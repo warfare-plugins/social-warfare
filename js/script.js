@@ -209,11 +209,26 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			var floatOption = firstSocialPanel.attr( 'data-float' );
 			var alignment = firstSocialPanel.attr( 'data-align' );
 			if ( floatOption ) {
+
+				if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
+					var floatLeftMobile = $( '.nc_socialPanelSide' ).attr( 'data-mobileFloat' );
+					var offsetOne = firstSocialPanel.offset();
+					var ncSideFloater = $( '.nc_socialPanelSide' ).filter( ':not(.mobile)' );
+					var minWidth = ncSideFloater.attr( 'data-screen-width' );
+					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
+						console.log('test');
+						var position = 'float' + floatLeftMobile.charAt(0).toUpperCase() + floatLeftMobile.slice(1);
+					} else {
+						var position = floatOption;
+					}
+				} else {
+					var position = floatOption;
+				}
 				var backgroundColor = $( '.nc_socialPanel' ).attr( 'data-floatColor' );
 				$( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' ).appendTo( 'body' );
-				var position = firstSocialPanel.attr( 'data-float' );
+				// var position = firstSocialPanel.attr( 'data-float' );
 				firstSocialPanel.clone().appendTo( '.nc_wrapper' );
-				$( '.nc_wrapper' ).hide().addClass( (position == 'floatLeft' ? 'floatBottom' : position) );
+				$( '.nc_wrapper' ).hide().addClass( position );
 				var width = firstSocialPanel.outerWidth( true );
 				var offset = firstSocialPanel.offset();
 				$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css({
@@ -243,7 +258,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		var st = $( window ).scrollTop();
 		var visible = false;
 
-
 		if ( typeof window.swpOffsets == 'undefined' ) {
 			window.swpOffsets = {};
 		}
@@ -254,16 +268,18 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
 				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
-						var thisOffset = $( this ).offset();
-						var thisHeight = $( this ).height();
-						if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
-							visible = true;
-						}
-					});
+					var thisOffset = $( this ).offset();
+					var thisHeight = $( this ).height();
+					if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
+						visible = true;
+					}
+				});
 				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 					visible = true;
 					if ( floatLeftMobile == 'bottom' ) {
 						floatOption = 'floatBottom';
+					} else if ( floatLeftMobile == 'top' ) {
+						floatOption = 'floatTop';
 					}
 				} else if (visible) {
 					visible == true;
@@ -277,6 +293,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					visible = true;
 					if(floatLeftMobile == 'bottom') {
 						floatOption = 'floatBottom';
+					} else if ( floatLeftMobile == 'top' ) {
+						floatOption = 'floatTop';
 					}
 				}
 			}
@@ -300,7 +318,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}
 		}
 
-		else if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
+		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
 			visible = false;
 			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
 					var thisOffset = $( this ).offset();
