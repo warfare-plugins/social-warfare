@@ -15,7 +15,7 @@ All WordPress coding standards should be followed. Anything not specifically def
 ### Variables and Class Names
 All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. 
 
-**PHP:** All names in PHP will use the Snake Case nomenclature. Independent function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix. 
+**PHP:** All names in PHP will use the Snake Case nomenclature. Independent function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix. Classes will be snake cased as well, but will also have the first letter of each word capitalized. The first letter will be capitalized on variables containing an instance of a class as well (e.g. $Class = new SWP_Class() ).
 
 **Javascript:** In Javascript, we will use the camelCase nomenclature. 
 
