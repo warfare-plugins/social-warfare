@@ -4,7 +4,7 @@
  * Register and output header meta tags
  *
  * @package   SocialWarfare\Functions
- * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
  */
@@ -66,7 +66,7 @@ function social_warfare_buttons( $array = array() ) {
 		$array = array();
 	}
 
-	// Setup the default Array parameters
+	// Setup the default Array PARAMETERS
 	if ( ! isset( $array['where'] ) ) { $array['where'] = 'default'; }
 	if ( ! isset( $array['echo'] ) ) { $array['echo'] = true; }
 	if ( ! isset( $array['content'] ) ) { $array['content'] = false; }
