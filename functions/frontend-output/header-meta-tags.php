@@ -3,7 +3,7 @@
  * Register and output open graph tags, Twitter cards, custom color CSS, and the icon fonts.
  *
  * @package   SocialWarfare\Functions
- * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
  */
