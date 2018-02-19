@@ -13,9 +13,9 @@
  * @since     2.4.0 | 19 FEB 2018 | Refactored into a class-based system
  *
  */
-class SWP_Shortcode() {
+class SWP_Shortcodes() {
 
-	
+
 	/**
 	 * Constructs a new SWP_Shortcodes instance
 	 *
