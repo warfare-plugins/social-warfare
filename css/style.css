@@ -1779,3 +1779,27 @@ div.nc_socialPanel .nc_tweetContainer.swp_emphasize {
    display: none !important;
    margin: 0 !important;
 }
+
+.trans-origin-top-left {
+    transform-origin: top left;
+}
+
+.trans-origin-center-left {
+    transform-origin: center left;
+}
+
+.trans-origin-bottom-left {
+    transform-origin: bottom left;
+}
+
+.trans-origin-top-right {
+    transform-origin: top right;
+}
+
+.trans-origin-center-right {
+    transform-origin: center right;
+}
+
+.trans-origin-bottom-right {
+    transform-origin: bottom right;
+}
