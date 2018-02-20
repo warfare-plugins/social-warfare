@@ -47,7 +47,7 @@ function swp_google_analytics( $array ) {
     		if ( strpos( $url,'?' ) !== false ) :
     			$array['url'] = $url . urlencode( '&' . $url_string );
     		else :
-    			$array['url'] = $url . urlencode( '?' . $url_string ) );
+    			$array['url'] = $url . urlencode( '?' . $url_string );
     		endif;
     	endif;
 
