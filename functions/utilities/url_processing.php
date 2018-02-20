@@ -28,16 +28,17 @@ add_filter( 'swp_analytics' 		, 'swp_google_analytics' );
 function swp_google_analytics( $array ) {
 	global $swp_user_options;
 
+    // Fetch the user options
+    $options = $swp_user_options;
+    $url = $array['url'];
+    $network = $array['network'];
+
+
     if( ( 'pinterest' === $network && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
 
     	if ( true === is_attachment() ) :
     		return $array;
     	endif;
-
-    	// Fetch the user options
-    	$options = $swp_user_options;
-    	$url = $array['url'];
-    	$network = $array['network'];
 
     	// Check if Analytics have been enabled or not
     	if ( $options['googleAnalytics'] == true ) :
