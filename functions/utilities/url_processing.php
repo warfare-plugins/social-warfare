@@ -28,24 +28,32 @@ add_filter( 'swp_analytics' 		, 'swp_google_analytics' );
 function swp_google_analytics( $array ) {
 	global $swp_user_options;
 
-	if ( true === is_attachment() ) {
-		return $array;
-	}
+    if( ( 'pinterest' === $network && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
 
-	// Fetch the user options
-	$options = $swp_user_options;
-	$url = $array['url'];
-	$network = $array['network'];
+    	if ( true === is_attachment() ) :
+    		return $array;
+    	endif;
 
-	// Check if Analytics have been enabled or not
-	if ( $options['googleAnalytics'] == true ) :
-		if ( strpos( $url,'?' ) !== false ) :
-			$array['url'] = $url . urlencode( '&utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
-		else :
-			$array['url'] = $url . urlencode( '?utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '' );
-		endif;
-	endif;
-	return $array;
+    	// Fetch the user options
+    	$options = $swp_user_options;
+    	$url = $array['url'];
+    	$network = $array['network'];
+
+    	// Check if Analytics have been enabled or not
+    	if ( $options['googleAnalytics'] == true ) :
+            $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '';
+
+    		if ( strpos( $url,'?' ) !== false ) :
+    			$array['url'] = $url . urlencode( '&' . $url_string );
+    		else :
+    			$array['url'] = $url . urlencode( '?' . $url_string ) );
+    		endif;
+    	endif;
+
+    	return $array;
+    endif;
+
+    return $array;
 }
 
 /**
@@ -68,8 +76,14 @@ function swp_link_shortener( $array ) {
 	$network = $array['network'];
 	$postID = $array['postID'];
 
+    if( $network === 'pinterest' ):
+        return $array;
+    endif;
 
-	if( true === _swp_is_debug('bitly') ){ echo swp_is_cache_fresh( $postID ); }
+
+	if( true === _swp_is_debug('bitly') ){
+        echo swp_is_cache_fresh( $postID );
+    }
 
 	// Fetch the User's Options
 	$options = $swp_user_options;
@@ -236,6 +250,8 @@ function swp_link_shortener( $array ) {
 
 		// End the check for link shortening being activated
 	endif;
+
+    return $array;
 }
 
 function swp_make_bitly_url( $url, $network, $access_token ) {
@@ -244,13 +260,6 @@ function swp_make_bitly_url( $url, $network, $access_token ) {
 	// Fetch the user's options
 	$options = $swp_user_options;
 
-	// Create a link to check if the permalink has already been shortened.
-	// $bitly_lookup_url = 'https://api-ssl.bitly.com/v3/user/link_lookup?url='.urlencode($url).'&access_token='.$access_token;
-	// Fetch a response from the Bitly Lookup API
-	// $bitly_lookup_response = swp_file_get_contents_curl( $bitly_lookup_url );
-	// Parse the JSON formatted response from the Bitly Lookup API
-	// $bitly_lookup_response = json_decode( $bitly_lookup_response , true );
-	// If the lookup returned a valid, previously generated short link....
 	if ( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) && true == false ) :
 
 		// Store the short url to return to the plugin
@@ -302,19 +311,9 @@ function swp_make_bitly_url( $url, $network, $access_token ) {
 function swp_process_url( $url, $network, $postID ) {
 	global $swp_user_options;
 
-	// $bitly_api = 'https://api-ssl.bitly.com/v3/link/lookup?url='.urlencode($url).'&login='.$login.'&apiKey='.$appkey;
-	// $data = swp_file_get_contents_curl($bitly_api);
-	// $data = json_decode($data);
-	// var_dump($data);
-	// Check to see if we've already shortened this link in another section of the loop.
-	// This will only be set if analytics are turned off and bitly is turned on.
-	// Since all links will be the same, this will be generated on the first request and
-	// then stored for immediate use on subsequent requests.
 	if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
 		return $_GLOBALS['sw']['links'][ $postID ];
 	else :
-
-
 		// Fetch the parameters into an array for use by the filters
 		$array['url'] = $url;
 		$array['network'] = $network;
@@ -323,14 +322,11 @@ function swp_process_url( $url, $network, $postID ) {
 		if( !is_attachment() ):
 
 			// Run the anaylitcs hook filters
-			if( ( $network === 'pinterest' && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
-				$array = apply_filters( 'swp_analytics' , $array );
-			endif;
+
+			$array = apply_filters( 'swp_analytics' , $array );
 
 			// Run the link shortening hook filters, but not on Pinterest
-			if( $network !== 'pinterest' ):
 				$array = apply_filters( 'swp_link_shortening' , $array );
-			endif;
 		endif;
 
 		return $array['url'];
