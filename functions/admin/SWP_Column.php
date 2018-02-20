@@ -12,8 +12,10 @@
  * @since     1.0.0
  *
  */
-class SWP_Column() {
+class SWP_Column {
     public function __construct() {
+
+		// Note: These "duplicate" functions are to cover both posts and pages.
         add_filter( 'manage_post_posts_columns', array($this, 'create_social_shares_column' ) );
         add_filter( 'manage_page_posts_columns', array($this, 'create_social_shares_column' ) );
 

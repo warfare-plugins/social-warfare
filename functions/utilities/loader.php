@@ -65,7 +65,9 @@ function swp_initiate_plugin() {
  */
 if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/columns.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/misc.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
+    require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Column.php';
+
+    new SWP_Column();
 }
