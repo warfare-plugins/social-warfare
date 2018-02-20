@@ -39,8 +39,10 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/curl_functions.php';
 	require_once SWP_PLUGIN_DIR . '/functions/widgets/widgets.php';
-	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/scripts.php';
+	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
+    require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
+    require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/display.php';
@@ -51,9 +53,8 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/profile-fields.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/deprecated.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/compatibility.php';
-    require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
-    require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
 
+    new SWP_Script();
     new SWP_Shortcode();
     new SWP_Shortcode_Generator();
 }
