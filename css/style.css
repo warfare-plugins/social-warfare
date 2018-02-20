@@ -1002,11 +1002,6 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	transition: all 0.1s linear;
 }
 
-.nc_socialPanelSide.swp_boxed:not([class*=scale-]){
-	-ms-transform: scale(0.9);
-	-webkit-transform: scale(0.9);
-	transform: scale(0.9);
-}
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer {
 	margin-bottom: 5px;
@@ -1014,9 +1009,9 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer,
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer a {
-	height: 75px;
+    width: 67.5px;
+	height: 67.5px;
 	position: relative;
-	width: 75px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer i.sw {
@@ -1035,7 +1030,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 	bottom: 0;
 	left: 0;
 	text-align: center;
-	width: 75px;
+	width: 67.5px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) span.swp_count {
@@ -1054,13 +1049,13 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes) span.swp_count.swp_hide,
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer span.swp_hide .iconFiller,
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer span.swp_hide .spaceManWilly {
-	height: 75px;
+	height: 67.5px;
 	opacity: 1;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer span.iconFiller {
 	height: 40px;
-	width: 75px;
+	width: 67.5px;
 }
 
 .nc_socialPanelSide.swp_boxed .nc_tweetContainer:not(.totes):hover span.swp_count:not(.swp_hide) {
@@ -1069,7 +1064,7 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard {
 
 .nc_socialPanelSide.swp_boxed .totes {
 	padding: 0;
-	width: 75px!important;
+	width: 67.5px!important;
 }
 
 .nc_socialPanelSide .nc_tweetContainer:not(.totes) {
