@@ -70,9 +70,9 @@ class SWP_Shortcodes() {
 
 		// Set some defaults that are needed by the social_warfare() function
 		$defaults = array(
-            'content'	=> false,
+                        'content'	=> false,
 			'where'		=> 'after',
-			'echo'		=> false,
+			'echo'		=> true,
 		);
 
 		// Merge the defaults into the $array that was passed into this function.
@@ -100,13 +100,8 @@ class SWP_Shortcodes() {
 	 *
 	 */
 	public function buttons_shortcode_legacy( $settings ) {
-        $settings = array(
-            'content'   => false,
-            'where'     => 'default',
-            'echo'      => true
-        );
-
-        return $this->buttons_shortcode( $settings )
+		
+            return $this->buttons_shortcode( array() );
 	}
 
 
