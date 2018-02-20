@@ -8,6 +8,10 @@
  *                                                                *
  ******************************************************************/
 
+/**
+*
+* @since 2.4.0 Added checks and classes for float_verical and float_button_size
+*/
 function socialWarfareSideFloat() {
 	global $swp_user_options;
 
@@ -54,9 +58,16 @@ function socialWarfareSideFloat() {
 			endif;
 
 			// *Get the vertical position
-			if ($vertical = $options['float_vertical'] && $options['float_vertical'] !== 'center' ) :
+			if ($options['float_vertical'] && $options['float_vertical'] !== 'center' ) :
 				$class .= " swp_side_${options['float_vertical']} ";
 			endif;
+
+            // *Set button size
+            if ( $options['float_button_size'] ) :
+                $position = $options['float_vertical'];
+                $size = $options['float_button_size'] * 100;
+                $class .= " scale-${size} ";
+            endif;
 
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares( $postID );
