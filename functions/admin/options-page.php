@@ -56,7 +56,7 @@ function swp_admin_options_page() {
  * Enqueue the Settings Page CSS & Javascript
  */
 function swp_admin_options_css() {
-	$suffix = swp_get_suffix();
+	$suffix = SWP_Script::get_suffix();
 
 	wp_enqueue_style(
 		'swp_admin_options_css',
@@ -73,7 +73,7 @@ function swp_admin_options_css() {
  * @return void
  */
 function swp_admin_options_js() {
-	$suffix = swp_get_suffix();
+	$suffix = SWP_Script::get_suffix();
 
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-effects-core' );
