@@ -13,7 +13,7 @@
  * @since     2.4.0 | 19 FEB 2018 | Refactored into a class-based system
  *
  */
-class SWP_Shortcodes() {
+class SWP_Shortcode {
 
 
 	/**
@@ -29,7 +29,7 @@ class SWP_Shortcodes() {
 	 */
     public function __construct() {
 		add_shortcode( 'social_warfare', array($this, 'buttons_shortcode') );
-		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode_legacy' );
+		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode_legacy' ) );
 		add_shortcode( 'total_shares', array ($this, 'post_total_shares') );
 		add_shortcode( 'sitewide_shares', array ($this, 'sitewide_total_shares') );
 	}
@@ -100,7 +100,7 @@ class SWP_Shortcodes() {
 	 *
 	 */
 	public function buttons_shortcode_legacy( $settings ) {
-		
+
             return $this->buttons_shortcode( array() );
 	}
 
