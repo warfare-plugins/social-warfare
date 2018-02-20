@@ -63,10 +63,17 @@ function socialWarfareSideFloat() {
 			endif;
 
             // *Set button size
-            if ( $options['float_button_size'] ) :
+            if ( isset($options['float_button_size']) ) :
                 $position = $options['float_vertical'];
                 $size = $options['float_button_size'] * 100;
-                $class .= " scale-${size} ";
+                $side = $options['floatOption'];
+
+                if ($side === 'right') :
+
+                endif;
+
+                $class .= " scale-${size} trans-origin-${position}-${side}";
+
             endif;
 
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
