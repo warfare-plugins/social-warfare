@@ -13,7 +13,7 @@
  * @since     2.4.0 | 19 FEB 2018 | Refactored into a class-based system
  *
  */
-class SWP_Shortcode() {
+class SWP_Shortcodes() {
 
 
 	/**
@@ -100,7 +100,13 @@ class SWP_Shortcode() {
 	 *
 	 */
 	public function buttons_shortcode_legacy( $settings ) {
-            return $this->buttons_shortcode( array() )
+        $settings = array(
+            'content'   => false,
+            'where'     => 'default',
+            'echo'      => true
+        );
+
+        return $this->buttons_shortcode( $settings )
 	}
 
 
