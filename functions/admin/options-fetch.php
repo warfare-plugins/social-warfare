@@ -3,7 +3,7 @@
  * Functions for getting and setting the plugin's options.
  *
  * @package   SocialWarfare\Functions
- * @copyright Copyright (c) 2017, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
  */
