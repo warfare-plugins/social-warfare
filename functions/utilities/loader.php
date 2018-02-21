@@ -50,13 +50,14 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/header-meta-tags.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/profile-fields.php';
+	require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/deprecated.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/compatibility.php';
 
     new SWP_Script();
     new SWP_Shortcode();
     new SWP_Shortcode_Generator();
+	new SWP_User_Profile();
 }
 
 
