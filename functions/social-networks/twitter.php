@@ -163,7 +163,7 @@ function swp_twitter_button_html( $array ) {
 			$ct .= ' @'.str_replace('@','',$twitter_mention);
 		endif;
 
-		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , swp_get_author( $array['postID'] ) );
+		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $array['postID'] ) );
 		if ( $user_twitter_handle ) :
 			$viaText = '&via=' . str_replace( '@','',$user_twitter_handle );
 		elseif ( $array['options']['twitterID'] ) :
