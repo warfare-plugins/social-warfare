@@ -387,3 +387,7 @@ function swp_get_site_url() {
 		return get_site_url();
 	}
 }
+
+function social_warfare( $array = array() ) {
+    return SWP_Display::social_warfare( $array );
+}
