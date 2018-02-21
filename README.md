@@ -19,6 +19,8 @@ All PHP and Javascript variables, functions and classes, and CSS classes and ID'
 
 Classes will be snake cased as well, but will also have the first letter of each word capitalized. Class names will also use the singular and never plural (e.g. My_Thing, not My_Things). The first letter will be capitalized on variables containing an instance of a class as well (e.g. $Class = new SWP_Class() ).
 
+Line breaks in PHP will be used generously to make the code more easily readable. Two blank lines will be used after a function or method and before the beginning of the docblock for the next function or method. One blank line will appear at the end (but within) each standard dockblock. One blank line will appear immediately before any forward-slashed comments.
+
 **Javascript:** In Javascript, we will use the camelCase nomenclature. 
 
 **CSS:** CSS selectors will use the snake_case nomenclature just as in our PHP code.
