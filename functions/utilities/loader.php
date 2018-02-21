@@ -33,6 +33,8 @@ require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
+
 
 
 /**
@@ -50,7 +52,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
-	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/display.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/permalinks.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
@@ -61,6 +62,8 @@ function swp_initiate_plugin() {
     new SWP_Shortcode();
     new SWP_Shortcode_Generator();
 	new SWP_User_Profile();
+	new SWP_Header_Output();
+    new SWP_Display();
 }
 
 
