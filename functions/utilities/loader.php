@@ -58,6 +58,7 @@ function swp_initiate_plugin() {
     new SWP_Shortcode();
     new SWP_Shortcode_Generator();
 	new SWP_User_Profile();
+	new SWP_Settings_Link();
 }
 
 
