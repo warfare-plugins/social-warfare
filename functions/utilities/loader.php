@@ -32,6 +32,8 @@ require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
+
 
 /**
  * Include the plugin's necessary functions files.
@@ -52,7 +54,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/permalinks.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
-	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/header-meta-tags.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/deprecated.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/compatibility.php';
 
