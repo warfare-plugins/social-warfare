@@ -20,7 +20,6 @@ class SWP_Header_Output {
  	* @var array $swp_user_options An array of options as set by the WordPress admin.
  	*
  	*/
-    global $swp_user_options;
 
 
 	/**
@@ -42,13 +41,14 @@ class SWP_Header_Output {
      * @since 2.4.0 | 21 FEB 2018 | Created
      *
      */
-    __construct() {
+    public function __construct() {
+        global $swp_user_options;
         $this->options = $swp_user_options;
         $this->init();
     }
 
     private function init() {
-        add_action( 'wp_head'           , array($this, 'add_header_meta'), 1 );
+        add_action( 'wp_head'           , array($this, 'add_header_output'), 1 );
         add_filter( 'swp_header_html'   , array($this, 'output_font_css'), 20 );
         add_action( 'admin_head'        , array($this, 'output_font_css'), 20 );
     }
@@ -127,9 +127,14 @@ class SWP_Header_Output {
      *
      */
     function output_font_css( $info = array() ) {
-        $style = "<style>@font-face {font-family: \"sw-icon-font\";src:url(\"${SWP_PLUGIN_URL}\"/fonts/sw-icon-font.eot?ver=${SWP_VERSION}\");src:url(\"${SWP_PLUGIN_URL}/fonts/sw-icon-font.eot?ver=${SWP_VERSION}#iefix\") format(\"embedded-opentype\"),url(\"${SWP_PLUGIN_URL}/fonts/sw-icon-font.woff?ver=${SWP_VERSION}\") format(\"woff\"),url(\"${SWP_PLUGIN_URL}/fonts/sw-icon-font.ttf?ver=\"${SWP_VERSION}\") format(\"truetype\"),url(\"${SWP_PLUGIN_URL}/fonts/sw-icon-font.svg?ver=${SWP_VERSION}#1445203416\") format(\"svg\");font-weight: normal;font-style: normal;}</style>";
+        $style = '<style>@font-face {font-family: "sw-icon-font";src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
+	url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
-		$info['html_output'] .= ( is_admin() : echo $style ? $style );
+		if ( true === is_admin() ) {
+			echo $style;
+		} else {
+			$info['html_output'] .= $style;
+		}
 
         return $info;
     }
