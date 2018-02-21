@@ -28,7 +28,7 @@ class SWP_Settings_Link {
     *
     */
 	public function __construct() {
-		add_filter( 'plugin_action_links_' . plugin_basename( SWP_PLUGIN_FILE ), array( $this , 'swp_settings_link' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( SWP_PLUGIN_FILE ), array( $this , 'add_settings_links' ) );
 	}
 
 	/**
@@ -39,7 +39,7 @@ class SWP_Settings_Link {
 	 * @return array $links Array of links modified by the function passed back to WordPress
 	 *
 	 */
-	public function swp_settings_link( $links ) {
+	public function add_settings_links( $links ) {
 		$settings_link = sprintf( '<a href="admin.php?page=social-warfare">%s</a>',
 			esc_html__( 'Settings', 'social-warfare' )
 		);

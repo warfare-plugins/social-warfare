@@ -27,6 +27,12 @@ require_once SWP_PLUGIN_DIR . '/functions/utilities/update-checker.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
+// Classes shouldn't have to be deferred since they won't do anything until instantiated
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
+require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
+
 /**
  * Include the plugin's necessary functions files.
  *
@@ -39,10 +45,7 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/curl_functions.php';
 	require_once SWP_PLUGIN_DIR . '/functions/widgets/widgets.php';
-	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
-    require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
-    require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/display.php';
@@ -50,7 +53,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/header-meta-tags.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/deprecated.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/compatibility.php';
 
@@ -58,7 +60,6 @@ function swp_initiate_plugin() {
     new SWP_Shortcode();
     new SWP_Shortcode_Generator();
 	new SWP_User_Profile();
-	new SWP_Settings_Link();
 }
 
 
@@ -68,9 +69,10 @@ function swp_initiate_plugin() {
  */
 if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/misc.php';
+	require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Settings_Link.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
     require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Column.php';
 
     new SWP_Column();
+	new SWP_Settings_Link();
 }
