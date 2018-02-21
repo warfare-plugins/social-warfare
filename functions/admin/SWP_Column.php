@@ -10,12 +10,27 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
+ * @since     2.4.0 | 21 FEB 2018 | Refactored into a class-based system.
  *
  */
 class SWP_Column {
+
+
+	/**
+	 * The magic __construct method used to instatiate our class. This method
+	 * will queue up all the other methods by adding them to the necessary
+	 * WordPress action and filter hooks.
+	 *
+	 * NOTE: These "duplicate" hooks/functions are to cover both posts and pages.
+	 *
+	 * @since  2.4.0
+	 * @access public
+	 * @param  None
+	 * @return None
+	 *
+	 */
     public function __construct() {
 
-		// Note: These "duplicate" functions are to cover both posts and pages.
         add_filter( 'manage_post_posts_columns', array($this, 'create_social_shares_column' ) );
         add_filter( 'manage_page_posts_columns', array($this, 'create_social_shares_column' ) );
 
