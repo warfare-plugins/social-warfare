@@ -67,7 +67,29 @@ add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 
-// Include the plugin's network classes.
+// Classes used for each social network.
+
+// Admin: Classes Used in the admin area of WordPress.
+require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
+require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
+
+// Frontend Output: Classes used to process the output to the Frontend.
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
+require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
+
+// Utilities: Classes used to perform misc functions throughout the plugin.
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
+
+// Widgets: Classes used to register and create Social Warfare widgets.
+require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Widget.php';
+require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Popular_Posts_Widget.php';
+
+// TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/googlePlus.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/twitter.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
@@ -76,23 +98,6 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
-
-// Classes Used in the admin area of WordPress.
-require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
-require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
-
-// Classes used to process the output to the Frontend
-require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
-require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
-require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
-require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
-
-// Utility Classes
-require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
-require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
-require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
-require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
-
 
 /**
  * Include the plugin's necessary functions files.
@@ -104,7 +109,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
-	require_once SWP_PLUGIN_DIR . '/functions/widgets/widgets.php';
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
@@ -119,6 +123,7 @@ function swp_initiate_plugin() {
 	new SWP_Header_Output();
     new SWP_Display();
 	new SWP_Compatibility();
+	new SWP_Widget();
 }
 
 
