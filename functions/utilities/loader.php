@@ -82,11 +82,14 @@ require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
 
-// Classes shouldn't have to be deferred since they won't do anything until instantiated
+// Classes used to process the output to the Frontend
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
+
+// Utility Classes
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
 
 
 
@@ -109,7 +112,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/deprecated.php';
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/compatibility.php';
 
     new SWP_Script();
     new SWP_Shortcode();
@@ -117,6 +119,7 @@ function swp_initiate_plugin() {
 	new SWP_User_Profile();
 	new SWP_Header_Output();
     new SWP_Display();
+	new SWP_Compatibility();
 }
 
 
