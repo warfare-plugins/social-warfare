@@ -90,6 +90,7 @@ require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 
 // Utility Classes
 require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
 
 
 
@@ -103,7 +104,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/curl_functions.php';
 	require_once SWP_PLUGIN_DIR . '/functions/widgets/widgets.php';
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';

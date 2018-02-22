@@ -276,7 +276,7 @@ function swp_make_bitly_url( $url, $network, $access_token ) {
 		$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token=' . $access_token . '&longUrl=' . urlencode( $url ) . '&format=' . $format;
 
 		// Fetch a response from the Bitly Shortening API
-		$data = swp_file_get_contents_curl( $bitly_api );
+		$data = SWP_CURL::file_get_contents_curl( $bitly_api );
 
 		// Parse the JSON formated response into an array
 		$data = json_decode( $data , true );
