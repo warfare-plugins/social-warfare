@@ -357,7 +357,7 @@ function swp_output_cache_trigger( $info ) {
 
 		// Fetch the alternate URL if share recovery is turned on
 		if( $info['swp_user_options']['recover_shares'] == true ) {
-			$alternateURL = swp_get_alt_permalink( $info['postID'] );
+			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
 			$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
 		} else {
 			$alternateURL = false;
