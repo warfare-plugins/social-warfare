@@ -1,43 +1,35 @@
 <?php
 
-add_action( 'widgets_init', 'swp_register_widgets' );
-
 /**
-* An Array of options to pass over to the option page
+* Popular Posts Widget
+*
+* Allows users to show most popular posts by share count.
+* Settings include widget title, network selections, thumbnail options, styles, and more.
 *
 * @package   SocialWarfare\Functions
-* @copyright Copyright (c) 2017, Warfare Plugins, LLC
+* @copyright Copyright (c) 2018, Warfare Plugins, LLC
 * @license   GPL-3.0+
 * @since     1.0.0 | Created | Unknown
 * @since     2.4.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
 * @since     2.4.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
 * @since     2.4.0 | Updated | 09 Feb 2018 | Added the post type selector
-*/
-
-/**
- * Register widgets.
- *
- * @since  1.0.0
- * @return void
- */
-function swp_register_widgets() {
-    register_widget( 'swp_popular_posts_widget' );
-}
-
-/**
-* Popular Posts Widget.
 *
-* Allows users to show most popular posts by share count.
-* Settings include widget title, network selections, thumbnail options, styles, and more.
 */
-class swp_popular_posts_widget extends WP_Widget {
+class SWP_Popular_Posts_Widget extends WP_Widget {
 
 	/**
     * Class constructor.
+    *
+    *  @since 1.0.0
+    *  @param none
+    *  @return none
+    *  @access public
+    *
     */
 	function __construct() {
 		parent::__construct( false, $name = 'Social Warfare: Popular Posts' );
 	}
+
 
     /**
     * Sets commonly applied attributes.
@@ -49,6 +41,7 @@ class swp_popular_posts_widget extends WP_Widget {
     * @param string $class The CSS class to be applied.
     * @param string $value The default value for the element.
     * @return string The string filled with attribute/value pairs.
+    *
     */
     private function set_attributes( $name, $class, $value) {
         $attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
@@ -119,6 +112,7 @@ class swp_popular_posts_widget extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 * @return none Output is echoed directly to the screen
+	 *
 	 */
 	function form( $instance ) {
 		global $swp_user_options;
@@ -347,6 +341,7 @@ class swp_popular_posts_widget extends WP_Widget {
 
 	}
 
+
     /**
     * Update widget form values.
     *
@@ -355,6 +350,7 @@ class swp_popular_posts_widget extends WP_Widget {
     * @param array $new_instance Updated values as input by the user in WP_Widget::form()
     * @param array $old_instance Previously set values.
     * @return array Sanitized array of final values.
+    *
     */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -379,6 +375,7 @@ class swp_popular_posts_widget extends WP_Widget {
 		return $instance;
 	}
 
+
     /**
     * Echoes the widget content.
     *
@@ -389,6 +386,7 @@ class swp_popular_posts_widget extends WP_Widget {
     * @access public
     * @param array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
     * @param array $instance The settings for the particular instance of the widget.
+    *
     */
 	function widget( $args, $instance ) {
 		extract( $args );
