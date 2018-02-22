@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Functions to enhance compatibility with other plugins
+ * SWP_Compatibility: A class to enhance compatibility with other plugins
  *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
@@ -9,17 +10,24 @@
  * @since     2.4.0 | 22 FEB 2018 | Refactored into a class-based system.
  *
  */
-
 class SWP_Compatibility {
 
+
+	/**
+	 * The magic method used to insantiate this class.
+	 *
+	 * This adds compatibility with Simple Podcast Press, the Duplicate Posts
+	 * plugin, and Really Simple SSL.
+	 *
+	 * @since  2.1.4
+	 * @access public
+	 * @param  integer $id The post ID
+	 * @return none
+	 *
+	 */
 	public function __construct() {
 
-		/**
-		 * Disabe Open Graph tags on Simple Podcast Press Pages
-		 *
-		 * @since 1.4.0
-		 * @access public
-		 */
+		// Disabe Open Graph tags on Simple Podcast Press Pages
 		if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
 			global $ob_wp_simplepodcastpress;
 			remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress, 'spp_open_graph' ) , 1 );

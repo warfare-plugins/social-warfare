@@ -102,12 +102,12 @@ function get_social_warfare_shares( $postID ) {
 	else :
 
 		// Fetch all the share counts asyncrounously
-		$raw_shares_array = swp_fetch_shares_via_curl_multi( $share_links );
+		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $share_links );
 		if ( $options['recover_shares'] == true ) :
-			$old_raw_shares_array = swp_fetch_shares_via_curl_multi( $old_share_links );
+			$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 
 			if(!empty($altURLs)):
-				$altURLs_raw_shares_array = swp_fetch_shares_via_curl_multi( $altURLs_share_links );
+				$altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
 			endif;
 		endif;
 
