@@ -20,10 +20,24 @@
  *
  *       We're not going to act on this until we have refactored everything in the
  *       swp_initiate_plugin (the stuff being deferred to the plugins_loaded hook)
- *       and moved all of those require_once's outside of that deferment. 
+ *       and moved all of those require_once's outside of that deferment.
+ *
+ *       We will go aheed and docblock each instantiation of a class in this file as
+ *       this file will then essentially serve as a table of contents for the entire
+ *       plugin.
  *
  */
 class Social_Warfare {
+
+	// Example __construct class that shows the basic logic of what I'm going for.
+	public function __construct() {
+		$this->load_admin_classes();
+		$this->load_frontend_output_classes();
+		$this->load_utility_classes();
+		$this->load_widget_classes();
+		$this->load_social_network_classes();
+		$this->instantiate_classes();
+	}
 
 }
 
