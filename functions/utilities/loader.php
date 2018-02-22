@@ -26,6 +26,11 @@
  *       this file will then essentially serve as a table of contents for the entire
  *       plugin.
  *
+ *       In the example below, the instantiate_classes() method is the last to be called,
+ *       and it needs to be, obviously, but I want it to be the first method defined
+ *       as that's the one that will serve as the plugin table of contents with it's
+ *       dockblocks.
+ *
  */
 class Social_Warfare {
 
@@ -37,6 +42,21 @@ class Social_Warfare {
 		$this->load_widget_classes();
 		$this->load_social_network_classes();
 		$this->instantiate_classes();
+	}
+
+	// Example for docblocking the instantiate_classes() method.
+	public function instantiate_classes() {
+
+		/**
+		 * The Shortcode Generator
+		 *
+		 * Instantiate the class that creates the shortcode generator on the post editor
+		 * which allows users to generate the [social_warfare] shortcodes by simply pointing
+		 * clicking, and filling in a few fill in the blanks.
+		 *
+		 */
+		new SWP_Shortcode_Generator();
+
 	}
 
 }
