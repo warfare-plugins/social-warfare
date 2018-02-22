@@ -91,6 +91,7 @@ require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
 
 
 /**
@@ -107,7 +108,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/permalinks.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/deprecated.php';
