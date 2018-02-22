@@ -69,7 +69,7 @@ function get_social_warfare_shares( $postID ) {
 	// Recover Shares From Previously Used URL Patterns
 	if ( true == $options['recover_shares'] && false == $freshCache ) :
 
-		$alternateURL = swp_get_alt_permalink( $postID );
+		$alternateURL = SWP_Permalink::get_alt_permalink( $postID );
 		$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
 
 		$altURLs = '';

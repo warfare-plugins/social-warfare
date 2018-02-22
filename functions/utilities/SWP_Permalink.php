@@ -6,6 +6,8 @@
  * This class allows the share count API to check for share counts using multiple
  * forms of a post's permalink. This is used for the share recovery features.
  *
+ * This class has no __construct method as it won't ever really need to be instantiated.
+ *
  * @package   SocialWarfare\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
@@ -18,7 +20,7 @@ class SWP_Permalink {
 	/**
 	 * A method to parse and produce the alternate permalink.
 	 *
-	 * @since 1.0.0 
+	 * @since 1.0.0
 	 * @param int The post ID.
 	 * @param bool Whether to keep the post name.
 	 * @return string The modified URL of the post.
