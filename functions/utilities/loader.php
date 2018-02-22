@@ -74,7 +74,6 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
-require_once SWP_PLUGIN_DIR . '/functions/utilities/update-checker.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
@@ -91,7 +90,7 @@ require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 // Utility Classes
 require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
-
+require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
 
 
 /**
