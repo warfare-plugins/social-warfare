@@ -8,7 +8,24 @@
  * @license   GPL-3.0+
  * @since     2.4.0 | 19 FEB 2018 | Created
  *
+ * @TODO: Convert this entire file into the Social_Warfare class. This class will load
+ * 		 all of the plugins classes and functions and fire the plugin into life. Other
+ * 		 Addons will then extend this class to addon and fire up their functionalities.
+ *
+ * 		 We will change the name of the /functions/ folder to /lib/ and this file and
+ * 		 class will reside in the root of that directory.
+ *
+ * 		 We will create a method for loading each set of classes. One for the frontend
+ * 		 output, one for admin classes, one for utility classes, etc.
+ *
+ *       We're not going to act on this until we have refactored everything in the
+ *       swp_initiate_plugin (the stuff being deferred to the plugins_loaded hook)
+ *       and moved all of those require_once's outside of that deferment. 
+ *
  */
+class Social_Warfare {
+
+}
 
 add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 
