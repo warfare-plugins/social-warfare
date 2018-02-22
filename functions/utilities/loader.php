@@ -63,11 +63,11 @@ class Social_Warfare {
 
 add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 
+// Require WordPress' core plugin class.
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-/**
- * Include the plugin's network files.
- *
- */
+
+// Include the plugin's network classes.
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/googlePlus.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/twitter.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
@@ -98,7 +98,7 @@ require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
  *
  */
 function swp_initiate_plugin() {
-	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/languages.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
