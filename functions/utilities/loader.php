@@ -78,11 +78,13 @@ require_once SWP_PLUGIN_DIR . '/functions/utilities/update-checker.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
+// Classes Used in the admin area of WordPress.
+require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
+require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
+
 // Classes shouldn't have to be deferred since they won't do anything until instantiated
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
-require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode_Generator.php';
-require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
 require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 
