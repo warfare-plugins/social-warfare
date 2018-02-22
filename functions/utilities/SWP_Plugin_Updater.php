@@ -1,15 +1,19 @@
 <?php
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
-
 /**
  * Allows plugins to use their own update API.
  *
+ * This class is built and created by the Author of the Easy Digital
+ * Downloads eCommerce suite. It is used to ping EDD on our storefront
+ * at periodic intervals in order to check for available updates. We
+ * host this class here in core so that it can be accessed via each
+ * installed premium addon to the plugin. 
+ *
  * @author Easy Digital Downloads
  * @version 1.6.14
+ *
  */
-class SW_EDD_SL_Plugin_Updater {
+class SWP_Plugin_Updater {
 
 	private $api_url     = '';
 	private $api_data    = array();
