@@ -11,29 +11,6 @@
  * @license   GPL-3.0+
  * @since     2.4.0 | 19 FEB 2018 | Created
  *
- * @TODO: Convert this entire file into the Social_Warfare class. This class will load
- * 		 all of the plugins classes and functions and fire the plugin into life. Other
- * 		 Addons will then extend this class to addon and fire up their functionalities.
- *
- * 		 We will change the name of the /functions/ folder to /lib/ and this file and
- * 		 class will reside in the root of that directory.
- *
- * 		 We will create a method for loading each set of classes. One for the frontend
- * 		 output, one for admin classes, one for utility classes, etc.
- *
- *       We're not going to act on this until we have refactored everything in the
- *       swp_initiate_plugin (the stuff being deferred to the plugins_loaded hook)
- *       and moved all of those require_once's outside of that deferment.
- *
- *       We will go aheed and docblock each instantiation of a class in this file as
- *       this file will then essentially serve as a table of contents for the entire
- *       plugin.
- *
- *       In the example below, the instantiate_classes() method is the last to be called,
- *       and it needs to be, obviously, but I want it to be the first method defined
- *       as that's the one that will serve as the plugin table of contents with it's
- *       dockblocks.
- *
  */
 class Social_Warfare {
 
@@ -74,13 +51,13 @@ class Social_Warfare {
 	 * @access public
 	 *
 	 */
-	private final function instantiate_classes() {
+	private function instantiate_classes() {
 
 
 		/**
 		 * The Localization Class
 		 *
-		 * Instantiates the class that will load the plugin translations. 
+		 * Instantiates the class that will load the plugin translations.
 		 *
 		 */
 		new SWP_Localization();
@@ -159,7 +136,7 @@ class Social_Warfare {
 	 * @access public
 	 *
 	 */
-	private final function instantiate_admin_classes() {
+	private function instantiate_admin_classes() {
 
 
 		/**
@@ -217,7 +194,7 @@ class Social_Warfare {
 	 * @access public
 	 *
 	 */
-	private final function load_classes() {
+	private function load_classes() {
 
 		// Require WordPress' core plugin class.
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
