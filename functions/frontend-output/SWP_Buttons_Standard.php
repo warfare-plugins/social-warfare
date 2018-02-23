@@ -80,14 +80,14 @@ class SWP_Buttons_Standard {
 
     	// Get the options, or create them if they don't exist
     	if ( isset( $array['post_id'] ) ) :
-    		$postID = $array['post_id'];
+    		$post_id = $array['post_id'];
     	else :
-    		$postID = get_the_ID();
+    		$post_id = get_the_ID();
     	endif;
 
     	// Check to see if display location was specifically defined for this post
-    	$specWhere = get_post_meta( $postID,'nc_postLocation',true );
-        	if ( ! $specWhere ) { $specWhere = 'default';
+    	$spec_where = get_post_meta( $post_id,'nc_postLocation',true );
+        	if ( ! $spec_where ) { $spec_where = 'default';
     	};
 
     	if ( $array['where'] == 'default' ) :
@@ -97,15 +97,15 @@ class SWP_Buttons_Standard {
 
     		// If we are on a singular page
     		elseif ( is_singular() && ! is_home() && ! is_archive() && ! is_front_page() ) :
-    			if ( $specWhere == 'default' || $specWhere == '' ) :
-    				$postType = get_post_type( $postID );
-    				if ( isset( $this->options[ 'location_' . $postType ] ) ) :
-    					$array['where'] = $this->options[ 'location_' . $postType ];
+    			if ( $spec_where == 'default' || $spec_where == '' ) :
+    				$post_type = get_post_type( $post_id );
+    				if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
+    					$array['where'] = $this->options[ 'location_' . $post_type ];
     				else :
     					$array['where'] = 'none';
     				endif;
     			else :
-    				$array['where'] = $specWhere;
+    				$array['where'] = $spec_where;
     			endif;
 
     		// If we are anywhere else besides the home page or a singular
@@ -138,27 +138,27 @@ class SWP_Buttons_Standard {
     	else :
 
     		// Set the options for the horizontal floating bar
-    		$postType = get_post_type( $postID );
-    		$spec_float_where = get_post_meta( $postID , 'nc_floatLocation' , true );
+    		$post_type = get_post_type( $post_id );
+    		$spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
 
     		if ( isset( $array['float'] ) && $array['float'] == 'ignore' ) :
     			$floatOption = 'float_ignore';
     		elseif ( $spec_float_where == 'off' && $this->options['buttonFloat'] != 'float_ignore' ) :
     				$floatOption = 'floatNone';
-    		elseif ( $this->options['float'] && is_singular() && $this->options[ 'float_location_' . $postType ] == 'on' ) :
+    		elseif ( $this->options['float'] && is_singular() && $this->options[ 'float_location_' . $post_type ] == 'on' ) :
     			$floatOption = 'float' . ucfirst( $this->options['floatOption'] );
     		else :
     			$floatOption = 'floatNone';
     		endif;
 
     		// Disable the plugin on feeds, search results, and non-published content
-    		if ( ! is_feed() && ! is_search() && get_post_status( $postID ) == 'publish' ) :
+    		if ( ! is_feed() && ! is_search() && get_post_status( $post_id ) == 'publish' ) :
 
     			// Acquire the social stats from the networks
     			if ( isset( $array['url'] ) ) :
-    				$buttonsArray['url'] = $array['url'];
+    				$buttons_array['url'] = $array['url'];
     			else :
-    				$buttonsArray['url'] = get_permalink( $postID );
+    				$buttons_array['url'] = get_permalink( $post_id );
     			endif;
 
     			if ( isset( $array['scale'] ) ) :
@@ -168,10 +168,10 @@ class SWP_Buttons_Standard {
     			endif;
 
     			// Fetch the share counts
-    			$buttonsArray['shares'] = get_social_warfare_shares( $postID );
+    			$buttons_array['shares'] = get_social_warfare_shares( $post_id );
 
     			// Pass the swp_options into the array so we can pass it into the filter
-    			$buttonsArray['options'] = $this->options;
+    			$buttons_array['options'] = $this->options;
 
     			// Customize which buttosn we're going to display
     			if ( isset( $array['buttons'] ) ) :
@@ -196,11 +196,11 @@ class SWP_Buttons_Standard {
     						$key = swp_recursive_array_search( $button , $available_buttons );
 
     						// Store the result in the array that gets passed to the HTML generator
-    						$buttonsArray['buttons'][ $key ] = $button;
+    						$buttons_array['buttons'][ $key ] = $button;
 
     						// Declare a default share count of zero. This will be overriden later
-    						if ( ! isset( $buttonsArray['shares'][ $key ] ) ) :
-    							$buttonsArray['shares'][ $key ] = 0;
+    						if ( ! isset( $buttons_array['shares'][ $key ] ) ) :
+    							$buttons_array['shares'][ $key ] = 0;
     						endif;
 
     					endif;
@@ -210,19 +210,23 @@ class SWP_Buttons_Standard {
     				endforeach;
 
     				// Manually turn the total shares on or off
-    				if ( array_search( 'Total',$button_set_array ) ) { $buttonsArray['buttons']['totes'] = 'Total' ;}
+    				if ( array_search( 'Total',$button_set_array ) ) :
+                        $buttons_array['buttons']['totes'] = 'Total';
+                    endif;
 
     			endif;
 
     			// Setup the buttons array to pass into the 'swp_network_buttons' hook
-    			$buttonsArray['count'] = 0;
-    			$buttonsArray['totes'] = 0;
-    			if ( 	( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] && ! isset( $array['buttons'] ) )
-    				|| 	( isset( $buttonsArray['buttons'] ) && isset( $buttonsArray['buttons']['totes'] ) && $buttonsArray['totes'] >= $this->options['minTotes'] ) ) :
-    				++$buttonsArray['count'];
+    			$buttons_array['count'] = 0;
+    			$buttons_array['totes'] = 0;
+
+    			if ( ( $buttons_array['options']['totes'] && $buttons_array['shares']['totes'] >= $buttons_array['options']['minTotes'] && ! isset( $array['buttons'] ) )
+    				|| 	( isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ) ) :
+    				++$buttons_array['count'];
     			endif;
-    			$buttonsArray['resource'] = array();
-    			$buttonsArray['postID'] = $postID;
+
+    			$buttons_array['resource'] = array();
+    			$buttons_array['post_id'] = $post_id;
 
     			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
     			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
@@ -230,53 +234,53 @@ class SWP_Buttons_Standard {
     			endif;
 
     			// This array will contain the HTML for all of the individual buttons
-    			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
+    			$buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
 
     			// Create the social panel
-    			$assets = '<div class="nc_socialPanel swp_' . $this->options['visualTheme'] . ' swp_d_' . $this->options['dColorSet'] . ' swp_i_' . $this->options['iColorSet'] . ' swp_o_' . $this->options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $this->options['buttonFloat'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $this->options['floatBgColor'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
+    			$assets = '<div class="nc_socialPanel swp_' . $this->options['visualTheme'] . ' swp_d_' . $this->options['dColorSet'] . ' swp_i_' . $this->options['iColorSet'] . ' swp_o_' . $this->options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $this->options['buttonFloat'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['floatBgColor'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
 
     			// Setup the total shares count if it's on the left
-    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] == 'totesAltLeft' && $buttonsArray['totes'] >= $this->options['minTotes'] && ! isset( $array['buttons'] ) || ( $this->options['swTotesFormat'] == 'totesAltLeft' && isset( $buttonsArray['buttons'] ) && isset( $buttonsArray['buttons']['totes'] ) && $buttonsArray['totes'] >= $this->options['minTotes'] ))
-    			|| 	($this->options['swTotesFormat'] == 'totesAltLeft' && isset( $array['buttons'] ) && isset( $array['buttons']['totes'] ) && $buttonsArray['totes'] >= $this->options['minTotes'] ) ) :
-    				++$buttonsArray['count'];
-    				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttonsArray['count'] . '" >';
-    				$assets .= '<span class="swp_count">' . swp_kilomega( $buttonsArray['totes'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] == 'totesAltLeft' && $buttons_array['totes'] >= $this->options['minTotes'] && ! isset( $array['buttons'] ) || ( $this->options['swTotesFormat'] == 'totesAltLeft' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ))
+    			|| 	($this->options['swTotesFormat'] == 'totesAltLeft' && isset( $array['buttons'] ) && isset( $array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ) ) :
+    				++$buttons_array['count'];
+    				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
+    				$assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['totes'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
     				$assets .= '</div>';
     			endif;
 
     			// Sort the buttons according to the user's preferences
-    			if ( isset( $buttonsArray ) && isset( $buttonsArray['buttons'] ) ) :
-    				foreach ( $buttonsArray['buttons'] as $key => $value ) :
-    					if ( isset( $buttonsArray['resource'][ $key ] ) ) :
-    						$assets .= $buttonsArray['resource'][ $key ];
+    			if ( isset( $buttons_array ) && isset( $buttons_array['buttons'] ) ) :
+    				foreach ( $buttons_array['buttons'] as $key => $value ) :
+    					if ( isset( $buttons_array['resource'][ $key ] ) ) :
+    						$assets .= $buttons_array['resource'][ $key ];
     					endif;
     				endforeach;
     			elseif ( $this->options['orderOfIconsSelect'] == 'manual' ) :
     				foreach ( $this->options['newOrderOfIcons'] as $key => $value ) :
-    					if ( isset( $buttonsArray['resource'][ $key ] ) ) :
-    						$assets .= $buttonsArray['resource'][ $key ];
+    					if ( isset( $buttons_array['resource'][ $key ] ) ) :
+    						$assets .= $buttons_array['resource'][ $key ];
     					endif;
     				endforeach;
     			elseif ( $this->options['orderOfIconsSelect'] == 'dynamic' ) :
-    				arsort( $buttonsArray['shares'] );
-    				foreach ( $buttonsArray['shares'] as $thisIcon => $status ) :
-    					if ( isset( $buttonsArray['resource'][ $thisIcon ] ) ) :
-    						$assets .= $buttonsArray['resource'][ $thisIcon ];
+    				arsort( $buttons_array['shares'] );
+    				foreach ( $buttons_array['shares'] as $thisIcon => $status ) :
+    					if ( isset( $buttons_array['resource'][ $thisIcon ] ) ) :
+    						$assets .= $buttons_array['resource'][ $thisIcon ];
     					endif;
     				endforeach;
     			endif;
 
     			// Create the Total Shares Box if it's on the right
-    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] != 'totesAltLeft' && $buttonsArray['totes'] >= $this->options['minTotes'] && ! isset( $buttonsArray['buttons'] ) )
-    			|| 	( $this->options['swTotesFormat'] != 'totesAltLeft' && isset( $buttonsArray['buttons'] ) && isset( $buttonsArray['buttons']['totes'] ) && $buttonsArray['totes'] >= $this->options['minTotes'] ) ) :
-    				++$buttonsArray['count'];
+    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] != 'totesAltLeft' && $buttons_array['totes'] >= $this->options['minTotes'] && ! isset( $buttons_array['buttons'] ) )
+    			|| 	( $this->options['swTotesFormat'] != 'totesAltLeft' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ) ) :
+    				++$buttons_array['count'];
     				if ( $this->options['swTotesFormat'] == 'totes' ) :
-    					$assets .= '<div class="nc_tweetContainer totes" data-id="' . $buttonsArray['count'] . '" >';
-    					$assets .= '<span class="swp_count">' . swp_kilomega( $buttonsArray['totes'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+    					$assets .= '<div class="nc_tweetContainer totes" data-id="' . $buttons_array['count'] . '" >';
+    					$assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['totes'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
     					$assets .= '</div>';
     				else :
-    					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttonsArray['count'] . '" >';
-    					$assets .= '<span class="swp_count"><span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span> ' . swp_kilomega( $buttonsArray['totes'] ) . '</span>';
+    					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
+    					$assets .= '<span class="swp_count"><span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span> ' . swp_kilomega( $buttons_array['totes'] ) . '</span>';
     					$assets .= '</div>';
     				endif;
     			endif;
@@ -285,9 +289,9 @@ class SWP_Buttons_Standard {
     			$assets .= '</div>';
 
     			// Reset the cache timestamp if needed
-    			if ( swp_is_cache_fresh( $postID ) == false  && isset($this->options['cacheMethod']) && 'legacy' === $this->options['cacheMethod'] ) :
-    				delete_post_meta( $postID,'swp_cache_timestamp' );
-    				update_post_meta( $postID,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
+    			if ( swp_is_cache_fresh( $post_id ) == false  && isset($this->options['cacheMethod']) && 'legacy' === $this->options['cacheMethod'] ) :
+    				delete_post_meta( $post_id,'swp_cache_timestamp' );
+    				update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
     			endif;
 
     			if ( isset( $array['genesis'] ) ) :
