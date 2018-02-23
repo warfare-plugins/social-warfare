@@ -3,8 +3,8 @@
 
 (function() {
 console.log("quacker");
-	tinymce.PluginManager.add('clickToTweet', function( editor, url ) {
-		editor.addButton( 'clickToTweet', {
+	tinymce.PluginManager.add('click_to_tweet', function( editor, url ) {
+		editor.addButton( 'click_to_tweet', {
 			title: 'Click to Tweet by Social Warfare',
 			icon: 'sw sw sw-twitter',
 			onclick: function() {
@@ -124,9 +124,9 @@ console.log("quacker");
 							return false;
 						}
 						if (e.data.theme == 'default') {
-							editor.insertContent( '[clickToTweet tweet="' + e.data.tweet.replace( /"/g,'\'' ) + '" quote="' + e.data.quote.replace( /"/g,'\'' ) + '"]' );
+							editor.insertContent( '[click_to_tweet tweet="' + e.data.tweet.replace( /"/g,'\'' ) + '" quote="' + e.data.quote.replace( /"/g,'\'' ) + '"]' );
 						} else {
-							editor.insertContent( '[clickToTweet tweet="' + e.data.tweet.replace( /"/g,'\'' ) + '" quote="' + e.data.quote.replace( /"/g,'\'' ) + '" theme="' + e.data.theme + '"]' );
+							editor.insertContent( '[click_to_tweet tweet="' + e.data.tweet.replace( /"/g,'\'' ) + '" quote="' + e.data.quote.replace( /"/g,'\'' ) + '" theme="' + e.data.theme + '"]' );
 						}
 					}
 				});
