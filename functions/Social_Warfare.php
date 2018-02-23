@@ -133,16 +133,6 @@ class Social_Warfare {
 		 */
 		new SWP_Widget();
 
-
-		/**
-		 * The Click to Tweet Class
-		 *
-		 * Instantiate the class that that creates the Click to Tweet button in the WordPress post
-		 * editor's dashboard (the kitchen sink) and also process the shortcode on the front end.
-		 *
-		 */
-		new SWP_Click_To_Tweet();
-
 	}
 
 
@@ -167,6 +157,16 @@ class Social_Warfare {
 		 *
 		 */
 		new SWP_Shortcode_Generator();
+
+
+		/**
+		 * The Click to Tweet Class
+		 *
+		 * Instantiate the class that that creates the Click to Tweet button in the WordPress post
+		 * editor's dashboard (the kitchen sink) and also process the shortcode on the front end.
+		 *
+		 */
+		new SWP_Click_To_Tweet();
 
 
 		/**
