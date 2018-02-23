@@ -14,7 +14,6 @@ class SWP_Click_To_Tweet {
 
 	public function __construct() {
 		$this->click_to_tweet();
-
 	}
 
 	public function click_to_tweet() {
@@ -36,10 +35,6 @@ class SWP_Click_To_Tweet {
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
-	public function deactivation() {
-
-	}
-
 	public function register_admin_hooks() {
 		add_filter( 'tiny_mce_version', array( $this, 'refresh_mce' ) );
 		add_action( 'init', array( $this, 'tinymce_button' ) );
@@ -51,8 +46,6 @@ class SWP_Click_To_Tweet {
 		}
 
 		if ( get_user_option( 'rich_editing' ) == 'true' ) {
-            die("tinymce_register_button()");
-            
 			add_filter( 'mce_external_plugins', array( $this, 'tinymce_register_plugin' ) );
 			add_filter( 'mce_buttons', array( $this, 'tinymce_register_button' ) );
 		}
