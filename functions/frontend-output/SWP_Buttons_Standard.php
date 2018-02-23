@@ -13,8 +13,8 @@ class SWP_Buttons_Standard {
     public $options;
 
     public function __construct() {
-        global $swp_user_options;
-        $this->options = $swp_user_options;
+        // *$this->options can not be set to $swp_user_options yet
+        // *as the options are not defined at this point. 
     }
 
     //
@@ -65,6 +65,9 @@ class SWP_Buttons_Standard {
     * @return string $content   The modified content
     */
     public function the_buttons( $array = array() ) {
+        global $swp_user_options;
+        $this->options = $swp_user_options;
+
     	if ( !is_array($array) ) {
     		$array = array();
     	}
@@ -79,15 +82,17 @@ class SWP_Buttons_Standard {
         $array = array_merge( $defaults, $array );
 
     	// Get the options, or create them if they don't exist
-    	if ( isset( $array['post_id'] ) ) :
-    		$post_id = $array['post_id'];
+    	if ( isset( $array['postID'] ) ) :
+    		$post_id = $array['postID'];
     	else :
     		$post_id = get_the_ID();
     	endif;
 
     	// Check to see if display location was specifically defined for this post
-    	$spec_where = get_post_meta( $post_id,'nc_postLocation',true );
-        	if ( ! $spec_where ) { $spec_where = 'default';
+    	$spec_where = get_post_meta( $post_id, 'nc_postLocation', true );
+
+        if ( !$spec_where ) {
+            $spec_where = 'default';
     	};
 
     	if ( $array['where'] == 'default' ) :
@@ -96,14 +101,16 @@ class SWP_Buttons_Standard {
     			$array['where'] = $this->options['locationHome'];
 
     		// If we are on a singular page
-    		elseif ( is_singular() && ! is_home() && ! is_archive() && ! is_front_page() ) :
+    		elseif ( is_singular() && !is_home() && !is_archive() && !is_front_page() ) :
     			if ( $spec_where == 'default' || $spec_where == '' ) :
     				$post_type = get_post_type( $post_id );
+
     				if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
     					$array['where'] = $this->options[ 'location_' . $post_type ];
     				else :
     					$array['where'] = 'none';
     				endif;
+
     			else :
     				$array['where'] = $spec_where;
     			endif;
@@ -123,11 +130,11 @@ class SWP_Buttons_Standard {
     		return $array['content'];
 
     	// Disable the buttons if the location is set to "None / Manual"
-    	elseif ( 'none' === $array['where'] && ! isset( $array['devs'] ) ) :
+    	elseif ( 'none' === $array['where'] && !isset( $array['devs'] ) ) :
     		return $array['content'];
 
     	// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
-    	elseif ( ( ! is_main_query() || ! in_the_loop()) && ! isset( $array['devs'] ) ) :
+    	elseif ( ( !is_main_query() || !in_the_loop()) && !isset( $array['devs'] ) ) :
     		return $array['content'];
 
     	// Don't do anything if we're in the admin section
@@ -152,7 +159,7 @@ class SWP_Buttons_Standard {
     		endif;
 
     		// Disable the plugin on feeds, search results, and non-published content
-    		if ( ! is_feed() && ! is_search() && get_post_status( $post_id ) == 'publish' ) :
+    		if ( !is_feed() && !is_search() && get_post_status( $post_id ) == 'publish' ) :
 
     			// Acquire the social stats from the networks
     			if ( isset( $array['url'] ) ) :
@@ -178,7 +185,7 @@ class SWP_Buttons_Standard {
 
     				// Fetch the global names and keys
     				$swp_options = array();
-    				$swp_available_options = apply_filters( 'swp_options',$swp_options );
+    				$swp_available_options = apply_filters( 'swp_options', $swp_options );
     				$available_buttons = $swp_available_options['options']['swp_display']['buttons']['content'];
 
     				// Split the comma separated list into an array
@@ -199,7 +206,7 @@ class SWP_Buttons_Standard {
     						$buttons_array['buttons'][ $key ] = $button;
 
     						// Declare a default share count of zero. This will be overriden later
-    						if ( ! isset( $buttons_array['shares'][ $key ] ) ) :
+    						if ( !isset( $buttons_array['shares'][ $key ] ) ) :
     							$buttons_array['shares'][ $key ] = 0;
     						endif;
 
@@ -210,7 +217,7 @@ class SWP_Buttons_Standard {
     				endforeach;
 
     				// Manually turn the total shares on or off
-    				if ( array_search( 'Total',$button_set_array ) ) :
+    				if ( array_search( 'Total', $button_set_array ) ) :
                         $buttons_array['buttons']['totes'] = 'Total';
                     endif;
 
@@ -220,13 +227,13 @@ class SWP_Buttons_Standard {
     			$buttons_array['count'] = 0;
     			$buttons_array['totes'] = 0;
 
-    			if ( ( $buttons_array['options']['totes'] && $buttons_array['shares']['totes'] >= $buttons_array['options']['minTotes'] && ! isset( $array['buttons'] ) )
+    			if ( ( $buttons_array['options']['totes'] && $buttons_array['shares']['totes'] >= $buttons_array['options']['minTotes'] && !isset( $array['buttons'] ) )
     				|| 	( isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ) ) :
     				++$buttons_array['count'];
     			endif;
 
     			$buttons_array['resource'] = array();
-    			$buttons_array['post_id'] = $post_id;
+    			$buttons_array['postID'] = $post_id;
 
     			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
     			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
@@ -240,7 +247,7 @@ class SWP_Buttons_Standard {
     			$assets = '<div class="nc_socialPanel swp_' . $this->options['visualTheme'] . ' swp_d_' . $this->options['dColorSet'] . ' swp_i_' . $this->options['iColorSet'] . ' swp_o_' . $this->options['oColorSet'] . ' scale-' . $scale*100 .' scale-' . $this->options['buttonFloat'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['floatBgColor'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
 
     			// Setup the total shares count if it's on the left
-    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] == 'totesAltLeft' && $buttons_array['totes'] >= $this->options['minTotes'] && ! isset( $array['buttons'] ) || ( $this->options['swTotesFormat'] == 'totesAltLeft' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ))
+    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] == 'totesAltLeft' && $buttons_array['totes'] >= $this->options['minTotes'] && !isset( $array['buttons'] ) || ( $this->options['swTotesFormat'] == 'totesAltLeft' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ))
     			|| 	($this->options['swTotesFormat'] == 'totesAltLeft' && isset( $array['buttons'] ) && isset( $array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ) ) :
     				++$buttons_array['count'];
     				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
@@ -271,7 +278,7 @@ class SWP_Buttons_Standard {
     			endif;
 
     			// Create the Total Shares Box if it's on the right
-    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] != 'totesAltLeft' && $buttons_array['totes'] >= $this->options['minTotes'] && ! isset( $buttons_array['buttons'] ) )
+    			if ( ( $this->options['totes'] && $this->options['swTotesFormat'] != 'totesAltLeft' && $buttons_array['totes'] >= $this->options['minTotes'] && !isset( $buttons_array['buttons'] ) )
     			|| 	( $this->options['swTotesFormat'] != 'totesAltLeft' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['totes'] ) && $buttons_array['totes'] >= $this->options['minTotes'] ) ) :
     				++$buttons_array['count'];
     				if ( $this->options['swTotesFormat'] == 'totes' ) :
