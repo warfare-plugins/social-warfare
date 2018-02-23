@@ -112,7 +112,7 @@ class SWP_User_Profile {
 	 * @return integer The author ID
 	 *
 	 */
-	public function get_author( $post_id = 0 ) {
+	public static function get_author( $post_id = 0 ) {
 		$post = get_post( $post_id );
 		return $post->post_author;
 	}
