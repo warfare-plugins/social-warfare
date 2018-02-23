@@ -94,6 +94,15 @@ class Social_Warfare {
 		 */
 		new SWP_Header_Output();
 
+        /**
+         * The Standard Buttons class.
+         *
+         * Assembles each share button based on user's selected options.
+         *
+         */
+
+         new SWP_Buttons_Standard();
+
 
 		/**
 		 * The Display Class
@@ -205,6 +214,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
+        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Standard.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
@@ -249,7 +259,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
 	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
-	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-standard.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
