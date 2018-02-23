@@ -78,6 +78,15 @@ class Social_Warfare {
 
 
 		/**
+		 * The Localization Class
+		 *
+		 * Instantiates the class that will load the plugin translations. 
+		 *
+		 */
+		new SWP_Localization();
+
+
+		/**
 		 * The Script Class
 		 *
 		 * Instantiates the class that will enqueue all of the styles and scripts used
@@ -226,6 +235,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Localization.php';
 
 		// Widgets: Classes used to register and create Social Warfare widgets.
 		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Widget.php';
@@ -258,7 +268,6 @@ add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 function swp_initiate_plugin() {
 
 	// All of these files need refactored and then migrated into the functions above
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/languages.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
