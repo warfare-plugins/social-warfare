@@ -101,7 +101,7 @@ class Social_Warfare {
          *
          */
 
-         new SWP_Button();
+         new SWP_Buttons_Panel();
 
 
 		/**
@@ -224,7 +224,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
-        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Button.php';
+        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Panel.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 		require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/SWP_Click_To_Tweet.php';
 
