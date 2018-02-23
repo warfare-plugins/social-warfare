@@ -12,10 +12,9 @@
  */
 class SWP_Display {
     public $already_print;
+    public $Button;
 
     public function __construct() {
-
-
         /**
          * A global for storing post ID's to prevent duplicate processing on the same posts
          * @since 2.1.4
@@ -31,6 +30,7 @@ class SWP_Display {
 
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
+        $this->Button  = new SWP_Button();
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action('template_redirect', array($this, 'activate_buttons') );
@@ -94,7 +94,7 @@ class SWP_Display {
 
     	// Pass the content (in an array) into the buttons function to add the buttons
     	$array['content'] = $content;
-    	$content = social_warfare_buttons( $array );
+    	$content = $this->Button->the_buttons( $array );
 
     	// Add an invisible div to the content so the image hover pin button finds the content container area
     	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
@@ -113,13 +113,13 @@ class SWP_Display {
      * @return string $content The modified content
      *
      */
-    public function social_warfare( $array = array() ) {
+    public static function social_warfare( $array = array() ) {
     	$array['devs'] = true;
-    	$content = social_warfare_buttons( $array );
+        $Button = new SWP_Button();
+    	$content = $Button->the_buttons( $array );
     	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle']):
     		$content .= '<p class="swp-content-locator"></p>';
     	endif;
     	return $content;
     }
-
 }
