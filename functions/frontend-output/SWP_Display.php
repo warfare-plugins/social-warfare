@@ -58,7 +58,7 @@ class SWP_Display {
     	global $swp_user_options;
 
     	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
-        if ( true === is_singular() || true === $swp_user_options['full_content'] ):
+        if( true === is_singular() || true === $swp_user_options['full_content'] ):
             add_filter( 'the_content', array($this, 'social_warfare_wrapper'), 10 );
 
         endif;
@@ -85,7 +85,7 @@ class SWP_Display {
     	$post_id = $post->ID;
 
     	// Check if it's already been processed
-    	if ( in_array( $post_id, $this->already_printed) ) {
+    	if( in_array( $post_id, $this->already_printed) ){
     		return $content;
     	}
 
@@ -99,7 +99,7 @@ class SWP_Display {
     	$content = $this->Buttons->the_buttons( $array );
 
     	// Add an invisible div to the content so the image hover pin button finds the content container area
-    	if ( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
+    	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
     		$content .= '<p class="swp-content-locator"></p>';
     	endif;
 
@@ -118,11 +118,10 @@ class SWP_Display {
     public function social_warfare( $array = array() ) {
     	$array['devs'] = true;
     	$content = $this->Buttons->the_buttons( $array );
-
-    	if ( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle']):
+        die("__finder" . var_dump($content));
+    	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle']):
     		$content .= '<p class="swp-content-locator"></p>';
     	endif;
-        
     	return $content;
     }
 
