@@ -9,7 +9,7 @@
  * @since     1.0.0
  */
 
-class SWP_Button {
+class SWP_Buttons_Panel {
     public $options;
 
     public function __construct() {

@@ -14,8 +14,6 @@
  *
  */
 class SWP_Shortcode {
-
-
 	/**
 	 * Constructs a new SWP_Shortcodes instance
 	 *
@@ -32,6 +30,8 @@ class SWP_Shortcode {
 		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode_legacy' ) );
 		add_shortcode( 'total_shares', array ($this, 'post_total_shares') );
 		add_shortcode( 'sitewide_shares', array ($this, 'sitewide_total_shares') );
+        add_shortcode( 'clickToTweet', array($this, 'click_to_tweet' ) );
+
 	}
 
 
@@ -145,5 +145,34 @@ class SWP_Shortcode {
 			$sum = $wpdb->get_results( "SELECT SUM(meta_value) AS total FROM $wpdb->postmeta WHERE meta_key = '_totes'" );
 			return swp_kilomega( $sum[0]->total );
 	}
+
+    /**
+     * The function to build the click to tweets
+     *
+     * @param  array $atts The shortcode key/value attributes.
+     * @return string The html of a click to tweet
+     */
+    function click_to_tweet( $atts ) {
+
+    	$url = swp_process_url( get_permalink() , 'twitter' , get_the_ID() );
+    	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
+    	$atts['tweet'] = rtrim( $atts['tweet'] );
+
+    	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
+
+    	if ( ! $user_twitter_handle ) :
+    		$user_twitter_handle = $this->options['twitterID'];
+    	endif;
+
+    	if ( isset( $atts['theme'] ) && $atts['theme'] != 'default' ) :
+    		$theme = $atts['theme'];
+    	else :
+    		$theme = $this->options['cttTheme'];
+    	endif;
+
+    	return '
+    		<div class="sw-tweet-clear"></div>
+    		<a class="swp_CTT ' . $theme . '" href="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" data-link="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" rel="nofollow" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">' . $atts['quote'] . '</span><span class="sw-ctt-btn">' . __( 'Click To Tweet','social-warfare' ) . '<i class="sw sw-twitter"></i></span></span></a>';
+    }
 
 }
