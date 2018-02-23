@@ -153,6 +153,8 @@ class SWP_Shortcode {
      * @return string The html of a click to tweet
      */
     function click_to_tweet( $atts ) {
+        global $swp_user_options;
+        $this->options = $swp_user_options;
 
     	$url = swp_process_url( get_permalink() , 'twitter' , get_the_ID() );
     	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
