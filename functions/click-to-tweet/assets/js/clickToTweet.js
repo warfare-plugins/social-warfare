@@ -1,6 +1,8 @@
 /* globals socialWarfareAdmin */
 
+
 (function() {
+console.log("quacker");
 	tinymce.PluginManager.add('clickToTweet', function( editor, url ) {
 		editor.addButton( 'clickToTweet', {
 			title: 'Click to Tweet by Social Warfare',
@@ -113,7 +115,7 @@
 						} else {
 							var remaining = 280 - socialWarfareAdmin.linkLength( value ) - linkSpace - handle.length - 6;
 						}
-						
+
 						if (e.data.tweet === '' || e.data.quote === '') {
 							editor.windowManager.alert( 'Please, fill in both fields.' );
 							return false;
