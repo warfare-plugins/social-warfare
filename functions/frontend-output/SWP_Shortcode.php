@@ -70,9 +70,9 @@ class SWP_Shortcode {
 
 		// Set some defaults that are needed by the social_warfare() function
 		$defaults = array(
-                        'content'	=> false,
+            'content'	=> false,
 			'where'		=> 'after',
-			'echo'		=> true,
+			'echo'		=> false,
 		);
 
 		// Merge the defaults into the $array that was passed into this function.
