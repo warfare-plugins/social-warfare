@@ -101,7 +101,7 @@ class Social_Warfare {
          *
          */
 
-         new SWP_Buttons_Standard();
+         new SWP_Button();
 
 
 		/**
@@ -214,7 +214,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
-        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Standard.php';
+        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Button.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.

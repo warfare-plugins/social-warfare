@@ -32,7 +32,7 @@ class SWP_Display {
 
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
-        $this->Buttons = new SWP_Buttons_Standard();
+        $this->Buttons = new SWP_Button();
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action('template_redirect', array($this, 'activate_buttons') );
