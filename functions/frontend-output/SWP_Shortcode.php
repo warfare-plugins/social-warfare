@@ -27,10 +27,18 @@ class SWP_Shortcode {
 	 */
     public function __construct() {
 		add_shortcode( 'social_warfare', array($this, 'buttons_shortcode') );
-		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode_legacy' ) );
 		add_shortcode( 'total_shares', array ($this, 'post_total_shares') );
 		add_shortcode( 'sitewide_shares', array ($this, 'sitewide_total_shares') );
+        add_shortcode( 'click_to_tweet', array($this, 'click_to_tweet' ) );
+
+		/**
+		 * These are old legacy shortcodes that have been replaced with the ones seen above.
+		 * We're leaving these here to ensure that it won't break for anyone who has used these
+		 * ones in the past. The ones above adhere to our code style guide.
+		 *
+		 */
         add_shortcode( 'clickToTweet', array($this, 'click_to_tweet' ) );
+		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode_legacy' ) );
 
 	}
 
