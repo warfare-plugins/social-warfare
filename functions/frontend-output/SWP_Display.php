@@ -12,11 +12,13 @@
  */
 class SWP_Display {
     public $already_print;
+<<<<<<< HEAD
     public $Buttons;
+=======
+    public $Button;
+>>>>>>> 16faf8c705f13dc9e898c7f1f1cbc5f93c2f02a5
 
     public function __construct() {
-
-
         /**
          * A global for storing post ID's to prevent duplicate processing on the same posts
          * @since 2.1.4
@@ -32,7 +34,11 @@ class SWP_Display {
 
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
+<<<<<<< HEAD
         $this->Buttons = new SWP_Button();
+=======
+        $this->Button  = new SWP_Button();
+>>>>>>> 16faf8c705f13dc9e898c7f1f1cbc5f93c2f02a5
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action('template_redirect', array($this, 'activate_buttons') );
@@ -96,7 +102,11 @@ class SWP_Display {
 
     	// Pass the content (in an array) into the buttons function to add the buttons
     	$array['content'] = $content;
+<<<<<<< HEAD
     	$content = $this->Buttons->the_buttons( $array );
+=======
+    	$content = $this->Button->the_buttons( $array );
+>>>>>>> 16faf8c705f13dc9e898c7f1f1cbc5f93c2f02a5
 
     	// Add an invisible div to the content so the image hover pin button finds the content container area
     	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
@@ -115,14 +125,18 @@ class SWP_Display {
      * @return string $content The modified content
      *
      */
-    public function social_warfare( $array = array() ) {
+    public static function social_warfare( $array = array() ) {
     	$array['devs'] = true;
+<<<<<<< HEAD
     	$content = $this->Buttons->the_buttons( $array );
         die("__finder" . var_dump($content));
+=======
+        $Button = new SWP_Button();
+    	$content = $Button->the_buttons( $array );
+>>>>>>> 16faf8c705f13dc9e898c7f1f1cbc5f93c2f02a5
     	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle']):
     		$content .= '<p class="swp-content-locator"></p>';
     	endif;
     	return $content;
     }
-
 }

@@ -26,7 +26,7 @@ class SWP_Permalink {
 	 * @return string The modified URL of the post.
 	 *
 	 */
-	function get_alt_permalink( $post = 0, $leavename = false ) {
+	public static function get_alt_permalink( $post = 0, $leavename = false ) {
 		global $swp_user_options;
 
 		$rewritecode = array(
