@@ -221,29 +221,29 @@ class Social_Warfare {
 		// Classes used for each social network. (These will be migrated up from below after being refactored).
 
 		// Frontend Output: Classes used to process the output to the Frontend.
+        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Panel.php';
+		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
+		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
-		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
-        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Panel.php';
-		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
-		require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/SWP_Click_To_Tweet.php';
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Localization.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
 
 		// Widgets: Classes used to register and create Social Warfare widgets.
-		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Widget.php';
 		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Popular_Posts_Widget.php';
+		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Widget.php';
 
 		// Admin: Classes used to power of some functionality in the admin area.
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Settings_Link.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Click_To_Tweet.php';
 	    require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Column.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Settings_Link.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 
 	}
 
