@@ -133,6 +133,16 @@ class Social_Warfare {
 		 */
 		new SWP_Widget();
 
+
+		/**
+		 * The Click to Tweet Class
+		 *
+		 * Instantiate the class that that creates the Click to Tweet button in the WordPress post
+		 * editor's dashboard (the kitchen sink) and also process the shortcode on the front end.
+		 *
+		 */
+		new SWP_Click_To_Tweet();
+
 	}
 
 
@@ -216,6 +226,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
         require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Button.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
+		require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/SWP_Click_To_Tweet.php';
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
@@ -258,7 +269,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
-	require_once SWP_PLUGIN_DIR . '/functions/click-to-tweet/clickToTweet.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
