@@ -9,39 +9,13 @@
  * @since     1.0.0
  */
 
-class SWP_Buttons_Standard {
+class SWP_Button {
     public $options;
 
     public function __construct() {
         // *$this->options can not be set to $swp_user_options yet
-        // *as the options are not defined at this point. 
+        // *as the options are not defined at this point.
     }
-
-    //
-    // /**
-    //  * A wrapper for the legacy version of the function
-    //  *
-    //  * This version accepted 3 parameters, but was scrapped for a
-    //  * new version that now accepts an array of unlimited parameters
-    //  *
-    //  * @since  1.4.0
-    //  * @access public
-    //  * @param  boolean $content The content to which the buttons will be added
-    //  * @param  string  $where   Where the buttons should appear (above, below, both, none)
-    //  * @param  boolean $echo    Echo the content or return it
-    //  * @return string 			Returns the modified content
-    //  */
-    // public function socialWarfare( $content = false, $where = 'default', $echo = true ) {
-    //
-    // 	// Collect the deprecated fields and place them into an array
-    // 	$array['content'] 	= $content;
-    // 	$array['where'] 	= $where;
-    // 	$array['echo'] 		= $echo;
-    // 	$array['devs']		= true;
-    //
-    // 	// Pass the array into the new function
-    // 	return social_warfare( $array );
-    // }
 
     /**
     * THE SHARE BUTTONS FUNCTION:
