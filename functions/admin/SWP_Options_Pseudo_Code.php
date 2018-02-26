@@ -25,7 +25,7 @@
  * Option = class-based object with properties and methods.
  *
  * Nomenclature: Let's use Options ($SWP_Options) to refer to what is available to the plugin user
- * to choose from, and let's use User Options ($SWP_User_options) to refer to what the user of the
+ * to choose from, and let's use User Options ($SWP_User_Options) to refer to what the user of the
  * plugin has set.
  *
  * Also, I believe that this is the only class where using plural makes more than enough sense to
@@ -35,6 +35,11 @@
  * Note: We should probably use priorities in multiples of 10 so that it's very easy for
  * 		 addons to add things in between them when needed. Plus we can always use fractions
  * 		 when needed, I suppose. Or we could start with a base of multiples of 100.
+ *
+ * 		 We need to find a way so that whenever a new Tab, Section, or Option is added, it immediately
+ * 		 sorts all items in the object of that type according to their priority. So if a new options is
+ * 		 added, all options in that section need to get sorted so that it is being inserted where it is
+ * 		 intended to be inserted.
  *
  * Here is some Pseudo code that sort of displays what I want the SWP_Options object to look like
  * once it is all put together (Even though I used equals signs, look at this as an object, not an array. It's pseudo-code.):
@@ -136,7 +141,7 @@ class SWP_Options_Page {
 	 *
 	 * Docblock each class property like this. Include a title, and then
 	 * a one or two sentence minimum description.
-	 * 
+	 *
 	 */
 	var $tabs;
 
@@ -178,6 +183,7 @@ class SWP_Options_Page {
 			)
 		);
 	}
+
 }
 
 
@@ -187,6 +193,11 @@ class SWP_Options_Page_Tab {
 	// The name of the tab.
 	var $name;
 	var $sections;
+	var $priority;
+
+	public function __construct() {
+
+	}
 
 	public function set_name( $name ) {
 		$this->name = $name;
@@ -266,6 +277,24 @@ class SWP_Options_Page_Option {
 
 	}
 
+
+	/**
+	 * Useful for adding new available choices to a dropdown item that already exists. For example, if Pro
+	 * adds additional choices to an option that's already in core.
+	 *
+	 */
+	public function add_choice() {
+
+	}
+
+	/**
+	 * What if the cool new choice that we just added above is so cool that we want it to be the default?
+	 *
+	 */
+	public function set_default() {
+
+	}
+
 }
 
 /**
@@ -284,4 +313,38 @@ class SWP_Options_Page_HTML {
 		}
 
 	}
+}
+
+
+class SWP_User_options {
+
+
+	public function __construct() {
+		get_option('Our_Options_In_The_Database');
+		$this->remove_unavailable_options();
+		$this->set_defaults();
+	}
+
+	/**
+	 * This will compare the User Options in the database against the SWP_Options_Page object. If it does
+	 * not exist in the SWP_Options_Page object, that means that the addon that offered this option is not
+	 * active or not registered so delete it from SWP_User_Options.
+	 *
+	 * But DO NOT remove registration keys or registration timestamps.
+	 *
+	 */
+	public function remove_unavailable_options() {
+
+	}
+
+	/**
+	 * Instead of a giant array of defaults like we have now, have it sort the options against the SWP_Options_Page object.
+	 * Any User Option that isn't set, simply set it to it's default value.
+	 *
+	 */
+	public function set_defaults() {
+
+	}
+
+
 }
