@@ -88,8 +88,9 @@ SWP_Buttons_Panel::new_buttons_panel( $args );
  *
  * #2: They should be able to call the static method to simply process everything all in one go without even
  * instantiating the class. Just call the method, and boom, there's some buttons on the page now. It should
- * function, practically speaking the same as calling: echo 'This gets printed on the screen';
- * 
+ * function, practically speaking the same as calling: echo 'This gets printed on the screen'; Nothing is
+ * instantiated, it just processes the command and echos or returns a string of HTML.
+ *
  */
 
 
