@@ -25,16 +25,23 @@
 class SWP_Buttons_Panel {
 	public $options;
 	public $args;
+
+	// Create an SWP_Buttons_Panel object without generating any HTML.
 	public function __construct( $generate_html = true ) {
 		global $SWP_User_Options;
 		$options = $SWP_User_Options;
+		$this->do_something();
 	}
+
+	// Allow developers to set options.
 	public function set_option( $option_name , $new_value ) {
 		$this->$options[$option_name] = $new_value;
 	}
+
+	// Create the HTML for the buttons without actually instantiating anything.
 	public static function new_buttons_panel( $args ) {
 		$this->$args = $args;
-		$this->__construct();
+		$this->do_something();
 	}
 }
 
