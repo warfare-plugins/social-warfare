@@ -9,6 +9,90 @@
  * @since     1.0.0
  */
 
+
+/**
+ * So we want to make it so that developers can easily access this class and make changes to the
+ * buttons panel on the fly for any particular instantiation of it. They don't need access to every
+ * single method or property of the buttons. Instead, we want to focus specifically on options that are
+ * available on the options page.
+ *
+ * So ideally, the buttons panel will pull it's parameters from the SWP_User_Options object, but it can
+ * then be overwritten by a developer. For example, something like this might do the trick:
+ *
+ * $generate_html: By default, this class will fully create the set of buttons and produce the HTML either
+ * via a return or an echo. It will go from top to bottom and put absolutely everything together.
+ */
+class SWP_Buttons_Panel {
+	public $options;
+	public $args;
+	public function __construct( $generate_html = true ) {
+		global $SWP_User_Options;
+		$options = $SWP_User_Options;
+	}
+	public function set_option( $option_name , $new_value ) {
+		$this->$options[$option_name] = $new_value;
+	}
+	public static function new_buttons_panel( $args ) {
+		$this->$args = $args;
+		$this->__construct();
+	}
+}
+
+
+/**
+ * So in this example, it will use the SWP_User_Options to fill in and create all of the default options, but
+ * it will then overwrite the custom_color and networks options programatically via a setter method and then
+ * after all of the manipulations have been done, the programmer can call to have the HTML output.
+ *
+ * $generate_html: By passing in 'false' through the generate_html variable, it will return an object that can
+ * be manipulated.
+ *
+ */
+$Buttons = new SWP_Buttons_Panel( false );
+$Buttons->set_option( 'custom_color' , '#FF0000' );
+$Buttons->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
+$Buttons->output_HTML();
+
+
+/**
+ * Alternatively, they should ALSO be able to use the $args method of instantiating an object. Perhaps something
+ * like this:
+ *
+ * Again, this version should do everything. Pull all paramters from the User_Options object, overwrite the
+ * 'custom_color' and 'networks' with the $args and then output the HTML of the buttons panel.
+ *
+ * Note #1: This static method should also be able to be called without any $args and should return HTML for the
+ * buttons without actually creating an instantiation of the class itself. It's just a one and done. Process the
+ * options and output the HTML.
+ *
+ * Note #2: This method should be what the procedural social_warfare() function calls. For example:
+ *
+ * function social_warfare( $args = array() ) {
+ * 		return SWP_Buttons_Panel::new_buttons_panel( $args );
+ * }
+ *
+ */
+$args = array(
+	'custom_color' => '#FF0000',
+	'networks' => array( 'Twitter' , 'Facebook' , 'Pinterest' )
+)
+SWP_Buttons_Panel::new_buttons_panel( $args );
+
+
+/**
+ * CONCLUSION: The goal is to have a variety of approaches for developers to use in outputting the buttons as
+ * they desire.
+ *
+ * #1: They should be able to instantiate the class into an object and call getters and setters to manipulate
+ * their output.
+ *
+ * #2: They should be able to call the static method to simply process everything all in one go without even
+ * instantiating the class. Just call the method, and boom, there's some buttons on the page now. It should
+ * function, practically speaking the same as calling: echo 'This gets printed on the screen';
+ * 
+ */
+
+
 class SWP_Buttons_Panel {
     public $options;
 

@@ -316,6 +316,8 @@ class SWP_Options_Page_HTML {
 }
 
 
+$SWP_USer_Options = new SWP_User_Options();
+
 class SWP_User_options {
 
 
