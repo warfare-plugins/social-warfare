@@ -52,6 +52,16 @@ class Social_Warfare {
 	 *
 	 */
 	private function instantiate_classes() {
+        global $SWP_Options_Page;
+
+		/**
+		 * The Options Page Class
+		 *
+		 * Instantiates the class that will load the plugin options page.
+		 * TODO: Make this object a global.
+		 */
+		$SWP_Options_Page = new SWP_Options_Page();
+		var_dump($SWP_Options_Page);
 
 
 		/**
@@ -244,6 +254,12 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Settings_Link.php';
 		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
 		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
+
+		// Options: Classes used to generate and organize the plugin's options.
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page_Tab.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page_Section.php';
+		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page_Option.php';
 
 	}
 
