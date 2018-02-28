@@ -21,7 +21,7 @@
  *
  * $generate_html: By default, this class will fully create the set of buttons and produce the HTML either
  * via a return or an echo. It will go from top to bottom and put absolutely everything together.
- */
+
 class SWP_Buttons_Panel {
 	public $options;
 	public $args;
@@ -54,7 +54,7 @@ class SWP_Buttons_Panel {
  * $generate_html: By passing in 'false' through the generate_html variable, it will return an object that can
  * be manipulated.
  *
- */
+ 
 $Buttons = new SWP_Buttons_Panel( false );
 $Buttons->set_option( 'custom_color' , '#FF0000' );
 $Buttons->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
@@ -79,11 +79,11 @@ $Buttons->output_HTML();
  * }
  *
  */
-$args = array(
-	'custom_color' => '#FF0000',
-	'networks' => array( 'Twitter' , 'Facebook' , 'Pinterest' )
-)
-SWP_Buttons_Panel::new_buttons_panel( $args );
+//$args = array(
+//	'custom_color' => '#FF0000',
+//	'networks' => array( 'Twitter' , 'Facebook' , 'Pinterest' )
+//)
+// SWP_Buttons_Panel::new_buttons_panel( $args );
 
 
 /**

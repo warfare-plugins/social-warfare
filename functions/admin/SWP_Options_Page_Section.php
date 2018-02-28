@@ -2,16 +2,18 @@
 
 class SWP_Options_Page_Section {
 
-	var $options;
-	var $title;
-	var $description;
-	var $information_link;
+	public $options;
+	public $title;
+	public $description;
+	public $information_link;
+	public $priority;
 
 	public function __construct() {
-
+        
 	}
 
-	public function set_title( $title , $kb_link ) { // KB stands for knowledge base articles. We have one for every section of options.
+    // KB stands for knowledge base articles. We have one for every section of options.
+	public function set_title( $title , $kb_link ) {
 		$this->title = $title;
 		$this->information_link = $kb_link;
 	}
@@ -19,6 +21,16 @@ class SWP_Options_Page_Section {
 	public function set_description( $description ) {
 		$this->description = $description;
 	}
+
+    public function set_priority( $priority ) {
+        if ( ! intval( $priority ) ) {
+            return false;
+        }
+
+        $this->priority = $priority;
+
+        return $priority;
+    }
 
 	function sort_by_priority() {
 

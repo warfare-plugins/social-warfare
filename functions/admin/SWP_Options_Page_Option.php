@@ -2,13 +2,12 @@
 
 class SWP_Options_Page_Option {
 
-	var $type;
-	var $size;
-	var $content;
-	var $default;
-	var $premium;
-	var $priority;
-
+	public $type;
+	public $size;
+	public $content;
+	public $default;
+	public $premium;
+	public $priority;
 
 	public function __construct( $attributes ) {
 
@@ -19,9 +18,12 @@ class SWP_Options_Page_Option {
 		 * tabs and sections.
 		 *
 		 */
-		if( isset($attributes['type']) ) {
-			$this->type = $type;
-		}
+
+        $whitelist = ['type', 'size', 'content', 'default', 'premium', 'priority'];
+
+		foreach($whitelist as $key ) {
+            $this->$key = $attributes[$key];
+        }
 
 	}
 

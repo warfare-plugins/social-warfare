@@ -2,9 +2,9 @@
 class SWP_Options_Page_Tab {
 
 	// The name of the tab.
-	var $name;
-	var $sections;
-	var $priority;
+	public $name;
+	public $sections;
+	public $priority;
 
 	public function __construct() {
 
@@ -13,6 +13,16 @@ class SWP_Options_Page_Tab {
 	public function set_name( $name ) {
 		$this->name = $name;
 	}
+
+    public function set_priority( $priority ) {
+        if ( ! intval( $priority ) ) {
+            return false;
+        }
+
+        $this->priority = $priority;
+
+        return $priority;
+    }
 
 	public function sort_by_priority() {
 
