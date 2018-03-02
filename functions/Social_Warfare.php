@@ -256,10 +256,11 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 
 		// Options: Classes used to generate and organize the plugin's options.
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page_Tab.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page_Section.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Options_Page_Option.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Tab.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Section.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Option.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Option_Checkbox.php';
 
 	}
 
