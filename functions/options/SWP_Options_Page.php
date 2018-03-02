@@ -47,10 +47,10 @@ class SWP_Options_Page {
         $_options->frame_buster->set_name( 'Frame Buster' )->set_priority(10)->set_size('two-thirds-advanced')->set_default(true)->set_divider(true);
 
         $_options->full_content = new SWP_Option_Checkbox();
-        $_options->full_content->set_name( 'Full Content?' )->set_default( false )->set_premium->( false )->set_divider(true);
+        $_options->full_content->set_name( 'Full Content?' )->set_default( false )->set_premium( 'pro' );
 
         $_options->force_new_shares = new SWP_Option_Checkbox();
-        $_options->force_new_shares->set_name( 'Force New Shares? ')->set_default( false )->set_premium( false )->set_size( 'two-thirds ');
+        $_options->force_new_shares->set_name( 'Force New Shares? ')->set_default( false )->set_premium( 'pro' )->set_size( 'two-thirds ');
         //
         // 'sniplyBuster' => array(
         //     'type'			=> 'checkbox',
