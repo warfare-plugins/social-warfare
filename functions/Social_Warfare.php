@@ -259,8 +259,8 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Tab.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Section.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Option.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Option_Checkbox.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Checkbox.php';
 
 	}
 
