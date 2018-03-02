@@ -230,19 +230,20 @@ class Social_Warfare {
 
 		// Classes used for each social network. (These will be migrated up from below after being refactored).
 
+		// Utilities: Classes used to perform misc functions throughout the plugin.
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Abstract.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Localization.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
+		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
+
 		// Frontend Output: Classes used to process the output to the Frontend.
         require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Panel.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
 		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
-
-		// Utilities: Classes used to perform misc functions throughout the plugin.
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Localization.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
 
 		// Widgets: Classes used to register and create Social Warfare widgets.
 		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Popular_Posts_Widget.php';
@@ -260,7 +261,8 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Tab.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Section.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Checkbox.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Checkbox.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Input.php';
 
 	}
 
