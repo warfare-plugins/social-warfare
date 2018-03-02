@@ -3,10 +3,11 @@ class SWP_Options_Page_Tab {
 
 	// The name of the tab.
 	public $name;
-	public $sections;
 	public $priority;
+	public $sections;
 
 	public function __construct() {
+		$this->sections = new stdClass();
 
 	}
 
