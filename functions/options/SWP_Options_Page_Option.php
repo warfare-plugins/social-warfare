@@ -4,10 +4,10 @@ class SWP_Options_Page_Option {
 
 	public $type;
 	public $size;
-	public $content;
 	public $default;
 	public $premium;
 	public $priority;
+	public $name;
 
 	public function __construct( ) {
 
@@ -50,7 +50,7 @@ class SWP_Options_Page_Option {
 	 * @return $this Return the object to allow method chaining.
 	 */
 	public function set_premium( $premium ) {
-		$this->premium = $value;
+		$this->premium = $premium;
 		return $this;
 	}
 
