@@ -38,8 +38,10 @@ class SWP_Options_Page {
 		$this->tabs->display->sections->share_counts->set_title( 'Share Counts' , 'http://warfareplugins.com/the-knowledge-base-article-for-this-section-of-options' );
 		$this->tabs->display->sections->share_counts->set_description( 'This is the description' );
 
-        $this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option( )
-
+		$_options = $this->tabs->display->sections->share_counts->options;
+		$_options->network_count = new SWP_Options_Page_Option_Checkbox();
+		$_options->network_count->set_name( __( 'Button Counts' ,'social-warfare' ) )->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
+		/*
 		$this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option(
 			array(
 				'type'		=> 'checkbox',
@@ -50,6 +52,7 @@ class SWP_Options_Page {
 				'priority'  => 1
 			)
 		);
+		*/
 	}
 
 }
