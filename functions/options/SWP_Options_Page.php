@@ -38,14 +38,11 @@ class SWP_Options_Page {
 		$this->tabs->display->sections->share_counts->set_title( 'Share Counts' , 'http://warfareplugins.com/the-knowledge-base-article-for-this-section-of-options' );
 		$this->tabs->display->sections->share_counts->set_description( 'This is the description' );
 
-		/** The goal is to replace the code below with a snippet much more like this:
-		 *
-		 * $_options = $this->tabs->display->sections->share_counts->options;
-		 * $_options->totals_for_each_button = new SWP_Options_Page_Options_Checkbox();
-		 * $_options->totals_for_each_button->set_name(__( 'Button Counts' ,'social-warfare' ))->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium(false);
-		 *
-		 */
 
+		$_options = $this->tabs->display->sections->share_counts->options;
+		$_options->totals_for_each_button = new SWP_Options_Page_Option_Checkbox();
+	//	$_options->totals_for_each_button->set_name(__( 'Button Counts' ,'social-warfare' ))->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
+		/*
 		$this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option(
 			array(
 				'type'		=> 'checkbox',
@@ -56,6 +53,7 @@ class SWP_Options_Page {
 				'priority'  => 1
 			)
 		);
+		*/
 	}
 
 }

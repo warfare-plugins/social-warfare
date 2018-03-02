@@ -9,21 +9,7 @@ class SWP_Options_Page_Option {
 	public $premium;
 	public $priority;
 
-	public function __construct( $attributes ) {
-
-		/**
-		 * Cycle through each attribute and set it. Not all attributes apply to all option types so we need
-		 * to check if each one is set before setting the property. I'd rather use a class-object so that if
-		 * I want to add a method or something to it later, I will be able to do so easily just like with the
-		 * tabs and sections.
-		 *
-		 */
-
-        $whitelist = ['type', 'size', 'content', 'default', 'premium', 'priority'];
-
-		foreach($whitelist as $key ) {
-            $this->$key = $attributes[$key];
-        }
+	public function __construct( ) {
 
 	}
 
