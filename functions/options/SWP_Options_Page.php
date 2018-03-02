@@ -41,7 +41,7 @@ class SWP_Options_Page {
 
 		$_options = $this->tabs->display->sections->share_counts->options;
 		$_options->totals_for_each_button = new SWP_Options_Page_Option_Checkbox();
-	//	$_options->totals_for_each_button->set_name(__( 'Button Counts' ,'social-warfare' ))->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
+		$_options->totals_for_each_button->set_name( __( 'Button Counts' ,'social-warfare' ) )->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
 		/*
 		$this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option(
 			array(
