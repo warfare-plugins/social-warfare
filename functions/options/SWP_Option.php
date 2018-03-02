@@ -69,4 +69,17 @@ class SWP_Options_Page_Option extends SWP_Abstract {
 		return $this;
 	}
 
+    public function set_divider( $bool ) {
+
+        $this->divider = !!$bool;
+
+        return $this;
+    }
+
+    public function set_premium( $bool ) {
+
+        $this->is_premium = $bool;
+        
+    }
+
 }
