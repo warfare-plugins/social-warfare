@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Options_Page_Option {
+class SWP_Options_Page_Option extends SWP_Abstract {
 
 	public $type;
 	public $size;
@@ -55,7 +55,12 @@ class SWP_Options_Page_Option {
 	}
 
 	public function set_name( $name ) {
-		$this->name = $name;
+        if ( !is_string($name) ) {
+            $this->throw(__CLASS__ . " method set_name() requires a string." );
+        }
+
+        $this->name = __( $name, 'social-warfare' );
+
 		return $this;
 	}
 
