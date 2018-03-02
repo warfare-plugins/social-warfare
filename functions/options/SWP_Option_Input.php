@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Options_Input {
+class SWP_Options_Input extends SWP_Option {
     public $type;
     public $size;
     public $content;
@@ -9,7 +9,7 @@ class SWP_Options_Input {
     public function __construct() {
         $this->name = "string";
         $this->choices = array();
-        $this->toggle =
+        // $this->toggle =
     }
 
 
@@ -53,7 +53,7 @@ class SWP_Options_Select extends SWP_Options_Input {
 
 
 }
-
+/*
 $select = new SWP_Select();
 
 $content = array(
@@ -64,9 +64,4 @@ $content = array(
                 );
 
 $select->set_size('two-fourths')->set_content( $content )->default( 'bottom' );
-
-
-
-
-
-            
+*/
