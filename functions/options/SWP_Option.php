@@ -66,7 +66,7 @@ class SWP_Option {
             $this->throw(__CLASS__ . " method set_name() requires a string. {$name} is not acceptable." );
         }
 
-        $this->name = __( $name, 'social-warfare' );
+        $this->name = $name;
 
 		return $this;
 	}
@@ -75,12 +75,5 @@ class SWP_Option {
 		$this->size = $size;
 		return $this;
 	}
-
-    public function set_divider( $bool ) {
-
-        $this->divider = !!$bool;
-
-        return $this;
-    }
 
 }
