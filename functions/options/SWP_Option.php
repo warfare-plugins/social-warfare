@@ -1,11 +1,12 @@
 <?php
 
-class SWP_Options_Page_Option extends SWP_Abstract {
+class SWP_Option {
+
+	use SWP_Abstract;
 
 	public $type;
-	public $size;
 	public $default;
-	public $premium;
+	public $premium = false;
 	public $priority;
 	public $name;
 
@@ -40,23 +41,29 @@ class SWP_Options_Page_Option extends SWP_Abstract {
 	 * Set the premium status of this option.
 	 *
 	 * Since there are going to be multiple addons, it's not sufficient to set premium to simply true or
-	 * false. Instead, it will be false, if it is a core (free) options and the registration key of the
-	 * premium plugin to which it belongs (e.g. "pro") if it is premium. This will allow us to use the
-	 * is_swp_addon_registered() function to check if it is allowed on output.
+	 * false. Instead, it will be false by default. Unless this method is called and a string corresponding
+	 * the registration key of the corresponding premium addon is passed. Example: $SWP_Option->set_premium('pro');
+	 *
+	 * This will then set the premium property to true and place the registration key into the premium_addon property.
 	 *
 	 * @since 2.4.0 | 02 MAR 2018 | Created
-	 * @param bool/str False if not premium, string corresponding to the registration key of premium plugin
-	 * 				   if true.
+	 * @param string String corresponding to the registration key of premium plugin if true.
 	 * @return $this Return the object to allow method chaining.
 	 */
-	public function set_premium( $premium ) {
-		$this->premium = $premium;
+	public function set_premium( $premium_addon ) {
+		if ( !is_string( $premium_addon ) ) {
+			$this->throw(__CLASS__ . " method set_premium() requires a string. {$premium_addon} is not acceptable." );
+		}
+
+		$this->premium = true;
+		$this->premium_addon = $premium_addon;
+
 		return $this;
 	}
 
 	public function set_name( $name ) {
-        if ( !is_string($name) ) {
-            $this->throw(__CLASS__ . " method set_name() requires a string." );
+        if ( !is_string( $name ) ) {
+            $this->throw(__CLASS__ . " method set_name() requires a string. {$name} is not acceptable." );
         }
 
         $this->name = __( $name, 'social-warfare' );
@@ -74,12 +81,6 @@ class SWP_Options_Page_Option extends SWP_Abstract {
         $this->divider = !!$bool;
 
         return $this;
-    }
-
-    public function set_premium( $bool ) {
-
-        $this->is_premium = $bool;
-        
     }
 
 }
