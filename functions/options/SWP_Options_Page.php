@@ -39,8 +39,44 @@ class SWP_Options_Page {
 		$this->tabs->display->sections->share_counts->set_description( 'This is the description' );
 
 		$_options = $this->tabs->display->sections->share_counts->options;
-		$_options->network_count = new SWP_Options_Page_Option_Checkbox();
-		$_options->network_count->set_name( __( 'Button Counts' ,'social-warfare' ) )->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
+
+		$_options->network_count = new SWP_Option_Checkbox();
+		$_options->network_count->set_name( 'Button Counts' )->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
+
+        $_options->frame_buster = new SWP_Option_Checkbox();
+        $_options->frame_buster->set_name( 'Frame Buster' )->set_priority(10)->set_size('two-thirds-advanced')->set_default(true)->set_divider(true);
+
+        $_options->full_content = new SWP_Option_Checkbox();
+        $_options->full_content->set_name( 'Full Content?' )->set_default( false )->set_premium->( false )->set_divider(true);
+
+        $_options->force_new_shares = new SWP_Option_Checkbox();
+        $_options->force_new_shares->set_name( 'Force New Shares? ')->set_default( false )->set_premium( false )->set_size( 'two-thirds ');
+        //
+        // 'sniplyBuster' => array(
+        //     'type'			=> 'checkbox',
+        //     'title' 		=> __( 'Frame Buster' , 'social-warfare' ),
+        //     'description' 	=> __( 'If you want to stop content pirates from framing your content, turn this on.' , 'social-warfare' ),
+        //     'size'			=> 'two-thirds-advanced',
+        //     'default'		=> true,
+        //     'divider'		=> true
+        // ),
+        //
+        // 'full_content'		=> array(
+        //     'type'				=> 'checkbox',
+        //     'size'				=> 'two-thirds',
+        //     'content'				=> __( 'Full Content?' , 'social-warfare' ),
+        //     'default'			=> false,
+        //     'premium'			=> false,
+        //     'divider'			=> true
+        // ),
+        //
+        // 'force_new_shares'		=> array(
+        //     'type'				=> 'checkbox',
+        //     'size'				=> 'two-thirds',
+        //     'content'				=> __( 'Force New Shares?' , 'social-warfare' ),
+        //     'default'			=> false,
+        //     'premium'			=> false
+        // )
 		/*
 		$this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option(
 			array(
@@ -54,5 +90,4 @@ class SWP_Options_Page {
 		);
 		*/
 	}
-
 }
