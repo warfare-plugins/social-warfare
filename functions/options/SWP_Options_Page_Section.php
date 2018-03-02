@@ -2,7 +2,7 @@
 
 class SWP_Options_Page_Section {
 
-	public $title;
+	public $name;
 	public $description;
 	public $information_link;
 	public $priority;
@@ -13,9 +13,9 @@ class SWP_Options_Page_Section {
 	}
 
     // KB stands for knowledge base articles. We have one for every section of options.
-	public function set_title( $title , $kb_link ) {
-		$this->title = $title;
-		$this->information_link = $kb_link;
+	public function set_title( $name , $information_link ) {
+		$this->name = $name;
+		$this->information_link = $information_link;
 	}
 
 	public function set_description( $description ) {
