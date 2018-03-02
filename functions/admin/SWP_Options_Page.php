@@ -38,8 +38,6 @@ class SWP_Options_Page {
 		$this->tabs->display->sections->share_counts->set_title( 'Share Counts' , 'http://warfareplugins.com/the-knowledge-base-article-for-this-section-of-options' );
 		$this->tabs->display->sections->share_counts->set_description( 'This is the description' );
 
-        $this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option( )
-
 		$this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option(
 			array(
 				'type'		=> 'checkbox',

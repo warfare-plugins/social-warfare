@@ -2,14 +2,14 @@
 
 class SWP_Options_Page_Section {
 
-	public $options;
 	public $title;
 	public $description;
 	public $information_link;
 	public $priority;
+	public $options;
 
 	public function __construct() {
-        
+		$this->options = new stdClass();
 	}
 
     // KB stands for knowledge base articles. We have one for every section of options.
