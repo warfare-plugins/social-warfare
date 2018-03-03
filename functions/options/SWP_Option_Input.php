@@ -1,53 +1,47 @@
 <?php
 
+/**
+ * SWP_Ooption_Input: The class used to create input options.
+ *
+ * This class is used to create each input option needed on the options page.
+ *
+ * @since  2.4.0   | Created | 02 MAR 2017
+ * @access public
+ *
+ */
 class SWP_Option_Input extends SWP_Option {
-    public $type;
-    public $size;
-    public $content;
-    public $default;
 
+
+	/**
+	 * The __construct magic method.
+	 *
+	 * This method is used to instantiate the class. However, right now, it is left
+	 * empty as the majority of this class simply relies on properties and property
+	 * setters, and the render_html methods of each child class.
+	 *
+	 * @param none
+	 * @return none
+	 *
+	 */
     public function __construct() {
-        $this->name = "string";
-        $this->choices = array();
-        // $this->toggle =
+
     }
 
 
+	/**
+	 * Render the HTML
+	 *
+	 * This is the method that will render the HTML to the options page based on what
+	 * the properties of this object have been set to.
+	 *
+	 * @since 2.4.0 | 02 MAR 2018 | Created
+	 * @param none
+	 * @return string The rendered HTML of this option.
+	 * @TODO: Make this method render soem HTML.
+	 * 
+	 */
     public function render_HTML() {
-        //* Intentionally left blank.
-        //* Each child class should override this method.
+
     }
 
 }
-
-
-class SWP_Option_Select extends SWP_Option {
-    public function __construct( ) {
-
-    }
-
-    public function set_choices( $content )  {
-
-        if ( !is_array( $content ) ) {
-            return false;
-        }
-
-        $this->content = $content;
-
-        return $this;
-    }
-
-
-}
-/*
-$select = new SWP_Select();
-
-$content = array(
-				'top' => __( 'Top of the Page' ,'social-warfare' ),
-				'bottom' => __( 'Bottom of the Page' ,'social-warfare' ),
-				'left' => __( 'On the left side of the page' ,'social-warfare' ),
-				'right' => __('On the right side of the page', 'social-warfare'),
-                );
-
-$select->set_size('two-fourths')->set_content( $content )->default( 'bottom' );
-*/
