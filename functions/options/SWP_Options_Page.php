@@ -18,6 +18,12 @@
  */
 class SWP_Options_Page {
 
+	/**
+	 * SWP_Abstact Trait: Usuful methods able to be used by classes throughout the plugin.
+	 *
+	 */
+	use SWP_Options_Abstract;
+
 
 	/**
 	 * The Options Page Tabs
@@ -93,15 +99,13 @@ class SWP_Options_Page {
 		 *
 		 */
  		$_tabs->advanced = new SWP_Options_Page_Tab();
- 		$_tabs->advanced->set_priority( 5 )->set_name( 'Advanced' );
+ 		$_tabs->advanced->set_priority( 40 )->set_name( 'Advanced' );
 		$_sections = $_tabs->advanced->sections;
 
 
 		// TODO: This needs moved to a different tab and section.
 		// $_options->frame_buster = new SWP_Option_Checkbox();
 		// $_options->frame_buster->set_name( __( 'Frame Buster', 'social-warfare' ) )->set_priority(10)->set_size('two-thirds-advanced')->set_default(true);
-
-		$this->sort_by_priority();
 
 	}
 
