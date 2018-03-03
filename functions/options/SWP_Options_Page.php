@@ -56,11 +56,11 @@ class SWP_Options_Page {
 
 		// Display share counts on each button?
 		$_options->network_count = new SWP_Option_Checkbox();
-		$_options->network_count->set_name( __( 'Button Counts', 'social-warfare' ) )->set_priority(10)->set_size('two-thirds')->set_default(true);
+		$_options->network_count->set_name( __( 'Button Counts', 'social-warfare' ) )->set_priority(10);
 
 		// Display the total share count?
 		$_options->total_count = new SWP_Option_Checkbox();
-		$_options->total_count->set_name( __( 'Total Counts ' , 'social-warfare') )->set_priority(20)->set_size('two-thirds')->set_default(true);
+		$_options->total_count->set_name( __( 'Total Counts ' , 'social-warfare') )->set_priority(20);
 
 
 		/**
