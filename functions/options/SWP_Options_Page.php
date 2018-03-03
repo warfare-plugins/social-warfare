@@ -49,7 +49,7 @@ class SWP_Options_Page {
 	    $_sections->share_counts
 			->set_priority( 20 )
 			->set_name( 'Share Counts' )
-			->set_link( 'https://warfareplugins.com/relavent-knowledge-base' )
+			->set_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' )
 			->set_description( __( 'Use the toggles below to determine how to display your social proof.' , 'social-warfare' ) );
 		$_options = $_sections->share_counts->options;
 

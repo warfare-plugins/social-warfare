@@ -11,7 +11,7 @@ class SWP_Options_Page_Section {
 
 	public $name;
 	public $description;
-	public $information_link;
+	public $link;
 	public $priority;
 	public $options;
 
