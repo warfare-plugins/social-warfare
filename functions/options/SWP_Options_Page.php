@@ -67,6 +67,11 @@ class SWP_Options_Page {
 		 * basic "styles" features of the plugin.
 		 *
 		 */
+		$this->tabs->advanced = new SWP_Options_Page_Tab();
+		$this->tabs->advanced->set_priority( 40 );
+		$this->tabs->advanced->set_name( 'Advanced' );
+
+
 		$this->tabs->styles = new SWP_Options_Page_Tab();
 		$this->tabs->styles->set_priority( 20 );
 		$this->tabs->styles->set_name( 'Styles' );
@@ -79,9 +84,9 @@ class SWP_Options_Page {
 		 * basic "social identity" features of the plugin.
 		 *
 		 */
-		$this->tabs->styles = new SWP_Options_Page_Tab();
-		$this->tabs->styles->set_priority( 30 );
-		$this->tabs->styles->set_name( 'Social Identity' );
+		$this->tabs->social_identity = new SWP_Options_Page_Tab();
+		$this->tabs->social_identity->set_priority( 30 );
+		$this->tabs->social_identity->set_name( 'Social Identity' );
 
 
 		/**
@@ -91,13 +96,23 @@ class SWP_Options_Page {
 		 * basic "advanced" features of the plugin.
 		 *
 		 */
-		$this->tabs->styles = new SWP_Options_Page_Tab();
-		$this->tabs->styles->set_priority( 40 );
-		$this->tabs->styles->set_name( 'Advanced' );
 
 		// TODO: This needs moved to a different tab and section.
 		// $_options->frame_buster = new SWP_Option_Checkbox();
 		// $_options->frame_buster->set_name( __( 'Frame Buster', 'social-warfare' ) )->set_priority(10)->set_size('two-thirds-advanced')->set_default(true);
 
+		$this->sort_by_priority();
+
 	}
+
+	public function sort_by_priority() {
+
+		usort( $this->tabs , array( $this , 'compare' ) );
+
+	}
+
+	public function compare($a, $b) {
+    	return strcmp($a->priority, $b->priority);
+	}
+
 }
