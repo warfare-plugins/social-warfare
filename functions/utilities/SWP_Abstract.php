@@ -27,7 +27,8 @@ trait SWP_Abstract {
 	}
 
 	/**
-	 * A method used within sorting functions to compare two integers.
+	 * A method used within sorting functions to compare two object properties
+	 * based on their "priority" property evaluated and compared as an integer.
 	 *
 	 * @since  2.4.0 | 02 MAR 2018 | Created
 	 * @param  int $a The first integer being compared.
@@ -43,7 +44,7 @@ trait SWP_Abstract {
 	/**
 	 * A method to replace strcmp which compares integers instead of strings.
 	 *
-	 * @since  2.4.0 | 2 MAR 2018 | Created 
+	 * @since  2.4.0 | 2 MAR 2018 | Created
 	 * @param  int $a The first integer being compared.
 	 * @param  int $b The second integer being compared.
 	 * @return int 1, 0, or -1
