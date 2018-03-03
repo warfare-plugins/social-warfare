@@ -52,7 +52,6 @@ class Social_Warfare {
 	 *
 	 */
 	private function instantiate_classes() {
-        global $SWP_Options_Page;
 
 		/**
 		 * The Options Page Class
@@ -60,8 +59,8 @@ class Social_Warfare {
 		 * Instantiates the class that will load the plugin options page.
 		 * TODO: Make this object a global.
 		 */
+		global $SWP_Options_Page;
 		$SWP_Options_Page = new SWP_Options_Page();
-		var_dump($SWP_Options_Page);
 
 
 		/**
