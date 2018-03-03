@@ -262,6 +262,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Checkbox.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Input.php';
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Select.php';
 
 	}
 
