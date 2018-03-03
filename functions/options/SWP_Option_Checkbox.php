@@ -9,7 +9,7 @@ class SWP_Option_Checkbox extends SWP_Option {
 		$this->size = 'two-thirds';
 	}
 
-	public function output_html() {
+	public function render_html() {
 		// Stuff goes here
 	}
 
