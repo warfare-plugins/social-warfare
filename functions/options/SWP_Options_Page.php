@@ -12,7 +12,7 @@
  * options page. This is simply used to create a global object containing values
  * that both core and all addons can then add to and manipulate as needed.
  *
- * @since  2.4.0   | Created | 02 MAR 2017
+ * @since  2.4.0   | 02 MAR 2018 | Created
  * @access public
  *
  */
@@ -29,30 +29,32 @@ class SWP_Options_Page {
 
 	public function __construct() {
 
+		$this->tabs = new stdClass();
+		$_tabs = $this->tabs;
+
+
 		/**
-		 * Create the Display Tab.
+		 * NEW TAB: Display
 		 *
 		 * This tab will contain all of the sections and options needed to control the
 		 * basic "display" features of the plugin.
 		 *
 		 */
-        $this->tabs = new stdClass();
-		$this->tabs->display = new SWP_Options_Page_Tab();
-		$this->tabs->display->set_priority( 10 );
-		$this->tabs->display->set_name( 'Display' );
+		$_tabs->display = new SWP_Options_Page_Tab();
+		$_tabs->display->set_priority( 10 )->set_name( 'Display' );
+		$_sections = $_tabs->display->sections;
 
 		/**
 		 * Create the Share Counts section of the display tab.
 		 *
 		 */
-		$this->tabs->display->sections->share_counts = new SWP_Options_Page_Section();
-	    $this->tabs->display->sections->share_counts->set_priority( 20 );
-		$this->tabs->display->sections->share_counts->set_title( 'Share Counts' , 'http://warfareplugins.com/the-knowledge-base-article-for-this-section-of-options' );
-		$this->tabs->display->sections->share_counts->set_description( __( 'Use the toggles below to determine how to display your social proof.' , 'social-warfare' ) );
-		$_options = $this->tabs->display->sections->share_counts->options;
-
-	   $this->tabs->display->sections->test_section = new SWP_Options_Page_Section();
-	   $this->tabs->display->sections->test_section->set_priority( 30 );
+		$_sections->share_counts = new SWP_Options_Page_Section();
+	    $_sections->share_counts
+			->set_priority( 20 )
+			->set_name( 'Share Counts' )
+			->set_link( 'https://warfareplugins.com/relavent-knowledge-base' )
+			->set_description( __( 'Use the toggles below to determine how to display your social proof.' , 'social-warfare' ) );
+		$_options = $_sections->share_counts->options;
 
 		// Display share counts on each button?
 		$_options->network_count = new SWP_Option_Checkbox();
@@ -70,10 +72,9 @@ class SWP_Options_Page {
 		 * basic "styles" features of the plugin.
 		 *
 		 */
- 		$this->tabs->styles = new SWP_Options_Page_Tab();
- 		$this->tabs->styles->set_priority( 20 );
- 		$this->tabs->styles->set_name( 'Styles' );
-
+ 		$_tabs->styles = new SWP_Options_Page_Tab();
+ 		$_tabs->styles->set_priority( 20 )->set_name( 'Styles' );
+		$_sections = $_tabs->styles->sections;
 
 		/**
 		 * Create the Social Identity Tab.
@@ -82,9 +83,9 @@ class SWP_Options_Page {
 		 * basic "social identity" features of the plugin.
 		 *
 		 */
-		$this->tabs->social_identity = new SWP_Options_Page_Tab();
-		$this->tabs->social_identity->set_priority( 30 );
-		$this->tabs->social_identity->set_name( 'Social Identity' );
+		$_tabs->social_identity = new SWP_Options_Page_Tab();
+		$_tabs->social_identity->set_priority( 30 )->set_name( 'Social Identity' );
+		$_sections = $_tabs->social_identity->sections;
 
 
 		/**
@@ -94,9 +95,10 @@ class SWP_Options_Page {
 		 * basic "advanced" features of the plugin.
 		 *
 		 */
- 		$this->tabs->advanced = new SWP_Options_Page_Tab();
- 		$this->tabs->advanced->set_priority( 40 );
- 		$this->tabs->advanced->set_name( 'Advanced' );
+ 		$_tabs->advanced = new SWP_Options_Page_Tab();
+ 		$_tabs->advanced->set_priority( 40 )->set_name( 'Advanced' );
+		$_sections = $_tabs->advanced->sections;
+
 
 		// TODO: This needs moved to a different tab and section.
 		// $_options->frame_buster = new SWP_Option_Checkbox();
