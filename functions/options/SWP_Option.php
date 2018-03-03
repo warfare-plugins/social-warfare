@@ -19,10 +19,10 @@ class SWP_Option {
 
 
 	/**
-	 * SWP_Abstact Trait: Usuful methods able to be used by classes throughout the plugin.
+	 * SWP_Options_Abstact Trait: Usuful methods able to be used by classes throughout the plugin.
 	 *
 	 */
-	use SWP_Abstract;
+	use SWP_Options_Abstract;
 
 
 	/**
@@ -105,40 +105,6 @@ class SWP_Option {
 
 	}
 
-
-	/**
-	 * Set's the name of this option. The name is what the plugin user will see as the label.
-	 *
-	 * @since  2.4.0 | 02 MAR 2018 | Created
-	 * @param string The name of this option
-	 * @return object $this Allows for method chaining
-	 *
-	 */
-	public function set_name( $name ) {
-        if ( !is_string( $name ) ) {
-            $this->throw(__CLASS__ . " method set_name() requires a string. {$name} is not acceptable." );
-        }
-
-        $this->name = $name;
-
-		return $this;
-	}
-
-
-	/**
-	 * Set the priority to determine where this option appears in relation to other
-	 * options in the same section.
-	 *
-	 * @since  2.4.0 | 02 MAR 2018 | Created
-	 * @param integer $priority The priority of this option.
-	 * @return object $this Allows for method chaining.
-	 * @TODO: Sanitize for integers only.
-	 *
-	 */
-	public function set_priority( $priority ) {
-		$this->priority = $priority;
-		return $this;
-	}
 
 	/**
 	 * Useful for adding new available choices to a dropdown item that already exists. For example, if Pro
