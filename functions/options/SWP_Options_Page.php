@@ -1,25 +1,39 @@
 <?php
 
+/**
+ * SWP_Ooptions_Page: Manages the values used to generate the options page.
+ *
+ * This class is used to create and control the fields of input on the Social
+ * Warfare options page. It will will by populated with SWP_Options_Page_Tab
+ * objects, which in turn will be populated with SWP_Options_Page_Section objects,
+ * which in turn will be populated with SWP_Option objects.
+ *
+ * SWP_Options_Page_HTML will then register and output the HTML for the actual
+ * options page. This is simply used to create a global object containing values
+ * that both core and all addons can then add to and manipulate as needed.
+ *
+ * @since  2.4.0   | Created | 02 MAR 2017
+ * @access public
+ *
+ */
 class SWP_Options_Page {
 
 
 	/**
 	 * The Options Page Tabs
 	 *
-	 * Docblock each class property like this. Include a title, and then
-	 * a one or two sentence minimum description.
+	 * This property will contain all of the tabs as tab objects.
 	 *
 	 */
 	public $tabs;
 
 	public function __construct() {
 
-		// Docblock each tab and each section.
-
 		/**
 		 * Create the Display Tab.
 		 *
-		 * The key in this example will be "display", but the pretty name will be "Display".
+		 * This tab will contain all of the sections and options needed to control the
+		 * basic "display" features of the plugin.
 		 *
 		 */
         $this->tabs = new stdClass();
@@ -36,58 +50,20 @@ class SWP_Options_Page {
 		$this->tabs->display->sections->share_counts = new SWP_Options_Page_Section();
 	    $this->tabs->display->sections->share_counts->set_priority( 1 );
 		$this->tabs->display->sections->share_counts->set_title( 'Share Counts' , 'http://warfareplugins.com/the-knowledge-base-article-for-this-section-of-options' );
-		$this->tabs->display->sections->share_counts->set_description( 'This is the description' );
-
+		$this->tabs->display->sections->share_counts->set_description( __( 'Use the toggles below to determine how to display your social proof.' , 'social-warfare' ) );
 		$_options = $this->tabs->display->sections->share_counts->options;
 
+		// Display share counts on each button?
 		$_options->network_count = new SWP_Option_Checkbox();
-		$_options->network_count->set_name( 'Button Counts' )->set_priority(10)->set_size('two-thirds')->set_default(true)->set_premium('pro');
+		$_options->network_count->set_name( __( 'Button Counts', 'social-warfare' ) )->set_priority(10)->set_size('two-thirds')->set_default(true);
 
-        $_options->frame_buster = new SWP_Option_Checkbox();
-        $_options->frame_buster->set_name( 'Frame Buster' )->set_priority(10)->set_size('two-thirds-advanced')->set_default(true)->set_divider(true);
+		// Display the total share count?
+		$_options->total_count = new SWP_Option_Checkbox();
+		$_options->total_count->set_name( __( 'Total Counts ' , 'social-warfare') )->set_priority(20)->set_size('two-thirds')->set_default(true);
 
-        $_options->full_content = new SWP_Option_Checkbox();
-        $_options->full_content->set_name( 'Full Content?' )->set_default( false )->set_premium( 'pro' );
+		// TODO: This needs moved to a different tab and section.
+		// $_options->frame_buster = new SWP_Option_Checkbox();
+		// $_options->frame_buster->set_name( __( 'Frame Buster', 'social-warfare' ) )->set_priority(10)->set_size('two-thirds-advanced')->set_default(true);
 
-        $_options->force_new_shares = new SWP_Option_Checkbox();
-        $_options->force_new_shares->set_name( 'Force New Shares? ')->set_default( false )->set_premium( 'pro' )->set_size( 'two-thirds ');
-        //
-        // 'sniplyBuster' => array(
-        //     'type'			=> 'checkbox',
-        //     'title' 		=> __( 'Frame Buster' , 'social-warfare' ),
-        //     'description' 	=> __( 'If you want to stop content pirates from framing your content, turn this on.' , 'social-warfare' ),
-        //     'size'			=> 'two-thirds-advanced',
-        //     'default'		=> true,
-        //     'divider'		=> true
-        // ),
-        //
-        // 'full_content'		=> array(
-        //     'type'				=> 'checkbox',
-        //     'size'				=> 'two-thirds',
-        //     'content'				=> __( 'Full Content?' , 'social-warfare' ),
-        //     'default'			=> false,
-        //     'premium'			=> false,
-        //     'divider'			=> true
-        // ),
-        //
-        // 'force_new_shares'		=> array(
-        //     'type'				=> 'checkbox',
-        //     'size'				=> 'two-thirds',
-        //     'content'				=> __( 'Force New Shares?' , 'social-warfare' ),
-        //     'default'			=> false,
-        //     'premium'			=> false
-        // )
-		/*
-		$this->tabs->display->sections->share_counts->options->totals_for_each_button = new SWP_Options_Page_Option(
-			array(
-				'type'		=> 'checkbox',
-				'size'		=> 'two-thirds',
-				'content'	=> __( 'Button Counts' ,'social-warfare' ),
-				'default'	=> true,
-				'premium'	=> false,
-				'priority'  => 1
-			)
-		);
-		*/
 	}
 }
