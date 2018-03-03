@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Options_Input extends SWP_Option {
+class SWP_Option_Input extends SWP_Option {
     public $type;
     public $size;
     public $content;
@@ -18,29 +18,15 @@ class SWP_Options_Input extends SWP_Option {
         //* Each child class should override this method.
     }
 
-    public function set_size( $size ) {
-        if ( !is_string($size) || !strpos("-", $size) ) {
-            return false;
-        }
-
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function set_default( $default ) {
-        $this->default = $defaults;
-    }
-
 }
 
 
-class SWP_Options_Select extends SWP_Options_Input {
+class SWP_Option_Select extends SWP_Option {
     public function __construct( ) {
 
     }
 
-    public function set_content( $content )  {
+    public function set_choices( $content )  {
 
         if ( !is_array( $content ) ) {
             return false;

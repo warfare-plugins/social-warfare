@@ -61,7 +61,6 @@ class Social_Warfare {
 		 * TODO: Make this object a global.
 		 */
 		$SWP_Options_Page = new SWP_Options_Page();
-		var_dump($SWP_Options_Page);
 
 
 		/**
