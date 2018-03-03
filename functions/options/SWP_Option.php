@@ -19,7 +19,7 @@ class SWP_Option {
 
 
 	/**
-	 * SWP_Abstact: Usuful functions able to be used by classes throughout the plugin.
+	 * SWP_Abstact Trait: Usuful methods able to be used by classes throughout the plugin.
 	 *
 	 */
 	use SWP_Abstract;
@@ -203,7 +203,7 @@ class SWP_Option {
 	 * @since 2.4.0 | 02 MAR 2018 | Created
 	 * @param string The size of the option on the page (e.g. 'two-thirds').
 	 * @return object $this Allows for method chaining.
-	 * 
+	 *
 	 */
 	public function set_size( $size ) {
 		$this->size = $size;
