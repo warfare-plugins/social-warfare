@@ -93,7 +93,7 @@ class SWP_Options_Page {
 		 *
 		 */
  		$_tabs->advanced = new SWP_Options_Page_Tab();
- 		$_tabs->advanced->set_priority( 40 )->set_name( 'Advanced' );
+ 		$_tabs->advanced->set_priority( 5 )->set_name( 'Advanced' );
 		$_sections = $_tabs->advanced->sections;
 
 
