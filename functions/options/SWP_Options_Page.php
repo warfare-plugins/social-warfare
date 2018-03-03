@@ -34,7 +34,7 @@ class SWP_Options_Page {
 
 
 		/**
-		 * NEW TAB: Display
+		 * New Tab: Display
 		 *
 		 * This tab will contain all of the sections and options needed to control the
 		 * basic "display" features of the plugin.
@@ -44,10 +44,7 @@ class SWP_Options_Page {
 		$_tabs->display->set_priority( 10 )->set_name( 'Display' );
 		$_sections = $_tabs->display->sections;
 
-		/**
-		 * Create the Share Counts section of the display tab.
-		 *
-		 */
+		// New Section: Share Counts
 		$_sections->share_counts = new SWP_Options_Page_Section();
 	    $_sections->share_counts
 			->set_priority( 20 )
