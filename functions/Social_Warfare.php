@@ -230,7 +230,6 @@ class Social_Warfare {
 		// Classes used for each social network. (These will be migrated up from below after being refactored).
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Abstract.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
 		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Localization.php';
@@ -256,6 +255,7 @@ class Social_Warfare {
 		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
 
 		// Options: Classes used to generate and organize the plugin's options.
+		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Abstract.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Tab.php';
 		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Section.php';
