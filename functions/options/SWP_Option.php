@@ -179,6 +179,8 @@ class SWP_Option {
 	 *
 	 * This will then set the premium property to true and place the registration key into the premium_addon property.
 	 *
+	 * This method does not need to be called unless it is a premium option.
+	 *
 	 * @since 2.4.0 | 02 MAR 2018 | Created
 	 * @param string String corresponding to the registration key of premium plugin if true.
 	 * @return $this Return the object to allow method chaining.
