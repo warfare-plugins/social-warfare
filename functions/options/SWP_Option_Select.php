@@ -76,10 +76,14 @@ class SWP_Option_Select extends SWP_Option {
 	 * @TODO: Sanitize the input with the throw() method.
 	 * @TODO: Make this function actually do something (i.e. make it merge these choices
 	 * 		  into the existing array of choices.)
-	 * 		  
+	 *
 	 */
 	public function add_choices( $choices ) {
 
+	}
+
+	render_html() {
+		// Do stuff here 
 	}
 
 
