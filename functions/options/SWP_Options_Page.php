@@ -38,17 +38,15 @@ class SWP_Options_Page {
 		 */
         $this->tabs = new stdClass();
 		$this->tabs->display = new SWP_Options_Page_Tab();
-		$this->tabs->display->set_priority( 1 );
+		$this->tabs->display->set_priority( 10 );
 		$this->tabs->display->set_name( 'Display' );
 
 		/**
 		 * Create the Share Counts section of the display tab.
 		 *
-		 * This section of options allows users to control the share count settings.
-		 *
 		 */
 		$this->tabs->display->sections->share_counts = new SWP_Options_Page_Section();
-	    $this->tabs->display->sections->share_counts->set_priority( 1 );
+	    $this->tabs->display->sections->share_counts->set_priority( 20 );
 		$this->tabs->display->sections->share_counts->set_title( 'Share Counts' , 'http://warfareplugins.com/the-knowledge-base-article-for-this-section-of-options' );
 		$this->tabs->display->sections->share_counts->set_description( __( 'Use the toggles below to determine how to display your social proof.' , 'social-warfare' ) );
 		$_options = $this->tabs->display->sections->share_counts->options;
@@ -60,6 +58,42 @@ class SWP_Options_Page {
 		// Display the total share count?
 		$_options->total_count = new SWP_Option_Checkbox();
 		$_options->total_count->set_name( __( 'Total Counts ' , 'social-warfare') )->set_priority(20)->set_size('two-thirds')->set_default(true);
+
+
+		/**
+		 * Create the Styles Tab.
+		 *
+		 * This tab will contain all of the sections and options needed to control the
+		 * basic "styles" features of the plugin.
+		 *
+		 */
+		$this->tabs->styles = new SWP_Options_Page_Tab();
+		$this->tabs->styles->set_priority( 20 );
+		$this->tabs->styles->set_name( 'Styles' );
+
+
+		/**
+		 * Create the Social Identity Tab.
+		 *
+		 * This tab will contain all of the sections and options needed to control the
+		 * basic "social identity" features of the plugin.
+		 *
+		 */
+		$this->tabs->styles = new SWP_Options_Page_Tab();
+		$this->tabs->styles->set_priority( 30 );
+		$this->tabs->styles->set_name( 'Social Identity' );
+
+
+		/**
+		 * Create the Advanced Tab.
+		 *
+		 * This tab will contain all of the sections and options needed to control the
+		 * basic "advanced" features of the plugin.
+		 *
+		 */
+		$this->tabs->styles = new SWP_Options_Page_Tab();
+		$this->tabs->styles->set_priority( 40 );
+		$this->tabs->styles->set_name( 'Advanced' );
 
 		// TODO: This needs moved to a different tab and section.
 		// $_options->frame_buster = new SWP_Option_Checkbox();
