@@ -1,28 +1,33 @@
 <?php
-class SWP_Options_Page_Tab {
+class SWP_Options_Page_Tab extends SWP_Abstract {
 
 	// The name of the tab.
 	public $name;
 	public $priority;
 	public $sections;
 
-	public function __construct() {
-		$this->sections = new stdClass();
+	public function __construct( $name ) {
+		$this->sections = array();
 
+        $this->set_name( $name );
 	}
 
-	public function set_name( $name ) {
-		$this->name = $name;
-	}
+    public function add_section( $section ) {
+        $this->sections_push( $section );
 
-    public function set_priority( $priority ) {
-        if ( ! intval( $priority ) ) {
-            return false;
+        return $this;
+    }
+
+    public function add_sections( $sections ) {
+        if ( !is_array( $sections ) || get_class( $sections[0] ) !== 'SWP_Options_Section' ) {
+            $this->throw("Requres an array of SWP_Options_Section objects.");
         }
 
-        $this->priority = $priority;
+        foreach ( $sections as $section ) {
+            $this->add_section( $section );
+        }
 
-        return $priority;
+        return $this;
     }
 
 	public function sort_by_priority() {
