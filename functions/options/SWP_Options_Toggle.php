@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Option_Checkbox extends SWP_Options_Page_Option {
+class SWP_Options_Toggle extends SWP_Options_Input {
 
 	public function __construct() {
 		parent::__construct();
