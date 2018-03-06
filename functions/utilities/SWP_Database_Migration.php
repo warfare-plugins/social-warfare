@@ -36,8 +36,55 @@ class SWP_Database_Migration {
         $options = get_option( 'socialWarfareOptions', array() );
 
         $map = array(
-            'sniplyBuster' => 'frame_buster',
+            //* Options names
+            'totesEach'     => 'network_shares',
+            'visualTheme'   => 'button_shape',
+            'buttonSize'    => 'button_size',
+            'dColorSet'     => 'default_colors',
+            'oColorSet'     => 'hover_colors',
+            'iColorSet'     => 'single_colors',
+            'swDecimals'    => 'decimals',
+            'swp_decimal_separator' => 'decimal_separator',
+            'swTotesFormat' => 'totals_alignment',
+            'float'         => 'floating_panel',
+            'floatOption'    => 'float_position',
+            'swp_float_scr_sz'  => 'float_screen_width',
+            'sideReveal'    => 'transition',
+            'floatStyle'    => 'float_button_shape',
+            'floatStyleSource'  => 'float_style_source',
+            'sideDColorSet' => 'float_default_colors',
+            'sideOColorSet' => 'float_hover_colors',
+            'sideIColorSet' => 'float_single_colors',
+            'twitterID'     => 'twitter_id',
+            'sniplyBuster'  => 'frame_buster',
+            'linkShortening'=> 'bitly_authentication',
+            'google_analytics' => 'google_analytics',
+            'analyticsMedium'   => 'analytics_medium',
+            'analyticsCampaign' => 'analytics_campaign',
+            'advanced_pinterest_image' => 'pin_browser_extension'
+            'advanced_pinterest_image_location' => 'pinterest_image_location',
+            'advanced_pinterest_fallback'   => 'pinterest_fallback',
+            'recovery_custom_format'    => 'recovery_permalink',
 
+
+
+
+
+            //* Choices names
+            'flatFresh'     => 'flat_fresh',
+            'threeDee'      => 'three_dee',
+            'fullColor'     => 'full_color',
+            'lightGray'     => 'light_gray',
+            'mediumGray'    => 'medium_gray',
+            'darkGray'      => 'dark_grey',
+            'lgOutlines'    => 'light_grey_outlines',
+            'mdOutlines'    => 'medium_grey_outlines',
+            'dgOutlines'    => 'dark_grey_outlines',
+            'colorOutlines' => 'color_outlines',
+            'customColor'   => 'custom_color',
+            'ccOutlines'    => 'custom_color_outlines',
+            'totesAlt'      => 'totals_right',
+            'totesAltLeft'  => 'totals_left',
         );
 
         $migrations = array();
@@ -46,17 +93,17 @@ class SWP_Database_Migration {
         //* whether or not it was camelCase.
         foreach( $options as $camel => $value ) {
 
-            //* We specified an update to the key.
             if ( array_key_exists( $camel, $map) ) {
+                //* We specified an update to the key.
                 $snake = $map[$camel];
                 $migrations[$snake] = $value;
 
-            //* The previous key was fine, keep it.
             } else {
+                //* The previous key was fine, keep it.
                 $migrations[$camel] = $value;
             }
         }
 
-        update_option( 'social_warfare_settings', $migrations);
+        update_option( 'social_warfare_settings', $migrations );
     }
 }
