@@ -1,11 +1,22 @@
 <?php
 
 class SWP_Options_Page_Section extends SWP_Abstract {
-
-	public $name;
+    /**
+     * The description printed on the Settings page under the title.
+     * @var string $description
+     */
 	public $description;
-	public $information_link;
-	public $priority;
+
+    /**
+     * The KnowledgeBase link printed on the Settings page near the title.
+     * @var string $link
+     */
+	public $link;
+
+    /**
+     * The input elements reflecting configurable options to be set by the uesr.
+     * @var array Array of SWP_Option objects.
+     */
 	public $options;
 
 	public function __construct( $name ) {
@@ -21,8 +32,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      * @return SWP_Options_Page_Section $this The updated object.
      */
     public function set_information_link( $link ) {
-        if ( !is_string( $link ) || strpos( 'http', $link) ) {
-            $this->throw("\$link must be a valid URL.");
+        if ( !is_string( $link ) || strpos( 'http', $link) === false ) {
+            $this->throw( $link . ' must be a valid URL.' );
         }
 
         return $this;
@@ -37,7 +48,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      */
     public function set_description( $description ) {
         if ( !is_string( $description ) ) {
-            $this->throw( "Requires a string." );
+            $this->throw( 'Please pass the description as a string.' );
         }
 
         $this->description = $description;
@@ -52,7 +63,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      *
      */
     public function add_option( $option ) {
-        $types = ['Checkbox', 'Select', 'Input', 'Textarea'];
+        $types = ['SWP_Option_Toggle', 'SWP_Option_Select', 'SWP_Option_Text', 'SWP_Option_Textarea'];
+
         $type = get_class( $option );
 
         if ( !in_array( $type, $types ) ) {
@@ -82,22 +94,10 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $this;
     }
 
-    public function add_divider() {
-        //* Every section will add a divider below, except for the last section.
-    }
-
-
-	function sort_by_priority() {
-
-		/**
-		 * Take the $this->options array and sort it according to the priority attribute of each option.
-		 * This will allow us to add options via the addons and place them where we want them by simply
-		 * assigning a priority to it that will place it in between the two other options that are
-		 * immediately higher and lower in their priorities. Or place it at the end if it has the highest
-		 * priority.
-		 *
-		 */
-
+	public function render_html() {
+		// Render the opening div for the section.
+		// Loop through each option within this section and call their render_html() function.
+		// Render the closing div for the section including the horizontal rule/divider.
 	}
 
 }
