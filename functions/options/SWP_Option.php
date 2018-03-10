@@ -65,11 +65,15 @@ class SWP_Option {
 	 * @return object $this Allos for method chaining.
 	 *
 	 */
-	public function set_default() {
-        //* Intentionally left blank.
-        //* Each child class should override this method.
-        $this->throw( "Should not be called from the parent class." );
-	}
+     public function set_default( $value ) {
+         if ( !is_string( $value ) ||  empty( $value ) ) {
+             $this->_throw( 'Please provide a default value as a string.' );
+         }
+
+         $this->default = $value;
+
+         return $this;
+     }
 
 	/**
 	 * Some option types have multiple sizes that will determine their visual layout on the option

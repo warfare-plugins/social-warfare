@@ -70,7 +70,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 		 * Set a section to 3 and it will show up in between sections that have priorities
 		 * of 2 and 4.
 		 */
-
+    }
 
 	/**
 	 * A method to render the html for the menu  across the top of the options page.
