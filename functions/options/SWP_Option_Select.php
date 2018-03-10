@@ -66,6 +66,16 @@ class SWP_Option_Select extends SWP_Option {
         return $this;
     }
 
+    public function set_default( $value ) {
+        if ( !is_string( $value ) ||  empty( $value ) ) {
+            $this->_throw( 'Please provide a default value as a string.' );
+        }
+
+        $this->default = $value;
+
+        return $this;
+    }
+
     /**
      * Create the options for a select dropdown.
      *
@@ -124,7 +134,7 @@ class SWP_Option_Select extends SWP_Option {
  	 * @TODO: Make this method render soem HTML.
  	 *
  	 */
-     public function render_HTML() {
+     public function render_HTML( $echo = false ) {
 
      }
 

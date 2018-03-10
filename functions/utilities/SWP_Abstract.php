@@ -87,7 +87,7 @@ class SWP_Abstract {
             return $this->$property;
         }
 
-        $this->throw("Property $property does not exist in " . __CLASS__ "." );
+        $this->_throw("Property $property does not exist in " . __CLASS__ . "." );
     }
 
     /**
@@ -96,7 +96,7 @@ class SWP_Abstract {
      * @param  mixed $message The message to send as an error.
      * @return object Exception An exception with the passed in message.
      */
-    public function throw( $message ) {
+    public function _throw( $message ) {
         if ( is_string( $message ) ) {
             throw new Exception( __METHOD__ . PHP_EOL . $message );
         } else {
@@ -106,7 +106,7 @@ class SWP_Abstract {
 
     public function set_name( $name ) {
         if ( !is_string($name) ) {
-            $this->throw("Please provide a string for your object's name." );
+            $this->_throw("Please provide a string for your object's name." );
         }
 
         $this->name = __( $name, 'social-warfare' );
@@ -116,7 +116,7 @@ class SWP_Abstract {
 
     public function set_priority( $priority ) {
         if ( ! intval( $priority ) || $priority < 1) {
-            $this->throw("Requires an integer greater than 0.");
+            $this->_throw("Requires an integer greater than 0.");
         }
 
         $this->priority = $priority;
@@ -147,7 +147,7 @@ class SWP_Abstract {
             $addon_string . $addon . PHP_EOL;
         }
 		if ( !is_string( $premium_addon ) ) {
-			$this->throw( "Please provide a string that is one of the following: " . $addons );
+			$this->_throw( "Please provide a string that is one of the following: " . $addons );
 		}
 
 		$this->premium = true;

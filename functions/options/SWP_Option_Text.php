@@ -8,7 +8,7 @@
  * @since  2.4.0   | Created | 02 MAR 2017
  * @access public
  */
-class SWP_Options_Text extends SWP_Option {
+class SWP_Option_Text extends SWP_Option {
 
     public function __construct( $name ) {
         parent::__construct( $name );

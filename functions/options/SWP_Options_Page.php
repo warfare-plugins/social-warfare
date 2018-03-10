@@ -129,7 +129,6 @@ class SWP_Options_Page {
                     ->set_default( 'period' )
                     ->set_size( 'two-fourths' );
 
-
                 //* swTotesFormat => totals_format
                 $totals_alignment = new SWP_Options_Select( 'Alignment' );
                 $totals_alignment->set_choices( [
@@ -182,12 +181,12 @@ class SWP_Options_Page {
                 //* sideOColorSet => float_hover_colors
                 $float_hover_colors = clone $float_default_colors;
                 $float_hover_colors->set_name( 'float_hover_colors')
-                     ->set_priority( 80 )
+                     ->set_priority( 80 );
 
                 //* sideIColorSet => float_single_colors
                 $float_single_colors = clone $float_default_colors;
                 $float_single_colors->set_name( 'Single Button Hover' )
-                    ->set_priority( 90 )
+                    ->set_priority( 90 );
 
                 //* floatBgColor => float_background_color
                 $float_background_color = new SWP_Options_Text( 'Background Color' );
@@ -200,14 +199,12 @@ class SWP_Options_Page {
                     $float_hover_colors, $float_single_colors,
                     $float_background_color] );
 
-
         $styles->add_sections( $visual_options, $total_counts,
             $floating_panel);
 
         array_push( $this->tabs, $styles );
 
         return $this;
-
     }
 
     public function init_social_tab() {
@@ -219,7 +216,7 @@ class SWP_Options_Page {
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
             $twitter_id = new SWP_Option_Input( 'Twitter Username' );
-            $twitter_id->set_size( 'two-thirds' )
+            $twitter_id->set_size( 'two-thirds' );
 
             $pinterest_id = new SWP_Option_Input( 'Pinterest Username' );
             $pinterest_id->set_size( 'two-thirds' );
@@ -242,7 +239,6 @@ class SWP_Options_Page {
             //* TODO: integrate sw_get_post_types() into this section.
 
         $sitewide_identity->add_option( $open_graph );
-
     }
 
     public function init_advanced_tab() {
@@ -335,3 +331,4 @@ class SWP_Options_Page {
             'custom_color_outlines' =>  'Custom Color Outlines'
         ];
     }
+}
