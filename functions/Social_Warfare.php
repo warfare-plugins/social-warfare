@@ -223,49 +223,83 @@ class Social_Warfare {
 	 *
 	 */
 	private function load_classes() {
-
 		// Require WordPress' core plugin class.
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		// Classes used for each social network. (These will be migrated up from below after being refactored).
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Compatibility.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_CURL.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Localization.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Permalink.php';
-		require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
+		$utilities = [
+            'Abstract',
+            'Compatibility',
+            'CURL',
+            'Localization',
+            'Permalink',
+            'Plugin_Updater',
+        ];
+        $this->load_files( '/functions/utilities/', $utilities);
 
-		// Frontend Output: Classes used to process the output to the Frontend.
-        require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Buttons_Panel.php';
-		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Header_Output.php';
-		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Display.php';
-		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Script.php';
-		require_once SWP_PLUGIN_DIR . '/functions/frontend-output/SWP_Shortcode.php';
+        // Frontend Output: Classes used to process the output to the Frontend.
+        $frontends = [
+            'Buttons_Panel',
+            'Header_Output',
+            'Display',
+            'Script',
+            'Shortcode',
+        ];
+        $this->load_files( '/functions/frontend-output/', $frontends );
 
 		// Widgets: Classes used to register and create Social Warfare widgets.
-		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Popular_Posts_Widget.php';
-		require_once SWP_PLUGIN_DIR . '/functions/widgets/SWP_Widget.php';
+		$widgets = [
+            'Popular_Posts_Widget',
+            'Widget',
+        ];
 
-		// Admin: Classes used to power of some functionality in the admin area.
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Click_To_Tweet.php';
-	    require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Column.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Settings_Link.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_Shortcode_Generator.php';
-		require_once SWP_PLUGIN_DIR . '/functions/admin/SWP_User_Profile.php';
+        $this->load_files( '/functions/widgets/', $widgets );
+
+        // Admin: Classes used to power of some functionality in the admin area.
+        $admins = [
+            'Click_To_Tweet',
+            'Column',
+            'Settings_Link',
+            'Shortcode_Generator',
+            'User_Profile',
+        ];
+        $this->load_files( '/functions/admin/', $admins );
+
 
 		// Options: Classes used to generate and organize the plugin's options.
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Abstract.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Tab.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Page_Section.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Checkbox.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Input.php';
-		require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Option_Select.php';
+		// require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Abstract.php';
 
+        $options = [
+            'Option',
+            'Options_Page',
+            'Options_Page_Tab',
+            'Options_Page_Section',
+            'Option_Toggle',
+            'Option_Input',
+            'Option_Select',
+            'Option_Text',
+        ];
+
+        $this->load_files( '/functions/options/', $options );
 	}
 
+    /**
+     * Loads an group of related files.
+     *
+     * @param  string   $path  The relative path to the files home.
+     * @param  array    $files The name of the files (classes), no vendor prefix.
+     * @return none     The files are loaded into memory.
+     *
+     */
+    private function load_files( $path, $files ) {
+        foreach( $files as $file ) {
+            //* Add our vendor prefix to the file name.
+            $file = "SWP_" . $file;
+            require_once SWP_PLUGIN_DIR . $path . $file . '.php';
+        }
+    }
 }
 
 
