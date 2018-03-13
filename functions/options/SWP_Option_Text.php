@@ -17,7 +17,7 @@ class SWP_Option_Text extends SWP_Option {
 
     public function set_default( $default ) {
         if ( !is_string( $default )  ) {
-            $this->throw( 'Please provide a default value as a string.' );
+            $this->_throw( 'Please provide a default value as a string.' );
         }
 
         $this->default = $default;

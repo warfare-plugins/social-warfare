@@ -15,6 +15,8 @@ class SWP_Options_Page {
 
 	public function __construct() {
         $this->tabs = [];
+
+        $this->init_display_tab();
     }
 
     /**
@@ -33,51 +35,51 @@ class SWP_Options_Page {
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
 
                 //* toteseach => network_count
-        		$network_count = new SWP_Options_Toggle( 'Button Counts' );
+        		$network_count = new SWP_Option_Toggle( 'Button Counts' );
         		$network_count->set_default( true )
                     ->set_priority( 10 )
                     ->set_size('two-thirds');
 
                 //* totes => totals
-                $totals = new SWP_Options_Toggle( 'Total Counts');
+                $totals = new SWP_Option_Toggle( 'Total Counts');
                 $totals->set_default( true )
                     ->set_priority( 20 )
                     ->set_size( 'two-thirds' );
 
-            $share_counts->add_options( [$network_count, $totals, $minimum_shares] );
+            $share_counts->add_options( [$network_count, $totals] );
 
-        /* Twitter Cards   */
+            /* Twitter Cards   */
 
-        $twitter_cards = new SWP_Options_Page_Section( 'Twitter Cards' );
-        $twitter_cards->set_description( 'Activating Twitter Cards will cause the plugin to output certain meta tags in the head section of your site\'s HTML. Twitter cards are pretty much exactly like Open Graph meta tags, except that there is only one network, Twitter, that looks at them.' )
-            ->set_priority( 20 )
-            ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-twitter-cards/' );
+            $twitter_cards = new SWP_Options_Page_Section( 'Twitter Cards' );
+            $twitter_cards->set_description( 'Activating Twitter Cards will cause the plugin to output certain meta tags in the head section of your site\'s HTML. Twitter cards are pretty much exactly like Open Graph meta tags, except that there is only one network, Twitter, that looks at them.' )
+                ->set_priority( 20 )
+                ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-twitter-cards/' );
 
-                $twitter_card = new SWP_Options_Toggle( 'Show Twitter Cards' );
-                $twitter_card->set_default( true )
-                    ->set_size( 'two-thirds' );
+                    $twitter_card = new SWP_Option_Toggle( 'Show Twitter Cards' );
+                    $twitter_card->set_default( true )
+                        ->set_size( 'two-thirds' );
 
-            $twitter_cards->add_option( $twitter_card );
+                $twitter_cards->add_option( $twitter_card );
 
-        /* Position Share Buttons  */
+            /* Position Share Buttons  */
 
-        $button_position = new SWP_Option_Page_Section( 'Position Share Buttons' );
-        $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
-            ->set_priority( 30 )
-            ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
+            $button_position = new SWP_Options_Page_Section( 'Position Share Buttons' );
+            $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
+                ->set_priority( 30 )
+                ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
+
+            //* TODO: Create the mini-table for this option.
+
+            /* Yummly Display Control  */
+
+            $yummly_display = new SWP_Options_Page_Section( 'Yummy Display Control' );
+            $yummly_display->set_description( 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.' )
+                ->set_priority( 50 )
+                ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-yummly-display-control/' );
 
         //* TODO: Create the mini-table for this option.
 
-        /* Yummly Display Control  */
-
-        $yummly_display = new SWP_Options_Page_Option( 'Yummy Display Control' );
-        $yummly_display->set_description( 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.' )
-            ->set_priority( 50 )
-            ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-yummly-display-control/' );
-
-        //* TODO: Create the mini-table for this option.
-
-        $display->add_sections( [$share_counts, $twitter_cards, $button_position, $image_hover, $yummly_display] );
+        $display->add_sections( [$share_counts, $twitter_cards, $button_position, $yummly_display] );
 
         array_push( $this->tabs, $display );
 
@@ -146,7 +148,7 @@ class SWP_Options_Page {
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
 
                 //* float => floating_panel
-                $show_floating_panel = new SWP_Options_Toggle( '' );
+                $show_floating_panel = new SWP_Option_Toggle( '' );
                 $show_floating_panel->set_default( false )
                     ->set_priority( 10 );
 
@@ -264,7 +266,7 @@ class SWP_Options_Page {
              ->set_description( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.' )
              ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-full-content-vs-excerpts/' );
 
-            $full_content_toggle = new SWP_Options_Toggle( 'Full Content? ');
+            $full_content_toggle = new SWP_Option_Toggle( 'Full Content? ');
             $full_content_toggle->set_default( false )
                 ->set_size( 'two-thirds' );
 
