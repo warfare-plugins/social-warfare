@@ -13,10 +13,20 @@ class SWP_Options_Page {
 	 */
 	public $tabs;
 
+    /**
+    * Boolean indicating whether the plugin is registered or not.
+    *
+    * @var bool $swp_registration
+    */
+    public $swp_registration;
+
 	public function __construct() {
         $this->tabs = [];
 
         $this->init_display_tab();
+        $this->render_html();
+
+        $this->swp_registration = true;
     }
 
     /**
@@ -288,6 +298,11 @@ class SWP_Options_Page {
 
         $tabs = $this->create_tabs();
 
+        $this->html = $menu . $tabs;
+
+        echo $this->html;
+
+        return $this;
     }
 
     /**
@@ -307,7 +322,15 @@ class SWP_Options_Page {
         $html .= '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-light.png" />';
         $html .= '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-pro-light.png" />';
         $html .= '<ul class="sw-header-menu">';
-        $html .= $this->fill_menu( $html );
+
+        foreach( $this->tabs as $index => $tab ) {
+            $active = $index === 1 ? 'sw-active-tab' : '';
+            $html .= '<li class="' . $active . '">';
+            $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
+            $html .= '<span>' . $tab->name . '</span>';
+            $html .= '</a></li>';
+        }
+
         $html .= '</ul>';
         $html .= '</div>';
 
@@ -322,21 +345,8 @@ class SWP_Options_Page {
         $html .= '</div>';
     }
 
-    private function fill_menu( $html ) {
-
-        foreach( $this->tabs as $index => $tab ) {
-            $active = $index === 1 ? 'sw-active-tab' : '';
-            $html .= '<li class="' . $active . '">';
-            $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
-            $html .= '<span>' . $tab->name . '</span>';
-            $html .= '</a></li>';
-        }
-
-        return $html;
-    }
-
     private function create_tabs() {
-        $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->registration . '">';
+        $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
         $container .= '<form class="sw-admin-settings-form">';
         $container .= '<div class="sw-tabs-container sw-grid sw-col-700>';
 

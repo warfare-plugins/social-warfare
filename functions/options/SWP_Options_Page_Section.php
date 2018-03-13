@@ -97,10 +97,10 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
 	public function render_html() {
         //* Open the options container.
-        $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->link . '_title_wrapper" ';
 
-        $html .= $this->render_dependency();
-        $html .= $this->render_premium();
+        $html .= $this->render_dependency( $html );
+        $html .= $this->render_premium( $html );
 
         $html .= ">";
 
@@ -110,6 +110,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         $html .= '<div class="sw-premium-blocker" title="test"></div>';
         $html .= '</div>';
+
+        return $html;
 	}
 
     private function create_title() {
@@ -123,13 +125,13 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     }
 
     private function create_description() {
-        $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_subtitle_wrapper" ';
+        $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->link . '_subtitle_wrapper" ';
 
         //* QUESTION: The dependency is already being set in render_html(). Do we also need to set it here?
         // $descrption .= $this->render_dependency( $description );
         // $descrption .= $this->render_premium( $description );
 
-        $description .= '<p class="sw-subtitle">' . $option['content'] . '</p>';
+        $description .= '<p class="sw-subtitle">' . $this->description . '</p>';
         $description .= '<div class="sw-premium-blocker no-icon"></div>';
         $description .= '</div>';
     }

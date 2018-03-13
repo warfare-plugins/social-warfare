@@ -35,7 +35,6 @@ class Social_Warfare {
 		if( true === is_admin() ){
 			$this->instantiate_admin_classes();
 		}
-
 	}
 
 

@@ -94,7 +94,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
     }
 
 	/**
-	* Opens the container for this tab's contents.
+    * A method to render the html for each tab.
 	*
 	* @since  2.4.0 | 03 MAR 2018 | Created
     * @param  null
@@ -102,32 +102,13 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*
 	*/
 	public function render_html() {
-        $container .= '<div id="swp_' . $tab->name . '" class="sw-admin-tab sw-grid sw-col-940">';
+        $container = '<div id="swp_' . $this->name . '" class="sw-admin-tab sw-grid sw-col-940">';
 
         foreach( $this->sections as $index => $section ) {
             $container .= $section->render_html();
         }
 
         $container .= '</div>';
-
-
-
-	}
-
-
-	/**
-	* A method to render the html for each tab.
-	*
-	* @since  2.4.0 | 03 MAR 2018 | Created
-	* @param  null
-	* @return string The html of the content of each tab.
-	*
-	*/
-	public function render_html() {
-		// Open the tab's div container.
-		// Loop through each of this tabs sections, calling on their ->render_html() function.
-		// Close the tab's div container.
-
 	}
 
 }
