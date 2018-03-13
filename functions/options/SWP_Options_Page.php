@@ -22,11 +22,93 @@ class SWP_Options_Page {
 
 	public function __construct() {
         $this->tabs = [];
+        $this->swp_registration = true;
+        add_action( 'admin_menu', array( $this, 'swp_admin_options_page') );
 
+    }
+
+    public function init() {
         $this->init_display_tab();
         $this->render_html();
 
-        $this->swp_registration = true;
+    }
+
+    public function swp_admin_options_page() {
+        $swp_top_level_menu = true;
+        $swp_top_level_menu = apply_filters( 'swp_top_level_menu' , $swp_top_level_menu );
+
+        // Make the menu item top level
+        if ( (bool) apply_filters( 'swp_top_level_menu', true ) ) {
+
+            // Declare the menu link
+            $swp_menu = add_menu_page(
+                'Social Warfare',
+                'Social Warfare',
+                'manage_options',
+                'social-warfare',
+                array( $this, 'init'),
+                SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
+            );
+
+        // Make the menu a submenu page of the settings menu
+        } else {
+
+            // Declare the menu link
+            $swp_menu = add_submenu_page(
+                'options-general.php',
+                'Social Warfare',
+                'Social Warfare',
+                'manage_options',
+                'social-warfare',
+                array( $this, 'init')
+            );
+        }
+
+        // Hook into the CSS and Javascript Enqueue process for this specific page
+        add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'swp_admin_options_css' ) );
+        add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'swp_admin_options_js' ) );
+    }
+
+    /**
+     * Enqueue the Settings Page CSS & Javascript
+     */
+    public function swp_admin_options_css() {
+        $suffix = SWP_Script::get_suffix();
+
+        wp_enqueue_style(
+            'swp_admin_options_css',
+            SWP_PLUGIN_URL . "/css/admin-options-page{$suffix}.css",
+            array(),
+            SWP_VERSION
+        );
+    }
+
+    /**
+     * Enqueue the admin javascript
+     *
+     * @since  2.0.0
+     * @return void
+     */
+    public function swp_admin_options_js() {
+        $suffix = SWP_Script::get_suffix();
+
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script( 'jquery-effects-core' );
+        wp_enqueue_script( 'jquery-ui-core' );
+        wp_enqueue_script( 'jquery-ui-sortable' );
+        wp_enqueue_script( 'jquery-ui-tooltip' );
+        wp_enqueue_media();
+        wp_enqueue_script(
+            'swp_admin_options_js',
+            SWP_PLUGIN_URL . "/js/admin-options-page{$suffix}.js",
+            array( 'jquery' ),
+            SWP_VERSION
+        );
+
+        wp_localize_script( 'swp_admin_options_js', 'swpAdminOptionsData', array(
+            'registerNonce' => wp_create_nonce( 'swp_plugin_registration' ),
+            'optionsNonce'  => wp_create_nonce( 'swp_plugin_options_save' ),
+        ));
     }
 
     /**
