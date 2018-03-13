@@ -32,8 +32,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      * @return SWP_Options_Page_Section $this The updated object.
      */
     public function set_information_link( $link ) {
-        if ( !is_string( $link ) || strpos( 'http', $link) === false ) {
-            $this->throw( $link . ' must be a valid URL.' );
+        if ( !is_string( $link ) || strpos( $link, 'http' ) === false ) {
+            $this->_throw( $link . ' must be a valid URL.' );
         }
 
         return $this;
@@ -48,7 +48,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      */
     public function set_description( $description ) {
         if ( !is_string( $description ) ) {
-            $this->throw( 'Please pass the description as a string.' );
+            $this->_throw( 'Please pass the description as a string.' );
         }
 
         $this->description = $description;
@@ -68,7 +68,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         $type = get_class( $option );
 
         if ( !in_array( $type, $types ) ) {
-            $this->throw("Requres one of the SWP_Option child classes.");
+            $this->_throw("Requres one of the SWP_Option child classes.");
         }
 
         array_push($this->options, $option);
@@ -84,7 +84,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      */
     public function add_options( $options ) {
         if ( !is_array( $options ) ) {
-            $this->throw( "Requires an array of SWP_Option objects." );
+            $this->_throw( "Requires an array of SWP_Option objects." );
         }
 
         foreach ( $options as $option ) {

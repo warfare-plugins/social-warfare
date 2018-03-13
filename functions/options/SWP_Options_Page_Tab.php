@@ -40,9 +40,9 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	}
 
     public function add_section( $section ) {
-        if ( 'SWP_Options_Page_Section' !== get_class( $section ) ) {
-            $this->throw( 'Please provide an instance of SWP_Options_Page_Section as the paramter.' );
-        }
+        if ( 'SWP_Options_Page_Section' !== get_class( $section ) ) :
+            $this->_throw( 'Please provide an instance of SWP_Options_Page_Section as the paramter.' );
+        endif;
 
         array_push( $this->sections, $section );
 
@@ -50,11 +50,15 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
     }
 
     public function add_sections( $sections ) {
-        if ( !is_array( $sections ) || get_class( $sections[0] ) !== 'SWP_Options_Section' ) {
-            $this->throw("Requres an array of SWP_Options_Section objects.");
-        }
+        if ( !is_array( $sections ) || get_class( $sections[0] ) !== 'SWP_Options_Page_Section' ) :
+            $this->_throw( 'This method requires an array. Please use add_section to add a single instance of SWP_Options_Page_Section.' );
+        endif;
 
         foreach ( $sections as $section ) {
+            if ( 'SWP_Options_Page_Section' !== get_class( $section ) ) :
+                $this->_throw( 'This need an array of SWP_Options_Page_Section objects.' );
+            endif;
+
             $this->add_section( $section );
         }
 
@@ -62,7 +66,6 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
     }
 
 	public function sort_by_priority() {
-
 		/**
 		 * Take the $this->sections and sort them according to their priority. So a section
 		 * with a priority of 1 will show up before a section wwith a priority of 2. Again,
