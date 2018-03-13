@@ -27,7 +27,8 @@ class SWP_Options_Page {
      */
     public function init_display_tab() {
         $display = new SWP_Options_Page_Tab( "Display" );
-		$display->set_priority( 10 );
+		$display->set_priority( 10 )
+            ->set_link( 'display' );
 
     		$share_counts = new SWP_Options_Page_Section( 'Share Counts' );
     	    $share_counts->set_description( 'This is the description' )
@@ -88,7 +89,8 @@ class SWP_Options_Page {
 
     public function init_styles_tab() {
         $styles = new SWP_Options_Page_Tab( 'Styles' );
-        $styles->set_priority( 20 );
+        $styles->set_priority( 20 )
+            ->set_link( 'styles' );
 
             $visual_options = new SWP_Options_Page_Section( 'Visual Options' );
             $visual_options->set_description( 'Use the settings below to customize the look of your share buttons.' )
@@ -211,7 +213,8 @@ class SWP_Options_Page {
 
     public function init_social_tab() {
         $social_identity = new SWP_Option_Page_Tab( 'Social Identity' );
-        $social_identity->set_priority( 30 );
+        $social_identity->set_priority( 30 )
+            ->set_link( 'social_identity' );
 
         $sitewide_identity = new SWP_Option_Page_Section( 'Sitewide Identity' );
         $sitewide_identity->set_description( 'If you would like to set sitewide defaults for your social identity, add them below.' )
@@ -245,7 +248,8 @@ class SWP_Options_Page {
 
     public function init_advanced_tab() {
         $advanced = new SWP_Option_Page_Tab();
-        $advanced->set_priority( 40 );
+        $advanced->set_priority( 40 )
+            ->set_link( 'advanced' );
 
         //* linkShortening => bitly_authentication
         $bitly_authentication = new SWP_Option_Page_Section( 'Bitly Link Shortening' );
@@ -275,7 +279,75 @@ class SWP_Options_Page {
 
     public function init_registration_tab() {
         $registration = new SWP_Option_Page_Tab( 'Registration' );
-        $registration->set_priority( 50 );
+        $registration->set_priority( 50 )
+            ->set_link( 'registration' );
+    }
+
+    public function render_html() {
+        $menu = $this->create_menu();
+
+        $tabs = $this->create_tabs();
+
+    }
+
+    /**
+     * Creates the HTML for the admin top menu (Logo, tabs, and save button).
+     *
+     * @return $html The fully qualified HTML for the menu.
+     */
+
+    private function create_menu() {
+        //* Open the admin top menu wrapper.
+        $html = '<div class="sw-header-wrapper">';
+        $html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . absint( $this->swp_registration ) . '">';
+
+
+        //* Menu wrapper and tabs.
+        $html .= '<div class="sw-grid sw-col-700">';
+        $html .= '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-light.png" />';
+        $html .= '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-pro-light.png" />';
+        $html .= '<ul class="sw-header-menu">';
+        $html .= $this->fill_menu( $html );
+        $html .= '</ul>';
+        $html .= '</div>';
+
+        //* "Save Changes" button.
+        $html .= '<div class="sw-grid sw-col-220 sw-fit">';
+        $html .= '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
+        $html .= '</div>';
+        $html .= '<div class="sw-clearfix"></div>';
+
+
+        $html .= '</div>';
+        $html .= '</div>';
+    }
+
+    private function fill_menu( $html ) {
+
+        foreach( $this->tabs as $index => $tab ) {
+            $active = $index === 1 ? 'sw-active-tab' : '';
+            $html .= '<li class="' . $active . '">';
+            $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
+            $html .= '<span>' . $tab->name . '</span>';
+            $html .= '</a></li>';
+        }
+
+        return $html;
+    }
+
+    private function create_tabs() {
+        $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->registration . '">';
+        $container .= '<form class="sw-admin-settings-form">';
+        $container .= '<div class="sw-tabs-container sw-grid sw-col-700>';
+
+        foreach( $this->tabs as $index => $tab ) {
+            $html = $tab->render_html();
+            $container .= $html;
+        }
+
+        $container .= '</div>';
+        $container .= '</form>';
+        $container .= '</div>';
     }
 
     private function get_custom_post_type_array() {

@@ -23,6 +23,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 		$this->options = array();
 
         $this->set_name( $name );
+
 	}
 
     /**
@@ -95,9 +96,52 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     }
 
 	public function render_html() {
-		// Render the opening div for the section.
-		// Loop through each option within this section and call their render_html() function.
-		// Render the closing div for the section including the horizontal rule/divider.
+        //* Open the options container.
+        $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
+
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+
+        $html .= ">";
+
+        $html .= $this->create_title();
+        $html .= $this->create_description();
+        $html .= $this->render_options();
+
+        $html .= '<div class="sw-premium-blocker" title="test"></div>';
+        $html .= '</div>';
 	}
+
+    private function create_title() {
+        //* Set the support link and title.
+        $title = '<h2>';
+        $title .= '<a target="_blank" class="swp_support_link" href="'. $this->link .'" title="Click here to learn more about these options.">i</a>';
+        $title .= $this->name . '</h2>';
+        $title .= '</div>';
+
+        return $title;
+    }
+
+    private function create_description() {
+        $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_subtitle_wrapper" ';
+
+        //* QUESTION: The dependency is already being set in render_html(). Do we also need to set it here?
+        // $descrption .= $this->render_dependency( $description );
+        // $descrption .= $this->render_premium( $description );
+
+        $description .= '<p class="sw-subtitle">' . $option['content'] . '</p>';
+        $description .= '<div class="sw-premium-blocker no-icon"></div>';
+        $description .= '</div>';
+    }
+
+    private function render_options() {
+        $options = '';
+
+        foreach ( $this->options as $index => $option ) {
+            $options .= $option->render_html();
+        }
+
+        return $options;
+    }
 
 }
