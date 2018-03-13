@@ -32,7 +32,7 @@ class Social_Warfare {
 		$this->load_classes();
 		$this->instantiate_classes();
 
-		if( true === is_admin() ){
+		if( true === is_admin() ) {
 			$this->instantiate_admin_classes();
 		}
 	}
@@ -51,16 +51,7 @@ class Social_Warfare {
 	 *
 	 */
 	private function instantiate_classes() {
-
-		/**
-		 * The Options Page Class
-		 *
-		 * Instantiates the class that will load the plugin options page.
-		 * TODO: Make this object a global.
-		 */
-		global $SWP_Options_Page;
-		$SWP_Options_Page = new SWP_Options_Page();
-
+        global $SWP_Options_Page;
 
 		/**
 		 * The Localization Class
@@ -141,6 +132,13 @@ class Social_Warfare {
 		 */
 		new SWP_Widget();
 
+        /**
+         * The Options Page Class
+         *
+         * Instantiates the class that will load the plugin options page.
+         * TODO: Make this object a global.
+         */
+        $SWP_Options_Page = new SWP_Options_Page();
 	}
 
 
@@ -285,7 +283,7 @@ class Social_Warfare {
 	}
 
     /**
-     * Loads an group of related files.
+     * Loads an array of related files.
      *
      * @param  string   $path  The relative path to the files home.
      * @param  array    $files The name of the files (classes), no vendor prefix.
@@ -294,6 +292,7 @@ class Social_Warfare {
      */
     private function load_files( $path, $files ) {
         foreach( $files as $file ) {
+
             //* Add our vendor prefix to the file name.
             $file = "SWP_" . $file;
             require_once SWP_PLUGIN_DIR . $path . $file . '.php';
@@ -315,6 +314,7 @@ class Social_Warfare {
 
 
 add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
+
 function swp_initiate_plugin() {
 
 	// All of these files need refactored and then migrated into the functions above
@@ -325,8 +325,6 @@ function swp_initiate_plugin() {
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
 }
-
-
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/googlePlus.php';
@@ -344,5 +342,6 @@ require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
  */
 if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
+	// require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
+    add_action( 'admin_menu', 'Social_Warfare' );
 }
