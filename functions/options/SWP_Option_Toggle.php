@@ -36,7 +36,7 @@ class SWP_Option_Toggle extends SWP_Option {
 
         $this->html = $html;
 
-        return $this;
+        return $html;
 	}
 
     /**
@@ -79,9 +79,9 @@ class SWP_Option_Toggle extends SWP_Option {
 
         $checked = $status === 'on' ? 'checked' : '';
 
-        $html .= '<h2 class="sw-h-label">' . $this->name . '</h2>';
-        $html .= '<p clasls="sw-subtext-label">' . $this->description . '</p>';
-        $html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
+        // $html = '<h2 class="sw-h-label">' . $this->name . '</h2>';
+        // $html .= '<p clasls="sw-subtext-label">' . $this->description . '</p>';
+        $html = '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
             $html .= '<div class="sw-checkbox-on>' . __( 'ON', 'social-warfare' ) . '</div>';
             $html .= '<div class="sw-checkbox-off>' . __( 'OFF', 'social-warfare' ) . '</div>';
         $html .= '</div>';
