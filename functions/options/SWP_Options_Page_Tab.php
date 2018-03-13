@@ -14,25 +14,33 @@
  */
 class SWP_Options_Page_Tab extends SWP_Abstract {
 	/**
-	 * Sections
-	 *
-	 * This property will contain a bunch of "section" objects each pertaining to a
-	 * different section of related options. Sections, like tabs, are also sorted
-	 * by their priority property in ascending order.
-	 *
-	 * @var array A group of "option" objects.
-	 *
-	 */
+	* Sections
+	*
+	* This property will contain a bunch of "section" objects each pertaining to a
+    * different section of related options. Sections, like tabs, are also sorted
+	* by their priority property in ascending order.
+	*
+	* @var array A group of "option" objects.
+	*
+	*/
 	public $sections;
 
+    /**
+    * Links
+    * This is the link used by Javscript to switch tabs.
+    *
+    * @var string $link
+    */
+    public $link;
+
 	/**
-	 * The magic method used to instantiate this class.
-	 *
-	 * This method instantiates this class by settings the "sections" property to
-	 * an object so the the "options" objects can easily be added to it later on.
-	 *
-	 * @since  2.4.0 | 3 MAR 2018 | Created
-	 */
+	* The magic method used to instantiate this class.
+	*
+	* This method instantiates this class by settings the "sections" property to
+	* an object so the the "options" objects can easily be added to it later on.
+	*
+	* @since  2.4.0 | 3 MAR 2018 | Created
+	*/
 	public function __construct( $name ) {
 		$this->sections = array();
 
@@ -41,7 +49,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 
     public function add_section( $section ) {
         if ( 'SWP_Options_Page_Section' !== get_class( $section ) ) :
-            $this->_throw( 'Please provide an instance of SWP_Options_Page_Section as the paramter.' );
+            $this->_throw( 'Please provide an instance of SWP_Options_Page_Section as the parameter.' );
         endif;
 
         array_push( $this->sections, $section );
@@ -65,40 +73,61 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
         return $this;
     }
 
+    public function set_link( $link ) {
+        if ( !is_string( $link ) ) {
+            $this->_throw( 'Please provide a valid string prefixed with "swp_" for the tab link.' );
+        }
+
+        $this->link = $link;
+
+        return $this;
+    }
+
 	public function sort_by_priority() {
 		/**
-		 * Take the $this->sections and sort them according to their priority. So a section
-		 * with a priority of 1 will show up before a section wwith a priority of 2. Again,
-		 * this will allow addons to add sections of options right in the middle of a tab.
-		 * Set a section to 3 and it will show up in between sections that have priorities
-		 * of 2 and 4.
-		 */
+		* Take the $this->sections and sort them according to their priority. So a section
+		* with a priority of 1 will show up before a section wwith a priority of 2. Again,
+		* this will allow addons to add sections of options right in the middle of a tab.
+		* Set a section to 3 and it will show up in between sections that have priorities
+		* of 2 and 4.
+		*/
     }
 
 	/**
-	 * A method to render the html for the menu  across the top of the options page.
-	 *
-	 * @since  2.4.0 | 03 MAR 2018 | Created
-	 * @param  null
-	 * @return string The html of the menu items for each tab.
-	 *
-	 */
-	public function render_menu_html() {
+	* Opens the container for this tab's contents.
+	*
+	* @since  2.4.0 | 03 MAR 2018 | Created
+    * @param  null
+	* @return string Fully qualified HTML for this tab.
+	*
+	*/
+	public function render_html() {
+        $container .= '<div id="swp_' . $tab->name . '" class="sw-admin-tab sw-grid sw-col-940">';
+
+        foreach( $this->sections as $index => $section ) {
+            $container .= $section->render_html();
+        }
+
+        $container .= '</div>';
+
+
 
 	}
 
+
 	/**
-	 * A method to render the html for each tab.
-	 *
-	 * @since  2.4.0 | 03 MAR 2018 | Created
-	 * @param  null
-	 * @return string The html of the content of each tab.
-	 *
-	 */
+	* A method to render the html for each tab.
+	*
+	* @since  2.4.0 | 03 MAR 2018 | Created
+	* @param  null
+	* @return string The html of the content of each tab.
+	*
+	*/
 	public function render_html() {
 		// Open the tab's div container.
 		// Loop through each of this tabs sections, calling on their ->render_html() function.
 		// Close the tab's div container.
+
 	}
 
 }
