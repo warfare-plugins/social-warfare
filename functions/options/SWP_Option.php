@@ -15,7 +15,7 @@
  * @access public
  *
  */
-class SWP_Option {
+class SWP_Option extends SWP_Abstract {
     /**
      * The type of HTML input element.
      *
@@ -35,11 +35,25 @@ class SWP_Option {
     public $size;
 
     /**
+     * The key for this option in the database.
+     *
+     * @var string $key
+     */
+    public $key;
+
+    /**
      * The default value for the given input.
      *
      * @var mixed $default. See the corresponding class's set_default() method.
      */
     public $default;
+
+    /**
+     * The string of HTML which creates the element.
+     *
+     * @var string $html
+     */
+    public $html;
 
 
 	/**
@@ -75,6 +89,7 @@ class SWP_Option {
          return $this;
      }
 
+
 	/**
 	 * Some option types have multiple sizes that will determine their visual layout on the option
 	 * page. This setter allows you to declare which one you want to use.
@@ -85,21 +100,23 @@ class SWP_Option {
 	 *
 	 */
      public function set_size( $size ) {
-         $options = [ 'one-fourth', 'two-fourths', 'three-fourths', 'four-fourths' ];
-         $sizes = PHP_EOL;
+         $options = [ 'two-fourths', 'two-thirds', 'four-fourths' ];
 
-         foreach( $options as $option ) {
-             $sizes .= $option . PHP_EOL;
-         }
+         if ( !in_array( $size, $options) ) {
+            $sizes = PHP_EOL;
 
-         if ( !in_array( $size, $sizes) ) {
-             $this->throw( "Please enter a valid size. Acceptable sizes are:" . $sizes );
+             foreach( $options as $option ) {
+                 $sizes .= $option . PHP_EOL;
+             }
+
+             $this->_throw( "Please enter a valid size. Acceptable sizes are:" . $sizes );
          }
 
          $this->size = $size;
 
          return $this;
      }
+
 
     /**
      * Creates HTML based on the option's properties and user settings.
@@ -111,8 +128,9 @@ class SWP_Option {
     public function render_HTML( $echo = false ) {
         //* Intentionally left blank.
         //* Each child class should override this method.
-        $this->throw( "Should not be called from the parent class." );
+        $this->_throw( "Should not be called from the parent class." );
     }
+
 
     /**
      * Force a child option to depend on a parent option.
@@ -127,11 +145,11 @@ class SWP_Option {
      */
     public function set_dependency( $parent, $values ) {
         if ( !is_string( $parent ) ) {
-            $this->throw( 'Argument $parent needs to be a string matching the key of another option.' );
+            $this->_throw( 'Argument $parent needs to be a string matching the key of another option.' );
         }
 
         if ( !isset( $values) ) {
-            $this->throw( 'Dependency values must passed in as the second argument.' );
+            $this->_throw( 'Dependency values must passed in as the second argument.' );
         }
 
         if ( !is_array( $values ) ) {
@@ -143,5 +161,39 @@ class SWP_Option {
         $this->dependency->values = $values;
 
         return $this;
+    }
+
+
+    /**
+     * Assign the database key for this element.
+     *
+     * @param string $key The key which correlates to the input.
+     * @return SWP_Option
+     */
+    public function set_key( $key ) {
+        if ( !is_string( $key ) ) {
+            $this->_throw( 'Please provide a key to the database as a string.' );
+        }
+
+        $this->key = $key;
+
+        return $this;
+    }
+
+
+    /**
+     * Fetches the css class to match a given size given as a string.
+     *
+     * @param string $size The size of the element using SWP sizing.
+     * @return object $this Allows for method chaining.
+     */
+    protected function get_css_size() {
+        $map = [
+            'two-fourths'   => ' sw-col-460 ',
+            'two-thirds'    => ' sw-col-940 ',
+            'four-fourths'  => ' sw-col-620 ',
+        ];
+
+        return $map[$this->size];
     }
 }
