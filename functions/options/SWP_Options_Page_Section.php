@@ -23,7 +23,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 		$this->options = array();
 
         $this->set_name( $name );
-
+        $this->key = strtolower( str_replace(' ', '_', $name) );
 	}
 
     /**
@@ -95,12 +95,12 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $this;
     }
 
-	public function render_html() {
+	public function render_HTML() {
         //* Open the options container.
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->link . '_title_wrapper" ';
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
 
-        $html .= $this->render_dependency( $html );
-        $html .= $this->render_premium( $html );
+        // $html .= $this->render_dependency( $html );
+        // $html .= $this->render_premium( $html );
 
         $html .= ">";
 
@@ -108,7 +108,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         $html .= $this->create_description();
         $html .= $this->render_options();
 
-        $html .= '<div class="sw-premium-blocker" title="test"></div>';
         $html .= '</div>';
 
         return $html;
@@ -125,23 +124,25 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     }
 
     private function create_description() {
-        $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->link . '_subtitle_wrapper" ';
+        $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_subtitle_wrapper">';
 
-        //* QUESTION: The dependency is already being set in render_html(). Do we also need to set it here?
+        //* QUESTION: The dependency is already being set in render_HTML(). Do we also need to set it here?
         // $descrption .= $this->render_dependency( $description );
         // $descrption .= $this->render_premium( $description );
 
         $description .= '<p class="sw-subtitle">' . $this->description . '</p>';
-        $description .= '<div class="sw-premium-blocker no-icon"></div>';
         $description .= '</div>';
+
+        return $description;
     }
 
     private function render_options() {
         $options = '';
 
         foreach ( $this->options as $index => $option ) {
-            $options .= $option->render_html();
+            $options .= $option->render_HTML();
         }
+
 
         return $options;
     }

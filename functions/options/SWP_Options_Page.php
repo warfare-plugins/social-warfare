@@ -23,22 +23,19 @@ class SWP_Options_Page {
 	public function __construct() {
         $this->tabs = [];
         $this->swp_registration = true;
-        add_action( 'admin_menu', array( $this, 'swp_admin_options_page') );
-
+        add_action( 'admin_menu', array( $this, 'options_page') );
     }
 
     public function init() {
         $this->init_display_tab();
-        $this->render_html();
-
+        $this->render_HTML();
     }
 
-    public function swp_admin_options_page() {
-        $swp_top_level_menu = true;
-        $swp_top_level_menu = apply_filters( 'swp_top_level_menu' , $swp_top_level_menu );
+    public function options_page() {
+        $swp_top_level_menu = apply_filters( 'swp_top_level_menu' , true );
 
         // Make the menu item top level
-        if ( (bool) apply_filters( 'swp_top_level_menu', true ) ) {
+        if ( !!apply_filters( 'swp_top_level_menu', true ) ) :
 
             // Declare the menu link
             $swp_menu = add_menu_page(
@@ -51,7 +48,7 @@ class SWP_Options_Page {
             );
 
         // Make the menu a submenu page of the settings menu
-        } else {
+        else :
 
             // Declare the menu link
             $swp_menu = add_submenu_page(
@@ -62,17 +59,18 @@ class SWP_Options_Page {
                 'social-warfare',
                 array( $this, 'init')
             );
-        }
+
+        endif;
 
         // Hook into the CSS and Javascript Enqueue process for this specific page
-        add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'swp_admin_options_css' ) );
-        add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'swp_admin_options_js' ) );
+        add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
+        add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
     }
 
     /**
      * Enqueue the Settings Page CSS & Javascript
      */
-    public function swp_admin_options_css() {
+    public function admin_css() {
         $suffix = SWP_Script::get_suffix();
 
         wp_enqueue_style(
@@ -89,7 +87,7 @@ class SWP_Options_Page {
      * @since  2.0.0
      * @return void
      */
-    public function swp_admin_options_js() {
+    public function admin_js() {
         $suffix = SWP_Script::get_suffix();
 
         wp_enqueue_script( 'jquery' );
@@ -118,28 +116,28 @@ class SWP_Options_Page {
      *
      */
     public function init_display_tab() {
-        $display = new SWP_Options_Page_Tab( "Display" );
+        $display = new SWP_Options_Page_Tab( 'Display' );
 		$display->set_priority( 10 )
             ->set_link( 'display' );
 
     		$share_counts = new SWP_Options_Page_Section( 'Share Counts' );
-    	    $share_counts->set_description( 'This is the description' )
+    	    $share_counts->set_description( 'Use the toggles below to determine how to display your social proof.' )
                 ->set_priority( 10 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
 
                 //* toteseach => network_count
-        		$network_count = new SWP_Option_Toggle( 'Button Counts' );
-        		$network_count->set_default( true )
+        		$network_shares = new SWP_Option_Toggle( 'Button Counts', 'network_shares' );
+        		$network_shares->set_default( true )
                     ->set_priority( 10 )
                     ->set_size('two-thirds');
 
                 //* totes => totals
-                $totals = new SWP_Option_Toggle( 'Total Counts');
-                $totals->set_default( true )
+                $total_shares = new SWP_Option_Toggle( 'Total Counts', 'total_shares' );
+                $total_shares->set_default( true )
                     ->set_priority( 20 )
                     ->set_size( 'two-thirds' );
 
-            $share_counts->add_options( [$network_count, $totals] );
+            $share_counts->add_options( [$network_shares, $total_shares] );
 
             /* Twitter Cards   */
 
@@ -148,7 +146,7 @@ class SWP_Options_Page {
                 ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-twitter-cards/' );
 
-                    $twitter_card = new SWP_Option_Toggle( 'Show Twitter Cards' );
+                    $twitter_card = new SWP_Option_Toggle( 'Show Twitter Cards', 'twitter_cards' );
                     $twitter_card->set_default( true )
                         ->set_size( 'two-thirds' );
 
@@ -242,7 +240,7 @@ class SWP_Options_Page {
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
 
                 //* float => floating_panel
-                $show_floating_panel = new SWP_Option_Toggle( '' );
+                $show_floating_panel = new SWP_Option_Toggle( 'Floating Share Buttons', 'floating_panel' );
                 $show_floating_panel->set_default( false )
                     ->set_priority( 10 );
 
@@ -362,12 +360,12 @@ class SWP_Options_Page {
              ->set_description( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.' )
              ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-full-content-vs-excerpts/' );
 
-            $full_content_toggle = new SWP_Option_Toggle( 'Full Content? ');
+            $full_content_toggle = new SWP_Option_Toggle( 'Full Content?', 'full_content' );
             $full_content_toggle->set_default( false )
                 ->set_size( 'two-thirds' );
 
             $full_content->add_option( $full_content_toggle );
-        }
+    }
 
     public function init_registration_tab() {
         $registration = new SWP_Option_Page_Tab( 'Registration' );
@@ -375,14 +373,13 @@ class SWP_Options_Page {
             ->set_link( 'registration' );
     }
 
-    public function render_html() {
+    public function render_HTML() {
         $menu = $this->create_menu();
 
         $tabs = $this->create_tabs();
 
-        $this->html = $menu . $tabs;
-
-        echo $this->html;
+        $html = $menu . $tabs;
+        echo $html;
 
         return $this;
     }
@@ -392,7 +389,6 @@ class SWP_Options_Page {
      *
      * @return $html The fully qualified HTML for the menu.
      */
-
     private function create_menu() {
         //* Open the admin top menu wrapper.
         $html = '<div class="sw-header-wrapper">';
@@ -425,21 +421,25 @@ class SWP_Options_Page {
 
         $html .= '</div>';
         $html .= '</div>';
+
+        return $html;
     }
 
     private function create_tabs() {
         $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
         $container .= '<form class="sw-admin-settings-form">';
-        $container .= '<div class="sw-tabs-container sw-grid sw-col-700>';
+        $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
         foreach( $this->tabs as $index => $tab ) {
-            $html = $tab->render_html();
+            $html = $tab->render_HTML();
             $container .= $html;
         }
 
         $container .= '</div>';
         $container .= '</form>';
         $container .= '</div>';
+
+        return $container;
     }
 
     private function get_custom_post_type_array() {

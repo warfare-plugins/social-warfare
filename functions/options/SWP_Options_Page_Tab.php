@@ -101,14 +101,17 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	* @return string Fully qualified HTML for this tab.
 	*
 	*/
-	public function render_html() {
-        $container = '<div id="swp_' . $this->name . '" class="sw-admin-tab sw-grid sw-col-940">';
+	public function render_HTML() {
+        $container= '<div id="' . $this->name . '">' . $this->name . '</div>';
+        $container = '<div id="swp_' . strtolower( $this->name ) . '" class="sw-admin-tab sw-grid sw-col-940">';
 
         foreach( $this->sections as $index => $section ) {
-            $container .= $section->render_html();
+            $container .= $section->render_HTML();
         }
 
         $container .= '</div>';
+
+        return $container;
 	}
 
 }
