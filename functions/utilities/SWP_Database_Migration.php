@@ -37,6 +37,8 @@ class SWP_Database_Migration {
         $map = array(
             //* Options names
             'totesEach'     => 'network_shares',
+            'totes'         => 'total_shares',
+            'minTotes'      => 'minimum_shares',
             'visualTheme'   => 'button_shape',
             'buttonSize'    => 'button_size',
             'dColorSet'     => 'default_colors',
@@ -54,6 +56,7 @@ class SWP_Database_Migration {
             'sideDColorSet' => 'float_default_colors',
             'sideOColorSet' => 'float_hover_colors',
             'sideIColorSet' => 'float_single_colors',
+            'swp_twitter_card'  => 'twitter_cards',
             'twitterID'     => 'twitter_id',
             'sniplyBuster'  => 'frame_buster',
             'linkShortening'=> 'bitly_authentication',
