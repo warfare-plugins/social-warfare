@@ -73,11 +73,12 @@ class SWP_Option extends SWP_Abstract {
     * @return none
     *
     */
-    public function __construct( $name ) {
+    public function __construct( $name, $key ) {
         parent::__construct( $name );
 
         //* TODO: Write the real method to verify registration.
         $this->swp_registration = true;
+        $this->set_key( $key );
     }
 
 
