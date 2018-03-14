@@ -137,7 +137,7 @@ class SWP_Option extends SWP_Abstract {
     *                    Else returns the markup as a string.
     * @return string $html
     */
-    public function render_HTML( $echo = false ) {
+    public function render_HTML() {
         //* Intentionally left blank.
         //* Each child class should override this method.
         $this->_throw( "Should not be called from the parent class." );

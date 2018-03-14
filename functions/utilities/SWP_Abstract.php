@@ -124,20 +124,20 @@ class SWP_Abstract {
         return $this;
     }
 
-    protected function render_dependency( $html ) {
+    protected function render_dependency() {
         if ( !empty( $this->dependency) ) :
-            $html .= 'data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '"';
+            return ' data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '"';
         endif;
 
-        return $html;
+        return '';
     }
 
-    protected function render_premium( $html ) {
+    protected function render_premium() {
         if ( $this->premium === true ) :
-            $html .= 'premium="true"';
+            return ' premium="true" ';
         endif;
 
-        return $html;
+        return '';
     }
 
     /**
