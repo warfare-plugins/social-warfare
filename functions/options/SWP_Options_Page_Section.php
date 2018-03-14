@@ -96,19 +96,21 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     }
 
 	public function render_HTML() {
-        //* Open the options container.
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
+        //* The opening tag, which may or may not have dependencies or be premium.
+        $html = '<div class="sw-section sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
 
-        // $html .= $this->render_dependency( $html );
-        // $html .= $this->render_premium( $html );
+            $html .= $this->create_title();
+            $html .= $this->create_description();
 
-        $html .= ">";
-
-        $html .= $this->create_title();
-        $html .= $this->create_description();
-        $html .= $this->render_options();
+            $html .= '<div class="sw-options-wrap">';
+                $html .= $this->render_options();
+            $html .= '</div>';
 
         $html .= '</div>';
+
 
         return $html;
 	}
@@ -118,7 +120,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         $title = '<h2>';
         $title .= '<a target="_blank" class="swp_support_link" href="'. $this->link .'" title="Click here to learn more about these options.">i</a>';
         $title .= $this->name . '</h2>';
-        $title .= '</div>';
 
         return $title;
     }
@@ -142,7 +143,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         foreach ( $this->options as $index => $option ) {
             $options .= $option->render_HTML();
         }
-
 
         return $options;
     }
