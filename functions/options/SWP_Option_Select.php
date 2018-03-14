@@ -33,8 +33,8 @@ class SWP_Option_Select extends SWP_Option {
 	 * @return none
 	 *
 	 */
-     public function __construct( $name ) {
-         parent::__construct( $name );
+     public function __construct( $name, $key ) {
+        parent::__construct( $name, $key );
 
          $this->choices = array();
      }
@@ -135,24 +135,24 @@ class SWP_Option_Select extends SWP_Option {
      *
      */
     public function render_HTML( $echo = false ) {
-        $html = $this->open_html();
+        $html = $this->open_HTML();
 
         $html .= $this->create_select( $html );
 
-        $html .= $this->close_html();
+        $html .= $this->close_HTML();
 
         $this->html = $html;
 
-        return $this;
+        return $html;
     }
 
 
     /**
      * Creates the boilerplate opening tags and classes.
      *
-     * @return string $html Html ready to be filled with a checkbox input.
+     * @return string $html HTML ready to be filled with a checkbox input.
      */
-    private function open_html() {
+    private function open_HTML() {
         $html = '';
 
         if ( empty( $this->size ) ) :
@@ -162,20 +162,17 @@ class SWP_Option_Select extends SWP_Option {
         $size = $this->get_css_size( $this->size );
 
         //* Open the wrapper tag, remains open to add attributes.
-        $html .= '<div class="sw-grid ' . $size . ' sw-fit sw-option-container ' . $this->name . '_wrapper ';
+        $html .= '<div class="sw-grid ' . $size . ' sw-fit sw-option-container ' . $this->name . '_wrapper" ';
 
-        if ( !empty( $this->dependency) ) :
-            $html .= 'data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '"';
-        endif;
-
-        if ( $this->premium === true ) :
-            $html .= 'premium="true"';
-        endif;
+        $html .= $this->render_dependency( $html );
+        $html .= $this->render_premium( $html );
 
         //* Close the opening bracket. Tag is still open.
         $html .= '>';
 
-        $html .= '<div class="sw-grid sw-col-300"><p class="sw-input-label">' . $this->name . '</p></div>';
+        $html .= '<div class="sw-grid sw-col-300">';
+        $html .= '<p class="sw-input-label">' . $this->name . '</p>';
+        $html .= '</div>';
         $html .= '<div class="sw-grid sw-col-300">';
 
         return $html;
@@ -205,12 +202,12 @@ class SWP_Option_Select extends SWP_Option {
     }
 
     /**
-    * Resolves tags left open in open_html.
+    * Resolves tags left open in open_HTML.
     *
     * @param string $html The HTML to close.
     * @return string $html Completed and valid HTML.
     */
-    private function close_html( $html ) {
+    private function close_HTML( $html ) {
         $html .= '</div><div class="sw-premium-blocker></div></div>';
 
         return $html;
