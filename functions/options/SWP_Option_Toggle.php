@@ -31,8 +31,9 @@ class SWP_Option_Toggle extends SWP_Option {
     *
     * @return SWP_Option_Toggle $this The calling object, for method chaining.
     */
-	public function render_HTML( $echo = false ) {
+	public function render_HTML() {
 	    $html = $this->open_HTML();
+        $html .= $this->create_label();
         $html .= $this->create_toggle();
 
         $this->html = $html;
@@ -50,15 +51,23 @@ class SWP_Option_Toggle extends SWP_Option {
 
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 
-        $html .= $this->render_dependency( $html );
-        $html .= $this->render_premium( $html );
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+
 
         $html .= '>';
 
         $html .= '</div>';
-        $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
 
         return $html;
+    }
+
+    private function create_label() {
+        $label = '<div class="sw-grid sw-col-300">';
+        $label .= '<p class="sw-checkbox-label">' . $this->name . '</p>';
+        $label .= '</div>';
+
+        return $label;
     }
 
     /**
@@ -75,15 +84,18 @@ class SWP_Option_Toggle extends SWP_Option {
             $status = $this->user_options[$this->name];
         endif;
 
+        //* Map the boolean to on/off.
+        $status = $status ? 'on' : 'off';
+
         $checked = $status === 'on' ? 'checked' : '';
 
-        // $html = '<h2 class="sw-h-label">' . $this->name . '</h2>';
-        // $html .= '<p clasls="sw-subtext-label">' . $this->description . '</p>';
-        $html = '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
+        $html = '<div class="sw-grid sw-col-300">';
+        $html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
             $html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
             $html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
         $html .= '</div>';
         $html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '" data-swp-name="' . $this->key . '" ' . $checked . '/>';
+        $html .= '</div>';
 
         return $html;
     }
