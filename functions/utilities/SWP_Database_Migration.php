@@ -23,8 +23,7 @@ class SWP_Database_Migration {
     public function is_migrated() {
         $option = get_option( 'social_warfare_settings' , false);
 
-        //* Cast the potential options array to boolean.
-        return !!$option;
+        return $option;
     }
 
     /**
@@ -61,13 +60,10 @@ class SWP_Database_Migration {
             'google_analytics' => 'google_analytics',
             'analyticsMedium'   => 'analytics_medium',
             'analyticsCampaign' => 'analytics_campaign',
-            'advanced_pinterest_image' => 'pin_browser_extension'
+            'advanced_pinterest_image' => 'pin_browser_extension',
             'advanced_pinterest_image_location' => 'pinterest_image_location',
             'advanced_pinterest_fallback'   => 'pinterest_fallback',
             'recovery_custom_format'    => 'recovery_permalink',
-
-
-
 
 
             //* Choices names
