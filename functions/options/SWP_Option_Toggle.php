@@ -2,11 +2,12 @@
 
 class SWP_Option_Toggle extends SWP_Option {
 
-	public function __construct( $name ) {
-		parent::__construct( $name );
+	public function __construct( $name, $key ) {
+		parent::__construct( $name, $key );
 		$this->type = 'checkbox';
 		$this->default = true;
 		$this->size = 'two-thirds';
+
 	}
 
     /**
@@ -30,8 +31,8 @@ class SWP_Option_Toggle extends SWP_Option {
     *
     * @return SWP_Option_Toggle $this The calling object, for method chaining.
     */
-	public function render_html( $echo = false ) {
-	    $html = $this->open_html();
+	public function render_HTML( $echo = false ) {
+	    $html = $this->open_HTML();
         $html .= $this->create_toggle();
 
         $this->html = $html;
@@ -44,21 +45,18 @@ class SWP_Option_Toggle extends SWP_Option {
      *
      * @return string $html HTML ready to be filled with a checkbox input.
      */
-    private function open_html() {
+    private function open_HTML() {
         $size = $this->get_css_size();
 
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper ';
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 
-        if ( !empty( $this->depdendency ) ) :
-            $html .= 'data-dep="' . $this->depdendency->parent . '" data-dep_val="' . json_encode( $this->dependency->values ) . '"';
-        endif;
+        $html .= $this->render_dependency( $html );
+        $html .= $this->render_premium( $html );
 
-        if ( $this->premium === true ) :
-            $html .= 'premium="true"';
-        endif;
+        $html .= '>';
 
         $html .= '</div>';
-        $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+        $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
 
         return $html;
     }
@@ -82,8 +80,8 @@ class SWP_Option_Toggle extends SWP_Option {
         // $html = '<h2 class="sw-h-label">' . $this->name . '</h2>';
         // $html .= '<p clasls="sw-subtext-label">' . $this->description . '</p>';
         $html = '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
-            $html .= '<div class="sw-checkbox-on>' . __( 'ON', 'social-warfare' ) . '</div>';
-            $html .= '<div class="sw-checkbox-off>' . __( 'OFF', 'social-warfare' ) . '</div>';
+            $html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
+            $html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
         $html .= '</div>';
         $html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '" data-swp-name="' . $this->key . '" ' . $checked . '/>';
 
@@ -91,13 +89,13 @@ class SWP_Option_Toggle extends SWP_Option {
     }
 
     /**
-    * Resolves open tags from open_html().
+    * Resolves open tags from open_HTML().
     *
     * @param string $html The HTML to close.
-    * @see $this->open_html().
+    * @see $this->open_HTML().
     * @return string $html Completed and valid HTML.
     */
-    private function close_html() {
+    private function close_HTML() {
 
     }
 
