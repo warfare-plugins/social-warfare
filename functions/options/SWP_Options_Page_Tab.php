@@ -102,7 +102,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*
 	*/
 	public function render_HTML() {
-        $container= '<div id="' . $this->name . '">' . $this->name . '</div>';
+        // $container= '<div id="' . $this->name . '">' . $this->name . '</div>';
         $container = '<div id="swp_' . strtolower( $this->name ) . '" class="sw-admin-tab sw-grid sw-col-940">';
 
         foreach( $this->sections as $index => $section ) {

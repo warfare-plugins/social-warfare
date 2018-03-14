@@ -148,6 +148,7 @@ class SWP_Options_Page {
 
                     $twitter_card = new SWP_Option_Toggle( 'Show Twitter Cards', 'twitter_cards' );
                     $twitter_card->set_default( true )
+                        ->set_priority( 10 )
                         ->set_size( 'two-thirds' );
 
                 $twitter_cards->add_option( $twitter_card );
