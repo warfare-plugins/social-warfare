@@ -98,9 +98,9 @@ class SWP_Abstract {
     */
     public function _throw( $message ) {
         if ( is_string( $message ) ) {
-            throw new Exception( __METHOD__ . PHP_EOL . $message );
+            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . var_export( debug_backtrace()[1]['args'], true ) );
         } else {
-            throw new Exception( __METHOD__ . PHP_EOL . var_dump( $message ) );
+            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
         }
     }
 
