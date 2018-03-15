@@ -21,13 +21,16 @@ class SWP_Options_Page {
     public $swp_registration;
 
 	public function __construct() {
-        $this->tabs = [];
+        $this->tabs = new stdClass();
         $this->swp_registration = true;
         add_action( 'admin_menu', array( $this, 'options_page') );
     }
 
     public function init() {
         $this->init_display_tab();
+        $Pro = new SWP_Pro_Options_Page();
+        $Pro->update_display_tab();
+
         $this->render_HTML();
     }
 
@@ -65,6 +68,7 @@ class SWP_Options_Page {
         // Hook into the CSS and Javascript Enqueue process for this specific page
         add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
         add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
+
     }
 
     /**
@@ -140,7 +144,6 @@ class SWP_Options_Page {
             $share_counts->add_options( [$network_shares, $total_shares] );
 
             /* Twitter Cards   */
-
             $twitter_cards = new SWP_Options_Page_Section( 'Twitter Cards' );
             $twitter_cards->set_description( 'Activating Twitter Cards will cause the plugin to output certain meta tags in the head section of your site\'s HTML. Twitter cards are pretty much exactly like Open Graph meta tags, except that there is only one network, Twitter, that looks at them.' )
                 ->set_priority( 20 )
@@ -154,7 +157,6 @@ class SWP_Options_Page {
                 $twitter_cards->add_option( $twitter_card );
 
             /* Position Share Buttons  */
-
             $button_position = new SWP_Options_Page_Section( 'Position Share Buttons' );
             $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
                 ->set_priority( 30 )
@@ -163,17 +165,15 @@ class SWP_Options_Page {
             //* TODO: Create the mini-table for this option.
 
             /* Yummly Display Control  */
-
             $yummly_display = new SWP_Options_Page_Section( 'Yummy Display Control' );
             $yummly_display->set_description( 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.' )
                 ->set_priority( 50 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-yummly-display-control/' );
 
         //* TODO: Create the mini-table for this option.
-
         $display->add_sections( [$share_counts, $twitter_cards, $button_position, $yummly_display] );
 
-        array_push( $this->tabs, $display );
+        $this->tabs->display = $display;
 
         return $this;
     }
@@ -297,7 +297,7 @@ class SWP_Options_Page {
         $styles->add_sections( $visual_options, $total_counts,
             $floating_panel);
 
-        array_push( $this->tabs, $styles );
+        $this->tabs->styles = $styles;
 
         return $this;
     }
@@ -335,6 +335,8 @@ class SWP_Options_Page {
             //* TODO: integrate sw_get_post_types() into this section.
 
         $sitewide_identity->add_option( $open_graph );
+
+        $this->tabs->social_identity = $social_identity;
     }
 
     public function init_advanced_tab() {
@@ -366,6 +368,8 @@ class SWP_Options_Page {
                 ->set_size( 'two-thirds' );
 
             $full_content->add_option( $full_content_toggle );
+
+        $this->tabs->advanced = $advanced;
     }
 
     public function init_registration_tab() {
@@ -380,6 +384,8 @@ class SWP_Options_Page {
         $tabs = $this->create_tabs();
 
         $html = $menu . $tabs;
+        $this->html = $html;
+
         echo $html;
 
         return $this;
@@ -404,6 +410,7 @@ class SWP_Options_Page {
 
         foreach( $this->tabs as $index => $tab ) {
             $active = $index === 1 ? 'sw-active-tab' : '';
+
             $html .= '<li class="' . $active . '">';
             $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
             $html .= '<span>' . $tab->name . '</span>';
