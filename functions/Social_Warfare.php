@@ -35,6 +35,8 @@ class Social_Warfare {
 		if( true === is_admin() ) {
 			$this->instantiate_admin_classes();
 		}
+
+        $this->load_addons();
 	}
 
 
@@ -152,8 +154,6 @@ class Social_Warfare {
 	 *
 	 */
 	private function instantiate_admin_classes() {
-
-
 		/**
 		 * The Shortcode Generator
 		 *
@@ -280,7 +280,21 @@ class Social_Warfare {
         ];
 
         $this->load_files( '/functions/options/', $options );
+
 	}
+
+    private function load_addons() {
+        $addons = [
+            '/social-warfare-pro/' => 'social-warfare-pro'
+        ];
+
+        foreach( $addons as $path => $file ) {
+            if ( file_exists( __DIR__ . '/../..' . $path . $file . '.php') ):
+                set_include_path( __DIR__ . '/../..');
+                require_once ( $path . $file . '.php' );
+            endif;
+        }
+    }
 
     /**
      * Loads an array of related files.
