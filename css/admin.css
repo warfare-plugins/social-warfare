@@ -206,3 +206,9 @@
 	float: left;
 	font-style: normal;
 }
+
+.sw-section {
+	border-bottom: 1px solid #CED3DC;
+	margin: 0 0 40px;
+
+}
