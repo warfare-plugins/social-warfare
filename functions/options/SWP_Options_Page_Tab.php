@@ -42,7 +42,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	* @since  2.4.0 | 3 MAR 2018 | Created
 	*/
 	public function __construct( $name ) {
-		$this->sections = array();
+		$this->sections = new stdClass();
 
         $this->set_name( $name );
 	}
@@ -52,13 +52,15 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
             $this->_throw( 'Please provide an instance of SWP_Options_Page_Section as the parameter.' );
         endif;
 
-        array_push( $this->sections, $section );
+        $key = $section->key;
+
+        $this->sections->$key = $section;
 
         return $this;
     }
 
     public function add_sections( $sections ) {
-        if ( !is_array( $sections ) || get_class( $sections[0] ) !== 'SWP_Options_Page_Section' ) :
+        if ( !is_array( $sections ) ) :
             $this->_throw( 'This method requires an array. Please use add_section to add a single instance of SWP_Options_Page_Section.' );
         endif;
 
@@ -102,16 +104,16 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*
 	*/
 	public function render_HTML() {
-        // $container= '<div id="' . $this->name . '">' . $this->name . '</div>';
-        $container = '<div id="swp_' . strtolower( $this->name ) . '" class="sw-admin-tab sw-grid sw-col-940">';
+        // $tab= '<div id="' . $this->name . '">' . $this->name . '</div>';
+        $tab = '<div id="swp_' . strtolower( $this->name ) . '" class="sw-admin-tab sw-grid sw-col-940">';
 
         foreach( $this->sections as $index => $section ) {
-            $container .= $section->render_HTML();
+            $tab .= $section->render_HTML();
         }
 
-        $container .= '</div>';
+        $tab .= '</div>';
 
-        return $container;
+        return $tab;
 	}
 
 }

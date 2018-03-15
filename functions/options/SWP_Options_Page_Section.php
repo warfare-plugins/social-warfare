@@ -20,10 +20,10 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 	public $options;
 
 	public function __construct( $name ) {
-		$this->options = array();
+		$this->options = new stdClass();
 
         $this->set_name( $name );
-        $this->key = strtolower( str_replace(' ', '_', $name) );
+        $this->set_key();
 	}
 
     /**
@@ -72,10 +72,12 @@ class SWP_Options_Page_Section extends SWP_Abstract {
             $this->_throw("Requres one of the SWP_Option child classes.");
         }
 
-        array_push($this->options, $option);
+        $name = $option->key;
+        $this->options->$name = $option;
 
         return $this;
     }
+
 
     /**
      * Adds multiple options at once.
@@ -114,6 +116,29 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         return $html;
 	}
+
+
+    protected function set_key( $key = null ) {
+        if ( !empty( $key ) ) :
+            if ( !is_string( $key ) ) :
+                $this->_throw( 'Please provide a string for this section\'s key.' );
+            endif;
+
+            $this->key = $key;
+            return $this;
+        endif;
+
+        //* Remove all non-word character symbols.
+        $key = preg_replace( '#[^\w\s]#i', '', $this->name );
+
+        //* Replace spaces with underscores.
+        $key = preg_replace( '/\s+/', '_', $this->name );
+
+
+        $this->key = strtolower( $key );
+
+        return $this;
+    }
 
     private function create_title() {
         //* Set the support link and title.
