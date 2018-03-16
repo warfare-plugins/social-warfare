@@ -97,8 +97,12 @@ class SWP_Abstract {
     * @return object Exception An exception with the passed in message.
     */
     public function _throw( $message ) {
+        ob_start();
+        print_r( debug_backtrace()[1]['args'] );
+        $dump = ob_get_clean();
+
         if ( is_string( $message ) ) {
-            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . var_export( debug_backtrace()[1]['args'], true ) );
+            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump );
         } else {
             throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
         }
