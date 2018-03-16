@@ -168,7 +168,7 @@ class SWP_Option extends SWP_Abstract {
             $values = array( $values );
         }
 
-        $this->dependency = new stdObject();
+        $this->dependency = new stdClass();
         $this->dependency->parent = $parent;
         $this->dependency->values = $values;
 
