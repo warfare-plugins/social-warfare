@@ -17,7 +17,7 @@ class SWP_Option_Toggle extends SWP_Option {
     * @return SWP_Option_Toggle $this The calling object, for method chaining.
     */
     public function set_default( $value ) {
-        if ( !is_bool( $value ) ||  empty( $value ) ) {
+        if ( !is_bool( $value ) ||  !isset( $value ) ) {
             $this->_throw( 'Please provide a default value as a boolean.' );
         }
 
