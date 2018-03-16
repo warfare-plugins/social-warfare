@@ -27,9 +27,11 @@ class SWP_Options_Page {
     }
 
     public function init() {
-        $this->init_display_tab();
+        // $this->init_display_tab();
+        $this->init_styles_tab();
         $Pro = new SWP_Pro_Options_Page();
-        $Pro->update_display_tab();
+        // $Pro->update_display_tab();
+        $Pro->update_styles_tab();
 
         $this->render_HTML();
     }
@@ -183,30 +185,13 @@ class SWP_Options_Page {
         $styles->set_priority( 20 )
             ->set_link( 'styles' );
 
-            $visual_options = new SWP_Options_Page_Section( 'Visual Options' );
-            $visual_options->set_description( 'Use the settings below to customize the look of your share buttons.' )
-                ->set_priority( 10 )
-                ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-visual-options/' );
-
-                //* oColorSet => hover_colors
-                $hover_colors = clone $default_colors;
-                $hover_colors->set_name( 'Hover Color Set')
-                    ->set_priority( 40 );
-
-                //* iColorSet => single_colors
-                $single_colors = clone $default_colors;
-                $single_colors->set_name( 'Single Button Hover' )
-                    ->set_priority( 50 );
-
-            $visual_options->add_options( [$default_colors, $single_colors] );
-
             $total_counts = new SWP_Options_Page_Section( 'Total Counts' );
             $total_counts->set_description( 'Customize how the "Total Shares" section of your share buttons look.' )
                 ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
 
                 //* swDecimals => decmials
-                $decimals = new SWP_Options_Select( 'Decimal Places' );
+                $decimals = new SWP_Option_Select( 'Decimal Places', 'decimals' );
                 $decimals->set_choices( [
                     '0' => 'Zero',
                     '1' => 'One',
@@ -216,7 +201,7 @@ class SWP_Options_Page {
                     ->set_size( 'two-fourths' );
 
                 //* swp_decimal_separator => decimal_separator
-                $decimal_separator = new SWP_Options_Select( 'Decimal Separator' );
+                $decimal_separator = new SWP_Option_Select( 'Decimal Separator', 'decimal_separator' );
                 $decimal_separator->set_choices( [
                     'period'    => 'Period',
                     'comma'     => 'Comma',
@@ -224,8 +209,8 @@ class SWP_Options_Page {
                     ->set_default( 'period' )
                     ->set_size( 'two-fourths' );
 
-                //* swTotesFormat => totals_format
-                $totals_alignment = new SWP_Options_Select( 'Alignment' );
+                //* swTotesFormat => totals_alignment
+                $totals_alignment = new SWP_Option_Select( 'Alignment', 'totals_alignment' );
                 $totals_alignment->set_choices( [
                     'totals_right'  => 'Right',
                     'totals_left'   => 'Left'
@@ -235,8 +220,8 @@ class SWP_Options_Page {
 
             $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
-            $floating_panel = new SWP_Option_Page_Section( 'Floating Share Buttons' );
-            $floating_panel->set_description( 'If you would like to activate floating share buttons, turn this on.' )
+            $floating_share_buttons = new SWP_Options_Page_Section( 'Floating Share Buttons' );
+            $floating_share_buttons->set_description( 'If you would like to activate floating share buttons, turn this on.' )
                 ->set_priority( 30 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
 
@@ -246,7 +231,7 @@ class SWP_Options_Page {
                     ->set_priority( 10 );
 
                 //* floatOption => float_position
-                $float_position = new SWP_Options_Select( 'Float Position' );
+                $float_position = new SWP_Option_Select( 'Float Position', 'float_position' );
                 $float_position->set_choices( [
                     'top'   => 'Top of the Page',
                     'bottom'    => 'Bottom of the Page',
@@ -258,16 +243,18 @@ class SWP_Options_Page {
                     ->set_dependency( 'floating_panel', true );
 
                 //* swp_float_scr_sz => float_screen_width
-                $float_screen_width = new SWP_Options_Text( 'Minimum Screen Width' );
+                $float_screen_width = new SWP_Option_Text( 'Minimum Screen Width', 'float_screen_width' );
                 $float_screen_width->set_default( '1100' )
                     ->set_priority( 30 )
                     ->set_size( 'two-fourths' )
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
                 //* sideDColorSet => float_default_colors
-                //* dColorSet => default_colors
-                $float_default_colors = new SWP_Options_Select( 'Default Color Set' );
-                $default_colors->set_choices( $color_choices )
+                $float_default_colors = new SWP_Option_Select( 'Default Color Set', 'default_colors' );
+
+                $color_choices = $this::get_color_choices_array();
+
+                $float_default_colors->set_choices( $color_choices )
                     ->set_default( 'full_color' )
                     ->set_priority( 30 )
                     ->set_size( 'two-fourths' )
@@ -276,26 +263,27 @@ class SWP_Options_Page {
                 //* sideOColorSet => float_hover_colors
                 $float_hover_colors = clone $float_default_colors;
                 $float_hover_colors->set_name( 'float_hover_colors')
-                     ->set_priority( 80 );
+                    ->set_key( 'float_hover_colors' )
+                    ->set_priority( 80 );
 
                 //* sideIColorSet => float_single_colors
                 $float_single_colors = clone $float_default_colors;
                 $float_single_colors->set_name( 'Single Button Hover' )
+                    ->set_key( 'float_single_colors' )
                     ->set_priority( 90 );
 
                 //* floatBgColor => float_background_color
-                $float_background_color = new SWP_Options_Text( 'Background Color' );
+                $float_background_color = new SWP_Option_Text( 'Background Color', 'float_background_color' );
                 $float_background_color->set_default( '#ffffff' )
                     ->set_priority( 100 )
                      ->set_dependency( 'float_position', ['top', 'bottom'] );
 
-                $floating_panel->add_options( [$show_floating_panel, $float_position,
-                    $float_screen_width, $float_style_source, $float_default_colors,
+                $floating_share_buttons->add_options( [$show_floating_panel, $float_position,
+                    $float_screen_width, $float_default_colors,
                     $float_hover_colors, $float_single_colors,
                     $float_background_color] );
 
-        $styles->add_sections( $visual_options, $total_counts,
-            $floating_panel);
+        $styles->add_sections( [$total_counts, $floating_share_buttons] );
 
         $this->tabs->styles = $styles;
 
@@ -491,7 +479,7 @@ class SWP_Options_Page {
         return $assosiative;
     }
 
-    private function get_color_choices_array() {
+    public static function get_color_choices_array() {
         return [
             'full_color' 		=>  'Full Color',
             'light_gray' 		=>  'Light Gray',
