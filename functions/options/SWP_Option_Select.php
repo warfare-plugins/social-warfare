@@ -56,10 +56,9 @@ class SWP_Option_Select extends SWP_Option {
 	 *
 	 */
     public function set_choices( $choices )  {
-
-        if ( !is_array( $choices ) ) {
+        if ( !is_array( $choices ) ) :
             $this->_throw( "You must provide an array of choices to go into the select." );
-        }
+        endif;
 
         $this->choices = $choices;
 
@@ -67,9 +66,13 @@ class SWP_Option_Select extends SWP_Option {
     }
 
     public function set_default( $value ) {
-        if ( !is_string( $value ) ||  empty( $value ) ) {
+        if ( is_bool( $value ) || is_numeric( $value ) ) :
+            settype( $value, 'string' );
+        endif;
+
+        if ( !is_string( $value ) ||  !isset( $value ) ) :
             $this->_throw( 'Please provide a default value as a string.' );
-        }
+        endif;
 
         $this->default = $value;
 
