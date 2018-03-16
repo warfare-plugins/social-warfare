@@ -140,9 +140,10 @@ class SWP_Option_Select extends SWP_Option {
     public function render_HTML( $echo = false ) {
         $html = $this->open_HTML();
 
-        $html .= $this->create_select( $html );
+        $html .= $this->create_select();
 
         $html .= $this->close_HTML();
+
 
         $this->html = $html;
 
@@ -156,26 +157,23 @@ class SWP_Option_Select extends SWP_Option {
      * @return string $html HTML ready to be filled with a checkbox input.
      */
     private function open_HTML() {
-        $html = '';
-
         if ( empty( $this->size ) ) :
             $this->size = '';
         endif;
 
-        $size = $this->get_css_size( $this->size );
+        $size = $this->get_css_size();
 
         //* Open the wrapper tag, remains open to add attributes.
-        $html .= '<div class="sw-grid ' . $size . ' sw-fit sw-option-container ' . $this->name . '_wrapper" ';
-
+        $html = '<div class="sw-grid ' . $size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
-
         //* Close the opening bracket. Tag is still open.
         $html .= '>';
 
-        $html .= '<div class="sw-grid sw-col-300">';
-        $html .= '<p class="sw-input-label">' . $this->name . '</p>';
-        $html .= '</div>';
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-input-label">' . $this->name . '</p>';
+            $html .= '</div>';
+
         $html .= '<div class="sw-grid sw-col-300">';
 
         return $html;
@@ -186,8 +184,8 @@ class SWP_Option_Select extends SWP_Option {
      *
      * @return string $html The select and related HTML.
      */
-    private function create_select( $html ) {
-        $html .= '<select name=' . $this->key . '>';
+    private function create_select() {
+        $select = '<select name=' . $this->key . '>';
 
         if ( isset($this->user_options[$this->key]) ) :
             $checked = $this->user_options[$this->key];
@@ -196,12 +194,12 @@ class SWP_Option_Select extends SWP_Option {
         endif;
 
         foreach ( $this->choices as $key => $display_name ) {
-            $html .= '<option value=' . $key . ' ' . selected($key, $checked, false) . '>' . $display_name . '</option>';
+            $select .= '<option value="' . $key . '" ' . selected($key, $checked, false) . '>' . $display_name . '</option>';
         }
 
-        $html .= '</select>';
+        $select .= '</select>';
 
-        return $html;
+        return $select;
     }
 
     /**
@@ -210,8 +208,9 @@ class SWP_Option_Select extends SWP_Option {
     * @param string $html The HTML to close.
     * @return string $html Completed and valid HTML.
     */
-    private function close_HTML( $html ) {
-        $html .= '</div><div class="sw-premium-blocker></div></div>';
+    private function close_HTML() {
+            $html = '</div>';
+        $html .= '</div>';
 
         return $html;
     }
