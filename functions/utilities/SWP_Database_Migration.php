@@ -60,6 +60,7 @@ class SWP_Database_Migration {
             'twitterID'     => 'twitter_id',
             'sniplyBuster'  => 'frame_buster',
             'linkShortening'=> 'bitly_authentication',
+            'cacheMethod'   => 'cache_method',
             'google_analytics' => 'google_analytics',
             'analyticsMedium'   => 'analytics_medium',
             'analyticsCampaign' => 'analytics_campaign',
