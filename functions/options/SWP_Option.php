@@ -206,6 +206,27 @@ class SWP_Option extends SWP_Abstract {
             'four-fourths'  => ' sw-col-620 ',
         ];
 
+        if ( empty( $this->size) ) :
+            return $map['two-thirds'];
+        endif;
+
         return $map[$this->size];
+    }
+
+    /**
+    * Get the pre-defined value of the option.
+    *
+    * @since April 15 2018
+    */
+    protected function get_value() {
+        if ( isset($this->value) ) {
+            return $this->value;
+        }
+
+        if ( isset( $this->user_options[$this->key] ) ) {
+            return $this->user_options[$this->key];
+        }
+
+        return $this->default;
     }
 }
