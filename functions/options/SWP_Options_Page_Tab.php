@@ -41,14 +41,15 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*
 	* @since  2.4.0 | 3 MAR 2018 | Created
 	*/
-	public function __construct( $name ) {
+	public function __construct( $name, $link ) {
 		$this->sections = new stdClass();
 
         $this->set_name( $name );
+        $this->set_link( $link );
 	}
 
     public function add_section( $section ) {
-        if ( 'SWP_Options_Page_Section' !== get_class( $section ) ) :
+        if ( !( 'SWP_Options_Page_Section' === get_class( $section ) ||  is_subclass_of( $section, 'SWP_Options_Page_Section' ) ) ) :
             $this->_throw( 'Please provide an instance of SWP_Options_Page_Section as the parameter.' );
         endif;
 
