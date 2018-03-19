@@ -64,7 +64,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
      *
      */
     public function add_option( $option ) {
-        $types = ['SWP_Option_Toggle', 'SWP_Option_Select', 'SWP_Option_Text', 'SWP_Option_Textarea'];
+        $types = ['SWP_Addon_Registration', 'SWP_Option_Toggle', 'SWP_Option_Select', 'SWP_Option_Text', 'SWP_Option_Textarea'];
 
         $type = get_class( $option );
 
