@@ -27,10 +27,10 @@ class SWP_Options_Page {
     }
 
     public function init() {
-        // $this->init_display_tab();
-        // $this->init_styles_tab();
-        // $this->init_social_tab();
-        // $this->init_advanced_tab();
+        $this->init_display_tab();
+        $this->init_styles_tab();
+        $this->init_social_tab();
+        $this->init_advanced_tab();
         $this->init_registration_tab();
 
         $Pro = new SWP_Pro_Options_Page();
@@ -354,7 +354,7 @@ class SWP_Options_Page {
     }
 
     protected function init_advanced_tab() {
-        $advanced = new SWP_Options_Page_Tab( 'Advanced', 'link' );
+        $advanced = new SWP_Options_Page_Tab( 'Advanced', 'advanced' );
         $advanced->set_priority( 40 );
 
         $frame_buster = new SWP_Options_Page_Section( 'Frame Buster' );
@@ -406,6 +406,7 @@ class SWP_Options_Page {
 
     protected function init_registration_tab() {
         $registration = new SWP_Options_Page_Tab( 'Registration', 'registration' );
+
         $registration->set_priority( 50 );
 
             $wrap = new SWP_Options_Page_Section( 'Addon Registrations', 'addon' );
@@ -471,7 +472,7 @@ class SWP_Options_Page {
         $html .= '<ul class="sw-header-menu">';
 
         foreach( $this->tabs as $index => $tab ) {
-            $active = $index === 1 ? 'sw-active-tab' : '';
+            $active = $index === 2 ? 'sw-active-tab' : '';
 
             $html .= '<li class="' . $active . '">';
             $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
@@ -502,6 +503,7 @@ class SWP_Options_Page {
 
                 foreach( $this->tabs as $index => $tab ) {
                     $html = $tab->render_HTML();
+
                     $container .= $html;
                 }
 
