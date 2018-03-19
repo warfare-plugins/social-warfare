@@ -30,7 +30,7 @@ class SWP_Addon_Registration extends SWP_Option_Text {
 
         $this->html = $html;
 
-        echo $html;
+        return $html;
     }
 
     protected function not_registered() {
