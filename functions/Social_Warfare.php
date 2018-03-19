@@ -274,12 +274,16 @@ class Social_Warfare {
             'Options_Page_Tab',
             'Options_Page_Section',
             'Option_Toggle',
-            'Option_Input',
             'Option_Select',
             'Option_Text',
+            'Option_Textarea'
         ];
 
         $this->load_files( '/functions/options/', $options );
+
+        $registration = ['Addon_Registration'];
+
+        $this->load_files( '/functions/options/', $registration );
 
 	}
 
