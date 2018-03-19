@@ -28,10 +28,16 @@ class SWP_Options_Page {
 
     public function init() {
         // $this->init_display_tab();
-        $this->init_styles_tab();
+        // $this->init_styles_tab();
+        // $this->init_social_tab();
+        // $this->init_advanced_tab();
+        $this->init_registration_tab();
+
         $Pro = new SWP_Pro_Options_Page();
         // $Pro->update_display_tab();
-        $Pro->update_styles_tab();
+        // $Pro->update_styles_tab();
+        // $Pro->update_social_tab();
+        // $Pro->update_advanced_tab();
 
         $this->render_HTML();
     }
@@ -71,6 +77,33 @@ class SWP_Options_Page {
         add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
         add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
 
+    }
+
+    public function render_HTML() {
+        $menu = $this->create_menu();
+        $tabs = $this->create_tabs();
+
+        $html = $menu . $tabs;
+        $this->html = $html;
+
+        echo $html;
+
+        return $this;
+    }
+
+    public static function get_color_choices_array() {
+        return [
+            'full_color'        =>  'Full Color',
+            'light_gray'        =>  'Light Gray',
+            'medium_grey'       =>  'Medium Gray',
+            'dark_grey'         =>  'Dark Gray',
+            'light_grey_outlines'   =>  'Light Gray Outlines',
+            'medium_grey_outlines'  =>  'Medium Gray Outlines',
+            'dark_grey_outlines'    =>  'Dark Gray Outlines',
+            'color_outlines'    =>  'Color Outlines',
+            'custom_color'      =>  'Custom Color',
+            'custom_color_outlines' =>  'Custom Color Outlines'
+        ];
     }
 
     /**
@@ -115,16 +148,16 @@ class SWP_Options_Page {
         ));
     }
 
+
     /**
      * Create the Share Counts section of the display tab.
      *
      * This section of options allows users to control the share count settings.
      *
      */
-    public function init_display_tab() {
-        $display = new SWP_Options_Page_Tab( 'Display' );
-		$display->set_priority( 10 )
-            ->set_link( 'display' );
+    protected function init_display_tab() {
+        $display = new SWP_Options_Page_Tab( 'Display', 'display' );
+		$display->set_priority( 10 );
 
     		$share_counts = new SWP_Options_Page_Section( 'Share Counts' );
     	    $share_counts->set_description( 'Use the toggles below to determine how to display your social proof.' )
@@ -180,10 +213,9 @@ class SWP_Options_Page {
         return $this;
     }
 
-    public function init_styles_tab() {
-        $styles = new SWP_Options_Page_Tab( 'Styles' );
-        $styles->set_priority( 20 )
-            ->set_link( 'styles' );
+    protected function init_styles_tab() {
+        $styles = new SWP_Options_Page_Tab( 'Styles', 'styles' );
+        $styles->set_priority( 20 );
 
             $total_counts = new SWP_Options_Page_Section( 'Total Counts' );
             $total_counts->set_description( 'Customize how the "Total Shares" section of your share buttons look.' )
@@ -290,63 +322,71 @@ class SWP_Options_Page {
         return $this;
     }
 
-    public function init_social_tab() {
-        $social_identity = new SWP_Option_Page_Tab( 'Social Identity' );
-        $social_identity->set_priority( 30 )
-            ->set_link( 'social_identity' );
+    protected function init_social_tab() {
+        $social_identity = new SWP_Options_Page_Tab( 'Social Identity', 'social_identity' );
+        $social_identity->set_priority( 30 );
 
-        $sitewide_identity = new SWP_Option_Page_Section( 'Sitewide Identity' );
+        $sitewide_identity = new SWP_Options_Page_Section( 'Sitewide Identity' );
         $sitewide_identity->set_description( 'If you would like to set sitewide defaults for your social identity, add them below.' )
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
-            $twitter_id = new SWP_Option_Input( 'Twitter Username' );
+            $twitter_id = new SWP_Option_Text( 'Twitter Username', 'twitter_id' );
             $twitter_id->set_size( 'two-thirds' );
 
-            $pinterest_id = new SWP_Option_Input( 'Pinterest Username' );
+            $pinterest_id = new SWP_Option_Text( 'Pinterest Username', 'pinterest_id' );
             $pinterest_id->set_size( 'two-thirds' );
 
-            $facebook_publisher_url = new SWP_Option_Input( 'Facebook Page URL ');
+            $facebook_publisher_url = new SWP_Option_Text( 'Facebook Page URL', 'facebook_publisher_url' );
             $facebook_publisher_url->set_size( 'two-thirds' );
 
-            $facebook_app_id = new SWP_Option_Input( 'Facebook App ID' );
+            $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
             $facebook_app_id->set_size( 'two-thirds' );
 
         $sitewide_identity->add_options( [$twitter_id, $pinterest_id, $facebook_publisher_url, $facebook_app_id] );
 
-        $open_graph = new SWP_Option_Page_Section( 'Open Graph og:type Values');
-        $open_graph->set_description( 'These options allow you to control which value you would like to use for the Open Graph og:type tag for each post type.' )
-            ->set_priority( 20 );
-
-            $custom_post_types = $this->get_custom_post_type_associative_array();
-
-
             //* TODO: integrate sw_get_post_types() into this section.
 
-        $sitewide_identity->add_option( $open_graph );
+        $social_identity->add_section( $sitewide_identity );
 
         $this->tabs->social_identity = $social_identity;
+
+        return $this;
     }
 
-    public function init_advanced_tab() {
-        $advanced = new SWP_Option_Page_Tab();
-        $advanced->set_priority( 40 )
-            ->set_link( 'advanced' );
+    protected function init_advanced_tab() {
+        $advanced = new SWP_Options_Page_Tab( 'Advanced', 'link' );
+        $advanced->set_priority( 40 );
 
-        //* linkShortening => bitly_authentication
-        $bitly_authentication = new SWP_Option_Page_Section( 'Bitly Link Shortening' );
-        $bitly_authentication->set_description( 'If you like to have all of your links automatically shortened, turn this on.' )
-            ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-bitly-link-shortening/' );
+        $frame_buster = new SWP_Options_Page_Section( 'Frame Buster' );
+        $frame_buster->set_priority( 10 )
+            ->set_description( 'If you want to stop content pirates from framing your content, turn this on.' )
+            ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-frame-buster/');
+
+            //* sniplyBuster => frame_buster
+            $frame_buster_toggle = new SWP_Option_Toggle( 'Frame Buster', 'frame_buster' );
+            $frame_buster_toggle->set_default( true );
+
+            $frame_buster->add_option( $frame_buster_toggle );
 
         //* TODO: Add the Bitly Authentication Button.
 
-        $share_recovery->add_options( [$recover_shares, $recovery_format,
-            $recovery_permalink, $recovery_prefix, $recovery_subdomain,
-            $former_domain, $current_domain] );
 
-        $caching_method = new SWP_Option_Page_Section( 'Caching Method' );
+
+        $caching_method = new SWP_Options_Page_Section( 'Caching Method' );
         $caching_method->set_priority( 60 );
 
-        $full_content = new SWP_Option_Page_Section( 'Full Content vs. Excerpts' );
+            //* cacheMethod => cache_method
+            $cache_method = new SWP_Option_Select( 'Cache Rebuild Method', 'cache_method' );
+            $cache_method->set_choices( [
+                'advanced'  => 'Advanced Cache Triggering',
+                'legacy'    => 'Legacy Cache Rebuilding during Page Loads'
+            ])
+                ->set_default( 'advanced' )
+                ->set_size( 'two-thirds' );
+
+            $caching_method->add_option( $cache_method );
+
+        $full_content = new SWP_Options_Page_Section( 'Full Content vs. Excerpts' );
         $full_content->set_priority( 70 )
              ->set_description( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.' )
              ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-full-content-vs-excerpts/' );
@@ -357,26 +397,60 @@ class SWP_Options_Page {
 
             $full_content->add_option( $full_content_toggle );
 
+        $advanced->add_sections( [$frame_buster, $caching_method, $full_content] );
+
         $this->tabs->advanced = $advanced;
-    }
-
-    public function init_registration_tab() {
-        $registration = new SWP_Option_Page_Tab( 'Registration' );
-        $registration->set_priority( 50 )
-            ->set_link( 'registration' );
-    }
-
-    public function render_HTML() {
-        $menu = $this->create_menu();
-
-        $tabs = $this->create_tabs();
-
-        $html = $menu . $tabs;
-        $this->html = $html;
-
-        echo $html;
 
         return $this;
+    }
+
+    protected function init_registration_tab() {
+        $registration = new SWP_Options_Page_Tab( 'Registration', 'registration' );
+        $registration->set_priority( 50 );
+
+            $wrap = new SWP_Options_Page_Section( 'Addon Registrations', 'addon' );
+            $wrap->set_priority( 10 );
+
+                $pro = new SWP_Addon_Registration( 'Pro Registration', 'pro' );
+                $pro->set_priority( 10 );
+
+            $wrap->add_option( $pro );
+
+        $registration->add_section( $wrap );
+
+        $this->tabs->registration = $registration;
+
+        return $this;
+    }
+
+    protected function get_custom_post_types() {
+        return [
+            'article',
+			'book',
+			'books.author',
+			'books.book',
+			'books.genre',
+			'business.business',
+			'fitness.course',
+			'game.achievement',
+			'music.album',
+			'music.playlist',
+			'music.radio_station',
+			'music.song',
+			'place',
+			'product',
+			'product.group',
+			'product.item',
+			'profile',
+			'restaurant.menu',
+			'restaurant.menu_item',
+			'restaurant.menu_section',
+			'restaurant.restaurant',
+			'video.episode',
+			'video.movie',
+			'video.other',
+			'video.tv_show',
+        ];
     }
 
     /**
@@ -423,74 +497,19 @@ class SWP_Options_Page {
 
     private function create_tabs() {
         $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
-        $container .= '<form class="sw-admin-settings-form">';
-        $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
+            $container .= '<form class="sw-admin-settings-form">';
+                $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
-        foreach( $this->tabs as $index => $tab ) {
-            $html = $tab->render_HTML();
-            $container .= $html;
-        }
+                foreach( $this->tabs as $index => $tab ) {
+                    $html = $tab->render_HTML();
+                    $container .= $html;
+                }
 
-        $container .= '</div>';
-        $container .= '</form>';
+                $container .= '</div>';
+            $container .= '</form>';
         $container .= '</div>';
 
         return $container;
     }
 
-    private function get_custom_post_type_array() {
-        return [
-            'article',
-			'book',
-			'books.author',
-			'books.book',
-			'books.genre',
-			'business.business',
-			'fitness.course',
-			'game.achievement',
-			'music.album',
-			'music.playlist',
-			'music.radio_station',
-			'music.song',
-			'place',
-			'product',
-			'product.group',
-			'product.item',
-			'profile',
-			'restaurant.menu',
-			'restaurant.menu_item',
-			'restaurant.menu_section',
-			'restaurant.restaurant',
-			'video.episode',
-			'video.movie',
-			'video.other',
-			'video.tv_show',
-        ];
-    }
-
-    private function get_custom_post_type_associative_array() {
-        $array = $this->get_custom_post_type_array();
-        $assosiative = [];
-
-        foreach( $array as $value ) {
-            $assosiative[$value] = $value;
-        }
-
-        return $assosiative;
-    }
-
-    public static function get_color_choices_array() {
-        return [
-            'full_color' 		=>  'Full Color',
-            'light_gray' 		=>  'Light Gray',
-            'medium_grey'		=>  'Medium Gray',
-            'dark_grey' 		=>  'Dark Gray',
-            'light_grey_outlines' 	=>  'Light Gray Outlines',
-            'medium_grey_outlines'	=>  'Medium Gray Outlines',
-            'dark_grey_outlines' 	=>  'Dark Gray Outlines',
-            'color_outlines' 	=>  'Color Outlines',
-            'custom_color' 		=>  'Custom Color',
-            'custom_color_outlines' =>  'Custom Color Outlines'
-        ];
-    }
 }
