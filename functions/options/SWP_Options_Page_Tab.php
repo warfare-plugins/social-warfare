@@ -46,6 +46,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 
         $this->set_name( $name );
         $this->set_link( $link );
+        $this->key = $this->name_to_key( $name );
 	}
 
     public function add_section( $section ) {
@@ -106,7 +107,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*/
 	public function render_HTML() {
         // $tab= '<div id="' . $this->name . '">' . $this->name . '</div>';
-        $tab = '<div id="swp_' . strtolower( $this->name ) . '" class="sw-admin-tab sw-grid sw-col-940">';
+        $tab = '<div id="swp_' . strtolower( $this->key ) . '" class="sw-admin-tab sw-grid sw-col-940">';
 
         foreach( $this->sections as $index => $section ) {
             $tab .= $section->render_HTML();
