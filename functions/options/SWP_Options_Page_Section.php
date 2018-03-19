@@ -23,8 +23,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 		$this->options = new stdClass();
 
         $this->set_name( $name );
-        $this->set_key();
-	}
+        $this->key = $this->name_to_key( $name );
+    }
 
     /**
      * The related link to our KnowledgeBase article.
@@ -120,9 +120,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
     protected function set_key( $key = null ) {
         if ( !empty( $key ) ) :
-            if ( !is_string( $key ) ) :
-                $this->_throw( 'Please provide a string for this section\'s key.' );
-            endif;
+
 
             $this->key = $key;
             return $this;

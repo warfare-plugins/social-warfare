@@ -145,6 +145,27 @@ class SWP_Abstract {
     }
 
     /**
+    * Creates a Javscript selector keyname  based on the object's name.
+    *
+    * @param string $name The name to be converted to a key. Usually the objects name.
+    * @return string $key A valid PHP and jQuery target keyname.
+    */
+    public function name_to_key( $name ) {
+        if ( !is_string( $name ) ) :
+            $this->_throw( 'Please provide a string to get a key.' );
+        endif;
+
+        //* Remove all non-word character symbols.
+        $key = preg_replace( '#[^\w\s]#i', '', $name );
+
+        //* Replace spaces with underscores.
+        $key = preg_replace( '/\s+/', '_', $name );
+
+
+        return strtolower( $key );
+    }
+
+    /**
     * Set the premium status of the object.
     *
     * Since there are going to be multiple addons, it's not sufficient to set premium to simply true or
