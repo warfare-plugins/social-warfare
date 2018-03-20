@@ -58,16 +58,32 @@ class SWP_Database_Migration {
             'sideIColorSet' => 'float_single_colors',
             'swp_twitter_card'  => 'twitter_cards',
             'twitterID'     => 'twitter_id',
+            'pinterestID'   => 'pinterest_id',
+            'facebookPublisherUrl'  => 'facebook_publisher_url',
+            'facebookAppID' => 'facebook_app_id',
             'sniplyBuster'  => 'frame_buster',
             'linkShortening'=> 'bitly_authentication',
             'cacheMethod'   => 'cache_method',
-            'google_analytics' => 'google_analytics',
+            'googleAnalytics' => 'google_analytics',
             'analyticsMedium'   => 'analytics_medium',
             'analyticsCampaign' => 'analytics_campaign',
             'advanced_pinterest_image' => 'pin_browser_extension',
             'advanced_pinterest_image_location' => 'pinterest_image_location',
             'advanced_pinterest_fallback'   => 'pinterest_fallback',
             'recovery_custom_format'    => 'recovery_permalink',
+            'cttTheme'  => 'ctt_theme',
+            'cttCSS'    => 'ctt_css',
+            'sideCustomColor'   => 'single_custom_color',
+
+
+            //* Missed options, adding them here
+            //* because lazy says i don't want to find
+            //* where they fit above ^^
+
+            'locationSite'  => 'location_archive_categories',
+            'locationHome'  => 'location_home',
+            'floatBgColor'  => 'float_background_color',
+            'orderOfIconsSelect'    => 'order_of_icons',
 
 
             //* Choices names
@@ -85,7 +101,25 @@ class SWP_Database_Migration {
             'ccOutlines'    => 'custom_color_outlines',
             'totesAlt'      => 'totals_right',
             'totesAltLeft'  => 'totals_left',
+
+            //* Missed choices,
+            //* same reason as above ^^
+            'fullWidth' => 'full_width',
+            'floatLeftMobile'   => 'float_mobile',
+
         );
+
+        $removals = [
+            'dashboardShares',
+            'rawNumbers',
+            'notShowing',
+            'visualEditorBug',
+            'loopFix',
+            'locationrevision',
+            'locationattachment',
+
+
+        ];
 
         $migrations = array();
 
