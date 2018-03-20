@@ -9,8 +9,9 @@ class SWP_Addon_Registration extends SWP_Option_Text {
         parent::__construct( $name, $key ) ;
         $this->display_name = 'Social Warfare - ' . $name;
         $this->set_key( $key );
-        $this->license_key = '';
-        $this->product_id = '';
+        $this->license_key = $this->get_license_key();
+        $this->product_id = 63157;
+        $this->version = '2.3.5';
     }
 
     public function render_HTML() {
@@ -31,6 +32,11 @@ class SWP_Addon_Registration extends SWP_Option_Text {
         $this->html = $html;
 
         return $html;
+    }
+
+    public function get_license_key() {
+        return '3034dd4c7d9dda6fe924fd59aa83fca3';
+        return $this->user_options( $this->key . "_license_key" );
     }
 
     protected function not_registered() {
@@ -88,7 +94,7 @@ class SWP_Addon_Registration extends SWP_Option_Text {
             </div>
 
             <div class="sw-grid sw-col-300">
-                <a href="#" class="unregister-plugin button sw-navy-button" swp-addon="<?php echo $registration['key']; ?>"  swp-item-id="<?php echo $registration["product_id"]; ?>">
+                <a href="#" class="unregister-plugin button sw-navy-button" swp-addon="<?php echo $this->key ?>"  swp-item-id="<?php echo $this->product_id; ?>">
                     <?php _e( 'Unregister Plugin' , 'social-warfare' ); ?>
                 </a>
             </div>
