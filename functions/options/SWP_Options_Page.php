@@ -27,17 +27,21 @@ class SWP_Options_Page {
     }
 
     public function init() {
-        $this->init_display_tab();
-        $this->init_styles_tab();
-        $this->init_social_tab();
-        $this->init_advanced_tab();
-        $this->init_registration_tab();
+        $swp_user_options = swp_get_user_options( true );
+        // echo "<pre>";`
+        // var_export($swp_user_options);
+        // die();`
+        $this->init_display_tab()
+            ->init_styles_tab()
+            ->init_social_tab()
+            ->init_advanced_tab()
+            ->init_registration_tab();
 
         $Pro = new SWP_Pro_Options_Page();
-        // $Pro->update_display_tab();
-        // $Pro->update_styles_tab();
-        // $Pro->update_social_tab();
-        // $Pro->update_advanced_tab();
+        $Pro->update_display_tab()
+            ->update_styles_tab()
+            ->update_social_tab()
+            ->update_advanced_tab();
 
         $this->render_HTML();
     }
@@ -159,9 +163,15 @@ class SWP_Options_Page {
         $display = new SWP_Options_Page_Tab( 'Display', 'display' );
 		$display->set_priority( 10 );
 
+            $social_networks = new SWP_Options_Page_Section( 'Social Networks' );
+            $social_networks->set_priority( 10 )
+                ->set_description( 'Drag & Drop to activate and order your share buttons.' );
+
+
+
     		$share_counts = new SWP_Options_Page_Section( 'Share Counts' );
     	    $share_counts->set_description( 'Use the toggles below to determine how to display your social proof.' )
-                ->set_priority( 10 )
+                ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
 
                 //* toteseach => network_count
@@ -178,10 +188,9 @@ class SWP_Options_Page {
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
-            /* Twitter Cards   */
             $twitter_cards = new SWP_Options_Page_Section( 'Twitter Cards' );
             $twitter_cards->set_description( 'Activating Twitter Cards will cause the plugin to output certain meta tags in the head section of your site\'s HTML. Twitter cards are pretty much exactly like Open Graph meta tags, except that there is only one network, Twitter, that looks at them.' )
-                ->set_priority( 20 )
+                ->set_priority( 30 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-twitter-cards/' );
 
                     $twitter_card = new SWP_Option_Toggle( 'Show Twitter Cards', 'twitter_cards' );
@@ -191,22 +200,43 @@ class SWP_Options_Page {
 
                 $twitter_cards->add_option( $twitter_card );
 
-            /* Position Share Buttons  */
             $button_position = new SWP_Options_Page_Section( 'Position Share Buttons' );
             $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
-                ->set_priority( 30 )
+                ->set_priority( 40 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
+
 
             //* TODO: Create the mini-table for this option.
 
-            /* Yummly Display Control  */
+            $static_options = $this->get_static_options_array();
+
+            //* locationHome => location_home
+            $location_home = new SWP_Option_Select( 'Home Page', 'location_home' );
+            $location_home->set_choices( $static_options )
+                ->set_size( 'two-thirds' )
+                ->set_default( 'none' )
+                ->set_priority( 30 );
+
+
+            //* locationSite => location_archive_categories
+            $location_archive_categories = new SWP_Option_Select( 'Archive & Categories', 'location_archive_categories' );
+            $location_archive_categories->set_choices( $static_options )
+                ->set_size( 'two-thirds' )
+                ->set_default( 'below' )
+                ->set_priority( 40 );
+
+            $button_position->add_options( [$location_home, $location_archive_categories] );
+
+            //* TODO: Create the mini-table for this option.
+
+
+
             $yummly_display = new SWP_Options_Page_Section( 'Yummy Display Control' );
             $yummly_display->set_description( 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.' )
-                ->set_priority( 50 )
+                ->set_priority( 60 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-yummly-display-control/' );
 
-        //* TODO: Create the mini-table for this option.
-        $display->add_sections( [$share_counts, $twitter_cards, $button_position, $yummly_display] );
+        $display->add_sections( [$social_networks, $share_counts, $twitter_cards, $button_position, $yummly_display] );
 
         $this->tabs->display = $display;
 
@@ -333,13 +363,16 @@ class SWP_Options_Page {
             $twitter_id = new SWP_Option_Text( 'Twitter Username', 'twitter_id' );
             $twitter_id->set_size( 'two-thirds' );
 
+            //* pinterestID => pinterest_id
             $pinterest_id = new SWP_Option_Text( 'Pinterest Username', 'pinterest_id' );
             $pinterest_id->set_size( 'two-thirds' );
 
+            //* facebookPublisherUrl => facebook_publisher_url
             $facebook_publisher_url = new SWP_Option_Text( 'Facebook Page URL', 'facebook_publisher_url' );
             $facebook_publisher_url->set_size( 'two-thirds' );
 
-            $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
+            //* facebookAppID => facebook_app_id
+            $facebook_app_id = new SWP_Option_Text( 'Facebook 1App ID', 'facebook_app_id' );
             $facebook_app_id->set_size( 'two-thirds' );
 
         $sitewide_identity->add_options( [$twitter_id, $pinterest_id, $facebook_publisher_url, $facebook_app_id] );
@@ -369,8 +402,6 @@ class SWP_Options_Page {
             $frame_buster->add_option( $frame_buster_toggle );
 
         //* TODO: Add the Bitly Authentication Button.
-
-
 
         $caching_method = new SWP_Options_Page_Section( 'Caching Method' );
         $caching_method->set_priority( 60 );
@@ -422,6 +453,15 @@ class SWP_Options_Page {
         $this->tabs->registration = $registration;
 
         return $this;
+    }
+
+    protected function get_static_options_array() {
+        return [
+            'above'=> 'Above the Content',
+            'below' => 'Below the Content',
+            'both' => 'Both Above and Below the Content',
+            'none' => 'None/Manual Placement'
+        ];
     }
 
     protected function get_custom_post_types() {
