@@ -80,6 +80,10 @@ class SWP_Abstract {
 
     public function __construct( $name ) {
         $this->set_name( $name );
+        $this->user_options = get_option( 'social_warfare_settings' );
+        // echo "<pre>";
+        // var_export( $this->user_options); die();
+
     }
 
     public function get_property( $property ) {
@@ -130,14 +134,14 @@ class SWP_Abstract {
 
     protected function render_dependency() {
         if ( !empty( $this->dependency) ) :
-            return ' data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '"';
+            return ' data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '" ';
         endif;
 
         return '';
     }
 
     protected function render_premium() {
-        if ( $this->premium === true ) :
+        if ( isset( $this->premium ) ) :
             return ' premium="true" ';
         endif;
 
@@ -182,17 +186,17 @@ class SWP_Abstract {
     *
     */
 	public function set_premium( $premium_addon ) {
-        $addons = [ 'pro' ];
-        $addon_string = PHP_EOL;
-        foreach( $addons as $addon ) {
-            $addon_string . $addon . PHP_EOL;
-        }
 		if ( !is_string( $premium_addon ) ) {
-			$this->_throw( "Please provide a string that is one of the following: " . $addons );
+            $addons = [ 'pro' ];
+            $addon_string = PHP_EOL;
+
+            foreach( $addons as $addon ) {
+                $addon_string . $addon . PHP_EOL;
+            }
+			$this->_throw( "Please provide a string that is one of the following: " . var_export($addons ) );
 		}
 
-		$this->premium = true;
-		$this->premium_addon = $premium_addon;
+		$this->premium = $premium_addon;
 
 		return $this;
 	}
