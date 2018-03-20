@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Option_Registration extends SWP_Abstract {
+class SWP_Addon_Registration extends SWP_Abstract {
     public function __construct( $name ) {
         parent::__construct( $name) ;
         $this->display_name = 'Social Warfare - ' . $name;
