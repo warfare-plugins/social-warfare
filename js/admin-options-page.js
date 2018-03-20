@@ -86,9 +86,9 @@
 	*********************************************************/
 	function tabNavInit() {
 		$( '.sw-tab-selector' ).on( 'click', function( event ) {
-			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
+			event.preventDefault();
 
-			$( 'html, body' ).animate( { scrollTop: 0 }, 0 );
+			$( 'html, body' ).animate( { scrollTop: 0 }, 300 );
 
 			var tab = $( this ).attr( 'data-link' );
 
@@ -266,73 +266,31 @@
 
 	function updateButtonPreviews() {
 
+		var defaults = {
+				fullColor: 'Full Color',
+				lightGray: 'Light Gray',
+				mediumGray: 'Medium Gray',
+				darkGray: 'Dark Gray',
+				lgOutlines: 'Light Gray Outlines',
+				mdOutlines: 'Medium Gray Outlines',
+				dgOutlines: 'Dark Gray Outlines',
+				colorOutlines: 'Color Outlines',
+				customColor: 'Custom Color',
+				ccOutlines: 'Custom Color Outlines'
+			};
+
 		var availableOptions = {
-			flatFresh: {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray',
-				lgOutlines: 'Light Gray Outlines',
-				mdOutlines: 'Medium Gray Outlines',
-				dgOutlines: 'Dark Gray Outlines',
-				colorOutlines: 'Color Outlines',
-				customColor: 'Custom Color',
-				ccOutlines: 'Custom Color Outlines'
-			},
-			leaf: {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray',
-				lgOutlines: 'Light Gray Outlines',
-				mdOutlines: 'Medium Gray Outlines',
-				dgOutlines: 'Dark Gray Outlines',
-				colorOutlines: 'Color Outlines',
-				customColor: 'Custom Color',
-				ccOutlines: 'Custom Color Outlines'
-			},
-			pill: {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray',
-				lgOutlines: 'Light Gray Outlines',
-				mdOutlines: 'Medium Gray Outlines',
-				dgOutlines: 'Dark Gray Outlines',
-				colorOutlines: 'Color Outlines',
-				customColor: 'Custom Color',
-				ccOutlines: 'Custom Color Outlines'
-			},
+			flatFresh: defaults,
+			leaf: defaults,
+			pill: defaults,
 			threeDee: {
 				fullColor: 'Full Color',
 				lightGray: 'Light Gray',
 				mediumGray: 'Medium Gray',
 				darkGray: 'Dark Gray'
 			},
-			connected: {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray',
-				lgOutlines: 'Light Gray Outlines',
-				mdOutlines: 'Medium Gray Outlines',
-				dgOutlines: 'Dark Gray Outlines',
-				colorOutlines: 'Color Outlines',
-				customColor: 'Custom Color',
-				ccOutlines: 'Custom Color Outlines'
-			},
-			shift: {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray',
-				lgOutlines: 'Light Gray Outlines',
-				mdOutlines: 'Medium Gray Outlines',
-				dgOutlines: 'Dark Gray Outlines',
-				colorOutlines: 'Color Outlines',
-				customColor: 'Custom Color',
-				ccOutlines: 'Custom Color Outlines'
-			}
+			connected: defaults,
+			shift: defaults
 		};
 
 		// Check if we are on the admin page
