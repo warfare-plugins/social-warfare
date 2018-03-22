@@ -176,45 +176,10 @@ class SWP_Options_Page {
 
                 $icons = isset( $this->user_options['new_order_of_icons'] ) ? $this->user_options['new_order_of_icons'] : $this->icons;
 
-                $html_active = '<div class="sw-grid sw-col-300">';
-                    $html_active .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
-                $html_active .= '</div>';
-
-                $html_active .= '<div class="sw-grid sw-col-620 sw-fit">';
-                    $html_active .= '<div class="sw-active sw-buttons-sort">';
-
-                    foreach ( $this->icons['content'] as $network => $data ) {
-                        $html_active .= '<i class="sw sw-' . $network . '-icon';
-                        $html_active .= ' data-network="' . $network . '"';
-
-                        if ( $data['premium'] === 'premium' ) :
-                            $html_active .= ' premium="true"';
-                        endif;
-
-                        $html_active .= ' tabindex="0" role="button" aria-label="' . $network . '">';
-                        $html_active .= '</i>';
-                    }
-
-                    $html_active .= '</div>';
-                $html_active .= '</div>';
-
-                $active->add_html( $html_active );
+                $active->do_active_buttons( $icons );
 
                 $inactive = new SWP_Section_HTML( 'Inactive' );
-
-                $html_inactive = '<div class="sw-grid sw-col-300">';
-                    $html_inactive .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
-                $html_inactive .=  '</div>';
-
-                $html_inactive .=  '<div class="sw-grid sw-col-620 sw-fit">';
-                    $html_inactive .=  '<div class="sw-inactive sw-buttons-sort">';
-
-                    //* wut
-
-                    $html_inactive .= '</div>';
-                $html_inactive .= '</div>';
-
-                $inactive->add_html( $html_inactive );
+                $inactive->do_inactive_buttons();
 
                 $social_networks->add_options( [$active, $inactive] );
 
@@ -282,9 +247,26 @@ class SWP_Options_Page {
         return $this;
     }
 
+    private function render_share_buttons_HTML() {
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'data-dep="' . $option['dep'] . '" data-dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
+        $html .= '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_1'] . '</p></div>';
+        $html .= '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_2'] . '</p></div>';
+        $html .= '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_3'] . '</p></div>';
+        $html .= '<div class="sw-premium-blocker"></div>';
+        $html .= '</div>';
+    }
+
     protected function init_styles_tab() {
         $styles = new SWP_Options_Page_Tab( 'Styles', 'styles' );
         $styles->set_priority( 20 );
+
+            $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
+            $buttons_preview->set_priority( 10 );
+            $buttons_preview->do_buttons_preview();
+
+
+
+
 
             $total_counts = new SWP_Options_Page_Section( 'Total Counts' );
             $total_counts->set_description( 'Customize how the "Total Shares" section of your share buttons look.' )
