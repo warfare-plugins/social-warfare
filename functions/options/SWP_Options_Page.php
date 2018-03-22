@@ -24,6 +24,8 @@ class SWP_Options_Page {
         $this->tabs = new stdClass();
         $this->swp_registration = true;
         add_action( 'admin_menu', array( $this, 'options_page') );
+
+        $this->icons = apply_filters( 'swp_button_options', array() );
     }
 
     public function init() {
@@ -37,11 +39,13 @@ class SWP_Options_Page {
             ->init_advanced_tab()
             ->init_registration_tab();
 
-        $Pro = new SWP_Pro_Options_Page();
-        $Pro->update_display_tab()
-            ->update_styles_tab()
-            ->update_social_tab()
-            ->update_advanced_tab();
+        if ( class_exists( 'SWP_Pro_Options_Page' ) ) :
+            $Pro = new SWP_Pro_Options_Page();
+            $Pro->update_display_tab()
+                ->update_styles_tab()
+                ->update_social_tab()
+                ->update_advanced_tab();
+        endif;
 
         $this->render_HTML();
     }
@@ -167,7 +171,52 @@ class SWP_Options_Page {
             $social_networks->set_priority( 10 )
                 ->set_description( 'Drag & Drop to activate and order your share buttons.' );
 
+                //* These two sections are unique and need special HTML.
+                $active = new SWP_Section_HTML( 'Active' );
 
+                $icons = isset( $this->user_options['new_order_of_icons'] ) ? $this->user_options['new_order_of_icons'] : $this->icons;
+
+                $html_active = '<div class="sw-grid sw-col-300">';
+                    $html_active .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
+                $html_active .= '</div>';
+
+                $html_active .= '<div class="sw-grid sw-col-620 sw-fit">';
+                    $html_active .= '<div class="sw-active sw-buttons-sort">';
+
+                    foreach ( $this->icons['content'] as $network => $data ) {
+                        $html_active .= '<i class="sw sw-' . $network . '-icon';
+                        $html_active .= ' data-network="' . $network . '"';
+
+                        if ( $data['premium'] === 'premium' ) :
+                            $html_active .= ' premium="true"';
+                        endif;
+
+                        $html_active .= ' tabindex="0" role="button" aria-label="' . $network . '">';
+                        $html_active .= '</i>';
+                    }
+
+                    $html_active .= '</div>';
+                $html_active .= '</div>';
+
+                $active->add_html( $html_active );
+
+                $inactive = new SWP_Section_HTML( 'Inactive' );
+
+                $html_inactive = '<div class="sw-grid sw-col-300">';
+                    $html_inactive .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
+                $html_inactive .=  '</div>';
+
+                $html_inactive .=  '<div class="sw-grid sw-col-620 sw-fit">';
+                    $html_inactive .=  '<div class="sw-inactive sw-buttons-sort">';
+
+                    //* wut
+
+                    $html_inactive .= '</div>';
+                $html_inactive .= '</div>';
+
+                $inactive->add_html( $html_inactive );
+
+                $social_networks->add_options( [$active, $inactive] );
 
     		$share_counts = new SWP_Options_Page_Section( 'Share Counts' );
     	    $share_counts->set_description( 'Use the toggles below to determine how to display your social proof.' )
@@ -188,17 +237,7 @@ class SWP_Options_Page {
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
-            $twitter_cards = new SWP_Options_Page_Section( 'Twitter Cards' );
-            $twitter_cards->set_description( 'Activating Twitter Cards will cause the plugin to output certain meta tags in the head section of your site\'s HTML. Twitter cards are pretty much exactly like Open Graph meta tags, except that there is only one network, Twitter, that looks at them.' )
-                ->set_priority( 30 )
-                ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-twitter-cards/' );
 
-                    $twitter_card = new SWP_Option_Toggle( 'Show Twitter Cards', 'twitter_cards' );
-                    $twitter_card->set_default( true )
-                        ->set_priority( 10 )
-                        ->set_size( 'two-thirds' );
-
-                $twitter_cards->add_option( $twitter_card );
 
             $button_position = new SWP_Options_Page_Section( 'Position Share Buttons' );
             $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
@@ -236,7 +275,7 @@ class SWP_Options_Page {
                 ->set_priority( 60 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-yummly-display-control/' );
 
-        $display->add_sections( [$social_networks, $share_counts, $twitter_cards, $button_position, $yummly_display] );
+        $display->add_sections( [$social_networks, $share_counts, $button_position, $yummly_display] );
 
         $this->tabs->display = $display;
 
