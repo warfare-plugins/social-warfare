@@ -12,9 +12,8 @@
  * @since     2.4.0 | 19 FEB 2018 | Created
  *
  */
+
 class Social_Warfare {
-
-
 	/**
 	 * The magic method used to instantiate this class.
 	 *
@@ -28,7 +27,6 @@ class Social_Warfare {
 	 *
 	 */
 	public function __construct() {
-
 		$this->load_classes();
 		$this->instantiate_classes();
 
@@ -274,8 +272,6 @@ class Social_Warfare {
 
 
 		// Options: Classes used to generate and organize the plugin's options.
-		// require_once SWP_PLUGIN_DIR . '/functions/options/SWP_Options_Abstract.php';
-
         $options = [
             'Option',
             'Options_Page',
@@ -284,7 +280,8 @@ class Social_Warfare {
             'Option_Toggle',
             'Option_Select',
             'Option_Text',
-            'Option_Textarea'
+            'Option_Textarea',
+            'Section_HTML'
         ];
 
         $this->load_files( '/functions/options/', $options );
@@ -369,5 +366,7 @@ require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
 	// require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
-    add_action( 'admin_menu', 'Social_Warfare' );
+    add_action( 'init', function() {
+        new Social_Warfare();
+    } );
 }
