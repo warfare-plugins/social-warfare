@@ -137,15 +137,16 @@ class SWP_Abstract {
             return ' data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '" ';
         endif;
 
-        return '';
+        return ' ';
     }
 
     protected function render_premium() {
+        return;
         if ( isset( $this->premium ) ) :
             return ' premium="true" ';
         endif;
 
-        return '';
+        return ' ';
     }
 
     /**
