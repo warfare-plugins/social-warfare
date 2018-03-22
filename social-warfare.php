@@ -20,8 +20,9 @@ define( 'SWP_VERSION' , '2.3.5' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
 define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'SWP_ADDON_DIR', dirname( __FILE__ . '/..') );
 define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
 
 // Load the main Social_Warfare class and fire up the plugin.
 require_once SWP_PLUGIN_DIR . '/functions/Social_Warfare.php';
-new Social_Warfare();
+// new Social_Warfare();
