@@ -21,10 +21,10 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
 	public function __construct( $name ) {
 		$this->options = new stdClass();
-
         $this->set_name( $name );
         $this->key = $this->name_to_key( $name );
     }
+
 
     /**
      * The related link to our KnowledgeBase article.
@@ -39,6 +39,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         return $this;
     }
+
 
     /**
      * The description text appearing under the section's name.
@@ -57,6 +58,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $this;
     }
 
+
     /**
      * Adds a user setting option to the section.
      * @param mixed $option One of the SWP_Option child classes.
@@ -68,7 +70,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         $type = get_class( $option );
 
-        if ( !in_array( $type, $types ) ) {
+        if ( !( in_array( $type, $types ) || is_subclass_of( $option, 'SWP_Option' ) ) ) {
             $this->_throw("Requres one of the SWP_Option child classes.");
         }
 
@@ -96,6 +98,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         return $this;
     }
+
 
 	public function render_HTML() {
         //* The opening tag, which may or may not have dependencies or be premium.
@@ -138,6 +141,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $this;
     }
 
+
     private function create_title() {
         //* Set the support link and title.
         $title = '<h2>';
@@ -146,6 +150,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         return $title;
     }
+
 
     private function create_description() {
         $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_subtitle_wrapper">';
@@ -160,6 +165,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $description;
     }
 
+
     private function render_options() {
         $options = '';
 
@@ -169,5 +175,4 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
         return $options;
     }
-
 }
