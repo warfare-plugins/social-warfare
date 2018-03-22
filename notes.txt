@@ -1,0 +1,84 @@
+New text domains
+
+'Show Twitter Cards'
+
+
+= = = = =
+
+Need a way to add in arbitrary paragraph fields.
+
+Display -> Position Share buttons has an extra table for the options. This needs its own thing.
+
+Display -> Yummly is the same.
+
+
+When creating new objects, use this order of operations for consistency.
+
+
+/**
+* Order of operation
+*  name
+*  description (for Text)
+*  type (for Text)
+*  priority
+*  default
+*  size
+*  choices
+*  columns
+*  divider
+*  premium
+*
+*/
+
+= = = = =
+
+Using output buffering:
+
+The ob_start() and ob_end_clean() functions are incredibly useful for rendering large chunks of HTML.
+
+For snippets of HTML, using typical techniques are often fine.
+
+<?php
+$html = "<p>I'm a paragraph, look at me!!!</p>";
+echo $html;
+?>
+
+When you have a huge code block though, things can quickly become messy. Output buffering prevents much of that mess, especially if there are not a lot of variables that need to be inserted. @see SWP_Section_HTML->do_buttons_preview for a full example.
+
+<?php
+ob_start() ?>
+
+<div class="swp-demo-div with-double-quotes">
+    <p>And I'm an even sweeter div, 'cuz I can use any kinds of quotes and can be as long as forever.</p>
+    <span>
+        <ul>
+            <li>Things</li>
+            <li>More things</li>
+            <li>Oops, one more thing.</li>
+        </ul>
+    </span>
+</div>
+
+<?php
+
+$html = ob_end_clean();
+//* If you want to go ahead and immediately print, you can just echo it out.
+echo $html;
+?>
+
+Instead of immediately printing the markup to the page (like Echo would do), the buffer instead holds it in memory. Calling ob_end_clean will then send that prepared markup to the variable. There are other functions to do this, but ob_end_clean is the one most suitable most often.
+
+The other awesome thing about output buffering is you can still pop into PHP if you need to insert a variable.
+
+<?php
+ob_start() ?>
+<div class="<? echo $class ?>">This div has a mystery class. . . we'll see what it is when printed to the page, I guess.</div>
+
+<?php
+
+$html = ob_end_clean();
+//* Or if you want to save the HTML for later, return it.
+return $html;
+?>
+
+
