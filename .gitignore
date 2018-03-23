@@ -3,3 +3,5 @@ functions/admin/SWP_Options_Pseudo_Code.php
 remote-sync.json
 functions/admin/SWP_Options_Page.php
 functions/options/SWP_Option.php
+functions/options/options-page-working.php
+functions/options/options.txt

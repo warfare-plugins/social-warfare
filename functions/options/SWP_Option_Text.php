@@ -55,6 +55,8 @@ class SWP_Option_Text extends SWP_Option {
 
         $html .= '</div>';
 
+        $this->html = $html;
+
         return $html;
     }
 }

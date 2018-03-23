@@ -134,7 +134,7 @@ class SWP_Abstract {
 
     protected function render_dependency() {
         if ( !empty( $this->dependency) ) :
-            return ' data-dep="' . $this->dependency->parent . '" data-dep_val="' . json_encode($this->dependency->values) . '" ';
+            return ' data-dep="' . $this->dependency->parent . '" data-dep_val=\'' . json_encode($this->dependency->values) . '\'';
         endif;
 
         return ' ';
