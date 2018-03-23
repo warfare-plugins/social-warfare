@@ -49,9 +49,6 @@ function swpConditionalFields() {
 
 		// Fetch the conditional values
 		var condition = $(this).data( 'dep' );
-		console.log(condition);
-		console.log('[data-swp-name="' + condition + '"]');
-		console.log($('[data-swp-name=\'' + condition + '\']'));
 		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
 
 		// Check if we're on the options page or somewhere else
@@ -61,19 +58,13 @@ function swpConditionalFields() {
 			var conditionEl = $( '[name="' + condition + '"]' )[0];
 		}
 
-		console.log(typeof conditionEl);
-
 		var value;
 
 		if (typeof conditionEl === 'undefined') {
-			console.log("Missed it the first time");
 			conditionEl = $( '[name="' + condition + '"]' )[0];
 
 			if (typeof conditionEl === 'undefined') {
-				console.log("Still dont' have it");
-				console.log(condition);
 				conditionEl = $( '[field$=' + condition + ']' )[0];
-				console.log(conditionEl);
 			}
 		}
 
