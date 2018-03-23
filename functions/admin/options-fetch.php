@@ -26,101 +26,19 @@ $swp_user_options = swp_get_user_options( is_admin() );
  * @return array $options The modified options array
  */
 function swp_get_user_options( $admin = false ) {
-	$options = get_option( 'socialWarfareOptions', array() );
+	$options = get_option( 'social_warfare_settings', array() );
+	return $options;
+
 
 	if(isset($options['activate_tweet_counts']) && true == $options['activate_tweet_counts'] && !isset($options['tweet_count_source']) ) {
 		$options['tweet_count_source'] = 'newsharecounts';
 	}
-
-	$defaults = array(
-		'locationSite'                      => 'below',
-		'locationHome'				        => 'none',
-		'location_post'				        => 'below',
-		'location_page'				        => 'below',
-		'totes'                             => true,
-		'totesEach'                         => true,
-		'twitterID'                         => false,
-		'swp_twitter_card'                  => true,
-		'visualTheme'                       => 'flatFresh',
-		'dColorSet'                         => 'fullColor',
-		'iColorSet'                         => 'fullColor',
-		'oColorSet'                         => 'fullColor',
-		'sideDColorSet'                     => 'fullColor',
-		'sideIColorSet'                     => 'fullColor',
-		'sideOColorSet'                     => 'fullColor',
-		'floatStyleSource'                  => true,
-		'buttonSize'                        => 1,
-		'buttonFloat'                       => 'fullWidth',
-		'sideReveal'                        => 'slide',
-		'swp_float_scr_sz'                  => 1100,
-		'cttTheme'                          => 'style1',
-		'cttCSS'							=> "",
-		'twitter_shares'                    => false,
-		'float'                             => true,
-		'floatOption'                       => 'bottom',
-		'floatBgColor'                      => '#ffffff',
-		'floatStyle'                        => 'default',
-		'float_vertical'					=> 'center',
-		'customColor'                       => '#000000',
-		'recover_shares'                    => false,
-		'recovery_format'                   => 'unchanged',
-		'recovery_protocol'                 => 'unchanged',
-		'recovery_prefix'                   => 'unchanged',
-		'swDecimals'                        => 0,
-		'swp_decimal_separator'             => 'period',
-		'swTotesFormat'                     => 'totesalt',
-		'googleAnalytics'                   => false,
-		'dashboardShares'                   => true,
-		'linkShortening'                    => false,
-		'minTotes'                          => 0,
-		'cacheMethod'                       => 'advanced',
-		'full_content'				        => false,
-		'rawNumbers'                        => false,
-		'notShowing'                        => false,
-		'visualEditorBug'                   => false,
-		'loopFix'                           => false,
-		'sniplyBuster'                      => false,
-		'analyticsMedium'                   => 'social',
-		'analyticsCampaign'                 => 'SocialWarfare',
-		'swp_click_tracking'                => false,
-		'orderOfIconsSelect'                => 'manual',
-		'pinit_toggle'                      => false,
-		'pinit_location_horizontal'         => 'center',
-		'pinit_location_vertical'           => 'top',
-		'pinit_min_width'                   => '200',
-		'pinit_min_height'                  => '200',
-		'pinit_image_source'                => 'image',
-		'pinit_image_description'           => 'alt_text',
-		'utm_on_pins'	                    => false,
-		'advanced_pinterest_image'          => false,
-		'advanced_pinterest_image_location' => 'hidden',
-		'advanced_pinterest_fallback'       => 'all',
-		'emphasize_icons'                   => 0,
-		'floatLeftMobile'                   => 'bottom',
-		'force_new_shares'                  => false,
-		'newOrderOfIcons' => array(
-			'active' => array(
-				'twitter'    => 'Twitter',
-				'linkedIn'   => 'LinkedIn',
-				'pinterest'  => 'Pinterest',
-				'facebook'   => 'Facebook',
-				'googlePlus' => 'Google Plus',
-			),
-		),
-	);
 
 	/**
 	 * Set the default og:type values for each post type
 	 *
 	 */
 	$swp_post_types = swp_get_post_types();
-	if(!empty($swp_post_types)):
-		foreach($swp_post_types as $swp_post_type):
-			$defaults['swp_og_type_'.$swp_post_type] = 'article';
-		endforeach;
-	endif;
-
-	$options = array_merge( $defaults, $options );
 
 	// Make the side custom absorb the main custom color if they haven't set one yet.
 	if(empty($options['sideCustomColor']) ):
@@ -185,17 +103,6 @@ function swp_get_user_options( $admin = false ) {
 	 * Unset any buttons that may have been put into the options but are no longer actually available
 	 *
 	 */
-	$icons_array = array(
-		'type'		=> 'buttons'
-	);
-	$icons_array = apply_filters( 'swp_button_options' , $icons_array );
-	foreach($options['newOrderOfIcons'] as $icon):
-		if(!isset($icons_array['content'][$icon])):
-			unset($options['newOrderOfIcons'][$icon]);
-		endif;
-	endforeach;
-
-	return $options;
 }
 
 /**
@@ -229,7 +136,7 @@ function swp_update_options( $options ) {
 
 	unset( $options['orderOfIcons'] );
 
-	return update_option( 'socialWarfareOptions', $options );
+	return update_option( 'social_warfare_settings', $options );
 }
 
 /**
