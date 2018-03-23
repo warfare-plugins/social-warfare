@@ -202,45 +202,65 @@ class SWP_Options_Page {
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
-
-
             $button_position = new SWP_Options_Page_Section( 'Position Share Buttons' );
             $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
                 ->set_priority( 40 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
 
-
-            //* TODO: Create the mini-table for this option.
-
             $static_options = $this->get_static_options_array();
 
             //* locationHome => location_home
-            $location_home = new SWP_Option_Select( 'Home Page', 'location_home' );
-            $location_home->set_choices( $static_options )
-                ->set_size( 'two-thirds' )
-                ->set_default( 'none' )
-                ->set_priority( 30 );
+            // $location_home = new SWP_Option_Select( 'Home Page', 'location_home' );
+            // $location_home->set_choices( $static_options )
+            //     ->set_size( 'two-thirds' )
+            //     ->set_default( 'none' )
+            //     ->set_priority( 30 );
 
+            // //* locationSite => location_archive_categories
+            // $location_archive_categories = new SWP_Option_Select( 'Archive & Categories', 'location_archive_categories' );
+            // $location_archive_categories->set_choices( $static_options )
+            //     ->set_size( 'two-thirds' )
+            //     ->set_default( 'below' )
+            //     ->set_priority( 40 );
 
-            //* locationSite => location_archive_categories
-            $location_archive_categories = new SWP_Option_Select( 'Archive & Categories', 'location_archive_categories' );
-            $location_archive_categories->set_choices( $static_options )
-                ->set_size( 'two-thirds' )
-                ->set_default( 'below' )
-                ->set_priority( 40 );
+            // $button_position->add_options( [$location_home, $location_archive_categories] );
 
-            $button_position->add_options( [$location_home, $location_archive_categories] );
+            $post_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
+            array_push( $post_types, 'page', 'post' );
 
-            //* TODO: Create the mini-table for this option.
+            $panel_locations = [
+                'above' => 'Above the Content',
+                'below' => 'Below the Content',
+                'both'  => 'Both Above and Below the Content',
+                'none'  => 'None/Manual Placement'
+            ];
 
+            $float_locations = [
+                'on'    => 'On',
+                'off'   => 'Off'
+            ];
 
+            //* TODO: This does not exactly match the original layout.
+            //* It needs to be a table of options, not a column.
+            foreach( $post_types as $index => $post ) {
+                $priority = ($index + 1) * 10;
 
-            $yummly_display = new SWP_Options_Page_Section( 'Yummy Display Control' );
-            $yummly_display->set_description( 'If you would like the Yummly button to only display on posts of a specific category or tag, enter the category or tag name below (e.g "Recipe"). Leave blank to display the button on all posts.' )
-                ->set_priority( 60 )
-                ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-yummly-display-control/' );
+                $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'position_' . $post );
+                $panel->set_priority( $priority )
+                    ->set_size( 'two-thirds' )
+                    ->set_choices( $panel_locations )
+                    ->set_default( 'both' );
 
-        $display->add_sections( [$social_networks, $share_counts, $button_position, $yummly_display] );
+                $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_position_' . $post );
+                $float->set_priority( $priority + 5 )
+                    ->set_size( 'two-thirds' )
+                    ->set_choices( $float_locations )
+                    ->set_default( 'on' );
+
+                $button_position->add_options( [$panel, $float] );
+            }
+
+        $display->add_sections( [$social_networks, $share_counts, $button_position] );
 
         $this->tabs->display = $display;
 
@@ -263,10 +283,6 @@ class SWP_Options_Page {
             $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
             $buttons_preview->set_priority( 10 );
             $buttons_preview->do_buttons_preview();
-
-
-
-
 
             $total_counts = new SWP_Options_Page_Section( 'Total Counts' );
             $total_counts->set_description( 'Customize how the "Total Shares" section of your share buttons look.' )
@@ -332,6 +348,16 @@ class SWP_Options_Page {
                     ->set_size( 'two-fourths' )
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
+                //* sideReveal => transition
+                $float_transition = new SWP_Option_Select( 'Transition', 'transition' );
+                $float_transition->set_priority( 40 )
+                    ->set_choices( [
+                        'slide' => 'Slide In / Slide Out',
+                        'fade'  => 'Fade In / Fade Out'
+                    ] )
+                    ->set_default( 'slide' )
+                    ->set_dependency( 'float_position', ['left', 'right']);
+
                 //* sideDColorSet => float_default_colors
                 $float_default_colors = new SWP_Option_Select( 'Default Color Set', 'default_colors' );
 
@@ -339,7 +365,7 @@ class SWP_Options_Page {
 
                 $float_default_colors->set_choices( $color_choices )
                     ->set_default( 'full_color' )
-                    ->set_priority( 30 )
+                    ->set_priority( 50 )
                     ->set_size( 'two-fourths' )
                     ->set_dependency( 'float_style_source', false );
 
@@ -361,7 +387,7 @@ class SWP_Options_Page {
                     ->set_priority( 100 )
                      ->set_dependency( 'float_position', ['top', 'bottom'] );
 
-                $floating_share_buttons->add_options( [$show_floating_panel, $float_position,
+                $floating_share_buttons->add_options( [$show_floating_panel, $float_position, $float_transition,
                     $float_screen_width, $float_default_colors,
                     $float_hover_colors, $float_single_colors,
                     $float_background_color] );
@@ -393,7 +419,7 @@ class SWP_Options_Page {
             $facebook_publisher_url->set_size( 'two-thirds' );
 
             //* facebookAppID => facebook_app_id
-            $facebook_app_id = new SWP_Option_Text( 'Facebook 1App ID', 'facebook_app_id' );
+            $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
             $facebook_app_id->set_size( 'two-thirds' );
 
         $sitewide_identity->add_options( [$twitter_id, $pinterest_id, $facebook_publisher_url, $facebook_app_id] );

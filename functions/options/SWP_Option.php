@@ -166,6 +166,7 @@ class SWP_Option extends SWP_Abstract {
 
         if ( !is_array( $values ) ) {
             $values = array( $values );
+
         }
 
         $this->dependency = new stdClass();
