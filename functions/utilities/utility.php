@@ -9,6 +9,56 @@
  */
 
 
+add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
+/**
+ * Handle the options save request inside of admin-ajax.php
+ *
+ * @since  unknown
+ * @return void
+ */
+function swp_store_the_settings() {
+	global $swp_user_options;
+	error_log( date( "H:m:s"));
+	error_log("swp_store_settings()");
+
+	error_log(var_export( $swp_user_options, true) );
+
+	if ( ! check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
+		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
+		die;
+	}
+
+	$data = wp_unslash( $_POST );
+
+	if ( empty( $data['settings'] ) ) {
+		wp_send_json_error( esc_html__( 'No settings to save.', 'social-warfare' ) );
+		die;
+	}
+
+	$settings = $data['settings'];
+	$options = $swp_user_options;
+
+	unset( $options['newOrderOfIcons']['active'] );
+	unset( $options['newOrderOfIcons']['inactive'] );
+
+	// Loop and check for checkbox values, convert them to boolean.
+	foreach ( $settings as $key => $value ) {
+		if ( 'true' == $value ) {
+			$options[ $key ] = true;
+		} elseif ( 'false' == $value ) {
+			$options[ $key ] = false;
+		} else {
+			$options[ $key ] = $value;
+		}
+	}
+
+	swp_update_options( $options );
+	echo json_encode($options);
+
+	die;
+}
+
+
  /**
   * A wrapper for the legacy version of the function
   *
@@ -390,7 +440,7 @@ function swp_get_license_key($key) {
 
 	if(is_swp_addon_registered($key)):
 
-		$options = get_option( 'socialWarfareOptions' );
+		$options = get_option( 'social_warfare_settings' );
 		$license = $options[$key.'_license_key'];
 		return $license;
 

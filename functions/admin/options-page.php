@@ -874,6 +874,8 @@ add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
  */
 function swp_store_the_settings() {
 	global $swp_user_options;
+	error_log( date( "H:m:s"));
+	error_log("swp_store_settings()");
 
 	if ( ! check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
 		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
