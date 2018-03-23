@@ -22,6 +22,7 @@ class SWP_Database_Migration {
      */
     public function is_migrated() {
         $option = get_option( 'social_warfare_settings' , false);
+        error_log(var_export($option, true));
 
         return $option;
     }
@@ -117,24 +118,22 @@ class SWP_Database_Migration {
             'loopFix',
             'locationrevision',
             'locationattachment',
-
-
         ];
 
         $migrations = array();
 
         //* Camel refers to the previous key in the options table
         //* whether or not it was camelCase.
-        foreach( $options as $camel => $value ) {
+        foreach( $options as $old => $value ) {
 
-            if ( array_key_exists( $camel, $map) ) {
+            if ( array_key_exists( $old, $map) ) {
                 //* We specified an update to the key.
-                $snake = $map[$camel];
-                $migrations[$snake] = $value;
+                $new = $map[$old];
+                $migrations[$new] = $value;
 
             } else {
                 //* The previous key was fine, keep it.
-                $migrations[$camel] = $value;
+                $migrations[$old] = $value;
             }
         }
 
