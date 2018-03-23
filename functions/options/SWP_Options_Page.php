@@ -209,22 +209,6 @@ class SWP_Options_Page {
 
             $static_options = $this->get_static_options_array();
 
-            //* locationHome => location_home
-            // $location_home = new SWP_Option_Select( 'Home Page', 'location_home' );
-            // $location_home->set_choices( $static_options )
-            //     ->set_size( 'two-thirds' )
-            //     ->set_default( 'none' )
-            //     ->set_priority( 30 );
-
-            // //* locationSite => location_archive_categories
-            // $location_archive_categories = new SWP_Option_Select( 'Archive & Categories', 'location_archive_categories' );
-            // $location_archive_categories->set_choices( $static_options )
-            //     ->set_size( 'two-thirds' )
-            //     ->set_default( 'below' )
-            //     ->set_priority( 40 );
-
-            // $button_position->add_options( [$location_home, $location_archive_categories] );
-
             $post_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
             array_push( $post_types, 'page', 'post' );
 
@@ -251,7 +235,7 @@ class SWP_Options_Page {
                     ->set_choices( $panel_locations )
                     ->set_default( 'both' );
 
-                $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_position_' . $post );
+                $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
                 $float->set_priority( $priority + 5 )
                     ->set_size( 'two-thirds' )
                     ->set_choices( $float_locations )
