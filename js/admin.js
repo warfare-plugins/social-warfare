@@ -31,11 +31,11 @@ if (typeof $ === 'undefined') {
 function swpConditionalFields() {
 
 	function swp_selected(name) {
-		return $('select[data-swp-name="' + name + '"]').val();
+		return $('select[name="' + name + '"]').val();
 	}
 
 	function swp_checked(name) {
-		return $( '[data-swp-name="' + name + '"]' ).prop( 'checked' );
+		return $( '[name="' + name + '"]' ).prop( 'checked' );
 	}
 
 	function string_to_bool(string) {
@@ -49,24 +49,31 @@ function swpConditionalFields() {
 
 		// Fetch the conditional values
 		var condition = $(this).data( 'dep' );
+		console.log(condition);
+		console.log('[data-swp-name="' + condition + '"]');
+		console.log($('[data-swp-name=\'' + condition + '\']'));
 		var required = JSON.parse( JSON.stringify( $(this).data( 'dep_val' ) ) );
 
 		// Check if we're on the options page or somewhere else
 		if (window.location.href.indexOf("page=social-warfare") === -1) {
 			var conditionEl = $(this).parents('.widgets-holder-wrap').find( '[data-swp-name="' + condition + '"]' );
 		} else {
-			var conditionEl = $( '[data-swp-name="' + condition + '"]' )[1];
+			var conditionEl = $( '[name="' + condition + '"]' )[0];
 		}
+
+		console.log(typeof conditionEl);
 
 		var value;
 
 		if (typeof conditionEl === 'undefined') {
-			conditionEl = $( '[data-swp-name="' + condition + '"]' )[0];
+			console.log("Missed it the first time");
+			conditionEl = $( '[name="' + condition + '"]' )[0];
 
 			if (typeof conditionEl === 'undefined') {
-				// console.log(condition);
+				console.log("Still dont' have it");
+				console.log(condition);
 				conditionEl = $( '[field$=' + condition + ']' )[0];
-				// console.log(conditionEl);
+				console.log(conditionEl);
 			}
 		}
 
