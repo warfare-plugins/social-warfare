@@ -207,16 +207,12 @@ class SWP_Abstract {
     */
     //* Logic: http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
     //* Code: http://andrewbaxter.net/quicksort.php
-    public function sort_by_priority( $object ) {
-        $length = count( $object );
+    public function sort_by_priority( $array ) {
+        $length = count( $array );
 
-        if (is_object($object)) {
-            $array = get_object_vars($object);
-        }
-
-        if ( $length < 2 ) {
+        if ( $length < 2 ) :
             return $array;
-        }
+        endif;
 
         if ( $length === 2 ) :
             $first;
@@ -252,15 +248,8 @@ class SWP_Abstract {
             $item['priority'] < $pivot['priority'] ? $left[] = $item : $right[] = $item;
         }
 
-        var_dump($left);
-        var_dump($priority);
-        var_dump($right);
-        echo "<br/><hr><br/>";
-
         return array_merge( $this->sort_by_priority($left), [$pivot], $this->sort_by_priority($right) );
     }
-
-
 
     /**
     * Adds the SWP dependency attributes, if this object has a dependency set.

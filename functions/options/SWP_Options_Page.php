@@ -3,7 +3,7 @@
 //* prevOption => new_option
 //* @see SWP_Database_Migration
 
-class SWP_Options_Page {
+class SWP_Options_Page extends SWP_Abstract {
 	/**
 	 * The Options Page Tabs
 	 *
@@ -17,6 +17,7 @@ class SWP_Options_Page {
     * Boolean indicating whether the plugin is registered or not.
     *
     * @var bool $swp_registration
+    *
     */
     public $swp_registration;
 
@@ -28,11 +29,15 @@ class SWP_Options_Page {
         $this->icons = apply_filters( 'swp_button_options', array() );
     }
 
+    /**
+    * Runs all of the core initializations. If Pro exists, runs Pro initialiations.
+    *
+    * @return function $this->render_html()
+    *
+    */
     public function init() {
         $swp_user_options = swp_get_user_options( true );
-        // echo "<pre>";`
-        // var_export($swp_user_options);
-        // die();`
+
         $this->init_display_tab()
             ->init_styles_tab()
             ->init_social_tab()
@@ -50,36 +55,22 @@ class SWP_Options_Page {
         $this->render_HTML();
     }
 
+    /**
+    * Adds the SWP button the sidebar and enqueues JS/CSS.
+    *
+    * @return null
+    *
+    */
     public function options_page() {
-        $swp_top_level_menu = apply_filters( 'swp_top_level_menu' , true );
-
-        // Make the menu item top level
-        if ( !!apply_filters( 'swp_top_level_menu', true ) ) :
-
-            // Declare the menu link
-            $swp_menu = add_menu_page(
-                'Social Warfare',
-                'Social Warfare',
-                'manage_options',
-                'social-warfare',
-                array( $this, 'init'),
-                SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
-            );
-
-        // Make the menu a submenu page of the settings menu
-        else :
-
-            // Declare the menu link
-            $swp_menu = add_submenu_page(
-                'options-general.php',
-                'Social Warfare',
-                'Social Warfare',
-                'manage_options',
-                'social-warfare',
-                array( $this, 'init')
-            );
-
-        endif;
+        // Declare the menu link
+        $swp_menu = add_menu_page(
+            'Social Warfare',
+            'Social Warfare',
+            'manage_options',
+            'social-warfare',
+            array( $this, 'init'),
+            SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
+        );
 
         // Hook into the CSS and Javascript Enqueue process for this specific page
         add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
@@ -87,6 +78,12 @@ class SWP_Options_Page {
 
     }
 
+    /**
+    * Calls rendering methods to assemble HTML for the Admin Settings page.
+    *
+    * @return SWP_Options_Page $this The calling object for method chaining.
+    *
+    */
     public function render_HTML() {
         $menu = $this->create_menu();
         $tabs = $this->create_tabs();
@@ -99,6 +96,13 @@ class SWP_Options_Page {
         return $this;
     }
 
+
+    /**
+    * Creates the commonly used color choides for choice settings.
+    *
+    * @return array The key/value pairs of color choides.
+    *
+    */
     public static function get_color_choices_array() {
         return [
             'full_color'        =>  'Full Color',
@@ -115,8 +119,11 @@ class SWP_Options_Page {
     }
 
     /**
-     * Enqueue the Settings Page CSS & Javascript
-     */
+    * Enqueue the Settings Page CSS & Javascript
+    *
+    * @see $this->options_page()
+    * @return void
+    */
     public function admin_css() {
         $suffix = SWP_Script::get_suffix();
 
@@ -129,11 +136,12 @@ class SWP_Options_Page {
     }
 
     /**
-     * Enqueue the admin javascript
-     *
-     * @since  2.0.0
-     * @return void
-     */
+    * Enqueue the admin javascript
+    *
+    * @since  2.0.0
+    * @see $this->options_page()
+    * @return void
+    */
     public function admin_js() {
         $suffix = SWP_Script::get_suffix();
 
@@ -158,14 +166,15 @@ class SWP_Options_Page {
 
 
     /**
-     * Create the Share Counts section of the display tab.
-     *
-     * This section of options allows users to control the share count settings.
-     *
-     */
+    * Create the Display section and its child options.
+    *
+    * This tab offers genereral layout setings for the front end of the site.
+    *
+    * @return SWP_Options_Page $this The calling object for method chaining.
+    */
     protected function init_display_tab() {
         $display = new SWP_Options_Page_Tab( 'Display', 'display' );
-		$display->set_priority( 10 );
+		$display->set_priority( 20 );
 
             $social_networks = new SWP_Options_Page_Section( 'Social Networks' );
             $social_networks->set_priority( 10 )
@@ -176,10 +185,12 @@ class SWP_Options_Page {
 
                 $icons = isset( $this->user_options['new_order_of_icons'] ) ? $this->user_options['new_order_of_icons'] : $this->icons;
 
-                $active->do_active_buttons( $icons );
+                $active->do_active_buttons( $icons )
+                    ->set_priority( 10 );
 
                 $inactive = new SWP_Section_HTML( 'Inactive' );
-                $inactive->do_inactive_buttons();
+                $inactive->do_inactive_buttons()
+                    ->set_priority( 20 );
 
                 $social_networks->add_options( [$active, $inactive] );
 
@@ -209,8 +220,8 @@ class SWP_Options_Page {
 
             $static_options = $this->get_static_options_array();
 
-            $post_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
-            array_push( $post_types, 'page', 'post' );
+            $default_types = ['page', 'post'];
+            $post_types = array_merge( $default_types, get_post_types( ['public' => true, '_builtin' => false ], 'names' ) );
 
             $panel_locations = [
                 'above' => 'Above the Content',
@@ -251,18 +262,17 @@ class SWP_Options_Page {
         return $this;
     }
 
-    private function render_share_buttons_HTML() {
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'data-dep="' . $option['dep'] . '" data-dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
-        $html .= '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_1'] . '</p></div>';
-        $html .= '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_2'] . '</p></div>';
-        $html .= '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_3'] . '</p></div>';
-        $html .= '<div class="sw-premium-blocker"></div>';
-        $html .= '</div>';
-    }
 
+    /**
+    * Create the Styles section of the display tab.
+    *
+    * This section allows the user to refine the look, feel, and placement of buttons.
+    *
+    * @return SWP_Options_Page $this The calling object for method chaining.
+    */
     protected function init_styles_tab() {
         $styles = new SWP_Options_Page_Tab( 'Styles', 'styles' );
-        $styles->set_priority( 20 );
+        $styles->set_priority( 10 );
 
             $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
             $buttons_preview->set_priority( 10 );
@@ -383,6 +393,13 @@ class SWP_Options_Page {
         return $this;
     }
 
+    /**
+    * Create the Social Identity section of the display tab.
+    *
+    * This section allows the user to set social network handles and OG metadata.
+    *
+    * @return SWP_Options_Page $this The calling object for method chaining.
+    */
     protected function init_social_tab() {
         $social_identity = new SWP_Options_Page_Tab( 'Social Identity', 'social_identity' );
         $social_identity->set_priority( 30 );
@@ -417,6 +434,14 @@ class SWP_Options_Page {
         return $this;
     }
 
+
+    /**
+    * Create the Advanced section of the display tab.
+    *
+    * This section offers miscellaneous advanced settings for finer control of the plugin.
+    *
+    * @return SWP_Options_Page $this The calling object for method chaining.
+    */
     protected function init_advanced_tab() {
         $advanced = new SWP_Options_Page_Tab( 'Advanced', 'advanced' );
         $advanced->set_priority( 40 );
@@ -466,10 +491,17 @@ class SWP_Options_Page {
         return $this;
     }
 
+    /**
+    * Create the Registration section of the display tab.
+    *
+    * This section allows users to register activation keys for the premium plugin features.
+    *
+    * @return SWP_Options_Page $this The calling object for method chaining.
+    */
     protected function init_registration_tab() {
         $registration = new SWP_Options_Page_Tab( 'Registration', 'registration' );
 
-        $registration->set_priority( 50 );
+        $registration->set_priority( 5 );
 
             $wrap = new SWP_Options_Page_Section( 'Addon Registrations', 'addon' );
             $wrap->set_priority( 10 );
@@ -486,6 +518,11 @@ class SWP_Options_Page {
         return $this;
     }
 
+    /**
+    * Provides the common placement choices for the buttons.
+    *
+    * @return array Key/Value pairs of button placement options.
+    */
     protected function get_static_options_array() {
         return [
             'above'=> 'Above the Content',
@@ -495,6 +532,11 @@ class SWP_Options_Page {
         ];
     }
 
+    /**
+    * Handwritten list of custom post types.
+    *
+    * @return array Custom Post Types.
+    */
     protected function get_custom_post_types() {
         return [
             'article',
@@ -528,7 +570,7 @@ class SWP_Options_Page {
     /**
      * Creates the HTML for the admin top menu (Logo, tabs, and save button).
      *
-     * @return $html The fully qualified HTML for the menu.
+     * @return string $html The fully qualified HTML for the menu.
      */
     private function create_menu() {
         //* Open the admin top menu wrapper.
@@ -567,12 +609,21 @@ class SWP_Options_Page {
         return $html;
     }
 
+    /**
+    * Renders HTML for each tab and assembles for outputting.
+    *
+    * @return string $container The Admin tab HTML container.
+    */
     private function create_tabs() {
+        var_dump($map);
+
+        $tabs = $this->sort_by_priority( $map );
+        echo "<hr><br/>"; die(var_dump($map));
         $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
             $container .= '<form class="sw-admin-settings-form">';
                 $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
-                foreach( $this->tabs as $index => $tab ) {
+                foreach( $this->tabs as $tab ) {
                     $html = $tab->render_HTML();
 
                     $container .= $html;
