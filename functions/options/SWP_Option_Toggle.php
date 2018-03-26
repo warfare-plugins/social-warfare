@@ -42,10 +42,10 @@ class SWP_Option_Toggle extends SWP_Option {
 	}
 
     /**
-     * Creates the boilerplate opening tags and classes.
-     *
-     * @return string $html HTML ready to be filled with a checkbox input.
-     */
+    * Creates the boilerplate opening tags and classes.
+    *
+    * @return string $html HTML ready to be filled with a checkbox input.
+    */
     private function open_HTML() {
         $size = $this->get_css_size();
 
@@ -71,12 +71,12 @@ class SWP_Option_Toggle extends SWP_Option {
     }
 
     /**
-     * Sets the HTML for the toggle element.
-     *
-     * This method produces fully qualifed HTML on its own, which is inserted into previously opened markup.
-     *
-     * @return string $html The checkbox and related HTML.
-     */
+    * Sets the HTML for the toggle element.
+    *
+    * This method produces fully qualifed HTML on its own, which is inserted into previously opened markup.
+    *
+    * @return string $html The checkbox and related HTML.
+    */
     private function create_toggle() {
         $status = $this->default;
 

@@ -100,6 +100,13 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     }
 
 
+    /**
+    * A method to render the html for each tab.
+    *
+    * @since  3.0.0 | 03 MAR 2018 | Created
+    * @return string Fully qualified HTML for this tab.
+    *
+    */
 	public function render_HTML() {
         //* The opening tag, which may or may not have dependencies or be premium.
         $html = '<div class="sw-section sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
@@ -121,10 +128,15 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 	}
 
 
+    /**
+    * Sets the key used by dependent sections and options.
+    *
+    * @param string $key The being assigned to this section.
+    * @return SWP_Options_Page_Section $this The updated object.
+    *
+    */
     protected function set_key( $key = null ) {
         if ( !empty( $key ) ) :
-
-
             $this->key = $key;
             return $this;
         endif;
@@ -142,6 +154,12 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     }
 
 
+    /**
+    * Renders Title and Support Link HTML.
+    *
+    * @return string $title The fullly qualified HTML for the section's title.
+    *
+    */
     private function create_title() {
         //* Set the support link and title.
         $title = '<h2>';
@@ -151,27 +169,35 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $title;
     }
 
-
+    /**
+    * Renders the description HTML.
+    *
+    * @return string $description The fullly qualified HTML for the section's description.
+    */
     private function create_description() {
         $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_subtitle_wrapper">';
 
-        //* QUESTION: The dependency is already being set in render_HTML(). Do we also need to set it here?
-        // $descrption .= $this->render_dependency( $description );
-        // $descrption .= $this->render_premium( $description );
-
-        $description .= '<p class="sw-subtitle">' . $this->description . '</p>';
+        $description .= '<p class="sw-subtext-label">' . $this->description . '</p>';
         $description .= '</div>';
 
         return $description;
     }
 
 
+    /**
+    * Renders the section's options HTML.
+    *
+    * @return string $options The fully qualified HTML for the sections options.
+    *
+    */
     private function render_options() {
+        $this->options = $this->sort_by_priority($this->options);
         $options = '';
 
         foreach ( $this->options as $index => $option ) {
             $options .= $option->render_HTML();
         }
+
 
         return $options;
     }
