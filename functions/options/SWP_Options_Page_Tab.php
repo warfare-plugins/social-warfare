@@ -49,6 +49,14 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
         $this->key = $this->name_to_key( $name );
 	}
 
+
+    /**
+    * Pushes one SWP_Options_Page_Section object into $this array of sections.
+    *
+    * @param SWP_Options_Page_Section $section The section to add to the array.
+    * @return SWP_Options_Page_Tab $this The calling option, for method chaining.
+    *
+    */
     public function add_section( $section ) {
         if ( !( 'SWP_Options_Page_Section' === get_class( $section ) ||  is_subclass_of( $section, 'SWP_Options_Page_Section' ) ) ) :
             $this->_throw( 'Please provide an instance of SWP_Options_Page_Section as the parameter.' );
@@ -61,6 +69,13 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
         return $this;
     }
 
+    /**
+    * Adds multiple SWP_Options_Page_Section objects into $this array of sections.
+    *
+    * @param array $sections An array of SWP_Options_Page_Section.
+    * @return SWP_Options_Page_Tab $this The calling option, for method chaining.
+    *
+    */
     public function add_sections( $sections ) {
         if ( !is_array( $sections ) ) :
             $this->_throw( 'This method requires an array. Please use add_section to add a single instance of SWP_Options_Page_Section.' );
@@ -77,6 +92,16 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
         return $this;
     }
 
+    /**
+    * Sets the Javascript for switching tabs on the Admin page.
+    *
+    * Notice: This is not an href or external link. This is just a key used by jQuery
+    * to select the proper tab.
+    *
+    * @param string $link The key correlatign to the tab. Must match the javascript target.
+    * @return SWP_Options_Page_Tab $this The calling option, for method chaining.
+    *
+    */
     public function set_link( $link ) {
         if ( !is_string( $link ) ) {
             $this->_throw( 'Please provide a valid string prefixed with "swp_" for the tab link.' );
@@ -87,32 +112,33 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
         return $this;
     }
 
-	public function sort_by_priority() {
-		/**
-		* Take the $this->sections and sort them according to their priority. So a section
-		* with a priority of 1 will show up before a section wwith a priority of 2. Again,
-		* this will allow addons to add sections of options right in the middle of a tab.
-		* Set a section to 3 and it will show up in between sections that have priorities
-		* of 2 and 4.
-		*/
-    }
 
 	/**
     * A method to render the html for each tab.
 	*
-	* @since  2.4.0 | 03 MAR 2018 | Created
+	* @since  3.0.0 | 03 MAR 2018 | Created
     * @param  null
 	* @return string Fully qualified HTML for this tab.
 	*
 	*/
 	public function render_HTML() {
-        // $tab= '<div id="' . $this->name . '">' . $this->name . '</div>';
-        $tab = '<div id="swp_' . strtolower( $this->key ) . '" class="sw-admin-tab sw-grid sw-col-940">';
+        $this->sections = $this->sort_by_priority($this->sections);
 
-        foreach( $this->sections as $index => $section ) {
-            $tab .= $section->render_HTML();
+        $section_tmp = $this->get_priority_map( $this->sections);
+
+        $map = [];
+
+        foreach( $section_tmp as $index => $array) {
+            $map[$index] = [$array['key'], 'priority' => $array['priority']];
         }
 
+        $sections = $this->sort_by_priority( $map );
+
+        $tab = '<div id="swp_' . strtolower( $this->key ) . '" class="sw-admin-tab sw-grid sw-col-940">';
+
+        foreach( $sections as $index => $section ) {
+            $tab .= $section->render_HTML();
+        }
         $tab .= '</div>';
 
         return $tab;

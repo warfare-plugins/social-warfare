@@ -65,6 +65,14 @@ class SWP_Option_Select extends SWP_Option {
         return $this;
     }
 
+    /**
+    * Defines the default value among this select's choices.
+    *
+    *
+    * @param string $value The key associated with the default option.
+    * @return SWP_Option_Select $this The calling instance, for method chaining.
+    *
+    */
     public function set_default( $value ) {
         if ( is_bool( $value ) || is_numeric( $value ) ) :
             settype( $value, 'string' );
@@ -80,13 +88,13 @@ class SWP_Option_Select extends SWP_Option {
     }
 
     /**
-     * Create the options for a select dropdown.
-     *
-     * @since 2.4.0 | 02 MAR 2018 | Created
-     * @param array $choices Array of strings to be translated and made into options.
-     * @return SWP_Option_Select $this This object with the updated choices.
-     *
-     */
+    * Create the options for a select dropdown.
+    *
+    * @since 2.4.0 | 02 MAR 2018 | Created
+    * @param array $choices Array of strings to be translated and made into options.
+    * @return SWP_Option_Select $this The calling instance, for method chaining.
+    *
+    */
     public function add_choices( $choices )  {
 
         if ( !is_array( $choices ) ) {
@@ -126,22 +134,20 @@ class SWP_Option_Select extends SWP_Option {
      }
 
     /**
-     * Render the HTML
-     *
-     * Renders the HTML to the options page based on what
-     * the properties of this object have been set to.
-     *
-     * @since 2.4.0 | 02 MAR 2018 | Created
-     * @param none
-     * @return string The rendered HTML of this option.
-     * @TODO: Make this method render soem HTML.
-     *
-     */
+    * Render the HTML
+    *
+    * Renders the HTML to the options page based on what
+    * the properties of this object have been set to.
+    *
+    * @since 2.4.0 | 02 MAR 2018 | Created
+    * @param none
+    * @return string The rendered HTML of this option.
+    * @TODO: Make this method render soem HTML.
+    *
+    */
     public function render_HTML( $echo = false ) {
         $html = $this->open_HTML();
-
         $html .= $this->create_select();
-
         $html .= $this->close_HTML();
 
 
@@ -152,10 +158,10 @@ class SWP_Option_Select extends SWP_Option {
 
 
     /**
-     * Creates the boilerplate opening tags and classes.
-     *
-     * @return string $html HTML ready to be filled with a checkbox input.
-     */
+    * Creates the boilerplate opening tags and classes.
+    *
+    * @return string $html HTML ready to be filled with a checkbox input.
+    */
     private function open_HTML() {
         if ( empty( $this->size ) ) :
             $this->size = '';
@@ -180,10 +186,11 @@ class SWP_Option_Select extends SWP_Option {
     }
 
     /**
-     * Sets the HTML for the select with options.
-     *
-     * @return string $html The select and related HTML.
-     */
+    * Sets the HTML for the select with options.
+    *
+    * @return string $html The select and related HTML.
+    *
+    */
     private function create_select() {
         $select = '<select name=' . $this->key . '>';
 
@@ -207,6 +214,7 @@ class SWP_Option_Select extends SWP_Option {
     *
     * @param string $html The HTML to close.
     * @return string $html Completed and valid HTML.
+    *
     */
     private function close_HTML() {
             $html = '</div>';

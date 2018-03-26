@@ -173,6 +173,8 @@ class SWP_Section_HTML extends SWP_Option {
 
             $html .= '</div>';
         $html .= '</div>';
+
+        return $this;
     }
 
 }

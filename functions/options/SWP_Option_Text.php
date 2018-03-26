@@ -15,6 +15,14 @@ class SWP_Option_Text extends SWP_Option {
         $this->default = '';
     }
 
+    /**
+    * Defines the default value among this select's choices.
+    *
+    *
+    * @param mixed $value The key associated with the default option.
+    * @return SWP_Option_Select $this The calling instance, for method chaining.
+    *
+    */
     public function set_default( $default ) {
         if ( is_numeric( $default) ) :
             settype( $default, 'string' );
@@ -29,6 +37,12 @@ class SWP_Option_Text extends SWP_Option {
         return $this;
     }
 
+    /**
+    * Renders the HTML to create the <input type="text" /> element.
+    *
+    * @return string $html The fully qualified HTML.
+    *
+    */
     public function render_HTML() {
         if ( isset( $this->user_options[$this->key] ) ) :
             $value = $this->user_options[$this->key];
