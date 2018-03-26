@@ -297,12 +297,25 @@ class Social_Warfare {
             '/social-warfare-pro/' => 'social-warfare-pro'
         ];
 
+        $classes = [
+            'social-warfare-pro' => 'Social_Warfare_Pro'
+        ];
+
+
         foreach( $addons as $path => $file ) {
             if ( file_exists( __DIR__ . '/../..' . $path . $file . '.php') ):
                 set_include_path( __DIR__ . '/../..');
                 require_once ( $path . $file . '.php' );
+
+                $class = $classes[$file];
+                require_once( $path . 'functions/' . $class . '.php' );
+                new $class();
+
             endif;
         }
+
+
+        // $Pro = new Social_Warfare_Pro();
     }
 
     /**
