@@ -208,11 +208,14 @@ class SWP_Abstract {
     //* Logic: http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
     //* Code: http://andrewbaxter.net/quicksort.php
     public function sort_by_priority( $object ) {
-        $length = count( $object );
 
         if (is_object($object)) {
-            $array = get_object_vars($object);
+            $array = $this->get_priority_map( $object) ; //get_object_vars($object);
+        } else {
+            $array = $object;
         }
+
+        $length =  count( $array );
 
         if ( $length < 2 ) {
             return $array;
@@ -252,10 +255,10 @@ class SWP_Abstract {
             $item['priority'] < $pivot['priority'] ? $left[] = $item : $right[] = $item;
         }
 
-        var_dump($left);
-        var_dump($priority);
-        var_dump($right);
-        echo "<br/><hr><br/>";
+        // var_dump($left);
+        // var_dump($pivot);
+        // var_dump($right);
+        // echo "<br/><hr><br/>";
 
         return array_merge( $this->sort_by_priority($left), [$pivot], $this->sort_by_priority($right) );
     }
