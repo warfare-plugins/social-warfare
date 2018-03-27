@@ -2,13 +2,72 @@
 
 class SWP_Option_Toggle extends SWP_Option {
 
+
+    /**
+    * Default
+    *
+    * The default value for this input type="checkbox".
+    *
+    * @var bool $default
+    *
+    */
+    public $default = true;
+
+
+    /**
+    * The required constructor for PHP classes.
+    *
+    * @param string $name The display name for the toggle.
+    * @param string $key The database key for the user setting.
+    */
 	public function __construct( $name, $key ) {
 		parent::__construct( $name, $key );
-		$this->type = 'checkbox';
 		$this->default = true;
-		$this->size = 'two-thirds';
-
+		$this->set_size( 'two-thirds' );
 	}
+
+
+    /**
+    * Creates the fully qulaified HTML for the checkbox/toggle module.
+    *
+    * @return SWP_Option_Toggle $this The calling object, for method chaining.
+    */
+	public function render_HTML() {
+        //* Map the default boolean to on/off.
+        $status = $this->default ? 'on' : 'off';
+
+        if ( isset( $this->user_options[$this->key] ) ) :
+            $status = $this->user_options[$this->key] === true ? 'on' : 'off';
+        endif;
+
+        $checked = $status === 'on' ? ' checked ' : '';
+        $size = $this->get_css_size();
+
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
+
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-checkbox-label">' . $this->name . '</p>';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
+                    $html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
+                    $html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
+                $html .= '</div>';
+
+                $html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '"' . $checked . '/>';
+            $html .= '</div>';
+
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $html;
+	}
+
 
     /**
     * Override parent method to make this boolean-specific.
@@ -25,76 +84,4 @@ class SWP_Option_Toggle extends SWP_Option {
 
         return $this;
     }
-
-    /**
-    * Creates the HTML for the checkbox module.
-    *
-    * @return SWP_Option_Toggle $this The calling object, for method chaining.
-    */
-	public function render_HTML() {
-	    $html = $this->open_HTML();
-        $html .= $this->create_label();
-        $html .= $this->create_toggle();
-
-        $this->html = $html;
-
-        return $html;
-	}
-
-    /**
-    * Creates the boilerplate opening tags and classes.
-    *
-    * @return string $html HTML ready to be filled with a checkbox input.
-    */
-    private function open_HTML() {
-        $size = $this->get_css_size();
-
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
-        $html .= $this->render_dependency();
-        $html .= $this->render_premium();
-        $html .= '>';
-
-        $html .= '</div>';
-
-        return $html;
-    }
-
-    private function create_label() {
-        $label = '<div class="sw-grid sw-col-300">';
-        $label .= '<p class="sw-checkbox-label">' . $this->name . '</p>';
-        $label .= '</div>';
-
-        return $label;
-    }
-
-    /**
-    * Sets the HTML for the toggle element.
-    *
-    * This method produces fully qualifed HTML on its own, which is inserted into previously opened markup.
-    *
-    * @return string $html The checkbox and related HTML.
-    */
-    private function create_toggle() {
-        //* Map the default boolean to on/off.
-       $status = $this->default ? 'on' : 'off';
-
-
-        if ( isset( $this->user_options[$this->key] ) ) :
-            $status = $this->user_options[$this->key] === true ? 'on' : 'off';
-        endif;
-
-        $checked = $status === 'on' ? ' checked ' : '';
-
-        $html = '<div class="sw-grid sw-col-300">';
-        $html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
-            $html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
-            $html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
-        $html .= '</div>';
-
-        $html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '"' . $checked . '/>';
-        $html .= '</div>';
-
-        return $html;
-    }
-
 }
