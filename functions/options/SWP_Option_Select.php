@@ -150,7 +150,6 @@ class SWP_Option_Select extends SWP_Option {
         $html .= $this->create_select();
         $html .= $this->close_HTML();
 
-
         $this->html = $html;
 
         return $html;
@@ -169,11 +168,9 @@ class SWP_Option_Select extends SWP_Option {
 
         $size = $this->get_css_size();
 
-        //* Open the wrapper tag, remains open to add attributes.
         $html = '<div class="sw-grid ' . $size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
-        //* Close the opening bracket. Tag is still open.
         $html .= '>';
 
             $html .= '<div class="sw-grid sw-col-300">';
