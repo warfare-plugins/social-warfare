@@ -52,10 +52,14 @@ class SWP_Option_Textarea extends SWP_Option {
             $html .= '</div>';
 
             $html .= '<div class="sw-grid sw-col-620 sw-fit ">';
-                $html .= '<textarea name="' . $this->key . '" data-swp-name="' . $this->key . '"  class="sw-grid-textarea" placeholder="' . $this->default . '>'. $this->get_value() . '</textarea>';
+                $html .= '<textarea name="' . $this->key . '" data-swp-name="' . $this->key . '"  class="sw-grid-textarea" >'. $this->get_value() . '</textarea>';
             $html .= '</div>';
 
         $html .= '</div>';
+
+        $this->html = $html;
+
+        return $html;
     }
 
 
