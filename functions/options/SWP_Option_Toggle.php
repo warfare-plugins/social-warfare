@@ -75,37 +75,26 @@ class SWP_Option_Toggle extends SWP_Option {
     * @return string $html The checkbox and related HTML.
     */
     private function create_toggle() {
-        $status = $this->default;
+        //* Map the default boolean to on/off.
+       $status = $this->default ? 'on' : 'off';
 
-        if ( isset( $this->user_options[$this->name] ) ) :
-            $status = $this->user_options[$this->name];
+
+        if ( isset( $this->user_options[$this->key] ) ) :
+            $status = $this->user_options[$this->key] === true ? 'on' : 'off';
         endif;
 
-        //* Map the boolean to on/off.
-        $status = $status ? 'on' : 'off';
-
-        $checked = $status === 'on' ? 'checked' : '';
+        $checked = $status === 'on' ? ' checked ' : '';
 
         $html = '<div class="sw-grid sw-col-300">';
         $html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
             $html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
             $html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
         $html .= '</div>';
-        $html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '" data-swp-name="' . $this->key . '" ' . $checked . '/>';
+
+        $html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '"' . $checked . '/>';
         $html .= '</div>';
 
         return $html;
-    }
-
-    /**
-    * Resolves open tags from open_HTML().
-    *
-    * @param string $html The HTML to close.
-    * @see $this->open_HTML().
-    * @return string $html Completed and valid HTML.
-    */
-    private function close_HTML() {
-
     }
 
 }
