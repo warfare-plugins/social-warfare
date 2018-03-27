@@ -3,19 +3,32 @@
 /**
 * For creating markup that does not fit into the exiting options.
 *
-* This extends SWP_Option rather than _Section because it uses
+* This extends SWP_Option rather than SWP_Section because it uses
 * many of the same methods as an option and is a child of a
-* section, even though this is not necessarily an option.
+* section, even though this is neither necessarily
+* an option or a section.
 *
 * @since 3.0.0
 */
-
 class SWP_Section_HTML extends SWP_Option {
-    public function __construct( $name ) {
-        //* This does not have a key, so pass an empty string
-        //* as the second arg.
-        parent::__construct( $name, $name );
+
+    /**
+    * The required constructor for PHP classes.
+    *
+    * @param string $name An arbitrary name, except for do_bitly_authentication_button
+    * @param Optional string $key If the object requires access beyond itself, pass it a key.
+    *                             Otherwise $name will be used.
+    * @see  $this->do_bitly_authentication_button()
+    *
+    */
+    public function __construct( $name, $key = null ) {
+        $key = $key === null ? $name : $key;
+
+        parent::__construct( $name, $key );
+
+        $this->html = '';
     }
+
 
     /**
     * Allows custom HTML to be added.
@@ -33,15 +46,47 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+
     /**
-    * The rendering method common to all classes.
+    * The Active buttons UI in the Display tab.
     *
-    * @return This object's saved HTML.
+    * @param array $icons The array of currently selected icons.
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
-    public function render_html() {
-        return $this->html;
+    public function do_active_buttons( $icons ) {
+        $html = '<div class="sw-grid sw-col-300">';
+            $html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
+        $html .= '</div>';
+
+        $html .= '<div class="sw-grid sw-col-620 sw-fit">';
+            $html .= '<div class="sw-active sw-buttons-sort">';
+
+            foreach ( $icons['content'] as $network => $data ) {
+                $html .= '<i class="sw sw-' . $network . '-icon';
+                $html .= ' data-network="' . $network . '"';
+
+                if ( $data['premium'] === 'premium' ) :
+                    $html .= ' premium="true"';
+                endif;
+
+                $html .= ' tabindex="0" role="button" aria-label="' . $network . '">';
+                $html .= '</i>';
+            }
+
+            $html .= '</div>';
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $this;
     }
 
+
+    /**
+    * Render the Bitly connection button on the Advanced tab.
+    *
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    */
     public function do_bitly_authentication_button() {
         $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=https://warfareplugins.com/wp-admin/admin-ajax.php&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
 
@@ -73,10 +118,11 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+
     /**
     * The buttons preview as shown on the Display tab.
     *
-    * @return SWP_Section_HTML $this This object for method chaining.
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
     public function do_buttons_preview() {
         ob_start() ?>
@@ -152,45 +198,12 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
-    /**
-    * The Active buttons UI in the Display tab.
-    *
-    * @param array $icons The array of currently selected icons.
-    * @return SWP_Section_HTML $this This object for method chaining.
-    */
-    public function do_active_buttons( $icons ) {
-        $html = '<div class="sw-grid sw-col-300">';
-            $html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
-        $html .= '</div>';
-
-        $html .= '<div class="sw-grid sw-col-620 sw-fit">';
-            $html .= '<div class="sw-active sw-buttons-sort">';
-
-            foreach ( $icons['content'] as $network => $data ) {
-                $html .= '<i class="sw sw-' . $network . '-icon';
-                $html .= ' data-network="' . $network . '"';
-
-                if ( $data['premium'] === 'premium' ) :
-                    $html .= ' premium="true"';
-                endif;
-
-                $html .= ' tabindex="0" role="button" aria-label="' . $network . '">';
-                $html .= '</i>';
-            }
-
-            $html .= '</div>';
-        $html .= '</div>';
-
-        $this->html = $html;
-
-        return $this;
-    }
 
     /**
     * The Inactive buttons UI in the Display tab.
     *
     * @param array $icons The array of currently selected icons.
-    * @return SWP_Section_HTML $this This object for method chaining.
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
     * //* TODO: finish this method.
     */
     public function do_inactive_buttons() {
@@ -209,5 +222,32 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+
+    /**
+    * Renders the three column table on the Display tab.
+    *
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    */
+    public function do_position_buttons_table() {
+            if ( $option['type'] == 'column_labels' ) :
+                if ( $option['columns'] == 3 ) :echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'data-dep="' . $option['dep'] . '" data-dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
+                    echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_1'] . '</p></div>';
+                    echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_2'] . '</p></div>';
+                    echo '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_3'] . '</p></div>';
+                    echo '<div class="sw-premium-blocker"></div>';
+                    echo '</div>';
+                endif;
+            endif;
+    }
+
+
+    /**
+    * The rendering method common to all classes.
+    *
+    * @return This object's saved HTML.
+    */
+    public function render_html() {
+        return $this->html;
+    }
 }
 
