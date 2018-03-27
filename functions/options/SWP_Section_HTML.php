@@ -62,14 +62,14 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<div class="sw-active sw-buttons-sort">';
 
             foreach ( $icons['content'] as $network => $data ) {
-                $html .= '<i class="sw sw-' . $network . '-icon';
+                $html .= '<i class="sw-s sw-' . $network . '-icon" ';
                 $html .= ' data-network="' . $network . '"';
 
                 if ( $data['premium'] === 'premium' ) :
                     $html .= ' premium="true"';
                 endif;
 
-                $html .= ' tabindex="0" role="button" aria-label="' . $network . '">';
+                $html .= '>';
                 $html .= '</i>';
             }
 
@@ -228,16 +228,85 @@ class SWP_Section_HTML extends SWP_Option {
     *
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
-    public function do_position_buttons_table() {
-            if ( $option['type'] == 'column_labels' ) :
-                if ( $option['columns'] == 3 ) :echo '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $key . '_wrapper" ' . (isset( $option['dep'] ) ? 'data-dep="' . $option['dep'] . '" data-dep_val=\'' . json_encode( $option['dep_val'] ) . '\'' : '') . ' ' . (isset( $option['premium'] ) ? 'premium="' . $option['premium'] . '"' : '') . '>';
-                    echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_1'] . '</p></div>';
-                    echo '<div class="sw-grid sw-col-300"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_2'] . '</p></div>';
-                    echo '<div class="sw-grid sw-col-300 sw-fit"><p class="sw-select-label sw-short sw-no-padding">' . $option['column_3'] . '</p></div>';
-                    echo '<div class="sw-premium-blocker"></div>';
-                    echo '</div>';
-                endif;
-            endif;
+    public function do_button_position_table() {
+        $static_options = [
+            'above'=> 'Above the Content',
+            'below' => 'Below the Content',
+            'both' => 'Both Above and Below the Content',
+            'none' => 'None/Manual Placement'
+        ];
+
+        $default_types = ['page', 'post'];
+        $post_types = array_merge( $default_types, get_post_types( ['public' => true, '_builtin' => false ], 'names' ) );
+
+        $panel_locations = [
+            'above' => 'Above the Content',
+            'below' => 'Below the Content',
+            'both'  => 'Both Above and Below the Content',
+            'none'  => 'None/Manual Placement'
+        ];
+
+        $float_locations = [
+            'on'    => 'On',
+            'off'   => 'Off'
+        ];
+
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
+
+        $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+        $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Static Buttons' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+        $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Floating Buttons (If Activated)' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+
+        foreach( $post_types as $index => $post ) {
+            $priority = ($index + 1) * 10;
+
+            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
+
+                $html .= '<div class="sw-grid sw-col-300">';
+                    $html .= '<p class="sw-input-label">' . str_replace('_', ' ', ucfirst($post)) . '</p>';
+                $html .= '</div>';
+
+                $html .= '<div class="sw-grid sw-col-300">';
+
+                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'position_' . $post );
+                    $panel->set_priority( $priority )
+                        ->set_size( 'two-thirds' )
+                        ->set_choices( $panel_locations )
+                        ->set_default( 'both' );
+
+                    $html .= $panel->render_HTML_element();
+
+                $html .= '</div>';
+                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+
+                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
+                    $float->set_priority( $priority + 5 )
+                        ->set_size( 'two-thirds' )
+                        ->set_choices( $float_locations )
+                        ->set_default( 'on' );
+
+                    $html .= $float->render_HTML_element();
+
+                $html .= '</div>';
+
+            $html .= '</div>';
+
+        }
+
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $this;
     }
 
 
