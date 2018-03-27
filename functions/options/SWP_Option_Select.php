@@ -97,7 +97,7 @@ class SWP_Option_Select extends SWP_Option {
     * @TODO: Make this method render soem HTML.
     *
     */
-    public function render_HTML( $echo = false ) {
+    public function render_HTML() {
         if ( empty( $this->size ) ) :
             $this->size = '';
         endif;
