@@ -121,14 +121,13 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         $html .= '</div>';
 
         $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_description_wrapper">';
-
             $html .= '<p class="sw-subtitle">' . $this->description . '</p>';
-
-            $html .= '<div class="sw-options-wrap">';
-                $html .= $this->render_options();
-            $html .= '</div>';
-
         $html .= '</div>';
+
+        $html .= '<div class="sw-options-wrap">';
+            $html .= $this->render_options();
+        $html .= '</div>';
+
         return $html;
     }
 
