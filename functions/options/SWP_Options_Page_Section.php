@@ -5,22 +5,22 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     * The description printed on the Settings page under the title.
     * @var string $description
     */
-	public $description;
+    public $description;
 
     /**
     * The KnowledgeBase link printed on the Settings page near the title.
     * @var string $link
     */
-	public $link;
+    public $link;
 
     /**
     * The input elements reflecting configurable options to be set by the uesr.
     * @var array Array of SWP_Option objects.
     */
-	public $options;
+    public $options;
 
-	public function __construct( $name ) {
-		$this->options = new stdClass();
+    public function __construct( $name ) {
+        $this->options = new stdClass();
         $this->set_name( $name );
         $this->key = $this->name_to_key( $name );
     }
@@ -107,24 +107,30 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     * @return string Fully qualified HTML for this tab.
     *
     */
-	public function render_HTML() {
+    public function render_HTML() {
         //* The opening tag, which may or may not have dependencies or be premium.
         $html = '<div class="sw-section sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
         $html .= '>';
 
-            $html .= $this->create_title();
-            $html .= $this->create_description();
+            $html .= '<h2>';
+                $html .= '<a target="_blank" class="swp_support_link" href="'. $this->link .'" title="Click here to learn more about these options.">i</a>';
+            $html .= $this->name . '</h2>';
+
+        $html .= '</div>';
+
+        $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_description_wrapper">';
+
+            $html .= '<p class="sw-subtitle">' . $this->description . '</p>';
 
             $html .= '<div class="sw-options-wrap">';
                 $html .= $this->render_options();
             $html .= '</div>';
 
         $html .= '</div>';
-
         return $html;
-	}
+    }
 
 
     /**
@@ -161,9 +167,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     */
     private function create_title() {
         //* Set the support link and title.
-        $title = '<h2>';
-        $title .= '<a target="_blank" class="swp_support_link" href="'. $this->link .'" title="Click here to learn more about these options.">i</a>';
-        $title .= $this->name . '</h2>';
+
 
         return $title;
     }
@@ -175,10 +179,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     * @return string $description The fullly qualified HTML for the section's description.
     */
     private function create_description() {
-        $description = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_subtitle_wrapper">';
 
-        $description .= '<p class="sw-subtext-label">' . $this->description . '</p>';
-        $description .= '</div>';
 
         return $description;
     }
