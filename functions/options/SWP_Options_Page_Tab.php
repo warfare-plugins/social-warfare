@@ -122,23 +122,20 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*
 	*/
 	public function render_HTML() {
-        $this->sections = $this->sort_by_priority($this->sections);
-
-        $section_tmp = $this->get_priority_map( $this->sections);
-
-        $map = [];
-
-        foreach( $section_tmp as $index => $array) {
-            $map[$index] = [$array['key'], 'priority' => $array['priority']];
-        }
+        $map = $this->sort_by_priority($this->sections);
 
         $sections = $this->sort_by_priority( $map );
 
         $tab = '<div id="swp_' . strtolower( $this->key ) . '" class="sw-admin-tab sw-grid sw-col-940">';
 
-        foreach( $sections as $index => $section ) {
-            $tab .= $section->render_HTML();
+        foreach( $map as $prioritized_section) {
+            foreach( $this->sections as $section) {
+                if ( $section->key === $prioritized_section['key'] ) :
+                    $tab .= $section->render_HTML();
+                endif;
+            }
         }
+
         $tab .= '</div>';
 
         return $tab;

@@ -2,21 +2,21 @@
 
 class SWP_Options_Page_Section extends SWP_Abstract {
     /**
-     * The description printed on the Settings page under the title.
-     * @var string $description
-     */
+    * The description printed on the Settings page under the title.
+    * @var string $description
+    */
 	public $description;
 
     /**
-     * The KnowledgeBase link printed on the Settings page near the title.
-     * @var string $link
-     */
+    * The KnowledgeBase link printed on the Settings page near the title.
+    * @var string $link
+    */
 	public $link;
 
     /**
-     * The input elements reflecting configurable options to be set by the uesr.
-     * @var array Array of SWP_Option objects.
-     */
+    * The input elements reflecting configurable options to be set by the uesr.
+    * @var array Array of SWP_Option objects.
+    */
 	public $options;
 
 	public function __construct( $name ) {
@@ -25,13 +25,12 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         $this->key = $this->name_to_key( $name );
     }
 
-
     /**
-     * The related link to our KnowledgeBase article.
-     *
-     * @param string $link The direct link to the article.
-     * @return SWP_Options_Page_Section $this The updated object.
-     */
+    * The related link to our KnowledgeBase article.
+    *
+    * @param string $link The direct link to the article.
+    * @return SWP_Options_Page_Section $this The updated object.
+    */
     public function set_information_link( $link ) {
         if ( !is_string( $link ) || strpos( $link, 'http' ) === false ) {
             $this->_throw( $link . ' must be a valid URL.' );
@@ -42,12 +41,12 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
 
     /**
-     * The description text appearing under the section's name.
-     *
-     * @param string $description The full text to be displayed in the section.
-     * @return SWP_Options_Page_Section $this The updated object.
-     *
-     */
+    * The description text appearing under the section's name.
+    *
+    * @param string $description The full text to be displayed in the section.
+    * @return SWP_Options_Page_Section $this The updated object.
+    *
+    */
     public function set_description( $description ) {
         if ( !is_string( $description ) ) {
             $this->_throw( 'Please pass the description as a string.' );
@@ -60,11 +59,11 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
 
     /**
-     * Adds a user setting option to the section.
-     * @param mixed $option One of the SWP_Option child classes.
-     * @return SWP_Options_Page_Section $this The updated object.
-     *
-     */
+    * Adds a user setting option to the section.
+    * @param mixed $option One of the SWP_Option child classes.
+    * @return SWP_Options_Page_Section $this The updated object.
+    *
+    */
     public function add_option( $option ) {
         $types = ['SWP_Addon_Registration', 'SWP_Option_Toggle', 'SWP_Option_Select', 'SWP_Option_Text', 'SWP_Option_Textarea'];
 
@@ -82,11 +81,12 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 
 
     /**
-     * Adds multiple options at once.
-     *
-     * @param array $options An array of SWP_Option child objects.
-     * @return SWP_Options_Page_Section $this The updated object.
-     */
+    * Adds multiple options at once.
+    *
+    * @param array $options An array of SWP_Option child objects.
+    * @return SWP_Options_Page_Section $this The updated object.
+    *
+    */
     public function add_options( $options ) {
         if ( !is_array( $options ) ) {
             $this->_throw( "Requires an array of SWP_Option objects." );
@@ -122,7 +122,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
             $html .= '</div>';
 
         $html .= '</div>';
-
 
         return $html;
 	}
@@ -169,6 +168,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         return $title;
     }
 
+
     /**
     * Renders the description HTML.
     *
@@ -191,13 +191,16 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     *
     */
     private function render_options() {
-        $this->options = $this->sort_by_priority($this->options);
+        $map = $this->sort_by_priority($this->options);
         $options = '';
 
-        foreach ( $this->options as $index => $option ) {
-            $options .= $option->render_HTML();
+        foreach( $map as $prioritized ) {
+            foreach( $this->options as $option) {
+                if ( $option->key === $prioritized['key'] ) :
+                    $options .= $option->render_HTML();
+                endif;
+            }
         }
-
 
         return $options;
     }
