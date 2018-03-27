@@ -10,10 +10,64 @@
  */
 class SWP_Option_Text extends SWP_Option {
 
+
+    /**
+    * Default
+    *
+    * The default value for this input type="text".
+    *
+    * @var string $default
+    *
+    */
+    public $default = '';
+
+
+    /**
+    * The required constructor for PHP classes.
+    *
+    * @param string $name The display name for the toggle.
+    * @param string $key The database key for the user setting.
+    *
+    */
     public function __construct( $name, $key ) {
         parent::__construct( $name, $key );
         $this->default = '';
     }
+
+
+    /**
+    * Renders the HTML to create the <input type="text" /> element.
+    *
+    * @return string $html The fully qualified HTML.
+    *
+    */
+    public function render_HTML() {
+        $user_setting = $this->user_options[$this->key];
+        $value = isset( $user_setting ) ? $user_setting : $this->default;
+
+        $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
+
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-input-label">' . $this->name . '</p>';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $value . '" />';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
+            $html .= '<div class="sw-clearfix"></div>';
+
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $html;
+    }
+
 
     /**
     * Defines the default value among this select's choices.
@@ -35,41 +89,5 @@ class SWP_Option_Text extends SWP_Option {
         $this->default = $default;
 
         return $this;
-    }
-
-    /**
-    * Renders the HTML to create the <input type="text" /> element.
-    *
-    * @return string $html The fully qualified HTML.
-    *
-    */
-    public function render_HTML() {
-        if ( isset( $this->user_options[$this->key] ) ) :
-            $value = $this->user_options[$this->key];
-        else:
-            $value = $this->default;
-        endif;
-
-        $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
-        $html .= $this->render_dependency();
-        $html .= $this->render_premium();
-        $html .= '>';
-
-            $html .= '<div class="sw-grid sw-col-300">';
-                $html .= '<p class="sw-input-label">' . $this->name . '</p>';
-            $html .= '</div>';
-
-            $html .= '<div class="sw-grid sw-col-300">';
-                $html .= '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" placeholder="' . $this->default . '" value="' . $value . '" />';
-            $html .= '</div>';
-
-            $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
-            $html .= '<div class="sw-clearfix"></div>';
-
-        $html .= '</div>';
-
-        $this->html = $html;
-
-        return $html;
     }
 }
