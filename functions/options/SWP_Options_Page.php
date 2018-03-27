@@ -275,8 +275,8 @@ class SWP_Options_Page extends SWP_Abstract {
         $styles->set_priority( 20 );
 
             $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
-            $buttons_preview->set_priority( 10 );
-            $buttons_preview->do_buttons_preview();
+            $buttons_preview->set_priority( 10 )
+                ->do_buttons_preview();
 
             $total_counts = new SWP_Options_Page_Section( 'Total Counts' );
             $total_counts->set_description( 'Customize how the "Total Shares" section of your share buttons look.' )
@@ -409,23 +409,29 @@ class SWP_Options_Page extends SWP_Abstract {
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
             $twitter_id = new SWP_Option_Text( 'Twitter Username', 'twitter_id' );
-            $twitter_id->set_size( 'two-thirds' );
+            $twitter_id->set_size( 'two-thirds' )
+                ->set_priority( 10 )
+                ->set_default( '' );
 
             //* pinterestID => pinterest_id
             $pinterest_id = new SWP_Option_Text( 'Pinterest Username', 'pinterest_id' );
-            $pinterest_id->set_size( 'two-thirds' );
+            $pinterest_id->set_size( 'two-thirds' )
+                ->set_priority( 20 )
+                ->set_default( '' );
 
             //* facebookPublisherUrl => facebook_publisher_url
             $facebook_publisher_url = new SWP_Option_Text( 'Facebook Page URL', 'facebook_publisher_url' );
-            $facebook_publisher_url->set_size( 'two-thirds' );
+            $facebook_publisher_url->set_size( 'two-thirds' )
+                ->set_priority( 30 )
+                ->set_default( '' );
 
             //* facebookAppID => facebook_app_id
             $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
-            $facebook_app_id->set_size( 'two-thirds' );
+            $facebook_app_id->set_size( 'two-thirds' )
+                ->set_priority( 40 )
+                ->set_default( '' );
 
         $sitewide_identity->add_options( [$twitter_id, $pinterest_id, $facebook_publisher_url, $facebook_app_id] );
-
-            //* TODO: integrate sw_get_post_types() into this section.
 
         $social_identity->add_section( $sitewide_identity );
 
