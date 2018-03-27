@@ -42,6 +42,37 @@ class SWP_Section_HTML extends SWP_Option {
         return $this->html;
     }
 
+    public function do_bitly_authentication_button() {
+        $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=https://warfareplugins.com/wp-admin/admin-ajax.php&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
+
+        if ( isset( $this->dependant) && !empty( $this->dependant) ):
+            $text = __( 'Connected', 'social-warfare' );
+            $color = 'sw-green-button';
+        else:
+            $text = __( 'Authenticated', 'social-warfare' );
+            $color = 'sw-navy-button';
+        endif;
+
+        ob_start() ?>
+
+            <div class="sw-grid sw-col-940 sw-fit sw-option-container <?php echo $this->key ?> '_wrapper" <?php $this->render_dependency(); $this->render_premium(); ?>>
+                <div class="sw-grid sw-col-300">
+                    <p class="sw-authenticate-label"><?php __( $this->name, 'social-warfare' ) ?></p>
+                </div>
+                <div class="sw-grid sw-col-300">
+                    <a class="button <?php echo $color ?>" href="<?php echo $link ?>"><?php echo $text ?></a>
+                </div>
+                <div class="sw-grid sw-col-300 sw-fit"></div>
+            </div>
+
+        <?php
+
+        $this->html = ob_get_contents();
+        ob_end_clean();
+
+        return $this;
+    }
+
     /**
     * The buttons preview as shown on the Display tab.
     *
@@ -115,7 +146,8 @@ class SWP_Section_HTML extends SWP_Option {
 
         <?php
 
-        $this->html = ob_end_clean();
+        $this->html = ob_get_contents();
+        ob_end_clean();
 
         return $this;
     }
