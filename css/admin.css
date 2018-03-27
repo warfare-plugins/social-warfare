@@ -207,8 +207,8 @@
 	font-style: normal;
 }
 
-.sw-section {
-	border-bottom: 1px solid #CED3DC;
-	margin: 0 0 40px;
-
+[class$=title_wrapper] ~ [class$=title_wrapper] {
+	border-top: 1px solid #CED3DC;
+    padding-top: 40px;
 }
+
