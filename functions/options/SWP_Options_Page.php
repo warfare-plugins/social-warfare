@@ -174,7 +174,7 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     protected function init_display_tab() {
         $display = new SWP_Options_Page_Tab( 'Display', 'display' );
-		$display->set_priority( 20 );
+		$display->set_priority( 10 );
 
             $social_networks = new SWP_Options_Page_Section( 'Social Networks' );
             $social_networks->set_priority( 10 )
@@ -272,7 +272,7 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     protected function init_styles_tab() {
         $styles = new SWP_Options_Page_Tab( 'Styles', 'styles' );
-        $styles->set_priority( 10 );
+        $styles->set_priority( 20 );
 
             $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
             $buttons_preview->set_priority( 10 );
@@ -501,7 +501,7 @@ class SWP_Options_Page extends SWP_Abstract {
     protected function init_registration_tab() {
         $registration = new SWP_Options_Page_Tab( 'Registration', 'registration' );
 
-        $registration->set_priority( 5 );
+        $registration->set_priority( 50 );
 
             $wrap = new SWP_Options_Page_Section( 'Addon Registrations', 'addon' );
             $wrap->set_priority( 10 );
@@ -584,21 +584,29 @@ class SWP_Options_Page extends SWP_Abstract {
         $html .= '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-pro-light.png" />';
         $html .= '<ul class="sw-header-menu">';
 
-        foreach( $this->tabs as $index => $tab ) {
-            $active = $index === 2 ? 'sw-active-tab' : '';
+        $tab_map = $this->sort_by_priority( $this->tabs );
 
-            $html .= '<li class="' . $active . '">';
-            $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
-            $html .= '<span>' . $tab->name . '</span>';
-            $html .= '</a></li>';
+        foreach( $tab_map as $prioritized_tab) {
+            foreach( $this->tabs as $index => $tab ) {
+                if ( $prioritized_tab['key'] === $tab->key ):
+                    $active = $index === 2 ? 'sw-active-tab' : '';
+
+                    $html .= '<li class="' . $active . '">';
+                    $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
+                    $html .= '<span>' . $tab->name . '</span>';
+                    $html .= '</a></li>';
+                endif;
+            }
         }
+
+
 
         $html .= '</ul>';
         $html .= '</div>';
 
         //* "Save Changes" button.
-        $html .= '<div class="sw-grid sw-col-220 sw-fit">'
-;        $html .= '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
+        $html .= '<div class="sw-grid sw-col-220 sw-fit">';
+        $html .= '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
         $html .= '</div>';
         $html .= '<div class="sw-clearfix"></div>';
 
@@ -611,6 +619,12 @@ class SWP_Options_Page extends SWP_Abstract {
 
     /**
     * Renders HTML for each tab and assembles for outputting.
+    *
+    * Note: We have to utilize a $map varaible for this and each
+    * other render() method. This is because the data are all
+    * stored as objects, when can not be iterated by index,
+    * only by key. Since they keys are arbitrary (for a plugin
+    * or addon, for example), this is no good, hence the map.
     *
     * @return string $container The Admin tab HTML container.
     */
@@ -625,9 +639,11 @@ class SWP_Options_Page extends SWP_Abstract {
                     $key = $prioritized_tab['key'];
 
                     foreach( $this->tabs as $tab ) {
-                        if ( $tab->key === $key )
+                        if ( $key === $tab->key ) :
                             $container .= $tab->render_HTML();
+                        endif;
                     }
+
                 }
 
                 $container .= '</div>';
