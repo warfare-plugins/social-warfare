@@ -13,79 +13,56 @@ class SWP_Option_Select extends SWP_Option {
 
 
 	/**
-	 * Choices
-	 *
-	 * Contains a key->value array designating the available
-	 * options that the plugin user can select from the select dropdown box.
-	 *
-	 * @var array
-	 *
-	 */
+	* Choices
+	*
+	* Contains a key->value array designating the available
+	* options that the plugin user can select from the select
+    * dropdown box.
+	*
+	* @var array
+	*
+	*/
 	public $choices = array();
 
 
-	/**
-	 * The __construct magic method.
-	 *
-	 * This method is used to instantiate the class.
-	 *
-	 * @param $name The name printed with the select.
-	 * @return none
-	 *
-	 */
-     public function __construct( $name, $key ) {
-        parent::__construct( $name, $key );
-
-         $this->choices = array();
-     }
-
-
-	/**
-	 * A method for setting the available choices for this option.
-	 *
-	 * Accepts a $key->value set of options which will later be used to
-	 * generate the select dropdown boxes from which the plugin user can select.
-	 *
-	 * This method will overwrite any existing choices previously set. If you
-	 * want to add a choice, use add_choice or add_choices instead.
-	 *
-	 * @since 2.4.0 | 02 MAR 2018 | Created
-	 * @param array $choices
-	 * @return object $this Allows for method chaining
-	 * @TODO: Use the throw() method instead of simply returning false.
-	 *
-	 */
-    public function set_choices( $choices )  {
-        if ( !is_array( $choices ) ) :
-            $this->_throw( "You must provide an array of choices to go into the select." );
-        endif;
-
-        $this->choices = $choices;
-
-        return $this;
-    }
-
     /**
-    * Defines the default value among this select's choices.
+    * The required constructor for PHP classes.
     *
-    *
-    * @param string $value The key associated with the default option.
-    * @return SWP_Option_Select $this The calling instance, for method chaining.
+    * @param string $name The display name for the toggle.
+    * @param string $key The database key for the user setting.
     *
     */
-    public function set_default( $value ) {
-        if ( is_bool( $value ) || is_numeric( $value ) ) :
-            settype( $value, 'string' );
-        endif;
+    public function __construct( $name, $key ) {
+        parent::__construct( $name, $key );
 
-        if ( !is_string( $value ) ||  !isset( $value ) ) :
-            $this->_throw( 'Please provide a default value as a string.' );
-        endif;
+        $this->choices = array();
+    }
 
-        $this->default = $value;
+
+    /**
+    * Add an option to the select.
+    *
+    * Additional addons may want to expand the choices available for
+    * a given option.
+    *
+    * @since 2.4.0 | 02 MAR 2018 | Created
+    * @param string $choice The choice to add to the select.
+    * @return object $this Allows for method chaining
+    * @TODO: Sanitize the input with the throw() method.
+    * @TODO: Make this function actually do something (i.e. make it merge these choices
+    *         into the existing array of choices.)
+    * @return SWP_Option_Select $this The calling object with an updated chocies array.
+    */
+    public function add_choice( $choice ) {
+        if ( !is_string( $choice ) ) {
+            $this->_throw( "Please provide a choice to add to the select. The choice must be passed as a string." );
+        }
+
+        array_push( $this->choices, __( $choice, 'social-warfare' ) );
 
         return $this;
     }
+
 
     /**
     * Create the options for a select dropdown.
@@ -108,31 +85,6 @@ class SWP_Option_Select extends SWP_Option {
         return $this;
     }
 
-
-    /**
-    * Add an option to the select.
-    *
-    * Additional addons may want to expand the choices available for
-    * a given option.
-    *
-    * @since 2.4.0 | 02 MAR 2018 | Created
-    * @param string $choice The choice to add to the select.
-    * @return object $this Allows for method chaining
-    * @TODO: Sanitize the input with the throw() method.
-    * @TODO: Make this function actually do something (i.e. make it merge these choices
-    * 		  into the existing array of choices.)
-    * @return SWP_Option_Select $this The calling object with an updated chocies array.
-    */
-     public function add_choice( $choice ) {
-         if ( !is_string( $choice ) ) {
-             $this->_throw( "Please provide a choice to add to the select. The choice must be passed as a string." );
-         }
-
-         array_push( $this->choices, __( $choice, 'social-warfare' ) );
-
-         return $this;
-     }
-
     /**
     * Render the HTML
     *
@@ -146,25 +98,13 @@ class SWP_Option_Select extends SWP_Option {
     *
     */
     public function render_HTML( $echo = false ) {
-        $html = $this->open_HTML();
-        $html .= $this->create_select();
-        $html .= $this->close_HTML();
-
-        $this->html = $html;
-
-        return $html;
-    }
-
-
-    /**
-    * Creates the boilerplate opening tags and classes.
-    *
-    * @return string $html HTML ready to be filled with a checkbox input.
-    */
-    private function open_HTML() {
         if ( empty( $this->size ) ) :
             $this->size = '';
         endif;
+
+        $user_setting = $this->user_options[$this->key];
+
+        $selected = isset( $user_setting ) ? $user_setting : $this->default;
 
         $size = $this->get_css_size();
 
@@ -177,47 +117,68 @@ class SWP_Option_Select extends SWP_Option {
                 $html .= '<p class="sw-input-label">' . $this->name . '</p>';
             $html .= '</div>';
 
-        $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<div class="sw-grid sw-col-300">';
 
-        return $html;
-    }
+                $html .= '<select name=' . $this->key . '>';
 
-    /**
-    * Sets the HTML for the select with options.
-    *
-    * @return string $html The select and related HTML.
-    *
-    */
-    private function create_select() {
-        $select = '<select name=' . $this->key . '>';
+                foreach ( $this->choices as $key => $display_name ) {
+                    $html .= '<option value="' . $key . '" ' . selected($key, $selected, false) . '>' . $display_name . '</option>';
+                }
+                $html .= '</select>';
 
-        if ( isset($this->user_options[$this->key]) ) :
-            $checked = $this->user_options[$this->key];
-        else :
-            $checked = $this->default;
-        endif;
-
-        foreach ( $this->choices as $key => $display_name ) {
-            $select .= '<option value="' . $key . '" ' . selected($key, $checked, false) . '>' . $display_name . '</option>';
-        }
-
-        $select .= '</select>';
-
-        return $select;
-    }
-
-    /**
-    * Resolves tags left open in open_HTML.
-    *
-    * @param string $html The HTML to close.
-    * @return string $html Completed and valid HTML.
-    *
-    */
-    private function close_HTML() {
-            $html = '</div>';
+            $html .= '</div>';
         $html .= '</div>';
 
+        $this->html = $html;
+
         return $html;
     }
 
+
+	/**
+	* A method for setting the available choices for this option.
+	*
+	* Accepts a $key->value set of options which will later be used to
+	* generate the select dropdown boxes from which the plugin user can select.
+	*
+	* This method will overwrite any existing choices previously set. If you
+	* want to add a choice, use add_choice() or add_choices() instead.
+	*
+	* @since 2.4.0 | 02 MAR 2018 | Created
+	* @param array $choices
+	* @return object $this Allows for method chaining
+	*
+	*/
+    public function set_choices( $choices )  {
+        if ( !is_array( $choices ) ) :
+            $this->_throw( "You must provide an array of choices to go into the select." );
+        endif;
+
+        $this->choices = $choices;
+
+        return $this;
+    }
+
+
+    /**
+    * Defines the default value among this select's choices.
+    *
+    *
+    * @param string $value The key associated with the default option.
+    * @return SWP_Option_Select $this The calling instance, for method chaining.
+    *
+    */
+    public function set_default( $value ) {
+        if ( is_bool( $value ) || is_numeric( $value ) ) :
+            settype( $value, 'string' );
+        endif;
+
+        if ( !is_string( $value ) ||  !isset( $value ) ) :
+            $this->_throw( 'Please provide a default value as a string.' );
+        endif;
+
+        $this->default = $value;
+
+        return $this;
+    }
 }
