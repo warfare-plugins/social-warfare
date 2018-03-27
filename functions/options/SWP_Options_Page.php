@@ -379,42 +379,12 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->set_priority( 40 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
 
-            $static_options = $this->get_static_options_array();
+                $button_position_table = new SWP_Section_HTML( 'Position Table' );
+                $button_position_table->do_button_position_table();
 
-            $default_types = ['page', 'post'];
-            $post_types = array_merge( $default_types, get_post_types( ['public' => true, '_builtin' => false ], 'names' ) );
+            $button_position->add_option( $button_position_table );
 
-            $panel_locations = [
-                'above' => 'Above the Content',
-                'below' => 'Below the Content',
-                'both'  => 'Both Above and Below the Content',
-                'none'  => 'None/Manual Placement'
-            ];
 
-            $float_locations = [
-                'on'    => 'On',
-                'off'   => 'Off'
-            ];
-
-            //* TODO: This does not exactly match the original layout.
-            //* It needs to be a table of options, not a column.
-            foreach( $post_types as $index => $post ) {
-                $priority = ($index + 1) * 10;
-
-                $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'position_' . $post );
-                $panel->set_priority( $priority )
-                    ->set_size( 'two-thirds' )
-                    ->set_choices( $panel_locations )
-                    ->set_default( 'both' );
-
-                $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
-                $float->set_priority( $priority + 5 )
-                    ->set_size( 'two-thirds' )
-                    ->set_choices( $float_locations )
-                    ->set_default( 'on' );
-
-                $button_position->add_options( [$panel, $float] );
-            }
 
         $display->add_sections( [$social_networks, $share_counts, $button_position] );
 
