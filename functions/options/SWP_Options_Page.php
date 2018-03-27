@@ -597,8 +597,8 @@ class SWP_Options_Page extends SWP_Abstract {
         $html .= '</div>';
 
         //* "Save Changes" button.
-        $html .= '<div class="sw-grid sw-col-220 sw-fit">';
-        $html .= '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
+        $html .= '<div class="sw-grid sw-col-220 sw-fit">'
+;        $html .= '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
         $html .= '</div>';
         $html .= '<div class="sw-clearfix"></div>';
 
@@ -615,18 +615,19 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return string $container The Admin tab HTML container.
     */
     private function create_tabs() {
-        var_dump($map);
+        $tab_map = $this->sort_by_priority( $this->tabs );
 
-        $tabs = $this->sort_by_priority( $map );
-        echo "<hr><br/>"; die(var_dump($map));
         $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
             $container .= '<form class="sw-admin-settings-form">';
                 $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
-                foreach( $this->tabs as $tab ) {
-                    $html = $tab->render_HTML();
+                foreach( $tab_map as $prioritized_tab ) {
+                    $key = $prioritized_tab['key'];
 
-                    $container .= $html;
+                    foreach( $this->tabs as $tab ) {
+                        if ( $tab->key === $key )
+                            $container .= $tab->render_HTML();
+                    }
                 }
 
                 $container .= '</div>';
