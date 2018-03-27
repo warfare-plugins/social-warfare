@@ -102,9 +102,7 @@ class SWP_Option_Select extends SWP_Option {
             $this->size = '';
         endif;
 
-        $user_setting = $this->user_options[$this->key];
 
-        $selected = isset( $user_setting ) ? $user_setting : $this->default;
 
         $size = $this->get_css_size();
 
@@ -119,17 +117,34 @@ class SWP_Option_Select extends SWP_Option {
 
             $html .= '<div class="sw-grid sw-col-300">';
 
-                $html .= '<select name=' . $this->key . '>';
-
-                foreach ( $this->choices as $key => $display_name ) {
-                    $html .= '<option value="' . $key . '" ' . selected($key, $selected, false) . '>' . $display_name . '</option>';
-                }
-                $html .= '</select>';
+                $html .= $this->render_HTML_element();
 
             $html .= '</div>';
         $html .= '</div>';
 
         $this->html = $html;
+
+        return $html;
+    }
+
+    /**
+    * Renders just the <select> part of the HTML.
+    *
+    * Pulled out from render_HTML for SWP_Section_HTML.
+    *
+    * @return string $html The fully qualified HTML for a select.
+    */
+    public function render_HTML_element() {
+        $user_setting = $this->user_options[$this->key];
+        $selected = isset( $user_setting ) ? $user_setting : $this->default;
+
+        $html = '<select name=' . $this->key . '>';
+
+        foreach ( $this->choices as $key => $display_name ) {
+            $html .= '<option value="' . $key . '" ' . selected($key, $selected, false) . '>' . $display_name . '</option>';
+        }
+
+        $html .= '</select>';
 
         return $html;
     }
