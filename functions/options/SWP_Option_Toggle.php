@@ -50,11 +50,8 @@ class SWP_Option_Toggle extends SWP_Option {
         $size = $this->get_css_size();
 
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
-
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
-
-
         $html .= '>';
 
         $html .= '</div>';

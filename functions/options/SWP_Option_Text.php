@@ -51,10 +51,8 @@ class SWP_Option_Text extends SWP_Option {
         endif;
 
         $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
-
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
-
         $html .= '>';
 
             $html .= '<div class="sw-grid sw-col-300">';
@@ -64,6 +62,7 @@ class SWP_Option_Text extends SWP_Option {
             $html .= '<div class="sw-grid sw-col-300">';
                 $html .= '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" placeholder="' . $this->default . '" value="' . $value . '" />';
             $html .= '</div>';
+
             $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
             $html .= '<div class="sw-clearfix"></div>';
 

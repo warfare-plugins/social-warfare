@@ -46,7 +46,6 @@ class SWP_Option_Textarea extends SWP_Option_Text {
     public function render_HTML() {
         // Open wrapper
         $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
-
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
         $html .= '>';
