@@ -24,7 +24,7 @@ add_filter( 'swp_button_options', 'swp_linkedIn_options_function',20 );
 function swp_linkedIn_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
-	$options['content']['linkedIn'] = array(
+	$options['icons']['linkedIn'] = array(
 		'type' => 'checkbox',
 		'content' => 'LinkedIn',
 		'default' => true,

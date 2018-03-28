@@ -24,7 +24,7 @@ add_filter( 'swp_button_options' , 'swp_stumbleupon_options_function' , 20 );
 function swp_stumbleupon_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
-	$options['content']['stumbleupon'] = array(
+	$options['icons']['stumbleupon'] = array(
 		'type' => 'checkbox',
 		'content' => 'StumbleUpon',
 		'default' => false,

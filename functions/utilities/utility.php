@@ -265,13 +265,14 @@ function _swp_is_debug( $type = 'all' ) {
  * @param Array $options The options Array
  * @return Array $options The modified options array
  */
-function swp_buttons_cleanup( $options ) {
-	if(isset($options['content']['active'])) {
-		unset($options['content']['active']);
-	}
-	return $options;
-}
-add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
+// DEPRECATED
+// function swp_buttons_cleanup( $options ) {
+// 	if(isset($options['icons']['active'])) {
+// 		unset($options['icons']['active']);
+// 	}
+// 	return $options;
+// }
+// add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
 
 /**
  * A function to recursively search arrays
