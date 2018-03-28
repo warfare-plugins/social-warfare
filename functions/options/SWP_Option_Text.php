@@ -31,7 +31,8 @@ class SWP_Option_Text extends SWP_Option {
     */
     public function __construct( $name, $key ) {
         parent::__construct( $name, $key );
-        $this->default = '';
+        $this->set_default( '' );
+        $this->value = $this->get_value();
     }
 
 
@@ -42,9 +43,6 @@ class SWP_Option_Text extends SWP_Option {
     *
     */
     public function render_HTML() {
-        $user_setting = $this->user_options[$this->key];
-        $value = isset( $user_setting ) ? $user_setting : $this->default;
-
         $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
@@ -55,7 +53,7 @@ class SWP_Option_Text extends SWP_Option {
             $html .= '</div>';
 
             $html .= '<div class="sw-grid sw-col-300">';
-                $html .= '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $value . '" />';
+                $html .= $this->render_HTML_element();
             $html .= '</div>';
 
             $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -66,6 +64,10 @@ class SWP_Option_Text extends SWP_Option {
         $this->html = $html;
 
         return $html;
+    }
+
+    public function render_HTML_element() {
+        return '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $this->value . '" />';
     }
 
 
