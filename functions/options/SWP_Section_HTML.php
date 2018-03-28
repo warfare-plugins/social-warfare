@@ -327,6 +327,56 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+    public function do_yummly_display() {
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
+
+
+            //* Table headers
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding"></p>';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Category' ,'social-warfare' ) . '</p>';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Tag' ,'social-warfare' ) . '</p>';
+            $html .= '</div>';
+
+            $yummly_categories = new SWP_Option_Text( 'Yummly Categories', 'yummly_categories' );
+            $categories_html = $yummly_categories->set_priority( 10 )
+                ->set_default( '' )
+                ->render_HTML_element();
+
+            $yummly_tags = new SWP_Option_Text( 'Yummly Tags', 'yummly_tags' );
+            $tags_html = $yummly_categories->set_priority( 10 )
+                ->set_default( '' )
+                ->render_HTML_element();
+
+            //* Table body
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Yummly Terms' ,'social-warfare' ) . '</p>';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300">';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . $categories_html . '</p>';
+            $html .= '</div>';
+
+            $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . $tags_html . '</p>';
+            $html .= '</div>';
+
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $this;
+    }
+
 
     /**
     * The rendering method common to all classes.
