@@ -479,9 +479,16 @@ class SWP_Options_Page extends SWP_Abstract {
         $styles = new SWP_Options_Page_Tab( 'Styles', 'styles' );
         $styles->set_priority( 20 );
 
-            $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
-            $buttons_preview->set_priority( 10 )
-                ->do_buttons_preview();
+            $visual_options = new SWP_Options_Page_Section( 'Visual Options' );
+            $visual_options->set_description( 'Use the settings below to customize the look of your share buttons.' )
+                ->set_priority( 10 )
+                ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-visual-options/' );
+
+                $buttons_preview = new SWP_Section_HTML( 'Buttons Preview' );
+                $buttons_preview->set_priority( 1000 )
+                    ->do_buttons_preview();
+
+            $visual_options->add_option( $buttons_preview );
 
             $total_counts = new SWP_Options_Page_Section( 'Total Counts' );
             $total_counts->set_description( 'Customize how the "Total Shares" section of your share buttons look.' )
@@ -591,7 +598,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     $float_hover_colors, $float_single_colors,
                     $float_background_color] );
 
-        $styles->add_sections( [$total_counts, $floating_share_buttons] );
+        $styles->add_sections( [$visual_options, $total_counts, $floating_share_buttons] );
 
         $this->tabs->styles = $styles;
 
