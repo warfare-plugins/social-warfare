@@ -86,21 +86,23 @@ class SWP_Option extends SWP_Abstract {
     /**
     * Fetches the css class to match a given size given as a string.
     *
-    * @param string $size The size of the element using SWP sizing.
+    * @param Optional string $size The size of the element using SWP sizing.
     * @return object $this Allows for method chaining.
     */
-    protected function get_css_size() {
+    protected function get_css_size( $size = '' ) {
+        $size = '' === $size ? $this->size : $size;
+
         $map = [
             'two-fourths'   => ' sw-col-460 ',
-            'two-thirds'    => ' sw-col-940 ',
+            'two-thirds'    => ' sw-col-300 ',
             'four-fourths'  => ' sw-col-620 ',
         ];
 
-        if ( empty( $this->size) ) :
+        if ( empty($size) ) :
             return $map['two-thirds'];
         endif;
 
-        return $map[$this->size];
+        return $map[$size];
     }
 
 
