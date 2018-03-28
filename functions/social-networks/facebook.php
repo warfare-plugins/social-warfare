@@ -24,7 +24,7 @@ add_filter( 'swp_button_options', 'swp_facebook_options_function',20 );
 function swp_facebook_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
-	$options['content']['facebook'] = array(
+	$options['icons']['facebook'] = array(
 		'type' => 'checkbox',
 		'content' => 'Facebook',
 		'default' => true,

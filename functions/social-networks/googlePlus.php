@@ -24,7 +24,7 @@ add_filter( 'swp_button_options', 'swp_googlePlus_options_function',20 );
 function swp_googlePlus_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
-	$options['content']['googlePlus'] = array(
+	$options['icons']['googlePlus'] = array(
 		'type' => 'checkbox',
 		'content' => 'Google Plus',
 		'default' => true,

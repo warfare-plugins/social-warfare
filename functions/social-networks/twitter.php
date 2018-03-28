@@ -24,7 +24,7 @@ add_filter( 'swp_button_options', 'swp_twitter_options_function',20 );
 function swp_twitter_options_function( $options ) {
 
 	// Create the new option in a variable to be inserted
-	$options['content']['twitter'] = array(
+	$options['icons']['twitter'] = array(
 		'type' => 'checkbox',
 		'content' => 'Twitter',
 		'default' => true,
