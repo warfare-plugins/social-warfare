@@ -36,6 +36,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
             $this->_throw( $link . ' must be a valid URL.' );
         }
 
+        $this->link = $link;
+
         return $this;
     }
 

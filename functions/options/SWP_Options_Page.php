@@ -339,7 +339,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $social_networks = new SWP_Options_Page_Section( 'Social Networks' );
             $social_networks->set_priority( 10 )
-                ->set_description( 'Drag & Drop to activate and order your share buttons.' );
+                ->set_description( 'Drag & Drop to activate and order your share buttons.' )
+                ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
 
                 //* These two sections are unique and need special HTML.
                 $active = new SWP_Section_HTML( 'Active' );
