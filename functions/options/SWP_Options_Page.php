@@ -343,10 +343,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 //* These two sections are unique and need special HTML.
                 $active = new SWP_Section_HTML( 'Active' );
-
-                $icons = isset( $this->user_options['new_order_of_icons'] ) ? $this->user_options['new_order_of_icons'] : $this->icons;
-
-                $active->do_active_buttons( $icons )
+                $active->do_active_buttons()
                     ->set_priority( 10 );
 
                 $inactive = new SWP_Section_HTML( 'Inactive' );

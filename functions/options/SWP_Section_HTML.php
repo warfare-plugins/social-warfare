@@ -53,7 +53,9 @@ class SWP_Section_HTML extends SWP_Option {
     * @param array $icons The array of currently selected icons.
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
-    public function do_active_buttons( $icons ) {
+    public function do_active_buttons() {
+        $user_icons = $this->get_user_icons();
+
         $html = '<div class="sw-grid sw-col-300">';
             $html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
         $html .= '</div>';
@@ -61,20 +63,20 @@ class SWP_Section_HTML extends SWP_Option {
         $html .= '<div class="sw-grid sw-col-620 sw-fit">';
             $html .= '<div class="sw-active sw-buttons-sort">';
 
-            foreach ( $icons['content'] as $network => $data ) {
+            foreach ( $user_icons['icons'] as $network => $data ) {
                 $html .= '<i class="sw-s sw-' . $network . '-icon" ';
                 $html .= ' data-network="' . $network . '"';
 
-                if ( $data['premium'] === 'premium' ) :
-                    $html .= ' premium="true"';
+                if ( isset($data['premium']) && $data['premium'] === 'premium' ) :
+                    $html .= ' premium="1"';
                 endif;
 
-                $html .= '>';
-                $html .= '</i>';
+                $html .= '></i>';
             }
 
             $html .= '</div>';
         $html .= '</div>';
+        $html .= '<div class="sw-clearfix"></div>';
 
         $this->html = $html;
 
@@ -207,6 +209,9 @@ class SWP_Section_HTML extends SWP_Option {
     * //* TODO: finish this method.
     */
     public function do_inactive_buttons() {
+        $all_icons = $this->get_all_icons();
+        $user_icons = $this->get_user_icons();
+
         $html = '<div class="sw-grid sw-col-300">';
             $html .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
         $html .=  '</div>';
@@ -214,10 +219,23 @@ class SWP_Section_HTML extends SWP_Option {
         $html .=  '<div class="sw-grid sw-col-620 sw-fit">';
             $html .=  '<div class="sw-inactive sw-buttons-sort">';
 
-            //* wut
+            foreach( $all_icons['icons'] as $network => $data ) {
+                if ( !isset( $user_icons['icons'][$network]) ) :
+                    $html .= '<i class="sw-s sw-' . $network . '-icon" ';
+                    $html .= ' data-network="' . $network . '"';
+
+                    if ( isset($data['premium']) && $data['premium'] === 'premium' ) :
+                        $html .= ' premium="1"';
+                    endif;
+
+                    $html .= '></i>';
+                endif;
+            }
 
             $html .= '</div>';
         $html .= '</div>';
+
+        $this->html = $html;
 
         return $this;
     }
