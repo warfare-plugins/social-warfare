@@ -110,6 +110,32 @@ class SWP_Abstract {
         }
     }
 
+    public function get_all_icons() {
+        return apply_filters( 'swp_button_options', array() );
+    }
+
+    public function get_user_icons() {
+        $user_icons = $this->user_options['newOrderOfIcons'];
+
+        if ( empty( $user_icons ) ):
+            $all_icons = $this->get_all_icons();
+            $defaults = [];
+
+            foreach( $all_icons as $network => $data ) {
+                $defaults[$network] = $data;
+            }
+
+            $icons = $defaults;
+
+        else :
+
+            $icons = ['icons' => $user_icons];
+
+        endif;
+
+        return $icons;
+    }
+
     public function set_name( $name ) {
         if ( !is_string($name) ) {
             $this->_throw("Please provide a string for your object's name." );
