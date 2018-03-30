@@ -76,15 +76,7 @@ function swpConditionalFields() {
 		}
 		value = string_to_bool(value);
 
-		if ( $(this).hasClass('custom_thumb_size') ) {
-			console.log(conditionEl);
-			console.log(typeof required);
-			console.log(required);
-			console.log(typeof value);
-			console.log(value);
-		}
-
-        // *Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
+        //* Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 
 		if (window.location.href.indexOf("page=social-warfare") !== -1) {
@@ -107,12 +99,12 @@ function swpConditionalFields() {
 	});
 
 	if ( false === swp_checked('floatStyleSource') &&
-	       'customColor' === swp_selected('sideDColorSet')
-	    || 'ccOutlines'  === swp_selected('sideDColorSet')
-	    || 'customColor' === swp_selected('sideIColorSet')
-	    || 'ccOutlines'  === swp_selected('sideIColorSet')
-	    || 'customColor' === swp_selected('sideOColorSet')
-        || 'ccOutlines'  === swp_selected('sideOColorSet') ) {
+	       'custom_color' === swp_selected('float_default_colors')
+	    || 'custom_color_outlines'  === swp_selected('float_default_colors')
+	    || 'custom_color' === swp_selected('float_single_colors')
+	    || 'custom_color_outlines'  === swp_selected('float_single_colors')
+	    || 'custom_color' === swp_selected('float_hover_colors')
+        || 'custom_color_outlines'  === swp_selected('float_hover_colors') ) {
 		$( '.sideCustomColor_wrapper' ).slideDown();
 
 	} else {
@@ -120,17 +112,17 @@ function swpConditionalFields() {
 	}
 }
 
-// *Only run on widgets.php
+//* Only run on widgets.php
 if (window.location.href.indexOf("widgets.php")) {
 
-	// *Make sure the elements exist before trying to read them.
+	//* Make sure the elements exist before trying to read them.
 	var widgetFinder = setInterval(function() {
 		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
 
 		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
 		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
 
-        // *Force swpConditionalFields to run when the widget is opened or saved.
+        //* Force swpConditionalFields to run when the widget is opened or saved.
 		$(swpWidget).on("click", swpConditionalFields);
 		$(widgetSubmit).on("click", function() {
 			setTimeout(swpConditionalFields, 600);

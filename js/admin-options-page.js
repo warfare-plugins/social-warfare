@@ -210,14 +210,14 @@
 	}
 
 	function updateCustomColor() {
-		var visualTheme  = $( 'select[name="visualTheme"]' ).val();
-		var dColorSet    = $( 'select[name="dColorSet"]' ).val();
-		var iColorSet    = $( 'select[name="iColorSet"]' ).val();
-		var oColorSet    = $( 'select[name="oColorSet"]' ).val();
+		var visualTheme  = $( 'select[name="button_shape"]' ).val();
+		var dColorSet    = $( 'select[name="default_colors"]' ).val();
+		var iColorSet    = $( 'select[name="single_colors"]' ).val();
+		var oColorSet    = $( 'select[name="hover_colors"]' ).val();
 
 		$( 'style.swp_customColorStuff' ).remove();
 
-		var colorCode = $( 'input[name="customColor"]' ).val();
+		var colorCode = $( 'input[name="custom_color"]' ).val();
 
 		var customCSS = '';
 
@@ -234,10 +234,10 @@
 
 	// A function for updating the preview
 	function updateTheme() {
-		var visualTheme  = $( 'select[name="visualTheme"]' ).val();
-		var dColorSet    = $( 'select[name="dColorSet"]' ).val();
-		var iColorSet    = $( 'select[name="iColorSet"]' ).val();
-		var oColorSet    = $( 'select[name="oColorSet"]' ).val();
+		var visualTheme  = $( 'select[name="button_shape"]' ).val();
+		var dColorSet    = $( 'select[name="default_colors"]' ).val();
+		var iColorSet    = $( 'select[name="single_colors"]' ).val();
+		var oColorSet    = $( 'select[name="hover_colors"]' ).val();
 		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
@@ -267,62 +267,63 @@
 	function updateButtonPreviews() {
 
 		var defaults = {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray',
-				lgOutlines: 'Light Gray Outlines',
-				mdOutlines: 'Medium Gray Outlines',
-				dgOutlines: 'Dark Gray Outlines',
-				colorOutlines: 'Color Outlines',
-				customColor: 'Custom Color',
-				ccOutlines: 'Custom Color Outlines'
+				full_color: 'Full Color',
+				light_gray: 'Light Gray',
+				medium_gray: 'Medium Gray',
+				dark_gray: 'Dark Gray',
+				light_grey_outlines: 'Light Gray Outlines',
+				medium_grey_outlines: 'Medium Gray Outlines',
+				dark_grey_outlines: 'Dark Gray Outlines',
+				color_outlines: 'Color Outlines',
+				custom_color: 'Custom Color',
+				custom_color_outlines: 'Custom Color Outlines'
 			};
 
 		var availableOptions = {
-			flatFresh: defaults,
+			flat_fresh: defaults,
 			leaf: defaults,
 			pill: defaults,
-			threeDee: {
+			three_dee: {
 				fullColor: 'Full Color',
 				lightGray: 'Light Gray',
 				mediumGray: 'Medium Gray',
 				darkGray: 'Dark Gray'
 			},
 			connected: defaults,
-			shift: defaults
+			shift: defaults,
+			boxed: defaults
 		};
 
 		// Check if we are on the admin page
-		if ( 0 === $( 'select[name="visualTheme"]' ).length ) {
+		if ( 0 === $( 'select[name="button_shape"]' ).length ) {
 			return;
 		}
 
 		// Update the items and previews on the initial page load
-		var visualTheme = $( 'select[name="visualTheme"]' ).val();
-		var dColorSet   = $( 'select[name="dColorSet"]' ).val();
-		var iColorSet   = $( 'select[name="iColorSet"]' ).val();
-		var oColorSet   = $( 'select[name="oColorSet"]' ).val();
+		var visualTheme = $( 'select[name="button_shape"]' ).val();
+		var dColorSet   = $( 'select[name="default_colors"]' ).val();
+		var iColorSet   = $( 'select[name="single_colors"]' ).val();
+		var oColorSet   = $( 'select[name="hover_colors"]' ).val();
 
-		$( 'select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option' ).remove();
+		$( 'select[name="default_colors"] option, select[name="single_colors"] option, select[name="hover_colors"] option' ).remove();
 
 		$.each( availableOptions[visualTheme], function( index, value ) {
 			if ( index === dColorSet ) {
-				$( 'select[name="dColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
+				$( 'select[name="default_colors"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 			} else {
-				$( 'select[name="dColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
+				$( 'select[name="default_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 			}
 
 			if ( index === iColorSet ) {
-				$( 'select[name="iColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
+				$( 'select[name="single_colors"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 			} else {
-				$( 'select[name="iColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
+				$( 'select[name="single_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 			}
 
 			if ( index === oColorSet ) {
-				$( 'select[name="oColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
+				$( 'select[name="hover_colors"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 			} else {
-				$( 'select[name="oColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
+				$( 'select[name="hover_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 			}
 
 			if ( dColorSet == 'customColor' || dColorSet == 'ccOutlines' || iColorSet == 'customColor' || iColorSet == 'ccOutlines' || oColorSet == 'customColor' || oColorSet == 'ccOutlines' ) {
@@ -335,39 +336,42 @@
 		});
 
 		// If the color set changes, update the preview with the function
-		$( 'select[name="dColorSet"], select[name="iColorSet"], select[name="oColorSet"]' ).on( 'change', updateTheme );
+		$( 'select[name="default_colors"], select[name="single_colors"], select[name="hover_colors"]' ).on( 'change', updateTheme );
 
 		// If the visual theme is updated, update the preview manually
-		$( 'select[name="visualTheme"]' ).on( 'change', function() {
-			var visualTheme  = $( 'select[name="visualTheme"]' ).val();
-			var dColorSet    = $( 'select[name="dColorSet"]' ).val();
-			var iColorSet    = $( 'select[name="iColorSet"]' ).val();
-			var oColorSet    = $( 'select[name="oColorSet"]' ).val();
+		$( 'select[name="button_shape"]' ).on( 'change', function() {
+			var visualTheme  = $( 'select[name="button_shape"]' ).val();
+			var dColorSet    = $( 'select[name="default_colors"]' ).val();
+			var iColorSet    = $( 'select[name="single_colors"]' ).val();
+			var oColorSet    = $( 'select[name="hover_colors"]' ).val();
 			var i = 0;
+			console.log(availableOptions);
+			console.log(visualTheme);
+			console.log(availableOptions[visualTheme]);
 			var array = availableOptions[visualTheme];
 			var dColor = array.hasOwnProperty( dColorSet );
 			var iColor = array.hasOwnProperty( iColorSet );
 			var oColor = array.hasOwnProperty( oColorSet );
 
-			$( 'select[name="dColorSet"] option, select[name="iColorSet"] option, select[name="oColorSet"] option' ).remove();
+			$( 'select[name="default_colors"] option, select[name="single_colors"] option, select[name="hover_colors"] option' ).remove();
 
 			$.each( availableOptions[visualTheme], function( index, value ) {
 				if ( index === dColorSet || ( dColor == false && i == 0 ) ) {
-					$( 'select[name="dColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
+					$( 'select[name="default_colors"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 				} else {
-					$( 'select[name="dColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
+					$( 'select[name="default_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 				}
 
 				if ( index === iColorSet || ( iColor == false && i == 0 ) ) {
-					$( 'select[name="iColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
+					$( 'select[name="single_colors"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 				} else {
-					$( 'select[name="iColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
+					$( 'select[name="single_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 				}
 
 				if ( index === oColorSet || ( oColor == false && i == 0 ) ) {
-					$( 'select[name="oColorSet"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
+					$( 'select[name="hover_colors"]' ).append( '<option value="' + index + '" selected>' + value + '</option>' );
 				} else {
-					$( 'select[name="oColorSet"]' ).append( '<option value="' + index + '">' + value + '</option>' );
+					$( 'select[name="hover_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 				}
 
 				++i;
@@ -387,11 +391,11 @@
 		A Function to update the button sizing options
 	 *********************************************************/
 	function updateScale() {
-		$( 'select[name="buttonSize"],select[name="buttonFloat"]' ).on( 'change', function() {
+		$( 'select[name="button_size"],select[name="buttonFloat"]' ).on( 'change', function() {
 			$( '.nc_socialPanel' ).css( { width: '100%' } );
 
 			var width = $( '.nc_socialPanel' ).width();
-			var scale = $( 'select[name="buttonSize"]' ).val();
+			var scale = $( 'select[name="button_size"]' ).val();
 			var align = $( 'select[name="buttonFloat"]' ).val();
 
 			var newWidth;
@@ -422,10 +426,10 @@
 		Update the Click To Tweet Demo
 	 *********************************************************/
 	function updateCttDemo() {
-		var $cttOptions = $( 'select[name="cttTheme"]' );
+		var $cttOptions = $( 'select[name="ctt_theme"]' );
 
 		$cttOptions.on( 'change', function() {
-			var newStyle = $( 'select[name="cttTheme"]' ).val();
+			var newStyle = $( 'select[name="ctt_theme"]' ).val();
 
 			$( '.swp_CTT' ).attr( 'class', 'swp_CTT' ).addClass( newStyle );
 		});
@@ -641,7 +645,7 @@
 
 	function set_ctt_preview() {
         var preview = $("#ctt_preview");
-        var select = $("select[name=cttTheme]");
+        var select = $("select[name=ctt_theme]");
 
         if (!preview.length) {
         	preview = $('<style id="ctt_preview"></style>');
@@ -658,12 +662,12 @@
         	}
         });
 
-        $("textarea").on("keyup", update_ctt_preview);
+        $("textarea[name=ctt_css]").on("keyup", update_ctt_preview);
 	}
 
 	function update_ctt_preview() {
 		var preview = $("#ctt_preview");
-        var textarea = $("textarea[name=cttCSS]");
+        var textarea = $("textarea[name=ctt_css]");
 
         $(preview).text($(textarea).val());
 	}
