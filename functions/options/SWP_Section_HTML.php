@@ -12,6 +12,21 @@
 */
 class SWP_Section_HTML extends SWP_Option {
 
+
+    /**
+    * HTML
+    *
+    * The non-conformant markup this object represents.
+    * Most of the sections and options can be created using
+    * one of the existing SWP_{Item} classes. Sometimes we
+    * need something that does not fit those boxes.
+    * This class provides native methods for a few of those
+    * cases, and an add_HTML() method for everything else.
+    *
+    * @var string $html
+    */
+    public $html = '';
+
     /**
     * The required constructor for PHP classes.
     *
@@ -129,7 +144,7 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_buttons_preview() {
         ob_start() ?>
 
-        <div class="nc_socialPanel swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor" data-position="both" data-float="floatNone" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="fullWidth">
+        <div class="nc_socialPanel swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor" data-position="both" data-float="float_ignore" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="full_width">
             <div class="nc_tweetContainer googlePlus" data-id="2">
                 <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet">
                     <span class="iconFiller">
@@ -327,6 +342,41 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+    /**
+    * Creates the Click To Tweet preview for the Styles tab.
+    *
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    */
+    public function do_ctt_preview() {
+        //* Pull these variables out just to make the $html string easier to read.
+        $link = "https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins";
+        $data_link = "https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins";
+        $text = "We couldn't find one social sharing plugin that met all of our needs, so we built it ourselves.";
+
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper">';
+            $html .= '<a class="swp_CTT style1"  data-style="style1" href="' . $link . '" data-link="' . $data_link . '" target="_blank">';
+                $html .= '<span class="sw-click-to-tweet">';
+                    $html .= '<span class="sw-ctt-text">' . $text . '</span>';
+                    $html .= '<span class="sw-ctt-btn">Click To Tweet';
+                        $html .= '<i class="sw sw-twitter"></i>';
+                    $html .= '</span>';
+                $html .= '</span>';
+            $html .= '</a>';
+        $html .= '</div>';
+
+
+        $this->html = $html;
+
+        return $this;
+
+    }
+
+
+    /**
+    * Renders the three column table on the Display tab.
+    *
+    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    */
     public function do_yummly_display() {
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
@@ -381,9 +431,13 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * The rendering method common to all classes.
     *
+    * Unlike the other option classes, this class creates its HTML
+    * and does not immediately return it. Instead, it stores the
+    * HTML inside itself and waits for the render_html method to be called.
+    *
     * @return This object's saved HTML.
     */
-    public function render_html() {
+    public function render_HTML() {
         return $this->html;
     }
 }
