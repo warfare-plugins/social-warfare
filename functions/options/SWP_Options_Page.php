@@ -344,9 +344,9 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
 
                 //* These two sections are unique and need special HTML.
-                $active = new SWP_Option_Icons();
+                $active = new SWP_Option_Icons( 'Active', 'active' );
                 $active->do_active_icons()->set_priority( 10 );
-                $inactive = new SWP_Option_Icons();
+                $inactive = new SWP_Option_Icons( 'Inactive', 'inactive' );
                 $inactive->do_inactive_icons()->set_priority( 20 );
 
 
