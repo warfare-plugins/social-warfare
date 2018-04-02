@@ -66,6 +66,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
 		// Create a 'tabs' object to which we can begin adding tabs.
         $this->tabs = new stdClass();
+        //* TODO: Create the registration function
         $this->swp_registration = true;
 
 		// Get the list of available icons.
@@ -103,6 +104,10 @@ class SWP_Options_Page extends SWP_Abstract {
 		 */
         add_action( 'admin_menu', array( $this, 'options_page') );
 
+<<<<<<< HEAD
+        // $this->icons = apply_filters( 'swp_button_options', array() );
+=======
+>>>>>>> 8491f0b1ee9e006ed881cc454f79964757d7ac23
     }
 
 
@@ -223,6 +228,60 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
+<<<<<<< HEAD
+    * Runs all of the core initializations. If Pro exists, runs Pro initialiations.
+    *
+    * @return function $this->render_html()
+    *
+    */
+    public function init() {
+        $swp_user_options = swp_get_user_options( true );
+
+        $this->init_display_tab()
+            ->init_styles_tab()
+            ->init_social_tab()
+            ->init_advanced_tab()
+            ->init_registration_tab();
+
+        // if ( class_exists( 'SWP_Pro_Options_Page' ) ) :
+        //     $Pro = new SWP_Pro_Options_Page();
+        //     $Pro->update_display_tab()
+        //         ->update_styles_tab()
+        //         ->update_social_tab()
+        //         ->update_advanced_tab();
+        // endif;
+
+        $this->render_HTML();
+    }
+
+
+    /**
+    * Adds the SWP button the sidebar and enqueues JS/CSS.
+    *
+    * @return null
+    *
+    */
+    public function options_page() {
+        // Declare the menu link
+        $swp_menu = add_menu_page(
+            'Social Warfare',
+            'Social Warfare',
+            'manage_options',
+            'social-warfare',
+            array( $this, 'init'),
+            SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
+        );
+
+        // Hook into the CSS and Javascript Enqueue process for this specific page
+        add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
+        add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
+
+    }
+
+
+    /**
+=======
+>>>>>>> 8491f0b1ee9e006ed881cc454f79964757d7ac23
     * Calls rendering methods to assemble HTML for the Admin Settings page.
     *
     * @return SWP_Options_Page $this The calling object for method chaining.
@@ -366,13 +425,11 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
 
                 //* These two sections are unique and need special HTML.
-                $active = new SWP_Section_HTML( 'Active' );
-                $active->do_active_buttons()
-                    ->set_priority( 10 );
+                $active = new SWP_Option_Icons( 'Active', 'active' );
+                $active->do_active_icons()->set_priority( 10 );
+                $inactive = new SWP_Option_Icons( 'Inactive', 'inactive' );
+                $inactive->do_inactive_icons()->set_priority( 20 );
 
-                $inactive = new SWP_Section_HTML( 'Inactive' );
-                $inactive->do_inactive_buttons()
-                    ->set_priority( 20 );
 
                 $social_networks->add_options( [$active, $inactive] );
 
@@ -385,7 +442,7 @@ class SWP_Options_Page extends SWP_Abstract {
         		$network_shares = new SWP_Option_Toggle( 'Button Counts', 'network_shares' );
         		$network_shares->set_default( true )
                     ->set_priority( 10 )
-                    ->set_size('two-thirds');
+                    ->set_size( 'two-thirds' );
 
                 //* totes => totals
                 $total_shares = new SWP_Option_Toggle( 'Total Counts', 'total_shares' );
@@ -518,7 +575,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
 
-                //* swDecimals => decmials
+                //* swDecimals => decimals
                 $decimals = new SWP_Option_Select( 'Decimal Places', 'decimals' );
                 $decimals->set_choices( [
                     '0' => 'Zero',

@@ -282,7 +282,8 @@ class Social_Warfare {
             'Option_Select',
             'Option_Text',
             'Option_Textarea',
-            'Section_HTML'
+            'Section_HTML',
+            'Option_Icons'
         ];
 
         $this->load_files( '/functions/options/', $options );
