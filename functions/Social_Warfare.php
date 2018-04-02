@@ -135,6 +135,7 @@ class Social_Warfare {
          * Database Migration
          *
          * Converts camelCased variable names to the new snake_case option names.
+         * 
          */
         new SWP_Database_Migration();
 
@@ -142,8 +143,7 @@ class Social_Warfare {
          * The Options Page Class
          *
          * Instantiates the class that will load the plugin options page.
-         * TODO: Make this object a global.
-         * 
+         *
          */
         global $SWP_Options_Page;
         $SWP_Options_Page = new SWP_Options_Page();
