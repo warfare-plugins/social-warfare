@@ -2,7 +2,11 @@
 
 class SWP_Option_Icons extends SWP_Option {
 
-    public function __construct() {
+    public function __construct( $name, $key ) {
+        global $swp_user_options;
+
+        parent::__construct( $name, $key );
+        $this->user_options = $swp_user_options;
     }
 
     /**
