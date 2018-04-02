@@ -34,7 +34,6 @@ class Social_Warfare {
 			$this->instantiate_admin_classes();
 		}
 
-        $this->load_addons();
 	}
 
 
@@ -144,7 +143,9 @@ class Social_Warfare {
          *
          * Instantiates the class that will load the plugin options page.
          * TODO: Make this object a global.
+         * 
          */
+        global $SWP_Options_Page;
         $SWP_Options_Page = new SWP_Options_Page();
 	}
 
@@ -293,31 +294,6 @@ class Social_Warfare {
 
 	}
 
-    private function load_addons() {
-        $addons = [
-            '/social-warfare-pro/' => 'social-warfare-pro'
-        ];
-
-        $classes = [
-            'social-warfare-pro' => 'Social_Warfare_Pro'
-        ];
-
-
-        foreach( $addons as $path => $file ) {
-            if ( file_exists( __DIR__ . '/../..' . $path . $file . '.php') ):
-                set_include_path( __DIR__ . '/../..');
-                require_once ( $path . $file . '.php' );
-
-                $class = $classes[$file];
-                require_once( $path . 'functions/' . $class . '.php' );
-                new $class();
-
-            endif;
-        }
-
-
-        // $Pro = new Social_Warfare_Pro();
-    }
 
     /**
      * Loads an array of related files.
@@ -356,7 +332,6 @@ function swp_initiate_plugin() {
 
 	// All of these files need refactored and then migrated into the functions above
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
@@ -370,6 +345,7 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
+require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
@@ -381,6 +357,6 @@ if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
 	// require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
     add_action( 'init', function() {
-        new Social_Warfare();
+        // new Social_Warfare();
     } );
 }

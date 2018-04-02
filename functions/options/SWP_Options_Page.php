@@ -46,15 +46,93 @@ class SWP_Options_Page extends SWP_Abstract {
     public $icons = array();
 
 
+	/**
+	 * The magic construct method to instatiate the options object.
+	 *
+	 * This class method provides the framework for the entire options page.
+	 * It outlines the chronology of loading order and makes it so that addons
+	 * can easily access this object to add their own tabs, sections, and
+	 * options as needed prior to the final output of the page and it's HTML.
+	 *
+	 * @since 2.4.0
+	 * @param none
+	 * @return object The options page object.
+	 *
+	 */
 	public function __construct() {
+
+		// Fetch the initial user-set options.
+		$swp_user_options = swp_get_user_options( true );
+
+		// Create a 'tabs' object to which we can begin adding tabs.
         $this->tabs = new stdClass();
         //* TODO: Create the registration function
         $this->swp_registration = true;
 
+		// Get the list of available icons.
+		$this->icons = apply_filters( 'swp_button_options', array() );
+
+
+		/**
+		 * STEP #1: We create the initial options object immediately when
+		 * this class is loaded which takes place while WordPress is loading
+		 * all of the installed plugins on the site.
+		 *
+		 */
+		$this->init_display_tab()
+			->init_styles_tab()
+			->init_social_tab()
+			->init_advanced_tab()
+			->init_registration_tab();
+
+
+		/**
+		 * STEP #2: Addons can now access this object to add their own
+		 * tabs, sections, and options prior to the page being rendered.
+		 * They will need to use the 'plugins_loaded' hook to ensure that
+		 * the first step above has already occurred.
+		 *
+		 */
+
+
+		/**
+		 * STEP #3: We take the final options object and render the
+		 * options page and it's necessary HTML. We defer this step until
+		 * much later using the admin_menu hook to ensure that all addons
+		 * have had an opportunity to modify the options object as needed.
+		 *
+		 */
         add_action( 'admin_menu', array( $this, 'options_page') );
 
+<<<<<<< HEAD
         // $this->icons = apply_filters( 'swp_button_options', array() );
+=======
+>>>>>>> 8491f0b1ee9e006ed881cc454f79964757d7ac23
     }
+
+
+	/**
+	* Create the admin menu options page
+	*
+	* @return null
+	*
+	*/
+	public function options_page() {
+		// Declare the menu link
+		$swp_menu = add_menu_page(
+			'Social Warfare',
+			'Social Warfare',
+			'manage_options',
+			'social-warfare',
+			array( $this, 'render_HTML'),
+			SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
+		);
+
+		// Hook into the CSS and Javascript Enqueue process for this specific page
+		add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
+		add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
+
+	}
 
 
     /**
@@ -150,6 +228,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
+<<<<<<< HEAD
     * Runs all of the core initializations. If Pro exists, runs Pro initialiations.
     *
     * @return function $this->render_html()
@@ -201,6 +280,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
+=======
+>>>>>>> 8491f0b1ee9e006ed881cc454f79964757d7ac23
     * Calls rendering methods to assemble HTML for the Admin Settings page.
     *
     * @return SWP_Options_Page $this The calling object for method chaining.
