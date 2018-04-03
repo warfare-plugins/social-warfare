@@ -85,7 +85,7 @@ class SWP_Option_Icons extends SWP_Option {
     }
 
     public function render_HTML() {
-        echo $this->html;
+        return $this->html;
     }
 
 }
