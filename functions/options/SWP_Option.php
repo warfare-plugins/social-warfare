@@ -215,16 +215,12 @@ class SWP_Option extends SWP_Abstract {
     *
     */
     public function set_size( $size ) {
-        $options = [ 'two-fourths', 'two-thirds', 'four-fourths' ];
 
-        if ( !in_array( $size, $options) ) {
+        if ( 0 !== strpos( $size, 'sw-col' ) ) {
             $sizes = PHP_EOL;
 
-            foreach( $options as $option ) {
-                $sizes .= $option . PHP_EOL;
-            }
 
-            $this->_throw( "Please enter a valid size. Acceptable sizes are:" . $sizes );
+            $this->_throw( "Please enter a valid size. The string must begin with 'sw-col-', followed by either: 300, 460, or 620.'" );
         }
 
         $this->size = $size;
