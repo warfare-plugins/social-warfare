@@ -228,9 +228,10 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     public function render_HTML() {
         $swp_user_options = swp_get_user_options( true );
+        $registrations = apply_filters( 'swp_registrations', [] );
 
-        $menu = $this->create_menu();
-        $tabs = $this->create_tabs();
+        $menu = $this->create_menu($registrations);
+        $tabs = $this->create_tabs($registrations);
 
         $html = $menu . $tabs;
         $this->html = $html;
@@ -633,7 +634,7 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * @return string $html The fully qualified HTML for the menu.
     */
-    private function create_menu() {
+    private function create_menu( $addons ) {
         //* Open the admin top menu wrapper.
         $html = '<div class="sw-header-wrapper">';
             $html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . absint( $this->swp_registration ) . '">';
@@ -651,6 +652,11 @@ class SWP_Options_Page extends SWP_Abstract {
                     foreach( $tab_map as $prioritized_tab) {
                         foreach( $this->tabs as $index => $tab ) {
                             if ( $prioritized_tab['key'] === $tab->key ) :
+
+                                if ( 'registration' == $tab->key && 0 === count( $addons ) ) :
+                                    continue;
+                                endif;
+
                                 $active = $activated ? 'sw-active-tab' : '';
                                 $activated = false;
 
