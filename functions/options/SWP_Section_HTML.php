@@ -61,6 +61,97 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+    public function do_admin_sidebar() {
+        $status_title =  __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' );
+        $support_link = __( 'Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.' , 'social-warfare' );
+        $support_status = __( 'Opening a support ticket? Copy your System Status by clicking the button below.' , 'social-warfare' );
+        $get_status = __( 'Get System Status' , 'social-warfare' );
+        ob_start();
+        ?>
+
+`    	<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">
+        	<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/affiliate-300x150.jpg"></a>
+        	<a href="https://warfareplugins.com/support-categories/getting-started/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/starter-guide-300x150.jpg"></a>
+        	<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/measure-roi-300x150.jpg"></a>
+        	<p class="sw-support-notice sw-italic"><?= $support_link ?></a></p>
+        	<p class="sw-support-notice sw-italic"><?= $support_status ?></p>
+        	<a href="#" class="button sw-blue-button sw-system-status"><?= $get_status ?></a>
+
+        	<!-- Sytem Status Container -->
+        	<div class="sw-clearfix"></div>
+        	<div class="system-status-wrapper">
+            	<h4><?= $status_title ?></h4>
+            	<div class="system-status-container"><?= $this->system_status() ?></div>
+        	</div>
+    	</div>
+
+        <?php
+
+        $this->html = ob_get_contents();
+        ob_end_clean();
+
+        return $this->html;
+    }
+
+    private function system_status() {
+        /**
+    	 * System Status Generator
+    	 */
+
+    	if ( ! function_exists( 'get_plugins' ) ) {
+    		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    	}
+
+    	$plugins = get_plugins();
+    	$pluginList = '';
+
+    	foreach ( $plugins as $plugin ) :
+    		$pluginList .= '<tr><td><b>' . $plugin['Name'] . '</b></td><td>' . $plugin['Version'] . '</td></tr>';
+    	endforeach;
+
+    	if ( function_exists( 'fsockopen' ) ) :
+    		$fsockopen = '<span style="color:green;">Enabled</span>';
+    	else :
+    		$fsockopen = '<span style="color:red;">Disabled</span>';
+    	endif;
+
+    	if ( function_exists( 'curl_version' ) ) :
+    		$curl_version = curl_version();
+    		$curl_status = '<span style="color:green;">Enabled: v' . $curl_version['version'] . '</span>';
+    	else :
+    		$curl_status = '<span style="color:red;">Disabled</span>';
+    	endif;
+
+    	$theme = wp_get_theme();
+
+    	$og_output = $swp_user_options['swp_og_output'] ? "On" : "Off";
+
+    	$system_status = '
+    		<table style="width:100%;">
+    			<tr><td><h2>Environment Statuses</h2></td><td></td></tr>
+    			<tr><td><b>Home URL</b></td><td>' . get_home_url() . '</td></tr>
+    			<tr><td><b>Site URL</b></td><td>' . get_site_url() . '</td></tr>
+    			<tr><td><b>WordPress Version</b></td><td>' . get_bloginfo( 'version' ) . '</td></tr>
+    			<tr><td><b>PHP Version</b></td><td>' . phpversion() . '</td></tr>
+    			<tr><td><b>WP Memory Limit</b></td><td>' . WP_MEMORY_LIMIT . '</td></tr>
+    			<tr><td><b>Social Warfare Version</b></td><td>' . SWP_VERSION . '</td></tr>
+    			<tr><td><h2>Connection Statuses</h2></td><td></td></tr>
+    			<tr><td><b>fsockopen</b></td><td>' . $fsockopen . '</td></tr>
+    			<tr><td><b>cURL</b></td><td>' . $curl_status . '</td></tr>
+    			<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
+    			<tr><td><b>Theme Name</b></td><td>' . $theme['Name'] . '</td></tr>
+    			<tr><td><b>Theme Version</b></td><td>' . $theme['Version'] . '</td></tr>
+    			<tr><td><b>Caching Method</b></td><td>' . ucfirst($swp_user_options['cacheMethod']) . '</td></tr>
+    			<tr><td><b>Open Graph Toggle Status</b></td><td>' . $og_output . '</td></tr>
+    			<tr><td><b>Active Plugins</b></td><td></td></tr>
+    			<tr><td><b>Number of Active Plugins</b></td><td>' . count( $plugins ) . '</td></tr>
+    			' . $pluginList . '
+    		</table>
+    		';
+
+        return $system_status;
+    }
+
 
 
 
@@ -83,12 +174,12 @@ class SWP_Section_HTML extends SWP_Option {
 
         ob_start() ?>
 
-            <div class="sw-grid sw-col-940 sw-fit sw-option-container <?php echo $this->key ?> '_wrapper" <?php $this->render_dependency(); $this->render_premium(); ?>>
+            <div class="sw-grid sw-col-940 sw-fit sw-option-container <?= $this->key ?> '_wrapper" <?php $this->render_dependency(); $this->render_premium(); ?>>
                 <div class="sw-grid sw-col-300">
                     <p class="sw-authenticate-label"><?php __( $this->name, 'social-warfare' ) ?></p>
                 </div>
                 <div class="sw-grid sw-col-300">
-                    <a class="button <?php echo $color ?>" href="<?php echo $link ?>"><?php echo $text ?></a>
+                    <a class="button <?= $color ?>" href="<?= $link ?>"><?= $text ?></a>
                 </div>
                 <div class="sw-grid sw-col-300 sw-fit"></div>
             </div>
