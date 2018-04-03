@@ -111,7 +111,7 @@ class SWP_Abstract {
     }
 
     public function get_all_icons() {
-        return apply_filters( 'swp_button_options', array() );
+        return apply_filters( 'swp_button_options', ['icons'=> []] );
     }
 
     public function get_user_icons() {
@@ -280,11 +280,6 @@ class SWP_Abstract {
 
             $item['priority'] < $pivot['priority'] ? $left[] = $item : $right[] = $item;
         }
-
-        // var_dump($left);
-        // var_dump($pivot);
-        // var_dump($right);
-        // echo "<br/><hr><br/>";
 
         return array_merge( $this->sort_by_priority($left), [$pivot], $this->sort_by_priority($right) );
     }
