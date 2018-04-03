@@ -143,7 +143,7 @@ class Social_Warfare {
          *
          * Instantiates the class that will load the plugin options page.
          * TODO: Make this object a global.
-         * 
+         *
          */
         global $SWP_Options_Page;
         $SWP_Options_Page = new SWP_Options_Page();
@@ -332,7 +332,6 @@ function swp_initiate_plugin() {
 
 	// All of these files need refactored and then migrated into the functions above
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
-	require_once SWP_PLUGIN_DIR . '/functions/admin/options-array.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
