@@ -326,7 +326,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 'legacy'    => 'Legacy Cache Rebuilding during Page Loads'
             ])
                 ->set_default( 'advanced' )
-                ->set_size( 'two-thirds' );
+                ->set_size( 'sw-col-300' );
 
             $caching_method->add_option( $cache_method );
 
@@ -337,7 +337,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $full_content_toggle = new SWP_Option_Toggle( 'Full Content?', 'full_content' );
             $full_content_toggle->set_default( false )
-                ->set_size( 'two-thirds' );
+                ->set_size( 'sw-col-300' );
 
             $full_content->add_option( $full_content_toggle );
 
@@ -384,13 +384,13 @@ class SWP_Options_Page extends SWP_Abstract {
         		$network_shares = new SWP_Option_Toggle( 'Button Counts', 'network_shares' );
         		$network_shares->set_default( true )
                     ->set_priority( 10 )
-                    ->set_size( 'two-thirds' );
+                    ->set_size( 'sw-col-300' );
 
                 //* totes => totals
                 $total_shares = new SWP_Option_Toggle( 'Total Counts', 'total_shares' );
                 $total_shares->set_default( true )
                     ->set_priority( 20 )
-                    ->set_size( 'two-thirds' );
+                    ->set_size( 'sw-col-300' );
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
@@ -458,25 +458,25 @@ class SWP_Options_Page extends SWP_Abstract {
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
             $twitter_id = new SWP_Option_Text( 'Twitter Username', 'twitter_id' );
-            $twitter_id->set_size( 'two-thirds' )
+            $twitter_id->set_size( 'sw-col-300' )
                 ->set_priority( 10 )
                 ->set_default( '' );
 
             //* pinterestID => pinterest_id
             $pinterest_id = new SWP_Option_Text( 'Pinterest Username', 'pinterest_id' );
-            $pinterest_id->set_size( 'two-thirds' )
+            $pinterest_id->set_size( 'sw-col-300' )
                 ->set_priority( 20 )
                 ->set_default( '' );
 
             //* facebookPublisherUrl => facebook_publisher_url
             $facebook_publisher_url = new SWP_Option_Text( 'Facebook Page URL', 'facebook_publisher_url' );
-            $facebook_publisher_url->set_size( 'two-thirds' )
+            $facebook_publisher_url->set_size( 'sw-col-300' )
                 ->set_priority( 30 )
                 ->set_default( '' );
 
             //* facebookAppID => facebook_app_id
             $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
-            $facebook_app_id->set_size( 'two-thirds' )
+            $facebook_app_id->set_size( 'sw-col-300' )
                 ->set_priority( 40 )
                 ->set_default( '' );
 
@@ -525,7 +525,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     '2' => 'Two',
                 ])
                     ->set_default( '0' )
-                    ->set_size( 'two-fourths' );
+                    ->set_size( 'sw-col-460' );
 
                 //* swp_decimal_separator => decimal_separator
                 $decimal_separator = new SWP_Option_Select( 'Decimal Separator', 'decimal_separator' );
@@ -534,7 +534,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'comma'     => 'Comma',
                 ])
                     ->set_default( 'period' )
-                    ->set_size( 'two-fourths' );
+                    ->set_size( 'sw-col-460' );
 
                 //* swTotesFormat => totals_alignment
                 $totals_alignment = new SWP_Option_Select( 'Alignment', 'totals_alignment' );
@@ -543,7 +543,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'totals_left'   => 'Left'
                 ])
                     ->set_default( 'totals_right' )
-                    ->set_size( 'two-fourths' );
+                    ->set_size( 'sw-col-460' );
 
             $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
@@ -573,7 +573,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_screen_width = new SWP_Option_Text( 'Minimum Screen Width', 'float_screen_width' );
                 $float_screen_width->set_default( '1100' )
                     ->set_priority( 30 )
-                    ->set_size( 'two-fourths' )
+                    ->set_size( 'sw-col-460' )
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
                 //* sideReveal => transition
@@ -594,7 +594,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_default_colors->set_choices( $color_choices )
                     ->set_default( 'full_color' )
                     ->set_priority( 50 )
-                    ->set_size( 'two-fourths' )
+                    ->set_size( 'sw-col-460' )
                     ->set_dependency( 'float_style_source', false );
 
                 //* sideOColorSet => float_hover_colors
