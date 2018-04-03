@@ -98,15 +98,8 @@ class SWP_Option_Select extends SWP_Option {
     *
     */
     public function render_HTML() {
-        if ( empty( $this->size ) ) :
-            $this->size = '';
-        endif;
 
-
-
-        $size = $this->get_css_size();
-
-        $html = '<div class="sw-grid ' . $size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+        $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
         $html .= '>';
@@ -115,7 +108,7 @@ class SWP_Option_Select extends SWP_Option {
                 $html .= '<p class="sw-input-label">' . $this->name . '</p>';
             $html .= '</div>';
 
-            $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<div class="sw-grid ' . $this->size . ' ">';
 
                 $html .= $this->render_HTML_element();
 

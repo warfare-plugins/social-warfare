@@ -23,7 +23,6 @@ class SWP_Option_Toggle extends SWP_Option {
 	public function __construct( $name, $key ) {
 		parent::__construct( $name, $key );
 		$this->default = true;
-		$this->set_size( 'two-thirds' );
 	}
 
 
@@ -41,7 +40,6 @@ class SWP_Option_Toggle extends SWP_Option {
         endif;
 
         $checked = $status === 'on' ? ' checked ' : '';
-        $size = $this->get_css_size();
 
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
