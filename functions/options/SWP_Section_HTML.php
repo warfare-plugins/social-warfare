@@ -241,7 +241,7 @@ class SWP_Section_HTML extends SWP_Option {
 
                     $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'position_' . $post );
                     $panel->set_priority( $priority )
-                        ->set_size( 'two-thirds' )
+                        ->set_size( 'sw-col-300' )
                         ->set_choices( $panel_locations )
                         ->set_default( 'both' );
 
@@ -252,7 +252,7 @@ class SWP_Section_HTML extends SWP_Option {
 
                     $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
                     $float->set_priority( $priority + 5 )
-                        ->set_size( 'two-thirds' )
+                        ->set_size( 'sw-col-300' )
                         ->set_choices( $float_locations )
                         ->set_default( 'on' );
 
