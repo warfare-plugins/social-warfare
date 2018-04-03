@@ -70,7 +70,6 @@ class SWP_Options_Page extends SWP_Abstract {
         $this->swp_registration = true;
 
 		// Get the list of available icons.
-		$this->icons = apply_filters( 'swp_button_options', array() );
 
 
 		/**
@@ -84,7 +83,6 @@ class SWP_Options_Page extends SWP_Abstract {
 			->init_social_tab()
 			->init_advanced_tab()
 			->init_registration_tab();
-
 
 		/**
 		 * STEP #2: Addons can now access this object to add their own
@@ -103,11 +101,6 @@ class SWP_Options_Page extends SWP_Abstract {
 		 *
 		 */
         add_action( 'admin_menu', array( $this, 'options_page') );
-
-<<<<<<< HEAD
-        // $this->icons = apply_filters( 'swp_button_options', array() );
-=======
->>>>>>> 8491f0b1ee9e006ed881cc454f79964757d7ac23
     }
 
 
@@ -228,66 +221,14 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
-<<<<<<< HEAD
-    * Runs all of the core initializations. If Pro exists, runs Pro initialiations.
-    *
-    * @return function $this->render_html()
-    *
-    */
-    public function init() {
-        $swp_user_options = swp_get_user_options( true );
-
-        $this->init_display_tab()
-            ->init_styles_tab()
-            ->init_social_tab()
-            ->init_advanced_tab()
-            ->init_registration_tab();
-
-        // if ( class_exists( 'SWP_Pro_Options_Page' ) ) :
-        //     $Pro = new SWP_Pro_Options_Page();
-        //     $Pro->update_display_tab()
-        //         ->update_styles_tab()
-        //         ->update_social_tab()
-        //         ->update_advanced_tab();
-        // endif;
-
-        $this->render_HTML();
-    }
-
-
-    /**
-    * Adds the SWP button the sidebar and enqueues JS/CSS.
-    *
-    * @return null
-    *
-    */
-    public function options_page() {
-        // Declare the menu link
-        $swp_menu = add_menu_page(
-            'Social Warfare',
-            'Social Warfare',
-            'manage_options',
-            'social-warfare',
-            array( $this, 'init'),
-            SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
-        );
-
-        // Hook into the CSS and Javascript Enqueue process for this specific page
-        add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
-        add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
-
-    }
-
-
-    /**
-=======
->>>>>>> 8491f0b1ee9e006ed881cc454f79964757d7ac23
     * Calls rendering methods to assemble HTML for the Admin Settings page.
     *
     * @return SWP_Options_Page $this The calling object for method chaining.
     *
     */
     public function render_HTML() {
+        $swp_user_options = swp_get_user_options( true );
+
         $menu = $this->create_menu();
         $tabs = $this->create_tabs();
 
@@ -385,7 +326,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 'legacy'    => 'Legacy Cache Rebuilding during Page Loads'
             ])
                 ->set_default( 'advanced' )
-                ->set_size( 'two-thirds' );
+                ->set_size( 'sw-col-300' );
 
             $caching_method->add_option( $cache_method );
 
@@ -396,7 +337,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $full_content_toggle = new SWP_Option_Toggle( 'Full Content?', 'full_content' );
             $full_content_toggle->set_default( false )
-                ->set_size( 'two-thirds' );
+                ->set_size( 'sw-col-300' );
 
             $full_content->add_option( $full_content_toggle );
 
@@ -427,6 +368,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 //* These two sections are unique and need special HTML.
                 $active = new SWP_Option_Icons( 'Active', 'active' );
                 $active->do_active_icons()->set_priority( 10 );
+
                 $inactive = new SWP_Option_Icons( 'Inactive', 'inactive' );
                 $inactive->do_inactive_icons()->set_priority( 20 );
 
@@ -442,13 +384,13 @@ class SWP_Options_Page extends SWP_Abstract {
         		$network_shares = new SWP_Option_Toggle( 'Button Counts', 'network_shares' );
         		$network_shares->set_default( true )
                     ->set_priority( 10 )
-                    ->set_size( 'two-thirds' );
+                    ->set_size( 'sw-col-300' );
 
                 //* totes => totals
                 $total_shares = new SWP_Option_Toggle( 'Total Counts', 'total_shares' );
                 $total_shares->set_default( true )
                     ->set_priority( 20 )
-                    ->set_size( 'two-thirds' );
+                    ->set_size( 'sw-col-300' );
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
@@ -516,25 +458,25 @@ class SWP_Options_Page extends SWP_Abstract {
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
             $twitter_id = new SWP_Option_Text( 'Twitter Username', 'twitter_id' );
-            $twitter_id->set_size( 'two-thirds' )
+            $twitter_id->set_size( 'sw-col-300' )
                 ->set_priority( 10 )
                 ->set_default( '' );
 
             //* pinterestID => pinterest_id
             $pinterest_id = new SWP_Option_Text( 'Pinterest Username', 'pinterest_id' );
-            $pinterest_id->set_size( 'two-thirds' )
+            $pinterest_id->set_size( 'sw-col-300' )
                 ->set_priority( 20 )
                 ->set_default( '' );
 
             //* facebookPublisherUrl => facebook_publisher_url
             $facebook_publisher_url = new SWP_Option_Text( 'Facebook Page URL', 'facebook_publisher_url' );
-            $facebook_publisher_url->set_size( 'two-thirds' )
+            $facebook_publisher_url->set_size( 'sw-col-300' )
                 ->set_priority( 30 )
                 ->set_default( '' );
 
             //* facebookAppID => facebook_app_id
             $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
-            $facebook_app_id->set_size( 'two-thirds' )
+            $facebook_app_id->set_size( 'sw-col-300' )
                 ->set_priority( 40 )
                 ->set_default( '' );
 
@@ -583,7 +525,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     '2' => 'Two',
                 ])
                     ->set_default( '0' )
-                    ->set_size( 'two-fourths' );
+                    ->set_size( 'sw-col-460' );
 
                 //* swp_decimal_separator => decimal_separator
                 $decimal_separator = new SWP_Option_Select( 'Decimal Separator', 'decimal_separator' );
@@ -592,7 +534,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'comma'     => 'Comma',
                 ])
                     ->set_default( 'period' )
-                    ->set_size( 'two-fourths' );
+                    ->set_size( 'sw-col-460' );
 
                 //* swTotesFormat => totals_alignment
                 $totals_alignment = new SWP_Option_Select( 'Alignment', 'totals_alignment' );
@@ -601,7 +543,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'totals_left'   => 'Left'
                 ])
                     ->set_default( 'totals_right' )
-                    ->set_size( 'two-fourths' );
+                    ->set_size( 'sw-col-460' );
 
             $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
@@ -631,7 +573,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_screen_width = new SWP_Option_Text( 'Minimum Screen Width', 'float_screen_width' );
                 $float_screen_width->set_default( '1100' )
                     ->set_priority( 30 )
-                    ->set_size( 'two-fourths' )
+                    ->set_size( 'sw-col-460' )
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
                 //* sideReveal => transition
@@ -652,7 +594,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_default_colors->set_choices( $color_choices )
                     ->set_default( 'full_color' )
                     ->set_priority( 50 )
-                    ->set_size( 'two-fourths' )
+                    ->set_size( 'sw-col-460' )
                     ->set_dependency( 'float_style_source', false );
 
                 //* sideOColorSet => float_hover_colors
@@ -704,16 +646,20 @@ class SWP_Options_Page extends SWP_Abstract {
 
                     $tab_map = $this->sort_by_priority( $this->tabs );
 
+                    $activated = true;
+
                     foreach( $tab_map as $prioritized_tab) {
                         foreach( $this->tabs as $index => $tab ) {
-                            if ( $prioritized_tab['key'] === $tab->key ):
-                                $active = $index === 2 ? 'sw-active-tab' : '';
+                            if ( $prioritized_tab['key'] === $tab->key ) :
+                                $active = $activated ? 'sw-active-tab' : '';
+                                $activated = false;
 
                                 $html .= '<li class="' . $active . '">';
                                     $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
                                         $html .= '<span>' . $tab->name . '</span>';
                                     $html .= '</a>';
                                 $html .= '</li>';
+
                             endif;
                         }
                     }
@@ -747,6 +693,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return string $container The Admin tab HTML container.
     */
     private function create_tabs() {
+        $sidebar = new SWP_Section_HTML( 'Sidebar' );
         $tab_map = $this->sort_by_priority( $this->tabs );
 
         $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
@@ -765,6 +712,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 $container .= '</div>';
             $container .= '</form>';
+            $container .= $sidebar->do_admin_sidebar();
+
         $container .= '</div>';
 
         return $container;
