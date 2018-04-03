@@ -689,6 +689,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return string $container The Admin tab HTML container.
     */
     private function create_tabs() {
+        $sidebar = new SWP_Section_HTML( 'Sidebar' );
         $tab_map = $this->sort_by_priority( $this->tabs );
 
         $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
@@ -707,6 +708,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 $container .= '</div>';
             $container .= '</form>';
+            $container .= $sidebar->do_admin_sidebar();
+
         $container .= '</div>';
 
         return $container;
