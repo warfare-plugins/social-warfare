@@ -646,16 +646,20 @@ class SWP_Options_Page extends SWP_Abstract {
 
                     $tab_map = $this->sort_by_priority( $this->tabs );
 
+                    $activated = true;
+
                     foreach( $tab_map as $prioritized_tab) {
                         foreach( $this->tabs as $index => $tab ) {
-                            if ( $prioritized_tab['key'] === $tab->key ):
-                                $active = $index === 2 ? 'sw-active-tab' : '';
+                            if ( $prioritized_tab['key'] === $tab->key ) :
+                                $active = $activated ? 'sw-active-tab' : '';
+                                $activated = false;
 
                                 $html .= '<li class="' . $active . '">';
                                     $html .= '<a class="sw-tab-selector" href="#" data-link="swp_' . $tab->link . '">';
                                         $html .= '<span>' . $tab->name . '</span>';
                                     $html .= '</a>';
                                 $html .= '</li>';
+
                             endif;
                         }
                     }
