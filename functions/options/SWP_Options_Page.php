@@ -70,7 +70,6 @@ class SWP_Options_Page extends SWP_Abstract {
         $this->swp_registration = true;
 
 		// Get the list of available icons.
-		$this->icons = apply_filters( 'swp_button_options', array() );
 
 
 		/**
@@ -84,7 +83,6 @@ class SWP_Options_Page extends SWP_Abstract {
 			->init_social_tab()
 			->init_advanced_tab()
 			->init_registration_tab();
-
 
 		/**
 		 * STEP #2: Addons can now access this object to add their own
@@ -103,8 +101,6 @@ class SWP_Options_Page extends SWP_Abstract {
 		 *
 		 */
         add_action( 'admin_menu', array( $this, 'options_page') );
-
-        // $this->icons = apply_filters( 'swp_button_options', array() );
     }
 
 
@@ -225,34 +221,6 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
-    * Runs all of the core initializations. If Pro exists, runs Pro initialiations.
-    *
-    * @return function $this->render_html()
-    *
-    */
-    public function init() {
-        $swp_user_options = swp_get_user_options( true );
-
-        $this->init_display_tab()
-            ->init_styles_tab()
-            ->init_social_tab()
-            ->init_advanced_tab()
-            ->init_registration_tab();
-
-        // if ( class_exists( 'SWP_Pro_Options_Page' ) ) :
-        //     $Pro = new SWP_Pro_Options_Page();
-        //     $Pro->update_display_tab()
-        //         ->update_styles_tab()
-        //         ->update_social_tab()
-        //         ->update_advanced_tab();
-        // endif;
-
-        $this->render_HTML();
-    }
-
-
-
-    /**
     * Calls rendering methods to assemble HTML for the Admin Settings page.
     *
     * @return SWP_Options_Page $this The calling object for method chaining.
@@ -260,12 +228,6 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     public function render_HTML() {
         $swp_user_options = swp_get_user_options( true );
-
-        $this->init_display_tab()
-            ->init_styles_tab()
-            ->init_social_tab()
-            ->init_advanced_tab()
-            ->init_registration_tab();
 
         $menu = $this->create_menu();
         $tabs = $this->create_tabs();
