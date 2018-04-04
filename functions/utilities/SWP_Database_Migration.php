@@ -103,6 +103,9 @@ class SWP_Database_Migration {
             'ccOutlines'    => 'custom_color_outlines',
             'totesAlt'      => 'totals_right',
             'totesAltLeft'  => 'totals_left',
+            'buttonFloat'   => 'button_alignment',
+            'post'          => 'location_post',
+            'page'          => 'location_page',
 
             //* Missed choices,
             //* same reason as above ^^
