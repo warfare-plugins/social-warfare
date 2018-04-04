@@ -164,7 +164,7 @@ class SWP_Shortcode {
         global $swp_user_options;
         $this->options = $swp_user_options;
 
-    	$url = swp_process_url( get_permalink() , 'twitter' , get_the_ID() );
+    	$url = SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
     	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
     	$atts['tweet'] = rtrim( $atts['tweet'] );
 

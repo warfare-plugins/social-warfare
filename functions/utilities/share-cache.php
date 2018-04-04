@@ -168,7 +168,7 @@ function swp_cache_rebuild() {
 	 *
 	 */
 	foreach ( $shares as $key => $value ) :
-		swp_process_url( get_permalink( $post_id ) , $key , $post_id );
+		SWP_URL_Management::process_url( get_permalink( $post_id ) , $key , $post_id );
 	endforeach;
 
 	/**

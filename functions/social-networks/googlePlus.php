@@ -1,4 +1,4 @@
-<?php
+SWP_URL_Management::process_url(<?php
 
 /**
  * Functions to add a Google Plus share button to the available buttons
@@ -96,7 +96,7 @@ function swp_googlePlus_button_html( $array ) {
 			++$array['count'];
 
 			$array['resource']['googlePlus'] = '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="google_plus">';
-			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
+			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
 			$array['resource']['googlePlus'] .= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
 			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['googlePlus'] > 0 ) :
 				$array['resource']['googlePlus'] .= '<span class="iconFiller">';

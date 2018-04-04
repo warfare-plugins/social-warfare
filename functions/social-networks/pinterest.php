@@ -124,7 +124,7 @@ function swp_pinterest_button_html( $array ) {
 			$pi		= '';
 		endif;
 
-		$pinterest_link = urlencode( urldecode( swp_process_url( $array['url'] , 'pinterest' , $array['postID'] ) ) );
+		$pinterest_link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'pinterest' , $array['postID'] ) ) );
 		$title = strip_tags( get_the_title( $array['postID'] ) );
 		$title = str_replace( '|','',$title );
 

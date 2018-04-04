@@ -113,7 +113,7 @@ function swp_facebook_button_html( $array ) {
 			++$array['count'];
 
 			$array['resource']['facebook'] = '<div class="nc_tweetContainer swp_fb" data-id="' . $array['count'] . '" data-network="facebook">';
-			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'facebook' , $array['postID'] ) ) );
+			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'facebook' , $array['postID'] ) ) );
 			$array['resource']['facebook'] .= '<a rel="nofollow" target="_blank" href="https://www.facebook.com/share.php?u=' . $link . '" data-link="http://www.facebook.com/share.php?u=' . $link . '" class="nc_tweet">';
 			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['facebook'] > 0 ) :
 				$array['resource']['facebook'] .= '<span class="iconFiller">';

@@ -148,7 +148,7 @@ function swp_twitter_button_html( $array ) {
 		$ct = get_post_meta( $array['postID'] , 'nc_customTweet' , true );
 
 		$ct = ($ct != '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ));
-		$twitterLink = swp_process_url( $array['url'] , 'twitter' , $array['postID'] );
+		$twitterLink = SWP_URL_Management::process_url( $array['url'] , 'twitter' , $array['postID'] );
 		if ( strpos( $ct,'http' ) !== false ) :
 			$urlParam = '&url=/';
 		else :

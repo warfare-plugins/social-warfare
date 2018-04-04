@@ -62,6 +62,14 @@ class Social_Warfare {
 
 
 		/**
+		 * The URL_Management Class
+		 *
+		 * This is the class that controls short links and UTM parameters.
+		 *
+		 */
+		new SWP_URL_Management();
+
+		/**
 		 * The Script Class
 		 *
 		 * Instantiates the class that will enqueue all of the styles and scripts used
@@ -143,10 +151,8 @@ class Social_Warfare {
          * The Options Page Class
          *
          * Instantiates the class that will load the plugin options page.
-         * TODO: Make this object a global.
          *
          */
-        global $SWP_Options_Page;
         $SWP_Options_Page = new SWP_Options_Page();
 	}
 
@@ -240,7 +246,8 @@ class Social_Warfare {
             'Localization',
             'Permalink',
             'Plugin_Updater',
-            'Database_Migration'
+            'Database_Migration',
+			'URL_Management'
         ];
         $this->load_files( '/functions/utilities/', $utilities);
 
@@ -332,7 +339,6 @@ add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 function swp_initiate_plugin() {
 
 	// All of these files need refactored and then migrated into the functions above
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/url_processing.php';
 	require_once SWP_PLUGIN_DIR . '/functions/frontend-output/buttons-floating.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
