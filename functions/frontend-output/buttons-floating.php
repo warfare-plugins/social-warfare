@@ -44,17 +44,17 @@ function socialWarfareSideFloat() {
 				$buttonsArray['url'] = get_permalink( $postID );
 			endif;
 
-			if ( $options['float'] && is_singular() ) :
-				$floatOption = 'float' . ucfirst( $options['floatOption'] );
-				$class = "swp_float_" . $options['floatOption'];
+			if ( $options['floating_panel'] && is_singular() ) :
+				$floatOption = 'floating_panel' . ucfirst( $options['float_position'] );
+				$class = "swp_float_" . $options['float_position'];
 			else :
 				$floatOption = 'floatNone';
 			endif;
 
-			if ( $options['floatStyleSource'] == true ) :
-				$options['sideDColorSet'] = $options['dColorSet'];
-				$options['sideIColorSet'] = $options['iColorSet'];
-				$options['sideOColorSet'] = $options['oColorSet'];
+			if ( $options['float_style_source'] == true ) :
+				$options['float_default_colors'] = $options['default_colors'];
+				$options['float_single_colors'] = $options['single_colors'];
+				$options['float_hover_colors'] = $options['hover_colors'];
 			endif;
 
 			// *Get the vertical position
@@ -66,7 +66,7 @@ function socialWarfareSideFloat() {
             if ( isset($options['float_button_size']) ) :
                 $position = $options['float_vertical'];
                 $size = $options['float_button_size'] * 100;
-                $side = $options['floatOption'];
+                $side = $options['float_position'];
 
                 if ($side === 'right') :
 
@@ -79,9 +79,9 @@ function socialWarfareSideFloat() {
 			// Setup the buttons array to pass into the 'swp_network_buttons' hook
 			$buttonsArray['shares'] = get_social_warfare_shares( $postID );
 			$buttonsArray['count'] = 0;
-			$buttonsArray['totes'] = 0;
+			$buttonsArray['total_shares'] = 0;
 			$buttonsArray['options'] = $options;
-			if ( $buttonsArray['options']['totes'] && $buttonsArray['shares']['totes'] >= $buttonsArray['options']['minTotes'] ) { ++$buttonsArray['count'];
+			if ( $buttonsArray['options']['total_shares'] && $buttonsArray['shares']['total_shares'] >= $buttonsArray['options']['minimum_shares'] ) { ++$buttonsArray['count'];
 			}
 			$buttonsArray['resource'] = array();
 			$buttonsArray['postID'] = $postID;
@@ -89,12 +89,12 @@ function socialWarfareSideFloat() {
 			$buttonsArray = apply_filters( 'swp_network_buttons' , $buttonsArray );
 
 			// Create the social panel
-			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_' . $options['floatStyle'] . ' swp_d_' . $options['sideDColorSet'] . ' swp_i_' . $options['sideIColorSet'] . ' swp_o_' . $options['sideOColorSet'] . ' ' . $options['sideReveal'] . ' ' . $class . ' ' . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['floatBgColor'] . '" data-screen-width="' . $options['swp_float_scr_sz'] . '" data-transition="' . $options['sideReveal'] . '" data-mobileFloat="'.$options['floatLeftMobile'].'">';
+			$assets 		= '<div class="nc_socialPanelSide nc_socialPanel swp_' . $options['float_button_shape'] . ' swp_d_' . $options['float_default_colors'] . ' swp_i_' . $options['float_single_colors'] . ' swp_o_' . $options['float_hover_colors'] . ' ' . $options['transition'] . ' ' . $class . ' ' . '" data-position="' . $options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttonsArray['count'] . '" data-floatColor="' . $options['float_background_color'] . '" data-screen-width="' . $options['float_screen_width'] . '" data-transition="' . $options['transition'] . '" data-mobileFloat="'.$options['float_mobile'].'">';
 
 			// Display Total Shares if the Threshold has been met
-			if ( $options['totes'] && $buttonsArray['totes'] >= $options['minTotes'] ) :
+			if ( $options['total_shares'] && $buttonsArray['total_shares'] >= $options['minimum_shares'] ) :
 				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="6" >';
-				$assets .= '<span class="swp_count">' . swp_kilomega( $buttonsArray['totes'] ) . '</span><span class="swp_label"> ' . __( 'Shares','social-warfare' ) . '</span>';
+				$assets .= '<span class="swp_count">' . swp_kilomega( $buttonsArray['total_shares'] ) . '</span><span class="swp_label"> ' . __( 'Shares','social-warfare' ) . '</span>';
 				$assets .= '</div>';
 			endif;
 
@@ -107,14 +107,14 @@ function socialWarfareSideFloat() {
 					endif;
 					++$i;
 				endforeach;
-			elseif ( $options['orderOfIconsSelect'] == 'manual' ) :
+			elseif ( $options['order_of_icons'] == 'manual' ) :
 				foreach ( $options['newOrderOfIcons'] as $key => $value ) :
 					if ( isset( $buttonsArray['resource'][ $key ] ) && $i <= 5 ) :
 						$assets .= $buttonsArray['resource'][ $key ];
 					endif;
 					++$i;
 				endforeach;
-			elseif ( $options['orderOfIconsSelect'] == 'dynamic' ) :
+			elseif ( $options['order_of_icons'] == 'dynamic' ) :
 				arsort( $buttonsArray['shares'] );
 				foreach ( $buttonsArray['shares'] as $thisIcon => $status ) :
 					if ( isset( $buttonsArray['resource'][ $thisIcon ] ) && $i <= 5 ) :

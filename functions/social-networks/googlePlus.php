@@ -92,13 +92,13 @@ function swp_googlePlus_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['googlePlus'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['googlePlus'] ))  ) :
 
-			$array['totes'] += intval( $array['shares']['googlePlus'] );
+			$array['total_shares'] += intval( $array['shares']['googlePlus'] );
 			++$array['count'];
 
 			$array['resource']['googlePlus'] = '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="google_plus">';
 			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
 			$array['resource']['googlePlus'] .= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
-			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['googlePlus'] > 0 ) :
+			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['googlePlus'] > 0 ) :
 				$array['resource']['googlePlus'] .= '<span class="iconFiller">';
 				$array['resource']['googlePlus'] .= '<span class="spaceManWilly">';
 				$array['resource']['googlePlus'] .= '<i class="sw sw-google-plus"></i>';

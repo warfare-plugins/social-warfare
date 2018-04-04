@@ -93,7 +93,7 @@ function swp_stumbleupon_button_html( $array ) {
 	elseif ( (isset( $array['options']['newOrderOfIcons']['stumbleupon'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['stumbleupon'] ))  ) :
 
 		if ( isset( $array['shares']['stumbleupon'] ) ) :
-			$array['totes'] += intval( $array['shares']['stumbleupon'] );
+			$array['total_shares'] += intval( $array['shares']['stumbleupon'] );
 		endif;
 		++$array['count'];
 
@@ -106,7 +106,7 @@ function swp_stumbleupon_button_html( $array ) {
 		$array['resource']['stumbleupon'] = '<div class="nc_tweetContainer swp_stumbleupon" data-id="' . $array['count'] . '" data-network="stumble_upon">';
 		$link = $array['url'];
 		$array['resource']['stumbleupon'] .= '<a rel="nofollow" target="_blank" href="http://www.stumbleupon.com/submit?url=' . $link . '&title=' . urlencode( $title ) . '" data-link="http://www.stumbleupon.com/submit?url=' . $link . '&title=' . urlencode( $title ) . '" class="nc_tweet">';
-		if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && isset( $array['shares']['stumbleupon'] ) && $array['shares']['stumbleupon'] > 0 ) :
+		if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && isset( $array['shares']['stumbleupon'] ) && $array['shares']['stumbleupon'] > 0 ) :
 			$array['resource']['stumbleupon'] .= '<span class="iconFiller">';
 			$array['resource']['stumbleupon'] .= '<span class="spaceManWilly">';
 			$array['resource']['stumbleupon'] .= '<i class="sw sw-stumbleupon"></i>';

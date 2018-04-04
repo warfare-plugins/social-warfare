@@ -141,7 +141,7 @@ class SWP_Section_HTML extends SWP_Option {
     			<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
     			<tr><td><b>Theme Name</b></td><td>' . $theme['Name'] . '</td></tr>
     			<tr><td><b>Theme Version</b></td><td>' . $theme['Version'] . '</td></tr>
-    			<tr><td><b>Caching Method</b></td><td>' . ucfirst($swp_user_options['cacheMethod']) . '</td></tr>
+    			<tr><td><b>Caching Method</b></td><td>' . ucfirst($swp_user_options['cache_method']) . '</td></tr>
     			<tr><td><b>Open Graph Toggle Status</b></td><td>' . $og_output . '</td></tr>
     			<tr><td><b>Active Plugins</b></td><td></td></tr>
     			<tr><td><b>Number of Active Plugins</b></td><td>' . count( $plugins ) . '</td></tr>

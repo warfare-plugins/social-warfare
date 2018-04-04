@@ -231,7 +231,7 @@ class SWP_Script {
 
     	global $swp_user_options;
 
-    	if ( true === $swp_user_options['sniplyBuster'] ) :
+    	if ( true === $swp_user_options['frame_buster'] ) :
     		$info['footer_output'] .= PHP_EOL . 'function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "' . get_permalink() . '";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};';
     	endif;
 

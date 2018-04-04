@@ -98,7 +98,7 @@ function swpConditionalFields() {
 		}
 	});
 
-	if ( false === swp_checked('floatStyleSource') &&
+	if ( false === swp_checked('float_style_source') &&
 	       'custom_color' === swp_selected('float_default_colors')
 	    || 'custom_color_outlines'  === swp_selected('float_default_colors')
 	    || 'custom_color' === swp_selected('float_single_colors')

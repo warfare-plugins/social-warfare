@@ -216,7 +216,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					var ncSideFloater = $( '.nc_socialPanelSide' ).filter( ':not(.mobile)' );
 					var minWidth = ncSideFloater.attr( 'data-screen-width' );
 					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
-						var position = 'float' + floatLeftMobile.charAt(0).toUpperCase() + floatLeftMobile.slice(1);
+						var position = 'floating_panel' + floatLeftMobile.charAt(0).toUpperCase() + floatLeftMobile.slice(1);
 					} else {
 						var position = floatOption;
 					}

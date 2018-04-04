@@ -221,11 +221,11 @@
 
 		var customCSS = '';
 
-		if ( dColorSet == 'customColor' || iColorSet == 'customColor' || oColorSet == 'customColor' ) {
+		if ( dColorSet == 'custom_color' || iColorSet == 'custom_color' || oColorSet == 'custom_color' ) {
 			customCSS = '.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:' + colorCode + ';border:1px solid ' + colorCode + ';}';
 		}
 
-		if ( dColorSet == 'ccOutlines' || iColorSet == 'ccOutlines' || oColorSet == 'ccOutlines' ) {
+		if ( dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color_outlines' ) {
 			customCSS = customCSS + ' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:' + colorCode + '; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' + colorCode + '; }';
 		}
 
@@ -251,7 +251,7 @@
 
 		var lastClass = buttonsClass;
 
-		if ( dColorSet == 'customColor' || dColorSet == 'ccOutlines' || iColorSet == 'customColor' || iColorSet == 'ccOutlines' || oColorSet == 'customColor' || oColorSet == 'ccOutlines' ) {
+		if ( dColorSet == 'custom_color' || dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color' || oColorSet == 'custom_color_outlines' ) {
 			$( '.customColor_wrapper' ).slideDown();
 
 			updateCustomColor();
@@ -326,7 +326,7 @@
 				$( 'select[name="hover_colors"]' ).append( '<option value="' + index + '">' + value + '</option>' );
 			}
 
-			if ( dColorSet == 'customColor' || dColorSet == 'ccOutlines' || iColorSet == 'customColor' || iColorSet == 'ccOutlines' || oColorSet == 'customColor' || oColorSet == 'ccOutlines' ) {
+			if ( dColorSet == 'custom_color' || dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color' || oColorSet == 'custom_color_outlines' ) {
 				$( '.customColor_wrapper' ).slideDown();
 
 				updateCustomColor();
@@ -400,7 +400,7 @@
 
 			var newWidth;
 
-			if ( ( align == 'fullWidth' && scale != 1 ) || scale >= 1 ) {
+			if ( ( align == 'full_width' && scale != 1 ) || scale >= 1 ) {
 				newWidth = width / scale;
 
 				$( '.nc_socialPanel' ).css( 'cssText', 'width:' + newWidth + 'px!important;' );
@@ -409,7 +409,7 @@
 					transform: 'scale(' + scale + ')',
 					'transform-origin': 'left'
 				});
-			} else if ( align != 'fullWidth' && scale < 1 ) {
+			} else if ( align != 'full_width' && scale < 1 ) {
 				newWidth = width / scale;
 
 				$( '.nc_socialPanel' ).css({

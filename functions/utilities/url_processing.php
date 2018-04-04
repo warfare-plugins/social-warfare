@@ -41,8 +41,8 @@ function swp_google_analytics( $array ) {
     	endif;
 
     	// Check if Analytics have been enabled or not
-    	if ( $options['googleAnalytics'] == true ) :
-            $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analyticsMedium'] . '&utm_campaign=' . $options['analyticsCampaign'] . '';
+    	if ( $options['google_analtyics'] == true ) :
+            $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analytics_medium'] . '&utm_campaign=' . $options['analytics_campaign'] . '';
 
     		if ( strpos( $url,'?' ) !== false ) :
     			$array['url'] = $url . urlencode( '&' . $url_string );
@@ -69,7 +69,7 @@ function swp_google_analytics( $array ) {
 function swp_link_shortener( $array ) {
 	global $swp_user_options;
 
-	if ( $array['network'] == 'totes' ) :
+	if ( $array['network'] == 'total_shares' ) :
 		return $array;
 	endif;
 
@@ -90,7 +90,7 @@ function swp_link_shortener( $array ) {
 	$options = $swp_user_options;
 
 	// If Link shortening is activated....
-	if ( $options['linkShortening'] == true ) :
+	if ( $options['bitly_authentication'] == true ) :
 
 		// If Bitly is activated and we have all the appropriate credentials....
 		if ( isset( $options['bitly_access_token'] ) ) :
@@ -99,7 +99,7 @@ function swp_link_shortener( $array ) {
 			$access_token = $options['bitly_access_token'];
 
 			// If Google Analytics is Activated....
-			if ( $options['googleAnalytics'] == true ) :
+			if ( $options['google_analtyics'] == true ) :
 
 				// If the link has already been shortened....
 				$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );

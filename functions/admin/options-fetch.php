@@ -41,8 +41,8 @@ function swp_get_user_options( $admin = false ) {
 	$swp_post_types = swp_get_post_types();
 
 	// Make the side custom absorb the main custom color if they haven't set one yet.
-	if(empty($options['sideCustomColor']) ):
-		$options['sideCustomColor'] = $options['customColor'];
+	if(empty($options['single_custom_color']) ):
+		$options['single_custom_color'] = $options['custom_color'];
 	endif;
 
 	// Force the plugin off on certain post types.
@@ -61,38 +61,38 @@ function swp_get_user_options( $admin = false ) {
 	endif;
 
 	if ( $admin || true === $swp_registration ) :
-		if ( 'totes' === $options['swTotesFormat'] ) :
-			$options['swTotesFormat'] = 'totesalt';
+		if ( 'total_shares' === $options['totals_alignment'] ) :
+			$options['totals_alignment'] = 'totals_right';
 		endif;
 	else:
-		$options['swp_twitter_card']                  = false;
-		$options['visualTheme']                       = 'flatFresh';
-		$options['dColorSet']                         = 'fullColor';
-		$options['iColorSet']                         = 'fullColor';
-		$options['oColorSet']                         = 'fullColor';
-		$options['sideDColorSet']                     = 'fullColor';
-		$options['sideIColorSet']                     = 'fullColor';
-		$options['sideOColorSet']                     = 'fullColor';
-		$options['floatStyleSource']                  = true;
-		$options['buttonSize']                        = 1;
-		$options['buttonFloat']                       = 'fullWidth';
-		$options['cttTheme']                          = 'style1';
-		$options['cttCSS'] 							  = "";
+		$options['twitter_cards']                  = false;
+		$options['button_shape']                       = 'flat_fresh';
+		$options['default_colors']                         = 'full_color';
+		$options['single_colors']                         = 'full_color';
+		$options['hover_colors']                         = 'full_color';
+		$options['float_default_colors']                     = 'full_color';
+		$options['float_single_colors']                     = 'full_color';
+		$options['float_hover_colors']                     = 'full_color';
+		$options['float_style_source']                  = true;
+		$options['button_size']                        = 1;
+		$options['buttonFloat']                       = 'full_width';
+		$options['ctt_theme']                          = 'style1';
+		$options['ctt_css'] 							  = "";
 		$options['twitter_shares']                    = false;
 		$options['recover_shares']                    = false;
-		$options['googleAnalytics']                   = false;
-		$options['linkShortening']                    = false;
-		$options['minTotes']                          = 0;
+		$options['google_analtyics']                   = false;
+		$options['bitly_authentication']                    = false;
+		$options['minimum_shares']                          = 0;
 		$options['swp_click_tracking']                = false;
-		$options['orderOfIconsSelect']                = 'manual';
+		$options['order_of_icons']                = 'manual';
 		$options['pinit_toggle']                      = false;
 		$options['pinit_location_horizontal']         = 'center';
 		$options['pinit_location_vertical']           = 'top';
 		$options['emphasize_icons']                   = 0;
-		$options['floatLeftMobile']                   = 'off';
-		$options['advanced_pinterest_image']          = false;
-		$options['advanced_pinterest_image_location'] = 'hidden';
-		$options['advanced_pinterest_fallback']       = 'all';
+		$options['float_mobile']                   = 'off';
+		$options['pin_browser_extension']          = false;
+		$options['pinterest_image_location'] = 'hidden';
+		$options['pinterest_fallback']       = 'all';
 	endif;
 
 	if(isset($options['newOrderOfIcons']['active'])) {

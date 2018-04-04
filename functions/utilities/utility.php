@@ -117,16 +117,16 @@ function swp_kilomega( $val ) {
 			$val = intval( $val ) / 1000;
 
 			// If the decimal separator is a period
-			if ( $options['swp_decimal_separator'] == 'period' ) :
+			if ( $options['decimal_separator'] == 'period' ) :
 
 				// Then format the number to the appropriate number of decimals
-				return number_format( $val,$options['swDecimals'],'.',',' ) . 'K';
+				return number_format( $val,$options['decimals'],'.',',' ) . 'K';
 
 				// If the decimal separator is a comma
 			else :
 
 				// Then format the number to the appropriate number of decimals
-				return number_format( $val,$options['swDecimals'],',','.' ) . 'K';
+				return number_format( $val,$options['decimals'],',','.' ) . 'K';
 
 			endif;
 
@@ -137,16 +137,16 @@ function swp_kilomega( $val ) {
 			$val = intval( $val ) / 1000000;
 
 			// If the decimal separator is a period
-			if ( $options['swp_decimal_separator'] == 'period' ) :
+			if ( $options['decimal_separator'] == 'period' ) :
 
 				// Then format the number to the appropriate number of decimals
-				return number_format( $val,$options['swDecimals'],'.',',' ) . 'M';
+				return number_format( $val,$options['decimals'],'.',',' ) . 'M';
 
 				// If the decimal separator is a comma
 			else :
 
 				// Then format the number to the appropriate number of decimals
-				return number_format( $val,$options['swDecimals'],',','.' ) . 'M';
+				return number_format( $val,$options['decimals'],',','.' ) . 'M';
 
 			endif;
 

@@ -94,14 +94,14 @@ function swp_pinterest_button_html( $array ) {
 	// If not, let's check if Facebook is activated and create the button HTML
 	elseif ( (isset( $array['options']['newOrderOfIcons']['pinterest'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['pinterest'] ))  ) :
 
-		$array['totes'] += intval( $array['shares']['pinterest'] );
+		$array['total_shares'] += intval( $array['shares']['pinterest'] );
 		++$array['count'];
 
 		$pi = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
 
 		// Pinterest Username
-		if ( !empty( $array['options']['pinterestID'] ) ) :
-			$pu = ' via @' . str_replace( '@' , '' , $array['options']['pinterestID'] );
+		if ( !empty( $array['options']['pinterest_id'] ) ) :
+			$pu = ' via @' . str_replace( '@' , '' , $array['options']['pinterest_id'] );
 		else :
 			$pu = '';
 		endif;
@@ -110,7 +110,7 @@ function swp_pinterest_button_html( $array ) {
 		$image_url = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
 		if( !empty( $image_url ) ):
 			$array['imageURL'] = $image_url;
-		elseif(isset($array['options']['advanced_pinterest_fallback']) && $array['options']['advanced_pinterest_fallback'] == 'featured'):
+		elseif(isset($array['options']['pinterest_fallback']) && $array['options']['pinterest_fallback'] == 'featured'):
 			$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
 			if( !empty( $thumbnail_url ) ):
 				$array['imageURL'] = $thumbnail_url;
@@ -141,7 +141,7 @@ function swp_pinterest_button_html( $array ) {
 		endif;
 		$array['resource']['pinterest'] = '<div class="nc_tweetContainer nc_pinterest" data-id="' . $array['count'] . '" data-network="pinterest">';
 		$array['resource']['pinterest'] .= $a;
-		if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['pinterest'] > 0 ) :
+		if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['pinterest'] > 0 ) :
 			$array['resource']['pinterest'] .= '<span class="iconFiller">';
 			$array['resource']['pinterest'] .= '<span class="spaceManWilly">';
 			$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';

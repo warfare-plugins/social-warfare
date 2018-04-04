@@ -109,13 +109,13 @@ function swp_facebook_button_html( $array ) {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['newOrderOfIcons']['facebook'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['facebook'] ))  ) :
 
-			$array['totes'] += intval( $array['shares']['facebook'] );
+			$array['total_shares'] += intval( $array['shares']['facebook'] );
 			++$array['count'];
 
 			$array['resource']['facebook'] = '<div class="nc_tweetContainer swp_fb" data-id="' . $array['count'] . '" data-network="facebook">';
 			$link = urlencode( urldecode( swp_process_url( $array['url'] , 'facebook' , $array['postID'] ) ) );
 			$array['resource']['facebook'] .= '<a rel="nofollow" target="_blank" href="https://www.facebook.com/share.php?u=' . $link . '" data-link="http://www.facebook.com/share.php?u=' . $link . '" class="nc_tweet">';
-			if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['facebook'] > 0 ) :
+			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['facebook'] > 0 ) :
 				$array['resource']['facebook'] .= '<span class="iconFiller">';
 				$array['resource']['facebook'] .= '<span class="spaceManWilly">';
 				$array['resource']['facebook'] .= '<i class="sw sw-facebook"></i>';
