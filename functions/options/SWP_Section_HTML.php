@@ -330,7 +330,7 @@ class SWP_Section_HTML extends SWP_Option {
 
                 $html .= '<div class="sw-grid sw-col-300">';
 
-                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'position_' . $post );
+                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'location_' . $post );
                     $panel->set_priority( $priority )
                         ->set_size( 'sw-col-300' )
                         ->set_choices( $panel_locations )
