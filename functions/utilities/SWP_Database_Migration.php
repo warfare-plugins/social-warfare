@@ -126,11 +126,10 @@ class SWP_Database_Migration {
 
         $migrations = array();
 
-        //* Camel refers to the previous key in the options table
-        //* whether or not it was camelCase.
         foreach( $options as $old => $value ) {
 
             if ( array_key_exists( $old, $map) ) {
+
                 //* We specified an update to the key.
                 $new = $map[$old];
                 $migrations[$new] = $value;

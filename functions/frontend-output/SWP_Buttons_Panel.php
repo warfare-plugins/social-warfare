@@ -218,7 +218,7 @@ class SWP_Buttons_Panel {
 
     		if ( isset( $array['floating_panel'] ) && $array['floating_panel'] == 'ignore' ) :
     			$floatOption = 'float_ignore';
-    		elseif ( $spec_float_where == 'off' && $this->options['buttonFloat'] != 'float_ignore' ) :
+    		elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
     				$floatOption = 'floatNone';
     		elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $post_type ] == 'on' ) :
     			$floatOption = 'floating_panel' . ucfirst( $this->options['float_position'] );
@@ -312,7 +312,7 @@ class SWP_Buttons_Panel {
     			$buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
 
     			// Create the social panel
-    			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_d_' . $this->options['default_colors'] . ' swp_i_' . $this->options['single_colors'] . ' swp_o_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['buttonFloat'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
+    			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_d_' . $this->options['default_colors'] . ' swp_i_' . $this->options['single_colors'] . ' swp_o_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
 
     			// Setup the total shares count if it's on the left
     			if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $array['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ))
