@@ -1,4 +1,4 @@
-SWP_URL_Management::process_url(<?php
+<?php
 
 /**
  * Functions to add a Google Plus share button to the available buttons
