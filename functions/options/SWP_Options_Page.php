@@ -208,11 +208,11 @@ class SWP_Options_Page extends SWP_Abstract {
         return [
             'full_color'        =>  'Full Color',
             'light_gray'        =>  'Light Gray',
-            'medium_grey'       =>  'Medium Gray',
-            'dark_grey'         =>  'Dark Gray',
-            'light_grey_outlines'   =>  'Light Gray Outlines',
-            'medium_grey_outlines'  =>  'Medium Gray Outlines',
-            'dark_grey_outlines'    =>  'Dark Gray Outlines',
+            'medium_gray'       =>  'Medium Gray',
+            'dark_gray'         =>  'Dark Gray',
+            'light_gray_outlines'   =>  'Light Gray Outlines',
+            'medium_gray_outlines'  =>  'Medium Gray Outlines',
+            'dark_gray_outlines'    =>  'Dark Gray Outlines',
             'color_outlines'    =>  'Color Outlines',
             'custom_color'      =>  'Custom Color',
             'custom_color_outlines' =>  'Custom Color Outlines'
@@ -698,7 +698,7 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * @return string $container The Admin tab HTML container.
     */
-    private function create_tabs() {
+    private function create_tabs( $addons ) {
         $sidebar = new SWP_Section_HTML( 'Sidebar' );
         $tab_map = $this->sort_by_priority( $this->tabs );
 
@@ -711,6 +711,12 @@ class SWP_Options_Page extends SWP_Abstract {
 
                     foreach( $this->tabs as $tab ) {
                         if ( $key === $tab->key ) :
+
+                            if ( 'registration' === $key ) :
+                                $container .= $tab->render_HTML( $addons );
+                                continue;
+                            endif;
+
                             $container .= $tab->render_HTML();
                         endif;
                     }

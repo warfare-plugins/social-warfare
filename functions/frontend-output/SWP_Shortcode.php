@@ -171,13 +171,13 @@ class SWP_Shortcode {
     	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
 
     	if ( ! $user_twitter_handle ) :
-    		$user_twitter_handle = $this->options['twitterID'];
+    		$user_twitter_handle = $this->options['twitter_id'];
     	endif;
 
     	if ( isset( $atts['theme'] ) && $atts['theme'] != 'default' ) :
     		$theme = $atts['theme'];
     	else :
-    		$theme = $this->options['cttTheme'];
+    		$theme = $this->options['ctt_theme'];
     	endif;
 
     	return '

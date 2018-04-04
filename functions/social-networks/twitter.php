@@ -140,7 +140,7 @@ function swp_twitter_button_html( $array ) {
 	// If not, let's check if Facebook is activated and create the button HTML
 	elseif ( (isset( $array['options']['newOrderOfIcons']['twitter'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['twitter'] ))  ) :
 
-		$array['totes'] += intval( $array['shares']['twitter'] );
+		$array['total_shares'] += intval( $array['shares']['twitter'] );
 		++$array['count'];
 
 		$title = strip_tags( get_the_title( $array['postID'] ) );
@@ -166,15 +166,15 @@ function swp_twitter_button_html( $array ) {
 		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $array['postID'] ) );
 		if ( $user_twitter_handle ) :
 			$viaText = '&via=' . str_replace( '@','',$user_twitter_handle );
-		elseif ( $array['options']['twitterID'] ) :
-			$viaText = '&via=' . str_replace( '@','',$array['options']['twitterID'] );
+		elseif ( $array['options']['twitter_id'] ) :
+			$viaText = '&via=' . str_replace( '@','',$array['options']['twitter_id'] );
 		else :
 			$viaText = '';
 		endif;
 
 		$array['resource']['twitter'] = '<div class="nc_tweetContainer twitter" data-id="' . $array['count'] . '" data-network="twitter">';
 		$array['resource']['twitter'] .= '<a rel="nofollow" target="_blank" href="https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText . '" data-link="https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText . '" class="nc_tweet">';
-		if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['twitter'] > 0 ) :
+		if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['twitter'] > 0 ) :
 			$array['resource']['twitter'] .= '<span class="iconFiller">';
 			$array['resource']['twitter'] .= '<span class="spaceManWilly">';
 			$array['resource']['twitter'] .= '<i class="sw sw-twitter"></i>';

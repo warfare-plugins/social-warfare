@@ -30,7 +30,7 @@ function get_social_warfare_shares( $postID ) {
 	 */
 
 	// Initiate the ShareCount variable
-	$shares['totes'] = 0;
+	$shares['total_shares'] = 0;
 
 	// Queue up the networks that are available
 	$availableNetworks = $options['newOrderOfIcons'];
@@ -94,10 +94,10 @@ function get_social_warfare_shares( $postID ) {
 
 	if ( $freshCache == true ) :
 		if ( get_post_meta( $postID,'_totes',true ) ) :
-			$shares['totes'] = get_post_meta( $postID, '_totes', true );
+			$shares['total_shares'] = get_post_meta( $postID, '_totes', true );
 
 		else :
-			$shares['totes'] = 0;
+			$shares['total_shares'] = 0;
 		endif;
 	else :
 
@@ -149,7 +149,7 @@ function get_social_warfare_shares( $postID ) {
 			endif;
 
 			if (is_numeric( $shares[$network] ) ):
-				$shares['totes'] += $shares[$network];
+				$shares['total_shares'] += $shares[$network];
 
 			endif;
 
@@ -165,7 +165,7 @@ function get_social_warfare_shares( $postID ) {
 		delete_post_meta( $postID,'_totes' );
 
 		// Add the new data to the custom meta fields
-		update_post_meta( $postID,'_totes',$shares['totes'] );
+		update_post_meta( $postID,'_totes',$shares['total_shares'] );
 
 	endif;
 

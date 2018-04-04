@@ -201,7 +201,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '<p class="network">';
 		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts\' popularity on?</label>';
         $form .= "<select {$this->set_attributes('network', 'widefat', null)}>";
-        $form .= "<option value=\"totes\" {selected($network, 'totes', false)}>All Networks</option>";
+        $form .= "<option value=\"totes\" {selected($network, 'total_shares', false)}>All Networks</option>";
 
 		foreach( $availableNetworks as $key => $value ) :
 
@@ -396,7 +396,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		(isset( $instance['count'] ) 		? $count 		= $instance['count'] 		: $count 		= '10');
 		(isset( $instance['timeframe'] ) 	? $timeframe 	= $instance['timeframe'] 	: $timeframe 	= '0');
 		(isset( $instance['post_type'] ) 	? $post_type 	= $instance['post_type'] 	: $post_type 	= 'post');
-		(isset( $instance['network'] ) 		? $network 		= $instance['network'] 		: $network 		= 'totes');
+		(isset( $instance['network'] ) 		? $network 		= $instance['network'] 		: $network 		= 'total_shares');
 		(isset( $instance['showCount'] ) 	? $showCount 	= $instance['showCount'] 	: $showCount 	= 'true');
 		(isset( $instance['countLabel'] ) 	? $countLabel 	= $instance['countLabel'] 	: $countLabel 	= 'Total Shares');
 		(isset( $instance['style'] ) 		? $style 		= $instance['style'] 		: $style 		= 'style_01');

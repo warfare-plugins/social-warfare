@@ -85,7 +85,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$fresh_cache = false;
 
 	// Bail if output isn't being forced and legacy caching isn't enabled.
-	if ( ! $output && 'legacy' !== $options['cacheMethod'] ) {
+	if ( ! $output && 'legacy' !== $options['cache_method'] ) {
 		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
 			$fresh_cache = true;
 		}
@@ -364,7 +364,7 @@ function swp_output_cache_trigger( $info ) {
 		}
 
 		// Bail if we're not using the newer cache method.
-		if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
+		if ( 'legacy' === $info['swp_user_options']['cache_method'] && is_singular() ) {
 			ob_start(); ?>
 
 			var swp_buttons_exist = (document.getElementsByClassName( 'nc_socialPanel' ).length > 0);

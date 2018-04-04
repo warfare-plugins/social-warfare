@@ -58,7 +58,7 @@ class SWP_Permalink {
 		$structure = $swp_user_options['recovery_format'];
 
 		if ( $structure == 'custom' ) :
-			$permalink = $swp_user_options['recovery_custom_format'];
+			$permalink = $swp_user_options['recovery_permalink'];
 		elseif ( $structure == 'unchanged' ) :
 			$permalink = get_option( 'permalink_structure' );
 			elseif ( $structure == 'default' ) :
