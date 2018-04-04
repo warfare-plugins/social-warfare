@@ -97,6 +97,7 @@ class SWP_Section_HTML extends SWP_Option {
         /**
     	 * System Status Generator
     	 */
+    	global $swp_user_options;
 
     	if ( ! function_exists( 'get_plugins' ) ) {
     		require_once ABSPATH . 'wp-admin/includes/plugin.php';
