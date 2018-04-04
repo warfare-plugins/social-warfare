@@ -33,7 +33,6 @@ function swp_google_analytics( $array ) {
     $url = $array['url'];
     $network = $array['network'];
 
-
     if( ( 'pinterest' === $network && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
 
     	if ( true === is_attachment() ) :
@@ -41,7 +40,7 @@ function swp_google_analytics( $array ) {
     	endif;
 
     	// Check if Analytics have been enabled or not
-    	if ( $options['google_analtyics'] == true ) :
+    	if ( true == $options['google_analytics'] ) :
             $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analytics_medium'] . '&utm_campaign=' . $options['analytics_campaign'] . '';
 
     		if ( strpos( $url,'?' ) !== false ) :
