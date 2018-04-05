@@ -251,6 +251,12 @@ class Social_Warfare {
         ];
         $this->load_files( '/functions/utilities/', $utilities);
 
+        //* Includes: Files required by other files in the system.
+        $includes = [
+            'Addon'
+        ];
+        $this->load_files( '/functions/includes/', $includes);
+
         // Frontend Output: Classes used to process the output to the Frontend.
         $frontends = [
             'Buttons_Panel',
