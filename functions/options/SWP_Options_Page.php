@@ -81,8 +81,8 @@ class SWP_Options_Page extends SWP_Abstract {
 		$this->init_display_tab()
 			->init_styles_tab()
 			->init_social_tab()
-			->init_advanced_tab()
-			->init_registration_tab();
+			->init_advanced_tab();
+			// ->init_registration_tab();
 
 		/**
 		 * STEP #2: Addons can now access this object to add their own
@@ -124,7 +124,6 @@ class SWP_Options_Page extends SWP_Abstract {
 		// Hook into the CSS and Javascript Enqueue process for this specific page
 		add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
 		add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
-
 	}
 
 
@@ -219,7 +218,6 @@ class SWP_Options_Page extends SWP_Abstract {
         ];
     }
 
-
     /**
     * Calls rendering methods to assemble HTML for the Admin Settings page.
     *
@@ -228,10 +226,21 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     public function render_HTML() {
         $swp_user_options = swp_get_user_options( true );
-        $registrations = apply_filters( 'swp_registrations', [] );
 
-        $menu = $this->create_menu($registrations);
-        $tabs = $this->create_tabs($registrations);
+
+        //* Fetch all the addons the user has installed,
+        //* whether or not they are actively registered.
+        $addons = apply_filters( 'swp_registrations', [] );
+        $registrations = [];
+
+        foreach( $addons as $data ) {
+            $registrations[] = new SWP_Addon_Registration( $data );
+        }
+
+        $this->init_registration_tab( $registrations );
+
+        $menu = $this->create_menu( $registrations );
+        $tabs = $this->create_tabs( $registrations );
 
         $html = $menu . $tabs;
         $this->html = $html;
@@ -422,7 +431,7 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * @return SWP_Options_Page $this The calling object for method chaining.
     */
-    protected function init_registration_tab() {
+    protected function init_registration_tab( $addons ) {
         $registration = new SWP_Options_Page_Tab( 'Registration', 'registration' );
 
         $registration->set_priority( 50 );
@@ -430,10 +439,14 @@ class SWP_Options_Page extends SWP_Abstract {
             $wrap = new SWP_Options_Page_Section( 'Addon Registrations', 'addon' );
             $wrap->set_priority( 10 );
 
-                $pro = new SWP_Addon_Registration( 'Pro Registration', 'pro' );
-                $pro->set_priority( 10 );
-
-            $wrap->add_option( $pro );
+                foreach( $addons as $addon ) {
+                    $wrap->add_option( $addon );
+                }
+            //
+            //     $pro = new SWP_Addon_Registration( 'Pro Registration', 'pro' );
+            //     $pro->set_priority( 10 );
+            //
+            // $wrap->add_option( $pro );
 
         $registration->add_section( $wrap );
 
@@ -651,8 +664,10 @@ class SWP_Options_Page extends SWP_Abstract {
 
                     foreach( $tab_map as $prioritized_tab) {
                         foreach( $this->tabs as $index => $tab ) {
+
                             if ( $prioritized_tab['key'] === $tab->key ) :
 
+                                //* Skip the registration tab if there are no addons.
                                 if ( 'registration' == $tab->key && 0 === count( $addons ) ) :
                                     continue;
                                 endif;
@@ -718,6 +733,7 @@ class SWP_Options_Page extends SWP_Abstract {
                             endif;
 
                             $container .= $tab->render_HTML();
+
                         endif;
                     }
                 }
