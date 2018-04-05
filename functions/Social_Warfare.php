@@ -266,6 +266,12 @@ class Social_Warfare {
         ];
         $this->load_files( '/functions/utilities/', $utilities);
 
+        //* Includes: Files required by other files in the system.
+        $includes = [
+            'Addon'
+        ];
+        $this->load_files( '/functions/includes/', $includes);
+
         // Frontend Output: Classes used to process the output to the Frontend.
         $frontends = [
             'Buttons_Panel',
@@ -367,7 +373,6 @@ require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
-require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 
 /**
  * Include the plugin's admin files.

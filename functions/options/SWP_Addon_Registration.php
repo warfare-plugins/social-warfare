@@ -1,17 +1,17 @@
 <?php
 
-class SWP_Addon_Registration extends SWP_Option_Text {
+class SWP_Addon_Registration extends SWP_Option {
     public $key;
     public $license_key;
     public $product_id;
 
-    public function __construct( $name, $key ) {
-        parent::__construct( $name, $key ) ;
-        $this->display_name = 'Social Warfare - ' . $name;
-        $this->set_key( $key );
+    public function __construct( $data ) {
+        parent::__construct( $data['plugin_name'], $data['key'] );
+        $this->display_name = $data['plugin_name'];
+        $this->set_key( $data['key'] );
         $this->license_key = $this->get_license_key();
-        $this->product_id = 63157;
-        $this->version = '2.3.5';
+        $this->product_id = $data['product_id'];
+        $this->version = $data['version'];
     }
 
     public function render_HTML() {
@@ -35,8 +35,12 @@ class SWP_Addon_Registration extends SWP_Option_Text {
     }
 
     public function get_license_key() {
+        if ( $key = $this->user_options[$this->key . '_license_key'] ) {
+            return $key;
+        }
+
+        return '';
         return '3034dd4c7d9dda6fe924fd59aa83fca3';
-        return $this->user_options( $this->key . "_license_key" );
     }
 
     protected function not_registered() {
