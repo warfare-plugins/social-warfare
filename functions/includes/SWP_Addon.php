@@ -14,6 +14,7 @@ class SWP_Addon extends SWP_Abstract {
 
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
+        add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
 
     }
 
@@ -178,35 +179,75 @@ class SWP_Addon extends SWP_Abstract {
     }
 
     public function unregister_plugin() {
-            // Setup the variables needed for processing
-        	$options = get_option( 'social_warfare_settings' );
-        	$key = $_POST['name_key'];
-        	$item_id = $_POST['item_id'];
+        // Setup the variables needed for processing
+    	$options = get_option( 'social_warfare_settings' );
+    	$key = $_POST['name_key'];
+    	$item_id = $_POST['item_id'];
 
-        	// Check to see if the license key is even in the options
-        	if ( empty( $options[$key.'_license_key'] ) ) :
-        		$response['success'] = true;
-        		echo json_encode($response);
-        	else :
-        		// Grab the license key so we can use it below
-        		$license = $options[$key.'_license_key'];
+    	// Check to see if the license key is even in the options
+    	if ( empty( $options[$key.'_license_key'] ) ) :
+    		$response['success'] = true;
+    		echo json_encode($response);
+    	else :
+    		// Grab the license key so we can use it below
+    		$license = $options[$key.'_license_key'];
 
-                // Setup the API request parameters
-                $api_params = array(
-                    'edd_action' => 'deactivate_license',
-                    'item_id' => $item_id,
-                    'license' => $license,
-                    'url' => $this->site_url,
-                );
+            // Setup the API request parameters
+            $api_params = array(
+                'edd_action' => 'deactivate_license',
+                'item_id' => $item_id,
+                'license' => $license,
+                'url' => $this->site_url,
+            );
 
-                $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+            $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
 
-    			$options = get_option( 'social_warfare_settings' );
-    			$options[$key.'_license_key'] = '';
-    			update_option( 'social_warfare_settings' , $options );
-    			echo json_encode($license_data);
-        	endif;
+			$options = get_option( 'social_warfare_settings' );
+			$options[$key.'_license_key'] = '';
+			update_option( 'social_warfare_settings' , $options );
+			echo json_encode($license_data);
+    	endif;
 
-        	wp_die();
+    	wp_die();
+    }
+
+    public function ajax_passthrough() {
+        if ( ! check_ajax_referer( 'swp_plugin_registration', 'security', false ) ) {
+    		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
+    		die;
+    	}
+
+    	$data = wp_unslash( $_POST ); // Input var okay.
+
+    	if ( ! isset( $data['activity'], $data['email'] ) ) {
+    		wp_send_json_error( esc_html__( 'Required fields missing.', 'social-warfare' ) );
+    		die;
+    	}
+
+    	if ( 'register' === $data['activity'] ) {
+    		$response = swp_register_plugin( $data['email'], swp_get_site_url() );
+
+    		if ( ! $response ) {
+    			wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
+    			die;
+    		}
+
+    		$response['message'] = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
+    	}
+
+    	if ( 'unregister' === $data['activity'] && isset( $data['key'] ) ) {
+    		$response = swp_unregister_plugin( $data['email'], $data['key'] );
+
+    		if ( ! $response ) {
+    			wp_send_json_error( esc_html__( 'Plugin could not be unregistered.', 'social-warfare' ) );
+    			die;
+    		}
+
+    		$response['message'] = esc_html__( 'Plugin successfully unregistered!', 'social-warfare' );
+    	}
+
+    	wp_send_json_success( $response );
+
+    	die;
     }
 }
