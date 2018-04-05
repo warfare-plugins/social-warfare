@@ -162,7 +162,7 @@ class SWP_Buttons_Panel {
         if ( !$spec_where ) {
             $spec_where = 'default';
     	};
-
+		var_dump($this->options);
     	if ( $array['where'] == 'default' ) :
     		// If we are on the home page
     		if( is_front_page() ):
@@ -300,7 +300,7 @@ class SWP_Buttons_Panel {
     				++$buttons_array['count'];
     			endif;
 
-    			$buttons_array['resource'] = array();
+    			$buttons_array['html'] = array();
     			$buttons_array['postID'] = $post_id;
 
     			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
@@ -312,9 +312,10 @@ class SWP_Buttons_Panel {
     			// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
 				global $swp_social_networks;
 				foreach( $swp_social_networks as $network ):
-					$buttons_array = $network->render_html($buttons_array);
+					$buttons_array['html'][$network->key] = $network->render_html($buttons_array);
+					$array['total_shares'] += intval( $array['shares'][$network->key] );
+					++$array['count'];
 				endforeach;
-				var_dump($buttons_array);
 
     			// Create the social panel
     			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_d_' . $this->options['default_colors'] . ' swp_i_' . $this->options['single_colors'] . ' swp_o_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
@@ -331,21 +332,21 @@ class SWP_Buttons_Panel {
     			// Sort the buttons according to the user's preferences
     			if ( isset( $buttons_array ) && isset( $buttons_array['buttons'] ) ) :
     				foreach ( $buttons_array['buttons'] as $key => $value ) :
-    					if ( isset( $buttons_array['resource'][ $key ] ) ) :
-    						$assets .= $buttons_array['resource'][ $key ];
+    					if ( isset( $buttons_array['html'][ $key ] ) ) :
+    						$assets .= $buttons_array['html'][ $key ];
     					endif;
     				endforeach;
-    			elseif ( $this->options['order_of_icons'] == 'manual' ) :
-    				foreach ( $this->options['newOrderOfIcons'] as $key => $value ) :
-    					if ( isset( $buttons_array['resource'][ $key ] ) ) :
-    						$assets .= $buttons_array['resource'][ $key ];
+    			elseif ( $this->options['order_of_icons_method'] == 'manual' ) :
+    				foreach ( $this->options['order_of_icons'] as $key => $value ) :
+    					if ( isset( $buttons_array['html'][ $key ] ) ) :
+    						$assets .= $buttons_array['html'][ $key ];
     					endif;
     				endforeach;
     			elseif ( $this->options['order_of_icons'] == 'dynamic' ) :
     				arsort( $buttons_array['shares'] );
     				foreach ( $buttons_array['shares'] as $thisIcon => $status ) :
-    					if ( isset( $buttons_array['resource'][ $thisIcon ] ) ) :
-    						$assets .= $buttons_array['resource'][ $thisIcon ];
+    					if ( isset( $buttons_array['html'][ $thisIcon ] ) ) :
+    						$assets .= $buttons_array['html'][ $thisIcon ];
     					endif;
     				endforeach;
     			endif;
