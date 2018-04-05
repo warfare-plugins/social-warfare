@@ -111,7 +111,8 @@ class SWP_Abstract {
     }
 
     public function get_all_icons() {
-        return apply_filters( 'swp_button_options', ['icons'=> []] );
+		global $swp_social_networks;
+        return $swp_social_networks;
     }
 
     public function get_user_icons() {

@@ -607,11 +607,11 @@ p.sw-subtitle.sw-registration-text {
 	border-color: #3c87b2;
 }
 
-.sw-googlePlus-icon:before {
+.sw-google_plus-icon:before {
 	content: 'h';
 }
 
-.sw-s.sw-googlePlus-icon {
+.sw-s.sw-google_plus-icon {
 	background-color: #df4b37;
 	border-color: #c44133;
 }

@@ -26,6 +26,7 @@ class SWP_Option_Icons extends SWP_Option {
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
     public function render_active_icons() {
+		$all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
 
         $html = '<div class="sw-grid sw-col-300">';
@@ -35,15 +36,17 @@ class SWP_Option_Icons extends SWP_Option {
         $html .= '<div class="sw-grid sw-col-620 sw-fit">';
             $html .= '<div class="sw-active sw-buttons-sort">';
 
-            foreach ( $user_icons['icons'] as $network => $data ) {
-                $html .= '<i class="sw-s sw-' . $network . '-icon" ';
-                $html .= ' data-network="' . $network . '"';
+			foreach( $all_icons as $network ) {
+                if ( isset( $user_icons['icons'][$network->key]) ) :
+                    $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
+                    $html .= ' data-network="' . $network->key . '"';
 
-                if ( isset($data['premium']) && $data['premium'] === 'premium' ) :
-                    $html .= ' premium="1"';
+                    if ( !empty($network->premium) ) :
+                        $html .= ' premium="'.$network->premium.'"';
+                    endif;
+
+                    $html .= '></i>';
                 endif;
-
-                $html .= '></i>';
             }
 
             $html .= '</div>';
@@ -73,13 +76,13 @@ class SWP_Option_Icons extends SWP_Option {
         $html .=  '<div class="sw-grid sw-col-620 sw-fit">';
             $html .=  '<div class="sw-inactive sw-buttons-sort">';
 
-            foreach( $all_icons['icons'] as $network => $data ) {
-                if ( !isset( $user_icons['icons'][$network]) ) :
-                    $html .= '<i class="sw-s sw-' . $network . '-icon" ';
-                    $html .= ' data-network="' . $network . '"';
+            foreach( $all_icons as $network ) {
+                if ( !isset( $user_icons['icons'][$network->key]) ) :
+                    $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
+                    $html .= ' data-network="' . $network->key . '"';
 
-                    if ( isset($data['premium']) && $data['premium'] === 'premium' ) :
-                        $html .= ' premium="1"';
+                    if ( !empty($network->premium) ) :
+                        $html .= ' premium="'.$network->premium.'"';
                     endif;
 
                     $html .= '></i>';
