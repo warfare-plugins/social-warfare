@@ -64,37 +64,34 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	public function render_html( $array ) {
 
 		// If we've already generated this button, just use our existing html
-		if ( isset( $_GLOBALS['sw']['buttons'][ $array['postID'] ]['googlePlus'] ) ) :
-			$array['resource']['googlePlus'] = $_GLOBALS['sw']['buttons'][ $array['postID'] ]['googlePlus'];
+		if ( isset( $_GLOBALS['sw']['buttons'][ $array['postID'] ][$this->key] ) ) :
+			$html= $_GLOBALS['sw']['buttons'][ $array['postID'] ][$this->key];
 
-			// If not, let's check if Facebook is activated and create the button HTML
-			elseif ( (isset( $array['options']['newOrderOfIcons']['googlePlus'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['googlePlus'] ))  ) :
+		// If not, let's check if Facebook is activated and create the button HTML
+		elseif ( (isset( $array['options']['order_of_icons'][$this->key] ) && !isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons'][$this->key] ))  ) :
 
-				$array['total_shares'] += intval( $array['shares']['googlePlus'] );
-				++$array['count'];
-
-				$array['resource']['googlePlus'] = '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="google_plus">';
-				$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
-				$array['resource']['googlePlus'] .= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
-				if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['googlePlus'] > 0 ) :
-					$array['resource']['googlePlus'] .= '<span class="iconFiller">';
-					$array['resource']['googlePlus'] .= '<span class="spaceManWilly">';
-					$array['resource']['googlePlus'] .= '<i class="sw sw-google-plus"></i>';
-					$array['resource']['googlePlus'] .= '<span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span>';
-					$array['resource']['googlePlus'] .= '</span></span>';
-					$array['resource']['googlePlus'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['googlePlus'] ) . '</span>';
-				else :
-					$array['resource']['googlePlus'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span></span></span></span>';
-				endif;
-				$array['resource']['googlePlus'] .= '</a>';
-				$array['resource']['googlePlus'] .= '</div>';
-
-				// Store these buttons so that we don't have to generate them for each set
-				$_GLOBALS['sw']['buttons'][ $array['postID'] ]['googlePlus'] = $array['resource']['googlePlus'];
-
+			$html= '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
+			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
+			$html.= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
+			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['googlePlus'] > 0 ) :
+				$html.= '<span class="iconFiller">';
+				$html.= '<span class="spaceManWilly">';
+				$html.= '<i class="sw sw-google-plus"></i>';
+				$html.= '<span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span>';
+				$html.= '</span></span>';
+				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares']['googlePlus'] ) . '</span>';
+			else :
+				$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span></span></span></span>';
 			endif;
+			$html.= '</a>';
+			$html.= '</div>';
 
-			return $array;
+			// Store these buttons so that we don't have to generate them for each set
+			$_GLOBALS['sw']['buttons'][ $array['postID'] ]['googlePlus'] = $array['html']['googlePlus'];
+
+		endif;
+
+		return $html;
 
 	}
 }

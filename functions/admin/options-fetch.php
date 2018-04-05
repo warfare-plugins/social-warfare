@@ -55,7 +55,7 @@ function swp_get_user_options( $admin = false ) {
 	$options['shop_webhook']       = 'none';
 
 	if( function_exists('is_swp_registered') ):
-		$swp_registration = is_swp_registered();
+		$swp_registration = is_swp_addon_registered('pro');
 	else:
 		$swp_registration = false;
 	endif;

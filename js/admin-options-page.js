@@ -52,12 +52,12 @@
 		});
 
 		// Create the objects
-		values.newOrderOfIcons = {};
+		values.order_of_icons = {};
 
 		// Loop through each active network
 		$( '.sw-active i' ).each( function() {
 			var network = $( this ).data( 'network' );
-			values.newOrderOfIcons[network] = network;
+			values.order_of_icons[network] = network;
 		});
 
 		return values;

@@ -129,7 +129,7 @@ function swp_pinterest_button_html( $array ) {
 		$title = str_replace( '|','',$title );
 
 		if( function_exists('is_swp_registered') ):
-			$swp_registration = is_swp_registered();
+			$swp_registration = is_swp_addon_registered('pro');
 		else:
 			$swp_registration = false;
 		endif;

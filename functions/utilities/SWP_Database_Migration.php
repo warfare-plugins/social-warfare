@@ -9,7 +9,7 @@
 class SWP_Database_Migration {
 
     public function __construct() {
-        $this->migrate();
+        // $this->migrate();
         if ( !$this->is_migrated() ) {
             $this->migrate();
         }
@@ -85,7 +85,8 @@ class SWP_Database_Migration {
             'locationSite'  => 'location_archive_categories',
             'locationHome'  => 'location_home',
             'floatBgColor'  => 'float_background_color',
-            'orderOfIconsSelect'    => 'order_of_icons',
+            'orderOfIconsSelect'    => 'order_of_icons_method',
+			'newOrderOfIcons' => 'order_of_icons',
 
 
             //* Choices names

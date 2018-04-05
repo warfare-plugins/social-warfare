@@ -81,9 +81,11 @@ function swp_store_the_settings() {
     $array['devs']		= true;
 
     // Pass the array into the new function
-    $Button = new SWP_Button();
-    return $Button->the_buttons( $array );
+    return SWP_Display::social_warfare( $array );
+ }
 
+ function social_warfare( $array = array() ) {
+    return SWP_Display::social_warfare( $array );
  }
 
 
@@ -465,8 +467,4 @@ function swp_get_site_url() {
 	} else {
 		return get_site_url();
 	}
-}
-
-function social_warfare( $array = array() ) {
-    return SWP_Display::social_warfare( $array );
 }

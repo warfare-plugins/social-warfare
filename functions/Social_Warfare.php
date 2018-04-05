@@ -108,15 +108,6 @@ class Social_Warfare {
 		 */
 		new SWP_Header_Output();
 
-        /**
-         * The Standard Buttons class.
-         *
-         * Assembles each share button based on user's selected options.
-         *
-         */
-
-         new SWP_Buttons_Panel();
-
 
 		/**
 		 * The Display Class
@@ -366,6 +357,7 @@ function swp_initiate_plugin() {
 }
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
+require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/twitter.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
