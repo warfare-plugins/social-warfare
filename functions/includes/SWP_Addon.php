@@ -18,9 +18,16 @@ class SWP_Addon extends SWP_Abstract {
 
     }
 
+    /**
+     * Add a registration key for the registration functions
+     *
+     * @param Array An array of registrations for each paid addon
+     * @return Array An array modified to add this new registration key
+     *
+     */
     public function init_addon( $registrations ) {
 
-        if ( defined('SWP_VERSION') && version_compare(SWP_VERSION , SWAWP_CORE_VERSION_REQUIRED) >= 0 ) :
+        if ( defined('SWP_VERSION') && version_compare($this->version , $this->core_required) >= 0 ) :
             array_push( $registrations, [
                 'plugin_name'   => $this->plugin_name,
                 'key'           => $this->key,
@@ -165,11 +172,10 @@ class SWP_Addon extends SWP_Abstract {
 
                 return true;
     			$is_registered = true;
-    		endif:
+    		endif;
     	endif;
 
-    	// Return the registration value true/false
-    	return $is_registered;
+    	return false;
     }
 
     public function check_for_updates() {
