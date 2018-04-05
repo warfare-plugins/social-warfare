@@ -309,7 +309,12 @@ class SWP_Buttons_Panel {
     			endif;
 
     			// This array will contain the HTML for all of the individual buttons
-    			$buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
+    			// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
+				global $swp_social_networks;
+				foreach( $swp_social_networks as $network ):
+					$buttons_array = $network->render_html($buttons_array);
+				endforeach;
+				var_dump($buttons_array);
 
     			// Create the social panel
     			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_d_' . $this->options['default_colors'] . ' swp_i_' . $this->options['single_colors'] . ' swp_o_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';

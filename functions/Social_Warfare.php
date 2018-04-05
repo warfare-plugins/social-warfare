@@ -53,6 +53,14 @@ class Social_Warfare {
         global $SWP_Options_Page;
 
 		/**
+		 * The Social Networks Loader
+		 *
+		 * Instantiates the class that will load the social networks.
+		 *
+		 */
+		new SWP_Social_Networks_Loader();
+
+		/**
 		 * The Localization Class
 		 *
 		 * Instantiates the class that will load the plugin translations.
@@ -237,6 +245,13 @@ class Social_Warfare {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		// Classes used for each social network. (These will be migrated up from below after being refactored).
+		$social_networks = [
+			'Social_Networks_Loader',
+            'Social_Network',
+			'Google_Plus',
+        ];
+        $this->load_files( '/functions/social-networks/', $social_networks);
+
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
 		$utilities = [
@@ -345,7 +360,6 @@ function swp_initiate_plugin() {
 }
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/googlePlus.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/twitter.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/facebook.php';
 require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
