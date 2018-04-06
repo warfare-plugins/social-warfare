@@ -278,7 +278,6 @@ class SWP_Social_Network {
 	 * @access public
 	 * @param  array $array The array of information used to create and display each social panel of buttons
 	 * @return array $array The modified array which will now contain the html for this button
-	 * TODO: Clean up those conditionals, maybe even put some of that into another method.
 	 *
 	 */
 	public function render_html( $array ) {
@@ -301,7 +300,7 @@ class SWP_Social_Network {
 				$html.= '<span class="iconFiller">';
 				$html.= '<span class="spaceManWilly">';
 				$html.= '<i class="sw sw-'.$this->key.'"></i>';
-				$html.= '<span class="swp_share"> ' . $this->cta . '</span>';
+				$html.= '<span class="swp_share">' . $this->cta . '</span>';
 				$html.= '</span></span>';
 				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
 
@@ -322,5 +321,21 @@ class SWP_Social_Network {
 		return $html;
 
 	}
+
+
+	/**
+	 * A method for processing URL's.
+	 *
+	 * This is designed to process the URL that is being shared onto the social
+	 * platorms. It takes care of encoding, UTM parameters, link shortening, etc.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  array $array  The array of data from the buttons panel.
+	 * @return string        The processed URL.
+	 */
+	public function get_shareable_permalink( $array ) {
+		return urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
+	}
+
 
 }
