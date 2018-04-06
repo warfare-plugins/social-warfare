@@ -260,14 +260,24 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function show_share_count( $array ) {
+
+		// If the shares value isn't set, don't show the share count.
 		if( !isset( $array['shares'][$this->key] )):
 			return false;
+
+		// If the global button level shares are turned off, don't show the share count.
 		elseif( !$array['options']['network_shares'] ):
 			return false;
+
+		// If the total shares haven't yet exceeded the minimum set in the options, don't show the share count.
 		elseif( $array['shares']['total_shares'] < $array['options']['minimum_shares']):
 			return false;
+
+		// If the share count is literally 0, don't show the share count.
 		elseif( $array['shares'][$this->key] <= 0 ):
 			return false;
+
+		// Show the share count.
 		else:
 			return true;
 		endif;
