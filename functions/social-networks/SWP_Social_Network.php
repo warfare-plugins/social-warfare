@@ -68,6 +68,19 @@ class SWP_Social_Network {
 	 */
 	public $premium = '';
 
+
+	/**
+	 * The active status of this network
+	 *
+	 * If the user has this network activated on the options page, then this
+	 * property will be set to true. If not, it will be set to false.
+	 *
+	 * @var bool
+	 *
+	 */
+	public $active = false;
+
+
 	public function add_to_global() {
 
 		global $swp_social_networks;
@@ -154,6 +167,37 @@ class SWP_Social_Network {
 
 		$this->premium = $value;
 		return $this;
+	}
+
+
+	/**
+	 * A method to return the 'active' status of this network.
+	 *
+	 * @since 3.0.0 | 06 APR 2018 | Created
+	 * @param none
+	 * @return bool
+	 * @access public
+	 *
+	 */
+	public function is_active() {
+		return $this->active;
+	}
+
+
+	/**
+	 * A method to set the 'active' status of this network.
+	 *
+	 * @since 3.0.0 | 06 APR 2018 | Created
+	 * @param none
+	 * @return none
+	 * @access public
+	 *
+	 */
+	public function set_active_state() {
+		global $swp_user_options;
+		if ( isset( $swp_user_options['order_of_icons'][$this->key] ) ) {
+			$this->active = true;
+		}
 	}
 
 }
