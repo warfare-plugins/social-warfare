@@ -322,9 +322,9 @@ span.swp_label {
 	margin: 0!important;
 }
 
-.nc_socialPanel.swp_flatFresh.swp_d_fullColor .googlePlus,
-html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .googlePlus:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .googlePlus:not(:hover) {
+.nc_socialPanel.swp_flatFresh.swp_d_fullColor .google_plus,
+html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .google_plus:hover,
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .google_plus:not(:hover) {
 	border: 1px solid #df4b37;
 }
 
@@ -412,9 +412,9 @@ body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .swp_flipboard:not(:hov
 	border: 1px solid #bf2626;
 }
 
-.nc_socialPanel.swp_d_fullColor .googlePlus,
-html body .nc_socialPanel.swp_i_fullColor .googlePlus:hover,
-body .nc_socialPanel.swp_o_fullColor:hover .googlePlus {
+.nc_socialPanel.swp_d_fullColor .google_plus,
+html body .nc_socialPanel.swp_i_fullColor .google_plus:hover,
+body .nc_socialPanel.swp_o_fullColor:hover .google_plus {
 	background: #df4b37;
 	border: 1px solid #c44133;
 }
@@ -517,9 +517,9 @@ body .nc_socialPanel.swp_o_fullColor:hover .swp_flipboard {
 	border: 1px solid #bf2626;
 }
 
-.nc_socialPanel.swp_threeDee.swp_d_fullColor .googlePlus,
-html body .nc_socialPanel.swp_threeDee.swp_i_fullColor .googlePlus:hover,
-body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .googlePlus {
+.nc_socialPanel.swp_threeDee.swp_d_fullColor .google_plus,
+html body .nc_socialPanel.swp_threeDee.swp_i_fullColor .google_plus:hover,
+body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .google_plus {
 	border-bottom: 3px solid #c44133;
 }
 
@@ -685,9 +685,9 @@ body .nc_socialPanel.swp_o_dgOutlines:hover .nc_tweetContainer {
 	border: 1px solid #444;
 }
 
-.nc_socialPanel.swp_d_colorOutlines .googlePlus a,
-html body .nc_socialPanel.swp_i_colorOutlines .googlePlus a:hover,
-body .nc_socialPanel.swp_o_colorOutlines:hover .googlePlus a {
+.nc_socialPanel.swp_d_colorOutlines .google_plus a,
+html body .nc_socialPanel.swp_i_colorOutlines .google_plus a:hover,
+body .nc_socialPanel.swp_o_colorOutlines:hover .google_plus a {
 	color: #df4b37;
 }
 
@@ -769,9 +769,9 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .swp_flipboard a {
 	color: #e02828;
 }
 
-.nc_socialPanel.swp_d_colorOutlines .googlePlus,
-html body .nc_socialPanel.swp_i_colorOutlines .googlePlus:hover,
-body .nc_socialPanel.swp_o_colorOutlines:hover .googlePlus {
+.nc_socialPanel.swp_d_colorOutlines .google_plus,
+html body .nc_socialPanel.swp_i_colorOutlines .google_plus:hover,
+body .nc_socialPanel.swp_o_colorOutlines:hover .google_plus {
 	background: transparent;
 	border: 1px solid #df4b37;
 }
