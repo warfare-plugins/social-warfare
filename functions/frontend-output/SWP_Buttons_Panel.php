@@ -312,9 +312,11 @@ class SWP_Buttons_Panel {
     			// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
 				global $swp_social_networks;
 				foreach( $swp_social_networks as $network ):
-					$buttons_array['html'][$network->key] = $network->render_html($buttons_array);
-					$array['total_shares'] += intval( $array['shares'][$network->key] );
-					++$array['count'];
+					if( true === $network->is_active() ):
+						$buttons_array['html'][$network->key] = $network->render_html($buttons_array);
+						$array['total_shares'] += intval( $array['shares'][$network->key] );
+						++$array['count'];
+					endif;
 				endforeach;
 
     			// Create the social panel
