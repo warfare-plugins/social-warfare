@@ -314,8 +314,10 @@ class SWP_Buttons_Panel {
 				foreach( $swp_social_networks as $network ):
 					if( true === $network->is_active() ):
 						$buttons_array['html'][$network->key] = $network->render_html($buttons_array);
-						$array['total_shares'] += intval( $array['shares'][$network->key] );
-						++$array['count'];
+						if(isset($buttons_array['shares'][$network->key])):
+							$buttons_array['total_shares'] += intval( $buttons_array['shares'][$network->key] );
+						endif;
+						++$buttons_array['count'];
 					endif;
 				endforeach;
 
