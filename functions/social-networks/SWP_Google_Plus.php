@@ -15,12 +15,30 @@
  */
 class SWP_Google_Plus extends SWP_Social_Network {
 
-	public $name    = __( 'Google Plus','social-warfare' );
-	public $cta     = __( '+1','social-warfare' );
-	public $key     = 'google_plus';
-	public $default = 'true';
 
+	/**
+	 * The Magic __construct Method
+	 *
+	 * This method is used to instantiate the social network object. It does three things.
+	 * First it sets the object properties for each network. Then it adds this object to
+	 * the globally accessible swp_social_networks array. Finally, it fetches the active
+	 * state (does the user have this button turned on?) so that it can be accessed directly
+	 * within the object.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  none
+	 * @return none
+	 * @access public
+	 *  
+	 */
 	public function __construct() {
+
+		// Update the class properties for this network
+		$this->name    = __( 'Google Plus','social-warfare' );
+		$this->cta     = __( '+1','social-warfare' );
+		$this->key     = 'google_plus';
+		$this->default = 'true';
+
 		$this->add_to_global();
 		$this->set_active_state();
 	}
@@ -73,49 +91,4 @@ class SWP_Google_Plus extends SWP_Social_Network {
 		return $share_link;
 	}
 
-
-	/**
-	 * Create the HTML to display the share button
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array $array The array of information used to create and display each social panel of buttons
-	 * @return array $array The modified array which will now contain the html for this button
-	 * TODO: Clean up those conditionals, maybe even put some of that into another method.
-	 *
-	 */
-	public function render_html( $array ) {
-
-		// If we've already generated this button, just use our existing html
-		if ( isset( $this->html[$array['postID']] ) ) :
-			return $this->html[$array['postID']]
-
-		// If not, let's check if this network is activated and create the button HTML
-		else:
-
-			$share_link = $this->generate_share_link( $array );
-
-			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
-			$html.= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
-			if ( true === $this->show_share_count( $array ) ) :
-				$html.= '<span class="iconFiller">';
-				$html.= '<span class="spaceManWilly">';
-				$html.= '<i class="sw sw-'.$this->key.'"></i>';
-				$html.= '<span class="swp_share"> ' . $this->cta . '</span>';
-				$html.= '</span></span>';
-				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
-			else :
-				$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span></span></span></span>';
-			endif;
-			$html.= '</a>';
-			$html.= '</div>';
-
-			// Store these buttons so that we don't have to generate them for each set
-			$this->save_html( $html , $array['postID'] );
-
-		endif;
-
-		return $html;
-
-	}
 }
