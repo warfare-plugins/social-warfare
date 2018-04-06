@@ -8,8 +8,8 @@
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0 | CREATED | Unknown
- * @since     2.2.4 | UPDATED | 2 MAY 2017 | Refactored functions & updated docblocking
+ * @since     1.0.0 | Created | Unknown
+ * @since     2.2.4 | Updated | 2 MAY 2017 | Refactored functions & updated docblocking
  * @since     3.0.0 | Updated | 05 APR 2018 | Rebuilt into a class-based system.
  *
  */
@@ -25,7 +25,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * state (does the user have this button turned on?) so that it can be accessed directly
 	 * within the object.
 	 *
-	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @since  3.0.0 | CREATED | 06 APR 2018
 	 * @param  none
 	 * @return none
 	 * @access public
@@ -78,7 +78,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * This is the link that is being clicked on which will open up the share
 	 * dialogue.
 	 *
-	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @since  3.0.0 | Created | 06 APR 2018
 	 * @param  array $array The array of information passed in from the buttons panel.
 	 * @return string The generated link
 	 * @access public
