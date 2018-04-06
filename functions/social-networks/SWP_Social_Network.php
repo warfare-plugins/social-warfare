@@ -271,4 +271,49 @@ class SWP_Social_Network {
 		endif;
 	}
 
+	/**
+	 * Create the HTML to display the share button
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $array The array of information used to create and display each social panel of buttons
+	 * @return array $array The modified array which will now contain the html for this button
+	 * TODO: Clean up those conditionals, maybe even put some of that into another method.
+	 *
+	 */
+	public function render_html( $array ) {
+
+		// If we've already generated this button, just use our existing html
+		if ( isset( $this->html[$array['postID']] ) ) :
+			return $this->html[$array['postID']];
+
+		// If not, let's check if this network is activated and create the button HTML
+		else:
+
+			$share_link = $this->generate_share_link( $array );
+
+			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
+			$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
+			if ( true === $this->show_share_count( $array ) ) :
+				$html.= '<span class="iconFiller">';
+				$html.= '<span class="spaceManWilly">';
+				$html.= '<i class="sw sw-'.$this->key.'"></i>';
+				$html.= '<span class="swp_share"> ' . $this->cta . '</span>';
+				$html.= '</span></span>';
+				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
+			else :
+				$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-'.$this->key.'"></i><span class="swp_share"> ' . $this->cta . '</span></span></span></span>';
+			endif;
+			$html.= '</a>';
+			$html.= '</div>';
+
+			// Store these buttons so that we don't have to generate them for each set
+			$this->save_html( $html , $array['postID'] );
+
+		endif;
+
+		return $html;
+
+	}
+
 }
