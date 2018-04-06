@@ -6,7 +6,7 @@
  * Class to add a Google Plus share button to the available buttons
  *
  * @package   SocialWarfare\Functions
- * @copyright Copyright (c) 2017, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0 | CREATED | Unknown
  * @since     2.2.4 | UPDATED | 2 MAY 2017 | Refactored functions & updated docblocking
@@ -29,7 +29,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *  
+	 *
 	 */
 	public function __construct() {
 
@@ -85,9 +85,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 *
 	 */
 	public function generate_share_link( $array ) {
-
-		$permalink = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
-		$share_link = 'https://plus.google.com/share?url=' . $permalink;
+		$share_link = 'https://plus.google.com/share?url=' . $this->get_shareable_permalink( $array );
 		return $share_link;
 	}
 
