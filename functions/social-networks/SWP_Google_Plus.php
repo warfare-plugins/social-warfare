@@ -66,8 +66,8 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	public function render_html( $array ) {
 
 		// If we've already generated this button, just use our existing html
-		if ( isset( $_GLOBALS['sw']['buttons'][ $array['postID'] ][$this->key] ) ) :
-			$html= $_GLOBALS['sw']['buttons'][ $array['postID'] ][$this->key];
+		if ( isset( $this->html[$array['postID']] ) ) :
+			return $this->html[$array['postID']]
 
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['order_of_icons'][$this->key] ) && !isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons'][$this->key] ))  ) :
@@ -89,7 +89,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 			$html.= '</div>';
 
 			// Store these buttons so that we don't have to generate them for each set
-			$_GLOBALS['sw']['buttons'][ $array['postID'] ]['googlePlus'] = $array['html']['googlePlus'];
+			$this->save_html( $html , $array['post_id'] );
 
 		endif;
 

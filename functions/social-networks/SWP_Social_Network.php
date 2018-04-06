@@ -81,6 +81,22 @@ class SWP_Social_Network {
 	public $active = false;
 
 
+	/**
+	 * The generated html for the button
+	 *
+	 * After the first time the HTML is generated, we will store it in this variable
+	 * so that when it is needed for the second or third panel on the page, the render
+	 * html method will not have to make all the computations again.
+	 *
+	 * The html will be stored in an array indexed by post ID's. For example $this->html[27]
+	 * will contain the HTML for this button that was generated for post with 27 as ID.
+	 *
+	 * @var array
+	 *
+	 */
+	public $html = array();
+
+
 	public function add_to_global() {
 
 		global $swp_social_networks;
@@ -199,5 +215,23 @@ class SWP_Social_Network {
 			$this->active = true;
 		}
 	}
+
+
+	/**
+	 * A method to save the generated HTML. This allows us to not have to
+	 * run all of the computations every time. Instead, just reuse the HTML
+	 * that was rendered by the method the first time it was created.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  string  $html     The string of HTML to save in this property.
+	 * @param  int     $post_id  The ID of the post that this belongs to.
+	 * @return none
+	 * @access public
+	 *
+	 */
+	public function save_html( $html , $post_id ) {
+		$this->html[$post_id] = $html;
+	}
+
 
 }
