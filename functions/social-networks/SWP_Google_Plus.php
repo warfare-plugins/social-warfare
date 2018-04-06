@@ -16,6 +16,7 @@
 class SWP_Google_Plus extends SWP_Social_Network {
 
 	public $name    = 'Google Plus';
+	public $cta     = '+1';
 	public $key     = 'google_plus';
 	public $default = 'true';
 
@@ -69,19 +70,19 @@ class SWP_Google_Plus extends SWP_Social_Network {
 		if ( isset( $this->html[$array['postID']] ) ) :
 			return $this->html[$array['postID']]
 
-		// If not, let's check if Facebook is activated and create the button HTML
-		elseif ( (isset( $array['options']['order_of_icons'][$this->key] ) && !isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons'][$this->key] ))  ) :
+		// If not, let's check if this network is activated and create the button HTML
+		else:
 
 			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
-			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
+			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
 			$html.= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
-			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['googlePlus'] > 0 ) :
+			if ( true === $this->show_share_count( $array ) ) :
 				$html.= '<span class="iconFiller">';
 				$html.= '<span class="spaceManWilly">';
-				$html.= '<i class="sw sw-google-plus"></i>';
+				$html.= '<i class="sw sw-'.$this->key.'"></i>';
 				$html.= '<span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span>';
 				$html.= '</span></span>';
-				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares']['googlePlus'] ) . '</span>';
+				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
 			else :
 				$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-google-plus"></i><span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span></span></span></span>';
 			endif;
@@ -89,7 +90,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 			$html.= '</div>';
 
 			// Store these buttons so that we don't have to generate them for each set
-			$this->save_html( $html , $array['post_id'] );
+			$this->save_html( $html , $array['postID'] );
 
 		endif;
 
