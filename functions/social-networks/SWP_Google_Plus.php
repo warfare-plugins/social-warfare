@@ -60,6 +60,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * @access public
 	 * @param  array $array The array of information used to create and display each social panel of buttons
 	 * @return array $array The modified array which will now contain the html for this button
+	 * TODO: Clean up those conditionals, maybe even put some of that into another method.
 	 *
 	 */
 	public function render_html( $array ) {
@@ -71,7 +72,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 		// If not, let's check if Facebook is activated and create the button HTML
 		elseif ( (isset( $array['options']['order_of_icons'][$this->key] ) && !isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons'][$this->key] ))  ) :
 
-			$html= '<div class="nc_tweetContainer googlePlus" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
+			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
 			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'googlePlus' , $array['postID'] ) ) );
 			$html.= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
 			if ( $array['options']['network_shares'] && $array['shares']['total_shares'] >= $array['options']['minimum_shares'] && $array['shares']['googlePlus'] > 0 ) :
