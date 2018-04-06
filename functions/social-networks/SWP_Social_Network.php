@@ -292,8 +292,11 @@ class SWP_Social_Network {
 
 			$share_link = $this->generate_share_link( $array );
 
+			// Build the button wrapper
 			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
 			$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
+
+			// If we are showing share counts...
 			if ( true === $this->show_share_count( $array ) ) :
 				$html.= '<span class="iconFiller">';
 				$html.= '<span class="spaceManWilly">';
@@ -301,9 +304,13 @@ class SWP_Social_Network {
 				$html.= '<span class="swp_share"> ' . $this->cta . '</span>';
 				$html.= '</span></span>';
 				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
+
+			// If we are not showing share counts...
 			else :
 				$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-'.$this->key.'"></i><span class="swp_share"> ' . $this->cta . '</span></span></span></span>';
 			endif;
+
+			// Close up the button
 			$html.= '</a>';
 			$html.= '</div>';
 
