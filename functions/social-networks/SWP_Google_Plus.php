@@ -15,8 +15,8 @@
  */
 class SWP_Google_Plus extends SWP_Social_Network {
 
-	public $name    = 'Google Plus';
-	public $cta     = '+1';
+	public $name    = __( 'Google Plus','social-warfare' );
+	public $cta     = __( '+1','social-warfare' );
 	public $key     = 'google_plus';
 	public $default = 'true';
 
@@ -55,7 +55,27 @@ class SWP_Google_Plus extends SWP_Social_Network {
 
 
 	/**
-	 * #5: Create the HTML to display the share button
+	 * Generate the share link
+	 *
+	 * This is the link that is being clicked on which will open up the share
+	 * dialogue.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  array $array The array of information passed in from the buttons panel.
+	 * @return string The generated link
+	 * @access public
+	 *
+	 */
+	public function generate_share_link( $array ) {
+
+		$permalink = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
+		$share_link = 'https://plus.google.com/share?url=' . $permalink;
+		return $share_link;
+	}
+
+
+	/**
+	 * Create the HTML to display the share button
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -73,14 +93,15 @@ class SWP_Google_Plus extends SWP_Social_Network {
 		// If not, let's check if this network is activated and create the button HTML
 		else:
 
+			$share_link = $this->generate_share_link( $array );
+
 			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
-			$link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
 			$html.= '<a rel="nofollow" target="_blank" href="https://plus.google.com/share?url=' . $link . '" data-link="https://plus.google.com/share?url=' . $link . '" class="nc_tweet">';
 			if ( true === $this->show_share_count( $array ) ) :
 				$html.= '<span class="iconFiller">';
 				$html.= '<span class="spaceManWilly">';
 				$html.= '<i class="sw sw-'.$this->key.'"></i>';
-				$html.= '<span class="swp_share"> ' . __( '+1','social-warfare' ) . '</span>';
+				$html.= '<span class="swp_share"> ' . $this->cta . '</span>';
 				$html.= '</span></span>';
 				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
 			else :
