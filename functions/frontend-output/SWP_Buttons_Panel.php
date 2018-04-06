@@ -162,7 +162,7 @@ class SWP_Buttons_Panel {
         if ( !$spec_where ) {
             $spec_where = 'default';
     	};
-		var_dump($this->options);
+
     	if ( $array['where'] == 'default' ) :
     		// If we are on the home page
     		if( is_front_page() ):

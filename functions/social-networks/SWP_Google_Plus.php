@@ -21,6 +21,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 
 	public function __construct() {
 		$this->add_to_global();
+		$this->set_active_state();
 	}
 
 	/**
