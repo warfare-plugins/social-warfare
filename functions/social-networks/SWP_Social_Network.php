@@ -233,5 +233,29 @@ class SWP_Social_Network {
 		$this->html[$post_id] = $html;
 	}
 
+	
+	/**
+	 * Show Share Counts?
+	 *
+	 * A method to determine whether or not share counts need to be shown
+	 * while rendering the HTML for this network's button.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  array $array The array of data from the buttons panel.
+	 * @return bool
+	 * @access public
+	 *
+	 */
+	public function show_share_count( $array ) {
+		if( !$array['options']['network_shares'] ):
+			return false;
+		elseif( $array['shares']['total_shares'] < $array['options']['minimum_shares']):
+			return false;
+		elseif( $array['shares'][$this->key] <= 0 ):
+			return false;
+		else:
+			return true;
+		endif;
+	}
 
 }
