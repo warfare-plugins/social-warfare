@@ -27,6 +27,19 @@ class SWP_Social_Network {
 
 
 	/**
+	 * The call to action text.
+	 *
+	 * This is the text that will appear on the button whenever it is
+	 * hovered over. For example, Facebook says "share" and Google Plus
+	 * says "+1".
+	 *
+	 * @var string
+	 *
+	 */
+	public $cta = '';
+
+
+	/**
 	 * The snake_case name of the social network
 	 *
 	 * This is 'ugly name' of the network. This a snake_case key used for
@@ -233,7 +246,7 @@ class SWP_Social_Network {
 		$this->html[$post_id] = $html;
 	}
 
-	
+
 	/**
 	 * Show Share Counts?
 	 *
