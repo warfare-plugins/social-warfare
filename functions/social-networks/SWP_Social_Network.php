@@ -260,7 +260,9 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function show_share_count( $array ) {
-		if( !$array['options']['network_shares'] ):
+		if( !isset( $array['shares'][$this->key] )):
+			return false;
+		elseif( !$array['options']['network_shares'] ):
 			return false;
 		elseif( $array['shares']['total_shares'] < $array['options']['minimum_shares']):
 			return false;
