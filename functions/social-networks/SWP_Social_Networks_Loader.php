@@ -20,6 +20,7 @@ class SWP_Social_Networks_Loader {
 
 		// Create the social network objects.
 		new SWP_Google_Plus();
+		new SWP_Facebook();
 
 	}
 
