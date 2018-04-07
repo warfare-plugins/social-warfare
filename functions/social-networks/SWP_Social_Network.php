@@ -7,7 +7,10 @@
  * buttons which can be selected on the options page and rendered in the
  * panel of buttons.
  *
- * @since 3.0.0 | 05 APR 2018
+ * @package   SocialWarfare\Functions\Social-Networks
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since 3.0.0 | 05 APR 2018 | Created
  *
  */
 class SWP_Social_Network {
@@ -18,7 +21,7 @@ class SWP_Social_Network {
 	 *
 	 */
 	use SWP_Utility_Trait;
-	
+
 
 	/**
 	 * The display name of the social network

@@ -5,7 +5,7 @@
  *
  * Class to add a Facebook share button to the available buttons
  *
- * @package   SocialWarfare\Functions
+ * @package   SocialWarfare\Functions\Social-Networks
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0 | Unknown     | CREATED
