@@ -273,7 +273,8 @@ class Social_Warfare {
 			'Social_Networks_Loader',
 			'Social_Network',
 			'Google_Plus',
-			'Facebook'
+			'Facebook',
+			'Twitter'
 		];
 		$this->load_files( '/functions/social-networks/', $social_networks);
 
