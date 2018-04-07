@@ -110,6 +110,15 @@ class SWP_Social_Network {
 	public $html = array();
 
 
+	/**
+	 * A method to add this network object to the globally accessible array.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  none
+	 * @return none
+	 * @access public
+	 *
+	 */
 	public function add_to_global() {
 
 		global $swp_social_networks;
@@ -118,10 +127,20 @@ class SWP_Social_Network {
 	}
 
 
+	/**
+	 * A function to run when the object is instantiated.
+	 *
+	 * @since  3.0.0 | 06 APR 2018 | Created
+	 * @param  none
+	 * @return none
+	 * @access public
+	 *
+	 */
 	public function init_social_network() {
 		$this->add_to_global();
 		$this->set_active_state();
 	}
+
 
 	/**
 	 * A method for providing the object with a name.
