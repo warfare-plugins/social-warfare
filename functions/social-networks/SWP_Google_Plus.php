@@ -29,6 +29,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
+	 * TODO: Combine add_to_global and set_active_state since both are in the parent class.
 	 *
 	 */
 	public function __construct() {
@@ -39,8 +40,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 		$this->key     = 'google_plus';
 		$this->default = 'true';
 
-		$this->add_to_global();
-		$this->set_active_state();
+		$this->init_social_network();
 	}
 
 	/**

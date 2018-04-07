@@ -118,6 +118,11 @@ class SWP_Social_Network {
 	}
 
 
+	public function init_social_network() {
+		$this->add_to_global();
+		$this->set_active_state();
+	}
+
 	/**
 	 * A method for providing the object with a name.
 	 *
