@@ -14,6 +14,13 @@ class SWP_Social_Network {
 
 
 	/**
+	 * SWP_Utility_Trait provides useful tool like error handling.
+	 *
+	 */
+	use SWP_Utility_Trait;
+	
+
+	/**
 	 * The display name of the social network
 	 *
 	 * This is the 'pretty name' that users will see. It should generally
