@@ -101,22 +101,21 @@ class SWP_Twitter extends SWP_Social_Network {
 		if ( $swp_user_options['twitter_shares'] ) :
 
 			// Debugging
-			if ( _swp_is_debug( 'twitter' ) ) {
+			if ( _swp_is_debug( 'twitter' ) ) :
 				echo '<b>Response:</b> ' . $response . '<br />';
-			}
+			endif;
 
 			// Parse the response to get the actual number
 			$response = json_decode( $response, true );
 
 			return isset( $response['count'] )?intval( $response['count'] ):0;
 
-			// If the user has not enabled Twitter shares....
-			else :
+		// If the user has not enabled Twitter shares....
+		else :
 
-				// Return the number 0
-				return 0;
+			// Return the number 0
+			return 0;
 
-			endif;
 		endif;
 	}
 
