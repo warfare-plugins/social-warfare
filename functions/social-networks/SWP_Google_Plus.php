@@ -8,9 +8,9 @@
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0 | Created | Unknown
- * @since     2.2.4 | Updated | 2 MAY 2017 | Refactored functions & updated docblocking
- * @since     3.0.0 | Updated | 05 APR 2018 | Rebuilt into a class-based system.
+ * @since     1.0.0 | Unknown     | Created
+ * @since     2.2.4 | 02 MAY 2017 | Refactored functions & updated docblocking
+ * @since     3.0.0 | 05 APR 2018 | Rebuilt into a class-based system.
  *
  */
 class SWP_Google_Plus extends SWP_Social_Network {
@@ -25,7 +25,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * state (does the user have this button turned on?) so that it can be accessed directly
 	 * within the object.
 	 *
-	 * @since  3.0.0 | CREATED | 06 APR 2018
+	 * @since  3.0.0 | 06 APR 2018 | Created
 	 * @param  none
 	 * @return none
 	 * @access public
@@ -45,7 +45,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	/**
 	 * Generate the API Share Count Request URL
 	 *
-	 * @since  1.0.0
+	 * @since  3.0.0 | 07 APR 2018 | Created
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -59,7 +59,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	/**
 	 * Parse the response to get the share count
 	 *
-	 * @since  1.0.0
+	 * @since  3.0.0 | 07 APR 2018 | Created
 	 * @access public
 	 * @param  string $response The raw response returned from the API request
 	 * @return int $total_activity The number of shares reported from the API
@@ -77,7 +77,7 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	 * This is the link that is being clicked on which will open up the share
 	 * dialogue.
 	 *
-	 * @since  3.0.0 | Created | 06 APR 2018
+	 * @since  3.0.0 | 07 APR 2018 | Created 
 	 * @param  array $array The array of information passed in from the buttons panel.
 	 * @return string The generated link
 	 * @access public

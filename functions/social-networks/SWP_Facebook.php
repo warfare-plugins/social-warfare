@@ -8,9 +8,9 @@
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0 | CREATED | Unknown
- * @since     2.2.4 | UPDATED | 2 MAY 2017 | Refactored functions & updated docblocking
- * @since     3.0.0 | Updated | 05 APR 2018 | Rebuilt into a class-based system.
+ * @since     1.0.0 | Unknown     | CREATED
+ * @since     2.2.4 | 02 MAY 2017 | Refactored functions & updated docblocking
+ * @since     3.0.0 | 05 APR 2018 | Rebuilt into a class-based system.
  *
  */
 class SWP_Facebook extends SWP_Social_Network {
@@ -45,7 +45,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	/**
 	 * Generate the API Share Count Request URL
 	 *
-	 * @since  1.0.0
+	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -60,7 +60,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	/**
 	 * Parse the response to get the share count
 	 *
-	 * @since  1.0.0
+	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @access public
 	 * @param  string $response The raw response returned from the API request
 	 * @return int $total_activity The number of shares reported from the API
