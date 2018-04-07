@@ -232,20 +232,18 @@ class Social_Warfare {
 	 *
 	 */
 	private function load_classes() {
+
 		// Require WordPress' core plugin class.
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-		// Classes used for each social network. (These will be migrated up from below after being refactored).
-		$social_networks = [
-			'Social_Networks_Loader',
-            'Social_Network',
-			'Google_Plus',
-			'Facebook'
-        ];
-        $this->load_files( '/functions/social-networks/', $social_networks);
 
-
-		// Utilities: Classes used to perform misc functions throughout the plugin.
+		/**
+		 * Utility Classes
+		 *
+		 * This loads our Utility Trait and our various classes used to provide general
+		 * functionality that will be used by many different classes throughout the plugin.
+		 *
+		 */
 		$utilities = [
 			'Utility_Trait',
             'Abstract',
@@ -259,13 +257,48 @@ class Social_Warfare {
         ];
         $this->load_files( '/functions/utilities/', $utilities);
 
-        //* Includes: Files required by other files in the system.
+
+		/**
+		 * The Social Network Classes
+		 *
+		 * This family of classes provides the framework and the model needed for creating
+		 * a unique object for each social network. It also provides for maximum extensibility
+		 * to allow addons even easier access than ever before to create and add more social
+		 * networks to the plugin.
+		 *
+		 */
+		$social_networks = [
+			'Social_Networks_Loader',
+			'Social_Network',
+			'Google_Plus',
+			'Facebook'
+		];
+		$this->load_files( '/functions/social-networks/', $social_networks);
+
+
+        /**
+         * The Addon Classes
+         *
+         * This family of classes provide for the management of addons. These control
+         * the framework for registering addons, checking for updates for the addons,
+         * and other addon specific tasks.
+         *
+         */
         $includes = [
             'Addon'
         ];
         $this->load_files( '/functions/includes/', $includes);
 
-        // Frontend Output: Classes used to process the output to the Frontend.
+
+		/**
+		 * The Frontend Output Classes
+		 *
+		 * This family of classes control everything that is output on the WordPress
+		 * frontend. This includes the HTML for the buttons panels, the meta data that
+		 * is output in the head section of the site, scripts and styles being enqueued
+		 * for output, and other things like that.
+		 *
+		 */
         $frontends = [
             'Buttons_Panel',
             'Header_Output',
@@ -275,15 +308,33 @@ class Social_Warfare {
         ];
         $this->load_files( '/functions/frontend-output/', $frontends );
 
-		// Widgets: Classes used to register and create Social Warfare widgets.
+
+		/**
+		 * The Widget Classes
+		 *
+		 * These are the classes that create the widgets available for output in WordPress.
+		 * Built in is the Popular Posts widget, but these also provide the framework for
+		 * extensibility so that more widgets can be created later via addons.
+		 *
+		 */
 		$widgets = [
             'Popular_Posts_Widget',
             'Widget',
         ];
-
         $this->load_files( '/functions/widgets/', $widgets );
 
-        // Admin: Classes used to power of some functionality in the admin area.
+
+		/**
+		 * The Admin Classes
+		 *
+		 * This family of classes power everything that you see in the WordPress admin area
+		 * of the site. This includes the Click To Tweet generator and Social Warfare shortcode
+		 * generator buttons that you see at the top of the post editor. These include adding
+		 * the share count column to the posts view and a few other things related to the
+		 * admin area. This does NOT include the classes used to generate the options page for
+		 * Social Warfare.
+		 *
+		 */
         $admins = [
             'Click_To_Tweet',
             'Column',
@@ -294,7 +345,14 @@ class Social_Warfare {
         $this->load_files( '/functions/admin/', $admins );
 
 
-		// Options: Classes used to generate and organize the plugin's options.
+		/**
+		 * The Options Classes
+		 *
+		 * These classes provide the framework that creates the admin options page
+		 * as well as the tools needed for addons to be able to interface with it
+		 * to add their own options.
+		 *
+		 */
         $options = [
             'Option',
             'Options_Page',
@@ -305,14 +363,10 @@ class Social_Warfare {
             'Option_Text',
             'Option_Textarea',
             'Section_HTML',
-            'Option_Icons'
+            'Option_Icons',
+			'Addon_Registration',
         ];
-
         $this->load_files( '/functions/options/', $options );
-
-        $registration = ['Addon_Registration'];
-
-        $this->load_files( '/functions/options/', $registration );
 
 	}
 
