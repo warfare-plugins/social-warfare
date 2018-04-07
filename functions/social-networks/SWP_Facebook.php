@@ -39,8 +39,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->key     = 'facebook';
 		$this->default = 'true';
 
-		$this->add_to_global();
-		$this->set_active_state();
+		$this->init_social_network();
 	}
 
 	/**
