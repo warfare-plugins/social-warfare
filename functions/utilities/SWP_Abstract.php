@@ -1,6 +1,10 @@
 <?php
 
 class SWP_Abstract {
+
+
+	use SWP_Utility_Trait;
+
     /**
     * Name
     *
@@ -92,23 +96,6 @@ class SWP_Abstract {
         $this->_throw("Property $property does not exist in " . __CLASS__ . "." );
     }
 
-    /**
-    * Give chid classes an error handling method.
-    *
-    * @param  mixed $message The message to send as an error.
-    * @return object Exception An exception with the passed in message.
-    */
-    public function _throw( $message ) {
-        ob_start();
-        print_r( debug_backtrace()[1]['args'] );
-        $dump = ob_get_clean();
-
-        if ( is_string( $message ) ) {
-            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump );
-        } else {
-            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
-        }
-    }
 
     public function get_all_icons() {
 		global $swp_social_networks;
