@@ -3,7 +3,12 @@
 class SWP_Abstract {
 
 
+	/**
+	 * SWP_Utility_Trait provides useful tool like error handling.
+	 *
+	 */
 	use SWP_Utility_Trait;
+
 
     /**
     * Name
