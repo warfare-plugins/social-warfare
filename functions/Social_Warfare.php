@@ -247,6 +247,7 @@ class Social_Warfare {
 
 		// Utilities: Classes used to perform misc functions throughout the plugin.
 		$utilities = [
+			'Utility_Trait',
             'Abstract',
             'Compatibility',
             'CURL',
