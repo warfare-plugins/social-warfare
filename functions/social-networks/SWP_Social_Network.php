@@ -306,7 +306,7 @@ class SWP_Social_Network {
 	 * @access public
 	 *
 	 */
-	public function show_share_count( $array ) {
+	public function is_share_count_shown( $array ) {
 
 		// If the shares value isn't set, don't show the share count.
 		if( !isset( $array['shares'][$this->key] )):
@@ -356,7 +356,7 @@ class SWP_Social_Network {
 			$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
 
 			// If we are showing share counts...
-			if ( true === $this->show_share_count( $array ) ) :
+			if ( true === $this->is_share_count_shown( $array ) ) :
 				$html.= '<span class="iconFiller">';
 				$html.= '<span class="spaceManWilly">';
 				$html.= '<i class="sw sw-'.$this->key.'"></i>';
