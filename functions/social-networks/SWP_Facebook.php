@@ -34,10 +34,11 @@ class SWP_Facebook extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name    = __( 'Facebook','social-warfare' );
-		$this->cta     = __( 'Share','social-warfare' );
-		$this->key     = 'facebook';
-		$this->default = 'true';
+		$this->name           = __( 'Facebook','social-warfare' );
+		$this->cta            = __( 'Share','social-warfare' );
+		$this->key            = 'facebook';
+		$this->default        = 'true';
+		$this->base_share_url = 'http://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
 	}
@@ -85,25 +86,6 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$total = $likes + $comments + $shares;
 		return $total;
-	}
-
-
-	/**
-	 * Generate the share link
-	 *
-	 * This is the link that is being clicked on which will open up the share
-	 * dialogue.
-	 *
-	 * @since  3.0.0 | 06 APR 2018 | Created
-	 * @param  array $array The array of information passed in from the buttons panel.
-	 * @return string The generated link
-	 * @access public
-	 *
-	 */
-	public function generate_share_link( $array ) {
-
-		$share_link = 'http://www.facebook.com/share.php?u=' . $this->get_shareable_permalink( $array );
-		return $share_link;
 	}
 
 }
