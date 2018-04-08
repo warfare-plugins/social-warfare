@@ -415,4 +415,43 @@ class SWP_Social_Network {
 		return $share_link;
 	}
 
+
+	/**
+	 * Generate the API Share Count Request URL
+	 *
+	 * For most social networks, the api link is unique and this method will need to be
+	 * overwritten in their respective child classes. However, for any networks that do
+	 * not support share counts, having the method here in the parent class will allow
+	 * us to simply use this one without have to write a new one in each child class.
+	 *
+	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @access public
+	 * @param  string $url The permalink of the page or post for which to fetch share counts
+	 * @return string $request_url The complete URL to be used to access share counts via the API
+	 *
+	 */
+	public function get_api_link( $url ) {
+		return 0;
+	}
+
+
+	/**
+	 * Parse the response to get the share count
+	 *
+	 * For most social networks, parsing of the API response needs to be a unique method
+	 * that is declared in each network's child class. However, we are including it here
+	 * for all networks that do not support share counts at all. If a network does not
+	 * support share count fetching, then it can just use the method defined here in the
+	 * parent class.
+	 *
+	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @access public
+	 * @param  string $response The raw response returned from the API request
+	 * @return int $total_activity The number of shares reported from the API
+	 *
+	 */
+	public function parse_api_response( $response ) {
+		return 0;
+	}
+
 }
