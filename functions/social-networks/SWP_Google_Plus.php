@@ -5,7 +5,7 @@
  *
  * Class to add a Google Plus share button to the available buttons
  *
- * @package   SocialWarfare\Functions\Social-Networks 
+ * @package   SocialWarfare\Functions\Social-Networks
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0 | Unknown     | Created
@@ -34,10 +34,11 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name    = __( 'Google Plus','social-warfare' );
-		$this->cta     = __( '+1','social-warfare' );
-		$this->key     = 'google_plus';
-		$this->default = 'true';
+		$this->name           = __( 'Google Plus','social-warfare' );
+		$this->cta            = __( '+1','social-warfare' );
+		$this->key            = 'google_plus';
+		$this->default        = 'true';
+		$this->base_share_url = 'https://plus.google.com/share?url=';
 
 		$this->init_social_network();
 	}
@@ -68,24 +69,6 @@ class SWP_Google_Plus extends SWP_Social_Network {
 	public function parse_api_response( $response ) {
 		$response = json_decode( $response, true );
 		return isset( $response[0]['result']['metadata']['globalCounts']['count'] )?intval( $response[0]['result']['metadata']['globalCounts']['count'] ):0;
-	}
-
-
-	/**
-	 * Generate the share link
-	 *
-	 * This is the link that is being clicked on which will open up the share
-	 * dialogue.
-	 *
-	 * @since  3.0.0 | 07 APR 2018 | Created
-	 * @param  array $array The array of information passed in from the buttons panel.
-	 * @return string The generated link
-	 * @access public
-	 *
-	 */
-	public function generate_share_link( $array ) {
-		$share_link = 'https://plus.google.com/share?url=' . $this->get_shareable_permalink( $array );
-		return $share_link;
 	}
 
 }

@@ -119,6 +119,19 @@ class SWP_Social_Network {
 	 */
 	public $html = array();
 
+	/**
+	 * The Base URL for the share link
+	 *
+	 * This will allow us to generate the share link for networks that only use just
+	 * one URL parameter, the URL to the post. This way we can use a boilerplate method
+	 * for generating the share links here in the parent class and will only have to
+	 * overwrite that method in child classes that absolutely need it.
+	 *
+	 * @var string
+	 *
+	 */
+	public $base_share_url = '';
+
 
 	/**
 	 * A method to add this network object to the globally accessible array.
@@ -317,6 +330,7 @@ class SWP_Social_Network {
 		endif;
 	}
 
+
 	/**
 	 * Create the HTML to display the share button
 	 *
@@ -383,5 +397,22 @@ class SWP_Social_Network {
 		return urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
 	}
 
+
+	/**
+	 * Generate the share link
+	 *
+	 * This is the link that is being clicked on which will open up the share
+	 * dialogue.
+	 *
+	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @param  array $array The array of information passed in from the buttons panel.
+	 * @return string The generated link
+	 * @access public
+	 *
+	 */
+	public function generate_share_link( $array ) {
+		$share_link = $this->base_share_url . $this->get_shareable_permalink( $array );
+		return $share_link;
+	}
 
 }

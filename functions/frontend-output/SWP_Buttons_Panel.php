@@ -250,7 +250,7 @@ class SWP_Buttons_Panel {
 
     			// Customize which buttosn we're going to display
     			if ( isset( $array['buttons'] ) ) :
-
+					var_dump($array['buttons']);
     				// Fetch the global names and keys
     				$swp_options = array();
     				$swp_available_options = apply_filters( 'swp_options', $swp_options );
