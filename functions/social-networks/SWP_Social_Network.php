@@ -402,9 +402,12 @@ class SWP_Social_Network {
 	 * Generate the share link
 	 *
 	 * This is the link that is being clicked on which will open up the share
-	 * dialogue.
+	 * dialogue. Thie method is only used for networks that use this exact same pattern.
+	 * For anything that accepts more than just the post permalink as a URL parameter,
+	 * those networks will have to overwrite this method with their own custom method
+	 * in their respective child classes.
 	 *
-	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @since  3.0.0 | 08 APR 2018 | Created
 	 * @param  array $array The array of information passed in from the buttons panel.
 	 * @return string The generated link
 	 * @access public
@@ -424,7 +427,7 @@ class SWP_Social_Network {
 	 * not support share counts, having the method here in the parent class will allow
 	 * us to simply use this one without have to write a new one in each child class.
 	 *
-	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @since  3.0.0 | 08 APR 2018 | Created
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -444,7 +447,7 @@ class SWP_Social_Network {
 	 * support share count fetching, then it can just use the method defined here in the
 	 * parent class.
 	 *
-	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @since  3.0.0 | 08 APR 2018 | Created
 	 * @access public
 	 * @param  string $response The raw response returned from the API request
 	 * @return int $total_activity The number of shares reported from the API
