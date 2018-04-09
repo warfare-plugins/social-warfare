@@ -31,6 +31,7 @@ class Social_Warfare {
 	public function __construct() {
 		$this->load_classes();
 		$this->instantiate_classes();
+        $this->core_version = '3.0.0';
 
 		if( true === is_admin() ) {
 			$this->instantiate_admin_classes();
