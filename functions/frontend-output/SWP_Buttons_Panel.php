@@ -104,12 +104,54 @@ $Buttons->output_HTML();
 
 
 class SWP_Buttons_Panel {
-    public $options;
+
+
+	/**
+	 * Options
+	 *
+	 * We're using a local property to clone in the global $swp_user_options array. As a local options
+	 * we and other developers accessing this object can use getters and setters to change any options
+	 * possibly imaginable without affecting the global options.
+	 *
+	 * @var array
+	 *
+	 */
+    public $options = array();
 
     public function __construct() {
-        // *$this->options can not be set to $swp_user_options yet
-        // *as the options are not defined at this point.
+        localize_options();
     }
+
+
+	/**
+	 * Localize the global options
+	 *
+	 * The goal here is to move the global $swp_options array into a local property so that the options
+	 * for this specific instantiation of the buttons panel can have the options manipulated prior to
+	 * rendering the HTML for the panel. We can do this by using getters and setters or by passing in
+	 * arguments.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  array  $args Arguments that can be used to change the options of the buttons panel.
+	 * @return none
+	 * @access private
+	 *
+	 */
+	private function localize_options( $args = array() ) {
+
+		// First, clone the global options into our local property.
+		global $swp_user_options;
+		$this->options = $swp_user_options;
+
+		// Second, if the user has passed in any args, merge them in.
+		array_merge( $this->options , $args );
+
+	}
+
+
+	public function create_buttons( $args = array() ) {
+
+	}
 
     /**
     * THE SHARE BUTTONS FUNCTION:
