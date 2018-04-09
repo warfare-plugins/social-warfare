@@ -119,6 +119,8 @@ class SWP_Buttons_Panel {
     public $options = array();
 
     public function __construct() {
+
+		// Localize the global options.
         localize_options();
     }
 
@@ -175,7 +177,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.0 | 09 APR 2018 | Created
 	 * @param  array  $options An array of options to be merged into the existing options.
 	 * @return object $this   Allows for method chaining.
-	 * @access public 
+	 * @access public
 	 *
 	 */
 	public function set_options( $options ) {
@@ -183,7 +185,31 @@ class SWP_Buttons_Panel {
 		return $this;
 	}
 
-	public function create_buttons( $args = array() ) {
+
+	/**
+	 * Set the post ID for this buttons panel.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  array $args The array of args passed in.
+	 * @return none
+	 * @access public
+	 * 
+	 */
+	public function set_post_id( $args ) {
+
+		// Legacy support.
+		if ( isset( $args['postID'] ) ) :
+			$this->post_id = $array['postID'];
+
+		// Current argument.
+		elseif( isset( $args['post_id'] ) ) :
+			$this->post_id = $array['post_id'];
+
+		// Use the id of the current post.
+		else :
+			global $post;
+			$this->post_id = $post->ID;
+		endif;
 
 	}
 
