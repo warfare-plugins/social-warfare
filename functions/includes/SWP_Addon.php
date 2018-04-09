@@ -1,16 +1,15 @@
 <?php
 
-class SWP_Addon extends SWP_Abstract {
-    public function __construct( $name, $key, $product_id, $version, $core = '2.0.0' ) {
-        $this->plugin_name = $name;
-        $this->product_id = $product_id;
-        $this->key = $key;
-        $this->version = $version;
-        $this->core_required = $core;
+class SWP_Addon extends Social_Warfare {
+    public function __construct() {
+        parent::__construct();
+        $this->name = '';
+        $this->product_id = 0;
+        $this->key = '';
+        $this->version = '';
+        $this->core_required = '';
         $this->store_url = 'https://warfareplugins.com';
         $this->site_url = swp_get_site_url();
-
-        add_filter( 'swp_registrations', [$this, 'init_addon']);
 
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
@@ -37,6 +36,19 @@ class SWP_Addon extends SWP_Abstract {
         endif;
 
         return $registrations;
+    }
+
+    /**
+     * The callback function used to add a new instance of this /**
+      * to our swp_registrations filter.
+      *
+      * This should be the last item called in an addon's main file.
+      *
+     * @param array $addons The array of addons currently activated.
+     */
+    public function add_self( $addons ) {
+        $addons[] = $this;
+        return $addons;
     }
 
     public function register_plugin() {
@@ -112,7 +124,9 @@ class SWP_Addon extends SWP_Abstract {
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
-        $timestamp = $options[$this->key.'_license_key_timestamp'];
+        if ( isset($options[$this->key.'_license_key_timestamp'] ) ) {
+            $timestamp = $options[$this->key . '_license_key_timestamp'];
+        }
     	$timestamp = isset ( $timestamp ) ? $timestamp  : 0;
 
     	$time_to_recheck = $timestamp + 604800;
