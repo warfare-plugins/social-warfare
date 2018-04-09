@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Addon extends SWP_Abstract {
+class SWP_Addon extends Social_Warfare {
     /**
      * The license key which activated the addon. Defaults to ''.
      * @var string
