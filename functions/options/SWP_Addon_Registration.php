@@ -6,26 +6,26 @@ class SWP_Addon_Registration extends SWP_Option {
     public $product_id;
 
     public function __construct( $data ) {
-        parent::__construct( $data['plugin_name'], $data['key'] );
-        $this->display_name = $data['plugin_name'];
-        $this->set_key( $data['key'] );
+        parent::__construct( $addon->name, $addon->key );
+        $this->display_name = $addon->name;
+        $this->key = $addon->key;
         $this->license_key = $this->get_license_key();
-        $this->product_id = $data['product_id'];
-        $this->version = $data['version'];
+        $this->product_id = $addon->product_id;
+        $this->version = $addon->version;
     }
 
     public function render_HTML() {
         $registered = 0;
 
-        if ( !empty( $this->license_key) ) :
+        if ( !empty( $this->license_key ) ) :
             $registered = 1;
         endif;
 
         $html = '<div class="registration-wrapper '. $this->key . '" registration="' . $registered . '">';
             $html .= '<h2>' . __($this->name . ' Registration', 'social-warfare') . '</h2>';
 
-            $html .= $this->not_registered();
-            $html .= $this->is_registered();
+            $html .= $this->not_registered_HTML();
+            $html .= $this->is_registered_HTML();
 
         $html .= '</div>';
 
@@ -40,10 +40,9 @@ class SWP_Addon_Registration extends SWP_Option {
         }
 
         return '';
-        return '3034dd4c7d9dda6fe924fd59aa83fca3';
     }
 
-    protected function not_registered() {
+    protected function not_registered_HTML() {
         $html = '<div class="sw-grid sw-col-940 swp_is_not_registered">';
 
             $html .= '<div class="sw-red-notice">';
@@ -76,7 +75,7 @@ class SWP_Addon_Registration extends SWP_Option {
         return $html;
     }
 
-    protected function is_registered() {
+    protected function is_registered_HTML() {
         ob_start();
 
         ?>
