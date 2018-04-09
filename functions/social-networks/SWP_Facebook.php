@@ -43,6 +43,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->init_social_network();
 	}
 
+
 	/**
 	 * Generate the API Share Count Request URL
 	 *
