@@ -149,6 +149,40 @@ class SWP_Buttons_Panel {
 	}
 
 
+	/**
+	 * Set an option
+	 *
+	 * This method allows you to change one of the options for the buttons panel.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  string $option The key of the option to be set.
+	 * @param  mixed  $value  The value to which we will set that option.
+	 * @return object $this   Allows for method chaining.
+	 * @access public
+	 *
+	 */
+	public function set_option( $option , $value ) {
+		$this->options[$options] = $value;
+		return $this;
+	}
+
+
+	/**
+	 * Set multiple options
+	 *
+	 * This method allows you to change multiple options for the buttons panel.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  array  $options An array of options to be merged into the existing options.
+	 * @return object $this   Allows for method chaining.
+	 * @access public 
+	 *
+	 */
+	public function set_options( $options ) {
+		array_merge( $this->options , $options );
+		return $this;
+	}
+
 	public function create_buttons( $args = array() ) {
 
 	}
