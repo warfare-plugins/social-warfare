@@ -127,6 +127,16 @@ class SWP_Buttons_Panel {
 	 */
 	public $post_id;
 
+
+	/**
+	 * The location of the buttons in relation to the content.
+	 *
+	 * @var string above | below | both | none
+	 *
+	 */
+	public $location = 'both';
+	
+
     public function __construct() {
 
         $this->localize_options();
@@ -223,6 +233,42 @@ class SWP_Buttons_Panel {
 
 	}
 
+	public function set_location() {
+
+		// Check to see if display location was specifically defined for this post
+		$post_set_location = get_post_meta( $this->post_id, 'nc_postLocation', true );
+
+		if ( false == $post_set_location ) {
+			$post_set_location = 'default';
+		};
+
+		if ( $this->args['where'] == 'default' ) :
+			// If we are on the home page
+			if( is_front_page() ):
+				$this->location = $this->options['location_home'];
+
+			// If we are on a singular page
+			elseif ( is_singular() && !is_home() && !is_archive() && !is_front_page() ) :
+				if ( $spec_where == 'default' || $spec_where == '' ) :
+					$post_type = get_post_type( $this->post_id );
+
+					if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
+						$this->where = $this->options[ 'location_' . $post_type ];
+					else :
+						$this->where = 'none';
+					endif;
+
+				else :
+					$this->where = $spec_where;
+				endif;
+
+			// If we are anywhere else besides the home page or a singular
+			else :
+				$this->where = $this->options['location_archive_categories'];
+			endif;
+		endif;
+	}
+
     /**
     * THE SHARE BUTTONS FUNCTION:
     *
@@ -244,13 +290,9 @@ class SWP_Buttons_Panel {
     * }
     * @return string $content   The modified content
     */
-    public function the_buttons( $array = array() ) {
-        global $swp_user_options;
-        $this->options = $swp_user_options;
+    public function the_buttons( $args = array() ) {
 
-    	if ( !is_array($array) ) {
-    		$array = array();
-    	}
+		$this->args = $args;
 
         $defaults = array(
             'where'     => 'default',
@@ -259,42 +301,8 @@ class SWP_Buttons_Panel {
         );
 
         // *Set default array values.
-        $array = array_merge( $defaults, $array );
+        $array = array_merge( $defaults, $args );
 
-	    $this->set_post_id();
-
-    	// Check to see if display location was specifically defined for this post
-    	$spec_where = get_post_meta( $this->post_id, 'nc_postLocation', true );
-
-        if ( !$spec_where ) {
-            $spec_where = 'default';
-    	};
-
-    	if ( $array['where'] == 'default' ) :
-    		// If we are on the home page
-    		if( is_front_page() ):
-    			$array['where'] = $this->options['location_home'];
-
-    		// If we are on a singular page
-    		elseif ( is_singular() && !is_home() && !is_archive() && !is_front_page() ) :
-    			if ( $spec_where == 'default' || $spec_where == '' ) :
-    				$post_type = get_post_type( $this->post_id );
-
-    				if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
-    					$array['where'] = $this->options[ 'location_' . $post_type ];
-    				else :
-    					$array['where'] = 'none';
-    				endif;
-
-    			else :
-    				$array['where'] = $spec_where;
-    			endif;
-
-    		// If we are anywhere else besides the home page or a singular
-    		else :
-    			$array['where'] = $this->options['location_archive_categories'];
-    		endif;
-    	endif;
 
     	// *Do not show on attachement pages.
     	if ( true === is_attachment() ) :
@@ -305,7 +313,7 @@ class SWP_Buttons_Panel {
     		return $array['content'];
 
     	// Disable the buttons if the location is set to "None / Manual"
-    	elseif ( 'none' === $array['where'] && !isset( $array['devs'] ) ) :
+    	elseif ( 'none' === $this->where && !isset( $array['devs'] ) ) :
     		return $array['content'];
 
     	// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
@@ -487,30 +495,30 @@ class SWP_Buttons_Panel {
     			endif;
 
     			if ( isset( $array['genesis'] ) ) :
-    				if ( $array['where'] == 'below' && $array['genesis'] == 'below' ) :
+    				if ( $this->where == 'below' && $array['genesis'] == 'below' ) :
     					return $assets;
-    				elseif ( $array['where'] == 'above' && $array['genesis'] == 'above' ) :
+    				elseif ( $this->where == 'above' && $array['genesis'] == 'above' ) :
     					return $assets;
-    				elseif ( $array['where'] == 'both' ) :
+    				elseif ( $this->where == 'both' ) :
     					return $assets;
-    				elseif ( $array['where'] == 'none' ) :
+    				elseif ( $this->where == 'none' ) :
     					return false;
     				endif;
     			else :
-    				if ( $array['echo'] == false && $array['where'] != 'none' ) :
+    				if ( $array['echo'] == false && $this->where != 'none' ) :
     					return $assets;
     				elseif ( $array['content'] === false ) :
     					echo $assets;
-    				elseif ( isset( $array['where'] ) && $array['where'] == 'below' ) :
+    				elseif ( isset( $this->where ) && $this->where == 'below' ) :
     					$content = $array['content'] . '' . $assets;
     					return $content;
-    				elseif ( isset( $array['where'] ) && $array['where'] == 'above' ) :
+    				elseif ( isset( $this->where ) && $this->where == 'above' ) :
     					$content = $assets . '' . $array['content'];
     					return $content;
-    				elseif ( isset( $array['where'] ) && $array['where'] == 'both' ) :
+    				elseif ( isset( $this->where ) && $this->where == 'both' ) :
     					$content = $assets . '' . $array['content'] . '' . $assets;
     					return $content;
-    				elseif ( isset( $array['where'] ) && $array['where'] == 'none' ) :
+    				elseif ( isset( $this->where ) && $this->where == 'none' ) :
     					return $array['content'];
     				endif;
     			endif;

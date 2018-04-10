@@ -304,6 +304,7 @@ class SWP_Social_Network {
 	 * @param  array $array The array of data from the buttons panel.
 	 * @return bool
 	 * @access public
+	 * @TODO Make it accept two parameters, both arrays, $options and $share_counts.
 	 *
 	 */
 	public function is_share_count_shown( $array ) {
@@ -338,6 +339,7 @@ class SWP_Social_Network {
 	 * @access public
 	 * @param  array $array The array of information used to create and display each social panel of buttons
 	 * @return array $array The modified array which will now contain the html for this button
+	 * @todo   Eliminate the array 
 	 *
 	 */
 	public function render_html( $array ) {
@@ -352,7 +354,7 @@ class SWP_Social_Network {
 			$share_link = $this->generate_share_link( $array );
 
 			// Build the button wrapper
-			$html= '<div class="nc_tweetContainer '.$this->key.'" data-id="' . $array['count'] . '" data-network="'.$this->key.'">';
+			$html= '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
 			$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
 
 			// If we are showing share counts...
