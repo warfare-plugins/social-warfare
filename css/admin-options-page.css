@@ -83,6 +83,11 @@
 	margin-right: 0 !important;
 }
 
+.sw-option-container *:last-child {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
 .sw-clearfix:after, .sw-clearfix:before {
 	content: ' ';
 	display: table;
