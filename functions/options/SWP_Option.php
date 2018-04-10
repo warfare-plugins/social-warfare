@@ -80,6 +80,7 @@ class SWP_Option extends SWP_Abstract {
         //* TODO: Write the real method to verify registration.
         $this->swp_registration = true;
         $this->set_key( $key );
+        $this->parent_size = ' sw-col-940 ';
     }
 
 
@@ -214,7 +215,7 @@ class SWP_Option extends SWP_Abstract {
     * @return object $this The calling instance, for method chaining.
     *
     */
-    public function set_size( $size ) {
+    public function set_size( $size, $parent_size = ' sw-col-940 ') {
 
         if ( 0 !== strpos( $size, 'sw-col' ) ) {
             $sizes = PHP_EOL;
@@ -224,6 +225,7 @@ class SWP_Option extends SWP_Abstract {
         }
 
         $this->size = $size;
+        $this->parent_size = $parent_size;
 
         return $this;
     }
