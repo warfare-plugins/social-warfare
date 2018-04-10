@@ -135,11 +135,11 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public $location = 'both';
-	
 
-    public function __construct() {
 
-        $this->localize_options();
+    public function __construct( $args = array() ) {
+
+        $this->localize_options( $args );
 		$this->set_post_id();
 
     }
