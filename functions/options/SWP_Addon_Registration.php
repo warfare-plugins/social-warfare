@@ -5,7 +5,7 @@ class SWP_Addon_Registration extends SWP_Option {
     public $license_key;
     public $product_id;
 
-    public function __construct( $addon ) {
+    public function __construct( $data ) {
         parent::__construct( $addon->name, $addon->key );
         $this->display_name = $addon->name;
         $this->key = $addon->key;
