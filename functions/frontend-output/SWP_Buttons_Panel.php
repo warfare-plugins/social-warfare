@@ -118,20 +118,10 @@ class SWP_Buttons_Panel {
 	 */
     public $options = array();
 
-
-	/**
-	 * The Post ID
-	 *
-	 * @var int
-	 *
-	 */
-	public $post_id;
-
     public function __construct() {
 
-        $this->localize_options();
-		$this->set_post_id();
-
+		// Localize the global options.
+        localize_options();
     }
 
 
@@ -203,9 +193,9 @@ class SWP_Buttons_Panel {
 	 * @param  array $args The array of args passed in.
 	 * @return none
 	 * @access public
-	 *
+	 * 
 	 */
-	public function set_post_id( $args = array() ) {
+	public function set_post_id( $args ) {
 
 		// Legacy support.
 		if ( isset( $args['postID'] ) ) :
@@ -261,10 +251,15 @@ class SWP_Buttons_Panel {
         // *Set default array values.
         $array = array_merge( $defaults, $array );
 
-	    $this->set_post_id();
+    	// Get the options, or create them if they don't exist
+    	if ( isset( $array['postID'] ) ) :
+    		$post_id = $array['postID'];
+    	else :
+    		$post_id = get_the_ID();
+    	endif;
 
     	// Check to see if display location was specifically defined for this post
-    	$spec_where = get_post_meta( $this->post_id, 'nc_postLocation', true );
+    	$spec_where = get_post_meta( $post_id, 'nc_postLocation', true );
 
         if ( !$spec_where ) {
             $spec_where = 'default';
@@ -278,7 +273,7 @@ class SWP_Buttons_Panel {
     		// If we are on a singular page
     		elseif ( is_singular() && !is_home() && !is_archive() && !is_front_page() ) :
     			if ( $spec_where == 'default' || $spec_where == '' ) :
-    				$post_type = get_post_type( $this->post_id );
+    				$post_type = get_post_type( $post_id );
 
     				if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
     					$array['where'] = $this->options[ 'location_' . $post_type ];
@@ -320,8 +315,8 @@ class SWP_Buttons_Panel {
     	else :
 
     		// Set the options for the horizontal floating bar
-    		$post_type = get_post_type( $this->post_id );
-    		$spec_float_where = get_post_meta( $this->post_id , 'nc_floatLocation' , true );
+    		$post_type = get_post_type( $post_id );
+    		$spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
 
     		if ( isset( $array['floating_panel'] ) && $array['floating_panel'] == 'ignore' ) :
     			$floatOption = 'float_ignore';
@@ -334,13 +329,13 @@ class SWP_Buttons_Panel {
     		endif;
 
     		// Disable the plugin on feeds, search results, and non-published content
-    		if ( !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish' ) :
+    		if ( !is_feed() && !is_search() && get_post_status( $post_id ) == 'publish' ) :
 
     			// Acquire the social stats from the networks
     			if ( isset( $array['url'] ) ) :
     				$buttons_array['url'] = $array['url'];
     			else :
-    				$buttons_array['url'] = get_permalink( $this->post_id );
+    				$buttons_array['url'] = get_permalink( $post_id );
     			endif;
 
     			if ( isset( $array['scale'] ) ) :
@@ -350,7 +345,7 @@ class SWP_Buttons_Panel {
     			endif;
 
     			// Fetch the share counts
-    			$buttons_array['shares'] = get_social_warfare_shares( $this->post_id );
+    			$buttons_array['shares'] = get_social_warfare_shares( $post_id );
 
     			// Pass the swp_options into the array so we can pass it into the filter
     			$buttons_array['options'] = $this->options;
@@ -408,7 +403,7 @@ class SWP_Buttons_Panel {
     			endif;
 
     			$buttons_array['html'] = array();
-    			$buttons_array['postID'] = $this->post_id;
+    			$buttons_array['postID'] = $post_id;
 
     			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
     			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
@@ -481,9 +476,9 @@ class SWP_Buttons_Panel {
     			$assets .= '</div>';
 
     			// Reset the cache timestamp if needed
-    			if ( swp_is_cache_fresh( $this->post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
-    				delete_post_meta( $this->post_id,'swp_cache_timestamp' );
-    				update_post_meta( $this->post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
+    			if ( swp_is_cache_fresh( $post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
+    				delete_post_meta( $post_id,'swp_cache_timestamp' );
+    				update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
     			endif;
 
     			if ( isset( $array['genesis'] ) ) :
