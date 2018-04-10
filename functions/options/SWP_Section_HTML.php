@@ -247,7 +247,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <span class="swp_count">157</span>
                 </a>
             </div>
-            <div class="nc_tweetContainer linkedIn" data-id="5">
+            <div class="nc_tweetContainer linkedin" data-id="5">
                 <a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">

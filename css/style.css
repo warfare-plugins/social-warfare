@@ -346,9 +346,9 @@ body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .nc_pinterest:not(:hove
 	border: 1px solid #cd2029;
 }
 
-.nc_socialPanel.swp_flatFresh.swp_d_fullColor .linkedIn,
-html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .linkedIn:hover,
-body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .linkedIn:not(:hover) {
+.nc_socialPanel.swp_flatFresh.swp_d_fullColor .linkedin,
+html body .nc_socialPanel.swp_flatFresh.swp_i_fullColor .linkedin:hover,
+body .nc_socialPanel.swp_flatFresh.swp_o_fullColor:hover .linkedin:not(:hover) {
 	border: 1px solid #0d77b7;
 }
 
@@ -440,9 +440,9 @@ body .nc_socialPanel.swp_o_fullColor:hover .nc_pinterest {
 	border: 1px solid #aa1b29;
 }
 
-.nc_socialPanel.swp_d_fullColor .linkedIn,
-html body .nc_socialPanel.swp_i_fullColor .linkedIn:hover,
-body .nc_socialPanel.swp_o_fullColor:hover .linkedIn {
+.nc_socialPanel.swp_d_fullColor .linkedin,
+html body .nc_socialPanel.swp_i_fullColor .linkedin:hover,
+body .nc_socialPanel.swp_o_fullColor:hover .linkedin {
 	background: #0d77b7;
 	border: 1px solid #0c6591;
 }
@@ -541,9 +541,9 @@ body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .nc_pinterest {
 	border-bottom: 3px solid #aa1b29;
 }
 
-.nc_socialPanel.swp_threeDee.swp_d_fullColor .linkedIn,
-html body .nc_socialPanel.swp_threeDee.swp_i_fullColor .linkedIn:hover,
-body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .linkedIn {
+.nc_socialPanel.swp_threeDee.swp_d_fullColor .linkedin,
+html body .nc_socialPanel.swp_threeDee.swp_i_fullColor .linkedin:hover,
+body .nc_socialPanel.swp_threeDee.swp_o_fullColor:hover .linkedin {
 	border-bottom: 3px solid #0c6591;
 }
 
@@ -703,9 +703,9 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .nc_pinterest a {
 	color: #cd2029;
 }
 
-.nc_socialPanel.swp_d_colorOutlines .linkedIn a,
-html body .nc_socialPanel.swp_i_colorOutlines .linkedIn a:hover,
-body .nc_socialPanel.swp_o_colorOutlines:hover .linkedIn a {
+.nc_socialPanel.swp_d_colorOutlines .linkedin a,
+html body .nc_socialPanel.swp_i_colorOutlines .linkedin a:hover,
+body .nc_socialPanel.swp_o_colorOutlines:hover .linkedin a {
 	color: #0d77b7;
 }
 
@@ -797,9 +797,9 @@ body .nc_socialPanel.swp_o_colorOutlines:hover .nc_pinterest {
 	border: 1px solid #cd2029;
 }
 
-.nc_socialPanel.swp_d_colorOutlines .linkedIn,
-html body .nc_socialPanel.swp_i_colorOutlines .linkedIn:hover,
-body .nc_socialPanel.swp_o_colorOutlines:hover .linkedIn {
+.nc_socialPanel.swp_d_colorOutlines .linkedin,
+html body .nc_socialPanel.swp_i_colorOutlines .linkedin:hover,
+body .nc_socialPanel.swp_o_colorOutlines:hover .linkedin {
 	background: transparent;
 	border: 1px solid #0d77b7;
 }
