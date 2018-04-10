@@ -43,21 +43,18 @@ class SWP_Option_Text extends SWP_Option {
     *
     */
     public function render_HTML() {
-        $html = '<div class="sw-grid sw-col-940 sw-option-container ' . $this->key . '_wrapper" ';
+        $html = '<div class="sw-grid ' . $this->parent_size . ' sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
         $html .= '>';
 
-            $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<div class="sw-grid ' . $this->size . '">';
                 $html .= '<p class="sw-input-label">' . $this->name . '</p>';
             $html .= '</div>';
 
-            $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<div class="sw-grid ' . $this->size . '">';
                 $html .= $this->render_HTML_element();
             $html .= '</div>';
-
-            $html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
-            $html .= '<div class="sw-clearfix"></div>';
 
         $html .= '</div>';
 
