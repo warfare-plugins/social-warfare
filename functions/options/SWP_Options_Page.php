@@ -320,7 +320,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
             //* sniplyBuster => frame_buster
             $frame_buster_toggle = new SWP_Option_Toggle( 'Frame Buster', 'frame_buster' );
-            $frame_buster_toggle->set_default( true );
+            $frame_buster_toggle->set_default( true )
+                ->set_size( 'sw-col-300' );
 
             $frame_buster->add_option( $frame_buster_toggle );
 
@@ -569,6 +570,7 @@ class SWP_Options_Page extends SWP_Abstract {
                 //* float => floating_panel
                 $floating_panel = new SWP_Option_Toggle( 'Floating Share Buttons', 'floating_panel' );
                 $floating_panel->set_default( false )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
                     ->set_priority( 10 );
 
                 //* floatOption => float_position
@@ -581,20 +583,21 @@ class SWP_Options_Page extends SWP_Abstract {
                 ])
                     ->set_default( 'bottom' )
                     ->set_priority( 20 )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
                     ->set_dependency( 'floating_panel', [true] );
 
                 //* floatBgColor => float_background_color
                 $float_background_color = new SWP_Option_Text( 'Background Color', 'float_background_color' );
                 $float_background_color->set_default( '#ffffff' )
                     ->set_priority( 25 )
-                    ->set_size( 'sw-col-300' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
                     ->set_dependency( 'float_position', ['top', 'bottom'] );
 
                 //* swp_float_scr_sz => float_screen_width
                 $float_screen_width = new SWP_Option_Text( 'Minimum Screen Width', 'float_screen_width' );
                 $float_screen_width->set_default( '1100' )
                     ->set_priority( 30 )
-                    ->set_size( 'sw-col-300' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
                 //* sideReveal => transition
@@ -605,6 +608,7 @@ class SWP_Options_Page extends SWP_Abstract {
                         'fade'  => 'Fade In / Fade Out'
                     ] )
                     ->set_default( 'slide' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
                 $color_choices = $this::get_color_choices_array();
