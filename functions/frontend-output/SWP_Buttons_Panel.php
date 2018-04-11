@@ -243,7 +243,7 @@ class SWP_Buttons_Panel {
 
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
-			$this->post_id = $this->args['postID']
+			$this->post_id = $this->args['postID'];
             return;
         endif;
 
@@ -502,7 +502,7 @@ class SWP_Buttons_Panel {
      * @return Boolean True if the buttoons are okay to print, else false.
      */
     public function should_print() {
-        return !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish'
+        return !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish';
     }
 
 
@@ -606,17 +606,16 @@ class SWP_Buttons_Panel {
                     $assets .= $buttons_array['html'][ $key ];
                 endif;
             }
-            endforeach;
             return;
         endif;
 
         //* Dynamic.
         arsort( $buttons_array['shares'] );
-        foreach ( $buttons_array['shares'] as $thisIcon => $status ) :
+        foreach ( $buttons_array['shares'] as $thisIcon => $status ) {
             if ( isset( $buttons_array['html'][ $thisIcon ] ) ) :
                 $assets .= $buttons_array['html'][ $thisIcon ];
             endif;
-        endforeach;
+        }
     }
 
 
