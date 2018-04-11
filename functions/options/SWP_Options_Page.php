@@ -320,7 +320,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
             //* sniplyBuster => frame_buster
             $frame_buster_toggle = new SWP_Option_Toggle( 'Frame Buster', 'frame_buster' );
-            $frame_buster_toggle->set_default( true );
+            $frame_buster_toggle->set_default( true )
+                ->set_size( 'sw-col-300' );
 
             $frame_buster->add_option( $frame_buster_toggle );
 
@@ -567,8 +568,9 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
 
                 //* float => floating_panel
-                $show_floating_panel = new SWP_Option_Toggle( 'Floating Share Buttons', 'floating_panel' );
-                $show_floating_panel->set_default( false )
+                $floating_panel = new SWP_Option_Toggle( 'Floating Share Buttons', 'floating_panel' );
+                $floating_panel->set_default( false )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
                     ->set_priority( 10 );
 
                 //* floatOption => float_position
@@ -576,18 +578,26 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_position->set_choices( [
                     'top'   => 'Top of the Page',
                     'bottom'    => 'Bottom of the Page',
-                    'left'      => 'Left side of the Page',
-                    'right'     => 'Right side of the page'
+                    'left'      => 'On the left side of the page',
+                    'right'     => 'On the right side of the page'
                 ])
                     ->set_default( 'bottom' )
                     ->set_priority( 20 )
-                    ->set_dependency( 'floating_panel', true );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
+                    ->set_dependency( 'floating_panel', [true] );
+
+                //* floatBgColor => float_background_color
+                $float_background_color = new SWP_Option_Text( 'Background Color', 'float_background_color' );
+                $float_background_color->set_default( '#ffffff' )
+                    ->set_priority( 25 )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
+                    ->set_dependency( 'float_position', ['top', 'bottom'] );
 
                 //* swp_float_scr_sz => float_screen_width
                 $float_screen_width = new SWP_Option_Text( 'Minimum Screen Width', 'float_screen_width' );
                 $float_screen_width->set_default( '1100' )
                     ->set_priority( 30 )
-                    ->set_size( 'sw-col-460' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
                     ->set_dependency( 'float_position', ['left', 'right'] );
 
                 //* sideReveal => transition
@@ -598,41 +608,13 @@ class SWP_Options_Page extends SWP_Abstract {
                         'fade'  => 'Fade In / Fade Out'
                     ] )
                     ->set_default( 'slide' )
-                    ->set_dependency( 'float_position', ['left', 'right']);
-
-                //* sideDColorSet => float_default_colors
-                $float_default_colors = new SWP_Option_Select( 'Default Color Set', 'default_colors' );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
+                    ->set_dependency( 'float_position', ['left', 'right'] );
 
                 $color_choices = $this::get_color_choices_array();
 
-                $float_default_colors->set_choices( $color_choices )
-                    ->set_default( 'full_color' )
-                    ->set_priority( 50 )
-                    ->set_size( 'sw-col-460' )
-                    ->set_dependency( 'float_style_source', false );
-
-                //* sideOColorSet => float_hover_colors
-                $float_hover_colors = clone $float_default_colors;
-                $float_hover_colors->set_name( 'float_hover_colors')
-                    ->set_key( 'float_hover_colors' )
-                    ->set_priority( 80 );
-
-                //* sideIColorSet => float_single_colors
-                $float_single_colors = clone $float_default_colors;
-                $float_single_colors->set_name( 'Single Button Hover' )
-                    ->set_key( 'float_single_colors' )
-                    ->set_priority( 90 );
-
-                //* floatBgColor => float_background_color
-                $float_background_color = new SWP_Option_Text( 'Background Color', 'float_background_color' );
-                $float_background_color->set_default( '#ffffff' )
-                    ->set_priority( 100 )
-                     ->set_dependency( 'float_position', ['top', 'bottom'] );
-
-                $floating_share_buttons->add_options( [$show_floating_panel, $float_position, $float_transition,
-                    $float_screen_width, $float_default_colors,
-                    $float_hover_colors, $float_single_colors,
-                    $float_background_color] );
+                $floating_share_buttons->add_options( [$floating_panel, $float_position, $float_transition,
+                    $float_screen_width, $float_background_color] );
 
         $styles->add_sections( [$visual_options, $total_counts, $floating_share_buttons] );
 
