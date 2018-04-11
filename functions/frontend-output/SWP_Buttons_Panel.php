@@ -56,14 +56,11 @@
  * $generate_html: By passing in 'false' through the generate_html variable, it will return an object that can
  * be manipulated.
  *
-
-$Buttons = new SWP_Buttons_Panel( false );
-$Buttons->set_option( 'custom_color' , '#FF0000' );
-$Buttons->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
-$Buttons->output_HTML();
-
-
-/**
+ * $Buttons = new SWP_Buttons_Panel( false );
+ * $Buttons->set_option( 'custom_color' , '#FF0000' );
+ * $Buttons->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
+ * $Buttons->output_HTML();
+ *
  * Alternatively, they should ALSO be able to use the $args method of instantiating an object. Perhaps something
  * like this:
  *
@@ -81,6 +78,7 @@ $Buttons->output_HTML();
  * }
  *
  */
+
 //$args = array(
 //	'custom_color' => '#FF0000',
 //	'networks' => array( 'Twitter' , 'Facebook' , 'Pinterest' )
@@ -168,9 +166,9 @@ class SWP_Buttons_Panel {
 		endif;
 
         $this->localize_options( $args );
-		    $this->establish_post_id();
-		    $this->establish_active_buttons();
-		    $this->establish_location();
+	    $this->establish_post_id();
+	    $this->establish_active_buttons();
+	    $this->establish_location();
     }
 
 
@@ -245,25 +243,26 @@ class SWP_Buttons_Panel {
 	 * @param  array $args The array of args passed in.
 	 * @return none
 	 * @access public
-	 * 
+	 *
 	 */
 
 	public function establish_post_id() {
 
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
-			$this->post_id = $this->args['postID'];
+			$this->post_id = $this->args['postID']
+            return;
+        endif;
 
 		// Current argument.
-		elseif( isset( $this->args['post_id'] ) ) :
+		if ( isset( $this->args['post_id'] ) ) :
 			$this->post_id = $this->args['post_id'];
+            return;
+        endif;
 
 		// Use the id of the current post.
-		else :
-			global $post;
-			$this->post_id = $post->ID;
-		endif;
-
+		global $post;
+		$this->post_id = $post->ID;
 	}
 
 
@@ -400,6 +399,19 @@ class SWP_Buttons_Panel {
     * @return string $content   The modified content
     */
 
+    /**
+     * Takes a display name and returns the snake_cased key of that name.
+     *
+     * This is used to convert a network's name, such as Google Plus,
+     * to the database-friendly key of google_plus.
+     *
+     * @param  string $name The string to convert.
+     * @return string The converted string.
+     */
+    public function display_name_to_key( $string ) {
+        return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
+    }
+
     public function the_buttons() {
 
 		if( $this->location !== 'none' ):
@@ -412,7 +424,7 @@ class SWP_Buttons_Panel {
     		$post_type = get_post_type( $post_id );
     		$spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
 
-    		if ( isset( $array['floating_panel'] ) && $array['floating_panel'] == 'ignore' ) :
+    		if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
     			$floatOption = 'float_ignore';
     		elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
     				$floatOption = 'floatNone';
@@ -431,16 +443,16 @@ class SWP_Buttons_Panel {
 				// TODO: Create a method for fetching the URL.
     			// Acquire the social stats from the networks
     			// TODO: Eliminate that $buttons_array and store it in $this->permalink.
-    			if ( isset( $array['url'] ) ) :
-    				$buttons_array['url'] = $array['url'];
+    			if ( isset( $this->args['url'] ) ) :
+    				$buttons_array['url'] = $this->args['url'];
     			else :
     				$buttons_array['url'] = get_permalink( $post_id );
     			endif;
 
 				// TODO: The localize options method should have already merged this. Look into it then
 				// get rid of this conditional.
-    			if ( isset( $array['scale'] ) ) :
-    				$scale = $array['scale'];
+    			if ( isset( $this->args['scale'] ) ) :
+    				$scale = $this->args['scale'];
     			else :
     				$scale = $this->options['button_size'];
     			endif;
@@ -453,15 +465,15 @@ class SWP_Buttons_Panel {
 
     			// Customize which buttosn we're going to display
     			// TODO: Move all of this into the establish_active_buttons method.
-    			if ( isset( $array['buttons'] ) ) :
-					var_dump($array['buttons']);
+    			if ( isset( $this->args['buttons'] ) ) :
+					var_dump($this->args['buttons']);
     				// Fetch the global names and keys
     				$swp_options = array();
     				$swp_available_options = apply_filters( 'swp_options', $swp_options );
     				$available_buttons = $swp_available_options['options']['swp_display']['buttons']['content'];
 
     				// Split the comma separated list into an array
-    				$button_set_array = explode( ',', $array['buttons'] );
+    				$button_set_array = explode( ',', $this->args['buttons'] );
 
     				// Match the names in the list to their appropriate system-wide keys
     				$i = 0;
@@ -499,7 +511,7 @@ class SWP_Buttons_Panel {
     			$buttons_array['count'] = 0;
     			$buttons_array['total_shares'] = 0;
 
-    			if ( ( $buttons_array['options']['total_shares'] && $buttons_array['shares']['total_shares'] >= $buttons_array['options']['minimum_shares'] && !isset( $array['buttons'] ) )
+    			if ( ( $buttons_array['options']['total_shares'] && $buttons_array['shares']['total_shares'] >= $buttons_array['options']['minimum_shares'] && !isset( $this->args['buttons'] ) )
     				|| 	( isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
     				++$buttons_array['count'];
     			endif;
@@ -529,8 +541,8 @@ class SWP_Buttons_Panel {
     			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_default_' . $this->options['default_colors'] . ' swp_individual_' . $this->options['single_colors'] . ' swp_other_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
 
     			// Setup the total shares count if it's on the left
-    			if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $array['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ))
-    			|| 	($this->options['totals_alignment'] == 'totals_left' && isset( $array['buttons'] ) && isset( $array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
+    			if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $this->args['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ))
+    			|| 	($this->options['totals_alignment'] == 'totals_left' && isset( $this->args['buttons'] ) && isset( $this->args['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
     				++$buttons_array['count'];
     				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
     				$assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
@@ -583,10 +595,10 @@ class SWP_Buttons_Panel {
     				update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
     			endif;
 
-    			if ( isset( $array['genesis'] ) ) :
-    				if ( $this->where == 'below' && $array['genesis'] == 'below' ) :
+    			if ( isset( $this->args['genesis'] ) ) :
+    				if ( $this->where == 'below' && $this->args['genesis'] == 'below' ) :
     					return $assets;
-    				elseif ( $this->where == 'above' && $array['genesis'] == 'above' ) :
+    				elseif ( $this->where == 'above' && $this->args['genesis'] == 'above' ) :
     					return $assets;
     				elseif ( $this->where == 'both' ) :
     					return $assets;
@@ -594,25 +606,25 @@ class SWP_Buttons_Panel {
     					return false;
     				endif;
     			else :
-    				if ( $array['echo'] == false && $this->where != 'none' ) :
+    				if ( $this->args['echo'] == false && $this->where != 'none' ) :
     					return $assets;
-    				elseif ( $array['content'] === false ) :
+    				elseif ( $this->args['content'] === false ) :
     					echo $assets;
     				elseif ( isset( $this->where ) && $this->where == 'below' ) :
-    					$content = $array['content'] . '' . $assets;
+    					$content = $this->args['content'] . '' . $assets;
     					return $content;
     				elseif ( isset( $this->where ) && $this->where == 'above' ) :
-    					$content = $assets . '' . $array['content'];
+    					$content = $assets . '' . $this->args['content'];
     					return $content;
     				elseif ( isset( $this->where ) && $this->where == 'both' ) :
-    					$content = $assets . '' . $array['content'] . '' . $assets;
+    					$content = $assets . '' . $this->args['content'] . '' . $assets;
     					return $content;
     				elseif ( isset( $this->where ) && $this->where == 'none' ) :
-    					return $array['content'];
+    					return $this->args['content'];
     				endif;
     			endif;
     		else :
-    			return $array['content'];
+    			return $this->args['content'];
     		endif;
 
     	endif;
