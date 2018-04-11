@@ -118,7 +118,6 @@ class SWP_Buttons_Panel {
 	 */
     public $options = array();
 
-
 	/**
 	 * The Post ID
 	 *
@@ -169,10 +168,9 @@ class SWP_Buttons_Panel {
 		endif;
 
         $this->localize_options( $args );
-		$this->establish_post_id();
-		$this->establish_active_buttons();
-		$this->establish_location();
-
+		    $this->establish_post_id();
+		    $this->establish_active_buttons();
+		    $this->establish_location();
     }
 
 
@@ -247,8 +245,9 @@ class SWP_Buttons_Panel {
 	 * @param  array $args The array of args passed in.
 	 * @return none
 	 * @access public
-	 *
+	 * 
 	 */
+
 	public function establish_post_id() {
 
 		// Legacy support.
@@ -400,6 +399,7 @@ class SWP_Buttons_Panel {
     * }
     * @return string $content   The modified content
     */
+
     public function the_buttons() {
 
 		if( $this->location !== 'none' ):
@@ -409,8 +409,8 @@ class SWP_Buttons_Panel {
 		else:
 
     		// Set the options for the horizontal floating bar
-    		$post_type = get_post_type( $this->post_id );
-    		$spec_float_where = get_post_meta( $this->post_id , 'nc_floatLocation' , true );
+    		$post_type = get_post_type( $post_id );
+    		$spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
 
     		if ( isset( $array['floating_panel'] ) && $array['floating_panel'] == 'ignore' ) :
     			$floatOption = 'float_ignore';
@@ -423,8 +423,10 @@ class SWP_Buttons_Panel {
     		endif;
 
     		// Disable the plugin on feeds, search results, and non-published content
+
     		// TODO: All of this conditonal needs migrated into the location method under exclusion filters.
     		if ( !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish' ) :
+
 
 				// TODO: Create a method for fetching the URL.
     			// Acquire the social stats from the networks
@@ -432,7 +434,7 @@ class SWP_Buttons_Panel {
     			if ( isset( $array['url'] ) ) :
     				$buttons_array['url'] = $array['url'];
     			else :
-    				$buttons_array['url'] = get_permalink( $this->post_id );
+    				$buttons_array['url'] = get_permalink( $post_id );
     			endif;
 
 				// TODO: The localize options method should have already merged this. Look into it then
@@ -444,7 +446,7 @@ class SWP_Buttons_Panel {
     			endif;
 
     			// Fetch the share counts
-    			$buttons_array['shares'] = get_social_warfare_shares( $this->post_id );
+    			$buttons_array['shares'] = get_social_warfare_shares( $post_id );
 
     			// Pass the swp_options into the array so we can pass it into the filter
     			$buttons_array['options'] = $this->options;
@@ -503,7 +505,7 @@ class SWP_Buttons_Panel {
     			endif;
 
     			$buttons_array['html'] = array();
-    			$buttons_array['postID'] = $this->post_id;
+    			$buttons_array['postID'] = $post_id;
 
     			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
     			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
@@ -576,9 +578,9 @@ class SWP_Buttons_Panel {
     			$assets .= '</div>';
 
     			// Reset the cache timestamp if needed
-    			if ( swp_is_cache_fresh( $this->post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
-    				delete_post_meta( $this->post_id,'swp_cache_timestamp' );
-    				update_post_meta( $this->post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
+    			if ( swp_is_cache_fresh( $post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
+    				delete_post_meta( $post_id,'swp_cache_timestamp' );
+    				update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
     			endif;
 
     			if ( isset( $array['genesis'] ) ) :

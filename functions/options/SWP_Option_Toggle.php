@@ -41,16 +41,16 @@ class SWP_Option_Toggle extends SWP_Option {
 
         $checked = $status === 'on' ? ' checked ' : '';
 
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+        $html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
         $html .= '>';
 
-            $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<div class="sw-grid ' . $this->size . '">';
                 $html .= '<p class="sw-checkbox-label">' . $this->name . '</p>';
             $html .= '</div>';
 
-            $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<div class="sw-grid ' . $this->size . '">';
                 $html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
                     $html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
                     $html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
