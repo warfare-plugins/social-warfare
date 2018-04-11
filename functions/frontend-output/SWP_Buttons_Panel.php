@@ -99,11 +99,7 @@
  * instantiated, it just processes the command and echos or returns a string of HTML.
  *
  */
-
-
 class SWP_Buttons_Panel {
-
-
 	/**
 	 * Options
 	 *
@@ -157,8 +153,10 @@ class SWP_Buttons_Panel {
 	 */
 	public $content = '';
 
-    public function __construct( $args = array() ) {
 
+    public function __construct( $args = array() ) {
+        global $swp_social_networks;
+        $this->networks = $swp_social_networks;
 		$this->args = $args;
 
 		if( isset( $args['content'] ) ):
@@ -187,13 +185,9 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function localize_options() {
-
-		// First, clone the global options into our local property.
 		global $swp_user_options;
-		$this->options = $swp_user_options;
 
-		// Second, if the user has passed in any args, merge them in.
-		array_merge( $this->options , $this->args );
+		$this->options = array_merge( $swp_user_options, $this->args );
 
 	}
 
@@ -245,7 +239,6 @@ class SWP_Buttons_Panel {
 	 * @access public
 	 *
 	 */
-
 	public function establish_post_id() {
 
 		// Legacy support.
@@ -281,8 +274,6 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_location() {
-
-
 		/**
 		 * Exclusion Filters
 		 *
@@ -370,12 +361,64 @@ class SWP_Buttons_Panel {
 			return;
 
 		endif;
-
 	}
 
+
+    public function establish_scale() {
+        if ( isset( $this->args['scale'] ) ) :
+            $this->scale = $this->args['scale'];
+        else :
+            $this->scale = $this->options['button_size'];
+        endif;
+    }
+
+
+    //* TODO: This method has not been refactored.
 	public function establish_active_buttons() {
+        if ( ! isset( $this->args['buttons'] ) ) :
+            return;
+        endif;
 
+		var_dump($this->args['buttons']);
+		// Fetch the global names and keys
+		$swp_options = array();
+		$swp_available_options = apply_filters( 'swp_options', $swp_options );
+		$available_buttons = $swp_available_options['options']['swp_display']['buttons']['content'];
+
+		// Split the comma separated list into an array
+		$button_set_array = explode( ',', $this->args['buttons'] );
+
+		// Match the names in the list to their appropriate system-wide keys
+		$i = 0;
+		foreach ( $button_set_array as $button ) :
+
+			// Trim the network name in case of white space
+			$button = trim( $button );
+
+			// Convert the names to their systme-wide keys
+			if ( swp_recursive_array_search( $button , $available_buttons ) ) :
+				$key = swp_recursive_array_search( $button , $available_buttons );
+
+				// Store the result in the array that gets passed to the HTML generator
+				$buttons_array['buttons'][ $key ] = $button;
+
+				// Declare a default share count of zero. This will be overriden later
+				if ( !isset( $buttons_array['shares'][ $key ] ) ) :
+					$buttons_array['shares'][ $key ] = 0;
+				endif;
+
+			endif;
+
+			$button_set_array[ $i ] = $button;
+			++$i;
+		endforeach;
+
+		// Manually turn the total shares on or off
+		if ( array_search( 'Total', $button_set_array ) ) :
+            $buttons_array['buttons']['total_shares'] = 'Total';
+        endif;
 	}
+
 
     /**
     * THE SHARE BUTTONS FUNCTION:
@@ -412,221 +455,309 @@ class SWP_Buttons_Panel {
         return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
     }
 
+
+    protected function establish_float_position() {
+        // Set the options for the horizontal floating bar
+        $post_type = get_post_type( $this->post_id );
+        $spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
+
+        if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
+            $floatOption = 'float_ignore';
+        elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
+                $floatOption = 'floatNone';
+        elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $post_type ] == 'on' ) :
+            $floatOption = 'floating_panel' . ucfirst( $this->options['float_position'] );
+        else :
+            $floatOption = 'floatNone';
+        endif;
+
+    }
+
+
+    protected function establish_permalink() {
+        if ( isset( $this->args['post_id'] ) ) :
+            $this->permalink = $this->args['post_id'];
+        else :
+            $this->permalink = get_permalink( $this->post_id );
+        endif;
+    }
+
+
+    //* TODO: This has not been refactored. I don't know that it needs refactoring.
+    //* In my mind, when we have known incompatability with other themes/plugins,
+    //* we can put those checks in here.
+    protected function filter_other_plugins() {
+		// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
+		if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
+			remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
+		endif;
+
+    }
+
+
+    //* TODO: This does not have all the checks in place.
+    /**
+     * Tells you true/false if the buttons should print on this page.
+     *
+     * @return Boolean True if the buttoons are okay to print, else false.
+     */
+    public function should_print() {
+        return !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish'
+    }
+
+
+    //* TODO: Make sure all of these variables are valid. This has not been refactored,
+    //* only pretty-printed.
+    public function render_social_panel() {
+        $html = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] .
+            ' swp_default_' . $this->options['default_colors'] .
+            ' swp_individual_' . $this->options['single_colors'] .
+            ' swp_other_' . $this->options['hover_colors'] .
+            ' scale-' . $scale*100 .
+            ' scale-' . $this->options['button_alignment'] .
+            '" data-position="' . $this->options['location_post'] .
+            '" data-float="' . $floatOption .
+            '" data-count="' . $buttons_array['count'] .
+            '" data-floatColor="' . $this->options['float_background_color'] .
+            '" data-emphasize="'.$this->options['emphasize_icons'].'
+            ">';
+
+            $html .= $this->render_share_counts();
+
+            $this->sort_buttons();
+            $html .= $this->render_buttons();
+
+        $html .= "</div>";
+
+        return $html;
+    }
+
+
+    //* This is called by render_social_panel().
+    //* This has been refactored, but may not be agreeable.
+    //* Please change as you see fit.
+    public function render_buttons() {
+        foreach( $this->networks as $key => $network ):
+            if( true === $network->is_active() ):
+                $this->html .= $network->render_html();
+                $this->total_shares += intval( $buttons_array['shares'][$network->key] );
+            endif;
+        endforeach;
+    }
+
+
+    //* TODO: Barely refactored, mostly prety printed.
+    // @see $this->render_share_counts_on_the_right()
+    public function render_share_counts() {
+        $html = '';
+        if ( !$this->options['total_shares'] ) {
+            return $html;
+        }
+
+        if ( ( $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $this->args['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] )
+        )
+        || 	($this->options['totals_alignment'] == 'totals_left' && isset( $this->args['buttons'] ) && isset( $this->args['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
+            ++$buttons_array['count'];
+            $html .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
+            $html .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+            $html .= '</div>';
+        endif;
+    }
+
+
+    //* I don't think we should have separate methods for left/right share counts.
+    //* Instead, we can create the Share Counts element and pass it a CSS class
+    //* which forces it to the left or the right of the socialPanel.
+    public function render_share_counts_on_the_right() {
+        // // Create the Total Shares Box if it's on the right
+        // if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] != 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $buttons_array['buttons'] ) )
+        // || 	( $this->options['totals_alignment'] != 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
+        //     ++$buttons_array['count'];
+        //     if ( $this->options['totals_alignment'] == 'total_shares' ) :
+        //         $assets .= '<div class="nc_tweetContainer totes" data-id="' . $buttons_array['count'] . '" >';
+        //         $assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+        //         $assets .= '</div>';
+        //     else :
+        //         $assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
+        //         $assets .= '<span class="swp_count"><span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span> ' . swp_kilomega( $buttons_array['total_shares'] ) . '</span>';
+        //         $assets .= '</div>';
+        //     endif;
+        // endif;
+    }
+
+    //* TODO: This has not been refactored, just a bit of pretty printing.
+    //* $this->networks is = $swp_social_networks
+    //* Is $buttons_array === $this->networks ?
+    protected function sort_buttons() {
+        //* User settings.
+        if ( isset( $buttons_array ) && isset( $buttons_array['buttons'] ) ) :
+            foreach ( $buttons_array['buttons'] as $key => $value ) {
+                if ( isset( $buttons_array['html'][ $key ] ) ) :
+                    $assets .= $buttons_array['html'][ $key ];
+                endif;
+            }
+            return;
+        endif;
+
+        //* Manual.
+        if ( $this->options['order_of_icons_method'] == 'manual' ) :
+            foreach ( $this->options['order_of_icons'] as $key => $value ) {
+                if ( isset( $buttons_array['html'][ $key ] ) ) :
+                    $assets .= $buttons_array['html'][ $key ];
+                endif;
+            }
+            endforeach;
+            return;
+        endif;
+
+        //* Dynamic.
+        arsort( $buttons_array['shares'] );
+        foreach ( $buttons_array['shares'] as $thisIcon => $status ) :
+            if ( isset( $buttons_array['html'][ $thisIcon ] ) ) :
+                $assets .= $buttons_array['html'][ $thisIcon ];
+            endif;
+        endforeach;
+    }
+
+
+    //* TODO: This has not been refactored.
+    protected function handle_timestamp() {
+        if ( swp_is_cache_fresh( $post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
+			delete_post_meta( $post_id,'swp_cache_timestamp' );
+			update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
+		endif;
+    }
+
+
+    //* TODO: This has not been refactored.
+    //* Can $this->where be called $this->location? Or is $this->location something else?
+    public function do_print() {
+		if ( isset( $this->args['genesis'] ) ) :
+			if ( $this->where == 'below' && $this->args['genesis'] == 'below' ) :
+				return $assets;
+			elseif ( $this->where == 'above' && $this->args['genesis'] == 'above' ) :
+				return $assets;
+			elseif ( $this->where == 'both' ) :
+				return $assets;
+			elseif ( $this->where == 'none' ) :
+				return false;
+			endif;
+		else :
+			if ( $this->args['echo'] == false && $this->where != 'none' ) :
+				return $assets;
+			elseif ( $this->args['content'] === false ) :
+				echo $assets;
+			elseif ( isset( $this->where ) && $this->where == 'below' ) :
+				$content = $this->args['content'] . '' . $assets;
+				return $content;
+			elseif ( isset( $this->where ) && $this->where == 'above' ) :
+				$content = $assets . '' . $this->args['content'];
+				return $content;
+			elseif ( isset( $this->where ) && $this->where == 'both' ) :
+				$content = $assets . '' . $this->args['content'] . '' . $assets;
+				return $content;
+			elseif ( isset( $this->where ) && $this->where == 'none' ) :
+				return $this->args['content'];
+			endif;
+		endif;
+    }
+
+
+    //* TODO: This is supposed to be deleted before production. In here
+    //* just to make it easy to see the flow of the inner workings.
+    public function the_buttons_no_comments() {
+		if( $this->location !== 'none' ) :
+            return;
+        endif;
+
+        $this->establish_float_position();
+
+		// Disable the plugin on feeds, search results, and non-published content
+		if ( ! $this->should_print() ) :
+            return $this->args['content'];
+        endif;
+
+		$this->establish_permalink();
+
+        $this->establish_scale();
+
+		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
+
+		$buttons_array['options'] = $this->options;
+
+
+        $this->filter_other_plugins();
+
+        $this->html = '';
+		$this->html .= $this->render_social_panel();
+
+		$this->handle_timestamp();
+
+        return $this->do_print();
+    }
+
+
     public function the_buttons() {
 
-		if( $this->location !== 'none' ):
+		if( $this->location !== 'none' ) :
+            return;
+        endif;
 
-			return;
+        $this->establish_float_position();
 
-		else:
+		// Disable the plugin on feeds, search results, and non-published content
 
-    		// Set the options for the horizontal floating bar
-    		$post_type = get_post_type( $post_id );
-    		$spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
+		if ( ! $this->should_print() ) :
+            return $this->args['content'];
+        endif;
 
-    		if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
-    			$floatOption = 'float_ignore';
-    		elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
-    				$floatOption = 'floatNone';
-    		elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $post_type ] == 'on' ) :
-    			$floatOption = 'floating_panel' . ucfirst( $this->options['float_position'] );
-    		else :
-    			$floatOption = 'floatNone';
-    		endif;
+		$this->establish_permalink();
 
-    		// Disable the plugin on feeds, search results, and non-published content
+		// TODO: The localize options method should have already merged this. Look into it then
+		// get rid of this conditional.
+		$this->establish_scale();
 
-    		// TODO: All of this conditonal needs migrated into the location method under exclusion filters.
-    		if ( !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish' ) :
+		// Fetch the share counts
+		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
+
+		// Pass the swp_options into the array so we can pass it into the filter
+		$buttons_array['options'] = $this->options;
 
 
-				// TODO: Create a method for fetching the URL.
-    			// Acquire the social stats from the networks
-    			// TODO: Eliminate that $buttons_array and store it in $this->permalink.
-    			if ( isset( $this->args['url'] ) ) :
-    				$buttons_array['url'] = $this->args['url'];
-    			else :
-    				$buttons_array['url'] = get_permalink( $post_id );
-    			endif;
+        //* I believe this is now deprecated in favor of each Network having $this->is_active = Boolean.
 
-				// TODO: The localize options method should have already merged this. Look into it then
-				// get rid of this conditional.
-    			if ( isset( $this->args['scale'] ) ) :
-    				$scale = $this->args['scale'];
-    			else :
-    				$scale = $this->options['button_size'];
-    			endif;
+		// // Setup the buttons array to pass into the 'swp_network_buttons' hook
+		// $buttons_array['count'] = 0;
+		// $buttons_array['total_shares'] = 0;
+        //
+		// if ( ( $buttons_array['options']['total_shares'] && $buttons_array['shares']['total_shares'] >= $buttons_array['options']['minimum_shares'] && !isset( $this->args['buttons'] ) )
+		// 	|| 	( isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
+		// 	++$buttons_array['count'];
+		// endif;
 
-    			// Fetch the share counts
-    			$buttons_array['shares'] = get_social_warfare_shares( $post_id );
 
-    			// Pass the swp_options into the array so we can pass it into the filter
-    			$buttons_array['options'] = $this->options;
+		//* If we need to know how many buttons are active:
+            //* As each button determines if it is active, let it add itself to an array of active buttons.
+            //* Store the active buttons a property of SWP_Buttons_Panel. For ex: $this->active_buttons = apply_filters( 'swp_active_buttons', [] );
+            //* Then $this->active_buttons should return an array of objects, or an array of 'network' => object. Depending on how it is set up.
+            //* And then we can easily see how many buttons are active by calling count( $this->active_buttons ).
+            //*
 
-    			// Customize which buttosn we're going to display
-    			// TODO: Move all of this into the establish_active_buttons method.
-    			if ( isset( $this->args['buttons'] ) ) :
-					var_dump($this->args['buttons']);
-    				// Fetch the global names and keys
-    				$swp_options = array();
-    				$swp_available_options = apply_filters( 'swp_options', $swp_options );
-    				$available_buttons = $swp_available_options['options']['swp_display']['buttons']['content'];
+        $this->html = '';
 
-    				// Split the comma separated list into an array
-    				$button_set_array = explode( ',', $this->args['buttons'] );
+        $this->filter_other_plugins();
 
-    				// Match the names in the list to their appropriate system-wide keys
-    				$i = 0;
-    				foreach ( $button_set_array as $button ) :
+		// This array will contain the HTML for all of the individual buttons
+		// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
 
-    					// Trim the network name in case of white space
-    					$button = trim( $button );
 
-    					// Convert the names to their systme-wide keys
-    					if ( swp_recursive_array_search( $button , $available_buttons ) ) :
-    						$key = swp_recursive_array_search( $button , $available_buttons );
 
-    						// Store the result in the array that gets passed to the HTML generator
-    						$buttons_array['buttons'][ $key ] = $button;
+		// Create the social panel
+		$this->html .= $this->render_social_panel();
 
-    						// Declare a default share count of zero. This will be overriden later
-    						if ( !isset( $buttons_array['shares'][ $key ] ) ) :
-    							$buttons_array['shares'][ $key ] = 0;
-    						endif;
 
-    					endif;
+		$this->handle_timestamp();
 
-    					$button_set_array[ $i ] = $button;
-    					++$i;
-    				endforeach;
-
-    				// Manually turn the total shares on or off
-    				if ( array_search( 'Total', $button_set_array ) ) :
-                        $buttons_array['buttons']['total_shares'] = 'Total';
-                    endif;
-
-    			endif;
-
-    			// Setup the buttons array to pass into the 'swp_network_buttons' hook
-    			$buttons_array['count'] = 0;
-    			$buttons_array['total_shares'] = 0;
-
-    			if ( ( $buttons_array['options']['total_shares'] && $buttons_array['shares']['total_shares'] >= $buttons_array['options']['minimum_shares'] && !isset( $this->args['buttons'] ) )
-    				|| 	( isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
-    				++$buttons_array['count'];
-    			endif;
-
-    			$buttons_array['html'] = array();
-    			$buttons_array['postID'] = $post_id;
-
-    			// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
-    			if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
-    				remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
-    			endif;
-
-    			// This array will contain the HTML for all of the individual buttons
-    			// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
-				global $swp_social_networks;
-				foreach( $swp_social_networks as $network ):
-					if( true === $network->is_active() ):
-						$buttons_array['html'][$network->key] = $network->render_html($buttons_array);
-						if(isset($buttons_array['shares'][$network->key])):
-							$buttons_array['total_shares'] += intval( $buttons_array['shares'][$network->key] );
-						endif;
-						++$buttons_array['count'];
-					endif;
-				endforeach;
-
-    			// Create the social panel
-    			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_default_' . $this->options['default_colors'] . ' swp_individual_' . $this->options['single_colors'] . ' swp_other_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
-
-    			// Setup the total shares count if it's on the left
-    			if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $this->args['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ))
-    			|| 	($this->options['totals_alignment'] == 'totals_left' && isset( $this->args['buttons'] ) && isset( $this->args['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
-    				++$buttons_array['count'];
-    				$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
-    				$assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-    				$assets .= '</div>';
-    			endif;
-
-    			// Sort the buttons according to the user's preferences
-    			if ( isset( $buttons_array ) && isset( $buttons_array['buttons'] ) ) :
-    				foreach ( $buttons_array['buttons'] as $key => $value ) :
-    					if ( isset( $buttons_array['html'][ $key ] ) ) :
-    						$assets .= $buttons_array['html'][ $key ];
-    					endif;
-    				endforeach;
-    			elseif ( $this->options['order_of_icons_method'] == 'manual' ) :
-    				foreach ( $this->options['order_of_icons'] as $key => $value ) :
-    					if ( isset( $buttons_array['html'][ $key ] ) ) :
-    						$assets .= $buttons_array['html'][ $key ];
-    					endif;
-    				endforeach;
-    			elseif ( $this->options['order_of_icons'] == 'dynamic' ) :
-    				arsort( $buttons_array['shares'] );
-    				foreach ( $buttons_array['shares'] as $thisIcon => $status ) :
-    					if ( isset( $buttons_array['html'][ $thisIcon ] ) ) :
-    						$assets .= $buttons_array['html'][ $thisIcon ];
-    					endif;
-    				endforeach;
-    			endif;
-
-    			// Create the Total Shares Box if it's on the right
-    			if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] != 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $buttons_array['buttons'] ) )
-    			|| 	( $this->options['totals_alignment'] != 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
-    				++$buttons_array['count'];
-    				if ( $this->options['totals_alignment'] == 'total_shares' ) :
-    					$assets .= '<div class="nc_tweetContainer totes" data-id="' . $buttons_array['count'] . '" >';
-    					$assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-    					$assets .= '</div>';
-    				else :
-    					$assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
-    					$assets .= '<span class="swp_count"><span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span> ' . swp_kilomega( $buttons_array['total_shares'] ) . '</span>';
-    					$assets .= '</div>';
-    				endif;
-    			endif;
-
-    			// Close the Social Panel
-    			$assets .= '</div>';
-
-    			// Reset the cache timestamp if needed
-    			if ( swp_is_cache_fresh( $post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
-    				delete_post_meta( $post_id,'swp_cache_timestamp' );
-    				update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
-    			endif;
-
-    			if ( isset( $this->args['genesis'] ) ) :
-    				if ( $this->where == 'below' && $this->args['genesis'] == 'below' ) :
-    					return $assets;
-    				elseif ( $this->where == 'above' && $this->args['genesis'] == 'above' ) :
-    					return $assets;
-    				elseif ( $this->where == 'both' ) :
-    					return $assets;
-    				elseif ( $this->where == 'none' ) :
-    					return false;
-    				endif;
-    			else :
-    				if ( $this->args['echo'] == false && $this->where != 'none' ) :
-    					return $assets;
-    				elseif ( $this->args['content'] === false ) :
-    					echo $assets;
-    				elseif ( isset( $this->where ) && $this->where == 'below' ) :
-    					$content = $this->args['content'] . '' . $assets;
-    					return $content;
-    				elseif ( isset( $this->where ) && $this->where == 'above' ) :
-    					$content = $assets . '' . $this->args['content'];
-    					return $content;
-    				elseif ( isset( $this->where ) && $this->where == 'both' ) :
-    					$content = $assets . '' . $this->args['content'] . '' . $assets;
-    					return $content;
-    				elseif ( isset( $this->where ) && $this->where == 'none' ) :
-    					return $this->args['content'];
-    				endif;
-    			endif;
-    		else :
-    			return $this->args['content'];
-    		endif;
-
-    	endif;
+        return $this->do_print();
     }
 }
