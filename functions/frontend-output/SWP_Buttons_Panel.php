@@ -134,13 +134,44 @@ class SWP_Buttons_Panel {
 	 * @var string above | below | both | none
 	 *
 	 */
-	public $location = 'both';
+	public $location = 'above';
 
+
+	/**
+	 * Arguments
+	 *
+	 * A temporary property used to store and access any arguments passed into
+	 * the constructor. These will then be processed into the other properties
+	 * as possible.
+	 *
+	 * @var array
+	 *
+	 */
+	public $args = array();
+
+
+	/**
+	 * The Content
+	 *
+	 * The content to which we are going to append the HTML of these buttons.
+	 *
+	 * @var string
+	 *
+	 */
+	public $content = '';
 
     public function __construct( $args = array() ) {
 
+		$this->args = $args;
+
+		if( isset( $args['content'] ) ):
+			$this->content = $args['content'];
+		endif;
+
         $this->localize_options( $args );
-		$this->set_post_id();
+		$this->establish_post_id();
+		$this->establish_active_buttons();
+		$this->establish_location();
 
     }
 
@@ -159,14 +190,14 @@ class SWP_Buttons_Panel {
 	 * @access private
 	 *
 	 */
-	private function localize_options( $args = array() ) {
+	private function localize_options() {
 
 		// First, clone the global options into our local property.
 		global $swp_user_options;
 		$this->options = $swp_user_options;
 
 		// Second, if the user has passed in any args, merge them in.
-		array_merge( $this->options , $args );
+		array_merge( $this->options , $this->args );
 
 	}
 
@@ -209,21 +240,24 @@ class SWP_Buttons_Panel {
 	/**
 	 * Set the post ID for this buttons panel.
 	 *
+	 * We want to use the global post ID for whichever post is being looped
+	 * through unless the post ID has been passed in as an argument.
+	 *
 	 * @since  3.0.0 | 09 APR 2018 | Created
 	 * @param  array $args The array of args passed in.
 	 * @return none
 	 * @access public
 	 *
 	 */
-	public function set_post_id( $args = array() ) {
+	public function establish_post_id() {
 
 		// Legacy support.
-		if ( isset( $args['postID'] ) ) :
-			$this->post_id = $array['postID'];
+		if ( isset( $this->args['postID'] ) ) :
+			$this->post_id = $this->args['postID'];
 
 		// Current argument.
-		elseif( isset( $args['post_id'] ) ) :
-			$this->post_id = $array['post_id'];
+		elseif( isset( $this->args['post_id'] ) ) :
+			$this->post_id = $this->args['post_id'];
 
 		// Use the id of the current post.
 		else :
@@ -233,40 +267,116 @@ class SWP_Buttons_Panel {
 
 	}
 
-	public function set_location() {
 
-		// Check to see if display location was specifically defined for this post
+	/**
+	 * Establish Location
+	 *
+	 * A method to handle figuring out where in the content these buttons are
+	 * supposed to appear. It has to check the global options, the options set
+	 * on the post, and be able to tell if this is being called without any
+	 * content to which to append.
+	 *
+	 * @since  3.0.0 | 10 APR 2018 | Created
+	 * @param  none
+	 * @return none All values are stored in local properties.
+	 * @access public
+	 *
+	 */
+	public function establish_location() {
+
+
+		/**
+		 * Exclusion Filters
+		 *
+		 * This is a list of post types and areas around the site to exclude
+		 * output of the button HTML.
+		 *
+		 */
+
+		// *Do not show on attachement pages.
+		if ( true === is_attachment() ) :
+			$this->location = 'none';
+			return;
+
+		// Disable the buttons on Buddy Press pages
+		elseif ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
+			$this->location = 'none';
+			return;
+
+		// Disable the buttons if the location is set to "None / Manual"
+		elseif ( 'none' === $this->where && !isset( $this->args['devs'] ) ) :
+			$this->location = 'none';
+			return;
+
+		// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
+		elseif ( ( !is_main_query() || !in_the_loop()) && !isset( $this->args['devs'] ) ) :
+			$this->location = 'none';
+			return;
+
+		// Don't do anything if we're in the admin section
+		elseif ( is_admin() ) :
+			$this->location = 'none';
+			return;
+		endif;
+
+
+		/**
+		 * Location from the Post Options
+		 *
+		 * If the location was specified on the post options, we'll make sure
+		 * to use this instead of the global options.
+		 *
+		 */
 		$post_set_location = get_post_meta( $this->post_id, 'nc_postLocation', true );
 
-		if ( false == $post_set_location ) {
-			$post_set_location = 'default';
+		// If the location is set in the post options, use that.
+		if ( !empty( $post_set_location ) && 'default' !== $post_set_location ) {
+			$this->location = $post_set_location;
+			return;
 		};
 
-		if ( $this->args['where'] == 'default' ) :
-			// If we are on the home page
-			if( is_front_page() ):
-				$this->location = $this->options['location_home'];
 
-			// If we are on a singular page
-			elseif ( is_singular() && !is_home() && !is_archive() && !is_front_page() ) :
-				if ( $spec_where == 'default' || $spec_where == '' ) :
-					$post_type = get_post_type( $this->post_id );
+		/**
+		 * Global Location Settings
+		 *
+		 * If it's passed the exclusion filters and the options set on the post page,
+		 * then we'll figure out what post type we're on and pull the location setting
+		 * for that post type from the global options.
+		 *
+		 */
 
-					if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
-						$this->where = $this->options[ 'location_' . $post_type ];
-					else :
-						$this->where = 'none';
-					endif;
+		// If we are on the home page
+		if( is_front_page() ):
 
-				else :
-					$this->where = $spec_where;
-				endif;
+			$this->location = $this->options['location_home'];
+			return;
 
-			// If we are anywhere else besides the home page or a singular
+		// If we are on a singular page
+		elseif ( is_singular() && !is_home() && !is_archive() ) :
+
+			// Find the location setting for this post type.
+			$post_type = get_post_type( $this->post_id );
+			if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
+				$this->where = $this->options[ 'location_' . $post_type ];
+				return;
+
 			else :
-				$this->where = $this->options['location_archive_categories'];
+				$this->where = 'none';
+				return;
+
 			endif;
+
+		// If we are anywhere else besides the home page or a singular
+		else :
+			$this->where = $this->options['location_archive_categories'];
+			return;
+
 		endif;
+
+	}
+
+	public function establish_active_buttons() {
+
 	}
 
     /**
@@ -290,42 +400,13 @@ class SWP_Buttons_Panel {
     * }
     * @return string $content   The modified content
     */
-    public function the_buttons( $args = array() ) {
+    public function the_buttons() {
 
-		$this->args = $args;
+		if( $this->location !== 'none' ):
 
-        $defaults = array(
-            'where'     => 'default',
-            'echo'      => true,
-            'content'   => false,
-        );
+			return;
 
-        // *Set default array values.
-        $array = array_merge( $defaults, $args );
-
-
-    	// *Do not show on attachement pages.
-    	if ( true === is_attachment() ) :
-    		return $array['content'];
-
-    	// Disable the buttons on Buddy Press pages
-    	elseif ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
-    		return $array['content'];
-
-    	// Disable the buttons if the location is set to "None / Manual"
-    	elseif ( 'none' === $this->where && !isset( $array['devs'] ) ) :
-    		return $array['content'];
-
-    	// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
-    	elseif ( ( !is_main_query() || !in_the_loop()) && !isset( $array['devs'] ) ) :
-    		return $array['content'];
-
-    	// Don't do anything if we're in the admin section
-    	elseif ( is_admin() ) :
-    		return $array['content'];
-
-    	// If all the checks pass, let's make us some buttons!
-    	else :
+		else:
 
     		// Set the options for the horizontal floating bar
     		$post_type = get_post_type( $this->post_id );
@@ -342,15 +423,20 @@ class SWP_Buttons_Panel {
     		endif;
 
     		// Disable the plugin on feeds, search results, and non-published content
+    		// TODO: All of this conditonal needs migrated into the location method under exclusion filters.
     		if ( !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish' ) :
 
+				// TODO: Create a method for fetching the URL.
     			// Acquire the social stats from the networks
+    			// TODO: Eliminate that $buttons_array and store it in $this->permalink.
     			if ( isset( $array['url'] ) ) :
     				$buttons_array['url'] = $array['url'];
     			else :
     				$buttons_array['url'] = get_permalink( $this->post_id );
     			endif;
 
+				// TODO: The localize options method should have already merged this. Look into it then
+				// get rid of this conditional.
     			if ( isset( $array['scale'] ) ) :
     				$scale = $array['scale'];
     			else :
@@ -364,6 +450,7 @@ class SWP_Buttons_Panel {
     			$buttons_array['options'] = $this->options;
 
     			// Customize which buttosn we're going to display
+    			// TODO: Move all of this into the establish_active_buttons method.
     			if ( isset( $array['buttons'] ) ) :
 					var_dump($array['buttons']);
     				// Fetch the global names and keys
@@ -437,7 +524,7 @@ class SWP_Buttons_Panel {
 				endforeach;
 
     			// Create the social panel
-    			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_d_' . $this->options['default_colors'] . ' swp_i_' . $this->options['single_colors'] . ' swp_o_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
+    			$assets = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] . ' swp_default_' . $this->options['default_colors'] . ' swp_individual_' . $this->options['single_colors'] . ' swp_other_' . $this->options['hover_colors'] . ' scale-' . $scale*100 .' scale-' . $this->options['button_alignment'] . '" data-position="' . $this->options['location_post'] . '" data-float="' . $floatOption . '" data-count="' . $buttons_array['count'] . '" data-floatColor="' . $this->options['float_background_color'] . '" data-emphasize="'.$this->options['emphasize_icons'].'">';
 
     			// Setup the total shares count if it's on the left
     			if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $array['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ))
