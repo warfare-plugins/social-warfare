@@ -26,7 +26,6 @@ class SWP_Display {
         }
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
-        $this->Button  = new SWP_Buttons_Panel();
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action('template_redirect', array($this, 'activate_buttons') );
@@ -76,8 +75,10 @@ class SWP_Display {
     		return $content;
     	}
     	// Pass the content (in an array) into the buttons function to add the buttons
-    	$array['content'] = $content;
-    	$content = $this->Button->the_buttons( $array );
+    	$args['content'] = $content;
+		$buttons_panel = new SWP_Buttons_Panel( $args );
+		$content = $buttons_panel->generate_html();
+
     	// Add an invisible div to the content so the image hover pin button finds the content container area
     	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
     		$content .= '<p class="swp-content-locator"></p>';
