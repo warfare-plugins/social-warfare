@@ -77,7 +77,8 @@ class SWP_Display {
     	// Pass the content (in an array) into the buttons function to add the buttons
     	$args['content'] = $content;
 		$buttons_panel = new SWP_Buttons_Panel( $args );
-		$content = $buttons_panel->generate_html();
+		var_dump($buttons_panel);
+		$content = $buttons_panel->the_buttons();
 
     	// Add an invisible div to the content so the image hover pin button finds the content container area
     	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle'] ):
