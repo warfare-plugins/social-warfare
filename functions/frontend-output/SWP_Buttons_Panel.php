@@ -167,6 +167,10 @@ class SWP_Buttons_Panel {
 	    $this->establish_post_id();
 	    $this->establish_active_buttons();
 	    $this->establish_location();
+		$this->establish_float_position();
+		$this->establish_permalink();
+		$this->establish_scale();
+		$this->shares = get_social_warfare_shares( $this->post_id );
     }
 
 
@@ -293,7 +297,7 @@ class SWP_Buttons_Panel {
 			return;
 
 		// Disable the buttons if the location is set to "None / Manual"
-		elseif ( 'none' === $this->where && !isset( $this->args['devs'] ) ) :
+		elseif ( 'none' === $this->location && !isset( $this->args['devs'] ) ) :
 			$this->location = 'none';
 			return;
 
@@ -346,18 +350,18 @@ class SWP_Buttons_Panel {
 			// Find the location setting for this post type.
 			$post_type = get_post_type( $this->post_id );
 			if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
-				$this->where = $this->options[ 'location_' . $post_type ];
+				$this->location = $this->options[ 'location_' . $post_type ];
 				return;
 
 			else :
-				$this->where = 'none';
+				$this->location = 'none';
 				return;
 
 			endif;
 
 		// If we are anywhere else besides the home page or a singular
 		else :
-			$this->where = $this->options['location_archive_categories'];
+			$this->location = $this->options['location_archive_categories'];
 			return;
 
 		endif;
@@ -418,29 +422,6 @@ class SWP_Buttons_Panel {
             $buttons_array['buttons']['total_shares'] = 'Total';
         endif;
 	}
-
-
-    /**
-    * THE SHARE BUTTONS FUNCTION:
-    *
-    * This function accepts an array of parameters resulting in the outputting
-    * of the Social Warfare Buttons.
-    *
-    * @since 1.0.0
-    * @access public
-    * @param array $array {
-    *     @type mixed  $content The post content to which we append the buttons.
-    *                           Default FALSE. Accepts string.
-    *
-    *     @type string $where   Overwrites the default location in relation
-    *                           to content.
-    *                           Accepts 'above', 'below', 'both', 'none'
-    *
-    *     @type bool   $echo    True echos the buttons. False returns HTML.
-    *                           Default true.
-    * }
-    * @return string $content   The modified content
-    */
 
     /**
      * Takes a display name and returns the snake_cased key of that name.
@@ -508,15 +489,29 @@ class SWP_Buttons_Panel {
 
     //* TODO: Make sure all of these variables are valid. This has not been refactored,
     //* only pretty-printed.
-    public function render_social_panel() {
+    //* This is what I want the final method to be that gets called on the object.
+    //* EVERYTHING should be stored in a local property during instantiation.
+    public function render_html() {
+
+		// Disable the plugin on feeds, search results, and non-published content
+		if ( ! $this->should_print() ) :
+			return $this->args['content'];
+		endif;
+
+		// Exit if location is set to none.
+		if( $this->location === 'none' ) :
+            return;
+        endif;
+
+		// Create the HTML Buttons panel wrapper
         $html = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] .
             ' swp_default_' . $this->options['default_colors'] .
             ' swp_individual_' . $this->options['single_colors'] .
             ' swp_other_' . $this->options['hover_colors'] .
-            ' scale-' . $scale*100 .
+            ' scale-' . $this->options['scale']*100 .
             ' scale-' . $this->options['button_alignment'] .
             '" data-position="' . $this->options['location_post'] .
-            '" data-float="' . $floatOption .
+            '" data-float="' . $this->float_option .
             '" data-count="' . $buttons_array['count'] .
             '" data-floatColor="' . $this->options['float_background_color'] .
             '" data-emphasize="'.$this->options['emphasize_icons'].'
@@ -525,7 +520,7 @@ class SWP_Buttons_Panel {
             $html .= $this->render_share_counts();
 
             $this->sort_buttons();
-            $html .= $this->render_buttons();
+            // $html .= $this->render_buttons();
 
         $html .= "</div>";
 
@@ -539,7 +534,7 @@ class SWP_Buttons_Panel {
     public function render_buttons() {
         foreach( $this->networks as $key => $network ):
             if( true === $network->is_active() ):
-                $this->html .= $network->render_html();
+                $this->html .= $network->render_html( $this );
                 $this->total_shares += intval( $buttons_array['shares'][$network->key] );
             endif;
         endforeach;
@@ -590,8 +585,8 @@ class SWP_Buttons_Panel {
     //* Is $buttons_array === $this->networks ?
     protected function sort_buttons() {
         //* User settings.
-        if ( isset( $buttons_array ) && isset( $buttons_array['buttons'] ) ) :
-            foreach ( $buttons_array['buttons'] as $key => $value ) {
+        if ( isset( $this->args['buttons'] ) && isset( $buttons_array['buttons'] ) ) :
+            foreach ( $this->args['buttons'] as $key => $value ) {
                 if ( isset( $buttons_array['html'][ $key ] ) ) :
                     $assets .= $buttons_array['html'][ $key ];
                 endif;
@@ -628,37 +623,42 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: This has not been refactored.
-    //* Can $this->where be called $this->location? Or is $this->location something else?
-    public function do_print() {
-		if ( isset( $this->args['genesis'] ) ) :
-			if ( $this->where == 'below' && $this->args['genesis'] == 'below' ) :
-				return $assets;
-			elseif ( $this->where == 'above' && $this->args['genesis'] == 'above' ) :
-				return $assets;
-			elseif ( $this->where == 'both' ) :
-				return $assets;
-			elseif ( $this->where == 'none' ) :
-				return false;
-			endif;
-		else :
-			if ( $this->args['echo'] == false && $this->where != 'none' ) :
-				return $assets;
-			elseif ( $this->args['content'] === false ) :
-				echo $assets;
-			elseif ( isset( $this->where ) && $this->where == 'below' ) :
-				$content = $this->args['content'] . '' . $assets;
-				return $content;
-			elseif ( isset( $this->where ) && $this->where == 'above' ) :
-				$content = $assets . '' . $this->args['content'];
-				return $content;
-			elseif ( isset( $this->where ) && $this->where == 'both' ) :
-				$content = $assets . '' . $this->args['content'] . '' . $assets;
-				return $content;
-			elseif ( isset( $this->where ) && $this->where == 'none' ) :
-				return $this->args['content'];
-			endif;
+	/**
+	 * Append to Content
+	 *
+	 * The idea here is that the render_html function will create the HTML
+	 * for the buttons panel and then, once the HTML has been created, store
+	 * it in the local $html property and then call this method to attach it
+	 * to the content.
+	 *
+	 * @since  3.0.0 | 12 APR 2018 | Created
+	 * @param  none
+	 * @return none Everything gets stored in local properties.
+	 *
+	 */
+    public function append_to_content() {
+
+		if ( $this->args['echo'] == false && $this->location != 'none' ) :
+			$this->html;
+
+		// If there is no content, just echo the HTML to the screen.
+		elseif ( $this->args['content'] === false ) :
+			echo $this_html;
+
+		// If the location is "below", then append it to the end of the content string.
+		elseif ( isset( $this->location ) && $this->location == 'below' ) :
+			$this->content = $this->content . '' . $this->html;
+
+		// If the location is "above", then append it to the beginning of the content string.
+		elseif ( isset( $this->location ) && $this->location == 'above' ) :
+			$this->content = $this->html . '' . $this->content;
+
+		// If "both" append it to the front and back of the content string.
+		elseif ( isset( $this->location ) && $this->location == 'both' ) :
+			$this->content = $this->html . '' . $this->content . '' . $this->html;
+
 		endif;
+
     }
 
 
@@ -668,22 +668,6 @@ class SWP_Buttons_Panel {
 		if( $this->location !== 'none' ) :
             return;
         endif;
-
-        $this->establish_float_position();
-
-		// Disable the plugin on feeds, search results, and non-published content
-		if ( ! $this->should_print() ) :
-            return $this->args['content'];
-        endif;
-
-		$this->establish_permalink();
-
-        $this->establish_scale();
-
-		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
-
-		$buttons_array['options'] = $this->options;
-
 
         $this->filter_other_plugins();
 
