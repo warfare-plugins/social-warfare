@@ -154,6 +154,31 @@ class SWP_Buttons_Panel {
 	public $content = '';
 
 
+	/**
+	 * The Construct Method
+	 *
+	 * A Few Important Notes:
+	 * 1. We want EVERYTHING to get processed during instantiation.
+	 * 2. The render_html method will be called afterwards.
+	 * 3. The render_html method will NOT call any ESTABLISH methods.
+	 * 4. The render_html method will use local properties to create the HTML.
+	 * 5. Anything in the options array, should stay in that array.
+	 * 5A. The "buttons" passed in via the args, needs to replace the
+	 * 		"order_of_icons" in the options array.
+	 * 5B. The "order_the_buttons" method needs to modify the "order_of_icons" in
+	 * 		the options array if needed.
+	 * 5C. Remove the set_scale method. Use the options array, setters, and args.
+	 * 6. Add a method to the social network class to eliminate passing over
+	 * 		the entire buttons panel object to that class. Instead we want
+	 * 		to pass the localized options array, the counts, and anything else
+	 * 		needed. That method will store it in local properties so that the
+	 * 		render_html method can be called and it will have everything it needs.
+	 * 	7. Instead of using the is_active() method of the networks, we'll just loop
+	 * 		through the order_of_icons keys and call the render_html from the global
+	 * 		network objects.	
+	 *
+	 * @param array $args [description]
+	 */
     public function __construct( $args = array() ) {
         global $swp_social_networks;
         $this->networks = $swp_social_networks;
