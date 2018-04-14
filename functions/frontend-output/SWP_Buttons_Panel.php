@@ -137,7 +137,7 @@ class SWP_Buttons_Panel {
 	 * the constructor. These will then be processed into the other properties
 	 * as possible.
 	 *
-	 * @var array
+	 * @var array $args;
 	 *
 	 */
 	public $args = array();
@@ -148,10 +148,18 @@ class SWP_Buttons_Panel {
 	 *
 	 * The WordPress content to which we are going to append the HTML of these buttons.
 	 *
-	 * @var string
+	 * @var string $content;
 	 *
 	 */
 	public $content = '';
+
+
+    /**
+     * The fully qualified HTML for the Buttons Panel.
+     *
+     * @var string $html;
+     */
+    public $html = '';
 
 
 	/**
@@ -180,7 +188,8 @@ class SWP_Buttons_Panel {
 	 * @param array $args [description]
 	 */
     public function __construct( $args = array() ) {
-        global $swp_social_networks;
+        global $swp_social_networks, $post;
+
         $this->networks = $swp_social_networks;
 		$this->args = $args;
 
@@ -188,18 +197,18 @@ class SWP_Buttons_Panel {
 			$this->content = $args['content'];
 		endif;
 
+        //* Access the $post once while we have it. Values may be overwritten.
+        $this->post_type = $post->post_type;
+        $this->post_status = $post->post_status;
+        $this->post_id = $post->ID;
+
         $this->localize_options( $args );
 	    $this->establish_post_id();
 	    $this->establish_active_buttons();
 	    $this->establish_location();
-<<<<<<< HEAD
-        $this->establish_float_position();
-=======
-		$this->establish_float_position();
+		$this->establish_float_location();
 		$this->establish_permalink();
-		$this->establish_scale();
 		$this->shares = get_social_warfare_shares( $this->post_id );
->>>>>>> ba8a3827f7b616435d7b3884bcc6eeea8793d8e8
     }
 
 
@@ -221,7 +230,6 @@ class SWP_Buttons_Panel {
 		global $swp_user_options;
 
 		$this->options = array_merge( $swp_user_options, $this->args );
-
 	}
 
 
@@ -273,23 +281,15 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_post_id() {
-        global $post;
-        $this->post_type = $post->post_type;
-
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
 			$this->post_id = $this->args['postID'];
-            return;
         endif;
 
 		// Current argument.
 		if ( isset( $this->args['post_id'] ) ) :
 			$this->post_id = $this->args['post_id'];
-            return;
         endif;
-
-		// Use the id of the current post.
-		$this->post_id = $post->ID;
 	}
 
 
@@ -350,14 +350,6 @@ class SWP_Buttons_Panel {
             $this->location = $this->options['location_archive_categories'];
         endif;
 	}
-
-    public function establish_scale() {
-        if ( isset( $this->args['scale'] ) ) :
-            $this->scale = $this->args['scale'];
-        else :
-            $this->scale = $this->options['button_size'];
-        endif;
-    }
 
 
     //* TODO: This method has not been refactored.
@@ -434,7 +426,6 @@ class SWP_Buttons_Panel {
         else :
             $floatOption = 'floatNone';
         endif;
-
     }
 
 
@@ -486,10 +477,12 @@ class SWP_Buttons_Panel {
         return (
             //* User settings.
             $this->location !== 'none' &&
+
             //* Conditions we want.
-            is_main_query() && in_the_loop() && get_post_status( $this->post_id ) == 'publish'
+            is_main_query() && in_the_loop() && get_post_status( $this->post_id ) == 'publish' &&
+
             //* Conditions we do not want.
-            && !is_admin() && !is_feed() && !is_search() && !is_attachment()
+            !is_admin() && !is_feed() && !is_search() && !is_attachment()
         );
     }
 
@@ -515,7 +508,7 @@ class SWP_Buttons_Panel {
             ' swp_default_' . $this->options['default_colors'] .
             ' swp_individual_' . $this->options['single_colors'] .
             ' swp_other_' . $this->options['hover_colors'] .
-            ' scale-' . $this->options['scale']*100 .
+            ' scale-' . $this->options['scale'] * 100 .
             ' scale-' . $this->options['button_alignment'] .
             '" data-position="' . $this->options['location_post'] .
             '" data-float="' . $this->float_option .
@@ -548,22 +541,27 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: Barely refactored, mostly prety printed.
-    // @see $this->render_share_counts_on_the_right()
+    /**
+     * If share counts are active, renders the Share Counts HTML.
+     *
+     * @return string $html The fully qualified HTML to display share counts.
+     * 
+     */
     public function render_share_counts() {
         $html = '';
-        if ( !$this->options['total_shares'] ) {
+        $total_shares = $this->options['total_shares'];
+
+        if ( empty( $total_shares) || $total_shares <= $this->options['minimum_shares'] ) {
             return $html;
         }
 
-        if ( ( $this->options['totals_alignment'] == 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $this->args['buttons'] ) || ( $this->options['totals_alignment'] == 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] )
-        )
-        || 	($this->options['totals_alignment'] == 'totals_left' && isset( $this->args['buttons'] ) && isset( $this->args['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
-            ++$buttons_array['count'];
-            $html .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
-            $html .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-            $html .= '</div>';
-        endif;
+        $classname = $this->options['totals_alignment'] === 'totals_left' ? 'totals-left' : 'totals-right';
+
+        $html .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
+            $html .= '<span class="swp_count ' . $classname . '">' . swp_kilomega( $this->options['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+        $html .= '</div>';
+
+        return $html;
     }
 
 
@@ -670,16 +668,10 @@ class SWP_Buttons_Panel {
 
 		$this->establish_permalink();
 
-        $this->establish_scale();
-
 		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
 
 		$buttons_array['options'] = $this->options;
 
-
-
-
-        $this->html = '';
 		$this->html .= $this->render_social_panel();
 
 		$this->handle_timestamp();
