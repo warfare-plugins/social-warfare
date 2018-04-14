@@ -211,7 +211,6 @@ class SWP_Buttons_Panel {
 
         $this->localize_options( $args );
 	    $this->establish_post_id();
-	    $this->establish_active_buttons();
 	    $this->establish_location();
 		$this->establish_float_location();
 		$this->establish_permalink();
@@ -360,52 +359,6 @@ class SWP_Buttons_Panel {
 	}
 
 
-    //* TODO: This method has not been refactored.
-	public function establish_active_buttons() {
-        if ( ! isset( $this->args['buttons'] ) ) :
-            return;
-        endif;
-
-		var_dump($this->args['buttons']);
-		// Fetch the global names and keys
-		$swp_options = array();
-		$swp_available_options = apply_filters( 'swp_options', $swp_options );
-		$available_buttons = $swp_available_options['options']['swp_display']['buttons']['content'];
-
-		// Split the comma separated list into an array
-		$button_set_array = explode( ',', $this->args['buttons'] );
-
-		// Match the names in the list to their appropriate system-wide keys
-		$i = 0;
-		foreach ( $button_set_array as $button ) :
-
-			// Trim the network name in case of white space
-			$button = trim( $button );
-
-			// Convert the names to their systme-wide keys
-			if ( swp_recursive_array_search( $button , $available_buttons ) ) :
-				$key = swp_recursive_array_search( $button , $available_buttons );
-
-				// Store the result in the array that gets passed to the HTML generator
-				$buttons_array['buttons'][ $key ] = $button;
-
-				// Declare a default share count of zero. This will be overriden later
-				if ( !isset( $buttons_array['shares'][ $key ] ) ) :
-					$buttons_array['shares'][ $key ] = 0;
-				endif;
-
-			endif;
-
-			$button_set_array[ $i ] = $button;
-			++$i;
-		endforeach;
-
-		// Manually turn the total shares on or off
-		if ( array_search( 'Total', $button_set_array ) ) :
-            $buttons_array['buttons']['total_shares'] = 'Total';
-        endif;
-	}
-
     /**
      * Takes a display name and returns the snake_cased key of that name.
      *
@@ -475,7 +428,6 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: This does not have all the checks in place.
     /**
      * Tells you true/false if the buttons should print on this page.
      *
@@ -495,10 +447,6 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: Make sure all of these variables are valid. This has not been refactored,
-    //* only pretty-printed.
-    //* This is what I want the final method to be that gets called on the object.
-    //* EVERYTHING should be stored in a local property during instantiation.
     public function render_html() {
 
 		if ( ! $this->should_print() ) :
@@ -560,6 +508,7 @@ class SWP_Buttons_Panel {
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
+            $this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
             foreach ( $this->args['buttons'] as $button_key ) {
 
@@ -662,8 +611,12 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: This has not been refactored.
-    //* Can $this->where be called $this->location? Or is $this->location something else?
+    /**
+     * Handles whether to echo the HTML or return it as a string.
+     *
+     * @return mixed null if set to echo, else a string of HTML.
+     *
+     */
     public function do_print() {
         if ( $this->args['echo'] || $this->content === false ) {
             echo $this->html;
@@ -683,9 +636,7 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: This is supposed to be deleted before production. In here
-    //* just to make it easy to see the flow of the inner workings.
-    public function the_buttons_no_comments() {
+    public function the_buttons() {
 		if( $this->location == 'none' ) :
             return;
         endif;
@@ -705,64 +656,6 @@ class SWP_Buttons_Panel {
 		$buttons_array['options'] = $this->options;
 
 		$this->html .= $this->render_social_panel();
-
-		$this->handle_timestamp();
-
-        return $this->do_print();
-    }
-
-
-    public function the_buttons() {
-
-		if( !$this->should_print() ) :
-            return $this->the_content;
-        endif;
-
-        $this->establish_float_position();
-		$this->establish_permalink();
-
-		// TODO: The localize options method should have already merged this. Look into it then
-		// get rid of this conditional.
-		$this->establish_scale();
-
-		// Fetch the share counts
-		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
-
-		// Pass the swp_options into the array so we can pass it into the filter
-		$buttons_array['options'] = $this->options;
-
-
-        //* I believe this is now deprecated in favor of each Network having $this->is_active = Boolean.
-
-		// // Setup the buttons array to pass into the 'swp_network_buttons' hook
-		// $buttons_array['count'] = 0;
-		// $buttons_array['total_shares'] = 0;
-        //
-		// if ( ( $buttons_array['options']['total_shares'] && $buttons_array['shares']['total_shares'] >= $buttons_array['options']['minimum_shares'] && !isset( $this->args['buttons'] ) )
-		// 	|| 	( isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
-		// 	++$buttons_array['count'];
-		// endif;
-
-
-		//* If we need to know how many buttons are active:
-            //* As each button determines if it is active, let it add itself to an array of active buttons.
-            //* Store the active buttons a property of SWP_Buttons_Panel. For ex: $this->active_buttons = apply_filters( 'swp_active_buttons', [] );
-            //* Then $this->active_buttons should return an array of objects, or an array of 'network' => object. Depending on how it is set up.
-            //* And then we can easily see how many buttons are active by calling count( $this->active_buttons ).
-            //*
-
-        $this->html = '';
-
-        $this->has_plugin_conflict();
-
-		// This array will contain the HTML for all of the individual buttons
-
-
-
-
-		// Create the social panel
-		$this->html .= $this->render_social_panel();
-
 
 		$this->handle_timestamp();
 
