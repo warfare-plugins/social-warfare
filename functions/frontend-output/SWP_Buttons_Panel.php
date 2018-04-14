@@ -353,10 +353,15 @@ class SWP_Buttons_Panel {
             endif;
         endif;
 
-        if ( $this->is_archive() ) :
+        if ( is_archive() ) :
             $this->location = $this->options['location_archive_categories'];
         endif;
 	}
+
+    //* TODO: Write this method.
+    public function establish_float_location() {
+
+    }
 
 
     /**
@@ -536,7 +541,7 @@ class SWP_Buttons_Panel {
 
     public function render_buttons() {
         foreach( $this->buttons as $button ) {
-            $this->html .= $button->render_HTML();
+            $this->html .= $button->render_HTML( $this );
         }
     }
 
