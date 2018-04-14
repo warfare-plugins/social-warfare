@@ -588,11 +588,11 @@ class SWP_Buttons_Panel {
         //* Add the Panel markup based on the location.
         if ( $this->location === 'both' ) :
             $this->content = $this->html + $this->content + $this->html;
-        elseif ( $this->location === 'above' ) {
+        elseif ( $this->location === 'above' ) :
             $this->content = $this->html + $this->content;
-        } else {
+        else :
             $this->content = $this->content + $this->html;
-        }
+        endif;
 
         return $this->content;
     }
