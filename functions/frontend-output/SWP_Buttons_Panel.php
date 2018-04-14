@@ -453,7 +453,6 @@ class SWP_Buttons_Panel {
 			return $this->args['content'];
 		endif;
 
-
 		// Create the HTML Buttons panel wrapper
         $html = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] .
             ' swp_default_' . $this->options['default_colors'] .
@@ -478,31 +477,6 @@ class SWP_Buttons_Panel {
     }
 
 
-
-    public function render_buttons() {
-        if ( isset( $this->args['buttons'] ) ) :
-            foreach ( $this->args['buttons'] as $button_key ) {
-
-                $button_key = $this->display_name_to_key( $button_key );
-
-                foreach( $this->networks as $key => $network ):
-                    if( $button_key === $key ):
-                        $this->html .= $network->render_html( $this );
-                        $this->total_shares += intval( $buttons_array['shares'][$network->key] );
-                    endif;
-                endforeach;
-            }
-
-        else :
-            foreach( $this->networks as $key => $network ):
-                if( true === $network->is_active() ):
-                    $this->html .= $network->render_html( $this );
-                    $this->total_shares += intval( $buttons_array['shares'][$network->key] );
-                endif;
-            endforeach;
-        endif;
-    }
-
     public function establish_active_buttons() {
         $buttons = [];
 
@@ -524,11 +498,11 @@ class SWP_Buttons_Panel {
         //* Use global button settings.
         else :
 
-            foreach( $this->networks as $key => $network ):
-                if( true === $network->is_active() ):
-                    $buttons[] = $network;
-                endif;
-            endforeach;
+            if ( $this->options['order_of_icons_method'] === 'manual' ) :
+                $buttons = $this->get_manual_buttons();
+            else :
+                $buttons = $this->get_dynamic_buttons();
+            endif;
 
         endif;
 
@@ -537,9 +511,32 @@ class SWP_Buttons_Panel {
         return $this;
     }
 
+    protected function get_manual_buttons() {
+        $buttons = [];
+        $order = $this->options['order_of_icons'];
+
+        foreach( $order as $network_key ) {
+            foreach( $this->networks as $key => $network ):
+                if( $key === $network_key && true === $network->is_active() ):
+                    $buttons[] = $network;
+                endif;
+            endforeach;
+        }
+
+        return $buttons;
+    }
+
+    //* TODO: How can we sort the buttons dynamically?
+    //* This is dependent on how we fetch share counts.
+    protected function get_dynamic_buttons() {
+        $buttons = [];
+
+        return $buttons;
+    }
+
     public function render_buttons() {
         foreach( $this->buttons as $button ) {
-            $this->html . = $button->render_HTML();
+            $this->html .= $button->render_HTML();
         }
     }
 
@@ -566,41 +563,6 @@ class SWP_Buttons_Panel {
 
         return $html;
     }
-
-
-    //* TODO: This has not been refactored, just a bit of pretty printing.
-    //* $this->networks is = $swp_social_networks
-    //* Is $buttons_array === $this->networks ?
-    protected function sort_buttons() {
-        //* User settings.
-        if ( isset( $this->args['buttons'] ) && isset( $this->networks['buttons'] ) ) :
-            foreach ( $this->args['buttons'] as $key => $value ) {
-                if ( isset( $this->networks[$key] ) :
-                    $ .= $buttons_array['html'][ $key ];
-                endif;
-            }
-            return;
-        endif;
-
-        //* Manual.
-        if ( $this->options['order_of_icons_method'] == 'manual' ) :
-            foreach ( $this->options['order_of_icons'] as $key => $value ) {
-                if ( isset( $buttons_array['html'][ $key ] ) ) :
-                    $assets .= $buttons_array['html'][ $key ];
-                endif;
-            }
-            return;
-        endif;
-
-        //* Dynamic.
-        arsort( $buttons_array['shares'] );
-        foreach ( $buttons_array['shares'] as $thisIcon => $status ) {
-            if ( isset( $buttons_array['html'][ $thisIcon ] ) ) :
-                $assets .= $buttons_array['html'][ $thisIcon ];
-            endif;
-        }
-    }
-
 
     //* TODO: This has not been refactored.
     protected function handle_timestamp() {
