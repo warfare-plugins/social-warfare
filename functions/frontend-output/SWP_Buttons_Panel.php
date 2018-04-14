@@ -146,7 +146,7 @@ class SWP_Buttons_Panel {
 	/**
 	 * The Content
 	 *
-	 * The content to which we are going to append the HTML of these buttons.
+	 * The WordPress content to which we are going to append the HTML of these buttons.
 	 *
 	 * @var string
 	 *
@@ -167,6 +167,7 @@ class SWP_Buttons_Panel {
 	    $this->establish_post_id();
 	    $this->establish_active_buttons();
 	    $this->establish_location();
+        $this->establish_float_position();
     }
 
 
@@ -240,6 +241,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_post_id() {
+        global $post;
+        $this->post_type = $post->post_type;
 
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
@@ -254,7 +257,6 @@ class SWP_Buttons_Panel {
         endif;
 
 		// Use the id of the current post.
-		global $post;
 		$this->post_id = $post->ID;
 	}
 
@@ -274,40 +276,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_location() {
-		/**
-		 * Exclusion Filters
-		 *
-		 * This is a list of post types and areas around the site to exclude
-		 * output of the button HTML.
-		 *
-		 */
-
-		// *Do not show on attachement pages.
-		if ( true === is_attachment() ) :
-			$this->location = 'none';
-			return;
-
-		// Disable the buttons on Buddy Press pages
-		elseif ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
-			$this->location = 'none';
-			return;
-
-		// Disable the buttons if the location is set to "None / Manual"
-		elseif ( 'none' === $this->where && !isset( $this->args['devs'] ) ) :
-			$this->location = 'none';
-			return;
-
-		// Disable the button if we're not in the loop, unless there is no content which means the function was called by a developer.
-		elseif ( ( !is_main_query() || !in_the_loop()) && !isset( $this->args['devs'] ) ) :
-			$this->location = 'none';
-			return;
-
-		// Don't do anything if we're in the admin section
-		elseif ( is_admin() ) :
-			$this->location = 'none';
-			return;
-		endif;
-
+        //* Establish a default.
+        $this->location = 'none';
 
 		/**
 		 * Location from the Post Options
@@ -316,53 +286,38 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$post_set_location = get_post_meta( $this->post_id, 'nc_postLocation', true );
+		$preset_location = get_post_meta( $this->post_id, 'nc_postLocation', true );
 
 		// If the location is set in the post options, use that.
-		if ( !empty( $post_set_location ) && 'default' !== $post_set_location ) {
-			$this->location = $post_set_location;
-			return;
+		if ( !empty( $preset_location ) && 'default' !== $preset_location ) {
+			$this->location = $preset_location;
 		};
-
 
 		/**
 		 * Global Location Settings
 		 *
-		 * If it's passed the exclusion filters and the options set on the post page,
-		 * then we'll figure out what post type we're on and pull the location setting
-		 * for that post type from the global options.
+		 * Decide which post type we're on and pull the location setting
+		 * for that type from the global options.
 		 *
 		 */
 
 		// If we are on the home page
 		if( is_front_page() ):
-
 			$this->location = $this->options['location_home'];
-			return;
+        endif;
 
 		// If we are on a singular page
-		elseif ( is_singular() && !is_home() && !is_archive() ) :
+		if ( is_singular() && !is_home() ) :
+            $location = $this->options[ 'location_' . $this->post_type ];
+            if ( isset( $location ) ) :
+                $this->location = $location;
+            endif;
+        endif;
 
-			// Find the location setting for this post type.
-			$post_type = get_post_type( $this->post_id );
-			if ( isset( $this->options[ 'location_' . $post_type ] ) ) :
-				$this->where = $this->options[ 'location_' . $post_type ];
-				return;
-
-			else :
-				$this->where = 'none';
-				return;
-
-			endif;
-
-		// If we are anywhere else besides the home page or a singular
-		else :
-			$this->where = $this->options['location_archive_categories'];
-			return;
-
-		endif;
+        if ( $this->is_archive() ) :
+            $this->location = $this->options['location_archive_categories'];
+        endif;
 	}
-
 
     public function establish_scale() {
         if ( isset( $this->args['scale'] ) ) :
@@ -483,15 +438,32 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: This has not been refactored. I don't know that it needs refactoring.
-    //* In my mind, when we have known incompatability with other themes/plugins,
+    //* When we have known incompatability with other themes/plugins,
     //* we can put those checks in here.
-    protected function filter_other_plugins() {
-		// Disable the subtitles plugin to avoid letting them inject their subtitle into our share titles
+    /**
+     * Checks for known conflicts with other plugins and themes.
+     *
+     * If there is a fatal conflict, returns true and exits printing.
+     * If there are other conflicts, they are silently handled and can still
+     * print.
+     *
+     * @return bool $conflict True iff the conflict is fatal.
+     */
+    protected function has_plugin_conflict() {
+        $conflict;
+
+		// Disable subtitles plugin to prevent it from injecting subtitles
+		// into our share titles.
 		if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
 			remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
 		endif;
 
+        //* Disable on BuddyPress pages.
+        if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
+            $conflict = true;
+        endif;
+
+        return $conflict;
     }
 
 
@@ -499,10 +471,17 @@ class SWP_Buttons_Panel {
     /**
      * Tells you true/false if the buttons should print on this page.
      *
-     * @return Boolean True if the buttoons are okay to print, else false.
+     * @return Boolean True if the buttons are okay to print, else false.
      */
     public function should_print() {
-        return !is_feed() && !is_search() && get_post_status( $this->post_id ) == 'publish';
+        return (
+            //* User settings.
+            $this->location !== 'none' &&
+            //* Conditions we want.
+            is_main_query() && in_the_loop() && get_post_status( $this->post_id ) == 'publish'
+            //* Conditions we do not want.
+            && !is_admin() && !is_feed() && !is_search() && !is_attachment()
+        );
     }
 
 
@@ -631,45 +610,35 @@ class SWP_Buttons_Panel {
     //* TODO: This has not been refactored.
     //* Can $this->where be called $this->location? Or is $this->location something else?
     public function do_print() {
-		if ( isset( $this->args['genesis'] ) ) :
-			if ( $this->where == 'below' && $this->args['genesis'] == 'below' ) :
-				return $assets;
-			elseif ( $this->where == 'above' && $this->args['genesis'] == 'above' ) :
-				return $assets;
-			elseif ( $this->where == 'both' ) :
-				return $assets;
-			elseif ( $this->where == 'none' ) :
-				return false;
-			endif;
-		else :
-			if ( $this->args['echo'] == false && $this->where != 'none' ) :
-				return $assets;
-			elseif ( $this->args['content'] === false ) :
-				echo $assets;
-			elseif ( isset( $this->where ) && $this->where == 'below' ) :
-				$content = $this->args['content'] . '' . $assets;
-				return $content;
-			elseif ( isset( $this->where ) && $this->where == 'above' ) :
-				$content = $assets . '' . $this->args['content'];
-				return $content;
-			elseif ( isset( $this->where ) && $this->where == 'both' ) :
-				$content = $assets . '' . $this->args['content'] . '' . $assets;
-				return $content;
-			elseif ( isset( $this->where ) && $this->where == 'none' ) :
-				return $this->args['content'];
-			endif;
-		endif;
+        if ( $this->args['echo'] || $this->content === false ) {
+            echo $this->html;
+            return;
+        }
+
+        //* Add the Panel markup based on the location.
+        if ( $this->location === 'both' ) :
+            $this->content = $this->html + $this->content + $this->html;
+        elseif ( $this->location === 'above' ) {
+            $this->content = $this->html + $this->content;
+        } else {
+            $this->content = $this->content + $this->html;
+        }
+
+        return $this->content;
     }
 
 
     //* TODO: This is supposed to be deleted before production. In here
     //* just to make it easy to see the flow of the inner workings.
     public function the_buttons_no_comments() {
-		if( $this->location !== 'none' ) :
+		if( $this->location == 'none' ) :
             return;
         endif;
 
-        $this->establish_float_position();
+        if ( $this->has_plugin_conflict() ) {
+            return;
+        }
+
 
 		// Disable the plugin on feeds, search results, and non-published content
 		if ( ! $this->should_print() ) :
@@ -685,7 +654,7 @@ class SWP_Buttons_Panel {
 		$buttons_array['options'] = $this->options;
 
 
-        $this->filter_other_plugins();
+
 
         $this->html = '';
 		$this->html .= $this->render_social_panel();
@@ -698,18 +667,11 @@ class SWP_Buttons_Panel {
 
     public function the_buttons() {
 
-		if( $this->location !== 'none' ) :
-            return;
+		if( !$this->should_print() ) :
+            return $this->the_content;
         endif;
 
         $this->establish_float_position();
-
-		// Disable the plugin on feeds, search results, and non-published content
-
-		if ( ! $this->should_print() ) :
-            return $this->args['content'];
-        endif;
-
 		$this->establish_permalink();
 
 		// TODO: The localize options method should have already merged this. Look into it then
@@ -744,7 +706,7 @@ class SWP_Buttons_Panel {
 
         $this->html = '';
 
-        $this->filter_other_plugins();
+        $this->has_plugin_conflict();
 
 		// This array will contain the HTML for all of the individual buttons
 		// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
