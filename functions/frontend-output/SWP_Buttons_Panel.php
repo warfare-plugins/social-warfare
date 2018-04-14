@@ -154,6 +154,31 @@ class SWP_Buttons_Panel {
 	public $content = '';
 
 
+	/**
+	 * The Construct Method
+	 *
+	 * A Few Important Notes:
+	 * 1. We want EVERYTHING to get processed during instantiation.
+	 * 2. The render_html method will be called afterwards.
+	 * 3. The render_html method will NOT call any ESTABLISH methods.
+	 * 4. The render_html method will use local properties to create the HTML.
+	 * 5. Anything in the options array, should stay in that array.
+	 * 5A. The "buttons" passed in via the args, needs to replace the
+	 * 		"order_of_icons" in the options array.
+	 * 5B. The "order_the_buttons" method needs to modify the "order_of_icons" in
+	 * 		the options array if needed.
+	 * 5C. Remove the set_scale method. Use the options array, setters, and args.
+	 * 6. Add a method to the social network class to eliminate passing over
+	 * 		the entire buttons panel object to that class. Instead we want
+	 * 		to pass the localized options array, the counts, and anything else
+	 * 		needed. That method will store it in local properties so that the
+	 * 		render_html method can be called and it will have everything it needs.
+	 * 	7. Instead of using the is_active() method of the networks, we'll just loop
+	 * 		through the order_of_icons keys and call the render_html from the global
+	 * 		network objects.
+	 *
+	 * @param array $args [description]
+	 */
     public function __construct( $args = array() ) {
         global $swp_social_networks;
         $this->networks = $swp_social_networks;
@@ -167,7 +192,14 @@ class SWP_Buttons_Panel {
 	    $this->establish_post_id();
 	    $this->establish_active_buttons();
 	    $this->establish_location();
+<<<<<<< HEAD
         $this->establish_float_position();
+=======
+		$this->establish_float_position();
+		$this->establish_permalink();
+		$this->establish_scale();
+		$this->shares = get_social_warfare_shares( $this->post_id );
+>>>>>>> ba8a3827f7b616435d7b3884bcc6eeea8793d8e8
     }
 
 
@@ -374,29 +406,6 @@ class SWP_Buttons_Panel {
         endif;
 	}
 
-
-    /**
-    * THE SHARE BUTTONS FUNCTION:
-    *
-    * This function accepts an array of parameters resulting in the outputting
-    * of the Social Warfare Buttons.
-    *
-    * @since 1.0.0
-    * @access public
-    * @param array $array {
-    *     @type mixed  $content The post content to which we append the buttons.
-    *                           Default FALSE. Accepts string.
-    *
-    *     @type string $where   Overwrites the default location in relation
-    *                           to content.
-    *                           Accepts 'above', 'below', 'both', 'none'
-    *
-    *     @type bool   $echo    True echos the buttons. False returns HTML.
-    *                           Default true.
-    * }
-    * @return string $content   The modified content
-    */
-
     /**
      * Takes a display name and returns the snake_cased key of that name.
      *
@@ -487,15 +496,29 @@ class SWP_Buttons_Panel {
 
     //* TODO: Make sure all of these variables are valid. This has not been refactored,
     //* only pretty-printed.
-    public function render_social_panel() {
+    //* This is what I want the final method to be that gets called on the object.
+    //* EVERYTHING should be stored in a local property during instantiation.
+    public function render_html() {
+
+		// Disable the plugin on feeds, search results, and non-published content
+		if ( ! $this->should_print() ) :
+			return $this->args['content'];
+		endif;
+
+		// Exit if location is set to none.
+		if( $this->location === 'none' ) :
+            return;
+        endif;
+
+		// Create the HTML Buttons panel wrapper
         $html = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] .
             ' swp_default_' . $this->options['default_colors'] .
             ' swp_individual_' . $this->options['single_colors'] .
             ' swp_other_' . $this->options['hover_colors'] .
-            ' scale-' . $scale*100 .
+            ' scale-' . $this->options['scale']*100 .
             ' scale-' . $this->options['button_alignment'] .
             '" data-position="' . $this->options['location_post'] .
-            '" data-float="' . $floatOption .
+            '" data-float="' . $this->float_option .
             '" data-count="' . $buttons_array['count'] .
             '" data-floatColor="' . $this->options['float_background_color'] .
             '" data-emphasize="'.$this->options['emphasize_icons'].'
@@ -504,7 +527,7 @@ class SWP_Buttons_Panel {
             $html .= $this->render_share_counts();
 
             $this->sort_buttons();
-            $html .= $this->render_buttons();
+            // $html .= $this->render_buttons();
 
         $html .= "</div>";
 
@@ -518,7 +541,7 @@ class SWP_Buttons_Panel {
     public function render_buttons() {
         foreach( $this->networks as $key => $network ):
             if( true === $network->is_active() ):
-                $this->html .= $network->render_html();
+                $this->html .= $network->render_html( $this );
                 $this->total_shares += intval( $buttons_array['shares'][$network->key] );
             endif;
         endforeach;
@@ -569,8 +592,8 @@ class SWP_Buttons_Panel {
     //* Is $buttons_array === $this->networks ?
     protected function sort_buttons() {
         //* User settings.
-        if ( isset( $buttons_array ) && isset( $buttons_array['buttons'] ) ) :
-            foreach ( $buttons_array['buttons'] as $key => $value ) {
+        if ( isset( $this->args['buttons'] ) && isset( $buttons_array['buttons'] ) ) :
+            foreach ( $this->args['buttons'] as $key => $value ) {
                 if ( isset( $buttons_array['html'][ $key ] ) ) :
                     $assets .= $buttons_array['html'][ $key ];
                 endif;
