@@ -140,7 +140,7 @@ class SWP_Buttons_Panel {
 	 * @var array $args;
 	 *
 	 */
-	public $args = array();
+	public $args = [];
 
 
 	/**
@@ -160,6 +160,13 @@ class SWP_Buttons_Panel {
      * @var string $html;
      */
     public $html = '';
+
+    /**
+     * The array of active buttons for $this Social Panel.
+     *
+     * @var array active_buttons;
+     */
+    public $active_buttons = [];
 
 
 	/**
@@ -208,6 +215,7 @@ class SWP_Buttons_Panel {
 	    $this->establish_location();
 		$this->establish_float_location();
 		$this->establish_permalink();
+        $this->establish_active_buttons();
 		$this->shares = get_social_warfare_shares( $this->post_id );
     }
 
@@ -493,15 +501,10 @@ class SWP_Buttons_Panel {
     //* EVERYTHING should be stored in a local property during instantiation.
     public function render_html() {
 
-		// Disable the plugin on feeds, search results, and non-published content
 		if ( ! $this->should_print() ) :
 			return $this->args['content'];
 		endif;
 
-		// Exit if location is set to none.
-		if( $this->location === 'none' ) :
-            return;
-        endif;
 
 		// Create the HTML Buttons panel wrapper
         $html = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] .
@@ -519,8 +522,7 @@ class SWP_Buttons_Panel {
 
             $html .= $this->render_share_counts();
 
-            $this->sort_buttons();
-            // $html .= $this->render_buttons();
+            $html .= $this->render_buttons();
 
         $html .= "</div>";
 
@@ -528,16 +530,68 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* This is called by render_social_panel().
-    //* This has been refactored, but may not be agreeable.
-    //* Please change as you see fit.
+
     public function render_buttons() {
-        foreach( $this->networks as $key => $network ):
-            if( true === $network->is_active() ):
-                $this->html .= $network->render_html( $this );
-                $this->total_shares += intval( $buttons_array['shares'][$network->key] );
-            endif;
-        endforeach;
+        if ( isset( $this->args['buttons'] ) ) :
+            foreach ( $this->args['buttons'] as $button_key ) {
+
+                $button_key = $this->display_name_to_key( $button_key );
+
+                foreach( $this->networks as $key => $network ):
+                    if( $button_key === $key ):
+                        $this->html .= $network->render_html( $this );
+                        $this->total_shares += intval( $buttons_array['shares'][$network->key] );
+                    endif;
+                endforeach;
+            }
+
+        else :
+            foreach( $this->networks as $key => $network ):
+                if( true === $network->is_active() ):
+                    $this->html .= $network->render_html( $this );
+                    $this->total_shares += intval( $buttons_array['shares'][$network->key] );
+                endif;
+            endforeach;
+        endif;
+    }
+
+    public function establish_active_buttons() {
+        $buttons = [];
+
+        //* Specified buttons take precedence to global options.
+        if ( isset( $this->args['buttons'] ) ) :
+
+            foreach ( $this->args['buttons'] as $button_key ) {
+
+                $network_key = $this->display_name_to_key( $button_key );
+
+                foreach( $this->networks as $key => $network ):
+                    if( $network_key === $key ):
+                        $buttons[] = $network;
+                    endif;
+                endforeach;
+            }
+
+        //* Use global button settings.
+        else :
+
+            foreach( $this->networks as $key => $network ):
+                if( true === $network->is_active() ):
+                    $buttons[] = $network;
+                endif;
+            endforeach;
+
+        endif;
+
+        $this->buttons = $buttons;
+
+        return $this;
+    }
+
+    public function render_buttons() {
+        foreach( $this->buttons as $button ) {
+            $this->html . = $button->render_HTML();
+        }
     }
 
 
@@ -545,7 +599,7 @@ class SWP_Buttons_Panel {
      * If share counts are active, renders the Share Counts HTML.
      *
      * @return string $html The fully qualified HTML to display share counts.
-     * 
+     *
      */
     public function render_share_counts() {
         $html = '';
@@ -565,35 +619,15 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* I don't think we should have separate methods for left/right share counts.
-    //* Instead, we can create the Share Counts element and pass it a CSS class
-    //* which forces it to the left or the right of the socialPanel.
-    public function render_share_counts_on_the_right() {
-        // // Create the Total Shares Box if it's on the right
-        // if ( ( $this->options['total_shares'] && $this->options['totals_alignment'] != 'totals_left' && $buttons_array['total_shares'] >= $this->options['minimum_shares'] && !isset( $buttons_array['buttons'] ) )
-        // || 	( $this->options['totals_alignment'] != 'totals_left' && isset( $buttons_array['buttons'] ) && isset( $buttons_array['buttons']['total_shares'] ) && $buttons_array['total_shares'] >= $this->options['minimum_shares'] ) ) :
-        //     ++$buttons_array['count'];
-        //     if ( $this->options['totals_alignment'] == 'total_shares' ) :
-        //         $assets .= '<div class="nc_tweetContainer totes" data-id="' . $buttons_array['count'] . '" >';
-        //         $assets .= '<span class="swp_count">' . swp_kilomega( $buttons_array['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-        //         $assets .= '</div>';
-        //     else :
-        //         $assets .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
-        //         $assets .= '<span class="swp_count"><span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span> ' . swp_kilomega( $buttons_array['total_shares'] ) . '</span>';
-        //         $assets .= '</div>';
-        //     endif;
-        // endif;
-    }
-
     //* TODO: This has not been refactored, just a bit of pretty printing.
     //* $this->networks is = $swp_social_networks
     //* Is $buttons_array === $this->networks ?
     protected function sort_buttons() {
         //* User settings.
-        if ( isset( $this->args['buttons'] ) && isset( $buttons_array['buttons'] ) ) :
+        if ( isset( $this->args['buttons'] ) && isset( $this->networks['buttons'] ) ) :
             foreach ( $this->args['buttons'] as $key => $value ) {
-                if ( isset( $buttons_array['html'][ $key ] ) ) :
-                    $assets .= $buttons_array['html'][ $key ];
+                if ( isset( $this->networks[$key] ) :
+                    $ .= $buttons_array['html'][ $key ];
                 endif;
             }
             return;
@@ -666,8 +700,6 @@ class SWP_Buttons_Panel {
             return $this->args['content'];
         endif;
 
-		$this->establish_permalink();
-
 		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
 
 		$buttons_array['options'] = $this->options;
@@ -724,7 +756,7 @@ class SWP_Buttons_Panel {
         $this->has_plugin_conflict();
 
 		// This array will contain the HTML for all of the individual buttons
-		// $buttons_array = apply_filters( 'swp_network_buttons' , $buttons_array );
+
 
 
 
