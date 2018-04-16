@@ -132,6 +132,13 @@ class SWP_Social_Network {
 	 */
 	public $base_share_url = '';
 
+    /**
+     * Whether or not to show the share count for this network.
+     *
+     * @var boolean $show_shares;
+     */
+    public $show_shares = false;
+
 
 	/**
 	 * A method to add this network object to the globally accessible array.
@@ -293,7 +300,6 @@ class SWP_Social_Network {
 		$this->html[$post_id] = $html;
 	}
 
-
 	/**
 	 * Show Share Counts?
 	 *
@@ -342,49 +348,51 @@ class SWP_Social_Network {
 	 * @todo   Eliminate the array
 	 *
 	 */
-	public function render_html( $network_counts ) {
+	public function render_HTML() {
 
         $share_count = $network_counts[$this->key];
+		$share_link = $this->generate_share_link( $array );
 
-		// If we've already generated this button, just use our existing html
-		if ( isset( $this->html[$array['postID']] ) ) :
-			return $this->html[$array['postID']];
+		// Build the button wrapper.
+		$html = '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
+		$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
 
-		// If not, let's check if this network is activated and create the button HTML
-		else:
+		// If we are showing share counts
+		if ( true === $this->is_share_count_shown( $array ) ) :
+			$html.= '<span class="iconFiller">';
+			$html.= '<span class="spaceManWilly">';
+			$html.= '<i class="sw sw-'.$this->key.'"></i>';
+			$html.= '<span class="swp_share">' . $this->cta . '</span>';
+			$html.= '</span></span>';
+			$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
 
-			$share_link = $this->generate_share_link( $array );
-
-			// Build the button wrapper
-			$html= '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
-			$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
-
-			// If we are showing share counts...
-			if ( true === $this->is_share_count_shown( $array ) ) :
-				$html.= '<span class="iconFiller">';
-				$html.= '<span class="spaceManWilly">';
-				$html.= '<i class="sw sw-'.$this->key.'"></i>';
-				$html.= '<span class="swp_share">' . $this->cta . '</span>';
-				$html.= '</span></span>';
-				$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
-
-			// If we are not showing share counts...
-			else :
-				$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-'.$this->key.'"></i><span class="swp_share"> ' . $this->cta . '</span></span></span></span>';
-			endif;
-
-			// Close up the button
-			$html.= '</a>';
-			$html.= '</div>';
-
-			// Store these buttons so that we don't have to generate them for each set
-			$this->save_html( $html , $array['postID'] );
-
+		// If we are not showing share counts...
+		else :
+			$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-'.$this->key.'"></i><span class="swp_share"> ' . $this->cta . '</span></span></span></span>';
 		endif;
+
+		// Close up the button
+		$html.= '</a>';
+		$html.= '</div>';
+
+		// Store these buttons so that we don't have to generate them for each set
+		$this->save_html( $html , $array['postID'] );
 
 		return $html;
 
 	}
+
+    public function set_shares_from_all( $total_shares, $minimum_required ) {
+        if ( !empty( $total_shares[$this->key] ) ) :
+            $this->share_count = $total_shares[$this->key];
+            $this->show_shares = $this->share_count >= $minimum_required ? true : false;
+        else :
+           $this->share_count = 0;
+           $this->show_shares = false;
+        endif;
+
+        return $this;
+    }
 
 
 	/**
