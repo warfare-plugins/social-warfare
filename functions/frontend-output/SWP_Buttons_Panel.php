@@ -330,10 +330,9 @@ class SWP_Buttons_Panel {
 
     public function establish_network_shares() {
         $network_shares = [];
-        echo "buttons<br/>";
-        die(var_dump($this->buttons));
 
         foreach( $this->buttons as $network_key => $network) {
+            echo "Network $network_key<br/>";
             $count_key = "_${network_key}_shares";
             $network_count = get_post_meta( $this->post_id, $count_key );
             if ( isset( $network_count ) ) :
@@ -432,7 +431,7 @@ class SWP_Buttons_Panel {
     }
 
 
-    public function render_html() {
+    public function render_HTML() {
 
 		if ( ! $this->should_print() ) :
 			return $this->args['content'];
@@ -499,17 +498,18 @@ class SWP_Buttons_Panel {
     protected function get_manual_buttons() {
         $buttons = [];
         $order = $this->options['order_of_icons'];
-        die(var_dump($this->networks));
+        $order = ['google_plus', 'twitter', 'facebook'];
+
 
         foreach( $order as $network_key ) {
-            foreach( $this->networks as $key => $network ):
-                if( $key === $network_key && true === $network->is_active() ):
-                    $buttons[] = $network;
+            foreach( $this->networks as $key => $network ) :
+                //* TODO: This needs to be the conditional instead.
+                // if( $key === $network_key && true === $network->is_active() ):
+                if ( $key === $network_key ) :
+                    $buttons[$key] = $network;
                 endif;
             endforeach;
         }
-        die(var_dump($buttons));
-
 
         return $buttons;
     }
@@ -602,10 +602,8 @@ class SWP_Buttons_Panel {
         endif;
 
 		$this->total_shares = $this->establish_network_shares( $this->post_id );
-        echo "total shares<br/>";
-        die (var_dump($this->total_shares));
 
-		$this->html .= $this->render_social_panel();
+		$this->html .= $this->render_HTML();
 
 		$this->handle_timestamp();
 
