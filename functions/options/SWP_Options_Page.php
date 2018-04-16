@@ -573,9 +573,9 @@ class SWP_Options_Page extends SWP_Abstract {
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
                     ->set_priority( 10 );
 
-                //* floatOption => float_position
-                $float_position = new SWP_Option_Select( 'Float Position', 'float_position' );
-                $float_position->set_choices( [
+                //* floatOption => float_location
+                $float_location = new SWP_Option_Select( 'Float Position', 'float_location' );
+                $float_location->set_choices( [
                     'top'   => 'Top of the Page',
                     'bottom'    => 'Bottom of the Page',
                     'left'      => 'On the left side of the page',
@@ -591,14 +591,14 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_background_color->set_default( '#ffffff' )
                     ->set_priority( 25 )
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
-                    ->set_dependency( 'float_position', ['top', 'bottom'] );
+                    ->set_dependency( 'float_location', ['top', 'bottom'] );
 
                 //* swp_float_scr_sz => float_screen_width
                 $float_screen_width = new SWP_Option_Text( 'Minimum Screen Width', 'float_screen_width' );
                 $float_screen_width->set_default( '1100' )
                     ->set_priority( 30 )
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
-                    ->set_dependency( 'float_position', ['left', 'right'] );
+                    ->set_dependency( 'float_location', ['left', 'right'] );
 
                 //* sideReveal => transition
                 $float_transition = new SWP_Option_Select( 'Transition', 'transition' );
@@ -609,11 +609,11 @@ class SWP_Options_Page extends SWP_Abstract {
                     ] )
                     ->set_default( 'slide' )
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
-                    ->set_dependency( 'float_position', ['left', 'right'] );
+                    ->set_dependency( 'float_location', ['left', 'right'] );
 
                 $color_choices = $this::get_color_choices_array();
 
-                $floating_share_buttons->add_options( [$floating_panel, $float_position, $float_transition,
+                $floating_share_buttons->add_options( [$floating_panel, $float_location, $float_transition,
                     $float_screen_width, $float_background_color] );
 
         $styles->add_sections( [$visual_options, $total_counts, $floating_share_buttons] );

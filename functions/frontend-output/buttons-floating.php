@@ -45,8 +45,8 @@ function socialWarfareSideFloat() {
 			endif;
 
 			if ( $options['floating_panel'] && is_singular() ) :
-				$floatOption = 'floating_panel' . ucfirst( $options['float_position'] );
-				$class = "swp_float_" . $options['float_position'];
+				$floatOption = 'floating_panel' . ucfirst( $options['float_location'] );
+				$class = "swp_float_" . $options['float_location'];
 			else :
 				$floatOption = 'floatNone';
 			endif;
@@ -66,7 +66,7 @@ function socialWarfareSideFloat() {
             if ( isset($options['float_button_size']) ) :
                 $position = $options['float_vertical'];
                 $size = $options['float_button_size'] * 100;
-                $side = $options['float_position'];
+                $side = $options['float_location'];
 
                 if ($side === 'right') :
 
@@ -108,7 +108,7 @@ function socialWarfareSideFloat() {
 					++$i;
 				endforeach;
 			elseif ( $options['order_of_icons'] == 'manual' ) :
-				foreach ( $options['newOrderOfIcons'] as $key => $value ) :
+				foreach ( $options['order_of_icons'] as $key => $value ) :
 					if ( isset( $buttonsArray['resource'][ $key ] ) && $i <= 5 ) :
 						$assets .= $buttonsArray['resource'][ $key ];
 					endif;
