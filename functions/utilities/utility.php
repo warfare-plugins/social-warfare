@@ -38,8 +38,8 @@ function swp_store_the_settings() {
 	$settings = $data['settings'];
 	$options = $swp_user_options;
 
-	unset( $options['newOrderOfIcons']['active'] );
-	unset( $options['newOrderOfIcons']['inactive'] );
+	unset( $options['order_of_icons']['active'] );
+	unset( $options['order_of_icons']['inactive'] );
 
 	// Loop and check for checkbox values, convert them to boolean.
 	foreach ( $settings as $key => $value ) {

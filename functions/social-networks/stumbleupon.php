@@ -90,7 +90,7 @@ function swp_stumbleupon_button_html( $array ) {
 		$array['resource']['stumbleupon'] = $_GLOBALS['sw']['buttons'][ $array['postID'] ]['stumbleupon'];
 
 	// If not, let's check if Facebook is activated and create the button HTML
-	elseif ( (isset( $array['options']['newOrderOfIcons']['stumbleupon'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['stumbleupon'] ))  ) :
+	elseif ( (isset( $array['options']['order_of_icons']['stumbleupon'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['stumbleupon'] ))  ) :
 
 		if ( isset( $array['shares']['stumbleupon'] ) ) :
 			$array['total_shares'] += intval( $array['shares']['stumbleupon'] );

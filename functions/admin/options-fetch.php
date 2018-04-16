@@ -95,8 +95,8 @@ function swp_get_user_options( $admin = false ) {
 		$options['pinterest_fallback']       = 'all';
 	endif;
 
-	if(isset($options['newOrderOfIcons']['active'])) {
-		unset($options['newOrderOfIcons']['active']);
+	if(isset($options['order_of_icons']['active'])) {
+		unset($options['order_of_icons']['active']);
 	}
 
 	/**

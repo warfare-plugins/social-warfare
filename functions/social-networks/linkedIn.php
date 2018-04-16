@@ -90,7 +90,7 @@ function swp_linkedIn_button_html( $array ) {
 		$array['resource']['linkedIn'] = $_GLOBALS['sw']['buttons'][ $array['postID'] ]['linkedIn'];
 
 		// If not, let's check if Facebook is activated and create the button HTML
-		elseif ( (isset( $array['options']['newOrderOfIcons']['linkedIn'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['linkedIn'] ))  ) :
+		elseif ( (isset( $array['options']['order_of_icons']['linkedIn'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['linkedIn'] ))  ) :
 
 			$array['total_shares'] += intval( $array['shares']['linkedIn'] );
 			++$array['count'];

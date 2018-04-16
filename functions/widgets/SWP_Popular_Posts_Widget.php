@@ -151,7 +151,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 
 		// Fetch the networks that are active on this blog
-		$availableNetworks = $options['newOrderOfIcons'];
+		$availableNetworks = $options['order_of_icons'];
 
 		// Build the Widget Form
 		$form = '<div class="swp_popular_post_options">';
