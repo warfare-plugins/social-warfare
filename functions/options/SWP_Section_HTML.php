@@ -274,9 +274,6 @@ class SWP_Section_HTML extends SWP_Option {
     }
 
 
-
-
-
     /**
     * Renders the three column table on the Display tab.
     *
@@ -362,6 +359,7 @@ class SWP_Section_HTML extends SWP_Option {
 
         return $this;
     }
+
 
     /**
     * Creates the Click To Tweet preview for the Styles tab.
