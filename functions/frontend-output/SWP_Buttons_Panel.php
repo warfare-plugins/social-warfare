@@ -342,7 +342,6 @@ class SWP_Buttons_Panel {
         $network_shares = [];
 
         foreach( $this->buttons as $network_key => $network) {
-            echo "Network $network_key<br/>";
             $count_key = "_${network_key}_shares";
             $network_count = get_post_meta( $this->post_data['ID'], $count_key );
             if ( isset( $network_count ) ) :
