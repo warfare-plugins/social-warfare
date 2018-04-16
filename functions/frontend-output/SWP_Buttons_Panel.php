@@ -524,6 +524,7 @@ class SWP_Buttons_Panel {
 
     public function render_buttons() {
         foreach( $this->buttons as $button ) {
+            $button->set_shares_from_all( $this->total_shares, $this->options['minimum_shares'] );
             $this->html .= $button->render_HTML( $this->network_shares );
         }
     }
