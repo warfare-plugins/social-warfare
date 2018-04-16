@@ -33,10 +33,10 @@ function get_social_warfare_shares( $postID ) {
 	$shares['total_shares'] = 0;
 
 	// Queue up the networks that are available
-	$availableNetworks = $options['newOrderOfIcons'];
+	$availableNetworks = $options['order_of_icons'];
 	$networks = array();
 	foreach ( $availableNetworks as $key => $value ) :
-		if ( $options['newOrderOfIcons'][$key] ) {
+		if ( $options['order_of_icons'][$key] ) {
 			$networks[] = $key;
 		}
 	endforeach;

@@ -92,7 +92,7 @@ function swp_pinterest_button_html( $array ) {
 		$array['resource']['pinterest'] = $_GLOBALS['sw']['buttons'][ $array['postID'] ]['pinterest'];
 
 	// If not, let's check if Facebook is activated and create the button HTML
-	elseif ( (isset( $array['options']['newOrderOfIcons']['pinterest'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['pinterest'] ))  ) :
+	elseif ( (isset( $array['options']['order_of_icons']['pinterest'] ) && ! isset( $array['buttons'] )) || (isset( $array['buttons'] ) && isset( $array['buttons']['pinterest'] ))  ) :
 
 		$array['total_shares'] += intval( $array['shares']['pinterest'] );
 		++$array['count'];

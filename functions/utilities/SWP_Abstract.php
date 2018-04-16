@@ -108,7 +108,7 @@ class SWP_Abstract {
     }
 
     public function get_user_icons() {
-        $user_icons = $this->user_options['newOrderOfIcons'];
+        $user_icons = $this->user_options['order_of_icons'];
 
         if ( empty( $user_icons ) ):
             $all_icons = $this->get_all_icons();
@@ -128,6 +128,7 @@ class SWP_Abstract {
 
         return $icons;
     }
+
 
     public function set_name( $name ) {
         if ( !is_string($name) ) {
