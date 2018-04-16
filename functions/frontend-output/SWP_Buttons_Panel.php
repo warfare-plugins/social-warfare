@@ -9,45 +9,6 @@
  * @since     1.0.0
  */
 
-
-/**
- * So we want to make it so that developers can easily access this class and make changes to the
- * buttons panel on the fly for any particular instantiation of it. They don't need access to every
- * single method or property of the buttons. Instead, we want to focus specifically on options that are
- * available on the options page.
- *
- * So ideally, the buttons panel will pull it's parameters from the SWP_User_Options object, but it can
- * then be overwritten by a developer. For example, something like this might do the trick:
- *
- * $generate_html: By default, this class will fully create the set of buttons and produce the HTML either
- * via a return or an echo. It will go from top to bottom and put absolutely everything together.
-*/
-
-//
-// class SWP_Buttons_Panel {
-// 	public $options;
-// 	public $args;
-//
-// 	// Create an SWP_Buttons_Panel object without generating any HTML.
-// 	public function __construct( $generate_html = true ) {
-// 		global $SWP_User_Options;
-// 		$options = $SWP_User_Options;
-// 		$this->do_something();
-// 	}
-//
-// 	// Allow developers to set options.
-// 	public function set_option( $option_name , $new_value ) {
-// 		$this->$options[$option_name] = $new_value;
-// 	}
-//
-// 	// Create the HTML for the buttons without actually instantiating anything.
-// 	public static function new_buttons_panel( $args ) {
-// 		$this->$args = $args;
-// 		$this->do_something();
-// 	}
-// }
-
-
 /**
  * So in this example, it will use the SWP_User_Options to fill in and create all of the default options, but
  * it will then overwrite the custom_color and networks options programatically via a setter method and then
@@ -164,9 +125,16 @@ class SWP_Buttons_Panel {
     /**
      * The array of active buttons for $this Social Panel.
      *
-     * @var array active_buttons;
+     * @var array $active_buttons;
      */
     public $active_buttons = [];
+
+    /**
+     * The sum of share counts across active networks.
+     *
+     * @var integer $total_shares;
+     */
+    public $total_shares = 0;
 
 
 	/**
@@ -216,6 +184,8 @@ class SWP_Buttons_Panel {
 		$this->establish_permalink();
         $this->establish_active_buttons();
 		$this->shares = get_social_warfare_shares( $this->post_id );
+
+        $this->the_buttons();
     }
 
 
@@ -358,9 +328,20 @@ class SWP_Buttons_Panel {
         endif;
 	}
 
-    //* TODO: Write this method.
-    public function establish_float_location() {
+    public function establish_network_shares() {
+        $network_shares = [];
+        echo "buttons<br/>";
+        die(var_dump($this->buttons));
 
+        foreach( $this->buttons as $network_key => $network) {
+            $count_key = "_${network_key}_shares";
+            $network_count = get_post_meta( $this->post_id, $count_key );
+            if ( isset( $network_count ) ) :
+                $network_shares[$network_key] = $network_count;
+            endif;
+        }
+
+        $this->network_shares = $network_shares;
     }
 
 
@@ -378,17 +359,16 @@ class SWP_Buttons_Panel {
     }
 
 
-    protected function establish_float_position() {
+    protected function establish_float_location() {
         // Set the options for the horizontal floating bar
-        $post_type = get_post_type( $this->post_id );
-        $spec_float_where = get_post_meta( $post_id , 'nc_floatLocation' , true );
+        $spec_float_where = get_post_meta( $this->post_id , 'nc_floatLocation' , true );
 
         if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
             $floatOption = 'float_ignore';
         elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
                 $floatOption = 'floatNone';
-        elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $post_type ] == 'on' ) :
-            $floatOption = 'floating_panel' . ucfirst( $this->options['float_position'] );
+        elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_type ] == 'on' ) :
+            $floatOption = 'floating_panel' . ucfirst( $this->options['float_location'] );
         else :
             $floatOption = 'floatNone';
         endif;
@@ -416,7 +396,7 @@ class SWP_Buttons_Panel {
      * @return bool $conflict True iff the conflict is fatal.
      */
     protected function has_plugin_conflict() {
-        $conflict;
+        $conflict = false;
 
 		// Disable subtitles plugin to prevent it from injecting subtitles
 		// into our share titles.
@@ -463,11 +443,11 @@ class SWP_Buttons_Panel {
             ' swp_default_' . $this->options['default_colors'] .
             ' swp_individual_' . $this->options['single_colors'] .
             ' swp_other_' . $this->options['hover_colors'] .
-            ' scale-' . $this->options['scale'] * 100 .
+            ' scale-' . $this->options['button_size'] * 100 .
             ' scale-' . $this->options['button_alignment'] .
             '" data-position="' . $this->options['location_post'] .
-            '" data-float="' . $this->float_option .
-            '" data-count="' . $buttons_array['count'] .
+            '" data-float="' . $this->options['float_location'] .
+            '" data-count="' . $this->total_shares .
             '" data-floatColor="' . $this->options['float_background_color'] .
             '" data-emphasize="'.$this->options['emphasize_icons'].'
             ">';
@@ -487,6 +467,7 @@ class SWP_Buttons_Panel {
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
+            die("has args buttons");
             $this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
             foreach ( $this->args['buttons'] as $button_key ) {
@@ -502,7 +483,6 @@ class SWP_Buttons_Panel {
 
         //* Use global button settings.
         else :
-
             if ( $this->options['order_of_icons_method'] === 'manual' ) :
                 $buttons = $this->get_manual_buttons();
             else :
@@ -519,6 +499,7 @@ class SWP_Buttons_Panel {
     protected function get_manual_buttons() {
         $buttons = [];
         $order = $this->options['order_of_icons'];
+        die(var_dump($this->networks));
 
         foreach( $order as $network_key ) {
             foreach( $this->networks as $key => $network ):
@@ -527,6 +508,8 @@ class SWP_Buttons_Panel {
                 endif;
             endforeach;
         }
+        die(var_dump($buttons));
+
 
         return $buttons;
     }
@@ -541,7 +524,7 @@ class SWP_Buttons_Panel {
 
     public function render_buttons() {
         foreach( $this->buttons as $button ) {
-            $this->html .= $button->render_HTML( $this );
+            $this->html .= $button->render_HTML( $this->network_shares );
         }
     }
 
@@ -562,7 +545,7 @@ class SWP_Buttons_Panel {
 
         $classname = $this->options['totals_alignment'] === 'totals_left' ? 'totals-left' : 'totals-right';
 
-        $html .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $buttons_array['count'] . '" >';
+        $html .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $this->total_shares . '" >';
             $html .= '<span class="swp_count ' . $classname . '">' . swp_kilomega( $this->options['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
         $html .= '</div>';
 
@@ -618,9 +601,9 @@ class SWP_Buttons_Panel {
             return $this->args['content'];
         endif;
 
-		$buttons_array['shares'] = get_social_warfare_shares( $post_id );
-
-		$buttons_array['options'] = $this->options;
+		$this->total_shares = $this->establish_network_shares( $this->post_id );
+        echo "total shares<br/>";
+        die (var_dump($this->total_shares));
 
 		$this->html .= $this->render_social_panel();
 
