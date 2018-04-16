@@ -117,7 +117,7 @@ class SWP_Social_Network {
 	 * @var array
 	 *
 	 */
-	public $html = array();
+	public $html_store = array();
 
 	/**
 	 * The Base URL for the share link
@@ -297,7 +297,7 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function save_html( $html , $post_id ) {
-		$this->html[$post_id] = $html;
+		$this->html_store[$post_id] = $html;
 	}
 
 	/**
