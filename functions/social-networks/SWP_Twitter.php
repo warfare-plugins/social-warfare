@@ -127,22 +127,21 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * dialogue.
 	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
-	 * @param  array $array The array of information passed in from the buttons panel.
+	 * @param  array $post_data The array of information passed in from the buttons panel.
 	 * @return string The generated link
 	 * @access public
 	 *
 	 */
-	public function generate_share_link( $array ) {
+	public function generate_share_link( $post_data ) {
 
 		// Generate a title for the share.
-		$title = strip_tags( get_the_title( $array['postID'] ) );
-		$title = str_replace( '|','',$title );
+		$title = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
 
 		// Check for a custom tweet from the post options.
-		$ct = get_post_meta( $array['postID'] , 'nc_customTweet' , true );
+		$ct = get_post_meta( $post_data['ID'] , 'nc_customTweet' , true );
 
-		$ct = ($ct != '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ));
-		$twitterLink = $this->get_shareable_permalink( $array );
+		$ct = $ct !== '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
+		$twitterLink = $this->get_shareable_permalink( $post_data );
 
 		// If the custom tweet contains a link, block Twitter for auto adding another one.
 		if ( false !== strpos( $ct , 'http' ) ) :
@@ -151,16 +150,18 @@ class SWP_Twitter extends SWP_Social_Network {
 			$urlParam = '&url=' . $twitterLink;
 		endif;
 
-		$twitter_mention = get_post_meta( $array['postID'] , 'swp_twitter_mention' , true );
-		if(false != $twitter_mention):
+		$twitter_mention = get_post_meta( $post_data['ID'] , 'swp_twitter_mention' , true );
+
+		if (false != $twitter_mention):
 			$ct .= ' @'.str_replace('@','',$twitter_mention);
 		endif;
 
-		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $array['postID'] ) );
-		if ( $user_twitter_handle ) :
+		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $post_data['ID'] ) );
+
+        if ( $user_twitter_handle ) :
 			$viaText = '&via=' . str_replace( '@','',$user_twitter_handle );
-		elseif ( $array['options']['twitter_id'] ) :
-			$viaText = '&via=' . str_replace( '@','',$array['options']['twitter_id'] );
+		elseif ( $post_data['options']['twitter_id'] ) :
+			$viaText = '&via=' . str_replace( '@','',$post_data['options']['twitter_id'] );
 		else :
 			$viaText = '';
 		endif;
