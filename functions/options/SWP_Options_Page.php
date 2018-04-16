@@ -166,7 +166,6 @@ class SWP_Options_Page extends SWP_Abstract {
         );
     }
 
-
     /**
     * Enqueue the admin javascript
     *
@@ -195,7 +194,6 @@ class SWP_Options_Page extends SWP_Abstract {
             'optionsNonce'  => wp_create_nonce( 'swp_plugin_options_save' ),
         ));
     }
-
 
     /**
     * Creates the commonly used color choides for choice settings.
@@ -226,7 +224,6 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     public function render_HTML() {
         $swp_user_options = swp_get_user_options( true );
-
 
         //* Fetch all the addons the user has installed,
         //* whether or not they are actively registered.
@@ -443,11 +440,6 @@ class SWP_Options_Page extends SWP_Abstract {
                 foreach( $addons as $addon ) {
                     $wrap->add_option( $addon );
                 }
-            //
-            //     $pro = new SWP_Addon_Registration( 'Pro Registration', 'pro' );
-            //     $pro->set_priority( 10 );
-            //
-            // $wrap->add_option( $pro );
 
         $registration->add_section( $wrap );
 
