@@ -9,7 +9,7 @@
 class SWP_Database_Migration {
 
     public function __construct() {
-        // $this->migrate();
+        $this->migrate();
         if ( !$this->is_migrated() ) {
             $this->migrate();
         }
@@ -34,6 +34,7 @@ class SWP_Database_Migration {
      * @return [type] [description]
      */
     private function migrate() {
+        echo "Migrating<br/>";
         $options = get_option( 'socialWarfareOptions', array() );
 
         $map = array(
@@ -50,7 +51,7 @@ class SWP_Database_Migration {
             'swp_decimal_separator' => 'decimal_separator',
             'swTotesFormat' => 'totals_alignment',
             'float'         => 'floating_panel',
-            'floatOption'    => 'float_position',
+            'floatOption'    => 'float_location',
             'swp_float_scr_sz'  => 'float_screen_width',
             'sideReveal'    => 'transition',
             'floatStyle'    => 'float_button_shape',
