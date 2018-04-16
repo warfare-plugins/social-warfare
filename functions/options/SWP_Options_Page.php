@@ -67,6 +67,7 @@ class SWP_Options_Page extends SWP_Abstract {
 		// Create a 'tabs' object to which we can begin adding tabs.
         $this->tabs = new stdClass();
         //* TODO: Create the registration function
+        //*
         $this->swp_registration = true;
 
 		// Get the list of available icons.
@@ -307,6 +308,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return SWP_Options_Page $this The calling object for method chaining.
     */
     protected function init_advanced_tab() {
+
         $advanced = new SWP_Options_Page_Tab( 'Advanced', 'advanced' );
         $advanced->set_priority( 40 );
 

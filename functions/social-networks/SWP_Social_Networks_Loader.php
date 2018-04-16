@@ -47,7 +47,7 @@ class SWP_Social_Networks_Loader {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 * 
+	 *
 	 */
 	public function instantiate_networks() {
 		foreach( get_declared_classes() as $class ){
