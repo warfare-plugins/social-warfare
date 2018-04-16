@@ -114,8 +114,8 @@ class SWP_Abstract {
             $all_icons = $this->get_all_icons();
             $defaults = [];
 
-            foreach( $all_icons as $network => $data ) {
-                $defaults[$network] = $data;
+            foreach( $all_icons as $network_key => $network_obj ) {
+                $defaults[$network_key] = $network_obj;
             }
 
             $icons = $defaults;
