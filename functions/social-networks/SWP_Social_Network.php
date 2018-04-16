@@ -348,36 +348,45 @@ class SWP_Social_Network {
 	 * @todo   Eliminate the array
 	 *
 	 */
-	public function render_HTML() {
+	public function render_HTML( $post_data, $echo = false ) {
 
-        $share_count = $network_counts[$this->key];
-		$share_link = $this->generate_share_link( $array );
+		$share_link = $this->generate_share_link( $post_data );
 
-		// Build the button wrapper.
+
+        // Build the button.
+        $icon = '<span class="iconFiller">';
+            $icon.= '<span class="spaceManWilly">';
+                $icon.= '<i class="sw sw-'.$this->key.'"></i>';
+                $icon.= '<span class="swp_share">' . $this->cta . '</span>';
+            $icon .= '</span>';
+        $icon .= '</span>';
+
+
+        // Build the wrapper.
 		$html = '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
-		$html.= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
+    		$html .= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
 
-		// If we are showing share counts
-		if ( true === $this->is_share_count_shown( $array ) ) :
-			$html.= '<span class="iconFiller">';
-			$html.= '<span class="spaceManWilly">';
-			$html.= '<i class="sw sw-'.$this->key.'"></i>';
-			$html.= '<span class="swp_share">' . $this->cta . '</span>';
-			$html.= '</span></span>';
-			$html.= '<span class="swp_count">' . swp_kilomega( $array['shares'][$this->key] ) . '</span>';
+    		if ( true === $this->show_shares ) :
+                $icon .= '<span class="swp_count">' . swp_kilomega( $this->share_count ) . '</span>';
+            else :
+                $icon_open = '<span class="swp_count swp_hide">';
 
-		// If we are not showing share counts...
-		else :
-			$html.= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-'.$this->key.'"></i><span class="swp_share"> ' . $this->cta . '</span></span></span></span>';
-		endif;
+                $icon_close = '</span';
+                $icon = $icon_open + $icon + $icon_close;
+            endif;
 
-		// Close up the button
-		$html.= '</a>';
+            // Put the button inside.
+            $html .= $icon;
+
+    		$html.= '</a>';
 		$html.= '</div>';
 
 		// Store these buttons so that we don't have to generate them for each set
-		$this->save_html( $html , $array['postID'] );
+		$this->html = $html;
 
+        if ( $echo ) :
+            echo $html;
+        endif;
 		return $html;
 
 	}
@@ -405,8 +414,8 @@ class SWP_Social_Network {
 	 * @param  array $array  The array of data from the buttons panel.
 	 * @return string        The processed URL.
 	 */
-	public function get_shareable_permalink( $array ) {
-		return urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , $this->key , $array['postID'] ) ) );
+	public function get_shareable_permalink( $post_data ) {
+		return urlencode( urldecode( SWP_URL_Management::process_url( $post_data['permalink'] , $this->key , $post_data['ID'] ) ) );
 	}
 
 
@@ -425,8 +434,8 @@ class SWP_Social_Network {
 	 * @access public
 	 *
 	 */
-	public function generate_share_link( $array ) {
-		$share_link = $this->base_share_url . $this->get_shareable_permalink( $array );
+	public function generate_share_link( $post_data ) {
+		$share_link = $this->base_share_url . $this->get_shareable_permalink( $post_data );
 		return $share_link;
 	}
 
