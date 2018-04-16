@@ -167,23 +167,27 @@ class SWP_Buttons_Panel {
 
         $this->networks = $swp_social_networks;
 		$this->args = $args;
-
-		if( isset( $args['content'] ) ):
-			$this->content = $args['content'];
-		endif;
+        $this->content = $post->content;
 
         //* Access the $post once while we have it. Values may be overwritten.
-        $this->post_type = $post->post_type;
-        $this->post_status = $post->post_status;
-        $this->post_id = $post->ID;
+        $this->post_data = [
+            'ID'        => $post->ID,
+            'post_type' => $post->post_type,
+            'permalink' => get_the_permalink( $post->ID ),
+            'post_title'    => $post->post_title,
+            'post_status'   => $post->post_status,
+            'post_content'  => $post->content
+        ];
 
         $this->localize_options( $args );
+
 	    $this->establish_post_id();
 	    $this->establish_location();
 		$this->establish_float_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
-		$this->shares = get_social_warfare_shares( $this->post_id );
+
+		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
 
         $this->the_buttons();
     }
@@ -207,6 +211,7 @@ class SWP_Buttons_Panel {
 		global $swp_user_options;
 
 		$this->options = array_merge( $swp_user_options, $this->args );
+        $this->post_data['options'] = $swp_user_options;
 	}
 
 
@@ -260,15 +265,20 @@ class SWP_Buttons_Panel {
 	public function establish_post_id() {
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
-			$this->post_id = $this->args['postID'];
+			$this->post_data['ID'] = $this->args['postID'];
         endif;
 
 		// Current argument.
 		if ( isset( $this->args['post_id'] ) ) :
-			$this->post_id = $this->args['post_id'];
+			$this->post_data['ID'] = $this->args['post_id'];
         endif;
 	}
 
+    public function establish_post_content() {
+        if( isset( $this->args['content'] ) ):
+			$this->content = $args['content'];
+		endif;
+    }
 
 	/**
 	 * Establish Location
@@ -295,7 +305,7 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$preset_location = get_post_meta( $this->post_id, 'nc_postLocation', true );
+		$preset_location = get_post_meta( $this->post_data['ID'], 'nc_postLocation', true );
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $preset_location ) && 'default' !== $preset_location ) {
@@ -317,7 +327,7 @@ class SWP_Buttons_Panel {
 
 		// If we are on a singular page
 		if ( is_singular() && !is_home() ) :
-            $location = $this->options[ 'location_' . $this->post_type ];
+            $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
             if ( isset( $location ) ) :
                 $this->location = $location;
             endif;
@@ -334,7 +344,7 @@ class SWP_Buttons_Panel {
         foreach( $this->buttons as $network_key => $network) {
             echo "Network $network_key<br/>";
             $count_key = "_${network_key}_shares";
-            $network_count = get_post_meta( $this->post_id, $count_key );
+            $network_count = get_post_meta( $this->post_data['ID'], $count_key );
             if ( isset( $network_count ) ) :
                 $network_shares[$network_key] = $network_count;
             endif;
@@ -360,13 +370,13 @@ class SWP_Buttons_Panel {
 
     protected function establish_float_location() {
         // Set the options for the horizontal floating bar
-        $spec_float_where = get_post_meta( $this->post_id , 'nc_floatLocation' , true );
+        $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_floatLocation' , true );
 
         if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
             $floatOption = 'float_ignore';
         elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
                 $floatOption = 'floatNone';
-        elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_type ] == 'on' ) :
+        elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_data['post_type'] ] == 'on' ) :
             $floatOption = 'floating_panel' . ucfirst( $this->options['float_location'] );
         else :
             $floatOption = 'floatNone';
@@ -375,11 +385,7 @@ class SWP_Buttons_Panel {
 
 
     protected function establish_permalink() {
-        if ( isset( $this->args['post_id'] ) ) :
-            $this->permalink = $this->args['post_id'];
-        else :
-            $this->permalink = get_permalink( $this->post_id );
-        endif;
+        $this->permalink = get_permalink( $this->post_data['ID'] );
     }
 
 
@@ -423,7 +429,7 @@ class SWP_Buttons_Panel {
             $this->location !== 'none' &&
 
             //* Conditions we want.
-            is_main_query() && in_the_loop() && get_post_status( $this->post_id ) == 'publish' &&
+            is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) == 'publish' &&
 
             //* Conditions we do not want.
             !is_admin() && !is_feed() && !is_search() && !is_attachment()
@@ -523,10 +529,14 @@ class SWP_Buttons_Panel {
     }
 
     public function render_buttons() {
+        $html = '';
+
         foreach( $this->buttons as $button ) {
             $button->set_shares_from_all( $this->total_shares, $this->options['minimum_shares'] );
-            $this->html .= $button->render_HTML( $this->network_shares );
+            $html .= $button->render_HTML( $this->post_data );
         }
+
+        return $html;
     }
 
 
@@ -555,9 +565,9 @@ class SWP_Buttons_Panel {
 
     //* TODO: This has not been refactored.
     protected function handle_timestamp() {
-        if ( swp_is_cache_fresh( $post_id ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
-			delete_post_meta( $post_id,'swp_cache_timestamp' );
-			update_post_meta( $post_id,'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
+        if ( swp_is_cache_fresh( $this->post_data['ID'] ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
+			delete_post_meta( $this->post_data['ID'],'swp_cache_timestamp' );
+			update_post_meta( $this->post_data['ID'],'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
 		endif;
     }
 
@@ -569,7 +579,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function do_print() {
-        if ( $this->args['echo'] || $this->content === false ) {
+        if ( isset( $this->args['echo']) && true === $this->args['echo'] || $this->content === false ) {
             echo $this->html;
             return;
         }
@@ -582,6 +592,8 @@ class SWP_Buttons_Panel {
         else :
             $this->content = $this->content + $this->html;
         endif;
+
+
 
         return $this->content;
     }
@@ -602,7 +614,7 @@ class SWP_Buttons_Panel {
             return $this->args['content'];
         endif;
 
-		$this->total_shares = $this->establish_network_shares( $this->post_id );
+		$this->total_shares = $this->establish_network_shares( $this->post_data['ID'] );
 
 		$this->html .= $this->render_HTML();
 
