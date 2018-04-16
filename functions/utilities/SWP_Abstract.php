@@ -91,6 +91,11 @@ class SWP_Abstract {
         $this->set_name( $name );
         $this->user_options = get_option( 'social_warfare_settings' );
 
+        add_action('plugins_loaded', function() {
+            global $swp_social_networks;
+            $this->networks = $swp_social_networks;
+        }, 1000);
+
     }
 
     public function get_property( $property ) {
@@ -103,8 +108,7 @@ class SWP_Abstract {
 
 
     public function get_all_icons() {
-		global $swp_social_networks;
-        return $swp_social_networks;
+		return $this->networks;
     }
 
     public function get_user_icons() {
@@ -118,15 +122,11 @@ class SWP_Abstract {
                 $defaults[$network_key] = $network_obj;
             }
 
-            $icons = $defaults;
-
-        else :
-
-            $icons = ['icons' => $user_icons];
+            return $defaults;
 
         endif;
 
-        return $icons;
+        return $user_icons;
     }
 
 
