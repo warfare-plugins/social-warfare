@@ -27,6 +27,8 @@ class SWP_Option_Icons extends SWP_Option {
     */
     public function render_active_icons() {
 		$all_icons = $this->get_all_icons();
+        echo "all icons<br/>";
+        die(var_dump($all_icons));
         $user_icons = $this->get_user_icons();
 
         $html = '<div class="sw-grid sw-col-300">';

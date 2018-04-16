@@ -503,7 +503,6 @@ class SWP_Buttons_Panel {
     protected function get_manual_buttons() {
         $buttons = [];
         $order = $this->options['order_of_icons'];
-        $order = ['google_plus', 'twitter', 'facebook'];
 
 
         foreach( $order as $network_key ) {
