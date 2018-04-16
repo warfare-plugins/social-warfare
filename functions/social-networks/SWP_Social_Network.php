@@ -337,12 +337,14 @@ class SWP_Social_Network {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  array $array The array of information used to create and display each social panel of buttons
+	 * @param  array $network_counts Associative array of 'network_key' => 'count_value'
 	 * @return array $array The modified array which will now contain the html for this button
 	 * @todo   Eliminate the array
 	 *
 	 */
-	public function render_html( $buttons_panel ) {
+	public function render_html( $network_counts ) {
+
+        $share_count = $network_counts[$this->key];
 
 		// If we've already generated this button, just use our existing html
 		if ( isset( $this->html[$array['postID']] ) ) :
