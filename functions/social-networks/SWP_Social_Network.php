@@ -360,24 +360,19 @@ class SWP_Social_Network {
                 $icon.= '<span class="swp_share">' . $this->cta . '</span>';
             $icon .= '</span>';
         $icon .= '</span>';
+        if ( true === $this->show_shares ) :
+            $icon .= '<span class="swp_count">' . swp_kilomega( $this->share_count ) . '</span>';
 
+        else :
 
+            $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
+
+        endif;
         // Build the wrapper.
 		$html = '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
     		$html .= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
-
-    		if ( true === $this->show_shares ) :
-                $icon .= '<span class="swp_count">' . swp_kilomega( $this->share_count ) . '</span>';
-            else :
-                $icon_open = '<span class="swp_count swp_hide">';
-
-                $icon_close = '</span';
-                $icon = $icon_open + $icon + $icon_close;
-            endif;
-
-            // Put the button inside.
-            $html .= $icon;
-
+                // Put the button inside.
+                $html .= $icon;
     		$html.= '</a>';
 		$html.= '</div>';
 
