@@ -9,7 +9,7 @@
 class SWP_Database_Migration {
 
     public function __construct() {
-        $this->migrate();
+        // $this->migrate();
         if ( !$this->is_migrated() ) {
             $this->migrate();
         }
@@ -34,7 +34,6 @@ class SWP_Database_Migration {
      * @return [type] [description]
      */
     private function migrate() {
-        echo "Migrating<br/>";
         $options = get_option( 'socialWarfareOptions', array() );
 
         $map = array(
