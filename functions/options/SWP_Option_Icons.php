@@ -27,8 +27,6 @@ class SWP_Option_Icons extends SWP_Option {
     */
     public function render_active_icons() {
 		$all_icons = $this->get_all_icons();
-        echo "all icons<br/>";
-        die(var_dump($all_icons));
         $user_icons = $this->get_user_icons();
 
         $html = '<div class="sw-grid sw-col-300">';
@@ -38,8 +36,10 @@ class SWP_Option_Icons extends SWP_Option {
         $html .= '<div class="sw-grid sw-col-620 sw-fit">';
             $html .= '<div class="sw-active sw-buttons-sort">';
 
-			foreach( $all_icons as $network ) {
-                if ( isset( $user_icons['icons'][$network->key]) ) :
+			foreach( $user_icons as $network_key ) {
+                if ( isset( $all_icons[$network_key]) ) :
+                    $network = $all_icons[$network_key];
+
                     $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
                     $html .= ' data-network="' . $network->key . '"';
 
@@ -65,11 +65,12 @@ class SWP_Option_Icons extends SWP_Option {
     *
     * @param array $icons The array of currently selected icons.
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
-    * //* TODO: finish this method.
     */
     public function render_inactive_icons() {
         $all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
+
+        $inactive_icons = array_diff( array_keys( $all_icons ), $user_icons );
 
         $html = '<div class="sw-grid sw-col-300">';
             $html .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
@@ -78,17 +79,17 @@ class SWP_Option_Icons extends SWP_Option {
         $html .=  '<div class="sw-grid sw-col-620 sw-fit">';
             $html .=  '<div class="sw-inactive sw-buttons-sort">';
 
-            foreach( $all_icons as $network ) {
-                if ( !isset( $user_icons['icons'][$network->key]) ) :
-                    $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
-                    $html .= ' data-network="' . $network->key . '"';
+            foreach( $inactive_icons as $network_key ) {
+                $network = $all_icons[$network_key];
 
-                    if ( !empty($network->premium) ) :
-                        $html .= ' premium="'.$network->premium.'"';
-                    endif;
+                $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
+                $html .= ' data-network="' . $network->key . '"';
 
-                    $html .= '></i>';
+                if ( !empty($network_obj->premium) ) :
+                    $html .= ' premium="'.$network->premium.'"';
                 endif;
+
+                $html .= '></i>';
             }
 
             $html .= '</div>';
@@ -105,6 +106,7 @@ class SWP_Option_Icons extends SWP_Option {
         } else {
             $this->render_inactive_icons();
         }
+
         return $this->html;
     }
 
