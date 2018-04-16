@@ -352,7 +352,6 @@ class SWP_Social_Network {
 
 		$share_link = $this->generate_share_link( $post_data );
 
-
         // Build the button.
         $icon = '<span class="iconFiller">';
             $icon.= '<span class="spaceManWilly">';
@@ -360,14 +359,13 @@ class SWP_Social_Network {
                 $icon.= '<span class="swp_share">' . $this->cta . '</span>';
             $icon .= '</span>';
         $icon .= '</span>';
+
         if ( true === $this->show_shares ) :
             $icon .= '<span class="swp_count">' . swp_kilomega( $this->share_count ) . '</span>';
-
         else :
-
             $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
-
         endif;
+
         // Build the wrapper.
 		$html = '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
     		$html .= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
@@ -382,6 +380,7 @@ class SWP_Social_Network {
         if ( $echo ) :
             echo $html;
         endif;
+        
 		return $html;
 
 	}
