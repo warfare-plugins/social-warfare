@@ -47,7 +47,7 @@ class SWP_Display {
     	global $swp_user_options;
     	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
         if( true === is_singular() || true === $swp_user_options['full_content'] ):
-            add_filter( 'the_content', array($this, 'social_warfare_wrapper'), 10 );
+            add_filter( 'the_content', array($this, 'social_warfare_wrapper'), 20 );
         endif;
         if (false === is_singular()) {
     		// Add the buttons to the excerpts
@@ -91,6 +91,6 @@ class SWP_Display {
     public static function social_warfare( $args = array() ) {
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
 
-    	return$Buttons_Panel->the_buttons();
+    	return $Buttons_Panel->the_buttons();
     }
 }
