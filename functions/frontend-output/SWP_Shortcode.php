@@ -67,30 +67,13 @@ class SWP_Shortcode {
 	 * @return string The HTML of the Social Warfare buttons.
 	 *
 	 */
-	public function buttons_shortcode( $array ) {
-        if(!is_array($array)){
-			$array = array();
-		}
-
-        // Paramters needed by the social_warfare() function to know how to process this request.
-		$array['shortcode'] = true;
-		$array['devs'] = true;
-
-		// Set some defaults that are needed by the social_warfare() function
+	public function buttons_shortcode( $args = [] ) {
 		$defaults = array(
-            'content'	=> false,
-			'where'		=> 'after',
+			'location'		=> 'after',
 			'echo'		=> false,
 		);
 
-		// Merge the defaults into the $array that was passed into this function.
-		foreach ($defaults as $key => $value) {
-			if ( !isset($array[$key]) ) {
-				$array[$key] = $value;
-			}
-		}
-
-		return social_warfare( $array );
+		return SWP_Display::social_warfare( array_merge( $args, $defaults ) );
 	}
 
 
