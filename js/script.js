@@ -177,7 +177,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 */
 	swp.activateHoverStates = function() {
 		swp_trigger_events('pre_activate_buttons');
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer').on('mouseenter',function(){
+		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter',function(){
 			if($(this).hasClass('swp_nohover')){
 
 			} else {
@@ -191,29 +191,29 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$(this).css({flex:percentage_change + ' 1 0%'});
 			}
 		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide)').on('mouseleave',function() {
+		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave',function() {
 			swpRestoreSizes();
 		});
 	}
 	function swpRestoreSizes() {
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller').removeAttr('style');
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
+		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller').removeAttr('style');
+		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
 	}
 	function createFloatBar() {
-		//if ( ! $( '.nc_socialPanelSide' ).length ) {
+		//if ( ! $( '.swp_social_panelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
 				$( '.nc_wrapper' ).remove();
 			}
-			var firstSocialPanel = $( '.nc_socialPanel' ).not( '[data-float="float_ignore"]' ).first();
-			var index = $( '.nc_socialPanel' ).index( firstSocialPanel );
+			var firstSocialPanel = $( '.swp_social_panel' ).not( '[data-float="float_ignore"]' ).first();
+			var index = $( '.swp_social_panel' ).index( firstSocialPanel );
 			var floatOption = firstSocialPanel.attr( 'data-float' );
 			var alignment = firstSocialPanel.attr( 'data-align' );
 			if ( floatOption ) {
 
-				if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
-					var floatLeftMobile = $( '.nc_socialPanelSide' ).attr( 'data-mobileFloat' );
+				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
+					var floatLeftMobile = $( '.swp_social_panelSide' ).attr( 'data-mobileFloat' );
 					var offsetOne = firstSocialPanel.offset();
-					var ncSideFloater = $( '.nc_socialPanelSide' ).filter( ':not(.mobile)' );
+					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
 					var minWidth = ncSideFloater.attr( 'data-screen-width' );
 					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 						var position = 'floating_panel' + floatLeftMobile.charAt(0).toUpperCase() + floatLeftMobile.slice(1);
@@ -223,34 +223,34 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				} else {
 					var position = floatOption;
 				}
-				var backgroundColor = $( '.nc_socialPanel' ).attr( 'data-floatColor' );
+				var backgroundColor = $( '.swp_social_panel' ).attr( 'data-floatColor' );
 				$( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' ).appendTo( 'body' );
 				// var position = firstSocialPanel.attr( 'data-float' );
 				firstSocialPanel.clone().appendTo( '.nc_wrapper' );
 				$( '.nc_wrapper' ).hide().addClass( position );
 				var width = firstSocialPanel.outerWidth( true );
 				var offset = firstSocialPanel.offset();
-				$( '.nc_socialPanel' ).last().addClass( 'nc_floater' ).css({
+				$( '.swp_social_panel' ).last().addClass( 'nc_floater' ).css({
 					width: width,
 					left: ( alignment == 'center' ? 0 : offset.left )
 				});
-				$( '.nc_socialPanel .swp_count' ).css({ transition: 'padding .1s linear' });
-				$( '.nc_socialPanel' ).eq( 0 ).addClass( 'swp_one' );
-				$( '.nc_socialPanel' ).eq( 2 ).addClass( 'swp_two' );
-				$( '.nc_socialPanel' ).eq( 1 ).addClass( 'swp_three' );
+				$( '.swp_social_panel .swp_count' ).css({ transition: 'padding .1s linear' });
+				$( '.swp_social_panel' ).eq( 0 ).addClass( 'swp_one' );
+				$( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
+				$( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
 			}
 		//}
 	}
 
 	function floatingBarReveal() {
 		// Adjust the floating bar
-		var panels = $( '.nc_socialPanel' );
+		var panels = $( '.swp_social_panel' );
 		var floatOption = panels.not( '[data-float="float_ignore"]' ).eq( 0 ).attr( 'data-float' );
 		var windowElement = $( window );
 		var windowHeight = windowElement.height();
 		var ncWrapper = $( '.nc_wrapper' );
-		var ncSideFloater = $( '.nc_socialPanelSide' ).filter( ':not(.mobile)' );
-		var position = $( '.nc_socialPanel' ).attr( 'data-position' );
+		var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
+		var position = $( '.swp_social_panel' ).attr( 'data-position' );
 		var minWidth = ncSideFloater.attr( 'data-screen-width' );
 		var offsetOne = panels.eq( 0 ).offset();
 		var scrollPos = windowElement.scrollTop();
@@ -262,11 +262,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		if ( floatOption === 'floatRight' || floatOption === 'floatLeft' ) {
-			var floatLeftMobile = $( '.nc_socialPanelSide' ).attr( 'data-mobileFloat' );
+			var floatLeftMobile = $( '.swp_social_panelSide' ).attr( 'data-mobileFloat' );
 			var direction = (floatOption.indexOf("Left") !== -1) ? "left" : "right";
 
-			if ( $( '.nc_socialPanel' ).not( '.nc_socialPanelSide' ).length ) {
-				$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
+			if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
+				$( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_floater' ).each(function() {
 					var thisOffset = $( this ).offset();
 					var thisHeight = $( this ).height();
 					if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
@@ -319,7 +319,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
 			visible = false;
-			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
+			$( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_floater' ).each(function() {
 					var thisOffset = $( this ).offset();
 					var thisHeight = $( this ).height();
 					if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
@@ -347,7 +347,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					newPadding = window.bodyPaddingBottom + 50;
 					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
 				} else if ( floatOption == 'floatTop' ) {
-					firstOffset = $( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).first().offset();
+					firstOffset = $( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_wrapper .swp_social_panel' ).first().offset();
 					if ( firstOffset.top > scrollPos + windowHeight ) {
 						newPadding = window.bodyPaddingTop + 50;
 						$( 'body' ).animate({ 'padding-top': newPadding + 'px' }, 0 );
@@ -358,7 +358,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 	function initShareButtons() {
-		if ( 0 !== $( '.nc_socialPanel' ).length ) {
+		if ( 0 !== $( '.swp_social_panel' ).length ) {
 			createFloatBar();
 			swp.activateHoverStates();
 			handleWindowOpens();
@@ -367,7 +367,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				floatingBarReveal();
 			}));
 			$( window ).trigger( 'scroll' );
-			$( '.nc_socialPanel' ).css( {'opacity':1} );
+			$( '.swp_social_panel' ).css( {'opacity':1} );
 		}
 	}
 
@@ -503,14 +503,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	$( document ).ready( function() {
 		handleWindowOpens();
 		initShareButtons();
-		var sidePanel = $( '.nc_socialPanelSide' );
+		var sidePanel = $( '.swp_social_panelSide' );
 
 		// Fetch the padding amount to make space later for the floating bars
 		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
 		window.bodyPaddingBottom = absint( $( 'body' ).css( 'padding-bottom' ).replace( 'px', '' ) );
 
 		var swp_hover = false;
-		$( '.nc_socialPanel' ).hover(
+		$( '.swp_social_panel' ).hover(
 		    function () {
 		        swp_hover = true;
 		    },
@@ -519,7 +519,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		    }
 		);
 		$( window ).resize( swp.debounce( 250, function() {
-			if ( $( '.nc_socialPanel' ).length && false !== swp_hover ) { } else {
+			if ( $( '.swp_social_panel' ).length && false !== swp_hover ) { } else {
 				window.swpAdjust = 1;
 				initShareButtons();
 			}

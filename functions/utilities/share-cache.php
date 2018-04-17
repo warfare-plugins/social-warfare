@@ -367,7 +367,7 @@ function swp_output_cache_trigger( $info ) {
 		if ( 'legacy' === $info['swp_user_options']['cache_method'] && is_singular() ) {
 			ob_start(); ?>
 
-			var swp_buttons_exist = (document.getElementsByClassName( 'nc_socialPanel' ).length > 0);
+			var swp_buttons_exist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
 			if ( swp_buttons_exist ) {
 				document.addEventListener('DOMContentLoaded', function() {
 					swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
@@ -400,7 +400,7 @@ function swp_output_cache_trigger( $info ) {
 			?>
 	        var within_timelimit;
 			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-			var swp_buttons_exist = (document.getElementsByClassName( 'nc_socialPanel' ).length > 0);
+			var swp_buttons_exist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
 			if ( swp_buttons_exist ) {
 				document.addEventListener('DOMContentLoaded', function() {
 					var swp_check_for_js = setInterval( function() {
