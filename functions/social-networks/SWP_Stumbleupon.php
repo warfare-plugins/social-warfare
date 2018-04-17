@@ -13,7 +13,7 @@
  * @since     3.0.0 | 05 APR 2018 | Rebuilt into a class-based system.
  *
  */
-class SWP_Facebook extends SWP_Social_Network {
+class SWP_StumbleUpon extends SWP_Social_Network {
 
 
 	/**
@@ -35,7 +35,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		// Update the class properties for this network
 		$this->name           = __( 'StumbleUpon','social-warfare' );
-		$this->cta            = __( 'Stumble','social-warfare' )
+		$this->cta            = __( 'Stumble','social-warfare' );
 		$this->key            = 'stumbleupon';
 		$this->default        = 'false';
 		$this->base_share_url = 'http://www.facebook.com/share.php?u=';

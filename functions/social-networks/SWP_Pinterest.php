@@ -71,4 +71,5 @@ class SWP_Pinterest extends SWP_Social_Network {
         $response = preg_replace( '/^receiveCount\((.*)\)$/', "\\1", $response );
     	$response = json_decode( $response, true );
     	return isset( $response['count'] ) ? intval( $response['count'] ) : 0;
+    }
 }
