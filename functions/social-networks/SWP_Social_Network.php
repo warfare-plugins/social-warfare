@@ -355,7 +355,7 @@ class SWP_Social_Network {
         // Build the button.
         $icon = '<span class="iconFiller">';
             $icon.= '<span class="spaceManWilly">';
-                $icon.= '<i class="sw swp_'.$this->key.'"></i>';
+                $icon.= '<i class="sw swp_'.$this->key.'_icon"></i>';
                 $icon.= '<span class="swp_share">' . $this->cta . '</span>';
             $icon .= '</span>';
         $icon .= '</span>';

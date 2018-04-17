@@ -322,9 +322,9 @@ span.swp_label {
 	margin: 0!important;
 }
 
-.nc_socialPanel.swp_flat_fresh.swp_default_full_color .google_plus,
-html body .nc_socialPanel.swp_flat_fresh.swp_individual_full_color .google_plus:hover,
-body .nc_socialPanel.swp_flat_fresh.swp_o_full_color:hover .google_plus:not(:hover) {
+.nc_socialPanel.swp_flat_fresh.swp_default_full_color .swp_google_plus,
+html body .nc_socialPanel.swp_flat_fresh.swp_individual_full_color .swp_google_plus:hover,
+body .nc_socialPanel.swp_flat_fresh.swp_o_full_color:hover .swp_google_plus:not(:hover) {
 	border: 1px solid #df4b37;
 }
 
@@ -412,9 +412,9 @@ body .nc_socialPanel.swp_flat_fresh.swp_o_full_color:hover .swp_flipboard:not(:h
 	border: 1px solid #bf2626;
 }
 
-.nc_socialPanel.swp_default_full_color .google_plus,
-html body .nc_socialPanel.swp_individual_full_color .google_plus:hover,
-body .nc_socialPanel.swp_o_full_color:hover .google_plus {
+.nc_socialPanel.swp_default_full_color .swp_google_plus,
+html body .nc_socialPanel.swp_individual_full_color .swp_google_plus:hover,
+body .nc_socialPanel.swp_o_full_color:hover .swp_google_plus {
 	background: #df4b37;
 	border: 1px solid #c44133;
 }
@@ -517,9 +517,9 @@ body .nc_socialPanel.swp_o_full_color:hover .swp_flipboard {
 	border: 1px solid #bf2626;
 }
 
-.nc_socialPanel.swp_three_dee.swp_default_full_color .google_plus,
-html body .nc_socialPanel.swp_three_dee.swp_individual_full_color .google_plus:hover,
-body .nc_socialPanel.swp_three_dee.swp_o_full_color:hover .google_plus {
+.nc_socialPanel.swp_three_dee.swp_default_full_color .swp_google_plus,
+html body .nc_socialPanel.swp_three_dee.swp_individual_full_color .swp_google_plus:hover,
+body .nc_socialPanel.swp_three_dee.swp_o_full_color:hover .swp_google_plus {
 	border-bottom: 3px solid #c44133;
 }
 
@@ -685,9 +685,9 @@ body .nc_socialPanel.swp_o_dark_gray_outlines:hover .nc_tweetContainer {
 	border: 1px solid #444;
 }
 
-.nc_socialPanel.swp_default_color_outlines .google_plus a,
-html body .nc_socialPanel.swp_individual_color_outlines .google_plus a:hover,
-body .nc_socialPanel.swp_o_color_outlines:hover .google_plus a {
+.nc_socialPanel.swp_default_color_outlines .swp_google_plus a,
+html body .nc_socialPanel.swp_individual_color_outlines .swp_google_plus a:hover,
+body .nc_socialPanel.swp_o_color_outlines:hover .swp_google_plus a {
 	color: #df4b37;
 }
 
@@ -769,9 +769,9 @@ body .nc_socialPanel.swp_o_color_outlines:hover .swp_flipboard a {
 	color: #e02828;
 }
 
-.nc_socialPanel.swp_default_color_outlines .google_plus,
-html body .nc_socialPanel.swp_individual_color_outlines .google_plus:hover,
-body .nc_socialPanel.swp_o_color_outlines:hover .google_plus {
+.nc_socialPanel.swp_default_color_outlines .swp_google_plus,
+html body .nc_socialPanel.swp_individual_color_outlines .swp_google_plus:hover,
+body .nc_socialPanel.swp_o_color_outlines:hover .swp_google_plus {
 	background: transparent;
 	border: 1px solid #df4b37;
 }
@@ -1207,63 +1207,63 @@ body .nc_socialPanel.swp_o_color_outlines:hover .swp_flipboard {
 	vertical-align: middle;
 }
 
-i.swp_google-plus:before {
+i.swp_google_plus_icon:before {
 	content: "h";
 }
 
-i.swp_pinterest:before {
+i.swp_pinterest_icon:before {
 	content: "b";
 }
 
-i.swp_twitter:before {
+i.swp_twitter_icon:before {
 	content: "s";
 }
 
-i.swp_facebook:before {
+i.swp_facebook_icon:before {
 	content: "j";
 }
 
-i.swp_swp_linkedin:before {
+i.swp_swp_linkedin_icon:before {
 	content: "f";
 }
 
-i.swp_tumblr:before {
+i.swp_tumblr_icon:before {
 	content: "r";
 }
 
-i.swp_stumbleupon:before {
+i.swp_stumbleupon_icon:before {
 	content: "q";
 }
 
-i.swp_reddit:before {
+i.swp_reddit_icon:before {
 	content: "a";
 }
 
-i.swp_email:before {
+i.swp_email_icon:before {
 	content: "k";
 }
 
-i.swp_yummly:before {
+i.swp_yummly_icon:before {
 	content: "x";
 }
 
-i.swp_whatsapp:before {
+i.swp_whatsapp_icon:before {
 	content: "y";
 }
 
-i.swp_pocket:before {
+i.swp_pocket_icon:before {
 	content: "B";
 }
 
-i.swp_buffer:before {
+i.swp_buffer_icon:before {
 	content: "z";
 }
 
-i.swp_hacker_news:before {
+i.swp_hacker_news_icon:before {
 	content: "D";
 }
 
-i.swp_flipboard:before {
+i.swp_flipboard_icon:before {
 	content: "C";
 }
 
