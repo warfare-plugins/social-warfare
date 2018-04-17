@@ -69,7 +69,6 @@ class SWP_Option_Icons extends SWP_Option {
     public function render_inactive_icons() {
         $all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
-
         $inactive_icons = array_diff( array_keys( $all_icons ), $user_icons );
 
         $html = '<div class="sw-grid sw-col-300">';
