@@ -423,7 +423,7 @@ class SWP_Buttons_Panel {
 		endif;
 
 		// Create the HTML Buttons panel wrapper
-        $html = '<div class="nc_socialPanel swp_' . $this->options['button_shape'] .
+        $html = '<div class="swp_social_panel swp_' . $this->options['button_shape'] .
             ' swp_default_' . $this->options['default_colors'] .
             ' swp_individual_' . $this->options['single_colors'] .
             ' swp_other_' . $this->options['hover_colors'] .

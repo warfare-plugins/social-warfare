@@ -222,11 +222,11 @@
 		var customCSS = '';
 
 		if ( dColorSet == 'custom_color' || iColorSet == 'custom_color' || oColorSet == 'custom_color' ) {
-			customCSS = '.nc_socialPanel.swp_d_customColor a, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_customColor:hover a {color:white} .nc_socialPanel.swp_d_customColor .nc_tweetContainer, html body .nc_socialPanel.swp_i_customColor .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_customColor:hover .nc_tweetContainer {background-color:' + colorCode + ';border:1px solid ' + colorCode + ';}';
+			customCSS = '.swp_social_panel.swp_d_customColor a, html body .swp_social_panel.swp_i_customColor .nc_tweetContainer:hover a, body .swp_social_panel.swp_o_customColor:hover a {color:white} .swp_social_panel.swp_d_customColor .nc_tweetContainer, html body .swp_social_panel.swp_i_customColor .nc_tweetContainer:hover, body .swp_social_panel.swp_o_customColor:hover .nc_tweetContainer {background-color:' + colorCode + ';border:1px solid ' + colorCode + ';}';
 		}
 
 		if ( dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color_outlines' ) {
-			customCSS = customCSS + ' .nc_socialPanel.swp_d_custom_color_outlines a, html body .nc_socialPanel.swp_i_custom_color_outlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_custom_color_outlines:hover a { color:' + colorCode + '; } .nc_socialPanel.swp_d_custom_color_outlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_custom_color_outlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_custom_color_outlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' + colorCode + '; }';
+			customCSS = customCSS + ' .swp_social_panel.swp_d_custom_color_outlines a, html body .swp_social_panel.swp_i_custom_color_outlines .nc_tweetContainer:hover a, body .swp_social_panel.swp_o_custom_color_outlines:hover a { color:' + colorCode + '; } .swp_social_panel.swp_d_custom_color_outlines .nc_tweetContainer, html body .swp_social_panel.swp_i_custom_color_outlines .nc_tweetContainer:hover, body .swp_social_panel.swp_o_custom_color_outlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' + colorCode + '; }';
 		}
 
 		$( 'head' ).append( '<style type="text/css" class="swp_customColorStuff">' + customCSS + '</style>' );
@@ -246,7 +246,7 @@
 		}
 		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
-		$( '.nc_socialPanel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
+		$( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
 		socialWarfarePlugin.lastClass = buttonsClass;
 
 		var lastClass = buttonsClass;
@@ -382,7 +382,7 @@
 			}
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
-			$( '.nc_socialPanel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
+			$( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
 			socialWarfarePlugin.lastClass = buttonsClass;
 		});
 	}
@@ -392,9 +392,9 @@
 	 *********************************************************/
 	function updateScale() {
 		$( 'select[name="button_size"],select[name="button_alignment"]' ).on( 'change', function() {
-			$( '.nc_socialPanel' ).css( { width: '100%' } );
+			$( '.swp_social_panel' ).css( { width: '100%' } );
 
-			var width = $( '.nc_socialPanel' ).width();
+			var width = $( '.swp_social_panel' ).width();
 			var scale = $( 'select[name="button_size"]' ).val();
 			var align = $( 'select[name="button_alignment"]' ).val();
 
@@ -403,16 +403,16 @@
 			if ( ( align == 'full_width' && scale != 1 ) || scale >= 1 ) {
 				newWidth = width / scale;
 
-				$( '.nc_socialPanel' ).css( 'cssText', 'width:' + newWidth + 'px!important;' );
+				$( '.swp_social_panel' ).css( 'cssText', 'width:' + newWidth + 'px!important;' );
 
-				$( '.nc_socialPanel' ).css({
+				$( '.swp_social_panel' ).css({
 					transform: 'scale(' + scale + ')',
 					'transform-origin': 'left'
 				});
 			} else if ( align != 'full_width' && scale < 1 ) {
 				newWidth = width / scale;
 
-				$( '.nc_socialPanel' ).css({
+				$( '.swp_social_panel' ).css({
 					transform: 'scale(' + scale + ')',
 					'transform-origin': align
 				});
