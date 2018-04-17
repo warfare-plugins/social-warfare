@@ -9,7 +9,7 @@
 class SWP_Database_Migration {
 
     public function __construct() {
-        $this->migrate();
+        // $this->migrate();
         if ( !$this->is_migrated() ) {
             $this->migrate();
         }
