@@ -147,7 +147,7 @@ class SWP_Buttons_Panel {
 
         $this->networks = $swp_social_networks;
 		$this->args = $args;
-        $this->content = $post->content;
+        $this->content = $post->post_content;
 
         //* Access the $post once while we have it. Values may be overwritten.
         $this->post_data = [
@@ -156,7 +156,7 @@ class SWP_Buttons_Panel {
             'permalink' => get_the_permalink( $post->ID ),
             'post_title'    => $post->post_title,
             'post_status'   => $post->post_status,
-            'post_content'  => $post->content
+            'post_content'  => $post->post_content
         ];
 
         $this->localize_options( $args );
@@ -168,8 +168,6 @@ class SWP_Buttons_Panel {
         $this->establish_active_buttons();
 
 		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
-
-        $this->the_buttons();
     }
 
 
@@ -422,7 +420,6 @@ class SWP_Buttons_Panel {
 
 
     public function render_HTML() {
-
 		if ( ! $this->should_print() ) :
 			return $this->args['content'];
 		endif;
@@ -456,7 +453,6 @@ class SWP_Buttons_Panel {
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
-            die("has args buttons");
             $this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
             foreach ( $this->args['buttons'] as $button_key ) {
@@ -562,40 +558,35 @@ class SWP_Buttons_Panel {
      *
      */
     public function do_print() {
-        if ( isset( $this->args['echo']) && true === $this->args['echo'] || $this->content === false ) {
-            echo $this->html;
+        if ( isset( $this->args['echo']) && true === $this->args['echo'] || $this->content == false ) {
             return;
         }
 
+        $this->content .= '<p class="swp-content-locator"></p>';
+
         //* Add the Panel markup based on the location.
         if ( $this->location === 'both' ) :
-            $this->content = $this->html .= $this->content .= $this->html;
+            $this->content = $this->html . $this->content . $this->html;
         elseif ( $this->location === 'above' ) :
-            $this->content = $this->html .= $this->content;
+            $this->content = $this->html . $this->content;
         else :
-            $this->content = $this->content .= $this->html;
+            $this->content = $this->content . $this->html;
         endif;
-
-
 
         return $this->content;
     }
 
 
     public function the_buttons() {
-		if( $this->location == 'none' ) :
-            return;
+        if ( ! $this->should_print() ) :
+            return $this->args['content'];
         endif;
+
 
         if ( $this->has_plugin_conflict() ) {
             return;
         }
 
-
-		// Disable the plugin on feeds, search results, and non-published content
-		if ( ! $this->should_print() ) :
-            return $this->args['content'];
-        endif;
 
 		$this->total_shares = $this->establish_network_shares( $this->post_data['ID'] );
 
