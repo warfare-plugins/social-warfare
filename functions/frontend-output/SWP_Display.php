@@ -54,6 +54,8 @@ class SWP_Display {
     		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper') );
         }
     }
+
+
     /**
      * A wrapper function for adding the buttons, content, or excerpt.
      *
@@ -63,15 +65,9 @@ class SWP_Display {
      *
      */
      public function social_warfare_wrapper( $content ) {
-    	// Fetch our global variables to ensure we haven't already processed this post
-    	global $post;
-    	$post_id = $post->ID;
-    	// Check if it's already been processed
-    	if( in_array( $post_id, $this->already_printed) ){
-    		return $content;
-    	}
+         global $post;
     	// Ensure it's not an embedded post
-    	if (true === is_singular() && $post_id !== get_queried_object_id()) {
+    	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
     		return $content;
     	}
 
@@ -80,6 +76,8 @@ class SWP_Display {
 
 		return $buttons_panel->the_buttons();
     }
+
+
     /**
      * The main social_warfare function used to create the buttons.
      *
@@ -91,6 +89,6 @@ class SWP_Display {
     public static function social_warfare( $args = array() ) {
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
 
-    	return $Buttons_Panel->the_buttons();
+    	return $Buttons_Panel->render_HTML();
     }
 }
