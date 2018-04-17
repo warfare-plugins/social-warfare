@@ -639,11 +639,11 @@ p.sw-subtitle.sw-registration-text {
 	border-color: #aa1b29;
 }
 
-.sw-linkedIn-icon:before {
+.sw-linkedin-icon:before {
 	content: 'f';
 }
 
-.sw-s.sw-linkedIn-icon {
+.sw-s.sw-linkedin-icon {
 	background-color: #0d77b7;
 	border-color: #0c6591;
 }
