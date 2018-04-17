@@ -74,10 +74,9 @@ class SWP_Display {
     	if (true === is_singular() && $post_id !== get_queried_object_id()) {
     		return $content;
     	}
-    	// Pass the content (in an array) into the buttons function to add the buttons
-    	$args['content'] = $content;
 
-		$buttons_panel = new SWP_Buttons_Panel();
+    	// Pass the content to the buttons constructor to place them inside.
+		$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
 
 		return $buttons_panel->the_buttons();
     }
@@ -89,13 +88,9 @@ class SWP_Display {
      * @return string $content The modified content
      *
      */
-    public static function social_warfare( $array = array() ) {
-    	$array['devs'] = true;
-        $Button = new SWP_Buttons_Panel();
-    	$content = $Button->the_buttons( $array );
-    	if( false === is_admin() && false == is_feed() && isset($swp_user_options['pinit_toggle']) && true == $swp_user_options['pinit_toggle']):
-    		$content .= '<p class="swp-content-locator"></p>';
-    	endif;
-    	return $content;
+    public static function social_warfare( $args = array() ) {
+        $Buttons_Panel = new SWP_Buttons_Panel( $args );
+
+    	return$Buttons_Panel->the_buttons();
     }
 }
