@@ -278,7 +278,9 @@ class Social_Warfare {
 			'Google_Plus',
 			'Facebook',
 			'Twitter',
-            'Linkedin'
+            'Linkedin',
+            'Pinterest',
+            'Stumbleupon'
 		];
 		$this->load_files( '/functions/social-networks/', $social_networks);
 
@@ -421,9 +423,6 @@ function swp_initiate_plugin() {
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
-// require_once SWP_PLUGIN_DIR . '/functions/social-networks/linkedIn.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/pinterest.php';
-require_once SWP_PLUGIN_DIR . '/functions/social-networks/stumbleupon.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 
