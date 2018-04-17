@@ -420,7 +420,7 @@ class SWP_Buttons_Panel {
     }
 
 
-    public function render_HTML() {
+    public function render_HTML( $echo = false ) {
 		if ( ! $this->should_print() ) :
 			return $this->args['content'];
 		endif;
@@ -449,6 +449,11 @@ class SWP_Buttons_Panel {
         endif;
 
         $html = $container . $buttons . '</div>';
+        $this->html = $html;
+
+        if ( $echo ) :
+            echo $html;
+        endif;
 
         return $html;
     }
@@ -565,6 +570,8 @@ class SWP_Buttons_Panel {
             return;
         }
 
+        $this->render_HTML();
+
         $content = $this->content . '<p class="swp-content-locator"></p>';
 
         //* Add the Panel markup based on the location.
@@ -576,10 +583,10 @@ class SWP_Buttons_Panel {
 
         else :
             $content = $this->content . $this->html;
-
         endif;
 
         $this->content = $content;
+
         return $this->content;
     }
 
@@ -596,8 +603,6 @@ class SWP_Buttons_Panel {
 
 
 		$this->total_shares = $this->establish_network_shares( $this->post_data['ID'] );
-
-		$this->html .= $this->render_HTML();
 
 		$this->handle_timestamp();
 
