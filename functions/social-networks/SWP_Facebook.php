@@ -54,8 +54,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	public function get_api_link( $url ) {
-		$link = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id='.$url;
-		return $link;
+		return 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' . $url;
 	}
 
 
