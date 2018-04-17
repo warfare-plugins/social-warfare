@@ -23,7 +23,6 @@ class SWP_Database_Migration {
      */
     public function is_migrated() {
         $option = get_option( 'social_warfare_settings' , false);
-        // die(var_dump($option));
 
         return $option;
     }
