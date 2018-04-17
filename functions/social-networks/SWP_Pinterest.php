@@ -36,7 +36,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 		// Update the class properties for this network
 		$this->name           = __( 'Pinterest','social-warfare' );
 		$this->cta            = __( 'Pin','social-warfare' );
-		$this->key            = 'pinterst';
+		$this->key            = 'pinterest';
 		$this->default        = 'true';
 		$this->base_share_url = 'https://api.pinterest.com/v1/urls/count.json?url=';
 
