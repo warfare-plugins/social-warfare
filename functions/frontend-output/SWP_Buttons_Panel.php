@@ -147,7 +147,8 @@ class SWP_Buttons_Panel {
 
         $this->networks = $swp_social_networks;
 		$this->args = $args;
-        $this->content = $post->post_content;
+
+        $this->content = isset( $args['content'] ) ? $args['content'] : $post->post_content;
 
         //* Access the $post once while we have it. Values may be overwritten.
         $this->post_data = [
@@ -447,7 +448,7 @@ class SWP_Buttons_Panel {
             $buttons .= $share_counts;
         endif;
 
-        $html = $container . $buttons . '</div.';
+        $html = $container . $buttons . '</div>';
 
         return $html;
     }
@@ -564,17 +565,21 @@ class SWP_Buttons_Panel {
             return;
         }
 
-        $this->content .= '<p class="swp-content-locator"></p>';
+        $content = $this->content . '<p class="swp-content-locator"></p>';
 
         //* Add the Panel markup based on the location.
         if ( $this->location === 'both' ) :
-            $this->content = $this->html . $this->content . $this->html;
+            $content = $this->html . $this->content . $this->html;
+
         elseif ( $this->location === 'above' ) :
-            $this->content = $this->html . $this->content;
+            $content = $this->html . $this->content;
+
         else :
-            $this->content = $this->content . $this->html;
+            $content = $this->content . $this->html;
+
         endif;
 
+        $this->content = $content;
         return $this->content;
     }
 
