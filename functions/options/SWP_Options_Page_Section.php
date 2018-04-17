@@ -126,9 +126,9 @@ class SWP_Options_Page_Section extends SWP_Abstract {
             $html .= '<p class="sw-subtitle">' . $this->description . '</p>';
         $html .= '</div>';
 
-        $html .= '<div class="sw-options-wrap">';
-            $html .= $this->render_options();
-        $html .= '</div>';
+        // $html .= '<div class="sw-options-wrap">';
+        $html .= $this->render_options();
+        // $html .= '</div>';
 
         return $html;
     }
