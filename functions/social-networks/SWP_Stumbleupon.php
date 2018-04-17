@@ -38,7 +38,7 @@ class SWP_StumbleUpon extends SWP_Social_Network {
 		$this->cta            = __( 'Stumble','social-warfare' );
 		$this->key            = 'stumbleupon';
 		$this->default        = 'false';
-		$this->base_share_url = 'http://www.facebook.com/share.php?u=';
+		$this->base_share_url = 'http://www.stumbleupon.com/submit?url=';
 
 		$this->init_social_network();
 	}
