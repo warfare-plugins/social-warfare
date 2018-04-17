@@ -355,7 +355,7 @@ class SWP_Social_Network {
         // Build the button.
         $icon = '<span class="iconFiller">';
             $icon.= '<span class="spaceManWilly">';
-                $icon.= '<i class="sw sw-'.$this->key.'"></i>';
+                $icon.= '<i class="sw swp_'.$this->key.'"></i>';
                 $icon.= '<span class="swp_share">' . $this->cta . '</span>';
             $icon .= '</span>';
         $icon .= '</span>';
@@ -367,7 +367,7 @@ class SWP_Social_Network {
         endif;
 
         // Build the wrapper.
-		$html = '<div class="nc_tweetContainer '.$this->key.'" data-network="'.$this->key.'">';
+		$html = '<div class="nc_tweetContainer swp_'.$this->key.'" data-network="'.$this->key.'">';
     		$html .= '<a rel="nofollow" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '" class="nc_tweet">';
                 // Put the button inside.
                 $html .= $icon;
@@ -380,7 +380,7 @@ class SWP_Social_Network {
         if ( $echo ) :
             echo $html;
         endif;
-        
+
 		return $html;
 
 	}
