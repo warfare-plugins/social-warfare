@@ -202,7 +202,7 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_buttons_preview() {
         ob_start() ?>
 
-        <div class="nc_socialPanel swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor" data-position="both" data-float="float_ignore" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="full_width">
+        <div class="nc_socialPanel swp_flat_fresh swp_d_full_color swp_i_full_color swp_o_full_color" data-position="both" data-float="float_ignore" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="full_width">
             <div class="nc_tweetContainer googlePlus" data-id="2">
                 <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet">
                     <span class="iconFiller">

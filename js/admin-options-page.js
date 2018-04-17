@@ -226,7 +226,7 @@
 		}
 
 		if ( dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color_outlines' ) {
-			customCSS = customCSS + ' .nc_socialPanel.swp_d_ccOutlines a, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_ccOutlines:hover a { color:' + colorCode + '; } .nc_socialPanel.swp_d_ccOutlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_ccOutlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_ccOutlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' + colorCode + '; }';
+			customCSS = customCSS + ' .nc_socialPanel.swp_d_custom_color_outlines a, html body .nc_socialPanel.swp_i_custom_color_outlines .nc_tweetContainer:hover a, body .nc_socialPanel.swp_o_custom_color_outlines:hover a { color:' + colorCode + '; } .nc_socialPanel.swp_d_custom_color_outlines .nc_tweetContainer, html body .nc_socialPanel.swp_i_custom_color_outlines .nc_tweetContainer:hover, body .nc_socialPanel.swp_o_custom_color_outlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' + colorCode + '; }';
 		}
 
 		$( 'head' ).append( '<style type="text/css" class="swp_customColorStuff">' + customCSS + '</style>' );
@@ -242,7 +242,7 @@
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
 		if('undefined' === typeof socialWarfarePlugin.lastClass){
-			socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
+			socialWarfarePlugin.lastClass = 'swp_flat_fresh swp_d_full_color swp_i_full_color swp_o_full_color';
 		}
 		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
@@ -273,7 +273,7 @@
 				dark_gray: 'Dark Gray',
 				light_grey_outlines: 'Light Gray Outlines',
 				medium_grey_outlines: 'Medium Gray Outlines',
-				dark_grey_outlines: 'Dark Gray Outlines',
+				dark_gray_outlines: 'Dark Gray Outlines',
 				color_outlines: 'Color Outlines',
 				custom_color: 'Custom Color',
 				custom_color_outlines: 'Custom Color Outlines'
@@ -284,10 +284,10 @@
 			leaf: defaults,
 			pill: defaults,
 			three_dee: {
-				fullColor: 'Full Color',
-				lightGray: 'Light Gray',
-				mediumGray: 'Medium Gray',
-				darkGray: 'Dark Gray'
+				full_color: 'Full Color',
+				light_gray: 'Light Gray',
+				medium_gray: 'Medium Gray',
+				dark_gray: 'Dark Gray'
 			},
 			connected: defaults,
 			shift: defaults,
@@ -378,7 +378,7 @@
 			});
 			// Declare a default lastClass based on the default HTML if we haven't declared one
 			if('undefined' === typeof socialWarfarePlugin.lastClass){
-				socialWarfarePlugin.lastClass = 'swp_flatFresh swp_d_fullColor swp_i_fullColor swp_o_fullColor';
+				socialWarfarePlugin.lastClass = 'swp_flat_fresh swp_d_full_color swp_i_full_color swp_o_full_color';
 			}
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
@@ -391,12 +391,12 @@
 		A Function to update the button sizing options
 	 *********************************************************/
 	function updateScale() {
-		$( 'select[name="button_size"],select[name="buttonFloat"]' ).on( 'change', function() {
+		$( 'select[name="button_size"],select[name="button_alignment"]' ).on( 'change', function() {
 			$( '.nc_socialPanel' ).css( { width: '100%' } );
 
 			var width = $( '.nc_socialPanel' ).width();
 			var scale = $( 'select[name="button_size"]' ).val();
-			var align = $( 'select[name="buttonFloat"]' ).val();
+			var align = $( 'select[name="button_alignment"]' ).val();
 
 			var newWidth;
 
