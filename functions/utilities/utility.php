@@ -84,8 +84,8 @@ function swp_store_the_settings() {
     return SWP_Display::social_warfare( $array );
  }
 
- function social_warfare( $array = array() ) {
-    return SWP_Display::social_warfare( $array );
+ function social_warfare( $args = array() ) {
+    return SWP_Display::social_warfare( $args );
  }
 
 
