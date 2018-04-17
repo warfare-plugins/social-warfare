@@ -207,8 +207,8 @@
 	font-style: normal;
 }
 
+/* Adds the border between sections. */
 [class$=title_wrapper] ~ [class$=title_wrapper] {
 	border-top: 1px solid #CED3DC;
     padding-top: 40px;
 }
-
