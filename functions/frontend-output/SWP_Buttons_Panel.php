@@ -400,19 +400,24 @@ class SWP_Buttons_Panel {
     /**
      * Tells you true/false if the buttons should print on this page.
      *
+     * Each variable is a boolean value. For the buttons to eligible for printing,
+     * each of the variables must evaluate to true.
+     *
+     * $user_settings: Options editable by the Admin user.
+     * $desired_conditions: WordPress conditions we require for the buttons.
+     * $undesired_conditions: WordPress pages where we do not display the buttons.
+     *
      * @return Boolean True if the buttons are okay to print, else false.
      */
     public function should_print() {
-        return (
-            //* User settings.
-            $this->location !== 'none' &&
 
-            //* Conditions we want.
-            is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) == 'publish' &&
+        $user_settings = $this->location !== 'none';
 
-            //* Conditions we do not want.
-            !is_admin() && !is_feed() && !is_search() && !is_attachment()
-        );
+        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
+
+        $undesired_conditions = !is_admin() && !is_feed() && !is_search() && !is_attachment();
+
+        return $user_settings && $desired_conditions && $undesired_conditions;
     }
 
 
