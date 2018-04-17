@@ -17,10 +17,10 @@
  * $generate_html: By passing in 'false' through the generate_html variable, it will return an object that can
  * be manipulated.
  *
- * $Buttons = new SWP_Buttons_Panel( false );
- * $Buttons->set_option( 'custom_color' , '#FF0000' );
- * $Buttons->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
- * $Buttons->output_HTML();
+ * $countss = new SWP_Buttons_Panel( false );
+ * $countss->set_option( 'custom_color' , '#FF0000' );
+ * $countss->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
+ * $countss->output_HTML();
  *
  * Alternatively, they should ALSO be able to use the $args method of instantiating an object. Perhaps something
  * like this:
@@ -424,8 +424,11 @@ class SWP_Buttons_Panel {
 			return $this->args['content'];
 		endif;
 
+        $share_counts = $this->render_share_counts();
+        $buttons = $this->render_buttons();
+
 		// Create the HTML Buttons panel wrapper
-        $html = '<div class="swp_social_panel swp_' . $this->options['button_shape'] .
+        $container = '<div class="swp_social_panel swp_' . $this->options['button_shape'] .
             ' swp_default_' . $this->options['default_colors'] .
             ' swp_individual_' . $this->options['single_colors'] .
             ' swp_other_' . $this->options['hover_colors'] .
@@ -438,30 +441,32 @@ class SWP_Buttons_Panel {
             '" data-emphasize="'.$this->options['emphasize_icons'].'
             ">';
 
-            $html .= $this->render_share_counts();
+        if ($this->options['totals_alignment'] === 'totals_left') :
+            $buttons = $share_counts . $buttons;
+        else:
+            $buttons .= $share_counts;
+        endif;
 
-            $html .= $this->render_buttons();
-
-        $html .= "</div>";
+        $html = $container . $buttons . '</div.';
 
         return $html;
     }
 
 
     public function establish_active_buttons() {
-        $buttons = [];
+        $countss = [];
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
             $this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
-            foreach ( $this->args['buttons'] as $button_key ) {
+            foreach ( $this->args['buttons'] as $counts_key ) {
 
-                $network_key = $this->display_name_to_key( $button_key );
+                $network_key = $this->display_name_to_key( $counts_key );
 
                 foreach( $this->networks as $key => $network ):
                     if( $network_key === $key ):
-                        $buttons[] = $network;
+                        $countss[] = $network;
                     endif;
                 endforeach;
             }
@@ -469,20 +474,20 @@ class SWP_Buttons_Panel {
         //* Use global button settings.
         else :
             if ( $this->options['order_of_icons_method'] === 'manual' ) :
-                $buttons = $this->get_manual_buttons();
+                $countss = $this->get_manual_buttons();
             else :
-                $buttons = $this->get_dynamic_buttons();
+                $countss = $this->get_dynamic_buttons();
             endif;
 
         endif;
 
-        $this->buttons = $buttons;
+        $this->buttons = $countss;
 
         return $this;
     }
 
     protected function get_manual_buttons() {
-        $buttons = [];
+        $countss = [];
         $order = $this->options['order_of_icons'];
 
 
@@ -491,28 +496,28 @@ class SWP_Buttons_Panel {
                 //* TODO: This needs to be the conditional instead.
                 // if( $key === $network_key && true === $network->is_active() ):
                 if ( $key === $network_key ) :
-                    $buttons[$key] = $network;
+                    $countss[$key] = $network;
                 endif;
             endforeach;
         }
 
-        return $buttons;
+        return $countss;
     }
 
     //* TODO: How can we sort the buttons dynamically?
     //* This is dependent on how we fetch share counts.
     protected function get_dynamic_buttons() {
-        $buttons = [];
+        $countss = [];
 
-        return $buttons;
+        return $countss;
     }
 
     public function render_buttons() {
         $html = '';
 
-        foreach( $this->buttons as $button ) {
-            $button->set_shares_from_all( $this->total_shares, $this->options['minimum_shares'] );
-            $html .= $button->render_HTML( $this->post_data );
+        foreach( $this->buttons as $counts ) {
+            $counts->set_shares_from_all( $this->total_shares, $this->options['minimum_shares'] );
+            $html .= $counts->render_HTML( $this->post_data );
         }
 
         return $html;
@@ -526,20 +531,17 @@ class SWP_Buttons_Panel {
      *
      */
     public function render_share_counts() {
-        $html = '';
         $total_shares = $this->options['total_shares'];
 
         if ( empty( $total_shares) || $total_shares <= $this->options['minimum_shares'] ) {
-            return $html;
+            return '';
         }
 
-        $classname = $this->options['totals_alignment'] === 'totals_left' ? 'totals-left' : 'totals-right';
+        $counts = '<div class="nc_tweetContainer totes totesalt" data-id="' . $this->total_shares . '" >';
+            $counts .= '<span class="swp_count ">' . swp_kilomega( $this->options['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+        $counts .= '</div>';
 
-        $html .= '<div class="nc_tweetContainer totes totesalt" data-id="' . $this->total_shares . '" >';
-            $html .= '<span class="swp_count ' . $classname . '">' . swp_kilomega( $this->options['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-        $html .= '</div>';
-
-        return $html;
+        return $counts;
     }
 
     //* TODO: This has not been refactored.
