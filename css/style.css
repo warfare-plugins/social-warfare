@@ -913,13 +913,24 @@ body .swp_social_panel.swp_o_color_outlines:hover .swp_flipboard {
 	right: 5px;
 }
 
+.swp_social_panelSide[class^=swp_side] {
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    position: fixed;
+    padding: 10px;
 
+}
 .swp_social_panelSide.swp_side_top {
-	top: 10px;
+	justify-content: flex-start;
 }
 
 .swp_social_panelSide.swp_side_bottom {
-	bottom: 0px;
+	justify-content: flex-end;
+}
+
+.swp_social_panelSide.swp_side_center {
+    justify-content: center;
 }
 
 .swp_social_panelSide .nc_tweetContainer {
@@ -1781,26 +1792,26 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
    margin: 0 !important;
 }
 
-.trans-origin-top-left {
+.float-position-top-left {
     transform-origin: top left;
 }
 
-.trans-origin-center-left {
+.float-position-center-left {
     transform-origin: center left;
 }
 
-.trans-origin-bottom-left {
+.float-position-bottom-left {
     transform-origin: bottom left;
 }
 
-.trans-origin-top-right {
+.float-position-top-right {
     transform-origin: top right;
 }
 
-.trans-origin-center-right {
+.float-position-center-right {
     transform-origin: center right;
 }
 
-.trans-origin-bottom-right {
+.float-position-bottom-right {
     transform-origin: bottom right;
 }
