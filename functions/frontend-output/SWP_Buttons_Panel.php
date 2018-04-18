@@ -70,12 +70,14 @@ class SWP_Buttons_Panel {
      */
     public $html = '';
 
+
     /**
      * The array of active buttons for $this Social Panel.
      *
      * @var array $active_buttons;
      */
     public $active_buttons = [];
+
 
     /**
      * The sum of share counts across active networks.
@@ -89,6 +91,7 @@ class SWP_Buttons_Panel {
 	 * The Construct Method
 	 *
 	 * @param optional array $args The arguments passed in via shortcode.
+	 *
 	 */
     public function __construct( $args = array() ) {
         global $swp_social_networks, $post;
@@ -201,6 +204,18 @@ class SWP_Buttons_Panel {
         endif;
 	}
 
+
+	/**
+	 * Establish the post content
+	 *
+	 * Take the content passed in via the $args and move it into a
+	 * local property.
+	 *
+	 * @since  3.0.0 | 18 APR 2018 | Created
+	 * @param  none
+	 * @return none Everything is stored in a local property.
+	 *
+	 */
     public function establish_post_content() {
         if( isset( $this->args['content'] ) ):
 			$this->content = $args['content'];
@@ -225,6 +240,7 @@ class SWP_Buttons_Panel {
         //* Establish a default.
         $this->location = 'none';
 
+
 		/**
 		 * Location from the Post Options
 		 *
@@ -238,6 +254,7 @@ class SWP_Buttons_Panel {
 		if ( !empty( $preset_location ) && 'default' !== $preset_location ) {
 			$this->location = $preset_location;
 		};
+
 
 		/**
 		 * Global Location Settings
