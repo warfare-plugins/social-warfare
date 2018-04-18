@@ -1,64 +1,12 @@
 <?php
 
 /**
- * Register and output header meta tags
+ * Creates the Panel of share buttons based on options and settings.
  *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- */
-
-/**
- * So in this example, it will use the SWP_User_Options to fill in and create all of the default options, but
- * it will then overwrite the custom_color and networks options programatically via a setter method and then
- * after all of the manipulations have been done, the programmer can call to have the HTML output.
- *
- * $generate_html: By passing in 'false' through the generate_html variable, it will return an object that can
- * be manipulated.
- *
- * $countss = new SWP_Buttons_Panel( false );
- * $countss->set_option( 'custom_color' , '#FF0000' );
- * $countss->set_option( 'networks' , array( 'Twitter' , 'Facebook' , 'Pinterest' ) );
- * $countss->output_HTML();
- *
- * Alternatively, they should ALSO be able to use the $args method of instantiating an object. Perhaps something
- * like this:
- *
- * Again, this version should do everything. Pull all paramters from the User_Options object, overwrite the
- * 'custom_color' and 'networks' with the $args and then output the HTML of the buttons panel.
- *
- * Note #1: This static method should also be able to be called without any $args and should return HTML for the
- * buttons without actually creating an instantiation of the class itself. It's just a one and done. Process the
- * options and output the HTML.
- *
- * Note #2: This method should be what the procedural social_warfare() function calls. For example:
- *
- * function social_warfare( $args = array() ) {
- * 		return SWP_Buttons_Panel::new_buttons_panel( $args );
- * }
- *
- */
-
-//$args = array(
-//	'custom_color' => '#FF0000',
-//	'networks' => array( 'Twitter' , 'Facebook' , 'Pinterest' )
-//)
-// SWP_Buttons_Panel::new_buttons_panel( $args );
-
-
-/**
- * CONCLUSION: The goal is to have a variety of approaches for developers to use in outputting the buttons as
- * they desire.
- *
- * #1: They should be able to instantiate the class into an object and call getters and setters to manipulate
- * their output.
- *
- * #2: They should be able to call the static method to simply process everything all in one go without even
- * instantiating the class. Just call the method, and boom, there's some buttons on the page now. It should
- * function, practically speaking the same as calling: echo 'This gets printed on the screen'; Nothing is
- * instantiated, it just processes the command and echos or returns a string of HTML.
- *
  */
 class SWP_Buttons_Panel {
 	/**
@@ -207,7 +155,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function set_option( $option , $value ) {
-		$this->options[$options] = $value;
+		$this->options[$this->options] = $value;
 		return $this;
 	}
 
@@ -218,7 +166,7 @@ class SWP_Buttons_Panel {
 	 * This method allows you to change multiple options for the buttons panel.
 	 *
 	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  array  $options An array of options to be merged into the existing options.
+	 * @param  array  $this->options An array of options to be merged into the existing options.
 	 * @return object $this   Allows for method chaining.
 	 * @access public
 	 *
@@ -422,7 +370,7 @@ class SWP_Buttons_Panel {
 
     public function render_HTML( $echo = false ) {
 		if ( ! $this->should_print() ) :
-			return $this->args['content'];
+			return $this->content;
 		endif;
 
         $share_counts = $this->render_share_counts();
@@ -441,6 +389,82 @@ class SWP_Buttons_Panel {
             '" data-floatColor="' . $this->options['float_background_color'] .
             '" data-emphasize="'.$this->options['emphasize_icons'].'
             ">';
+
+        if ($this->options['totals_alignment'] === 'totals_left') :
+            $buttons = $share_counts . $buttons;
+        else:
+            $buttons .= $share_counts;
+        endif;
+
+        $html = $container . $buttons . '</div>';
+        $this->html = $html;
+
+        if ( $echo ) :
+            echo $html;
+        endif;
+
+        return $html;
+    }
+
+    public function render_floating_HTML( $echo = true ) {
+        //* Old boilerplate that needs to be refactored.
+        $class = "";
+        $size = $this->options['float_button_size'] * 100;
+        $side = $this->options['float_location'];
+
+        // Acquire the social stats from the networks
+        if ( isset( $array['url'] ) ) :
+            $buttonsArray['url'] = $array['url'];
+        else :
+            $buttonsArray['url'] = get_permalink( $this->post_id );
+        endif;
+
+        if ( $this->options['floating_panel'] && is_singular() ) :
+            $float_location =  $this->options['float_location'];
+            $class = "swp_float_" . $this->options['float_location'];
+        else :
+            $float_location = 'ignore';
+        endif;
+
+        if ( $this->options['float_style_source'] == true ) :
+            $this->options['float_default_colors'] = $this->options['default_colors'];
+            $this->options['float_single_colors'] = $this->options['single_colors'];
+            $this->options['float_hover_colors'] = $this->options['hover_colors'];
+        endif;
+
+        // *Get the vertical position
+        if ($this->options['float_alignment']  ) :
+            $class .= " swp_side_" . $this->options['float_alignment'];
+        endif;
+
+        // *Set button size
+        if ( isset($this->options['float_button_size']) ) :
+            $position = $this->options['float_alignment'];
+
+            $class .= " scale-${size} float-position-${position}-${side}";
+
+        endif;
+
+
+        //* End old boilerplate.
+
+        $share_counts = $this->render_share_counts();
+        $buttons = $this->render_buttons();
+
+        $container = '<div class="swp_social_panelSide swp_social_panel swp_
+            ' . $this->options['float_button_shape'] .
+            ' swp_d_' . $this->options['float_default_colors'] .
+            ' swp_i_' . $this->options['float_single_colors'] .
+            ' swp_o_' . $this->options['float_hover_colors'] . '
+            ' . $this->options['transition'] . '
+            ' . $class . '
+            ' . '" data-position="' . $this->options['location_post'] .
+            '" data-float="' . $float_location .
+            '" data-count="' . count($this->buttons) .
+            '" data-floatColor="' . $this->options['float_background_color'] .
+            '" data-screen-width="' . $this->options['float_screen_width'] .
+            '" data-transition="' . $this->options['transition'] .
+            '" data-mobileFloat="'.$this->options['float_mobile'].'">';
 
         if ($this->options['totals_alignment'] === 'totals_left') :
             $buttons = $share_counts . $buttons;
