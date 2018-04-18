@@ -379,7 +379,7 @@ class SWP_Buttons_Panel {
 			return $this->content;
 		endif;
 
-        $share_counts = $this->render_total_shares_html();
+        $total_shares_html = $this->render_total_shares_html();
         $buttons = $this->render_buttons();
 
 		// Create the HTML Buttons panel wrapper
@@ -397,9 +397,9 @@ class SWP_Buttons_Panel {
             ">';
 
         if ($this->options['totals_alignment'] === 'totals_left') :
-            $buttons = $share_counts . $buttons;
+            $buttons = $total_shares_html . $buttons;
         else:
-            $buttons .= $share_counts;
+            $buttons .= $total_shares_html;
         endif;
 
         $html = $container . $buttons . '</div>';
@@ -466,7 +466,7 @@ class SWP_Buttons_Panel {
             ' . '" data-position="' . $this->options['location_post'] .
             ' scale-' . $this->options['float_size'] * 100 .
             '" data-float="' . $float_location .
-            '" data-count="' . count($this->buttons) .
+            '" data-count="' . count($this->networks) .
             '" data-floatColor="' . $this->options['float_background_color'] .
             '" data-screen-width="' . $this->options['float_screen_width'] .
             '" data-transition="' . $this->options['transition'] .
@@ -517,7 +517,7 @@ class SWP_Buttons_Panel {
 
         endif;
 
-        $this->buttons = $countss;
+        $this->networks = $countss;
 
         return $this;
     }
@@ -551,9 +551,9 @@ class SWP_Buttons_Panel {
     public function render_buttons() {
         $html = '';
 
-        foreach( $this->buttons as $counts ) {
-            $counts->set_shares_from_all( $this->total_shares, $this->options['minimum_shares'] );
-            $html .= $counts->render_HTML( $this->post_data );
+        foreach( $this->networks as $network ) {
+            $network->set_shares_from_all( $this->shares, $this->options['minimum_shares'] );
+            $html .= $network->render_HTML( $this->post_data );
         }
 
         return $html;
@@ -633,9 +633,6 @@ class SWP_Buttons_Panel {
         if ( $this->has_plugin_conflict() ) {
             return;
         }
-
-
-		$this->total_shares = $this->establish_network_shares( $this->post_data['ID'] );
 
 		$this->handle_timestamp();
 
