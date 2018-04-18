@@ -1156,12 +1156,12 @@ body .swp_social_panel.swp_o_color_outlines:hover .swp_flipboard {
 	z-index: 99999;
 }
 
-.nc_wrapper.floatBottom {
+.nc_wrapper.bottom {
 	bottom: 0;
 	left: 0;
 }
 
-.nc_wrapper.floatTop {
+.nc_wrapper.top {
 	top: 0;
 	left: 0;
 }
