@@ -26,10 +26,10 @@ class SWP_Shortcode {
 	 *
 	 */
     public function __construct() {
-		add_shortcode( 'social_warfare', array($this, 'buttons_shortcode') );
-		add_shortcode( 'total_shares', array ($this, 'post_total_shares') );
-		add_shortcode( 'sitewide_shares', array ($this, 'sitewide_total_shares') );
-        add_shortcode( 'click_to_tweet', array($this, 'click_to_tweet' ) );
+		add_shortcode( 'social_warfare', array( $this , 'buttons_shortcode' ) );
+		add_shortcode( 'total_shares', array ( $this , 'post_total_shares' ) );
+		add_shortcode( 'sitewide_shares', array ( $this , 'sitewide_total_shares' ) );
+        add_shortcode( 'click_to_tweet', array( $this , 'click_to_tweet' ) );
 
 		/**
 		 * These are old legacy shortcodes that have been replaced with the ones seen above.
@@ -67,13 +67,20 @@ class SWP_Shortcode {
 	 * @return string The HTML of the Social Warfare buttons.
 	 *
 	 */
-	public function buttons_shortcode( $args = [] ) {
+	public function buttons_shortcode( $args ) {
+
+		if( !is_array($args) ):
+			$args = array();
+		endif;
+
 		$defaults = array(
 			'location'		=> 'after',
 			'echo'		=> false,
 		);
 
-		return SWP_Display::social_warfare( array_merge( $args, $defaults ) );
+		array_merge( $args, $defaults );
+
+		return SWP_Display::social_warfare( $args );
 	}
 
 
@@ -163,9 +170,7 @@ class SWP_Shortcode {
     		$theme = $this->options['ctt_theme'];
     	endif;
 
-    	return '
-    		<div class="sw-tweet-clear"></div>
-    		<a class="swp_CTT ' . $theme . '" href="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" data-link="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" rel="nofollow" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">' . $atts['quote'] . '</span><span class="sw-ctt-btn">' . __( 'Click To Tweet','social-warfare' ) . '<i class="sw sw-twitter"></i></span></span></a>';
+    	return '<div class="sw-tweet-clear"></div><a class="swp_CTT ' . $theme . '" href="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" data-link="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" rel="nofollow" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">' . $atts['quote'] . '</span><span class="sw-ctt-btn">' . __( 'Click To Tweet','social-warfare' ) . '<i class="sw sw-twitter"></i></span></span></a>';
     }
 
 }
