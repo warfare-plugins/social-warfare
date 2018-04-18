@@ -389,6 +389,19 @@ class SWP_Social_Network {
 
 	}
 
+
+	/**
+	 * Are Shares Shown?
+	 *
+	 * This function returns a boolean letting the render_html method know
+	 * if we are supposed to be showing the share count or not.
+	 *
+	 * @since  3.0.0 | 18 APR 2018 | Created
+	 * @param  array $share_counts The array of share counts
+	 * @param  array $options      The array of options from the button panel object.
+	 * @return bool                Do we show the share counts?
+	 *
+	 */
 	public function are_shares_shown( $share_counts , $options ) {
 
 		// False if the share count is empty
@@ -424,6 +437,7 @@ class SWP_Social_Network {
 	 * @since  3.0.0 | 06 APR 2018 | Created
 	 * @param  array $array  The array of data from the buttons panel.
 	 * @return string        The processed URL.
+	 * 
 	 */
 	public function get_shareable_permalink( $post_data ) {
 		return urlencode( urldecode( SWP_URL_Management::process_url( $post_data['permalink'] , $this->key , $post_data['ID'] ) ) );
