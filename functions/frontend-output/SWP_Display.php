@@ -51,7 +51,7 @@ class SWP_Display {
         endif;
         if (false === is_singular()) {
     		// Add the buttons to the excerpts
-    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper') );
+    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper'), 20 );
         }
     }
 
