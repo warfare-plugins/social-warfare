@@ -283,20 +283,6 @@ class SWP_Buttons_Panel {
         endif;
 	}
 
-    public function establish_network_shares() {
-        $network_shares = [];
-
-        foreach( $this->buttons as $network_key => $network) {
-            $count_key = "_${network_key}_shares";
-            $network_count = get_post_meta( $this->post_data['ID'], $count_key );
-            if ( isset( $network_count ) ) :
-                $network_shares[$network_key] = $network_count;
-            endif;
-        }
-
-        $this->network_shares = $network_shares;
-    }
-
 
     /**
      * Takes a display name and returns the snake_cased key of that name.
