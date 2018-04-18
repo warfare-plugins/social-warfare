@@ -574,7 +574,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'bottom'    => 'Bottom of the Page',
                     'left'      => 'On the left side of the page',
                     'right'     => 'On the right side of the page'
-                ])
+                    ] )
                     ->set_default( 'bottom' )
                     ->set_priority( 20 )
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')

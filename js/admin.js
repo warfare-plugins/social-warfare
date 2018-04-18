@@ -99,12 +99,12 @@ function swpConditionalFields() {
 	});
 
 	if ( false === swp_checked('float_style_source') &&
-	       'custom_color' === swp_selected('float_default_colors')
-	    || 'custom_color_outlines'  === swp_selected('float_default_colors')
-	    || 'custom_color' === swp_selected('float_single_colors')
-	    || 'custom_color_outlines'  === swp_selected('float_single_colors')
-	    || 'custom_color' === swp_selected('float_hover_colors')
-        || 'custom_color_outlines'  === swp_selected('float_hover_colors') ) {
+	       'custom_color'              === swp_selected('float_default_colors')
+	    || 'custom_color_outlines'     === swp_selected('float_default_colors')
+	    || 'custom_color'              === swp_selected('float_single_colors')
+	    || 'custom_color_outlines'     === swp_selected('float_single_colors')
+	    || 'custom_color'              === swp_selected('float_hover_colors')
+        || 'custom_color_outlines'     === swp_selected('float_hover_colors') ) {
 		$( '.sideCustomColor_wrapper' ).slideDown();
 
 	} else {
