@@ -205,9 +205,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.nc_wrapper' ).remove();
 			}
 			var firstSocialPanel = $( '.swp_social_panel' ).not( '[data-float="float_ignore"]' ).first();
+            console.log("socialPanel");
+            console.log(firstSocialPanel);
 			var index = $( '.swp_social_panel' ).index( firstSocialPanel );
 			var floatOption = firstSocialPanel.attr( 'data-float' );
 			var alignment = firstSocialPanel.attr( 'data-align' );
+
 			if ( floatOption ) {
 
 				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
@@ -220,16 +223,20 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					} else {
 						var position = floatOption;
 					}
+
 				} else {
 					var position = floatOption;
 				}
 				var backgroundColor = $( '.swp_social_panel' ).attr( 'data-floatColor' );
+
 				$( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' ).appendTo( 'body' );
 				// var position = firstSocialPanel.attr( 'data-float' );
+				console.log("before clone");
 				firstSocialPanel.clone().appendTo( '.nc_wrapper' );
 				$( '.nc_wrapper' ).hide().addClass( position );
 				var width = firstSocialPanel.outerWidth( true );
 				var offset = firstSocialPanel.offset();
+
 				$( '.swp_social_panel' ).last().addClass( 'nc_floater' ).css({
 					width: width,
 					left: ( alignment == 'center' ? 0 : offset.left )
@@ -261,9 +268,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			window.swpOffsets = {};
 		}
 
-		if ( floatOption === 'floatRight' || floatOption === 'floatLeft' ) {
+		if ( floatOption === 'right' || floatOption === 'left' ) {
 			var floatLeftMobile = $( '.swp_social_panelSide' ).attr( 'data-mobileFloat' );
-			var direction = (floatOption.indexOf("Left") !== -1) ? "left" : "right";
+			var direction = (floatOption.indexOf("left") !== -1) ? "left" : "right";
 
 			if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
 				$( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_floater' ).each(function() {
@@ -276,9 +283,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 					visible = true;
 					if ( floatLeftMobile == 'bottom' ) {
-						floatOption = 'floatBottom';
+						floatOption = 'bottom';
 					} else if ( floatLeftMobile == 'top' ) {
-						floatOption = 'floatTop';
+						floatOption = 'top';
 					}
 				} else if (visible) {
 					visible == true;
@@ -291,9 +298,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				} else {
 					visible = true;
 					if(floatLeftMobile == 'bottom') {
-						floatOption = 'floatBottom';
+						floatOption = 'bottom';
 					} else if ( floatLeftMobile == 'top' ) {
-						floatOption = 'floatTop';
+						floatOption = 'top';
 					}
 				}
 			}
@@ -317,7 +324,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}
 		}
 
-		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
+		if ( floatOption == 'bottom' || floatOption == 'top' ) {
 			visible = false;
 			$( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_floater' ).each(function() {
 					var thisOffset = $( this ).offset();
@@ -331,9 +338,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				ncWrapper.hide();
 
 				// Add some padding to the page so it fits nicely at the top or bottom
-				if ( floatOption == 'floatBottom' ) {
+				if ( floatOption == 'bottom' ) {
 					$( 'body' ).animate({ 'padding-bottom': window.bodyPaddingBottom + 'px' }, 0 );
-				} else if ( floatOption == 'floatTop' ) {
+				} else if ( floatOption == 'top' ) {
 					$( 'body' ).animate({ 'padding-top': window.bodyPaddingTop + 'px' }, 0 );
 				}
 			} else {
@@ -343,10 +350,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				swp_trigger_events('floating_bar_revealed');
 
 				// Add some padding to the page so it fits nicely at the top or bottom
-				if ( floatOption == 'floatBottom' ) {
+				if ( floatOption == 'bottom' ) {
 					newPadding = window.bodyPaddingBottom + 50;
 					$( 'body' ).animate({ 'padding-bottom': newPadding + 'px' }, 0 );
-				} else if ( floatOption == 'floatTop' ) {
+				} else if ( floatOption == 'top' ) {
 					firstOffset = $( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_wrapper .swp_social_panel' ).first().offset();
 					if ( firstOffset.top > scrollPos + windowHeight ) {
 						newPadding = window.bodyPaddingTop + 50;
