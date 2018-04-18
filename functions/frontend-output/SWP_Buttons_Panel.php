@@ -348,17 +348,17 @@ class SWP_Buttons_Panel {
 
     protected function establish_float_location() {
         // Set the options for the horizontal floating bar
-        $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_floatLocation' , true );
-
-        if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
-            $floatOption = 'float_ignore';
-        elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
-                $floatOption = 'floatNone';
-        elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_data['post_type'] ] == 'on' ) :
-            $floatOption = 'floating_panel' . ucfirst( $this->options['float_location'] );
-        else :
-            $floatOption = 'floatNone';
-        endif;
+        // $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_floatLocation' , true );
+        //
+        // if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
+        //     $floatOption = 'float_ignore';
+        // elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
+        //         $floatOption = 'floatNone';
+        // elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_data['post_type'] ] == 'on' ) :
+        //     $floatOption = 'floating_panel' . ucfirst( $this->options['float_location'] );
+        // else :
+        //     $floatOption = 'floatNone';
+        // endif;
     }
 
 
