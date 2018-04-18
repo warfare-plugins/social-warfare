@@ -106,6 +106,7 @@ class SWP_Database_Migration {
             'buttonFloat'   => 'button_alignment',
             'post'          => 'location_post',
             'page'          => 'location_page',
+            'float_vertical'=> 'float_alignment',
 
             //* Missed choices,
             //* same reason as above ^^
