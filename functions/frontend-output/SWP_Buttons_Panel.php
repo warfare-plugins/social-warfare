@@ -103,12 +103,12 @@ class SWP_Buttons_Panel {
 
         //* Access the $post once while we have it. Values may be overwritten.
         $this->post_data = [
-            'ID'        => $post->ID,
-            'post_type' => $post->post_type,
-            'permalink' => get_the_permalink( $post->ID ),
-            'post_title'    => $post->post_title,
-            'post_status'   => $post->post_status,
-            'post_content'  => $post->post_content
+            'ID'           => $post->ID,
+            'post_type'    => $post->post_type,
+            'permalink'    => get_the_permalink( $post->ID ),
+            'post_title'   => $post->post_title,
+            'post_status'  => $post->post_status,
+            'post_content' => $post->post_content
         ];
 
         $this->localize_options( $args );
@@ -139,8 +139,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function localize_options() {
-		global $swp_user_options;
 
+		global $swp_user_options;
 		$this->options = array_merge( $swp_user_options, $this->args );
         $this->post_data['options'] = $swp_user_options;
 	}
@@ -290,8 +290,10 @@ class SWP_Buttons_Panel {
      * This is used to convert a network's name, such as Google Plus,
      * to the database-friendly key of google_plus.
      *
+     * @since  3.0.0 | 18 APR 2018 | Created
      * @param  string $name The string to convert.
      * @return string The converted string.
+     *
      */
     public function display_name_to_key( $string ) {
         return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
