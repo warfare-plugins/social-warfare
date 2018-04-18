@@ -534,7 +534,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     '2' => 'Two',
                 ])
                     ->set_default( '0' )
-                    ->set_size( 'sw-col-460' );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
                 //* swp_decimal_separator => decimal_separator
                 $decimal_separator = new SWP_Option_Select( 'Decimal Separator', 'decimal_separator' );
@@ -543,7 +543,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'comma'     => 'Comma',
                 ])
                     ->set_default( 'period' )
-                    ->set_size( 'sw-col-460' );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
                 //* swTotesFormat => totals_alignment
                 $totals_alignment = new SWP_Option_Select( 'Alignment', 'totals_alignment' );
@@ -552,7 +552,7 @@ class SWP_Options_Page extends SWP_Abstract {
                     'totals_left'   => 'Left'
                 ])
                     ->set_default( 'totals_right' )
-                    ->set_size( 'sw-col-460' );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
             $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
