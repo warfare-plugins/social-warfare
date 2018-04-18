@@ -426,7 +426,7 @@ class SWP_Buttons_Panel {
     public function render_floating_HTML( $echo = true ) {
         //* Old boilerplate that needs to be refactored.
         $class = "";
-        $size = $this->options['float_button_size'] * 100;
+        $size = $this->options['float_size'] * 100;
         $side = $this->options['float_location'];
 
         // Acquire the social stats from the networks
@@ -455,7 +455,7 @@ class SWP_Buttons_Panel {
         endif;
 
         // *Set button size
-        if ( isset($this->options['float_button_size']) ) :
+        if ( isset($this->options['float_size']) ) :
             $position = $this->options['float_alignment'];
 
             $class .= " scale-${size} float-position-${position}-${side}";
@@ -468,8 +468,7 @@ class SWP_Buttons_Panel {
         $share_counts = $this->render_share_counts();
         $buttons = $this->render_buttons();
 
-        $container = '<div class="swp_social_panelSide swp_social_panel swp_
-            ' . $this->options['float_button_shape'] .
+        $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
             ' swp_default_' . $this->options['float_default_colors'] .
             ' swp_individual_' . $this->options['float_single_colors'] .
             ' swp_o_' . $this->options['float_hover_colors'] . '

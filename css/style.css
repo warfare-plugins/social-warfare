@@ -1126,6 +1126,7 @@ body .swp_social_panel.swp_o_color_outlines:hover .swp_flipboard {
 	padding: 0;
 	text-align: center;
 	width: 90px;
+	order:-100;
 }
 
 .swp_social_panelSide .nc_tweetContainer.totes .swp_count {
