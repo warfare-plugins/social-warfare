@@ -913,13 +913,12 @@ body .swp_social_panel.swp_o_color_outlines:hover .swp_flipboard {
 	right: 5px;
 }
 
-.swp_social_panelSide[class^=swp_side] {
+.swp_social_panelSide[class*=swp_side] {
     height: 100vh;
     display: flex;
-    flex-flow: column nowrap;
     position: fixed;
-    padding: 10px;
-
+    padding: 10px 0;
+    top: 0;
 }
 .swp_social_panelSide.swp_side_top {
 	justify-content: flex-start;
