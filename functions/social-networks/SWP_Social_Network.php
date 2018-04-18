@@ -406,25 +406,13 @@ class SWP_Social_Network {
 		// False if network shares are turned off in the options.
 		elseif( false == $options['network_shares'] ):
 			return false;
-			
+
 		else :
 			return true;
 		endif;
 
 		return $this;
 	}
-
-    public function set_shares_from_all( $total_shares, $minimum_required ) {
-        if ( !empty( $total_shares[$this->key] ) ) :
-            $this->share_count = $total_shares[$this->key];
-            $this->show_shares = $this->share_count >= $minimum_required ? true : false;
-        else :
-           $this->share_count = 0;
-           $this->show_shares = false;
-        endif;
-
-        return $this;
-    }
 
 
 	/**
