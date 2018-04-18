@@ -380,7 +380,7 @@ class SWP_Buttons_Panel {
 		endif;
 
         $total_shares_html = $this->render_total_shares_html();
-        $buttons = $this->render_buttons();
+        $buttons = $this->render_buttons_html();
 
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel swp_' . $this->options['button_shape'] .
@@ -455,7 +455,7 @@ class SWP_Buttons_Panel {
         //* End old boilerplate.
 
         $share_counts = $this->render_total_shares_html();
-        $buttons = $this->render_buttons();
+        $buttons = $this->render_buttons_html();
 
         $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
             ' swp_default_' . $this->options['float_default_colors'] .
@@ -548,7 +548,7 @@ class SWP_Buttons_Panel {
         return $countss;
     }
 
-    public function render_buttons() {
+    public function render_buttons_html() {
         $html = '';
 
         foreach( $this->networks as $network ) {
