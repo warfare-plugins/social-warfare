@@ -129,7 +129,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			 * Parse the responses, add up the activity, send the results to admin_ajax
 			 */
 			if( 'undefined' !== typeof a[0].share ) {
-				console.log(a);
 				var f1 = absint( a[0].share.share_count);
 				var f2 = absint( a[0].share.comment_count );
 				if( 'undefined' !== typeof a[0].og_object ){
@@ -139,7 +138,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}
 				var fShares = f1 + f2 + f3;
 				if(swp_post_recovery_url) {
-					console.log(b);
 					if (typeof b[0].share !== 'undefined') {
 						var f4 = absint( b[0].share.share_count);
 						var f5 = absint( b[0].share.comment_count);
@@ -161,10 +159,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					post_id: swp_post_id,
 					activity: fShares
 				};
-
-				$.post( swp_admin_ajax, swpPostData, function( response ) {
-					console.log( 'Facebook Shares Response: ' + fShares );
-				});
 			}
 		});
 	}
@@ -181,7 +175,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if($(this).hasClass('swp_nohover')){
 
 			} else {
-				console.log('fired');
 				swpRestoreSizes();
 				var term_width = $(this).find('.swp_share').outerWidth();
 				var icon_width = $(this).find('i.sw').outerWidth();
@@ -277,6 +270,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}
 			} else {
 				if ( $( window ).width() > minWidth ) {
+
 					visible = false;
 				} else {
 					visible = true;
@@ -291,7 +285,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			var transition = ncSideFloater.data('transition');
 
 			if ( transition == 'slide' ) {
-
 				if ( visible == true ) {
 					ncSideFloater.css(direction, "-100px");
 				} else {
@@ -299,11 +292,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}
 
 			} else if ( transition == 'fade' ) {
-
 				if ( visible == true ) {
 					ncSideFloater.fadeOut( 200 );
 				} else {
-					ncSideFloater.fadeIn( 200 );
+					ncSideFloater.fadeIn( 200 ).css("display", "flex")
 				}
 			}
 		}
@@ -430,7 +422,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				// Record the event if Google Analytics Click tracking is enabled
 				if (typeof ga == "function" && true === swpClickTracking) {
 					var network = 'pin_image';
-					console.log(network + " Button Clicked");
 					ga("send", "event", "social_media", "swp_" + network + "_share" );
 				}
 				return false;
@@ -444,8 +435,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( $( this ).hasClass( 'noPop' ) ) {
 				return false;
 			}
-
-			console.log($(this));
 
 			if( $( this ).data( 'link' ) ) {
 				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
@@ -476,7 +465,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					} else if ($(this).hasClass('swp_CTT') ) {
 						var network = 'ctt';
 					}
-					console.log(network + " Button Clicked");
 					ga("send", "event", "social_media", "swp_" + network + "_share" );
 				}
 
