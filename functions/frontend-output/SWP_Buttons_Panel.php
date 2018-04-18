@@ -552,8 +552,13 @@ class SWP_Buttons_Panel {
         $html = '';
 
         foreach( $this->networks as $network ) {
-            $network->set_shares_from_all( $this->shares, $this->options['minimum_shares'] );
-            $html .= $network->render_HTML( $this->post_data );
+
+			// Pass in some context for this specific panel of buttons
+			$context['shares'] = $this->shares;
+			$context['options'] = $this->options;
+			$context['post_data'] = $this->post_data;
+
+            $html .= $network->render_HTML( $context );
         }
 
         return $html;

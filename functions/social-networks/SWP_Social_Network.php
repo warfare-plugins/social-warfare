@@ -348,7 +348,11 @@ class SWP_Social_Network {
 	 * @todo   Eliminate the array
 	 *
 	 */
-	public function render_HTML( $post_data, $echo = false ) {
+	public function render_HTML( $panel_context , $echo = false ) {
+
+		$post_data = $panel_context['post_data'];
+		$share_counts = $panel_context['shares'];
+		$options = $panel_context['options'];
 
 		$share_link = $this->generate_share_link( $post_data );
 
@@ -360,8 +364,8 @@ class SWP_Social_Network {
             $icon .= '</span>';
         $icon .= '</span>';
 
-        if ( true === $this->show_shares ) :
-            $icon .= '<span class="swp_count">' . swp_kilomega( $this->share_count ) . '</span>';
+        if ( true === $this->show_shares( $share_counts , $options ) ) :
+            $icon .= '<span class="swp_count">' . swp_kilomega( $share_counts[$this->key] ) . '</span>';
         else :
             $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
         endif;
@@ -383,6 +387,26 @@ class SWP_Social_Network {
 
 		return $html;
 
+	}
+
+	public function show_shares( $share_counts , $options ) {
+
+		// False if the share count is empty
+		if ( empty( $share_counts[$this->key] ) ) :
+			return false;
+
+		// False if the share count is below the minimum
+		elseif( $share_counts[$this->key] < $options['minimum_shares'] ):
+			return false;
+
+		// False if the share count is zero.
+		elseif( $share_counts[$this->key] = 0 ):
+			return false;
+		else :
+			return true;
+		endif;
+
+		return $this;
 	}
 
     public function set_shares_from_all( $total_shares, $minimum_required ) {
