@@ -193,36 +193,57 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
 	}
 	function createFloatBar() {
-        var panel    = $(".swp_social_panel");
-        var location = panel.data("float");
+        //if ( ! $( '.swp_social_panelSide' ).length ) {
+			if( $( '.nc_wrapper' ).length ) {
+				$( '.nc_wrapper' ).remove();
+			}
+			var firstSocialPanel = $( '.swp_social_panel' ).not( '[data-float="ignore"]' ).first();
+			var location = firstSocialPanel.data( 'float' );
+			var alignment = firstSocialPanel.data( 'align' );
 
-        if (typeof location === 'undefined' || location.indexOf("ignore") !== -1) return;
+			if ( location ) {
 
-        var alignment   = panel.data("align");
-        var sidePanel   = $(".swp_social_panelSide:not(.mobile)");
-        var minWidth    = sidePanel.data("screen-width");
-        var background  = panel.data("floatcolor");
+				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
+                    console.log("first if");
+					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'mobilefloat' );
+					var offsetOne = firstSocialPanel.offset();
+					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
+					var minWidth = ncSideFloater.data( 'screen-width' );
+					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
+						var position = 'floating_panel' + floatLeftMobile.charAt(0).toUpperCase() + floatLeftMobile.slice(1);
+					} else {
+						var position = location;
+					}
 
-        if (panel.offset().left < 100 || $(window).width() < minWidth) {
-            location = sidePanel.data("mobilefloat");
-        }
+				} else {
+					var position = location;
+				}
 
-        var floatClassname = "swp_float_" + location;
+				var backgroundColor = $( '.swp_social_panel' ).data( 'floatcolor' );
 
-        // panel.clone().appendTo(".nc_wrapper");
-        $(".nc_wrapper").append(panel.clone())
-            .hide()
-            .addClass(floatClassname);
+				var el = $( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' );
+                el.appendTo( 'body' );
+				// var position = firstSocialPanel.data( 'float' );
+				console.log("before clone");
+                console.log(el);
+				firstSocialPanel.clone().appendTo( el );
+                console.log("after clone");
+                console.log(el);
 
-        $("swp.social_panel").last().addClass("nc_floater").css({
-            width: panel.outerWidth(true),
-            left: panel.offset().left
-        });
+				$( '.nc_wrapper' ).hide().addClass( position );
+				var width = firstSocialPanel.outerWidth( true );
+				var offset = firstSocialPanel.offset();
 
-        $( '.swp_social_panel .swp_count' ).css({ transition: 'padding .1s linear' });
-        $( '.swp_social_panel' ).eq( 0 ).addClass( 'swp_one' );
-        $( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
-        $( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
+				$( '.swp_social_panel' ).last().addClass( 'nc_floater' ).css({
+					width: width,
+					left: ( alignment == 'center' ? 0 : offset.left )
+				});
+				$( '.swp_social_panel .swp_count' ).css({ transition: 'padding .1s linear' });
+				$( '.swp_social_panel' ).eq( 0 ).addClass( 'swp_one' );
+				$( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
+				$( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
+			}
+//}
 	}
 
 	function floatingBarReveal() {
@@ -302,6 +323,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 		if ( location == 'bottom' || location == 'top' ) {
 			visible = false;
+
 			$( '.swp_social_panel' ).not( '.swp_social_panelSide, .nc_floater' ).each(function() {
 					var thisOffset = $( this ).offset();
 					var thisHeight = $( this ).height();
@@ -309,6 +331,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 						visible = true;
 					}
 			});
+
 			if ( visible ) {
 				// Hide the Floating bar
 				ncWrapper.hide();
