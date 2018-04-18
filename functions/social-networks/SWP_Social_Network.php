@@ -364,7 +364,7 @@ class SWP_Social_Network {
             $icon .= '</span>';
         $icon .= '</span>';
 
-        if ( true === $this->show_shares( $share_counts , $options ) ) :
+        if ( true === $this->are_shares_shown( $share_counts , $options ) ) :
             $icon .= '<span class="swp_count">' . swp_kilomega( $share_counts[$this->key] ) . '</span>';
         else :
             $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
@@ -389,19 +389,24 @@ class SWP_Social_Network {
 
 	}
 
-	public function show_shares( $share_counts , $options ) {
+	public function are_shares_shown( $share_counts , $options ) {
 
 		// False if the share count is empty
 		if ( empty( $share_counts[$this->key] ) ) :
 			return false;
 
-		// False if the share count is below the minimum
-		elseif( $share_counts[$this->key] < $options['minimum_shares'] ):
+		// False if the total share count is below the minimum
+		elseif( $share_counts['total_shares'] < $options['minimum_shares'] ):
 			return false;
 
 		// False if the share count is zero.
 		elseif( $share_counts[$this->key] = 0 ):
 			return false;
+
+		// False if network shares are turned off in the options.
+		elseif( false == $options['network_shares'] ):
+			return false;
+			
 		else :
 			return true;
 		endif;
