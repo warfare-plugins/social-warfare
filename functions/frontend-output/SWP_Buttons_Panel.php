@@ -120,6 +120,7 @@ class SWP_Buttons_Panel {
         $this->establish_active_buttons();
 
 		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+
     }
 
 
@@ -390,7 +391,7 @@ class SWP_Buttons_Panel {
 			return $this->content;
 		endif;
 
-        $share_counts = $this->render_share_counts();
+        $share_counts = $this->render_total_shares_html();
         $buttons = $this->render_buttons();
 
 		// Create the HTML Buttons panel wrapper
@@ -465,7 +466,7 @@ class SWP_Buttons_Panel {
 
         //* End old boilerplate.
 
-        $share_counts = $this->render_share_counts();
+        $share_counts = $this->render_total_shares_html();
         $buttons = $this->render_buttons();
 
         $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
@@ -572,23 +573,26 @@ class SWP_Buttons_Panel {
 
 
     /**
-     * If share counts are active, renders the Share Counts HTML.
+     * The Total Shares Count
      *
+     * If share counts are active, renders the Total Share Counts HTML.
+     *
+     * @since  3.0.0 | 18 APR 2018 | Created
+     * @param  none
      * @return string $html The fully qualified HTML to display share counts.
      *
      */
-    public function render_share_counts() {
-        $total_shares = $this->options['total_shares'];
+    public function render_total_shares_html() {
 
-        if ( empty( $total_shares) || $total_shares <= $this->options['minimum_shares'] ) {
+        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] <= $this->options['minimum_shares'] ) {
             return '';
         }
 
-        $counts = '<div class="nc_tweetContainer totes totesalt" data-id="' . $this->total_shares . '" >';
-            $counts .= '<span class="swp_count ">' . swp_kilomega( $this->options['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-        $counts .= '</div>';
+        $html = '<div class="nc_tweetContainer totes totesalt" >';
+            $html .= '<span class="swp_count ">' . swp_kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+        $html .= '</div>';
 
-        return $counts;
+        return $html;
     }
 
     //* TODO: This has not been refactored.
