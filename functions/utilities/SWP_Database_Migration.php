@@ -100,16 +100,14 @@ class SWP_Database_Migration {
         $populated = get_option( 'social_warfare_settings', false );
 
         //* Fetch posts where we have already stored data.
-        $old_post_meta = get_posts( ['meta_key' => 'nc_postLocation']) );
+        $old_posts = get_posts( ['meta_key' => 'nc_postLocation'] );
 
-        if ( count($old_post_meta) > 0 ) :
-            $this->update_sw_meta( $posts );
+        if ( count($old_posts) > 0 ) :
+            $this->update_sw_meta( $old_posts );
         endif;
 
-        $this->update_sw_meta();
-
         if ( false === $populated || empty( $options['location_archive_categories'] ) ) :
-            $this->initialize();
+            $this->initialize_database();
         endif;
 
         if ( !$this->is_migrated() ) {
@@ -119,10 +117,10 @@ class SWP_Database_Migration {
 
     public function update_sw_meta( $posts ) {
         foreach( $posts as $post ) {
-            foreach( $this->$metadata_map as $previous_key => $new_key ) {
+            foreach( $this->metadata_map as $previous_key => $new_key ) {
                 $value = get_post_meta( $post->ID, $previous_key );
                 update_post_meta ($post->ID, $new_key, $value );
-                delete_post_meta( $post->ID, $previous_key, $value );
+                $del = delete_post_meta( $post->ID, $previous_key );
             }
         }
     }
@@ -222,7 +220,7 @@ class SWP_Database_Migration {
             //* same reason as above ^^
             'fullWidth' => 'full_width',
             'floatLeftMobile'   => 'float_mobile',
-        );
+        ];
 
 
         $removals = [
