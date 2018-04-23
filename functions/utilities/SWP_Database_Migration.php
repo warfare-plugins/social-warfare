@@ -8,6 +8,22 @@
 
 class SWP_Database_Migration {
 
+    public $meta_defaults = [
+         'swp_og_image',
+         'swp_og_title',
+         'swp_og_description',
+         'swp_pinterest_image',
+         'swp_custom_tweet',
+         'nc_pinterest_description',
+         'swp_pin_browser_extension',
+         'swp_pin_browser_extension_location',
+         'swp_pin_browser_extension_url',
+         'swp_post_location',
+         'swp_float_location',
+         'swp_twitter_id',
+         'swp_cache_timestamp',
+     ];
+
     public $metadata_map =  [
         'nc_ogImage'        => 'swp_og_image',
         'nc_ogTitleWrapper' => 'swp_og_title',
@@ -101,14 +117,23 @@ class SWP_Database_Migration {
         $this->meta_defaults
     }
 
-    public function __construct() {
 
+    public function __construct() {
+        $populated = get_option( 'social_warfare_settings', false );
+
+        if ( false === $populated || empty( $options['location_archive_categories'] ) ) :
+            $this->initialize();
+            return;
+        endif;
 
         if ( !$this->is_migrated() ) {
             $this->migrate();
         }
     }
 
+    public function initialize_database() {
+        update_option( 'social_warfare_settings', $this->defaults );
+    }
 
     /**
      * Checks to see if our new options have been stored in the database.
