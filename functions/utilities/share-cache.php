@@ -85,7 +85,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$fresh_cache = false;
 
 	// Bail if output isn't being forced and legacy caching isn't enabled.
-	if ( ! $output && 'legacy' !== $options['cache_method'] ) {
+	if ( ! $output && isset( $options['cache_metod'] ) && 'legacy' !== $options['cache_method'] ) {
 		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
 			$fresh_cache = true;
 		}
