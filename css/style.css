@@ -920,6 +920,11 @@ body .swp_social_panel.swp_o_color_outlines:hover .swp_flipboard {
     padding: 10px 0;
     top: 0;
 }
+
+.swp_social_panelSide.swp_float_right {
+    align-content: flex-end;
+}
+
 .swp_social_panelSide.swp_side_top {
 	justify-content: flex-start;
 }
