@@ -287,7 +287,7 @@ class SWP_Section_HTML extends SWP_Option {
             'none' => 'None/Manual Placement'
         ];
 
-        $default_types = ['page', 'post'];
+        $default_types = ['page', 'post', 'home', 'archive_categories'];
         $post_types = array_merge( $default_types, get_post_types( ['public' => true, '_builtin' => false ], 'names' ) );
 
         $panel_locations = [
@@ -323,7 +323,7 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
                 $html .= '<div class="sw-grid sw-col-300">';
-                    $html .= '<p class="sw-input-label">' . str_replace('_', ' ', ucfirst($post)) . '</p>';
+                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
                 $html .= '</div>';
 
                 $html .= '<div class="sw-grid sw-col-300">';
