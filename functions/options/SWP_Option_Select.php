@@ -128,11 +128,10 @@ class SWP_Option_Select extends SWP_Option {
     * @return string $html The fully qualified HTML for a select.
     */
     public function render_HTML_element() {
-        $user_setting = $this->user_options[$this->key];
+        $user_setting = isset( $this->user_options[$this->key]) ? $this->user_options[$this->key] : $this->default;
 
         if ( is_array( $user_setting ) ) :
             $selected = isset( $user_setting[$this->key] ) ? $user_setting[$this->key] : $this->default;
-
         else:
             $selected = isset( $user_setting ) ? $user_setting : $this->default;
         endif;
