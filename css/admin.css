@@ -55,16 +55,16 @@
 	float: left;
 }
 
-.swpmb-field.swpmb-select-wrapper.swp_advanced_pinterest_imageWrapper,
-.swpmb-field.swpmb-select-wrapper.swp_advanced_pinterest_image_locationWrapper,
+.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper,
+.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper,
 .swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper,
 .swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper {
 	width:32%;
 	float:left;
 	min-width:320px;
 }
-.swpmb-field.swpmb-select-wrapper.swp_advanced_pinterest_imageWrapper select,
-.swpmb-field.swpmb-select-wrapper.swp_advanced_pinterest_image_locationWrapper select,
+.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper select,
+.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper select,
 .swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper select,
 .swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper select {
 	width:90%;
