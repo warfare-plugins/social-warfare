@@ -126,6 +126,10 @@ class SWP_Abstract {
 
         endif;
 
+        if (array_key_exists( 'active', $user_icons) ) :
+            return $user_icons['active'];
+        endif;
+
         return $user_icons;
     }
 
