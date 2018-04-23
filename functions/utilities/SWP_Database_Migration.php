@@ -1,28 +1,12 @@
 <?php
 /**
- * Migrates camel cased database keys to semantic, snake cased keys.
+ * The Database updater for Social Warfare 3.0.0.
  *
- * The migrate() method should only ever be called once. This class is planned
- * to be obsolete in the future.
+ * This willl either migrate previous options to social_warfare_settings,
+ * or create the new default settings.
  */
 
 class SWP_Database_Migration {
-
-    public $meta_defaults = [
-         'swp_og_image',
-         'swp_og_title',
-         'swp_og_description',
-         'swp_pinterest_image',
-         'swp_custom_tweet',
-         'nc_pinterest_description',
-         'swp_pin_browser_extension',
-         'swp_pin_browser_extension_location',
-         'swp_pin_browser_extension_url',
-         'swp_post_location',
-         'swp_float_location',
-         'swp_twitter_id',
-         'swp_cache_timestamp',
-     ];
 
     public $metadata_map =  [
         'nc_ogImage'        => 'swp_og_image',
@@ -39,6 +23,7 @@ class SWP_Database_Migration {
         'twitterID'             => 'swp_twitter_id',
         'swp_cache_timestamp'   => 'swp_cache_timestamp'
     ];
+
 
     private $defaults = [
         'location_archive_categories'       => 'below',
@@ -110,20 +95,21 @@ class SWP_Database_Migration {
         ],
     ];
 
-    //* Fetch posts where we have already stored data.
-    $posts = get_posts(['meta_key' => 'nc_postLocation']);
-
-    foreach($posts as $post) {
-        $this->meta_defaults
-    }
-
 
     public function __construct() {
         $populated = get_option( 'social_warfare_settings', false );
 
+        //* Fetch posts where we have already stored data.
+        $old_post_meta = get_posts( ['meta_key' => 'nc_postLocation']) );
+
+        if ( count($old_post_meta) > 0 ) :
+            $this->update_sw_meta( $posts );
+        endif;
+
+        $this->update_sw_meta();
+
         if ( false === $populated || empty( $options['location_archive_categories'] ) ) :
             $this->initialize();
-            return;
         endif;
 
         if ( !$this->is_migrated() ) {
@@ -131,9 +117,20 @@ class SWP_Database_Migration {
         }
     }
 
+    public function update_sw_meta( $posts ) {
+        foreach( $posts as $post ) {
+            foreach( $this->$metadata_map as $previous_key => $new_key ) {
+                $value = get_post_meta( $post->ID, $previous_key );
+                update_post_meta ($post->ID, $new_key, $value );
+                delete_post_meta( $post->ID, $previous_key, $value );
+            }
+        }
+    }
+
     public function initialize_database() {
         update_option( 'social_warfare_settings', $this->defaults );
     }
+
 
     /**
      * Checks to see if our new options have been stored in the database.
@@ -147,17 +144,19 @@ class SWP_Database_Migration {
         return $option;
     }
 
+
     /**
      * Map prevous key/value pairs to new keys.
      *
      * @return [type] [description]
      */
     private function migrate() {
-        $options = get_option( 'socialWarfareOptions', [) );
+        $options = get_option( 'socialWarfareOptions', [] );
 
         $map = [
             //* Options names
-            'totesEach'     => 'network_shares',
+            'locationSite'  => 'location_archive_categories',
+            'locationHome'  => 'location_home',            'totesEach'     => 'network_shares',
             'totes'         => 'total_shares',
             'minTotes'      => 'minimum_shares',
             'visualTheme'   => 'button_shape',
@@ -195,13 +194,6 @@ class SWP_Database_Migration {
             'cttTheme'  => 'ctt_theme',
             'cttCSS'    => 'ctt_css',
             'sideCustomColor'   => 'single_custom_color',
-
-            //* Missed options, adding them here
-            //* because lazy says i don't want to find
-            //* where they fit above ^^
-
-            'locationSite'  => 'location_archive_categories',
-            'locationHome'  => 'location_home',
             'floatBgColor'  => 'float_background_color',
             'orderOfIconsSelect'    => 'order_of_icons_method',
 			'newOrderOfIcons' => 'order_of_icons',
@@ -232,6 +224,7 @@ class SWP_Database_Migration {
             'floatLeftMobile'   => 'float_mobile',
         );
 
+
         $removals = [
             'dashboardShares',
             'rawNumbers',
@@ -242,7 +235,9 @@ class SWP_Database_Migration {
             'locationattachment',
         ];
 
-        $migrations = [);
+
+        $migrations = [];
+
 
         foreach( $options as $old => $value ) {
 
@@ -256,6 +251,7 @@ class SWP_Database_Migration {
                 $migrations[$old] = $value;
             }
         }
+
 
         update_option( 'social_warfare_settings', $migrations );
     }
