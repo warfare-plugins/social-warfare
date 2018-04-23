@@ -393,9 +393,11 @@ class SWP_Buttons_Panel {
             '" data-position="' . $this->options['location_post'] .
             '" data-float="' . $this->options['float_location'] .
             '" data-count="' . $this->total_shares .
-            '" data-floatColor="' . $this->options['float_background_color'] .
-            '" data-emphasize="'.$this->options['emphasize_icons'].'
+            '" data-floatColor="' . $this->options['float_background_color'] . '
+
             ">';
+            //* This should be inserted via addon, not here. 
+            //'" data-emphasize="'.$this->options['emphasize_icons'].'
 
         if ($this->options['totals_alignment'] === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
