@@ -98,7 +98,6 @@ class SWP_Option_Select extends SWP_Option {
     *
     */
     public function render_HTML() {
-
         $html = '<div class="sw-grid ' . $this->parent_size . ' sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
@@ -138,11 +137,10 @@ class SWP_Option_Select extends SWP_Option {
 
         $selected_user_option = $this->user_options[$this->key];
 
-
         $html = '<select name=' . $this->key . '>';
 
         foreach ( $this->choices as $key => $display_name ) {
-            $selected = selected($key, $value, false);
+            $selected = selected( $key, $value, false );
             $html .= '<option value="' . $key . '"' . $selected .  ' >' . $display_name . '</option>';
         }
 

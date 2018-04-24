@@ -83,7 +83,6 @@ class SWP_Options_Page extends SWP_Abstract {
 			->init_styles_tab()
 			->init_social_tab()
 			->init_advanced_tab();
-			// ->init_registration_tab();
 
 		/**
 		 * STEP #2: Addons can now access this object to add their own
