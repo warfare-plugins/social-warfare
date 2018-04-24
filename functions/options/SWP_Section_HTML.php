@@ -339,6 +339,8 @@ class SWP_Section_HTML extends SWP_Option {
                 $html .= '</div>';
                 $html .= '<div class="sw-grid sw-col-300 sw-fit">';
 
+                if ( $post !== 'home' && $post !== 'archive_categories' ) :
+
                     $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
                     $float->set_priority( $priority + 5 )
                         ->set_size( 'sw-col-300' )
@@ -346,6 +348,8 @@ class SWP_Section_HTML extends SWP_Option {
                         ->set_default( 'on' );
 
                     $html .= $float->render_HTML_element();
+
+                endif;
 
                 $html .= '</div>';
 
