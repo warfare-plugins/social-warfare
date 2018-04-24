@@ -351,6 +351,7 @@ add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
  * @return array $info A modified array of footer script information.
  */
 function swp_output_cache_trigger( $info ) {
+    die(var_dump($info));
 
 	// Make sure the post is published, otherwise don't attempt to update counts
 	if('publish' == get_post_status($info['postID']) ):
@@ -364,7 +365,7 @@ function swp_output_cache_trigger( $info ) {
 		}
 
 		// Bail if we're not using the newer cache method.
-		if ( 'legacy' === $info['swp_user_options']['cache_method'] && is_singular() ) {
+		if ( is_singular() && !empty( $info['swp_user_options']['cache_method'] ) && 'legacy' === $info['swp_user_options']['cache_method'] ) {
 			ob_start(); ?>
 
 			var swp_buttons_exist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
