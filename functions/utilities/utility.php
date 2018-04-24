@@ -17,12 +17,13 @@
  * @since  3.0.0 | 24 APR 2018 | Created
  * @param  string $key   The key associated with the option we want.
  * @return mixed  $value The value of the option.
- * 
+ *
  */
+
 function swp_get_option($key){
 	global $swp_user_options;
 	$defaults = array();
-	$defaults = apply_filter('swp_options_page_defaults' , $defaults );
+	$defaults = apply_filters('swp_options_page_defaults' , $defaults );
 
 	// If the options exists, return it.
 	if( !empty( $swp_user_options[$key] ) ):
