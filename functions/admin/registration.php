@@ -65,7 +65,7 @@ function swp_get_registration_key( $domain, $context = 'api' ) {
 function is_swp_addon_registered($key) {
 
 	// Get the plugin options from the database
-	$options = get_option( 'socialWarfareOptions' );
+	$options = get_option( 'social_warfare_settings' );
 	$is_registered = false;
 
 	// Get the timestamps setup for comparison to see if a week has passed since our last check
@@ -113,19 +113,19 @@ function is_swp_addon_registered($key) {
 				$is_registered = false;
 				$options[$key.'_license_key'] = '';
 				$options[$key.'_license_key_timestamp'] = $current_time;
-				update_option( 'socialWarfareOptions' , $options );
+				update_option( 'social_warfare_settings' , $options );
 
 			// If the property is some other status, just go with it.
 			} else {
 				$options[$key.'_license_key_timestamp'] = $current_time;
-				update_option( 'socialWarfareOptions' , $options );
+				update_option( 'social_warfare_settings' , $options );
 				$is_registered = true;
 			}
 
 		// If we recieved no response from the server, we'll just check again next week
 		} else {
 			$options[$key.'_license_key_timestamp'] = $current_time;
-			update_option( 'socialWarfareOptions' , $options );
+			update_option( 'social_warfare_settings' , $options );
 			$is_registered = true;
 		}
 	}
@@ -191,10 +191,10 @@ function swp_register_plugin() {
 			if( isset($license_data->license) && 'valid' == $license_data->license ) {
 
 				$current_time = time();
-				$options = get_option( 'socialWarfareOptions' );
+				$options = get_option( 'social_warfare_settings' );
 				$options[$name_key.'_license_key'] = $license;
 				$options[$name_key.'_license_key_timestamp'] = $current_time;
-				update_option( 'socialWarfareOptions' , $options );
+				update_option( 'social_warfare_settings' , $options );
 
 				echo json_encode($license_data);
 				wp_die();
@@ -242,7 +242,7 @@ add_action( 'wp_ajax_swp_unregister_plugin', 'swp_unregister_plugin' );
 function swp_unregister_plugin() {
 
     // Setup the variables needed for processing
-	$options = get_option( 'socialWarfareOptions' );
+	$options = get_option( 'social_warfare_settings' );
 	$name_key = $_POST['name_key'];
 	$item_id = $_POST['item_id'];
     $site_url = swp_get_site_url();
@@ -273,18 +273,18 @@ function swp_unregister_plugin() {
 		// If the deactivation was valid update the database
 		if( isset($license_data->license) && $license_data->license == 'valid' ) {
 
-			$options = get_option( 'socialWarfareOptions' );
+			$options = get_option( 'social_warfare_settings' );
 			$options[$name_key.'_license_key'] = '';
-			update_option( 'socialWarfareOptions' , $options );
+			update_option( 'social_warfare_settings' , $options );
 			echo json_encode($license_data);
 			wp_die();
 
 		// If the API request didn't work, just deactivate locally anyways
 		} else {
 
-			$options = get_option( 'socialWarfareOptions' );
+			$options = get_option( 'social_warfare_settings' );
 			$options[$name_key.'_license_key'] = '';
-			update_option( 'socialWarfareOptions' , $options );
+			update_option( 'social_warfare_settings' , $options );
 			echo json_encode($license_data);
 			wp_die();
 		}
