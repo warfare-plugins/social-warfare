@@ -253,7 +253,7 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * @return array Custom Post Types.
     */
-    protected function get_custom_post_types() {
+    protected function get_og_post_types() {
         return [
             'article',
             'book',
