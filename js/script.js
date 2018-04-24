@@ -205,7 +205,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
                     console.log("first if");
-					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'mobilefloat' );
+					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
 					var offsetOne = firstSocialPanel.offset();
 					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
 					var minWidth = ncSideFloater.data( 'screen-width' );
@@ -224,11 +224,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				var el = $( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' );
                 el.appendTo( 'body' );
 				// var position = firstSocialPanel.data( 'float' );
-				console.log("before clone");
-                console.log(el);
 				firstSocialPanel.clone().appendTo( el );
-                console.log("after clone");
-                console.log(el);
 
 				$( '.nc_wrapper' ).hide().addClass( position );
 				var width = firstSocialPanel.outerWidth( true );
@@ -266,7 +262,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		if ( location === 'right' || location === 'left' ) {
-			var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'mobilefloat' );
+			var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
 			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 
 			if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
