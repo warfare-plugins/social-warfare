@@ -185,7 +185,6 @@
 			$.post( ajaxurl, data, function(response) {
 				// Clear the loading screen
 				clearLoadingScreen();
-				console.log($.parseJSON(response));
 
 				// Reset the default options variable
 				socialWarfarePlugin.defaultOptions = fetchAllOptions();
@@ -345,9 +344,6 @@
 			var iColorSet    = $( 'select[name="single_colors"]' ).val();
 			var oColorSet    = $( 'select[name="hover_colors"]' ).val();
 			var i = 0;
-			console.log(availableOptions);
-			console.log(visualTheme);
-			console.log(availableOptions[visualTheme]);
 			var array = availableOptions[visualTheme];
 			var dColor = array.hasOwnProperty( dColorSet );
 			var iColor = array.hasOwnProperty( iColorSet );
@@ -461,14 +457,11 @@
 
 		loadingScreen();
 
-		console.log(data);
 
 		$.post( ajaxurl, data, function( response ) {
 			// If the response was a failure...
-			console.log(response);
 			response = JSON.parse(response);
 
-			console.log(response);
 			if ( !response.success ) {
 				alert( 'Failure: ' + response.data );
 			} else {
@@ -494,14 +487,12 @@
 			name_key: key,
 			item_id: item_id,
 		};
-		console.log(ajaxData);
 		loadingScreen();
 
 		// Ping the home server to create a registration log
 		$.post( ajaxurl, ajaxData, function( response ) {
 			// If the response was a failure...
 			//
-			console.log(response);
 			response = JSON.parse(response);
 			if ( !response.success ) {
 				alert( 'Failure: ' + response.data );
@@ -523,7 +514,6 @@
 		$( '.register-plugin' ).on( 'click', function() {
 			var key = $(this).attr('swp-addon');
 			var item_id = $(this).attr('swp-item-id');
-			console.log(key);
 			registerPlugin(key,item_id);
 			return false;
 		});
@@ -531,7 +521,6 @@
 		$( '.unregister-plugin' ).on( 'click', function() {
 			var key = $(this).attr('swp-addon');
 			var item_id = $(this).attr('swp-item-id');
-			console.log(key);
 			unregisterPlugin(key,item_id);
 			return false;
 		});
