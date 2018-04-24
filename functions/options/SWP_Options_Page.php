@@ -211,8 +211,8 @@ class SWP_Options_Page extends SWP_Abstract {
             'light_gray_outlines'   =>  'Light Gray Outlines',
             'medium_gray_outlines'  =>  'Medium Gray Outlines',
             'dark_gray_outlines'    =>  'Dark Gray Outlines',
-            'color_outlines'    =>  'Color Outlines',
-            'custom_color'      =>  'Custom Color',
+            'color_outlines'        =>  'Color Outlines',
+            'custom_color'          =>  'Custom Color',
             'custom_color_outlines' =>  'Custom Color Outlines'
         ];
     }

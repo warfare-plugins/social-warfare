@@ -351,7 +351,6 @@ add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
  * @return array $info A modified array of footer script information.
  */
 function swp_output_cache_trigger( $info ) {
-    die(var_dump($info));
 
 	// Make sure the post is published, otherwise don't attempt to update counts
 	if('publish' == get_post_status($info['postID']) ):

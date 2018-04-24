@@ -35,7 +35,6 @@ class SWP_Option_Icons extends SWP_Option {
 
         $html .= '<div class="sw-grid sw-col-620 sw-fit">';
             $html .= '<div class="sw-active sw-buttons-sort">';
-
 			foreach( $user_icons as $network_key ) {
                 if ( isset( $all_icons[$network_key]) ) :
                     $network = $all_icons[$network_key];
