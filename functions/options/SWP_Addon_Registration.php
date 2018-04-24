@@ -1,9 +1,10 @@
 <?php
 
 class SWP_Addon_Registration extends SWP_Option {
-    public $key;
-    public $license_key;
-    public $product_id;
+    public $key = '';
+    public $license_key = '';
+    public $product_id = 0;
+    public $registered = 0;
 
     public function __construct( $addon ) {
         parent::__construct( $addon->name, $addon->key );
@@ -15,15 +16,14 @@ class SWP_Addon_Registration extends SWP_Option {
     }
 
     public function render_HTML() {
-        $registered = 0;
-
         if ( !empty( $this->license_key ) ) :
-            $registered = 1;
+            $this->registered = 1;
         endif;
 
-        $html = '<div class="registration-wrapper '. $this->key . '" registration="' . $registered . '">';
+        $html = '<div class="registration-wrapper '. $this->key . '" registration="' . $this->registered . '">';
             $html .= '<h2>' . __($this->name . ' Registration', 'social-warfare') . '</h2>';
 
+            //* Print both types of HTML. Javascript determines which to display.
             $html .= $this->not_registered_HTML();
             $html .= $this->is_registered_HTML();
 
@@ -35,10 +35,11 @@ class SWP_Addon_Registration extends SWP_Option {
     }
 
     public function get_license_key() {
-        $identifier = $this->key . '_license_key';
+        $license = $this->key . '_license_key';
+        // die(var_dump($this->user_options));
 
-        if ( isset( $this->user_options[$identifier] ) ) {
-            return $this->user_options[$identifier];
+        if ( isset( $this->user_options[$license] ) ) {
+            return $this->user_options[$license];
         }
 
         return '';
