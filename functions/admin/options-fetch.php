@@ -148,7 +148,7 @@ function swp_update_options( $options ) {
  * @return bool True if the option has been updated.
  */
 function swp_update_option( $key, $value ) {
-	$options = get_option( 'socialWarfareOptions', array() );
+	$options = get_option( 'social_warfare_settings', array() );
 
 	$options[ $key ] = $value;
 
