@@ -87,16 +87,38 @@ class SWP_Abstract {
     */
 	public $priority;
 
+
+	/**
+	 * The Construct Method
+	 *
+	 * Pull in the users options from the database and pull in the global network objects.
+	 *
+	 * @since 3.0.0 | 24 APR 2018 | Created
+	 * @param string $name The name of the option
+	 * @return none
+	 *
+	 */
     public function __construct( $name ) {
         $this->set_name( $name );
         $this->user_options = get_option( 'social_warfare_settings' );
 
-        add_action('plugins_loaded', function() {
-            global $swp_social_networks;
-            $this->networks = $swp_social_networks;
-        }, 1000);
+        add_action('plugins_loaded', array( $this , 'load_social_networks' ) , 1000 );
 
     }
+
+
+	/**
+	 * A function to pull the global social networks into a local property.
+	 *
+	 * @since  3.0.0 | 24 APR 2018 | Created
+	 * @param  none
+	 * @return none
+	 * 
+	 */
+	public function load_social_networks() {
+		global $swp_social_networks;
+		$this->networks = $swp_social_networks;
+	}
 
     public function get_property( $property ) {
         if ( property_exists( __CLASS__, $property ) ) {
