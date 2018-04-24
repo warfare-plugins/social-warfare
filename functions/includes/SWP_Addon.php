@@ -7,36 +7,14 @@ class SWP_Addon extends Social_Warfare {
         $this->product_id = 0;
         $this->key = '';
         $this->version = '';
-        $this->core_required = '';
+        $this->core_required = '3.0.0';
         $this->store_url = 'https://warfareplugins.com';
         $this->site_url = swp_get_site_url();
-
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
-
     }
 
-    /**
-     * Add a registration key for the registration functions
-     *
-     * @param Array An array of registrations for each paid addon
-     * @return Array An array modified to add this new registration key
-     *
-     */
-    public function init_addon( $registrations ) {
-
-        if ( defined('SWP_VERSION') && version_compare($this->version , $this->core_required) >= 0 ) :
-            array_push( $registrations, [
-                'plugin_name'   => $this->plugin_name,
-                'key'           => $this->key,
-                'product_id'    => $this->product_id,
-                'version'       => $this->version
-            ]);
-        endif;
-
-        return $registrations;
-    }
 
     /**
      * The callback function used to add a new instance of this /**
@@ -47,7 +25,13 @@ class SWP_Addon extends Social_Warfare {
      * @param array $addons The array of addons currently activated.
      */
     public function add_self( $addons ) {
-        $addons[] = $this;
+        $this->establish_license_key();
+        $this->registered = $this->is_registered();
+
+        if ( defined('SWP_VERSION') && version_compare($this->core_version , $this->core_required) >= 0 ) :
+            $addons[] = $this;
+        endif;
+
         return $addons;
     }
 
@@ -117,16 +101,26 @@ class SWP_Addon extends Social_Warfare {
 
     }
 
+    public function establish_license_key() {
+        $options = get_option( 'social_warfare_settings' );
+
+        if ( isset ( $options[ $this->key . '_license_key'] ) ) :
+            $this->license_key = $options[ $this->key . '_license_key'];
+        endif;
+
+        $this->license_key = '';
+    }
+
     public function is_registered() {
         // Get the plugin options from the database
     	$options = get_option( 'social_warfare_settings' );
-
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
         if ( isset($options[$this->key.'_license_key_timestamp'] ) ) {
             $timestamp = $options[$this->key . '_license_key_timestamp'];
         }
+
     	$timestamp = isset ( $timestamp ) ? $timestamp  : 0;
 
     	$time_to_recheck = $timestamp + 604800;
