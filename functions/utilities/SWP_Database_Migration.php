@@ -9,19 +9,19 @@
 class SWP_Database_Migration {
 
     public $metadata_map =  [
-        'nc_ogImage'        => 'swp_og_image',
-        'nc_ogTitleWrapper' => 'swp_og_title',
-        'nc_ogDescriptionWrapper'       => 'swp_og_description',
-        'nc_pinterestImage' => 'swp_pinterest_image',
-        'nc_customTweet'    => 'swp_custom_tweet',
-        'nc_pinterestDescription'       => 'nc_pinterest_description',
-        'swp_pin_browser_extension'         => 'swp_pin_browser_extension',
-        'swp_pin_browser_extension_location'     => 'swp_pin_browser_extension_location',
-        'swp_pin_browser_extension_url'     => 'swp_pin_browser_extension_url',
+        'nc_ogImage'            => 'swp_og_image',
+        'nc_ogTitleWrapper'     => 'swp_og_title',
+        'nc_pinterestImage'     => 'swp_pinterest_image',
+        'nc_customTweet'        => 'swp_custom_tweet',
         'nc_postLocation'       => 'swp_post_location',
         'nc_floatLocation'      => 'swp_float_location',
         'twitterID'             => 'swp_twitter_id',
-        'swp_cache_timestamp'   => 'swp_cache_timestamp'
+        'nc_ogDescriptionWrapper'       => 'swp_og_description',
+        'nc_pinterestDescription'       => 'nc_pinterest_description',
+        'swp_cache_timestamp'           => 'swp_cache_timestamp'
+        'swp_pin_browser_extension'     => 'swp_pin_browser_extension',
+        'swp_pin_browser_extension_location'    => 'swp_pin_browser_extension_location',
+        'swp_pin_browser_extension_url'         => 'swp_pin_browser_extension_url',
     ];
 
 
@@ -97,17 +97,19 @@ class SWP_Database_Migration {
 
 
     public function __construct() {
-        $populated = get_option( 'social_warfare_settings', false );
+        //* Check to see if the 3.0.0 settings exist.
+        $settings = get_option( 'social_warfare_settings', false );
 
-        //* Fetch posts where we have already stored data.
-        $old_posts = get_posts( ['meta_key' => 'nc_postLocation'] );
-
-        if ( count($old_posts) > 0 ) :
-            $this->update_sw_meta( $old_posts );
+        if ( false === $settings || empty( $settings['location_archive_categories'] ) ) :
+            $this->initialize_database();
         endif;
 
-        if ( false === $populated || empty( $options['location_archive_categories'] ) ) :
-            $this->initialize_database();
+        //* Fetch posts with 2.3.5 metadata.
+        $old_metadata = get_posts( ['meta_key' => 'nc_postLocation'] );
+
+        //* Map 2.3.5 metadata to 3.0.0 keys.
+        if ( count( $old_metadata ) > 0 ) :
+            $this->update_sw_meta( $old_posts );
         endif;
 
         if ( !$this->is_migrated() ) {
@@ -137,9 +139,9 @@ class SWP_Database_Migration {
      *
      */
     public function is_migrated() {
-        $option = get_option( 'social_warfare_settings' , false);
+        $option = get_option( 'socialWarfareOptions' , false);
 
-        return $option;
+        return is_array( $option );
     }
 
 
@@ -154,7 +156,8 @@ class SWP_Database_Migration {
         $map = [
             //* Options names
             'locationSite'  => 'location_archive_categories',
-            'locationHome'  => 'location_home',            'totesEach'     => 'network_shares',
+            'locationHome'  => 'location_home',
+            'totesEach'     => 'network_shares',
             'totes'         => 'total_shares',
             'minTotes'      => 'minimum_shares',
             'visualTheme'   => 'button_shape',
@@ -252,5 +255,6 @@ class SWP_Database_Migration {
 
 
         update_option( 'social_warfare_settings', $migrations );
+        delete_option( 'socialWarfareOptions' );
     }
 }
