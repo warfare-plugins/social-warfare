@@ -9,6 +9,35 @@
  */
 
 
+/**
+ * A global function to ensure that we always have a value for
+ * every option. Grab and use the default value if it hasn't been
+ * set.
+ *
+ * @since  3.0.0 | 24 APR 2018 | Created
+ * @param  string $key   The key associated with the option we want.
+ * @return mixed  $value The value of the option.
+ * 
+ */
+function swp_get_option($key){
+	global $swp_user_options;
+	$defaults = array();
+	$defaults = apply_filter('swp_options_page_defaults' , $defaults );
+
+	// If the options exists, return it.
+	if( !empty( $swp_user_options[$key] ) ):
+		return $swp_user_options[$key];
+
+	// Else check if we have a default to use:
+	elseif( !empty($defaults[$key]) ):
+		return $defaults[$key];
+
+	// If neither, just return false.
+	else:
+		return false;
+	endif;
+}
+
 add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
 /**
  * Handle the options save request inside of admin-ajax.php
