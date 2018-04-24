@@ -44,6 +44,8 @@ class SWP_Database_Migration {
         'float_single_colors'               => 'full_color',
         'float_hover_colors'                => 'fullColor',
         'float_style_source'                => true,
+        'float_size'                        => 1,
+        'float_alignment'                   => 'center',
         'button_size'                       => 1,
         'button_alignment'                  => 'fullWidth',
         'transition'                        => 'slide',
@@ -73,6 +75,11 @@ class SWP_Database_Migration {
         'analytics_campaign'                => 'SocialWarfare',
         'swp_click_tracking'                => false,
         'order_of_icons_method'             => 'manual',
+        'og_post'                           => 'article',
+        'og_page'                           => 'article',
+        'pinterest_image_location'          => 'hidden',
+        'pin_browser_extension'             => false,
+        'pinterest_fallback'                => 'all',
         'pinit_toggle'                      => false,
         'pinit_location_horizontal'         => 'center',
         'pinit_location_vertical'           => 'top',
@@ -137,7 +144,6 @@ class SWP_Database_Migration {
     }
 
     public function initialize_database() {
-        echo "initialize_database()";
         update_option( 'social_warfare_settings', $this->defaults );
     }
 
@@ -161,7 +167,6 @@ class SWP_Database_Migration {
      * @return [type] [description]
      */
     private function migrate() {
-        echo "migrating()";
         $options = get_option( 'socialWarfareOptions', [] );
 
         $map = [
@@ -200,7 +205,8 @@ class SWP_Database_Migration {
             'analyticsMedium'   => 'analytics_medium',
             'analyticsCampaign' => 'analytics_campaign',
             'advanced_pinterest_image' => 'pin_browser_extension',
-            'pin_browser_extension_location' => 'pinterest_image_location',
+            'advanced_pinterest_image_location' => 'pinterest_image_location',
+            'pin_browser_extension_location' => 'pin_browser_extension_location',
             'advanced_pinterest_fallback'   => 'pinterest_fallback',
             'recovery_custom_format'    => 'recovery_permalink',
             'cttTheme'  => 'ctt_theme',
