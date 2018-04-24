@@ -28,9 +28,7 @@ class SWP_Addon extends Social_Warfare {
         $this->establish_license_key();
         $this->registered = $this->is_registered();
 
-        if ( defined('SWP_VERSION') && version_compare($this->core_version , $this->core_required) >= 0 ) :
-            $addons[] = $this;
-        endif;
+        $addons[] = $this;
 
         return $addons;
     }
