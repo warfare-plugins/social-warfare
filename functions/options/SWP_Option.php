@@ -152,8 +152,29 @@ class SWP_Option extends SWP_Abstract {
 
         $this->default = $value;
 
+		// Add this to our global list of defaults
+		add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
+
          return $this;
     }
+
+
+	/**
+	 * Register Default
+	 *
+	 * Add this to a global list of defaults so that if an option isn't set in the database,
+	 * then the method that pulls out the user option can just fall back to using this option's
+	 * default value.
+	 *
+	 * @since  3.0.0 | 24 APR 2018 | Created
+	 * @param  array  $defaults The array of defaults
+	 * @return array  $defaults The modifed array of defaults.
+	 * 
+	 */
+	public function register_default( $defaults = array() ) {
+		$defaults[$this->key] = $this->default;
+		return $defaults;
+	}
 
 
     /**
