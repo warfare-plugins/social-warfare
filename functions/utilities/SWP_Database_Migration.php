@@ -18,7 +18,7 @@ class SWP_Database_Migration {
         'twitterID'             => 'swp_twitter_id',
         'nc_ogDescriptionWrapper'       => 'swp_og_description',
         'nc_pinterestDescription'       => 'nc_pinterest_description',
-        'swp_cache_timestamp'           => 'swp_cache_timestamp'
+        'swp_cache_timestamp'           => 'swp_cache_timestamp',
         'swp_pin_browser_extension'     => 'swp_pin_browser_extension',
         'swp_pin_browser_extension_location'    => 'swp_pin_browser_extension_location',
         'swp_pin_browser_extension_url'         => 'swp_pin_browser_extension_url',
@@ -84,18 +84,25 @@ class SWP_Database_Migration {
         'pinterest_fallback'                => 'all',
         'float_mobile'                      => 'bottom',
         'force_new_shares'                  => false,
-        'order_of_icons' => [
-            'active' => [
-                'twitter'    => 'Twitter',
-                'linkedIn'   => 'LinkedIn',
-                'pinterest'  => 'Pinterest',
-                'facebook'   => 'Facebook',
-                'google_plus' => 'Google Plus',
-            ],
-        ],
+        'cache_method'                      => 'advanced',
+        'order_of_icons'                    =>  [
+                                                'twitter'    => 'Twitter',
+                                                'linkedIn'   => 'LinkedIn',
+                                                'pinterest'  => 'Pinterest',
+                                                'facebook'   => 'Facebook',
+                                                'google_plus' => 'Google Plus',
+                                            ],
     ];
 
 
+    /**
+     * Checks to see if we are on the most up-to-date database schema.
+     *
+     * If not, runs the migration and updators.
+     *
+     * @since 3.0.0
+     *
+     */
     public function __construct() {
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
@@ -128,6 +135,7 @@ class SWP_Database_Migration {
     }
 
     public function initialize_database() {
+        echo "initialize_database()";
         update_option( 'social_warfare_settings', $this->defaults );
     }
 
@@ -151,6 +159,7 @@ class SWP_Database_Migration {
      * @return [type] [description]
      */
     private function migrate() {
+        echo "migrating()";
         $options = get_option( 'socialWarfareOptions', [] );
 
         $map = [
@@ -239,20 +248,25 @@ class SWP_Database_Migration {
 
         $migrations = [];
 
-
         foreach( $options as $old => $value ) {
 
-            if ( array_key_exists( $old, $map) ) {
+            //* The order of icons used to be stored in an array at 'active'.
+            if ( $old === 'newOrderOfIcons' ) {
+                if ( is_array( $value) && array_key_exists( 'active', $value) ) :
+                    $value = $value['active'];
+                endif;
+            }
+
+            if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.
                 $new = $map[$old];
                 $migrations[$new] = $value;
 
-            } else {
+            else :
                 //* The previous key was fine, keep it.
                 $migrations[$old] = $value;
-            }
+            endif;
         }
-
 
         update_option( 'social_warfare_settings', $migrations );
         delete_option( 'socialWarfareOptions' );
