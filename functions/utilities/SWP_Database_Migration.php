@@ -30,6 +30,8 @@ class SWP_Database_Migration {
         'location_home'				        => 'none',
         'location_post'				        => 'below',
         'location_page'				        => 'below',
+        'float_location_post'               => 'on',
+        'float_location_page'               => 'off',
         'total_shares'                      => true,
         'network_shares'                    => true,
         'twitter_id'                        => false,
