@@ -87,16 +87,19 @@ class SWP_Abstract {
     */
 	public $priority;
 
+
     public function __construct( $name ) {
         $this->set_name( $name );
         $this->user_options = get_option( 'social_warfare_settings' );
 
-        add_action('plugins_loaded', function() {
-            global $swp_social_networks;
-            $this->networks = $swp_social_networks;
-        }, 1000);
+        add_action('plugins_loaded', array( $this , 'load_social_networks' ) , 1000 );
 
     }
+
+	public function load_social_networks() {
+		global $swp_social_networks;
+		$this->networks = $swp_social_networks;
+	}
 
     public function get_property( $property ) {
         if ( property_exists( __CLASS__, $property ) ) {
