@@ -36,7 +36,6 @@ class SWP_Addon_Registration extends SWP_Option {
 
     public function get_license_key() {
         $license = $this->key . '_license_key';
-        // die(var_dump($this->user_options));
 
         if ( isset( $this->user_options[$license] ) ) {
             return $this->user_options[$license];
