@@ -128,18 +128,22 @@ class SWP_Option_Select extends SWP_Option {
     * @return string $html The fully qualified HTML for a select.
     */
     public function render_HTML_element() {
-        $user_setting = isset( $this->user_options[$this->key]) ? $this->user_options[$this->key] : $this->default;
+        $value = $this->user_options[$this->key];
 
-        if ( is_array( $user_setting ) ) :
-            $selected = isset( $user_setting[$this->key] ) ? $user_setting[$this->key] : $this->default;
+        if ( isset( $value) ) :
+            $value = is_array( $value ) ? '' : $value;
         else:
-            $selected = isset( $user_setting ) ? $user_setting : $this->default;
+            $value = $this->default;
         endif;
+
+        $selected_user_option = $this->user_options[$this->key];
+
 
         $html = '<select name=' . $this->key . '>';
 
         foreach ( $this->choices as $key => $display_name ) {
-            $html .= '<option value="' . $key . '" ' . selected($key, $selected, false) . '>' . $display_name . '</option>';
+            $selected = selected($key, $value, false);
+            $html .= '<option value="' . $key . '"' . $selected .  ' >' . $display_name . '</option>';
         }
 
         $html .= '</select>';
