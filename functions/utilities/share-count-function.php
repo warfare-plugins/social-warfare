@@ -8,7 +8,7 @@
  * @return array $shares An array of share data
  */
 function get_social_warfare_shares( $postID ) {
-	global $swp_user_options;
+	global $swp_user_options, $swp_social_networks;
 
 	if ( true === is_attachment() ) :
 		return false;
@@ -33,24 +33,11 @@ function get_social_warfare_shares( $postID ) {
 	$shares['total_shares'] = 0;
 
 	// Queue up the networks that are available
-	$availableNetworks = $options['order_of_icons'];
-	$networks = array();
-	foreach ( $availableNetworks as $key => $value ) :
-		if ( $options['order_of_icons'][$key] ) {
-			$networks[] = $key;
-		}
-	endforeach;
+	$networks = $options['order_of_icons'];
 
 	$icons_array = array(
 		'type'		=> 'buttons'
 	);
-
-	/**
-	* Loop through the Networks and fetch their share counts
-	*/
-	if (isset($networks['active'])) {
-		unset($networks['active']);
-	}
 
 	foreach ( $networks as $network ) :
 
@@ -61,7 +48,7 @@ function get_social_warfare_shares( $postID ) {
 		// If cache is expired, fetch new and update the cache
 		else :
 			$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
-			$share_links[$network]	= call_user_func( 'swp_' . $network . '_request_link',$url );
+			$share_links[$network]	= $swp_social_networks[$network]->get_api_link();
 		endif;
 
 	endforeach;
@@ -103,6 +90,7 @@ function get_social_warfare_shares( $postID ) {
 
 		// Fetch all the share counts asyncrounously
 		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $share_links );
+
 		if ( $options['recover_shares'] == true ) :
 			$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 
