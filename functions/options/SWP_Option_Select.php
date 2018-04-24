@@ -127,7 +127,8 @@ class SWP_Option_Select extends SWP_Option {
     * @return string $html The fully qualified HTML for a select.
     */
     public function render_HTML_element() {
-        $value = $this->user_options[$this->key];
+        $value = swp_get_option( $this->key );
+        // $value = $this->user_options[$this->key];
 
         if ( isset( $value) ) :
             $value = is_array( $value ) ? '' : $value;
