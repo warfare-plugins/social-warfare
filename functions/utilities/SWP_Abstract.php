@@ -113,7 +113,7 @@ class SWP_Abstract {
 	 * @since  3.0.0 | 24 APR 2018 | Created
 	 * @param  none
 	 * @return none
-	 * 
+	 *
 	 */
 	public function load_social_networks() {
 		global $swp_social_networks;
@@ -156,12 +156,20 @@ class SWP_Abstract {
     }
 
 
+	/**
+	 * Set the Name
+	 *
+	 * @since  3.0.0 | 25 APR 2018 | Created
+	 * @param  string $name The name of this option.
+	 * @return object $this Allows method chaining.
+	 *
+	 */
     public function set_name( $name ) {
         if ( !is_string($name) ) {
             $this->_throw("Please provide a string for your object's name." );
         }
 
-        $this->name = __( $name, 'social-warfare' );
+        $this->name = $name;
 
         return $this;
     }
