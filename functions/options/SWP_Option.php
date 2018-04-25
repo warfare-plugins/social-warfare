@@ -48,7 +48,7 @@ class SWP_Option extends SWP_Abstract {
     *
     * @var mixed $default. See the corresponding class's set_default() method.
     */
-    public $default;
+    public $default = false;
 
 
     /**
@@ -169,7 +169,7 @@ class SWP_Option extends SWP_Abstract {
 	 * @since  3.0.0 | 24 APR 2018 | Created
 	 * @param  array  $defaults The array of defaults
 	 * @return array  $defaults The modifed array of defaults.
-	 * 
+	 *
 	 */
 	public function register_default( $defaults = array() ) {
 		$defaults[$this->key] = $this->default;
