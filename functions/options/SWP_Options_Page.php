@@ -291,10 +291,10 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     protected function get_static_options_array() {
         return [
-            'above'=> 'Above the Content',
-            'below' => 'Below the Content',
-            'both' => 'Both Above and Below the Content',
-            'none' => 'None/Manual Placement'
+            'above' => __( 'Above the Content' , 'social-warfare' ),
+            'below' => __( 'Below the Content' , 'social-warfare' ),
+            'both'  => __( 'Both Above and Below the Content' , 'social-warfare' ),
+            'none'  => __( 'None/Manual Placement' , 'social-warfare' )
         ];
     }
 
