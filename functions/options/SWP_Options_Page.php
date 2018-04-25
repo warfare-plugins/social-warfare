@@ -203,16 +203,16 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     public static function get_color_choices_array() {
         return [
-            'full_color'        =>  'Full Color',
-            'light_gray'        =>  'Light Gray',
-            'medium_gray'       =>  'Medium Gray',
-            'dark_gray'         =>  'Dark Gray',
-            'light_gray_outlines'   =>  'Light Gray Outlines',
-            'medium_gray_outlines'  =>  'Medium Gray Outlines',
-            'dark_gray_outlines'    =>  'Dark Gray Outlines',
-            'color_outlines'        =>  'Color Outlines',
-            'custom_color'          =>  'Custom Color',
-            'custom_color_outlines' =>  'Custom Color Outlines'
+            'full_color'            => __( 'Full Color' , 'social-warfare' ),
+            'light_gray'            => __( 'Light Gray' , 'social-warfare' ),
+            'medium_gray'           => __( 'Medium Gray' , 'social-warfare' ),
+            'dark_gray'             => __( 'Dark Gray' , 'social-warfare' ),
+            'light_gray_outlines'   => __( 'Light Gray Outlines' , 'social-warfare' ),
+            'medium_gray_outlines'  => __( 'Medium Gray Outlines' , 'social-warfare' ),
+            'dark_gray_outlines'    => __( 'Dark Gray Outlines' , 'social-warfare' ),
+            'color_outlines'        => __( 'Color Outlines' , 'social-warfare' ),
+            'custom_color'          => __( 'Custom Color' , 'social-warfare' ),
+            'custom_color_outlines' => __( 'Custom Color Outlines' , 'social-warfare' )
         ];
     }
 
