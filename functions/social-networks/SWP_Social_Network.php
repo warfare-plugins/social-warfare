@@ -437,7 +437,7 @@ class SWP_Social_Network {
 	 * @since  3.0.0 | 06 APR 2018 | Created
 	 * @param  array $array  The array of data from the buttons panel.
 	 * @return string        The processed URL.
-	 * 
+	 *
 	 */
 	public function get_shareable_permalink( $post_data ) {
 		return urlencode( urldecode( SWP_URL_Management::process_url( $post_data['permalink'] , $this->key , $post_data['ID'] ) ) );
