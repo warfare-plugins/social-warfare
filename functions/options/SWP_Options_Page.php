@@ -431,11 +431,11 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return SWP_Options_Page $this The calling object for method chaining.
     */
     protected function init_registration_tab( $addons ) {
-        $registration = new SWP_Options_Page_Tab( 'Registration', 'registration' );
+        $registration = new SWP_Options_Page_Tab( __( 'Registration' , 'social-warfare' ), 'registration' );
 
         $registration->set_priority( 50 );
 
-            $wrap = new SWP_Options_Page_Section( 'Addon Registrations', 'addon' );
+            $wrap = new SWP_Options_Page_Section( __( 'Addon Registrations' , 'social-warfare' ), 'addon' );
             $wrap->set_priority( 10 );
 
                 foreach( $addons as $addon ) {
