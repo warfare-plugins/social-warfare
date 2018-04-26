@@ -280,7 +280,7 @@ class Social_Warfare {
 			'Twitter',
             'Linkedin',
             'Pinterest',
-            'StumbleUpon'
+            'Stumble_Upon'
 		];
 		$this->load_files( '/functions/social-networks/', $social_networks);
 
