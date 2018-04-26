@@ -458,32 +458,32 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return SWP_Options_Page $this The calling object for method chaining.
     */
     protected function init_social_tab() {
-        $social_identity = new SWP_Options_Page_Tab( 'Social Identity', 'social_identity' );
+        $social_identity = new SWP_Options_Page_Tab( __( 'Social Identity' , 'social-warfare' ), 'social_identity' );
         $social_identity->set_priority( 30 );
 
         $sitewide_identity = new SWP_Options_Page_Section( 'Sitewide Identity' );
-        $sitewide_identity->set_description( 'If you would like to set sitewide defaults for your social identity, add them below.' )
+        $sitewide_identity->set_description( __( 'If you would like to set sitewide defaults for your social identity, add them below.' , 'social-warfare' ) )
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
-            $twitter_id = new SWP_Option_Text( 'Twitter Username', 'twitter_id' );
+            $twitter_id = new SWP_Option_Text( __( 'Twitter Username' , 'social-warfare' ), 'twitter_id' );
             $twitter_id->set_size( 'sw-col-300' )
                 ->set_priority( 10 )
                 ->set_default( '' );
 
             //* pinterestID => pinterest_id
-            $pinterest_id = new SWP_Option_Text( 'Pinterest Username', 'pinterest_id' );
+            $pinterest_id = new SWP_Option_Text( __( 'Pinterest Username' , 'social-warfare' ), 'pinterest_id' );
             $pinterest_id->set_size( 'sw-col-300' )
                 ->set_priority( 20 )
                 ->set_default( '' );
 
             //* facebookPublisherUrl => facebook_publisher_url
-            $facebook_publisher_url = new SWP_Option_Text( 'Facebook Page URL', 'facebook_publisher_url' );
+            $facebook_publisher_url = new SWP_Option_Text( __( 'Facebook Page URL' , 'social-warfare' ), 'facebook_publisher_url' );
             $facebook_publisher_url->set_size( 'sw-col-300' )
                 ->set_priority( 30 )
                 ->set_default( '' );
 
             //* facebookAppID => facebook_app_id
-            $facebook_app_id = new SWP_Option_Text( 'Facebook App ID', 'facebook_app_id' );
+            $facebook_app_id = new SWP_Option_Text( __( 'Facebook App ID' , 'social-warfare' ), 'facebook_app_id' );
             $facebook_app_id->set_size( 'sw-col-300' )
                 ->set_priority( 40 )
                 ->set_default( '' );
