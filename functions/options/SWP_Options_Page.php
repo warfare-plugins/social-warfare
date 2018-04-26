@@ -308,16 +308,16 @@ class SWP_Options_Page extends SWP_Abstract {
     */
     protected function init_advanced_tab() {
 
-        $advanced = new SWP_Options_Page_Tab( 'Advanced', 'advanced' );
+        $advanced = new SWP_Options_Page_Tab( __( 'Advanced' , 'social-warfare' ) , 'advanced' );
         $advanced->set_priority( 40 );
 
-        $frame_buster = new SWP_Options_Page_Section( 'Frame Buster' );
+        $frame_buster = new SWP_Options_Page_Section( __( 'Frame Buster' , 'social-warfare' ) );
         $frame_buster->set_priority( 10 )
-            ->set_description( 'If you want to stop content pirates from framing your content, turn this on.' )
+            ->set_description( __( 'If you want to stop content pirates from framing your content, turn this on.' , 'social-warfare' ) )
             ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-frame-buster/');
 
             //* sniplyBuster => frame_buster
-            $frame_buster_toggle = new SWP_Option_Toggle( 'Frame Buster', 'frame_buster' );
+            $frame_buster_toggle = new SWP_Option_Toggle( __( 'Frame Buster' , 'social-warfare' ) , 'frame_buster' );
             $frame_buster_toggle->set_default( true )
                 ->set_size( 'sw-col-300' );
 
@@ -325,7 +325,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
         //* TODO: Add the Bitly Authentication Button.
 
-        $caching_method = new SWP_Options_Page_Section( 'Caching Method' );
+        $caching_method = new SWP_Options_Page_Section( __( 'Caching Method' , 'social-warfare' ) );
         $caching_method->set_priority( 60 );
 
             //* cacheMethod => cache_method
@@ -569,10 +569,10 @@ class SWP_Options_Page extends SWP_Abstract {
                 //* floatOption => float_location
                 $float_location = new SWP_Option_Select( 'Float Position', 'float_location' );
                 $float_location->set_choices( [
-                    'top'   => 'Top of the Page',
-                    'bottom'    => 'Bottom of the Page',
-                    'left'      => 'On the left side of the page',
-                    'right'     => 'On the right side of the page'
+                    'top'    => 'Top of the Page',
+                    'bottom' => 'Bottom of the Page',
+                    'left'   => 'On the left side of the page',
+                    'right'  => 'On the right side of the page'
                     ] )
                     ->set_default( 'bottom' )
                     ->set_priority( 20 )
