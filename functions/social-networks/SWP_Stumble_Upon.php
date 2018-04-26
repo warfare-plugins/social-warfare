@@ -13,7 +13,7 @@
  * @since     3.0.0 | 05 APR 2018 | Rebuilt into a class-based system.
  *
  */
-class SWP_StumbleUpon extends SWP_Social_Network {
+class SWP_Stumble_Upon extends SWP_Social_Network {
 
 
 	/**
