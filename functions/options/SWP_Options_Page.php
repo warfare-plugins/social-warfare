@@ -366,49 +366,49 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return SWP_Options_Page $this The calling object for method chaining.
     */
     protected function init_display_tab() {
-        $display = new SWP_Options_Page_Tab( 'Display', 'display' );
+        $display = new SWP_Options_Page_Tab( __( 'Display' , 'social-warfare' ) , 'display' );
 		$display->set_priority( 10 );
 
-            $social_networks = new SWP_Options_Page_Section( 'Social Networks' );
+            $social_networks = new SWP_Options_Page_Section( __( 'Social Networks' , 'social-warfare' ) );
             $social_networks->set_priority( 10 )
-                ->set_description( 'Drag & Drop to activate and order your share buttons.' )
+                ->set_description( __( 'Drag & Drop to activate and order your share buttons.' , 'social-warfare' ) )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
 
                 //* These two sections are unique and need special HTML.
-                $active = new SWP_Option_Icons( 'Active', 'active' );
+                $active = new SWP_Option_Icons( __( 'Active' , 'social-warfare' ) , 'active' );
                 $active->do_active_icons()->set_priority( 10 );
 
-                $inactive = new SWP_Option_Icons( 'Inactive', 'inactive' );
+                $inactive = new SWP_Option_Icons( __( 'Inactive' , 'social-warfare' ) , 'inactive' );
                 $inactive->do_inactive_icons()->set_priority( 20 );
 
 
                 $social_networks->add_options( [$active, $inactive] );
 
-    		$share_counts = new SWP_Options_Page_Section( 'Share Counts' );
-    	    $share_counts->set_description( 'Use the toggles below to determine how to display your social proof.' )
+    		$share_counts = new SWP_Options_Page_Section( __( 'Share Counts' , 'social-warfare' ) );
+    	    $share_counts->set_description( __( 'Use the toggles below to determine how to display your social proof.' , 'social-warfare' ) )
                 ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
 
                 //* toteseach => network_count
-        		$network_shares = new SWP_Option_Toggle( 'Button Counts', 'network_shares' );
+        		$network_shares = new SWP_Option_Toggle( __( 'Button Counts' , 'social-warfare' ), 'network_shares' );
         		$network_shares->set_default( true )
                     ->set_priority( 10 )
                     ->set_size( 'sw-col-300' );
 
                 //* totes => totals
-                $total_shares = new SWP_Option_Toggle( 'Total Counts', 'total_shares' );
+                $total_shares = new SWP_Option_Toggle( __( 'Total Counts' , 'social-warfare' ), 'total_shares' );
                 $total_shares->set_default( true )
                     ->set_priority( 20 )
                     ->set_size( 'sw-col-300' );
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
-            $button_position = new SWP_Options_Page_Section( 'Position Share Buttons' );
-            $button_position->set_description( 'These settings let you decide where the share buttons should go for each post type.' )
+            $button_position = new SWP_Options_Page_Section( __( 'Position Share Buttons' , 'social-warfare' ) );
+            $button_position->set_description( __( 'These settings let you decide where the share buttons should go for each post type.' , 'social-warfare' ) )
                 ->set_priority( 40 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
 
-                $button_position_table = new SWP_Section_HTML( 'Position Table' );
+                $button_position_table = new SWP_Section_HTML( __( 'Position Table' , 'social-warfare' ) );
                 $button_position_table->do_button_position_table();
 
             $button_position->add_option( $button_position_table );
