@@ -2,6 +2,107 @@
 (function( window, $, undefined ) {
 	'use strict';
 
+    window.onload = function() {
+        console.log("hello")
+        /*********************************************************
+    		Temporary patch for the custom color selects.
+    	*********************************************************/
+
+        //* Temp patch on the Visual Options color s.
+        //* This makes the custom colors appear/disappear as necessary.
+
+        var panelSelector = "[name=default_colors],[name=hover_colors], [name=single_colors]";
+        var floatSelector = "[name=float_default_colors], [name=float_hover_colors], [name=float_single_colors]";
+
+        //* Show custom fields if they have already been selected.
+        $(panelSelector).each(function(index, select) {
+            var value = $(select).val();
+            var customColor = $("[name=custom_color]").parent().parent();
+            var customOutlines = $("[name=custom_color_outlines]").parent().parent();
+
+            if ( value.indexOf("custom") !== -1) {
+                value.indexOf('outlines') > 0 ? customOutlines.show() : customColor.show();
+            }
+        });
+
+        $(floatSelector).each(function(index, select) {
+            var value = $(select).val();
+            var customColor = $("[name=float_custom_color]").parent().parent();
+            var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
+
+            if ( value.indexOf("custom") !== -1) {
+                value.indexOf('outlines') > 0 ? customOutlines.show() : customColor.show();
+            }
+        });
+
+        //* Change handlers for style.
+        $(panelSelector).on("change", function(e) {
+            var value = e.target.value;
+            var customColor = $("[name=custom_color]").parent().parent();
+            var customOutlines = $("[name=custom_color_outlines]").parent().parent();
+            var visible = false;
+
+            $(panelSelector).each(function(index, select) {
+                //* Check to see if this or a sibling input has custom_color selected.
+                if ($(select).val().indexOf("custom") !== -1) {
+                    visible = true;
+                }
+            });
+
+            if (!visible) {
+                customColor.hide();
+                customOutlines.hide();
+                return;
+            }
+
+            if ( value === "custom_color" ) {
+                customColor.show();
+            }
+
+            if ( value === 'custom_color_outlines' ) {
+                customOutlines.show();
+            }
+
+
+            return;
+        });
+
+        //* This code is a near verbatim copy of the above. The only difference is the
+        //* prefix "float_" on the custom color selectors.
+        //* Violates DRY, but this is a temp patch due for makeover by Fall 2018.
+        $(floatSelector).on("change", function(e) {
+            var value = e.target.value;
+            var customColor = $("[name=float_custom_color]").parent().parent();
+            var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
+            var visible = false;
+
+            //* Check to see if this or a sibling input has custom_color selected.
+            $(floatSelector).each(function(index, select) {
+                //* Check to see if this or a sibling input has custom_color selected.
+                if ($(select).val().indexOf("custom") !== -1) {
+                    visible = true;
+                }
+            });
+
+            if (!visible) {
+                customColor.hide();
+                customOutlines.hide();
+                return;
+            }
+
+            if ( value === "custom_color" ) {
+                customColor.show();
+            }
+
+            if ( value === 'custom_color_outlines' ) {
+                customOutlines.show();
+            }
+
+            return;
+        });
+
+    }
+
 	/*********************************************************
 		A Function send the array of setting to ajax.php
 	*********************************************************/
@@ -248,7 +349,7 @@
 		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_oother_' + oColorSet;
 
         $( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
-        
+
 		socialWarfarePlugin.lastClass = buttonsClass;
 
 		if ( dColorSet == 'custom_color' || dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color' || oColorSet == 'custom_color_outlines' ) {
