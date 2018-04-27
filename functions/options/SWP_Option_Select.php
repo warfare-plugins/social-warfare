@@ -136,7 +136,7 @@ class SWP_Option_Select extends SWP_Option {
             $value = $this->default;
         endif;
 
-        $selected_user_option = $this->user_options[$this->key];
+        $selected_user_option = swp_get_option($this->key);//$this->user_options[$this->key];
 
         $html = '<select name=' . $this->key . '>';
 
