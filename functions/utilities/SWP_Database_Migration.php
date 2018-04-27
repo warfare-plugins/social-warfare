@@ -113,10 +113,14 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
+        if ( !$this->is_migrated() ) {
+            $this->migrate();
+        }
+
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
 
-        if ( false === $settings || empty( $settings['location_archive_categories'] ) ) :
+        if ( false === $settings || empty( $settings['order_of_icons'] ) ) :
             $this->initialize_database();
         endif;
 
@@ -127,10 +131,6 @@ class SWP_Database_Migration {
         if ( count( $old_metadata ) > 0 ) :
             $this->update_sw_meta( $old_posts );
         endif;
-
-        if ( !$this->is_migrated() ) {
-            $this->migrate();
-        }
     }
 
     public function update_sw_meta( $posts ) {
@@ -149,7 +149,7 @@ class SWP_Database_Migration {
 
 
     /**
-     * Checks to see if our new options have been stored in the database.
+     * Checks to see if Social Warfare < 3.0.0 options exist.
      *
      * @return bool True if migrated, else false.
      *
@@ -168,6 +168,10 @@ class SWP_Database_Migration {
      */
     private function migrate() {
         $options = get_option( 'socialWarfareOptions', [] );
+
+        if ( $options === [] ) :
+            return;
+        endif;
 
         $map = [
             //* Options names
