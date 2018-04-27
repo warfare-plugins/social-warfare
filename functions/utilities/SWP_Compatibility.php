@@ -90,11 +90,11 @@ class SWP_Compatibility {
 
 	    // Delete any custom options fields
 	    delete_post_meta( $id , 'nc_customTweet' );
-	    delete_post_meta( $id , 'nc_floatLocation' );
+	    delete_post_meta( $id , 'nc_float_location' );
 	    delete_post_meta( $id , 'nc_ogDescription' );
 	    delete_post_meta( $id , 'swp_og_image' );
 	    delete_post_meta( $id , 'nc_ogTitle' );
-	    delete_post_meta( $id , 'nc_pinterestDescription' );
+	    delete_post_meta( $id , 'nc_pinterest_description' );
 	    delete_post_meta( $id , 'swp_pinterest_image' );
 	    delete_post_meta( $id , 'swp_post_location' );
 	    delete_post_meta( $id , 'sw_fb_author' );

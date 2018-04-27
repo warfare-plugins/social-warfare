@@ -163,13 +163,13 @@ if (window.location.href.indexOf("widgets.php")) {
 		var smDescription = $( '#socialWarfare textarea#nc_ogDescription' ).val();
 		var remaining = 160 - smDescription.length;
 		if ( smDescription.length > 0 && remaining >= 0 ) {
-			$( '#socialWarfare .nc_ogDescriptionWrapper .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
+			$( '#socialWarfare .nc_og_description .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
 		} else if ( smDescription.length > 0 && remaining < 0 ) {
-			$( '#socialWarfare .nc_ogDescriptionWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
+			$( '#socialWarfare .nc_og_description .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
 		} else {
-			$( '#socialWarfare .nc_ogDescriptionWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
+			$( '#socialWarfare .nc_og_description .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
 		}
-		$( '#socialWarfare .nc_ogDescriptionWrapper .counterNumber' ).html( remaining );
+		$( '#socialWarfare .nc_og_description .counterNumber' ).html( remaining );
 	}
 
 	// Function for Twitter Box Counting

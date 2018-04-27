@@ -303,7 +303,7 @@ class SWP_Buttons_Panel {
 
     protected function establish_float_location() {
         // Set the options for the horizontal floating bar
-        // $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_floatLocation' , true );
+        // $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_float_location' , true );
         //
         // if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
         //     $floatOption = 'float_ignore';
