@@ -237,18 +237,19 @@
 		var dColorSet    = $( 'select[name="default_colors"]' ).val();
 		var iColorSet    = $( 'select[name="single_colors"]' ).val();
 		var oColorSet    = $( 'select[name="hover_colors"]' ).val();
-		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
+		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
-		if('undefined' === typeof socialWarfarePlugin.lastClass){
-			socialWarfarePlugin.lastClass = 'swp_flat_fresh swp_d_full_color swp_i_full_color swp_o_full_color';
+		if ('undefined' === typeof socialWarfarePlugin.lastClass) {
+			socialWarfarePlugin.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
 		}
-		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
-		var buttonsClass = 'swp_' + visualTheme + ' swp_d_' + dColorSet + ' swp_i_' + iColorSet + ' swp_o_' + oColorSet;
-		$( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
-		socialWarfarePlugin.lastClass = buttonsClass;
 
-		var lastClass = buttonsClass;
+		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
+		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_oother_' + oColorSet;
+
+        $( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
+        
+		socialWarfarePlugin.lastClass = buttonsClass;
 
 		if ( dColorSet == 'custom_color' || dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color' || oColorSet == 'custom_color_outlines' ) {
 			$( '.customColor_wrapper' ).slideDown();
