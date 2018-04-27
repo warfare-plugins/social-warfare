@@ -1820,3 +1820,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 .float-position-bottom-right {
     transform-origin: bottom right;
 }
+
+div[class*=custom_color] {
+    display: none;
+}
