@@ -92,11 +92,11 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , 'nc_customTweet' );
 	    delete_post_meta( $id , 'nc_floatLocation' );
 	    delete_post_meta( $id , 'nc_ogDescription' );
-	    delete_post_meta( $id , 'nc_ogImage' );
+	    delete_post_meta( $id , 'swp_og_image' );
 	    delete_post_meta( $id , 'nc_ogTitle' );
 	    delete_post_meta( $id , 'nc_pinterestDescription' );
-	    delete_post_meta( $id , 'nc_pinterestImage' );
-	    delete_post_meta( $id , 'nc_postLocation' );
+	    delete_post_meta( $id , 'swp_pinterest_image' );
+	    delete_post_meta( $id , 'swp_post_location' );
 	    delete_post_meta( $id , 'sw_fb_author' );
 	    delete_post_meta( $id , 'sw_open_graph_image_data' );
 	    delete_post_meta( $id , 'sw_open_graph_image_url' );

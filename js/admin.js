@@ -149,13 +149,13 @@ if (window.location.href.indexOf("widgets.php")) {
 		var smTitle = $( '#socialWarfare textarea#nc_ogTitle' ).val();
 		var remaining = 60 - smTitle.length;
 		if ( smTitle.length > 0 && remaining >= 0 ) {
-			$( '#socialWarfare .nc_ogTitleWrapper .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
+			$( '#socialWarfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
 		} else if ( smTitle.length > 0 && remaining < 0 ) {
-			$( '#socialWarfare .nc_ogTitleWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
+			$( '#socialWarfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
 		} else {
-			$( '#socialWarfare .nc_ogTitleWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
+			$( '#socialWarfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
 		}
-		$( '#socialWarfare .nc_ogTitleWrapper .counterNumber' ).html( remaining );
+		$( '#socialWarfare .swp_og_title .counterNumber' ).html( remaining );
 	}
 
 	// Function for SM Description Counting
@@ -244,8 +244,8 @@ if (window.location.href.indexOf("widgets.php")) {
 
 			// Setup an initilazation loop
 			var swpPostInit = setInterval( function() {
-				var swpOgImage  = $( '.nc_ogImageWrapper ul.swpmb-media-list' );
-				var swpPinImage = $( '.nc_pinterestImageWrapper ul.swpmb-media-list' );
+				var swpOgImage  = $( '.swp_og_imageWrapper ul.swpmb-media-list' );
+				var swpPinImage = $( '.swp_pinterest_imageWrapper ul.swpmb-media-list' );
 
 				var smWidth, smHeight;
 

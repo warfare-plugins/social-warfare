@@ -264,7 +264,7 @@ function swp_cache_store_autoloads() {
 function swp_cache_rebuild_og_image($post_id) {
 
 	// Check if an OG image has been declared
-	$image_id = get_post_meta( $post_id , 'nc_ogImage' , true );
+	$image_id = get_post_meta( $post_id , 'swp_og_image' , true );
 	if ( $image_id ):
 
 		$cur_image_url = get_post_meta( $post_id , 'swp_open_graph_image_url' , true );
@@ -300,7 +300,7 @@ function swp_cache_rebuild_og_image($post_id) {
 function swp_cache_rebuild_pin_image($post_id) {
 
 	// Check if a custom pinterest image has been declared
-	$pin_image_id = get_post_meta( $post_id , 'nc_pinterestImage' , true );
+	$pin_image_id = get_post_meta( $post_id , 'swp_pinterest_image' , true );
 	if ( false !== $pin_image_id ) :
 		$pin_image_url = wp_get_attachment_url( $pin_image_id );
 		$cur_image_url = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
