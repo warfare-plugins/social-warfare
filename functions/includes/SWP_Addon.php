@@ -112,6 +112,11 @@ class SWP_Addon extends Social_Warfare {
     public function is_registered() {
         // Get the plugin options from the database
     	$options = get_option( 'social_warfare_settings' );
+
+
+
+        $this->license_key = $options[$this->key . '_license_key'];
+
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
@@ -180,6 +185,7 @@ class SWP_Addon extends Social_Warfare {
     			$is_registered = true;
     		endif;
     	endif;
+
 
     	return false;
     }
