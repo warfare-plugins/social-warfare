@@ -128,9 +128,9 @@ class SWP_Option_Select extends SWP_Option {
     */
     public function render_HTML_element() {
         $value = swp_get_option( $this->key );
-        // $value = $this->user_options[$this->key];
 
         if ( isset( $value) ) :
+            //* As of 4-24-18, 'active_networks' is the only array.
             $value = is_array( $value ) ? '' : $value;
         else:
             $value = $this->default;
