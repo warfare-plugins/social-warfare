@@ -12,7 +12,7 @@
  */
 class SWP_CURL {
 
-	public function fetch_shares_via_curl_multi( $data, $options = array() ) {
+	public static function fetch_shares_via_curl_multi( $data, $options = array() ) {
 
 		// array of curl handles
 		$curly = array();
