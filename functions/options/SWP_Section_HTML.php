@@ -199,8 +199,8 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_buttons_preview() {
         ob_start() ?>
 
-        <div class="swp_social_panel swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_medium_gray" data-position="both" data-float="ignore" data-count="6" data-floatColor="#ffffff" data-scale="1" data-align="full_width">
-            <div class="nc_tweetContainer googlePlus" data-id="2">
+        <div class="swp_social_panel swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_medium_gray" data-position="both" data-float="ignore" data-count="6" data-floatcolor="#ffffff" data-scale="1" data-align="full_width">
+            <div class="nc_tweetContainer swp_google_plus" data-id="2">
                 <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
@@ -211,7 +211,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <span class="swp_count">1.2K</span>
                 </a>
             </div>
-            <div class="nc_tweetContainer twitter" data-id="3">
+            <div class="nc_tweetContainer swp_twitter" data-id="3">
                 <a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
@@ -222,7 +222,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <span class="swp_count">280</span>
                 </a>
             </div>
-            <div class="nc_tweetContainer nc_pinterest" data-id="6">
+            <div class="nc_tweetContainer swp_pinterest" data-id="6">
                 <a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
@@ -233,7 +233,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <span class="swp_count">104</span>
                 </a>
             </div>
-            <div class="nc_tweetContainer swp_fb" data-id="4">
+            <div class="nc_tweetContainer swp_facebook" data-id="4">
                 <a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
@@ -244,7 +244,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <span class="swp_count">157</span>
                 </a>
             </div>
-            <div class="nc_tweetContainer linkedin" data-id="5">
+            <div class="nc_tweetContainer swp_linkedin" data-id="5">
                 <a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
