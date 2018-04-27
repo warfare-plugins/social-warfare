@@ -69,7 +69,7 @@ class SWP_Section_HTML extends SWP_Option {
         ob_start();
         ?>
 
-`    	<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">
+    	<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">
         	<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/affiliate-300x150.jpg"></a>
         	<a href="https://warfareplugins.com/support-categories/getting-started/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/starter-guide-300x150.jpg"></a>
         	<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/measure-roi-300x150.jpg"></a>
