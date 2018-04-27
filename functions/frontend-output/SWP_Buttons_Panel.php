@@ -249,7 +249,7 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$preset_location = get_post_meta( $this->post_data['ID'], 'nc_postLocation', true );
+		$preset_location = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $preset_location ) && 'default' !== $preset_location ) {
@@ -392,7 +392,7 @@ class SWP_Buttons_Panel {
             ' scale-' . $this->options['button_alignment'] .
             '" data-position="' . $this->options['location_post'] .
             '" data-float="' . $this->options['float_location'] .
-            '" data-float-mobile="' . $this->options['float_mobile'] . 
+            '" data-float-mobile="' . $this->options['float_mobile'] .
             '" data-count="' . $this->total_shares .
             '" data-floatcolor="' . $this->options['float_background_color'] . '
 

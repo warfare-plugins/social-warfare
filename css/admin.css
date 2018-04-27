@@ -39,15 +39,15 @@
 	padding: 0;
 }
 
-#socialWarfare .nc_ogImageWrapper ul.swpmb-media-list {
+#socialWarfare .swp_og_imageWrapper ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-og.jpg');
 }
 
-#socialWarfare .nc_pinterestImageWrapper ul.swpmb-media-list {
+#socialWarfare .swp_pinterest_imageWrapper ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 
-.swpmb-field.swpmb-textarea-wrapper.nc_ogTitleWrapper,
+.swpmb-field.swpmb-textarea-wrapper.swp_og_title,
 .swpmb-field.swpmb-textarea-wrapper.nc_ogDescriptionWrapper,
 .swpmb-field.swpmb-textarea-wrapper.nc_pinterestDescriptionWrapper,
 .swpmb-field.swpmb-textarea-wrapper.nc_customTweetWrapper {
@@ -57,7 +57,7 @@
 
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper,
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper,
-.swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper,
+.swpmb-field.swpmb-select-wrapper.swp_post_locationWrapper,
 .swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper {
 	width:32%;
 	float:left;
@@ -65,13 +65,13 @@
 }
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper select,
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper select,
-.swpmb-field.swpmb-select-wrapper.nc_postLocationWrapper select,
+.swpmb-field.swpmb-select-wrapper.swp_post_locationWrapper select,
 .swpmb-field.swpmb-select-wrapper.nc_floatLocationWrapper select {
 	width:90%;
 }
 
-.swpmb-field.swpmb-image_advanced-wrapper.nc_ogImageWrapper,
-.swpmb-field.swpmb-image_advanced-wrapper.nc_pinterestImageWrapper {
+.swpmb-field.swpmb-image_advanced-wrapper.swp_og_imageWrapper,
+.swpmb-field.swpmb-image_advanced-wrapper.swp_pinterest_imageWrapper {
 	width: 30%;
 	float: left;
 	margin-right: 3%;
