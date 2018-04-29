@@ -311,7 +311,7 @@ class SWP_Options_Page extends SWP_Abstract {
         $advanced = new SWP_Options_Page_Tab( __( 'Advanced', 'social-warfare' ), 'advanced' );
         $advanced->set_priority( 40 );
 
-        $frame_buster = new SWP_Options_Page_Section( __( 'Frame Buster', 'social-warfare' ) );
+        $frame_buster = new SWP_Options_Page_Section( __( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
         $frame_buster->set_priority( 10 )
             ->set_description( __( 'If you want to stop content pirates from framing your content, turn this on.', 'social-warfare' ) )
             ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-frame-buster/');
@@ -325,7 +325,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
         //* TODO: Add the Bitly Authentication Button.
 
-        $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ) );
+        $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ), 'caching_method' );
         $caching_method->set_priority( 60 );
 
             //* cacheMethod => cache_method
@@ -339,7 +339,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $caching_method->add_option( $cache_method );
 
-        $full_content = new SWP_Options_Page_Section( __( 'Full Content vs. Excerpts', 'social-warfare' ) );
+        $full_content = new SWP_Options_Page_Section( __( 'Full Content vs. Excerpts', 'social-warfare' ), 'full_content' );
         $full_content->set_priority( 70 )
              ->set_description( __( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.', 'social-warfare' ) )
              ->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-full-content-vs-excerpts/' );
@@ -369,7 +369,7 @@ class SWP_Options_Page extends SWP_Abstract {
         $display = new SWP_Options_Page_Tab( __( 'Display', 'social-warfare' ), 'display' );
 		$display->set_priority( 10 );
 
-            $social_networks = new SWP_Options_Page_Section( __( 'Social Networks', 'social-warfare' ) );
+            $social_networks = new SWP_Options_Page_Section( __( 'Social Networks', 'social-warfare' ), 'social_networks' );
             $social_networks->set_priority( 10 )
                 ->set_description( __( 'Drag & Drop to activate and order your share buttons.', 'social-warfare' ) )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
@@ -383,7 +383,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 $social_networks->add_options( [$active, $inactive] );
 
-    		$share_counts = new SWP_Options_Page_Section( __( 'Share Counts', 'social-warfare' ) );
+    		$share_counts = new SWP_Options_Page_Section( __( 'Share Counts', 'social-warfare' ), 'share_counts' );
     	    $share_counts->set_description( __( 'Use the toggles below to determine how to display your social proof.', 'social-warfare' ) )
                 ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
@@ -402,7 +402,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $share_counts->add_options( [$network_shares, $total_shares] );
 
-            $button_position = new SWP_Options_Page_Section( __( 'Position Share Buttons', 'social-warfare' ) );
+            $button_position = new SWP_Options_Page_Section( __( 'Position Share Buttons', 'social-warfare' ), 'button_position' );
             $button_position->set_description( __( 'These settings let you decide where the share buttons should go for each post type.', 'social-warfare' ) )
                 ->set_priority( 40 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
@@ -434,7 +434,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
         $registration->set_priority( 50 );
 
-            $wrap = new SWP_Options_Page_Section( __( 'Addon Registrations', 'social-warfare' ), 'addon' );
+            $wrap = new SWP_Options_Page_Section( __( 'Addon Registrations', 'social-warfare' ), 'addon_registrations' );
             $wrap->set_priority( 10 );
 
                 foreach( $addons as $addon ) {
@@ -460,7 +460,7 @@ class SWP_Options_Page extends SWP_Abstract {
         $social_identity = new SWP_Options_Page_Tab( __( 'Social Identity', 'social-warfare' ), 'social_identity' );
         $social_identity->set_priority( 30 );
 
-        $sitewide_identity = new SWP_Options_Page_Section( 'Sitewide Identity' );
+        $sitewide_identity = new SWP_Options_Page_Section( 'Sitewide Identity', 'sitewide_identity' );
         $sitewide_identity->set_description( __( 'If you would like to set sitewide defaults for your social identity, add them below.', 'social-warfare' ) )
             ->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
@@ -513,13 +513,13 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->do_buttons_preview();
 
 
-            $buttons_preview_section = new SWP_Options_Page_Section( __( 'Buttons Preview', 'social-warfare' ) );
+            $buttons_preview_section = new SWP_Options_Page_Section( __( 'Buttons Preview', 'social-warfare' ), 'buttons_preview_section' );
             $buttons_preview_section->add_option( $buttons_preview );
 
             $styles->add_section( $buttons_preview_section );
 
 
-            $total_counts = new SWP_Options_Page_Section( __( 'Total Counts', 'social-warfare' ) );
+            $total_counts = new SWP_Options_Page_Section( __( 'Total Counts', 'social-warfare' ), 'total_counts' );
             $total_counts->set_description( __( 'Customize how the "Total Shares" section of your share buttons look.', 'social-warfare' ) )
                 ->set_priority( 20 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
@@ -554,7 +554,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
-            $floating_share_buttons = new SWP_Options_Page_Section( __( 'Floating Share Buttons', 'social-warfare' ) );
+            $floating_share_buttons = new SWP_Options_Page_Section( __( 'Floating Share Buttons', 'social-warfare' ), 'floating_share_buttons' );
             $floating_share_buttons->set_description( __( 'If you would like to activate floating share buttons, turn this on.', 'social-warfare' ) )
                 ->set_priority( 30 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
