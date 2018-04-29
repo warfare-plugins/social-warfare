@@ -77,7 +77,6 @@ class SWP_Option extends SWP_Abstract {
     public function __construct( $name, $key ) {
         parent::__construct( $name );
 
-        //* TODO: Write the real method to verify registration.
         $this->swp_registration = true;
         $this->set_key( $key );
         $this->parent_size = ' sw-col-940 ';
