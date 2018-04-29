@@ -71,7 +71,8 @@ class Social_Warfare {
 		 * Instantiates the class that will load the plugin translations.
 		 *
 		 */
-		new SWP_Localization();
+		$Localization = new SWP_Localization();
+        $Localization->init();
 
 
 		/**
