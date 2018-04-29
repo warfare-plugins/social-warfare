@@ -19,10 +19,15 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     */
     public $options;
 
-    public function __construct( $name ) {
+    public function __construct( $name, $key ) {
         $this->options = new stdClass();
         $this->set_name( $name );
-        $this->key = $this->name_to_key( $name );
+        
+        if ( isset( $key ) ) :
+            $this->key = $key;
+        else:
+            $this->key = $this->name_to_key( $name );
+        endif;
     }
 
     /**
