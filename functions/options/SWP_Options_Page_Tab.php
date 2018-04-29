@@ -41,12 +41,16 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	*
 	* @since  2.4.0 | 3 MAR 2018 | Created
 	*/
-	public function __construct( $name, $link ) {
+	public function __construct( $name, $key ) {
 		$this->sections = new stdClass();
 
         $this->set_name( $name );
-        $this->set_link( $link );
-        $this->key = $this->name_to_key( $name );
+        $this->set_link( $key );
+        if ( isset( $key ) ) :
+            $this->key = $key;
+        else:
+            $this->key = $this->name_to_key( $name );
+        endif;
 	}
 
 
