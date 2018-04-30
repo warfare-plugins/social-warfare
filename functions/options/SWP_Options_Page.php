@@ -505,7 +505,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * @return SWP_Options_Page $this The calling object for method chaining.
     */
     protected function init_styles_tab() {
-        $styles = new SWP_Options_Page_Tab( 'Styles', 'styles' );
+        $styles = new SWP_Options_Page_Tab( __( 'Styles' , 'social-warfare' ) , 'styles' );
         $styles->set_priority( 20 );
 
             $buttons_preview = new SWP_Section_HTML( __( 'Buttons Preview', 'social-warfare' ) );
