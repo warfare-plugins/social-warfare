@@ -38,7 +38,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 		$this->cta            = __( 'Pin','social-warfare' );
 		$this->key            = 'pinterest';
 		$this->default        = 'true';
-		$this->base_share_url = 'https://api.pinterest.com/v1/urls/count.json?url=';
+		$this->base_share_url = 'https://pinterest.com/pin/create/button/?url=';
 
 		$this->init_social_network();
 	}
