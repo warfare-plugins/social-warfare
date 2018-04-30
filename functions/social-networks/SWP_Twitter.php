@@ -166,7 +166,9 @@ class SWP_Twitter extends SWP_Social_Network {
 			$viaText = '';
 		endif;
 
-        $intent_link = "https://twitter.com/intent/tweet?text=$ct$urlParam$viaText";
+        $parameters = $ct . $urlParam . $viaText;
+
+        $intent_link = "https://twitter.com/intent/tweet?text=$parameters";
 
 		return $intent_link;
 
