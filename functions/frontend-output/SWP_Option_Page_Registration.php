@@ -3,11 +3,8 @@
 class SWP_Option_Page_Registration extends SWP_Abstract {
     public $addon;
 
-
     public function __construct() {
-
         apply_filters( 'swp_registrations', array() );
-
     }
 
     /**
@@ -24,7 +21,7 @@ class SWP_Option_Page_Registration extends SWP_Abstract {
         $path = PLUGIN_DIR . '/includes/' . $file;
 
         if ( !file_exists( $path ) ) {
-            $this->throw( 'Missing template file to render HTML.' );
+            $this->_throw( 'Missing template file to render HTML.' );
         }
 
         ob_start();
