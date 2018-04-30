@@ -23,7 +23,7 @@ class SWP_Linkedin extends SWP_Social_Network {
     		$this->cta            = __( 'Share','social-warfare' );
     		$this->key            = 'linkedin';
     		$this->default        = 'true';
-    		$this->base_share_url = 'https://www.linkedin.com/countserv/count/share?url=';
+    		$this->base_share_url = 'https://www.linkedin.com/cws/share?url=';
 
     		$this->init_social_network();
     	}
