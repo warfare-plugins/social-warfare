@@ -7,24 +7,6 @@
  */
 
 class SWP_Database_Migration {
-
-    public $metadata_map =  [
-        'nc_ogImage'            => 'swp_og_image',
-        'nc_ogTitleWrapper'     => 'swp_og_title',
-        'nc_pinterestImage'     => 'swp_pinterest_image',
-        'nc_customTweet'        => 'swp_custom_tweet',
-        'nc_postLocation'       => 'swp_post_location',
-        'nc_floatLocation'      => 'swp_float_location',
-        'twitterID'             => 'swp_twitter_id',
-        'nc_ogDescriptionWrapper'       => 'swp_og_description',
-        'nc_pinterestDescription'       => 'nc_pinterest_description',
-        'swp_cache_timestamp'           => 'swp_cache_timestamp',
-        'swp_pin_browser_extension'     => 'swp_pin_browser_extension',
-        'swp_pin_browser_extension_location'    => 'swp_pin_browser_extension_location',
-        'swp_pin_browser_extension_url'         => 'swp_pin_browser_extension_url',
-    ];
-
-
     private $defaults = [
         'location_archive_categories'       => 'below',
         'location_home'				        => 'none',
@@ -125,21 +107,51 @@ class SWP_Database_Migration {
         endif;
 
         //* Fetch posts with 2.3.5 metadata.
-        $old_metadata = get_posts( ['meta_key' => 'nc_postLocation'] );
+        $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
         //* Map 2.3.5 metadata to 3.0.0 keys.
         if ( count( $old_metadata ) > 0 ) :
-            $this->update_sw_meta( $old_posts );
+            $this->update_sw_meta();
         endif;
     }
 
-    public function update_sw_meta( $posts ) {
-        foreach( $posts as $post ) {
-            foreach( $this->metadata_map as $previous_key => $new_key ) {
-                $value = get_post_meta( $post->ID, $previous_key );
-                update_post_meta ($post->ID, $new_key, $value );
-                $del = delete_post_meta( $post->ID, $previous_key );
-            }
+    public function update_sw_meta() {
+        global $wpdb;
+
+        $metadata_map =  [
+            'ogImage'            => 'swp_og_image',
+            'ogTitleWrapper'     => 'swp_og_title',
+            'pinterestImage'     => 'swp_pinterest_image',
+            'customTweet'        => 'swp_custom_tweet',
+            'postLocation'       => 'swp_post_location',
+            'floatLocation'      => 'swp_float_location',
+            'pinterest_description'  => 'swp_pinterest_description',
+            'twitterID'             => 'swp_twitter_id',
+            'ogDescriptionWrapper'       => 'swp_og_description',
+            'pinterestDescription'       => 'swp_pinterest_description',
+            'cache_timestamp'           => 'swp_cache_timestamp',
+            'pin_browser_extension'     => 'swp_pin_browser_extension',
+            'pin_browser_extension_location'    => 'swp_pin_browser_extension_location',
+            'pin_browser_extension_url'         => 'swp_pin_browser_extension_url',
+        ];
+
+        $prefix1 = "nc_";
+        $prefix2 = "swp_";
+
+        $query = "
+            UPDATE " . $wpdb->prefix . "postmeta
+            SET meta_key = %s
+            WHERE meta_key = %s
+        ";
+
+        foreach ( $metadata_map as $old_key => $new_key ) {
+            //* Make replacements for the first kind of prefix.
+            $q1 = $wpdb->prepare( $query, $new_key, $prefix1 . $old_key );
+            $results = $wpdb->query( $q1 );
+
+            //* And make replacements for the second kind of prefix.
+            $q2 = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
+            $results = $wpdb->query( $q2 );
         }
     }
 
