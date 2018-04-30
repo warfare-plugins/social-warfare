@@ -568,10 +568,10 @@ class SWP_Options_Page extends SWP_Abstract {
                 //* floatOption => float_location
                 $float_location = new SWP_Option_Select( __( 'Float Position', 'social-warfare' ), 'float_location' );
                 $float_location->set_choices( [
-                    'top'    => 'Top of the Page',
-                    'bottom' => 'Bottom of the Page',
-                    'left'   => 'On the left side of the page',
-                    'right'  => 'On the right side of the page'
+                    'top'    => __( 'Top of the Page' , 'social-warfare' ),
+                    'bottom' => __( 'Bottom of the Page' , 'social-warfare' ),
+                    'left'   => __( 'On the left side of the page' , 'social-warfare' ),
+                    'right'  => __( 'On the right side of the page' , 'social-warfare' )
                     ] )
                     ->set_default( 'bottom' )
                     ->set_priority( 20 )
@@ -664,7 +664,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 //* "Save Changes" button.
                 $html .= '<div class="sw-grid sw-col-220 sw-fit">';
-                $html .= '<a href="#" class="button sw-navy-button sw-save-settings">Save Changes</a>';
+                $html .= '<a href="#" class="button sw-navy-button sw-save-settings">'. __( 'Save Changes' , 'social-warfare' ) .'</a>';
                 $html .= '</div>';
 
                 $html .= '<div class="sw-clearfix"></div>';
