@@ -166,9 +166,10 @@ class SWP_Twitter extends SWP_Social_Network {
 			$viaText = '';
 		endif;
 
-		$share_link = 'https://twitter.com/share?original_referer=/&text=' . $ct . '' . $urlParam . '' . $viaText;
+        $intent_link = "https://twitter.com/intent/tweet?text=$ct$urlParam$viaText";
 
-		return $share_link;
+		return $intent_link;
+
 	}
 
 }
