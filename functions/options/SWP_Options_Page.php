@@ -596,8 +596,8 @@ class SWP_Options_Page extends SWP_Abstract {
                 $float_transition = new SWP_Option_Select( __( 'Transition', 'social-warfare' ), 'transition' );
                 $float_transition->set_priority( 40 )
                     ->set_choices( [
-                        'slide' => 'Slide In / Slide Out',
-                        'fade'  => 'Fade In / Fade Out'
+                        'slide' => __( 'Slide In / Slide Out' , 'social-warfare' ) ,
+                        'fade'  => __( 'Fade In / Fade Out' , 'social-warfare' )
                     ] )
                     ->set_default( 'slide' )
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
