@@ -7,24 +7,6 @@
  */
 
 class SWP_Database_Migration {
-
-    public $metadata_map =  [
-        'nc_ogImage'            => 'swp_og_image',
-        'nc_ogTitleWrapper'     => 'swp_og_title',
-        'nc_pinterestImage'     => 'swp_pinterest_image',
-        'nc_customTweet'        => 'swp_custom_tweet',
-        'nc_postLocation'       => 'swp_post_location',
-        'nc_floatLocation'      => 'swp_float_location',
-        'twitterID'             => 'swp_twitter_id',
-        'nc_ogDescriptionWrapper'       => 'swp_og_description',
-        'nc_pinterestDescription'       => 'nc_pinterest_description',
-        'swp_cache_timestamp'           => 'swp_cache_timestamp',
-        'swp_pin_browser_extension'     => 'swp_pin_browser_extension',
-        'swp_pin_browser_extension_location'    => 'swp_pin_browser_extension_location',
-        'swp_pin_browser_extension_url'         => 'swp_pin_browser_extension_url',
-    ];
-
-
     private $defaults = [
         'location_archive_categories'       => 'below',
         'location_home'				        => 'none',
@@ -125,21 +107,54 @@ class SWP_Database_Migration {
         endif;
 
         //* Fetch posts with 2.3.5 metadata.
-        $old_metadata = get_posts( ['meta_key' => 'nc_postLocation'] );
+        $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
         //* Map 2.3.5 metadata to 3.0.0 keys.
         if ( count( $old_metadata ) > 0 ) :
-            $this->update_sw_meta( $old_posts );
+            $this->update_sw_meta();
         endif;
     }
 
-    public function update_sw_meta( $posts ) {
-        foreach( $posts as $post ) {
-            foreach( $this->metadata_map as $previous_key => $new_key ) {
-                $value = get_post_meta( $post->ID, $previous_key );
-                update_post_meta ($post->ID, $new_key, $value );
-                $del = delete_post_meta( $post->ID, $previous_key );
-            }
+    public function update_sw_meta() {
+        global $wpdb;
+
+        //* Notice there is no prefix on any of the indices.
+        //* Old code has prefixed these with either "nc_" or "swp_".
+        //* For simplicity's sake, we'll just check each for both.
+        $metadata_map =  [
+            'ogImage'                        => 'swp_og_image',
+            'ogTitleWrapper'                 => 'swp_og_title',
+            'pinterestImage'                 => 'swp_pinterest_image',
+            'customTweet'                    => 'swp_custom_tweet',
+            'postLocation'                   => 'swp_post_location',
+            'floatLocation'                  => 'swp_float_location',
+            'pinterest_description'          => 'swp_pinterest_description',
+            'twitterID'                      => 'swp_twitter_id',
+            'ogDescriptionWrapper'           => 'swp_og_description',
+            'pinterestDescription'           => 'swp_pinterest_description',
+            'cache_timestamp'                => 'swp_cache_timestamp',
+            'pin_browser_extension'          => 'swp_pin_browser_extension',
+            'pin_browser_extension_location' => 'swp_pin_browser_extension_location',
+            'pin_browser_extension_url'      => 'swp_pin_browser_extension_url',
+        ];
+
+        $prefix1 = "nc_";
+        $prefix2 = "swp_";
+
+        $query = "
+            UPDATE " . $wpdb->prefix . "postmeta
+            SET meta_key = %s
+            WHERE meta_key = %s
+        ";
+
+        foreach ( $metadata_map as $old_key => $new_key ) {
+            //* Make replacements for the first kind of prefix.
+            $q1 = $wpdb->prepare( $query, $new_key, $prefix1 . $old_key );
+            $results = $wpdb->query( $q1 );
+
+            //* And make replacements for the second kind of prefix.
+            $q2 = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
+            $results = $wpdb->query( $q2 );
         }
     }
 
@@ -175,50 +190,50 @@ class SWP_Database_Migration {
 
         $map = [
             //* Options names
-            'locationSite'  => 'location_archive_categories',
-            'locationHome'  => 'location_home',
-            'totesEach'     => 'network_shares',
-            'totes'         => 'total_shares',
-            'minTotes'      => 'minimum_shares',
-            'visualTheme'   => 'button_shape',
-            'buttonSize'    => 'button_size',
-            'dColorSet'     => 'default_colors',
-            'oColorSet'     => 'hover_colors',
-            'iColorSet'     => 'single_colors',
-            'swDecimals'    => 'decimals',
-            'swp_decimal_separator' => 'decimal_separator',
-            'swTotesFormat' => 'totals_alignment',
-            'float'         => 'floating_panel',
-            'float_background_color'    => 'float_location',
-            'swp_float_scr_sz'  => 'float_screen_width',
-            'sideReveal'    => 'transition',
-            'floatStyle'    => 'float_button_shape',
-            'floatStyleSource'  => 'float_style_source',
-            'sideDColorSet' => 'float_default_colors',
-            'sideOColorSet' => 'float_hover_colors',
-            'sideIColorSet' => 'float_single_colors',
-            'swp_twitter_card'  => 'twitter_cards',
-            'twitterID'     => 'twitter_id',
-            'pinterestID'   => 'pinterest_id',
-            'facebookPublisherUrl'  => 'facebook_publisher_url',
-            'facebookAppID' => 'facebook_app_id',
-            'sniplyBuster'  => 'frame_buster',
-            'linkShortening'=> 'bitly_authentication',
-            'cacheMethod'   => 'cache_method',
-            'googleAnalytics' => 'google_analytics',
-            'analyticsMedium'   => 'analytics_medium',
-            'analyticsCampaign' => 'analytics_campaign',
-            'advanced_pinterest_image' => 'pin_browser_extension',
+            'locationSite'                      => 'location_archive_categories',
+            'locationHome'                      => 'location_home',
+            'totesEach'                         => 'network_shares',
+            'totes'                             => 'total_shares',
+            'minTotes'                          => 'minimum_shares',
+            'visualTheme'                       => 'button_shape',
+            'buttonSize'                        => 'button_size',
+            'dColorSet'                         => 'default_colors',
+            'oColorSet'                         => 'hover_colors',
+            'iColorSet'                         => 'single_colors',
+            'swDecimals'                        => 'decimals',
+            'swp_decimal_separator'             => 'decimal_separator',
+            'swTotesFormat'                     => 'totals_alignment',
+            'float'                             => 'floating_panel',
+            'float_background_color'            => 'float_location',
+            'swp_float_scr_sz'                  => 'float_screen_width',
+            'sideReveal'                        => 'transition',
+            'floatStyle'                        => 'float_button_shape',
+            'floatStyleSource'                  => 'float_style_source',
+            'sideDColorSet'                     => 'float_default_colors',
+            'sideOColorSet'                     => 'float_hover_colors',
+            'sideIColorSet'                     => 'float_single_colors',
+            'swp_twitter_card'                  => 'twitter_cards',
+            'twitterID'                         => 'twitter_id',
+            'pinterestID'                       => 'pinterest_id',
+            'facebookPublisherUrl'              => 'facebook_publisher_url',
+            'facebookAppID'                     => 'facebook_app_id',
+            'sniplyBuster'                      => 'frame_buster',
+            'linkShortening'                    => 'bitly_authentication',
+            'cacheMethod'                       => 'cache_method',
+            'googleAnalytics'                   => 'google_analytics',
+            'analyticsMedium'                   => 'analytics_medium',
+            'analyticsCampaign'                 => 'analytics_campaign',
+            'advanced_pinterest_image'          => 'pin_browser_extension',
             'advanced_pinterest_image_location' => 'pinterest_image_location',
-            'pin_browser_extension_location' => 'pin_browser_extension_location',
-            'advanced_pinterest_fallback'   => 'pinterest_fallback',
-            'recovery_custom_format'    => 'recovery_permalink',
-            'cttTheme'  => 'ctt_theme',
-            'cttCSS'    => 'ctt_css',
-            'sideCustomColor'   => 'single_custom_color',
-            'floatBgColor'  => 'float_background_color',
-            'orderOfIconsSelect'    => 'order_of_icons_method',
-			'newOrderOfIcons' => 'order_of_icons',
+            'pin_browser_extension_location'    => 'pin_browser_extension_location',
+            'advanced_pinterest_fallback'       => 'pinterest_fallback',
+            'recovery_custom_format'            => 'recovery_permalink',
+            'cttTheme'                          => 'ctt_theme',
+            'cttCSS'                            => 'ctt_css',
+            'sideCustomColor'                   => 'single_custom_color',
+            'floatBgColor'                      => 'float_background_color',
+            'orderOfIconsSelect'                => 'order_of_icons_method',
+			'newOrderOfIcons'                            => 'order_of_icons',
 
             //* Choices names
             'flatFresh'     => 'flat_fresh',
