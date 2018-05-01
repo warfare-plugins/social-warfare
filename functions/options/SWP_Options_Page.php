@@ -226,7 +226,7 @@ class SWP_Options_Page extends SWP_Abstract {
         //* whether or not they are actively registered.
         $addons = apply_filters( 'swp_registrations', [] );
         $registrations = [];
-        $registered = false;
+        $registered = 0;
         $active_addons = '';
         $registered_addons = '';
 
@@ -236,7 +236,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             if ( true === $addon->registered ) :
                 $registered_addons .= " $addon->key ";
-                $registered = true;
+                $registered = 1;
             endif;
         }
 
@@ -700,7 +700,7 @@ class SWP_Options_Page extends SWP_Abstract {
         $tab_map = $this->sort_by_priority( $this->tabs );
         $registered = false;
 
-        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->registered .'" data-swp-addons="' . $active_addons . '" data-swp-registrations="' . $registered_addons . '">';
+        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->registered .'" swp-addons="' . $active_addons . '" swp-registrations="' . $registered_addons . '">';
             $container .= '<form class="sw-admin-settings-form">';
                 $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
