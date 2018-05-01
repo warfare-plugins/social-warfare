@@ -66,9 +66,6 @@ class SWP_Options_Page extends SWP_Abstract {
 
 		// Create a 'tabs' object to which we can begin adding tabs.
         $this->tabs = new stdClass();
-        //* TODO: Create the registration function
-        //*
-        $this->swp_registration = true;
 
 		// Get the list of available icons.
 
@@ -229,15 +226,24 @@ class SWP_Options_Page extends SWP_Abstract {
         //* whether or not they are actively registered.
         $addons = apply_filters( 'swp_registrations', [] );
         $registrations = [];
+        $registered = false;
+        $active_addons = '';
 
-        foreach( $addons as $data ) {
-            $registrations[] = new SWP_Addon_Registration( $data );
+        foreach( $addons as $addon ) {
+            $registrations[] = new SWP_Addon_Registration( $addon );
+
+            if ( true === $addon->registered ) :
+                $active_addons .= " $addon->key ";
+                $registered = true;
+            endif;
         }
+
+        $this->registered = $registered;
 
         $this->init_registration_tab( $registrations );
 
         $menu = $this->create_menu( $registrations );
-        $tabs = $this->create_tabs( $registrations );
+        $tabs = $this->create_tabs( $active_addons );
 
         $html = $menu . $tabs;
         $this->html = $html;
@@ -624,7 +630,7 @@ class SWP_Options_Page extends SWP_Abstract {
     private function create_menu( $addons ) {
         //* Open the admin top menu wrapper.
         $html = '<div class="sw-header-wrapper">';
-            $html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . absint( $this->swp_registration ) . '">';
+            $html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . $this->registered . '">';
 
                 //* Menu wrapper and tabs.
                 $html .= '<div class="sw-grid sw-col-700">';
@@ -687,11 +693,12 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * @return string $container The Admin tab HTML container.
     */
-    private function create_tabs( $addons ) {
+    private function create_tabs( $active_addons ) {
         $sidebar = new SWP_Section_HTML( 'Sidebar' );
         $tab_map = $this->sort_by_priority( $this->tabs );
+        $registered = false;
 
-        $container = '<div class="sw-admin-wrapper" sw-registered="' . $this->swp_registration . '">';
+        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->registered .'" data-swp-registrations="' . $active_addons . '">';
             $container .= '<form class="sw-admin-settings-form">';
                 $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
