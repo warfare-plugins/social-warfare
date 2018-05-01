@@ -138,35 +138,35 @@ class SWP_Twitter extends SWP_Social_Network {
 		$title = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
 
 		// Check for a custom tweet from the post options.
-		$ct = get_post_meta( $post_data['ID'] , 'nc_customTweet' , true );
+		$custom_tweet = get_post_meta( $post_data['ID'] , 'nc_customTweet' , true );
 
-		$ct = $ct !== '' ? urlencode( html_entity_decode( $ct, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
-		$twitterLink = $this->get_shareable_permalink( $post_data );
+		$custom_tweet = $custom_tweet !== '' ? urlencode( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
+		$twitter_link = $this->get_shareable_permalink( $post_data );
 
 		// If the custom tweet contains a link, block Twitter for auto adding another one.
-		if ( false !== strpos( $ct , 'http' ) ) :
-			$urlParam = '&url=/';
+		if ( false !== strpos( $custom_tweet , 'http' ) ) :
+			$url_parameter = '&url=/';
 		else :
-			$urlParam = '&url=' . $twitterLink;
+			$url_parameter = '&url=' . $twitter_link;
 		endif;
 
 		$twitter_mention = get_post_meta( $post_data['ID'] , 'swp_twitter_mention' , true );
 
 		if (false != $twitter_mention):
-			$ct .= ' @'.str_replace('@','',$twitter_mention);
+			$custom_tweet .= ' @'.str_replace('@','',$twitter_mention);
 		endif;
 
 		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $post_data['ID'] ) );
 
         if ( $user_twitter_handle ) :
-			$viaText = '&via=' . str_replace( '@','',$user_twitter_handle );
+			$via_parameter = '&via=' . str_replace( '@','',$user_twitter_handle );
 		elseif ( $post_data['options']['twitter_id'] ) :
-			$viaText = '&via=' . str_replace( '@','',$post_data['options']['twitter_id'] );
+			$via_parameter = '&via=' . str_replace( '@','',$post_data['options']['twitter_id'] );
 		else :
-			$viaText = '';
+			$via_parameter = '';
 		endif;
 
-        $parameters = $ct . $urlParam . $viaText;
+        $parameters = $custom_tweet . $url_parameter . $via_parameter;
 
         $intent_link = "https://twitter.com/intent/tweet?text=$parameters";
 
