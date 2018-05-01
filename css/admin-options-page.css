@@ -758,7 +758,7 @@ p.sw-subtitle.sw-registration-text {
 
 *********************************************************/
 
-.sw-admin-wrapper[sw-registered="0"] div[premium="1"] {
+.sw-admin-wrapper[sw-registered="0"] [premium="1"] {
 	display:none!important;
 }
 
@@ -766,11 +766,11 @@ p.sw-subtitle.sw-registration-text {
 	position: relative;
 }
 
-.sw-admin-wrapper[sw-registered="0"] div[premium="1"] .sw-premium-blocker {
+.sw-admin-wrapper[sw-registered="0"] [premium="1"] .sw-premium-blocker {
 	display:none;
 }
 
-.sw-admin-wrapper[sw-registered="0"] div[premium="1"] .sw-premium-blocker:not(.no-icon):before {
+.sw-admin-wrapper[sw-registered="0"] [premium="1"] .sw-premium-blocker:not(.no-icon):before {
 	font-family: 'sw-icon-font';
 	content: 'E';
 	font-size: 24px;
@@ -786,8 +786,18 @@ p.sw-subtitle.sw-registration-text {
 	display: none;
 }
 
-.sw-admin-wrapper[sw-registered="1"] .sw-premium-blocker {
-	display: none;
+.sw-admin-wrapper[data-swp-addons*="pro"] [premium],
+.sw-admin-wrapper[data-swp-addons*="affiliatewp"] [premium],
+.sw-admin-wrapper[data-swp-addons*="enhanced_shortcodes"] [premium],
+.sw-admin-wrapper[data-swp-addons*="advanced_display"] [premium] {
+    display: none;
+}
+
+.sw-admin-wrapper[data-swp-addons*="pro"][data-swp-registrations*="pro"] [premium],
+.sw-admin-wrapper[data-swp-addons*="affiliatewp"][data-swp-registrations*="affiliatewp"] [premium],
+.sw-admin-wrapper[data-swp-addons*="enhanced_shortcodes"][data-swp-registrations*="enhanced_shortcodes"] [premium],
+.sw-admin-wrapper[data-swp-addons*="advanced_display"][data-swp-registrations*="advanced_display"] [premium]{
+    display: inherit;
 }
 
 .ui-tooltip.sw-admin-hover-notice {
