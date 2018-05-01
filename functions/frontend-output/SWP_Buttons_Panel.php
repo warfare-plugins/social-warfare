@@ -417,10 +417,12 @@ class SWP_Buttons_Panel {
     }
 
     public function render_floating_HTML( $echo = true ) {
-        //* Old boilerplate that needs to be refactored.
+        //* BEGIN Old boilerplate that needs to be refactored.
         $class = "";
         $size = $this->options['float_size'] * 100;
         $side = $this->options['float_location'];
+        $max_buttons = swp_get_option( 'float_button_count' );
+
 
         // Acquire the social stats from the networks
         if ( isset( $array['url'] ) ) :
@@ -456,10 +458,10 @@ class SWP_Buttons_Panel {
         endif;
 
 
-        //* End old boilerplate.
+        //* END old boilerplate.
 
-        $share_counts = $this->render_total_shares_html();
-        $buttons = $this->render_buttons_html();
+        $share_counts = $this->render_total_shares_HTML();
+        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
 
         $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
             ' swp_default_' . $this->options['float_default_colors'] .
@@ -494,7 +496,7 @@ class SWP_Buttons_Panel {
 
 
     public function establish_active_buttons() {
-        $countss = [];
+        $count = [];
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
@@ -506,7 +508,7 @@ class SWP_Buttons_Panel {
 
                 foreach( $this->networks as $key => $network ):
                     if( $network_key === $key ):
-                        $countss[] = $network;
+                        $count[] = $network;
                     endif;
                 endforeach;
             }
@@ -514,20 +516,20 @@ class SWP_Buttons_Panel {
         //* Use global button settings.
         else :
             if ( $this->options['order_of_icons_method'] === 'manual' ) :
-                $countss = $this->get_manual_buttons();
+                $count = $this->get_manual_buttons();
             else :
-                $countss = $this->get_dynamic_buttons();
+                $count = $this->get_dynamic_buttons();
             endif;
 
         endif;
 
-        $this->networks = $countss;
+        $this->networks = $count;
 
         return $this;
     }
 
     protected function get_manual_buttons() {
-        $countss = [];
+        $count = [];
         $order = $this->options['order_of_icons'];
 
 
@@ -536,26 +538,30 @@ class SWP_Buttons_Panel {
                 //* TODO: This needs to be the conditional instead.
                 // if( $key === $network_key && true === $network->is_active() ):
                 if ( $key === $network_key ) :
-                    $countss[$key] = $network;
+                    $count[$key] = $network;
                 endif;
             endforeach;
         }
 
-        return $countss;
+        return $count;
     }
 
     //* TODO: How can we sort the buttons dynamically?
     //* This is dependent on how we fetch share counts.
     protected function get_dynamic_buttons() {
-        $countss = [];
+        $count = [];
 
-        return $countss;
+        return $count;
     }
 
-    public function render_buttons_html() {
+    public function render_buttons_HTML( $max_count = null) {
         $html = '';
+        $count = 0;
 
-        foreach( $this->networks as $network ) {
+        foreach( $this->networks as $key => $network ) {
+            if ( isset( $max_count) && $count === $max_count) :
+                return $html;
+            endif;
 
 			// Pass in some context for this specific panel of buttons
 			$context['shares'] = $this->shares;
@@ -563,6 +569,8 @@ class SWP_Buttons_Panel {
 			$context['post_data'] = $this->post_data;
 
             $html .= $network->render_HTML( $context );
+            $count++;
+
         }
 
         return $html;
