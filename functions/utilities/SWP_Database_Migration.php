@@ -40,6 +40,7 @@ class SWP_Database_Migration {
         'float_background_color'            => '#ffffff',
         'float_button_shape'                => 'default',
         'float_vertical'					=> 'center',
+        'float_button_count'                => 5,
         'custom_color'                      => '#000000',
         'recover_shares'                    => false,
         'recovery_format'                   => 'unchanged',
