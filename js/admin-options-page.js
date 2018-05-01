@@ -3,7 +3,6 @@
 	'use strict';
 
     window.onload = function() {
-        console.log("hello")
         /*********************************************************
     		Temporary patch for the custom color selects.
     	*********************************************************/
@@ -514,12 +513,41 @@
 	}
 
 	function toggleRegistration( status , key ) {
-		$( '.registration-wrapper.'+key ).attr( 'registration', status );
-		if('pro' == key) {
-			$( '.sw-admin-wrapper' ).attr( 'sw-registered', status );
-			$( '.sw-top-menu' ).attr( 'sw-registered', status );
-		}
+        var adminWrapper = $(".sw-admin-wrapper");
+        var addons = adminWrapper.attr("swp-addons");
+        var registeredAddons = adminWrapper.attr("swp-registrations");
+
+        //* Toggle visibility of the registration input field for {key}.
+		$('.registration-wrapper.' + key).attr('registration', status);
+
+        if (1 === parseInt(status)) {
+            adminWrapper.attr('sw-registered', status);
+            $('.sw-top-menu').attr('sw-registered', status);
+            addAttrValue(adminWrapper, "swp-registrations", key);
+        } else {
+            removeAttrValue(adminWrapper, "swp-registrations", key);
+        }
 	}
+
+    //* Removes a string from a given attribute.
+    function removeAttrValue(el, attribute, removal) {
+        var value = $(el).attr(attribute);
+        var startIndex = value.indexOf(removal);
+        if (startIndex === -1) return;
+        
+        var stopIndex = startIndex + removal.length;
+        var newValue = value.slice(0, startIndex) + value.slice(stopIndex);
+
+        $(el).attr(attribute, newValue);
+    }
+
+    //* Adds a string to a given attribute.
+    function addAttrValue(el, attribute, addition) {
+        var value = $(el).attr(attribute);
+        if (value.includes(addition)) return;
+
+        $(el).attr(attribute, value + addition);
+    }
 
 	/*******************************************************
 		Register the Plugin
