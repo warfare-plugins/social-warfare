@@ -39,14 +39,7 @@ class SWP_Option_Icons extends SWP_Option {
                 if ( isset( $all_icons[$network_key]) ) :
                     $network = $all_icons[$network_key];
 
-                    $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
-                    $html .= ' data-network="' . $network->key . '"';
-
-                    if ( !empty($network->premium) ) :
-                        $html .= ' premium="'.$network->premium.'"';
-                    endif;
-
-                    $html .= '></i>';
+                    $html .= $this->render_icon_HTML( $network );
                 endif;
             }
 
@@ -80,14 +73,7 @@ class SWP_Option_Icons extends SWP_Option {
             foreach( $inactive_icons as $network_key ) {
                 $network = $all_icons[$network_key];
 
-                $html .= '<i class="sw-s sw-' . $network->key . '-icon" ';
-                $html .= ' data-network="' . $network->key . '"';
-
-                if ( !empty($network_obj->premium) ) :
-                    $html .= ' premium="'.$network->premium.'"';
-                endif;
-
-                $html .= '></i>';
+                $html .= $this->render_icon_HTML( $network );
             }
 
             $html .= '</div>';
@@ -96,6 +82,20 @@ class SWP_Option_Icons extends SWP_Option {
         $this->html = $html;
 
         return $this;
+    }
+
+    protected function render_icon_HTML( $network ) {
+        $html = '<i class="sw-s sw-' . $network->key . '-icon" ';
+        $html .= ' data-network="' . $network->key . '"';
+
+        if ( !empty($network->premium) ) :
+            $html .= ' premium="'.$network->premium.'"';
+        endif;
+
+        $html .= '></i>';
+
+
+        return $html;
     }
 
     public function render_HTML() {
