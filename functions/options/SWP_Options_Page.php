@@ -228,12 +228,14 @@ class SWP_Options_Page extends SWP_Abstract {
         $registrations = [];
         $registered = false;
         $active_addons = '';
+        $registered_addons = '';
 
         foreach( $addons as $addon ) {
             $registrations[] = new SWP_Addon_Registration( $addon );
+            $active_addons .= " $addon->key ";
 
             if ( true === $addon->registered ) :
-                $active_addons .= " $addon->key ";
+                $registered_addons .= " $addon->key ";
                 $registered = true;
             endif;
         }
@@ -243,7 +245,7 @@ class SWP_Options_Page extends SWP_Abstract {
         $this->init_registration_tab( $registrations );
 
         $menu = $this->create_menu( $registrations );
-        $tabs = $this->create_tabs( $active_addons );
+        $tabs = $this->create_tabs( $active_addons, $registered_addons );
 
         $html = $menu . $tabs;
         $this->html = $html;
@@ -693,12 +695,12 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * @return string $container The Admin tab HTML container.
     */
-    private function create_tabs( $active_addons ) {
+    private function create_tabs( $active_addons, $registered_addons ) {
         $sidebar = new SWP_Section_HTML( 'Sidebar' );
         $tab_map = $this->sort_by_priority( $this->tabs );
         $registered = false;
 
-        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->registered .'" data-swp-registrations="' . $active_addons . '">';
+        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->registered .'" data-swp-addons="' . $active_addons . '" data-swp-registrations="' . $registered_addons . '">';
             $container .= '<form class="sw-admin-settings-form">';
                 $container .= '<div class="sw-tabs-container sw-grid sw-col-700">';
 
