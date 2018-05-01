@@ -60,7 +60,6 @@ class SWP_Options_Page extends SWP_Abstract {
 	 *
 	 */
 	public function __construct() {
-
 		// Fetch the initial user-set options.
 		$swp_user_options = swp_get_user_options( true );
 
