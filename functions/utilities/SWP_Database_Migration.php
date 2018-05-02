@@ -26,8 +26,8 @@ class SWP_Database_Migration {
         }
 
         if ( !$this->post_meta_is_migrated() ) {
-            echo "Not migrated post meta";
-            $this->update_sw_meta();
+            $this->update_post_meta();
+            $this->update_hidden_post_meta();
         }
     }
 
@@ -46,6 +46,7 @@ class SWP_Database_Migration {
 
         return !is_array( $option );
     }
+
 
     /**
     * Checks to see if we have 3.0.0 settings installed or not.
@@ -74,13 +75,34 @@ class SWP_Database_Migration {
         return count( $old_metadata ) === 0;
     }
 
+    public function update_hidden_post_meta() {
+        $hidden_map = [
+            '_google_plus_shares'    => '_google_plus_shares',
+            '_linkedin_shares'      => '_linkedin_shares',
+            'bitly_link_googlePlus' => '_bitly_link_google_plus',
+            'bitly_link_linkedIn'   => '_bitly_link_linked_in'
+        ];
+
+        $query = "
+            UPDATE " . $wpdb->prefix . "postmeta
+            SET meta_key = %s
+            WHERE meta_key = %s
+        ";
+
+        foreach ( $metadata_map as $old_key => $new_key ) {
+            //* Make replacements for the first kind of prefix.
+            $q = $wpdb->prepare( $query, $new_key, $old_key );
+            $wpdb->query( $q );
+        }
+    }
+
 
     /**
     * Replaces 2.3.5 camelCased keys with 3.0.0 standardized snake_cased keys.
     *
     * @since 3.0.0 | 01 MAY 2018 | Created the function
     */
-    public function update_sw_meta() {
+    public function update_post_meta() {
         global $wpdb;
 
         //* Notice there is no prefix on any of the indices.
