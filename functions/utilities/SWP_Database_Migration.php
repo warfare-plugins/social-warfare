@@ -77,8 +77,8 @@ class SWP_Database_Migration {
 
     public function update_hidden_post_meta() {
         $hidden_map = [
-            '_google_plus_shares'    => '_google_plus_shares',
-            '_linkedin_shares'      => '_linkedin_shares',
+            '_googlePlus_shares'    => '_google_plus_shares',
+            '_linkedIn_shares'      => '_linkedin_shares',
             'bitly_link_googlePlus' => '_bitly_link_google_plus',
             'bitly_link_linkedIn'   => '_bitly_link_linked_in'
         ];
