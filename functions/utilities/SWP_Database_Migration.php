@@ -26,8 +26,25 @@ class SWP_Database_Migration {
         }
 
         if ( !$this->post_meta_is_migrated() ) {
+            echo "Not migrated post meta";
             $this->update_sw_meta();
         }
+    }
+
+    /**
+     * Checks to see if Social Warfare < 3.0.0 options exist.
+     *
+     * If these options exist in the databse, we need to move them
+     * from "socialWarfareOptions" to "social_warfare_settings",
+     * then
+     *
+     * @since 3.0.0 | 01 MAY 2018 | Created the function
+     * @return bool True if migrated, else false.
+     */
+    public function database_is_migrated() {
+        $option = get_option( 'socialWarfareOptions' , false);
+
+        return !is_array( $option );
     }
 
     /**
@@ -40,7 +57,7 @@ class SWP_Database_Migration {
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
 
-        return false === $settings || empty( $settings['order_of_icons'] );
+        return is_array( $settings ) && !empty( $settings['order_of_icons'] );
     }
 
 
@@ -54,7 +71,7 @@ class SWP_Database_Migration {
          //* Fetch posts with 2.3.5 metadata.
         $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
-        return count( $old_metadata ) > 0;
+        return count( $old_metadata ) === 0;
     }
 
 
@@ -194,23 +211,6 @@ class SWP_Database_Migration {
         ];
 
         update_option( 'social_warfare_settings', $defaults );
-    }
-
-
-    /**
-     * Checks to see if Social Warfare < 3.0.0 options exist.
-     *
-     * If these options exist in the databse, we need to move them
-     * from "socialWarfareOptions" to "social_warfare_settings",
-     * then
-     *
-     * @since 3.0.0 | 01 MAY 2018 | Created the function
-     * @return bool True if migrated, else false.
-     */
-    public function database_is_migrated() {
-        $option = get_option( 'socialWarfareOptions' , false);
-
-        return !is_array( $option );
     }
 
 
