@@ -58,9 +58,9 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , '_buffer_shares' );
 	    delete_post_meta( $id , '_facebook_shares' );
 	    delete_post_meta( $id , '_flipboard_shares' );
-	    delete_post_meta( $id , '_googlePlus_shares' );
+	    delete_post_meta( $id , '_google_plus_shares' );
 	    delete_post_meta( $id , '_hacker_news_shares' );
-	    delete_post_meta( $id , '_linkedIn_shares' );
+	    delete_post_meta( $id , '_linkedin_shares' );
 	    delete_post_meta( $id , '_pinterest_shares' );
 	    delete_post_meta( $id , '_pocket_shares' );
 	    delete_post_meta( $id , '_reddit_shares' );
@@ -75,9 +75,9 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , 'bitly_link_buffer' );
 	    delete_post_meta( $id , 'bitly_link_facebook' );
 	    delete_post_meta( $id , 'bitly_link_flipboard' );
-	    delete_post_meta( $id , 'bitly_link_googlePlus' );
+	    delete_post_meta( $id , 'bitly_link_google_plus' );
 	    delete_post_meta( $id , 'bitly_link_hacker_news' );
-	    delete_post_meta( $id , 'bitly_link_linkedIn' );
+	    delete_post_meta( $id , 'bitly_link_linkedin' );
 	    delete_post_meta( $id , 'bitly_link_pinterest' );
 	    delete_post_meta( $id , 'bitly_link_pocket' );
 	    delete_post_meta( $id , 'bitly_link_reddit' );
