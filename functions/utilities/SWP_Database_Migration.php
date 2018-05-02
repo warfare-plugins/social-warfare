@@ -7,115 +7,62 @@
  */
 
 class SWP_Database_Migration {
-    private $defaults = [
-        'location_archive_categories'       => 'below',
-        'location_home'				        => 'none',
-        'location_post'				        => 'below',
-        'location_page'				        => 'below',
-        'float_location_post'               => 'on',
-        'float_location_page'               => 'off',
-        'total_shares'                      => true,
-        'network_shares'                    => true,
-        'twitter_id'                        => false,
-        'swp_twitter_card'                  => true,
-        'button_shape'                      => 'flatFresh',
-        'default_colors'                    => 'full_color',
-        'single_colors'                     => 'full_color',
-        'hover_colors'                      => 'full_color',
-        'float_default_colors'              => 'full_color',
-        'float_single_colors'               => 'full_color',
-        'float_hover_colors'                => 'fullColor',
-        'float_style_source'                => true,
-        'float_size'                        => 1,
-        'float_alignment'                   => 'center',
-        'button_size'                       => 1,
-        'button_alignment'                  => 'fullWidth',
-        'transition'                        => 'slide',
-        'float_screen_width'                => 1100,
-        'ctt_theme'                         => 'style1',
-        'ctt_css'							=> "",
-        'twitter_shares'                    => false,
-        'floating_panel'                    => true,
-        'float_location'                    => 'bottom',
-        'float_background_color'            => '#ffffff',
-        'float_button_shape'                => 'default',
-        'float_vertical'					=> 'center',
-        'float_button_count'                => 5,
-        'custom_color'                      => '#000000',
-        'recover_shares'                    => false,
-        'recovery_format'                   => 'unchanged',
-        'recovery_protocol'                 => 'unchanged',
-        'recovery_prefix'                   => 'unchanged',
-        'decimals'                          => 0,
-        'decimal_separator'                 => 'period',
-        'totals_alignment'                  => 'totesalt',
-        'google_analytics'                  => false,
-        'bitly_authentication'              => false,
-        'minimum_shares'                    => 0,
-        'full_content'				        => false,
-        'frame_buster'                      => false,
-        'analytics_medium'                  => 'social',
-        'analytics_campaign'                => 'SocialWarfare',
-        'swp_click_tracking'                => false,
-        'order_of_icons_method'             => 'manual',
-        'og_post'                           => 'article',
-        'og_page'                           => 'article',
-        'pinterest_image_location'          => 'hidden',
-        'pin_browser_extension'             => false,
-        'pinterest_fallback'                => 'all',
-        'pinit_toggle'                      => false,
-        'pinit_location_horizontal'         => 'center',
-        'pinit_location_vertical'           => 'top',
-        'pinit_min_width'                   => '200',
-        'pinit_min_height'                  => '200',
-        'pinit_image_source'                => 'image',
-        'pinit_image_description'           => 'alt_text',
-        'utm_on_pins'	                    => false,
-        'pin_browser_extension'             => false,
-        'pin_browser_extension_location'    => 'hidden',
-        'pinterest_fallback'                => 'all',
-        'float_mobile'                      => 'bottom',
-        'force_new_shares'                  => false,
-        'cache_method'                      => 'advanced',
-        'order_of_icons'                    =>  [
-                                                'twitter'    => 'Twitter',
-                                                'linkedIn'   => 'LinkedIn',
-                                                'pinterest'  => 'Pinterest',
-                                                'facebook'   => 'Facebook',
-                                                'google_plus' => 'Google Plus',
-                                            ],
-    ];
-
-
     /**
      * Checks to see if we are on the most up-to-date database schema.
      *
      * If not, runs the migration and updators.
      *
-     * @since 3.0.0
+     * @since 3.0.0 | 01 MAY 2018 | Created the function
      *
      */
     public function __construct() {
-        if ( !$this->is_migrated() ) {
+
+        if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
 
+        if ( !$this->has_3_0_0_settings() ) {
+            $this->initialize_database();
+        }
+
+        if ( !$this->post_meta_is_migrated() ) {
+            $this->update_sw_meta();
+        }
+    }
+
+    /**
+    * Checks to see if we have 3.0.0 settings installed or not.
+    *
+    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @return bool True if the 3.0.0 array exists, otherwise false.
+    */
+    protected function has_3_0_0_settings() {
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
 
-        if ( false === $settings || empty( $settings['order_of_icons'] ) ) :
-            $this->initialize_database();
-        endif;
-
-        //* Fetch posts with 2.3.5 metadata.
-        $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
-
-        //* Map 2.3.5 metadata to 3.0.0 keys.
-        if ( count( $old_metadata ) > 0 ) :
-            $this->update_sw_meta();
-        endif;
+        return false === $settings || empty( $settings['order_of_icons'] );
     }
 
+
+    /**
+    * Tries to get an option that uses the old post_meta keynames.
+    *
+    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @return bool True if the old option still exists; false otherwise.
+    */
+    public function post_meta_is_migrated() {
+         //* Fetch posts with 2.3.5 metadata.
+        $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
+
+        return count( $old_metadata ) > 0;
+    }
+
+
+    /**
+    * Replaces 2.3.5 camelCased keys with 3.0.0 standardized snake_cased keys.
+    *
+    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    */
     public function update_sw_meta() {
         global $wpdb;
 
@@ -159,33 +106,126 @@ class SWP_Database_Migration {
         }
     }
 
+
+    /**
+    * Seeds the database with Social Warfare 3.0.0 default values.
+    *
+    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @return void
+    */
     public function initialize_database() {
-        update_option( 'social_warfare_settings', $this->defaults );
+        $defaults = [
+            'location_archive_categories'       => 'below',
+            'location_home'                     => 'none',
+            'location_post'                     => 'below',
+            'location_page'                     => 'below',
+            'float_location_post'               => 'on',
+            'float_location_page'               => 'off',
+            'total_shares'                      => true,
+            'network_shares'                    => true,
+            'twitter_id'                        => false,
+            'swp_twitter_card'                  => true,
+            'button_shape'                      => 'flatFresh',
+            'default_colors'                    => 'full_color',
+            'single_colors'                     => 'full_color',
+            'hover_colors'                      => 'full_color',
+            'float_default_colors'              => 'full_color',
+            'float_single_colors'               => 'full_color',
+            'float_hover_colors'                => 'fullColor',
+            'float_style_source'                => true,
+            'float_size'                        => 1,
+            'float_alignment'                   => 'center',
+            'button_size'                       => 1,
+            'button_alignment'                  => 'fullWidth',
+            'transition'                        => 'slide',
+            'float_screen_width'                => 1100,
+            'ctt_theme'                         => 'style1',
+            'ctt_css'                           => "",
+            'twitter_shares'                    => false,
+            'floating_panel'                    => true,
+            'float_location'                    => 'bottom',
+            'float_background_color'            => '#ffffff',
+            'float_button_shape'                => 'default',
+            'float_vertical'                    => 'center',
+            'float_button_count'                => 5,
+            'custom_color'                      => '#000000',
+            'recover_shares'                    => false,
+            'recovery_format'                   => 'unchanged',
+            'recovery_protocol'                 => 'unchanged',
+            'recovery_prefix'                   => 'unchanged',
+            'decimals'                          => 0,
+            'decimal_separator'                 => 'period',
+            'totals_alignment'                  => 'totesalt',
+            'google_analytics'                  => false,
+            'bitly_authentication'              => false,
+            'minimum_shares'                    => 0,
+            'full_content'                      => false,
+            'frame_buster'                      => false,
+            'analytics_medium'                  => 'social',
+            'analytics_campaign'                => 'SocialWarfare',
+            'swp_click_tracking'                => false,
+            'order_of_icons_method'             => 'manual',
+            'og_post'                           => 'article',
+            'og_page'                           => 'article',
+            'pinterest_image_location'          => 'hidden',
+            'pin_browser_extension'             => false,
+            'pinterest_fallback'                => 'all',
+            'pinit_toggle'                      => false,
+            'pinit_location_horizontal'         => 'center',
+            'pinit_location_vertical'           => 'top',
+            'pinit_min_width'                   => '200',
+            'pinit_min_height'                  => '200',
+            'pinit_image_source'                => 'image',
+            'pinit_image_description'           => 'alt_text',
+            'utm_on_pins'                       => false,
+            'pin_browser_extension'             => false,
+            'pin_browser_extension_location'    => 'hidden',
+            'pinterest_fallback'                => 'all',
+            'float_mobile'                      => 'bottom',
+            'force_new_shares'                  => false,
+            'cache_method'                      => 'advanced',
+            'order_of_icons' =>  [
+                'twitter'    => 'Twitter',
+                'linkedIn'   => 'LinkedIn',
+                'pinterest'  => 'Pinterest',
+                'facebook'   => 'Facebook',
+                'google_plus' => 'Google Plus',
+            ],
+        ];
+
+        update_option( 'social_warfare_settings', $defaults );
     }
 
 
     /**
      * Checks to see if Social Warfare < 3.0.0 options exist.
      *
-     * @return bool True if migrated, else false.
+     * If these options exist in the databse, we need to move them
+     * from "socialWarfareOptions" to "social_warfare_settings",
+     * then
      *
+     * @since 3.0.0 | 01 MAY 2018 | Created the function
+     * @return bool True if migrated, else false.
      */
-    public function is_migrated() {
+    public function database_is_migrated() {
         $option = get_option( 'socialWarfareOptions' , false);
 
-        return is_array( $option );
+        return !is_array( $option );
     }
 
 
     /**
      * Map prevous key/value pairs to new keys.
      *
-     * @return [type] [description]
+     * This also deletes the previous keys once the migration is done.
+     * @since 3.0.0 | 01 MAY 2018 | Created the function
+     * @return void
      */
     private function migrate() {
         $options = get_option( 'socialWarfareOptions', [] );
 
         if ( $options === [] ) :
+            //* The old options do not exist.
             return;
         endif;
 
@@ -234,7 +274,7 @@ class SWP_Database_Migration {
             'sideCustomColor'                   => 'single_custom_color',
             'floatBgColor'                      => 'float_background_color',
             'orderOfIconsSelect'                => 'order_of_icons_method',
-			'newOrderOfIcons'                            => 'order_of_icons',
+			'newOrderOfIcons'                   => 'order_of_icons',
 
             //* Choices names
             'flatFresh'     => 'flat_fresh',
@@ -263,6 +303,8 @@ class SWP_Database_Migration {
         ];
 
 
+        //* We don't actually do anything with these. I left them here just as a note.
+        //* They are deleted during the call to delete_option( 'socialWarfareOptions' ).
         $removals = [
             'dashboardShares',
             'rawNumbers',
