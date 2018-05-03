@@ -532,7 +532,6 @@ class SWP_Buttons_Panel {
         $count = [];
         $order = $this->options['order_of_icons'];
 
-
         foreach( $order as $network_key ) {
             foreach( $this->networks as $key => $network ) :
                 //* TODO: This needs to be the conditional instead.
