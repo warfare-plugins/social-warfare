@@ -37,6 +37,7 @@
 
         //* Change handlers for style.
         $(panelSelector).on("change", function(e) {
+            var value = e.target.value;
             var customColor = $("[name=custom_color]").parent().parent();
             var customOutlines = $("[name=custom_color_outlines]").parent().parent();
 
@@ -44,6 +45,7 @@
         });
 
         $(floatSelector).on("change", function(e) {
+            var value = e.target.value;
             var customColor = $("[name=float_custom_color]").parent().parent();
             var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
             handleCustomColors(e, floatSelector, customColor, customOutlines, value);
@@ -51,12 +53,12 @@
         });
     }
 
-    function handleCustomColors(event, panelSelector, customColor, customOutlines) {
+    function handleCustomColors(event, selector, customColor, customOutlines) {
         var visible = false;
         var value = event.target.value;
 
         //* Check to see if this or a sibling input has custom_color selected.
-        $(floatSelector).each(function(index, select) {
+        $(selector).each(function(index, select) {
             //* Check to see if this or a sibling input has custom_color selected.
             if ($(select).val().indexOf("custom") !== -1) {
                 visible = true;
@@ -534,7 +536,7 @@
         var value = $(el).attr(attribute);
         var startIndex = value.indexOf(removal);
         if (startIndex === -1) return;
-        
+
         var stopIndex = startIndex + removal.length;
         var newValue = value.slice(0, startIndex) + value.slice(stopIndex);
 
