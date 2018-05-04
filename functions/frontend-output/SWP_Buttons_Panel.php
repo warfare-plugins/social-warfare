@@ -466,7 +466,7 @@ class SWP_Buttons_Panel {
         $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
             ' swp_default_' . $this->options['float_default_colors'] .
             ' swp_individual_' . $this->options['float_single_colors'] .
-            ' swp_o_' . $this->options['float_hover_colors'] . '
+            ' swp_other_' . $this->options['float_hover_colors'] . '
             ' . $this->options['transition'] . '
             ' . $class . '
             ' . '" data-position="' . $this->options['location_post'] .
