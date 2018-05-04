@@ -710,7 +710,7 @@ class SWP_Options_Page extends SWP_Abstract {
                         if ( $key === $tab->key ) :
 
                             if ( 'registration' === $key ) :
-                                $container .= $tab->render_HTML( $addons );
+                                $container .= $tab->render_HTML( $registered_addons );
                                 continue;
                             endif;
 
