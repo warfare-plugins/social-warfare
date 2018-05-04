@@ -204,7 +204,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( location ) {
 
 				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
-y					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
 					var offsetOne = firstSocialPanel.offset();
 					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
 					var minWidth = ncSideFloater.data( 'screen-width' );
