@@ -114,12 +114,13 @@ class SWP_Buttons_Panel {
         $this->localize_options( $args );
 
 	    $this->establish_post_id();
+
+		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+
 	    $this->establish_location();
 		$this->establish_float_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
-
-		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
 
     }
 
@@ -495,8 +496,25 @@ class SWP_Buttons_Panel {
     }
 
 
+	/**
+	 * A method to establish the active buttons for this panel.
+	 *
+	 * First it will check to see if user arguments have been passed in. If not, it will
+	 * check to see if they are set to manual or dynamic sorting. If manual, we will use
+	 * the buttons in the order they were stored in the options array (they were set in
+	 * this order on the options page.) If dynamic, we will look at the share counts and
+	 * order them with the largest share counts appearing first.
+	 *
+	 * The results will be stored as an ordered array of network objects in the
+	 * $this->networks property.
+	 *
+	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @param  none
+	 * @return object $this Allows for method chaining.
+	 *
+	 */
     public function establish_active_buttons() {
-        $count = [];
+        $network_objects = [];
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
@@ -508,50 +526,78 @@ class SWP_Buttons_Panel {
 
                 foreach( $this->networks as $key => $network ):
                     if( $network_key === $key ):
-                        $count[] = $network;
+                        $network_objects[] = $network;
                     endif;
                 endforeach;
             }
 
         //* Use global button settings.
         else :
+
+			// Order manually using the user's specified order.
             if ( $this->options['order_of_icons_method'] === 'manual' ) :
-                $count = $this->get_manual_buttons();
+                $order = $this->options['order_of_icons'];
+
+			// Order them dynamically according to share counts.
             else :
-                $count = $this->get_dynamic_buttons();
+                $order = $this->get_dynamic_buttons_order();
             endif;
+
+			$count = $this->order_network_objects($order);
 
         endif;
 
-        $this->networks = $count;
+        $this->networks = $network_objects;
 
         return $this;
     }
 
-    protected function get_manual_buttons() {
-        $count = [];
-        $order = $this->options['order_of_icons'];
 
-        foreach( $order as $network_key ) {
+	/**
+	 * A method to order the networks dynamically.
+	 *
+	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @param  none
+	 * @return object An ordered array containing the social network objects.
+	 */
+    protected function get_dynamic_buttons_order() {
+
+		$order = array();
+		arsort($this->shares);
+		foreach( $this->shares as $key => $value ):
+
+			if($key !== 'total_shares'):
+				$order[$key] = $key;
+			endif;
+
+		endforeach;
+
+		$this->options['order_of_icons'] = $order;
+
+		return $order;
+
+    }
+
+
+	/**
+	 * A method to shuffle the array of network objects.
+	 *
+	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @param  array $order An ordered array of network keys.
+	 * @return array        An ordered array of network objects.
+	 * 
+	 */
+	public function order_network_objects( $order ) {
+		$network_objects = array();
+		foreach( $order as $network_key ) {
             foreach( $this->networks as $key => $network ) :
-                //* TODO: This needs to be the conditional instead.
-                // if( $key === $network_key && true === $network->is_active() ):
                 if ( $key === $network_key ) :
-                    $count[$key] = $network;
+                    $network_objects[$key] = $network;
                 endif;
             endforeach;
         }
-
-        return $count;
-    }
-
-    //* TODO: How can we sort the buttons dynamically?
-    //* This is dependent on how we fetch share counts.
-    protected function get_dynamic_buttons() {
-        $count = [];
-
-        return $count;
-    }
+		return $network_objects;
+	}
 
     public function render_buttons_HTML( $max_count = null) {
         $html = '';
