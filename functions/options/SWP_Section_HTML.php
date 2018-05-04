@@ -160,13 +160,13 @@ class SWP_Section_HTML extends SWP_Option {
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
     public function do_bitly_authentication_button() {
-        $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=https://warfareplugins.com/wp-admin/admin-ajax.php&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
+        $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=" . admin_url( 'admin-ajax.php' ) . "&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
 
         if ( isset( $this->dependant) && !empty( $this->dependant) ):
             $text = __( 'Connected', 'social-warfare' );
             $color = 'sw-green-button';
         else:
-            $text = __( 'Authenticated', 'social-warfare' );
+            $text = __( 'Authenticate', 'social-warfare' );
             $color = 'sw-navy-button';
         endif;
 
@@ -174,7 +174,7 @@ class SWP_Section_HTML extends SWP_Option {
 
             <div class="sw-grid sw-col-940 sw-fit sw-option-container <?= $this->key ?> '_wrapper" <?php $this->render_dependency(); $this->render_premium(); ?>>
                 <div class="sw-grid sw-col-300">
-                    <p class="sw-authenticate-label"><?php __( $this->name, 'social-warfare' ) ?></p>
+                    <p class="sw-authenticate-label"><?php __( 'Bitly Link Shortening', 'social-warfare' ) ?></p>
                 </div>
                 <div class="sw-grid sw-col-300">
                     <a class="button <?= $color ?>" href="<?= $link ?>"><?= $text ?></a>
@@ -215,7 +215,7 @@ class SWP_Section_HTML extends SWP_Option {
                 <a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
-                            <i class="sw sw-twitter"></i>
+                            <i class="sw swp-twitter"></i>
                             <span class="swp_share"><?php __( 'Tweet','social-warfare' ) ?></span>
                         </span>
                     </span>
@@ -378,7 +378,7 @@ class SWP_Section_HTML extends SWP_Option {
                 $html .= '<span class="sw-click-to-tweet">';
                     $html .= '<span class="sw-ctt-text">' . $text . '</span>';
                     $html .= '<span class="sw-ctt-btn">Click To Tweet';
-                        $html .= '<i class="sw sw-twitter"></i>';
+                        $html .= '<i class="sw swp-twitter"></i>';
                     $html .= '</span>';
                 $html .= '</span>';
             $html .= '</a>';
