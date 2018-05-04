@@ -166,7 +166,7 @@ class SWP_Section_HTML extends SWP_Option {
             $text = __( 'Connected', 'social-warfare' );
             $color = 'sw-green-button';
         else:
-            $text = __( 'Authenticated', 'social-warfare' );
+            $text = __( 'Authenticate', 'social-warfare' );
             $color = 'sw-navy-button';
         endif;
 
