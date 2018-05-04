@@ -35,6 +35,11 @@ function get_social_warfare_shares( $postID ) {
 	// Queue up the networks that are available
 	$networks = $options['order_of_icons'];
 
+	foreach ( $networks as $network ):
+		$temp_array[] = swp_snake_case ( $network );;
+	endforeach;
+	$networks = $temp_array;
+
 	$icons_array = array(
 		'type'		=> 'buttons'
 	);
@@ -47,8 +52,10 @@ function get_social_warfare_shares( $postID ) {
 
 		// If cache is expired, fetch new and update the cache
 		else :
-			$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
-			$api_responses[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+			if( isset( $swp_social_networks[$network] ) ):
+				$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
+				$api_responses[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+			endif;
 		endif;
 
 	endforeach;

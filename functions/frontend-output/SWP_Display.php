@@ -31,7 +31,7 @@ class SWP_Display {
         add_action('template_redirect', array($this, 'activate_buttons') );
 
         // Add the side floating buttons to the footer if they are activated
-        if ( in_array( $this->options['float_location'], array( 'left', 'right' ), true ) ) {
+        if ( in_array( swp_get_option('float_location') , array( 'left', 'right' ), true ) ) {
             add_action( 'wp_footer', [$this, 'floating_buttons_side'] );
         }
     }

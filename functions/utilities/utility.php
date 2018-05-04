@@ -494,3 +494,17 @@ function swp_get_site_url() {
 		return get_site_url();
 	}
 }
+
+
+/**
+ * A function to convert strings into snake_case
+ *
+ * @since  3.0.0 | 02 MAY 2018 | Created
+ * @param  string $string The string to be modified.
+ * @return string         The snake_case modified string.
+ * 
+ */
+function swp_snake_case( $string ) {
+	$snake_case = str_replace( ' ' , '_' , strtolower($string) );
+	return $snake_case;
+}
