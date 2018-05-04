@@ -35,11 +35,6 @@ function get_social_warfare_shares( $postID ) {
 	// Queue up the networks that are available
 	$networks = $options['order_of_icons'];
 
-	foreach ( $networks as $network ):
-		$temp_array[] = swp_snake_case ( $network );;
-	endforeach;
-	$networks = $temp_array;
-
 	$icons_array = array(
 		'type'		=> 'buttons'
 	);
