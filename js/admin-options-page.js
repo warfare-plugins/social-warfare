@@ -313,10 +313,24 @@
 
 	// A function for updating the preview
 	function updateTheme() {
-		var visualTheme  = $( 'select[name="button_shape"]' ).val();
-		var dColorSet    = $( 'select[name="default_colors"]' ).val();
-		var iColorSet    = $( 'select[name="single_colors"]' ).val();
-		var oColorSet    = $( 'select[name="hover_colors"]' ).val();
+		var visualTheme  = getParsedValue("button_shape");
+		var dColorSet    = getParsedValue("default_colors");
+        var iColorSet    = getParsedValue("single_colors");
+		var oColorSet    = getParsedValue("hover_colors");
+
+        function getParsedValue(selector) {
+            var value = $( 'select[name="' + selector + '"]' ).val();
+
+            if (value.indexOf("custom") === 0) {
+                console.log("Selected a custom color.")
+                var prefix = selector.slice(0, selector.indexOf("_"));
+                console.log("returning: ", prefix);
+                return prefix + "_full_color";
+            }
+
+            return value;
+        }
+
 		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
@@ -331,13 +345,13 @@
 
 		socialWarfarePlugin.lastClass = buttonsClass;
 
-		if ( dColorSet == 'custom_color' || dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color' || oColorSet == 'custom_color_outlines' ) {
-			$( '.customColor_wrapper' ).slideDown();
-
-			updateCustomColor();
-		} else {
-			$( '.customColor_wrapper' ).slideUp();
-		}
+		// if ( dColorSet == 'custom_color' || dColorSet == 'custom_color_outlines' || iColorSet == 'custom_color' || iColorSet == 'custom_color_outlines' || oColorSet == 'custom_color' || oColorSet == 'custom_color_outlines' ) {
+		// 	$( '.customColor_wrapper' ).slideDown();
+        //
+		// 	updateCustomColor();
+		// } else {
+		// 	$( '.customColor_wrapper' ).slideUp();
+		// }
 	}
 
 	/*********************************************************
