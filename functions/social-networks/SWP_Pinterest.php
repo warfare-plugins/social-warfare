@@ -88,52 +88,58 @@ class SWP_Pinterest extends SWP_Social_Network {
 		else :
 			$pinterest_username = '';
 		endif;
-
-
-	$array['imageURL'] = false;
-	$image_url = get_post_meta( $post_data['ID'] , 'swp_pinterest_image_url' , true );
-	if( !empty( $image_url ) ):
-		$array['imageURL'] = $image_url;
-	elseif(isset($array['options']['advanced_pinterest_fallback']) && $array['options']['advanced_pinterest_fallback'] == 'featured'):
-		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-		if( !empty( $thumbnail_url ) ):
-			$array['imageURL'] = $thumbnail_url;
-		endif;
-	endif;
-	$pd	= get_post_meta( $array['postID'] , 'nc_pinterestDescription' , true );
-	if ( $array['imageURL'] ) :
-		$pinterest_image 	= '&media=' . urlencode( html_entity_decode( $array['imageURL'],ENT_COMPAT, 'UTF-8' ) );
-	else :
-		$pinterest_image		= '';
-	endif;
-	$pinterest_imagenterest_link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'pinterest' , $array['postID'] ) ) );
-	$title = strip_tags( get_the_title( $array['postID'] ) );
-	$title = str_replace( '|','',$title );
-	if( function_exists('is_swp_registered') ):
-		$swp_registration = is_swp_registered();
-	else:
-		$swp_registration = false;
-	endif;
-	if ( $pinterest_image != '' && true === $swp_registration ) :
-		$a = '<a rel="nofollow" data-link="https://pinterest.com/pin/create/button/?url=' . $pinterest_imagenterest_link . '' . $pinterest_image . '&description=' . ($pd != '' ? urlencode( html_entity_decode( $pd . $pinterest_username, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title . $pinterest_username, ENT_COMPAT, 'UTF-8' ) )) . '" class="nc_tweet" data-count="0">';
-	else :
-		$a = '<a rel="nofollow" onClick="var e=document.createElement(\'script\');e.setAttribute(\'type\',\'text/javascript\');e.setAttribute(\'charset\',\'UTF-8\');e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);document.body.appendChild(e);" class="nc_tweet noPop">';
-	endif;
-	$array['resource']['pinterest'] = '<div class="nc_tweetContainer nc_pinterest" data-id="' . $array['count'] . '" data-network="pinterest">';
-	$array['resource']['pinterest'] .= $a;
-	if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['pinterest'] > 0 ) :
-		$array['resource']['pinterest'] .= '<span class="iconFiller">';
-		$array['resource']['pinterest'] .= '<span class="spaceManWilly">';
-		$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';
-		$array['resource']['pinterest'] .= '<span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span>';
-		$array['resource']['pinterest'] .= '</span></span>';
-		$array['resource']['pinterest'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['pinterest'] ) . '</span>';
-	else :
-		$array['resource']['pinterest'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pinterest"></i><span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span></span></span></span>';
-	endif;
-	$array['resource']['pinterest'] .= '</a>';
-	$array['resource']['pinterest'] .= '</div>';
-	// Store these buttons so that we don't have to generate them for each set
-	$_GLOBALS['sw']['buttons'][ $array['postID'] ]['pinterest'] = $array['resource']['pinterest'];
+    
+    	$array['imageURL'] = false;
+    	$image_url = get_post_meta( $post_data['ID'] , 'swp_pinterest_image_url' , true );
+    	if( !empty( $image_url ) ):
+    		$array['imageURL'] = $image_url;
+    	elseif(isset($array['options']['advanced_pinterest_fallback']) && $array['options']['advanced_pinterest_fallback'] == 'featured'):
+    		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
+    		if( !empty( $thumbnail_url ) ):
+    			$array['imageURL'] = $thumbnail_url;
+    		endif;
+    	endif;
+
+    	$pd	= get_post_meta( $array['postID'] , 'nc_pinterestDescription' , true );
+    	if ( $array['imageURL'] ) :
+    		$pinterest_image 	= '&media=' . urlencode( html_entity_decode( $array['imageURL'],ENT_COMPAT, 'UTF-8' ) );
+    	else :
+    		$pinterest_image		= '';
+    	endif;
+
+    	$pinterest_imagenterest_link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'pinterest' , $array['postID'] ) ) );
+
+    	$title = strip_tags( get_the_title( $array['postID'] ) );
+    	$title = str_replace( '|','',$title );
+
+    	if( function_exists('is_swp_registered') ):
+    		$swp_registration = is_swp_registered();
+    	else:
+    		$swp_registration = false;
+    	endif;
+
+    	if ( $pinterest_image != '' && true === $swp_registration ) :
+    		$a = '<a rel="nofollow" data-link="https://pinterest.com/pin/create/button/?url=' . $pinterest_imagenterest_link . '' . $pinterest_image . '&description=' . ($pd != '' ? urlencode( html_entity_decode( $pd . $pinterest_username, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title . $pinterest_username, ENT_COMPAT, 'UTF-8' ) )) . '" class="nc_tweet" data-count="0">';
+    	else :
+    		$a = '<a rel="nofollow" onClick="var e=document.createElement(\'script\');e.setAttribute(\'type\',\'text/javascript\');e.setAttribute(\'charset\',\'UTF-8\');e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);document.body.appendChild(e);" class="nc_tweet noPop">';
+    	endif;
+
+    	$array['resource']['pinterest'] = '<div class="nc_tweetContainer nc_pinterest" data-id="' . $array['count'] . '" data-network="pinterest">';
+    	$array['resource']['pinterest'] .= $a;
+    	if ( $array['options']['totesEach'] && $array['shares']['totes'] >= $array['options']['minTotes'] && $array['shares']['pinterest'] > 0 ) :
+    		$array['resource']['pinterest'] .= '<span class="iconFiller">';
+    		$array['resource']['pinterest'] .= '<span class="spaceManWilly">';
+    		$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';
+    		$array['resource']['pinterest'] .= '<span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span>';
+    		$array['resource']['pinterest'] .= '</span></span>';
+    		$array['resource']['pinterest'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['pinterest'] ) . '</span>';
+    	else :
+    		$array['resource']['pinterest'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pinterest"></i><span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span></span></span></span>';
+    	endif;
+
+    	$array['resource']['pinterest'] .= '</a>';
+    	$array['resource']['pinterest'] .= '</div>';
+    	// Store these buttons so that we don't have to generate them for each set
+    	$_GLOBALS['sw']['buttons'][ $array['postID'] ]['pinterest'] = $array['resource']['pinterest'];
 	}
 }
