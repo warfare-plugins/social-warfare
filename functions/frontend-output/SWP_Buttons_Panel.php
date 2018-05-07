@@ -543,7 +543,7 @@ class SWP_Buttons_Panel {
                 $order = $this->get_dynamic_buttons_order();
             endif;
 
-			$count = $this->order_network_objects($order);
+			$network_objects = $this->order_network_objects($order);
 
         endif;
 
@@ -585,7 +585,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.0 | 04 MAY 2018 | Created
 	 * @param  array $order An ordered array of network keys.
 	 * @return array        An ordered array of network objects.
-	 * 
+	 *
 	 */
 	public function order_network_objects( $order ) {
 		$network_objects = array();
