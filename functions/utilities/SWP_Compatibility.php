@@ -37,7 +37,7 @@ class SWP_Compatibility {
 		add_action( 'dp_duplicate_post', array( $this , 'remove_fields' ) );
 
 		// Fix the links that are modified by the Really Simple SSL plugin.
-		add_filter("rsssl_fixer_output","swp_rsssl_fix_compatibility");
+		add_filter("rsssl_fixer_output", [$this, 'rsssl_fix_compatibility'] );
 
 	}
 
