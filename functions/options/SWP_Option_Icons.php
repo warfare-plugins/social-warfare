@@ -28,6 +28,9 @@ class SWP_Option_Icons extends SWP_Option {
     public function render_active_icons() {
 		$all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
+        if ( empty($user_icons) ) :
+            $user_icons = [];
+        endif;
 
         $html = '<div class="sw-grid sw-col-300">';
             $html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
@@ -35,13 +38,16 @@ class SWP_Option_Icons extends SWP_Option {
 
         $html .= '<div class="sw-grid sw-col-620 sw-fit">';
             $html .= '<div class="sw-active sw-buttons-sort">';
-			foreach( $user_icons as $network_key ) {
-                if ( isset( $all_icons[$network_key]) ) :
-                    $network = $all_icons[$network_key];
 
-                    $html .= $this->render_icon_HTML( $network );
-                endif;
-            }
+            if ( count($user_icons) > 0 ):
+    			foreach( $user_icons as $network_key => $network ) {
+                    if ( isset( $all_icons[$network_key]) ) :
+                        $network = $all_icons[$network_key];
+
+                        $html .= $this->render_icon_HTML( $network );
+                    endif;
+                }
+            endif;
 
             $html .= '</div>';
         $html .= '</div>';
@@ -61,6 +67,10 @@ class SWP_Option_Icons extends SWP_Option {
     public function render_inactive_icons() {
         $all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
+        if ( empty($user_icons) ) :
+            $user_icons = [];
+        endif;
+
         $inactive_icons = array_diff( array_keys( $all_icons ), $user_icons );
 
         $html = '<div class="sw-grid sw-col-300">';
@@ -69,12 +79,13 @@ class SWP_Option_Icons extends SWP_Option {
 
         $html .=  '<div class="sw-grid sw-col-620 sw-fit">';
             $html .=  '<div class="sw-inactive sw-buttons-sort">';
+            if ( count( $inactive_icons) > 0 ) :
+                foreach( $inactive_icons as $network_key => $network) {
+                    $network = $all_icons[$network_key];
 
-            foreach( $inactive_icons as $network_key ) {
-                $network = $all_icons[$network_key];
-
-                $html .= $this->render_icon_HTML( $network );
-            }
+                    $html .= $this->render_icon_HTML( $network );
+                }
+            endif;
 
             $html .= '</div>';
         $html .= '</div>';
