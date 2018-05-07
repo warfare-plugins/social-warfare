@@ -58,7 +58,7 @@ class SWP_Database_Migration {
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
 
-        return is_array( $settings ) && !empty( $settings['order_of_icons'] );
+        return is_array( $settings ) && is_bool( $settings['total_shares']) );
     }
 
 
