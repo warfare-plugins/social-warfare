@@ -85,9 +85,11 @@ class SWP_Pinterest extends SWP_Social_Network {
         global $swp_user_options;
         $post_id = $panel_context['post_data']['ID'];
 
+		$post_url = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
+
         $options = $swp_user_options;
         $pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image' , true );
-        $pinterest_image_link = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
+        $pinterest_image_link = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
 
         if ( !empty( $options['pinterest_id'] ) ) :
  			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
@@ -99,7 +101,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 
         $pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
 
-		if( is_array($pinterest_description ) ) {
+		if( is_array( $pinterest_description ) && !empty( $pinterest_description )  ) {
 			$pinterest_description = $pinterest_description[0];
 			delete_post_meta( $post_id , 'swp_pinterest_description' );
 			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
