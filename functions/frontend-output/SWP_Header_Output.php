@@ -128,7 +128,7 @@ class SWP_Header_Output {
      */
     function output_font_css( $info = array() ) {
         //* Make sure we only output the style once.
-        if ( strpos( $info['html_output'], 'font-family: "sw-icon-font"' ) ) :
+        if ( !empty( $info['html_output'] ) && strpos( $info['html_output'], 'font-family: "sw-icon-font"' ) ) :
             return $info;
         endif;
 
