@@ -26,7 +26,6 @@ class SWP_Compatibility {
 	 *
 	 */
 	public function __construct() {
-
 		// Disabe Open Graph tags on Simple Podcast Press Pages
 		if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
 			global $ob_wp_simplepodcastpress;
@@ -37,7 +36,7 @@ class SWP_Compatibility {
 		add_action( 'dp_duplicate_post', array( $this , 'remove_fields' ) );
 
 		// Fix the links that are modified by the Really Simple SSL plugin.
-		add_filter("rsssl_fixer_output", [$this, 'rsssl_fix_compatibility'] );
+		add_filter("rsssl_fixer_output", [$this, 'rsssl_fix_compatibility']   );
 
 	}
 
@@ -109,6 +108,27 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , 'swp_open_thumbnail_url' );
 	    delete_post_meta( $id , 'swp_pinterest_image_url' );
 	    delete_post_meta( $id , 'swp_recovery_url' );
+
+        $new_meta_fields = [
+            'swp_og_image',
+            'swp_og_title',
+            'swp_pinterest_image',
+            'swp_custom_tweet',
+            'swp_post_location',
+            'swp_float_location',
+            'swp_pinterest_description',
+            'swp_twitter_id',
+            'swp_og_description',
+            'swp_pinterest_description',
+            'swp_cache_timestamp',
+            'swp_pin_browser_extension',
+            'swp_pin_browser_extension_location',
+            'swp_pin_browser_extension_url'
+        ];
+
+        foreach($new_meta_fields as $field) {
+            delete_post_meta( $id, $field );
+        }
 
 	}
 
