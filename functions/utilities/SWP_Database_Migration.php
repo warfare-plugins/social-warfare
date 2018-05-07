@@ -16,6 +16,7 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
+        $this->migrate();
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -339,25 +340,32 @@ class SWP_Database_Migration {
         $migrations = [];
 
         foreach( $options as $old => $value ) {
-            if (is_array( $value) ) :
+
+            //* The order of icons used to be stored in an array at 'active'.
+            if ( is_array( $value) && array_key_exists( 'active', $value) ) :
                 $new_value = $value;
+            //* Filter out the booleans and integers.
             elseif ( is_string( $value ) ):
                 $new_value = array_key_exists($value, $value_map) ? $value_map[$value] : $value;
             endif;
 
-            //* The order of icons used to be stored in an array at 'active'.
-            if ( $old === 'newOrderOfIcons' ) {
-                if ( is_array( $new_value) && array_key_exists( 'active', $new_value) ) :
-                    $new_value = $new_value['active'];
+            //* Specific case: customColor mapping.
+            if ( $old === 'customColor' ) :
+                $migrations['custom_color'] = $new_value;
+                $migrations['custom_color_outlines'] = $new_value;
+
+                if ( $options['floatStyleSource'] == false ) :
+                    $migrations['float_custom_color'] = $new_value;
+                    $migrations['float_custom_color_outlines'] = $new_value;
                 endif;
-            }
+
+                continue;
+            endif;
 
             if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.
                 $new = $map[$old];
-
                 $migrations[$new] = $new_value;
-
             else :
                 //* The previous key was fine, keep it.
                 $migrations[$old] = $new_value;
@@ -365,7 +373,7 @@ class SWP_Database_Migration {
         }
 
         update_option( 'social_warfare_settings', $migrations );
-        //* I want to play it safe for now.
+        //* Play it safe for now.
         //* Leave socialWarfareOptions in the database.
         // delete_option( 'socialWarfareOptions' );
     }
