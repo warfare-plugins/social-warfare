@@ -16,10 +16,6 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-        if( true == _swp_is_debug('migrate_db') ){
-            $this->migrate();
-        }
-        
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -33,9 +29,14 @@ class SWP_Database_Migration {
             $this->update_hidden_post_meta();
         }
 
-		if( true == _swp_is_debug('migrate_db') ){
+		if ( true === _swp_is_debug('migrate_db') ) {
 			$this->migrate();
 		}
+
+        if ( true === _swp_is_debug('initialize_db') ) {
+            $this->initialize_db();
+        }
+
 
     }
 
@@ -66,7 +67,7 @@ class SWP_Database_Migration {
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
 
-        return is_array( $settings ) && is_bool( $settings['total_shares']);
+        return is_array( $settings );
     }
 
 
@@ -352,12 +353,16 @@ class SWP_Database_Migration {
 
         foreach( $options as $old => $value ) {
 
+
+
             //* The order of icons used to be stored in an array at 'active'.
             if ( is_array( $value) && array_key_exists( 'active', $value) ) :
                 $new_value = $value;
             //* Filter out the booleans and integers.
             elseif ( is_string( $value ) ):
                 $new_value = array_key_exists($value, $value_map) ? $value_map[$value] : $value;
+            else :
+                $new_value = $value;
             endif;
 
             //* Specific case: customColor mapping.
@@ -381,6 +386,7 @@ class SWP_Database_Migration {
                 //* The previous key was fine, keep it.
                 $migrations[$old] = $new_value;
             endif;
+
         }
 
         update_option( 'social_warfare_settings', $migrations );
