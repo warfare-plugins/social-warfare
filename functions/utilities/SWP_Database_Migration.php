@@ -89,7 +89,7 @@ class SWP_Database_Migration {
             WHERE meta_key = %s
         ";
 
-        foreach ( $metadata_map as $old_key => $new_key ) {
+        foreach ( $hidden_maps as $old_key => $new_key ) {
             //* Make replacements for the first kind of prefix.
             $q = $wpdb->prepare( $query, $new_key, $old_key );
             $wpdb->query( $q );

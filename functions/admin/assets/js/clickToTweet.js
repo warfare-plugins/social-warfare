@@ -6,7 +6,7 @@ console.log("quacker");
 	tinymce.PluginManager.add('click_to_tweet', function( editor, url ) {
 		editor.addButton( 'click_to_tweet', {
 			title: 'Click to Tweet by Social Warfare',
-			icon: 'sw sw sw-twitter',
+			icon: 'sw sw swp_twitter_icon',
 			onclick: function() {
 				editor.windowManager.open( {
 					title: 'Build Your "Click to Tweet"',

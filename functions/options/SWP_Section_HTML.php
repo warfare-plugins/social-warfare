@@ -204,7 +204,7 @@ class SWP_Section_HTML extends SWP_Option {
                 <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
-                            <i class="sw sw-google-plus"></i>
+                            <i class="sw swp_google_plus_icon"></i>
                             <span class="swp_share"><?php __( '+1','social-warfare' ) ?></span>
                         </span>
                     </span>
@@ -215,7 +215,7 @@ class SWP_Section_HTML extends SWP_Option {
                 <a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
-                            <i class="sw swp-twitter"></i>
+                            <i class="sw swp_twitter_icon"></i>
                             <span class="swp_share"><?php __( 'Tweet','social-warfare' ) ?></span>
                         </span>
                     </span>
@@ -226,8 +226,8 @@ class SWP_Section_HTML extends SWP_Option {
                 <a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet" data-count="0">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
-                            <i class="sw sw-pinterest"></i>
-                            <span class="swp_share"><?php __( 'Pin','social-warfare' ) ?>'</span>
+                            <i class="sw swp_pinterest_icon"></i>
+                            <span class="swp_share"><?php __( 'Pin','social-warfare' ) ?></span>
                         </span>
                     </span>
                     <span class="swp_count">104</span>
@@ -237,7 +237,7 @@ class SWP_Section_HTML extends SWP_Option {
                 <a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
-                            <i class="sw sw-facebook"></i>
+                            <i class="sw swp_facebook_icon"></i>
                             <span class="swp_share"><?php __( 'Share','social-warfare' ) ?></span>
                         </span>
                     </span>
@@ -248,7 +248,7 @@ class SWP_Section_HTML extends SWP_Option {
                 <a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
-                            <i class="sw sw-linkedin"></i>
+                            <i class="sw swp_linkedin_icon"></i>
                             <span class="swp_share"><?php __( 'Share','social-warfare' ) ?></span>
                         </span>
                     </span>
@@ -378,7 +378,7 @@ class SWP_Section_HTML extends SWP_Option {
                 $html .= '<span class="sw-click-to-tweet">';
                     $html .= '<span class="sw-ctt-text">' . $text . '</span>';
                     $html .= '<span class="sw-ctt-btn">Click To Tweet';
-                        $html .= '<i class="sw swp-twitter"></i>';
+                        $html .= '<i class="sw swp_twitter_icon"></i>';
                     $html .= '</span>';
                 $html .= '</span>';
             $html .= '</a>';
