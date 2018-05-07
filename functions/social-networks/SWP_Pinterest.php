@@ -66,6 +66,8 @@ class SWP_Pinterest extends SWP_Social_Network {
     	$response = json_decode( $response, true );
     	return isset( $response['count'] ) ? intval( $response['count'] ) : 0;
     }
+
+    
     /**
      * Create the HTML to display the share button
      *
@@ -150,73 +152,5 @@ class SWP_Pinterest extends SWP_Social_Network {
 
  	public function generate_share_link( $post_data ) {
         return 0;
-     	$array['imageURL'] = false;
-     	$image_url = get_post_meta( $post_data['ID'] , 'swp_pinterest_image_url' , true );
-     	if( !empty( $image_url ) ):
-     		$array['imageURL'] = $image_url;
-     	elseif(isset($options['advanced_pinterest_fallback']) && $options['advanced_pinterest_fallback'] == 'featured'):
-     		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-     		if( !empty( $thumbnail_url ) ):
-     			$array['imageURL'] = $thumbnail_url;
-     		endif;
-     	endif;
-
-     	$pinterest_description	= get_post_meta( $array['postID'] , 'nc_pinterestDescription' , true );
-         if ( $pinterest_description == '' ) :
-             $pinterest_description = $title . $pinterest_username;
-         endif;
-         $pinterest_description = urlencode( html_entity_decode( $pinterest_description, ENT_COMPAT, 'UTF-8' ));
-
-     	if ( $array['imageURL'] ) :
-     		$pinterest_image 	= urlencode( html_entity_decode( $array['imageURL'],ENT_COMPAT, 'UTF-8' ) );
-     	else :
-     		$pinterest_image		= '';
-     	endif;
-
-     	$pinterest_image_link = urlencode( urldecode( SWP_URL_Management::process_url( $array['url'] , 'pinterest' , $array['postID'] ) ) );
-
-     	$title = strip_tags( get_the_title( $array['postID'] ) );
-     	$title = str_replace( '|','',$title );
-
-     	if( function_exists('is_swp_registered') ):
-     		$swp_registration = is_swp_registered();
-     	else:
-     		$swp_registration = false;
-     	endif;
-
-     	if ( $pinterest_image != '' && true === $swp_registration ) :
-     		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
-                 'data-link="https://pinterest.com/pin/create/button/' .
-                 '?url=' . $pinterest_image_link .
-                 '&media=' . $pinterest_image .
-                 '&description=' . $pinterest_description .
-                 '">';
-     	else :
-     		$anchor = '<a rel="nofollow" class="nc_tweet noPop" ' .
-                 'onClick="var e=document.createElement(\'script\');
-                     e.setAttribute(\'type\',\'text/javascript\');
-                     e.setAttribute(\'charset\',\'UTF-8\');
-                     e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
-                     document.body.appendChild(e);
-                 " >';
-     	endif;
-
-     	$array['resource']['pinterest'] = '<div class="nc_tweetContainer nc_pinterest" data-id="' . $array['count'] . '" data-network="pinterest">';
-     	$array['resource']['pinterest'] .= $anchor;
-     	if ( $options['totesEach'] && $array['shares']['totes'] >= $options['minTotes'] && $array['shares']['pinterest'] > 0 ) :
-     		$array['resource']['pinterest'] .= '<span class="iconFiller">';
-     		$array['resource']['pinterest'] .= '<span class="spaceManWilly">';
-     		$array['resource']['pinterest'] .= '<i class="sw sw-pinterest"></i>';
-     		$array['resource']['pinterest'] .= '<span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span>';
-     		$array['resource']['pinterest'] .= '</span></span>';
-     		$array['resource']['pinterest'] .= '<span class="swp_count">' . swp_kilomega( $array['shares']['pinterest'] ) . '</span>';
-     	else :
-     		$array['resource']['pinterest'] .= '<span class="swp_count swp_hide"><span class="iconFiller"><span class="spaceManWilly"><i class="sw sw-pinterest"></i><span class="swp_share"> ' . __( 'Pin','social-warfare' ) . '</span></span></span></span>';
-     	endif;
-
-     	$array['resource']['pinterest'] .= '</a>';
-     	$array['resource']['pinterest'] .= '</div>';
-     	// Store these buttons so that we don't have to generate them for each set
-     	$_GLOBALS['sw']['buttons'][ $array['postID'] ]['pinterest'] = $array['resource']['pinterest'];
  	}
 }
