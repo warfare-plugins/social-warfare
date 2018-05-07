@@ -341,6 +341,8 @@
 		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
+
+        $( '.swp_social_panel' ).removeClass("swp_other_medium_gray");
         $( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
 
 		socialWarfarePlugin.lastClass = buttonsClass;
@@ -473,6 +475,7 @@
 			}
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
+
 			$( '.swp_social_panel' ).removeClass( socialWarfarePlugin.lastClass ).addClass( buttonsClass );
 			socialWarfarePlugin.lastClass = buttonsClass;
 		});
