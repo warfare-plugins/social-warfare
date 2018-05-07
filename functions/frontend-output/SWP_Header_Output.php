@@ -127,6 +127,11 @@ class SWP_Header_Output {
      *
      */
     function output_font_css( $info = array() ) {
+        //* Make sure we only output the style once.
+        if ( strpos( $info['html_output'], 'font-family: "sw-icon-font"' ) ) :
+            return $info;
+        endif;
+
         $style = '<style>@font-face {font-family: "sw-icon-font";src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");src:url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
 	url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),url("' . SWP_PLUGIN_URL . '/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
 
@@ -135,6 +140,8 @@ class SWP_Header_Output {
 		} else {
 			$info['html_output'] .= $style;
 		}
+
+        $this->has_output_css;
 
         return $info;
     }
