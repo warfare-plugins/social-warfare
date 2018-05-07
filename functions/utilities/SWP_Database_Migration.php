@@ -42,9 +42,9 @@ class SWP_Database_Migration {
      * @return bool True if migrated, else false.
      */
     public function database_is_migrated() {
-        $option = get_option( 'socialWarfareOptions' , false);
+        $option = get_option( 'social_warfare_settings' , false);
 
-        return !is_array( $option );
+        return false !== $option;
     }
 
 
