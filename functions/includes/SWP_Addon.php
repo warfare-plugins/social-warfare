@@ -113,12 +113,12 @@ class SWP_Addon extends Social_Warfare {
         // Get the plugin options from the database
     	$options = get_option( 'social_warfare_settings' );
 
-        if ( !empty( $this->options[$this->key . '_license_key'] ) ) :
-            $this->licence_key = $options[$this->key . '_license_key'];
+        if ( isset( $options[$this->key . '_license_key'] ) ) :
+            $this->license_key = $options[$this->key . '_license_key'];
         else:
             $this->license_key = '';
         endif;
-        
+
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
