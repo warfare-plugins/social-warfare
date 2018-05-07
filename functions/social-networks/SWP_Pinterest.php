@@ -83,10 +83,11 @@ class SWP_Pinterest extends SWP_Social_Network {
      */
      public function render_HTML( $panel_context , $echo = false ) {
         global $swp_user_options;
+        $post_id = $panel_context['post_data']['ID']
 
         $options = $swp_user_options;
-        $pinterest_image = get_post_meta( $panel_context['post_data']['ID'] , 'swp_pinterest_image' , true );
-        $pinterest_image_link = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $array['postID'] ) ) );
+        $pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image' , true );
+        $pinterest_image_link = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
 
         if ( !empty( $options['pinterest_id'] ) ) :
  			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
@@ -96,7 +97,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 
         $title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
 
-        $pinterest_description	= get_post_meta( $panel_context['post_data']['ID'] , 'nc_pinterestDescription' , true );
+        $pinterest_description	= get_post_meta( $post_id , 'nc_pinterestDescription' , true );
 
         if ( $pinterest_description == '' ) :
             $pinterest_description = $title . $pinterest_username;
@@ -106,8 +107,8 @@ class SWP_Pinterest extends SWP_Social_Network {
        		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
                    'data-link="https://pinterest.com/pin/create/button/' .
                    '?url=' . $pinterest_image_link .
-                   '&media=' . $pinterest_image .
-                   '&description=' . $pinterest_description .
+                   '&media=' . urlencode( $pinterest_image ) .
+                   '&description=' . urlencode( $pinterest_description ) .
                    '">';
        	else :
        		$anchor = '<a rel="nofollow" class="nc_tweet noPop" ' .
