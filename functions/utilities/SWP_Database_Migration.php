@@ -361,6 +361,8 @@ class SWP_Database_Migration {
         }
 
         update_option( 'social_warfare_settings', $migrations );
-        delete_option( 'socialWarfareOptions' );
+        //* I want to play it safe for now.
+        //* Leave socialWarfareOptions in the database.
+        // delete_option( 'socialWarfareOptions' );
     }
 }
