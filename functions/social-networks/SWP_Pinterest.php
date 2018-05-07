@@ -83,7 +83,7 @@ class SWP_Pinterest extends SWP_Social_Network {
      */
      public function render_HTML( $panel_context , $echo = false ) {
         global $swp_user_options;
-        $post_id = $panel_context['post_data']['ID']
+        $post_id = $panel_context['post_data']['ID'];
 
         $options = $swp_user_options;
         $pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image' , true );
