@@ -541,6 +541,7 @@ class SWP_Buttons_Panel {
         }
         $this->render_HTML();
         $content = $this->content . '<p class="swp-content-locator"></p>';
+
         //* Add the Panel markup based on the location.
         if ( $this->location === 'both' ) :
             $content = $this->html . $this->content . $this->html;
@@ -549,17 +550,26 @@ class SWP_Buttons_Panel {
         else :
             $content = $this->content . $this->html;
         endif;
+
         $this->content = $content;
         return $this->content;
     }
+
     public function the_buttons() {
         if ( ! $this->should_print() ) :
             return $this->args['content'];
         endif;
+
         if ( $this->has_plugin_conflict() ) {
             return;
         }
+
 		$this->handle_timestamp();
+
+        if ( strpos( $this->content, 'swp-content-locator' ) === false ) {
+            $this->content .= '<p class="swp-content-locator"></p>';
+        }
+
         return $this->do_print();
     }
 }
