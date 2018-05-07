@@ -283,9 +283,14 @@
 
 		$( '.sw-loading-bg' ).delay( 1000 ).fadeOut( 1000 );
 
+        //* Passing in true forces reload from the server rather than cache.
+        window.location.reload(true);
+
 		setTimeout( function() {
 			$( '.sw-loading-bg' ).remove();
 		}, 2000 );
+
+
 	}
 
 	function updateCustomColor() {
