@@ -151,6 +151,58 @@ class SWP_Section_HTML extends SWP_Option {
     }
 
 
+    public function do_tweet_count_registration() {
+        global $swp_user_options;
+
+        // Check for a default value
+        if ( isset( $swp_user_options['twitter_shares'] ) && $swp_user_options['twitter_shares'] == true ) :
+            $status = 'on';
+            $selected = 'checked';
+        elseif ( isset( $swp_user_options['twitter_shares'] ) && $swp_user_options['twitter_shares'] == false ) :
+            $status = 'off';
+            $selected = '';
+        else :
+            $status = 'off';
+            $selected = '';
+        endif;
+
+
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ' . $this->render_dependency() . '>';
+
+		// Begin Registration Wrapper
+		$html .= '<div class="tweet-count-wrapper" registration="false">';
+
+		// Registration Title
+		$html .= '<h2>' . __( 'Tweet Count Registration' , 'social-warfare' ) . '</h2>';
+
+		// Open the IS NOT Activated container
+		$html .= '<div class="sw-grid sw-col-940 swp_tweets_not_activated">';
+
+		// The Warning Notice & Instructions
+		$html .= '<p class="sw-subtitle sw-registration-text">' . __( 'In order to allow Social Warfare to track tweet counts, we\'ve partnered with a couple of third-party share counting tools. Follow the steps below to register with one of these platforms and allow us to track your Twitter shares.' , 'social-warfare' ) . '</p>';
+		$html .= '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="https://opensharecount.com" target="_blank">' . __( 'Click here to visit OpenShareCount.com (Recommended)' , 'social-warfare' ) . '</a>&nbsp;<a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">' . __( 'Click here to visit NewShareCounts.com' , 'social-warfare' ) . '</a><br />' . __( 'Step 2: Follow the prompts on their website to create an account and add your domain to be tracked for share counts.' , 'social-warfare' ) . '<br />' . __( 'Step 3: Flip the switch below to "ON", select which tracking service the plugin should use, then save your changes.' , 'social-warfare' ) . '</p>';
+
+		// Close the IS NOT ACTIVATED container
+		$html .= '</div>';
+
+		// Checkbox Module
+		$html .= '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';
+		$html .= '<div class="sw-grid sw-col-300">';
+		$html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#twitter_shares"><div class="sw-checkbox-on">' . __( 'ON' , 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF' , 'social-warfare' ) . '</div></div>';
+		$html .= '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" ' . $selected . ' />';
+		$html .= '</div>';
+		$html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
+
+		// Close the Registration Wrapper
+		$html .= '</div>';
+
+		$html .= '<div class="sw-premium-blocker"></div>';
+		$html .= '</div>';
+
+        $this->html = $html;
+
+        return $html;
+    }
 
 
 
@@ -159,7 +211,7 @@ class SWP_Section_HTML extends SWP_Option {
     *
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
     */
-    public function do_bitly_authentication_button() {
+        public function do_bitly_authentication_button() {
         $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=" . admin_url( 'admin-ajax.php' ) . "&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
 
         if ( isset( $this->dependant) && !empty( $this->dependant) ):
