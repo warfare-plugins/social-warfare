@@ -146,36 +146,36 @@ if (window.location.href.indexOf("widgets.php")) {
 
 	// Function for SM Title Counting
 	function smTitleRemaining() {
-		var smTitle = $( '#socialWarfare textarea#nc_ogTitle' ).val();
+		var smTitle = $( '#social_warfare textarea#swp_ogTitle' ).val();
 		var remaining = 60 - smTitle.length;
 		if ( smTitle.length > 0 && remaining >= 0 ) {
-			$( '#socialWarfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
+			$( '#social_warfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
 		} else if ( smTitle.length > 0 && remaining < 0 ) {
-			$( '#socialWarfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
+			$( '#social_warfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
 		} else {
-			$( '#socialWarfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
+			$( '#social_warfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
 		}
-		$( '#socialWarfare .swp_og_title .counterNumber' ).html( remaining );
+		$( '#social_warfare .swp_og_title .counterNumber' ).html( remaining );
 	}
 
 	// Function for SM Description Counting
 	function smDescriptionRemaining() {
-		var smDescription = $( '#socialWarfare textarea#nc_ogDescription' ).val();
+		var smDescription = $( '#social_warfare textarea#swp_ogDescription' ).val();
 		var remaining = 160 - smDescription.length;
 		if ( smDescription.length > 0 && remaining >= 0 ) {
-			$( '#socialWarfare .nc_og_description .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
+			$( '#social_warfare .swp_og_description .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
 		} else if ( smDescription.length > 0 && remaining < 0 ) {
-			$( '#socialWarfare .nc_og_description .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
+			$( '#social_warfare .swp_og_description .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
 		} else {
-			$( '#socialWarfare .nc_og_description .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
+			$( '#social_warfare .swp_og_description .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
 		}
-		$( '#socialWarfare .nc_og_description .counterNumber' ).html( remaining );
+		$( '#social_warfare .swp_og_description .counterNumber' ).html( remaining );
 	}
 
 	// Function for Twitter Box Counting
 	function twitterRemaining() {
-		var smTwitter = $( '#socialWarfare textarea#nc_customTweet' ).val();
-		var handle = $( '#socialWarfare .twitterIDWrapper label' ).html();
+		var smTwitter = $( '#social_warfare textarea#swp_customTweet' ).val();
+		var handle = $( '#social_warfare .twitterIDWrapper label' ).html();
 		var linkSpace;
 
 		if ( smTwitter.indexOf( 'http' ) > -1 || smTwitter.indexOf( 'https' ) > -1 ) {
@@ -194,14 +194,14 @@ if (window.location.href.indexOf("widgets.php")) {
 		}
 
 		if ( smTwitter.length > 0 && remaining >= 0 ) {
-			$( '#socialWarfare .nc_customTweetWrapper .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
+			$( '#social_warfare .swp_customTweetWrapper .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
 		} else if ( smTwitter.length > 0 && remaining < 0 ) {
-			$( '#socialWarfare .nc_customTweetWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
+			$( '#social_warfare .swp_customTweetWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).addClass( 'swp_red' );
 		} else {
-			$( '#socialWarfare .nc_customTweetWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
+			$( '#social_warfare .swp_customTweetWrapper .swp_CountDown' ).removeClass( 'swp_blue' ).removeClass( 'swp_red' );
 		}
 
-		$( '#socialWarfare .nc_customTweetWrapper .counterNumber' ).html( remaining );
+		$( '#social_warfare .swp_customTweetWrapper .counterNumber' ).html( remaining );
 	}
 
 	function toggleCustomThumbnailFields(show) {
@@ -216,34 +216,35 @@ if (window.location.href.indexOf("widgets.php")) {
 	}
 
 	$( document ).ready( function() {
-		if ( $( '#socialWarfare.postbox' ).length ) {
+		if ( $( '#social_warfare.postbox' ).length ) {
 
 			// Add the CountDown Box for the Social Media Title
-			$( '#socialWarfare #nc_ogTitle' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+			$( '#social_warfare #swp_ogTitle' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 			// Add the CountDown Box for the Social Media Description
-			$( '#socialWarfare #nc_ogDescription' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+			$( '#social_warfare #swp_ogDescription' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 			// Add the CountDown Box for the Twitter Box
-			$( '#socialWarfare #nc_customTweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+			$( '#social_warfare #swp_customTweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 			smTitleRemaining();
-			$( '#socialWarfare textarea#nc_ogTitle' ).on( 'input', function() {
+			$( '#social_warfare textarea#swp_ogTitle' ).on( 'input', function() {
 				smTitleRemaining();
 			});
 
 			smDescriptionRemaining();
-			$( '#socialWarfare textarea#nc_ogDescription' ).on( 'input', function() {
+			$( '#social_warfare textarea#swp_ogDescription' ).on( 'input', function() {
 				smDescriptionRemaining();
 			});
 
 			twitterRemaining();
-			$( '#socialWarfare textarea#nc_customTweet' ).on( 'input', function() {
+			$( '#social_warfare textarea#swp_customTweet' ).on( 'input', function() {
 				twitterRemaining();
 			});
 
 			// Setup an initilazation loop
 			var swpPostInit = setInterval( function() {
+
 				var swpOgImage  = $( '.swp_og_imageWrapper ul.swpmb-media-list' );
 				var swpPinImage = $( '.swp_pinterest_imageWrapper ul.swpmb-media-list' );
 
@@ -281,15 +282,15 @@ if (window.location.href.indexOf("widgets.php")) {
 			swpConditionalFields();
 		});
 
-		if ( $( '.postbox#socialWarfare' ).length ) {
-			var registrationStatus = $( '#socialWarfare .registrationWrapper input' ).attr( 'id' );
+		if ( $( '.postbox#social_warfare' ).length ) {
+			var registrationStatus = $( '#social_warfare .registrationWrapper input' ).attr( 'id' );
 			if ( registrationStatus == 'false' ) {
-				$( '.postbox#socialWarfare' )
+				$( '.postbox#social_warfare' )
 					.css({ position: 'relative',opacity: '0.3' })
 					.append( '<div class="sw-premium-blocker"></div>' );
 
-				$( '#socialWarfare .sw-premium-blocker' ).tooltip({
-					items: '#socialWarfare .sw-premium-blocker',
+				$( '#social_warfare .sw-premium-blocker' ).tooltip({
+					items: '#social_warfare .sw-premium-blocker',
 					content: '<i></i>Unlock these features by registering your license.',
 					position: {
 						my: 'center top',

@@ -2,7 +2,6 @@
 
 
 (function() {
-console.log("quacker");
 	tinymce.PluginManager.add('click_to_tweet', function( editor, url ) {
 		editor.addButton( 'click_to_tweet', {
 			title: 'Click to Tweet by Social Warfare',
@@ -21,7 +20,7 @@ console.log("quacker");
 							onkeyup: function() {
 								var value = jQuery( '.mce-first textarea' ).val();
 								var strLength = value.length;
-								var handle = jQuery( '#socialWarfare .twitterIDWrapper label' ).html();
+								var handle = jQuery( '#social_warfare .twitterIDWrapper label' ).html();
 
 								if (value.indexOf( 'http' ) > -1 || value.indexOf( 'https' ) > -1) {
 									linkSpace = 0;
@@ -50,7 +49,7 @@ console.log("quacker");
 							onPostRender : function() {
 								var value = jQuery( '.mce-first textarea' ).val();
 								var strLength = value.length;
-								var handle = jQuery( '#socialWarfare .twitterIDWrapper label' ).html();
+								var handle = jQuery( '#social_warfare .twitterIDWrapper label' ).html();
 
 								if (value.indexOf( 'http' ) > -1 || value.indexOf( 'https' ) > -1) {
 									linkSpace = 0;
@@ -102,7 +101,7 @@ console.log("quacker");
 
 						var value = jQuery( '.mce-first textarea' ).val();
 						var strLength = value.length;
-						var handle = jQuery( '#socialWarfare .twitterIDWrapper label' ).html();
+						var handle = jQuery( '#social_warfare .twitterIDWrapper label' ).html();
 
 						if (value.indexOf( 'http' ) > -1 || value.indexOf( 'https' ) > -1) {
 							linkSpace = 0;
