@@ -1821,6 +1821,6 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
     transform-origin: bottom right;
 }
 
-div[class*=custom_color] {
+div[class*=custom_color][class^=_wrapper] {
     display: none;
 }
