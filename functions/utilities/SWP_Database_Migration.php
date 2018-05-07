@@ -16,7 +16,10 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-        $this->migrate();
+        if( true == _swp_is_debug('migrate_db') ){
+            $this->migrate();
+        }
+        
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -188,6 +191,9 @@ class SWP_Database_Migration {
             'float_vertical'                    => 'center',
             'float_button_count'                => 5,
             'custom_color'                      => '#000000',
+            'custom_color_outlines'             => '#000000',
+            'float_custom_color'                => '#000000',
+            'float_custom_color_outlines'       => '#000000',
             'recover_shares'                    => false,
             'recovery_format'                   => 'unchanged',
             'recovery_protocol'                 => 'unchanged',
