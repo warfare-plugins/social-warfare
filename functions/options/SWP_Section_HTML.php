@@ -378,7 +378,7 @@ class SWP_Section_HTML extends SWP_Option {
                 $html .= '<span class="sw-click-to-tweet">';
                     $html .= '<span class="sw-ctt-text">' . $text . '</span>';
                     $html .= '<span class="sw-ctt-btn">Click To Tweet';
-                        $html .= '<i class="sw swp-twitter"></i>';
+                        $html .= '<i class="sw swp_twitter_icon"></i>';
                     $html .= '</span>';
                 $html .= '</span>';
             $html .= '</a>';
