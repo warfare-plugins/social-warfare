@@ -99,6 +99,12 @@ class SWP_Pinterest extends SWP_Social_Network {
 
         $pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
 
+		if( is_array($pinterest_description ) ) {
+			$pinterest_description = $pinterest_description[0];
+			delete_post_meta( $post_id , 'swp_pinterest_description' );
+			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
+		}
+
         if ( empty( $pinterest_description ) ) :
             $pinterest_description = $title . $pinterest_username;
         endif;
