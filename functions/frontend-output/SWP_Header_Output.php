@@ -141,8 +141,6 @@ class SWP_Header_Output {
 			$info['html_output'] .= $style;
 		}
 
-        $this->has_output_css;
-
         return $info;
     }
 }
