@@ -72,10 +72,13 @@ class SWP_Pinterest extends SWP_Social_Network {
      * Create the HTML to display the share button
      *
      * @since  1.0.0
+     * @since  3.0.0 | 01 May 2018 | Re-wrote the function to a class method.
      * @access public
-     * @param  array $network_counts Associative array of 'network_key' => 'count_value'
-     * @return array $array The modified array which will now contain the html for this button
-     * @todo   Eliminate the array
+     * @return array $panel_context Array of
+     *                   ['post_data']  => metadata about the post;
+     *                   ['shares']     => share count data
+     *                   ['options']    => swp_user_options
+     * @param  bool $echo If true, this will immediately echo its code rather than save it for later.
      *
      */
      public function render_HTML( $panel_context , $echo = false ) {
@@ -93,7 +96,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 
         $title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
 
-        $pinterest_description	= get_post_meta( $array['postID'] , 'nc_pinterestDescription' , true );
+        $pinterest_description	= get_post_meta( $panel_context['post_data']['ID'] , 'nc_pinterestDescription' , true );
 
         if ( $pinterest_description == '' ) :
             $pinterest_description = $title . $pinterest_username;
