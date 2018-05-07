@@ -115,7 +115,7 @@ class SWP_Database_Migration {
             'customTweet'                    => 'swp_custom_tweet',
             'postLocation'                   => 'swp_post_location',
             'floatLocation'                  => 'swp_float_location',
-            'pinterest_description'          => 'swp_pinterest_description',
+            'pinterestDescription'          => 'swp_pinterest_description',
             'twitterID'                      => 'swp_twitter_id',
             'ogDescriptionWrapper'           => 'swp_og_description',
             'pinterestDescription'           => 'swp_pinterest_description',
