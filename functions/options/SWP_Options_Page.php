@@ -230,6 +230,9 @@ class SWP_Options_Page extends SWP_Abstract {
         $registered_addons = '';
 
         foreach( $addons as $addon ) {
+            if ( gettype($addon) !== 'object' ) :
+                continue;
+            endif;
             $registrations[] = new SWP_Addon_Registration( $addon );
             $active_addons .= " $addon->key ";
 
