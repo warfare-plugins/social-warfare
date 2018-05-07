@@ -16,7 +16,6 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -170,12 +169,12 @@ class SWP_Database_Migration {
             'hover_colors'                      => 'full_color',
             'float_default_colors'              => 'full_color',
             'float_single_colors'               => 'full_color',
-            'float_hover_colors'                => 'full_color',
+            'float_hover_colors'                => 'fullColor',
             'float_style_source'                => true,
             'float_size'                        => 1,
             'float_alignment'                   => 'center',
             'button_size'                       => 1,
-            'button_alignment'                  => 'full_width',
+            'button_alignment'                  => 'fullWidth',
             'transition'                        => 'slide',
             'float_screen_width'                => 1100,
             'ctt_theme'                         => 'style1',
@@ -194,7 +193,7 @@ class SWP_Database_Migration {
             'recovery_prefix'                   => 'unchanged',
             'decimals'                          => 0,
             'decimal_separator'                 => 'period',
-            'totals_alignment'                  => 'totals_right',
+            'totals_alignment'                  => 'totesalt',
             'google_analytics'                  => false,
             'bitly_authentication'              => false,
             'minimum_shares'                    => 0,
@@ -297,8 +296,9 @@ class SWP_Database_Migration {
             'floatBgColor'                      => 'float_background_color',
             'orderOfIconsSelect'                => 'order_of_icons_method',
 			'newOrderOfIcons'                   => 'order_of_icons',
+        ];
 
-            //* Choices names
+        $value_map = [
             'flatFresh'     => 'flat_fresh',
             'threeDee'      => 'three_dee',
             'fullColor'     => 'full_color',
@@ -317,12 +317,10 @@ class SWP_Database_Migration {
             'post'          => 'location_post',
             'page'          => 'location_page',
             'float_vertical'=> 'float_alignment',
-
-            //* Missed choices,
-            //* same reason as above ^^
             'fullWidth' => 'full_width',
             'floatLeftMobile'   => 'float_mobile',
         ];
+
 
 
         //* We don't actually do anything with these. I left them here just as a note.
@@ -341,22 +339,28 @@ class SWP_Database_Migration {
         $migrations = [];
 
         foreach( $options as $old => $value ) {
+            if (is_array( $value) ) :
+                $new_value = $value;
+            elseif ( is_string( $value ) ):
+                $new_value = array_key_exists($value, $value_map) ? $value_map[$value] : $value;
+            endif;
 
             //* The order of icons used to be stored in an array at 'active'.
             if ( $old === 'newOrderOfIcons' ) {
-                if ( is_array( $value) && array_key_exists( 'active', $value) ) :
-                    $value = $value['active'];
+                if ( is_array( $new_value) && array_key_exists( 'active', $new_value) ) :
+                    $new_value = $new_value['active'];
                 endif;
             }
 
             if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.
                 $new = $map[$old];
-                $migrations[$new] = $value;
+
+                $migrations[$new] = $new_value;
 
             else :
                 //* The previous key was fine, keep it.
-                $migrations[$old] = $value;
+                $migrations[$old] = $new_value;
             endif;
         }
 
