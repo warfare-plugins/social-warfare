@@ -97,17 +97,23 @@ class SWP_Pinterest extends SWP_Social_Network {
 
         $title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
 
-        $pinterest_description	= get_post_meta( $post_id , 'nc_pinterestDescription' , true );
+        $pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
 
-        if ( $pinterest_description == '' ) :
+		if( is_array($pinterest_description ) ) {
+			$pinterest_description = $pinterest_description[0];
+			delete_post_meta( $post_id , 'swp_pinterest_description' );
+			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
+		}
+
+        if ( empty( $pinterest_description ) ) :
             $pinterest_description = $title . $pinterest_username;
         endif;
 
         if ( $pinterest_image != '') :
        		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
                    'data-link="https://pinterest.com/pin/create/button/' .
-                   '?url=' . $pinterest_image_link .
-                   '&media=' . urlencode( $pinterest_image ) .
+                   '?url=' . $panel_context['post_data']['permalink'] .
+                   '&media=' . urlencode( $pinterest_image_link ) .
                    '&description=' . urlencode( $pinterest_description ) .
                    '">';
        	else :
