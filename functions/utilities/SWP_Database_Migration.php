@@ -58,7 +58,7 @@ class SWP_Database_Migration {
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
 
-        return is_array( $settings ) && is_bool( $settings['total_shares']) );
+        return is_array( $settings ) && is_bool( $settings['total_shares']);
     }
 
 
@@ -170,12 +170,12 @@ class SWP_Database_Migration {
             'hover_colors'                      => 'full_color',
             'float_default_colors'              => 'full_color',
             'float_single_colors'               => 'full_color',
-            'float_hover_colors'                => 'fullColor',
+            'float_hover_colors'                => 'full_color',
             'float_style_source'                => true,
             'float_size'                        => 1,
             'float_alignment'                   => 'center',
             'button_size'                       => 1,
-            'button_alignment'                  => 'fullWidth',
+            'button_alignment'                  => 'full_width',
             'transition'                        => 'slide',
             'float_screen_width'                => 1100,
             'ctt_theme'                         => 'style1',
@@ -194,7 +194,7 @@ class SWP_Database_Migration {
             'recovery_prefix'                   => 'unchanged',
             'decimals'                          => 0,
             'decimal_separator'                 => 'period',
-            'totals_alignment'                  => 'totesalt',
+            'totals_alignment'                  => 'totals_right',
             'google_analytics'                  => false,
             'bitly_authentication'              => false,
             'minimum_shares'                    => 0,
