@@ -172,7 +172,7 @@ class SWP_Section_HTML extends SWP_Option {
 
         ob_start() ?>
 
-            <div class="sw-grid sw-col-940 sw-fit sw-option-container <?= $this->key ?> '_wrapper" <?php $this->render_dependency(); $this->render_premium(); ?>>
+            <div class="sw-grid sw-col-940 sw-fit sw-option-container <?= $this->key ?> '_wrapper" data-dep="bitly_authentication" data-dep_val="[true]">
                 <div class="sw-grid sw-col-300">
                     <p class="sw-authenticate-label"><?php __( 'Bitly Link Shortening', 'social-warfare' ) ?></p>
                 </div>
