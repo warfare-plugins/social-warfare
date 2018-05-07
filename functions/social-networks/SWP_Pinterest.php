@@ -67,7 +67,7 @@ class SWP_Pinterest extends SWP_Social_Network {
     	return isset( $response['count'] ) ? intval( $response['count'] ) : 0;
     }
 
-    
+
     /**
      * Create the HTML to display the share button
      *
@@ -80,10 +80,26 @@ class SWP_Pinterest extends SWP_Social_Network {
      */
      public function render_HTML( $panel_context , $echo = false ) {
         global $swp_user_options;
-        $options = $swp_user_options;
-        $pinterest_image = get_post_meta( $post_data['ID'] , 'swp_pinterest_image' , true );
 
-        if ( $pinterest_image != '' && true === $swp_registration ) :
+        $options = $swp_user_options;
+        $pinterest_image = get_post_meta( $panel_context['post_data']['ID'] , 'swp_pinterest_image' , true );
+        $pinterest_image_link = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $array['postID'] ) ) );
+
+        if ( !empty( $options['pinterest_id'] ) ) :
+ 			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
+ 		else :
+ 			$pinterest_username = '';
+ 		endif;
+
+        $title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
+
+        $pinterest_description	= get_post_meta( $array['postID'] , 'nc_pinterestDescription' , true );
+
+        if ( $pinterest_description == '' ) :
+            $pinterest_description = $title . $pinterest_username;
+        endif;
+
+        if ( $pinterest_image != '') :
        		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
                    'data-link="https://pinterest.com/pin/create/button/' .
                    '?url=' . $pinterest_image_link .
@@ -100,19 +116,15 @@ class SWP_Pinterest extends SWP_Social_Network {
                    " >';
        	endif;
 
- 		if ( !empty( $options['pinterest_id'] ) ) :
- 			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
- 		else :
- 			$pinterest_username = '';
- 		endif;
 
-        if ( isset($options['advanced_pinterest_fallback']) && $options['advanced_pinterest_fallback'] == 'featured'):
-     		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $panel_context['postID'] ) );
-     		if( !empty( $thumbnail_url ) ):
-     			$array['imageURL'] = $thumbnail_url;
-     		endif;
 
-     	endif;
+            if ( isset($options['advanced_pinterest_fallback']) && $options['advanced_pinterest_fallback'] == 'featured'):
+         		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $panel_context['postID'] ) );
+         		if( !empty( $thumbnail_url ) ):
+         			$array['imageURL'] = $thumbnail_url;
+         		endif;
+
+         	endif;
 
          //* Begin parent class method.
 
