@@ -150,7 +150,7 @@ class SWP_URL_Management {
 					else :
 
 						// If the API provides a shortened URL...
-						$shortURL = swp_make_bitly_url( urldecode( $url ) , $network , $access_token );
+						$shortURL = $this->make_bitly_url( urldecode( $url ) , $network , $access_token );
 						if ( $shortURL ) :
 							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
@@ -218,7 +218,7 @@ class SWP_URL_Management {
 						else :
 
 							// Use the bitly function to construct a shortened link
-							$shortURL = swp_make_bitly_url( urldecode( $url ) , $network , $access_token );
+							$shortURL = $this->make_bitly_url( urldecode( $url ) , $network , $access_token );
 
 							// If we got a shortened URL from their API....
 							if ( $shortURL ) :
