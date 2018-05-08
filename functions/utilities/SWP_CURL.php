@@ -27,11 +27,11 @@ class SWP_CURL {
 		if( is_array( $data ) ):
 			foreach ( $data as $id => $d ) :
 
-				if ( $d !== 0 || $id == 'googlePlus' ) :
+				if ( $d !== 0 || $id == 'google_plus' ) :
 
 					$curly[ $id ] = curl_init();
 
-					if ( $id == 'googlePlus' ) :
+					if ( $id == 'google_plus' ) :
 
 						curl_setopt( $curly[ $id ], CURLOPT_URL, 'https://clients6.google.com/rpc' );
 						curl_setopt( $curly[ $id ], CURLOPT_POST, true );
