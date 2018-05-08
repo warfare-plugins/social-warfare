@@ -5,7 +5,7 @@
  *
  * This class is used to create each select option needed on the options page.
  *
- * @since  2.4.0   | Created | 02 MAR 2017
+ * @since  3.0.0   | Created | 02 MAR 2017
  * @access public
  *
  */
@@ -45,7 +45,7 @@ class SWP_Option_Select extends SWP_Option {
     * Additional addons may want to expand the choices available for
     * a given option.
     *
-    * @since 2.4.0 | 02 MAR 2018 | Created
+    * @since 3.0.0 | 02 MAR 2018 | Created
     * @param string $choice The choice to add to the select.
     * @return object $this Allows for method chaining
     * @TODO: Sanitize the input with the throw() method.
@@ -67,7 +67,7 @@ class SWP_Option_Select extends SWP_Option {
     /**
     * Create the options for a select dropdown.
     *
-    * @since 2.4.0 | 02 MAR 2018 | Created
+    * @since 3.0.0 | 02 MAR 2018 | Created
     * @param array $choices Array of strings to be translated and made into options.
     * @return SWP_Option_Select $this The calling instance, for method chaining.
     *
@@ -91,7 +91,7 @@ class SWP_Option_Select extends SWP_Option {
     * Renders the HTML to the options page based on what
     * the properties of this object have been set to.
     *
-    * @since 2.4.0 | 02 MAR 2018 | Created
+    * @since 3.0.0 | 02 MAR 2018 | Created
     * @param none
     * @return string The rendered HTML of this option.
     * @TODO: Make this method render soem HTML.
@@ -160,7 +160,7 @@ class SWP_Option_Select extends SWP_Option {
 	* This method will overwrite any existing choices previously set. If you
 	* want to add a choice, use add_choice() or add_choices() instead.
 	*
-	* @since 2.4.0 | 02 MAR 2018 | Created
+	* @since 3.0.0 | 02 MAR 2018 | Created
 	* @param array $choices
 	* @return object $this Allows for method chaining
 	*

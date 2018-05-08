@@ -9,7 +9,7 @@
  * @package   SocialWarfare\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     2.4.0 | 19 FEB 2018 | Created
+ * @since     3.0.0 | 19 FEB 2018 | Created
  *
  */
 
@@ -22,7 +22,7 @@ class Social_Warfare {
 	 * This method will load all of the classes using the "require_once" command. It
 	 * will then instantiate them all one by one.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  none
 	 * @return none
 	 * @access public
@@ -48,7 +48,7 @@ class Social_Warfare {
 	 * This method will instantiate every class throughout the plugin except for those
 	 * classes that are only used in the admin area.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  none
 	 * @return none
 	 * @access public
@@ -165,7 +165,7 @@ class Social_Warfare {
 	/**
 	 * This method will load up all of the admin-only classes.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  none
 	 * @return none
 	 * @access public
@@ -230,7 +230,7 @@ class Social_Warfare {
 	/**
 	 * The method is used to include all of the files needed.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  none
 	 * @return none
 	 * @access public

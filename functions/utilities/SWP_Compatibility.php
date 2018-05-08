@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 22 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.0 | 22 FEB 2018 | Refactored into a class-based system.
  *
  */
 class SWP_Compatibility {
@@ -68,7 +68,7 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , '_twitter_shares' );
 	    delete_post_meta( $id , '_whatsapp_shares' );
 	    delete_post_meta( $id , '_yummly_shares' );
-	    delete_post_meta( $id , '_totes' );
+	    delete_post_meta( $id , '_total_shares' );
 
 	    // Delete any bitly links
 	    delete_post_meta( $id , 'bitly_link_buffer' );

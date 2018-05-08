@@ -54,7 +54,7 @@ class SWP_Options_Page extends SWP_Abstract {
 	 * can easily access this object to add their own tabs, sections, and
 	 * options as needed prior to the final output of the page and it's HTML.
 	 *
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 * @param none
 	 * @return object The options page object.
 	 *

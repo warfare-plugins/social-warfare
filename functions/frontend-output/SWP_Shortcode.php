@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 19 FEB 2018 | Refactored into a class-based system
+ * @since     3.0.0 | 19 FEB 2018 | Refactored into a class-based system
  *
  */
 class SWP_Shortcode {
@@ -20,7 +20,7 @@ class SWP_Shortcode {
 	 * This function is used to add our shortcodes to WordPress' registry of
 	 * shortcodes and to map our functions to each one.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  none
 	 * @return none
 	 *
@@ -50,7 +50,7 @@ class SWP_Shortcode {
 	 * This function will accept an array of arguments which WordPress
 	 * will create from the shortcode attributes.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  $atts Array An array converted from shortcode attributes.
 	 *
 	 * 		content: The content for the Social Warfare function to filter. In the case of
@@ -92,7 +92,7 @@ class SWP_Shortcode {
 	 * This function will accept an array of arguments which WordPress
 	 * will create from the shortcode attributes.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  $atts Array An array converted from shortcode attributes.
 	 * @return string The HTML of the Social Warfare buttons.
 	 *
@@ -112,15 +112,15 @@ class SWP_Shortcode {
 	 * use any parameters. It is only included to prevent throwing an error
 	 * in the event that someone tries to input a parameter on it.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  $atts Array An array converted from shortcode attributes.
 	 * @return string A string of text representing the total shares for the post.
 	 *
 	 */
 	public function post_total_shares( $settings ) {
-			$totes = get_post_meta( get_the_ID() , '_totes', true );
-			$totes = swp_kilomega( $totes );
-			return $totes;
+			$total_shares = get_post_meta( get_the_ID() , '_total_shares', true );
+			$total_shares = swp_kilomega( $total_shares );
+			return $total_shares;
 	}
 
 
@@ -133,14 +133,14 @@ class SWP_Shortcode {
 	 * use any parameters. It is only included to prevent throwing an error
 	 * in the event that someone tries to input a parameter on it.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @param  $atts Array An array converted from shortcode attributes.
 	 * @return string A string of text representing the total sitewide shares.
 	 *
 	 */
 	public function sitewide_total_shares( $settings ) {
 			global $wpdb;
-			$sum = $wpdb->get_results( "SELECT SUM(meta_value) AS total FROM $wpdb->postmeta WHERE meta_key = '_totes'" );
+			$sum = $wpdb->get_results( "SELECT SUM(meta_value) AS total FROM $wpdb->postmeta WHERE meta_key = '_total_shares'" );
 			return swp_kilomega( $sum[0]->total );
 	}
 

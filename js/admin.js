@@ -22,8 +22,8 @@ if (typeof $ === 'undefined') {
 * such dependant element, its parent element controls whether the dependant is shown or hidden
 * if the parent's value matches the condition.
 *
-* @since 2.4.0 Feb 12 2018 | Brought func in from admin-options-page.js and set to global scope; Updated variable names for semantics, switched to Yoda condietionals.
-* @since 2.4.0 Feb 14 2018 | Mapped the required array from variable types to string.
+* @since 3.0.0 Feb 12 2018 | Brought func in from admin-options-page.js and set to global scope; Updated variable names for semantics, switched to Yoda condietionals.
+* @since 3.0.0 Feb 14 2018 | Mapped the required array from variable types to string.
 *
 * @see admin-options-page.js
 * @return none
