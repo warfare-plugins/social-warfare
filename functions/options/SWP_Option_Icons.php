@@ -40,7 +40,7 @@ class SWP_Option_Icons extends SWP_Option {
             $html .= '<div class="sw-active sw-buttons-sort">';
 
             if ( count($user_icons) > 0 ):
-    			foreach( $user_icons as $network_key => $network ) {
+    			foreach( $user_icons as $network_key) {
                     if ( isset( $all_icons[$network_key]) ) :
                         $network = $all_icons[$network_key];
 
@@ -80,7 +80,7 @@ class SWP_Option_Icons extends SWP_Option {
         $html .=  '<div class="sw-grid sw-col-620 sw-fit">';
             $html .=  '<div class="sw-inactive sw-buttons-sort">';
             if ( count( $inactive_icons) > 0 ) :
-                foreach( $inactive_icons as $network_key => $network) {
+                foreach( $inactive_icons as $network_key) {
                     $network = $all_icons[$network_key];
 
                     $html .= $this->render_icon_HTML( $network );
