@@ -64,7 +64,7 @@ class SWP_Option_Text extends SWP_Option {
     }
 
     public function render_HTML_element() {
-        return '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $this->value . '" />';
+        return '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $this->value . '"' . $this->render_placeholder() . '/>';
     }
 
 
