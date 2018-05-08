@@ -1046,12 +1046,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 100%;
 }
 
-<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_share,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_share {
-=======
-.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_share {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	height: 35px;
 	opacity: 0;
 	position: absolute;
@@ -1061,12 +1057,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 67.5px;
 }
 
-<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_count,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_count {
-=======
-.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_count {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	height: 35px;
 	margin: 0;
 	padding: 0;
@@ -1095,7 +1087,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 67.5px;
 }
 
-<<<<<<< HEAD
+
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide),
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide) {
 	opacity: 0;
@@ -1103,13 +1095,6 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 
 .swp_social_panelSide.swp_boxed .total_shares,
 .swp_social_panelSide.swp_circles .total_shares {
-=======
-.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide) {
-	opacity: 0;
-}
-
-.swp_social_panelSide.swp_boxed .total_shares {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	padding: 0;
 	width: 67.5px!important;
 }
@@ -1118,11 +1103,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	line-height: 34px;
 }
 
-<<<<<<< HEAD
 .swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares) .iconFiller{
-=======
-.swp_social_panelSide:not(.swp_boxed) .nc_tweetContainer:not(.total_shares) .iconFiller {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	margin-left: 2px;
 	width: 30px;
 }
@@ -1143,11 +1124,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	margin: 0 auto;
 }
 
-<<<<<<< HEAD
+
 .swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares):hover {
-=======
-.swp_social_panelSide:not(.swp_boxed) .nc_tweetContainer:not(.total_shares):hover {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	width: 150px;
 }
 
@@ -1157,13 +1135,9 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover .iconFiller,
-<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .spaceManWilly,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover .iconFiller,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) .spaceManWilly {
-=======
-.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .spaceManWilly {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	width: 100%;
 }
 
@@ -1655,13 +1629,9 @@ a.style2 .sw-click-to-tweet i.swp_twitter {
 }
 
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .swp_hide span.swp_share,
-<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide),
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) .swp_hide span.swp_share,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide) {
-=======
-.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide) {
->>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	opacity: 1;
 }
 
