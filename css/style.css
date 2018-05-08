@@ -1352,10 +1352,10 @@ a .sw-click-to-tweet .sw-ctt-text {
 	text-transform: uppercase;
 }
 
-.sw-click-to-tweet i.sw-swp_twitter {
+.sw-click-to-tweet i.swp_twitter_icon {
 	float: right;
 	font-size: 21px;
-	margin-left: 15px;
+	margin-left: 15px !important;
 	margin-top: 2px;
 	text-transform: none;
 }
@@ -1451,7 +1451,7 @@ a.swp_CTT.style6 .sw-click-to-tweet {
 	transition: all 0.25s linear;
 }
 
-a.style6 .sw-click-to-tweet i.sw-swp_twitter {
+a.style6 .sw-click-to-tweet i.swp_twitter {
 	color: #30394f;
 }
 
@@ -1603,9 +1603,9 @@ body .swp_social_panel.swp_other_dark_gray:hover a {
 .swp_social_panel.swp_default_color_outlines .swp_twitter a,
 html body .swp_social_panel.swp_individual_color_outlines .swp_twitter a:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_twitter a,
-.wp-editor-container .sw-swp_twitter:before,
-a.style1 .sw-click-to-tweet i.sw-swp_twitter,
-a.style2 .sw-click-to-tweet i.sw-swp_twitter {
+.wp-editor-container .swp_twitter:before,
+a.style1 .sw-click-to-tweet i.swp_twitter,
+a.style2 .sw-click-to-tweet i.swp_twitter {
 	color: #429cd6;
 }
 
@@ -1637,7 +1637,7 @@ a.style2:hover .sw-click-to-tweet .sw-ctt-btn {
 a.style3:hover .sw-click-to-tweet .sw-ctt-text,
 a.style3 .sw-click-to-tweet .sw-ctt-btn,
 a.style3:hover .sw-click-to-tweet .sw-ctt-btn,
-a.style3 .sw-click-to-tweet i.sw-swp_twitter,
+a.style3 .sw-click-to-tweet i.swp_twitter,
 a.style4 .sw-click-to-tweet .sw-ctt-text,
 a.style4:hover .sw-click-to-tweet .sw-ctt-text,
 a.style4 .sw-click-to-tweet .sw-ctt-btn,
@@ -1650,8 +1650,8 @@ a.style5:hover .sw-click-to-tweet .sw-ctt-btn {
 	text-decoration: none;
 }
 
-a.style4 .sw-click-to-tweet i.sw-swp_twitter,
-a.style5 .sw-click-to-tweet i.sw-swp_twitter {
+a.style4 .sw-click-to-tweet i.swp_twitter,
+a.style5 .sw-click-to-tweet i.swp_twitter {
 	color: #fff;
 }
 
@@ -1663,7 +1663,7 @@ a.style6 .sw-click-to-tweet .sw-ctt-btn {
 
 a.style6:hover .sw-click-to-tweet .sw-ctt-text,
 a.style6:hover .sw-click-to-tweet .sw-ctt-btn,
-a.style6:hover .sw-click-to-tweet i.sw-swp_twitter {
+a.style6:hover .sw-click-to-tweet i.swp_twitter {
 	color: #2a2d34;
 	text-decoration: none;
 }
