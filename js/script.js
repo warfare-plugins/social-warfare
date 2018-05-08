@@ -209,7 +209,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
 					var minWidth = ncSideFloater.data( 'screen-width' );
 					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
-						var position = 'floating_panel' + floatLeftMobile.charAt(0).toUpperCase() + floatLeftMobile.slice(1);
+						var position = floatLeftMobile;
 					} else {
 						var position = location;
 					}
