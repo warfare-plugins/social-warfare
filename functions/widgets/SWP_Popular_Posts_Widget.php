@@ -74,7 +74,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     //         'count'         => "10",
     //         'timeframe'     => "0",
     //         'post_type'     => "post",
-    //         'network'       => "totes",
+    //         'network'       => "total_shares",
     //         'showCount'     => "true",
     //         'countLabel'    => "Total Shares",
     //         'style'         => "style_01",
@@ -122,7 +122,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
             'count'         => "10",
             'timeframe'     => "0",
             'post_type'     => "post",
-            'network'       => "totes",
+            'network'       => "total_shares",
             'showCount'     => "true",
             'countLabel'    => "Total Shares",
             'style'         => "style_01",
@@ -201,7 +201,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '<p class="network">';
 		$form .= '<label for="' . $this->get_field_id( 'network' ) . '">Which network would you like to base your posts\' popularity on?</label>';
         $form .= "<select {$this->set_attributes('network', 'widefat', null)}>";
-        $form .= "<option value=\"totes\" {selected($network, 'total_shares', false)}>All Networks</option>";
+        $form .= "<option value=\"total_shares\" {selected($network, 'total_shares', false)}>All Networks</option>";
 
 		foreach( $availableNetworks as $key => $value ) :
 

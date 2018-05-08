@@ -133,6 +133,7 @@ class SWP_Database_Migration {
             'pin_browser_extension'          => 'swp_pin_browser_extension',
             'pin_browser_extension_location' => 'swp_pin_browser_extension_location',
             'pin_browser_extension_url'      => 'swp_pin_browser_extension_url',
+            'totes'                          => 'total_shares'
         ];
 
         $prefix1 = "nc_";
@@ -207,7 +208,7 @@ class SWP_Database_Migration {
             'recovery_prefix'                   => 'unchanged',
             'decimals'                          => 0,
             'decimal_separator'                 => 'period',
-            'totals_alignment'                  => 'totesalt',
+            'totals_alignment'                  => 'total_sharesalt',
             'google_analytics'                  => false,
             'bitly_authentication'              => false,
             'minimum_shares'                    => 0,
