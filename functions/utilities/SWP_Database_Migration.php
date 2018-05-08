@@ -16,6 +16,7 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
+        $this->update_hidden_post_meta();
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -36,8 +37,6 @@ class SWP_Database_Migration {
         if ( true === _swp_is_debug('initialize_db') ) {
             $this->initialize_db();
         }
-
-
     }
 
     /**
@@ -85,6 +84,8 @@ class SWP_Database_Migration {
     }
 
     public function update_hidden_post_meta() {
+        global $wpdb;
+
         $hidden_map = [
             '_googlePlus_shares'    => '_google_plus_shares',
             '_linkedIn_shares'      => '_linkedin_shares',
@@ -98,7 +99,7 @@ class SWP_Database_Migration {
             WHERE meta_key = %s
         ";
 
-        foreach ( $hidden_maps as $old_key => $new_key ) {
+        foreach ( $hidden_map as $old_key => $new_key ) {
             //* Make replacements for the first kind of prefix.
             $q = $wpdb->prepare( $query, $new_key, $old_key );
             $wpdb->query( $q );
@@ -113,6 +114,7 @@ class SWP_Database_Migration {
     */
     public function update_post_meta() {
         global $wpdb;
+        echo "Updating post meta.";
 
         //* Notice there is no prefix on any of the indices.
         //* Old code has prefixed these with either "nc_" or "swp_".
