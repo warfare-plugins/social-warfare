@@ -517,7 +517,7 @@ class SWP_Buttons_Panel {
         if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] <= $this->options['minimum_shares'] ) {
             return '';
         }
-        $html = '<div class="nc_tweetContainer totes totesalt" >';
+        $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
             $html .= '<span class="swp_count ">' . swp_kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
         $html .= '</div>';
         return $html;

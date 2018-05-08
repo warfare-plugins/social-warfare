@@ -82,8 +82,8 @@ function get_social_warfare_shares( $postID ) {
 	endif;
 
 	if ( $freshCache == true ) :
-		if ( get_post_meta( $postID,'_totes',true ) ) :
-			$shares['total_shares'] = get_post_meta( $postID, '_totes', true );
+		if ( get_post_meta( $postID,'_total_shares',true ) ) :
+			$shares['total_shares'] = get_post_meta( $postID, '_total_shares', true );
 
 		else :
 			$shares['total_shares'] = 0;
@@ -147,10 +147,10 @@ function get_social_warfare_shares( $postID ) {
 	if ( $freshCache != true ) :
 
 		// Clean out the previously used custom meta fields
-		delete_post_meta( $postID,'_totes' );
+		delete_post_meta( $postID,'_total_shares' );
 
 		// Add the new data to the custom meta fields
-		update_post_meta( $postID,'_totes',$shares['total_shares'] );
+		update_post_meta( $postID,'_total_shares',$shares['total_shares'] );
 
 	endif;
 

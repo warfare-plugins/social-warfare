@@ -307,7 +307,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <span class="swp_count">51</span>
                 </a>
             </div>
-            <div class="nc_tweetContainer totes totesalt" data-id="6" >
+            <div class="nc_tweetContainer total_shares total_sharesalt" data-id="6" >
             <span class="swp_count">
                 <span class="swp_label">Shares</span> 1.8K
             </span>
