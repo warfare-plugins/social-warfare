@@ -7,7 +7,7 @@
 * @copyright Copyright (c) 2018, Warfare Plugins, LLC
 * @license   GPL-3.0+
 * @since     1.0.0
-* @since     2.4.0 | Feb 23 2018 | Updated class to fit our style guide.
+* @since     3.0.0 | Feb 23 2018 | Updated class to fit our style guide.
 *
 */
 class SWP_Click_To_Tweet {

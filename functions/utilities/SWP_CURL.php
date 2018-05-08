@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 22 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.0 | 22 FEB 2018 | Refactored into a class-based system.
  *
  */
 class SWP_CURL {
@@ -27,11 +27,11 @@ class SWP_CURL {
 		if( is_array( $data ) ):
 			foreach ( $data as $id => $d ) :
 
-				if ( $d !== 0 || $id == 'googlePlus' ) :
+				if ( $d !== 0 || $id == 'google_plus' ) :
 
 					$curly[ $id ] = curl_init();
 
-					if ( $id == 'googlePlus' ) :
+					if ( $id == 'google_plus' ) :
 
 						curl_setopt( $curly[ $id ], CURLOPT_URL, 'https://clients6.google.com/rpc' );
 						curl_setopt( $curly[ $id ], CURLOPT_POST, true );

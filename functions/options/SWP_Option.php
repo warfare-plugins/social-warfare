@@ -249,4 +249,35 @@ class SWP_Option extends SWP_Abstract {
 
         return $this;
     }
+
+    /**
+     * Defines the placeholder for text inputs.
+     *
+     * @var string $placeholder The text to display as a placeholder.
+     *
+     * @return object $this The calling instance, for method chaining.
+     */
+    public function set_placeholder( $placeholder ) {
+        if (!is_string( $placeholder ) && !is_numeric( $placeholder ) ) :
+            $this->_throw( "Please set a string or number for the placeholder." );
+        endif;
+
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    /**
+     * Creates the HTML placeholder attribute if a placeholder is defined.
+     *
+     * @return string $placeholder The qualified HTML placeholder attribute.
+     */
+    public function render_placeholder() {
+        if ( empty( $this->placeholder) ) :
+            return "";
+        endif;
+
+        return ' placeholder="' . $this->placeholder . '"';
+
+    }
 }

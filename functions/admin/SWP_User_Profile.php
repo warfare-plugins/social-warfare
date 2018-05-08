@@ -13,7 +13,7 @@
  *
  * @since  Unknown | Created |
  * @since  2.2.4   | Updated | 07 MAR 2017 | Added gettext calls to the form.
- * @since  2.4.0   | Updated | 21 FEB 2017 | Refactored into a class-based system.
+ * @since  3.0.0   | Updated | 21 FEB 2017 | Refactored into a class-based system.
  * @access public
  * @return none
  *
@@ -31,7 +31,7 @@ class SWP_User_Profile {
 	 *
 	 * @param  object $user The user object
 	 * @since  Unknown
-	 * @since  2.4.0   | Created | 21 FEB 2017
+	 * @since  3.0.0   | Created | 21 FEB 2017
 	 * @access public
 	 * @return none
 	 *

@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 21 FEB 2018 | Updated to a class.
+ * @since     3.0.0 | 21 FEB 2018 | Updated to a class.
  *
  */
 class SWP_Header_Output {
@@ -16,7 +16,7 @@ class SWP_Header_Output {
 	/**
  	* The global user options array.
  	*
- 	* @since 2.4.0
+ 	* @since 3.0.0
  	* @var array $swp_user_options An array of options as set by the WordPress admin.
  	*
  	*/
@@ -25,7 +25,7 @@ class SWP_Header_Output {
 	/**
  	* The local user options array.
  	*
- 	* @since 2.4.0
+ 	* @since 3.0.0
  	* @var array $swp_user_options An array of options as set by the WordPress admin.
  	*
  	*/
@@ -38,7 +38,7 @@ class SWP_Header_Output {
      *  We pull the global user options into a local property so that we don't have to keep
      *  pulling in the global in each method in which it is needed.
      *
-     * @since 2.4.0 | 21 FEB 2018 | Created
+     * @since 3.0.0 | 21 FEB 2018 | Created
      *
      */
     public function __construct() {

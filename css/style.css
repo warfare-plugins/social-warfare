@@ -884,7 +884,6 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 100px!important;
 	z-index: 9999999;
     margin: 10px 5px !important;
-    padding: 0 !important;
 
 	-webkit-box-direction: normal;
 	-moz-box-direction: normal;
@@ -917,7 +916,6 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
     height: 100vh;
     display: flex;
     position: fixed;
-    padding: 10px 0;
     top: 0;
 }
 
@@ -1046,8 +1044,11 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 100%;
 }
 
+<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_share,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_share {
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	height: 35px;
 	opacity: 0;
 	position: absolute;
@@ -1057,8 +1058,11 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 67.5px;
 }
 
+<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_count,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_count {
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	height: 35px;
 	margin: 0;
 	padding: 0;
@@ -1087,6 +1091,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 67.5px;
 }
 
+<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide),
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide) {
 	opacity: 0;
@@ -1094,6 +1099,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 
 .swp_social_panelSide.swp_boxed .total_shares,
 .swp_social_panelSide.swp_circles .total_shares {
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	padding: 0;
 	width: 67.5px!important;
 }
@@ -1102,7 +1109,10 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	line-height: 34px;
 }
 
+<<<<<<< HEAD
 .swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares) .iconFiller{
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	margin-left: 2px;
 	width: 30px;
 }
@@ -1123,7 +1133,10 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	margin: 0 auto;
 }
 
+<<<<<<< HEAD
 .swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares):hover {
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	width: 150px;
 }
 
@@ -1133,9 +1146,12 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover .iconFiller,
+<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .spaceManWilly,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover .iconFiller,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) .spaceManWilly {
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	width: 100%;
 }
 
@@ -1369,10 +1385,8 @@ a .sw-click-to-tweet .sw-ctt-text {
 	text-transform: uppercase;
 }
 
-.sw-click-to-tweet i.sw-swp_twitter {
 	float: right;
 	font-size: 21px;
-	margin-left: 15px;
 	margin-top: 2px;
 	text-transform: none;
 }
@@ -1468,7 +1482,6 @@ a.swp_CTT.style6 .sw-click-to-tweet {
 	transition: all 0.25s linear;
 }
 
-a.style6 .sw-click-to-tweet i.sw-swp_twitter {
 	color: #30394f;
 }
 
@@ -1620,16 +1633,16 @@ body .swp_social_panel.swp_other_dark_gray:hover a {
 .swp_social_panel.swp_default_color_outlines .swp_twitter a,
 html body .swp_social_panel.swp_individual_color_outlines .swp_twitter a:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_twitter a,
-.wp-editor-container .sw-swp_twitter:before,
-a.style1 .sw-click-to-tweet i.sw-swp_twitter,
-a.style2 .sw-click-to-tweet i.sw-swp_twitter {
 	color: #429cd6;
 }
 
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .swp_hide span.swp_share,
+<<<<<<< HEAD
 .swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide),
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) .swp_hide span.swp_share,
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide) {
+=======
+>>>>>>> 08e2de321203ee86dc779a09c9d01d0f06b3fdeb
 	opacity: 1;
 }
 
@@ -1656,7 +1669,6 @@ a.style2:hover .sw-click-to-tweet .sw-ctt-btn {
 a.style3:hover .sw-click-to-tweet .sw-ctt-text,
 a.style3 .sw-click-to-tweet .sw-ctt-btn,
 a.style3:hover .sw-click-to-tweet .sw-ctt-btn,
-a.style3 .sw-click-to-tweet i.sw-swp_twitter,
 a.style4 .sw-click-to-tweet .sw-ctt-text,
 a.style4:hover .sw-click-to-tweet .sw-ctt-text,
 a.style4 .sw-click-to-tweet .sw-ctt-btn,
@@ -1669,8 +1681,6 @@ a.style5:hover .sw-click-to-tweet .sw-ctt-btn {
 	text-decoration: none;
 }
 
-a.style4 .sw-click-to-tweet i.sw-swp_twitter,
-a.style5 .sw-click-to-tweet i.sw-swp_twitter {
 	color: #fff;
 }
 
@@ -1682,7 +1692,6 @@ a.style6 .sw-click-to-tweet .sw-ctt-btn {
 
 a.style6:hover .sw-click-to-tweet .sw-ctt-text,
 a.style6:hover .sw-click-to-tweet .sw-ctt-btn,
-a.style6:hover .sw-click-to-tweet i.sw-swp_twitter {
 	color: #2a2d34;
 	text-decoration: none;
 }

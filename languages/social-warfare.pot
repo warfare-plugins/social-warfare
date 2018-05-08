@@ -392,8 +392,8 @@ msgstr ""
 msgid "Share"
 msgstr ""
 
-#: functions/social-networks/googlePlus.php:91
-#: functions/social-networks/googlePlus.php:95
+#: functions/social-networks/google_plus.php:91
+#: functions/social-networks/google_plus.php:95
 msgid "+1"
 msgstr ""
 

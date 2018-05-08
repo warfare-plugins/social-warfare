@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 21 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.0 | 21 FEB 2018 | Refactored into a class-based system.
  *
  */
 class SWP_Column {
@@ -23,7 +23,7 @@ class SWP_Column {
 	 *
 	 * NOTE: These "duplicate" hooks/functions are to cover both posts and pages.
 	 *
-	 * @since  2.4.0
+	 * @since  3.0.0
 	 * @access public
 	 * @param  None
 	 * @return None
@@ -73,7 +73,7 @@ class SWP_Column {
 	 */
 	public function populate_social_shares_column( $column_name, $post_ID ) {
 	 	if ( $column_name == 'swSocialShares' ) {
-	 		$answer = get_post_meta( $post_ID,'_totes',true );
+	 		$answer = get_post_meta( $post_ID,'_total_shares',true );
 	 		echo intval( $answer );
 		}
 	}
@@ -106,7 +106,7 @@ class SWP_Column {
 	 	$orderby = $query->get( 'orderby' );
 
 		if ( 'Social Shares' === $orderby ) {
-	 		$query->set( 'meta_key','_totes' );
+	 		$query->set( 'meta_key','_total_shares' );
 	 		$query->set( 'orderby','meta_value_num' );
 	 	}
 	}

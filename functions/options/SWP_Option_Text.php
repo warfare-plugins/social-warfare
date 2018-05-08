@@ -5,7 +5,7 @@
  *
  * This class is used to create each input option needed on the options page.
  *
- * @since  2.4.0   | Created | 02 MAR 2017
+ * @since  3.0.0   | Created | 02 MAR 2017
  * @access public
  */
 class SWP_Option_Text extends SWP_Option {
@@ -64,7 +64,7 @@ class SWP_Option_Text extends SWP_Option {
     }
 
     public function render_HTML_element() {
-        return '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $this->value . '" />';
+        return '<input name="' . $this->key . '" data-swp-name="' . $this->key . '"  type="text" class="sw-admin-input" value="' . $this->value . '"' . $this->render_placeholder() . '/>';
     }
 
 
