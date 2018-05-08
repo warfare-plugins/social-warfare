@@ -10,9 +10,9 @@
 * @copyright Copyright (c) 2018, Warfare Plugins, LLC
 * @license   GPL-3.0+
 * @since     1.0.0 | Created | Unknown
-* @since     2.4.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
-* @since     2.4.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
-* @since     2.4.0 | Updated | 09 Feb 2018 | Added the post type selector
+* @since     3.0.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
+* @since     3.0.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
+* @since     3.0.0 | Updated | 09 Feb 2018 | Added the post type selector
 *
 */
 class SWP_Popular_Posts_Widget extends WP_Widget {
@@ -34,7 +34,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     /**
     * Sets commonly applied attributes.
     *
-    * @since 2.4.0 | 08 Feb 2018
+    * @since 3.0.0 | 08 Feb 2018
     * @access private
     *
     * @param string $name The name to be called.
@@ -60,7 +60,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     // /**
     // * Set the default values for widget settings.
     // *
-    // * @since 2.4.0 | 10 Feb 2018
+    // * @since 3.0.0 | 10 Feb 2018
     // * @access private
     // *
     // * @param array $instance The current instance settings.
@@ -108,7 +108,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	 * Outputs the Settings Update form
 	 *
 	 * @since 1.0.0
-	 * @since 2.4.0 | Refactored using loops, $this->set_attributes(), and added custom thumb sizes
+	 * @since 3.0.0 | Refactored using loops, $this->set_attributes(), and added custom thumb sizes
 	 *
 	 * @param array $instance Current settings.
 	 * @return none Output is echoed directly to the screen
@@ -382,7 +382,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     * This sub-class over-rides this function from the parent class to generate the widget code.
     *
     * @since 1.0.0
-    * @since 2.4.0 | 09 FEB 2018 | Refactored and added the $args array output
+    * @since 3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
     * @access public
     * @param array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
     * @param array $instance The settings for the particular instance of the widget.

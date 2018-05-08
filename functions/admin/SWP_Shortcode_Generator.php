@@ -11,7 +11,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 20 FEB 2018 | Refactored this file to align
+ * @since     3.0.0 | 20 FEB 2018 | Refactored this file to align
  * 			  with our code style guide
  *
  */

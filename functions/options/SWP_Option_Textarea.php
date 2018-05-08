@@ -5,7 +5,7 @@
  *
  * This class is used to create each input option needed on the options page.
  *
- * @since  2.4.0   | Created | 02 MAR 2017
+ * @since  3.0.0   | Created | 02 MAR 2017
  * @access public
  */
 class SWP_Option_Textarea extends SWP_Option {

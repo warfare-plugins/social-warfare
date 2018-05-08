@@ -8,7 +8,7 @@
  * is a collection of "section" objects each of which will contain a collection of related
  * options to display on the options page in a group.
  *
- * @since  2.4.0   | Created | 02 MAR 2017
+ * @since  3.0.0   | Created | 02 MAR 2017
  * @access public
  *
  */
@@ -39,7 +39,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	* This method instantiates this class by settings the "sections" property to
 	* an object so the the "options" objects can easily be added to it later on.
 	*
-	* @since  2.4.0 | 3 MAR 2018 | Created
+	* @since  3.0.0 | 3 MAR 2018 | Created
 	*/
 	public function __construct( $name, $key ) {
 		$this->sections = new stdClass();
