@@ -884,7 +884,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 100px!important;
 	z-index: 9999999;
     margin: 10px 5px !important;
-    padding: 0 !important;
+    padding: 0;
 
 	-webkit-box-direction: normal;
 	-moz-box-direction: normal;
@@ -917,7 +917,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
     height: 100vh;
     display: flex;
     position: fixed;
-    padding: 10px 0;
+    padding: 30px 0;
     top: 0;
 }
 
