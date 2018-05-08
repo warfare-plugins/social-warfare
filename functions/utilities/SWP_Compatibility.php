@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     2.4.0 | 22 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.0 | 22 FEB 2018 | Refactored into a class-based system.
  *
  */
 class SWP_Compatibility {
