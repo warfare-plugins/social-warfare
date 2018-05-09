@@ -337,7 +337,9 @@ class SWP_Section_HTML extends SWP_Option {
         ];
 
         $default_types = ['page', 'post', 'home', 'archive_categories'];
+
         $post_types = array_merge( $default_types, get_post_types( ['public' => true, '_builtin' => false ], 'names' ) );
+
 
         $panel_locations = [
             'above' => 'Above the Content',
