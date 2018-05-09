@@ -294,6 +294,8 @@ class SWP_Buttons_Panel {
         endif;
         return $conflict;
     }
+
+
     /**
      * Tells you true/false if the buttons should print on this page.
      *
@@ -304,6 +306,7 @@ class SWP_Buttons_Panel {
      * $desired_conditions: WordPress conditions we require for the buttons.
      * $undesired_conditions: WordPress pages where we do not display the buttons.
      *
+     *
      * @return Boolean True if the buttons are okay to print, else false.
      */
     public function should_print() {
@@ -312,6 +315,18 @@ class SWP_Buttons_Panel {
         $undesired_conditions = !is_admin() && !is_feed() && !is_search() && !is_attachment();
         return $user_settings && $desired_conditions && $undesired_conditions;
     }
+
+
+	/**
+	 * The method that renderes the button panel HTML.
+	 *
+	 * @since  3.0.0 | 25 APR 2018 | Created
+	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
+	 *                               location methods instead of the raw options value.
+	 * @param  boolean $echo Echo's the content or returns it if false.
+	 * @return string        The string of HTML.
+	 *
+	 */
     public function render_HTML( $echo = false ) {
 		if ( ! $this->should_print() ) :
 			return $this->content;
