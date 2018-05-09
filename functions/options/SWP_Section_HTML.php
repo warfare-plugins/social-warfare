@@ -327,7 +327,9 @@ class SWP_Section_HTML extends SWP_Option {
     * Renders the three column table on the Display tab.
     *
     * @since  3.0.4 | 09 MAY 2018 | Added check for is_numeric to avoid throwing errors.
-    * @param  none 
+    * @since  3.0.5 | 09 MAY 2018 | Switched to using an iterator. Many post types are
+    *                               being returned with associative keys, not numeric ones.
+    * @param  none
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
     *
     */
@@ -340,9 +342,9 @@ class SWP_Section_HTML extends SWP_Option {
         ];
 
         $default_types = ['page', 'post', 'home', 'archive_categories'];
+		$other_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
 
-        $post_types = array_merge( $default_types, get_post_types( ['public' => true, '_builtin' => false ], 'names' ) );
-
+        $post_types = array_merge( $default_types, $other_types );
 
         $panel_locations = [
             'above' => 'Above the Content',
@@ -371,48 +373,45 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Floating Buttons (If Activated)' ,'social-warfare' ) . '</p>';
         $html .= '</div>';
 
+		$i = 0;
         foreach( $post_types as $index => $post ) {
 
-			if( is_numeric( $index ) ):
+            $priority = ($i + 1) * 10; $i++;
 
-	            $priority = ($index + 1) * 10;
+            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
-	            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
+                $html .= '<div class="sw-grid sw-col-300">';
+                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
+                $html .= '</div>';
 
-	                $html .= '<div class="sw-grid sw-col-300">';
-	                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
-	                $html .= '</div>';
+                $html .= '<div class="sw-grid sw-col-300">';
 
-	                $html .= '<div class="sw-grid sw-col-300">';
+                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'location_' . $post );
+                    $panel->set_priority( $priority )
+                        ->set_size( 'sw-col-300' )
+                        ->set_choices( $panel_locations )
+                        ->set_default( 'both' );
 
-	                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'location_' . $post );
-	                    $panel->set_priority( $priority )
-	                        ->set_size( 'sw-col-300' )
-	                        ->set_choices( $panel_locations )
-	                        ->set_default( 'both' );
+                    $html .= $panel->render_HTML_element();
 
-	                    $html .= $panel->render_HTML_element();
+                $html .= '</div>';
+                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
 
-	                $html .= '</div>';
-	                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+                if ( $post !== 'home' && $post !== 'archive_categories' ) :
 
-	                if ( $post !== 'home' && $post !== 'archive_categories' ) :
+                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
+                    $float->set_priority( $priority + 5 )
+                        ->set_size( 'sw-col-300' )
+                        ->set_choices( $float_locations )
+                        ->set_default( 'on' );
 
-	                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
-	                    $float->set_priority( $priority + 5 )
-	                        ->set_size( 'sw-col-300' )
-	                        ->set_choices( $float_locations )
-	                        ->set_default( 'on' );
+                    $html .= $float->render_HTML_element();
 
-	                    $html .= $float->render_HTML_element();
+                endif;
 
-	                endif;
+                $html .= '</div>';
 
-	                $html .= '</div>';
-
-	            $html .= '</div>';
-
-			endif;
+            $html .= '</div>';
 
         }
 
