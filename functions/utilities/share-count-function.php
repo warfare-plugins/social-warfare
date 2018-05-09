@@ -72,10 +72,10 @@ function get_social_warfare_shares( $postID ) {
 
 		foreach ( $networks as $network ) :
 
-			$old_share_links[$network] = call_user_func( 'swp_' . $network . '_request_link',$alternateURL );
+			$old_share_links[$network] = $network->get_api_link( $alternateURL );
 
 			if( !empty($altURLs) ):
-				$altURLs_share_links[$network] = call_user_func( 'swp_' . $network . '_request_link' , $altURLs );
+				$altURLs_share_links[$network] = $network->get_api_link( $altURLs );
 			endif;
 
 		endforeach;
@@ -108,11 +108,11 @@ function get_social_warfare_shares( $postID ) {
 			if ( $options['recover_shares'] == true ) :
                 $old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 
-				$recovered_shares[$network] = call_user_func( 'swp_format_' . $network . '_response', $old_raw_shares_array[$network] );
+				$recovered_shares[$network] = $network->parse_api_response( $old_raw_shares_array[$network] );
 
 				if( !empty($altURLs) ):
                     $altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
-					$altURLs_recovered_shares[$network] = call_user_func( 'swp_format_' . $network . '_response', $altURLs_raw_shares_array[$network] );
+					$altURLs_recovered_shares[$network] = $network->parse_api_response( $altURLs_raw_shares_array[$network] );
 				endif;
 
 				if ( $shares[$network] != $recovered_shares[$network] ) :
