@@ -347,7 +347,7 @@ class SWP_Buttons_Panel {
     }
 
 	public function get_float_location() {
-		if( is_single() ):
+		if( is_single() && true == $this->options['floating_panel'] ):
 			return $this->options['float_location'];
 		else:
 			return 'none';
@@ -355,7 +355,7 @@ class SWP_Buttons_Panel {
 	}
 
 	public function get_mobile_float_location() {
-		if( is_single() ):
+		if( is_single() && true == $this->options['floating_panel'] ):
 			return $this->options['float_mobile'];
 		else:
 			return 'none';
