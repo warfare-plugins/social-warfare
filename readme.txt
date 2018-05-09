@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 3.5.1
 Tested up to: 4.9
-Stable tag: 2.3.5 
+Stable tag: 2.3.5
 License: GNU General Public License v2.0 or later
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,26 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+= 3.0.0 (8 MAY 2018) =
+* Rewrote the core mechanics of the plugin to a class based system.
+* Added top floating bar for mobile.
+* Added circular button option.
+* Normalized variable and function naming conventions.
+* Updated CSS to reflect new classnames and keys.
+* Share windows now appear in the center of the browser.
+* Added toggle to print/not print OG output.
+* Created a custom CSS field for Click To Tweet.
+* Added option for right floating buttons.
+* Added size option for floating buttons.
+* Added vertical placement options for floating buttons.
+* Added option in to select from all post-types for the Widget.
+* Fixed URL Encoding for social network links.
+* URLs are no longer created for attachment or media items.
+* Updated copyright dates.
+* Made the buttons preview its own section in the options page.
+* Moved Tweet Count registration from Registrations to Social Identity.
+* 
+
 = 2.3.5 (12 JAN 2017) =
 
 * Changed the Twitter counter from 140 characters to 280 characters
