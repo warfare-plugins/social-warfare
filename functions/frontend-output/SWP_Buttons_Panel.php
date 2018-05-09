@@ -371,12 +371,13 @@ class SWP_Buttons_Panel {
 	 * Then and only then will we check the actual floating location and return it.
 	 *
 	 * @since  3.0.0 | 09 MAY 2018 | Created
+	 * @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
 	 * @param  none
 	 * @return string A string containing the float bar location.
 	 *
 	 */
 	public function get_float_location() {
-		if( is_single() && true == $this->options['floating_panel'] ):
+		if( is_single() && true == $this->options['floating_panel'] && 'on' == $this->options[ 'float_location_' . $this->post_data['post_type'] ] ):
 			return $this->options['float_location'];
 		else:
 			return 'none';
@@ -393,12 +394,13 @@ class SWP_Buttons_Panel {
 	 * Then and only then will we check the actual floating location and return it.
 	 *
 	 * @since  3.0.0 | 09 MAY 2018 | Created
+	 * @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
 	 * @param  none
 	 * @return string A string containing the float bar location.
 	 *
 	 */
 	public function get_mobile_float_location() {
-		if( is_single() && true == $this->options['floating_panel'] ):
+		if( is_single() && true == $this->options['floating_panel'] && 'on' == $this->options[ 'float_location_' . $this->post_data['post_type'] ] ):
 			return $this->options['float_mobile'];
 		else:
 			return 'none';
