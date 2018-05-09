@@ -36,21 +36,25 @@ function get_social_warfare_shares( $postID ) {
 	$networks = $options['order_of_icons'];
 
 	$icons_array = array(
-		'type'		=> 'buttons'
+		'type' => 'buttons'
 	);
 
 	foreach ( $networks as $network ) :
 
-		// Check if we can used the cached share numbers
-		if ( $freshCache == true ) :
-			$shares[$network] = get_post_meta( $postID,'_' . $network . '_shares',true );
+		if( isset( $swp_social_networks[$network] ) ):
 
-		// If cache is expired, fetch new and update the cache
-		else :
-			if( isset( $swp_social_networks[$network] ) ):
-				$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
-				$api_responses[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+			// Check if we can used the cached share numbers
+			if ( $freshCache == true ) :
+				$shares[$network] = get_post_meta( $postID,'_' . $network . '_shares',true );
+
+			// If cache is expired, fetch new and update the cache
+			else :
+				if( isset( $swp_social_networks[$network] ) ):
+					$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
+					$api_responses[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+				endif;
 			endif;
+
 		endif;
 
 	endforeach;
@@ -72,10 +76,14 @@ function get_social_warfare_shares( $postID ) {
 
 		foreach ( $networks as $network ) :
 
-			$old_share_links[$network] = $network->get_api_link( $alternateURL );
+			if( isset( $swp_social_networks[$network] ) ):
 
-			if( !empty($altURLs) ):
-				$altURLs_share_links[$network] = $network->get_api_link( $altURLs );
+				$old_share_links[$network] = $network->get_api_link( $alternateURL );
+
+				if( !empty($altURLs) ):
+					$altURLs_share_links[$network] = $network->get_api_link( $altURLs );
+				endif;
+
 			endif;
 
 		endforeach;
@@ -95,47 +103,50 @@ function get_social_warfare_shares( $postID ) {
 
 		foreach ( $networks as $network ) :
 
-			if ( ! isset( $raw_shares_array[$network] ) ) {
-				$raw_shares_array[$network] = 0;
-			}
+			if( isset( $swp_social_networks[$network] ) ):
 
-			if ( ! isset( $old_raw_shares_array[$network] ) ) {
-				$old_raw_shares_array[$network] = 0;
-			}
+				if ( ! isset( $raw_shares_array[$network] ) ) {
+					$raw_shares_array[$network] = 0;
+				}
 
-            $shares[$network] = $swp_social_networks[$network]->parse_api_response($api_responses[$network]);
+				if ( ! isset( $old_raw_shares_array[$network] ) ) {
+					$old_raw_shares_array[$network] = 0;
+				}
 
-			if ( $options['recover_shares'] == true ) :
-                $old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
+	            $shares[$network] = $swp_social_networks[$network]->parse_api_response($api_responses[$network]);
 
-				$recovered_shares[$network] = $network->parse_api_response( $old_raw_shares_array[$network] );
+				if ( $options['recover_shares'] == true ) :
+	                $old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 
-				if( !empty($altURLs) ):
-                    $altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
-					$altURLs_recovered_shares[$network] = $network->parse_api_response( $altURLs_raw_shares_array[$network] );
+					$recovered_shares[$network] = $network->parse_api_response( $old_raw_shares_array[$network] );
+
+					if( !empty($altURLs) ):
+	                    $altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
+						$altURLs_recovered_shares[$network] = $network->parse_api_response( $altURLs_raw_shares_array[$network] );
+					endif;
+
+					if ( $shares[$network] != $recovered_shares[$network] ) :
+						$shares[$network] = $shares[$network] + $recovered_shares[$network];
+					endif;
+
+					if( !empty($altURLs) ):
+						$shares[$network] = $shares[$network] + $altURLs_recovered_shares[$network];
+					endif;
 				endif;
 
-				if ( $shares[$network] != $recovered_shares[$network] ) :
-					$shares[$network] = $shares[$network] + $recovered_shares[$network];
+				if ( $shares[$network] < $old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
+					$shares[$network] = $old_shares[$network];
+
+				elseif($shares[$network] > 0) :
+					delete_post_meta( $postID,'_' . $network . '_shares' );
+					update_post_meta( $postID,'_' . $network . '_shares',$shares[$network] );
+
 				endif;
 
-				if( !empty($altURLs) ):
-					$shares[$network] = $shares[$network] + $altURLs_recovered_shares[$network];
+				if (is_numeric( $shares[$network] ) ):
+					$shares['total_shares'] += $shares[$network];
+
 				endif;
-			endif;
-
-			if ( $shares[$network] < $old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
-				$shares[$network] = $old_shares[$network];
-
-			elseif($shares[$network] > 0) :
-				delete_post_meta( $postID,'_' . $network . '_shares' );
-				update_post_meta( $postID,'_' . $network . '_shares',$shares[$network] );
-
-			endif;
-
-			if (is_numeric( $shares[$network] ) ):
-				$shares['total_shares'] += $shares[$network];
-
 			endif;
 
 		endforeach;
