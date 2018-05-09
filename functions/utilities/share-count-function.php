@@ -3,10 +3,11 @@
 /**
  * A function to fetch all the social shares
  *
- * @since 	1.0.0
- * @since   3.0.3 | 09 MAY 2018 | Added checks for the network objects (isset) to ensure
+ * @since  1.0.0 | Unknown     | Created
+ * @since  3.0.3 | 09 MAY 2018 | Added checks for the network objects (isset) to ensure
  *                                we're not calling those methods from strings or other
  *                                random items that will throw errors.
+ * @since  3.0.4 | 09 MAY 2018 | Replaced $network-> with $swp_social_networks[$network]->
  * @param  integer $postID The post ID
  * @return array $shares An array of share data
  */
