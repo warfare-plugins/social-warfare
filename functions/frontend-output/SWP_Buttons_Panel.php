@@ -346,6 +346,20 @@ class SWP_Buttons_Panel {
         return $html;
     }
 
+
+	/**
+	 * A Method to determine the location of the floating buttons
+	 *
+	 * This method was created because we can't just use the option as it is set
+	 * in the options page. Instead, we must first check that we are on a single.php
+	 * page and second we must check that the floating buttons toggle is turned on.
+	 * Then and only then will we check the actual floating location and return it.
+	 *
+	 * @since  3.0.0 | 09 MAY 2018 | Created
+	 * @param  none
+	 * @return string A string containing the float bar location.
+	 *
+	 */
 	public function get_float_location() {
 		if( is_single() && true == $this->options['floating_panel'] ):
 			return $this->options['float_location'];
@@ -354,6 +368,20 @@ class SWP_Buttons_Panel {
 		endif;
 	}
 
+
+	/**
+	 * A Method to determine the location of the floating buttons on mobile devices
+	 *
+	 * This method was created because we can't just use the option as it is set
+	 * in the options page. Instead, we must first check that we are on a single.php
+	 * page and second we must check that the floating buttons toggle is turned on.
+	 * Then and only then will we check the actual floating location and return it.
+	 *
+	 * @since  3.0.0 | 09 MAY 2018 | Created
+	 * @param  none
+	 * @return string A string containing the float bar location.
+	 *
+	 */
 	public function get_mobile_float_location() {
 		if( is_single() && true == $this->options['floating_panel'] ):
 			return $this->options['float_mobile'];
