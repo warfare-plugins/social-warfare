@@ -326,7 +326,10 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * Renders the three column table on the Display tab.
     *
+    * @since  3.0.4 | 09 MAY 2018 | Added check for is_numeric to avoid throwing errors.
+    * @param  none 
     * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    *
     */
     public function do_button_position_table() {
         $static_options = [
@@ -369,42 +372,47 @@ class SWP_Section_HTML extends SWP_Option {
         $html .= '</div>';
 
         foreach( $post_types as $index => $post ) {
-            $priority = ($index + 1) * 10;
 
-            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
+			if( is_numeric( $index ) ):
 
-                $html .= '<div class="sw-grid sw-col-300">';
-                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
-                $html .= '</div>';
+	            $priority = ($index + 1) * 10;
 
-                $html .= '<div class="sw-grid sw-col-300">';
+	            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
-                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'location_' . $post );
-                    $panel->set_priority( $priority )
-                        ->set_size( 'sw-col-300' )
-                        ->set_choices( $panel_locations )
-                        ->set_default( 'both' );
+	                $html .= '<div class="sw-grid sw-col-300">';
+	                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
+	                $html .= '</div>';
 
-                    $html .= $panel->render_HTML_element();
+	                $html .= '<div class="sw-grid sw-col-300">';
 
-                $html .= '</div>';
-                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+	                    $panel = new SWP_Option_Select( 'Panel '. ucfirst( $post ), 'location_' . $post );
+	                    $panel->set_priority( $priority )
+	                        ->set_size( 'sw-col-300' )
+	                        ->set_choices( $panel_locations )
+	                        ->set_default( 'both' );
 
-                if ( $post !== 'home' && $post !== 'archive_categories' ) :
+	                    $html .= $panel->render_HTML_element();
 
-                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
-                    $float->set_priority( $priority + 5 )
-                        ->set_size( 'sw-col-300' )
-                        ->set_choices( $float_locations )
-                        ->set_default( 'on' );
+	                $html .= '</div>';
+	                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
 
-                    $html .= $float->render_HTML_element();
+	                if ( $post !== 'home' && $post !== 'archive_categories' ) :
 
-                endif;
+	                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
+	                    $float->set_priority( $priority + 5 )
+	                        ->set_size( 'sw-col-300' )
+	                        ->set_choices( $float_locations )
+	                        ->set_default( 'on' );
 
-                $html .= '</div>';
+	                    $html .= $float->render_HTML_element();
 
-            $html .= '</div>';
+	                endif;
+
+	                $html .= '</div>';
+
+	            $html .= '</div>';
+
+			endif;
 
         }
 
