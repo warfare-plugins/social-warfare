@@ -4,3 +4,5 @@ functions/admin/SWP_Options_Page.php
 functions/options/SWP_Option.php
 functions/options/options-page-working.php
 functions/options/options.txt
+remote-sync.json
+.remote-sync.json
