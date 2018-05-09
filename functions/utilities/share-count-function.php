@@ -4,6 +4,9 @@
  * A function to fetch all the social shares
  *
  * @since 	1.0.0
+ * @since   3.0.3 | 09 MAY 2018 | Added checks for the network objects (isset) to ensure 
+ *                                we're not calling those methods from strings or other
+ *                                random items that will throw errors.
  * @param  integer $postID The post ID
  * @return array $shares An array of share data
  */
@@ -78,7 +81,7 @@ function get_social_warfare_shares( $postID ) {
 
 			if( isset( $swp_social_networks[$network] ) ):
 
-				$old_share_links[$network] = $network->get_api_link( $alternateURL );
+				$old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
 
 				if( !empty($altURLs) ):
 					$altURLs_share_links[$network] = $network->get_api_link( $altURLs );
