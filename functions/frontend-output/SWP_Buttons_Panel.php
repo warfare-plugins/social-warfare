@@ -325,8 +325,8 @@ class SWP_Buttons_Panel {
             ' swp_other_' . $this->options['hover_colors'] .
             ' scale-' . $this->options['button_size'] * 100 .
             ' scale-' . $this->options['button_alignment'] .
-            '" data-position="' . $this->options['location_post'] .
-            '" data-float="' . $this->options['float_location'] .
+            '" data-position="' . $this->get_float_location() .
+            '" data-float="' . $this->get_mobile_float_location() .
             '" data-float-mobile="' . $this->options['float_mobile'] .
             '" data-count="' . $this->total_shares .
             '" data-floatcolor="' . $this->options['float_background_color'] . '
@@ -345,6 +345,23 @@ class SWP_Buttons_Panel {
         endif;
         return $html;
     }
+
+	public function get_float_location() {
+		if( is_single() ):
+			return $this->options['float_location'];
+		else:
+			return 'none';
+		endif;
+	}
+
+	public function get_mobile_float_location() {
+		if( is_single() ):
+			return $this->options['float_mobile'];
+		else:
+			return 'none';
+		endif;
+	}
+
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
         $class = "";
