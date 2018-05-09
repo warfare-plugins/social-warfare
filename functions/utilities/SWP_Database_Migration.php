@@ -37,6 +37,11 @@ class SWP_Database_Migration {
         if ( true === _swp_is_debug('initialize_db') ) {
             $this->initialize_db();
         }
+
+		if ( true === _swp_is_debug('migrate_post_meta') ) {
+			$this->update_post_meta();
+			$this->update_hidden_post_meta();
+		}
     }
 
     /**
