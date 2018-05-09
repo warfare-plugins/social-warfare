@@ -80,6 +80,8 @@ class SWP_Options_Page extends SWP_Abstract {
 			->init_social_tab()
 			->init_advanced_tab();
 
+        add_action('wp_loaded', [$this, 'load_deferred_options']);
+
 		/**
 		 * STEP #2: Addons can now access this object to add their own
 		 * tabs, sections, and options prior to the page being rendered.
@@ -97,6 +99,10 @@ class SWP_Options_Page extends SWP_Abstract {
 		 *
 		 */
         add_action( 'admin_menu', array( $this, 'options_page') );
+    }
+
+    public function load_deferred_options() {
+        $this->tabs->display->sections->button_position->options->button_position_table->do_button_position_table();
     }
 
 
@@ -259,7 +265,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
-    * Handwritten list of custom post types.
+    * Handwritten list of og meta types.
     *
     * @return array Custom Post Types.
     */
@@ -417,8 +423,8 @@ class SWP_Options_Page extends SWP_Abstract {
                 ->set_priority( 40 )
                 ->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
 
-                $button_position_table = new SWP_Section_HTML( __( 'Position Table', 'social-warfare' ) );
-                $button_position_table->do_button_position_table();
+                $button_position_table = new SWP_Section_HTML( __( 'Position Table', 'social-warfare' ), 'button_position_table' );
+                // $button_position_table->do_button_position_table();
 
             $button_position->add_option( $button_position_table );
 
