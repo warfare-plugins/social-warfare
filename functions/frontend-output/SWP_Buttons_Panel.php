@@ -453,16 +453,16 @@ class SWP_Buttons_Panel {
 	            $float_location = 'ignore';
 	        endif;
 	        if ( $this->options['float_style_source'] == true ) :
-	            $this->options['float_default_colors'] = $this->options['default_colors'];
-	            $this->options['float_single_colors'] = $this->options['single_colors'];
-	            $this->options['float_hover_colors'] = $this->options['hover_colors'];
+	            $this->options['float_default_colors'] = $this->option('default_colors');
+	            $this->options['float_single_colors'] = $this->option('single_colors');
+	            $this->options['float_hover_colors'] = $this->option('hover_colors');
 	        endif;
 	        // *Get the vertical position
-	        if ($this->options['float_alignment']  ) :
-	            $class .= " swp_side_" . $this->options['float_alignment'];
+	        if ($this->option('float_alignment')  ) :
+	            $class .= " swp_side_" . $this->option('float_alignment');
 	        endif;
 	        // *Set button size
-	        if ( isset($this->options['float_size']) ) :
+	        if ( isset($this->option('float_size')) ) :
 	            $position = $this->option('float_alignment');
 	            $class .= " scale-${size} float-position-${position}-${side}";
 	        endif;
