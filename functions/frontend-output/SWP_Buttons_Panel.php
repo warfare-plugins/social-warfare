@@ -328,7 +328,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function render_HTML( $echo = false ) {
-		var_dump($this->should_print() );
+
 		if ( ! $this->should_print() ) :
 			return $this->content;
 		endif;
