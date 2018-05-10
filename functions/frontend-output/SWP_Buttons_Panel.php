@@ -462,7 +462,7 @@ class SWP_Buttons_Panel {
 	            $class .= " swp_side_" . $this->option('float_alignment');
 	        endif;
 	        // *Set button size
-	        if ( isset($this->option('float_size')) ) :
+	        if ( isset($this->options['float_size']) ) :
 	            $position = $this->option('float_alignment');
 	            $class .= " scale-${size} float-position-${position}-${side}";
 	        endif;
@@ -597,6 +597,8 @@ class SWP_Buttons_Panel {
         }
         return $html;
     }
+
+
     /**
      * The Total Shares Count
      *
@@ -608,7 +610,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function render_total_shares_html() {
-        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] <= $this->options['minimum_shares'] ) {
+        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') ) {
             return '';
         }
         $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
