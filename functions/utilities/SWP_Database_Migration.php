@@ -126,14 +126,14 @@ class SWP_Database_Migration {
         //* For simplicity's sake, we'll just check each for both.
         $metadata_map =  [
             'ogImage'                        => 'swp_og_image',
-            'ogTitleWrapper'                 => 'swp_og_title',
+            'ogTitle'                        => 'swp_og_title',
             'pinterestImage'                 => 'swp_pinterest_image',
             'customTweet'                    => 'swp_custom_tweet',
             'postLocation'                   => 'swp_post_location',
             'floatLocation'                  => 'swp_float_location',
             'pinterestDescription'           => 'swp_pinterest_description',
             'twitterID'                      => 'swp_twitter_id',
-            'ogDescriptionWrapper'           => 'swp_og_description',
+            'ogDescription'                  => 'swp_og_description',
             'cache_timestamp'                => 'swp_cache_timestamp',
             'pin_browser_extension'          => 'swp_pin_browser_extension',
             'pin_browser_extension_location' => 'swp_pin_browser_extension_location',
