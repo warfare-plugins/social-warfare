@@ -340,9 +340,9 @@ class SWP_Buttons_Panel {
             ' swp_other_' . $this->options['hover_colors'] .
             ' scale-' . $this->options['button_size'] * 100 .
             ' scale-' . $this->options['button_alignment'] .
-            '" data-position="' . $this->get_float_location() .
-            '" data-float="' . $this->get_mobile_float_location() .
-            '" data-float-mobile="' . $this->options['float_mobile'] .
+            '" data-position="' . $this->options['location_post'] .
+            '" data-float="' . $this->get_float_location() .
+            '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" data-count="' . $this->total_shares .
             '" data-floatcolor="' . $this->options['float_background_color'] . '
             ">';
