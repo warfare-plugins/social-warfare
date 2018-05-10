@@ -113,7 +113,7 @@ function swpConditionalFields() {
 }
 
 //* Only run on widgets.php
-if (window.location.href.indexOf("widgets.php")) {
+if (window.location.href.indexOf("widgets.php") > -1 ) {
 
 	//* Make sure the elements exist before trying to read them.
 	var widgetFinder = setInterval(function() {
