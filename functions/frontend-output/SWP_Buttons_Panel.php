@@ -328,6 +328,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function render_HTML( $echo = false ) {
+		var_dump($this->should_print() );
 		if ( ! $this->should_print() ) :
 			return $this->content;
 		endif;
@@ -525,13 +526,17 @@ class SWP_Buttons_Panel {
 	 */
     protected function get_dynamic_buttons_order() {
 		$order = array();
-		arsort($this->shares);
-		foreach( $this->shares as $key => $value ):
-			if($key !== 'total_shares'):
-				$order[$key] = $key;
-			endif;
-		endforeach;
-		$this->options['order_of_icons'] = $order;
+		if( !empty( $this->shares ) && is_array( $this->shares ) ):
+			arsort( $this->shares );
+			foreach( $this->shares as $key => $value ):
+				if($key !== 'total_shares'):
+					$order[$key] = $key;
+				endif;
+			endforeach;
+			$this->options['order_of_icons'] = $order;
+		else:
+			$order = $this->options['order_of_icons'];
+		endif;
 		return $order;
     }
 	/**

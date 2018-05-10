@@ -50,7 +50,8 @@ class SWP_Display {
         if( true === is_singular() || true === $swp_user_options['full_content'] ):
             add_filter( 'the_content', array($this, 'social_warfare_wrapper'), 20 );
         endif;
-        if (false === is_singular()) {
+
+        if (false == is_singular()) {
     		// Add the buttons to the excerpts
     		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper'), 20 );
         }
@@ -71,7 +72,6 @@ class SWP_Display {
     	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
     		return $content;
     	}
-
     	// Pass the content to the buttons constructor to place them inside.
 		$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
 
