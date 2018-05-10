@@ -20,7 +20,7 @@
  *
  */
 
-function swp_get_option($key){
+function swp_get_option( $key ){
 	global $swp_user_options;
 	$defaults = array();
 	$defaults = apply_filters('swp_options_page_defaults' , $defaults );
@@ -502,7 +502,7 @@ function swp_get_site_url() {
  * @since  3.0.0 | 02 MAY 2018 | Created
  * @param  string $string The string to be modified.
  * @return string         The snake_case modified string.
- * 
+ *
  */
 function swp_snake_case( $string ) {
 	$snake_case = str_replace( ' ' , '_' , strtolower($string) );
