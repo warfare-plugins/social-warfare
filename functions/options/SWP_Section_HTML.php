@@ -172,14 +172,10 @@ class SWP_Section_HTML extends SWP_Option {
 		// Begin Registration Wrapper
 		$html .= '<div class="tweet-count-wrapper" registration="false">';
 
-		// Registration Title
-		$html .= '<h2>' . __( 'Tweet Count Registration' , 'social-warfare' ) . '</h2>';
-
 		// Open the IS NOT Activated container
 		$html .= '<div class="sw-grid sw-col-940 swp_tweets_not_activated">';
 
 		// The Warning Notice & Instructions
-		$html .= '<p class="sw-subtitle sw-registration-text">' . __( 'In order to allow Social Warfare to track tweet counts, we\'ve partnered with a couple of third-party share counting tools. Follow the steps below to register with one of these platforms and allow us to track your Twitter shares.' , 'social-warfare' ) . '</p>';
 		$html .= '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="https://opensharecount.com" target="_blank">' . __( 'Click here to visit OpenShareCount.com (Recommended)' , 'social-warfare' ) . '</a>&nbsp;<a style="float:none;" class="button sw-navy-button" href="http://newsharecounts.com" target="_blank">' . __( 'Click here to visit NewShareCounts.com' , 'social-warfare' ) . '</a><br />' . __( 'Step 2: Follow the prompts on their website to create an account and add your domain to be tracked for share counts.' , 'social-warfare' ) . '<br />' . __( 'Step 3: Flip the switch below to "ON", select which tracking service the plugin should use, then save your changes.' , 'social-warfare' ) . '</p>';
 
 		// Close the IS NOT ACTIVATED container
