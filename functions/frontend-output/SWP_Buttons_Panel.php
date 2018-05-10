@@ -409,64 +409,68 @@ class SWP_Buttons_Panel {
 
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
-        $class = "";
-        $size = $this->options['float_size'] * 100;
-        $side = $this->options['float_location'];
-        $max_buttons = swp_get_option( 'float_button_count' );
-        // Acquire the social stats from the networks
-        if ( isset( $array['url'] ) ) :
-            $buttonsArray['url'] = $array['url'];
-        else :
-            $buttonsArray['url'] = get_permalink( $this->post_id );
-        endif;
-        if ( $this->options['floating_panel'] && is_singular() ) :
-            $float_location =  $this->options['float_location'];
-            $class = "swp_float_" . $this->options['float_location'];
-        else :
-            $float_location = 'ignore';
-        endif;
-        if ( $this->options['float_style_source'] == true ) :
-            $this->options['float_default_colors'] = $this->options['default_colors'];
-            $this->options['float_single_colors'] = $this->options['single_colors'];
-            $this->options['float_hover_colors'] = $this->options['hover_colors'];
-        endif;
-        // *Get the vertical position
-        if ($this->options['float_alignment']  ) :
-            $class .= " swp_side_" . $this->options['float_alignment'];
-        endif;
-        // *Set button size
-        if ( isset($this->options['float_size']) ) :
-            $position = $this->options['float_alignment'];
-            $class .= " scale-${size} float-position-${position}-${side}";
-        endif;
-        //* END old boilerplate.
-        $share_counts = $this->render_total_shares_HTML();
-        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
-        $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
-            ' swp_default_' . $this->options['float_default_colors'] .
-            ' swp_individual_' . $this->options['float_single_colors'] .
-            ' swp_other_' . $this->options['float_hover_colors'] . '
-            ' . $this->options['transition'] . '
-            ' . $class . '
-            ' . '" data-position="' . $this->options['location_post'] .
-            ' scale-' . $this->options['float_size'] * 100 .
-            '" data-float="' . $float_location .
-            '" data-count="' . count($this->networks) .
-            '" data-floatColor="' . $this->options['float_background_color'] .
-            '" data-screen-width="' . $this->options['float_screen_width'] .
-            '" data-transition="' . $this->options['transition'] .
-            '" data-float-mobile="'.$this->options['float_mobile'].'">';
-        if ($this->options['totals_alignment'] === 'totals_left') :
-            $buttons = $share_counts . $buttons;
-        else:
-            $buttons .= $share_counts;
-        endif;
-        $html = $container . $buttons . '</div>';
-        $this->html = $html;
-        if ( $echo ) :
-            echo $html;
-        endif;
-        return $html;
+
+		if( is_singular() && $this->options['floating_panel'] ):
+
+	        $class = "";
+	        $size = $this->options['float_size'] * 100;
+	        $side = $this->options['float_location'];
+	        $max_buttons = swp_get_option( 'float_button_count' );
+	        // Acquire the social stats from the networks
+	        if ( isset( $array['url'] ) ) :
+	            $buttonsArray['url'] = $array['url'];
+	        else :
+	            $buttonsArray['url'] = get_permalink( $this->post_id );
+	        endif;
+	        if ( $this->options['floating_panel'] && is_singular() ) :
+	            $float_location =  $this->options['float_location'];
+	            $class = "swp_float_" . $this->options['float_location'];
+	        else :
+	            $float_location = 'ignore';
+	        endif;
+	        if ( $this->options['float_style_source'] == true ) :
+	            $this->options['float_default_colors'] = $this->options['default_colors'];
+	            $this->options['float_single_colors'] = $this->options['single_colors'];
+	            $this->options['float_hover_colors'] = $this->options['hover_colors'];
+	        endif;
+	        // *Get the vertical position
+	        if ($this->options['float_alignment']  ) :
+	            $class .= " swp_side_" . $this->options['float_alignment'];
+	        endif;
+	        // *Set button size
+	        if ( isset($this->options['float_size']) ) :
+	            $position = $this->options['float_alignment'];
+	            $class .= " scale-${size} float-position-${position}-${side}";
+	        endif;
+	        //* END old boilerplate.
+	        $share_counts = $this->render_total_shares_HTML();
+	        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
+	        $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->options['float_button_shape'] .
+	            ' swp_default_' . $this->options['float_default_colors'] .
+	            ' swp_individual_' . $this->options['float_single_colors'] .
+	            ' swp_other_' . $this->options['float_hover_colors'] . '
+	            ' . $this->options['transition'] . '
+	            ' . $class . '
+	            ' . '" data-position="' . $this->options['location_post'] .
+	            ' scale-' . $this->options['float_size'] * 100 .
+	            '" data-float="' . $float_location .
+	            '" data-count="' . count($this->networks) .
+	            '" data-floatColor="' . $this->options['float_background_color'] .
+	            '" data-screen-width="' . $this->options['float_screen_width'] .
+	            '" data-transition="' . $this->options['transition'] .
+	            '" data-float-mobile="'.$this->options['float_mobile'].'">';
+	        if ($this->options['totals_alignment'] === 'totals_left') :
+	            $buttons = $share_counts . $buttons;
+	        else:
+	            $buttons .= $share_counts;
+	        endif;
+	        $html = $container . $buttons . '</div>';
+	        $this->html = $html;
+	        if ( $echo ) :
+	            echo $html;
+	        endif;
+	        return $html;
+		endif;
     }
 	/**
 	 * A method to establish the active buttons for this panel.
