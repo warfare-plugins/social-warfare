@@ -11,7 +11,8 @@
  */
 class SWP_Display {
     public $already_print;
-    public $Button;
+    // public $Button;
+
     public function __construct() {
         /**
          * A global for storing post ID's to prevent duplicate processing on the same posts
@@ -24,6 +25,8 @@ class SWP_Display {
         if ( !is_array( $swp_already_print ) ) {
             $swp_already_print = array();
         }
+
+
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
 
@@ -46,6 +49,7 @@ class SWP_Display {
     public function activate_buttons() {
     	// Fetch the user's settings
     	global $swp_user_options;
+
     	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
         if( true === is_singular() || true === $swp_user_options['full_content'] ):
             add_filter( 'the_content', array($this, 'social_warfare_wrapper'), 20 );
@@ -55,7 +59,7 @@ class SWP_Display {
             global $wp_filter;
     		// Add the buttons to the excerpts
 
-    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper'), 2 );
+    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper') );
         }
     }
 
@@ -100,6 +104,6 @@ class SWP_Display {
     public static function social_warfare( $args = array() ) {
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
 
-    	return $Buttons_Panel->render_HTML();
+    	echo $Buttons_Panel->render_HTML();
     }
 }
