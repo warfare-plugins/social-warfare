@@ -125,7 +125,7 @@ function swp_store_the_settings() {
     $array['devs']		= true;
 
     // Pass the array into the new function
-    return SWP_Display::social_warfare( $array );
+    return social_warfare( $array );
  }
 
  function social_warfare( $args = array() ) {
