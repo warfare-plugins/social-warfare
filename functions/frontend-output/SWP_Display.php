@@ -56,7 +56,6 @@ class SWP_Display {
     		// Add the buttons to the excerpts
 
     		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper'), 2 );
-            die(var_dump($wp_filter['the_excerpt']));
         }
     }
 
