@@ -110,6 +110,10 @@ function get_social_warfare_shares( $postID ) {
 		// Fetch all the share counts asyncrounously
 		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_responses );
 
+		if ( $options['recover_shares'] == true ) :
+			$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
+		endif;
+
 		foreach ( $networks as $network ) :
 
 			if( isset( $swp_social_networks[$network] ) ):
@@ -125,7 +129,6 @@ function get_social_warfare_shares( $postID ) {
 	            $shares[$network] = $swp_social_networks[$network]->parse_api_response($api_responses[$network]);
 
 				if ( $options['recover_shares'] == true ) :
-	                $old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 
 					$recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares_array[$network] );
 
