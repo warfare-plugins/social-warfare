@@ -142,7 +142,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
 	// Function for SM Title Counting
 	function smTitleRemaining() {
-		var smTitle = jQuery( '#social_warfare textarea#swp_ogTitle' ).val();
+		var smTitle = jQuery( '#social_warfare textarea#swp_og_title' ).val();
 		var remaining = 60 - smTitle.length;
 		if ( smTitle.length > 0 && remaining >= 0 ) {
 			jQuery( '#social_warfare .swp_og_title .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
@@ -156,7 +156,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
 	// Function for SM Description Counting
 	function smDescriptionRemaining() {
-		var smDescription = jQuery( '#social_warfare textarea#swp_ogDescription' ).val();
+		var smDescription = jQuery( '#social_warfare textarea#swp_og_description' ).val();
 		var remaining = 160 - smDescription.length;
 		if ( smDescription.length > 0 && remaining >= 0 ) {
 			jQuery( '#social_warfare .swp_og_description .swp_CountDown' ).removeClass( 'swp_red' ).addClass( 'swp_blue' );
@@ -170,7 +170,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
 	// Function for Twitter Box Counting
 	function twitterRemaining() {
-		var smTwitter = jQuery( '#social_warfare textarea#swp_customTweet' ).val();
+		var smTwitter = jQuery( '#social_warfare textarea#swp_custom_tweet' ).val();
 		var handle = jQuery( '#social_warfare .twitterIDWrapper label' ).html();
 		var linkSpace;
 
@@ -215,21 +215,21 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 		if ( jQuery( '#social_warfare.postbox' ).length ) {
 
 			// Add the CountDown Box for the Social Media Title
-			jQuery( '#social_warfare #swp_ogTitle' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+			jQuery( '#social_warfare #swp_og_title' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 			// Add the CountDown Box for the Social Media Description
-			jQuery( '#social_warfare #swp_ogDescription' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+			jQuery( '#social_warfare #swp_og_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 			// Add the CountDown Box for the Twitter Box
 			jQuery( '#social_warfare #swp_customTweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 			smTitleRemaining();
-			jQuery( '#social_warfare textarea#swp_ogTitle' ).on( 'input', function() {
+			jQuery( '#social_warfare textarea#swp_og_title' ).on( 'input', function() {
 				smTitleRemaining();
 			});
 
 			smDescriptionRemaining();
-			jQuery( '#social_warfare textarea#swp_ogDescription' ).on( 'input', function() {
+			jQuery( '#social_warfare textarea#swp_og_description' ).on( 'input', function() {
 				smDescriptionRemaining();
 			});
 
