@@ -81,7 +81,7 @@ class SWP_Buttons_Panel {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
 		$this->args = $args;
-        $this->content = isset( $args['content'] ) ? $args['content'] : $post->post_content;
+        $this->content = isset( $args['content'] ) ? $args['content'] : '';
         //* Access the $post once while we have it. Values may be overwritten.
         $this->post_data = [
             'ID'           => $post->ID,
@@ -334,6 +334,7 @@ class SWP_Buttons_Panel {
 		if ( ! $this->should_print() ) :
 			return $this->content;
 		endif;
+
         $total_shares_html = $this->render_total_shares_html();
         $buttons = $this->render_buttons_html();
 		// Create the HTML Buttons panel wrapper
@@ -645,9 +646,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function do_print() {
-        if ( isset( $this->args['echo']) && true === $this->args['echo'] || $this->content == false ) {
-            return;
-        }
+
         $this->render_HTML();
         $content = $this->content . '<p class="swp-content-locator"></p>';
 
@@ -661,6 +660,11 @@ class SWP_Buttons_Panel {
         endif;
 
         $this->content = $content;
+
+        if ( isset( $this->args['echo']) && true === $this->args['echo'] || $this->content == false ) {
+            echo $this->content;
+        }
+
         return $this->content;
     }
 
