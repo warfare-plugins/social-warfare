@@ -17,6 +17,7 @@ class SWP_Database_Migration {
      */
     public function __construct() {
         $this->update_hidden_post_meta();
+
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -42,6 +43,12 @@ class SWP_Database_Migration {
 			$this->update_post_meta();
 			$this->update_hidden_post_meta();
 		}
+
+        if ( true === _swp_is_Debug('get_last_migrated') ) {
+
+        }
+
+        $this->check_last_migrated();
     }
 
     /**
@@ -400,5 +407,37 @@ class SWP_Database_Migration {
         //* Play it safe for now.
         //* Leave socialWarfareOptions in the database.
         // delete_option( 'socialWarfareOptions' );
+    }
+
+    public function get_last_migrated( $echo = false ) {
+        $options = get_option( 'social_warfare_settings' );
+
+        if ( array_key_exists( 'migration_verison', $options ) ) :
+            if ( true === $echo ) :
+                var_dump( $options['last_migrated'] );
+            endif;
+
+            return $options['last_migrated'];
+        endif;
+
+        if ( true === $echo ) :
+            echo "No previous migration version has been set.";
+        endif;
+
+        return false;
+
+    }
+
+    public function update_last_migrated() {
+        $options = get_option( 'social_warfare_settings' );
+        $options['last_migrated'] = SWP_VERSION;
+
+        update_option( 'social_warfare_settings', $options );
+    }
+
+    public function check_last_migrated() {
+        if ( false === $this->get_last_migrated() ) :
+            $this->update_last_migrated();
+        endif;
     }
 }
