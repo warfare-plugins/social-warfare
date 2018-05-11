@@ -196,6 +196,7 @@ class SWP_Buttons_Panel {
 	 * content to which to append.
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
+	 * @since  3.0.5 | 11 MAY 2018 | Added returns to the method won't keep processing.
 	 * @param  none
 	 * @return none All values are stored in local properties.
 	 * @access public
@@ -220,6 +221,7 @@ class SWP_Buttons_Panel {
 		// If the location is set in the post options, use that.
 		if ( !empty( $preset_location ) && 'default' !== $preset_location ) {
 			$this->location = $preset_location;
+			return;
 		};
 		/**
 		 * Global Location Settings
@@ -232,12 +234,14 @@ class SWP_Buttons_Panel {
 		if( is_front_page() || is_home() ):
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
+			return;
         endif;
 		// If we are on a singular page
 		if ( is_singular() && !is_home() ) :
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
             if ( isset( $location ) ) :
                 $this->location = $location;
+				return;
             endif;
         endif;
         if ( is_archive() ) :
