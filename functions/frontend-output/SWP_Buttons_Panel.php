@@ -403,7 +403,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_float_location() {
-		if( is_home() ):
+		if( is_home() || is_front_page() ):
 			return 'none';
 		elseif( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
 			return $this->option('float_location');
@@ -428,7 +428,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_mobile_float_location() {
-		if( is_home() ):
+		if( is_home() || is_front_page() ):
 			return 'none';
 		elseif( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
 			return $this->option('float_mobile');
