@@ -669,6 +669,11 @@ class SWP_Buttons_Panel {
     }
 
     public function the_buttons( $content = null ) {
+        if ( empty( $this->content ) ) :
+            echo "No content";
+            return $this->do_print();
+        endif;
+
         if ( ! $this->should_print() ) :
             return $this->args['content'];
         endif;
