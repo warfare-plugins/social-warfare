@@ -129,7 +129,8 @@ function swp_store_the_settings() {
  }
 
  function social_warfare( $args = array() ) {
-    return SWP_Display::social_warfare( $args );
+    $buttons_panel = SWP_Display::social_warfare( $args );
+	echo $buttons_panel->the_buttons();
  }
 
 
