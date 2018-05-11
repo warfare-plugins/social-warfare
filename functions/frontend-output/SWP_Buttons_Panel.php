@@ -19,6 +19,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public $options = array();
+
+
 	/**
 	 * The Post ID
 	 *
@@ -26,6 +28,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public $post_id;
+
+
 	/**
 	 * The location of the buttons in relation to the content.
 	 *
@@ -33,6 +37,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public $location = 'above';
+
+
 	/**
 	 * Arguments
 	 *
@@ -44,6 +50,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public $args = [];
+
+
 	/**
 	 * The Content
 	 *
@@ -53,24 +61,32 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public $content = '';
-    /**
+
+
+	/**
      * The fully qualified HTML for the Buttons Panel.
      *
      * @var string $html;
      */
     public $html = '';
-    /**
+
+
+	/**
      * The array of active buttons for $this Social Panel.
      *
      * @var array $active_buttons;
      */
     public $active_buttons = [];
-    /**
+
+
+	/**
      * The sum of share counts across active networks.
      *
      * @var integer $total_shares;
      */
     public $total_shares = 0;
+
+
 	/**
 	 * The Construct Method
 	 *
@@ -369,6 +385,9 @@ class SWP_Buttons_Panel {
         $html = $container . $buttons . '</div>';
         $this->html = $html;
         if ( $echo ) :
+			if( true == _swp_is_debug('buttons_output')):
+				echo 'Echoing, not returning. In SWP_Buttons_Panel on line '.__LINE__;
+			endif;
             echo $html;
         endif;
         return $html;
@@ -674,7 +693,10 @@ class SWP_Buttons_Panel {
 
         $this->content = $content;
 
-        if ( isset( $this->args['echo']) && true === $this->args['echo'] || $this->content == false ) {
+        if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
+			if( true == _swp_is_debug('buttons_output')):
+				echo 'Echoing, not returning. In SWP_Buttons_Panel on line '.__LINE__;
+			endif;
             echo $this->content;
         }
 
