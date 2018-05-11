@@ -41,10 +41,11 @@ class SWP_Option_Icons extends SWP_Option {
 
             if ( count($user_icons) > 0 ):
     			foreach( $user_icons as $network_key) {
-                    if ( isset( $all_icons[$network_key]) ) :
+                    if ( array_key_exists( $network_key, $all_icons ) && isset( $all_icons[$network_key]) ) :
                         $network = $all_icons[$network_key];
 
                         $html .= $this->render_icon_HTML( $network );
+
                     endif;
                 }
             endif;
