@@ -39,6 +39,11 @@ function get_social_warfare_shares( $postID ) {
 	// Queue up the networks that are available
 	$networks = $options['order_of_icons'];
 
+    if ( !is_array( $networks ) ) :
+        write_log( $networks, "Variable: \$networks. In share-count-function.php" );
+        return $shares;
+    endif;
+
 	$icons_array = array(
 		'type' => 'buttons'
 	);
