@@ -45,7 +45,11 @@ class SWP_Database_Migration {
 		}
 
         if ( true === _swp_is_Debug('get_last_migrated') ) {
+            $this->get_last_migrated();
+        }
 
+        if ( true === _swp_is_Debug('update_last_migrated') ) {
+            $this->update_last_migrated();
         }
     }
 
@@ -431,11 +435,5 @@ class SWP_Database_Migration {
         $options['last_migrated'] = SWP_VERSION;
 
         update_option( 'social_warfare_settings', $options );
-    }
-
-    public function check_last_migrated() {
-        if ( false === $this->get_last_migrated() ) :
-            $this->update_last_migrated();
-        endif;
     }
 }
