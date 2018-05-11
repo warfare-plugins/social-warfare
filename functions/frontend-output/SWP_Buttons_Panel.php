@@ -447,6 +447,9 @@ class SWP_Buttons_Panel {
 	        $size = $this->option('float_size') * 100;
 	        $side = $this->option('float_location');
 	        $max_buttons = $this->option( 'float_button_count' );
+			if( false == $max_buttons || 0 = $max_buttons ):
+				$max_buttons = 5;
+			endif;
 	        // Acquire the social stats from the networks
 	        if ( isset( $array['url'] ) ) :
 	            $buttonsArray['url'] = $array['url'];
@@ -475,6 +478,7 @@ class SWP_Buttons_Panel {
 	        endif;
 	        //* END old boilerplate.
 	        $share_counts = $this->render_total_shares_HTML();
+
 	        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
 	        $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->option('float_button_shape') .
 	            ' swp_default_' . $this->option('float_default_colors') .
@@ -670,7 +674,6 @@ class SWP_Buttons_Panel {
 
     public function the_buttons( $content = null ) {
         if ( empty( $this->content ) ) :
-            echo "No content";
             return $this->do_print();
         endif;
 
