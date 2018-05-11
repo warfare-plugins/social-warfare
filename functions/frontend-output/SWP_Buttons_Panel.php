@@ -244,7 +244,7 @@ class SWP_Buttons_Panel {
 				return;
             endif;
         endif;
-        if ( is_archive() ) :
+        if ( is_archive() || is_home() ) :
             $this->location = $this->options['location_archive_categories'];
         endif;
 	}
