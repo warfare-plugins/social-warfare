@@ -10,6 +10,23 @@
 
 
 /**
+ * Writes data to the wordpress log.
+ *
+ * @var mixed $log The data you want to print.
+ * @var string optional $context Context about the data you are writing.
+ */
+ if ( ! function_exists('write_log')) {
+    function write_log ( $log, $context )  {
+       if ( is_array( $log ) || is_object( $log ) ) {
+          error_log( print_r( $log, true ) );
+       } else {
+          error_log( $log );
+       }
+    }
+ }
+
+
+/**
  * A global function to ensure that we always have a value for
  * every option. Grab and use the default value if it hasn't been
  * set.
