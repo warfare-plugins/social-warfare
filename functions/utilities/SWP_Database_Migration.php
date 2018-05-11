@@ -432,7 +432,7 @@ class SWP_Database_Migration {
 
     public function update_last_migrated() {
         $options = get_option( 'social_warfare_settings' );
-        $options['last_migrated'] = SWP_VERSION;
+        $options['last_migrated'] = '3.0.5';
 
         update_option( 'social_warfare_settings', $options );
     }
