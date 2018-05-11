@@ -313,7 +313,7 @@ class SWP_Buttons_Panel {
         $user_settings = $this->location !== 'none';
 
         $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
-        
+
         $undesired_conditions = !is_admin() && !is_feed() && !is_search() && !is_attachment();
         return $user_settings && $desired_conditions && $undesired_conditions;
     }
@@ -660,9 +660,13 @@ class SWP_Buttons_Panel {
         return $this->content;
     }
 
-    public function the_buttons() {
+    public function the_buttons( $content = null ) {
         if ( ! $this->should_print() ) :
             return $this->args['content'];
+        endif;
+
+        if ( null !== $content ) :
+            $this->args['content'] = $content;
         endif;
 
         if ( $this->has_plugin_conflict() ) {
