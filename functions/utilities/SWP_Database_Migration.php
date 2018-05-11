@@ -132,7 +132,6 @@ class SWP_Database_Migration {
     */
     public function update_post_meta() {
         global $wpdb;
-        echo "Updating post meta.";
 
         //* Notice there is no prefix on any of the indices.
         //* Old code has prefixed these with either "nc_" or "swp_".
