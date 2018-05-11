@@ -665,7 +665,7 @@ class SWP_Buttons_Panel {
             return $this->args['content'];
         endif;
 
-        if ( null !== $content ) :
+        if ( null !== $content && gettype( $content ) === 'string' ) :
             $this->args['content'] = $content;
         endif;
 
