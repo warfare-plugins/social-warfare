@@ -204,6 +204,11 @@ class SWP_Buttons_Panel {
 	public function establish_location() {
         //* Establish a default.
         $this->location = 'none';
+
+		if(empty($this->content)):
+			$this->location = 'above';
+			return;
+		endif;
 		/**
 		 * Location from the Post Options
 		 *
@@ -224,7 +229,7 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		// If we are on the home page
-		if( is_front_page() ):
+		if( is_front_page() || is_home() ):
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
         endif;
