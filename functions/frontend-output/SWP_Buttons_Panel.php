@@ -231,13 +231,13 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		// If we are on the home page
-		if( is_front_page() || is_home() ):
+		if( is_front_page() ):
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
 			return;
         endif;
 		// If we are on a singular page
-		if ( is_singular() && !is_home() ) :
+		if ( is_singular() && !is_front_page() ) :
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
             if ( isset( $location ) ) :
                 $this->location = $location;
