@@ -79,7 +79,7 @@ class SWP_Option_Icons extends SWP_Option {
         if ( array_key_exists( 0, $all_icons) ) :
             //* If $all_icons is numerically indexed, just diff the array.
             $inactive_icons = array_diff( $all_icons, $user_icons );
-        elseif ( gettype( array_pop( $all_icons ) === 'object' )  :
+        elseif ( gettype( array_pop( $all_icons ) === 'object' ) )  :
             //* Get the keys first, then diff the array.
             $inactive_icons = array_diff( array_keys( $all_icons ), $user_icons );
         else :
