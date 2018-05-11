@@ -46,6 +46,9 @@ class SWP_Option_Icons extends SWP_Option {
 
                         $html .= $this->render_icon_HTML( $network );
 
+                    else :
+                        write_log( $network_key, "We are looking for this index in the following icons array.");
+                        write_log( $all_icons );
                     endif;
                 }
             endif;
