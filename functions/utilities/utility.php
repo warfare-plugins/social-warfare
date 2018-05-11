@@ -16,7 +16,8 @@
  * @var string optional $context Context about the data you are writing.
  */
  if ( ! function_exists('write_log')) {
-    function write_log ( $log, $context )  {
+    function write_log ( $log, $context = '' )  {
+       error_log( "Context: " . $context );
        if ( is_array( $log ) || is_object( $log ) ) {
           error_log( print_r( $log, true ) );
        } else {
