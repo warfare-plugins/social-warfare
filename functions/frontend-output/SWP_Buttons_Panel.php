@@ -441,7 +441,7 @@ class SWP_Buttons_Panel {
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
 
-		if( is_singular() && $this->option('floating_panel') ):
+		if( is_singular() && 'none' !== $this->get_float_location() ):
 
 	        $class = "";
 	        $size = $this->option('float_size') * 100;
@@ -456,7 +456,7 @@ class SWP_Buttons_Panel {
 	        else :
 	            $buttonsArray['url'] = get_permalink( $this->post_id );
 	        endif;
-	        if ( $this->option( 'floating_panel' ) && is_singular() ) :
+	        if ( 'none' != $this->get_float_location() ) :
 	            $float_location =  $this->option('float_location');
 	            $class = "swp_float_" . $this->option('float_location');
 	        else :
