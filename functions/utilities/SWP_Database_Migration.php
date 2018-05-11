@@ -47,8 +47,6 @@ class SWP_Database_Migration {
         if ( true === _swp_is_Debug('get_last_migrated') ) {
 
         }
-
-        $this->check_last_migrated();
     }
 
     /**
