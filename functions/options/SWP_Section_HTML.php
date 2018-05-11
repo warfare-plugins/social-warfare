@@ -480,7 +480,7 @@ class SWP_Section_HTML extends SWP_Option {
                 ->render_HTML_element();
 
             $yummly_tags = new SWP_Option_Text( 'Yummly Tags', 'yummly_tags' );
-            $tags_html = $yummly_categories->set_priority( 10 )
+            $tags_html = $yummly_tags->set_priority( 10 )
                 ->set_default( '' )
                 ->render_HTML_element();
 
