@@ -52,8 +52,11 @@ class SWP_Display {
         endif;
 
         if (false == is_singular()) {
+            global $wp_filter;
     		// Add the buttons to the excerpts
-    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper'), 20 );
+
+    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper'), 2 );
+            die(var_dump($wp_filter['the_excerpt']));
         }
     }
 
@@ -75,7 +78,7 @@ class SWP_Display {
     	// Pass the content to the buttons constructor to place them inside.
 		$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
 
-		return $buttons_panel->the_buttons();
+		return $buttons_panel->the_buttons( $content );
     }
 
     function floating_buttons_side() {
