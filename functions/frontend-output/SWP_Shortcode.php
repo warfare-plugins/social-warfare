@@ -73,14 +73,8 @@ class SWP_Shortcode {
 			$args = array();
 		endif;
 
-		$defaults = array(
-			'location'		=> 'after',
-			'echo'		=> false,
-		);
-
-		array_merge( $args, $defaults );
-
-		return SWP_Display::social_warfare( $args );
+		$buttons_panel = new SWP_Buttons_Panel( $args );
+		return $buttons_panel->render_HTML();
 	}
 
 
