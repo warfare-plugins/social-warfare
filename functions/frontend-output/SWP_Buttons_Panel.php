@@ -447,7 +447,7 @@ class SWP_Buttons_Panel {
 	        $size = $this->option('float_size') * 100;
 	        $side = $this->option('float_location');
 	        $max_buttons = $this->option( 'float_button_count' );
-			if( false == $max_buttons || 0 = $max_buttons ):
+			if( false == $max_buttons || 0 == $max_buttons ):
 				$max_buttons = 5;
 			endif;
 	        // Acquire the social stats from the networks
