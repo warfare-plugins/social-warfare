@@ -138,9 +138,14 @@ class SWP_Twitter extends SWP_Social_Network {
 		$title = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
 
 		// Check for a custom tweet from the post options.
-		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_customTweet' , true );
+		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
-		$custom_tweet = $custom_tweet !== '' ? urlencode( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
+        if ( gettype( $custom_tweet) === 'string' && !empty( $custom_tweet ) ) :
+            $custom_tweet = urlencode( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) );
+        else :
+            $custom_tweet = urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
+        endif;
+
 		$twitter_link = $this->get_shareable_permalink( $post_data );
 
 		// If the custom tweet contains a link, block Twitter for auto adding another one.
