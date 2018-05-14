@@ -28,7 +28,7 @@ function get_social_warfare_shares( $postID ) {
 	 * Check if the cache is fresh or expired
 	 * @var boolean
 	 */
-	$freshCache = swp_is_cache_fresh( $postID );
+	$fresh_cache = swp_is_cache_fresh( $postID );
 
 	/**
 	 * Setup the networks array that we'll loop through
@@ -55,7 +55,7 @@ function get_social_warfare_shares( $postID ) {
 		if( isset( $swp_social_networks[$network] ) ):
 
 			// Check if we can used the cached share numbers
-			if ( $freshCache == true ) :
+			if ( $fresh_cache == true ) :
 				$shares[$network] = get_post_meta( $postID,'_' . $network . '_shares',true );
 
 			// If cache is expired, fetch new and update the cache
@@ -71,7 +71,7 @@ function get_social_warfare_shares( $postID ) {
 	endforeach;
 
 	// Recover Shares From Previously Used URL Patterns
-	if ( true == $options['recover_shares'] && false == $freshCache ) :
+	if ( true == $options['recover_shares'] && false == $fresh_cache ) :
 
 		$alternateURL = SWP_Permalink::get_alt_permalink( $postID );
 		$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
@@ -100,7 +100,7 @@ function get_social_warfare_shares( $postID ) {
 		endforeach;
 	endif;
 
-	if ( $freshCache == true ) :
+	if ( $fresh_cache == true ) :
 		if ( get_post_meta( $postID,'_total_shares',true ) ) :
 			$shares['total_shares'] = get_post_meta( $postID, '_total_shares', true );
 
@@ -169,7 +169,7 @@ function get_social_warfare_shares( $postID ) {
 	/**
 	* Update the Cache and Return the Share Counts
 	*/
-	if ( $freshCache != true ) :
+	if ( $fresh_cache != true ) :
 
 		// Clean out the previously used custom meta fields
 		delete_post_meta( $postID,'_total_shares' );
