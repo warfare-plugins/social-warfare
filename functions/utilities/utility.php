@@ -142,9 +142,9 @@ function swp_store_the_settings() {
  *                               the buttons panel class.
  * @param  array $args An array of arguments to manipulate the output of the buttons.
  * @return none        The html of the buttons will be output to the screen.
- * 
+ *
  */
- function social_warfare( $args ) {
+ function social_warfare( $args = array() ) {
 
 	 if( !is_array($args) ):
 		 $args = array();
