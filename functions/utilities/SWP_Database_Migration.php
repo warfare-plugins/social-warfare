@@ -4,9 +4,22 @@
  *
  * This willl either migrate previous options to social_warfare_settings,
  * or create the new default settings.
+ *
+ * @since  3.0.0 | 08 MAY 2018 | Created
+ * @since  3.0.6 | 14 MAY 2018 | Added local $last_migrated property.
+ *
  */
-
 class SWP_Database_Migration {
+
+
+	/**
+	 * This property represents the version during which we last made changes
+	 * and therefore want the database migrator to have run up to this version.
+	 *
+	 * @var string
+	 */
+	public $last_migrated = '3.0.5';
+
     /**
      * Checks to see if we are on the most up-to-date database schema.
      *
@@ -92,7 +105,7 @@ class SWP_Database_Migration {
          //* Fetch posts with 2.3.5 metadata.
         $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
-		if( '3.0.5' !== $this->get_last_migrated() ) {
+		if( $this->last_migrated !== $this->get_last_migrated() ) {
 			return false;
 		}
 
@@ -438,7 +451,7 @@ class SWP_Database_Migration {
 
     public function update_last_migrated() {
         $options = get_option( 'social_warfare_settings' );
-        $options['last_migrated'] = '3.0.5';
+        $options['last_migrated'] = $this->last_migrated;
 
         update_option( 'social_warfare_settings', $options );
     }
