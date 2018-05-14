@@ -475,7 +475,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
                 echo $args['before_title'];
             endif;
 
-			echo '<h4 class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</h4>';
+			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</span>';
 
             // Output the "After Title" content
             if( isset( $args['after_title'] ) ) :
