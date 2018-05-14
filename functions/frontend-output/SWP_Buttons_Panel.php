@@ -264,6 +264,8 @@ class SWP_Buttons_Panel {
             $this->location = $this->options['location_archive_categories'];
         endif;
 	}
+
+
     /**
      * Takes a display name and returns the snake_cased key of that name.
      *
@@ -278,6 +280,8 @@ class SWP_Buttons_Panel {
     public function display_name_to_key( $string ) {
         return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
     }
+
+
     protected function establish_float_location() {
         // Set the options for the horizontal floating bar
         // $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_float_location' , true );
@@ -292,9 +296,13 @@ class SWP_Buttons_Panel {
         //     $floatOption = 'floatNone';
         // endif;
     }
+
+
     protected function establish_permalink() {
         $this->permalink = get_permalink( $this->post_data['ID'] );
     }
+
+
     //* When we have known incompatability with other themes/plugins,
     //* we can put those checks in here.
     /**
@@ -418,6 +426,7 @@ class SWP_Buttons_Panel {
 
 	}
 
+
 	/**
 	 * A Method to determine the location of the floating buttons
 	 *
@@ -466,6 +475,7 @@ class SWP_Buttons_Panel {
 			return 'none';
 		endif;
 	}
+
 
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
@@ -536,6 +546,8 @@ class SWP_Buttons_Panel {
 	        return $html;
 		endif;
     }
+
+
 	/**
 	 * A method to establish the active buttons for this panel.
 	 *
@@ -587,6 +599,8 @@ class SWP_Buttons_Panel {
         $this->networks = $network_objects;
         return $this;
     }
+
+
 	/**
 	 * A method to order the networks dynamically.
 	 *
@@ -609,6 +623,8 @@ class SWP_Buttons_Panel {
 		endif;
 		return $order;
     }
+
+
 	/**
 	 * A method to shuffle the array of network objects.
 	 *
@@ -628,6 +644,8 @@ class SWP_Buttons_Panel {
         }
 		return $network_objects;
 	}
+
+
     public function render_buttons_HTML( $max_count = null) {
         $html = '';
         $count = 0;
@@ -665,6 +683,8 @@ class SWP_Buttons_Panel {
         $html .= '</div>';
         return $html;
     }
+
+
     //* TODO: This has not been refactored.
     protected function handle_timestamp() {
         if ( swp_is_cache_fresh( $this->post_data['ID'] ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
@@ -672,6 +692,8 @@ class SWP_Buttons_Panel {
 			update_post_meta( $this->post_data['ID'],'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
 		endif;
     }
+
+
     /**
      * Handles whether to echo the HTML or return it as a string.
      *
@@ -705,7 +727,7 @@ class SWP_Buttons_Panel {
     }
 
     /**
-     * Runs checks before ordering a set of buttons. 
+     * Runs checks before ordering a set of buttons.
      *
      * @param  string $content The WordPress content, if passed in.
      * @return function @see $this->do_print
