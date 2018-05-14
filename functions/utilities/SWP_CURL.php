@@ -85,6 +85,12 @@ class SWP_CURL {
 		  // all done
 		  curl_multi_close( $mh );
 
+          if( true == _swp_is_debug('show_share_data') ) :
+              echo "<pre>";
+              var_dump($result);
+              echo "</pre>";
+          endif;
+          
 		  return $result;
 	}
 
