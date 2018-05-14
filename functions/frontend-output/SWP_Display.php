@@ -24,17 +24,17 @@ class SWP_Display {
         global $swp_user_options;
 
         if ( !is_array( $swp_already_print ) ) {
-            $swp_already_print = array();
+            $swp_already_print = [];
         }
 
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
-        add_action('template_redirect', array($this, 'activate_buttons') );
+        add_action('template_redirect', [$this, 'activate_buttons'] );
 
         // Add the side floating buttons to the footer if they are activated
-        if ( in_array( swp_get_option('float_location') , array( 'left', 'right' ), true ) ) {
+        if ( in_array( swp_get_option('float_location') , ['left', 'right'], true ) ) {
             add_action( 'wp_footer', [$this, 'floating_buttons_side'] );
         }
     }
@@ -61,7 +61,7 @@ class SWP_Display {
             global $wp_filter;
     		// Add the buttons to the excerpts
 
-    		add_filter( 'the_excerpt', $this, 'social_warfare_wrapper') );
+    		add_filter( 'the_excerpt', [$this, 'social_warfare_wrapper'] );
         }
     }
 
@@ -113,7 +113,7 @@ class SWP_Display {
      * @return string $content The modified content
      *
      */
-    public static function social_warfare( $args = array() ) {
+    public static function social_warfare( $args = [] ) {
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
 
     	echo $Buttons_Panel->render_HTML();
