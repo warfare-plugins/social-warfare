@@ -18,6 +18,7 @@ function get_social_warfare_shares( $postID ) {
 		return false;
 	endif;
 
+
 	// Set the initial options
 	$options = $swp_user_options;
 	$url     = get_permalink( $postID );
@@ -39,8 +40,9 @@ function get_social_warfare_shares( $postID ) {
 	// Queue up the networks that are available
 	$networks = $options['order_of_icons'];
 
-    if ( !is_array( $networks ) ) :
-        write_log( $networks, "Variable: \$networks. In share-count-function.php" );
+
+
+    if ( !is_array( $networks ) || count ( $networks ) === 0 ) :
         return $shares;
     endif;
 
