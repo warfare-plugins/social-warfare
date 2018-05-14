@@ -59,6 +59,7 @@ function swp_get_registration_key( $domain, $context = 'api' ) {
  * Once per week, we'll ping our server to ask if the license key is still valid.
  *
  * @since  2.3.3 - Created the function to work for all addons, not just the pro addon
+ * @since  3.0.6 | 14 MAY 2018 | Added check for array key to prevent undefined index notice.
  * @param string The unique key for the addon
  * @return bool True if the plugin is registered, false otherwise.
  */
@@ -91,6 +92,11 @@ function is_swp_addon_registered($key) {
         $store_url = 'https://warfareplugins.com';
         $registration_array = array();
         $registration_array = apply_filters( 'swp_registrations' , $registration_array );
+
+        if ( !array_key_exists( $key, $registration_array ) ) :
+            return $is_registered;
+        endif;
+
         $item_id = $registration_array[$key]['product_id'];
 
 
