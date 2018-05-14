@@ -129,9 +129,12 @@ class SWP_Database_Migration {
     * Replaces 2.3.5 camelCased keys with 3.0.0 standardized snake_cased keys.
     *
     * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @since 3.0.6 | 14 MAY 2018 | Added time limit to prevent very large datasets from timing out.
     */
     public function update_post_meta() {
         global $wpdb;
+
+        set_time_limit(300);
 
         //* Notice there is no prefix on any of the indices.
         //* Old code has prefixed these with either "nc_" or "swp_".
