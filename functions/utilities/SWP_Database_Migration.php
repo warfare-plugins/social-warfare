@@ -16,8 +16,6 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-        $this->update_hidden_post_meta();
-
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -103,6 +101,8 @@ class SWP_Database_Migration {
 
     public function update_hidden_post_meta() {
         global $wpdb;
+
+        set_time_limit(300);
 
         $hidden_map = [
             '_googlePlus_shares'    => '_google_plus_shares',
