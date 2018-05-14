@@ -302,7 +302,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			if ( transition == 'slide' ) {
 				if ( visible == true ) {
-					ncSideFloater.css(direction, "-100px");
+					ncSideFloater.css(direction, "-150px");
 				} else {
 					ncSideFloater.css(direction, "5px");
 				}
@@ -311,7 +311,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				if ( visible == true ) {
 					ncSideFloater.fadeOut( 200 );
 				} else {
-					ncSideFloater.fadeIn( 200 ).css("display", "flex")
+					ncSideFloater.fadeIn( 200 ).css("display", "block");
 				}
 			}
 		}
@@ -368,7 +368,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				floatingBarReveal();
 			}));
 			$( window ).trigger( 'scroll' );
-			$( '.swp_social_panel' ).css( {'opacity':1} );
+			// $( '.swp_social_panel' ).css( {'opacity':1} );
 		}
 	}
 
