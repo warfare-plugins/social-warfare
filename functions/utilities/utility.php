@@ -128,7 +128,28 @@ function swp_store_the_settings() {
     return social_warfare( $array );
  }
 
- function social_warfare( $args = array() ) {
+
+/**
+ * The primary social_warfare function
+ *
+ * This is the function that we encourage users to use in their themes and whatnot
+ * if they want to be able to directly output the buttons in their theme. It accepts
+ * an array of arguments that correspond to the arguments that the SWP_Buttons_Panel
+ * accepts.
+ *
+ * @since  1.0.0 | Unknown | Created
+ * @since  3.0.0 | 08 MAY 2018 | Converted to a passthrough function that calls
+ *                               the buttons panel class.
+ * @param  array $args An array of arguments to manipulate the output of the buttons.
+ * @return none        The html of the buttons will be output to the screen.
+ * 
+ */
+ function social_warfare( $args ) {
+
+	 if( !is_array($args) ):
+		 $args = array();
+	 endif;
+
     $buttons_panel = new SWP_Buttons_Panel( $args );
 	echo $buttons_panel->render_HTML();
  }
