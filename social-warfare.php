@@ -22,6 +22,13 @@ define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
 
+/**
+ * Legacy version of the update cheker.
+ *
+ * @since  3.0.6 | 15 MAY 2018 | Added the requirement statement for legacy support.
+ * @TODO   THis should be removed after 31 DEC 2018.
+ *
+ */
 require_once SWP_PLUGIN_DIR . '/functions/legacy/update-checker.php';
 
 add_filter('the_excerpt', 'do_shortcode', 1);
