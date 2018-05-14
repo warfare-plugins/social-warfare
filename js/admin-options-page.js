@@ -6,13 +6,15 @@
         /*********************************************************
     		Temporary patch for the custom color selects.
     	*********************************************************/
-
         /*
-        *  Temp patch on the Visual Options color s.
+        *  Temp patch on the Visual Options colors.
         *  This makes the custom colors appear/disappear as necessary.
         */
         var panelSelector = "[name=default_colors],[name=hover_colors], [name=single_colors]";
         var floatSelector = "[name=float_default_colors], [name=float_hover_colors], [name=float_single_colors]";
+
+        //* Hide the custom color inputs by default.
+        $("[name=custom_color],[name=custom_color_outlines],[name=float_custom_color],[name=float_custom_color_outlines]").parent().parent().hide();
 
         //* Show custom fields if they have already been selected.
         $(panelSelector).each(function(index, select) {
@@ -21,19 +23,29 @@
             var customOutlines = $("[name=custom_color_outlines]").parent().parent();
 
             if ( value.indexOf("custom") !== -1) {
-                value.indexOf('outlines') > 0 ? customOutlines.show() : customColor.show();
+                //* A custom value is set for this input.
+                if (value.indexOf('outlines') > 0 ) {
+                    customOutlines.show();
+
+                } else {
+                    customColor.show();
+                }
             }
         });
 
+
+        //* Same, for floating button options.
         $(floatSelector).each(function(index, select) {
             var value = $(select).val();
             var customColor = $("[name=float_custom_color]").parent().parent();
             var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
 
             if ( value.indexOf("custom") !== -1) {
+                //* A custom value is set for this input.
                 value.indexOf('outlines') > 0 ? customOutlines.show() : customColor.show();
             }
         });
+
 
         //* Change handlers for style.
         $(panelSelector).on("change", function(e) {
@@ -44,42 +56,43 @@
             handleCustomColors(e, panelSelector, customColor, customOutlines, value);
         });
 
+
+        //* Same, for floating button options.
         $(floatSelector).on("change", function(e) {
             var value = e.target.value;
             var customColor = $("[name=float_custom_color]").parent().parent();
             var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
-            handleCustomColors(e, floatSelector, customColor, customOutlines, value);
 
+            customColor.hide();
+            customOutlines.hide();
+
+            handleCustomColors(e, floatSelector, customColor, customOutlines, value);
         });
     }
 
     function handleCustomColors(event, selector, customColor, customOutlines) {
         var visible = false;
         var value = event.target.value;
+        var visibility = {
+            customColor: false,
+            customOutlines: false
+        };
 
-        //* Check to see if this or a sibling input has custom_color selected.
         $(selector).each(function(index, select) {
+            var val = $(select).val();
             //* Check to see if this or a sibling input has custom_color selected.
-            if ($(select).val().indexOf("custom") !== -1) {
-                visible = true;
+            if (val.indexOf("custom") !== -1) {
+                if (val.indexOf("outlines") > 0) {
+                    visibility.customOutlines = true;
+                } else {
+                    visibility.customColor = true;
+                }
             }
         });
 
-        if (!visible) {
-            customColor.hide();
-            customOutlines.hide();
-            return;
-        }
+        visibility.customColor ? customColor.slideDown() : customColor.slideUp();
+        visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
 
-        if ( value === "custom_color" ) {
-            customColor.show();
-        }
-
-        if ( value === 'custom_color_outlines' ) {
-            customOutlines.show();
-        }
-
-        return;
     }
 
 	/*********************************************************
@@ -324,9 +337,7 @@
             var value = $( 'select[name="' + selector + '"]' ).val();
 
             if (value.indexOf("custom") === 0) {
-                console.log("Selected a custom color.")
                 var prefix = selector.slice(0, selector.indexOf("_"));
-                console.log("returning: ", prefix);
                 return prefix + "_full_color";
             }
 
@@ -634,7 +645,7 @@
 				toggleRegistration( '0' , key );
 				unregistered = true;
 			}
-            
+
             //* Passing in true forces reload from the server rather than cache.
             window.location.reload(true);
 			clearLoadingScreen();
