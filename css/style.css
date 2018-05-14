@@ -1118,7 +1118,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 100%;
 }
 
-.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .swp_hide .iconFiller {
+.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .swp_count.swp_hide .iconFiller {
 	display: block;
 	float: none;
 	margin: 0 auto;
