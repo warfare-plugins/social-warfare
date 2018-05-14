@@ -350,7 +350,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.0 | 25 APR 2018 | Created
 	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
 	 *                               location methods instead of the raw options value.
-	 * @since  3.0.6 | 15 MAY 2018 | Switch from $option array access to instead use $this->option method.
+	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->option() method to prevent undefined index error.
 	 * @param  boolean $echo Echo's the content or returns it if false.
 	 * @return string        The string of HTML.
 	 *
