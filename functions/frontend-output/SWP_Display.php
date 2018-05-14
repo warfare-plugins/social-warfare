@@ -22,10 +22,10 @@ class SWP_Display {
          */
         global $swp_already_print;
         global $swp_user_options;
+
         if ( !is_array( $swp_already_print ) ) {
             $swp_already_print = array();
         }
-
 
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
@@ -42,6 +42,7 @@ class SWP_Display {
      * A function to add the buttons
      *
      * @since 2.1.4
+     * @since 3.0.6 | 14 MAY | Added second filter for the_content.
      * @param none
      * @return none
      *
@@ -52,15 +53,28 @@ class SWP_Display {
 
     	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
         if( true === is_singular() || true === $swp_user_options['full_content'] ):
-            add_filter( 'the_content', array($this, 'social_warfare_wrapper'), 20 );
+            add_filter( 'the_content', [$this, 'social_warfare_wrapper'], 20 );
+            add_filter( 'the_content', [$this, 'add_content_locator'], 20);
         endif;
 
         if (false == is_singular()) {
             global $wp_filter;
     		// Add the buttons to the excerpts
 
-    		add_filter( 'the_excerpt', array($this, 'social_warfare_wrapper') );
+    		add_filter( 'the_excerpt', $this, 'social_warfare_wrapper') );
         }
+    }
+
+    /**
+     * Inserts the empty div for locating Pin images (with javascript).
+     *
+     * @param string $content The WordPress content passed via filter.
+     * @since 3.0.6 | 14 MAY | Created the method.
+     *
+     */
+    public function add_content_locator( $content ) {
+        $content .= '<div class="swp-content-locator"></div>';
+        return $content;
     }
 
 
@@ -90,8 +104,6 @@ class SWP_Display {
         return;
 
     }
-
-
 
     /**
      * The main social_warfare function used to create the buttons.
