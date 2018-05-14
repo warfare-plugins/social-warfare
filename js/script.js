@@ -222,7 +222,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				var el = $( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' );
                 el.appendTo( 'body' );
-				// var position = firstSocialPanel.data( 'float' );
+				var position = firstSocialPanel.data( 'float' );
 				firstSocialPanel.clone().appendTo( el );
 
 				$( '.nc_wrapper' ).hide().addClass( position );
