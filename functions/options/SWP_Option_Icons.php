@@ -82,7 +82,11 @@ class SWP_Option_Icons extends SWP_Option {
 
         elseif ( gettype( array_pop( $all_icons ) === 'object' ) )  :
             //* Get the keys first, then diff the array.
-            $inactive_icons = array_diff( $all_icons, $user_icons );
+            $keys = [];
+            foreach( $all_icons as $object) {
+                $keys[] = $object->key;
+            }
+            $inactive_icons = array_diff( $keys, $user_icons );
 
         else :
             // write_log( $all_icons, 'Showing $all_icons from SWP_Option_Icons->render_inactive_icons().');
