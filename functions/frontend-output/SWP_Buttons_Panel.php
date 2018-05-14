@@ -363,21 +363,21 @@ class SWP_Buttons_Panel {
         $total_shares_html = $this->render_total_shares_html();
         $buttons = $this->render_buttons_html();
 		// Create the HTML Buttons panel wrapper
-        $container = '<div class="swp_social_panel swp_' . $this->options['button_shape'] .
-            ' swp_default_' . $this->options['default_colors'] .
-            ' swp_individual_' . $this->options['single_colors'] .
-            ' swp_other_' . $this->options['hover_colors'] .
-            ' scale-' . $this->options['button_size'] * 100 .
-            ' scale-' . $this->options['button_alignment'] .
-            '" data-position="' . $this->options['location_post'] .
+        $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
+            ' swp_default_' . $this->option('default_colors') .
+            ' swp_individual_' . $this->option('single_colors') .
+            ' swp_other_' . $this->option('hover_colors') .
+            ' scale-' . $this->option('button_size') * 100 .
+            ' scale-' . $this->option('button_alignment') .
+            '" data-position="' . $this->option('location_post') .
             '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" data-count="' . $this->total_shares .
-            '" data-floatcolor="' . $this->options['float_background_color'] . '
+            '" data-floatcolor="' . $this->option('float_background_color') . '
             ">';
             //* This should be inserted via addon, not here.
-            //'" data-emphasize="'.$this->options['emphasize_icons'].'
-        if ($this->options['totals_alignment'] === 'totals_left') :
+            //'" data-emphasize="'.$this->option('emphasize_icons').'
+        if ($this->option('totals_alignment') === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
         else:
             $buttons .= $total_shares_html;
