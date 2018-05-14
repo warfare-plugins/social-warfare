@@ -676,12 +676,12 @@ class SWP_Buttons_Panel {
      * Handles whether to echo the HTML or return it as a string.
      *
      * @return mixed null if set to echo, else a string of HTML.
+     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
      *
      */
     public function do_print() {
 
         $this->render_HTML();
-        $content = $this->content . '<p class="swp-content-locator"></p>';
 
         //* Add the Panel markup based on the location.
         if ( $this->location === 'both' ) :
@@ -704,6 +704,14 @@ class SWP_Buttons_Panel {
         return $this->content;
     }
 
+    /**
+     * Runs checks before ordering a set of buttons. 
+     *
+     * @param  string $content The WordPress content, if passed in.
+     * @return function @see $this->do_print
+     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+     *
+     */
     public function the_buttons( $content = null ) {
         if ( empty( $this->content ) ) :
             return $this->do_print();
@@ -722,10 +730,6 @@ class SWP_Buttons_Panel {
         }
 
 		$this->handle_timestamp();
-
-        if ( strpos( $this->content, 'swp-content-locator' ) === false ) {
-            $this->content .= '<p class="swp-content-locator"></p>';
-        }
 
         return $this->do_print();
     }
