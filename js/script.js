@@ -311,7 +311,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				if ( visible == true ) {
 					ncSideFloater.fadeOut( 200 );
 				} else {
-					ncSideFloater.fadeIn( 200 ).css("display", "block");
+					ncSideFloater.fadeIn( 200 ).css("display", "flex");
 				}
 			}
 		}
@@ -391,6 +391,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			var $image = $( this );
 
 			if ( $image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth ) {
+                console.log("Early exit because not big enough", this);
 				return;
 			}
 
@@ -408,10 +409,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			// Bail if we don't have any media to pin.
 			if ( false === pinMedia ) {
+                console.log("Exit because no pinMedia");
 				return;
 			}
 
 			if ( $image.hasClass('no_pin')) {
+                console.log("No_pin exit");
 				return;
 			}
 
@@ -434,6 +437,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$image.after( '<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>' );
 
 			$image.parent( '.sw-pinit' ).addClass( imageClasses ).attr( 'style', imageStyle );
+
+            console.log("Before the click handler", this);
 
 			$( '.sw-pinit .sw-pinit-button' ).on( 'click', function() {
 				window.open( $( this ).attr( 'href' ), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' );
