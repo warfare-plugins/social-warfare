@@ -92,7 +92,7 @@ class SWP_Database_Migration {
          //* Fetch posts with 2.3.5 metadata.
         $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
-		if( '2.3.5' !== $this->get_last_migrated() ) {
+		if( '3.0.5' !== $this->get_last_migrated() ) {
 			return false;
 		}
 
