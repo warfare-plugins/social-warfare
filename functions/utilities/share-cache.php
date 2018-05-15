@@ -122,6 +122,10 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		$fresh_cache = false;
 	}
 
+    if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+        echo "The cache is fresh: " . (int) $fresh_cache;
+    }
+
 	return $fresh_cache;
 }
 
@@ -357,7 +361,7 @@ function swp_output_cache_trigger( $info ) {
 		// Fetch the alternate URL if share recovery is turned on
 		if( $info['swp_user_options']['recover_shares'] == true ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
-			$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
+			$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
 		} else {
 			$alternateURL = false;
 		}
