@@ -93,7 +93,7 @@ class SWP_Buttons_Panel {
 	 * @param optional array $args The arguments passed in via shortcode.
 	 *
 	 */
-    public function __construct( $args = array() ) {
+    public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
 		$this->args = $args;
@@ -107,6 +107,7 @@ class SWP_Buttons_Panel {
             'post_status'  => $post->post_status,
             'post_content' => $post->post_content
         ];
+        $this->is_shortcode = $shortcode;
         $this->localize_options( $args );
 	    $this->establish_post_id();
 		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
