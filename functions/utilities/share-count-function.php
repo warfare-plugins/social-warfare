@@ -59,8 +59,8 @@ function get_social_warfare_shares( $postID ) {
 
 			// If cache is expired, fetch new and update the cache
 			else :
-					$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
-					$api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+				$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
+				$api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
 			endif;
 
 		endif;
