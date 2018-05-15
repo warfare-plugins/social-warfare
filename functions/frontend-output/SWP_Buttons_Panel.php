@@ -682,8 +682,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function render_total_shares_html() {
-        $buttons = $this->args['buttons'];
-        $buttons = is_null( $buttons ) ? [] : $buttons;
+        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
         
         if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares')  || $this->is_shortcode && !in_array( 'total', $buttons ) ) {
             return '';
