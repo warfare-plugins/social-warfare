@@ -73,7 +73,7 @@ class SWP_Shortcode {
 			$args = array();
 		endif;
 
-		$buttons_panel = new SWP_Buttons_Panel( $args );
+		$buttons_panel = new SWP_Buttons_Panel( $args, true );
 		return $buttons_panel->render_HTML();
 	}
 
