@@ -114,6 +114,12 @@ class SWP_Buttons_Panel {
 		$this->establish_float_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
+
+        if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
+                echo "<pre>";
+                var_dump($this);
+                echo "</pre>";
+        endif;
     }
 	/**
 	 * Localize the global options
