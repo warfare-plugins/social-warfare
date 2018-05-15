@@ -1031,8 +1031,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	height: 67.5px;
 	position: relative;
 }
-.swp_social_panelSide.swp_circles .nc_tweetContainer,
-.swp_social_panelSide.swp_circles .nc_tweetContainer a {
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares),
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) a {
 	border-radius:50%!important;
 }
 
