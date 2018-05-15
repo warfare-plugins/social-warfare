@@ -99,21 +99,23 @@ class SWP_Buttons_Panel {
 		$this->args = $args;
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
         //* Access the $post once while we have it. Values may be overwritten.
-        $this->post_data = [
-            'ID'           => $post->ID,
-            'post_type'    => $post->post_type,
-            'permalink'    => get_the_permalink( $post->ID ),
-            'post_title'   => $post->post_title,
-            'post_status'  => $post->post_status,
-            'post_content' => $post->post_content
-        ];
-        $this->localize_options( $args );
-	    $this->establish_post_id();
-		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
-	    $this->establish_location();
-		$this->establish_float_location();
-		$this->establish_permalink();
-        $this->establish_active_buttons();
+	if( isset( $post->post_type ) ) {
+           $this->post_data = [
+                'ID'           => $post->ID,
+                'post_type'    => $post->post_type,
+                'permalink'    => get_the_permalink( $post->ID ),
+                'post_title'   => $post->post_title,
+                'post_status'  => $post->post_status,
+                'post_content' => $post->post_content
+            ];
+            $this->localize_options( $args );
+            $this->establish_post_id();
+            $this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+            $this->establish_location();
+            $this->establish_float_location();
+            $this->establish_permalink();
+            $this->establish_active_buttons();
+        }
     }
 	/**
 	 * Localize the global options
