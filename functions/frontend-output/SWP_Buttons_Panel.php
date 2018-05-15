@@ -228,7 +228,6 @@ class SWP_Buttons_Panel {
 	public function establish_location() {
         //* Establish a default.
         $this->location = 'none';
-
 		if(empty($this->content)):
 			$this->location = 'above';
 			return;
@@ -241,8 +240,9 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		$preset_location = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
+		if( is_array($preset_location) ) { $preset_location = $preset_location[0]; }
 		// If the location is set in the post options, use that.
-		if ( !empty( $preset_location ) && 'default' !== $preset_location ) {
+		if ( !empty( $preset_location ) && 'default' != $preset_location ) {
 			$this->location = $preset_location;
 			return;
 		};
