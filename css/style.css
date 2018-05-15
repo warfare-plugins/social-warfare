@@ -1129,7 +1129,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	width: 150px;
 }
 
-.swp_social_panelSide .nc_tweetContainer:not(.total_shares):hover .iconFiller,
+.swp_social_panelSide .nc_tweetContainer[data-network]:not(.total_shares):hover .iconFiller,
 .swp_social_panelSide .nc_tweetContainer:not(.total_shares) .spaceManWilly {
 	width: 90px;
 }
