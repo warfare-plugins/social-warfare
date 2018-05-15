@@ -682,7 +682,10 @@ class SWP_Buttons_Panel {
      *
      */
     public function render_total_shares_html() {
-        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares')  || $this->is_shortcode && !in_array( 'total', $this->args['buttons'] ) ) {
+        $buttons = $this->args['buttons'];
+        $buttons = is_null( $buttons ) ? [] : $buttons;
+        
+        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares')  || $this->is_shortcode && !in_array( 'total', $buttons ) ) {
             return '';
         }
         $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
