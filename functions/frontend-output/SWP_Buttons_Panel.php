@@ -220,6 +220,7 @@ class SWP_Buttons_Panel {
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
 	 * @since  3.0.5 | 11 MAY 2018 | Added returns to the method won't keep processing.
+	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $preset_location isn't an array.
 	 * @param  none
 	 * @return none All values are stored in local properties.
 	 * @access public
@@ -242,7 +243,7 @@ class SWP_Buttons_Panel {
 		$preset_location = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
 		if( is_array($preset_location) ) { $preset_location = $preset_location[0]; }
 		// If the location is set in the post options, use that.
-		if ( !empty( $preset_location ) && 'default' != $preset_location ) {
+		if ( !empty( $preset_location ) && 'default' != $preset_location && !is_array( $preset_location ) ) {
 			$this->location = $preset_location;
 			return;
 		};
@@ -683,7 +684,7 @@ class SWP_Buttons_Panel {
      */
     public function render_total_shares_html() {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
-        
+
         if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares')  || $this->is_shortcode && !in_array( 'total', $buttons ) ) {
             return '';
         }
