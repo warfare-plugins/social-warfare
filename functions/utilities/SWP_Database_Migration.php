@@ -117,6 +117,7 @@ class SWP_Database_Migration {
     /**
      * Creates the default value for any new keys.
      *
+     * @since 3.0.8 | 16 MAY 2018 | Created the method. 
      * @param  string $key They suspected missing key.
      * @return [type]      [description]
      */
