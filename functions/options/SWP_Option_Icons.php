@@ -44,7 +44,7 @@ class SWP_Option_Icons extends SWP_Option {
 
                     //* On updates, this is being passed as an object for some reason.
                     if ( is_object( $network_key ) ) :
-                        
+
                         $network_key = $network_key->key;
 
                     //* This should not ever be reached. But if it does, fail gracefully.
@@ -56,10 +56,6 @@ class SWP_Option_Icons extends SWP_Option {
                         $network = $all_icons[$network_key];
 
                         $html .= $this->render_icon_HTML( $network );
-
-                    else :
-                        write_log( $network_key, "We are looking for this index in the following icons array.");
-                        write_log( $all_icons );
                     endif;
                 }
             endif;
