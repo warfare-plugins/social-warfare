@@ -1810,9 +1810,6 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	display: block !important;
 }
 
-/*In FF, the "Shares" is cutoff */
-@-moz-document url-prefix() { .swp_social_panel .total_shares .swp_label { margin-top: 8px; } }
-
 .swp-content-locator {
    display: none !important;
    margin: 0 !important;
