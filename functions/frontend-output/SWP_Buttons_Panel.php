@@ -112,7 +112,6 @@ class SWP_Buttons_Panel {
 	    $this->establish_post_id();
 		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
 	    $this->establish_location();
-		$this->establish_float_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
 
@@ -287,22 +286,6 @@ class SWP_Buttons_Panel {
      */
     public function display_name_to_key( $string ) {
         return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
-    }
-
-
-    protected function establish_float_location() {
-        // Set the options for the horizontal floating bar
-        // $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_float_location' , true );
-        //
-        // if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
-        //     $floatOption = 'float_ignore';
-        // elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
-        //         $floatOption = 'floatNone';
-        // elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_data['post_type'] ] == 'on' ) :
-        //     $floatOption = 'floating_panel' . ucfirst( $this->options['float_location'] );
-        // else :
-        //     $floatOption = 'floatNone';
-        // endif;
     }
 
 
