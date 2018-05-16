@@ -117,7 +117,7 @@ class SWP_Database_Migration {
     /**
      * Creates the default value for any new keys.
      *
-     * @since 3.0.8 | 16 MAY 2018 | Created the method. 
+     * @since 3.0.8 | 16 MAY 2018 | Created the method.
      * @param  string $key They suspected missing key.
      * @return [type]      [description]
      */
@@ -127,7 +127,7 @@ class SWP_Database_Migration {
          $defaults = apply_filters( 'swp_options_page_defaults', [] );
 
          foreach ($defaults  as $key => $value ) {
-             if ( !array_key_exists( $swp_user_options) ) :
+             if ( !array_key_exists( $key, $swp_user_options) ) :
                  $updated = true;
                  $swp_user_options[$key] = $defaults[$key];
              endif;
