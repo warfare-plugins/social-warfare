@@ -218,7 +218,6 @@ class SWP_Buttons_Panel {
 	 * content to which to append.
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
-	 * @since  3.0.5 | 11 MAY 2018 | Added returns to the method won't keep processing.
 	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $preset_location isn't an array.
 	 * @param  none
 	 * @return none All values are stored in local properties.
@@ -230,8 +229,8 @@ class SWP_Buttons_Panel {
         $this->location = 'none';
 		if(empty($this->content)):
 			$this->location = 'above';
-			return;
 		endif;
+        
 		/**
 		 * Location from the Post Options
 		 *
@@ -244,7 +243,6 @@ class SWP_Buttons_Panel {
 		// If the location is set in the post options, use that.
 		if ( !empty( $preset_location ) && 'default' != $preset_location && !is_array( $preset_location ) ) {
 			$this->location = $preset_location;
-			return;
 		};
 		/**
 		 * Global Location Settings
@@ -257,16 +255,15 @@ class SWP_Buttons_Panel {
 		if( is_front_page() ):
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
-			return;
         endif;
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
             if ( isset( $location ) ) :
                 $this->location = $location;
-				return;
             endif;
         endif;
+
         if ( is_archive() || is_home() ) :
             $this->location = $this->options['location_archive_categories'];
         endif;
@@ -435,11 +432,13 @@ class SWP_Buttons_Panel {
 	public function get_float_location() {
 		if( is_home() || is_front_page() ):
 			return 'none';
-		elseif( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
+        endif;
+
+		if ( is_single() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
 			return $this->option('float_location');
-		else:
-			return 'none';
 		endif;
+
+		return 'none';
 	}
 
 
