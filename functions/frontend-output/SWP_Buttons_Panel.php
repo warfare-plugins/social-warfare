@@ -227,7 +227,7 @@ class SWP_Buttons_Panel {
 	public function establish_location() {
         //* Establish a default.
         $this->location = 'none';
-        
+
 		if ( empty( $this->content ) && is_singular() ):
 			$this->location = 'above';
 		endif;
@@ -240,11 +240,16 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		$preset_location = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
-		if( is_array($preset_location) ) { $preset_location = $preset_location[0]; }
+
+        if( is_array($preset_location) ) :
+             $preset_location = $preset_location[0];
+         endif;
+
 		// If the location is set in the post options, use that.
 		if ( !empty( $preset_location ) && 'default' != $preset_location && !is_array( $preset_location ) ) {
 			$this->location = $preset_location;
 		};
+
 		/**
 		 * Global Location Settings
 		 *
@@ -252,6 +257,7 @@ class SWP_Buttons_Panel {
 		 * for that type from the global options.
 		 *
 		 */
+
 		// If we are on the home page
 		if( is_front_page() ):
             $home = $this->options['location_home'];
@@ -265,7 +271,8 @@ class SWP_Buttons_Panel {
             endif;
         endif;
 
-        if ( is_archive() || is_home() ) :
+        // if ( is_archive() || is_home() ) :
+        if ( is_archive() ) :
             $this->location = $this->options['location_archive_categories'];
         endif;
 	}
