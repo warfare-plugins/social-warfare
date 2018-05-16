@@ -79,24 +79,26 @@ class SWP_Option_Icons extends SWP_Option {
         $all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
 
-        if ( empty($user_icons) ) :
+        if ( empty( $user_icons ) ) :
             $user_icons = [];
         endif;
 
-        if ( array_key_exists( 0, $all_icons) ) :
-            //* If $all_icons is numerically indexed, just diff the array.
-            $inactive_icons = array_diff( $all_icons, $user_icons );
+        if ( gettype( array_pop( $all_icons ) === 'object' ) )  :
 
-        elseif ( gettype( array_pop( $all_icons ) === 'object' ) )  :
             //* Get the keys first, then diff the array.
             $keys = [];
+
             foreach( $all_icons as $object) {
                 $keys[] = $object->key;
             }
+
             $inactive_icons = array_diff( $keys, $user_icons );
 
-        else :
-            // write_log( $all_icons, 'Showing $all_icons from SWP_Option_Icons->render_inactive_icons().');
+        elseif ( array_key_exists( 0, $all_icons) ) :
+
+            //* If $all_icons is numerically indexed, just diff the array.
+            $inactive_icons = array_diff( $all_icons, $user_icons );
+
         endif;
 
         $html = '<div class="sw-grid sw-col-300">';
