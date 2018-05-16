@@ -83,7 +83,9 @@ class SWP_Option_Icons extends SWP_Option {
             $user_icons = [];
         endif;
 
-        if ( gettype( array_pop( $all_icons ) === 'object' ) )  :
+        $length = count( $all_icons );
+
+        if ( gettype( $all_icons[$length] ) === 'object' ) :
 
             //* Get the keys first, then diff the array.
             $keys = [];
