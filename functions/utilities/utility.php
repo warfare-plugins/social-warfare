@@ -26,15 +26,6 @@
     }
  }
 
-function init_default( $key ) {
-     global $swp_user_options;
-
-     $defaults = apply_filters( 'swp_options_page_defaults' );
-
-     $swp_user_options[$key] = $defauts[$key];
-     update_option( 'social_warfare_settings', $swp_user_options );
- }
-
 
 /**
  * A global function to ensure that we always have a value for
