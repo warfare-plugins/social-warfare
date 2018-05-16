@@ -123,7 +123,7 @@ class SWP_Database_Migration {
     public function scan_for_new_defaults() {
          global $swp_user_options;
          $updated = false;
-         $defaults = apply_filters( 'swp_options_page_defaults' );
+         $defaults = apply_filters( 'swp_options_page_defaults', [] );
 
          foreach ($defaults  as $key => $value ) {
              if ( !array_key_exists( $swp_user_options) ) :
