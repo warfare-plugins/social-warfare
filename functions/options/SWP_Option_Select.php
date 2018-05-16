@@ -47,10 +47,6 @@ class SWP_Option_Select extends SWP_Option {
     *
     * @since 3.0.0 | 02 MAR 2018 | Created
     * @param string $choice The choice to add to the select.
-    * @return object $this Allows for method chaining
-    * @TODO: Sanitize the input with the throw() method.
-    * @TODO: Make this function actually do something (i.e. make it merge these choices
-    *         into the existing array of choices.)
     * @return SWP_Option_Select $this The calling object with an updated chocies array.
     */
     public function add_choice( $choice ) {

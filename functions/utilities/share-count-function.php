@@ -21,8 +21,7 @@ function get_social_warfare_shares( $postID ) {
 
 	// Set the initial options
 	$options = $swp_user_options;
-	$url     = get_permalink( $postID );
-	$url     = apply_filters( 'swp_url_filter_function', $url );
+	$url     = apply_filters( 'swp_url_filter_function', get_permalink( $postID ) );
 
 	/**
 	 * Check if the cache is fresh or expired
@@ -60,10 +59,8 @@ function get_social_warfare_shares( $postID ) {
 
 			// If cache is expired, fetch new and update the cache
 			else :
-				if( isset( $swp_social_networks[$network] ) ):
-					$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
-					$api_responses[$network]	= $swp_social_networks[$network]->get_api_link( $url );
-				endif;
+				$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
+				$api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
 			endif;
 
 		endif;
@@ -110,7 +107,7 @@ function get_social_warfare_shares( $postID ) {
 	else :
 
 		// Fetch all the share counts asyncrounously
-		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_responses );
+		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
 
 		if ( $options['recover_shares'] == true ) :
 			$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
@@ -128,7 +125,7 @@ function get_social_warfare_shares( $postID ) {
 					$old_raw_shares_array[$network] = 0;
 				}
 
-	            $shares[$network] = $swp_social_networks[$network]->parse_api_response($api_responses[$network]);
+	            $shares[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares_array[$network]);
 
 				if ( $options['recover_shares'] == true ) :
 
