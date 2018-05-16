@@ -227,10 +227,11 @@ class SWP_Buttons_Panel {
 	public function establish_location() {
         //* Establish a default.
         $this->location = 'none';
-		if(empty($this->content)):
+        
+		if ( empty( $this->content ) && is_singular() ):
 			$this->location = 'above';
 		endif;
-        
+
 		/**
 		 * Location from the Post Options
 		 *
