@@ -42,6 +42,8 @@ class SWP_Database_Migration {
             $this->update_hidden_post_meta();
         }
 
+        $this->scan_for_new_defaults();
+
 		if ( true === _swp_is_debug('migrate_db') ) {
 			$this->migrate();
 		}
@@ -111,6 +113,30 @@ class SWP_Database_Migration {
 
         return count( $old_metadata ) === 0;
     }
+
+    /**
+     * Creates the default value for any new keys.
+     *
+     * @param  string $key They suspected missing key.
+     * @return [type]      [description]
+     */
+    public function scan_for_new_defaults() {
+         global $swp_user_options;
+         $updated = false;
+         $defaults = apply_filters( 'swp_options_page_defaults' );
+
+         foreach ($defaults  as $key => $value ) {
+             if ( !array_key_exists( $swp_user_options) ) :
+                 $updated = true;
+                 $swp_user_options[$key] = $defaults[$key];
+             endif;
+         }
+
+         if ( $updated ) {
+             update_option( 'social_warfare_settings', $swp_user_options );
+         }
+     }
+
 
     public function update_hidden_post_meta() {
         global $wpdb;
