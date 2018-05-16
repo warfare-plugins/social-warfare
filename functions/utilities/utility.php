@@ -26,6 +26,15 @@
     }
  }
 
+function init_default( $key ) {
+     global $swp_user_options;
+
+     $defaults = apply_filters( 'swp_options_page_defaults' );
+
+     $swp_user_options[$key] = $defauts[$key];
+     update_option( 'social_warfare_settings', $swp_user_options );
+ }
+
 
 /**
  * A global function to ensure that we always have a value for
@@ -33,22 +42,29 @@
  * set.
  *
  * @since  3.0.0 | 24 APR 2018 | Created
+ * @since  3.0.8 | 16 MAY 2018 | Added $options parameter.
  * @param  string $key   The key associated with the option we want.
+ * @param  optional array $optoins A set of options to read from.
  * @return mixed  $value The value of the option.
  *
  */
-
-function swp_get_option( $key ){
+function swp_get_option( $key, $options = null ){
 	global $swp_user_options;
+
+    if ( null === $options ) {
+        $options = $swp_user_options;
+    }
+
 	$defaults = array();
 	$defaults = apply_filters('swp_options_page_defaults' , $defaults );
 
 	// If the options exists, return it.
-	if( !empty( $swp_user_options[$key] ) ):
-		return $swp_user_options[$key];
+	if( !empty( $options[$key] ) ):
+		return $options[$key];
 
 	// Else check if we have a default to use:
 	elseif( !empty($defaults[$key]) ):
+        init_default( $key );
 		return $defaults[$key];
 
 	// If neither, just return false.
