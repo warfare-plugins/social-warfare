@@ -40,6 +40,7 @@ class SWP_Database_Migration {
         if ( !$this->post_meta_is_migrated() ) {
             $this->update_post_meta();
             $this->update_hidden_post_meta();
+			$this->update_last_migrated();
         }
 
         $this->scan_for_new_defaults();
@@ -214,6 +215,7 @@ class SWP_Database_Migration {
             $q2 = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
             $results = $wpdb->query( $q2 );
         }
+
     }
 
 
