@@ -405,7 +405,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			} else if ( $image[0].src ) {
                 var imageURL = $image[0].src;
 
-                $.ajax({
+                $.ajax(imageURL, {
                     success: function() {
                         console.log("success");
                         pinMedia = imageURL;
