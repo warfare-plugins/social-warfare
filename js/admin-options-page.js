@@ -701,43 +701,6 @@
 		});
 	}
 
-	function blockPremiumFeatures() {
-		$( '.sw-premium-blocker' ).tooltip({
-			items: '.sw-premium-blocker',
-			content: '<i></i>Unlock this feature by registering your license.',
-			position: {
-				my: 'center top',
-				at: 'center top'
-			},
-
-			tooltipClass: 'sw-admin-hover-notice',
-
-			open: function( event, ui ) {
-				if ( typeof ( event.originalEvent ) === 'undefined' ) {
-					return false;
-				}
-
-				var $id = $( ui.tooltip ).attr( 'id' );
-
-				// close any lingering tooltips
-				$( 'div.ui-tooltip' ).not( '#' + $id ).remove();
-
-				// ajax function to pull in data and add it to the tooltip goes here
-			},
-
-			close: function( event, ui ) {
-				ui.tooltip.hover(function() {
-					$( this ).stop( true ).fadeTo( 400, 1 );
-				},
-				function() {
-					$( this ).fadeOut( '400', function() {
-						$( this ).remove();
-					});
-				});
-			}
-		});
-	}
-
 	/*********************************************************
 		A Function for image upload buttons
 	*********************************************************/
@@ -819,7 +782,6 @@
 		handleRegistration();
 		sortableInit();
 		getSystemStatus();
-		blockPremiumFeatures();
 		customUploaderInit();
 		set_ctt_preview();
 	});
