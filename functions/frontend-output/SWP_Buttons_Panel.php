@@ -442,7 +442,7 @@ class SWP_Buttons_Panel {
 			return 'none';
         endif;
 
-		if ( is_single() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
+		if ( is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
 			return $this->option('float_location');
 		endif;
 
