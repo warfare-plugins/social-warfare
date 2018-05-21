@@ -278,46 +278,6 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 			swpConditionalFields();
 		});
 
-		if ( jQuery( '.postbox#social_warfare' ).length ) {
-			var registrationStatus = jQuery( '#social_warfare .registrationWrapper input' ).attr( 'id' );
-			if ( registrationStatus == 'false' ) {
-				jQuery( '.postbox#social_warfare' )
-					.css({ position: 'relative',opacity: '0.3' })
-					.append( '<div class="sw-premium-blocker"></div>' );
-
-				jQuery( '#social_warfare .sw-premium-blocker' ).tooltip({
-					items: '#social_warfare .sw-premium-blocker',
-					content: '<i></i>Unlock these features by registering your license.',
-					position: {
-						my: 'center top',
-						at: 'center top'
-					},
-					tooltipClass: 'sw-admin-hover-notice',
-					open: function( event, ui ) {
-						if ( 'undefined' === typeof ( event.originalEvent ) ) {
-							return false;
-						}
-
-						var jQueryid = jQuery( ui.tooltip ).attr( 'id' );
-
-						// close any lingering tooltips
-						jQuery( 'div.ui-tooltip' ).not( '#' + jQueryid ).remove();
-
-						// ajax function to pull in data and add it to the tooltip goes here
-					},
-					close: function( event, ui ) {
-						ui.tooltip.hover(function() {
-							jQuery(this).stop( true ).fadeTo( 400, 1 );
-						},
-						function() {
-							jQuery(this).fadeOut( '400', function() {
-								jQuery(this).remove();
-							});
-						});
-					}
-				});
-			}
-		}
 
 		/*
 		var customThumbnailSelect = jQuery("#widget-swp_popular_posts_widget-2-thumb_size");
