@@ -337,13 +337,19 @@ class SWP_Buttons_Panel {
      *
      *
      * @return Boolean True if the buttons are okay to print, else false.
+     * @since 3.0.8  | 21 MAY 2018 | Added extra condition to check for content (for calls to social_warfare()).
      */
     public function should_print() {
+        if ( empty( $this->content ) ) :
+            return true;
+        endif;
+        
         $user_settings = $this->location !== 'none';
 
         $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
 
         $undesired_conditions = !is_admin() && !is_feed() && !is_search() && !is_attachment();
+
         return $user_settings && $desired_conditions && $undesired_conditions;
     }
 
@@ -361,12 +367,13 @@ class SWP_Buttons_Panel {
 	 */
     public function render_HTML( $echo = false ) {
 
-		if ( ! $this->should_print() ) :
+		if ( !$this->should_print() ) :
 			return $this->content;
 		endif;
 
         $total_shares_html = $this->render_total_shares_html();
         $buttons = $this->render_buttons_html();
+
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
             ' swp_default_' . $this->option('default_colors') .
@@ -382,11 +389,13 @@ class SWP_Buttons_Panel {
             ">';
             //* This should be inserted via addon, not here.
             //'" data-emphasize="'.$this->option('emphasize_icons').'
+
         if ($this->option('totals_alignment') === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
         else:
             $buttons .= $total_shares_html;
         endif;
+
         $html = $container . $buttons . '</div>';
         $this->html = $html;
         if ( $echo ) :
