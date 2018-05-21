@@ -222,6 +222,8 @@ class SWP_Database_Migration {
             $results = $wpdb->query( $q2 );
         }
 
+        $this->update_last_migrated();
+
     }
 
 
