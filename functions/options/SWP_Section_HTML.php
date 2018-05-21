@@ -192,7 +192,6 @@ class SWP_Section_HTML extends SWP_Option {
 		// Close the Registration Wrapper
 		$html .= '</div>';
 
-		$html .= '<div class="sw-premium-blocker"></div>';
 		$html .= '</div>';
 
         $this->html = $html;
