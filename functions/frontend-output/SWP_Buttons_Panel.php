@@ -343,14 +343,14 @@ class SWP_Buttons_Panel {
         if ( empty( $this->content ) ) :
             return true;
         endif;
-        
+
         $user_settings = $this->location !== 'none';
 
         $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
 
-        $undesired_conditions = !is_admin() && !is_feed() && !is_search() && !is_attachment();
+        $undesired_conditions = is_admin() && is_feed() && is_search() && is_attachment();
 
-        return $user_settings && $desired_conditions && $undesired_conditions;
+        return $user_settings && $desired_conditions && !$undesired_conditions;
     }
 
 
