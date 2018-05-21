@@ -403,25 +403,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			} else if ( $(this).data('lazy-src') ) {
 			    pinMedia = $(this).data('lazy-src');
 			} else if ( $image[0].src ) {
-                var imageURL = $image[0].src;
-
-                $.ajax(imageURL, {
-                    success: function() {
-                        console.log("success");
-                        pinMedia = imageURL;
-                    },
-                    statusCode: {
-                        404: function() {
-                            console.log("404");
-                            var contentIndex = imageURL.indexOf("/wp-content")
-                            pinMedia = siteURL + src.slice(contentIndex)
-                            }
-                    },
-                    complete: function() {
-                        console.log("Pin media is ", pinMedia);
-                    }
-                });
-
+				pinMedia = $image[0].src;
 			}
 
 			// Bail if we don't have any media to pin.
@@ -693,10 +675,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         define('swp_isMobile', [], global.swp_isMobile = instantiate());
     } else {
         global.swp_isMobile = instantiate();
-    }
-
-    function imageExists(url) {
-
     }
 
 })(this);
