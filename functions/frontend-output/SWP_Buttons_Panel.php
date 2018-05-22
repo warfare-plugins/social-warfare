@@ -218,7 +218,7 @@ class SWP_Buttons_Panel {
 	 * content to which to append.
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
-	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $preset_location isn't an array.
+	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $post_setting isn't an array.
 	 * @param  none
 	 * @return none All values are stored in local properties.
 	 * @access public
@@ -239,15 +239,16 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$preset_location = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
+		$post_setting = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
 
-        if( is_array($preset_location) ) :
-             $preset_location = $preset_location[0];
+        if( is_array($post_setting) ) :
+             $post_setting = $post_setting[0];
          endif;
 
 		// If the location is set in the post options, use that.
-		if ( !empty( $preset_location ) && 'default' != $preset_location && !is_array( $preset_location ) ) {
-			$this->location = $preset_location;
+		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+			$this->location = $post_setting;
+            return;
 		};
 
 		/**
@@ -263,6 +264,7 @@ class SWP_Buttons_Panel {
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
         endif;
+
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
@@ -450,6 +452,17 @@ class SWP_Buttons_Panel {
 		if( is_home() || is_front_page() ):
 			return 'none';
         endif;
+
+        $post_setting = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
+
+        if( is_array($post_setting) ) :
+             $post_setting = $post_setting[0];
+         endif;
+
+		// If the location is set in the post options, use that.
+		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+			return $post_setting;
+		};
 
 		if ( is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
 			return $this->option('float_location');
