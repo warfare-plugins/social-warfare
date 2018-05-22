@@ -345,7 +345,9 @@ class SWP_Buttons_Panel {
      * @since 3.0.8  | 21 MAY 2018 | Added extra condition to check for content (for calls to social_warfare()).
      */
     public function should_print() {
-        if ( empty( $this->content ) ) :
+
+        //* WordPress requires title and content. This indicates the buttons are called via social_warfare(). 
+        if ( empty( $this->content ) && empty( $this->title) ) :
             return true;
         endif;
 
