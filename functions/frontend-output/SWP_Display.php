@@ -104,8 +104,6 @@ class SWP_Display {
             return;
         }
 
-        echo "post_type is:", get_post_type();
-
         $side_panel->render_floating_HTML( $echo = true );
 
         return;
