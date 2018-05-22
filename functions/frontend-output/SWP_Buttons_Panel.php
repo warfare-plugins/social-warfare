@@ -346,7 +346,7 @@ class SWP_Buttons_Panel {
      */
     public function should_print() {
 
-        //* WordPress requires title and content. This indicates the buttons are called via social_warfare(). 
+        //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
         if ( empty( $this->content ) && empty( $this->title) ) :
             return true;
         endif;
@@ -454,7 +454,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_float_location() {
-		if( is_home() || is_front_page() ):
+		if( is_home() && !is_home_page() ):
 			return 'none';
         endif;
 
