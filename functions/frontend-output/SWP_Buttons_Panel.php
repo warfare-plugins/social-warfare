@@ -109,7 +109,6 @@ class SWP_Buttons_Panel {
         ];
 
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
-        $this->title   = isset( $post->post_title ) ? $post->post_title : '';
         $this->is_shortcode = $shortcode;
         $this->localize_options( $args );
 	    $this->establish_post_id();
@@ -251,8 +250,11 @@ class SWP_Buttons_Panel {
 		// If the location is set in the post options, use that.
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
 			$this->location = $post_setting;
+
+            //* Exit early because this is a priority.
             return;
 		};
+
 
 		/**
 		 * Global Location Settings
@@ -276,8 +278,7 @@ class SWP_Buttons_Panel {
             endif;
         endif;
 
-        // if ( is_archive() || is_home() ) :
-        if ( is_archive() ) :
+        if ( is_archive() || is_home() ) :
             $this->location = $this->options['location_archive_categories'];
         endif;
 	}
@@ -347,7 +348,7 @@ class SWP_Buttons_Panel {
     public function should_print() {
 
         //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
-        if ( empty( $this->content ) && empty( $this->title) ) :
+        if ( empty( $this->content && !isset( $this->args['content'] )  ) :
             return true;
         endif;
 
