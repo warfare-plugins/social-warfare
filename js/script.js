@@ -193,9 +193,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
 	}
 	function createFloatBar() {
-        console.log("createFloatBar()");
         if ( ! $( '.swp_social_panelSide' ).length ) {
-            console.log("passed");
 			if( $( '.nc_wrapper' ).length ) {
 				$( '.nc_wrapper' ).remove();
 			}
@@ -205,19 +203,23 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 			if ( location ) {
 
-				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
-					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
-					var offsetOne = firstSocialPanel.offset();
-					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
-					var minWidth = ncSideFloater.data( 'screen-width' );
-					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
-						var position = floatLeftMobile;
-					} else {
-						var position = location;
-					}
+                //* COMMENTED OUT because this is a redundant check.
+                //* WE ALREADY KNOW  ! $( '.swp_social_panelSide' ).length  && location
+				// if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
+    			var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+    			var offsetOne = firstSocialPanel.offset();
+    			var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
+    			var minWidth = ncSideFloater.data( 'screen-width' );
 
-				} else {
-					var position = location;
+                    //* COMMENTED OUT  because position is immediately redefined below. *//
+					// if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
+					// 	var position = floatLeftMobile;
+					// } else {
+					// 	var position = location;
+					// }
+
+				// } else {
+				// 	var position = location;
 				}
 
 				var backgroundColor = $( '.swp_social_panel' ).data( 'floatcolor' );
@@ -239,8 +241,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.swp_social_panel' ).eq( 0 ).addClass( 'swp_one' );
 				$( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
-			}
-}
+		}
 	}
 
 	function floatingBarReveal() {
