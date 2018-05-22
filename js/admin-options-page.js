@@ -71,6 +71,8 @@
     }
 
     function handleCustomColors(event, selector, customColor, customOutlines) {
+        //* Create a notice about the custom colors.
+        var colorNotice = '<div id="color-notice"><p>Notice: Custom colors will not show up in the preview, but will on your site.</p><span class="color-dismiss">dismiss</span></div>';
         var visible = false;
         var value = event.target.value;
         var visibility = {
@@ -80,7 +82,7 @@
 
         $(selector).each(function(index, select) {
             var val = $(select).val();
-            //* Check to see if this or a sibling input has custom_color selected.
+            //* Check to see if this or a sibling input has a custom_color selected.
             if (val.indexOf("custom") !== -1) {
                 if (val.indexOf("outlines") > 0) {
                     visibility.customOutlines = true;
@@ -92,6 +94,18 @@
 
         visibility.customColor ? customColor.slideDown() : customColor.slideUp();
         visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
+
+        if (visibility.customColor || visibility.customOutlines) {
+            console.log(colorNotice);
+            $("body").append(colorNotice);
+            $(".color-dismiss").on("click", function() {
+                $("#color-notice").fadeOut("slow");
+            });
+        } else {
+            if ($("#color-notice")) {
+                $(colorNotice).fadeOut("slow");
+            }
+        }
 
     }
 
