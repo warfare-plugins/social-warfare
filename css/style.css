@@ -881,7 +881,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	/*top: 200px;*/
 	-webkit-transition: all 0.2s linear;
 	transition: all 0.2s linear;
-	width: 100px!important;
+	
 	z-index: 9999999;
     margin: 10px 5px !important;
     padding: 0;
