@@ -164,7 +164,27 @@ class SWP_Shortcode {
     		$theme = $this->options['ctt_theme'];
     	endif;
 
-    	return '<div class="sw-tweet-clear"></div><a class="swp_CTT ' . $theme . '" href="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" data-link="https://twitter.com/share?text=' . urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam . '' . ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '') . '" rel="nofollow" target="_blank"><span class="sw-click-to-tweet"><span class="sw-ctt-text">' . $atts['quote'] . '</span><span class="sw-ctt-btn">' . __( 'Click To Tweet','social-warfare' ) . '<i class="sw sw-twitter"></i></span></span></a>';
+        $text = urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam ;
+        $via = ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '');
+
+
+        $html = '<div class="sw-tweet-clear"></div>';
+        $html .= '<a class="swp_CTT ' . $theme;
+        $html .= '" href="https://twitter.com/share?text=' . $text . $via;
+        $html .= '" data-link="https://twitter.com/share?text=' . $text . $via;
+        $html .= '" rel="nofollow" target="_blank">';
+            $html .= '<span class="sw-click-to-tweet">';
+                $html .= '<span class="sw-ctt-text">';
+                    $html .= $atts['quote'];
+                $html .= '</span>';
+                $html .= '<span class="sw-ctt-btn">';
+                    $html .= __( 'Click To Tweet','social-warfare' );
+                    $html .= '<i class="sw swp_twitter_icon"></i>';
+            $html .= '</span>';
+            $html .= '</span>';
+        $html .= '</a>';
+
+    	return $html;
     }
 
 }
