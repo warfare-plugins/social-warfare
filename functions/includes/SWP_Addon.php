@@ -111,10 +111,13 @@ class SWP_Addon extends Social_Warfare {
 
     public function is_registered() {
         // Get the plugin options from the database
-    	$options = get_option( 'social_warfare_settings' );
+    	$options = get_option( 'social_warfare_settings', false );
+        $old_options = get_option( 'socialWarfareOptions', false );
 
         if ( isset( $options[$this->key . '_license_key'] ) ) :
             $this->license_key = $options[$this->key . '_license_key'];
+        elseif ( isset( $old_options[$this->key . '_license_key'] ) ) :
+            $this->license_key = $old_options[$this->key . '_license_key'];
         else:
             $this->license_key = '';
         endif;
