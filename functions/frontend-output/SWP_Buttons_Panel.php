@@ -348,7 +348,7 @@ class SWP_Buttons_Panel {
     public function should_print() {
 
         //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
-        if ( empty( $this->content && !isset( $this->args['content'] )  ) :
+        if ( empty( $this->content ) && !isset( $this->args['content'] )  ) :
             return true;
         endif;
 
