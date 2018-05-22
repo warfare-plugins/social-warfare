@@ -843,3 +843,13 @@ p.sw-subtitle.sw-registration-text {
     height: 120px;
     width: 97%
 }
+
+#color-notice {
+    position: fixed;
+    bottom: 15px;
+    margin: 0 auto;
+    left: 25%;
+    right: 25%;
+    text-align: center;
+    background: rgba( 255, 225, 255, .37 );
+}
