@@ -488,14 +488,14 @@ class SWP_Buttons_Panel {
      *
      * @param  boolean $echo Whether or not to immediately echo the HTML.
      * @return string  $html The qualified markup for the panel.
-     * @since 3.0.0 
+     * @since 3.0.0
      * @since 3.0.8 | 22 MAY 2018 | Added the $blacklist and in_array conditional.
      */
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
         $blacklist = ['none', 'top', 'bottom'];
 
-        if ( in_array( $this->option('float_position'), $blacklist ) ) :
+        if ( in_array( $this->option('float_location'), $blacklist ) ) :
             return '';
         endif;
 
