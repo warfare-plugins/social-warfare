@@ -486,6 +486,11 @@ class SWP_Buttons_Panel {
 
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
+        $blacklist = ['none', 'top', 'bottom'];
+
+        if ( in_array( $this->option('float_position'), $blacklist ) ) :
+            return '';
+        endif;
 
 		if( is_singular() && 'none' !== $this->get_float_location() ):
 
