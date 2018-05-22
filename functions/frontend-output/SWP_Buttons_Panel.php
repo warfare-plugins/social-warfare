@@ -454,7 +454,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_float_location() {
-		if( is_home() && !is_home_page() ):
+		if( is_home() && !is_front_page() ):
 			return 'none';
         endif;
 
