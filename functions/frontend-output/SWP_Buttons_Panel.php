@@ -455,6 +455,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_float_location() {
+        $post_on = false;
 		if( is_home() && !is_front_page() ):
 			return 'none';
         endif;
@@ -467,10 +468,10 @@ class SWP_Buttons_Panel {
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
-			return $post_setting;
+			$post_on = true;
 		};
 
-		if ( is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
+		if ( $post_on || is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
 			return $this->option('float_location');
 		endif;
 
