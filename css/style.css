@@ -914,11 +914,10 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide[class*=swp_side] {
-    height: 100vh;
+    height: auto;
     display: flex;
     position: fixed;
     padding: 30px 0;
-    top: 0;
 }
 
 .swp_social_panelSide.swp_float_right {
@@ -926,15 +925,15 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide.swp_side_top {
-	justify-content: flex-start;
+    top: 15px;
 }
 
 .swp_social_panelSide.swp_side_bottom {
-	justify-content: flex-end;
+    bottom: 15px;
 }
 
 .swp_social_panelSide.swp_side_center {
-    justify-content: center;
+    top: 25vh;
 }
 
 .swp_social_panelSide .nc_tweetContainer {
