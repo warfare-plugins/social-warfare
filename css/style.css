@@ -901,10 +901,6 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	transition: all 0.2s linear;
 }
 
-.swp_social_panelSide.fade {
-	display: none;
-}
-
 .swp_social_panelSide.fade.swp_float_left {
 	left: 5px;
 }
@@ -918,6 +914,10 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
     display: flex;
     position: fixed;
     padding: 30px 0;
+}
+
+.swp_social_panelSide.fade {
+	display: none;
 }
 
 .swp_social_panelSide.swp_float_right {
