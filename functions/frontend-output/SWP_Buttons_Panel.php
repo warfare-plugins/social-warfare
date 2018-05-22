@@ -97,7 +97,7 @@ class SWP_Buttons_Panel {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
 		$this->args = $args;
-        $this->content = isset( $args['content'] ) ? $args['content'] : '';
+
         //* Access the $post once while we have it. Values may be overwritten.
         $this->post_data = [
             'ID'           => $post->ID,
@@ -107,6 +107,9 @@ class SWP_Buttons_Panel {
             'post_status'  => $post->post_status,
             'post_content' => $post->post_content
         ];
+
+        $this->content = isset( $args['content'] ) ? $args['content'] : '';
+        $this->title   = isset( $post->post_title ) ? $post->post_title : '';
         $this->is_shortcode = $shortcode;
         $this->localize_options( $args );
 	    $this->establish_post_id();
