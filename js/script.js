@@ -193,7 +193,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
 	}
 	function createFloatBar() {
-        //if ( ! $( '.swp_social_panelSide' ).length ) {
+        console.log("createFloatBar()");
+        if ( ! $( '.swp_social_panelSide' ).length ) {
+            console.log("passed");
 			if( $( '.nc_wrapper' ).length ) {
 				$( '.nc_wrapper' ).remove();
 			}
@@ -238,7 +240,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
 			}
-//}
+}
 	}
 
 	function floatingBarReveal() {
