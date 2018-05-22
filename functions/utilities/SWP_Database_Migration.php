@@ -110,13 +110,14 @@ class SWP_Database_Migration {
     * @return bool True if the old option still exists; false otherwise.
     */
     public function post_meta_is_migrated() {
+        if( $this->last_migrated === $this->get_last_migrated() ) {
+            return true;
+        }
 
          //* Fetch posts with 2.3.5 metadata.
         $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
-		if( $this->last_migrated !== $this->get_last_migrated() ) {
-			return false;
-		}
+
 
         return count( $old_metadata ) === 0;
     }
