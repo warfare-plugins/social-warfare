@@ -568,7 +568,7 @@ class SWP_Buttons_Panel {
 	            ' scale-' . $this->option('float_size') * 100 .
 	            '" data-float="' . $float_location .
 	            '" data-count="' . count($this->networks) .
-	            '" data-floatColor="' . $this->option('float_background_color') .
+	            '" data-floatcolor="' . $this->option('float_background_color') .
 	            '" data-screen-width="' . $this->option('float_screen_width') .
 	            '" data-transition="' . $this->option('transition') .
 	            '" data-float-mobile="'.$this->option('float_mobile').'">';
