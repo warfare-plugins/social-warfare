@@ -72,7 +72,7 @@
 
     function handleCustomColors(event, selector, customColor, customOutlines) {
         //* Create a notice about the custom colors.
-        var colorNotice = '<div id="color-notice"><p>Notice: Custom colors will not show up in the preview, but will on your site.</p><span class="color-dismiss">dismiss</span></div>';
+        var colorNotice = '<div id="color-notice"><p><span class="color-dismiss"></span><b>Note:</b> Custom colors will not show up in the preview, but will on your site.</p></div>';
         var visible = false;
         var value = event.target.value;
         var visibility = {
