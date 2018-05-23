@@ -868,8 +868,8 @@ p.sw-subtitle.sw-registration-text {
 
 #color-notice .color-dismiss {
 	float: right;
-    color: white;
-    font-weight: bold;
+    color: #ced3dc;
+    font-weight: 600;
 }
 
 #color-notice .color-dismiss:before {
