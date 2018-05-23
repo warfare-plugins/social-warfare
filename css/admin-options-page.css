@@ -850,6 +850,38 @@ p.sw-subtitle.sw-registration-text {
     margin: 0 auto;
     left: 25%;
     right: 25%;
-    text-align: center;
     background: rgba( 255, 225, 255, .37 );
+	background-color: #ced3dc;
+	color: #30394f;
+	padding: 20px;
+	border-radius: 4px;
+	text-align: left;
+	width: 650px;
+
+}
+
+#color-notice p {
+	font-size: 16px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#color-notice .color-dismiss {
+	float: right;
+    color: white;
+    font-weight: bold;
+}
+
+#color-notice .color-dismiss:before {
+	content: 'x';
+    background: gray;
+    border-radius: 50%;
+    width: 26px;
+    display: block;
+    text-align: center;
+    height: 25px;
+    line-height: 19px;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0px;
 }
