@@ -201,8 +201,8 @@ span.spaceManWilly {
 }
 
 .swp_social_panel .total_shares {
-	background: #c4c4c4;
-	border: 1px solid #e08a0f;
+	background: transparent !important;;
+	border: none !important;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	color: white;
@@ -216,6 +216,11 @@ span.spaceManWilly {
 	-webkit-flex: none!important;
 	-ms-flex: none!important;
 	flex: none!important;
+}
+
+.swp_social_panel .total_sharesalt {
+    background: transparent !important;
+    border: none !important;
 }
 
 .swp_social_panel div.total_shares.total_sharesalt,
@@ -881,8 +886,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	/*top: 200px;*/
 	-webkit-transition: all 0.2s linear;
 	transition: all 0.2s linear;
-	
-	z-index: 9999999;
+
+	z-index: 9998;
     margin: 10px 5px !important;
     padding: 0;
 
