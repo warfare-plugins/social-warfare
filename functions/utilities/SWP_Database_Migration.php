@@ -139,8 +139,6 @@ class SWP_Database_Migration {
              endif;
          }
 
-         die(var_dump($defaults));
-
 
          if ( $updated ) {
              update_option( 'social_warfare_settings', $swp_user_options );

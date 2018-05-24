@@ -150,7 +150,6 @@ class SWP_Option extends SWP_Abstract {
 
 		// Add this to our global list of defaults
 		add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
-        echo "Setting default for $this->key: $value<br/>";
 
         return $this;
     }
