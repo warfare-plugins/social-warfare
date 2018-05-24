@@ -117,8 +117,6 @@ class SWP_Database_Migration {
          //* Fetch posts with 2.3.5 metadata.
         $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
-
-
         return count( $old_metadata ) === 0;
     }
 
@@ -134,12 +132,15 @@ class SWP_Database_Migration {
          $updated = false;
          $defaults = apply_filters( 'swp_options_page_defaults', [] );
 
-         foreach ($defaults  as $key => $value ) {
+         foreach ($defaults as $key => $value ) {
              if ( !array_key_exists( $key, $swp_user_options) ) :
                  $updated = true;
-                 $swp_user_options[$key] = $defaults[$key];
+                 $swp_user_options[$key] = $value;
              endif;
          }
+
+         die(var_dump($defaults));
+
 
          if ( $updated ) {
              update_option( 'social_warfare_settings', $swp_user_options );
@@ -352,7 +353,7 @@ class SWP_Database_Migration {
             'swp_decimal_separator'             => 'decimal_separator',
             'swTotesFormat'                     => 'totals_alignment',
             'float'                             => 'floating_panel',
-            'float_background_color'            => 'float_location',
+            'floatOption'                       => 'float_location',
             'swp_float_scr_sz'                  => 'float_screen_width',
             'sideReveal'                        => 'transition',
             'floatStyle'                        => 'float_button_shape',
@@ -407,27 +408,9 @@ class SWP_Database_Migration {
             'floatLeftMobile'   => 'float_mobile',
         ];
 
-
-
-        //* We don't actually do anything with these. I left them here just as a note.
-        //* They are deleted during the call to delete_option( 'socialWarfareOptions' ).
-        $removals = [
-            'dashboardShares',
-            'rawNumbers',
-            'notShowing',
-            'visualEditorBug',
-            'loopFix',
-            'locationrevision',
-            'locationattachment',
-        ];
-
-
         $migrations = [];
 
         foreach( $options as $old => $value ) {
-
-
-
             //* The order of icons used to be stored in an array at 'active'.
             if ( is_array( $value) && array_key_exists( 'active', $value) ) :
                 $new_value = $value;
@@ -461,6 +444,35 @@ class SWP_Database_Migration {
             endif;
 
         }
+
+        //* Manually adding these in as short term solution.
+        if ( !isset( $migrations['float_size'] ) ) :
+            $migrations['float_size'] = '1';
+        endif;
+
+        if ( !isset( $migrations['float_location'] ) ) :
+            $migrations['float_location'] = 'bottom';
+        endif;
+
+        if ( !isset( $migrations['float_alignment'] ) ) :
+            $migrations['float_alignment'] = 'center';
+        endif;
+
+        $removals = [
+            'dashboardShares',
+            'rawNumbers',
+            'notShowing',
+            'visualEditorBug',
+            'loopFix',
+            'locationrevision',
+            'locationattachment',
+        ];
+
+        foreach ( $removals as $trash ) :
+            if ( ( $migrations[$trash] ) ) :
+                unset($migrations[$trash]);
+            endif;
+        endforeach;
 
         update_option( 'social_warfare_settings', $migrations );
         //* Play it safe for now.
