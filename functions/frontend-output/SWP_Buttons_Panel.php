@@ -715,15 +715,21 @@ class SWP_Buttons_Panel {
      */
     public function render_total_shares_html() {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
-
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
+
+        $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
+            $html .= '<span class="swp_count ">' . swp_kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+        $html .= '</div>';
+
+        //* Called via social_warfare().
+        if ( empty( $this->content ) && !isset( $this->args['content'] ) ) {
+            return $html;
+        }
 
         if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument ) {
             return '';
         }
-        $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
-            $html .= '<span class="swp_count ">' . swp_kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
-        $html .= '</div>';
+
         return $html;
     }
 
