@@ -194,7 +194,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 	function createFloatBar() {
-        if ( ! $( '.swp_social_panelSide' ).length ) {
+        // if ( ! $( '.swp_social_panelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
 				$( '.nc_wrapper' ).remove();
 			}
@@ -205,19 +205,20 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( location ) {
 
 				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
-        			var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+        			var floatMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
         			var offsetOne = firstSocialPanel.offset();
         			var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
         			var minWidth = ncSideFloater.data( 'screen-width' );
 
 					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
-						var position = floatLeftMobile;
+						var position = floatMobile;
 					} else {
 						var position = location;
 					}
 
 				} else {
 					var position = location;
+
 				}
 
 				var backgroundColor = $( '.swp_social_panel' ).data( 'floatcolor' );
@@ -240,7 +241,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
             }
-		}
+		// }
 	}
 
 	function floatingBarReveal() {
@@ -263,7 +264,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		if ( location === 'right' || location === 'left' ) {
-			var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+			var floatMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
 			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 
 			if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
@@ -276,9 +277,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				});
 				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 					visible = true;
-					if ( floatLeftMobile == 'bottom' ) {
+					if ( floatMobile == 'bottom' ) {
 						location = 'bottom';
-					} else if ( floatLeftMobile == 'top' ) {
+					} else if ( floatMobile == 'top' ) {
 						location = 'top';
 					}
 				} else if (visible) {
@@ -292,9 +293,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					visible = false;
 				} else {
 					visible = true;
-					if(floatLeftMobile == 'bottom') {
+					if(floatMobile == 'bottom') {
 						location = 'bottom';
-					} else if ( floatLeftMobile == 'top' ) {
+					} else if ( floatMobile == 'top' ) {
 						location = 'top';
 					}
 				}
@@ -328,6 +329,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 						visible = true;
 					}
 			});
+
+            console.log("Visible", visible);
 
 			if ( visible ) {
 				// Hide the Floating bar
