@@ -185,12 +185,10 @@ class SWP_Option_Select extends SWP_Option {
             settype( $value, 'string' );
         endif;
 
-        if ( !is_string( $value ) ||  !isset( $value ) ) :
+        if ( !is_string( $value )  ) :
             $this->_throw( 'Please provide a default value as a string.' );
         endif;
 
-        $this->default = $value;
-
-        return $this;
+        return parent::set_default( $value );
     }
 }
