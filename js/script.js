@@ -225,7 +225,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				var el = $( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' );
                 el.appendTo( 'body' );
-				var position = firstSocialPanel.data( 'float' );
+				var position = firstSocialPanel.data( 'float-mobile' );
 				firstSocialPanel.clone().appendTo( el );
 
 				$( '.nc_wrapper' ).hide().addClass( position );
@@ -329,8 +329,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 						visible = true;
 					}
 			});
-
-            console.log("Visible", visible);
 
 			if ( visible ) {
 				// Hide the Floating bar
