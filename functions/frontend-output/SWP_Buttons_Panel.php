@@ -468,6 +468,10 @@ class SWP_Buttons_Panel {
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+            if( 'off' === $post_setting) :
+                return 'none';
+            endif;
+            
 			$post_on = true;
 		};
 
@@ -717,7 +721,7 @@ class SWP_Buttons_Panel {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-    
+
 
         if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument && !empty( $this->args['buttons'] ) ) {
             return '';
