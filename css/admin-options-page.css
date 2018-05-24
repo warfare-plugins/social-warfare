@@ -868,20 +868,21 @@ p.sw-subtitle.sw-registration-text {
 
 #color-notice .color-dismiss {
 	float: right;
-    color: #ced3dc;
+    color: #ffffff;
     font-weight: 600;
 }
 
 #color-notice .color-dismiss:before {
 	content: 'x';
-    background: gray;
+    background: #30394f;
     border-radius: 50%;
     width: 26px;
     display: block;
     text-align: center;
-    height: 25px;
-    line-height: 19px;
+    height: 26px;
+    line-height: 22px;
     font-size: 22px;
     cursor: pointer;
-    padding: 0px;
+    padding: 0;
+    opacity: .4;
 }
