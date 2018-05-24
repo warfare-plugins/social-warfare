@@ -717,16 +717,7 @@ class SWP_Buttons_Panel {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        //* Called via social_warfare().
-        if ( empty( $this->content ) && !isset( $this->args['content'] ) ) {
-            foreach( $this->shares as $network_key => $shares ) {
-                if ( $network_key === 'total_shares' ) :
-                    continue;
-                endif;
-
-                $this->shares['total_shares'] += (int) $shares;
-            }
-        }
+    
 
         if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument && !empty( $this->args['buttons'] ) ) {
             return '';
