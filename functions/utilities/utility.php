@@ -55,7 +55,7 @@ function swp_get_option( $key, $options = null ){
 
 	// Else check if we have a default to use:
 	elseif( !empty($defaults[$key]) ):
-        init_default( $key );
+        // init_default( $key );
 		return $defaults[$key];
 
 	// If neither, just return false.
