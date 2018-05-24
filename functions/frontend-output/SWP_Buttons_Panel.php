@@ -571,7 +571,7 @@ class SWP_Buttons_Panel {
 	            '" data-floatcolor="' . $this->option('float_background_color') .
 	            '" data-screen-width="' . $this->option('float_screen_width') .
 	            '" data-transition="' . $this->option('transition') .
-	            '" data-float-mobile="'.$this->option('float_mobile').'">';
+	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
 	        if ($this->option('totals_alignment') === 'totals_left') :
 	            $buttons = $share_counts . $buttons;
 	        else:
