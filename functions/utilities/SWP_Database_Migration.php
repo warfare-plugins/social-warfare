@@ -419,6 +419,19 @@ class SWP_Database_Migration {
                 $new_value = $value;
             endif;
 
+            //* Specific case: newOrderOfIcons mapping.
+            if ( 'newOrderOfIcons' === $old ) :
+                if ( array_key_exists( 'googlePlus', $new_value ) ) :
+                    unset( $new_value['googlePlus'] );
+                    $new_value[] = 'google_plus';
+                endif;
+
+                if (array_key_exists( 'linkedIn', $new_value) ) :
+                    unset( $new_value['linkedIn'] );
+                    $new_value[] = 'linkedin';
+                endif;
+            endif;
+
             //* Specific case: customColor mapping.
             if ( $old === 'customColor' ) :
                 $migrations['custom_color'] = $new_value;
@@ -428,8 +441,6 @@ class SWP_Database_Migration {
                     $migrations['float_custom_color'] = $new_value;
                     $migrations['float_custom_color_outlines'] = $new_value;
                 endif;
-
-                continue;
             endif;
 
             if ( array_key_exists( $old, $map) ) :
