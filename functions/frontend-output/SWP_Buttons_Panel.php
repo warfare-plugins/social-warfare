@@ -728,7 +728,7 @@ class SWP_Buttons_Panel {
             }
         }
 
-        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument ) {
+        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument && !empty( $this->args['buttons'] ) ) {
             return '';
         }
 
