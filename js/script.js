@@ -225,7 +225,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				var el = $( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' );
                 el.appendTo( 'body' );
-				var position = firstSocialPanel.data( 'float-mobile' );
+                if ( location === 'left' || location === 'right' ) {
+                    var position = firstSocialPanel.data( 'float-mobile' );
+                } else {
+                    var position = firstSocialPanel.data( 'float' );
+                }
 				firstSocialPanel.clone().appendTo( el );
 
 				$( '.nc_wrapper' ).hide().addClass( position );
