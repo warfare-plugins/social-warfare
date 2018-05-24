@@ -192,6 +192,20 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+= 3.0.8 (24 MAY 2018) =
+* Fixed 'Undefined Index' notices.
+* Fixed 'File not found' errors.
+* Custom Color and Custom Color Outlines are fully functional.
+* Floating bar on mobile is back to normal.
+* Fixed global/post-specific setting incompatibilities.
+* Total shares is responsive to the settings, shortcode, and function.
+* Right floating buttons are properly positioned.
+* Fixed conflict with buttons showing on Archive/Category post types.
+* The shortcode and social_warfare() function behave as expected.
+* Yummly and StumbleUpon buttons are back.
+* Created default settings for float position, location, and size.
+* Improved the migration mechanism.
+
 = 3.0.0 (8 MAY 2018) =
 * Rewrote the core mechanics of the plugin to a class based system.
 * Added top floating bar for mobile.
