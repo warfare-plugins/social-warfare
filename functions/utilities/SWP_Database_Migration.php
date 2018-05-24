@@ -29,8 +29,11 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-        add_action( 'plugins_loaded', [$this, 'init'] );
 
+		// Set up the defaults before directing into the template functions.
+		add_action( 'template_redirect' , array( $this , 'scan_for_new_defaults') );
+
+        add_action( 'plugins_loaded', [$this, 'init'] );
     }
 
     public function init() {
@@ -48,7 +51,6 @@ class SWP_Database_Migration {
 			$this->update_last_migrated();
         }
 
-        $this->scan_for_new_defaults();
 
 		if ( true === _swp_is_debug('migrate_db') ) {
 			$this->migrate();
