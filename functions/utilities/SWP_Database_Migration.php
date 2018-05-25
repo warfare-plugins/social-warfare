@@ -452,6 +452,11 @@ class SWP_Database_Migration {
                 endif;
             endif;
 
+			if ( $old === 'sideCustomColor' ) :
+				$migrations['float_custom_color'] = $new_value;
+				$migrations['float_custom_color_outlines'] = $new_value;
+			endif;
+
             if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.
                 $new = $map[$old];
