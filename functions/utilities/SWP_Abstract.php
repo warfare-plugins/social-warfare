@@ -134,7 +134,17 @@ class SWP_Abstract {
     }
 
     public function get_user_icons() {
-        $user_icons = $this->user_options['order_of_icons'];
+        if ( isset( $this->user_options['order_of_icons'] ) ) :
+            $user_icons = $this->user_options['order_of_icons'];
+        else:
+            $user_icons = [
+    			'google_plus' => 'google_plus',
+    			'twitter'     => 'twitter',
+    			'facebook'    => 'facebook',
+    			'linkedin'    => 'linkedin',
+    			'pinterest'   => 'pinterest'
+    		];
+        endif;
 
         if ( empty( $user_icons ) ):
             $all_icons = $this->get_all_icons();
