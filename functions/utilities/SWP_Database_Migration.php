@@ -446,12 +446,14 @@ class SWP_Database_Migration {
                 $migrations['custom_color'] = $new_value;
                 $migrations['custom_color_outlines'] = $new_value;
 
-                if ( $options['floatStyleSource'] == false ) :
+				// If the float style source is set to inherit the style from the static buttons.
+                if ( $options['floatStyleSource'] == true ) :
                     $migrations['float_custom_color'] = $new_value;
                     $migrations['float_custom_color_outlines'] = $new_value;
                 endif;
             endif;
 
+			// Only if the source is set to not inherit them from the static buttons.
 			if ( $old === 'sideCustomColor' ) :
 				$migrations['float_custom_color'] = $new_value;
 				$migrations['float_custom_color_outlines'] = $new_value;
