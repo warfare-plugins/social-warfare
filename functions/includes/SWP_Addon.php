@@ -139,7 +139,7 @@ class SWP_Addon extends Social_Warfare {
         endif;
 
         // If a week has passed since the last check, ping our API to check the validity of the license key
-        if ( !empty( $this->licence_key) ) :
+        if ( !empty( $this->license_key) ) :
 
             $data = array(
                 'edd_action' => 'check_license',
