@@ -116,7 +116,6 @@ class SWP_Addon extends Social_Warfare {
         if ( isset( $options[$this->key . '_license_key'] ) ) :
             $this->license_key = $options[$this->key . '_license_key'];
         elseif ( isset( $old_options[$this->key . '_license_key'] ) ) :
-            $options = $old_options;
             $this->license_key = $old_options[$this->key . '_license_key'];
         else:
             $this->license_key = '';
@@ -164,8 +163,7 @@ class SWP_Addon extends Social_Warfare {
     				$this->license_key = '';
 
                     $options[$this->key . '_license_key'] = '';
-
-
+					
     				update_option( 'social_warfare_settings' , $options );
 
                     return false;
