@@ -31,7 +31,7 @@ class SWP_Database_Migration {
     public function __construct() {
 
 		// Set up the defaults before directing into the template functions.
-		add_action( 'template_redirect' , array( $this , 'scan_for_new_defaults') );
+		add_action( 'template_redirect' , [ $this , 'scan_for_new_defaults'] );
 
         add_action( 'plugins_loaded', [$this, 'init'] );
     }
@@ -151,7 +151,7 @@ class SWP_Database_Migration {
                  $swp_user_options[$key] = $value;
              endif;
          }
-
+		 var_dump($swp_user_options);
      }
 
 
