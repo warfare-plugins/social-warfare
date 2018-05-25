@@ -467,6 +467,14 @@ class SWP_Database_Migration {
             $migrations['float_alignment'] = 'center';
         endif;
 
+        $custom_colors = ['custom_color', 'custom_color_outlines', 'float_custom_color', 'float_custom_color_outlines'];
+
+        foreach( $custom_colors as $color ) {
+            if ( !isset($migrations[$color] ) ) :
+                $migrations[$color] = "#333333";
+            endif;
+        }
+
         $removals = [
             'dashboardShares',
             'rawNumbers',
