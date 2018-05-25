@@ -57,7 +57,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		global $swp_user_options;
 
 		// If the user has enabled Twitter shares....
-		if ( $swp_user_options['twitter_shares'] && isset( $swp_user_options['tweet_count_source'] ) ) :
+		if ( swp_get_option('twitter_shares') && isset( $swp_user_options['tweet_count_source'] ) ) :
 
 			// Return the correct Twitter JSON endpoint URL
 			if ('opensharecount' == $swp_user_options['tweet_count_source']) {
@@ -98,7 +98,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		global $swp_user_options;
 
 		// If the user has enabled Twitter shares....
-		if ( $swp_user_options['twitter_shares'] ) :
+		if ( swp_get_option('twitter_shares') ) :
 
 			// Debugging
 			if ( _swp_is_debug( 'twitter' ) ) :
