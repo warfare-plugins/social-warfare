@@ -151,7 +151,7 @@ class SWP_Database_Migration {
                  $swp_user_options[$key] = $value;
              endif;
          }
-		 var_dump($swp_user_options);
+
      }
 
 
