@@ -171,7 +171,6 @@ class SWP_Addon extends Social_Warfare {
     			else :
                     $is_registered = true;
     				update_option( 'social_warfare_settings' , [
-                        $this->key.'_license_key'   => '',
                         $this->key.'_license_key_timestamp' => $current_time
                     ] );
 
