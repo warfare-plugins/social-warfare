@@ -29,8 +29,11 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-        add_action( 'plugins_loaded', [$this, 'init'] );
 
+		// Set up the defaults before directing into the template functions.
+		add_action( 'template_redirect' , array( $this , 'scan_for_new_defaults') );
+
+        add_action( 'plugins_loaded', [$this, 'init'] );
     }
 
     public function init() {
@@ -48,7 +51,6 @@ class SWP_Database_Migration {
 			$this->update_last_migrated();
         }
 
-        $this->scan_for_new_defaults();
 
 		if ( true === _swp_is_debug('migrate_db') ) {
 			$this->migrate();
@@ -124,21 +126,31 @@ class SWP_Database_Migration {
      * Creates the default value for any new keys.
      *
      * @since 3.0.8 | 16 MAY 2018 | Created the method.
+     * @since 3.0.8 | 24 MAY 2018 | Added check for order_of_icons
      * @param  string $key They suspected missing key.
      * @return [type]      [description]
      */
     public function scan_for_new_defaults() {
-         global $swp_user_options;
-         $updated = false;
-         $defaults = apply_filters( 'swp_options_page_defaults', [] );
+        global $swp_user_options;
+        $updated = false;
+        $defaults = apply_filters( 'swp_options_page_defaults', [] );
 
-         foreach ($defaults as $key => $value ) {
+		// Manually set the order_of_icons default.
+		// TODO: Set this programatically via the set_default method on the options page.
+ 	 	$defaults['order_of_icons'] = array(
+			'google_plus' => 'google_plus',
+			'twitter'     => 'twitter',
+			'facebook'    => 'facebook',
+			'linkedin'    => 'linkedin',
+			'pinterest'   => 'pinterest'
+		);
+
+		foreach ($defaults as $key => $value ) {
              if ( !array_key_exists( $key, $swp_user_options) ) :
                  $updated = true;
                  $swp_user_options[$key] = $value;
              endif;
          }
-
 
          if ( $updated ) {
              update_option( 'social_warfare_settings', $swp_user_options );
