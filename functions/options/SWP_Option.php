@@ -145,16 +145,18 @@ class SWP_Option extends SWP_Abstract {
     *
     */
     public function set_default( $value ) {
-        if ( !is_string( $value ) ||  empty( $value ) ) {
-            $this->_throw( 'Please provide a default value as a string.' );
-        }
 
         $this->default = $value;
 
 		// Add this to our global list of defaults
 		add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
 
-         return $this;
+		global $swp_user_options;
+		if( !isset( $swp_user_options[$this->key] ) ):
+			$swp_user_options[$this->key] = $this->default;
+		endif;
+
+        return $this;
     }
 
 

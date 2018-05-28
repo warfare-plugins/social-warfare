@@ -201,8 +201,8 @@ span.spaceManWilly {
 }
 
 .swp_social_panel .total_shares {
-	background: #c4c4c4;
-	border: 1px solid #e08a0f;
+	background: transparent !important;;
+	border: none !important;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	color: white;
@@ -216,6 +216,11 @@ span.spaceManWilly {
 	-webkit-flex: none!important;
 	-ms-flex: none!important;
 	flex: none!important;
+}
+
+.swp_social_panel .total_sharesalt {
+    background: transparent !important;
+    border: none !important;
 }
 
 .swp_social_panel div.total_shares.total_sharesalt,
@@ -881,8 +886,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	/*top: 200px;*/
 	-webkit-transition: all 0.2s linear;
 	transition: all 0.2s linear;
-	width: 100px!important;
-	z-index: 9999999;
+
+	z-index: 9998;
     margin: 10px 5px !important;
     padding: 0;
 
@@ -901,10 +906,6 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	transition: all 0.2s linear;
 }
 
-.swp_social_panelSide.fade {
-	display: none;
-}
-
 .swp_social_panelSide.fade.swp_float_left {
 	left: 5px;
 }
@@ -914,11 +915,14 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide[class*=swp_side] {
-    height: 100vh;
+    height: auto;
     display: flex;
     position: fixed;
     padding: 30px 0;
-    top: 0;
+}
+
+.swp_social_panelSide.fade {
+	display: none;
 }
 
 .swp_social_panelSide.swp_float_right {
@@ -926,15 +930,14 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide.swp_side_top {
-	justify-content: flex-start;
+    top: 15px;
 }
 
 .swp_social_panelSide.swp_side_bottom {
-	justify-content: flex-end;
+    bottom: 15px;
 }
 
 .swp_social_panelSide.swp_side_center {
-    justify-content: center;
 }
 
 .swp_social_panelSide .nc_tweetContainer {
@@ -1809,9 +1812,6 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 .fl-module-content .uabb-blog-posts .uabb-post-thumbnail .sw-pinit.lazyloaded {
 	display: block !important;
 }
-
-/*In FF, the "Shares" is cutoff */
-@-moz-document url-prefix() { .swp_social_panel .total_shares .swp_label { margin-top: 8px; } }
 
 .swp-content-locator {
    display: none !important;

@@ -85,8 +85,6 @@ class SWP_Option_Text extends SWP_Option {
             $this->_throw( 'Please provide a default value as a string.' );
         endif;
 
-        $this->default = $default;
-
-        return $this;
+        return parent::set_default( $default );
     }
 }

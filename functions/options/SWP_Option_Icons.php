@@ -41,14 +41,21 @@ class SWP_Option_Icons extends SWP_Option {
 
             if ( count($user_icons) > 0 ):
     			foreach( $user_icons as $network_key) {
+
+                    //* On updates, this is being passed as an object for some reason.
+                    if ( is_object( $network_key ) ) :
+
+                        $network_key = $network_key->key;
+
+                    //* This should not ever be reached. But if it does, fail gracefully.
+                    elseif ( !is_string( $network_key) ) :
+                        return;
+                    endif;
+
                     if ( array_key_exists( $network_key, $all_icons ) && isset( $all_icons[$network_key]) ) :
                         $network = $all_icons[$network_key];
 
                         $html .= $this->render_icon_HTML( $network );
-
-                    else :
-                        write_log( $network_key, "We are looking for this index in the following icons array.");
-                        write_log( $all_icons );
                     endif;
                 }
             endif;
@@ -72,24 +79,28 @@ class SWP_Option_Icons extends SWP_Option {
         $all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
 
-        if ( empty($user_icons) ) :
-            $user_icons = [];
+        if ( empty( $user_icons )  ) :
+            return $this;
         endif;
 
-        if ( array_key_exists( 0, $all_icons) ) :
-            //* If $all_icons is numerically indexed, just diff the array.
-            $inactive_icons = array_diff( $all_icons, $user_icons );
+        $first = reset( $all_icons );
 
-        elseif ( gettype( array_pop( $all_icons ) === 'object' ) )  :
+        if ( gettype( $first ) === 'object' ) :
+
             //* Get the keys first, then diff the array.
             $keys = [];
+
             foreach( $all_icons as $object) {
                 $keys[] = $object->key;
             }
+
             $inactive_icons = array_diff( $keys, $user_icons );
 
-        else :
-            // write_log( $all_icons, 'Showing $all_icons from SWP_Option_Icons->render_inactive_icons().');
+        elseif ( array_key_exists( 0, $all_icons) ) :
+
+            //* If $all_icons is numerically indexed, just diff the array.
+            $inactive_icons = array_diff( $all_icons, $user_icons );
+
         endif;
 
         $html = '<div class="sw-grid sw-col-300">';

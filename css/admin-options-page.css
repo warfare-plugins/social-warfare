@@ -843,3 +843,46 @@ p.sw-subtitle.sw-registration-text {
     height: 120px;
     width: 97%
 }
+
+#color-notice {
+    position: fixed;
+    bottom: 15px;
+    margin: 0 auto;
+    left: 25%;
+    right: 25%;
+    background: rgba( 255, 225, 255, .37 );
+	background-color: #ced3dc;
+	color: #30394f;
+	padding: 20px;
+	border-radius: 4px;
+	text-align: left;
+	width: 650px;
+
+}
+
+#color-notice p {
+	font-size: 16px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#color-notice .color-dismiss {
+	float: right;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#color-notice .color-dismiss:before {
+	content: 'x';
+    background: #30394f;
+    border-radius: 50%;
+    width: 26px;
+    display: block;
+    text-align: center;
+    height: 26px;
+    line-height: 22px;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0;
+    opacity: .4;
+}

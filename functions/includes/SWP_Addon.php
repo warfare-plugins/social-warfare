@@ -34,7 +34,6 @@ class SWP_Addon extends Social_Warfare {
     }
 
     public function register_plugin() {
-
         	// Check to ensure that license key was passed into the function
         	if ( !empty( $_POST['license_key'] ) ) :
 
@@ -111,13 +110,17 @@ class SWP_Addon extends Social_Warfare {
 
     public function is_registered() {
         // Get the plugin options from the database
-    	$options = get_option( 'social_warfare_settings' );
+    	$options = get_option( 'social_warfare_settings', false );
+        $old_options = get_option( 'socialWarfareOptions', false );
 
         if ( isset( $options[$this->key . '_license_key'] ) ) :
             $this->license_key = $options[$this->key . '_license_key'];
+        elseif ( isset( $old_options[$this->key . '_license_key'] ) ) :
+            $this->license_key = $old_options[$this->key . '_license_key'];
         else:
             $this->license_key = '';
         endif;
+
 
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
@@ -136,7 +139,7 @@ class SWP_Addon extends Social_Warfare {
         endif;
 
         // If a week has passed since the last check, ping our API to check the validity of the license key
-        if ( !empty( $this->licence_key) ) :
+        if ( !empty( $this->license_key) ) :
 
             $data = array(
                 'edd_action' => 'check_license',
@@ -152,25 +155,23 @@ class SWP_Addon extends Social_Warfare {
     			// Parse the response into an object
     			$license_data = json_decode( $response );
 
+                $options[$this->key . '_license_key_timestamp'] = $current_time;
+
     			// If the license was invalid
     			if ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
     				$is_registered = false;
     				$this->license_key = '';
 
-    				update_option( 'social_warfare_settings' , [
-                        $this->key.'_license_key'   => '',
-                        $this->key.'_license_key_timestamp' => $current_time
-                    ] );
+                    $options[$this->key . '_license_key'] = '';
+					
+    				update_option( 'social_warfare_settings' , $options );
 
                     return false;
 
     			// If the property is some other status, just go with it.
     			else :
                     $is_registered = true;
-    				update_option( 'social_warfare_settings' , [
-                        $this->key.'_license_key'   => '',
-                        $this->key.'_license_key_timestamp' => $current_time
-                    ] );
+    				update_option( 'social_warfare_settings' , $options );
 
                     return true;
 
@@ -179,12 +180,9 @@ class SWP_Addon extends Social_Warfare {
     		// If we recieved no response from the server, we'll just check again next week
     		else :
     			$options[$key.'_license_key_timestamp'] = $current_time;
-    			update_option( 'social_warfare_settings' , [
-                    $this->key.'_license_key_timestamp' => $current_time
-                    ] );
+    			update_option( 'social_warfare_settings' , $options );
 
                 return true;
-    			$is_registered = true;
     		endif;
     	endif;
 

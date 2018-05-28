@@ -90,11 +90,11 @@ class SWP_CURL {
               var_dump($result);
               echo "</pre>";
           endif;
-          
+
 		  return $result;
 	}
 
-	public function file_get_contents_curl( $url ) {
+	public static function file_get_contents_curl( $url ) {
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );

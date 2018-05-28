@@ -71,6 +71,8 @@
     }
 
     function handleCustomColors(event, selector, customColor, customOutlines) {
+        //* Create a notice about the custom colors.
+        var colorNotice = '<div id="color-notice"><p><span class="color-dismiss"></span><b>Note:</b> Custom colors will not show up in the preview, but will on your site.</p></div>';
         var visible = false;
         var value = event.target.value;
         var visibility = {
@@ -80,7 +82,7 @@
 
         $(selector).each(function(index, select) {
             var val = $(select).val();
-            //* Check to see if this or a sibling input has custom_color selected.
+            //* Check to see if this or a sibling input has a custom_color selected.
             if (val.indexOf("custom") !== -1) {
                 if (val.indexOf("outlines") > 0) {
                     visibility.customOutlines = true;
@@ -92,6 +94,18 @@
 
         visibility.customColor ? customColor.slideDown() : customColor.slideUp();
         visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
+
+        if (visibility.customColor || visibility.customOutlines) {
+            console.log(colorNotice);
+            $("body").append(colorNotice);
+            $(".color-dismiss").on("click", function() {
+                $("#color-notice").fadeOut("slow");
+            });
+        } else {
+            if ($("#color-notice")) {
+                $(colorNotice).fadeOut("slow");
+            }
+        }
 
     }
 
@@ -701,43 +715,6 @@
 		});
 	}
 
-	function blockPremiumFeatures() {
-		$( '.sw-premium-blocker' ).tooltip({
-			items: '.sw-premium-blocker',
-			content: '<i></i>Unlock this feature by registering your license.',
-			position: {
-				my: 'center top',
-				at: 'center top'
-			},
-
-			tooltipClass: 'sw-admin-hover-notice',
-
-			open: function( event, ui ) {
-				if ( typeof ( event.originalEvent ) === 'undefined' ) {
-					return false;
-				}
-
-				var $id = $( ui.tooltip ).attr( 'id' );
-
-				// close any lingering tooltips
-				$( 'div.ui-tooltip' ).not( '#' + $id ).remove();
-
-				// ajax function to pull in data and add it to the tooltip goes here
-			},
-
-			close: function( event, ui ) {
-				ui.tooltip.hover(function() {
-					$( this ).stop( true ).fadeTo( 400, 1 );
-				},
-				function() {
-					$( this ).fadeOut( '400', function() {
-						$( this ).remove();
-					});
-				});
-			}
-		});
-	}
-
 	/*********************************************************
 		A Function for image upload buttons
 	*********************************************************/
@@ -819,7 +796,6 @@
 		handleRegistration();
 		sortableInit();
 		getSystemStatus();
-		blockPremiumFeatures();
 		customUploaderInit();
 		set_ctt_preview();
 	});

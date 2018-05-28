@@ -32,11 +32,7 @@ class SWP_Display {
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action('template_redirect', [$this, 'activate_buttons'] );
-
-        // Add the side floating buttons to the footer if they are activated
-        if ( in_array( swp_get_option('float_location') , ['left', 'right'], true ) ) {
-            add_action( 'wp_footer', [$this, 'floating_buttons_side'] );
-        }
+        add_action( 'wp_footer', [$this, 'floating_buttons'] );
     }
     /**
      * A function to add the buttons
@@ -98,11 +94,19 @@ class SWP_Display {
 		return $buttons_panel->the_buttons( $content );
     }
 
-    function floating_buttons_side() {
-        $side_panel = new SWP_Buttons_Panel( ['content' => "" ]);
-        $side_panel->render_floating_HTML( $echo = true );
-        return;
+    function floating_buttons() {
 
+        $side_panel = new SWP_Buttons_Panel( ['content' => "" ]);
+
+        $location = $side_panel->get_float_location();
+
+        if ( 'none' === $location || 'ignore' === $location ) {
+            return;
+        }
+
+        $side_panel->render_floating_HTML( $echo = true );
+
+        return;
     }
 
     /**

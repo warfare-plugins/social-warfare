@@ -78,8 +78,6 @@ class SWP_Option_Toggle extends SWP_Option {
             $this->_throw( 'Please provide a default value as a boolean.' );
         }
 
-        $this->default = $value;
-
-        return $this;
+        return parent::set_default( $value );
     }
 }

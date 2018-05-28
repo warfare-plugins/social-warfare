@@ -97,31 +97,33 @@ class SWP_Buttons_Panel {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
 		$this->args = $args;
-        $this->content = isset( $args['content'] ) ? $args['content'] : '';
-        //* Access the $post once while we have it. Values may be overwritten.
-	      if( isset( $post->post_type ) ) {
-            $this->post_data = [
-                'ID'           => $post->ID,
-                'post_type'    => $post->post_type,
-                'permalink'    => get_the_permalink( $post->ID ),
-                'post_title'   => $post->post_title,
-                'post_status'  => $post->post_status,
-                'post_content' => $post->post_content
-            ];
-            $this->is_shortcode = $shortcode;
-            $this->localize_options( $args );
-            $this->establish_post_id();
-            $this->shares = get_social_warfare_shares( $this->post_data['ID'] );
-            $this->establish_location();
-            $this->establish_float_location();
-            $this->establish_permalink();
-            $this->establish_active_buttons();
 
-            if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
-                    echo "<pre>";
-                    var_dump($this);
-                    echo "</pre>";
-            endif;
+        //* Access the $post once while we have it. Values may be overwritten.
+
+	      if( isset( $post->post_type ) ) {
+        $this->post_data = [
+            'ID'           => $post->ID,
+            'post_type'    => $post->post_type,
+            'permalink'    => get_the_permalink( $post->ID ),
+            'post_title'   => $post->post_title,
+            'post_status'  => $post->post_status,
+            'post_content' => $post->post_content
+        ];
+
+        $this->content = isset( $args['content'] ) ? $args['content'] : '';
+        $this->is_shortcode = $shortcode;
+        $this->localize_options( $args );
+	    $this->establish_post_id();
+		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+	    $this->establish_location();
+		$this->establish_permalink();
+        $this->establish_active_buttons();
+
+        if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
+                echo "<pre>";
+                var_dump($this);
+                echo "</pre>";
+        endif;
         }
     }
 	/**
@@ -221,8 +223,7 @@ class SWP_Buttons_Panel {
 	 * content to which to append.
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
-	 * @since  3.0.5 | 11 MAY 2018 | Added returns to the method won't keep processing.
-	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $preset_location isn't an array.
+	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $post_setting isn't an array.
 	 * @param  none
 	 * @return none All values are stored in local properties.
 	 * @access public
@@ -231,10 +232,11 @@ class SWP_Buttons_Panel {
 	public function establish_location() {
         //* Establish a default.
         $this->location = 'none';
-		if(empty($this->content)):
+
+		if ( empty( $this->content ) && is_singular() ):
 			$this->location = 'above';
-			return;
 		endif;
+
 		/**
 		 * Location from the Post Options
 		 *
@@ -242,13 +244,21 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$preset_location = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
-		if( is_array($preset_location) ) { $preset_location = $preset_location[0]; }
+		$post_setting = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
+
+        if( is_array($post_setting) ) :
+             $post_setting = $post_setting[0];
+         endif;
+
 		// If the location is set in the post options, use that.
-		if ( !empty( $preset_location ) && 'default' != $preset_location && !is_array( $preset_location ) ) {
-			$this->location = $preset_location;
-			return;
+		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+			$this->location = $post_setting;
+
+            //* Exit early because this is a priority.
+            return;
 		};
+
+
 		/**
 		 * Global Location Settings
 		 *
@@ -256,20 +266,21 @@ class SWP_Buttons_Panel {
 		 * for that type from the global options.
 		 *
 		 */
+
 		// If we are on the home page
 		if( is_front_page() ):
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
-			return;
         endif;
+
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
             if ( isset( $location ) ) :
                 $this->location = $location;
-				return;
             endif;
         endif;
+
         if ( is_archive() || is_home() ) :
             $this->location = $this->options['location_archive_categories'];
         endif;
@@ -289,22 +300,6 @@ class SWP_Buttons_Panel {
      */
     public function display_name_to_key( $string ) {
         return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
-    }
-
-
-    protected function establish_float_location() {
-        // Set the options for the horizontal floating bar
-        // $spec_float_where = get_post_meta( $this->post_data['ID'] , 'nc_float_location' , true );
-        //
-        // if ( isset( $this->args['floating_panel'] ) && $this->args['floating_panel'] == 'ignore' ) :
-        //     $floatOption = 'float_ignore';
-        // elseif ( $spec_float_where == 'off' && $this->options['button_alignment'] != 'float_ignore' ) :
-        //         $floatOption = 'floatNone';
-        // elseif ( $this->options['floating_panel'] && is_singular() && $this->options[ 'float_location_' . $this->post_data['post_type'] ] == 'on' ) :
-        //     $floatOption = 'floating_panel' . ucfirst( $this->options['float_location'] );
-        // else :
-        //     $floatOption = 'floatNone';
-        // endif;
     }
 
 
@@ -351,14 +346,22 @@ class SWP_Buttons_Panel {
      *
      *
      * @return Boolean True if the buttons are okay to print, else false.
+     * @since 3.0.8  | 21 MAY 2018 | Added extra condition to check for content (for calls to social_warfare()).
      */
     public function should_print() {
+
+        //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
+        if ( empty( $this->content ) && !isset( $this->args['content'] )  ) :
+            return true;
+        endif;
+
         $user_settings = $this->location !== 'none';
 
         $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
 
-        $undesired_conditions = !is_admin() && !is_feed() && !is_search() && !is_attachment();
-        return $user_settings && $desired_conditions && $undesired_conditions;
+        $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
+
+        return $user_settings && $desired_conditions && !$undesired_conditions;
     }
 
 
@@ -375,12 +378,13 @@ class SWP_Buttons_Panel {
 	 */
     public function render_HTML( $echo = false ) {
 
-		if ( ! $this->should_print() ) :
+		if ( !$this->should_print() ) :
 			return $this->content;
 		endif;
 
         $total_shares_html = $this->render_total_shares_html();
         $buttons = $this->render_buttons_html();
+
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
             ' swp_default_' . $this->option('default_colors') .
@@ -396,11 +400,13 @@ class SWP_Buttons_Panel {
             ">';
             //* This should be inserted via addon, not here.
             //'" data-emphasize="'.$this->option('emphasize_icons').'
+
         if ($this->option('totals_alignment') === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
         else:
             $buttons .= $total_shares_html;
         endif;
+
         $html = $container . $buttons . '</div>';
         $this->html = $html;
         if ( $echo ) :
@@ -452,13 +458,31 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_float_location() {
-		if( is_home() || is_front_page() || is_404() ):
+        $post_on = false;
+		if( is_home() && !is_front_page() || is_404() ):
 			return 'none';
-		elseif( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
+        endif;
+
+        $post_setting = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
+
+        if( is_array($post_setting) ) :
+             $post_setting = $post_setting[0];
+         endif;
+
+		// If the location is set in the post options, use that.
+		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+            if( 'off' === $post_setting) :
+                return 'none';
+            endif;
+            
+			$post_on = true;
+		};
+
+		if ( $post_on || is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
 			return $this->option('float_location');
-		else:
-			return 'none';
 		endif;
+
+		return 'none';
 	}
 
 
@@ -486,9 +510,21 @@ class SWP_Buttons_Panel {
 		endif;
 	}
 
-
+    /**
+     * Creates the fully qualified markup for floating button panel.
+     *
+     * @param  boolean $echo Whether or not to immediately echo the HTML.
+     * @return string  $html The qualified markup for the panel.
+     * @since 3.0.0
+     * @since 3.0.8 | 22 MAY 2018 | Added the $blacklist and in_array conditional.
+     */
     public function render_floating_HTML( $echo = true ) {
         //* BEGIN Old boilerplate that needs to be refactored.
+        $blacklist = ['none', 'top', 'bottom'];
+
+        if ( in_array( $this->option('float_location'), $blacklist ) ) :
+            return '';
+        endif;
 
 		if( is_singular() && 'none' !== $this->get_float_location() ):
 
@@ -539,10 +575,10 @@ class SWP_Buttons_Panel {
 	            ' scale-' . $this->option('float_size') * 100 .
 	            '" data-float="' . $float_location .
 	            '" data-count="' . count($this->networks) .
-	            '" data-floatColor="' . $this->option('float_background_color') .
+	            '" data-floatcolor="' . $this->option('float_background_color') .
 	            '" data-screen-width="' . $this->option('float_screen_width') .
 	            '" data-transition="' . $this->option('transition') .
-	            '" data-float-mobile="'.$this->option('float_mobile').'">';
+	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
 	        if ($this->option('totals_alignment') === 'totals_left') :
 	            $buttons = $share_counts . $buttons;
 	        else:
@@ -686,13 +722,18 @@ class SWP_Buttons_Panel {
      */
     public function render_total_shares_html() {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
+        $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares')  || $this->is_shortcode && !in_array( 'total', $buttons ) ) {
+
+
+        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument && !empty( $this->args['buttons'] ) ) {
             return '';
         }
+
         $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
             $html .= '<span class="swp_count ">' . swp_kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
         $html .= '</div>';
+
         return $html;
     }
 

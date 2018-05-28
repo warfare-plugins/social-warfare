@@ -29,6 +29,14 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
+
+		// Set up the defaults before directing into the template functions.
+		add_action( 'template_redirect' , [ $this , 'scan_for_new_defaults'] );
+
+        add_action( 'plugins_loaded', [$this, 'init'] );
+    }
+
+    public function init() {
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
@@ -40,7 +48,9 @@ class SWP_Database_Migration {
         if ( !$this->post_meta_is_migrated() ) {
             $this->update_post_meta();
             $this->update_hidden_post_meta();
+			$this->update_last_migrated();
         }
+
 
 		if ( true === _swp_is_debug('migrate_db') ) {
 			$this->migrate();
@@ -102,15 +112,48 @@ class SWP_Database_Migration {
     * @return bool True if the old option still exists; false otherwise.
     */
     public function post_meta_is_migrated() {
+        if( $this->last_migrated === $this->get_last_migrated() ) {
+            return true;
+        }
+
          //* Fetch posts with 2.3.5 metadata.
         $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
-		if( $this->last_migrated !== $this->get_last_migrated() ) {
-			return false;
-		}
-
         return count( $old_metadata ) === 0;
     }
+
+    /**
+     * Creates the default value for any new keys.
+     *
+     * @since 3.0.8 | 16 MAY 2018 | Created the method.
+     * @since 3.0.8 | 24 MAY 2018 | Added check for order_of_icons
+     * @param  string $key They suspected missing key.
+     * @return [type]      [description]
+     */
+    public function scan_for_new_defaults() {
+        global $swp_user_options;
+        $updated = false;
+        $defaults = apply_filters( 'swp_options_page_defaults', [] );
+
+		// Manually set the order_of_icons default.
+		// TODO: Set this programatically via the set_default method on the options page.
+ 	 	$defaults['order_of_icons'] = array(
+			'google_plus' => 'google_plus',
+			'twitter'     => 'twitter',
+			'facebook'    => 'facebook',
+			'linkedin'    => 'linkedin',
+			'pinterest'   => 'pinterest'
+		);
+
+		foreach ($defaults as $key => $value ) {
+             if ( !array_key_exists( $key, $swp_user_options) ) :
+                 $updated = true;
+                 $swp_user_options[$key] = $value;
+             endif;
+         }
+
+     }
+
 
     public function update_hidden_post_meta() {
         global $wpdb;
@@ -187,6 +230,9 @@ class SWP_Database_Migration {
             $q2 = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
             $results = $wpdb->query( $q2 );
         }
+
+        $this->update_last_migrated();
+
     }
 
 
@@ -314,7 +360,7 @@ class SWP_Database_Migration {
             'swp_decimal_separator'             => 'decimal_separator',
             'swTotesFormat'                     => 'totals_alignment',
             'float'                             => 'floating_panel',
-            'float_background_color'            => 'float_location',
+            'floatOption'                       => 'float_location',
             'swp_float_scr_sz'                  => 'float_screen_width',
             'sideReveal'                        => 'transition',
             'floatStyle'                        => 'float_button_shape',
@@ -369,27 +415,9 @@ class SWP_Database_Migration {
             'floatLeftMobile'   => 'float_mobile',
         ];
 
-
-
-        //* We don't actually do anything with these. I left them here just as a note.
-        //* They are deleted during the call to delete_option( 'socialWarfareOptions' ).
-        $removals = [
-            'dashboardShares',
-            'rawNumbers',
-            'notShowing',
-            'visualEditorBug',
-            'loopFix',
-            'locationrevision',
-            'locationattachment',
-        ];
-
-
         $migrations = [];
 
         foreach( $options as $old => $value ) {
-
-
-
             //* The order of icons used to be stored in an array at 'active'.
             if ( is_array( $value) && array_key_exists( 'active', $value) ) :
                 $new_value = $value;
@@ -400,18 +428,36 @@ class SWP_Database_Migration {
                 $new_value = $value;
             endif;
 
+            //* Specific case: newOrderOfIcons mapping.
+            if ( 'newOrderOfIcons' === $old ) :
+                if ( array_key_exists( 'googlePlus', $new_value ) ) :
+                    unset( $new_value['googlePlus'] );
+                    $new_value[] = 'google_plus';
+                endif;
+
+                if (array_key_exists( 'linkedIn', $new_value) ) :
+                    unset( $new_value['linkedIn'] );
+                    $new_value[] = 'linkedin';
+                endif;
+            endif;
+
             //* Specific case: customColor mapping.
             if ( $old === 'customColor' ) :
                 $migrations['custom_color'] = $new_value;
                 $migrations['custom_color_outlines'] = $new_value;
 
-                if ( $options['floatStyleSource'] == false ) :
+				// If the float style source is set to inherit the style from the static buttons.
+                if ( $options['floatStyleSource'] == true ) :
                     $migrations['float_custom_color'] = $new_value;
                     $migrations['float_custom_color_outlines'] = $new_value;
                 endif;
-
-                continue;
             endif;
+
+			// Only if the source is set to not inherit them from the static buttons.
+			if ( $old === 'sideCustomColor' ) :
+				$migrations['float_custom_color'] = $new_value;
+				$migrations['float_custom_color_outlines'] = $new_value;
+			endif;
 
             if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.
@@ -423,6 +469,43 @@ class SWP_Database_Migration {
             endif;
 
         }
+
+        //* Manually adding these in as short term solution.
+        if ( !isset( $migrations['float_size'] ) ) :
+            $migrations['float_size'] = '1';
+        endif;
+
+        if ( !isset( $migrations['float_location'] ) ) :
+            $migrations['float_location'] = 'bottom';
+        endif;
+
+        if ( !isset( $migrations['float_alignment'] ) ) :
+            $migrations['float_alignment'] = 'center';
+        endif;
+
+        $custom_colors = ['custom_color', 'custom_color_outlines', 'float_custom_color', 'float_custom_color_outlines'];
+
+        foreach( $custom_colors as $color ) {
+            if ( !isset($migrations[$color] ) ) :
+                $migrations[$color] = "#333333";
+            endif;
+        }
+
+        $removals = [
+            'dashboardShares',
+            'rawNumbers',
+            'notShowing',
+            'visualEditorBug',
+            'loopFix',
+            'locationrevision',
+            'locationattachment',
+        ];
+
+        foreach ( $removals as $trash ) :
+            if ( ( $migrations[$trash] ) ) :
+                unset($migrations[$trash]);
+            endif;
+        endforeach;
 
         update_option( 'social_warfare_settings', $migrations );
         //* Play it safe for now.

@@ -192,8 +192,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller').removeAttr('style');
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
 	}
+
 	function createFloatBar() {
-        //if ( ! $( '.swp_social_panelSide' ).length ) {
+        // if ( ! $( '.swp_social_panelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
 				$( '.nc_wrapper' ).remove();
 			}
@@ -204,25 +205,31 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			if ( location ) {
 
 				if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
-					var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
-					var offsetOne = firstSocialPanel.offset();
-					var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
-					var minWidth = ncSideFloater.data( 'screen-width' );
+        			var floatMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+        			var offsetOne = firstSocialPanel.offset();
+        			var ncSideFloater = $( '.swp_social_panelSide' ).filter( ':not(.mobile)' );
+        			var minWidth = ncSideFloater.data( 'screen-width' );
+
 					if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
-						var position = floatLeftMobile;
+						var position = floatMobile;
 					} else {
 						var position = location;
 					}
 
 				} else {
 					var position = location;
+
 				}
 
 				var backgroundColor = $( '.swp_social_panel' ).data( 'floatcolor' );
 
 				var el = $( '<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>' );
                 el.appendTo( 'body' );
-				var position = firstSocialPanel.data( 'float' );
+                if ( location === 'left' || location === 'right' ) {
+                    var position = firstSocialPanel.data( 'float-mobile' );
+                } else {
+                    var position = firstSocialPanel.data( 'float' );
+                }
 				firstSocialPanel.clone().appendTo( el );
 
 				$( '.nc_wrapper' ).hide().addClass( position );
@@ -237,8 +244,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				$( '.swp_social_panel' ).eq( 0 ).addClass( 'swp_one' );
 				$( '.swp_social_panel' ).eq( 2 ).addClass( 'swp_two' );
 				$( '.swp_social_panel' ).eq( 1 ).addClass( 'swp_three' );
-			}
-//}
+            }
+		// }
 	}
 
 	function floatingBarReveal() {
@@ -261,7 +268,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		if ( location === 'right' || location === 'left' ) {
-			var floatLeftMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+			var floatMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
 			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 
 			if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
@@ -274,9 +281,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				});
 				if ( offsetOne.left < 100 || $( window ).width() < minWidth ) {
 					visible = true;
-					if ( floatLeftMobile == 'bottom' ) {
+					if ( floatMobile == 'bottom' ) {
 						location = 'bottom';
-					} else if ( floatLeftMobile == 'top' ) {
+					} else if ( floatMobile == 'top' ) {
 						location = 'top';
 					}
 				} else if (visible) {
@@ -290,9 +297,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					visible = false;
 				} else {
 					visible = true;
-					if(floatLeftMobile == 'bottom') {
+					if(floatMobile == 'bottom') {
 						location = 'bottom';
-					} else if ( floatLeftMobile == 'top' ) {
+					} else if ( floatMobile == 'top' ) {
 						location = 'top';
 					}
 				}
@@ -358,9 +365,28 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 	}
 
+    function centerSidePanel() {
+        var sidePanel = jQuery("[class*=float-position-center]");
+
+        if (!sidePanel.length) return;
+
+        var panelHeight = sidePanel.outerHeight();
+        var windowHeight = window.innerHeight;
+
+        if (panelHeight > windowHeight) {
+            sidePanel.css("top", 0);
+            return;
+        }
+
+        var offset = (windowHeight - panelHeight) / 2;
+
+        sidePanel.css("top", offset);
+    }
+
 	function initShareButtons() {
 		if ( 0 !== $( '.swp_social_panel' ).length ) {
 			createFloatBar();
+            centerSidePanel();
 			swp.activateHoverStates();
 			handleWindowOpens();
 			$( window ).scrollTop();
