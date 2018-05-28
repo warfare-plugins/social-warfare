@@ -459,7 +459,7 @@ class SWP_Buttons_Panel {
 	 */
 	public function get_float_location() {
         $post_on = false;
-		if( is_home() && !is_front_page() || is_404() ):
+		if( is_home() && !is_front_page() || is_404() || !isset($this->post_data) ):
 			return 'none';
         endif;
 
@@ -695,6 +695,7 @@ class SWP_Buttons_Panel {
     public function render_buttons_HTML( $max_count = null) {
         $html = '';
         $count = 0;
+	    if(isset($this->networks)) {
         foreach( $this->networks as $key => $network ) {
             if ( isset( $max_count) && $count === $max_count) :
                 return $html;
@@ -706,6 +707,7 @@ class SWP_Buttons_Panel {
             $html .= $network->render_HTML( $context );
             $count++;
         }
+	    }
         return $html;
     }
 
