@@ -96,7 +96,7 @@ class SWP_Buttons_Panel {
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
-		$this->args = $args;
+    		$this->args = $args;
 
         //* Access the $post once while we have it. Values may be overwritten.
         $this->post_data = [
@@ -111,10 +111,10 @@ class SWP_Buttons_Panel {
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
         $this->localize_options( $args );
-	    $this->establish_post_id();
-		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
-	    $this->establish_location();
-		$this->establish_permalink();
+  	    $this->establish_post_id();
+    		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+  	    $this->establish_location();
+    		$this->establish_permalink();
         $this->establish_active_buttons();
 
         if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
@@ -189,11 +189,27 @@ class SWP_Buttons_Panel {
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
 			$this->post_data['ID'] = $this->args['postID'];
-        endif;
+    endif;
+
 		// Current argument.
 		if ( isset( $this->args['post_id'] ) ) :
 			$this->post_data['ID'] = $this->args['post_id'];
-        endif;
+    endif;
+
+    if ( isset ( $this->args['id'] ) ) :
+      $post = get_post( $this->args['id'] );
+      $post_data = [
+          'ID'           => $post->ID,
+          'post_type'    => $post->post_type,
+          'permalink'    => get_the_permalink( $post->ID ),
+          'post_title'   => $post->post_title,
+          'post_status'  => $post->post_status,
+          'post_content' => $post->post_content
+      ];
+
+      $this->post_data = array_merge( $this->post_data, $post_data );
+
+    endif;
 	}
 	/**
 	 * Establish the post content
@@ -471,7 +487,7 @@ class SWP_Buttons_Panel {
             if( 'off' === $post_setting) :
                 return 'none';
             endif;
-            
+
 			$post_on = true;
 		};
 
