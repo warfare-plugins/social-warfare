@@ -125,7 +125,7 @@ class SWP_URL_Management {
 				$access_token = $options['bitly_access_token'];
 
 				// If Google Analytics is Activated....
-				if ( $options['google_analtyics'] == true ) :
+				if ( swp_get_option('google_analytics') == true ) :
 
 					// If the link has already been shortened....
 					$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );
