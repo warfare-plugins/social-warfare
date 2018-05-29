@@ -7,7 +7,7 @@
 * networks. This class will shorten them via Bitly or add Google Analytics tracking
 * parameters if the user has either of these options enabled and configured.
 *
-* @since 3.0.0 | 14 FEB 2018 | Added check for is_attachment() to swp_google_analtyics
+* @since 3.0.0 | 14 FEB 2018 | Added check for is_attachment() to swp_google_analytics
 * @since 3.0.0 | 04 APR 2018 | Converted to class-based, object-oriented system.
 *
 */
@@ -63,7 +63,7 @@ class SWP_URL_Management {
 	    	endif;
 
 	    	// Check if Analytics have been enabled or not
-	    	if ( true == $options['google_analytics'] ) :
+	    	if ( true == swp_get_option('google_analytics') ) :
 	            $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analytics_medium'] . '&utm_campaign=' . $options['analytics_campaign'] . '';
 
 	    		if ( strpos( $url,'?' ) !== false ) :
