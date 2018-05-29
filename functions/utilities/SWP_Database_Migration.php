@@ -48,22 +48,27 @@ class SWP_Database_Migration {
         if ( !$this->post_meta_is_migrated() ) {
             $this->update_post_meta();
             $this->update_hidden_post_meta();
-			$this->update_last_migrated();
+						$this->update_last_migrated();
         }
 
+        if ( true === _swp_is_debug('get_user_options') ) :
+            echo "<pre>";
+						var_export( get_option( 'social_warfare_settings', array() ) );
+						echo "</pre>";
+				endif;
 
-		if ( true === _swp_is_debug('migrate_db') ) {
-			$this->migrate();
-		}
+				if ( true === _swp_is_debug('migrate_db') ) {
+					$this->migrate();
+				}
 
         if ( true === _swp_is_debug('initialize_db') ) {
             $this->initialize_db();
         }
 
-		if ( true === _swp_is_debug('migrate_post_meta') ) {
-			$this->update_post_meta();
-			$this->update_hidden_post_meta();
-		}
+				if ( true === _swp_is_debug('migrate_post_meta') ) {
+					$this->update_post_meta();
+					$this->update_hidden_post_meta();
+				}
 
         if ( true === _swp_is_Debug('get_last_migrated') ) {
             $this->get_last_migrated( true );
