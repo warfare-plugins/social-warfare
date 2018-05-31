@@ -104,7 +104,7 @@ function swp_store_the_settings() {
 		}
 	}
 
-  wp_cache_delete ( 'alloptions', 'options' );
+  wp_cache_delete ( 'social_warfare_settings', 'options' );
 	echo json_encode(swp_update_options( $options ));
 
 	die;
