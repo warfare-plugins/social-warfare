@@ -73,60 +73,75 @@ function swp_cache_rebuild_rel_canonical( $info ) {
  * @return boolean true/false The status of wether the cache is fresh or not
  */
 function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
-	global $swp_user_options;
+		global $swp_user_options;‘
 
-	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
-	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
-		return true;
-	}
 
-	$options = $swp_user_options;
 
-	$fresh_cache = false;
+		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
+			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+			}
+			return true;
+		}
 
-	// Bail if output isn't being forced and legacy caching isn't enabled.
-	if ( ! $output && isset( $options['cache_metod'] ) && 'legacy' !== $options['cache_method'] ) {
-		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
+		$options = $swp_user_options;
+
+		$fresh_cache = false;
+
+		// Bail if output isn't being forced and legacy caching isn't enabled.
+		if ( ! $output && isset( $options['cache_metod'] ) && 'legacy' !== $options['cache_method'] ) {
+
+			if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
+				$fresh_cache = true;
+			}
+
+			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+	        echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+	    }
+			return $fresh_cache;
+		}
+
+		if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
+			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+			}
+			return false;
+		}
+
+		// Always be TRUE if we're not on a single.php otherwise we could end up
+		// Rebuilding multiple page caches which will cost a lot of time.
+		if ( ! is_singular() && ! $ajax ) {
+			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+			}
+			return true;
+		}
+
+		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $post_id ) );
+
+		if ( $post_age < ( 21 * 86400 ) ) {
+			$hours = 1;
+		} elseif ( $post_age < ( 60 * 86400 ) ) {
+			$hours = 4;
+		} else {
+			$hours = 12;
+		}
+
+		$time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
+		$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
+
+		if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
 			$fresh_cache = true;
+		} else {
+			$fresh_cache = false;
+		}
+
+		if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
 		}
 
 		return $fresh_cache;
-	}
-
-	if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
-		return false;
-	}
-
-	// Always be TRUE if we're not on a single.php otherwise we could end up
-	// Rebuilding multiple page caches which will cost a lot of time.
-	if ( ! is_singular() && ! $ajax ) {
-		return true;
-	}
-
-	$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $post_id ) );
-
-	if ( $post_age < ( 21 * 86400 ) ) {
-		$hours = 1;
-	} elseif ( $post_age < ( 60 * 86400 ) ) {
-		$hours = 4;
-	} else {
-		$hours = 12;
-	}
-
-	$time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
-	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
-
-	if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
-		$fresh_cache = true;
-	} else {
-		$fresh_cache = false;
-	}
-
-    if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-        echo "The cache is fresh: " . (int) $fresh_cache;
-    }
-
-	return $fresh_cache;
 }
 
 add_action( 'wp_ajax_swp_cache_trigger', 'swp_cache_rebuild' );
@@ -328,19 +343,19 @@ function swp_cache_rebuild_pin_image($post_id) {
 add_action( 'wp_ajax_swp_facebook_shares_update', 'swp_facebook_shares_update' );
 add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', 'swp_facebook_shares_update' );
 function swp_facebook_shares_update() {
-	$post_id = $_POST['post_id'];
-	$activity = $_POST['activity'];
+		$post_id = $_POST['post_id'];
+		$activity = $_POST['activity'];
 
-	$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
+		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
-	if ( $activity > $previous_activity || (isset($options['force_new_shares']) && true === $options['force_new_shares']) ) :
-		delete_post_meta( $post_id, '_facebook_shares' );
-		update_post_meta( $post_id, '_facebook_shares', $activity );
-	endif;
+		if ( $activity > $previous_activity || (isset($options['force_new_shares']) && true === $options['force_new_shares']) ) :
+			delete_post_meta( $post_id, '_facebook_shares' );
+			update_post_meta( $post_id, '_facebook_shares', $activity );
+		endif;
 
-	echo true;
+		echo true;
 
-	wp_die();
+		wp_die();
 }
 
 add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
