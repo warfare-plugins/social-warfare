@@ -272,32 +272,42 @@
 	*********************************************************/
 	function handleSettingSave() {
 		$( '.sw-save-settings' ).on( 'click', function( event ) {
-			// Block the default action
-			event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
+				// Block the default action
+				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
 
-			// The loading screen
-			loadingScreen();
+				// The loading screen
+				loadingScreen();
 
-			// Fetch all the settings
-			var settings = fetchAllOptions();
+				// Fetch all the settings
+				var settings = fetchAllOptions();
 
-			// Prepare date
-			var data = {
-				action: 'swp_store_settings',
-				security: swpAdminOptionsData.optionsNonce,
-				settings: settings
-			};
+				// Prepare date
+				var data = {
+					action: 'swp_store_settings',
+					security: swpAdminOptionsData.optionsNonce,
+					settings: settings
+				};
 
-			// Send the POST request
-			$.post( ajaxurl, data, function(response) {
-				// Clear the loading screen
-				clearLoadingScreen();
+				// Send the POST request
+				$.post( ajaxurl, {
+					data,
+					success: function(response) {
+						// Clear the loading screen
+						clearLoadingScreen();
 
-				// Reset the default options variable
-				socialWarfarePlugin.defaultOptions = fetchAllOptions();
+						// Reset the default options variable
+						socialWarfarePlugin.defaultOptions = fetchAllOptions();
 
-				saveColorToggle();
+						saveColorToggle();
+						console.log("this was the response from the server.")
+						console.dir(response)
+					},
+					beforeSend: function() {
+						console.log("Sending this to the server.");
+						console.dir(data);
+					}
 			});
+
 		});
 	}
 
