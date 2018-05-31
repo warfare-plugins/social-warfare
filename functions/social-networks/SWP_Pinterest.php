@@ -85,28 +85,27 @@ class SWP_Pinterest extends SWP_Social_Network {
      public function render_HTML( $panel_context , $echo = false ) {
         global $swp_user_options;
         $post_id = $panel_context['post_data']['ID'];
-
-		$post_url = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
+				$post_url = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
 
         $options = $swp_user_options;
         $pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image' , true );
         $pinterest_image_link = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
 
         if ( !empty( $options['pinterest_id'] ) ) :
- 			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
- 		else :
- 			$pinterest_username = '';
- 		endif;
+			 			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
+		 		else :
+			 			$pinterest_username = '';
+		 		endif;
 
         $title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
 
         $pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
 
-		if( is_array( $pinterest_description ) && !empty( $pinterest_description )  ) {
-			$pinterest_description = $pinterest_description[0];
-			delete_post_meta( $post_id , 'swp_pinterest_description' );
-			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
-		}
+				if( is_array( $pinterest_description ) && !empty( $pinterest_description ) ) {
+						$pinterest_description = $pinterest_description[0];
+						// delete_post_meta( $post_id , 'swp_pinterest_description' );
+						update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
+				}
 
         if ( empty( $pinterest_description ) ) :
             $pinterest_description = $title;
@@ -115,31 +114,30 @@ class SWP_Pinterest extends SWP_Social_Network {
         $pinterest_description .= $pinterest_username;
 
         if ( $pinterest_image != '') :
-       		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
-                   'data-link="https://pinterest.com/pin/create/button/' .
-                   '?url=' . $panel_context['post_data']['permalink'] .
-                   '&media=' . urlencode( $pinterest_image_link ) .
-                   '&description=' . urlencode( $pinterest_description ) .
-                   '">';
+	       		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
+								'data-link="https://pinterest.com/pin/create/button/' .
+								'?url=' . $panel_context['post_data']['permalink'] .
+								'&media=' . urlencode( $pinterest_image_link ) .
+								'&description=' . urlencode( $pinterest_description ) .
+								'">';
        	else :
-       		$anchor = '<a rel="nofollow" class="nc_tweet noPop" ' .
-                   'onClick="var e=document.createElement(\'script\');
-                       e.setAttribute(\'type\',\'text/javascript\');
-                       e.setAttribute(\'charset\',\'UTF-8\');
-                       e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
-                       document.body.appendChild(e);
-                   " >';
+	       		$anchor = '<a rel="nofollow" class="nc_tweet noPop" ' .
+								'onClick="var e=document.createElement(\'script\');
+								   e.setAttribute(\'type\',\'text/javascript\');
+								   e.setAttribute(\'charset\',\'UTF-8\');
+								   e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
+								   document.body.appendChild(e);
+								" >';
        	endif;
 
-
-
-            if ( isset($options['advanced_pinterest_fallback']) && $options['advanced_pinterest_fallback'] == 'featured'):
+        if ( isset($options['advanced_pinterest_fallback']) && $options['advanced_pinterest_fallback'] == 'featured'):
          		$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $panel_context['postID'] ) );
-         		if( !empty( $thumbnail_url ) ):
-         			$array['imageURL'] = $thumbnail_url;
-         		endif;
 
-         	endif;
+		     		if( !empty( $thumbnail_url ) ):
+			     			$array['imageURL'] = $thumbnail_url;
+		     		endif;
+
+       	endif;
 
          //* Begin parent class method.
 
