@@ -51,10 +51,11 @@ class SWP_Database_Migration {
 						$this->update_last_migrated();
         }
 
-        if ( true === _swp_is_debug('get_user_options') ) :
-            echo "<pre>";
+				if ( true === _swp_is_debug('get_user_options') ) :
+				    echo "<pre>";
 						var_export( get_option( 'social_warfare_settings', array() ) );
 						echo "</pre>";
+						wp_die();
 				endif;
 
 				if ( true === _swp_is_debug('migrate_db') ) {
@@ -394,7 +395,7 @@ class SWP_Database_Migration {
             'sideCustomColor'                   => 'single_custom_color',
             'floatBgColor'                      => 'float_background_color',
             'orderOfIconsSelect'                => 'order_of_icons_method',
-			'newOrderOfIcons'                   => 'order_of_icons',
+						'newOrderOfIcons'                   => 'order_of_icons',
         ];
 
         $value_map = [
@@ -451,18 +452,18 @@ class SWP_Database_Migration {
                 $migrations['custom_color'] = $new_value;
                 $migrations['custom_color_outlines'] = $new_value;
 
-				// If the float style source is set to inherit the style from the static buttons.
-                if ( $options['floatStyleSource'] == true ) :
+						// If the float style source is set to inherit the style from the static buttons.
+            if ( $options['floatStyleSource'] == true ) :
                     $migrations['float_custom_color'] = $new_value;
                     $migrations['float_custom_color_outlines'] = $new_value;
                 endif;
             endif;
 
-			// Only if the source is set to not inherit them from the static buttons.
-			if ( $old === 'sideCustomColor' ) :
-				$migrations['float_custom_color'] = $new_value;
-				$migrations['float_custom_color_outlines'] = $new_value;
-			endif;
+						// Only if the source is set to not inherit them from the static buttons.
+						if ( $old === 'sideCustomColor' ) :
+							$migrations['float_custom_color'] = $new_value;
+							$migrations['float_custom_color_outlines'] = $new_value;
+						endif;
 
             if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.

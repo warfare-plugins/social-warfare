@@ -40,28 +40,28 @@
  *
  */
 function swp_get_option( $key, $options = null ){
-	global $swp_user_options;
+  	global $swp_user_options;
 
     if ( null === $options ) {
         $options = $swp_user_options;
     }
 
-	$defaults = array();
-	$defaults = apply_filters('swp_options_page_defaults' , $defaults );
+  	$defaults = array();
+  	$defaults = apply_filters('swp_options_page_defaults' , $defaults );
 
-	// If the options exists, return it.
-	if( !empty( $options[$key] ) ):
-		return $options[$key];
+  	// If the options exists, return it.
+  	if( !empty( $options[$key] ) ):
+  		return $options[$key];
 
-	// Else check if we have a default to use:
-	elseif( !empty($defaults[$key]) ):
-        // init_default( $key );
+  	// Else check if we have a default to use:
+  	elseif( !empty($defaults[$key]) ):
+          // init_default( $key );
 		return $defaults[$key];
 
-	// If neither, just return false.
-	else:
-		return false;
-	endif;
+  	// If neither, just return false.
+  	else:
+  		return false;
+  	endif;
 }
 
 add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
@@ -70,6 +70,7 @@ add_action( 'wp_ajax_swp_store_settings', 'swp_store_the_settings' );
  *
  * @since  unknown
  * @return void
+ * @since  3.0.9 | 31 MAY 2018 | Added call to wp_cache_delete to make sure settings save
  */
 function swp_store_the_settings() {
 	global $swp_user_options;
@@ -103,8 +104,8 @@ function swp_store_the_settings() {
 		}
 	}
 
-	swp_update_options( $options );
-	echo json_encode($options);
+  wp_cache_delete ( 'alloptions', 'options' )
+	echo json_encode(swp_update_options( $options ));
 
 	die;
 }
@@ -554,4 +555,10 @@ function swp_get_site_url() {
 function swp_snake_case( $string ) {
 	$snake_case = str_replace( ' ' , '_' , strtolower($string) );
 	return $snake_case;
+}
+
+add_action( 'wp_ajax_swp_fetch_user_options', 'swp_fetch_user_options' );
+function swp_fetch_user_options() {
+  echo json_encode( get_option( 'social_warfare_settings', [] ) );
+  wp_die();
 }
