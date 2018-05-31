@@ -73,14 +73,12 @@ function swp_cache_rebuild_rel_canonical( $info ) {
  * @return boolean true/false The status of wether the cache is fresh or not
  */
 function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
-		global $swp_user_options;‘
-
-
+		global $swp_user_options;
 
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
 			}
 			return true;
 		}
@@ -97,14 +95,14 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 			}
 
 			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-	        echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+	        echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
 	    }
 			return $fresh_cache;
 		}
 
 		if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
 			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
 			}
 			return false;
 		}
@@ -113,7 +111,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		// Rebuilding multiple page caches which will cost a lot of time.
 		if ( ! is_singular() && ! $ajax ) {
 			if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+					echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
 			}
 			return true;
 		}
@@ -138,7 +136,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		}
 
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number '__LINE__;
+				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
 		}
 
 		return $fresh_cache;
