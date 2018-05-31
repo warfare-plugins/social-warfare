@@ -146,17 +146,18 @@ class SWP_Option extends SWP_Abstract {
     */
     public function set_default( $value ) {
 
-        $this->default = $value;
+    $this->default = $value;
 
 		// Add this to our global list of defaults
 		add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
 
 		global $swp_user_options;
+
 		if( !isset( $swp_user_options[$this->key] ) ):
-			$swp_user_options[$this->key] = $this->default;
+  			$swp_user_options[$this->key] = $this->default;
 		endif;
 
-        return $this;
+    return $this;
     }
 
 
