@@ -149,7 +149,6 @@ function get_social_warfare_shares( $postID ) {
 					$shares[$network] = $old_shares[$network];
 
 				elseif($shares[$network] > 0) :
-					delete_post_meta( $postID,'_' . $network . '_shares' );
 					update_post_meta( $postID,'_' . $network . '_shares',$shares[$network] );
 
 				endif;
@@ -167,9 +166,6 @@ function get_social_warfare_shares( $postID ) {
 	* Update the Cache and Return the Share Counts
 	*/
 	if ( $fresh_cache != true ) :
-
-		// Clean out the previously used custom meta fields
-		delete_post_meta( $postID,'_total_shares' );
 
 		// Add the new data to the custom meta fields
 		update_post_meta( $postID,'_total_shares',$shares['total_shares'] );
