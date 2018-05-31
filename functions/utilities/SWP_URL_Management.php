@@ -56,7 +56,7 @@ class SWP_URL_Management {
 	    $url = $array['url'];
 	    $network = $array['network'];
 
-	    if( ( 'pinterest' === $network && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ):
+	    if( ( 'pinterest' === $network && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ) :
 
 	    	if ( true === is_attachment() ) :
 	    		return $array;
