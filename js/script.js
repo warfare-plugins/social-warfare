@@ -272,7 +272,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
 		if ( location === 'right' || location === 'left' ) {
-			var floatMobile = $( '.swp_social_panelSide' ).data( 'float-mobile' );
+			var floatMobile = $( '.swp_social_panel' ).data( 'float-mobile' );
 			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 
 			if ( $( '.swp_social_panel' ).not( '.swp_social_panelSide' ).length ) {
@@ -370,23 +370,23 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 	}
 
-    function centerSidePanel() {
-        var sidePanel = jQuery("[class*=float-position-center]");
+  function centerSidePanel() {
+      var sidePanel = jQuery("[class*=float-position-center]");
 
-        if (!sidePanel.length) return;
+      if (!sidePanel.length) return;
 
-        var panelHeight = sidePanel.outerHeight();
-        var windowHeight = window.innerHeight;
+      var panelHeight = sidePanel.outerHeight();
+      var windowHeight = window.innerHeight;
 
-        if (panelHeight > windowHeight) {
-            sidePanel.css("top", 0);
-            return;
-        }
+      if (panelHeight > windowHeight) {
+          sidePanel.css("top", 0);
+          return;
+      }
 
-        var offset = (windowHeight - panelHeight) / 2;
+      var offset = (windowHeight - panelHeight) / 2;
 
-        sidePanel.css("top", offset);
-    }
+      sidePanel.css("top", offset);
+  }
 
 	function initShareButtons() {
 		if ( 0 !== $( '.swp_social_panel' ).length ) {
