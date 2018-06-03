@@ -85,6 +85,7 @@ class SWP_Display {
     */
     public function social_warfare_wrapper( $content ) {
         global $post;
+        
       	// Ensure it's not an embedded post
       	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
       		return $content;
