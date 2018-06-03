@@ -107,9 +107,9 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 
 		if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
 
-				if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+				if ( _swp_is_debug( 'is_cache_fresh' ) ) :
 						echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
-				}
+				endif;
 
 				return false;
 		}
@@ -137,15 +137,21 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		$time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
 		$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
+		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
+        echo "Time: ", var_dump($time);
+				echo "Last_checked: ", var_dump($last_checked);
+				echo "Hours: ", var_dump($hours);
+		endif;
+
 		if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
 				$fresh_cache = true;
 		} else {
 				$fresh_cache = false;
 		}
 
-		if ( _swp_is_debug( 'is_cache_fresh' ) ) {
+		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
 				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
-		}
+		endif;
 
 		return $fresh_cache;
 }
