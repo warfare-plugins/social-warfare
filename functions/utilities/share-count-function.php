@@ -108,6 +108,7 @@ function get_social_warfare_shares( $postID ) {
 				endif;
 
 				foreach ( $networks as $network ) :
+					
 						if( isset( $swp_social_networks[$network] ) ):
 								if ( ! isset( $raw_shares_array[$network] ) ) :
 									$raw_shares_array[$network] = 0;
