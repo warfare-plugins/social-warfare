@@ -11,7 +11,6 @@
  */
 class SWP_Display {
     public $already_print;
-    // public $Button;
 
     public function __construct() {
         /**
@@ -34,6 +33,8 @@ class SWP_Display {
         add_action('template_redirect', [$this, 'activate_buttons'] );
         add_action( 'wp_footer', [$this, 'floating_buttons'] );
     }
+
+
     /**
      * A function to add the buttons
      *
@@ -75,24 +76,26 @@ class SWP_Display {
 
 
     /**
-     * A wrapper function for adding the buttons, content, or excerpt.
-     *
-     * @since  1.0.0
-     * @param  string $content The content.
-     * @return String $content The modified content
-     *
-     */
-     public function social_warfare_wrapper( $content ) {
-         global $post;
-    	// Ensure it's not an embedded post
-    	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
-    		return $content;
-    	}
-    	// Pass the content to the buttons constructor to place them inside.
-		$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
+    * A wrapper function for adding the buttons, content, or excerpt.
+    *
+    * @since  1.0.0
+    * @param  string $content The content.
+    * @return String $content The modified content
+    *
+    */
+    public function social_warfare_wrapper( $content ) {
+        global $post;
+      	// Ensure it's not an embedded post
+      	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
+      		return $content;
+      	}
 
-		return $buttons_panel->the_buttons( $content );
+        // Pass the content to the buttons constructor to place them inside.
+    		$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
+
+        return $buttons_panel->the_buttons( $content );
     }
+
 
     function floating_buttons() {
 
@@ -108,6 +111,7 @@ class SWP_Display {
 
         return;
     }
+
 
     /**
      * The main social_warfare function used to create the buttons.
