@@ -12,166 +12,165 @@
  * @return array $shares An array of share data
  */
 function get_social_warfare_shares( $postID ) {
-		global $swp_user_options, $swp_social_networks;
+	global $swp_user_options, $swp_social_networks;
 
-		if ( true === is_attachment() ) :
-			return false;
+	if ( true === is_attachment() ) :
+		return false;
+	endif;
+
+	// Set the initial options
+	$options = $swp_user_options;
+	$url     = apply_filters( 'swp_url_filter_function', get_permalink( $postID ) );
+
+	/**
+	 * Check if the cache is fresh or expired
+	 * @var boolean
+	 */
+	$fresh_cache = swp_is_cache_fresh( $postID );
+
+	/**
+	 * Setup the networks array that we'll loop through
+	 */
+
+	// Initiate the ShareCount variable
+	$shares['total_shares'] = 0;
+
+	// Queue up the networks that are available
+	$networks = $options['order_of_icons'];
+
+    if ( !is_array( $networks ) || count ( $networks ) === 0 ) :
+      return $shares;
+    endif;
+
+	$icons_array = array(
+		'type' => 'buttons'
+	);
+
+	foreach ( $networks as $network ) :
+
+        if( isset( $swp_social_networks[$network] ) ):
+
+    		// Check if we can used the cached share numbers
+    		if ( $fresh_cache == true ) :
+				$shares[$network] = get_post_meta( $postID,'_' . $network . '_shares',true );
+
+    		// If cache is expired, fetch new and update the cache
+    		else :
+				$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
+				$api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+    		endif;
+
+			endif;
+
+	endforeach;
+
+	// Recover Shares From Previously Used URL Patterns
+	if ( true == $options['recover_shares'] && false == $fresh_cache ) :
+		$alternateURL = SWP_Permalink::get_alt_permalink( $postID );
+		$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+
+		$altURLs = '';
+		$altURLs = apply_filters('swp_additional_url_to_check', $altURLs );
+
+		// Debug the Alternate URL being checked
+		if ( _swp_is_debug( 'recovery' ) ) :
+			echo $alternateURL;
+			echo $altURLs;
 		endif;
-
-		// Set the initial options
-		$options = $swp_user_options;
-		$url     = apply_filters( 'swp_url_filter_function', get_permalink( $postID ) );
-
-		/**
-		 * Check if the cache is fresh or expired
-		 * @var boolean
-		 */
-		$fresh_cache = swp_is_cache_fresh( $postID );
-
-		/**
-		 * Setup the networks array that we'll loop through
-		 */
-
-		// Initiate the ShareCount variable
-		$shares['total_shares'] = 0;
-
-		// Queue up the networks that are available
-		$networks = $options['order_of_icons'];
-
-	  if ( !is_array( $networks ) || count ( $networks ) === 0 ) :
-	      return $shares;
-	  endif;
-
-		$icons_array = array(
-			'type' => 'buttons'
-		);
 
 		foreach ( $networks as $network ) :
 
-				if( isset( $swp_social_networks[$network] ) ):
+			if( isset( $swp_social_networks[$network] ) ):
+				$old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
 
-						// Check if we can used the cached share numbers
-						if ( $fresh_cache == true ) :
-								$shares[$network] = get_post_meta( $postID,'_' . $network . '_shares',true );
-
-						// If cache is expired, fetch new and update the cache
-						else :
-								$old_shares[$network]  	= get_post_meta( $postID,'_' . $network . '_shares',true );
-								$api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
-						endif;
-
+				if( !empty($altURLs) ):
+					$altURLs_share_links[$network] = $swp_social_networks[$network]->get_api_link( $altURLs );
 				endif;
+
+			endif;
 
 		endforeach;
+	endif;
 
-		// Recover Shares From Previously Used URL Patterns
-		if ( true == $options['recover_shares'] && false == $fresh_cache ) :
-				$alternateURL = SWP_Permalink::get_alt_permalink( $postID );
-				$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+	if ( $fresh_cache == true ) :
+		if ( get_post_meta( $postID,'_total_shares',true ) ) :
+			$shares['total_shares'] = get_post_meta( $postID, '_total_shares', true );
+		else :
+			$shares['total_shares'] = 0;
+		endif;
+	else :
+		// Fetch all the share counts asyncrounously
+		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
 
-				$altURLs = '';
-				$altURLs = apply_filters('swp_additional_url_to_check', $altURLs );
-
-				// Debug the Alternate URL being checked
-				if ( _swp_is_debug( 'recovery' ) ) :
-						echo $alternateURL;
-						echo $altURLs;
-				endif;
-
-				foreach ( $networks as $network ) :
-
-						if( isset( $swp_social_networks[$network] ) ):
-
-								$old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
-
-								if( !empty($altURLs) ):
-									$altURLs_share_links[$network] = $swp_social_networks[$network]->get_api_link( $altURLs );
-								endif;
-
-						endif;
-
-				endforeach;
+		if ( $options['recover_shares'] == true ) :
+			$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 		endif;
 
-		if ( $fresh_cache == true ) :
-				if ( get_post_meta( $postID,'_total_shares',true ) ) :
-					$shares['total_shares'] = get_post_meta( $postID, '_total_shares', true );
-				else :
-					$shares['total_shares'] = 0;
+    //* Need to reset the timestamp so we don't fetch shares again on the same request.
+		swp_cache_reset_timestamp( $postID );
+
+		foreach ( $networks as $network ) :
+
+			if( isset( $swp_social_networks[$network] ) ):
+				if ( ! isset( $raw_shares_array[$network] ) ) :
+					$raw_shares_array[$network] = 0;
 				endif;
-		else :
-				// Fetch all the share counts asyncrounously
-				$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
+
+				if ( ! isset( $old_raw_shares_array[$network] ) ) :
+					$old_raw_shares_array[$network] = 0;
+				endif;
+
+				$shares[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares_array[$network]);
 
 				if ( $options['recover_shares'] == true ) :
-					$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
+
+					$recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares_array[$network] );
+
+					if( !empty($altURLs) ) :
+                        $altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
+						$altURLs_recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $altURLs_raw_shares_array[$network] );
+					endif;
+
+					if ( $shares[$network] != $recovered_shares[$network] ) :
+						$shares[$network] = $shares[$network] + $recovered_shares[$network];
+					endif;
+
+					if( !empty($altURLs) ):
+						$shares[$network] = $shares[$network] + $altURLs_recovered_shares[$network];
+					endif;
+
+				endif; //* End 'recover_shares'
+
+				if ( $shares[$network] < $old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
+						$shares[$network] = $old_shares[$network];
+
+				elseif($shares[$network] > 0) :
+						delete_post_meta( $postID,'_' . $network . '_shares' );
+						update_post_meta( $postID,'_' . $network . '_shares',$shares[$network] );
 				endif;
 
-        //* Need to reset the timestamp so we don't fetch shares again on the same request.
-				swp_cache_reset_timestamp( $postID );
+				if (is_numeric( $shares[$network] ) ):
+						$shares['total_shares'] += $shares[$network];
+				endif;
 
-				foreach ( $networks as $network ) :
+			endif;
+		 endforeach;
+	endif;
 
-						if( isset( $swp_social_networks[$network] ) ):
-								if ( ! isset( $raw_shares_array[$network] ) ) :
-									$raw_shares_array[$network] = 0;
-								endif;
+	/**
+	* Update the Cache and Return the Share Counts
+	*/
 
-								if ( ! isset( $old_raw_shares_array[$network] ) ) :
-									$old_raw_shares_array[$network] = 0;
-								endif;
+	if ( $fresh_cache != true ) :
 
-								$shares[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares_array[$network]);
+		// Clean out the previously used custom meta fields
+		delete_post_meta( $postID,'_total_shares' );
 
-								if ( $options['recover_shares'] == true ) :
+		// Add the new data to the custom meta fields
+		update_post_meta( $postID,'_total_shares',$shares['total_shares'] );
 
-										$recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares_array[$network] );
+	endif;
 
-										if( !empty($altURLs) ) :
-								      $altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
-											$altURLs_recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $altURLs_raw_shares_array[$network] );
-										endif;
-
-										if ( $shares[$network] != $recovered_shares[$network] ) :
-											$shares[$network] = $shares[$network] + $recovered_shares[$network];
-										endif;
-
-										if( !empty($altURLs) ):
-											$shares[$network] = $shares[$network] + $altURLs_recovered_shares[$network];
-										endif;
-
-								endif; //* End 'recover_shares'
-
-								if ( $shares[$network] < $old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
-										$shares[$network] = $old_shares[$network];
-
-								elseif($shares[$network] > 0) :
-										delete_post_meta( $postID,'_' . $network . '_shares' );
-										update_post_meta( $postID,'_' . $network . '_shares',$shares[$network] );
-								endif;
-
-								if (is_numeric( $shares[$network] ) ):
-										$shares['total_shares'] += $shares[$network];
-								endif;
-
-						endif;
-				 endforeach;
-		endif;
-
-		/**
-		* Update the Cache and Return the Share Counts
-		*/
-
-		if ( $fresh_cache != true ) :
-
-				// Clean out the previously used custom meta fields
-				delete_post_meta( $postID,'_total_shares' );
-
-				// Add the new data to the custom meta fields
-				update_post_meta( $postID,'_total_shares',$shares['total_shares'] );
-
-		endif;
-
-		// Return the share counts
-		return $shares;
+	// Return the share counts
+	return $shares;
 }
