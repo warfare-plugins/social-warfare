@@ -116,6 +116,7 @@ class SWP_Buttons_Panel {
   	    $this->establish_location();
     		$this->establish_permalink();
         $this->establish_active_buttons();
+        $this->handle_timestamp();
 
         if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
                 echo "<pre>";
@@ -751,12 +752,11 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* TODO: This has not been refactored.
     protected function handle_timestamp() {
-        if ( swp_is_cache_fresh( $this->post_data['ID'] ) == false  && isset($this->options['cache_method']) && 'legacy' === $this->options['cache_method'] ) :
-			delete_post_meta( $this->post_data['ID'],'swp_cache_timestamp' );
-			update_post_meta( $this->post_data['ID'],'swp_cache_timestamp',floor( ((date( 'U' ) / 60) / 60) ) );
-		endif;
+        if ( swp_is_cache_fresh( $this->post_data['ID'] ) == false  && isset( $this->options['cache_method'] ) && 'legacy' === $this->options['cache_method'] ) :
+      			delete_post_meta( $this->post_data['ID'], 'swp_cache_timestamp' );
+      			update_post_meta( $this->post_data['ID'], 'swp_cache_timestamp', floor( ( (date( 'U' ) / 60) / 60) ) );
+    		endif;
     }
 
 
@@ -783,9 +783,11 @@ class SWP_Buttons_Panel {
         $this->content = $content;
 
         if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
-			if( true == _swp_is_debug('buttons_output')):
-				echo 'Echoing, not returning. In SWP_Buttons_Panel on line '.__LINE__;
-			endif;
+
+          	if( true == _swp_is_debug('buttons_output')):
+        				echo 'Echoing, not returning. In SWP_Buttons_Panel on line ' . __LINE__;
+      			endif;
+
             echo $this->content;
         }
 
@@ -816,8 +818,6 @@ class SWP_Buttons_Panel {
         if ( $this->has_plugin_conflict() ) {
             return;
         }
-
-		$this->handle_timestamp();
 
         return $this->do_print();
     }
