@@ -112,11 +112,10 @@ class SWP_Buttons_Panel {
         $this->is_shortcode = $shortcode;
         $this->localize_options( $args );
   	    $this->establish_post_id();
-    		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
   	    $this->establish_location();
-    		$this->establish_permalink();
+		$this->establish_permalink();
         $this->establish_active_buttons();
-        $this->handle_timestamp();
 
         if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
                 echo "<pre>";
@@ -436,6 +435,9 @@ class SWP_Buttons_Panel {
 			endif;
             echo $html;
         endif;
+
+        $this->handle_timestamp();
+
         return $html;
     }
 
@@ -610,8 +612,12 @@ class SWP_Buttons_Panel {
 	        if ( $echo ) :
 	            echo $html;
 	        endif;
+
+            $this->handle_timestamp();
+
 	        return $html;
 		endif;
+
     }
 
 
@@ -825,6 +831,8 @@ class SWP_Buttons_Panel {
         if ( $this->has_plugin_conflict() ) {
             return;
         }
+
+        $this->handle_timestamp();
 
         return $this->do_print();
     }
