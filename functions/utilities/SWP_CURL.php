@@ -100,9 +100,11 @@ class SWP_CURL {
 
 				if ( _swp_is_debug( 'is_cache_fresh' ) ) :
 					$done = time();
+					$duration = $done - $started;
 					echo "<br>Finishing the multi curl request at " . $done;
-					echo "<br>Total time for request was " . $done - $started . "ms";
+					echo "<br>Total time for request was " . $duration . " seconds.";
 				endif;
+
 
 			  return $result;
 		}
