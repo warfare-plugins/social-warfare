@@ -82,17 +82,23 @@ class SWP_Pinterest extends SWP_Social_Network {
      * @param  bool $echo If true, this will immediately echo its code rather than save it for later.
      *
      */
-     public function render_HTML( $panel_context , $echo = false ) {
+     public function render_HTML( $panel_context, $echo = false ) {
         global $swp_user_options;
         $post_id = $panel_context['post_data']['ID'];
 		$post_url = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
 
         $options = $swp_user_options;
-        $pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image' , true );
-        $pinterest_image_link = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
+        $metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
 
-        if ( empty( $pinterest_image ) && isset($options['advanced_pinterest_fallback']) && $options['advanced_pinterest_fallback'] == 'featured' ):
+        if ( !empty( $metabox_pinterest_image ) ) :
+            $pinterest_image = $metabox_pinterest_image;
+
+        elseif ( isset($options['pinterest_fallback']) && $options['pinterest_fallback'] == 'featured' ):
             $pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
+
+        else :
+            $pinterest_image = '';
+
         endif;
 
         if ( !empty( $options['pinterest_id'] ) ) :
@@ -120,7 +126,7 @@ class SWP_Pinterest extends SWP_Social_Network {
        		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
 						'data-link="https://pinterest.com/pin/create/button/' .
 						'?url=' . $panel_context['post_data']['permalink'] .
-						'&media=' . urlencode( $pinterest_image_link ) .
+						'&media=' . urlencode( $pinterest_image ) .
 						'&description=' . urlencode( $pinterest_description ) .
 					'">';
        	else :
@@ -164,7 +170,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 
          // Store these buttons so that we don't have to generate them for each set
          $this->html = $html;
-         
+
          if ( $echo ) :
              echo $html;
          endif;
