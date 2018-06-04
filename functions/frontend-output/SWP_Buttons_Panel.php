@@ -159,6 +159,8 @@ class SWP_Buttons_Panel {
 		$this->options[$this->options] = $value;
 		return $this;
 	}
+
+
 	/**
 	 * Set multiple options
 	 *
@@ -174,6 +176,8 @@ class SWP_Buttons_Panel {
 		array_merge( $this->options , $options );
 		return $this;
 	}
+
+
 	/**
 	 * Set the post ID for this buttons panel.
 	 *
@@ -190,28 +194,30 @@ class SWP_Buttons_Panel {
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
 			$this->post_data['ID'] = $this->args['postID'];
-    endif;
+        endif;
 
-		// Current argument.
-		if ( isset( $this->args['post_id'] ) ) :
-			$this->post_data['ID'] = $this->args['post_id'];
-    endif;
+    		// Current argument.
+    		if ( isset( $this->args['post_id'] ) ) :
+    			$this->post_data['ID'] = $this->args['post_id'];
+        endif;
 
-    if ( isset ( $this->args['id'] ) ) :
-      $post = get_post( $this->args['id'] );
-      $post_data = [
-          'ID'           => $post->ID,
-          'post_type'    => $post->post_type,
-          'permalink'    => get_the_permalink( $post->ID ),
-          'post_title'   => $post->post_title,
-          'post_status'  => $post->post_status,
-          'post_content' => $post->post_content
-      ];
+        if ( isset ( $this->args['id'] ) ) :
+          $post = get_post( $this->args['id'] );
+          $post_data = [
+              'ID'           => $post->ID,
+              'post_type'    => $post->post_type,
+              'permalink'    => get_the_permalink( $post->ID ),
+              'post_title'   => $post->post_title,
+              'post_status'  => $post->post_status,
+              'post_content' => $post->post_content
+          ];
 
-      $this->post_data = array_merge( $this->post_data, $post_data );
+          $this->post_data = array_merge( $this->post_data, $post_data );
 
-    endif;
+        endif;
 	}
+
+
 	/**
 	 * Establish the post content
 	 *
@@ -228,6 +234,8 @@ class SWP_Buttons_Panel {
 			$this->content = $args['content'];
 		endif;
     }
+
+
 	/**
 	 * Establish Location
 	 *
@@ -280,7 +288,6 @@ class SWP_Buttons_Panel {
 		 * for that type from the global options.
 		 *
 		 */
-
 		// If we are on the home page
 		if( is_front_page() ):
             $home = $this->options['location_home'];
