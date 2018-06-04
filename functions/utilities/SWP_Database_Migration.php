@@ -123,7 +123,7 @@ class SWP_Database_Migration {
         }
 
 		     //* Fetch posts with 2.3.5 metadata.
-		    $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
+		    $old_metadata = get_posts( ['meta_key' => 'nc_postLocation', 'numberposts' => 1] );
 
         return count( $old_metadata ) === 0;
     }
