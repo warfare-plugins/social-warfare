@@ -107,8 +107,11 @@ function get_social_warfare_shares( $postID ) {
 					$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
 				endif;
 
+        //* Need to reset the timestamp so we don't fetch shares again on the same request.
+				swp_cache_reset_timestamp( $postID );
+
 				foreach ( $networks as $network ) :
-					
+
 						if( isset( $swp_social_networks[$network] ) ):
 								if ( ! isset( $raw_shares_array[$network] ) ) :
 									$raw_shares_array[$network] = 0;
