@@ -74,6 +74,7 @@ class SWP_Pinterest extends SWP_Social_Network {
      * @since  1.0.0
      * @since  3.0.0 | 01 MAY 2018 | Re-wrote the function to a class method.
      * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
+     * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image. 
      * @access public
      * @return array $panel_context Array of
      *                   ['post_data']  => metadata about the post;
