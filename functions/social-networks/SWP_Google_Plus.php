@@ -11,6 +11,7 @@
  * @since     1.0.0 | Unknown     | Created
  * @since     2.2.4 | 02 MAY 2017 | Refactored functions & updated docblocking
  * @since     3.0.0 | 05 APR 2018 | Rebuilt into a class-based system.
+ * @since     3.0.9 | 04 JUN 2018 | Removed deprecated API request (share counts)
  *
  */
 class SWP_Google_Plus extends SWP_Social_Network {
