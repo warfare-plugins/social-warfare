@@ -138,9 +138,9 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-        echo "Time: ", var_dump($time);
-				echo "Last_checked: ", var_dump($last_checked);
-				echo "Hours: ", var_dump($hours);
+        echo "<br/>Time: ", var_dump($time);
+				echo "<br/>Last_checked: ", var_dump($last_checked);
+				echo "<br/>Hours: ", var_dump($hours);
 		endif;
 
 		if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
