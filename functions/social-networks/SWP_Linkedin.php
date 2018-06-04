@@ -11,6 +11,7 @@ class SWP_Linkedin extends SWP_Social_Network {
      * within the object.
      *
      * @since  3.0.0 | 06 APR 2018 | Created
+     * @since  3.0.9 | 04 JUN 2018 | Removed deprecated API request (share counts)
      * @param  none
      * @return none
      * @access public
