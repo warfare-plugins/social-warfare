@@ -118,12 +118,12 @@ class SWP_Database_Migration {
     * @return bool True if the old option still exists; false otherwise.
     */
     public function post_meta_is_migrated() {
-        if( $this->last_migrated === $this->get_last_migrated() ) {
-            return true;
+        if( $this->last_migrated !== $this->get_last_migrated() ) {
+            return false;
         }
 
-         //* Fetch posts with 2.3.5 metadata.
-        $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
+		     //* Fetch posts with 2.3.5 metadata.
+		    $old_metadata = get_posts( ['meta_key' => 'swp_postLocation', 'numberposts' => 1] );
 
         return count( $old_metadata ) === 0;
     }
@@ -236,8 +236,6 @@ class SWP_Database_Migration {
             $q2 = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
             $results = $wpdb->query( $q2 );
         }
-
-        $this->update_last_migrated();
 
     }
 
