@@ -2,20 +2,29 @@
 
 class SWP_Notice {
     public function __construct( $key, $message, $class = '' ) {
+        // delete_option('social_warfare_dismissed_notices');
+        $this->init();
         $this->set_key( $key );
         $this->set_message( $message );
         $this->set_class( $class );
-        $this->notices = get_option( 'social_warfare_dismissed_notices', [] );
         $this->actions = '';
 
-        if ( !$this->should_display_notice() ) :
-            return;
-        endif;
+    }
+
+    public function init() {
+        $notices = get_option( 'social_warfare_dismissed_notices', [] );
+
+        if ( [] === $notices ) {
+            update_option( 'social_warfare_dismissed_notices', [] );
+        }
+
+        $this->notices = $notices;
     }
 
 
     public function should_display_notice() {
         if ( empty( $this->notices[$this->key] ) ) {
+
             return true;
         }
 
@@ -26,7 +35,7 @@ class SWP_Notice {
     public function perma_dismiss() {
         $this->notices[$_POST['key']] = true;
 
-        echo json_encode( update_option( 'social_warfare_dismissed_notices', $notices ) );
+        echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
         wp_die();
     }
 
@@ -63,10 +72,14 @@ class SWP_Notice {
     }
 
 
-    public function add_cta( $message = "Thanks, I understand." , $link = '', $class = '')  {
-        if ( !empty( $link ) ) {
+    public function add_cta( $message = '', $link = '', $class = '')  {
+        if ( '' === $message ) :
+            $message = "Thanks, I understand.";
+        endif;
+
+        if ( !empty( $link ) ) :
             $link = ' href="' . $link . '" target="_blank"';
-        }
+        endif;
 
         $html = '<a class="swp-notice-cta ' . $class . '" ' . $link . '>';
             $html .= $message;
@@ -80,7 +93,7 @@ class SWP_Notice {
 
     public function render_HTML() {
 
-        $html = '<div class="swp-notice swp-dismiss-notice ' . $this->class . '" data-key="' . $this->key . '">';
+        $html = '<div class="swp-notice swp-dismiss-notice notice ' . $this->class . '" data-key="' . $this->key . '">';
             $html .= '<p>' . $this->message . '</p>';
             $html .= '<div class="swp-actions">';
                 $html .= $this->actions;
@@ -113,6 +126,10 @@ class SWP_Notice {
     }
 
     public function ready() {
+        if ( !$this->should_display_notice() ) :
+            return;
+        endif;
+
         add_action( 'admin_notices', [$this, 'print_HTML'] );
         add_action( 'swp_admin_notices', [$this, 'get_HTML'] );
         add_action( 'wp_ajax_perma_dismiss', [ $this, 'perma_dismiss' ] );
