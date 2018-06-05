@@ -865,11 +865,7 @@ div.error {
 	display: block;
 }
 
-.swp-notice a {
-    cursor: hover;
-    text-decoration: underline;
-    margin: 0 10px;
-}
+
 
 .sw-grid-textarea {
 	border: rgb(221, 221, 221);

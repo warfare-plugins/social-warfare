@@ -212,3 +212,24 @@
 	border-top: 1px solid #CED3DC;
     padding-top: 40px;
 }
+
+.swp-notice-wrapper {
+    max-width: 73%;
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+.swp-notice {
+    padding: 10px 15px;
+}
+
+.swp-actions {
+    display: flex;
+    align-items: center;
+}
+
+.swp-notice a {
+    cursor: hover;
+    text-decoration: underline;
+    margin: 0 10px;
+}
