@@ -9,6 +9,10 @@ class SWP_Notice {
         $this->set_class( $class );
         $this->actions = '';
 
+        add_action( 'admin_notices', [$this, 'print_HTML'] );
+        add_action( 'swp_admin_notices', [$this, 'get_HTML'] );
+        add_action( 'wp_ajax_perma_dismiss', [ $this, 'perma_dismiss' ] );
+        add_action( 'wp_ajax_nopriv_perma_dismiss', [ $this, 'perma_dismiss' ] );
     }
 
     public function init() {
@@ -93,7 +97,7 @@ class SWP_Notice {
 
     public function render_HTML() {
 
-        $html = '<div class="swp-notice swp-dismiss-notice notice ' . $this->class . '" data-key="' . $this->key . '">';
+        $html = '<div class="swp-dismiss-notice notice ' . $this->class . '" data-key="' . $this->key . '">';
             $html .= '<p>' . $this->message . '</p>';
             $html .= '<div class="swp-actions">';
                 $html .= $this->actions;
@@ -107,6 +111,10 @@ class SWP_Notice {
 
 
     public function get_HTML() {
+        if ( !$this->should_display_notice() ) :
+            return;
+        endif;
+
         if ( empty( $this->html ) ) :
             $this->render_HTML();
         endif;
@@ -116,24 +124,15 @@ class SWP_Notice {
 
 
     public function print_HTML() {
+        if ( !$this->should_display_notice() ) :
+            return;
+        endif;
+
         if ( empty( $this->html ) ) :
             $this->render_HTML();
         endif;
 
         echo $this->html;
-
-        return $this;
-    }
-
-    public function ready() {
-        if ( !$this->should_display_notice() ) :
-            return;
-        endif;
-
-        add_action( 'admin_notices', [$this, 'print_HTML'] );
-        add_action( 'swp_admin_notices', [$this, 'get_HTML'] );
-        add_action( 'wp_ajax_perma_dismiss', [ $this, 'perma_dismiss' ] );
-        add_action( 'wp_ajax_nopriv_perma_dismiss', [ $this, 'perma_dismiss' ] );
 
         return $this;
     }
