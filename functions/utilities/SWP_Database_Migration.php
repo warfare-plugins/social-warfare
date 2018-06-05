@@ -164,7 +164,13 @@ class SWP_Database_Migration {
     public function update_hidden_post_meta() {
         global $wpdb;
 
-        set_time_limit(300);
+        try {
+            set_time_limit(300);
+        } catch (Exception $e) {
+            if ( function_exists( 'error_log' ) ) :
+                error_log($e->getMessage());
+            endif;
+        }
 
         $hidden_map = [
             '_googlePlus_shares'    => '_google_plus_shares',
