@@ -211,6 +211,30 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
         }
 	}
 
+    function noticeClickHandlers() {
+        jQuery(".swp-notice-cta").on("click", function(e) {
+            e.preventDefault();
+            var parent = jQuery(this).parents(".swp-dismiss-notice");
+
+            $.post({
+                url: ajaxurl,
+                data: {
+                    action: 'perma_dismiss',
+                    key: parent.data("key")
+                },
+                success: function(result) {
+                    console.dir(result);
+                    result = JSON.parse(result)
+                    console.log("type:" , typeof result);
+                    console.log(result);
+                    if (result) {
+                        parent.fadeOut();
+                    }
+                }
+            });
+        });
+    }
+
 	jQuery( document ).ready( function() {
 		if ( jQuery( '#social_warfare.postbox' ).length ) {
 
@@ -237,6 +261,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 			jQuery( '#social_warfare textarea#swp_customTweet' ).on( 'input', function() {
 				twitterRemaining();
 			});
+
 
 			// Setup an initilazation loop
 			var swpPostInit = setInterval( function() {
@@ -273,6 +298,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 			}, 1000 );
 		}
 
+        noticeClickHandlers();
 		swpConditionalFields();
 		jQuery( '.swp_popular_post_options select' ).on( 'change', function() {
 			swpConditionalFields();
