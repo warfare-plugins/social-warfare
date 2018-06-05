@@ -167,7 +167,7 @@ class SWP_Script {
      *
      */
     public function click_tracking( $info ) {
-    	if ( isset( $info['swp_user_options']['click_tracking'] ) ) {
+    	if ( isset( $info['swp_user_options']['click_tracking'] ) && true === $info['swp_user_options']['click_tracking'] ) {
     		$info['footer_output'] .= 'var swpClickTracking = true;';
     	} else {
     		$info['footer_output'] .= 'var swpClickTracking = false;';
