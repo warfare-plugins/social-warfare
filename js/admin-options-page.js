@@ -109,6 +109,32 @@
 
     }
 
+    function createNotice(message, parentElement) {
+        console.log("createNotice")
+        var notice = document.createElement("div");
+        var style = "background-color: lemonchiffon; padding: 5px 10px; ";
+
+        notice.style = style;
+        notice.innerHTML = message;
+
+        parentElement.appendChild(notice);
+    }
+
+    function createStumbleUponNotice() {
+        console.log("createStumbleUponNotice")
+        var message = '<h3><u>Big news</u></h3>';
+        message += '<p>As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform.<br/>Instead, they are moving in with Mix.</p>';
+        message += '<p>While this is existing for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API.</b>';
+        message += '<br/>You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.</p>';
+
+        var parent = document.querySelector(".social_networks_description_wrapper");
+
+        if (typeof parent !== 'undefined') {
+            createNotice(message, parent)
+        }
+    }
+
+
 	/*********************************************************
 		A Function send the array of setting to ajax.php
 	*********************************************************/
@@ -808,6 +834,7 @@
 		getSystemStatus();
 		customUploaderInit();
 		set_ctt_preview();
+        createStumbleUponNotice();
 	});
 
 
