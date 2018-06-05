@@ -73,8 +73,6 @@
     function handleCustomColors(event, selector, customColor, customOutlines) {
         //* Create a notice about the custom colors.
         var colorNotice = '<div id="color-notice"><p><span class="color-dismiss"></span><b>Note:</b> Custom colors will not show up in the preview, but will on your site.</p></div>';
-        var visible = false;
-        var value = event.target.value;
         var visibility = {
             customColor: false,
             customOutlines: false
@@ -96,7 +94,6 @@
         visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
 
         if (visibility.customColor || visibility.customOutlines) {
-            console.log(colorNotice);
             $("body").append(colorNotice);
             $(".color-dismiss").on("click", function() {
                 $("#color-notice").fadeOut("slow");
@@ -322,7 +319,7 @@
 
 				// Send the POST request
 				$.post( ajaxurl, {
-					data,
+					data: data,
 					success: function(response) {
 						// Clear the loading screen
 						clearLoadingScreen();
@@ -331,13 +328,8 @@
 						socialWarfarePlugin.defaultOptions = fetchAllOptions();
 
 						saveColorToggle();
-						console.log("this was the response from the server.")
-						console.dir(response)
-					},
-					beforeSend: function() {
-						console.log("Sending this to the server.");
-						console.dir(data);
 					}
+
 			});
 
 		});
