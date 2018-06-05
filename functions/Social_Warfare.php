@@ -152,6 +152,10 @@ class Social_Warfare {
          */
         new SWP_Database_Migration();
 
+
+        $notice = new SWP_Notice( 'stumble_upon', 'Big news! StumbleUpon is dead.', 'notice-info' );
+        $notice->add_cta()->add_cta()->ready();
+
         /**
          * The Options Page Class
          *
@@ -294,7 +298,8 @@ class Social_Warfare {
          *
          */
         $includes = [
-            'Addon'
+            'Addon',
+            'Notice'
         ];
         $this->load_files( '/functions/includes/', $includes);
 
