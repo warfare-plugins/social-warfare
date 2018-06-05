@@ -832,7 +832,7 @@
 		getSystemStatus();
 		customUploaderInit();
 		set_ctt_preview();
-        createStumbleUponNotice();
+        // createStumbleUponNotice();
 	});
 
 
