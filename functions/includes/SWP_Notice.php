@@ -2,7 +2,6 @@
 
 class SWP_Notice {
     public function __construct( $key, $message, $class = '' ) {
-        // delete_option('social_warfare_dismissed_notices');
         $this->init();
         $this->set_key( $key );
         $this->set_message( $message );
