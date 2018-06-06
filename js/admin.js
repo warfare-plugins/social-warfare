@@ -223,12 +223,9 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
                     key: parent.data("key")
                 },
                 success: function(result) {
-                    console.dir(result);
                     result = JSON.parse(result)
-                    console.log("type:" , typeof result);
-                    console.log(result);
                     if (result) {
-                        parent.fadeOut();
+                        parent.slideUp(500);
                     }
                 }
             });
