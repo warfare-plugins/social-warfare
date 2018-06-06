@@ -216,7 +216,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
             e.preventDefault();
             var parent = jQuery(this).parents(".swp-dismiss-notice");
 
-            $.post({
+            jQuery.post({
                 url: ajaxurl,
                 data: {
                     action: 'perma_dismiss',
@@ -233,6 +233,8 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
     }
 
 	jQuery( document ).ready( function() {
+        noticeClickHandlers();
+
 		if ( jQuery( '#social_warfare.postbox' ).length ) {
 
 			// Add the CountDown Box for the Social Media Title
@@ -295,7 +297,6 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 			}, 1000 );
 		}
 
-        noticeClickHandlers();
 		swpConditionalFields();
 		jQuery( '.swp_popular_post_options select' ).on( 'change', function() {
 			swpConditionalFields();
