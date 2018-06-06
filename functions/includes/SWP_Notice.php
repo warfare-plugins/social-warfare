@@ -102,6 +102,7 @@ class SWP_Notice {
 
         $html = '<div class="swp-dismiss-notice notice ' . $this->class . '" data-key="' . $this->key . '">';
             $html .= '<p>' . $this->message . '</p>';
+            $html .= '<p> - Warfare Plugins Team</p>';
             $html .= '<div class="swp-actions">';
 
                 foreach( $this->actions as $cta) {
