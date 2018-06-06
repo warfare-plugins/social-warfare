@@ -7,7 +7,7 @@ class SWP_Notice {
         $this->set_key( $key );
         $this->set_message( $message );
         $this->set_class( $class );
-        $this->actions = '';
+        $this->actions = [];
 
         add_action( 'admin_notices', [$this, 'print_HTML'] );
         add_action( 'swp_admin_notices', [$this, 'get_HTML'] );
@@ -76,31 +76,41 @@ class SWP_Notice {
     }
 
 
-    public function add_cta( $message = '', $link = '', $class = '')  {
-        if ( '' === $message ) :
-            $message = "Thanks, I understand.";
+    public function add_cta( $action = '', $link = '', $class = '')  {
+        if ( '' === $action ) :
+            $action = "Thanks, I understand.";
         endif;
 
         if ( !empty( $link ) ) :
             $link = ' href="' . $link . '" target="_blank"';
         endif;
 
-        $html = '<a class="swp-notice-cta ' . $class . '" ' . $link . '>';
-            $html .= $message;
-        $html .= "</a>";
+        $cta = [];
+        $cta['action'] = $action;
+        $cta['link'] = $link;
+        $cta['class'] = $class;
 
-        $this->actions .= $html;
+        $this->actions[] = $cta;
 
         return $this;
     }
 
 
     public function render_HTML() {
+        if ( empty( $this->actions) ) :
+            $this->add_cta();
+        endif;
 
         $html = '<div class="swp-dismiss-notice notice ' . $this->class . '" data-key="' . $this->key . '">';
             $html .= '<p>' . $this->message . '</p>';
             $html .= '<div class="swp-actions">';
-                $html .= $this->actions;
+
+                foreach( $this->actions as $cta) {
+                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" ' . $cta['link'] . '>';
+                        $html .= $cta['action'];
+                    $html .= "</a>";
+                }
+
             $html .= '</div>';
         $html .= '</div>';
 
