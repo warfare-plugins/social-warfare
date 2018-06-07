@@ -24,9 +24,11 @@ class SWP_Notice {
 	 * @param str $message The message for this notice
 	 *
 	 */
-    public function __construct( $key, $message ) {
+    public function __construct( $key, $message, $class = '', $id = '' ) {
         $this->set_key( $key );
         $this->init();
+        $this->class = $class;
+        $this->id = $id;
         $this->set_message( $message );
         $this->actions = array();
 
@@ -36,13 +38,12 @@ class SWP_Notice {
         add_action( 'swp_admin_notices', array( $this, 'get_HTML' ) );
 
 		// Add a hook for permanently dismissing a notice via admin-ajax.php
-        add_action( 'wp_ajax_dismiss', array( $this, 'perma_dismiss' ) );
-        add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'perma_dismiss' ) );
+        add_action( 'wp_ajax_dismiss', array( $this, 'dismiss' ) );
+        add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'dismiss' ) );
 
 		// Add a hook for temporarily dismissing a notice via admin-ajax.php
         add_action( 'wp_ajax_temp_dismiss', array( $this, 'temp_dismiss' ) );
         add_action( 'wp_ajax_nopriv_temp_dismiss', array( $this, 'temp_dismiss' ) );
-
     }
 
     public function init() {
@@ -65,7 +66,7 @@ class SWP_Notice {
 	 *
 	 * @TODO   Check for timestamps and see if 30 days have elapsed.
 	 * @since  3.0.9 | 07 JUN 2018 | Created
-	 * @return bool Default true. 
+	 * @return bool Default true. d
 	 *
 	 */
     public function should_display_notice() {
@@ -81,10 +82,10 @@ class SWP_Notice {
 
         //* They have dismissed with a temp CTA.
         if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
-            $today = new DateTime();
+            $now = new DateTime();
             $expiry = $this->data['timestamp'];
 
-            return $today > $expiry;
+            return $now > $expiry;
         }
 
         return true;
@@ -102,15 +103,16 @@ class SWP_Notice {
     public function dismiss() {
         $key = $_POST['key'];
         $timeframe = $_POST['timeframe'];
-        $today = new DateTime();
+        $now = new DateTime();
 
         if ( 0 > $timeframe ) {
-            $timestamp = $today->modify("+$timeframe days")->format('Y-m-d H:i:s');
+            $timestamp = $now->modify("+$timeframe days")->format('Y-m-d H:i:s');
         } else {
-            $timestamp = $today->format('Y-m-d H:i:s');
+            $timestamp = $now->format('Y-m-d H:i:s');
         }
 
         $this->notices[$key]['timestamp'] = $timestamp;
+        $this->notices[$key]['timeframe'] = $timeframe;
 
         echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
         wp_die();
@@ -173,7 +175,7 @@ class SWP_Notice {
             $this->add_cta();
         endif;
 
-        $html = '<div class="swp-dismiss-notice notice" data-key="' . $this->key . '">';
+        $html = '<div class="swp-dismiss-notice notice' . $this->class . '" data-key="' . $this->key . '">';
             $html .= '<p>' . $this->message . '</p>';
             $html .= '<p> - Warfare Plugins Team</p>';
             $html .= '<div class="swp-actions">';
