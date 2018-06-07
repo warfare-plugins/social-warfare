@@ -260,7 +260,8 @@ class Social_Warfare {
             'Permalink',
             'Plugin_Updater',
             'Database_Migration',
-			'URL_Management'
+			'URL_Management',
+            'Notice'
         ];
         $this->load_files( '/functions/utilities/', $utilities);
 
@@ -296,8 +297,7 @@ class Social_Warfare {
          *
          */
         $includes = [
-            'Addon',
-            'Notice'
+            'Addon'
         ];
         $this->load_files( '/functions/includes/', $includes);
 
@@ -405,7 +405,7 @@ class Social_Warfare {
         $message .= '<p>While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API.</b>';
         $message .= '<br/>You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.</p>';
 
-        $notice = new SWP_Notice( 'stumble_upon', $message, 'notice-info' );
+        $notice = new SWP_Notice( 'stumble_upon5', $message, 'notice-info' );
 
     }
 }
