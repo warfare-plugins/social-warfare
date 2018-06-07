@@ -74,7 +74,7 @@ class SWP_Notice {
         endif;
 
         //* They have dismissed a permadismiss.
-        if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] === 0) {
+        if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] == 0) {
             return false;
         }
 
