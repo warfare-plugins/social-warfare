@@ -30,13 +30,14 @@ class SWP_Notice {
         $this->set_message( $message );
         $this->actions = array();
 
+
 		// Add hooks to display our admin notices in the dashbaord and on our settings page.
         add_action( 'admin_notices', array( $this, 'print_HTML' ) );
         add_action( 'swp_admin_notices', array( $this, 'get_HTML' ) );
 
 		// Add a hook for permanently dismissing a notice via admin-ajax.php
         add_action( 'wp_ajax_dismiss', array( $this, 'perma_dismiss' ) );
-        add_action( 'wp_ajax_nopriv_perma_dismiss', array( $this, 'perma_dismiss' ) );
+        add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'perma_dismiss' ) );
 
 		// Add a hook for temporarily dismissing a notice via admin-ajax.php
         add_action( 'wp_ajax_temp_dismiss', array( $this, 'temp_dismiss' ) );
@@ -74,9 +75,9 @@ class SWP_Notice {
         //* They have dismissed with a temp CTA.
         if ( $this->data['timeframe'] > 0 ) {
             $today = new DateTime();
-            $expiry = new DateTime();
-            $modifier = $this->data['timeframe'];
-            $expiry->modify("+$modifier days");
+            $expiry = $this->data['timestamp'];
+            // $modifier = $this->data['timeframe'];
+            // $expiry->modify("+$modifier days");
 
             return $today > $expiry;
         }
@@ -87,15 +88,26 @@ class SWP_Notice {
 
 
 	/**
-	 * A method to permanently dismiss notices via admin-ajax.php
+	 * Processes notice dismissals via ajax.
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @param  none
 	 * @return none The respond from update_option is echoed.
 	 *
 	 */
-    public function perma_dismiss() {
-        $this->notices[$_POST['key']] = true;
+    public function dismiss() {
+        $key = $_POST['key'];
+        $timeframe = $_POST['timeframe'];
+        $today = new DateTime();
+
+        if ( 0 > $timeframe ) {
+            $next_notice = $today->modify("+$timeframe days");
+            $timestamp = $next_notice->format('Y-m-d H:i:s');
+        } else {
+            $timestamp = $today->format('Y-m-d H:i:s');
+        }
+
+        $this->notices[$key]['timestamp'] = $timestamp;
 
         echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
         wp_die();
