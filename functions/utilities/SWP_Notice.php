@@ -25,8 +25,8 @@ class SWP_Notice {
 	 *
 	 */
     public function __construct( $key, $message ) {
-        $this->init();
         $this->set_key( $key );
+        $this->init();
         $this->set_message( $message );
         $this->actions = array();
 
@@ -35,7 +35,7 @@ class SWP_Notice {
         add_action( 'swp_admin_notices', array( $this, 'get_HTML' ) );
 
 		// Add a hook for permanently dismissing a notice via admin-ajax.php
-        add_action( 'wp_ajax_perma_dismiss', array( $this, 'perma_dismiss' ) );
+        add_action( 'wp_ajax_dismiss', array( $this, 'perma_dismiss' ) );
         add_action( 'wp_ajax_nopriv_perma_dismiss', array( $this, 'perma_dismiss' ) );
 
 		// Add a hook for temporarily dismissing a notice via admin-ajax.php
@@ -45,13 +45,15 @@ class SWP_Notice {
     }
 
     public function init() {
-        $notices = get_option( 'social_warfare_dismissed_notices', array() );
+        $notices = get_option( 'social_warfare_dismissed_notices', false );
 
-        if ( [] === $notices ) {
+        if ( false === $notices ) {
             update_option( 'social_warfare_dismissed_notices', array() );
+            $notices = array();
         }
 
         $this->notices = $notices;
+        $this->data = $notices[$this->key];
     }
 
 
@@ -64,12 +66,23 @@ class SWP_Notice {
 	 *
 	 */
     public function should_display_notice() {
-        if ( empty( $this->notices[$this->key] ) ) {
-
-            return true;
+        //* They have dismissed a permadismiss.
+        if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] === 0) {
+            return false;
         }
 
-        return false === $this->notices[$this->key];
+        //* They have dismissed with a temp CTA.
+        if ( $this->data['timeframe'] > 0 ) {
+            $today = new DateTime();
+            $expiry = new DateTime();
+            $modifier = $this->data['timeframe'];
+            $expiry->modify("+$modifier days");
+
+            return $today > $expiry;
+        }
+
+        //* No dismissal has happened yet.
+        return true;
     }
 
 
@@ -129,6 +142,14 @@ class SWP_Notice {
     }
 
 
+    /**
+    * Creates the interactive CTA for the notice.
+    *
+    * @param string $action Optional. The message to be displayed. Default "Thanks, I understand."
+    * @param string $link Optional. The outbound link.
+    * @param string $class Optional. The CSS classname to assign to the CTA.
+    * @param string $timeframe
+    */
     public function add_cta( $action = '', $link = '', $class = '' , $timeframe = 'permanent' )  {
         if ( '' === $action ) :
             $action = "Thanks, I understand.";
