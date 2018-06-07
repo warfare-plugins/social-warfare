@@ -221,6 +221,8 @@
 
 .swp-notice {
     padding: 10px 15px;
+    padding: 20px;
+
 }
 
 .swp-actions {
@@ -232,4 +234,23 @@
     cursor: hover;
     text-decoration: underline;
     margin: 0 10px;
+}
+
+.swp-dismiss-notice.notice.notice-info {
+    font-size: 15px;
+    line-height: 25px;
+}
+
+.swp-dismiss-notice.notice.notice-info {
+   border-left-color: #D34250;
+    padding: 20px;
+     margin: 15px 0 15px;
+}
+
+a.swp-notice-cta {
+   cursor: pointer;
+   text-decoration: underline;
+   font-size: 15px;
+   line-height: 30px;
+   margin-right: 50px;
 }
