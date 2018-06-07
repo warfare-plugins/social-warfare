@@ -62,13 +62,17 @@ class SWP_Notice {
 	/**
 	 * A method to determine if this notice should be displayed.
 	 *
+	 * This method lets the class now if this notice should be displayed or not. It checks
+	 * thing like the start date, the end date, the dimissal status if it was temporarily
+	 * dismissed versus permanently dismissed and so on.
+	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
 	 * @return bool Default true.
-	 * @TODO: Add a conditional to check for start_date/end_date compared to the current date/time.
 	 *
 	 */
     public function should_display_notice() {
-		
+
         //* No dismissal has happened yet.
         if ( empty( $this->data) ) :
             return true;
@@ -79,10 +83,22 @@ class SWP_Notice {
             return false;
         }
 
+		$now = new DateTime();
+		$now = $now->format('Y-m-d H:i:s');
+
+		// If the start date has not been reached.
+		if ( isset( $this->start_date ) ) {
+			return $now > $this->start_date;
+		}
+
+		// If the end date has been reached.
+		if( isset( $this->end_date ) ) {
+			return $now < $this->end_date;
+		}
+
         //* They have dismissed with a temp CTA.
         if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
-            $now = new DateTime();
-            $now = $now->format('Y-m-d H:i:s');
+
             $expiry = $this->data['timestamp'];
 
             return $now > $expiry;
