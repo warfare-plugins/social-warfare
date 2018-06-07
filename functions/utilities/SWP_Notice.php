@@ -73,11 +73,9 @@ class SWP_Notice {
         }
 
         //* They have dismissed with a temp CTA.
-        if ( $this->data['timeframe'] > 0 ) {
+        if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
             $today = new DateTime();
             $expiry = $this->data['timestamp'];
-            // $modifier = $this->data['timeframe'];
-            // $expiry->modify("+$modifier days");
 
             return $today > $expiry;
         }
@@ -101,8 +99,7 @@ class SWP_Notice {
         $today = new DateTime();
 
         if ( 0 > $timeframe ) {
-            $next_notice = $today->modify("+$timeframe days");
-            $timestamp = $next_notice->format('Y-m-d H:i:s');
+            $timestamp = $today->modify("+$timeframe days")->format('Y-m-d H:i:s');
         } else {
             $timestamp = $today->format('Y-m-d H:i:s');
         }
