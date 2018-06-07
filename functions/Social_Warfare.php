@@ -401,8 +401,8 @@ class Social_Warfare {
     }
 
     private function do_notices() {
-        $message = 'As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform. Instead, they are moving in with Mix.';
-        $message .= ' While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API.</b>';
+        $message = 'As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform. Instead, they are moving in with Mix. ';
+        $message .= 'While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API. </b>';
         $message .= 'You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.';
 
         $notice = new SWP_Notice( 'stumble_upon', $message, 'notice-info' );
