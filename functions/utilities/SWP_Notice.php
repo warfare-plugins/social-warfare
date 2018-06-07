@@ -87,13 +87,13 @@ class SWP_Notice {
 		$now = $now->format('Y-m-d H:i:s');
 
 		// If the start date has not been reached.
-		if ( isset( $this->start_date ) ) {
-			return $now > $this->start_date;
+		if ( isset( $this->start_date && $now < $this->start_date ) ) {
+			return false;
 		}
 
 		// If the end date has been reached.
-		if( isset( $this->end_date ) ) {
-			return $now < $this->end_date;
+		if( isset( $this->end_date && $now > $this->end_date ) ) {
+			return false;
 		}
 
         //* They have dismissed with a temp CTA.
