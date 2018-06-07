@@ -62,12 +62,13 @@ class SWP_Notice {
 	/**
 	 * A method to determine if this notice should be displayed.
 	 *
-	 * @TODO   Check for timestamps and see if 30 days have elapsed.
 	 * @since  3.0.9 | 07 JUN 2018 | Created
-	 * @return bool Default true. d
+	 * @return bool Default true.
+	 * @TODO: Add a conditional to check for start_date/end_date compared to the current date/time.
 	 *
 	 */
     public function should_display_notice() {
+		
         //* No dismissal has happened yet.
         if ( empty( $this->data) ) :
             return true;
@@ -138,6 +139,52 @@ class SWP_Notice {
 
         return $this;
     }
+
+
+	/**
+	 * Set a start date.
+	 *
+	 * This will allow us to schedule messages to be displayed at a specific date in the
+	 * future. For example, before the StumbleUpon service goes away, we may want to post
+	 * a notice letting folks know that it WILL BE going away. The day that they actually
+	 * go away could be the start date for a notice that says that they HAVE gone away.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  str $start_date A str date formatted to 'Y-m-d H:i:s'
+	 * @return $this Allows for method chaining
+	 * @TODO   Add a type check, if possible, for a properly formatted date string.
+	 *
+	 */
+	public function set_start_date( $start_date ) {
+		$this->start_date = $start_date;
+		return $this;
+	}
+
+
+	/**
+	 * Set an end date.
+	 *
+	 * This will allow us to schedule messages to stop being displayed at a specific date
+	 * in the future. For example, before the StumbleUpon service goes away, we may want
+	 * to post a notice letting folks know that it WILL BE going away. The day that they
+	 * actually go away could be the end date for that notice and the start date for a
+	 * notice that says that they HAVE gone away. Additionally, we may only want to notify
+	 * people about StumbleUpon having gone away for 60 days after it happens. After that,
+	 * we can just assume that they've probably heard from somewhere else and not worry
+	 * about showing a notice message.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  str $end_date A str date formatted to 'Y-m-d H:i:s'
+	 * @return $this Allows for method chaining
+	 * @TODO   Add a type check, if possible, for a properly formatted date string.
+	 *
+	 */
+	public function set_end_date( $end_date ) {
+		$this->end_date = $end_date;
+		return $this;
+	}
 
 
     /**
