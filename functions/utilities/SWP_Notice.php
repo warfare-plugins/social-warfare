@@ -114,24 +114,6 @@ class SWP_Notice {
     }
 
 
-	/**
-	 * A method to temporarily dismiss notices via admin-ajax.php
-	 *
-	 * @since  3.0.9 | 07 JUN 2018 | Created
-	 * @param  none
-	 * @return none The respond from update_option is echoed.
-	 *
-	 */
-	public function temp_dismiss() {
-		// TODO: Create a timestamp
-		$timestamp = '';
-		$this->notices[$_POST['key']] = $timestamp;
-
-		echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
-		wp_die();
-	}
-
-
     public function set_message( $message ) {
         if ( !is_string( $message ) ) :
             throw("Please provide a string for your database key.");
