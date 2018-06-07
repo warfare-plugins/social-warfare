@@ -219,8 +219,9 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
             jQuery.post({
                 url: ajaxurl,
                 data: {
-                    action: 'perma_dismiss',
-                    key: parent.data("key")
+                    action: 'dismiss',
+                    key: parent.data("key"),
+                    timeframe: this.dataset.timeframe
                 },
                 success: function(result) {
                     result = JSON.parse(result)
