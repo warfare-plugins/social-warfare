@@ -54,7 +54,9 @@ class SWP_Notice {
         }
 
         $this->notices = $notices;
-        $this->data = $notices[$this->key];
+        if ( isset( $notices[$this->key] ) ) :
+            $this->data = $notices[$this->key];
+        endif;
     }
 
 
@@ -63,10 +65,15 @@ class SWP_Notice {
 	 *
 	 * @TODO   Check for timestamps and see if 30 days have elapsed.
 	 * @since  3.0.9 | 07 JUN 2018 | Created
-	 * @return bool true/false
+	 * @return bool Default true. 
 	 *
 	 */
     public function should_display_notice() {
+        //* No dismissal has happened yet.
+        if ( empty( $this->data) ) :
+            return true;
+        endif;
+
         //* They have dismissed a permadismiss.
         if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] === 0) {
             return false;
@@ -80,7 +87,6 @@ class SWP_Notice {
             return $today > $expiry;
         }
 
-        //* No dismissal has happened yet.
         return true;
     }
 
