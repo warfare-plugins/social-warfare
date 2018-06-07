@@ -222,7 +222,6 @@
 .swp-notice {
     padding: 10px 15px;
     padding: 20px;
-
 }
 
 .swp-actions {
@@ -242,9 +241,16 @@
 }
 
 .swp-dismiss-notice.notice.notice-info {
-   border-left-color: #D34250;
+    border-left-color: #D34250;
     padding: 20px;
-     margin: 15px 0 15px;
+    margin: 15px 0 15px;
+}
+
+.swp-dismiss-notice.notice.notice-info p {
+    font-size: 15px;
+    line-height: 25px;
+    padding: 0;
+    margin: 0 0 20px;
 }
 
 a.swp-notice-cta {
