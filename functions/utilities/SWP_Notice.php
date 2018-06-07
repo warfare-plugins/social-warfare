@@ -141,7 +141,7 @@ class SWP_Notice {
     * @param string $class Optional. The CSS classname to assign to the CTA.
     * @param string $timeframe
     */
-    public function add_cta( $action = '', $link = '', $class = '' , $timeframe = 'permanent' )  {
+    public function add_cta( $action = '', $link = '', $class = '' , $timeframe = 0 )  {
         if ( '' === $action ) :
             $action = "Thanks, I understand.";
         endif;
