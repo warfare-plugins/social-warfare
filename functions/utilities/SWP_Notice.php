@@ -24,14 +24,11 @@ class SWP_Notice {
 	 * @param str $message The message for this notice
 	 *
 	 */
-    public function __construct( $key, $message, $class = '', $id = '' ) {
+    public function __construct( $key, $message ) {
         $this->set_key( $key );
         $this->init();
-        $this->class = $class;
-        $this->id = $id;
         $this->set_message( $message );
         $this->actions = array();
-
 
 		// Add hooks to display our admin notices in the dashbaord and on our settings page.
         add_action( 'admin_notices', array( $this, 'print_HTML' ) );
@@ -55,6 +52,7 @@ class SWP_Notice {
         }
 
         $this->notices = $notices;
+
         if ( isset( $notices[$this->key] ) ) :
             $this->data = $notices[$this->key];
         endif;
@@ -83,6 +81,7 @@ class SWP_Notice {
         //* They have dismissed with a temp CTA.
         if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
             $now = new DateTime();
+            $now = $now->format('Y-m-d H:i:s');
             $expiry = $this->data['timestamp'];
 
             return $now > $expiry;
@@ -105,7 +104,7 @@ class SWP_Notice {
         $timeframe = $_POST['timeframe'];
         $now = new DateTime();
 
-        if ( 0 > $timeframe ) {
+        if ( 0 < $timeframe ) {
             $timestamp = $now->modify("+$timeframe days")->format('Y-m-d H:i:s');
         } else {
             $timestamp = $now->format('Y-m-d H:i:s');
@@ -175,7 +174,7 @@ class SWP_Notice {
             $this->add_cta();
         endif;
 
-        $html = '<div class="swp-dismiss-notice notice' . $this->class . '" data-key="' . $this->key . '">';
+        $html = '<div class="swp-dismiss-notice notice notice-info " data-key="' . $this->key . '">';
             $html .= '<p>' . $this->message . '</p>';
             $html .= '<p> - Warfare Plugins Team</p>';
             $html .= '<div class="swp-actions">';
@@ -195,16 +194,17 @@ class SWP_Notice {
     }
 
 
-    public function get_HTML() {
+    public function get_HTML( $notices = '' ) {
+
         if ( !$this->should_display_notice() ) :
-            return;
+            return $notices;
         endif;
 
         if ( empty( $this->html ) ) :
             $this->render_HTML();
         endif;
 
-        return $this->html;
+        return $notices .= $this->html;
     }
 
 
