@@ -41,10 +41,19 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
 		$this->base_share_url = 'http://www.stumbleupon.com/submit?url=';
 
         $today = date("Y-m-d H:i:s");
-        $expiry = "2018-06-30 00:00:00";
+        $expiry = "2018-03-30 00:00:00";
+
+        $options = get_option('social_warfare_settings');
+        die(var_dump($options['order_of_icons']));
 
         if ( $today < $expiry ) :
     		$this->init_social_network();
+        else :
+            $options = get_option('social_warfare_settings');
+            if ( isset( $options['order_of_icons']['stumbleupon'] ) ) :
+                unset( $options['order_of_icons']['stumbleupon'] );
+                update_option( 'social_warfare_settings', $options );
+            endif;
         endif;
 	}
 
