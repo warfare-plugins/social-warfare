@@ -96,12 +96,12 @@ class SWP_Notice {
 		$now = $now->format('Y-m-d H:i:s');
 
         // If the start date has not been reached.
-		if ( isset( $this->data['start_date'] ) && $now < $this->data['start_date'] ) {
+		if ( isset( $this->start_date ) && $now < $this->start_date ) {
 			return false;
 		}
 
 		// If the end date has been reached.
-		if( isset( $this->data['end_date'] ) && $now > $this->data['end_date'] ) {
+		if( isset( $this->end_date ) && $now > $this->end_date ) {
 			return false;
 		}
 
@@ -214,7 +214,7 @@ class SWP_Notice {
 	 */
 	public function set_start_date( $start_date ) {
         if ( $this->is_date( $start_date ) ) :
-		    $this->data['start_date'] = $start_date;
+		    $this->start_date = $start_date;
         endif;
 
 		return $this;
@@ -242,7 +242,7 @@ class SWP_Notice {
 	 */
 	public function set_end_date( $end_date ) {
         if ( $this->is_date( $end_date ) ) :
-		    $this->data['end_date'] = $end_date;
+		    $this->end_date = $end_date;
         endif;
 
 		return $this;
