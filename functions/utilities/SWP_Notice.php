@@ -107,12 +107,12 @@ class SWP_Notice {
 		$now = $now->format('Y-m-d H:i:s');
 
 		// If the start date has not been reached.
-		if ( isset( $this->start_date && $now < $this->start_date ) ) {
+		if ( isset( $this->start_date ) && $now < $this->start_date ) {
 			return false;
 		}
 
 		// If the end date has been reached.
-		if( isset( $this->end_date && $now > $this->end_date ) ) {
+		if( isset( $this->end_date ) && $now > $this->end_date ) {
 			return false;
 		}
 
@@ -363,5 +363,17 @@ class SWP_Notice {
         echo $this->html;
 
         return $this;
+    }
+
+    /**
+     * Checks whether a string is formatted as our default Date format.
+     *
+     * @since  3.0.9 | 08 JUN 2018 | Created
+     * @param string $string The datetime string in question.
+     * @return bool True iff the string is of the format 'Y-m-d h:i:s'.
+     *
+     */
+    private function is_date( $string ) {
+        return DateTime::createFromFormat( 'Y-m-d h:i:s', $string ) !== false;
     }
 }
