@@ -4,10 +4,16 @@
  * SWP_Notice
  *
  * A class to control the creation and display of admin notices throughout the
- * WordPress dashboard and on the Social Warfare settings page.
+ * WordPress dashboard and on the Social Warfare settings page. This class also
+ * creates the framework and functionality for both permanently and temporarily
+ * dismissing these notices. It also allows for creating start dates, end dates,
+ * and various types of calls-to-actions used to dismiss these notices.
  *
- * @since  3.0.9 | 07 JUN 2018 | Created
- * @access public
+ * @package   SocialWarfare\Utilities
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     3.0.9 | 07 JUN 2018 | Created
+ * @access    public
  *
  */
 class SWP_Notice {
@@ -20,8 +26,8 @@ class SWP_Notice {
 	 * allow it to be displayed and to be dismissed via admin-ajax.php.
 	 *
 	 * @since 3.0.9 | 07 JUN 2018 | Created
-	 * @param str $key     A unique key for this notice.
-	 * @param str $message The message for this notice
+	 * @param string $key     A unique key for this notice.
+	 * @param string $message The message for this notice
 	 *
 	 */
     public function __construct( $key, $message ) {
@@ -38,11 +44,24 @@ class SWP_Notice {
         add_action( 'wp_ajax_dismiss', array( $this, 'dismiss' ) );
         add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'dismiss' ) );
 
-		// Add a hook for temporarily dismissing a notice via admin-ajax.php
-        add_action( 'wp_ajax_temp_dismiss', array( $this, 'temp_dismiss' ) );
-        add_action( 'wp_ajax_nopriv_temp_dismiss', array( $this, 'temp_dismiss' ) );
     }
 
+
+	/**
+	 * Initialize the basics of this property.
+	 *
+	 * This method checks for the dismissed_notices options array in the database.
+	 * If it doesn't exist, it creates it as an empty array. It then stores that
+	 * array in a local property to control the display or non-display of this
+	 * notice. It then finds the attributes for this specific notice and stores it
+	 * in the local $data property.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  null
+	 * @return null
+	 *
+	 */
     public function init() {
         $notices = get_option( 'social_warfare_dismissed_notices', false );
 
@@ -68,6 +87,7 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
+	 * @param  null
 	 * @return bool Default true.
 	 *
 	 */
@@ -111,9 +131,12 @@ class SWP_Notice {
 	/**
 	 * Processes notice dismissals via ajax.
 	 *
+	 * This is the method that is added to the Wordpress admin-ajax hooks.
+	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
-	 * @param  none
-	 * @return none The respond from update_option is echoed.
+	 * @access public
+	 * @param  null
+	 * @return null The response from update_option is echoed.
 	 *
 	 */
     public function dismiss() {
@@ -135,6 +158,15 @@ class SWP_Notice {
     }
 
 
+	/**
+	 * A method to allow you to set the message text for this notice.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  string $message A string of text for the notices message.
+	 * @return object $this    Allows for method chaining.
+	 *
+	 */
     public function set_message( $message ) {
         if ( !is_string( $message ) ) :
             throw("Please provide a string for your database key.");
@@ -146,6 +178,15 @@ class SWP_Notice {
     }
 
 
+	/**
+	 * A method to allow you to set the unique key for this notice.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access protected
+	 * @param  string $key   A string representing this notices unique key.
+	 * @return object $this  Allows for method chaining.
+	 *
+	 */
     protected function set_key( $key ) {
         if ( !is_string ( $key ) ) :
             throw("Please provide a string for your database key.");
@@ -167,7 +208,7 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  str $start_date A str date formatted to 'Y-m-d H:i:s'
+	 * @param  string $start_date A str date formatted to 'Y-m-d H:i:s'
 	 * @return $this Allows for method chaining
 	 * @TODO   Add a type check, if possible, for a properly formatted date string.
 	 *
@@ -192,7 +233,7 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  str $end_date A str date formatted to 'Y-m-d H:i:s'
+	 * @param  string $end_date A str date formatted to 'Y-m-d H:i:s'
 	 * @return $this Allows for method chaining
 	 * @TODO   Add a type check, if possible, for a properly formatted date string.
 	 *
@@ -206,10 +247,14 @@ class SWP_Notice {
     /**
     * Creates the interactive CTA for the notice.
     *
-    * @param string $action Optional. The message to be displayed. Default "Thanks, I understand."
-    * @param string $link Optional. The outbound link.
-    * @param string $class Optional. The CSS classname to assign to the CTA.
-    * @param string $timeframe
+    * @since  3.0.9 | 07 JUN 2018 | Created
+    * @access public
+    * @param  string $action Optional. The message to be displayed. Default "Thanks, I understand."
+    * @param  string $link Optional. The outbound link.
+    * @param  string $class Optional. The CSS classname to assign to the CTA.
+    * @param  string $timeframe
+    * @return $this Allows for method chaining.
+    *
     */
     public function add_cta( $action = '', $link = '', $class = '' , $timeframe = 0 )  {
         if ( '' === $action ) :
@@ -232,6 +277,18 @@ class SWP_Notice {
     }
 
 
+	/**
+	 * Render out the HTML.
+	 *
+	 * Ideally, everything before this method will create a beautiful data-oriented
+	 * object. The only HTML that should be compiled should be inside this method.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  null
+	 * @return string The compiled HTML of the dashboard notice.
+	 *
+	 */
     public function render_HTML() {
         if ( empty( $this->actions) ) :
             $this->add_cta();
@@ -256,6 +313,18 @@ class SWP_Notice {
     }
 
 
+	/**
+	 * Gets (returns) the HTML for this notice.
+	 *
+	 * We have two separate methods for this. One for returning the HTML, and
+	 * one for echoing the html. This one returns it.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  string $notices The string of notices to be modified.
+	 * @return string          The modified string of notices' html.
+	 *
+	 */
     public function get_HTML( $notices = '' ) {
 
         if ( !$this->should_display_notice() ) :
@@ -270,6 +339,18 @@ class SWP_Notice {
     }
 
 
+	/**
+	 * Echos the HTML for this notice.
+	 *
+	 * We have two separate methods for this. One for returning the HTML, and
+	 * one for echoing the html. This one echos it.
+	 *
+	 * @since  3.0.9 | 07 JUN 2018 | Created
+	 * @access public
+	 * @param  string $notices The string of notices to be modified.
+	 * @return string          The modified string of notices' html.
+	 *
+	 */
     public function print_HTML() {
         if ( !$this->should_display_notice() ) :
             return;
