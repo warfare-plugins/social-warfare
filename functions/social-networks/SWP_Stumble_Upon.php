@@ -43,9 +43,6 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
         $today = date("Y-m-d H:i:s");
         $expiry = "2018-03-30 00:00:00";
 
-        $options = get_option('social_warfare_settings');
-        die(var_dump($options['order_of_icons']));
-
         if ( $today < $expiry ) :
     		$this->init_social_network();
         else :
