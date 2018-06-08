@@ -94,7 +94,7 @@ class SWP_Notice {
     public function should_display_notice() {
 
         //* No dismissal has happened yet.
-        if ( empty( $this->data) ) :
+        if ( empty( $this->data['timestamp']) ) :
             return true;
         endif;
 
@@ -214,8 +214,12 @@ class SWP_Notice {
 	 *
 	 */
 	public function set_start_date( $start_date ) {
-		$this->start_date = $start_date;
+        if ( $this->is_date( $start_date ) ) :
+		    $this->data['start_date'] = $start_date;
+        endif;
+
 		return $this;
+
 	}
 
 
@@ -239,7 +243,10 @@ class SWP_Notice {
 	 *
 	 */
 	public function set_end_date( $end_date ) {
-		$this->end_date = $end_date;
+        if ( $this->is_date( $end_date ) ) :
+		    $this->data['end_date'] = $end_date;
+        endif;
+
 		return $this;
 	}
 
