@@ -92,6 +92,18 @@ class SWP_Notice {
 	 *
 	 */
     public function should_display_notice() {
+        $now = new DateTime();
+		$now = $now->format('Y-m-d H:i:s');
+
+        // If the start date has not been reached.
+		if ( isset( $this->data['start_date'] ) && $now < $this->data['start_date'] ) {
+			return false;
+		}
+
+		// If the end date has been reached.
+		if( isset( $this->data['end_date'] ) && $now > $this->data['end_date'] ) {
+			return false;
+		}
 
         //* No dismissal has happened yet.
         if ( empty( $this->data['timestamp']) ) :
@@ -102,19 +114,6 @@ class SWP_Notice {
         if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] == 0) {
             return false;
         }
-
-		$now = new DateTime();
-		$now = $now->format('Y-m-d H:i:s');
-
-		// If the start date has not been reached.
-		if ( isset( $this->start_date ) && $now < $this->start_date ) {
-			return false;
-		}
-
-		// If the end date has been reached.
-		if( isset( $this->end_date ) && $now > $this->end_date ) {
-			return false;
-		}
 
         //* They have dismissed with a temp CTA.
         if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
@@ -219,7 +218,6 @@ class SWP_Notice {
         endif;
 
 		return $this;
-
 	}
 
 
