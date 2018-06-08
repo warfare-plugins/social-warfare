@@ -35,7 +35,6 @@ class Social_Warfare {
 
             if( true === is_admin() ) {
                 $this->instantiate_admin_classes();
-                $this->do_notices();
             }
         }
 
@@ -226,6 +225,12 @@ class Social_Warfare {
 		 *
 		 */
 		new SWP_User_Profile();
+
+        /**
+         * 
+         * Instantiates all of our notices.
+         */
+        new SWP_Notice_Loader();
 	}
 
 
@@ -261,7 +266,8 @@ class Social_Warfare {
             'Plugin_Updater',
             'Database_Migration',
 			'URL_Management',
-            'Notice'
+            'Notice',
+            'Notice_Loader'
         ];
         $this->load_files( '/functions/utilities/', $utilities);
 
@@ -398,14 +404,6 @@ class Social_Warfare {
             $file = "SWP_" . $file;
             require_once SWP_PLUGIN_DIR . $path . $file . '.php';
         }
-    }
-
-    private function do_notices() {
-        $message = 'As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform. Instead, they are moving in with Mix. ';
-        $message .= 'While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API. </b>';
-        $message .= 'You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.';
-
-        $notice = new SWP_Notice( 'stumble_upon', $message, 'notice-info' );
     }
 }
 
