@@ -27,10 +27,6 @@ class SWP_Notice_Loader {
         $message .= 'While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API. </b>';
         $message .= 'You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.';
 
-        $notice = new SWP_Notice( 'stumble_uponc', $message, 'notice-info' );
-        $date = new DateTime();
-        $start = $date->modify('-1 days')->format('Y-m-d h:i:s');
-        $end = $date->modify('+3 day')->format('Y-m-d h:i:s');
-        $notice->set_start_date( $start )->set_end_date($end);
+        $notice = new SWP_Notice( 'stumble_upon', $message, 'notice-info' );
     }
 }
