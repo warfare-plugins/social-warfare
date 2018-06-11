@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 3.5.1
 Tested up to: 4.9
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 License: GNU General Public License v2.0 or later
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,19 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 3.0.9 (08 JUN 2018) =
+* Fix for slow page loads on some sites.
+* Added notice to warn that StumbleUpon is being removed at the end of the month.
+* Fix for buttons not showing on mobile in some cases.
+* Removed calls to Google Plus' and LinkedIn's API's since they no longer offer share counts.
+* Fix for the Pinterest fallback image functionality.
+* Fix for admin settings page not saving in some instances.
+* Fix for the post_id parameter not working in the shortcodes.
+* Fix for the Buffer share button showing plusses instead of spaces.
+* Fix for Bitly Authentication occasionally not working.
+* Fix for some undefined index errors.
+
 = 3.0.8 (24 MAY 2018) =
 * Fixed 'Undefined Index' notices.
 * Fixed 'File not found' errors.
