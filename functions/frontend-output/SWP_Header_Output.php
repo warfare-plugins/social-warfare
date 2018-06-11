@@ -138,6 +138,10 @@ class SWP_Header_Output {
 		if ( true === is_admin() ) {
 			echo $style;
 		} else {
+            if ( empty( $info['html_output'] ) ) :
+                $info['html_output'] = '';
+            endif;
+
 			$info['html_output'] .= $style;
 		}
 
