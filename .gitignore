@@ -3,3 +3,4 @@ functions/options/options-page-working.php
 functions/options/options.txt
 remote-sync.json
 .remote-sync.json
+.DS_Store
