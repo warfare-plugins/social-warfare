@@ -38,7 +38,7 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
 		$this->cta            = __( 'Stumble','social-warfare' );
 		$this->key            = 'stumbleupon';
 		$this->default        = 'false';
-		$this->base_share_url = 'http://www.stumbleupon.com/submit?url=';
+		$this->base_share_url = 'https://www.stumbleupon.com/submit?url=';
 
         $today = date("Y-m-d H:i:s");
         $expiry = "2018-06-30 00:00:00";

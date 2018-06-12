@@ -38,7 +38,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->cta            = __( 'Share','social-warfare' );
 		$this->key            = 'facebook';
 		$this->default        = 'true';
-		$this->base_share_url = 'http://www.facebook.com/share.php?u=';
+		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
 	}
