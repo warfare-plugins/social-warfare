@@ -124,14 +124,14 @@ class SWP_Pinterest extends SWP_Social_Network {
         $pinterest_description .= $pinterest_username;
 
         if ( !empty( $pinterest_image ) ) :
-       		$anchor = '<a rel="noreferrer" class="nc_tweet" data-count="0" ' .
+       		$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet" data-count="0" ' .
 						'data-link="https://pinterest.com/pin/create/button/' .
 						'?url=' . $panel_context['post_data']['permalink'] .
 						'&media=' . urlencode( $pinterest_image ) .
 						'&description=' . urlencode( $pinterest_description ) .
 					'">';
        	else :
-       		$anchor = '<a rel="noreferrer" class="nc_tweet noPop" ' .
+       		$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet noPop" ' .
 						'onClick="var e=document.createElement(\'script\');
 						   e.setAttribute(\'type\',\'text/javascript\');
 						   e.setAttribute(\'charset\',\'UTF-8\');

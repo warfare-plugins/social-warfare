@@ -172,7 +172,7 @@ class SWP_Shortcode {
         $html .= '<a class="swp_CTT ' . $theme;
         $html .= '" href="https://twitter.com/share?text=' . $text . $via;
         $html .= '" data-link="https://twitter.com/share?text=' . $text . $via;
-        $html .= '" rel="noreferrer" target="_blank">';
+        $html .= '" rel="nofollow noreferrer noopener" target="_blank">';
             $html .= '<span class="sw-click-to-tweet">';
                 $html .= '<span class="sw-ctt-text">';
                     $html .= $atts['quote'];
