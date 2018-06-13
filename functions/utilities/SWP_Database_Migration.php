@@ -36,9 +36,10 @@ class SWP_Database_Migration {
     public function __construct() {
 
 		// Set up the defaults before directing into the template functions.
-		add_action( 'template_redirect' , [ $this , 'scan_for_new_defaults'] );
+		add_action( 'template_redirect' , array( $this , 'scan_for_new_defaults' ) );
 
-        add_action( 'plugins_loaded', [$this, 'init'] );
+		// Queue up the migrate features to run after plugins are loaded.
+        add_action( 'plugins_loaded', array( $this, 'init' ) );
     }
 
 
@@ -51,48 +52,80 @@ class SWP_Database_Migration {
 	 *
 	 */
     public function init() {
+
+		// Check for and migrate the settings page data.
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
         }
 
+		// Initialize the database for new installs.
         if ( !$this->has_3_0_0_settings() ) {
             $this->initialize_database();
         }
 
+		// Check for and migrate the post meta fields.
         if ( !$this->post_meta_is_migrated() ) {
             $this->update_post_meta();
             $this->update_hidden_post_meta();
-						$this->update_last_migrated();
+			$this->update_last_migrated();
         }
 
-				if ( true === _swp_is_debug('get_user_options') ) :
-				    echo "<pre>";
-						var_export( get_option( 'social_warfare_settings', array() ) );
-						echo "</pre>";
-						wp_die();
-				endif;
+		$this->debug_parameters();
 
-				if ( true === _swp_is_debug('migrate_db') ) {
-					$this->migrate();
-				}
-
-        if ( true === _swp_is_debug('initialize_db') ) {
-            $this->initialize_db();
-        }
-
-				if ( true === _swp_is_debug('migrate_post_meta') ) {
-					$this->update_post_meta();
-					$this->update_hidden_post_meta();
-				}
-
-        if ( true === _swp_is_Debug('get_last_migrated') ) {
-            $this->get_last_migrated( true );
-        }
-
-        if ( true === _swp_is_Debug('update_last_migrated') ) {
-            $this->update_last_migrated();
-        }
     }
+
+
+	/**
+	 * A method to allow for easier debugging of database migration functions.
+	 *
+	 * The following URL parameters may be used for debugging purposes:
+	 *     ?swp_debug=get_user_options     | Outputs an array of user settings.
+	 *     ?swp_debug=migrate_db           | Runs settings page db migrator.
+	 *     ?swp_debug=initialize_db        | Runs the database initializer.
+	 *     ?swp_debug=migrate_post_meta    | Migrates the post meta fields.
+	 *     ?swp_debug=get_last_migrated    | Outputs the last_updated version number.
+	 *     ?swp_debug=update_last_migrated | Updates the last_updated version number.
+	 *
+	 * @since  3.0.10 | 13 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 */
+	public function debug_parameters() {
+
+		// Output an array of user options if called via a debugging parameter.
+		if ( true === _swp_is_debug('get_user_options') ) :
+			echo "<pre>";
+			var_export( get_option( 'social_warfare_settings', array() ) );
+			echo "</pre>";
+			wp_die();
+		endif;
+
+		// Migrate settings page if explicitly being called via a debugging parameter.
+		if ( true === _swp_is_debug('migrate_db') ) {
+			$this->migrate();
+		}
+
+		// Initialize database if explicitly being called via a debugging parameter.
+		if ( true === _swp_is_debug('initialize_db') ) {
+			$this->initialize_db();
+		}
+
+		// Update post meta if explicitly being called via a debugging parameter.
+		if ( true === _swp_is_debug('migrate_post_meta') ) {
+			$this->update_post_meta();
+			$this->update_hidden_post_meta();
+		}
+
+		// Output the last_migrated status if called via a debugging parameter.
+		if ( true === _swp_is_Debug('get_last_migrated') ) {
+			$this->get_last_migrated( true );
+		}
+
+		// Update the last migrated status if called via a debugging parameter.
+		if ( true === _swp_is_Debug('update_last_migrated') ) {
+			$this->update_last_migrated();
+		}
+	}
 
     /**
      * Checks to see if Social Warfare < 3.0.0 options exist.
