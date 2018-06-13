@@ -141,7 +141,6 @@ class SWP_Database_Migration {
      */
     public function database_is_migrated() {
         $option = get_option( 'social_warfare_settings' , false);
-
         return false !== $option;
     }
 
@@ -155,9 +154,9 @@ class SWP_Database_Migration {
     *
     */
     protected function has_3_0_0_settings() {
+
         //* Check to see if the 3.0.0 settings exist.
         $settings = get_option( 'social_warfare_settings', false );
-
         return is_array( $settings );
     }
 
@@ -175,8 +174,8 @@ class SWP_Database_Migration {
             return false;
         }
 
-		     //* Fetch posts with 2.3.5 metadata.
-		    $old_metadata = get_posts( array( 'meta_key' => 'nc_postLocation', 'numberposts' => 1 ) );
+	     //* Fetch posts with 2.3.5 metadata.
+	    $old_metadata = get_posts( array( 'meta_key' => 'nc_postLocation', 'numberposts' => 1 ) );
 
         return count( $old_metadata ) === 0;
     }
@@ -192,13 +191,13 @@ class SWP_Database_Migration {
      *
      */
     public function scan_for_new_defaults() {
+		
         global $swp_user_options;
 
         $updated = false;
         $defaults = apply_filters( 'swp_options_page_defaults', array() );
 
 		// Manually set the order_of_icons default.
-		// TODO: Set this programatically via the set_default method on the options page.
  	 	$defaults['order_of_icons'] = array(
 			'google_plus' => 'google_plus',
 			'twitter'     => 'twitter',
