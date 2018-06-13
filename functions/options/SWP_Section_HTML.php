@@ -281,7 +281,7 @@ class SWP_Section_HTML extends SWP_Option {
                 </a>
             </div>
             <div class="nc_tweetContainer swp_facebook" data-id="4">
-                <a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="http://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet">
+                <a target="_blank" href="https://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="https://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet">
                     <span class="iconFiller">
                         <span class="spaceManWilly">
                             <i class="sw swp_facebook_icon"></i>
@@ -425,8 +425,8 @@ class SWP_Section_HTML extends SWP_Option {
     */
     public function do_ctt_preview() {
         //* Pull these variables out just to make the $html string easier to read.
-        $link = "https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://warfareplugins.com&amp;via=warfareplugins";
-        $data_link = "https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=http://wfa.re/1PtqdNM&amp;via=WarfarePlugins";
+        $link = "https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=https://warfareplugins.com&amp;via=warfareplugins";
+        $data_link = "https://twitter.com/share?text=We+couldn%27t+find+one+social+sharing+plugin+that+met+all+of+our+needs%2C+so+we+built+it+ourselves.&amp;url=https://wfa.re/1PtqdNM&amp;via=WarfarePlugins";
         $text = "We couldn't find one social sharing plugin that met all of our needs, so we built it ourselves.";
 
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper">';
