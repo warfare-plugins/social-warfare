@@ -74,7 +74,7 @@ class SWP_Pinterest extends SWP_Social_Network {
      * @since  1.0.0
      * @since  3.0.0 | 01 MAY 2018 | Re-wrote the function to a class method.
      * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
-     * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image. 
+     * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image.
      * @access public
      * @return array $panel_context Array of
      *                   ['post_data']  => metadata about the post;
@@ -124,14 +124,14 @@ class SWP_Pinterest extends SWP_Social_Network {
         $pinterest_description .= $pinterest_username;
 
         if ( !empty( $pinterest_image ) ) :
-       		$anchor = '<a rel="nofollow" class="nc_tweet" data-count="0" ' .
+       		$anchor = '<a rel="noreferrer" class="nc_tweet" data-count="0" ' .
 						'data-link="https://pinterest.com/pin/create/button/' .
 						'?url=' . $panel_context['post_data']['permalink'] .
 						'&media=' . urlencode( $pinterest_image ) .
 						'&description=' . urlencode( $pinterest_description ) .
 					'">';
        	else :
-       		$anchor = '<a rel="nofollow" class="nc_tweet noPop" ' .
+       		$anchor = '<a rel="noreferrer" class="nc_tweet noPop" ' .
 						'onClick="var e=document.createElement(\'script\');
 						   e.setAttribute(\'type\',\'text/javascript\');
 						   e.setAttribute(\'charset\',\'UTF-8\');

@@ -52,7 +52,6 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function get_api_link( $url ) {
-
 		// Fetch the user's options
 		global $swp_user_options;
 
@@ -73,13 +72,13 @@ class SWP_Twitter extends SWP_Social_Network {
 
 			return $request_url;
 
-			// If the user has not enabled Twitter shares....
-			else :
+		// If the user has not enabled Twitter shares....
+		else :
 
-				// Return nothing so we don't run an API call
-				return 0;
+			// Return nothing so we don't run an API call
+			return 0;
 
-			endif;
+		endif;
 	}
 
 
