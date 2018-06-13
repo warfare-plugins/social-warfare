@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Social Warfare
- * Plugin URI:  http://warfareplugins.com
+ * Plugin URI:  https://warfareplugins.com
  * Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
  * Version:     3.0.9
  * Author:      Warfare Plugins
- * Author URI:  http://warfareplugins.com
+ * Author URI:  https://warfareplugins.com
  * Text Domain: social-warfare
  *
  */
