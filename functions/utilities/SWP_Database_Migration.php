@@ -5,8 +5,9 @@
  * This willl either migrate previous options to social_warfare_settings,
  * or create the new default settings.
  *
- * @since  3.0.0 | 08 MAY 2018 | Created
- * @since  3.0.6 | 14 MAY 2018 | Added local $last_migrated property.
+ * @since  3.0.0  | 08 MAY 2018 | Created
+ * @since  3.0.6  | 14 MAY 2018 | Added local $last_migrated property.
+ * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
  *
  */
 class SWP_Database_Migration {
@@ -17,15 +18,19 @@ class SWP_Database_Migration {
 	 * and therefore want the database migrator to have run up to this version.
 	 *
 	 * @var string
+	 *
 	 */
 	public $last_migrated = '3.0.5';
+
 
     /**
      * Checks to see if we are on the most up-to-date database schema.
      *
      * If not, runs the migration and updators.
      *
-     * @since 3.0.0 | 01 MAY 2018 | Created the function
+     * @since  3.0.0 | 01 MAY 2018 | Created the function
+     * @param  void
+     * @return void
      *
      */
     public function __construct() {
@@ -36,6 +41,15 @@ class SWP_Database_Migration {
         add_action( 'plugins_loaded', [$this, 'init'] );
     }
 
+
+	/**
+	 * This function initializes and calls up all the  migration methods.
+	 *
+	 * @since  3.0.0 | 08 MAY 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
     public function init() {
         if ( !$this->database_is_migrated() ) {
             $this->migrate();
@@ -87,8 +101,10 @@ class SWP_Database_Migration {
      * from "socialWarfareOptions" to "social_warfare_settings",
      * then
      *
-     * @since 3.0.0 | 01 MAY 2018 | Created the function
+     * @since  3.0.0 | 01 MAY 2018 | Created the function
+     * @param  void
      * @return bool True if migrated, else false.
+     *
      */
     public function database_is_migrated() {
         $option = get_option( 'social_warfare_settings' , false);
@@ -100,8 +116,10 @@ class SWP_Database_Migration {
     /**
     * Checks to see if we have 3.0.0 settings installed or not.
     *
-    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @since  3.0.0 | 01 MAY 2018 | Created the function
+    * @param  void
     * @return bool True if the 3.0.0 array exists, otherwise false.
+    *
     */
     protected function has_3_0_0_settings() {
         //* Check to see if the 3.0.0 settings exist.
@@ -114,8 +132,10 @@ class SWP_Database_Migration {
     /**
     * Tries to get an option that uses the old post_meta keynames.
     *
-    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @since  3.0.0 | 01 MAY 2018 | Created the function
+    * @param  void
     * @return bool True if the old option still exists; false otherwise.
+    *
     */
     public function post_meta_is_migrated() {
         if( $this->last_migrated !== $this->get_last_migrated() ) {
@@ -123,7 +143,7 @@ class SWP_Database_Migration {
         }
 
 		     //* Fetch posts with 2.3.5 metadata.
-		    $old_metadata = get_posts( ['meta_key' => 'nc_postLocation', 'numberposts' => 1] );
+		    $old_metadata = get_posts( array( 'meta_key' => 'nc_postLocation', 'numberposts' => 1 ) );
 
         return count( $old_metadata ) === 0;
     }
@@ -131,15 +151,18 @@ class SWP_Database_Migration {
     /**
      * Creates the default value for any new keys.
      *
-     * @since 3.0.8 | 16 MAY 2018 | Created the method.
-     * @since 3.0.8 | 24 MAY 2018 | Added check for order_of_icons
-     * @param  string $key They suspected missing key.
-     * @return [type]      [description]
+     * @since  3.0.8  | 16 MAY 2018 | Created the method.
+     * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
+     * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+     * @param  void
+     * @return void
+     *
      */
     public function scan_for_new_defaults() {
         global $swp_user_options;
+
         $updated = false;
-        $defaults = apply_filters( 'swp_options_page_defaults', [] );
+        $defaults = apply_filters( 'swp_options_page_defaults', array() );
 
 		// Manually set the order_of_icons default.
 		// TODO: Set this programatically via the set_default method on the options page.
@@ -161,6 +184,15 @@ class SWP_Database_Migration {
      }
 
 
+	 /**
+	  * A method for updating the post meta fields.
+	  *
+	  * @since  3.0.0  | 08 MAY 2018 | Created
+	  * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notations.
+	  * @param  void
+	  * @return void
+	  *
+	  */
     public function update_hidden_post_meta() {
         global $wpdb;
 
@@ -172,12 +204,12 @@ class SWP_Database_Migration {
             endif;
         }
 
-        $hidden_map = [
+        $hidden_map = array(
             '_googlePlus_shares'    => '_google_plus_shares',
             '_linkedIn_shares'      => '_linkedin_shares',
             'bitly_link_googlePlus' => '_bitly_link_google_plus',
             'bitly_link_linkedIn'   => '_bitly_link_linked_in'
-        ];
+        );
 
         $query = "
             UPDATE " . $wpdb->prefix . "postmeta
@@ -196,8 +228,11 @@ class SWP_Database_Migration {
     /**
     * Replaces 2.3.5 camelCased keys with 3.0.0 standardized snake_cased keys.
     *
-    * @since 3.0.0 | 01 MAY 2018 | Created the function
-    * @since 3.0.6 | 14 MAY 2018 | Added time limit to prevent very large datasets from timing out.
+    * @since  3.0.0 | 01 MAY 2018 | Created the function
+    * @since  3.0.6 | 14 MAY 2018 | Added time limit to prevent very large datasets from timing out.
+    * @param  void
+    * @return void
+    *
     */
     public function update_post_meta() {
         global $wpdb;
@@ -207,7 +242,7 @@ class SWP_Database_Migration {
         //* Notice there is no prefix on any of the indices.
         //* Old code has prefixed these with either "nc_" or "swp_".
         //* For simplicity's sake, we'll just check each for both.
-        $metadata_map =  [
+        $metadata_map = array(
             'ogImage'                        => 'swp_og_image',
             'ogTitle'                        => 'swp_og_title',
             'pinterestImage'                 => 'swp_pinterest_image',
@@ -222,7 +257,7 @@ class SWP_Database_Migration {
             'pin_browser_extension_location' => 'swp_pin_browser_extension_location',
             'pin_browser_extension_url'      => 'swp_pin_browser_extension_url',
             'totes'                          => 'total_shares'
-        ];
+        );
 
         $prefix1 = "nc_";
         $prefix2 = "swp_";
@@ -249,11 +284,13 @@ class SWP_Database_Migration {
     /**
     * Seeds the database with Social Warfare 3.0.0 default values.
     *
-    * @since 3.0.0 | 01 MAY 2018 | Created the function
+    * @since  3.0.0 | 01 MAY 2018 | Created the function
+    * @param  void
     * @return void
+    *
     */
     public function initialize_database() {
-        $defaults = [
+        $defaults = array(
             'location_archive_categories'       => 'below',
             'location_home'                     => 'none',
             'location_post'                     => 'below',
@@ -326,14 +363,14 @@ class SWP_Database_Migration {
             'float_mobile'                      => 'bottom',
             'force_new_shares'                  => false,
             'cache_method'                      => 'advanced',
-            'order_of_icons' =>  [
+            'order_of_icons' =>  array(
                 'twitter'    => 'Twitter',
                 'linkedIn'   => 'LinkedIn',
                 'pinterest'  => 'Pinterest',
                 'facebook'   => 'Facebook',
                 'google_plus' => 'Google Plus',
-            ],
-        ];
+            ),
+        );
 
         update_option( 'social_warfare_settings', $defaults );
     }
@@ -343,18 +380,21 @@ class SWP_Database_Migration {
      * Map prevous key/value pairs to new keys.
      *
      * This also deletes the previous keys once the migration is done.
-     * @since 3.0.0 | 01 MAY 2018 | Created the function
+     * @since  3.0.0  | 01 MAY 2018 | Created the function
+     * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+     * @param  void
      * @return void
+     *
      */
     private function migrate() {
-        $options = get_option( 'socialWarfareOptions', [] );
+        $options = get_option( 'socialWarfareOptions', array() );
 
-        if ( $options === [] ) :
+        if ( $options === array() ) :
             //* The old options do not exist.
             return;
         endif;
 
-        $map = [
+        $map = array(
             //* Options names
             'locationSite'                      => 'location_archive_categories',
             'locationHome'                      => 'location_home',
@@ -399,10 +439,10 @@ class SWP_Database_Migration {
             'sideCustomColor'                   => 'single_custom_color',
             'floatBgColor'                      => 'float_background_color',
             'orderOfIconsSelect'                => 'order_of_icons_method',
-						'newOrderOfIcons'                   => 'order_of_icons',
-        ];
+			'newOrderOfIcons'                   => 'order_of_icons',
+        );
 
-        $value_map = [
+        $value_map = array(
             'flatFresh'     => 'flat_fresh',
             'threeDee'      => 'three_dee',
             'fullColor'     => 'full_color',
@@ -423,9 +463,9 @@ class SWP_Database_Migration {
             'float_vertical'=> 'float_alignment',
             'fullWidth' => 'full_width',
             'floatLeftMobile'   => 'float_mobile',
-        ];
+        );
 
-        $migrations = [];
+        $migrations = array();
 
         foreach( $options as $old => $value ) {
             //* The order of icons used to be stored in an array at 'active'.
@@ -463,11 +503,11 @@ class SWP_Database_Migration {
                 endif;
             endif;
 
-						// Only if the source is set to not inherit them from the static buttons.
-						if ( $old === 'sideCustomColor' ) :
-							$migrations['float_custom_color'] = $new_value;
-							$migrations['float_custom_color_outlines'] = $new_value;
-						endif;
+			// Only if the source is set to not inherit them from the static buttons.
+			if ( $old === 'sideCustomColor' ) :
+				$migrations['float_custom_color'] = $new_value;
+				$migrations['float_custom_color_outlines'] = $new_value;
+			endif;
 
             if ( array_key_exists( $old, $map) ) :
                 //* We specified an update to the key.
@@ -493,7 +533,7 @@ class SWP_Database_Migration {
             $migrations['float_alignment'] = 'center';
         endif;
 
-        $custom_colors = ['custom_color', 'custom_color_outlines', 'float_custom_color', 'float_custom_color_outlines'];
+        $custom_colors = array( 'custom_color', 'custom_color_outlines', 'float_custom_color', 'float_custom_color_outlines' );
 
         foreach( $custom_colors as $color ) {
             if ( !isset($migrations[$color] ) ) :
@@ -501,7 +541,7 @@ class SWP_Database_Migration {
             endif;
         }
 
-        $removals = [
+        $removals = array(
             'dashboardShares',
             'rawNumbers',
             'notShowing',
@@ -509,7 +549,7 @@ class SWP_Database_Migration {
             'loopFix',
             'locationrevision',
             'locationattachment',
-        ];
+        );
 
         foreach ( $removals as $trash ) :
             if ( ( $migrations[$trash] ) ) :
@@ -523,6 +563,19 @@ class SWP_Database_Migration {
         // delete_option( 'socialWarfareOptions' );
     }
 
+
+	/**
+	 * Get Last Migrated
+	 *
+	 * This method gets the version number during which the last migration was
+	 * run. This allows us to increment a version if we need a part of this class
+	 * to run again.
+	 *
+	 * @since  3.0.0 | Created | 08 MAY 2018
+	 * @param  boolean $echo True echoes the data; False returns it.
+	 * @return mixed         (str) Version number if found, (bool) false if not found.
+	 *
+	 */
     public function get_last_migrated( $echo = false ) {
         $options = get_option( 'social_warfare_settings' );
 
@@ -542,6 +595,15 @@ class SWP_Database_Migration {
 
     }
 
+
+	/**
+	 * A method to update the last migrated version number.
+	 *
+	 * @since  3.0.0 | Created | 08 MAY 2018
+	 * @param  null
+	 * @return void
+	 *
+	 */
     public function update_last_migrated() {
         $options = get_option( 'social_warfare_settings' );
         $options['last_migrated'] = $this->last_migrated;
