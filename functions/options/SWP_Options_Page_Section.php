@@ -63,8 +63,7 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     public function __construct( $name, $key ) {
         $this->options = new stdClass();
         $this->set_name( $name );
-
-        $this->key = $this->set_key( $key );
+		$this->set_key( $key );
 
     }
 
@@ -189,33 +188,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         // $html .= '</div>';
 
         return $html;
-    }
-
-
-    /**
-    * Sets the key used by dependent sections and options.
-    *
-    * @since 3.0.0 | 01 MAR 2018 | Created
-    * @param string $key The unique key being assigned to this section.
-    * @return SWP_Options_Page_Section $this The updated object.
-    *
-    */
-    protected function set_key( $key = null ) {
-        if ( !empty( $key ) ) :
-            $this->key = $key;
-            return $this;
-        endif;
-
-        //* Remove all non-word character symbols.
-        $key = preg_replace( '#[^\w\s]#i', '', $this->name );
-
-        //* Replace spaces with underscores.
-        $key = preg_replace( '/\s+/', '_', $this->name );
-
-
-        $this->key = strtolower( $key );
-
-        return $this;
     }
 
 
