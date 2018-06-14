@@ -4,12 +4,15 @@
  * The parent class for all Option_X types.
  *
  * This class is used to create each individual option throughout the options page.
- * It provides the framework for each of type of option that is
- * available: input, select, checkbox, and textarea. Each of these options is
- * instantiated through their respective class.
+ * It provides the framework for each of type of option that is available: input,
+ * select, checkbox, and textarea. Each of these options is instantiated through
+ * their respective class and then added to the option page section.
  *
- * @since  2.4.0   | Created | 02 MAR 2017
- * @access public
+ * @package   SocialWarfare\Functions\Social-Networks
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     3.0.0   | Created | 02 MAR 2017
+ * @access    public
  *
  */
 class SWP_Option extends SWP_Abstract {
@@ -19,9 +22,10 @@ class SWP_Option extends SWP_Abstract {
     * The type of HTML input element.
     *
     * Valid types are:
-    *
     * text, select, checkbox, textarea
+    *
     * @var string $type
+    *
     */
     public $type;
 
@@ -31,6 +35,7 @@ class SWP_Option extends SWP_Abstract {
     *
     * @see set_size()
     * @var string $size
+    *
     */
     public $size;
 
@@ -39,6 +44,7 @@ class SWP_Option extends SWP_Abstract {
     * The key for this option in the database.
     *
     * @var string $key
+    *
     */
     public $key;
 
@@ -47,6 +53,7 @@ class SWP_Option extends SWP_Abstract {
     * The default value for the given input.
     *
     * @var mixed $default. See the corresponding class's set_default() method.
+    *
     */
     public $default = false;
 
@@ -55,6 +62,7 @@ class SWP_Option extends SWP_Abstract {
     * The string of HTML which creates the element.
     *
     * @var string $html
+    *
     */
     public $html;
 
@@ -63,6 +71,7 @@ class SWP_Option extends SWP_Abstract {
     * Boolean indicating whether the plugin is registered or not.
     *
     * @var bool $swp_registration
+    *
     */
     public $swp_registration;
 
@@ -70,8 +79,10 @@ class SWP_Option extends SWP_Abstract {
     /**
     * The required constructor for PHP classes.
     *
-    * @param string $name The display name for the toggle.
-    * @param string $key The database key for the user setting.
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  string $name The display name for the toggle.
+    * @param  string $key The database key for the user setting.
+    * @return void
     *
     */
     public function __construct( $name, $key ) {
@@ -86,8 +97,10 @@ class SWP_Option extends SWP_Abstract {
     /**
     * Fetches the css class to match a given size given as a string.
     *
-    * @param Optional string $size The size of the element using SWP sizing.
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  string $size Optional: The size of the element using SWP sizing.
     * @return object $this Allows for method chaining.
+    *
     */
     protected function get_css_size( $size = '' ) {
         $size = '' === $size ? $this->size : $size;
@@ -109,7 +122,10 @@ class SWP_Option extends SWP_Abstract {
     /**
     * Get the pre-defined value of the option.
     *
-    * @since April 15 2018
+    * @since  3.0.0 | April 15 2018 | Created
+    * @param  void
+    * @return mixed The current value of this option.
+    *
     */
     protected function get_value() {
         if ( isset($this->value) ) {
@@ -127,7 +143,10 @@ class SWP_Option extends SWP_Abstract {
     /**
     * Creates HTML based on the option's properties and user settings.
     *
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  void
     * @return void
+    *
     */
     public function render_HTML() {
         //* Intentionally left blank.
@@ -140,8 +159,9 @@ class SWP_Option extends SWP_Abstract {
     * Set the default value of this option. This value will be used until the plugin user changes the value
     * to something else and saves the options.
     *
-    * @since 2.4.0 | 02 MAR 2018 | Created
-    * @param mixed The default value will vary based on the kind of option being generated.
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  mixed The default value will vary based on the kind of option being generated.
+    * @return object $this Allows for method chaining.
     *
     */
     public function set_default( $value ) {
@@ -186,8 +206,10 @@ class SWP_Option extends SWP_Abstract {
     * the option will be visible ont the Settings page. Otherwise, the option
     * is hidden until the dependency is set to that value.
     *
-    * @param string $parent The parent option's key.
-    * @param array $values Values which enable this option to exist.
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  string $parent The parent option's key.
+    * @param  array $values Values which enable this option to exist.
+    * @return object $this Allows for method chaining.
     *
     */
     public function set_dependency( $parent, $values ) {
@@ -215,8 +237,10 @@ class SWP_Option extends SWP_Abstract {
     /**
     * Assign the database key for this element.
     *
-    * @param string $key The key which correlates to the input.
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  string $key The key which correlates to the input.
     * @return object $this The calling instance, for method chaining.
+    *
     */
     public function set_key( $key ) {
         if ( !is_string( $key ) ) {
@@ -233,8 +257,8 @@ class SWP_Option extends SWP_Abstract {
     * Some option types have multiple sizes that will determine their visual layout on the option
     * page. This setter allows you to declare which one you want to use.
     *
-    * @since 2.4.0 | 02 MAR 2018 | Created
-    * @param string The size of the option on the page (e.g. 'two-thirds').
+    * @since  3.0.0 | 02 MAR 2018 | Created
+    * @param  string The size of the option on the page (e.g. 'two-thirds').
     * @return object $this The calling instance, for method chaining.
     *
     */
@@ -253,12 +277,14 @@ class SWP_Option extends SWP_Abstract {
         return $this;
     }
 
+
     /**
      * Defines the placeholder for text inputs.
      *
-     * @var string $placeholder The text to display as a placeholder.
-     *
+     * @since  3.0.0 | 02 MAR 2018 | Created
+     * @param  string $placeholder The text to display as a placeholder.
      * @return object $this The calling instance, for method chaining.
+     *
      */
     public function set_placeholder( $placeholder ) {
         if (!is_string( $placeholder ) && !is_numeric( $placeholder ) ) :
@@ -270,9 +296,12 @@ class SWP_Option extends SWP_Abstract {
         return $this;
     }
 
+
     /**
      * Creates the HTML placeholder attribute if a placeholder is defined.
      *
+     * @since  3.0.0 | 02 MAR 2018 | Created
+     * @param  void
      * @return string $placeholder The qualified HTML placeholder attribute.
      */
     public function render_placeholder() {
