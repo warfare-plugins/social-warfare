@@ -11,7 +11,7 @@
  * @package   SocialWarfare\Functions\Social-Networks
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     3.0.0  | 02 MAR 2017 | Created 
+ * @since     3.0.0  | 02 MAR 2017 | Created
  * @since     3.0.10 | 14 JUN 2018 | Updated to use set_key() method.
  * @access    public
  *
@@ -55,8 +55,6 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	* @since  3.0.10 | 14 JUN 2018 | Update to use set_key() method.
 	* @param  str $name The name of this tab.
 	* @param  str $key  The unique key for this tab.
-	*
-	* @todo   If $key is a mandatory property, why are we checking if it's set?
 	*
 	*/
 	public function __construct( $name, $key ) {
