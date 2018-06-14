@@ -1,14 +1,17 @@
 <?php
 
 /**
-* For creating markup that does not fit into the exiting options.
+* For creating markup that does not fit into the existing options.
 *
-* This extends SWP_Option rather than SWP_Section because it uses
-* many of the same methods as an option and is a child of a
-* section, even though this is neither necessarily
-* an option or a section.
+* This extends SWP_Option rather than SWP_Section because it uses many of the
+* same methods as an option and is a child of a section, even though this is
+* neither necessarily an option or a section.
 *
-* @since 3.0.0
+* @package   SocialWarfare\Functions\Social-Networks
+* @copyright Copyright (c) 2018, Warfare Plugins, LLC
+* @license   GPL-3.0+
+* @since     3.0.0 | 01 MAR 2018 | Created
+*
 */
 class SWP_Section_HTML extends SWP_Option {
 
@@ -16,24 +19,27 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * HTML
     *
-    * The non-conformant markup this object represents.
-    * Most of the sections and options can be created using
-    * one of the existing SWP_{Item} classes. Sometimes we
-    * need something that does not fit those boxes.
-    * This class provides native methods for a few of those
-    * cases, and an add_HTML() method for everything else.
+    * The non-conformant markup this object represents. Most of the sections and
+    * options can be created using one of the existing SWP_{Item} classes.
+    * Sometimes we need something that does not fit those boxes. This class
+    * provides native methods for a few of those cases, and an add_HTML() method
+    * for everything else.
     *
     * @var string $html
+    *
     */
     public $html = '';
+
 
     /**
     * The required constructor for PHP classes.
     *
-    * @param string $name An arbitrary name, except for do_bitly_authentication_button
-    * @param Optional string $key If the object requires access beyond itself, pass it a key.
-    *                             Otherwise $name will be used.
-    * @see  $this->do_bitly_authentication_button()
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  string $name Required: An arbitrary name, except for do_bitly_authentication_button
+    * @param  string $key  Optional: If the object requires access beyond itself,
+    *                      pass it a key. Otherwise $name will be used.
+    * @return void
+    * @see    $this->do_bitly_authentication_button()
     *
     */
     public function __construct( $name, $key = null ) {
@@ -48,8 +54,10 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * Allows custom HTML to be added.
     *
-    * @param string $html The fully qualified, ready-to-print HTML to display.
-    * @return SWP_Section_HTML $this This object for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  string $html Required: The fully qualified, ready-to-print HTML to display.
+    * @return object $this This object for method chaining.
+    *
     */
     public function add_HTML( $html ) {
         if ( !is_string( $html) ) :
@@ -61,6 +69,15 @@ class SWP_Section_HTML extends SWP_Option {
         return $this;
     }
 
+
+	/**
+	 * A method for creating the admin sidebar HTML.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The compiled HTML returned as a string.
+	 *
+	 */
     public function do_admin_sidebar() {
         $status_title =  __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' );
         $support_link = __( 'Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.' , 'social-warfare' );
@@ -93,6 +110,15 @@ class SWP_Section_HTML extends SWP_Option {
         return $this->html;
     }
 
+
+	/**
+	 * A method for compiling the system status html.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The compiled html returned as a string.
+	 *
+	 */
     private function system_status() {
         /**
     	 * System Status Generator
@@ -151,6 +177,14 @@ class SWP_Section_HTML extends SWP_Option {
     }
 
 
+	/**
+	 * A method for compiling the tweet count registration html.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The compiled html returned as a string.
+	 *
+	 */
     public function do_tweet_count_registration() {
         global $swp_user_options;
 
@@ -200,13 +234,15 @@ class SWP_Section_HTML extends SWP_Option {
     }
 
 
-
     /**
     * Render the Bitly connection button on the Advanced tab.
     *
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling instance, for method chaining.
+    *
     */
-        public function do_bitly_authentication_button() {
+    public function do_bitly_authentication_button() {
         $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=" . admin_url( 'admin-ajax.php' ) . "&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
 
         if ( swp_get_option('bitly_access_token') ):
@@ -241,7 +277,10 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * The buttons preview as shown on the Display tab.
     *
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling instance, for method chaining.
+    *
     */
     public function do_buttons_preview() {
         ob_start() ?>
@@ -321,11 +360,12 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * Renders the three column table on the Display tab.
     *
+    * @since  3.0.0 | 01 MAR 2018 | Created
     * @since  3.0.4 | 09 MAY 2018 | Added check for is_numeric to avoid throwing errors.
     * @since  3.0.5 | 09 MAY 2018 | Switched to using an iterator. Many post types are
     *                               being returned with associative keys, not numeric ones.
-    * @param  none
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @param  void
+    * @return object $this The calling instance, for method chaining.
     *
     */
     public function do_button_position_table() {
@@ -421,7 +461,10 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * Creates the Click To Tweet preview for the Styles tab.
     *
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling instance, for method chaining.
+    *
     */
     public function do_ctt_preview() {
         //* Pull these variables out just to make the $html string easier to read.
@@ -451,7 +494,10 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * Renders the three column table on the Display tab.
     *
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling instance, for method chaining.
+    *
     */
     public function do_yummly_display() {
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
@@ -507,11 +553,14 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * The rendering method common to all classes.
     *
-    * Unlike the other option classes, this class creates its HTML
-    * and does not immediately return it. Instead, it stores the
-    * HTML inside itself and waits for the render_html method to be called.
+    * Unlike the other option classes, this class creates its HTML and does not immediately
+    * return it. Instead, it stores the HTML inside itself and waits for the render_html
+    * method to be called.
     *
-    * @return This object's saved HTML.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return string The object's saved HTML.
+    * 
     */
     public function render_HTML() {
         return $this->html;
