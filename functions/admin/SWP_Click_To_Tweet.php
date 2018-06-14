@@ -34,23 +34,6 @@ class SWP_Click_To_Tweet {
 
 
 	/**
-	 * Debug method
-	 *
-	 * TODO: This method isn't called anywhere. Can it be deleted?
-	 *
-	 * @since  3.0.0 | 23 FEB 2018 | Created
-	 * @param  array $array
-	 * @return void
-	 *
-	 */
-	public function debug( $array ) {
-		echo '<pre>';
-		print_r( $array );
-		echo '</pre>';
-	}
-
-
-	/**
 	 * Register the uninstall hook to remove our button later.
 	 *
 	 * @since  3.0.0 | 23 FEB 2018 | Created
@@ -157,7 +140,7 @@ class SWP_Click_To_Tweet {
 	 * @since  3.0.0 | 23 FEB 2018 | Created
 	 * @param  int $ver The current version of the tinyMCE editor.
 	 * @return int      The modified version of the tinyMCE editor.
-	 * 
+	 *
 	 */
 	public function refresh_mce( $ver ) {
 		$ver += 3;

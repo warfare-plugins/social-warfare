@@ -386,8 +386,6 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $frame_buster->add_option( $frame_buster_toggle );
 
-        //* TODO: Add the Bitly Authentication Button.
-
         $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ), 'caching_method' );
         $caching_method->set_priority( 60 );
 
@@ -766,7 +764,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * @since  3.0.0 | 01 MAR 2018 | Created
     * @param  void
     * @return string $container The Admin tab HTML container.
-    * 
+    *
     */
     private function create_tabs( $active_addons, $registered_addons ) {
         $sidebar = new SWP_Section_HTML( 'Sidebar' );

@@ -59,18 +59,13 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 	 * @param  string $key  The unique key for this section of the options page.
 	 * @return void
 	 *
-	 * @todo If $key is a mandatory property, why are we checking if it's set?
-	 *
 	 */
     public function __construct( $name, $key ) {
         $this->options = new stdClass();
         $this->set_name( $name );
 
-        if ( isset( $key ) ) :
-            $this->key = $key;
-        else:
-            $this->key = $this->name_to_key( $name );
-        endif;
+        $this->key = $this->set_key( $key );
+
     }
 
 
@@ -221,34 +216,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
         $this->key = strtolower( $key );
 
         return $this;
-    }
-
-
-    /**
-    * Renders Title and Support Link HTML.
-    *
-    * @since  3.0.0 | 01 MAR 2018 | Created
-    * @param  void
-    * @return string $title The fullly qualified HTML for the section's title.
-    * @todo What the heck is this method? This method doesn't do anything except return a variable
-    *       that isn't even defined. Is this method actually called anywhere?
-    *
-    */
-    private function create_title() {
-        return $title;
-    }
-
-
-    /**
-    * Renders the description HTML.
-    *
-    * @return string $description The fullly qualified HTML for the section's description.
-    * @todo What the heck is this method? This method doesn't do anything except return a variable
-    *       that isn't even defined. Is this method actually called anywhere?
-    *
-    */
-    private function create_description() {
-        return $description;
     }
 
 
