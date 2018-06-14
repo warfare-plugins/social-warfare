@@ -11,7 +11,8 @@
  * @package   SocialWarfare\Functions\Social-Networks
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     3.0.0   | Created | 02 MAR 2017
+ * @since     3.0.0  | 02 MAR 2017 | Created 
+ * @since     3.0.10 | 14 JUN 2018 | Updated to use set_key() method.
  * @access    public
  *
  */
@@ -37,7 +38,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
     *
     * Note: This is not an href or external link. This is just a key used by jQuery
 	* to select the proper tab.
-	* 
+	*
     * @var string $link
     *
     */
@@ -50,7 +51,8 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	* This method instantiates this class by settings the "sections" property to
 	* an object so the the "options" objects can easily be added to it later on.
 	*
-	* @since  3.0.0 | 3 MAR 2018 | Created
+	* @since  3.0.0  | 3 MAR 2018 | Created
+	* @since  3.0.10 | 14 JUN 2018 | Update to use set_key() method.
 	* @param  str $name The name of this tab.
 	* @param  str $key  The unique key for this tab.
 	*
@@ -62,11 +64,8 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 
         $this->set_name( $name );
         $this->set_link( $key );
-        if ( isset( $key ) ) :
-            $this->key = $key;
-        else:
-            $this->key = $this->name_to_key( $name );
-        endif;
+		$this->set_key( $key );
+
 	}
 
 
@@ -84,7 +83,6 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
         endif;
 
         $key = $section->key;
-
         $this->sections->$key = $section;
 
         return $this;
