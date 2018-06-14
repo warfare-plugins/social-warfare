@@ -35,6 +35,9 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
     * Links
     * This is the link used by Javscript to switch tabs.
     *
+    * Note: This is not an href or external link. This is just a key used by jQuery
+	* to select the proper tab.
+	* 
     * @var string $link
     *
     */
