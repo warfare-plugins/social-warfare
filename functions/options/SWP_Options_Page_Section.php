@@ -233,9 +233,6 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     *
     */
     private function create_title() {
-        //* Set the support link and title.
-
-
         return $title;
     }
 
@@ -246,10 +243,9 @@ class SWP_Options_Page_Section extends SWP_Abstract {
     * @return string $description The fullly qualified HTML for the section's description.
     * @todo What the heck is this method? This method doesn't do anything except return a variable
     *       that isn't even defined. Is this method actually called anywhere?
+    *
     */
     private function create_description() {
-
-
         return $description;
     }
 
