@@ -9,8 +9,9 @@
  * @package   Social-Warfare\Functions\Admin
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0
- * @since     3.0.0 | 21 FEB 2018 | Refactored into a class-based system.
+ * @since     1.0.0  | UNKNOWN     | Created
+ * @since     3.0.0  | 21 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.10 | 14 JUN 2018 | Added number_format for numeric output.
  *
  */
 class SWP_Column {
@@ -23,10 +24,9 @@ class SWP_Column {
 	 *
 	 * NOTE: These "duplicate" hooks/functions are to cover both posts and pages.
 	 *
-	 * @since  3.0.0
-	 * @access public
-	 * @param  None
-	 * @return None
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return void
 	 *
 	 */
     public function __construct() {
@@ -51,9 +51,9 @@ class SWP_Column {
 	/**
 	 * Add a share counts column to the post listing admin pages; make it Sortable.
 	 *
-	 * @since  1.4.0
-	 * @param  Array The default columns registered with WordPress.
-	 * @return Array The array modified with our new column.
+	 * @since  1.4.0 | 01 JAN 2016 | Created
+	 * @param  array $defaults The default columns registered with WordPress.
+	 * @return array           The array modified with our new column.
 	 *
 	 */
 	public function create_social_shares_column( $defaults ) {
@@ -65,16 +65,21 @@ class SWP_Column {
 	/**
 	 * Populate the new column with the share count from the meta field
 	 *
-	 * @since  1.4.0
-	 * @param  String The name of the column to be modified.
-	 * @param  Int The Post ID
-	 * @return None The number is echoed to the screen.
+	 * @since  1.4.0  | 01 JAN 2018 | Created
+	 * @since  3.0.10 | 14 JUN 2018 | Added number_format
+	 * @param  string $column_name The name of the column to be modified.
+	 * @param  int    $post_ID     The Post ID
+	 * @return void                The number is echoed to the screen.
 	 *
 	 */
 	public function populate_social_shares_column( $column_name, $post_ID ) {
 	 	if ( $column_name == 'swSocialShares' ) {
-	 		$answer = get_post_meta( $post_ID,'_total_shares',true );
-	 		echo intval( $answer );
+	 		$answer = get_post_meta( $post_ID , '_total_shares' , true );
+			if( !empty( $answer ) ):
+	 			echo number_format( intval( $answer ) );
+			else:
+				echo 0;
+			endif;
 		}
 	}
 
@@ -82,9 +87,9 @@ class SWP_Column {
 	/**
 	 * Make the column sortable
 	 *
-	 * @since  1.4.0
-	 * @param  Array The array of registered columns.
-	 * @return Array The array modified columns.
+	 * @since  1.4.0 | 01 JAN 2018 | Created
+	 * @param  array The array of registered columns.
+	 * @return array The array modified columns.
 	 *
 	 */
     public function make_social_shares_sortable( $columns ) {
@@ -96,18 +101,20 @@ class SWP_Column {
     /**
     * Sort the column by share count.
     *
-    * @since 1.4.0
-    * @param Object $query The WordPress query object.
+    * @since  1.4.0 | 01 JAN 2018 | Created
+    * @param  object $query The WordPress query object.
+    * @return void
+    *
     */
 	public function swp_social_shares_orderby( $query ) {
-		if ( ! is_admin() ) {
+		if ( !is_admin() ) {
 	 		return;
 	 	}
 	 	$orderby = $query->get( 'orderby' );
 
 		if ( 'Social Shares' === $orderby ) {
-	 		$query->set( 'meta_key','_total_shares' );
-	 		$query->set( 'orderby','meta_value_num' );
+	 		$query->set( 'meta_key', '_total_shares' );
+	 		$query->set( 'orderby', 'meta_value_num' );
 	 	}
 	}
 }
