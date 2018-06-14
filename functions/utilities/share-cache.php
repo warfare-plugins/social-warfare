@@ -78,10 +78,14 @@ add_filter( 'swp_meta_tags', 'swp_cache_rebuild_rel_canonical', 7 );
 function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	global $swp_user_options;
 
+    if ( _swp_is_debug( 'is_cache_fresh' ) ) :
+        echo "Calling function: <pre>" . debug_backtrace()[1]['function'] . "</pre>";
+    endif;
+
 	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
+				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
 		endif;
 
 		return true;
@@ -99,7 +103,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		}
 
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-	        echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
+	        echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
 	    }
 
 		return $fresh_cache;
@@ -108,7 +112,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
 
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-			echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
+			echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
 		endif;
 
 		return false;
@@ -118,7 +122,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	// Rebuilding multiple page caches which will cost a lot of time.
 	if ( ! is_singular() && ! $ajax ) :
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-			echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
+			echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
 		endif;
 
 		return true;
@@ -138,9 +142,11 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
 	if ( _swp_is_debug( 'is_cache_fresh' ) ) :
+        echo "<pre>";
         echo "<br/>Time: ", var_dump($time);
 		echo "<br/>Last_checked: ", var_dump($last_checked);
 		echo "<br/>Hours: ", var_dump($hours);
+        echo "</pre>";
 	endif;
 
 	if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
@@ -150,7 +156,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	}
 
 	if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-		echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__;
+		echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
 	endif;
 
 	return $fresh_cache;
