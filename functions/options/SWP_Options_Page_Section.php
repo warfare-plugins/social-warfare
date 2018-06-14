@@ -59,6 +59,8 @@ class SWP_Options_Page_Section extends SWP_Abstract {
 	 * @param  string $key  The unique key for this section of the options page.
 	 * @return void
 	 *
+	 * @todo If $key is a mandatory property, why are we checking if it's set?
+	 *
 	 */
     public function __construct( $name, $key ) {
         $this->options = new stdClass();
