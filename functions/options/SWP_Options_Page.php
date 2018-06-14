@@ -14,8 +14,15 @@
 *
 * Addons, such as Pro, can hook into this object to add
 * their own sections and options by using the one of the
+*
+* @package   SocialWarfare\Functions\Social-Networks
+* @copyright Copyright (c) 2018, Warfare Plugins, LLC
+* @license   GPL-3.0+
+* @since     3.0.0   | Created | 02 MAR 2017
+* @access    public
+* @todo      Clean out all array bracket notations.
+*
 */
-
 class SWP_Options_Page extends SWP_Abstract {
 	/**
 	* The Options Page Tabs
@@ -54,19 +61,18 @@ class SWP_Options_Page extends SWP_Abstract {
 	 * can easily access this object to add their own tabs, sections, and
 	 * options as needed prior to the final output of the page and it's HTML.
 	 *
-	 * @since 3.0.0
-	 * @param none
-	 * @return object The options page object.
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this The options page object. Allows for method chaining.
 	 *
 	 */
 	public function __construct() {
+
 		// Fetch the initial user-set options.
 		$swp_user_options = swp_get_user_options( true );
 
 		// Create a 'tabs' object to which we can begin adding tabs.
         $this->tabs = new stdClass();
-
-		// Get the list of available icons.
 
 
 		/**
@@ -81,6 +87,7 @@ class SWP_Options_Page extends SWP_Abstract {
 			->init_advanced_tab();
 
         add_action('wp_loaded', [$this, 'load_deferred_options']);
+
 
 		/**
 		 * STEP #2: Addons can now access this object to add their own
@@ -101,6 +108,17 @@ class SWP_Options_Page extends SWP_Abstract {
         add_action( 'admin_menu', array( $this, 'options_page') );
     }
 
+
+	/**
+	 * Load Deferred Options
+	 *
+	 * The buttons position table needs deferred via a hook. This method
+	 * takes care of that.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return void
+	 */
     public function load_deferred_options() {
         $this->tabs->display->sections->button_position->options->button_position_table->do_button_position_table();
     }
@@ -109,10 +127,13 @@ class SWP_Options_Page extends SWP_Abstract {
 	/**
 	* Create the admin menu options page
 	*
-	* @return null
+	* @since  3.0.0 | 01 MAR 2018 | Created
+	* @param  void
+	* @return void
 	*
 	*/
 	public function options_page() {
+
 		// Declare the menu link
 		$swp_menu = add_menu_page(
 			'Social Warfare',
@@ -132,8 +153,10 @@ class SWP_Options_Page extends SWP_Abstract {
     /**
     * Add a tab to the Options Page object.
     *
-    * @param SWP_Options_Page_Tab $tab The tab to add.
-    * @return SWP_Options_Page $this The calling instance, for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param object $tab The SWP_Options_Page_Tab object to add.
+    * @return object $this The calling instance, for method chaining.
+    *
     */
     public function add_tab( $tab ) {
         $class = get_class( $tab );
@@ -154,8 +177,11 @@ class SWP_Options_Page extends SWP_Abstract {
     /**
     * Enqueue the Settings Page CSS & Javascript
     *
-    * @see $this->options_page()
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @see    $this->options_page()
+    * @param  void
     * @return void
+    *
     */
     public function admin_css() {
         $suffix = SWP_Script::get_suffix();
@@ -168,12 +194,16 @@ class SWP_Options_Page extends SWP_Abstract {
         );
     }
 
+
     /**
     * Enqueue the admin javascript
     *
-    * @since  2.0.0
+    * @since  3.0.0 | 01 MAR 2018 | Created
     * @see $this->options_page()
+    * @param  void
     * @return void
+    * @todo: Are we still using the tooltip for anything?
+    *
     */
     public function admin_js() {
         $suffix = SWP_Script::get_suffix();
@@ -197,9 +227,12 @@ class SWP_Options_Page extends SWP_Abstract {
         ));
     }
 
+
     /**
     * Creates the commonly used color choides for choice settings.
     *
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
     * @return array The key/value pairs of color choides.
     *
     */
@@ -218,10 +251,13 @@ class SWP_Options_Page extends SWP_Abstract {
         ];
     }
 
+
     /**
     * Calls rendering methods to assemble HTML for the Admin Settings page.
     *
-    * @return SWP_Options_Page $this The calling object for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling object for method chaining.
     *
     */
     public function render_HTML() {
@@ -265,12 +301,16 @@ class SWP_Options_Page extends SWP_Abstract {
 
 
     /**
-    * Handwritten list of og meta types.
+    * Handwritten list of OG Meta types.
     *
+    * @since  3.0.0  | 01 MAR 2018 | Created
+    * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+    * @param  void
     * @return array Custom Post Types.
+    *
     */
     protected function get_og_post_types() {
-        return [
+        return array(
             'article',
             'book',
             'books.author',
@@ -296,22 +336,26 @@ class SWP_Options_Page extends SWP_Abstract {
             'video.movie',
             'video.other',
             'video.tv_show',
-        ];
+        );
     }
 
 
     /**
     * Provides the common placement choices for the buttons.
     *
+    * @since  3.0.0  | 01 MAR 2018 | Created
+    * @since  3.0.10 | 13 JUN 2018 | Replaced Array bracket notation.
+    * @param  void
     * @return array Key/Value pairs of button placement options.
+    *
     */
     protected function get_static_options_array() {
-        return [
+        return array(
             'above' => __( 'Above the Content', 'social-warfare' ),
             'below' => __( 'Below the Content', 'social-warfare' ),
             'both'  => __( 'Both Above and Below the Content', 'social-warfare' ),
             'none'  => __( 'None/Manual Placement', 'social-warfare' )
-        ];
+        );
     }
 
 
@@ -320,7 +364,10 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * This section offers miscellaneous advanced settings for finer control of the plugin.
     *
-    * @return SWP_Options_Page $this The calling object for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling object for method chaining.
+    *
     */
     protected function init_advanced_tab() {
 
@@ -379,7 +426,10 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * This tab offers genereral layout setings for the front end of the site.
     *
-    * @return SWP_Options_Page $this The calling object for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling object for method chaining.
+    *
     */
     protected function init_display_tab() {
         $display = new SWP_Options_Page_Tab( __( 'Display', 'social-warfare' ), 'display' );
@@ -443,7 +493,10 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * This section allows users to register activation keys for the premium plugin features.
     *
-    * @return SWP_Options_Page $this The calling object for method chaining.
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
+    * @return object $this The calling object for method chaining.
+    *
     */
     protected function init_registration_tab( $addons ) {
         $registration = new SWP_Options_Page_Tab( __( 'Registration', 'social-warfare' ), 'registration' );
@@ -470,7 +523,10 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * This section allows the user to set social network handles and OG metadata.
     *
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
     * @return SWP_Options_Page $this The calling object for method chaining.
+    *
     */
     protected function init_social_tab() {
         $social_identity = new SWP_Options_Page_Tab( __( 'Social Identity', 'social-warfare' ), 'social_identity' );
@@ -518,7 +574,10 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     * This section allows the user to refine the look, feel, and placement of buttons.
     *
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
     * @return SWP_Options_Page $this The calling object for method chaining.
+    *
     */
     protected function init_styles_tab() {
         $styles = new SWP_Options_Page_Tab( __( 'Styles' , 'social-warfare' ) , 'styles' );
@@ -635,7 +694,10 @@ class SWP_Options_Page extends SWP_Abstract {
     /**
     * Creates the HTML for the admin top menu (Logo, tabs, and save button).
     *
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
     * @return string $html The fully qualified HTML for the menu.
+    *
     */
     private function create_menu( $addons ) {
         //* Open the admin top menu wrapper.
@@ -701,7 +763,10 @@ class SWP_Options_Page extends SWP_Abstract {
     * only by key. Since they keys are arbitrary (for a plugin
     * or addon, for example), this is no good, hence the map.
     *
+    * @since  3.0.0 | 01 MAR 2018 | Created
+    * @param  void
     * @return string $container The Admin tab HTML container.
+    * 
     */
     private function create_tabs( $active_addons, $registered_addons ) {
         $sidebar = new SWP_Section_HTML( 'Sidebar' );
