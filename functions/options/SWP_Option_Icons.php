@@ -155,6 +155,19 @@ class SWP_Option_Icons extends SWP_Option {
                 $keys[] = $object->key;
             }
 
+            $first = reset( $user_icons );
+
+            if ( gettype( $first ) === 'object' ) :
+                $temp = array();
+
+                foreach( $user_icons as $object ) {
+                    $temp[] = $object->key;
+                }
+
+                $user_icons = $temp;
+
+            endif;
+
             $inactive_icons = array_diff( $keys, $user_icons );
 
         elseif ( array_key_exists( 0, $all_icons) ) :
