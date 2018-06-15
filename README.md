@@ -28,8 +28,40 @@ Line breaks in PHP will be used generously to make the code more easily readable
 ### Conditionals and Loops
 No inline/same-line conditionals or loops will be used, nor will we continue to use brace syntax. Rather we will use the colin/endif syntax.
 
-### Docblocking
+### Style Guidelines for Docblocking Class Methods
 Each file should begin with a docblock, as well as each function and class should be preceded with a docblock to explain it's purpose and functionality. There is no such thing as too much documentation on this project. The purpose is that any developer or even a non-developer should be able to easily browse each file and know exactly what is happening in that file.
+
+In our experience, it is better to provide too much explanation than not enough. As such, we want to provide very thorough documentation for each function and method throughout the plugin.
+
+The following will serve as an example docblock with instructions to follow.
+
+```
+1.     /**
+2.      * Creates the default value for any new keys.
+3.      *
+4.      * @since  3.0.8  | 16 MAY 2018 | Created the method.
+5.      * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
+6.      * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+7.      * @param  void
+8.      * @return void
+9.      *
+10.    */
+```
+**Instructions:**
+
+1. Every class method needs to contain a docblock immediately preceding it's declaration.
+2. Each doblock should contain, at a minimum, a @_since, a @_param, and a @_return.
+3. If either the @_param or @_return does not exist, it should be annotated with the word "void".
+4. The @_since should always use the following format @_since x.x.x | DD MMM YYYY | Description
+5. Every time a change is made to a method, a new @_since will be added logging that change.
+6. If a method is anything other than public, it should have an @_access tag explaining why.
+7. Two blank lines will precede each docblock.
+8. One blank line within the docblock will be included at the end (see line 9 above).
+9. No blank lines will be placed between the doblock and the declaration of the method.
+10. A blank line will be placed between the method description and the @ tags.
+11. If the title does not fit onto a single line (90 characters), it should be broken into a title and description separated by a blank line.
+
+**Note:** Tags are preceded with an underscore to avoid tagging other GitHub users. Tags are not to be preceded with underscores in actual development.
 
 ***
 
