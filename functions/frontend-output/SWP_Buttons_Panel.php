@@ -49,7 +49,7 @@ class SWP_Buttons_Panel {
 	 * @var array $args;
 	 *
 	 */
-	public $args = [];
+	public $args = array()
 
 
 	/**
@@ -76,7 +76,7 @@ class SWP_Buttons_Panel {
      *
      * @var array $active_buttons;
      */
-    public $active_buttons = [];
+    public $active_buttons = array()
 
 
 	/**
@@ -639,7 +639,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function establish_active_buttons() {
-        $network_objects = [];
+        $network_objects = array()
 
         //* Specified buttons take precedence to global options.
         if ( isset( $this->args['buttons'] ) ) :
@@ -748,7 +748,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function render_total_shares_html() {
-        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : [];
+        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array()
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
 
