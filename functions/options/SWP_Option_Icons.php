@@ -1,7 +1,32 @@
 <?PHP
 
+/**
+ * SWP_Option_Icons: The class used to display available netowrks on the options
+ * page.
+ *
+ * This class is used to create each individual nnetwork that is available to be
+ * dragged and dropped between the active and inactive states.
+ *
+ * @package   SocialWarfare\Functions\Options
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     3.0.0  | 02 MAR 2018 | Created
+ * @access    public
+ *
+ */
+
 class SWP_Option_Icons extends SWP_Option {
 
+
+	/**
+	 * The magic construct method designed to instantiate this option object.
+	 *
+	 * @since  3.0.0 | 02 MAR 2018 | Created
+	 * @param  string $name The name of this option object.
+	 * @param  string $key  The unique key of this option object.
+	 * @return void
+	 *
+	 */
     public function __construct( $name, $key ) {
         global $swp_user_options;
 
@@ -9,21 +34,42 @@ class SWP_Option_Icons extends SWP_Option {
         $this->user_options = $swp_user_options;
     }
 
+
+	/**
+	 * A method to output the currently active icons.
+	 *
+	 * @since  3.0.0 | 02 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this Allows for method chaining.
+	 *
+	 */
     public function do_active_icons() {
         $this->is_active_icons = true;
         return $this;
     }
 
+
+	/**
+	 * A method to output the currently inactive icons.
+	 *
+	 * @since  3.0.0 | 02 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this Allows for method chaining.
+	 *
+	 */
     public function do_inactive_icons() {
         $this->is_active_icons = false;
         return $this;
     }
 
+
     /**
     * The Active buttons UI in the Display tab.
     *
+    * @since  3.0.0 | 02 MAR 2018 | Created
     * @param array $icons The array of currently selected icons.
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @return object $this The calling instance, for method chaining.
+    *
     */
     public function render_active_icons() {
 		$all_icons = $this->get_all_icons();
@@ -69,11 +115,14 @@ class SWP_Option_Icons extends SWP_Option {
         return $this;
     }
 
+
     /**
     * The Inactive buttons UI in the Display tab.
     *
+    * @since  3.0.0 | 02 MAR 2018 | Created
     * @param array $icons The array of currently selected icons.
-    * @return SWP_Section_HTML $this The calling instance, for method chaining.
+    * @return object $this The calling instance, for method chaining.
+    *
     */
     public function render_inactive_icons() {
         $all_icons = $this->get_all_icons();
@@ -125,6 +174,15 @@ class SWP_Option_Icons extends SWP_Option {
         return $this;
     }
 
+
+	/**
+	 * Render the html for an individual icon.
+	 *
+	 * @since  3.0.0 | 02 MAR 2018 | Created
+	 * @param  object $network The social network object
+	 * @return string          The string of html with the new icon added.
+	 *
+	 */
     protected function render_icon_HTML( $network ) {
         $html = '<i class="sw-s sw-' . $network->key . '-icon" ';
         $html .= ' data-network="' . $network->key . '"';
@@ -139,6 +197,15 @@ class SWP_Option_Icons extends SWP_Option {
         return $html;
     }
 
+
+	/**
+	 * Render the html for the icons panel.
+	 *
+	 * @since  3.0.0 | 02 MAR 2018 | Created
+	 * @param  void
+	 * @return void Rendered html will be stored in local html property.
+	 * 
+	 */
     public function render_HTML() {
         if ($this->is_active_icons) {
             $this->render_active_icons();
