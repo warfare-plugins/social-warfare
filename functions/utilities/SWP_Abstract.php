@@ -159,7 +159,7 @@ class SWP_Abstract {
 
         if ( empty( $user_icons ) ):
             $all_icons = $this->get_all_icons();
-            $defaults = [];
+            $defaults = array()
 
             foreach( $all_icons as $network_key => $network_obj ) {
                 $defaults[$network_key] = $network_obj;
@@ -320,7 +320,7 @@ class SWP_Abstract {
             return [$first, $second];
         endif;
 
-        $left = $right = [];
+        $left = $right = array()
 
         $pivot = $array[0];
 

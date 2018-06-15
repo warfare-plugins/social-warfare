@@ -16,7 +16,7 @@ class SWP_Display {
      * The class constructor.
      *
      * @since 3.0.10 | Changed priority for wp_footer. Makes the buttons loads
-     *                 This post data instead of data in the loop. 
+     *                 This post data instead of data in the loop.
      *
      */
     public function __construct() {
@@ -30,7 +30,7 @@ class SWP_Display {
         global $swp_user_options;
 
         if ( !is_array( $swp_already_print ) ) {
-            $swp_already_print = [];
+            $swp_already_print = array();
         }
 
         $this->already_printed = $swp_already_print;
@@ -129,7 +129,7 @@ class SWP_Display {
      * @return string $content The modified content
      *
      */
-    public static function social_warfare( $args = [] ) {
+    public static function social_warfare( $args = array() ) {
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
 
     	echo $Buttons_Panel->render_HTML();
