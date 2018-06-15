@@ -266,7 +266,7 @@ class SWP_Options_Page extends SWP_Abstract {
         //* Fetch all the addons the user has installed,
         //* whether or not they are actively registered.
         $addons = apply_filters( 'swp_registrations', [] );
-        $registrations = array()
+        $registrations = array();
         $registered = 0;
         $active_addons = '';
         $registered_addons = '';

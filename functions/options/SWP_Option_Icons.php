@@ -87,7 +87,7 @@ class SWP_Option_Icons extends SWP_Option {
 		$all_icons = $this->get_all_icons();
         $user_icons = $this->get_user_icons();
         if ( empty($user_icons) ) :
-            $user_icons = array()
+            $user_icons = array();
         endif;
 
         $html = '<div class="sw-grid sw-col-300">';
@@ -149,7 +149,7 @@ class SWP_Option_Icons extends SWP_Option {
         if ( gettype( $first ) === 'object' ) :
 
             //* Get the keys first, then diff the array.
-            $keys = array()
+            $keys = array();
 
             foreach( $all_icons as $object) {
                 $keys[] = $object->key;

@@ -67,7 +67,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     // * @return array The instance values updated with default settings if not previously defined.
     // */
     // private function set_instance_defaults( $instance ) {
-    //     $vars = array()
+    //     $vars = array();
 
     //     $defaults = [
     //         'title'         => "Popular Posts",
