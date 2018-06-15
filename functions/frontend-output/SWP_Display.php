@@ -12,6 +12,13 @@
 class SWP_Display {
     public $already_print;
 
+    /**
+     * The class constructor.
+     *
+     * @since 3.0.10 | Changed priority for wp_footer. Makes the buttons loads
+     *                 This post data instead of data in the loop. 
+     *
+     */
     public function __construct() {
         /**
          * A global for storing post ID's to prevent duplicate processing on the same posts
@@ -31,7 +38,7 @@ class SWP_Display {
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action('template_redirect', [$this, 'activate_buttons'] );
-        add_action( 'wp_footer', [$this, 'floating_buttons'] );
+        add_action( 'wp_footer', [$this, 'floating_buttons'], 20 );
     }
 
 
@@ -85,7 +92,7 @@ class SWP_Display {
     */
     public function social_warfare_wrapper( $content ) {
         global $post;
-        
+
       	// Ensure it's not an embedded post
       	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
       		return $content;
