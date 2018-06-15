@@ -19,6 +19,18 @@ class SWP_Option_Icons extends SWP_Option {
 
 
 	/**
+	* html
+	*
+	* This property will contain the string of rendered html for this panel of
+	* icons.
+	*
+	* @var string
+	*
+	*/
+	public $html;
+
+
+	/**
 	 * The magic construct method designed to instantiate this option object.
 	 *
 	 * @since  3.0.0 | 02 MAR 2018 | Created
@@ -204,7 +216,7 @@ class SWP_Option_Icons extends SWP_Option {
 	 * @since  3.0.0 | 02 MAR 2018 | Created
 	 * @param  void
 	 * @return void Rendered html will be stored in local html property.
-	 * 
+	 *
 	 */
     public function render_HTML() {
         if ($this->is_active_icons) {
