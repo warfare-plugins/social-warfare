@@ -62,8 +62,8 @@ class SWP_Display {
         $this->options = $swp_user_options;
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
-        add_action( 'template_redirect', [$this, 'activate_buttons'] );
-        add_action( 'wp_footer', [$this, 'floating_buttons'], 20 );
+        add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
+        add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
     }
 
 
@@ -84,8 +84,8 @@ class SWP_Display {
     	// Only hook into the_content filter if is_singular() is true or
     	// they don't use excerpts on the archive pages.
         if( true === is_singular() || true === $swp_user_options['full_content'] ):
-            add_filter( 'the_content', [$this, 'social_warfare_wrapper'], 20 );
-            add_filter( 'the_content', [$this, 'add_content_locator'], 20);
+            add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 20 );
+            add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
         endif;
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
@@ -94,7 +94,7 @@ class SWP_Display {
             global $wp_filter;
 
     		// Add the buttons to the excerpts
-    		add_filter( 'the_excerpt', [$this, 'social_warfare_wrapper'] );
+    		add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
         }
     }
 
@@ -131,7 +131,7 @@ class SWP_Display {
       	}
 
         // Pass the content to the buttons constructor to place them inside.
-    	$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
+    	$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
         return $buttons_panel->the_buttons( $content );
     }
 
@@ -147,7 +147,7 @@ class SWP_Display {
     function floating_buttons() {
 
 		// Instantiate a new Buttons Panel.
-        $side_panel = new SWP_Buttons_Panel( ['content' => "" ]);
+        $side_panel = new SWP_Buttons_Panel( array( 'content' => "" ) );
 
 		// Determine where the buttons are supposed to appear.
         $location = $side_panel->get_float_location();
