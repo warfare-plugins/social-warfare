@@ -46,8 +46,6 @@ function swp_alter_the_query( $request ) {
 }
 add_filter( 'request', 'swp_alter_the_query' );
 
-
-
 /**
  * Use a rel canonical so search engines know this is not a real page.
  *
@@ -83,16 +81,15 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
     endif;
 
 	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
-	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
+	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
 				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
-		endif;
+    	endif;
 
-		return true;
-	}
+    	return true;
+    endif;
 
 	$options = $swp_user_options;
-
 	$fresh_cache = false;
 
 	// Bail if output isn't being forced and legacy caching isn't enabled.
@@ -130,16 +127,21 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 
 	$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $post_id ) );
 
+
 	if ( $post_age < ( 21 * 86400 ) ) {
+        //* Three weeks
 		$hours = 1;
 	} elseif ( $post_age < ( 60 * 86400 ) ) {
+        //* Two months
 		$hours = 4;
 	} else {
 		$hours = 12;
 	}
 
 	$time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
+    //* $time is a number in hours. Example: 424814 == Number of hourse since Unix epoch.
 	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
+    //* $last_checked was the number in hours since the Unix epoch at the time of save. 
 
 	if ( _swp_is_debug( 'is_cache_fresh' ) ) :
         echo "<pre>";
