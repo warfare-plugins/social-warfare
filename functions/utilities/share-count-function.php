@@ -53,10 +53,6 @@ function get_social_warfare_shares( $postID ) {
         return $shares;
     endif;
 
-	$icons_array = array(
-		'type' => 'buttons'
-	);
-
 	foreach ( $networks as $network ) :
         if( isset( $swp_social_networks[$network] ) ):
     		// Check if we can used the cached share numbers
