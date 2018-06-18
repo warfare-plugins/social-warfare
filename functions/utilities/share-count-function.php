@@ -23,7 +23,7 @@ function get_social_warfare_shares( $postID ) {
 	$url     = get_permalink( $postID );
     /**
      * 'swp_url_filter_function' exists for third parties to include
-     * through their own functions.php file.
+     * through their own in functions.php or some other file.
      *
      */
     $url     = apply_filters( 'swp_url_filter_function', get_permalink( $postID ) );
@@ -45,7 +45,12 @@ function get_social_warfare_shares( $postID ) {
 	$networks = $options['order_of_icons'];
 
     if ( !is_array( $networks ) || count ( $networks ) === 0 ) :
-      return $shares;
+        if ( _swp_is_debug( 'is_cache_fresh' ) || _swp_is_debug( 'share_counts' ) ) :
+            echo "<br>Debugging: Message from share-count-functions.php get_social_warfare_shares() on line " . __LINE__;
+            echo "<br>\$networks is not an array, or count(\$networks) is 0.<br/>";
+        endif;
+
+        return $shares;
     endif;
 
 	$icons_array = array(
@@ -53,7 +58,6 @@ function get_social_warfare_shares( $postID ) {
 	);
 
 	foreach ( $networks as $network ) :
-
         if( isset( $swp_social_networks[$network] ) ):
     		// Check if we can used the cached share numbers
     		if ( $fresh_cache == true ) :
