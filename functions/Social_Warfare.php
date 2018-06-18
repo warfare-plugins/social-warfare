@@ -274,7 +274,7 @@ class Social_Warfare {
 		 * functionality that will be used by many different classes throughout the plugin.
 		 *
 		 */
-		$utilities = [
+		$utilities = array(
 			'Utility_Trait',
             'Abstract',
             'Compatibility',
@@ -286,7 +286,7 @@ class Social_Warfare {
 			'URL_Management',
             'Notice',
             'Notice_Loader'
-        ];
+        );
         $this->load_files( '/functions/utilities/', $utilities);
 
 
@@ -299,7 +299,7 @@ class Social_Warfare {
 		 * than ever before to create and add more social networks to the plugin.
 		 *
 		 */
-		$social_networks = [
+		$social_networks = array(
 			'Social_Networks_Loader',
 			'Social_Network',
 			'Google_Plus',
@@ -308,7 +308,7 @@ class Social_Warfare {
             'Linkedin',
             'Pinterest',
             'Stumble_Upon'
-		];
+		);
 		$this->load_files( '/functions/social-networks/', $social_networks);
 
 
@@ -320,9 +320,9 @@ class Social_Warfare {
          * for the addons, and other addon specific tasks.
          *
          */
-        $includes = [
+        $includes = array(
             'Addon'
-        ];
+        );
         $this->load_files( '/functions/includes/', $includes);
 
 
@@ -335,13 +335,13 @@ class Social_Warfare {
 		 * and styles being enqueued for output, and other things like that.
 		 *
 		 */
-        $frontends = [
+        $frontends = array(
             'Buttons_Panel',
             'Header_Output',
             'Display',
             'Script',
             'Shortcode',
-        ];
+        );
         $this->load_files( '/functions/frontend-output/', $frontends );
 
 
@@ -354,10 +354,10 @@ class Social_Warfare {
 		 * created later via addons.
 		 *
 		 */
-		$widgets = [
+		$widgets = array(
             'Popular_Posts_Widget',
             'Widget',
-        ];
+        );
         $this->load_files( '/functions/widgets/', $widgets );
 
 
@@ -373,13 +373,13 @@ class Social_Warfare {
 		 * for Social Warfare.
 		 *
 		 */
-        $admins = [
+        $admins = array(
             'Click_To_Tweet',
             'Column',
             'Settings_Link',
             'Shortcode_Generator',
             'User_Profile',
-        ];
+        );
         $this->load_files( '/functions/admin/', $admins );
 
 
@@ -391,7 +391,7 @@ class Social_Warfare {
 		 * with it to add their own options.
 		 *
 		 */
-        $options = [
+        $options = array(
             'Option',
             'Options_Page',
             'Options_Page_Tab',
@@ -403,7 +403,7 @@ class Social_Warfare {
             'Section_HTML',
             'Option_Icons',
 			'Addon_Registration',
-        ];
+        );
         $this->load_files( '/functions/options/', $options );
 
 	}
