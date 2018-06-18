@@ -10,7 +10,31 @@
  *
  */
 class SWP_Display {
-    public $already_print;
+
+
+	/**
+	 * A global for storing post ID's to prevent duplicate processing on the
+	 * same posts. Array of post ID's that have been processed during this
+	 * pageload.
+	 *
+	 * @since 2.1.4
+	 *
+	 * @var array
+	 *
+	 */
+    public $already_printed;
+
+
+	/**
+	 * Options
+	 *
+	 * This property takes the global $swp_user_options array and stores it
+	 * into a local class property.
+	 *
+	 * @var array
+	 */
+	public $options;
+
 
     /**
      * The class constructor.
@@ -20,24 +44,25 @@ class SWP_Display {
      *
      */
     public function __construct() {
-        /**
-         * A global for storing post ID's to prevent duplicate processing on the same posts
-         * @since 2.1.4
-         * @var array $swp_already_print Array of post ID's that have been processed during this pageload.
-         *
-         */
+
+
+		// The global array of posts that have already been processed.
         global $swp_already_print;
+
+		// The global array of the user-selected options.
         global $swp_user_options;
 
+		// Declare var as array if not already done so.
         if ( !is_array( $swp_already_print ) ) {
             $swp_already_print = array();
         }
 
+		// Move these two globals into local properties.
         $this->already_printed = $swp_already_print;
         $this->options = $swp_user_options;
 
         // Hook into the template_redirect so that is_singular() conditionals will be ready
-        add_action('template_redirect', [$this, 'activate_buttons'] );
+        add_action( 'template_redirect', [$this, 'activate_buttons'] );
         add_action( 'wp_footer', [$this, 'floating_buttons'], 20 );
     }
 
@@ -52,19 +77,23 @@ class SWP_Display {
      *
      */
     public function activate_buttons() {
+
     	// Fetch the user's settings
     	global $swp_user_options;
 
-    	// Only hook into the_content filter if we're is_singular() is true or they don't use excerpts
+    	// Only hook into the_content filter if is_singular() is true or
+    	// they don't use excerpts on the archive pages.
         if( true === is_singular() || true === $swp_user_options['full_content'] ):
             add_filter( 'the_content', [$this, 'social_warfare_wrapper'], 20 );
             add_filter( 'the_content', [$this, 'add_content_locator'], 20);
         endif;
 
+		// If we're not on is_singlular, we'll hook into the excerpt.
         if (false == is_singular()) {
-            global $wp_filter;
-    		// Add the buttons to the excerpts
 
+            global $wp_filter;
+
+    		// Add the buttons to the excerpts
     		add_filter( 'the_excerpt', [$this, 'social_warfare_wrapper'] );
         }
     }
@@ -72,8 +101,9 @@ class SWP_Display {
     /**
      * Inserts the empty div for locating Pin images (with javascript).
      *
-     * @param string $content The WordPress content passed via filter.
-     * @since 3.0.6 | 14 MAY | Created the method.
+     * @since  3.0.6 | 14 MAY | Created the method.
+     * @param  string $content The WordPress content passed via filter.
+     * @return void
      *
      */
     public function add_content_locator( $content ) {
@@ -87,10 +117,12 @@ class SWP_Display {
     *
     * @since  1.0.0
     * @param  string $content The content.
-    * @return String $content The modified content
+    * @return string $content The modified content
     *
     */
     public function social_warfare_wrapper( $content ) {
+
+		// The global WordPress post object.
         global $post;
 
       	// Ensure it's not an embedded post
@@ -99,22 +131,31 @@ class SWP_Display {
       	}
 
         // Pass the content to the buttons constructor to place them inside.
-    		$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
-
+    	$buttons_panel = new SWP_Buttons_Panel( ['content' => $content ]);
         return $buttons_panel->the_buttons( $content );
     }
 
 
+	/**
+	 * A function to add the side floating buttons to a post.
+	 *
+	 * @since  2.0.0
+	 * @param  void
+	 * @return void
+	 *
+	 */
     function floating_buttons() {
 
+		// Instantiate a new Buttons Panel.
         $side_panel = new SWP_Buttons_Panel( ['content' => "" ]);
 
+		// Determine where the buttons are supposed to appear.
         $location = $side_panel->get_float_location();
-
         if ( 'none' === $location || 'ignore' === $location ) {
             return;
         }
 
+		// Render the html to output to the screen.
         $side_panel->render_floating_HTML( $echo = true );
 
         return;
@@ -125,13 +166,14 @@ class SWP_Display {
      * The main social_warfare function used to create the buttons.
      *
      * @since  1.4.0
-     * @param  array $array An array of options and information to pass into the buttons function.
-     * @return string $content The modified content
+     * @param  array $array An array of options and information to pass into the
+     *                      buttons function.
+     * @return string       The modified content
      *
      */
     public static function social_warfare( $args = array() ) {
-        $Buttons_Panel = new SWP_Buttons_Panel( $args );
 
+        $Buttons_Panel = new SWP_Buttons_Panel( $args );
     	echo $Buttons_Panel->render_HTML();
     }
 }
