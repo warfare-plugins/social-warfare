@@ -21,6 +21,12 @@ function get_social_warfare_shares( $postID ) {
 	// Set the initial options
 	$options = $swp_user_options;
 	$url     = get_permalink( $postID );
+    /**
+     * 'swp_url_filter_function' exists for third parties to include
+     * through their own functions.php file.
+     *
+     */
+    $url     = apply_filters( 'swp_url_filter_function', get_permalink( $postID ) );
 
 	/**
 	 * Check if the cache is fresh or expired
@@ -64,9 +70,22 @@ function get_social_warfare_shares( $postID ) {
 	// Recover Shares From Previously Used URL Patterns
 	if ( true == $options['recover_shares'] && false == $fresh_cache ) :
 		$alternateURL = SWP_Permalink::get_alt_permalink( $postID );
-		// $alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+        /**
+         * 'swp_recovery_filter' exists for third parties to include
+         * through their own functions.php file.
+         *
+         */
+		$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+
 
 		$altURLs = '';
+        /**
+         * 'swp_additional_url_to_check' exists for third parties to include
+         * through their own functions.php file.
+         *
+         */
+        $altURLs = apply_filters('swp_additional_url_to_check', $altURLs );
+
 
 		// Debug the Alternate URL being checked
 		if ( _swp_is_debug( 'recovery' ) ) :
@@ -78,10 +97,9 @@ function get_social_warfare_shares( $postID ) {
 			if( isset( $swp_social_networks[$network] ) ):
 				$old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
 
-                //* This will always be empty. `$altURLs = apply_filters("deprecated_filter", $altURLs)` has been removed. 
-				// if( !empty($altURLs) ):
-				// 	$altURLs_share_links[$network] = $swp_social_networks[$network]->get_api_link( $altURLs );
-				// endif;
+				if( !empty($altURLs) ):
+					$altURLs_share_links[$network] = $swp_social_networks[$network]->get_api_link( $altURLs );
+				endif;
 
 			endif;
 		endforeach;

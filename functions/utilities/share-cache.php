@@ -93,7 +93,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$fresh_cache = false;
 
 	//  Bail if output isn't being forced and legacy caching isn't enabled.
-    //* This sets triggers output of JS that runs ajax calls to update share counts. 
+    //* This sets triggers output of JS that runs ajax calls to update share counts.
 	if ( !$output && isset( $options['cache_method'] ) && 'advanced' === $options['cache_method'] ) {
 
 		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
@@ -407,7 +407,12 @@ function swp_output_cache_trigger( $info ) {
 		// Fetch the alternate URL if share recovery is turned on
 		if( $info['swp_user_options']['recover_shares'] == true ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
-			// $alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+            /**
+             * 'swp_recovery_filter' exists for third parties to include
+             * as many extra recovery URLs through their own functions.php file.
+             *
+             */
+			$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
 		} else {
 			$alternateURL = false;
 		}
