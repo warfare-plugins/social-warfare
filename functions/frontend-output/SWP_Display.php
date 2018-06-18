@@ -6,7 +6,8 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     3.0.0 | 21 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.0  | 21 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.10 | 18 JUN 2018 | Replaced brack array notation.
  *
  */
 class SWP_Display {
@@ -70,10 +71,10 @@ class SWP_Display {
     /**
      * A function to add the buttons
      *
-     * @since 2.1.4
-     * @since 3.0.6 | 14 MAY | Added second filter for the_content.
-     * @param none
-     * @return none
+     * @since  2.1.4 | 01 JAN 2017 | Created
+     * @since  3.0.6 | 14 MAY 2018 | Added second filter for the_content.
+     * @param  void
+     * @return void
      *
      */
     public function activate_buttons() {
