@@ -92,8 +92,9 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$options = $swp_user_options;
 	$fresh_cache = false;
 
-	// Bail if output isn't being forced and legacy caching isn't enabled.
-	if ( !$output && isset( $options['cache_method'] ) && 'legacy' !== $options['cache_method'] ) {
+	//  Bail if output isn't being forced and legacy caching isn't enabled.
+    //* This sets triggers output of JS that runs ajax calls to update share counts. 
+	if ( !$output && isset( $options['cache_method'] ) && 'advanced' === $options['cache_method'] ) {
 
 		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
 			$fresh_cache = true;
@@ -141,7 +142,7 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	$time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
     //* $time is a number in hours. Example: 424814 == Number of hourse since Unix epoch.
 	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
-    //* $last_checked was the number in hours since the Unix epoch at the time of save. 
+    //* $last_checked was the number in hours since the Unix epoch at the time of save.
 
 	if ( _swp_is_debug( 'is_cache_fresh' ) ) :
         echo "<pre>";
@@ -406,7 +407,7 @@ function swp_output_cache_trigger( $info ) {
 		// Fetch the alternate URL if share recovery is turned on
 		if( $info['swp_user_options']['recover_shares'] == true ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
-			$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+			// $alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
 		} else {
 			$alternateURL = false;
 		}
