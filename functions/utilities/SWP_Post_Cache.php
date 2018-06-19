@@ -20,7 +20,7 @@ class SWP_Post_Cache {
         $this->fresh_cache = $this->has_fresh_cache();
 
         if ( !$this->fresh_cache ) {
-            add_filter( 'swp_ajax_script', array( $this, 'print_ajax_script') );
+            add_action('wp_footer', array( $this, 'print_ajax_script' ) ); 
         }
     }
 
@@ -118,28 +118,19 @@ class SWP_Post_Cache {
     }
 
     public function print_ajax_script() {
-        global $Cache;
-
-        if ( !$Cache->will_print_script ) {
-            return;
-        }
-
-        ob_start();
-
 		?>
+        <script>
         var ticker = 0;
 		var swpButtonsExist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
-        //* TODO remove the second true
-		if (swpButtonsExist) {
-            if (!swpButtonsExist)
 
+		if (swpButtonsExist) {
 			document.addEventListener('DOMContentLoaded', function() {
 				var swpCheck = setInterval(function() {
                     ticker++;
 
                     if (timer > 40) {
                         //* Twenty seconds have passed. We can close this check.
-                        clearInterval(swpCheck)
+                        clearInterval(swpCheck);
                     }
 
 					if('undefined' !== typeof socialWarfarePlugin) {
@@ -148,34 +139,25 @@ class SWP_Post_Cache {
                         var swpCacheData  = {
                             action: 'swp_cache_trigger',
                             post_id: <?= (int) $this->post_id ?>,
-                            timestamp: <?= time() ?>,
+                            timestamp: <?= time() ?>
                         }
-
-    	                var browserDate = Math.floor(Date.now() / 1000);
-    	                if ( !browserDate )
-    	                    browserDate = Math.floor(new Date().getTime() / 1000);
-    	                var elapsedTime = ( browserDate - swpCacheData.timestamp);
+                        var browserDate = Math.floor(Date.now() / 1000);
+                        var elapsedTime = ( browserDate - swpCacheData.timestamp);
 
     	                if ( elapsedTime < 60 ) {
-                            jQuery.post( '<?= admin_url( 'admin-ajax.php' ) ?>', swp_cache_data, function( response ) {
-                            });
+                            jQuery.post('<?= admin_url( 'admin-ajax.php' ) ?>',
+                                        swp_cache_data,
+                                        function( response ) {
+                                            console.log("SWP: Response from server");
+                                            console.log(response);
+                                        });
                             socialWarfarePlugin.fetchFacebookShares();
     	                }
 					}
 				} , 250 );
 			});
-
-			swp_post_id='<?php echo $info['postID']; ?>';
-			swp_post_url='<?php echo get_permalink(); ?>';
-			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
-
-			//socialWarfarePlugin.fetchShares();
 		}
-
+        </script>
 		<?php
-
-		$Cache->add_ajax_js( ob_get_clean() );
-
-        }
     }
 }
