@@ -33,8 +33,6 @@ class SWP_Post_Cache {
         $this->fresh_cache = $this->has_fresh_cache();
 
         $this->init_hooks();
-
-
     }
 
 
@@ -46,13 +44,9 @@ class SWP_Post_Cache {
      * @return void
      */
     protected function init_hooks() {
-        add_action( 'save_post', array( $this, 'delete_timestamp' ) );
-        add_action( 'save_post', array( $this, 'store_autoloads' ) );
-        add_action( 'save_post', array( $this, 'clear_bitly_cache' ) );
-        add_action( 'publish_post', array( $this, 'delete_timestamp' ) );
-        add_action( 'publish_post', array( $this, 'store_autoloads' ) );
-        add_action( 'publish_post', array( $this, 'clear_bitly_cache' ) );
-        
+        add_action( 'save_post', array( $this, 'rebuild_cache' ) );
+        add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
+
         if ( !$this->fresh_cache ) {
             add_action('wp_footer', array( $this, 'print_ajax_script' ) );
         }
@@ -291,5 +285,16 @@ class SWP_Post_Cache {
     public function reset_timestamp() {
         delete_post_meta( $this->id, 'swp_cache_timestamp' );
     	update_post_meta( $this->id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+    }
+
+
+    /**
+     * Removes the timestamp on certain hooks.
+     *
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @return void
+     */
+    public function delete_timestamp() {
+        delete_post_meta( $this->id, 'swp_cache_timestamp' );
     }
 }
