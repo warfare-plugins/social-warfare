@@ -77,15 +77,12 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	global $swp_user_options;
 
     if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-        echo "Calling function: <pre>" . debug_backtrace()[1]['function'] . "</pre>";
+        echo "This function: <pre> " . debug_backtrace()[0]['function'] . "</pre><br/>";
+        echo "Prev function: <pre>" . debug_backtrace()[1]['function'] . "</pre>";
     endif;
 
 	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
-		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-				echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
-    	endif;
-
     	return true;
     endif;
 
@@ -99,10 +96,6 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
 			$fresh_cache = true;
 		}
-
-		if ( _swp_is_debug( 'is_cache_fresh' ) ) {
-	        echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
-	    }
 
 		return $fresh_cache;
 	}
@@ -119,10 +112,6 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	// Always be TRUE if we're not on a single.php otherwise we could end up
 	// Rebuilding multiple page caches which will cost a lot of time.
 	if ( ! is_singular() && ! $ajax ) :
-		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-			echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
-		endif;
-
 		return true;
 	endif;
 
@@ -145,11 +134,11 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
     //* $last_checked was the number in hours since the Unix epoch at the time of save.
 
 	if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-        echo "<pre>";
-        echo "<br/>Time: ", var_dump($time);
-		echo "<br/>Last_checked: ", var_dump($last_checked);
-		echo "<br/>Hours: ", var_dump($hours);
-        echo "</pre>";
+        // echo "<pre>";
+        // echo "<br/>Time: ", var_dump($time);
+		// echo "<br/>Last_checked: ", var_dump($last_checked);
+		// echo "<br/>Hours: ", var_dump($hours);
+        // echo "</pre>";
 	endif;
 
 	if ( $last_checked > ( $time - $hours ) && $last_checked > 390000 ) {
@@ -157,10 +146,6 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	} else {
 		$fresh_cache = false;
 	}
-
-	if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-		echo "The cache is fresh: " . (int) $fresh_cache . ' on line number ' . __LINE__ . ".<br>";
-	endif;
 
 	return $fresh_cache;
 }
@@ -172,6 +157,7 @@ add_action( 'wp_ajax_nopriv_swp_cache_trigger', 'swp_cache_rebuild' );
 /**
  * Rebuild the share cache.
  *
+ * Note: This function is only called via ajax.
  * @since  1.0.0
  * @global $wpdb
  * @return void
@@ -180,15 +166,6 @@ function swp_cache_rebuild() {
 	global $wpdb;
 
 	$post_id = absint( $_POST['post_id'] );
-
-	/**
-	 *  Bail if we already have fresh cache and this request is invalid.
-	 *
-	 */
-	//if ( swp_is_cache_fresh( $post_id , true , true ) && !isset($_POST['force']) ) {
-	//	wp_send_json_error();
-	//	die();
-	//}
 
 	/**
 	 *  Force the cache trigger on.
@@ -405,7 +382,7 @@ function swp_output_cache_trigger( $info ) {
 	if('publish' == get_post_status($info['postID']) ):
 
 		// Fetch the alternate URL if share recovery is turned on
-		if( $info['swp_user_options']['recover_shares'] == true ) {
+		if ( $info['swp_user_options']['recover_shares'] == true ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
             /**
              * 'swp_recovery_filter' exists for third parties to include
@@ -455,8 +432,9 @@ function swp_output_cache_trigger( $info ) {
 	        var within_timelimit;
 			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
 			var swp_buttons_exist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
-
-			if ( swp_buttons_exist ) {
+            //* TODO remove the second true
+			if ( swp_buttons_exist || true ) {
+                if (!swp_buttons_exist) console.log("Forced the swp_cache_trigger. //* TODO: Remember to remove the 'true' in this condition.");
 				document.addEventListener('DOMContentLoaded', function() {
 					var swp_check_for_js = setInterval( function() {
 						if( 'undefined' !== typeof socialWarfarePlugin) {
