@@ -116,7 +116,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 	****************************************************************************/
 	var swpPostData = {};
-	socialWarfarePlugin.fetchShares = function() {
+	socialWarfarePlugin.fetchFacebookShares = function() {
 		/**
 		 * Run all the API calls
 		 */
