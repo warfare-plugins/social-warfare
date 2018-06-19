@@ -127,58 +127,39 @@ class SWP_Post_Cache {
         ob_start();
 
 		?>
-        var within_timelimit;
-		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-		var swp_buttons_exist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
+        var ticker = 0;
+		var swpButtonsExist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
         //* TODO remove the second true
-		if ( swp_buttons_exist ) {
-            if (!swp_buttons_exist) console.log("Forced the swp_cache_trigger. //* TODO: Remember to remove the 'true' in this condition.");
+		if (swpButtonsExist) {
+            if (!swpButtonsExist)
+
 			document.addEventListener('DOMContentLoaded', function() {
-				var swp_check_for_js = setInterval( function() {
-					if( 'undefined' !== typeof socialWarfarePlugin) {
-						clearInterval(swp_check_for_js);
+				var swpCheck = setInterval(function() {
+                    ticker++;
 
-						<?php if( isset($_GET['swp_cache']) && 'rebuild' === $_GET['swp_cache'] ): ?>
+                    if (timer > 40) {
+                        //* Twenty seconds have passed. We can close this check.
+                        clearInterval(swpCheck)
+                    }
 
-						var swp_cache_data = {
-							'action': 'swp_cache_trigger',
-							'post_id': <?php echo $info['postID']; ?>,
-		                    'timestamp': <?php echo time(); ?>,
-							'force':true
-						};
+					if('undefined' !== typeof socialWarfarePlugin) {
+						clearInterval(swpCheck);
 
-						<?php else: ?>
+                        var swpCacheData  = {
+                            action: 'swp_cache_trigger',
+                            post_id: <?= (int) $this->post_id ?>,
+                            timestamp: <?= time() ?>,
+                        }
 
-						var swp_cache_data = {
-							'action': 'swp_cache_trigger',
-							'post_id': <?php echo $info['postID']; ?>,
-		                    'timestamp': <?php echo time(); ?>
-						};
+    	                var browserDate = Math.floor(Date.now() / 1000);
+    	                if ( !browserDate )
+    	                    browserDate = Math.floor(new Date().getTime() / 1000);
+    	                var elapsedTime = ( browserDate - swpCacheData.timestamp);
 
-						<?php endif; ?>
-
-    	                // if ( !swp_cache_data.timestamp ) { // error handling}
-    	                console.log( "Server Timestamp is " + swp_cache_data.timestamp );
-    	                var browser_date = Date.now();
-    	                if ( !browser_date )
-    	                    browser_date = new Date().getTime();
-    	                browser_date = Math.floor( browser_date / 1000 );
-    	                console.log( "Browser Timestamp is " + browser_date );
-    	                var elapsed_time = ( browser_date - swp_cache_data.timestamp );
-    	                if ( elapsed_time > 60 ) {
-    	                    console.log( "Elapsed time since server timestamp is greater than 60 seconds -- " + elapsed_time + "seconds" );
-    	                    within_timelimit = false;
-    	                } else {
-    	                    console.log( "Elapsed time since server timestamp is less than 60 seconds -- " + elapsed_time + "seconds"  );
-    	                    within_timelimit = true;
-    	                }
-
-    	                if ( within_timelimit === true ) {
-    									    jQuery.post( swp_admin_ajax, swp_cache_data, function( response ) {
-    										    console.log(response);
-    									    });
-
-    	                    socialWarfarePlugin.fetchShares();
+    	                if ( elapsedTime < 60 ) {
+                            jQuery.post( '<?= admin_url( 'admin-ajax.php' ) ?>', swp_cache_data, function( response ) {
+                            });
+                            socialWarfarePlugin.fetchFacebookShares();
     	                }
 					}
 				} , 250 );
@@ -192,7 +173,7 @@ class SWP_Post_Cache {
 		}
 
 		<?php
-        
+
 		$Cache->add_ajax_js( ob_get_clean() );
 
         }
