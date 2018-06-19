@@ -32,6 +32,27 @@ class SWP_Post_Cache {
         $this->post = $post;
         $this->fresh_cache = $this->has_fresh_cache();
 
+        $this->init_hooks();
+
+
+    }
+
+
+    /**
+     * Reaches into WordPress to interfere with data.
+     *
+     * @since  3.0.10 | 19 JUN 2018 | Ported from procedural code to method.
+     * @access protected This should only ever be called by the constructor.
+     * @return void
+     */
+    protected function init_hooks() {
+        add_action( 'save_post', array( $this, 'delete_timestamp' ) );
+        add_action( 'save_post', array( $this, 'store_autoloads' ) );
+        add_action( 'save_post', array( $this, 'clear_bitly_cache' ) );
+        add_action( 'publish_post', array( $this, 'delete_timestamp' ) );
+        add_action( 'publish_post', array( $this, 'store_autoloads' ) );
+        add_action( 'publish_post', array( $this, 'clear_bitly_cache' ) );
+        
         if ( !$this->fresh_cache ) {
             add_action('wp_footer', array( $this, 'print_ajax_script' ) );
         }
@@ -40,7 +61,7 @@ class SWP_Post_Cache {
     /**
      * Determines if the data has recently been updated.
      *
-     * @since 3.0.10 | 19 JUN 2018 | Converted from function to class method.
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
      * @access protected Use the $fresh_cache property to determine cache status.
      * @return mixed boolean if the conditions are met, else function $this->calulcate_age.
      *
@@ -201,7 +222,7 @@ class SWP_Post_Cache {
      * because then the URL will be autoloaded with the post preventing the
      * need for an additional database query during page loads.
      *
-     * @since 3.0.10 | 19 JUN 2018 | Converted from function to class method.
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
      * @access protected Nothing outside this class should manage this data.
      * @return void
      */
@@ -231,7 +252,7 @@ class SWP_Post_Cache {
      * because then the URL will be autoloaded with the post preventing the
      * need for an additional database query during page loads.
      *
-     * @since 3.0.10 | 19 JUN 2018 | Converted from function to class method.
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
      * @access protected Nothing outside this class should manage this data.
      * @return void
      */
@@ -259,7 +280,16 @@ class SWP_Post_Cache {
         endif;
     }
 
-    public function reset_timestamp() {
 
+    /**
+     * Resets the cache timestamp to the current time in hours since Unix epoch.
+     *
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @access protected Nothing outside this class should manage this data.
+     * @return void
+     */
+    public function reset_timestamp() {
+        delete_post_meta( $this->id, 'swp_cache_timestamp' );
+    	update_post_meta( $this->id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
     }
 }
