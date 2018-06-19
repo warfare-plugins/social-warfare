@@ -254,6 +254,12 @@ class SWP_Buttons_Panel {
         //* Establish a default.
         $this->location = 'none';
 
+		// Return with the location set to none if we are on attachment pages.
+		if( is_attachment() ):
+			return;
+		endif;
+
+		// If there is no content, this must be called directly via function or shortcode.
 		if ( empty( $this->content ) && is_singular() ):
 			$this->location = 'above';
 		endif;
