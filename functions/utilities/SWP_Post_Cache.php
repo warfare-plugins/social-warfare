@@ -20,7 +20,7 @@ class SWP_Post_Cache {
         $this->fresh_cache = $this->has_fresh_cache();
 
         if ( !$this->fresh_cache ) {
-            add_action('wp_footer', array( $this, 'print_ajax_script' ) ); 
+            add_action('wp_footer', array( $this, 'print_ajax_script' ) );
         }
     }
 
@@ -119,7 +119,7 @@ class SWP_Post_Cache {
 
     public function print_ajax_script() {
 		?>
-        <script>
+        <script type="text/javascript">
         var ticker = 0;
 		var swpButtonsExist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
 
@@ -128,8 +128,8 @@ class SWP_Post_Cache {
 				var swpCheck = setInterval(function() {
                     ticker++;
 
-                    if (timer > 40) {
-                        //* Twenty seconds have passed. We can close this check.
+                    if (ticker > 40) {
+                        //* Twenty seconds have passed. We can close this.
                         clearInterval(swpCheck);
                     }
 
