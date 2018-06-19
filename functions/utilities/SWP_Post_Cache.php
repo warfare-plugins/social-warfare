@@ -8,11 +8,24 @@ class SWP_Post_Cache {
      */
     public $fresh_cache = false;
 
+
+    /**
+     * @var bool $rebuild
+     *
+     * If true, forces the cache to be rebuilt.
+     *
+     */
+    public $rebuild = false;
+
     public function __construct( $post_id ) {
         global $post;
 
         if ( $post->ID != $post_id ) {
             $post = get_post( $post_id );
+        }
+
+        if ( $_POST['swp_cache'] == 'rebuidl' || $_GET['swp_cache'] == 'rebuild' ) {
+            $this->rebuild = true;
         }
 
         $this->post_id = $post_id;
@@ -27,7 +40,8 @@ class SWP_Post_Cache {
     /**
      * Determines if the data has recently been updated.
      *
-     * @access Protected Use the $fresh_cache property to determine cache status.
+     * @since 3.0.10 | 19 JUN 2018 | Converted from function to class method.
+     * @access protected Use the $fresh_cache property to determine cache status.
      * @return mixed boolean if the conditions are met, else function $this->calulcate_age.
      *
      */
@@ -159,5 +173,93 @@ class SWP_Post_Cache {
 		}
         </script>
 		<?php
+    }
+
+    public function rebuild_cache() {
+        $this->rebuild = true;
+
+        $shares = get_social_warfare_shares( $this->id );
+
+        //* TODO What is $value, the network object? We can have better names.
+        foreach($shares as $network => $value ) {
+            SWP_URL_Management::process_url( get_permalink( $this->id ), $network, $this->id );
+        }
+
+        $this->rebuild_pin_image();
+        $this->rebuild_og_image();
+        $this->reset_timestamp();
+
+        wp_send_json( $shares );
+        wp_die();
+    }
+
+
+    /**
+     * Pinterest Image
+     *
+     * Convert the pinterest image ID to a URL and store it in a meta field
+     * because then the URL will be autoloaded with the post preventing the
+     * need for an additional database query during page loads.
+     *
+     * @since 3.0.10 | 19 JUN 2018 | Converted from function to class method.
+     * @access protected Nothing outside this class should manage this data.
+     * @return void
+     */
+    public function rebuild_pin_image() {
+        // Check if a custom pinterest image has been declared
+    	$pin_image_id = get_post_meta( $this->id , 'swp_pinterest_image' , true );
+
+    	if ( false !== $pin_image_id ) :
+    		$pin_image_url = wp_get_attachment_url( $pin_image_id );
+    		$cur_image_url = get_post_meta( $this->id , 'swp_pinterest_image_url' , true );
+
+    		// No need to update the database if the image URL has not changed
+    		if($pin_image_url !== $cur_image_url):
+    			delete_post_meta( $this->id,'swp_pinterest_image_url' );
+    			update_post_meta( $this->id,'swp_pinterest_image_url' , $pin_image_url );
+    		endif;
+
+    	else:
+    		delete_post_meta( $this->id , 'swp_pinterest_image_url' );
+    	endif;
+    }
+
+    /**
+     * Open Graph Image
+     *
+     * Convert the open graph image ID to a URL and store it in a meta field
+     * because then the URL will be autoloaded with the post preventing the
+     * need for an additional database query during page loads.
+     *
+     * @since 3.0.10 | 19 JUN 2018 | Converted from function to class method.
+     * @access protected Nothing outside this class should manage this data.
+     * @return void
+     */
+    public function rebuild_og_image() {
+        $image_id = get_post_meta( $this->id , 'swp_og_image' , true );
+
+        if ( $image_id ):
+
+            $cur_image_url = get_post_meta( $this->id , 'swp_open_graph_image_url' , true );
+            $new_image_url = wp_get_attachment_url( $image_id );
+
+            // No need to update the DB if the url hasn't changed
+            if( $cur_image_url !== $new_image_url ):
+
+                $image_data = wp_get_attachment_image_src( $image_id , 'full' );
+                delete_post_meta( $this->id , 'swp_open_graph_image_data' );
+                update_post_meta( $this->id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+
+                delete_post_meta( $this->id,'swp_open_graph_image_url' );
+                update_post_meta( $this->id,'swp_open_graph_image_url' , $new_image_url );
+
+            endif;
+        else:
+            delete_post_meta( $this->id,'swp_open_graph_image_url' );
+        endif;
+    }
+
+    public function reset_timestamp() {
+
     }
 }
