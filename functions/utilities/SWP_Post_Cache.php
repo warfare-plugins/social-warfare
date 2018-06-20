@@ -23,15 +23,6 @@
 class SWP_Post_Cache {
 
 
-    /**
-     * True if the post has recently been updated, false otherwise.
-     *
-     * @var bool $fresh_cache
-     *
-     */
-    public $fresh_cache = false;
-
-
 	/**
 	 * The WordPress Post Object
 	 *
