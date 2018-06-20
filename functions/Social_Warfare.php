@@ -285,7 +285,9 @@ class Social_Warfare {
             'Database_Migration',
 			'URL_Management',
             'Notice',
-            'Notice_Loader'
+            'Notice_Loader',
+            'Cache',
+            'Post_Cache'
         );
         $this->load_files( '/functions/utilities/', $utilities);
 
