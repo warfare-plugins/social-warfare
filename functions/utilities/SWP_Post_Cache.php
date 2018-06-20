@@ -119,6 +119,38 @@ class SWP_Post_Cache {
     	return $fresh_cache;
     }
 
+
+	/**
+	 * @review: I read recently that if you're using an "else" without any qualifiers
+	 * (i.e. elsif) then you should simplify the logic into smaller bits. As such,
+	 * I think that breaking this logic out of the method above makes sense and makes
+	 * this method very, very simple. However, I want to come up with a better name
+	 * for this method. Please review and advise. If you like it, then please replace
+	 * the logic above with a call to this method.
+	 *
+	 * Regarding the name, I like methods to be in a verb - noun format. Obviously,
+	 * in this case the noun has some modifiers which is fine.
+	 *
+	 * @var [type]
+	 */
+	get_time_between_expirations() {
+
+		// Current age of the post
+		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->post_id ) );
+
+		// If it's less than 21 days old.
+		if ( $post_age < ( 21 * 86400 ) ) {
+			return 1;
+
+		// If it's less than 60 days old.
+		} elseif ( $post_age < ( 60 * 86400 ) ) {
+			return 4;
+		}
+
+		// If it's really old.
+		return 12;
+	}
+
     /**
      * Get either the cached or updated post meta.
      *
