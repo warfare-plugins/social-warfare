@@ -25,6 +25,10 @@ class SWP_Post_Cache {
     public function __construct( $post_id ) {
         global $post;
 
+        if ( !is_object( $post ) ) {
+            return;
+        }
+
         if ( $post->ID != $post_id ) {
             $post = get_post( $post_id );
         }
