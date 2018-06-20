@@ -157,7 +157,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				swpPostData = {
 					action: 'swp_facebook_shares_update',
 					post_id: swp_post_id,
-					activity: fShares
+					share_counts: fShares
 				};
 			}
 		});
