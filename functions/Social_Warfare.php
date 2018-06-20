@@ -170,6 +170,8 @@ class Social_Warfare {
          *
          */
         $SWP_Options_Page = new SWP_Options_Page();
+
+        new SWP_Cache();
 	}
 
 
