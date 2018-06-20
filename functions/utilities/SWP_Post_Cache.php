@@ -17,6 +17,11 @@ class SWP_Post_Cache {
      */
     public $rebuild = false;
 
+    public $old_shares = array();
+    public $api_links = array();
+    public $share_data = array();
+
+
     public function __construct( $post_id ) {
         global $post;
 
@@ -323,12 +328,14 @@ class SWP_Post_Cache {
 
 
     public function facebook_shares_update() {
+        global $swp_user_options;
+
         $post_id = $_POST['post_id'];
     	$activity = $_POST['share_counts'];
 
     	$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
-    	if ( $activity > $previous_activity || (isset($options['force_new_shares']) && true === $options['force_new_shares']) ) :
+    	if ( $activity > $previous_activity || (isset($swp_user_options['force_new_shares']) && true === $swp_user_options['force_new_shares']) ) :
     		delete_post_meta( $post_id, '_facebook_shares' );
     		update_post_meta( $post_id, '_facebook_shares', $activity );
     	endif;
@@ -371,79 +378,88 @@ class SWP_Post_Cache {
      *
      */
     public function establish_shares() {
-        global $swp_user_options, $swp_social_networks;
+        global $swp_social_networks;
 
-        foreach( $networks as $network ) {
+        foreach( $swp_social_networks as $network ) {
             if ( !isset( $swp_social_networks[$network] ) ) :
                 continue;
             endif;
 
-
             $this->fresh_cache ? $this->set_cached_shares( $network ) : $this->prepare_network( $network );
         }
 
-        $this->fresh_cache ? $this->set_total_shares() : '';
+        $this->fresh_cache ? $this->set_total_shares() : $this->update_networks();
+    }
 
-        set_total_shares() {
-            if ( get_post_meta( $this->id, '_total_shares', true ) ) :
-                $this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
-            else :
-                $this->share_data['total_shares'] = 0;
-            endif;
-        }
+    protected function set_total_shares() {
+        if ( get_post_meta( $this->id, '_total_shares', true ) ) :
+            $this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
+        else :
+            $this->share_data['total_shares'] = 0;
+        endif;
+    }
 
-        set_cached_shares( $network ) {
-            $this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
-        }
+    protected function set_cached_shares( $network ) {
+        $this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
+    }
 
-        three() {
-            $raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
-            $this->share_data[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares_array[$network]);
+    /**
+     *  Finishes processing the share data after the network links have been set up.
+     *
+     *
+     *
+     */
+    protected function update_networks() {
+        global $swp_social_networks, $swp_user_options;
 
-            if ( true == $options['recover_shares'] ) {
-                $old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
-                $recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares_array[$network] );
+        $raw_shares = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
 
+        if ( true == $swp_user_options['recover_shares'] ) :
+            $recovered_shares = array();
 
+            $old_raw_shares = SWP_CURL::fetch_shares_via_curl_multi( $this->old_share_links );
+            $recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares[$network] );
+        endif;
+
+        foreach( $networks as $network ) {
+            $this->share_data[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares[$network]);
+
+            if ( true == $swp_user_options['recover_shares'] &&  $this->share_data[$network] != $recovered_shares[$network] ) {
+                $this->share_data[$network] = $this->share_data[$network] + $recovered_shares[$network];
             }
-        }
 
-        prepare_network( $network ) {
-            $old_shares[$network]  	= get_post_meta( $this->id, '_' . $network . '_shares', true );
-            $api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
-
-            swp_cache_reset_timestamp( $this->id );
-
-            // $this->share_data[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares_array[$network]);
-
-            if ( $options['recover_shares'] == true ) :
-                $alternateURL = SWP_Permalink::get_alt_permalink( $this->id );
-                $alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
-                $this->old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
-
-                // $old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
-                // $recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares_array[$network] );
-
-                if ( $this->share_data[$network] != $recovered_shares[$network] ) :
-                    $this->share_data[$network] = $this->share_data[$network] + $recovered_shares[$network];
-                endif;
+            if ( $this->share_data[$network] < $this->old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
+                $this->share_data[$network] = $this->old_shares[$network];
             endif;
 
-            if ( $this->share_data[$network] < $old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
-                $this->share_data[$network] = $old_shares[$network];
-
-            elseif( $this->share_data[$network] > 0 ) :
-                delete_post_meta( $this->id,'_' . $network . '_shares' );
-                update_post_meta( $this->id,'_' . $network . '_shares',$this->share_data[$network] );
-            endif;
-
-            if (is_numeric( $this->share_data[$network] ) ):
+            //* TODO We do want to update post meta for network_shares, right?
+            //* Previously this was in a chain of conditionals
+            if ( $this->share_data[$network] > 0 ) :
+                delete_post_meta( $this->id, '_' . $network . '_shares' );
+                update_post_meta( $this->id, '_' . $network . '_shares', $this->share_data[$network] );
                 $this->share_data['total_shares'] += $this->share_data[$network];
             endif;
-
-            delete_post_meta( $this->id, '_total_shares' );
-            update_post_meta( $this->id, '_total_shares', $this->share_data['total_shares'] );
-
         }
+
+        delete_post_meta( $this->id, '_total_shares' );
+        update_post_meta( $this->id, '_total_shares', $this->share_data['total_shares'] );
+    }
+
+
+    /**
+     *  Prepares the API link(s) and old share data for a network.
+     *
+     */
+    protected function prepare_network( $network ) {
+        global $swp_social_networks, $swp_user_options;
+
+        $this->old_shares[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
+        $this->api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+
+        if ( $swp_user_options['recover_shares'] == true ) :
+            $alternateURL = SWP_Permalink::get_alt_permalink( $this->id );
+            $alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+            $this->old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
+        endif;
     }
 }
