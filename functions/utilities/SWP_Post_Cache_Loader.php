@@ -1,12 +1,12 @@
 <?php
 
 /**
- * The Global SWP_Cache Object
+ * The Global SWP_Post_Caches Object
  *
- * This class allows for the creation of a global $SWP_Cache object. This will
- * be called and instantiated from the main loader class. It will then be made
- * available to classes like the buttons_panel class which can then use it to
- * fetch share counts for specific posts via their post_cache objects.
+ * This class allows for the creation of a global $SWP_Post_Caches object. This
+ * will be called and instantiated from the main loader class. It will then be
+ * made available to classes like the buttons_panel class which can then use it
+ * to fetch share counts for specific posts via their post_cache objects.
  *
  * This class is essentially a loader class for the post_cache objects.
  *
