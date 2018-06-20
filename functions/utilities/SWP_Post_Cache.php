@@ -46,6 +46,8 @@ class SWP_Post_Cache {
     protected function init_hooks() {
         add_action( 'save_post', array( $this, 'rebuild_cache' ) );
         add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
+        add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+        add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 
         if ( !$this->fresh_cache ) {
             add_action('wp_footer', array( $this, 'print_ajax_script' ) );
@@ -133,7 +135,7 @@ class SWP_Post_Cache {
 	 *
 	 * @var [type]
 	 */
-	get_time_between_expirations() {
+	public function get_time_between_expirations() {
 
 		// Current age of the post
 		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->post_id ) );
@@ -317,6 +319,23 @@ class SWP_Post_Cache {
     public function reset_timestamp() {
         delete_post_meta( $this->id, 'swp_cache_timestamp' );
     	update_post_meta( $this->id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+    }
+
+
+    public function facebook_shares_update() {
+        $post_id = $_POST['post_id'];
+    	$activity = $_POST['share_counts'];
+
+    	$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
+
+    	if ( $activity > $previous_activity || (isset($options['force_new_shares']) && true === $options['force_new_shares']) ) :
+    		delete_post_meta( $post_id, '_facebook_shares' );
+    		update_post_meta( $post_id, '_facebook_shares', $activity );
+    	endif;
+
+    	echo true;
+
+    	wp_die();
     }
 
 
