@@ -1,10 +1,33 @@
 <?php
 
+/**
+ * The Post_Cache Object
+ *
+ * This class will control the cached data for each individual post across a
+ * WordPress website. Direct calls for data such as share counts, will pull and
+ * return cached data.
+ *
+ * Since all Post_Cache objects should be loaded via the Post_Cache_Loader class,
+ * we will use the instantiation method (__construct) to queue up asyncronous
+ * methods for rebuilding cached data. This should allow us to run that subset
+ * of functions only once per page load, and then the cache will once again be
+ * fresh for a few hours before we need to do it again.
+ *
+ * @package   SocialWarfare\Functions\Utilities
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     3.0.10 | 20 JUN 2018 | Created
+ * @access    public
+ *
+ */
 class SWP_Post_Cache {
+
+
     /**
+     * True if the post has recently been updated, false otherwise.
+     *
      * @var bool $fresh_cache
      *
-     * True if the post has recently been updated, false otherwise.
      */
     public $fresh_cache = false;
 
@@ -22,28 +45,59 @@ class SWP_Post_Cache {
     public $share_data = array();
 
 
+	/**
+	 * The Magic Construct Method
+	 *
+	 * The only thing this method should do is 1.) instantiate the object
+	 * making the public methods available for use by the plugin, and 2.) it
+	 * should determine if the cache is fresh, and if not, trigger an
+	 * asyncronous request to rebuild the cached data.
+	 *
+	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @param  integer $post_id The ID of the post
+	 * @return void
+	 *
+	 */
     public function __construct( $post_id ) {
-        global $post;
+
+		// Set up the post data into local properties.
+		establish_post_data( $post_id );
+
+		// If the cache is expired, trigger the rebuild processes.
+        if ( false === $this->is_cache_fresh() ):
+			rebuild_cached_data();
+		endif;
+
+		// This may not work here and may need moved to the loader class.
+        $this->init_post_publish_hooks();
+
+		// This call should be moved into the rebuild_cached_data() method.
+		$this->init_cache_update_hooks();
+    }
+
+
+	protected function rebuild_cached_data() {
+
+	}
+
+	protected function establish_post_data( $post_id ) {
+		global $post;
 
         if ( !is_object( $post ) ) {
-            return;
+            $post = get_post( $post_id );
         }
 
         if ( $post->ID != $post_id ) {
             $post = get_post( $post_id );
         }
 
-        if ( $_POST['swp_cache'] == 'rebuidl' || $_GET['swp_cache'] == 'rebuild' ) {
+        if ( $_POST['swp_cache'] == 'rebuild' || $_GET['swp_cache'] == 'rebuild' ) {
             $this->rebuild = true;
         }
 
         $this->id = $post_id;
         $this->post = $post;
-        $this->fresh_cache = $this->has_fresh_cache();
-
-        $this->init_hooks();
-    }
-
+	}
 
     /**
      * Reaches into WordPress to interfere with data.
@@ -52,9 +106,7 @@ class SWP_Post_Cache {
      * @access protected This should only ever be called by the constructor.
      * @return void
      */
-    protected function init_hooks() {
-        add_action( 'save_post', array( $this, 'rebuild_cache' ) );
-        add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
+    protected function init_cache_update_hooks() {
         add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
         add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 
@@ -63,50 +115,57 @@ class SWP_Post_Cache {
         }
     }
 
+	protected function init_post_publish_hooks() {
+		add_action( 'save_post', array( $this, 'rebuild_cache' ) );
+		add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
+	}
+
     /**
      * Determines if the data has recently been updated.
      *
      * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
      * @access protected Use the $fresh_cache property to determine cache status.
-     * @return mixed boolean if the conditions are met, else function $this->calulcate_age.
+     * @return boolean True if fresh, false if expired and needs rebuilt.
      *
      */
-    protected function has_fresh_cache() {
-        global $swp_user_options;
+    protected function is_cache_fresh() {
 
     	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
     	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
         	return true;
         endif;
 
-    	if ( !$output && isset( $swp_user_options['cache_method'] ) && 'advanced' === $swp_user_options['cache_method'] ) {
-    		if ( empty( $_GET['swp_cache'] ) && empty( $_POST['swp_cache'] ) ) {
-    			return true;
-    		}
+		// Always be true if we're not a single post.
+    	if ( !is_singular() ) :
+    		return true;
+    	endif;
 
-    		return false;
-    	}
+		// If a URL parameter is specifically telling it to rebuild.
+		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+			return false;
+		}
 
-        //* TODO Describe why this condition would pass.
+		// If a POST request (AJAX) is specifically telling it to rebuild.
+		// This may now become deprecated as we rebuild this.
     	if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
     		return false;
     	}
 
-    	// Always be TRUE if we're not on a single.php otherwise we could end up
-    	// Rebuilding multiple page caches which will cost a lot of time.
-    	if ( ! is_singular() && !$ajax ) :
-    		return true;
-    	endif;
+		if( get_age_of_cache() >= get_time_between_expirations() ):
+			return false;
+		endif;
 
-        return $this->calculate_age();
+		return true;
+
     }
 
     /**
-     *  Determines if the page has recently been updated.
+     * Determines if the page has recently been updated.
      * @since 3.0.10 | 19 JUN 2018 | Created the method.
      * @return bool $fresh_cache True if the post has recently updated, false otherwise.
      */
-    protected function calculate_age() {
+    protected function get_age_of_cache() {
+
         $post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
 
     	if ( $post_age < ( 21 * 86400 ) ) {

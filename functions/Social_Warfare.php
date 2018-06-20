@@ -28,8 +28,8 @@ class Social_Warfare {
 	 *
 	 * @since  3.0.0  | 19 FEB 2018 | Created
 	 * @since  3.0.10 | 20 JUN 2018 | Added instantiate_frontend_classes()
-	 * @param  none
-	 * @return none
+	 * @param  void
+	 * @return void
 	 * @access public
 	 *
 	 */
@@ -62,14 +62,14 @@ class Social_Warfare {
 
 
 	/**
-	 * The method used to instantiate all non-admin-only classes.
+	 * The method used to instantiate all classes used on both frontend and admin.
 	 *
 	 * This method will instantiate every class throughout the plugin except for
-	 * those classes that are only used in the admin area.
+	 * those classes that are used in both the frontend and the admin area.
 	 *
 	 * @since  3.0.0
-	 * @param  none
-	 * @return none
+	 * @param  void
+	 * @return void
 	 * @access public
 	 *
 	 */
@@ -193,11 +193,11 @@ class Social_Warfare {
 	 * This method will load up all of the frontend-only classes.
 	 *
 	 * @since  3.0.10 | 20 JUNE 2018 | Created
-	 * @param  none
-	 * @return none
+	 * @param  void
+	 * @return void
 	 * @access private
 	 */
-	private function instatiate_frontend_classes() {
+	private function instantiate_frontend_classes() {
 
 
 		/**
@@ -217,8 +217,8 @@ class Social_Warfare {
 	 * This method will load up all of the admin-only classes.
 	 *
 	 * @since  3.0.0
-	 * @param  none
-	 * @return none
+	 * @param  void
+	 * @return void
 	 * @access public
 	 *
 	 */

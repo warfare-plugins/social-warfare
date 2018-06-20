@@ -42,6 +42,7 @@ class SWP_Post_Cache_Loader {
 	 * @since  3.0.10 | 20 JUNE 2018 | Created
 	 * @param  integer $post_id The ID of the post being requested.
 	 * @return object           The post_cache object for the post.
+	 * 
 	 */
     public function get_post_cache( $post_id ) {
 
