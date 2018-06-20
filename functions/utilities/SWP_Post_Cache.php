@@ -32,13 +32,24 @@ class SWP_Post_Cache {
     public $fresh_cache = false;
 
 
-    /**
-     * @var bool $rebuild
-     *
-     * If true, forces the cache to be rebuilt.
-     *
-     */
-    public $rebuild = false;
+	/**
+	 * The WordPress Post Object
+	 *
+	 * @see $this->establish_post_data() method.
+	 * @var object
+	 *
+	 */
+	public $post;
+
+
+	/**
+	 * The ID of the Current Post Being Processed
+	 *
+	 * @see $this->establish_post_data() method.
+	 * @var integer
+	 *
+	 */
+	public $id;
 
     public $old_shares = array();
     public $api_links = array();
@@ -54,6 +65,10 @@ class SWP_Post_Cache {
 	 * asyncronous request to rebuild the cached data.
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @todo   Review this class. While not all of the methods realy map all the
+	 *         way out just yet, this is essentially the flow of logic that I'm
+	 *         looking for in the constructor. All it does is establish the post
+	 *         data and then rebuild the cache if necessary.
 	 * @param  integer $post_id The ID of the post
 	 * @return void
 	 *
@@ -71,60 +86,78 @@ class SWP_Post_Cache {
 		// This may not work here and may need moved to the loader class.
         $this->init_post_publish_hooks();
 
-		// This call should be moved into the rebuild_cached_data() method.
-		$this->init_cache_update_hooks();
     }
 
 
+	/**
+	 * A method to rebuild all cached data
+	 *
+	 * This is the method that will be called in the constructor. This is also
+	 * the method that we want to run asyncronously. This method will call all
+	 * other methods and run the action filter to allow third-party functions
+	 * to run during the cache rebuild process.
+	 *
+	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @todo   Move all calls to cache rebuild methods into this method. This
+	 *         will become the one and only method that is used to rebuild this
+	 *         particular cache of data.
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	protected function rebuild_cached_data() {
+
+		$this->init_cache_update_hooks();
+
+		// A hook to run allowing third-party functions to run.
+		do_action('swp_cache_rebuild');
 
 	}
 
+
+	/**
+	 * Establish the Post Data
+	 *
+	 *
+	 *
+	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @todo   Review this method. The constructor was becoming cluttered with
+	 *         logic ensuring that the post data was being set properly, so I
+	 *         broke this into it's own method to simplify everything and improve
+	 *         readability. After simplifying, it's much smaller now, but I still
+	 *         like having it as it's own little method.
+	 * @param  integer $post_id The post id.
+	 * @return void             All processed data are stored in local properties.
+	 *
+	 */
 	protected function establish_post_data( $post_id ) {
+
+		// Retrieve the global post object.
 		global $post;
 
-        if ( !is_object( $post ) ) {
+		// If there is a glitch, use get_post() to fix it.
+        if ( !is_object( $post ) || $post->ID != $post_id ) {
             $post = get_post( $post_id );
-        }
-
-        if ( $post->ID != $post_id ) {
-            $post = get_post( $post_id );
-        }
-
-        if ( $_POST['swp_cache'] == 'rebuild' || $_GET['swp_cache'] == 'rebuild' ) {
-            $this->rebuild = true;
         }
 
         $this->id = $post_id;
         $this->post = $post;
 	}
 
-    /**
-     * Reaches into WordPress to interfere with data.
-     *
-     * @since  3.0.10 | 19 JUN 2018 | Ported from procedural code to method.
-     * @access protected This should only ever be called by the constructor.
-     * @return void
-     */
-    protected function init_cache_update_hooks() {
-        add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-        add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-
-        if ( !$this->fresh_cache ) {
-            add_action('wp_footer', array( $this, 'print_ajax_script' ) );
-        }
-    }
-
-	protected function init_post_publish_hooks() {
-		add_action( 'save_post', array( $this, 'rebuild_cache' ) );
-		add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
-	}
 
     /**
      * Determines if the data has recently been updated.
      *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected Use the $fresh_cache property to determine cache status.
+     * This is the determining method to decide if a cache is fresh or if it
+     * needs to be rebuilt.
+     *
+     * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @todo   Review: Specifically look at how I broke the logic out into
+     *         get_cache_age() and get_freshness_duration() methods. I'm trying
+     *         really hard to keep all pieces of logic broken down into very
+     *         simple, bite-sized amounts that take care of very specific tasks.
+     * @access protected
+     * @param  void
      * @return boolean True if fresh, false if expired and needs rebuilt.
      *
      */
@@ -146,12 +179,11 @@ class SWP_Post_Cache {
 		}
 
 		// If a POST request (AJAX) is specifically telling it to rebuild.
-		// This may now become deprecated as we rebuild this.
     	if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
     		return false;
     	}
 
-		if( get_age_of_cache() >= get_freshness_duration() ):
+		if( get_cache_age() >= get_freshness_duration() ):
 			return false;
 		endif;
 
@@ -159,15 +191,17 @@ class SWP_Post_Cache {
 
     }
 
+
     /**
-     * Determines if the page has recently been updated.
+     * Determines how recently, in hours, the cache has been updated.
      *
      * @since  3.0.10 | 19 JUN 2018 | Created the method.
+     * @todo   Review
      * @param  void
      * @return int  The current age of the cache in hours.
      *
      */
-    protected function get_age_of_cache() {
+    protected function get_cache_age() {
 
         // $time is a number in hours. Example: 424814 == Number of hourse since Unix epoch.
     	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
@@ -191,6 +225,7 @@ class SWP_Post_Cache {
 	 *     12 Hours - Old Posts Older than 60 days old.
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @todo   Review
 	 * @param  void
 	 * @return integer The duration in hours that applies to this cache.
 	 *
@@ -211,6 +246,45 @@ class SWP_Post_Cache {
 
 		// If it's really old.
 		return 12;
+	}
+
+
+/*******************************************************************************
+ *
+ *
+ * WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING!
+ *
+ * This is where I stopped refactoring for the day. This ends the requested
+ * review sections. Delete this when you get to this point.
+ *
+ * For the methods below this, continue working on breaking things out into very
+ * tiny, bite-sized pieces of straightforward logic in each method.
+ *
+ *
+ ******************************************************************************/
+
+
+
+
+	/**
+	 * Reaches into WordPress to interfere with data.
+	 *
+	 * @since  3.0.10 | 19 JUN 2018 | Ported from procedural code to method.
+	 * @access protected This should only ever be called by the constructor.
+	 * @return void
+	 */
+	protected function init_cache_update_hooks() {
+		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+
+		if ( !$this->fresh_cache ) {
+			add_action('wp_footer', array( $this, 'print_ajax_script' ) );
+		}
+	}
+
+	protected function init_post_publish_hooks() {
+		add_action( 'save_post', array( $this, 'rebuild_cache' ) );
+		add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
 	}
 
     /**
