@@ -12,25 +12,23 @@
  */
 class SWP_CURL {
 
-	public static function fetch_shares_via_curl_multi( $data, $options = array() ) {
+	public static function fetch_shares_via_curl_multi( $links ) {
 
 		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
 			  $started = time();
 			  echo "Starting multi curl request at : " . $started;
 		endif;
 
-		// array of curl handles
 		$curly = array();
-		// data to be returned
 		$result = array();
 
 		// multi handle
 		$mh = curl_multi_init();
 
-		// loop through $data and create curl handles
+		// loop through $links and create curl handles
 		// then add them to the multi-handle
-		if( is_array( $data ) ):
-			foreach ( $data as $id => $d ) :
+		if( is_array( $links ) ):
+			foreach ( $links as $id => $d ) :
 				if ( $d !== 0 || $id == 'google_plus' ) :
 					$curly[ $id ] = curl_init();
 
@@ -62,19 +60,10 @@ class SWP_CURL {
 						// curl_setopt($curly[$id], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
 					endif;
 
-					// extra options?
-					if ( ! empty( $options ) ) {
-						curl_setopt_array( $curly[ $id ], $options );
-					}
-
 					curl_multi_add_handle( $mh, $curly[ $id ] );
 
 				endif;
 			endforeach;
-		endif;
-
-		if (_swp_is_debug( 'is_cache_fresh' ) ) :
-			echo "<br>About to execute the multi curl. Current time: " . time();
 		endif;
 
 		// execute the handles
@@ -89,22 +78,7 @@ class SWP_CURL {
 			curl_multi_remove_handle( $mh, $c );
 		}
 
-		// all done
 		curl_multi_close( $mh );
-
-		if( true == _swp_is_debug('show_share_data') ) :
-		    echo "<pre>";
-		    var_dump($result);
-		    echo "</pre>";
-		endif;
-
-		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
-			$done = time();
-			$duration = $done - $started;
-			echo "<br>Finishing the multi curl request at " . $done;
-			echo "<br>Total time for request was " . $duration . " seconds.";
-		endif;
-
 
 	  return $result;
 	}
