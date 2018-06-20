@@ -151,7 +151,7 @@ class SWP_Post_Cache {
     		return false;
     	}
 
-		if( get_age_of_cache() >= get_time_between_expirations() ):
+		if( get_age_of_cache() >= get_freshness_duration() ):
 			return false;
 		endif;
 
@@ -161,49 +161,41 @@ class SWP_Post_Cache {
 
     /**
      * Determines if the page has recently been updated.
-     * @since 3.0.10 | 19 JUN 2018 | Created the method.
-     * @return bool $fresh_cache True if the post has recently updated, false otherwise.
+     *
+     * @since  3.0.10 | 19 JUN 2018 | Created the method.
+     * @param  void
+     * @return int  The current age of the cache in hours.
+     *
      */
     protected function get_age_of_cache() {
 
-        $post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
+        // $time is a number in hours. Example: 424814 == Number of hourse since Unix epoch.
+    	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
 
-    	if ( $post_age < ( 21 * 86400 ) ) {
-            //* Three weeks
-    		$hours = 1;
-    	} elseif ( $post_age < ( 60 * 86400 ) ) {
-            //* Two months
-    		$hours = 4;
-    	} else {
-    		$hours = 12;
-    	}
+        // $last_checked is the number in hours (at time of storage) since the Unix epoch.
+    	$last_checked_time = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
-    	$time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
-        //* $time is a number in hours. Example: 424814 == Number of hourse since Unix epoch.
+		// How many hours has it been since the cache was rebuilt?
+    	$age = $current_time - $last_checked_time;
 
-    	$last_checked = get_post_meta( $post_id, 'swp_cache_timestamp', true );
-        //* $last_checked is the number in hours (at time of storage) since the Unix epoch.
-
-    	$fresh_cache =  $last_checked > ( $time - $hours ) && ( $last_checked > 390000 );
-
-    	return $fresh_cache;
+    	return $age;
     }
 
 
 	/**
-	 * @review: I read recently that if you're using an "else" without any qualifiers
-	 * (i.e. elsif) then you should simplify the logic into smaller bits. As such,
-	 * I think that breaking this logic out of the method above makes sense and makes
-	 * this method very, very simple. However, I want to come up with a better name
-	 * for this method. Please review and advise. If you like it, then please replace
-	 * the logic above with a call to this method.
+	 * Get the duration during which this cache can be considered fresh.
 	 *
-	 * Regarding the name, I like methods to be in a verb - noun format. Obviously,
-	 * in this case the noun has some modifiers which is fine.
+	 * A cache is fresh for the following durations:
+	 *     1 Hour   - New Posts less than 21 days old.
+	 *     4 Hours  - Medium Posts less than 60 days old.
+	 *     12 Hours - Old Posts Older than 60 days old.
 	 *
-	 * @var [type]
+	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @param  void
+	 * @return integer The duration in hours that applies to this cache.
+	 *
 	 */
-	public function get_time_between_expirations() {
+	public function get_freshness_duration() {
 
 		// Current age of the post
 		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
