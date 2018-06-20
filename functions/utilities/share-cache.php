@@ -19,6 +19,7 @@ defined( 'WPINC' ) || die;
  * @access public
  * @param  array $vars The current query vars.
  * @return array $vars The modified query vars.
+ * @review What does this do?
  */
 function swp_add_query_vars( $vars ) {
 	$vars[] = 'swp_cache';
@@ -33,6 +34,7 @@ add_filter( 'query_vars', 'swp_add_query_vars' );
  * @access public
  * @param  array $request The current query request.
  * @return array $request The modified query request.
+ * @review What does this do?
  */
 function swp_alter_the_query( $request ) {
     $dummy_query = new WP_Query();  // the query isn't run if we don't pass any query vars
@@ -52,6 +54,7 @@ add_filter( 'request', 'swp_alter_the_query' );
  * @since 1.4.0
  * @param array $info Meta tag info.
  * @return array $info Meta tag info.
+ * @review What does this do?
  */
 function swp_cache_rebuild_rel_canonical( $info ) {
 	if ( 'rebuild' === $_GET['swp_cache'] ) :

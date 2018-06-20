@@ -28,7 +28,7 @@ class SWP_Post_Cache {
             $this->rebuild = true;
         }
 
-        $this->post_id = $post_id;
+        $this->id = $post_id;
         $this->post = $post;
         $this->fresh_cache = $this->has_fresh_cache();
 
@@ -98,7 +98,7 @@ class SWP_Post_Cache {
      * @return bool $fresh_cache True if the post has recently updated, false otherwise.
      */
     protected function calculate_age() {
-        $post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->post_id ) );
+        $post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
 
     	if ( $post_age < ( 21 * 86400 ) ) {
             //* Three weeks
@@ -138,7 +138,7 @@ class SWP_Post_Cache {
 	public function get_time_between_expirations() {
 
 		// Current age of the post
-		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->post_id ) );
+		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
 
 		// If it's less than 21 days old.
 		if ( $post_age < ( 21 * 86400 ) ) {
@@ -201,7 +201,7 @@ class SWP_Post_Cache {
 
                         var swpCacheData  = {
                             action: 'swp_cache_trigger',
-                            post_id: <?= (int) $this->post_id ?>,
+                            post_id: <?= (int) $this->id ?>,
                             timestamp: <?= time() ?>
                         }
                         var browserDate = Math.floor(Date.now() / 1000);
@@ -347,5 +347,145 @@ class SWP_Post_Cache {
      */
     public function delete_timestamp() {
         delete_post_meta( $this->id, 'swp_cache_timestamp' );
+    }
+
+
+    /**
+     * Gets the computed share data.
+     *
+     * @since  3.0.10 | 20 JUN 2018 | Created the method.
+     * @return array $this->share_data if it exists, or an empty array.
+     */
+    public function get_shares() {
+        if ( !empty( $this->share_data ) ) :
+            return $this->share_data;
+        endif;
+
+        return array();
+    }
+
+
+    /**
+     * Process the existing share data, or update it.
+     *
+     *
+     */
+    public function establish_shares() {
+        global $swp_user_options, $swp_social_networks;
+
+    	$options = $swp_user_options;
+    	$url     = get_permalink( $postID );
+        $url     = apply_filters( 'swp_url_filter_function', get_permalink( $this->ID ) );
+
+    	$fresh_cache = swp_is_cache_fresh( $postID );
+        $share_data = array();
+
+    	$share_data['total_shares'] = 0;
+
+    	// Queue up the networks that are available
+    	$networks = $options['order_of_icons'];
+
+        if ( !is_array( $networks ) || count ( $networks ) === 0 ) :
+            return $share_data;
+        endif;
+
+    	foreach ( $networks as $network ) :
+            if( isset( $swp_social_networks[$network] ) ):
+        		// Check if we can used the cached share numbers
+        		if ( $fresh_cache == true ) :
+    				$share_data[$network] = get_post_meta( $postID, '_' . $network . '_shares', true );
+
+        		// If cache is expired, fetch new and update the cache
+        		else :
+    				$old_shares[$network]  	= get_post_meta( $postID, '_' . $network . '_shares', true );
+    				$api_links[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+        		endif;
+    		endif;
+    	endforeach;
+
+    	// Recover Shares From Previously Used URL Patterns
+    	if ( true == $options['recover_shares'] && false == $fresh_cache ) :
+    		$alternateURL = SWP_Permalink::get_alt_permalink( $postID );
+    		$alternateURL = apply_filters( 'swp_recovery_filter', $alternateURL );
+
+    		foreach ( $networks as $network ) :
+    			if( isset( $swp_social_networks[$network] ) ):
+    				$old_share_links[$network] = $swp_social_networks[$network]->get_api_link( $alternateURL );
+    			endif;
+    		endforeach;
+    	endif;
+
+    	if ( $fresh_cache == true ) :
+    		if ( get_post_meta( $postID, '_total_shares', true ) ) :
+    			$share_data['total_shares'] = get_post_meta( $postID, '_total_shares', true );
+    		else :
+    			$share_data['total_shares'] = 0;
+    		endif;
+    	else :
+
+    		// Fetch all the share counts asyncrounously
+    		$raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
+
+    		if ( $options['recover_shares'] == true ) :
+    			$old_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $old_share_links );
+    		endif;
+
+            //* Need to reset the timestamp so we don't fetch shares again on the same request.
+    		swp_cache_reset_timestamp( $postID );
+
+    		foreach ( $networks as $network ) :
+
+    			if( isset( $swp_social_networks[$network] ) ):
+    				if ( ! isset( $raw_shares_array[$network] ) ) :
+    					$raw_shares_array[$network] = 0;
+    				endif;
+
+    				if ( ! isset( $old_raw_shares_array[$network] ) ) :
+    					$old_raw_shares_array[$network] = 0;
+    				endif;
+
+    				$share_data[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares_array[$network]);
+
+    				if ( $options['recover_shares'] == true ) :
+
+    					$recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares_array[$network] );
+
+    					if( !empty($altURLs) ) :
+                            $altURLs_raw_shares_array = SWP_CURL::fetch_shares_via_curl_multi( $altURLs_share_links );
+    						$altURLs_recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $altURLs_raw_shares_array[$network] );
+    					endif;
+
+    					if ( $share_data[$network] != $recovered_shares[$network] ) :
+    						$share_data[$network] = $share_data[$network] + $recovered_shares[$network];
+    					endif;
+
+    					if( !empty($altURLs) ):
+    						$share_data[$network] = $share_data[$network] + $altURLs_recovered_shares[$network];
+    					endif;
+
+    				endif; //* End 'recover_shares'
+
+    				if ( $share_data[$network] < $old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
+    						$share_data[$network] = $old_shares[$network];
+
+    				elseif($share_data[$network] > 0) :
+    						delete_post_meta( $postID,'_' . $network . '_shares' );
+    						update_post_meta( $postID,'_' . $network . '_shares',$share_data[$network] );
+    				endif;
+
+    				if (is_numeric( $share_data[$network] ) ):
+    						$share_data['total_shares'] += $share_data[$network];
+    				endif;
+
+            		delete_post_meta( $postID,'_total_shares' );
+            		update_post_meta( $postID,'_total_shares',$share_data['total_shares'] );
+
+    			endif;
+    		 endforeach;
+    	endif;
+
+
+    	// Return the share counts
+    	return $share_data;
     }
 }
