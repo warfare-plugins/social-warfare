@@ -97,6 +97,12 @@ class SWP_Post_Cache {
 	 * other methods and run the action filter to allow third-party functions
 	 * to run during the cache rebuild process.
 	 *
+	 * I know there's another method for this already, but I'm kind of starting
+	 * over now that we should be able to eliminate some of the AJAX and begin
+	 * repurposing how we want everything to work. As well, we want to eliminate
+	 * any references to advanced vs. legacy caching modes. This class should
+	 * allow us to completely ONLY use the neo-advanced method.
+	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
 	 * @todo   Move all calls to cache rebuild methods into this method. This
 	 *         will become the one and only method that is used to rebuild this
