@@ -24,7 +24,7 @@ class SWP_Script {
 	 */
     public function __construct() {
 		$this->add_hooks();
-		$this->fix_litespeed_compatability();
+		$this->fix_litespeed_compatibility();
     }
 
 
@@ -231,7 +231,7 @@ class SWP_Script {
         endif;
 	}
 
-	
+
     /**
      * Create a nonce for added security
      *
