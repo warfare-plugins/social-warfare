@@ -13,10 +13,10 @@
  * @package   SocialWarfare\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     3.0.0 | 19 FEB 2018 | Created
+ * @since     3.0.0  | 19 FEB 2018 | Created
+ * @since     3.0.10 | 20 JUN 2018 | Added instantiate_frontend_classes()
  *
  */
-
 class Social_Warfare {
 
 
@@ -26,23 +26,38 @@ class Social_Warfare {
 	 * This method will load all of the classes using the "require_once" command.
 	 * It will then instantiate them all one by one.
 	 *
-	 * @since  3.0.0
+	 * @since  3.0.0  | 19 FEB 2018 | Created
+	 * @since  3.0.10 | 20 JUN 2018 | Added instantiate_frontend_classes()
 	 * @param  none
 	 * @return none
 	 * @access public
 	 *
 	 */
 	public function __construct() {
+
+		// Block these classes from being loaded again if a child class attempts
+		// to run the parent::__construct() method.
         if ( get_class($this) === 'Social_Warfare' ) {
+
+			// Loads the files for each class.
             $this->load_classes();
+
+			// Instantiate all the core classes
             $this->instantiate_classes();
 
+			// Instantiate the admin-only classes.
             if( true === is_admin() ) {
                 $this->instantiate_admin_classes();
             }
+
+			// Instantiate the frontend-only classes.
+			if( false === is_admin() ) {
+				$this->instantiate_frontend_classes();
+			}
+
         }
 
-        $this->core_version = '3.0.0';
+        $this->core_version = SWP_VERSION;
 	}
 
 
@@ -171,20 +186,32 @@ class Social_Warfare {
          */
         $SWP_Options_Page = new SWP_Options_Page();
 
-
-		/**
-         * The Post Cache Loader Class
-         *
-         * Instantiates a global object that will manage and load cached data
-         * for each individual post on a site allowing access to cached data like
-         * share counts, for example.
-         *
-         */
-        global $SWP_Post_Caches;
-        $SWP_Post_Caches = new SWP_Post_Cache_Loader();
-
 	}
 
+
+	/**
+	 * This method will load up all of the frontend-only classes.
+	 *
+	 * @since  3.0.10 | 20 JUNE 2018 | Created
+	 * @param  none
+	 * @return none
+	 * @access private
+	 */
+	private function instatiate_frontend_classes() {
+
+
+		/**
+		 * The Post Cache Loader Class
+		 *
+		 * Instantiates a global object that will manage and load cached data
+		 * for each individual post on a site allowing access to cached data like
+		 * share counts, for example.
+		 *
+		 */
+		global $SWP_Post_Caches;
+		$SWP_Post_Caches = new SWP_Post_Cache_Loader();
+
+	}
 
 	/**
 	 * This method will load up all of the admin-only classes.
