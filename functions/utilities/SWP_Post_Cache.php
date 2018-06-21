@@ -59,6 +59,19 @@ class SWP_Post_Cache {
 	public $id;
 
 
+	/**
+	 * Permalinks
+	 *
+	 * This variable contains an array of permalinks to be checked for share
+	 * counts during the share count update process.
+	 *
+	 * @see $this->establish_permalinks();
+	 * @var array
+	 *
+	 */
+	protected $permalinks = array();
+
+
     public $share_data = array();
     protected $old_shares = array();
     protected $api_links = array();
@@ -82,7 +95,7 @@ class SWP_Post_Cache {
 		$this->establish_post_data( $post_id );
 
 		// If the cache is expired, trigger the rebuild processes.
-        if ( false === $this->is_cache_fresh() ):
+        if ( true === $this->is_cache_fresh() ):
 			$this->rebuild_cached_data();
 		endif;
 
@@ -161,7 +174,7 @@ class SWP_Post_Cache {
 		}
 
  		// Check if the cache is older than is allowable for this post.
- 		if( $this->get_cache_age() >= $this->get_freshness() ):
+ 		if( $this->get_cache_age() >= $this->get_allowable_age() ):
  			return false;
  		endif;
 
@@ -208,7 +221,7 @@ class SWP_Post_Cache {
  	 * @return integer The duration in hours that applies to this cache.
  	 *
  	 */
- 	public function get_freshness() {
+ 	public function get_allowable_age() {
 
  		// Integer in hours of the current age of the post.
  		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
@@ -282,34 +295,6 @@ class SWP_Post_Cache {
 		add_action( 'save_post', array( $this, 'rebuild_cached_data' ) );
 		add_action( 'publish_post', array( $this, 'rebuild_cached_data' ) );
 	}
-
-
-    /**
-     * Get either the cached or updated post meta.
-     *
-     * @return mixed $meta An array of post_meta, or void if not found.
-     *
-     */
-    public function get_post_meta() {
-        if ( $this->is_cache_fresh() ) :
-            return get_post_meta( $this->id );
-        endif;
-
-        //* Cache is not fresh. Do the requests.
-        $data = do_requests();
-
-        if ( !$data ) {
-          //* Output the ajax JS.
-          return;
-        }
-
-        $meta = cleanup_data($data);
-
-        update_post_meta( $this->id, $meta );
-        $this->post->post_meta = $meta;
-
-        return $meta;
-    }
 
 
     /**
@@ -388,8 +373,10 @@ class SWP_Post_Cache {
      * Resets the cache timestamp to the current time in hours since Unix epoch.
      *
      * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected Nothing outside this class should manage this data.
+     * @access protected
+     * @param  void
      * @return void
+     *
      */
     public function reset_timestamp() {
         delete_post_meta( $this->id, 'swp_cache_timestamp' );
@@ -421,14 +408,36 @@ class SWP_Post_Cache {
      * The flow of logic should look something like this:
      * establish_permalinks();                    $this->permalinks;
      * establish_api_request_urls();              $this->api_urls;
-     * fetch_responses_from_apis();               $this->raw_api_responses;
-     * parse_responses_from_apis();               $this->parsed_api_responses;
-     * calculate_api_responses();                 $this->share_counts;
-     * cache_share_counts();
+     * fetch_api_responses();                     $this->raw_api_responses;
+     * parse_api_responses();                     $this->parsed_api_responses;
+     * calculate_network_shares();                $this->share_counts;
+     * calculate_total_shares();                  $this->share_counts;
+     * cache_share_counts();                      Stored in DB post meta.
+     *
+     * @since  3.0.10 | 21 JUN 2018 | Created
+     * @access protected
+     * @param  void
+     * @return void
      *
      */
-    protected function rebuild_share_data() {
+    protected function rebuild_share_counts() {
+
+		// Pull in necessary globals.
         global $swp_social_networks, $swp_user_options;
+
+		/**
+		 * Required flow of Logic
+		 *
+		 * @todo Uncomment these methods as they are created.
+		 *
+		 */
+		$this->establish_permalinks();
+		// $this->establish_api_request_urls();
+		// $this->fetch_api_responses();
+		// $this->parse_api_responses();
+		// $this->calculate_network_shares();
+		// $this->calculate_total_shares();
+		// $this->cache_share_counts();
 
         foreach ($this->permalinks as $link ) {
             $unprocessed_share_data = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
@@ -451,6 +460,22 @@ class SWP_Post_Cache {
     }
 
 
+	/**
+	 * Establish the Permalinks to be checked for shares.
+	 *
+	 * The word Permalink here specifically refers to URL's of blog posts which
+	 * we want to fetch share counts for. We want a system that allows us to
+	 * create permalinks for the primary permalink, the share recovery permalink,
+	 * allow a filter for programatic adding of others, and so on.
+	 *
+	 * The processed results will be stored in $this->permalinks.
+	 *
+	 * @since  3.0.10 | 21 JUN 2018 | Created
+	 * @access private
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	private function establish_permalinks() {
 
         global $swp_social_networks;
@@ -522,8 +547,14 @@ class SWP_Post_Cache {
 	/**
 	 * Process the existing share data, or update it.
 	 *
+	 * @todo Remove all fresh_cache() checks. This method needs to assume the
+	 * cache is always fresh and always return cached data.
+	 *
 	 * @since 3.0.10 | 21 JUN 2018 | Created the method.
+	 * @access protected
+	 * @param  void
 	 * @return void
+	 * 
 	 */
 	protected function establish_share_data() {
 		global $swp_social_networks;
