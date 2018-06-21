@@ -42,10 +42,10 @@ class SWP_Post_Cache {
 	 */
 	public $id;
 
-    public $old_shares = array();
-    public $api_links = array();
-    public $share_data = array();
 
+    public $share_data = array();
+    protected $old_shares = array();
+    protected $api_links = array();
 
 	/**
 	 * The Magic Construct Method
@@ -69,6 +69,8 @@ class SWP_Post_Cache {
         if ( false === $this->is_cache_fresh() ):
 			$this->rebuild_cached_data();
 		endif;
+
+        $this->establish_share_data();
 
 		// This may not work here and may need moved to the loader class.
         //* It can not go in the loader class because the post id needs
@@ -95,7 +97,7 @@ class SWP_Post_Cache {
 	 *
 	 */
 	protected function rebuild_cached_data() {
-        $this->rebuild_shares();
+        $this->rebuild_share_data();
         $this->rebuild_pin_image();
         $this->rebuild_og_image();
         $this->reset_timestamp();
@@ -451,23 +453,24 @@ class SWP_Post_Cache {
     /**
      * Process the existing share data, or update it.
      *
-     *
+     * @since 3.0.10 | 21 JUN 2018 | Created the method.
+     * @return void
      */
-    public function establish_shares() {
+    protected function establish_share_data() {
         global $swp_social_networks;
 
-        foreach( $swp_social_networks as $network ) {
+        foreach( $swp_social_networks as $network => $network_object ) {
             if ( !isset( $swp_social_networks[$network] ) ) :
                 continue;
             endif;
 
-            $this->fresh_cache ? $this->set_cached_shares( $network ) : $this->prepare_network( $network );
+            $this->is_cache_fresh() ? $this->establish_cached_shares( $network ) : $this->prepare_network( $network );
         }
 
-        $this->fresh_cache ? $this->set_total_shares() : $this->rebuild_shares();
+        $this->is_cache_fresh() ? $this->establish_total_shares() : $this->rebuild_share_data();
     }
 
-    protected function set_total_shares() {
+    protected function establish_total_shares() {
         if ( get_post_meta( $this->id, '_total_shares', true ) ) :
             $this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
         else :
@@ -475,7 +478,7 @@ class SWP_Post_Cache {
         endif;
     }
 
-    protected function set_cached_shares( $network ) {
+    protected function establish_cached_shares( $network ) {
         $this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
     }
 
@@ -485,10 +488,16 @@ class SWP_Post_Cache {
      *
      *
      */
-    protected function rebuild_shares() {
+    protected function rebuild_share_data() {
         global $swp_social_networks, $swp_user_options;
 
-        $raw_shares = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
+        foreach ($this->permalinks as $link ) {
+            $raw_shares = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
+
+            foreach( $swp_social_networks as $network => $network_object ) {
+                $this->share_data[$network] += $raw_shares[$network];
+            }
+        }
 
         if ( true == $swp_user_options['recover_shares'] ) :
             $recovered_shares = array();
@@ -497,16 +506,8 @@ class SWP_Post_Cache {
             $recovered_shares[$network] = $swp_social_networks[$network]->parse_api_response( $old_raw_shares[$network] );
         endif;
 
-        foreach( $networks as $network ) {
-            $this->share_data[$network] = $swp_social_networks[$network]->parse_api_response($raw_shares[$network]);
-
-            if ( true == $swp_user_options['recover_shares'] &&  $this->share_data[$network] != $recovered_shares[$network] ) {
-                $this->share_data[$network] = $this->share_data[$network] + $recovered_shares[$network];
-            }
-
-            if ( $this->share_data[$network] < $this->old_shares[$network] && false === _swp_is_debug('force_new_shares') ) :
-                $this->share_data[$network] = $this->old_shares[$network];
-            endif;
+        foreach( $swp_social_networks as $network => $network_object ) {
+            $this->share_data[$network] = $network_object->parse_api_response($raw_shares[$network]);
 
             //* TODO We do want to update post meta for network_shares, right?
             //* Previously this was in a chain of conditionals
@@ -515,6 +516,20 @@ class SWP_Post_Cache {
                 update_post_meta( $this->id, '_' . $network . '_shares', $this->share_data[$network] );
                 $this->share_data['total_shares'] += $this->share_data[$network];
             endif;
+        }
+
+
+    }
+
+    protected function update_data() {
+        global $swp_social_networks;
+
+        foreach ( $swp_social_networks as $network => $network_object ) {
+            $this->share_data[$network] = $this->share_data[$network];
+
+            if ( isset( $this->recovered_share_data[$network] ) && false == _swp_is_debug( 'force_new_shares' ) ) {
+                $this->share_data[$network] += $this->recovered_share_data[$network];
+            }
         }
 
         delete_post_meta( $this->id, '_total_shares' );
