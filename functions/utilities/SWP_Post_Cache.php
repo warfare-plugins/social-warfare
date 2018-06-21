@@ -13,6 +13,12 @@
  * of functions only once per page load, and then the cache will once again be
  * fresh for a few hours before we need to do it again.
  *
+ * This class contains four major sections of methods:
+ *     1. Set up the cache object and necessary properties.
+ *     2. Check if the cache is fresh or not.
+ *     3. Update the cached data when the cache is expired.
+ *     4. Allow a publicly accessable method for fetching cached counts.
+ *
  * @package   SocialWarfare\Functions\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
@@ -21,6 +27,16 @@
  *
  */
 class SWP_Post_Cache {
+
+
+	/**
+	 * SECTION #1: SETTING UP THE CACHE OBJECT
+	 *
+	 * The methods in this section are used to set up the cache object by
+	 * initializing the object, setting up local properties, and pulling in the
+	 * global $post object that will be used throughout the class.
+	 *
+	 */
 
 
 	/**
@@ -72,12 +88,151 @@ class SWP_Post_Cache {
 
         $this->establish_share_data();
 
-		// This may not work here and may need moved to the loader class.
-        //* It can not go in the loader class because the post id needs
-        //* to be available as a local property.
+		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
 
     }
+
+
+	/**
+	 * Establish the Post Data
+	 *
+	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @param  integer $post_id The post id.
+	 * @return void    All processed data are stored in local properties.
+	 *
+	 */
+	protected function establish_post_data( $post_id ) {
+
+		// Retrieve the global post object.
+		global $post;
+
+		// If there is a glitch, use get_post() to fix it.
+        if ( !is_object( $post ) || $post->ID != $post_id ) {
+            $post = get_post( $post_id );
+        }
+
+        $this->id = $post_id;
+        $this->post = $post;
+	}
+
+
+	/**
+	 * SECTION #2: CHECKING IF THE CACHE IS FRESH
+	 *
+	 * The methods in this section are used to determine whether or not the
+	 * cached data needs to be rebuilt or not.
+	 *
+	 */
+
+
+	/**
+	* Determines if the data has recently been updated.
+	*
+	* This is the determining method to decide if a cache is fresh or if it
+	* needs to be rebuilt.
+	*
+	* @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+	* @access protected
+	* @param  void
+	* @return boolean True if fresh, false if expired and needs rebuilt.
+	*
+	*/
+	protected function is_cache_fresh() {
+
+		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
+		 	return true;
+	 	endif;
+
+		// Always be true if we're not a single post.
+		if ( !is_singular() ) :
+			return true;
+		endif;
+
+		// If a URL parameter is specifically telling it to rebuild.
+		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+			return false;
+		}
+
+		// If a POST request (AJAX) is specifically telling it to rebuild.
+		if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
+			return false;
+		}
+
+ 		// Check if the cache is older than is allowable for this post.
+ 		if( $this->get_cache_age() >= $this->get_freshness() ):
+ 			return false;
+ 		endif;
+
+ 		return true;
+
+     }
+
+
+     /**
+      * Determines how recently, in hours, the cache has been updated.
+      *
+      * @since  3.0.10 | 19 JUN 2018 | Created the method.
+      * @todo   Review
+      * @param  void
+      * @return int  The current age of the cache in hours.
+      *
+      */
+     protected function get_cache_age() {
+
+         // An integer in hours. Example: 424814 == Number of hourse since Unix epoch.
+     	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
+
+         // The integer in hours at time of storage since the Unix epoch.
+     	$last_checked_time = get_post_meta( $post_id, 'swp_cache_timestamp', true );
+
+ 		// How many hours has it been since the cache was rebuilt?
+     	$age = $current_time - $last_checked_time;
+
+     	return $age;
+    }
+
+
+ 	/**
+ 	 * Get the duration during which this cache can be considered fresh.
+ 	 *
+ 	 * A cache is fresh for the following durations:
+ 	 *     1 Hour   - New Posts less than 21 days old.
+ 	 *     4 Hours  - Medium Posts less than 60 days old.
+ 	 *     12 Hours - Old Posts Older than 60 days old.
+ 	 *
+ 	 * @since  3.0.10 | 20 JUN 2018 | Created
+ 	 * @todo   Review
+ 	 * @param  void
+ 	 * @return integer The duration in hours that applies to this cache.
+ 	 *
+ 	 */
+ 	public function get_freshness() {
+
+ 		// Integer in hours of the current age of the post.
+ 		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
+
+ 		// If it's less than 21 days old.
+ 		if ( $post_age < ( 21 * 86400 ) ) {
+ 			return 1;
+
+ 		// If it's less than 60 days old.
+ 		} elseif ( $post_age < ( 60 * 86400 ) ) {
+ 			return 4;
+ 		}
+
+ 		// If it's really old.
+ 		return 12;
+ 	}
+
+
+	/**
+	 * SECTION #3: REBUILDING THE CACHED DATA
+	 *
+	 * The methods in this section are used to rebuild all of the cached data.
+	 *
+	 */
 
 
 	/**
@@ -118,140 +273,16 @@ class SWP_Post_Cache {
 
 
 	/**
-	 * Establish the Post Data
-	 *
-	 *
-	 *
-	 * @since  3.0.10 | 20 JUN 2018 | Created
-	 * @param  integer $post_id The post id.
-	 * @return void    All processed data are stored in local properties.
-	 *
-	 */
-	protected function establish_post_data( $post_id ) {
-
-		// Retrieve the global post object.
-		global $post;
-
-		// If there is a glitch, use get_post() to fix it.
-        if ( !is_object( $post ) || $post->ID != $post_id ) {
-            $post = get_post( $post_id );
-        }
-
-        $this->id = $post_id;
-        $this->post = $post;
-	}
-
-
-    /**
-     * Determines if the data has recently been updated.
-     *
-     * This is the determining method to decide if a cache is fresh or if it
-     * needs to be rebuilt.
-     *
-     * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected
-     * @param  void
-     * @return boolean True if fresh, false if expired and needs rebuilt.
-     *
-     */
-    protected function is_cache_fresh() {
-
-    	// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
-    	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
-        	return true;
-        endif;
-
-		// Always be true if we're not a single post.
-    	if ( !is_singular() ) :
-    		return true;
-    	endif;
-
-		// If a URL parameter is specifically telling it to rebuild.
-		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-			return false;
-		}
-
-		// If a POST request (AJAX) is specifically telling it to rebuild.
-    	if( isset( $_POST['swp_cache'] ) && 'rebuild' === $_POST['swp_cache'] ) {
-    		return false;
-    	}
-
-		if( $this->get_cache_age() >= $this->get_freshness() ):
-			return false;
-		endif;
-
-		return true;
-
-    }
-
-
-    /**
-     * Determines how recently, in hours, the cache has been updated.
-     *
-     * @since  3.0.10 | 19 JUN 2018 | Created the method.
-     * @todo   Review
-     * @param  void
-     * @return int  The current age of the cache in hours.
-     *
-     */
-    protected function get_cache_age() {
-
-        // An integer in hours. Example: 424814 == Number of hourse since Unix epoch.
-    	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
-
-        // The integer in hours at time of storage since the Unix epoch.
-    	$last_checked_time = get_post_meta( $post_id, 'swp_cache_timestamp', true );
-
-		// How many hours has it been since the cache was rebuilt?
-    	$age = $current_time - $last_checked_time;
-
-    	return $age;
-    }
-
-
-	/**
-	 * Get the duration during which this cache can be considered fresh.
-	 *
-	 * A cache is fresh for the following durations:
-	 *     1 Hour   - New Posts less than 21 days old.
-	 *     4 Hours  - Medium Posts less than 60 days old.
-	 *     12 Hours - Old Posts Older than 60 days old.
-	 *
-	 * @since  3.0.10 | 20 JUN 2018 | Created
-	 * @todo   Review
-	 * @param  void
-	 * @return integer The duration in hours that applies to this cache.
-	 *
-	 */
-	public function get_freshness() {
-
-		// Integer in hours of the current age of the post.
-		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
-
-		// If it's less than 21 days old.
-		if ( $post_age < ( 21 * 86400 ) ) {
-			return 1;
-
-		// If it's less than 60 days old.
-		} elseif ( $post_age < ( 60 * 86400 ) ) {
-			return 4;
-		}
-
-		// If it's really old.
-		return 12;
-	}
-
-
-    /**
      * Sets the cache to rebuild itself when a user creates or updates a post.
      *
-     * @since 3.0.10 | 21 JUN 2018 | Created the method.
+     * @since  3.0.10 | 21 JUN 2018 | Created the method.
+     * @param  void
      * @return void
      *
      */
 	protected function init_publish_hooks() {
-		add_action( 'save_post', array( $this, 'rebuild_cache' ) );
-		add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
+		add_action( 'save_post', array( $this, 'rebuild_cached_data' ) );
+		add_action( 'publish_post', array( $this, 'rebuild_cached_data' ) );
 	}
 
 
