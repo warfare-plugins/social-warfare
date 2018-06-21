@@ -50,16 +50,12 @@ class SWP_Post_Cache {
 	/**
 	 * The Magic Construct Method
 	 *
-	 * The only thing this method should do is 1.) instantiate the object
-	 * making the public methods available for use by the plugin, and 2.) it
-	 * should determine if the cache is fresh, and if not, trigger an
+	 * This method 1.) instantiates the object
+	 * making the public methods available for use by the plugin, and
+     * 2.) Determine if the cache is fresh, and if not, trigger an
 	 * asyncronous request to rebuild the cached data.
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
-	 * @todo   Review this class. While not all of the methods realy map all the
-	 *         way out just yet, this is essentially the flow of logic that I'm
-	 *         looking for in the constructor. All it does is establish the post
-	 *         data and then rebuild the cache if necessary.
 	 * @param  integer $post_id The ID of the post
 	 * @return void
 	 *
@@ -67,11 +63,11 @@ class SWP_Post_Cache {
     public function __construct( $post_id ) {
 
 		// Set up the post data into local properties.
-		establish_post_data( $post_id );
+		$this->establish_post_data( $post_id );
 
 		// If the cache is expired, trigger the rebuild processes.
         if ( false === $this->is_cache_fresh() ):
-			rebuild_cached_data();
+			$this->rebuild_cached_data();
 		endif;
 
 		// This may not work here and may need moved to the loader class.
@@ -88,12 +84,6 @@ class SWP_Post_Cache {
 	 * other methods and run the action filter to allow third-party functions
 	 * to run during the cache rebuild process.
 	 *
-	 * I know there's another method for this already, but I'm kind of starting
-	 * over now that we should be able to eliminate some of the AJAX and begin
-	 * repurposing how we want everything to work. As well, we want to eliminate
-	 * any references to advanced vs. legacy caching modes. This class should
-	 * allow us to completely ONLY use the neo-advanced method.
-	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
 	 * @todo   Move all calls to cache rebuild methods into this method. This
 	 *         will become the one and only method that is used to rebuild this
@@ -103,8 +93,19 @@ class SWP_Post_Cache {
 	 *
 	 */
 	protected function rebuild_cached_data() {
+        $this->rebuild_shares();
+        $this->rebuild_pin_image();
+        $this->rebuild_og_image();
+        $this->reset_timestamp();
 
-		$this->init_cache_update_hooks();
+        //* @note: I removed init_cache_update_hooks and just copied its
+        //*        contents here sine there was no logic involved.
+
+        //* If we can find a way to spoof IP addresses, we can also remove the
+        //* Facebook ajax methods.
+        add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+        add_action( 'wp_footer', array( $this, 'print_ajax_script' ) );
 
 		// A hook to run allowing third-party functions to run.
 		do_action('swp_cache_rebuild');
@@ -118,11 +119,6 @@ class SWP_Post_Cache {
 	 *
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
-	 * @todo   Review this method. The constructor was becoming cluttered with
-	 *         logic ensuring that the post data was being set properly, so I
-	 *         broke this into it's own method to simplify everything and improve
-	 *         readability. After simplifying, it's much smaller now, but I still
-	 *         like having it as it's own little method.
 	 * @param  integer $post_id The post id.
 	 * @return void             All processed data are stored in local properties.
 	 *
@@ -263,21 +259,6 @@ class SWP_Post_Cache {
 
 
 
-	/**
-	 * Reaches into WordPress to interfere with data.
-	 *
-	 * @since  3.0.10 | 19 JUN 2018 | Ported from procedural code to method.
-	 * @access protected This should only ever be called by the constructor.
-	 * @return void
-	 */
-	protected function init_cache_update_hooks() {
-		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-
-		if ( !$this->fresh_cache ) {
-			add_action('wp_footer', array( $this, 'print_ajax_script' ) );
-		}
-	}
 
 	protected function init_post_publish_hooks() {
 		add_action( 'save_post', array( $this, 'rebuild_cache' ) );
@@ -354,25 +335,6 @@ class SWP_Post_Cache {
         </script>
 		<?php
     }
-
-    public function rebuild_cache() {
-        $this->rebuild = true;
-
-        $shares = get_social_warfare_shares( $this->id );
-
-        //* TODO What is $value, the network object? We can have better names.
-        foreach($shares as $network => $value ) {
-            SWP_URL_Management::process_url( get_permalink( $this->id ), $network, $this->id );
-        }
-
-        $this->rebuild_pin_image();
-        $this->rebuild_og_image();
-        $this->reset_timestamp();
-
-        wp_send_json( $shares );
-        wp_die();
-    }
-
 
     /**
      * Pinterest Image
@@ -514,7 +476,7 @@ class SWP_Post_Cache {
             $this->fresh_cache ? $this->set_cached_shares( $network ) : $this->prepare_network( $network );
         }
 
-        $this->fresh_cache ? $this->set_total_shares() : $this->update_networks();
+        $this->fresh_cache ? $this->set_total_shares() : $this->rebuild_shares();
     }
 
     protected function set_total_shares() {
@@ -535,7 +497,7 @@ class SWP_Post_Cache {
      *
      *
      */
-    protected function update_networks() {
+    protected function rebuild_shares() {
         global $swp_social_networks, $swp_user_options;
 
         $raw_shares = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
