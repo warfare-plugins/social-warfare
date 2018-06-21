@@ -71,7 +71,9 @@ class SWP_Post_Cache {
 		endif;
 
 		// This may not work here and may need moved to the loader class.
-        $this->init_post_publish_hooks();
+        //* It can not go in the loader class because the post id needs
+        //* to be available as a local property.
+        $this->init_publish_hooks();
 
     }
 
@@ -120,7 +122,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
 	 * @param  integer $post_id The post id.
-	 * @return void             All processed data are stored in local properties.
+	 * @return void    All processed data are stored in local properties.
 	 *
 	 */
 	protected function establish_post_data( $post_id ) {
@@ -145,10 +147,6 @@ class SWP_Post_Cache {
      * needs to be rebuilt.
      *
      * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @todo   Review: Specifically look at how I broke the logic out into
-     *         get_cache_age() and get_freshness_duration() methods. I'm trying
-     *         really hard to keep all pieces of logic broken down into very
-     *         simple, bite-sized amounts that take care of very specific tasks.
      * @access protected
      * @param  void
      * @return boolean True if fresh, false if expired and needs rebuilt.
@@ -176,7 +174,7 @@ class SWP_Post_Cache {
     		return false;
     	}
 
-		if( get_cache_age() >= get_freshness_duration() ):
+		if( $this->get_cache_age() >= $this->get_freshness() ):
 			return false;
 		endif;
 
@@ -196,10 +194,10 @@ class SWP_Post_Cache {
      */
     protected function get_cache_age() {
 
-        // $time is a number in hours. Example: 424814 == Number of hourse since Unix epoch.
+        // An integer in hours. Example: 424814 == Number of hourse since Unix epoch.
     	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
 
-        // $last_checked is the number in hours (at time of storage) since the Unix epoch.
+        // The integer in hours at time of storage since the Unix epoch.
     	$last_checked_time = get_post_meta( $post_id, 'swp_cache_timestamp', true );
 
 		// How many hours has it been since the cache was rebuilt?
@@ -223,9 +221,9 @@ class SWP_Post_Cache {
 	 * @return integer The duration in hours that applies to this cache.
 	 *
 	 */
-	public function get_freshness_duration() {
+	public function get_freshness() {
 
-		// Current age of the post
+		// Integer in hours of the current age of the post.
 		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
 
 		// If it's less than 21 days old.
@@ -242,28 +240,18 @@ class SWP_Post_Cache {
 	}
 
 
-/*******************************************************************************
- *
- *
- * WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING!
- *
- * This is where I stopped refactoring for the day. This ends the requested
- * review sections. Delete this when you get to this point.
- *
- * For the methods below this, continue working on breaking things out into very
- * tiny, bite-sized pieces of straightforward logic in each method.
- *
- *
- ******************************************************************************/
-
-
-
-
-
-	protected function init_post_publish_hooks() {
+    /**
+     * Sets the cache to rebuild itself when a user creates or updates a post.
+     *
+     * @since 3.0.10 | 21 JUN 2018 | Created the method.
+     * @return void
+     *
+     */
+	protected function init_publish_hooks() {
 		add_action( 'save_post', array( $this, 'rebuild_cache' ) );
 		add_action( 'publish_post', array( $this, 'rebuild_cache' ) );
 	}
+
 
     /**
      * Get either the cached or updated post meta.
@@ -272,7 +260,7 @@ class SWP_Post_Cache {
      *
      */
     public function get_post_meta() {
-        if ( $this->fresh_cache ) :
+        if ( $this->is_cache_fresh() ) :
             return get_post_meta( $this->id );
         endif;
 
