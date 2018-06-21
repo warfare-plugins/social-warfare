@@ -252,13 +252,11 @@ class SWP_Post_Cache {
 	 *
 	 */
 	protected function rebuild_cached_data() {
-        $this->rebuild_share_data();
-        $this->rebuild_pin_image();
-        $this->rebuild_og_image();
-        $this->reset_timestamp();
 
-        //* @note: I removed init_cache_update_hooks and just copied its
-        //*        contents here sine there was no logic involved.
+        $this->rebuild_share_counts();
+        $this->rebuild_pinterest_image();
+        $this->rebuild_open_graph_image();
+        $this->reset_timestamp();
 
         //* If we can find a way to spoof IP addresses, we can also remove the
         //* Facebook ajax methods.
@@ -313,7 +311,247 @@ class SWP_Post_Cache {
         return $meta;
     }
 
-    public function print_ajax_script() {
+
+    /**
+     * Pinterest Image
+     *
+     * Convert the pinterest image ID to a URL and store it in a meta field
+     * because then the URL will be autoloaded with the post preventing the
+     * need for an additional database query during page loads.
+     *
+     * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @access protected
+     * @param  void
+     * @return void
+     *
+     */
+    public function rebuild_pinterest_image() {
+
+        // Check if a custom pinterest image has been declared
+    	$pin_image_id = get_post_meta( $this->id , 'swp_pinterest_image' , true );
+
+    	if ( false !== $pin_image_id ) :
+    		$pin_image_url = wp_get_attachment_url( $pin_image_id );
+    		$cur_image_url = get_post_meta( $this->id , 'swp_pinterest_image_url' , true );
+
+    		// No need to update the database if the image URL has not changed
+    		if($pin_image_url !== $cur_image_url):
+    			delete_post_meta( $this->id,'swp_pinterest_image_url' );
+    			update_post_meta( $this->id,'swp_pinterest_image_url' , $pin_image_url );
+    		endif;
+
+    	else:
+    		delete_post_meta( $this->id , 'swp_pinterest_image_url' );
+    	endif;
+    }
+
+
+    /**
+     * Open Graph Image
+     *
+     * Convert the open graph image ID to a URL and store it in a meta field
+     * because then the URL will be autoloaded with the post preventing the
+     * need for an additional database query during page loads.
+     *
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @access protected
+     * @param  void
+     * @return void
+     *
+     */
+    public function rebuild_open_graph_image() {
+        $image_id = get_post_meta( $this->id , 'swp_og_image' , true );
+
+        if ( $image_id ):
+
+            $cur_image_url = get_post_meta( $this->id , 'swp_open_graph_image_url' , true );
+            $new_image_url = wp_get_attachment_url( $image_id );
+
+            // No need to update the DB if the url hasn't changed
+            if( $cur_image_url !== $new_image_url ):
+
+                $image_data = wp_get_attachment_image_src( $image_id , 'full' );
+                delete_post_meta( $this->id , 'swp_open_graph_image_data' );
+                update_post_meta( $this->id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+
+                delete_post_meta( $this->id,'swp_open_graph_image_url' );
+                update_post_meta( $this->id,'swp_open_graph_image_url' , $new_image_url );
+
+            endif;
+        else:
+            delete_post_meta( $this->id,'swp_open_graph_image_url' );
+        endif;
+    }
+
+
+    /**
+     * Resets the cache timestamp to the current time in hours since Unix epoch.
+     *
+     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @access protected Nothing outside this class should manage this data.
+     * @return void
+     */
+    public function reset_timestamp() {
+        delete_post_meta( $this->id, 'swp_cache_timestamp' );
+    	update_post_meta( $this->id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+    }
+
+
+	/**
+	 * Removes the timestamp on certain hooks like when a post is updated.
+	 *
+	 * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function delete_timestamp() {
+		delete_post_meta( $this->id, 'swp_cache_timestamp' );
+	}
+
+
+    /**
+     * Finishes processing the share data after the network links have been set up.
+     *
+     * Note: There should not be any calls to check if the cache is fresh in
+     * any of these methods. It should check once in the constructor. If any of
+     * these methods are called, then the cache is NOT fresh and can therefore
+     * skip any checks for it.
+     *
+     * The flow of logic should look something like this:
+     * establish_permalinks();                    $this->permalinks;
+     * establish_api_request_urls();              $this->api_urls;
+     * fetch_responses_from_apis();               $this->raw_api_responses;
+     * parse_responses_from_apis();               $this->parsed_api_responses;
+     * calculate_api_responses();                 $this->share_counts;
+     * cache_share_counts();
+     *
+     */
+    protected function rebuild_share_data() {
+        global $swp_social_networks, $swp_user_options;
+
+        foreach ($this->permalinks as $link ) {
+            $unprocessed_share_data = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
+
+            foreach( $swp_social_networks as $network => $network_object ) {
+                $share_count = $network_object->parse_api_response($unprocessed_share_data[$network]);
+                $this->share_data[$network] += $share_count;
+                $this->share_data['total_shares'] += $share_count;
+            }
+        }
+
+        //* This needs to be a separate loop so all of the share data can be summed.
+        foreach( $swp_social_networks as $network => $network_object ) {
+            delete_post_meta( $this->id, '_' . $network . '_shares' );
+            update_post_meta( $this->id, '_' . $network . '_shares', $this->share_data[$network] );
+        }
+
+        delete_post_meta( $this->id, '_total_shares' );
+        update_post_meta( $this->id, '_total_shares', $this->share_data['total_shares'] );
+    }
+
+
+	private function establish_permalinks() {
+
+        global $swp_social_networks;
+        $this->permalinks = array();
+
+        foreach( $swp_social_networks as $key => $object):
+            $this->permalinks[$key][] = get_the_permalink();
+            if( $share_recovery_in_the_options == 'blahblah' ):
+                $this->permalinks[$key][] = get_the_other_permalink_that_we_need_to_check_for();
+            endif;
+
+        endforeach;
+
+        $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
+
+    }
+
+
+    /**
+     *  Prepares the API link(s) and old share data for a network.
+     *
+     */
+    protected function prepare_network( $network ) {
+        global $swp_social_networks, $swp_user_options;
+
+        $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+
+        if ( $swp_user_options['recover_shares'] == true ) :
+            array_merge( $this->permalinks, apply_filters( 'swp_recovery_filter' ) );
+            $this->permalinks[] = SWP_Permalink::get_alt_permalink( $this->id );
+        endif;
+    }
+
+	public function facebook_shares_update() {
+		global $swp_user_options;
+
+		$post_id = $_POST['post_id'];
+		$activity = $_POST['share_counts'];
+
+		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
+
+		if ( $activity > $previous_activity || (isset($swp_user_options['force_new_shares']) && true === $swp_user_options['force_new_shares']) ) :
+			delete_post_meta( $post_id, '_facebook_shares' );
+			update_post_meta( $post_id, '_facebook_shares', $activity );
+		endif;
+
+		echo true;
+
+		wp_die();
+	}
+
+
+
+	/**
+	 * Gets the computed share data.
+	 *
+	 * @since  3.0.10 | 20 JUN 2018 | Created the method.
+	 * @return array $this->share_data if it exists, or an empty array.
+	 */
+	public function get_shares() {
+		if ( !empty( $this->share_data ) ) :
+			return $this->share_data;
+		endif;
+
+		return array();
+	}
+
+
+	/**
+	 * Process the existing share data, or update it.
+	 *
+	 * @since 3.0.10 | 21 JUN 2018 | Created the method.
+	 * @return void
+	 */
+	protected function establish_share_data() {
+		global $swp_social_networks;
+
+		foreach( $swp_social_networks as $network => $network_object ) {
+			if ( !isset( $swp_social_networks[$network] ) ) :
+				continue;
+			endif;
+
+			$this->is_cache_fresh() ? $this->establish_cached_shares( $network ) : $this->prepare_network( $network );
+		}
+
+		$this->is_cache_fresh() ? $this->establish_total_shares() : $this->rebuild_share_data();
+	}
+
+	protected function establish_total_shares() {
+		if ( get_post_meta( $this->id, '_total_shares', true ) ) :
+			$this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
+		else :
+			$this->share_data['total_shares'] = 0;
+		endif;
+	}
+
+	protected function establish_cached_shares( $network ) {
+		$this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
+	}
+
+	public function print_ajax_script() {
 		?>
         <script type="text/javascript">
         var ticker = 0;
@@ -357,205 +595,4 @@ class SWP_Post_Cache {
 		<?php
     }
 
-    /**
-     * Pinterest Image
-     *
-     * Convert the pinterest image ID to a URL and store it in a meta field
-     * because then the URL will be autoloaded with the post preventing the
-     * need for an additional database query during page loads.
-     *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected Nothing outside this class should manage this data.
-     * @return void
-     */
-    public function rebuild_pin_image() {
-        // Check if a custom pinterest image has been declared
-    	$pin_image_id = get_post_meta( $this->id , 'swp_pinterest_image' , true );
-
-    	if ( false !== $pin_image_id ) :
-    		$pin_image_url = wp_get_attachment_url( $pin_image_id );
-    		$cur_image_url = get_post_meta( $this->id , 'swp_pinterest_image_url' , true );
-
-    		// No need to update the database if the image URL has not changed
-    		if($pin_image_url !== $cur_image_url):
-    			delete_post_meta( $this->id,'swp_pinterest_image_url' );
-    			update_post_meta( $this->id,'swp_pinterest_image_url' , $pin_image_url );
-    		endif;
-
-    	else:
-    		delete_post_meta( $this->id , 'swp_pinterest_image_url' );
-    	endif;
-    }
-
-    /**
-     * Open Graph Image
-     *
-     * Convert the open graph image ID to a URL and store it in a meta field
-     * because then the URL will be autoloaded with the post preventing the
-     * need for an additional database query during page loads.
-     *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected Nothing outside this class should manage this data.
-     * @return void
-     */
-    public function rebuild_og_image() {
-        $image_id = get_post_meta( $this->id , 'swp_og_image' , true );
-
-        if ( $image_id ):
-
-            $cur_image_url = get_post_meta( $this->id , 'swp_open_graph_image_url' , true );
-            $new_image_url = wp_get_attachment_url( $image_id );
-
-            // No need to update the DB if the url hasn't changed
-            if( $cur_image_url !== $new_image_url ):
-
-                $image_data = wp_get_attachment_image_src( $image_id , 'full' );
-                delete_post_meta( $this->id , 'swp_open_graph_image_data' );
-                update_post_meta( $this->id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
-
-                delete_post_meta( $this->id,'swp_open_graph_image_url' );
-                update_post_meta( $this->id,'swp_open_graph_image_url' , $new_image_url );
-
-            endif;
-        else:
-            delete_post_meta( $this->id,'swp_open_graph_image_url' );
-        endif;
-    }
-
-
-    /**
-     * Resets the cache timestamp to the current time in hours since Unix epoch.
-     *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected Nothing outside this class should manage this data.
-     * @return void
-     */
-    public function reset_timestamp() {
-        delete_post_meta( $this->id, 'swp_cache_timestamp' );
-    	update_post_meta( $this->id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
-    }
-
-
-    public function facebook_shares_update() {
-        global $swp_user_options;
-
-        $post_id = $_POST['post_id'];
-    	$activity = $_POST['share_counts'];
-
-    	$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
-
-    	if ( $activity > $previous_activity || (isset($swp_user_options['force_new_shares']) && true === $swp_user_options['force_new_shares']) ) :
-    		delete_post_meta( $post_id, '_facebook_shares' );
-    		update_post_meta( $post_id, '_facebook_shares', $activity );
-    	endif;
-
-    	echo true;
-
-    	wp_die();
-    }
-
-
-    /**
-     * Removes the timestamp on certain hooks.
-     *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
-     * @return void
-     */
-    public function delete_timestamp() {
-        delete_post_meta( $this->id, 'swp_cache_timestamp' );
-    }
-
-
-    /**
-     * Gets the computed share data.
-     *
-     * @since  3.0.10 | 20 JUN 2018 | Created the method.
-     * @return array $this->share_data if it exists, or an empty array.
-     */
-    public function get_shares() {
-        if ( !empty( $this->share_data ) ) :
-            return $this->share_data;
-        endif;
-
-        return array();
-    }
-
-
-    /**
-     * Process the existing share data, or update it.
-     *
-     * @since 3.0.10 | 21 JUN 2018 | Created the method.
-     * @return void
-     */
-    protected function establish_share_data() {
-        global $swp_social_networks;
-
-        foreach( $swp_social_networks as $network => $network_object ) {
-            if ( !isset( $swp_social_networks[$network] ) ) :
-                continue;
-            endif;
-
-            $this->is_cache_fresh() ? $this->establish_cached_shares( $network ) : $this->prepare_network( $network );
-        }
-
-        $this->is_cache_fresh() ? $this->establish_total_shares() : $this->rebuild_share_data();
-    }
-
-    protected function establish_total_shares() {
-        if ( get_post_meta( $this->id, '_total_shares', true ) ) :
-            $this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
-        else :
-            $this->share_data['total_shares'] = 0;
-        endif;
-    }
-
-    protected function establish_cached_shares( $network ) {
-        $this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
-    }
-
-
-    /**
-     *  Finishes processing the share data after the network links have been set up.
-     *
-     *
-     *
-     */
-    protected function rebuild_share_data() {
-        global $swp_social_networks, $swp_user_options;
-
-        foreach ($this->permalinks as $link ) {
-            $unprocessed_share_data = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
-
-            foreach( $swp_social_networks as $network => $network_object ) {
-                $share_count = $network_object->parse_api_response($unprocessed_share_data[$network]);
-                $this->share_data[$network] += $share_count;
-                $this->share_data['total_shares'] += $share_count;
-            }
-        }
-
-        //* This needs to be a separate loop so all of the share data can be summed.
-        foreach( $swp_social_networks as $network => $network_object ) {
-            delete_post_meta( $this->id, '_' . $network . '_shares' );
-            update_post_meta( $this->id, '_' . $network . '_shares', $this->share_data[$network] );
-        }
-
-        delete_post_meta( $this->id, '_total_shares' );
-        update_post_meta( $this->id, '_total_shares', $this->share_data['total_shares'] );
-    }
-
-
-    /**
-     *  Prepares the API link(s) and old share data for a network.
-     *
-     */
-    protected function prepare_network( $network ) {
-        global $swp_social_networks, $swp_user_options;
-
-        $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( $url );
-
-        if ( $swp_user_options['recover_shares'] == true ) :
-            array_merge( $this->permalinks, apply_filters( 'swp_recovery_filter' ) );
-            $this->permalinks[] = SWP_Permalink::get_alt_permalink( $this->id );
-        endif;
-    }
 }
