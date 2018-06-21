@@ -28,39 +28,39 @@ class SWP_CURL {
 		// loop through $links and create curl handles
 		// then add them to the multi-handle
 		if( is_array( $links ) ):
-			foreach ( $links as $id => $d ) :
-				if ( $d !== 0 || $id == 'google_plus' ) :
-					$curly[ $id ] = curl_init();
+			foreach ( $links as $network => $link_data ) :
+				if ( $link_data !== 0 || $network == 'google_plus' ) :
+					$curly[ $network ] = curl_init();
 
-					if ( $id == 'google_plus' ) :
+					if ( $network == 'google_plus' ) :
 
-						curl_setopt( $curly[ $id ], CURLOPT_URL, 'https://clients6.google.com/rpc' );
-						curl_setopt( $curly[ $id ], CURLOPT_POST, true );
-						curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYPEER, false );
-						curl_setopt( $curly[ $id ], CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . rawurldecode( $d ) . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]' );
-						curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER, true );
-						curl_setopt( $curly[ $id ], CURLOPT_HTTPHEADER, array( 'Content-type: application/json' ) );
+						curl_setopt( $curly[ $network ], CURLOPT_URL, 'https://clients6.google.com/rpc' );
+						curl_setopt( $curly[ $network ], CURLOPT_POST, true );
+						curl_setopt( $curly[ $network ], CURLOPT_SSL_VERIFYPEER, false );
+						curl_setopt( $curly[ $network ], CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . rawurldecode( $link_data ) . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]' );
+						curl_setopt( $curly[ $network ], CURLOPT_RETURNTRANSFER, true );
+						curl_setopt( $curly[ $network ], CURLOPT_HTTPHEADER, array( 'Content-type: application/json' ) );
 
 					else :
 
-						$url = (is_array( $d ) && ! empty( $d['url'] )) ? $d['url'] : $d;
-						curl_setopt( $curly[ $id ], CURLOPT_URL,            $url );
-						curl_setopt( $curly[ $id ], CURLOPT_HEADER,         0 );
-						curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER, 1 );
-						curl_setopt( $curly[ $id ], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
-						curl_setopt( $curly[ $id ], CURLOPT_FAILONERROR, 0 );
-						curl_setopt( $curly[ $id ], CURLOPT_FOLLOWLOCATION, 0 );
-						curl_setopt( $curly[ $id ], CURLOPT_RETURNTRANSFER,1 );
-						curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYPEER, false );
-						curl_setopt( $curly[ $id ], CURLOPT_SSL_VERIFYHOST, false );
-						curl_setopt( $curly[ $id ], CURLOPT_TIMEOUT, 5 );
-						curl_setopt( $curly[ $id ], CURLOPT_CONNECTTIMEOUT, 5 );
-						curl_setopt( $curly[ $id ], CURLOPT_NOSIGNAL, 1 );
-						curl_setopt( $curly[ $id ], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
-						// curl_setopt($curly[$id], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
+						$url = (is_array( $link_data ) && ! empty( $link_data['url'] )) ? $link_data['url'] : $link_data;
+						curl_setopt( $curly[ $network ], CURLOPT_URL,            $url );
+						curl_setopt( $curly[ $network ], CURLOPT_HEADER,         0 );
+						curl_setopt( $curly[ $network ], CURLOPT_RETURNTRANSFER, 1 );
+						curl_setopt( $curly[ $network ], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
+						curl_setopt( $curly[ $network ], CURLOPT_FAILONERROR, 0 );
+						curl_setopt( $curly[ $network ], CURLOPT_FOLLOWLOCATION, 0 );
+						curl_setopt( $curly[ $network ], CURLOPT_RETURNTRANSFER,1 );
+						curl_setopt( $curly[ $network ], CURLOPT_SSL_VERIFYPEER, false );
+						curl_setopt( $curly[ $network ], CURLOPT_SSL_VERIFYHOST, false );
+						curl_setopt( $curly[ $network ], CURLOPT_TIMEOUT, 5 );
+						curl_setopt( $curly[ $network ], CURLOPT_CONNECTTIMEOUT, 5 );
+						curl_setopt( $curly[ $network ], CURLOPT_NOSIGNAL, 1 );
+						curl_setopt( $curly[ $network ], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+						// curl_setopt($curly[$network], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
 					endif;
 
-					curl_multi_add_handle( $mh, $curly[ $id ] );
+					curl_multi_add_handle( $mh, $curly[ $network ] );
 
 				endif;
 			endforeach;
@@ -73,9 +73,9 @@ class SWP_CURL {
 		} while ($running > 0);
 
 		  // get content and remove handles
-		foreach ( $curly as $id => $c ) {
-			$result[ $id ] = curl_multi_getcontent( $c );
-			curl_multi_remove_handle( $mh, $c );
+		foreach ( $curly as $network => $content ) {
+			$result[ $network ] = curl_multi_getcontent( $content );
+			curl_multi_remove_handle( $mh, $content );
 		}
 
 		curl_multi_close( $mh );
