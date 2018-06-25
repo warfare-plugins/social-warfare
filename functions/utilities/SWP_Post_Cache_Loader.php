@@ -29,6 +29,12 @@ class SWP_Post_Cache_Loader {
     */
     public $post_caches = array();
 
+	/**
+	 * @todo Register the admin-ajax handler below.
+	 */
+	public function __construct() {
+
+	}
 
 	/**
 	 * Gets the post_cache object for a specific post.
@@ -42,7 +48,7 @@ class SWP_Post_Cache_Loader {
 	 * @since  3.0.10 | 20 JUNE 2018 | Created
 	 * @param  integer $post_id The ID of the post being requested.
 	 * @return object           The post_cache object for the post.
-	 * 
+	 *
 	 */
     public function get_post_cache( $post_id ) {
 
@@ -51,6 +57,29 @@ class SWP_Post_Cache_Loader {
 		endif;
 
 		return $this->post_caches[$post_id];
+	}
+
+
+	/**
+	 * Rebuild the cached data for a post cache.
+	 *
+	 * Since this class is loaded glboally, it can be made available for use by
+	 * admin ajax calls. This method will intercept/recieve the admin-ajax
+	 * request, instantiate a post cache object, and then instruct that object
+	 * to rebuild the post cache data.
+	 *
+	 * @todo   Add the wp-die() or whatever command is needed to close a wp-ajax
+	 *         handler method.
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 */
+	public function rebuild_cached_data() {
+		if( isset( $_POST['post_id'] ) ):
+			$post_id = $_POST['post_id'];
+			$Post_Cache = new SWP_Post_Cache( $post_id );
+			$Post_Cache->rebuild_cached_data();
+		endif;
 	}
 
 }
