@@ -84,7 +84,6 @@ class SWP_Post_Cache_Loader {
 	 *
 	 */
 	public function rebuild_post_cache_data() {
-        die(var_dump($_POST['post_id']));
 		if( isset( $_POST['post_id'] ) ):
 			$Post_Cache = new SWP_Post_Cache( $_POST['post_id'] );
 			$Post_Cache->rebuild_cached_data();
