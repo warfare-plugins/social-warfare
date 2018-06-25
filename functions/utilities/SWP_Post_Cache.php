@@ -66,6 +66,7 @@ class SWP_Post_Cache {
      * 2.) Determine if the cache is fresh, and if not, trigger an
 	 * asyncronous request to rebuild the cached data.
 	 *
+	 * @todo   Can we eliminate all post data except for the post_id?
 	 * @since  3.0.10 | 20 JUN 2018 | Created
 	 * @param  integer $post_id The ID of the post
 	 * @return void
@@ -326,46 +327,6 @@ class SWP_Post_Cache {
 
 
     /**
-     * Finishes processing the share data after the network links have been set up.
-     *
-     * The flow of logic should look something like this:
-     * establish_permalinks();                    $this->permalinks;
-     * establish_api_request_urls();              $this->api_urls;
-     * fetch_api_responses();                     $this->raw_api_responses;
-     * parse_api_responses();                     $this->parsed_api_responses;
-     * calculate_network_shares();                $this->share_counts;
-     * calculate_total_shares();                  $this->share_counts['total_shares'];
-     * cache_share_counts();                      Stored in DB post meta.
-     *
-     * @since  3.0.10 | 21 JUN 2018 | Created
-     * @access protected
-     * @param  void
-     * @return void
-     *
-     */
-    protected function rebuild_share_counts() {
-        global $swp_social_networks, $swp_user_options;
-
-		/**
-		 * Required flow of Logic
-		 *
-		 * @todo Uncomment these methods as they are created.
-		 *
-		 */
-		$this->establish_permalinks();
-		$this->establish_api_request_urls();
-		$this->fetch_api_responses();
-		$this->parse_api_responses();
-		// $this->calculate_network_shares();
-		// $this->calculate_total_shares();
-		// $this->cache_share_counts();
-
-        // $background_request = new SWP_Background_cURL();
-        // $background_request->push_to_queue( $this->permalinks )->save()->dispatch();
-    }
-
-
-    /**
      * Pinterest Image
      *
      * Convert the pinterest image ID to a URL and store it in a meta field
@@ -466,6 +427,37 @@ class SWP_Post_Cache {
 
 
 	/**
+     * Finishes processing the share data after the network links have been set up.
+     *
+     * The flow of logic should look something like this:
+     * establish_permalinks();                    $this->permalinks;
+     * establish_api_request_urls();              $this->api_urls;
+     * fetch_api_responses();                     $this->raw_api_responses;
+     * parse_api_responses();                     $this->parsed_api_responses;
+     * calculate_network_shares();                $this->share_counts;
+     * calculate_total_shares();                  $this->share_counts['total_shares'];
+     * cache_share_counts();                      Stored in DB post meta.
+     *
+     * @since  3.0.10 | 21 JUN 2018 | Created
+     * @access protected
+     * @param  void
+     * @return void
+     *
+     */
+    protected function rebuild_share_counts() {
+        global $swp_social_networks, $swp_user_options;
+
+		$this->establish_permalinks();
+		$this->establish_api_request_urls();
+		$this->fetch_api_responses();
+		$this->parse_api_responses();
+		$this->calculate_network_shares();
+		$this->calculate_network_shares();
+		$this->cache_share_counts();
+    }
+
+
+	/**
 	 * Establish the Permalinks to be checked for shares.
 	 *
 	 * The word Permalink here specifically refers to URL's of blog posts which
@@ -542,8 +534,8 @@ class SWP_Post_Cache {
 	 *
 	 */
     private function fetch_api_responses() {
+		$current_request = 0;
         foreach ( $this->api_urls as $request => $networks ) {
-            $current_request = 0;
             $this->raw_api_responses[$current_request] = SWP_CURL::fetch_shares_via_curl_multi( $networks );
             $current_request++;
         }
@@ -565,15 +557,98 @@ class SWP_Post_Cache {
 	 */
     private function parse_api_responses() {
         global $swp_social_networks;
+        $this->parsed_api_responses = array();
 
         foreach( $this->raw_api_responses as $request => $responses ) {
             $current_request = 0;
 
             foreach ( $responses as $key => $response ) {
-                $this->parsed_api_responses[$current_request][$key] = $swp_social_networks[$key]->parse_api_response( $response );
+                $this->parsed_api_responses[$current_request][$key][] = $swp_social_networks[$key]->parse_api_response( $response );
                 $current_request++;
             }
         }
+    }
+
+
+	/**
+	 * Calculate the network shares.
+	 *
+	 * This method is used to calculate the shares for each network based on
+	 * what we have just retrieved from the API responses. Another method,
+	 * establish_share_data will be used to create this data from the cached
+	 * database data. This one is ONLY used when the cache is not fresh and the
+	 * data is being rebuilt.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @var    share_counts An array of share count numbers.
+	 * @param  void
+	 * @return void All data stored in local properties.
+	 *
+	 */
+    private function calculate_network_shares() {
+        global $swp_social_networks;
+
+        $share_counts = array();
+
+        foreach ( $this->parsed_api_responses as $request => $networks ) {
+            foreach ( $networks as $key => $count_array ) {
+                foreach ( $count_array as $count ) {
+                    if ( !isset( $share_counts[$key] ) ) {
+                        $share_counts[$key] = 0;
+                    }
+
+                    $share_counts[$key] += $count;
+                }
+
+            }
+        }
+
+        $this->share_counts = $share_counts;
+    }
+
+
+	/**
+	 * Update the meta fields with the new share counts.
+	 *
+	 * As per the inline docblock below, we only update if larger numbers are
+	 * recieved than the previous checks. This is because some networks, like
+	 * Pinterest are notorious for randomly resetting some counts all the way
+	 * back to zero. This will prevent a post with 10K shares from keeping the
+	 * zero response.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+    private function cache_share_counts() {
+        $this->share_counts['total_shares'] = 0;
+
+        foreach( $this->share_counts as $key => $count ) {
+            if ( 'total_shares' === $key ) {
+                continue;
+            }
+
+            $previous_count = get_post_meta( $this->id, "_${key}_shares", true);
+
+            if ( empty( $previous_count ) ) {
+                $previous_count = 0;
+            }
+
+			// We only update to newly fetched numbers if they're bigger than
+			// the old ones unless the url parameter is forcing it to take.
+            if ( $count <= $previous_count && false === _swp_is_debug( 'force_new_shares' ) ) {
+                $this->share_counts[$key] = $previous_count;
+            }
+
+ 			$this->share_counts['total_shares'] += $this->share_counts[$key];
+
+            delete_post_meta( $this->id, "_${key}_shares");
+            update_post_meta( $this->id, "_${key}_shares", $this->share_counts[$key] );
+        }
+
+        delete_post_meta( $this->id, '_total_shares');
+        update_post_meta( $this->id, '_total_shares', $this->share_counts['total_shares'] );
     }
 
 
