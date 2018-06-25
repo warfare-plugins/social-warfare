@@ -495,7 +495,7 @@ class SWP_Post_Cache {
             $this->permalinks[$key][] = get_permalink( $this->id );
 
             if( true === $swp_user_options['recover_shares'] ):
-                $this->permalinks[$key][] = $object->get_alt_permalink( $this->id );
+                $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->id );
             endif;
         endforeach;
 
@@ -504,12 +504,20 @@ class SWP_Post_Cache {
 
 
     /**
+     * Prepares outbound API links per network.
      *
-     *
-     *
+     * @since  3.0.10 | 25 JUN 2018 | Created the method.
+     * @var api_urls The array of outbound API request destinations.
+     * @return void
      */
     private function establish_api_request_urls() {
+        global $swp_social_networks;
 
+        foreach ( $this->permalinks as $network => $links ) {
+            foreach( $links as $url ) {
+                $this->api_urls[$network] = $swp_social_networks[$network]->get_api_link( $url );
+            }
+        }
     }
 
 
@@ -518,15 +526,16 @@ class SWP_Post_Cache {
      *
      */
     protected function prepare_network( $network ) {
-        global $swp_social_networks, $swp_user_options;
-
-        $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( get_permalink( $this->id ) );
-
-        if ( $swp_user_options['recover_shares'] == true ) :
-            $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
-            $this->permalinks[] = SWP_Permalink::get_alt_permalink( $this->id );
-        endif;
+        // global $swp_social_networks, $swp_user_options;
+        //
+        // $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( get_permalink( $this->id ) );
+        //
+        // if ( $swp_user_options['recover_shares'] == true ) :
+        //     $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
+        //     $this->permalinks[] = SWP_Permalink::get_alt_permalink( $this->id );
+        // endif;
     }
+
 
 	public function facebook_shares_update() {
 		global $swp_user_options;
@@ -545,7 +554,6 @@ class SWP_Post_Cache {
 
 		wp_die();
 	}
-
 
 
 	/**
@@ -587,6 +595,7 @@ class SWP_Post_Cache {
 		}
 	}
 
+
 	protected function establish_total_shares() {
 		if ( get_post_meta( $this->id, '_total_shares', true ) ) :
 			$this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
@@ -595,9 +604,11 @@ class SWP_Post_Cache {
 		endif;
 	}
 
+
 	protected function establish_cached_shares( $network ) {
 		$this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
 	}
+
 
 	public function print_ajax_script() {
 		?>
