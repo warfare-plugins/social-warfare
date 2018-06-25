@@ -73,25 +73,28 @@ class SWP_Post_Cache {
 	 *
 	 */
     public function __construct( $post_id ) {
+        global $swp_user_options;
+
 		// Set up the post data into local properties.
-		$this->establish_post_data( $post_id );
+		$this->id = $post_id;
+        $this->establish_share_counts();
 
 		// If the cache is expired, trigger the rebuild processes.
         if ( false === $this->is_cache_fresh() ):
-			// $this->trigger_cache_rebuild();
-		endif;
+            add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
 
-        $this->rebuild_cached_data();
-
-        //* TODO for now I'm focusing on just the rebuild functionality.
-        // $this->establish_share_counts();
+			if ( $swp_user_options['cache_method'] == 'legacy' ) :
+				$this->rebuild_cached_data();
+			else:
+				$this->trigger_cache_rebuild();
+            endif;
+        endif;
 
 		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
 
 		// Debugging
 		$this->debug();
-
     }
 
 
@@ -121,29 +124,6 @@ class SWP_Post_Cache {
 	protected function init_publish_hooks() {
 		add_action( 'save_post', array( $this, 'rebuild_cached_data' ) );
 		add_action( 'publish_post', array( $this, 'rebuild_cached_data' ) );
-	}
-
-
-	/**
-	 * Establish the Post Data
-	 *
-	 * @since  3.0.10 | 20 JUN 2018 | Created
-	 * @param  integer $post_id The post id.
-	 * @return void    All processed data is stored in local properties.
-	 *
-	 */
-	protected function establish_post_data( $post_id ) {
-
-		// Retrieve the global post object.
-		global $post;
-
-		// If there is a glitch, use get_post() to fix it.
-        if ( !is_object( $post ) || $post->ID != $post_id ) {
-            $post = get_post( $post_id );
-        }
-
-        $this->id = $post_id;
-        $this->post = $post;
 	}
 
 
@@ -280,7 +260,7 @@ class SWP_Post_Cache {
 	 * rebuild_cached_data() method below. This way the rebuilding of the cache
 	 * is conducted in an asyncronous, non-blocking fashion.
 	 *
-	 * @todo   Add the wp_remote_post to ping admin-ajax.php.
+	 * @TODO   Add the wp_remote_post to ping admin-ajax.php.
 	 * @since  3.0.10 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
@@ -318,7 +298,6 @@ class SWP_Post_Cache {
         //* Facebook ajax methods.
         add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-        add_action( 'wp_footer', array( $this, 'print_ajax_script' ) );
 
 		// A hook to run allowing third-party functions to run.
 		do_action('swp_cache_rebuild');
@@ -652,46 +631,13 @@ class SWP_Post_Cache {
     }
 
 
-    /**
-     *  Prepares the API link(s) and old share data for a network.
-     *  This is now deprecated, I think.TRUE DAT
-     */
-    protected function prepare_network( $network ) {
-        // global $swp_social_networks, $swp_user_options;
-        //
-        // $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( get_permalink( $this->id ) );
-        //
-        // if ( $swp_user_options['recover_shares'] == true ) :
-        //     $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
-        //     $this->permalinks[] = SWP_Permalink::get_alt_permalink( $this->id );
-        // endif;
-    }
-
-
-	public function facebook_shares_update() {
-		global $swp_user_options;
-
-		$post_id = $_POST['post_id'];
-		$activity = $_POST['share_counts'];
-
-		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
-
-		if ( $activity > $previous_activity || (isset($swp_user_options['force_new_shares']) && true === $swp_user_options['force_new_shares']) ) :
-			delete_post_meta( $post_id, '_facebook_shares' );
-			update_post_meta( $post_id, '_facebook_shares', $activity );
-		endif;
-
-		echo true;
-
-		wp_die();
-	}
-
-
 	/**
 	 * Gets the computed share data.
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created the method.
+	 * @param  void
 	 * @return array $this->share_counts if it exists, or an empty array.
+	 *
 	 */
 	public function get_shares() {
 		if ( !empty( $this->share_counts ) ) :
@@ -731,48 +677,65 @@ class SWP_Post_Cache {
 	}
 
 
-	public function print_ajax_script() {
-		?>
-        <script type="text/javascript">
-        var ticker = 0;
-		var swpButtonsExist = (document.getElementsByClassName( 'swp_social_panel' ).length > 0);
-
-		if (swpButtonsExist) {
-			document.addEventListener('DOMContentLoaded', function() {
-				var swpCheck = setInterval(function() {
-                    ticker++;
-
-                    if (ticker > 40) {
-                        //* Twenty seconds have passed. We can close this.
-                        clearInterval(swpCheck);
-                    }
-
-					if('undefined' !== typeof socialWarfarePlugin) {
-						clearInterval(swpCheck);
-
-                        var swpCacheData  = {
-                            action: 'swp_cache_trigger',
-                            post_id: <?= (int) $this->id ?>,
-                            timestamp: <?= time() ?>
-                        }
-                        var browserDate = Math.floor(Date.now() / 1000);
-                        var elapsedTime = ( browserDate - swpCacheData.timestamp);
-
-    	                if ( elapsedTime < 60 ) {
-                            jQuery.post('<?= admin_url( 'admin-ajax.php' ) ?>',
-                                        swp_cache_data,
-                                        function( response ) {
-                                            console.log("SWP: Response from server");
-                                            console.log(response);
-                                        });
-                            socialWarfarePlugin.fetchFacebookShares();
-    	                }
-					}
-				} , 250 );
-			});
+	/**
+	 * Output the AJAX/JS for updating Facebook share counts.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void Output is printed directly to the screen.
+	 *
+	 */
+	public function print_facebook_script() {
+        global $swp_user_options;
+        
+        if ( $swp_user_options['recover_shares'] == true ) {
+			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
+		} else {
+			$alternateURL = false;
 		}
-        </script>
-		<?php
-    }
+
+		echo '<script type="text/javascript">
+	        document.addEventListener("DOMContentLoaded", function() {
+	            var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
+	            if (swpButtonsExist) {
+					swp_admin_ajax = ' . admin_url( 'admin-ajax.php' ) . ';
+					swp_post_id=' . $this->id . ';
+					swp_post_url=' . get_permalink() . ';
+					swp_post_recovery_url = ' . $alternateURL . ';
+					socialWarfarePlugin.fetchFacebookShares();
+	    		}
+	        });
+	        </script>
+		';
+	}
+
+
+	/**
+	 * Process the Facebook shares response via admin-ajax.php.
+	 *
+	 * The object will be instantiated by the Cache_Loader class and it will
+	 * then call this method from there.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function facebook_shares_update() {
+		global $swp_user_options;
+
+		$activity = $_POST['share_counts'];
+
+		$previous_activity = get_post_meta( $this->id, '_facebook_shares', true );
+
+		if ( $activity > $previous_activity || true === _swp_is_debug('force_new_shares') ) :
+			delete_post_meta( $this->id, '_facebook_shares' );
+			update_post_meta( $this->id, '_facebook_shares', $activity );
+		endif;
+
+		echo true;
+
+		wp_die();
+	}
 
 }
