@@ -90,12 +90,11 @@ class SWP_Post_Cache {
 	 *
 	 */
     public function __construct( $post_id ) {
-
 		// Set up the post data into local properties.
 		$this->establish_post_data( $post_id );
 
 		// If the cache is expired, trigger the rebuild processes.
-        if ( true === $this->is_cache_fresh() ):
+        if ( false === $this->is_cache_fresh() ):
 			$this->rebuild_cached_data();
 		endif;
 
@@ -105,6 +104,20 @@ class SWP_Post_Cache {
         $this->init_publish_hooks();
 
     }
+
+
+	/**
+     * Sets the cache to rebuild itself when a user creates or updates a post.
+     *
+     * @since  3.0.10 | 21 JUN 2018 | Created the method.
+     * @param  void
+     * @return void
+     *
+     */
+	protected function init_publish_hooks() {
+		add_action( 'save_post', array( $this, 'rebuild_cached_data' ) );
+		add_action( 'publish_post', array( $this, 'rebuild_cached_data' ) );
+	}
 
 
 	/**
@@ -198,7 +211,7 @@ class SWP_Post_Cache {
      	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
 
          // The integer in hours at time of storage since the Unix epoch.
-     	$last_checked_time = get_post_meta( $post_id, 'swp_cache_timestamp', true );
+     	$last_checked_time = get_post_meta( $this->id, 'swp_cache_timestamp', true );
 
  		// How many hours has it been since the cache was rebuilt?
      	$age = $current_time - $last_checked_time;
@@ -280,20 +293,6 @@ class SWP_Post_Cache {
 		// A hook to run allowing third-party functions to run.
 		do_action('swp_cache_rebuild');
 
-	}
-
-
-	/**
-     * Sets the cache to rebuild itself when a user creates or updates a post.
-     *
-     * @since  3.0.10 | 21 JUN 2018 | Created the method.
-     * @param  void
-     * @return void
-     *
-     */
-	protected function init_publish_hooks() {
-		add_action( 'save_post', array( $this, 'rebuild_cached_data' ) );
-		add_action( 'publish_post', array( $this, 'rebuild_cached_data' ) );
 	}
 
 
@@ -439,24 +438,8 @@ class SWP_Post_Cache {
 		// $this->calculate_total_shares();
 		// $this->cache_share_counts();
 
-        foreach ($this->permalinks as $link ) {
-            $unprocessed_share_data = SWP_CURL::fetch_shares_via_curl_multi( $api_links );
-
-            foreach( $swp_social_networks as $network => $network_object ) {
-                $share_count = $network_object->parse_api_response($unprocessed_share_data[$network]);
-                $this->share_data[$network] += $share_count;
-                $this->share_data['total_shares'] += $share_count;
-            }
-        }
-
-        //* This needs to be a separate loop so all of the share data can be summed.
-        foreach( $swp_social_networks as $network => $network_object ) {
-            delete_post_meta( $this->id, '_' . $network . '_shares' );
-            update_post_meta( $this->id, '_' . $network . '_shares', $this->share_data[$network] );
-        }
-
-        delete_post_meta( $this->id, '_total_shares' );
-        update_post_meta( $this->id, '_total_shares', $this->share_data['total_shares'] );
+        $background_request = new SWP_Background_cURL();
+        $background_request->data( $this->permalinks )->dispatch();
     }
 
 
@@ -477,19 +460,18 @@ class SWP_Post_Cache {
 	 *
 	 */
 	private function establish_permalinks() {
-
-        global $swp_social_networks;
-        $this->permalinks = array();
-
-        foreach( $swp_social_networks as $key => $object):
-            $this->permalinks[$key][] = get_the_permalink();
-            if( $share_recovery_in_the_options == 'blahblah' ):
-                $this->permalinks[$key][] = get_the_other_permalink_that_we_need_to_check_for();
-            endif;
-
-        endforeach;
-
-        $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
+        // global $swp_social_networks;
+        //
+        // foreach( $swp_social_networks as $network => $object):
+        //     $this->permalinks[$key][] = get_the_permalink();
+        //
+        //     if( $share_recovery_in_the_options == 'blahblah' ):
+        //         $this->permalinks[$key][] = get_the_other_permalink_that_we_need_to_check_for();
+        //     endif;
+        //
+        // endforeach;
+        //
+        // $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
 
     }
 
@@ -501,10 +483,10 @@ class SWP_Post_Cache {
     protected function prepare_network( $network ) {
         global $swp_social_networks, $swp_user_options;
 
-        $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( $url );
+        $this->permalinks[$network]	= $swp_social_networks[$network]->get_api_link( get_permalink( $this->id ) );
 
         if ( $swp_user_options['recover_shares'] == true ) :
-            array_merge( $this->permalinks, apply_filters( 'swp_recovery_filter' ) );
+            $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
             $this->permalinks[] = SWP_Permalink::get_alt_permalink( $this->id );
         endif;
     }
@@ -554,7 +536,7 @@ class SWP_Post_Cache {
 	 * @access protected
 	 * @param  void
 	 * @return void
-	 * 
+	 *
 	 */
 	protected function establish_share_data() {
 		global $swp_social_networks;
