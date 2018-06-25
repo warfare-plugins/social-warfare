@@ -111,8 +111,13 @@ class SWP_Buttons_Panel {
 
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
+
+        if ( !isset( $this->post_data['ID'] ) ) :
+            return;
+        endif;
+
+        $this->establish_post_id();
         $this->localize_options();
-  	    $this->establish_post_id();
 		$this->establish_share_data();
   	    $this->establish_location();
 		$this->establish_permalink();
@@ -232,7 +237,6 @@ class SWP_Buttons_Panel {
      */
     public function establish_share_data() {
         global $SWP_Post_Caches;
-
         $post = $SWP_Post_Caches->get_post_cache( $this->post_data['ID'] );
         $this->shares = $post->get_shares();
         return $this;
@@ -425,6 +429,9 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function render_HTML( $echo = false ) {
+        if ( !isset( $this->post_data['ID'] ) ) :
+            return;
+        endif;
 
 		if ( !$this->should_print() ) :
 			return $this->content;
@@ -510,13 +517,14 @@ class SWP_Buttons_Panel {
 	 */
 	public function get_float_location() {
         $post_on = false;
-		if( is_home() && !is_front_page() ):
+
+		if( is_home() && !is_front_page() || !isset( $this->post_data['ID'] ) ):
 			return 'none';
         endif;
 
         $post_setting = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
 
-        if( is_array($post_setting) ) :
+        if( is_array( $post_setting ) ) :
              $post_setting = $post_setting[0];
          endif;
 
