@@ -104,7 +104,25 @@ class SWP_Post_Cache {
 		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
 
+		// Debugging
+		$this->debug();
+
     }
+
+
+	/**
+	 * A method for debugging and outputting the class object.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 * 
+	 */
+	private function debug() {
+		if( true === _swp_is_debug('swp_share_cache') ):
+			var_dump( $this );
+		endif;
+	}
 
 
 	/**
@@ -291,7 +309,7 @@ class SWP_Post_Cache {
 	/**
 	 * A method to rebuild all cached data
 	 *
-	 * This is the method that will be called in the constructor. This is also
+	 * This is the method that will be called during the rebuild. This is also
 	 * the method that we want to run asyncronously. This method will call all
 	 * other methods and run the action filter to allow third-party functions
 	 * to run during the cache rebuild process.
