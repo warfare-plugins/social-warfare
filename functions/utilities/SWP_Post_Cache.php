@@ -353,15 +353,15 @@ class SWP_Post_Cache {
 		 *
 		 */
 		$this->establish_permalinks();
-		// $this->establish_api_request_urls();
+		$this->establish_api_request_urls();
 		// $this->fetch_api_responses();
 		// $this->parse_api_responses();
 		// $this->calculate_network_shares();
 		// $this->calculate_total_shares();
 		// $this->cache_share_counts();
 
-        $background_request = new SWP_Background_cURL();
-        $background_request->push_to_queue( $this->permalinks )->save()->dispatch();
+        // $background_request = new SWP_Background_cURL();
+        // $background_request->push_to_queue( $this->permalinks )->save()->dispatch();
     }
 
 
@@ -483,19 +483,33 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-	private function establish_permalinks() {
+    private function establish_permalinks() {
         global $swp_social_networks, $swp_user_options;
         $this->permalinks = array();
 
         foreach( $swp_social_networks as $key => $object):
-            $this->permalinks[$key][] = isset($this->id) ? get_permalink( $this->id ) : get_permalink();
+            if ( !$object->active ) :
+                continue;
+            endif;
+
+            $this->permalinks[$key][] = get_permalink( $this->id );
 
             if( true === $swp_user_options['recover_shares'] ):
-                $this->permalinks[$key][] = get_the_other_permalink_that_we_need_to_check_for();
+                $this->permalinks[$key][] = $object->get_alt_permalink( $this->id );
             endif;
         endforeach;
 
         $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
+    }
+
+
+    /**
+     *
+     *
+     *
+     */
+    private function establish_api_request_urls() {
+
     }
 
 
