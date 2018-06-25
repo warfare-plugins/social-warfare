@@ -104,7 +104,7 @@ class SWP_Post_Cache {
 	 */
 	private function debug() {
 		if( true === _swp_is_debug('swp_share_cache') ):
-			var_dump( $this );
+            echo "<pre>", var_dump( $this ), "</pre>";
 		endif;
 	}
 
@@ -128,7 +128,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created
 	 * @param  integer $post_id The post id.
-	 * @return void    All processed data are stored in local properties.
+	 * @return void    All processed data is stored in local properties.
 	 *
 	 */
 	protected function establish_post_data( $post_id ) {
@@ -334,7 +334,7 @@ class SWP_Post_Cache {
      * fetch_api_responses();                     $this->raw_api_responses;
      * parse_api_responses();                     $this->parsed_api_responses;
      * calculate_network_shares();                $this->share_counts;
-     * calculate_total_shares();                  $this->share_counts;
+     * calculate_total_shares();                  $this->share_counts['total_shares'];
      * cache_share_counts();                      Stored in DB post meta.
      *
      * @since  3.0.10 | 21 JUN 2018 | Created
@@ -355,7 +355,7 @@ class SWP_Post_Cache {
 		$this->establish_permalinks();
 		$this->establish_api_request_urls();
 		$this->fetch_api_responses();
-		// $this->parse_api_responses();
+		$this->parse_api_responses();
 		// $this->calculate_network_shares();
 		// $this->calculate_total_shares();
 		// $this->cache_share_counts();
@@ -486,7 +486,6 @@ class SWP_Post_Cache {
     private function establish_permalinks() {
         global $swp_social_networks, $swp_user_options;
         $this->permalinks = array();
-        $this->outbound_requests = array();
 
         foreach( $swp_social_networks as $key => $object):
             if ( !$object->active ) :
@@ -509,7 +508,8 @@ class SWP_Post_Cache {
      * Prepares outbound API links per network.
      *
      * @since  3.0.10 | 25 JUN 2018 | Created the method.
-     * @var api_urls The array of outbound API request destinations.
+     * @var    api_urls The array of outbound API request destinations.
+     * @param  void
      * @return void
      *
      */
@@ -528,16 +528,58 @@ class SWP_Post_Cache {
     }
 
 
+	/**
+	 * Fetch responses from the network API's.
+	 *
+	 * This method will use the $this->api_urls array, loop through them, and
+	 * using curl_multi will fetch raw responses from the network API's. The
+	 * results will be stored in $this->raw_api_responses array.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @var    raw_api_responses An array of responses from the API's.
+	 * @param  void
+	 * @return void All data is stored in local properties.
+	 *
+	 */
     private function fetch_api_responses() {
-        foreach ( $this->api_urls as $network => $urls ) {
+        foreach ( $this->api_urls as $request => $networks ) {
+            $current_request = 0;
+            $this->raw_api_responses[$current_request] = SWP_CURL::fetch_shares_via_curl_multi( $networks );
+            $current_request++;
+        }
+    }
 
+
+	/**
+	 * Parse the API responses
+	 *
+	 * This method will take the array of raw responses stored inside the
+	 * $this->raw_api_responses property and use each network's parse method
+	 * to convert them into integers that we can use to tally up our share counts.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @var    parsed_api_responses An array of integers from parsing the responses.
+	 * @param  void
+	 * @return void Processed data is stored in local properties.
+	 *
+	 */
+    private function parse_api_responses() {
+        global $swp_social_networks;
+
+        foreach( $this->raw_api_responses as $request => $responses ) {
+            $current_request = 0;
+
+            foreach ( $responses as $key => $response ) {
+                $this->parsed_api_responses[$current_request][$key] = $swp_social_networks[$key]->parse_api_response( $response );
+                $current_request++;
+            }
         }
     }
 
 
     /**
      *  Prepares the API link(s) and old share data for a network.
-     *
+     *  This is now deprecated, I think.TRUE DAT
      */
     protected function prepare_network( $network ) {
         // global $swp_social_networks, $swp_user_options;
