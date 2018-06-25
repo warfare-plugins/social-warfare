@@ -96,23 +96,24 @@ class SWP_Buttons_Panel {
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
-    		$this->args = $args;
+		$this->args = $args;
 
-        //* Access the $post once while we have it. Values may be overwritten.
-        $this->post_data = [
-            'ID'           => $post->ID,
-            'post_type'    => $post->post_type,
-            'permalink'    => get_the_permalink( $post->ID ),
-            'post_title'   => $post->post_title,
-            'post_status'  => $post->post_status,
-            'post_content' => $post->post_content
-        ];
+        if ( is_object( $post ) ) :
+            $this->post_data = [
+                'ID'           => $post->ID,
+                'post_type'    => $post->post_type,
+                'permalink'    => get_the_permalink( $post->ID ),
+                'post_title'   => $post->post_title,
+                'post_status'  => $post->post_status,
+                'post_content' => $post->post_content
+            ];
+        endif;
 
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
-        $this->localize_options( $args );
+        $this->localize_options();
   	    $this->establish_post_id();
-		$this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+		$this->establish_share_data();
   	    $this->establish_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
@@ -123,6 +124,8 @@ class SWP_Buttons_Panel {
                 echo "</pre>";
         endif;
     }
+
+
 	/**
 	 * Localize the global options
 	 *
@@ -142,6 +145,8 @@ class SWP_Buttons_Panel {
 		$this->options = array_merge( $swp_user_options, $this->args );
         $this->post_data['options'] = $swp_user_options;
 	}
+
+
 	/**
 	 * Set an option
 	 *
@@ -196,8 +201,8 @@ class SWP_Buttons_Panel {
         endif;
 
     		// Current argument.
-    		if ( isset( $this->args['post_id'] ) ) :
-    			$this->post_data['ID'] = $this->args['post_id'];
+		if ( isset( $this->args['post_id'] ) ) :
+			$this->post_data['ID'] = $this->args['post_id'];
         endif;
 
         if ( isset ( $this->args['id'] ) ) :
@@ -215,6 +220,23 @@ class SWP_Buttons_Panel {
 
         endif;
 	}
+
+
+    /**
+     * Instantiates the share data from a given post ID.
+     *
+     * @since 3.0.10 | 25 JUN 2018 | Created the method.
+     * @return void
+     * @access public
+     *
+     */
+    public function establish_share_data() {
+        if ( isset( $this->post_data['ID'] ) ) {
+            $this->shares = get_social_warfare_shares( $this->post_data['ID'] );
+        } else if ( isset( $this->args['ID'] ) ) {
+            $this->shares = get_social_warfare_shares( $this->args['ID'] );
+        }
+    }
 
 
 	/**
@@ -755,6 +777,7 @@ class SWP_Buttons_Panel {
      */
     public function render_total_shares_html() {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
+
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
 
