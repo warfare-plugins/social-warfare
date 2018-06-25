@@ -29,12 +29,20 @@ class SWP_Post_Cache_Loader {
     */
     public $post_caches = array();
 
+
 	/**
-	 * @todo Register the admin-ajax handler below.
+	 * Load the class and queue up the admin hooks.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
 	 */
 	public function __construct() {
-
+        add_action( 'wp_ajax_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
+        add_action( 'wp_ajax_nopriv_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
 	}
+
 
 	/**
 	 * Gets the post_cache object for a specific post.
@@ -73,14 +81,15 @@ class SWP_Post_Cache_Loader {
 	 * @since  3.0.10 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
-	 * 
+	 *
 	 */
 	public function rebuild_post_cache_data() {
+        die(var_dump($_POST['post_id']));
 		if( isset( $_POST['post_id'] ) ):
-			$post_id = $_POST['post_id'];
-			$Post_Cache = new SWP_Post_Cache( $post_id );
+			$Post_Cache = new SWP_Post_Cache( $_POST['post_id'] );
 			$Post_Cache->rebuild_cached_data();
 		endif;
+		wp_die();
 	}
 
 }
