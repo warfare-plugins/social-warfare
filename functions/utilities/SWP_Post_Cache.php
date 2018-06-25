@@ -283,7 +283,7 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-	protected function rebuild_cached_data() {
+	public function rebuild_cached_data() {
 
         $this->rebuild_share_counts();
         $this->rebuild_pinterest_image();
