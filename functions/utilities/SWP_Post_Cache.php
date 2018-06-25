@@ -38,7 +38,6 @@ class SWP_Post_Cache {
 	 *
 	 */
 
-
 	/**
 	 * The WordPress Post Object
 	 *
@@ -60,23 +59,6 @@ class SWP_Post_Cache {
 
 
 	/**
-	 * Permalinks
-	 *
-	 * This variable contains an array of permalinks to be checked for share
-	 * counts during the share count update process.
-	 *
-	 * @see $this->establish_permalinks();
-	 * @var array
-	 *
-	 */
-	protected $permalinks = array();
-
-
-    public $share_data = array();
-    protected $old_shares = array();
-    protected $api_links = array();
-
-	/**
 	 * The Magic Construct Method
 	 *
 	 * This method 1.) instantiates the object
@@ -95,8 +77,10 @@ class SWP_Post_Cache {
 
 		// If the cache is expired, trigger the rebuild processes.
         if ( false === $this->is_cache_fresh() ):
-			$this->trigger_cache_rebuild();
+			// $this->trigger_cache_rebuild();
 		endif;
+
+        $this->rebuild_cached_data();
 
         //* TODO for now I'm focusing on just the rebuild functionality.
         // $this->establish_share_data();
@@ -116,7 +100,7 @@ class SWP_Post_Cache {
 	 * @since  3.0.10 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
-	 * 
+	 *
 	 */
 	private function debug() {
 		if( true === _swp_is_debug('swp_share_cache') ):
@@ -344,11 +328,6 @@ class SWP_Post_Cache {
     /**
      * Finishes processing the share data after the network links have been set up.
      *
-     * Note: There should not be any calls to check if the cache is fresh in
-     * any of these methods. It should check once in the constructor. If any of
-     * these methods are called, then the cache is NOT fresh and can therefore
-     * skip any checks for it.
-     *
      * The flow of logic should look something like this:
      * establish_permalinks();                    $this->permalinks;
      * establish_api_request_urls();              $this->api_urls;
@@ -380,8 +359,6 @@ class SWP_Post_Cache {
 		// $this->calculate_network_shares();
 		// $this->calculate_total_shares();
 		// $this->cache_share_counts();
-        var_dump($this->permalinks);
-        echo "rebuild_share_counts()";
 
         $background_request = new SWP_Background_cURL();
         $background_request->push_to_queue( $this->permalinks )->save()->dispatch();
@@ -497,6 +474,8 @@ class SWP_Post_Cache {
 	 * allow a filter for programatic adding of others, and so on.
 	 *
 	 * The processed results will be stored in $this->permalinks.
+     * @var permalinks Links to be checked for share counts during the
+     *                 share count update process.
 	 *
 	 * @since  3.0.10 | 21 JUN 2018 | Created
 	 * @access private
@@ -505,13 +484,18 @@ class SWP_Post_Cache {
 	 *
 	 */
 	private function establish_permalinks() {
-        global $swp_social_networks;
+        global $swp_social_networks, $swp_user_options;
+        $this->permalinks = array();
 
-        foreach( $swp_social_networks as $network => $object):
-            $this->prepare_network( $network );
+        foreach( $swp_social_networks as $key => $object):
+            $this->permalinks[$key][] = isset($this->id) ? get_permalink( $this->id ) : get_permalink();
+
+            if( true === $swp_user_options['recover_shares'] ):
+                $this->permalinks[$key][] = get_the_other_permalink_that_we_need_to_check_for();
+            endif;
         endforeach;
 
-        $this->permalinks = apply_filters('swp_recovery_urls', $this->permalinks );
+        $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
     }
 
 
