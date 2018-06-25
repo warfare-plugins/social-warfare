@@ -41,6 +41,11 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
+
+        add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ) );
+		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+
 	}
 
 
@@ -86,6 +91,72 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$total = $likes + $comments + $shares;
 		return $total;
+	}
+
+
+	public function add_facebook_footer_hook() {
+		add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
+	}
+
+	/**
+	 * Output the AJAX/JS for updating Facebook share counts.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void Output is printed directly to the screen.
+	 *
+	 */
+	public function print_facebook_script() {
+		global $swp_user_options;
+
+		if ( $swp_user_options['recover_shares'] == true ) {
+			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
+		} else {
+			$alternateURL = false;
+		}
+
+		echo '<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
+				if (swpButtonsExist) {
+					swp_admin_ajax = ' . admin_url( 'admin-ajax.php' ) . ';
+					swp_post_id=' . $this->id . ';
+					swp_post_url=' . get_permalink() . ';
+					swp_post_recovery_url = ' . $alternateURL . ';
+					socialWarfarePlugin.fetchFacebookShares();
+				}
+			});
+			</script>
+		';
+	}
+
+
+	/**
+	 * Process the Facebook shares response via admin-ajax.php.
+	 *
+	 * The object will be instantiated by the Cache_Loader class and it will
+	 * then call this method from there.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function facebook_shares_update() {
+		global $swp_user_options;
+
+		$activity = $_POST['share_counts'];
+
+		$previous_activity = get_post_meta( $this->id, '_facebook_shares', true );
+
+		if ( $activity > $previous_activity || true === _swp_is_debug('force_new_shares') ) :
+			delete_post_meta( $this->id, '_facebook_shares' );
+			update_post_meta( $this->id, '_facebook_shares', $activity );
+		endif;
+
+		echo true;
+
+		wp_die();
 	}
 
 }
