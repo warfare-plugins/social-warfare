@@ -84,7 +84,7 @@ class SWP_Post_Cache {
         $this->rebuild_cached_data();
 
         //* TODO for now I'm focusing on just the rebuild functionality.
-        // $this->establish_share_data();
+        // $this->establish_share_counts();
 
 		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
@@ -575,7 +575,7 @@ class SWP_Post_Cache {
 	 *
 	 * This method is used to calculate the shares for each network based on
 	 * what we have just retrieved from the API responses. Another method,
-	 * establish_share_data will be used to create this data from the cached
+	 * establish_share_counts will be used to create this data from the cached
 	 * database data. This one is ONLY used when the cache is not fresh and the
 	 * data is being rebuilt.
 	 *
@@ -691,11 +691,11 @@ class SWP_Post_Cache {
 	 * Gets the computed share data.
 	 *
 	 * @since  3.0.10 | 20 JUN 2018 | Created the method.
-	 * @return array $this->share_data if it exists, or an empty array.
+	 * @return array $this->share_counts if it exists, or an empty array.
 	 */
 	public function get_shares() {
-		if ( !empty( $this->share_data ) ) :
-			return $this->share_data;
+		if ( !empty( $this->share_counts ) ) :
+			return $this->share_counts;
 		endif;
 
 		return array();
@@ -714,7 +714,7 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-	protected function establish_share_data() {
+	protected function establish_share_counts() {
 		global $swp_social_networks;
 
 		foreach( $swp_social_networks as $network => $network_object ) {
@@ -722,22 +722,12 @@ class SWP_Post_Cache {
 				continue;
 			endif;
 
-			$this->establish_cached_shares( $network );
+            $count = get_post_meta( $this->id, '_' . $network . '_shares', true );
+			$this->share_counts[$network] = $count ? $count : 0;
 		}
-	}
 
-
-	protected function establish_total_shares() {
-		if ( get_post_meta( $this->id, '_total_shares', true ) ) :
-			$this->share_data['total_shares'] = get_post_meta( $this->id, '_total_shares', true );
-		else :
-			$this->share_data['total_shares'] = 0;
-		endif;
-	}
-
-
-	protected function establish_cached_shares( $network ) {
-		$this->share_data[$network] = get_post_meta( $this->id, '_' . $network . '_shares', true );
+        $total = get_post_meta( $this->id, '_total_shares', true );
+        $this->share_counts['total_shares'] = $total ? $total : 0;
 	}
 
 
