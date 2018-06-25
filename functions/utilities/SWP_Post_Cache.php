@@ -98,7 +98,8 @@ class SWP_Post_Cache {
 			$this->rebuild_cached_data();
 		endif;
 
-        $this->establish_share_data();
+        //* TODO for now I'm focusing on just the rebuild functionality.
+        // $this->establish_share_data();
 
 		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
@@ -213,6 +214,11 @@ class SWP_Post_Cache {
          // The integer in hours at time of storage since the Unix epoch.
      	$last_checked_time = get_post_meta( $this->id, 'swp_cache_timestamp', true );
 
+        if ( !is_numeric( $last_checked_time ) ) :
+            $last_checked_time = 0;
+        endif;
+
+
  		// How many hours has it been since the cache was rebuilt?
      	$age = $current_time - $last_checked_time;
 
@@ -294,6 +300,53 @@ class SWP_Post_Cache {
 		do_action('swp_cache_rebuild');
 
 	}
+
+
+    /**
+     * Finishes processing the share data after the network links have been set up.
+     *
+     * Note: There should not be any calls to check if the cache is fresh in
+     * any of these methods. It should check once in the constructor. If any of
+     * these methods are called, then the cache is NOT fresh and can therefore
+     * skip any checks for it.
+     *
+     * The flow of logic should look something like this:
+     * establish_permalinks();                    $this->permalinks;
+     * establish_api_request_urls();              $this->api_urls;
+     * fetch_api_responses();                     $this->raw_api_responses;
+     * parse_api_responses();                     $this->parsed_api_responses;
+     * calculate_network_shares();                $this->share_counts;
+     * calculate_total_shares();                  $this->share_counts;
+     * cache_share_counts();                      Stored in DB post meta.
+     *
+     * @since  3.0.10 | 21 JUN 2018 | Created
+     * @access protected
+     * @param  void
+     * @return void
+     *
+     */
+    protected function rebuild_share_counts() {
+        global $swp_social_networks, $swp_user_options;
+
+		/**
+		 * Required flow of Logic
+		 *
+		 * @todo Uncomment these methods as they are created.
+		 *
+		 */
+		$this->establish_permalinks();
+		// $this->establish_api_request_urls();
+		// $this->fetch_api_responses();
+		// $this->parse_api_responses();
+		// $this->calculate_network_shares();
+		// $this->calculate_total_shares();
+		// $this->cache_share_counts();
+        var_dump($this->permalinks);
+        echo "rebuild_share_counts()";
+
+        $background_request = new SWP_Background_cURL();
+        $background_request->push_to_queue( $this->permalinks )->save()->dispatch();
+    }
 
 
     /**
@@ -396,53 +449,6 @@ class SWP_Post_Cache {
 	}
 
 
-    /**
-     * Finishes processing the share data after the network links have been set up.
-     *
-     * Note: There should not be any calls to check if the cache is fresh in
-     * any of these methods. It should check once in the constructor. If any of
-     * these methods are called, then the cache is NOT fresh and can therefore
-     * skip any checks for it.
-     *
-     * The flow of logic should look something like this:
-     * establish_permalinks();                    $this->permalinks;
-     * establish_api_request_urls();              $this->api_urls;
-     * fetch_api_responses();                     $this->raw_api_responses;
-     * parse_api_responses();                     $this->parsed_api_responses;
-     * calculate_network_shares();                $this->share_counts;
-     * calculate_total_shares();                  $this->share_counts;
-     * cache_share_counts();                      Stored in DB post meta.
-     *
-     * @since  3.0.10 | 21 JUN 2018 | Created
-     * @access protected
-     * @param  void
-     * @return void
-     *
-     */
-    protected function rebuild_share_counts() {
-
-		// Pull in necessary globals.
-        global $swp_social_networks, $swp_user_options;
-
-		/**
-		 * Required flow of Logic
-		 *
-		 * @todo Uncomment these methods as they are created.
-		 *
-		 */
-		$this->establish_permalinks();
-		// $this->establish_api_request_urls();
-		// $this->fetch_api_responses();
-		// $this->parse_api_responses();
-		// $this->calculate_network_shares();
-		// $this->calculate_total_shares();
-		// $this->cache_share_counts();
-
-        $background_request = new SWP_Background_cURL();
-        $background_request->data( $this->permalinks )->dispatch();
-    }
-
-
 	/**
 	 * Establish the Permalinks to be checked for shares.
 	 *
@@ -460,19 +466,13 @@ class SWP_Post_Cache {
 	 *
 	 */
 	private function establish_permalinks() {
-        // global $swp_social_networks;
-        //
-        // foreach( $swp_social_networks as $network => $object):
-        //     $this->permalinks[$key][] = get_the_permalink();
-        //
-        //     if( $share_recovery_in_the_options == 'blahblah' ):
-        //         $this->permalinks[$key][] = get_the_other_permalink_that_we_need_to_check_for();
-        //     endif;
-        //
-        // endforeach;
-        //
-        // $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
+        global $swp_social_networks;
 
+        foreach( $swp_social_networks as $network => $object):
+            $this->prepare_network( $network );
+        endforeach;
+
+        $this->permalinks = apply_filters('swp_recovery_urls', $this->permalinks );
     }
 
 
@@ -546,10 +546,8 @@ class SWP_Post_Cache {
 				continue;
 			endif;
 
-			$this->is_cache_fresh() ? $this->establish_cached_shares( $network ) : $this->prepare_network( $network );
+			$this->establish_cached_shares( $network );
 		}
-
-		$this->is_cache_fresh() ? $this->establish_total_shares() : $this->rebuild_share_data();
 	}
 
 	protected function establish_total_shares() {
