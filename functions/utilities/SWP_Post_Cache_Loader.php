@@ -73,6 +73,7 @@ class SWP_Post_Cache_Loader {
 	 * @since  3.0.10 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
+	 * 
 	 */
 	public function rebuild_cached_data() {
 		if( isset( $_POST['post_id'] ) ):
