@@ -44,9 +44,8 @@ class SWP_CURL {
 					else :
 
 						$url = (is_array( $link_data ) && ! empty( $link_data['url'] )) ? $link_data['url'] : $link_data;
-						curl_setopt( $curly[ $network ], CURLOPT_URL,            $url );
-						curl_setopt( $curly[ $network ], CURLOPT_HEADER,         0 );
-						curl_setopt( $curly[ $network ], CURLOPT_RETURNTRANSFER, 1 );
+						curl_setopt( $curly[ $network ], CURLOPT_URL, $url );
+						curl_setopt( $curly[ $network ], CURLOPT_HEADER, 0 );
 						curl_setopt( $curly[ $network ], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
 						curl_setopt( $curly[ $network ], CURLOPT_FAILONERROR, 0 );
 						curl_setopt( $curly[ $network ], CURLOPT_FOLLOWLOCATION, 0 );
@@ -86,6 +85,7 @@ class SWP_CURL {
 	public static function file_get_contents_curl( $url ) {
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_HEADER, 0 );
 		curl_setopt( $ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
 		curl_setopt( $ch, CURLOPT_FAILONERROR, 0 );
 		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 0 );
