@@ -354,7 +354,7 @@ class SWP_Post_Cache {
 		 */
 		$this->establish_permalinks();
 		$this->establish_api_request_urls();
-		// $this->fetch_api_responses();
+		$this->fetch_api_responses();
 		// $this->parse_api_responses();
 		// $this->calculate_network_shares();
 		// $this->calculate_total_shares();
@@ -486,6 +486,7 @@ class SWP_Post_Cache {
     private function establish_permalinks() {
         global $swp_social_networks, $swp_user_options;
         $this->permalinks = array();
+        $this->outbound_requests = array();
 
         foreach( $swp_social_networks as $key => $object):
             if ( !$object->active ) :
@@ -494,12 +495,13 @@ class SWP_Post_Cache {
 
             $this->permalinks[$key][] = get_permalink( $this->id );
 
-            if( true === $swp_user_options['recover_shares'] ):
+            if( true === $swp_user_options['recover_shares'] ) :
                 $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->id );
             endif;
+
+            $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
         endforeach;
 
-        $this->permalinks = apply_filter('swp_recovery_urls', $this->permalinks );
     }
 
 
@@ -509,14 +511,26 @@ class SWP_Post_Cache {
      * @since  3.0.10 | 25 JUN 2018 | Created the method.
      * @var api_urls The array of outbound API request destinations.
      * @return void
+     *
      */
     private function establish_api_request_urls() {
         global $swp_social_networks;
 
+        $this->api_urls = array();
+
         foreach ( $this->permalinks as $network => $links ) {
+			$current_request = 0;
             foreach( $links as $url ) {
-                $this->api_urls[$network] = $swp_social_networks[$network]->get_api_link( $url );
-            }
+                $this->api_urls[$current_request][$network] = $swp_social_networks[$network]->get_api_link( $url );
+				++$current_request;
+			}
+        }
+    }
+
+
+    private function fetch_api_responses() {
+        foreach ( $this->api_urls as $network => $urls ) {
+
         }
     }
 
