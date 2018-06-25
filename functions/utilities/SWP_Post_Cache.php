@@ -281,9 +281,8 @@ class SWP_Post_Cache {
             'cookies'   => $_COOKIE,
             'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
         );
-        
+
         $var = wp_remote_post( admin_url( 'admin-ajax.php', $args ) );
-        die(var_dump($var));
 	}
 
 
