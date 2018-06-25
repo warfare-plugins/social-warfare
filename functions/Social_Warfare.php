@@ -186,6 +186,18 @@ class Social_Warfare {
          */
         $SWP_Options_Page = new SWP_Options_Page();
 
+
+		/**
+		 * The Post Cache Loader Class
+		 *
+		 * Instantiates a global object that will manage and load cached data
+		 * for each individual post on a site allowing access to cached data like
+		 * share counts, for example.
+		 *
+		 */
+		global $SWP_Post_Caches;
+		$SWP_Post_Caches = new SWP_Post_Cache_Loader();
+
 	}
 
 
@@ -199,17 +211,6 @@ class Social_Warfare {
 	 */
 	private function instantiate_frontend_classes() {
 
-
-		/**
-		 * The Post Cache Loader Class
-		 *
-		 * Instantiates a global object that will manage and load cached data
-		 * for each individual post on a site allowing access to cached data like
-		 * share counts, for example.
-		 *
-		 */
-		global $SWP_Post_Caches;
-		$SWP_Post_Caches = new SWP_Post_Cache_Loader();
 
 	}
 
