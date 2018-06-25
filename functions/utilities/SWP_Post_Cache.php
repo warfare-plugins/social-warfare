@@ -95,7 +95,7 @@ class SWP_Post_Cache {
 
 		// If the cache is expired, trigger the rebuild processes.
         if ( false === $this->is_cache_fresh() ):
-			$this->rebuild_cached_data();
+			$this->trigger_cache_rebuild();
 		endif;
 
         //* TODO for now I'm focusing on just the rebuild functionality.
@@ -265,6 +265,27 @@ class SWP_Post_Cache {
 	 * The methods in this section are used to rebuild all of the cached data.
 	 *
 	 */
+
+
+
+	/**
+	 * Trigger the Cache Rebuild
+	 *
+	 * This method will trigger a non-blocking request to admin-ajax. This
+	 * request will be intercepted/recieved by the Post_Cache_Loader class
+	 * during which it will load this post_cache object and call the
+	 * rebuild_cached_data() method below. This way the rebuilding of the cache
+	 * is conducted in an asyncronous, non-blocking fashion.
+	 *
+	 * @todo   Add the wp_remote_post to ping admin-ajax.php.
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	protected function trigger_cache_rebuild() {
+
+	}
 
 
 	/**
