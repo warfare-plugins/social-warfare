@@ -489,13 +489,13 @@ function swp_initiate_plugin() {
 	// All of these files need refactored and then migrated into the functions above
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
 	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
-    require_once SWP_PLUGIN_DIR . '/functions/utilities/wp-background-processing/wp-background-processing.php';
 }
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
 require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
+require_once SWP_PLUGIN_DIR . '/functions/utilities/wp-background-processing/wp-background-processing.php';
 
 /**
  * Include the plugin's admin files.
