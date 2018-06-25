@@ -99,6 +99,8 @@ class SWP_Buttons_Panel {
     		$this->args = $args;
 
         //* Access the $post once while we have it. Values may be overwritten.
+
+	      if( isset( $post->post_type ) ) {
         $this->post_data = [
             'ID'           => $post->ID,
             'post_type'    => $post->post_type,
@@ -122,6 +124,7 @@ class SWP_Buttons_Panel {
                 var_dump($this);
                 echo "</pre>";
         endif;
+        }
     }
 	/**
 	 * Localize the global options
@@ -488,7 +491,7 @@ class SWP_Buttons_Panel {
 	 */
 	public function get_float_location() {
         $post_on = false;
-		if( is_home() && !is_front_page() ):
+		if( is_home() && !is_front_page() || is_404() || !isset($this->post_data) ):
 			return 'none';
         endif;
 
@@ -728,6 +731,7 @@ class SWP_Buttons_Panel {
     public function render_buttons_HTML( $max_count = null) {
         $html = '';
         $count = 0;
+	    if(isset($this->networks)) {
         foreach( $this->networks as $key => $network ) {
             if ( isset( $max_count) && $count === $max_count) :
                 return $html;
@@ -739,6 +743,7 @@ class SWP_Buttons_Panel {
             $html .= $network->render_HTML( $context );
             $count++;
         }
+	    }
         return $html;
     }
 
