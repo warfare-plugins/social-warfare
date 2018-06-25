@@ -42,6 +42,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$this->init_social_network();
 
+		// Methods for updating cache related share counts
         add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ) );
 		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
@@ -94,9 +95,18 @@ class SWP_Facebook extends SWP_Social_Network {
 	}
 
 
+	/**
+	 * A function to add the Facebook updater to the footer hook.
+	 *
+	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	public function add_facebook_footer_hook() {
 		add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
 	}
+
 
 	/**
 	 * Output the AJAX/JS for updating Facebook share counts.
@@ -106,8 +116,10 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @return void Output is printed directly to the screen.
 	 *
 	 */
-	public function print_facebook_script() {
+	public function print_facebook_script( $args ) {
 		global $swp_user_options;
+
+		$post_id = $args['post_id'];
 
 		if ( $swp_user_options['recover_shares'] == true ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
@@ -146,15 +158,14 @@ class SWP_Facebook extends SWP_Social_Network {
 		global $swp_user_options;
 
 		$activity = $_POST['share_counts'];
+		$post_id = $_POST['post_id'];
 
-		$previous_activity = get_post_meta( $this->id, '_facebook_shares', true );
+		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
 		if ( $activity > $previous_activity || true === _swp_is_debug('force_new_shares') ) :
-			delete_post_meta( $this->id, '_facebook_shares' );
-			update_post_meta( $this->id, '_facebook_shares', $activity );
+			delete_post_meta( $post_id, '_facebook_shares' );
+			update_post_meta( $post_id, '_facebook_shares', $activity );
 		endif;
-
-		echo true;
 
 		wp_die();
 	}

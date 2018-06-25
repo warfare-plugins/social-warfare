@@ -80,7 +80,7 @@ class SWP_Post_Cache {
         $this->establish_share_counts();
 
 		// If the cache is expired, trigger the rebuild processes.
-        if ( false === $this->is_cache_fresh() ):
+        // if ( false === $this->is_cache_fresh() ):
             add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
 
 			if ( $swp_user_options['cache_method'] == 'legacy' ) :
@@ -88,7 +88,7 @@ class SWP_Post_Cache {
 			else:
 				$this->trigger_cache_rebuild();
             endif;
-        endif;
+        // endif;
 
 		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
@@ -267,7 +267,23 @@ class SWP_Post_Cache {
 	 *
 	 */
 	protected function trigger_cache_rebuild() {
+        //* Ping ajax to Post_Cache_Loader->
+        $data = array(
+            'method'    => 'POST',
+            'action'    => 'swp_rebuild_cache',
+            'post_id'   => $this->id
+        );
 
+        $args = array(
+            'timeout'   => 0.01,
+            'blocking'  => false,
+            'body'      => $data,
+            'cookies'   => $_COOKIE,
+            'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+        );
+        
+        $var = wp_remote_post( admin_url( 'admin-ajax.php', $args ) );
+        die(var_dump($var));
 	}
 
 
@@ -294,14 +310,8 @@ class SWP_Post_Cache {
         $this->rebuild_open_graph_image();
         $this->reset_timestamp();
 
-        //* If we can find a way to spoof IP addresses, we can also remove the
-        //* Facebook ajax methods.
-        add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-
 		// A hook to run allowing third-party functions to run.
-		do_action('swp_cache_rebuild');
-
+		do_action( 'swp_cache_rebuild', array( 'post_id' => $this->id ) );
 	}
 
 
@@ -340,6 +350,7 @@ class SWP_Post_Cache {
 
 
     /**
+
      * Open Graph Image
      *
      * Convert the open graph image ID to a URL and store it in a meta field
@@ -674,68 +685,6 @@ class SWP_Post_Cache {
 
         $total = get_post_meta( $this->id, '_total_shares', true );
         $this->share_counts['total_shares'] = $total ? $total : 0;
-	}
-
-
-	/**
-	 * Output the AJAX/JS for updating Facebook share counts.
-	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
-	 * @param  void
-	 * @return void Output is printed directly to the screen.
-	 *
-	 */
-	public function print_facebook_script() {
-        global $swp_user_options;
-        
-        if ( $swp_user_options['recover_shares'] == true ) {
-			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
-		} else {
-			$alternateURL = false;
-		}
-
-		echo '<script type="text/javascript">
-	        document.addEventListener("DOMContentLoaded", function() {
-	            var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
-	            if (swpButtonsExist) {
-					swp_admin_ajax = ' . admin_url( 'admin-ajax.php' ) . ';
-					swp_post_id=' . $this->id . ';
-					swp_post_url=' . get_permalink() . ';
-					swp_post_recovery_url = ' . $alternateURL . ';
-					socialWarfarePlugin.fetchFacebookShares();
-	    		}
-	        });
-	        </script>
-		';
-	}
-
-
-	/**
-	 * Process the Facebook shares response via admin-ajax.php.
-	 *
-	 * The object will be instantiated by the Cache_Loader class and it will
-	 * then call this method from there.
-	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	public function facebook_shares_update() {
-		global $swp_user_options;
-
-		$activity = $_POST['share_counts'];
-
-		$previous_activity = get_post_meta( $this->id, '_facebook_shares', true );
-
-		if ( $activity > $previous_activity || true === _swp_is_debug('force_new_shares') ) :
-			delete_post_meta( $this->id, '_facebook_shares' );
-			update_post_meta( $this->id, '_facebook_shares', $activity );
-		endif;
-
-		echo true;
-
-		wp_die();
 	}
 
 }
