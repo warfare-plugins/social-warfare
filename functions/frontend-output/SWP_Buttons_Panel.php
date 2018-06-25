@@ -231,11 +231,11 @@ class SWP_Buttons_Panel {
      *
      */
     public function establish_share_data() {
-        if ( isset( $this->post_data['ID'] ) ) {
-            $this->shares = get_social_warfare_shares( $this->post_data['ID'] );
-        } else if ( isset( $this->args['ID'] ) ) {
-            $this->shares = get_social_warfare_shares( $this->args['ID'] );
-        }
+        global $SWP_Post_Caches;
+
+        $post = $SWP_Post_Caches->get_post_cache( $this->post_data['ID'] );
+        $this->shares = $post->get_shares();
+        return $this;
     }
 
 
