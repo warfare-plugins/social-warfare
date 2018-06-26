@@ -450,7 +450,7 @@ class SWP_Buttons_Panel {
             '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" data-count="' . $this->total_shares .
-            '" data-floatcolor="' . $this->option('float_background_color') . '
+            '" data-float-color="' . $this->option('float_background_color') . '
             ">';
             //* This should be inserted via addon, not here.
             //'" data-emphasize="'.$this->option('emphasize_icons').'
@@ -631,7 +631,7 @@ class SWP_Buttons_Panel {
 	            ' scale-' . $this->option('float_size') * 100 .
 	            '" data-float="' . $float_location .
 	            '" data-count="' . count($this->networks) .
-	            '" data-floatcolor="' . $this->option('float_background_color') .
+	            '" data-float-color="' . $this->option('float_background_color') .
 	            '" data-screen-width="' . $this->option('float_screen_width') .
 	            '" data-transition="' . $this->option('transition') .
 	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
