@@ -83,11 +83,25 @@ class SWP_Post_Cache {
         // if ( false === $this->is_cache_fresh() ):
             add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
 
+			// Reverse this AND make it detect failures for redudancy.
 			if ( $swp_user_options['cache_method'] == 'legacy' ) :
 				$this->rebuild_cached_data();
 			else:
 				$this->trigger_cache_rebuild();
             endif;
+
+			// Example:
+			if ( $swp_user_options['cache_method'] == 'advanced' ):
+				$rebuild_status = $this->trigger_cache_rebuild();
+			endif;
+
+			if( $swp_user_options['cache_method'] == 'legacy' || 'failure' == $rebuild_status ):
+				$this->rebuild_cached_data();
+			endif;
+			// End Example
+			// This does the same as above except now it has a built in redundancy
+			// in case the wp_remote_post can't connect.
+
         // endif;
 
 		// Reset portions of the cache when a post is updated.
@@ -275,14 +289,15 @@ class SWP_Post_Cache {
         );
 
         $args = array(
-            'timeout'   => 0.01,
+            // 'timeout'   => 0.01,
             'blocking'  => false,
             'body'      => $data,
             'cookies'   => $_COOKIE,
-            'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+            'sslverify' => false,
         );
 
         $var = wp_remote_post( admin_url( 'admin-ajax.php', $args ) );
+		var_dump($var);
 	}
 
 
