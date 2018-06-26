@@ -41,7 +41,10 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
-		$this->register_cache_processes();
+
+        if( true === $this->is_active() ):
+    		$this->register_cache_processes();
+        endif;
 
 	}
 
@@ -105,9 +108,10 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	private function register_cache_processes() {
+
 		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ), 10, 1 );
-		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 	}
 
 
@@ -149,10 +153,10 @@ class SWP_Facebook extends SWP_Social_Network {
 			document.addEventListener("DOMContentLoaded", function() {
 				var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
 				if (swpButtonsExist) {
-					swp_admin_ajax = ' . admin_url( 'admin-ajax.php' ) . ';
-					swp_post_id=' . $this->post_id . ';
-					swp_post_url=' . get_permalink() . ';
-					swp_post_recovery_url = ' . $alternateURL . ';
+					swp_admin_ajax = "' . admin_url( 'admin-ajax.php' ) . '";
+					swp_post_id=' . (int) $this->post_id . ';
+					swp_post_url= "' . get_permalink() . '";
+					swp_post_recovery_url = "' . $alternateURL . '";
 					socialWarfarePlugin.fetchFacebookShares();
 				}
 			});
@@ -184,6 +188,8 @@ class SWP_Facebook extends SWP_Social_Network {
 			delete_post_meta( $post_id, '_facebook_shares' );
 			update_post_meta( $post_id, '_facebook_shares', $activity );
 		endif;
+
+		echo 'Logged ' . $activity . ' shares.';
 
 		wp_die();
 	}
