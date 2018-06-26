@@ -81,9 +81,7 @@ class SWP_Post_Cache {
 
 		// If the cache is expired, trigger the rebuild processes.
         if ( false === $this->is_cache_fresh() ):
-
 			$this->rebuild_cached_data();
-
         endif;
 
 		// Debugging
