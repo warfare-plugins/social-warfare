@@ -601,7 +601,7 @@ class SWP_Buttons_Panel {
 	            $float_location =  $this->option('float_location');
 	            $class = "swp_float_" . $this->option('float_location');
 	        else :
-	            $float_location = 'ignore';
+	            // $float_location = 'ignore';
 	        endif;
 	        if ( $this->options['float_style_source'] == true ) :
 	            $this->options['float_default_colors'] = $this->option('default_colors');
