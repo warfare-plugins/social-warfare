@@ -41,6 +41,14 @@ class SWP_Post_Cache_Loader {
 	public function __construct() {
         add_action( 'wp_ajax_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
         add_action( 'wp_ajax_nopriv_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
+
+		/**
+		 * Reset the cache timestamp when a post is updated. This will cause the
+		 * cache to rebuild on the next page load.
+		 *
+		 */
+		add_action( 'save_post', array( $this, 'update_post' ) );
+		add_action( 'publish_post', array( $this, 'update_post' ) );
 	}
 
 
@@ -90,6 +98,20 @@ class SWP_Post_Cache_Loader {
 			$Post_Cache->rebuild_cached_data();
 		endif;
 		wp_die();
+	}
+
+
+	/**
+	 * Resets the cache timestamp so that it will rebuild during the next page load.
+	 *
+	 * @since  3.0.10 | 26 JUN 2018 | Created the method.
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	protected function update_post( $post_id ) {
+		$Post_Cache = new SWP_Post_Cache( $_POST['post_id'] );
+		$Post_Cache->delete_timestamp();
 	}
 
 }
