@@ -29,7 +29,7 @@ class SWP_CURL {
 		// then add them to the multi-handle
 		if( is_array( $links ) ):
 			foreach ( $links as $network => $link_data ) :
-				if ( $link_data !== 0 || $network == 'google_plus' ) :
+				if ( $link_data !== 0 || ($link_data !== 0 && $network == 'google_plus') ) :
 					$curly[ $network ] = curl_init();
 
 					if ( $network == 'google_plus' ) :
