@@ -86,9 +86,6 @@ class SWP_Post_Cache {
 
         endif;
 
-		// Reset portions of the cache when a post is updated.
-        $this->init_publish_hooks();
-
 		// Debugging
 		$this->debug();
     }
