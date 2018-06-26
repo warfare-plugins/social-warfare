@@ -110,20 +110,6 @@ class SWP_Post_Cache {
 
 
 	/**
-     * Sets the cache to rebuild itself when a user creates or updates a post.
-     *
-     * @since  3.0.10 | 21 JUN 2018 | Created the method.
-     * @param  void
-     * @return void
-     *
-     */
-	protected function init_publish_hooks() {
-		add_action( 'save_post', array( $this, 'rebuild_cached_data' ) );
-		add_action( 'publish_post', array( $this, 'rebuild_cached_data' ) );
-	}
-
-
-	/**
 	 * SECTION #2: CHECKING IF THE CACHE IS FRESH
 	 *
 	 * The methods in this section are used to determine whether or not the
