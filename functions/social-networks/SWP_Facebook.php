@@ -41,11 +41,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
-
-		// Methods for updating cache related share counts
-        add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ) );
-		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
-		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		$this->register_cache_processes();
 
 	}
 
@@ -96,7 +92,30 @@ class SWP_Facebook extends SWP_Social_Network {
 
 
 	/**
+	 * Register Cache Processes
+	 *
+	 * This method registered the processes that will need to be run during the
+	 * cache rebuild process. The new caching class (codenames neo-advanced cache
+	 * method) allows us to hook in functions that will run during the cache
+	 * rebuild process by hooking into the swp_cache_rebuild hook.
+	 *
+	 * @since  3.0.10 | 26 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function register_cache_processes() {
+		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ) );
+		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+	}
+
+
+	/**
 	 * A function to add the Facebook updater to the footer hook.
+	 *
+	 * This is a standalone method because we only want to hook into the footer
+	 * and display the script during the cache rebuild process.
 	 *
 	 * @since  3.0.10 | 25 JUN 2018 | Created
 	 * @param  void
