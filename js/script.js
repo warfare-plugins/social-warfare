@@ -188,83 +188,70 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			swpRestoreSizes();
 		});
 	}
+
+
 	function swpRestoreSizes() {
-		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller').removeAttr('style');
-		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
 	}
 
-	function createFloatBar() {
-        var panel = $('.swp_social_panel').not('.swp_social_panelSide').first();
 
-        if (typeof panel == "undefined" || panel.data("float") == "none") {
+	function createFloatBar() {
+        //* .swp_social_panelSide is the side floater.
+        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+
+        //* If a side panel exists, do not create the top/bottom bar.
+        if (typeof panel == "undefined" || panel.data("float") != "top" && panel.data("float") != "bottom") {
             return;
         }
 
-		if ($('.nc_wrapper').length) {
-			$('.nc_wrapper').remove();
+		if ($(".nc_wrapper").length) {
+			$(".nc_wrapper").remove();
 		}
 
         var offset = panel.offset();
-		var mobileLocation = $('.swp_social_panelSide').data('float-mobile');
-		var sidePanel = $('.swp_social_panelSide').filter(':not(.mobile)');
-		var minWidth = sidePanel.data('screen-width');
-        var backgroundColor = $('.swp_social_panel').data('float-color');
+        var backgroundColor = panel.data("float-color");
+        var left = panel.data("align") == "center" ? 0 : offset.left;
+        var position = panel.data('float');
+        var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
-		if (offset.left < 100 || $(window).width() < minWidth) {
-			var position = mobileLocation;
-		} else {
-			var position = location;
+		if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
+			position = panel.data("float-mobile");
 		}
 
-		var el = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-        el.appendTo('body');
+        wrapper.addClass(position).hide().appendTo("body");
+        var clone = panel.clone();
+        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
-        if (location === 'left' || location === 'right') {
-            var position = panel.data('float-mobile');
-        } else {
-            var position = panel.data('float');
-        }
-
-		panel.clone().appendTo(el);
-
-		$('.nc_wrapper').hide().addClass(position);
-
-		var width = panel.outerWidth(true);
-		var offset = panel.offset();
-
-		$('.swp_social_panel').last().addClass('nc_floater').css({
-			width: width,
-			left: panel.data('align') == 'center' ? 0 : offset.left
-		});
-
-		$('.swp_social_panel .swp_count').css({ transition: 'padding .1s linear' });
+		$(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
 	}
+
 
 	function floatingBarReveal() {
 		// Adjust the floating bar
-		var panels = $('.swp_social_panel');
+		var panels = $(".swp_social_panel");
 		var location = panels.not('[data-float="float_ignore"]').eq(0).data('float');
 		var windowElement = $(window);
 		var windowHeight = windowElement.height();
-		var ncWrapper = $('.nc_wrapper');
-		var sidePanel = $('.swp_social_panelSide').filter(':not(.mobile)');
-		var position = $('.swp_social_panel').data('position');
-		var minWidth = sidePanel.data('screen-width');
+		var ncWrapper = $(".nc_wrapper");
+		var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
+		var position = $(".swp_social_panel").data("position");
+		var minWidth = sidePanel.data("screen-width");
 		var offsetOne = panels.eq(0).offset();
 		var scrollPos = windowElement.scrollTop();
 		var st = $(window).scrollTop();
 		var visible = false;
 
-		if (typeof window.swpOffsets == 'undefined') {
+		if (typeof window.swpOffsets == "undefined") {
 			window.swpOffsets = {};
 		}
 
-		if (location === 'right' || location === 'left') {
-			var mobileLocation = $('.swp_social_panel').data('float-mobile');
+		if (location === "right" || location === "left") {
+			var mobileLocation = $(".swp_social_panel").data("float-mobile");
 			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 
-			if ($('.swp_social_panel').not('.swp_social_panelSide').length) {
-				$('.swp_social_panel').not('.swp_social_panelSide, .nc_floater').each(function() {
+			if ($(".swp_social_panel").not(".swp_social_panelSide").length) {
+				$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function() {
 					var thisOffset = $(this).offset();
 					var thisHeight = $(this).height();
 					if (thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
@@ -274,10 +261,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				if (offsetOne.left < 100 || $(window).width() < minWidth) {
 					visible = true;
-					if (mobileLocation == 'bottom') {
-						location = 'bottom';
-					} else if (mobileLocation == 'top') {
-						location = 'top';
+					if (mobileLocation == "bottom") {
+						location = "bottom";
+					} else if (mobileLocation == "top") {
+						location = "top";
 					}
 				} else if (visible) {
 					visible == true;
@@ -290,24 +277,24 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					visible = false;
 				} else {
 					visible = true;
-					if(mobileLocation == 'bottom') {
-						location = 'bottom';
-					} else if (mobileLocation == 'top') {
-						location = 'top';
+					if(mobileLocation == "bottom") {
+						location = "bottom";
+					} else if (mobileLocation == "top") {
+						location = "top";
 					}
 				}
 			}
 
-			var transition = sidePanel.data('transition');
+			var transition = sidePanel.data("transition");
 
-			if (transition == 'slide') {
+			if (transition == "slide") {
 				if (visible == true) {
 					sidePanel.css(direction, "-150px");
 				} else {
 					sidePanel.css(direction, "5px");
 				}
 
-			} else if (transition == 'fade') {
+			} else if (transition == "fade") {
 				if (visible == true) {
 					sidePanel.fadeOut(200);
 				} else {
@@ -316,10 +303,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}
 		}
 
-		if (location == 'bottom' || location == 'top') {
+		if (location == "bottom" || location == "top") {
 			visible = false;
 
-			$('.swp_social_panel').not('.swp_social_panelSide, .nc_floater').each(function() {
+			$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function() {
 					var thisOffset = $(this).offset();
 					var thisHeight = $(this).height();
 					if (thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
@@ -332,10 +319,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				ncWrapper.hide();
 
 				// Add some padding to the page so it fits nicely at the top or bottom
-				if (location == 'bottom') {
-					$('body').animate({ 'padding-bottom': window.bodyPaddingBottom + 'px' }, 0);
-				} else if (location == 'top') {
-					$('body').animate({ 'padding-top': window.bodyPaddingTop + 'px' }, 0);
+				if (location == "bottom") {
+					$("body").animate({ "padding-bottom": window.bodyPaddingBottom + "px" }, 0);
+				} else if (location == "top") {
+					$("body").animate({ "padding-top": window.bodyPaddingTop + "px" }, 0);
 				}
 			} else {
 				var newPadding, firstOffset;
