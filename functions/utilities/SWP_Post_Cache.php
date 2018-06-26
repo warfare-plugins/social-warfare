@@ -81,9 +81,7 @@ class SWP_Post_Cache {
 
 		// If the cache is expired, trigger the rebuild processes.
         if ( false === $this->is_cache_fresh() ):
-
 			$this->rebuild_cached_data();
-
         endif;
 
 		// Debugging
@@ -128,7 +126,6 @@ class SWP_Post_Cache {
 	*
 	*/
 	protected function is_cache_fresh() {
-
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
 		 	return true;
@@ -283,14 +280,13 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function rebuild_cached_data() {
-
         $this->rebuild_share_counts();
         $this->rebuild_pinterest_image();
         $this->rebuild_open_graph_image();
         $this->reset_timestamp();
 
 		// A hook to run allowing third-party functions to run.
-		do_action( 'swp_cache_rebuild', array( 'post_id' => $this->id ) );
+		do_action( 'swp_cache_rebuild', $this->id );
 	}
 
 

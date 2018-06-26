@@ -488,8 +488,8 @@ add_action( 'plugins_loaded' , 'swp_initiate_plugin' , 20 );
 function swp_initiate_plugin() {
 
 	// All of these files need refactored and then migrated into the functions above
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
-	require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
+	// require_once SWP_PLUGIN_DIR . '/functions/utilities/share-count-function.php';
+	// require_once SWP_PLUGIN_DIR . '/functions/utilities/share-cache.php';
 }
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
