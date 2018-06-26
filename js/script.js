@@ -159,6 +159,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 					post_id: swp_post_id,
 					share_counts: fShares
 				};
+                
+                $.post(swp_admin_ajax, swpPostData);
 			}
 		});
 	}
