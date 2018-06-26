@@ -446,6 +446,7 @@ class SWP_Buttons_Panel {
             ' swp_other_' . $this->option('hover_colors') .
             ' scale-' . $this->option('button_size') * 100 .
             ' scale-' . $this->option('button_alignment') .
+            '" data-min-width="' . $this->option('float_screen_width') .
             '" data-position="' . $this->option('location_post') .
             '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
@@ -632,7 +633,7 @@ class SWP_Buttons_Panel {
 	            '" data-float="' . $float_location .
 	            '" data-count="' . count($this->networks) .
 	            '" data-float-color="' . $this->option('float_background_color') .
-	            '" data-screen-width="' . $this->option('float_screen_width') .
+	            '" data-min-width="' . $this->option('float_screen_width') .
 	            '" data-transition="' . $this->option('transition') .
 	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
 	        if ($this->option('totals_alignment') === 'totals_left') :
