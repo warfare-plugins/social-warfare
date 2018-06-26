@@ -241,62 +241,79 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 	}
 
+    //* TODO This function.
     function toggleSideButtons() {
-        var panel = $(".swp_social_panel").first();
+        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
-		var minWidth = sidePanel.data("screen-width");
+		var minWidth = sidePanel.data("min-width");
 		var scrollPos = $(window).scrollTop();
         var mobileLocation = $(".swp_social_panel").data("float-mobile");
-        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-        var visible = false;
         var location = panel.data('float');
+        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+        var visiblePanel = false;
 
-        if ($(".swp_social_panel").not(".swp_social_panelSide").length) {
-            $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function() {
+        if (panel.length) {
+            $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
                 var offset = $(this).offset();
-                var thisHeight = $(this).height();
-                if (offset.top + thisHeight > scrollPos && offset.top < scrollPos + $(window).height()) {
-                    visible = true;
+
+                //* Do not display the floating bar before the buttons.
+                if (index === 0 && offset.top > scrollPos) {
+                    visiblePanel = true;
+                }
+
+                //* Do not display the floating bar if a panel is currently visiblePanel.
+                if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
+                    visiblePanel = true;
                 }
             });
 
-            if (panel.offset().left < 100 || $(window).width() < minWidth) {
-                visible = true;
-                if (mobileLocation == "bottom") {
-                    location = "bottom";
-                } else if (mobileLocation == "top") {
-                    location = "top";
-                }
-            } else if (visible) {
-                visible == true;
-            } else {
-                visible = false;
-            }
-        } else {
-            if ($(window).width() > minWidth) {
+       //* This is basically checking for mobile. But these do nothing for mobile.
+            // if ($(window).width() < minWidth) {
+            //     if (direction == "left" && panel.offset().left < 100) {
+            //         visiblePanel = true;
+            //
+            //     } else if (panel.offset().right < 100) {
+            //         visiblePanel = true;
+            //
+            //     } else {
+            //         visiblePanel = false;
+            //     }
+            //
+            //     //* TODO none of these variables are used.
+            //     // if (mobileLocation == "bottom") {
+            //     //     location = "bottom";
+            //     // } else if (mobileLocation == "top") {
+            //     //     location = "top";
+            //     // }
+            // } else {
+            //     visiblePanel = false;
+            // }
 
-                visible = false;
+        } else {
+            //* No buttons panel!
+            if ($(window).width() > minWidth) {
+                visiblePanel = false;
             } else {
-                visible = true;
-                if(mobileLocation == "bottom") {
-                    location = "bottom";
-                } else if (mobileLocation == "top") {
-                    location = "top";
-                }
+                visiblePanel = true;
+
+                //* TODO none of these variables are used.
+                // if (mobileLocation == "bottom") {
+                //     location = "bottom";
+                // } else if (mobileLocation == "top") {
+                //     location = "top";
+                // }
             }
         }
 
-        var transition = sidePanel.data("transition");
-
-        if (transition == "slide") {
-            if (visible == true) {
+        if (sidePanel.data("transition") == "slide") {
+            if (visiblePanel == true) {
                 sidePanel.css(direction, "-150px");
             } else {
                 sidePanel.css(direction, "5px");
             }
 
-        } else if (transition == "fade") {
-            if (visible == true) {
+        } else {
+            if (visiblePanel == true) {
                 sidePanel.fadeOut(200);
             } else {
                 sidePanel.fadeIn(200).css("display", "flex");
@@ -305,52 +322,51 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     }
 
     function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").first();
+        var panel = $(".swp_social_panel").not('.nc_wrapper').first();
         var location = panel.data('float');
 		var scrollPos = $(window).scrollTop();
-        var visible = false;
+        var visiblePanel = false;
+        var paddingTop = absint($('body').css('padding-top').replace('px', ''));
+        var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
 
         $(".swp_social_panel").not(".nc_floater").each(function(index) {
             var offset = $(this).offset();
 
             //* Do not display the floating bar before the buttons.
             if (index === 0 && offset.top > scrollPos) {
-                visible = true;
+                visiblePanel = true;
             }
 
-            //* Do not display the floating bar if a panel is currently visible.
+            //* Do not display the floating bar if a panel is currently visiblePanel.
             if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
-                visible = true;
+                visiblePanel = true;
             }
         });
 
-        if (visible) {
-            // Hide the Floating bar
-            $(".nc_wrapper").hide();
-
+        if (visiblePanel) {
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == "bottom") {
-                $("body").animate({ "padding-bottom": window.bodyPaddingBottom + "px" }, 0);
-            } else if (location == "top") {
-                $("body").animate({ "padding-top": window.bodyPaddingTop + "px" }, 0);
+                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
+            } else {
+                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
             }
-        } else {
-            var newPadding, firstOffset;
-            // Show the floating bar
-            $(".nc_wrapper").show();
 
+            $(".nc_wrapper").hide();
+        } else {
+            var newPadding;
 
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == 'bottom') {
-                newPadding = window.bodyPaddingBottom + 50;
+                newPadding = paddingBottom + 50;
                 $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-            } else if (location == 'top') {
-                firstOffset = $('.swp_social_panel').not('.swp_social_panelSide, .nc_wrapper .swp_social_panel').first().offset();
-                if (firstOffset.top > scrollPos + $(window).height()) {
-                    newPadding = window.bodyPaddingTop + 50;
+            } else {
+                if (panel.offset().top > scrollPos + $(window).height()) {
+                    newPadding = paddingTop + 50;
                     $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
                 }
             }
+
+            $(".nc_wrapper").show();
         }
     }
 
@@ -516,11 +532,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		handleWindowOpens();
 		initShareButtons();
 		var sidePanel = $('.swp_social_panelSide');
-
-		// Fetch the padding amount to make space later for the floating bars
-		window.bodyPaddingTop = absint($('body').css('padding-top').replace('px', ''));
-		window.bodyPaddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
-
 		var swp_hover = false;
 		$('.swp_social_panel').hover(
 		    function () {
