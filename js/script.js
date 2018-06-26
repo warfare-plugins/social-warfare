@@ -212,14 +212,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var offset = panel.offset();
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : offset.left;
-        var position = panel.data('float');
+        var location = panel.data('float');
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
 		if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
 			position = panel.data("float-mobile");
 		}
 
-        wrapper.addClass(position).hide().appendTo("body");
+        wrapper.addClass(location).hide().appendTo("body");
         var clone = panel.clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
@@ -227,123 +227,132 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 
-	function floatingBarReveal() {
+	function toggleFloatingButtons() {
 		// Adjust the floating bar
-		var panels = $(".swp_social_panel");
-		var location = panels.not('[data-float="float_ignore"]').eq(0).data('float');
-		var windowElement = $(window);
-		var windowHeight = windowElement.height();
-		var ncWrapper = $(".nc_wrapper");
-		var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
-		var position = $(".swp_social_panel").data("position");
-		var minWidth = sidePanel.data("screen-width");
-		var offsetOne = panels.eq(0).offset();
-		var scrollPos = windowElement.scrollTop();
-		var st = $(window).scrollTop();
-		var visible = false;
-
-		if (typeof window.swpOffsets == "undefined") {
-			window.swpOffsets = {};
-		}
+		var panel = $(".swp_social_panel").first();
+		var location = panel.data('float');
 
 		if (location === "right" || location === "left") {
-			var mobileLocation = $(".swp_social_panel").data("float-mobile");
-			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-
-			if ($(".swp_social_panel").not(".swp_social_panelSide").length) {
-				$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function() {
-					var thisOffset = $(this).offset();
-					var thisHeight = $(this).height();
-					if (thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
-						visible = true;
-					}
-				});
-
-				if (offsetOne.left < 100 || $(window).width() < minWidth) {
-					visible = true;
-					if (mobileLocation == "bottom") {
-						location = "bottom";
-					} else if (mobileLocation == "top") {
-						location = "top";
-					}
-				} else if (visible) {
-					visible == true;
-				} else {
-					visible = false;
-				}
-			} else {
-				if ($(window).width() > minWidth) {
-
-					visible = false;
-				} else {
-					visible = true;
-					if(mobileLocation == "bottom") {
-						location = "bottom";
-					} else if (mobileLocation == "top") {
-						location = "top";
-					}
-				}
-			}
-
-			var transition = sidePanel.data("transition");
-
-			if (transition == "slide") {
-				if (visible == true) {
-					sidePanel.css(direction, "-150px");
-				} else {
-					sidePanel.css(direction, "5px");
-				}
-
-			} else if (transition == "fade") {
-				if (visible == true) {
-					sidePanel.fadeOut(200);
-				} else {
-					sidePanel.fadeIn(200).css("display", "flex");
-				}
-			}
+            toggleSideButtons();
 		}
 
 		if (location == "bottom" || location == "top") {
-			visible = false;
-
-			$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function() {
-					var thisOffset = $(this).offset();
-					var thisHeight = $(this).height();
-					if (thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight) {
-						visible = true;
-					}
-			});
-
-			if (visible) {
-				// Hide the Floating bar
-				ncWrapper.hide();
-
-				// Add some padding to the page so it fits nicely at the top or bottom
-				if (location == "bottom") {
-					$("body").animate({ "padding-bottom": window.bodyPaddingBottom + "px" }, 0);
-				} else if (location == "top") {
-					$("body").animate({ "padding-top": window.bodyPaddingTop + "px" }, 0);
-				}
-			} else {
-				var newPadding, firstOffset;
-				// Show the floating bar
-				ncWrapper.show();
-
-
-				// Add some padding to the page so it fits nicely at the top or bottom
-				if (location == 'bottom') {
-					newPadding = window.bodyPaddingBottom + 50;
-					$('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-				} else if (location == 'top') {
-					firstOffset = $('.swp_social_panel').not('.swp_social_panelSide, .nc_wrapper .swp_social_panel').first().offset();
-					if (firstOffset.top > scrollPos + windowHeight) {
-						newPadding = window.bodyPaddingTop + 50;
-						$('body').animate({ 'padding-top': newPadding + 'px' }, 0);
-					}
-				}
-			}
+			toggleFloatingBar();
 		}
 	}
+
+    function toggleSideButtons() {
+        var panel = $(".swp_social_panel").first();
+        var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
+		var minWidth = sidePanel.data("screen-width");
+		var scrollPos = $(window).scrollTop();
+        var mobileLocation = $(".swp_social_panel").data("float-mobile");
+        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+        var visible = false;
+        var location = panel.data('float');
+
+        if ($(".swp_social_panel").not(".swp_social_panelSide").length) {
+            $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function() {
+                var offset = $(this).offset();
+                var thisHeight = $(this).height();
+                if (offset.top + thisHeight > scrollPos && offset.top < scrollPos + $(window).height()) {
+                    visible = true;
+                }
+            });
+
+            if (panel.offset().left < 100 || $(window).width() < minWidth) {
+                visible = true;
+                if (mobileLocation == "bottom") {
+                    location = "bottom";
+                } else if (mobileLocation == "top") {
+                    location = "top";
+                }
+            } else if (visible) {
+                visible == true;
+            } else {
+                visible = false;
+            }
+        } else {
+            if ($(window).width() > minWidth) {
+
+                visible = false;
+            } else {
+                visible = true;
+                if(mobileLocation == "bottom") {
+                    location = "bottom";
+                } else if (mobileLocation == "top") {
+                    location = "top";
+                }
+            }
+        }
+
+        var transition = sidePanel.data("transition");
+
+        if (transition == "slide") {
+            if (visible == true) {
+                sidePanel.css(direction, "-150px");
+            } else {
+                sidePanel.css(direction, "5px");
+            }
+
+        } else if (transition == "fade") {
+            if (visible == true) {
+                sidePanel.fadeOut(200);
+            } else {
+                sidePanel.fadeIn(200).css("display", "flex");
+            }
+        }
+    }
+
+    function toggleFloatingBar() {
+        var panel = $(".swp_social_panel").first();
+        var location = panel.data('float');
+		var scrollPos = $(window).scrollTop();
+        var visible = false;
+
+        $(".swp_social_panel").not(".nc_floater").each(function(index) {
+            var offset = $(this).offset();
+
+            //* Do not display the floating bar before the buttons.
+            if (index === 0 && offset.top > scrollPos) {
+                visible = true;
+            }
+
+            //* Do not display the floating bar if a panel is currently visible.
+            if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
+                visible = true;
+            }
+        });
+
+        if (visible) {
+            // Hide the Floating bar
+            $(".nc_wrapper").hide();
+
+            // Add some padding to the page so it fits nicely at the top or bottom
+            if (location == "bottom") {
+                $("body").animate({ "padding-bottom": window.bodyPaddingBottom + "px" }, 0);
+            } else if (location == "top") {
+                $("body").animate({ "padding-top": window.bodyPaddingTop + "px" }, 0);
+            }
+        } else {
+            var newPadding, firstOffset;
+            // Show the floating bar
+            $(".nc_wrapper").show();
+
+
+            // Add some padding to the page so it fits nicely at the top or bottom
+            if (location == 'bottom') {
+                newPadding = window.bodyPaddingBottom + 50;
+                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+            } else if (location == 'top') {
+                firstOffset = $('.swp_social_panel').not('.swp_social_panelSide, .nc_wrapper .swp_social_panel').first().offset();
+                if (firstOffset.top > scrollPos + $(window).height()) {
+                    newPadding = window.bodyPaddingTop + 50;
+                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
+                }
+            }
+        }
+    }
 
   function centerSidePanel() {
       var sidePanel = jQuery("[class*=float-position-center]");
@@ -371,7 +380,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			handleWindowOpens();
 			$(window).scrollTop();
 			$(window).scroll(swp.throttle(50, function() {
-				floatingBarReveal();
+				toggleFloatingButtons();
 			}));
 			$(window).trigger('scroll');
 			// $('.swp_social_panel').css({'opacity':1});
