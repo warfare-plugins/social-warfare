@@ -105,7 +105,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	private function register_cache_processes() {
-		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ) );
+		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ), 10, 1 );
 		add_action( 'wp_ajax_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 		add_action( 'wp_ajax_nopriv_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 	}
@@ -122,7 +122,8 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @return void
 	 *
 	 */
-	public function add_facebook_footer_hook() {
+	public function add_facebook_footer_hook( $post_id ) {
+        $this->post_id = $post_id;
 		add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
 	}
 
@@ -135,13 +136,11 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @return void Output is printed directly to the screen.
 	 *
 	 */
-	public function print_facebook_script( $args ) {
+	public function print_facebook_script() {
 		global $swp_user_options;
 
-		$post_id = $args['post_id'];
-
 		if ( $swp_user_options['recover_shares'] == true ) {
-			$alternateURL = SWP_Permalink::get_alt_permalink( $info['postID'] );
+			$alternateURL = SWP_Permalink::get_alt_permalink( $this->post_id );
 		} else {
 			$alternateURL = false;
 		}
@@ -151,7 +150,7 @@ class SWP_Facebook extends SWP_Social_Network {
 				var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
 				if (swpButtonsExist) {
 					swp_admin_ajax = ' . admin_url( 'admin-ajax.php' ) . ';
-					swp_post_id=' . $this->id . ';
+					swp_post_id=' . $this->post_id . ';
 					swp_post_url=' . get_permalink() . ';
 					swp_post_recovery_url = ' . $alternateURL . ';
 					socialWarfarePlugin.fetchFacebookShares();

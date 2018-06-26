@@ -237,8 +237,7 @@ class SWP_Buttons_Panel {
      */
     public function establish_share_data() {
         global $SWP_Post_Caches;
-        $post = $SWP_Post_Caches->get_post_cache( $this->post_data['ID'] );
-        $this->shares = $post->get_shares();
+        $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_data['ID'] )->get_shares();
         return $this;
     }
 
@@ -471,8 +470,6 @@ class SWP_Buttons_Panel {
             echo $html;
         endif;
 
-        $this->handle_timestamp();
-
         return $html;
     }
 
@@ -649,8 +646,6 @@ class SWP_Buttons_Panel {
 	            echo $html;
 	        endif;
 
-            $this->handle_timestamp();
-
 	        return $html;
 		endif;
 
@@ -801,15 +796,6 @@ class SWP_Buttons_Panel {
         return $html;
     }
 
-
-    protected function handle_timestamp() {
-        if ( swp_is_cache_fresh( $this->post_data['ID'] ) == false  && isset( $this->options['cache_method'] ) && 'legacy' === $this->options['cache_method'] ) :
-      			delete_post_meta( $this->post_data['ID'], 'swp_cache_timestamp' );
-      			update_post_meta( $this->post_data['ID'], 'swp_cache_timestamp', floor( ( (date( 'U' ) / 60) / 60) ) );
-    		endif;
-    }
-
-
     /**
      * Handles whether to echo the HTML or return it as a string.
      *
@@ -868,8 +854,6 @@ class SWP_Buttons_Panel {
         if ( $this->has_plugin_conflict() ) {
             return;
         }
-
-        $this->handle_timestamp();
 
         return $this->do_print();
     }
