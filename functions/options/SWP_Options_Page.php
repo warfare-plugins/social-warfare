@@ -386,19 +386,19 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $frame_buster->add_option( $frame_buster_toggle );
 
-        $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ), 'caching_method' );
-        $caching_method->set_priority( 60 );
-
-            //* cacheMethod => cache_method
-            $cache_method = new SWP_Option_Select( __( 'Cache Rebuild Method', 'social-warfare' ), 'cache_method' );
-            $cache_method->set_choices( [
-                'advanced'  => __( 'Advanced Cache Triggering', 'social-warfare' ),
-                'legacy'    => __( 'Legacy Cache Rebuilding During Page Loads', 'social-warfare' )
-            ])
-                ->set_default( 'advanced' )
-                ->set_size( 'sw-col-300' );
-
-            $caching_method->add_option( $cache_method );
+        // $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ), 'caching_method' );
+        // $caching_method->set_priority( 60 );
+            //
+            // //* cacheMethod => cache_method
+            // $cache_method = new SWP_Option_Select( __( 'Cache Rebuild Method', 'social-warfare' ), 'cache_method' );
+            // $cache_method->set_choices( [
+            //     'advanced'  => __( 'Advanced Cache Triggering', 'social-warfare' ),
+            //     'legacy'    => __( 'Legacy Cache Rebuilding During Page Loads', 'social-warfare' )
+            // ])
+            //     ->set_default( 'advanced' )
+            //     ->set_size( 'sw-col-300' );
+            //
+            // $caching_method->add_option( $cache_method );
 
         $full_content = new SWP_Options_Page_Section( __( 'Full Content vs. Excerpts', 'social-warfare' ), 'full_content' );
         $full_content->set_priority( 70 )
@@ -411,7 +411,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
             $full_content->add_option( $full_content_toggle );
 
-        $advanced->add_sections( [$frame_buster, $caching_method, $full_content] );
+        $advanced->add_sections( [$frame_buster, $full_content] );
 
         $this->tabs->advanced = $advanced;
 
