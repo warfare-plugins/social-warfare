@@ -80,29 +80,11 @@ class SWP_Post_Cache {
         $this->establish_share_counts();
 
 		// If the cache is expired, trigger the rebuild processes.
-        // if ( false === $this->is_cache_fresh() ):
-            add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
+        if ( false === $this->is_cache_fresh() ):
 
-			// Reverse this AND make it detect failures for redudancy.
-			if ( $swp_user_options['cache_method'] == 'legacy' ) :
-				$this->rebuild_cached_data();
-			else:
-				$this->trigger_cache_rebuild();
-            endif;
+			$this->rebuild_cached_data();
 
-			// Example:
-			if ( $swp_user_options['cache_method'] == 'advanced' ):
-				$rebuild_status = $this->trigger_cache_rebuild();
-			endif;
-
-			if( $swp_user_options['cache_method'] == 'legacy' || 'failure' == $rebuild_status ):
-				$this->rebuild_cached_data();
-			endif;
-			// End Example
-			// This does the same as above except now it has a built in redundancy
-			// in case the wp_remote_post can't connect.
-
-        // endif;
+        endif;
 
 		// Reset portions of the cache when a post is updated.
         $this->init_publish_hooks();
