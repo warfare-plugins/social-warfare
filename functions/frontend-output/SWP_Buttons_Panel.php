@@ -447,7 +447,7 @@ class SWP_Buttons_Panel {
             ' scale-' . $this->option('button_size') * 100 .
             ' scale-' . $this->option('button_alignment') .
             '" data-min-width="' . $this->option('float_screen_width') .
-            '" data-position="' . $this->option('location_post') .
+            '" data-panel-position="' . $this->option('location_post') .
             '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" data-count="' . $this->total_shares .
@@ -628,7 +628,7 @@ class SWP_Buttons_Panel {
 	            ' swp_other_' . $this->option('float_hover_colors') . '
 	            ' . $this->option('transition') . '
 	            ' . $class . '
-	            ' . '" data-position="' . $this->option('location_post') .
+	            ' . '" data-panel-position="' . $this->option('location_post') .
 	            ' scale-' . $this->option('float_size') * 100 .
 	            '" data-float="' . $float_location .
 	            '" data-count="' . count($this->networks) .
