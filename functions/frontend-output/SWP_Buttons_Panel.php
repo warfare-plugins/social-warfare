@@ -495,7 +495,6 @@ class SWP_Buttons_Panel {
 		else:
 			return false;
 		endif;
-
 	}
 
 
@@ -576,7 +575,6 @@ class SWP_Buttons_Panel {
      * @since 3.0.8 | 22 MAY 2018 | Added the $blacklist and in_array conditional.
      */
     public function render_floating_HTML( $echo = true ) {
-        //* BEGIN Old boilerplate that needs to be refactored.
         $blacklist = ['none', 'top', 'bottom'];
 
         if ( in_array( $this->option('float_location'), $blacklist ) ) :
@@ -585,43 +583,52 @@ class SWP_Buttons_Panel {
 
 		if( is_singular() && 'none' !== $this->get_float_location() ):
 
+            //* BEGIN Old boilerplate that needs to be refactored.
 	        $class = "";
 	        $size = $this->option('float_size') * 100;
 	        $side = $this->option('float_location');
 	        $max_buttons = $this->option( 'float_button_count' );
+
 			if( false == $max_buttons || 0 == $max_buttons ):
 				$max_buttons = 5;
 			endif;
+
 	        // Acquire the social stats from the networks
 	        if ( isset( $array['url'] ) ) :
 	            $buttonsArray['url'] = $array['url'];
 	        else :
 	            $buttonsArray['url'] = get_permalink( $this->post_id );
 	        endif;
+
 	        if ( 'none' != $this->get_float_location() ) :
 	            $float_location =  $this->option('float_location');
 	            $class = "swp_float_" . $this->option('float_location');
 	        else :
 	            // $float_location = 'ignore';
 	        endif;
+
 	        if ( $this->options['float_style_source'] == true ) :
 	            $this->options['float_default_colors'] = $this->option('default_colors');
 	            $this->options['float_single_colors'] = $this->option('single_colors');
 	            $this->options['float_hover_colors'] = $this->option('hover_colors');
 	        endif;
+
 	        // *Get the vertical position
 	        if ($this->option('float_alignment')  ) :
 	            $class .= " swp_side_" . $this->option('float_alignment');
 	        endif;
+
 	        // *Set button size
 	        if ( isset($this->options['float_size']) ) :
 	            $position = $this->option('float_alignment');
 	            $class .= " scale-${size} float-position-${position}-${side}";
 	        endif;
-	        //* END old boilerplate.
-	        $share_counts = $this->render_total_shares_HTML();
 
+	        //* END old boilerplate.
+
+	        $share_counts = $this->render_total_shares_HTML();
 	        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
+
 	        $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->option('float_button_shape') .
 	            ' swp_default_' . $this->option('float_default_colors') .
 	            ' swp_individual_' . $this->option('float_single_colors') .
@@ -636,13 +643,16 @@ class SWP_Buttons_Panel {
 	            '" data-min-width="' . $this->option('float_screen_width') .
 	            '" data-transition="' . $this->option('transition') .
 	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
+
 	        if ($this->option('totals_alignment') === 'totals_left') :
 	            $buttons = $share_counts . $buttons;
 	        else:
 	            $buttons .= $share_counts;
 	        endif;
+
 	        $html = $container . $buttons . '</div>';
 	        $this->html = $html;
+
 	        if ( $echo ) :
 	            echo $html;
 	        endif;
@@ -754,10 +764,12 @@ class SWP_Buttons_Panel {
     public function render_buttons_HTML( $max_count = null) {
         $html = '';
         $count = 0;
+
         foreach( $this->networks as $key => $network ) {
             if ( isset( $max_count) && $count === $max_count) :
                 return $html;
             endif;
+            
 			// Pass in some context for this specific panel of buttons
 			$context['shares'] = $this->shares;
 			$context['options'] = $this->options;
@@ -784,9 +796,10 @@ class SWP_Buttons_Panel {
 
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-
-
-        if ( empty( $this->shares['total_shares']) || $this->shares['total_shares'] < $this->option('minimum_shares') || false == $this->option('total_shares') || $this->is_shortcode && !$totals_argument && !empty( $this->args['buttons'] ) ) {
+        if ( empty( $this->shares['total_shares'])
+        || $this->shares['total_shares'] < $this->option('minimum_shares')
+        || false == $this->option('total_shares')
+        || $this->is_shortcode && !$totals_argument && !empty( $this->args['buttons'] ) ) {
             return '';
         }
 
