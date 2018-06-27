@@ -26,7 +26,6 @@
                 //* A custom value is set for this input.
                 if (value.indexOf('outlines') > 0 ) {
                     customOutlines.show();
-
                 } else {
                     customColor.show();
                 }
@@ -42,7 +41,11 @@
 
             if ( value.indexOf("custom") !== -1) {
                 //* A custom value is set for this input.
-                value.indexOf('outlines') > 0 ? customOutlines.show() : customColor.show();
+                if (value.indexOf('outlines') > 0 ) {
+                    customOutlines.show();
+                } else {
+                    customColor.show();
+                }
             }
         });
 
@@ -90,6 +93,7 @@
             }
         });
 
+        //* Hide or show the inputs based on results from above.
         visibility.customColor ? customColor.slideDown() : customColor.slideUp();
         visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
 
@@ -99,42 +103,11 @@
                 $("#color-notice").fadeOut("slow");
             });
         } else {
-            if ($("#color-notice")) {
-                $(colorNotice).fadeOut("slow");
+            if ($("#color-notice").length) {
+                $("#color-notice").fadeOut("slow");
             }
         }
 
-    }
-
-    function createNotice(message, parentElement) {
-        var notice = document.createElement("div");
-        var style = "background-color: #ced3dc; color: #30394f; padding: 5px 10px; font-size: 16px !important;";
-
-        var dismiss = document.createElement("span");
-        dismiss.textContent = "Dismiss this notice";
-
-        dismiss.addEventListener("click", function(e) {
-            jQuery(e.target.parentNode).slideUp();
-        });
-
-        notice.style = style;
-        notice.innerHTML = message;
-        notice.appendChild(dismiss)
-
-        parentElement.appendChild(notice);
-    }
-
-    function createStumbleUponNotice() {
-        var message = '<h3><u>Big news</u></h3>';
-        message += '<p>As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform.<br/>Instead, they are moving in with Mix.</p>';
-        message += '<p>While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API.</b>';
-        message += '<br/>You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.</p>';
-
-        var parent = document.querySelector(".social_networks_description_wrapper");
-
-        if (typeof parent !== 'undefined') {
-            createNotice(message, parent)
-        }
     }
 
 
@@ -424,19 +397,21 @@
 
 	function updateButtonPreviews() {
 
+        //* Maps out the button themes.
 		var defaults = {
-				full_color: 'Full Color',
-				light_gray: 'Light Gray',
-				medium_gray: 'Medium Gray',
-				dark_gray: 'Dark Gray',
-				light_gray_outlines: 'Light Gray Outlines',
-				medium_gray_outlines: 'Medium Gray Outlines',
-				dark_gray_outlines: 'Dark Gray Outlines',
-				color_outlines: 'Color Outlines',
-				custom_color: 'Custom Color',
-				custom_color_outlines: 'Custom Color Outlines'
-			};
+			full_color: 'Full Color',
+			light_gray: 'Light Gray',
+			medium_gray: 'Medium Gray',
+			dark_gray: 'Dark Gray',
+			light_gray_outlines: 'Light Gray Outlines',
+			medium_gray_outlines: 'Medium Gray Outlines',
+			dark_gray_outlines: 'Dark Gray Outlines',
+			color_outlines: 'Color Outlines',
+			custom_color: 'Custom Color',
+			custom_color_outlines: 'Custom Color Outlines'
+		};
 
+        //* Defines which themes are available per style.
 		var availableOptions = {
 			flat_fresh: defaults,
 			leaf: defaults,
@@ -641,11 +616,10 @@
 			activity: 'register',
 			name_key: key,
 			item_id: item_id,
-			license_key: $( 'input[name="'+key+'_license_key"]' ).val()
+			license_key: $( 'input[name="' + key + '_license_key"]' ).val()
 		};
 
 		loadingScreen();
-
 
 		$.post( ajaxurl, data, function( response ) {
 			// If the response was a failure...
@@ -679,6 +653,7 @@
 			name_key: key,
 			item_id: item_id,
 		};
+
 		loadingScreen();
 
 		// Ping the home server to create a registration log
@@ -833,7 +808,6 @@
 		getSystemStatus();
 		customUploaderInit();
 		set_ctt_preview();
-        // createStumbleUponNotice();
 	});
 
 
