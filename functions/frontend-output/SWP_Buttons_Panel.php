@@ -884,7 +884,8 @@ class SWP_Buttons_Panel {
      *
      */
     public function print_js_variables() {
-        $float_before_content = swp_get_option( 'float_before_content' );
+        global $swp_user_options;
+        $float_before_content = $swp_user_options['float_before_content'];
 
         echo '<script type="text/javascript">
               var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
