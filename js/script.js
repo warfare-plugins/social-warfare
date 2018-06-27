@@ -274,7 +274,27 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 	}
 
+    function toggleMobileButtons() {
+        var panel = $(".swp_social_panel").first();
+        var location = panel.data("float-mobile");
 
+        if (direction == "left" && panel.offset().left < 100) {
+            visiblePanel = true;
+
+        } else if (panel.offset().right < 100) {
+            visiblePanel = true;
+
+        } else {
+            visiblePanel = false;
+        }
+
+        //* TODO none of these variables are used.
+        // if (mobileLocation == "bottom") {
+        //     location = "bottom";
+        // } else if (mobileLocation == "top") {
+        //     location = "top";
+        // }
+    }
 
     //* TODO This function.
     function toggleSideButtons() {
