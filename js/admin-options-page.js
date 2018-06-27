@@ -26,7 +26,6 @@
                 //* A custom value is set for this input.
                 if (value.indexOf('outlines') > 0 ) {
                     customOutlines.show();
-
                 } else {
                     customColor.show();
                 }
@@ -42,7 +41,11 @@
 
             if ( value.indexOf("custom") !== -1) {
                 //* A custom value is set for this input.
-                value.indexOf('outlines') > 0 ? customOutlines.show() : customColor.show();
+                if (value.indexOf('outlines') > 0 ) {
+                    customOutlines.show();
+                } else {
+                    customColor.show();
+                }
             }
         });
 
@@ -90,6 +93,7 @@
             }
         });
 
+        //* Hide or show the inputs based on results from above.
         visibility.customColor ? customColor.slideDown() : customColor.slideUp();
         visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
 
@@ -99,8 +103,8 @@
                 $("#color-notice").fadeOut("slow");
             });
         } else {
-            if ($("#color-notice")) {
-                $(colorNotice).fadeOut("slow");
+            if ($("#color-notice").length) {
+                $("#color-notice").fadeOut("slow");
             }
         }
 
