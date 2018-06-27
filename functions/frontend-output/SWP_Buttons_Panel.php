@@ -123,6 +123,8 @@ class SWP_Buttons_Panel {
 		$this->establish_permalink();
         $this->establish_active_buttons();
 
+        add_action( 'wp_footer', array( $this, 'print_js_variables' ) );
+
         if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
                 echo "<pre>";
                 var_dump($this);
@@ -769,7 +771,7 @@ class SWP_Buttons_Panel {
             if ( isset( $max_count) && $count === $max_count) :
                 return $html;
             endif;
-            
+
 			// Pass in some context for this specific panel of buttons
 			$context['shares'] = $this->shares;
 			$context['options'] = $this->options;
@@ -870,5 +872,22 @@ class SWP_Buttons_Panel {
         }
 
         return $this->do_print();
+    }
+
+
+    /**
+     * Echoes selected admin settings from the database to javascript.
+     *
+     * @since  3.1.0 | 27 JUN 2018 | Created the method.
+     * @access public
+     * @return void
+     *
+     */
+    public function print_js_variables() {
+        $float_before_content = swp_get_option( 'float_before_content' );
+
+        echo '<script type="text/javascript">
+              var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
+              </script>';
     }
 }
