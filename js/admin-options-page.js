@@ -110,37 +110,6 @@
 
     }
 
-    function createNotice(message, parentElement) {
-        var notice = document.createElement("div");
-        var style = "background-color: #ced3dc; color: #30394f; padding: 5px 10px; font-size: 16px !important;";
-
-        var dismiss = document.createElement("span");
-        dismiss.textContent = "Dismiss this notice";
-
-        dismiss.addEventListener("click", function(e) {
-            jQuery(e.target.parentNode).slideUp();
-        });
-
-        notice.style = style;
-        notice.innerHTML = message;
-        notice.appendChild(dismiss)
-
-        parentElement.appendChild(notice);
-    }
-
-    function createStumbleUponNotice() {
-        var message = '<h3><u>Big news</u></h3>';
-        message += '<p>As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform.<br/>Instead, they are moving in with Mix.</p>';
-        message += '<p>While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API.</b>';
-        message += '<br/>You can read more about it <a href="http://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.</p>';
-
-        var parent = document.querySelector(".social_networks_description_wrapper");
-
-        if (typeof parent !== 'undefined') {
-            createNotice(message, parent)
-        }
-    }
-
 
 	/*********************************************************
 		A Function send the array of setting to ajax.php
