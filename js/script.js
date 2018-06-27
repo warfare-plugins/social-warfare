@@ -197,10 +197,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 
     //*  If any horiztonal buttons panel is currently visible on screen,
-    //* returns true. Else, returns false.
+    //*  returns true. Else, returns false.
     function panelIsVisible() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var visible = false;
+        var scrollPos = $(window).scrollTop();
+
 
         $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
             var offset = $(this).offset();
@@ -225,7 +227,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 
         //* If a side panel exists, do not create the top/bottom bar.
-        if (typeof panel == "undefined" || panel.data("float") != "top" && panel.data("float") != "bottom") {
+        if (typeof panel == "undefined"
+            || $(window).width() > panel.data("min-width") && panel.data("float") != "top" && panel.data("float") != "bottom") {
             return;
         }
 
@@ -240,12 +243,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
 		if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
-			position = panel.data("float-mobile");
+			location = panel.data("float-mobile");
 		}
 
         wrapper.addClass(location).hide().appendTo("body");
         var clone = panel.clone();
-        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
+        clone.addClass("nc_floater awesomesauce").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
 		$(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
 	}
@@ -256,27 +259,32 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		var panel = $(".swp_social_panel").first();
 		var location = panel.data('float');
 
-        if (panelIsVisible()) {
-            $(".nc_wrapper, .swp_social_panelSide").hide();
-            return;
-        }
-
         if ($(window).width() < panel.data("min-width")) {
-            return toggleMobileButtons();
+            if (!$(".nc_wrapper").length) {
+                createFloatBar();
+            }
+            toggleMobileButtons();
+            toggleFloatingBar();
         }
 
-		if (location === "right" || location === "left") {
-            return toggleSideButtons();
+		if (location == "right" || location == "left") {
+             toggleSideButtons();
 		}
 
 		if (location == "bottom" || location == "top") {
-			return toggleFloatingBar();
+            toggleFloatingBar();
 		}
 	}
+    
 
     function toggleMobileButtons() {
         var panel = $(".swp_social_panel").first();
         var location = panel.data("float-mobile");
+        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+        var visiblePanel;
+
+        //* Force side floating panel to be hidden.
+        $(".swp_social_panelSide").hide();
 
         if (direction == "left" && panel.offset().left < 100) {
             visiblePanel = true;
@@ -301,40 +309,23 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
 		var scrollPos = $(window).scrollTop();
-        var mobileLocation = $(".swp_social_panel").data("float-mobile");
-        var location = panel.data('float');
-        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-        var showSideButtons = true;
+        var location = panel.data("float");
+        var visible = panelIsVisible();
 
         if (!panel.length) {
             //* No buttons panel!
             if ($(window).width() > minWidth) {
-                showSideButtons = true;
+                visible = false;
             } else {
-                showSideButtons = false;
-
-                //* TODO none of these variables are used.
-                // if (mobileLocation == "bottom") {
-                //     location = "bottom";
-                // } else if (mobileLocation == "top") {
-                //     location = "top";
-                // }
+                visible = true;
             }
         }
 
         if (sidePanel.data("transition") == "slide") {
-            if (showSideButtons == false) {
-                sidePanel.css(direction, "-150px");
-            } else {
-                sidePanel.css(direction, "5px");
-            }
-
+            var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+            visible ? sidePanel.css(direction, "-150px") : sidePanel.css(direction, "5px");
         } else {
-            if (showSideButtons == false) {
-                sidePanel.fadeOut(200);
-            } else {
-                sidePanel.fadeIn(200).css("display", "flex");
-            }
+            visible ? sidePanel.fadeOut(200) : sidePanel.fadeIn(200).css("display", "flex");
         }
     }
 
@@ -342,25 +333,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var panel = $(".swp_social_panel").not('.nc_wrapper').first();
         var location = panel.data('float');
 		var scrollPos = $(window).scrollTop();
-        var visiblePanel = false;
         var paddingTop = absint($('body').css('padding-top').replace('px', ''));
         var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
 
-        $(".swp_social_panel").not(".nc_floater").each(function(index) {
-            var offset = $(this).offset();
+        if ($(window).width() < panel.data("min-width")) {
+            location = panel.data("float-mobile")
+        }
 
-            //* Do not display the floating bar before the buttons.
-            if (index === 0 && offset.top > scrollPos) {
-                visiblePanel = true;
-            }
-
-            //* Do not display the floating bar if a panel is currently visiblePanel.
-            if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
-                visiblePanel = true;
-            }
-        });
-
-        if (visiblePanel) {
+        if (panelIsVisible()) {
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == "bottom") {
                 $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
@@ -403,12 +383,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
       var offset = (windowHeight - panelHeight) / 2;
 
       sidePanel.css("top", offset);
-  }
+    }
 
 	function initShareButtons() {
 		if (0 !== $('.swp_social_panel').length) {
 			createFloatBar();
-      centerSidePanel();
+            centerSidePanel();
 			swp.activateHoverStates();
 			handleWindowOpens();
 			$(window).scrollTop();
