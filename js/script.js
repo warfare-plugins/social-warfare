@@ -196,6 +196,30 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 
+    //*  If any horiztonal buttons panel is currently visible on screen,
+    //* returns true. Else, returns false.
+    function panelIsVisible() {
+        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var visible = false;
+
+        $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
+            var offset = $(this).offset();
+
+            //* Do not display floating buttons before the horizontal panel.
+            if (index === 0 && offset.top > scrollPos) {
+                visible = true;
+            }
+
+            //* Do not display floating buttons if a panel is currently visible.
+            if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
+                visible = true;
+            }
+        });
+
+        return visible;
+    }
+
+
 	function createFloatBar() {
         //* .swp_social_panelSide is the side floater.
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
@@ -232,69 +256,42 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		var panel = $(".swp_social_panel").first();
 		var location = panel.data('float');
 
+        if (panelIsVisible()) {
+            $(".nc_wrapper, .swp_social_panelSide").hide();
+            return;
+        }
+
+        if ($(window).width() < panel.data("min-width")) {
+            return toggleMobileButtons();
+        }
+
 		if (location === "right" || location === "left") {
-            toggleSideButtons();
+            return toggleSideButtons();
 		}
 
 		if (location == "bottom" || location == "top") {
-			toggleFloatingBar();
+			return toggleFloatingBar();
 		}
 	}
+
+
 
     //* TODO This function.
     function toggleSideButtons() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
-		var minWidth = sidePanel.data("min-width");
 		var scrollPos = $(window).scrollTop();
         var mobileLocation = $(".swp_social_panel").data("float-mobile");
         var location = panel.data('float');
         var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-        var visiblePanel = false;
+        var showSideButtons = true;
 
-        if (panel.length) {
-            $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
-                var offset = $(this).offset();
-
-                //* Do not display the floating bar before the buttons.
-                if (index === 0 && offset.top > scrollPos) {
-                    visiblePanel = true;
-                }
-
-                //* Do not display the floating bar if a panel is currently visiblePanel.
-                if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
-                    visiblePanel = true;
-                }
-            });
-
-       //* This is basically checking for mobile. But these do nothing for mobile.
-            // if ($(window).width() < minWidth) {
-            //     if (direction == "left" && panel.offset().left < 100) {
-            //         visiblePanel = true;
-            //
-            //     } else if (panel.offset().right < 100) {
-            //         visiblePanel = true;
-            //
-            //     } else {
-            //         visiblePanel = false;
-            //     }
-            //
-            //     //* TODO none of these variables are used.
-            //     // if (mobileLocation == "bottom") {
-            //     //     location = "bottom";
-            //     // } else if (mobileLocation == "top") {
-            //     //     location = "top";
-            //     // }
-            // } else {
-            //     visiblePanel = false;
-            // }
-
-        } else {
+        if (!panel.length) {
             //* No buttons panel!
             if ($(window).width() > minWidth) {
-                visiblePanel = false;
+                showSideButtons = true;
             } else {
-                visiblePanel = true;
+                showSideButtons = false;
 
                 //* TODO none of these variables are used.
                 // if (mobileLocation == "bottom") {
@@ -306,14 +303,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         if (sidePanel.data("transition") == "slide") {
-            if (visiblePanel == true) {
+            if (showSideButtons == false) {
                 sidePanel.css(direction, "-150px");
             } else {
                 sidePanel.css(direction, "5px");
             }
 
         } else {
-            if (visiblePanel == true) {
+            if (showSideButtons == false) {
                 sidePanel.fadeOut(200);
             } else {
                 sidePanel.fadeIn(200).css("display", "flex");
