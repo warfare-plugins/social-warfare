@@ -155,7 +155,7 @@ class SWP_Option extends SWP_Abstract {
     }
 
 
-	/**
+    /**
     * Set the default value of this option. This value will be used until the plugin user changes the value
     * to something else and saves the options.
     *
@@ -165,38 +165,32 @@ class SWP_Option extends SWP_Abstract {
     *
     */
     public function set_default( $value ) {
+        global $swp_user_options;
+        $this->default = $value;
 
-    $this->default = $value;
+        // Add this to our global list of defaults
+        add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
 
-		// Add this to our global list of defaults
-		add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
-
-		global $swp_user_options;
-
-		if( !isset( $swp_user_options[$this->key] ) ):
-  			$swp_user_options[$this->key] = $this->default;
-		endif;
-
-    return $this;
+        return $this;
     }
 
 
-	/**
-	 * Register Default
-	 *
-	 * Add this to a global list of defaults so that if an option isn't set in the database,
-	 * then the method that pulls out the user option can just fall back to using this option's
-	 * default value.
-	 *
-	 * @since  3.0.0 | 24 APR 2018 | Created
-	 * @param  array  $defaults The array of defaults
-	 * @return array  $defaults The modifed array of defaults.
-	 *
-	 */
-	public function register_default( $defaults = array() ) {
-		$defaults[$this->key] = $this->default;
-		return $defaults;
-	}
+    /**
+     * Register Default
+     *
+     * Add this to a global list of defaults so that if an option isn't set in the database,
+     * then the method that pulls out the user option can just fall back to using this option's
+     * default value.
+     *
+     * @since  3.0.0 | 24 APR 2018 | Created
+     * @param  array  $defaults The array of defaults
+     * @return array  $defaults The modifed array of defaults.
+     *
+     */
+    public function register_default( $defaults = array() ) {
+        $defaults[$this->key] = $this->default;
+        return $defaults;
+    }
 
 
     /**
@@ -253,7 +247,7 @@ class SWP_Option extends SWP_Abstract {
     }
 
 
-	/**
+    /**
     * Some option types have multiple sizes that will determine their visual layout on the option
     * page. This setter allows you to declare which one you want to use.
     *

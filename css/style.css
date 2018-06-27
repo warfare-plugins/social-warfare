@@ -229,6 +229,7 @@ span.spaceManWilly {
 	border: none;
 	color: #474b4d;
 	margin-left: 0!important;
+    margin-bottom: 10px !important;
 }
 
 div.swp_social_panel:hover div.total_shares.total_sharesalt:not(:nth-child(1)) {
@@ -262,7 +263,7 @@ div.swp_social_panel:hover div.total_shares.total_sharesalt:not(:nth-child(1)) {
 	background: #e08a0f;
 }
 
-.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer.total_shares.total_sharesalt:before {
+.swp_social_panel .nc_tweetContainer.total_shares.total_sharesalt:before {
 	content: "o";
 	display: inline-block;
 	font-family: sw-icon-font;
@@ -1147,7 +1148,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	background: rgba(0, 0, 0, 0);
 	border: 0!important;
 	font-weight: 800;
-	height: 45px;
+	height: 55px;
 	margin: 0;
 	padding: 0;
 	text-align: center;
