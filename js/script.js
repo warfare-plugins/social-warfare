@@ -208,9 +208,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
             var offset = $(this).offset();
 
-            //* Do not display floating buttons before the horizontal panel.
-            if (index === 0 && offset.top > scrollPos) {
-                visible = true;
+            if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+                //* Do not display floating buttons before the horizontal panel.
+                if (index === 0 && offset.top > scrollPos) {
+                    visible = true;
+                }
             }
 
             //* Do not display floating buttons if a panel is currently visible.
@@ -237,25 +239,54 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             return;
         }
 
-        if ($(".nc_wrapper").length) {
-            $(".nc_wrapper").remove();
-        }
-
         var offset = panel.offset();
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : offset.left;
-        var location = panel.data('float');
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+        var paddingTop = absint($('body').css('padding-top').replace('px', ''));
+        var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
+        var location = panel.data('float');
+
+        if ($(window).width() < panel.data("min-width")) {
+            location = panel.data("float-mobile")
+        }
 
         if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
             location = panel.data("float-mobile");
         }
 
+        if ($(".nc_wrapper").length) {
+            $(".nc_wrapper").remove();
+        }
+
         wrapper.addClass(location).hide().appendTo("body");
+
         var clone = panel.clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
+
+        if (panelIsVisible()) {
+            // Add some padding to the page so it fits nicely at the top or bottom
+            if (location == "bottom") {
+                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
+            } else {
+                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
+            }
+        } else {
+            var newPadding;
+
+            // Add some padding to the page so it fits nicely at the top or bottom
+            if (location == 'bottom') {
+                newPadding = paddingBottom + 50;
+                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+            } else {
+                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
+                    newPadding = paddingTop + 50;
+                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
+                }
+            }
+        }
     }
 
 
@@ -313,74 +344,42 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         if (sidePanel.data("transition") == "slide") {
             var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-			if (visible) {
-				sidePanel.css(direction, "-150px");
-			} else {
-				sidePanel.css(direction, "5px");
-			}
+            if (visible) {
+                sidePanel.css(direction, "-150px");
+            } else {
+                sidePanel.css(direction, "5px");
+            }
         } else {
-			if (visible) {
-				sidePanel.fadeOut(200);
-			} else {
-				sidePanel.fadeIn(200).css("display", "flex");
-			}
+            if (visible) {
+                sidePanel.fadeOut(200);
+            } else {
+                sidePanel.fadeIn(200).css("display", "flex");
+            }
         }
     }
 
+    //* Note: All of the other logic for padding now lives in createFloatBar.
+    //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").not('.nc_wrapper').first();
-        var location = panel.data('float');
-        var scrollPos = $(window).scrollTop();
-        var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-        var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
-
-        if ($(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile")
-        }
-
-        if (panelIsVisible()) {
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == "bottom") {
-                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            } else {
-                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            }
-
-            $(".nc_wrapper").hide();
-        } else {
-            var newPadding;
-
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == 'bottom') {
-                newPadding = paddingBottom + 50;
-                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-            } else {
-                if (panel.offset().top > scrollPos + $(window).height()) {
-                    newPadding = paddingTop + 50;
-                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
-                }
-            }
-
-            $(".nc_wrapper").show();
-        }
+        panelIsVisible() ? $(".nc_wrapper").fadeOut("slow") : $(".nc_wrapper").fadeIn("fast");
     }
 
-  function centerSidePanel() {
-      var sidePanel = jQuery("[class*=float-position-center]");
+    function centerSidePanel() {
+        var sidePanel = jQuery("[class*=float-position-center]");
 
-      if (!sidePanel.length) return;
+        if (!sidePanel.length) return;
 
-      var panelHeight = sidePanel.outerHeight();
-      var windowHeight = window.innerHeight;
+        var panelHeight = sidePanel.outerHeight();
+        var windowHeight = window.innerHeight;
 
-      if (panelHeight > windowHeight) {
+        if (panelHeight > windowHeight) {
           sidePanel.css("top", 0);
           return;
-      }
+        }
 
-      var offset = (windowHeight - panelHeight) / 2;
+        var offset = (windowHeight - panelHeight) / 2;
 
-      sidePanel.css("top", offset);
+        sidePanel.css("top", offset);
     }
 
     function initShareButtons() {
