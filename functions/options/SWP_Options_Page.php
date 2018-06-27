@@ -678,8 +678,16 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 $color_choices = $this::get_color_choices_array();
 
+                $float_before_content = new SWP_Option_Toggle( __( 'Float Before Content', 'social-warfare' ), 'float_before_content');
+                $float_before_content->set_default( true )
+                    ->set_priority( 140 )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit')
+                    ->set_dependency( 'floating_panel', true );
+
                 $floating_share_buttons->add_options( [$floating_panel, $float_location, $float_transition,
-                    $float_screen_width, $float_background_color] );
+                    $float_screen_width, $float_background_color, $float_before_content] );
+
+
 
         $styles->add_sections( [$total_counts, $floating_share_buttons] );
 
