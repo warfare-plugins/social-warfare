@@ -31,6 +31,7 @@ class SWP_Notice_Loader {
 	 */
     public function __construct() {
         $this->announce_stumble_upon_closing();
+		$this->activate_json_notices();
     }
 
 
@@ -51,4 +52,17 @@ class SWP_Notice_Loader {
 
         $notice = new SWP_Notice( 'stumble_upon_closed', $message, 'notice-info' );
     }
+
+
+	/**
+	 * Activate notices created via our remote JSON file.
+	 *
+	 * @since  3.1.0 | 27 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 * 
+	 */
+	private function activate_json_notices() {
+
+	}
 }
