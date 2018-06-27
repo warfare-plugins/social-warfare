@@ -397,19 +397,21 @@
 
 	function updateButtonPreviews() {
 
+        //* Maps out the button themes.
 		var defaults = {
-				full_color: 'Full Color',
-				light_gray: 'Light Gray',
-				medium_gray: 'Medium Gray',
-				dark_gray: 'Dark Gray',
-				light_gray_outlines: 'Light Gray Outlines',
-				medium_gray_outlines: 'Medium Gray Outlines',
-				dark_gray_outlines: 'Dark Gray Outlines',
-				color_outlines: 'Color Outlines',
-				custom_color: 'Custom Color',
-				custom_color_outlines: 'Custom Color Outlines'
-			};
+			full_color: 'Full Color',
+			light_gray: 'Light Gray',
+			medium_gray: 'Medium Gray',
+			dark_gray: 'Dark Gray',
+			light_gray_outlines: 'Light Gray Outlines',
+			medium_gray_outlines: 'Medium Gray Outlines',
+			dark_gray_outlines: 'Dark Gray Outlines',
+			color_outlines: 'Color Outlines',
+			custom_color: 'Custom Color',
+			custom_color_outlines: 'Custom Color Outlines'
+		};
 
+        //* Defines which themes are available per style.
 		var availableOptions = {
 			flat_fresh: defaults,
 			leaf: defaults,
@@ -614,11 +616,10 @@
 			activity: 'register',
 			name_key: key,
 			item_id: item_id,
-			license_key: $( 'input[name="'+key+'_license_key"]' ).val()
+			license_key: $( 'input[name="' + key + '_license_key"]' ).val()
 		};
 
 		loadingScreen();
-
 
 		$.post( ajaxurl, data, function( response ) {
 			// If the response was a failure...
@@ -652,6 +653,7 @@
 			name_key: key,
 			item_id: item_id,
 		};
+
 		loadingScreen();
 
 		// Ping the home server to create a registration log
@@ -806,7 +808,6 @@
 		getSystemStatus();
 		customUploaderInit();
 		set_ctt_preview();
-        // createStumbleUponNotice();
 	});
 
 
