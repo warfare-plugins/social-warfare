@@ -72,6 +72,7 @@ class SWP_Database_Migration {
 
 		$this->debug_parameters();
 
+
     }
 
 
@@ -191,7 +192,6 @@ class SWP_Database_Migration {
      *
      */
     public function scan_for_new_defaults() {
-		
         global $swp_user_options;
 
         $updated = false;
@@ -206,12 +206,16 @@ class SWP_Database_Migration {
 			'pinterest'   => 'pinterest'
 		);
 
-		foreach ($defaults as $key => $value ) {
+        foreach ($defaults as $key => $value ) {
              if ( !array_key_exists( $key, $swp_user_options) ) :
-                 $updated = true;
                  $swp_user_options[$key] = $value;
+                 $updated = true;
              endif;
-         }
+        }
+
+        if ( $updated ) {
+            update_option( 'social_warfare_settings', $swp_user_options );
+        }
 
      }
 
