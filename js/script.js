@@ -165,6 +165,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		});
 	}
 
+
 	/**
 	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
 	 * @since 2.1.0
@@ -226,9 +227,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         //* .swp_social_panelSide is the side floater.
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 
-        //* If a side panel exists, do not create the top/bottom bar.
-        if (typeof panel == "undefined"
-            || $(window).width() > panel.data("min-width") && panel.data("float") != "top" && panel.data("float") != "bottom") {
+        //* If a horizontal panel does not exist,
+        if (typeof panel == "undefined") {
+            return;
+        }
+
+        //* Or we are on desktop and not using top/bottom floaters:
+        if ($(window).width() > panel.data("min-width" && panel.data("float") != "top" && panel.data("float") != "bottom")) {
             return;
         }
 
@@ -248,7 +253,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         wrapper.addClass(location).hide().appendTo("body");
         var clone = panel.clone();
-        clone.addClass("nc_floater awesomesauce").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
+        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
 		$(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
 	}
@@ -275,40 +280,25 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             toggleFloatingBar();
 		}
 	}
-    
+
 
     function toggleMobileButtons() {
         var panel = $(".swp_social_panel").first();
         var location = panel.data("float-mobile");
         var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-        var visiblePanel;
+        var visibility = panelIsVisible() ? "collapse" : "visible";
 
         //* Force side floating panel to be hidden.
         $(".swp_social_panelSide").hide();
 
-        if (direction == "left" && panel.offset().left < 100) {
-            visiblePanel = true;
-
-        } else if (panel.offset().right < 100) {
-            visiblePanel = true;
-
-        } else {
-            visiblePanel = false;
-        }
-
-        //* TODO none of these variables are used.
-        // if (mobileLocation == "bottom") {
-        //     location = "bottom";
-        // } else if (mobileLocation == "top") {
-        //     location = "top";
-        // }
+        //* Make sure hidden mobile buttons do not block clicks on content underneath. 
+        $(".nc_wrapper").css("visibility", visibility);
     }
 
-    //* TODO This function.
+
     function toggleSideButtons() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
-		var scrollPos = $(window).scrollTop();
         var location = panel.data("float");
         var visible = panelIsVisible();
 
