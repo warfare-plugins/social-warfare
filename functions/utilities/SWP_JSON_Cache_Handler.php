@@ -14,27 +14,82 @@
 class SWP_JSON_Cache_Handler {
 
 
+	/**
+	 * Instantiate the class object.
+	 *
+	 * Check if the cache is fresh, if not, ping the JSON file on our server,
+	 * parse the results, and store them in an options field in the database.
+	 *
+	 * @since  3.1.0 | 28 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	__construct() {
 
 		if( false === $this->is_cache_fresh() ):
-			$this->fetch_json_response();
-			$this->cache_json_response();
+			$this->fetch_new_json_data();
 		endif;
 	}
 
-	private function fetch_json_response() {
-		$this->response = wp_remote_retreive_body('link_to_our_json_file');
+
+	/**
+	 * Fetch new JSON data.
+	 *
+	 * @since  3.1.0 | 28 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function fetch_new_json_data() {
+
+		// Fetch the response.
+		$response = wp_remote_retreive_body('https://warfareplugins.com/json_updates.php');
+
+		// Create the cache data array.
+		$cache_data = array();
+
+		if( !empty($response) ):
+			$cache_data = json_decode( $this->response , true );
+		endif;
+
+		$cache_data['timestamp'] = time();
+
+		// Store the data in the database.
+		update_option('swp_json_cache' , $cache_data , true );
+
 	}
 
-	private function cache_json_response() {
-		// Store the response in an options object with an expiration timestamp.
-		// If no response, store somethine to make sure that we have a cache to
-		// check so that we don't keep loading the json file over and over.
-	}
 
+	/**
+	 * A method to determin if the cached data is still fresh.
+	 *
+	 * @since  3.1.0 | 28 JUN 2018 | Created
+	 * @param  void
+	 * @return boolean true if fresh, false if expired.
+	 *
+	 */
 	private function is_cache_fresh() {
-		// Check the global options object to see how long its been since the 
-		// last time we pinged the JSON file for a response.
+
+		$cache_data = get_option('swp_json_cache');
+
+		// If no cached data, the cache is not fresh.
+		if( false === $cache_data):
+			return false;
+		endif;
+
+		// Forumlate the timestamps.
+		$timestamp = $cache_data['timestamp'];
+		$current_time = time();
+		$time_between_checks = ( 6 * 60 * 60 )
+
+		// Compare the timestamps.
+		if($current_time > $timestamp + $time_between_checks ):
+			return false;
+		endif;
+
+		return true;
+
 	}
 
 }
