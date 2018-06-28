@@ -30,9 +30,38 @@ class SWP_Notice_Loader {
 	 *
 	 */
     public function __construct() {
-        $this->announce_stumble_upon_closing();
 		$this->activate_json_notices();
+        $this->announce_stumble_upon_closing();
     }
+
+
+	/**
+	 * Activate notices created via our remote JSON file.
+	 *
+	 * @since  3.1.0 | 27 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function activate_json_notices() {
+		$cache_data = get_option('swp_json_cache');
+
+		if( false === $cache_data ):
+			return;
+		endif;
+
+		if( is_array( $cache_data ) && !empty($cache_data['notices']) ):
+			foreach( $cache_data['notices'] as $notice ):
+
+				$key     = $notice['key'];
+				$message = $notice['message'];
+				$ctas    = $notice['ctas'];
+
+				new SWP_Notice( $key, $message );
+
+			endforeach;
+		endif;
+	}
 
 
     /**
@@ -54,15 +83,4 @@ class SWP_Notice_Loader {
     }
 
 
-	/**
-	 * Activate notices created via our remote JSON file.
-	 *
-	 * @since  3.1.0 | 27 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 * 
-	 */
-	private function activate_json_notices() {
-
-	}
 }
