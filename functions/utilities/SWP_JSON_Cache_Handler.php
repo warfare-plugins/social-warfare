@@ -5,6 +5,10 @@
  * easily allow other classes to access the data for the purpose of generating
  * notices, updating the sidebar, etc.
  *
+ * Everything is stored in local properties to allow the debug method to simply
+ * dump the $this item allowing us to see the results of everything that has
+ * been processed by this class.
+ *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
@@ -12,6 +16,33 @@
  *
  */
 class SWP_JSON_Cache_Handler {
+
+
+	/**
+	 * The fetched from the remote JSON file.
+	 *
+	 * @var string
+	 *
+	 */
+	private $response = '';
+
+
+	/**
+	 * The responsed parsed into an associative array.
+	 *
+	 * @var array
+	 *
+	 */
+	private $parsed_response = array();
+
+
+	/**
+	 * The cached JSON data fetched from the database.
+	 *
+	 * @var array
+	 *
+	 */
+	private $cached_data = array();
 
 
 	/**
@@ -29,6 +60,7 @@ class SWP_JSON_Cache_Handler {
 
 		if( false === $this->is_cache_fresh() ):
 			$this->fetch_new_json_data();
+			$this->debug();
 		endif;
 	}
 
@@ -44,19 +76,19 @@ class SWP_JSON_Cache_Handler {
 	private function fetch_new_json_data() {
 
 		// Fetch the response.
-		$response = wp_remote_retreive_body('https://warfareplugins.com/json_updates.php');
+		$this->response = wp_remote_retreive_body('https://warfareplugins.com/json_updates.php');
 
 		// Create the cache data array.
-		$cache_data = array();
+		$this->parsed_response = array();
 
-		if( !empty($response) ):
-			$cache_data = json_decode( $this->response , true );
+		if( !empty($this->response) ):
+			$this->parsed_response = json_decode( $this->response , true );
 		endif;
 
-		$cache_data['timestamp'] = time();
+		$this->parsed_response['timestamp'] = time();
 
 		// Store the data in the database.
-		update_option('swp_json_cache' , $cache_data , true );
+		update_option('swp_json_cache' , $this->parsed_response , true );
 
 	}
 
@@ -71,15 +103,20 @@ class SWP_JSON_Cache_Handler {
 	 */
 	private function is_cache_fresh() {
 
-		$cache_data = get_option('swp_json_cache');
+		// If we're debugging, the cache is expired and needs to fetch.
+		if( true == _swp_debug( 'json_fetch' ) ):
+			return false;
+		endif;
+
+		$this->cache_data = get_option('swp_json_cache');
 
 		// If no cached data, the cache is not fresh.
-		if( false === $cache_data):
+		if( false === $this->cache_data):
 			return false;
 		endif;
 
 		// Forumlate the timestamps.
-		$timestamp = $cache_data['timestamp'];
+		$timestamp = $this->cache_data['timestamp'];
 		$current_time = time();
 		$time_between_checks = ( 6 * 60 * 60 )
 
@@ -90,6 +127,21 @@ class SWP_JSON_Cache_Handler {
 
 		return true;
 
+	}
+
+
+	/**
+	 * A method for debugging this class.
+	 *
+	 * @since  3.1.0 | 28 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function debug() {
+		if( true === _swp_debug( 'json_fetch') ):
+			var_dump($this);
+		endif;
 	}
 
 }
