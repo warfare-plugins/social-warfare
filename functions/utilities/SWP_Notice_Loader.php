@@ -50,17 +50,19 @@ class SWP_Notice_Loader {
 			return;
 		endif;
 
-		if( is_array( $cache_data ) && !empty($cache_data['notices']) ):
-			foreach( $cache_data['notices'] as $notice ):
-
-				$key     = $notice['key'];
-				$message = $notice['message'];
-				$ctas    = $notice['ctas'];
-
-				new SWP_Notice( $key, $message );
-
-			endforeach;
+		if( !is_array( $cache_data ) || empty($cache_data['notices']) ):
+			return;
 		endif;
+		
+		foreach( $cache_data['notices'] as $notice ):
+
+			$key     = $notice['key'];
+			$message = $notice['message'];
+			$ctas    = $notice['ctas'];
+
+			new SWP_Notice( $key, $message );
+
+		endforeach;
 	}
 
 
