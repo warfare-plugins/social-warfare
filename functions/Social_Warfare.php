@@ -286,8 +286,8 @@ class Social_Warfare {
 
 
         /**
-         *
          * Instantiates all of our notices.
+         *
          */
         new SWP_Notice_Loader();
 	}
