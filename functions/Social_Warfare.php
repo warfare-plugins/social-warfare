@@ -284,6 +284,8 @@ class Social_Warfare {
 		 */
 		new SWP_User_Profile();
 
+        new SWP_JSON_Cache_Handler();
+
 
         /**
          * Instantiates all of our notices.
@@ -328,7 +330,8 @@ class Social_Warfare {
             'Notice',
             'Notice_Loader',
             'Post_Cache_Loader',
-            'Post_Cache'
+            'Post_Cache',
+            'JSON_Cache_Handler'
         );
         $this->load_files( '/functions/utilities/', $utilities);
 
