@@ -56,8 +56,7 @@ class SWP_JSON_Cache_Handler {
 	 * @return void
 	 *
 	 */
-	__construct() {
-
+	public function __construct() {
 		if( false === $this->is_cache_fresh() ):
 			$this->fetch_new_json_data();
 			$this->debug();
@@ -76,7 +75,8 @@ class SWP_JSON_Cache_Handler {
 	private function fetch_new_json_data() {
 
 		// Fetch the response.
-		$this->response = wp_remote_retreive_body('https://warfareplugins.com/json_updates.php');
+        $response = wp_remote_get( 'https://warfareplugins.com/json_updates.php' );
+		$this->response = wp_remote_retrieve_body( $response );
 
 		// Create the cache data array.
 		$this->parsed_response = array();
@@ -104,7 +104,7 @@ class SWP_JSON_Cache_Handler {
 	private function is_cache_fresh() {
 
 		// If we're debugging, the cache is expired and needs to fetch.
-		if( true == _swp_debug( 'json_fetch' ) ):
+		if( true == _swp_is_debug( 'json_fetch' ) ):
 			return false;
 		endif;
 
@@ -118,10 +118,10 @@ class SWP_JSON_Cache_Handler {
 		// Forumlate the timestamps.
 		$timestamp = $this->cache_data['timestamp'];
 		$current_time = time();
-		$time_between_checks = ( 6 * 60 * 60 )
+		$time_between_checks = ( 6 * 60 * 60 );
 
 		// Compare the timestamps.
-		if($current_time > $timestamp + $time_between_checks ):
+		if ($current_time > $timestamp + $time_between_checks ) :
 			return false;
 		endif;
 
@@ -139,7 +139,7 @@ class SWP_JSON_Cache_Handler {
 	 *
 	 */
 	private function debug() {
-		if( true === _swp_debug( 'json_fetch') ):
+		if( true === _swp_is_debug( 'json_fetch') ):
 			var_dump($this);
 		endif;
 	}
