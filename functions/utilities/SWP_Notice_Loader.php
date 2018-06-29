@@ -67,7 +67,23 @@ class SWP_Notice_Loader {
 
             if ( !empty ( $notice['ctas'] ) ) {
                 foreach( $notice['ctas'] as $cta) {
-                    $n->add_cta( $cta );
+                    $action = $cta[0];
+                    $link = '';
+                    $class = '';
+                    $timeframe = 0;
+
+                    if ( isset( $cta[1] ) ) {
+                        $link = $cta[1];
+                    }
+
+                    if ( isset( $cta[2] ) ) {
+                        $class = $cta[2];
+                    }
+
+                    if ( isset( $cta[3] ) ) {
+                        $timeframe = $cta[3];
+                    }
+                    $n->add_cta( $action, $link, $class, $timeframe );
                 }
             }
 
