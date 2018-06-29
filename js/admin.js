@@ -230,7 +230,6 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
     function noticeClickHandlers() {
         jQuery(".swp-notice-cta").on("click", function(e) {
-            console.log(e.target);
             e.preventDefault();
             if (typeof e.target.href == 'string') {
                 window.open(e.target.href);
