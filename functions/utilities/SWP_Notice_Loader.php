@@ -87,6 +87,14 @@ class SWP_Notice_Loader {
                 }
             }
 
+            if ( isset( $notice['start_date'] ) ) {
+                $n->set_start_date( $notice['start_date'] );
+            }
+
+            if ( isset( $notice['end_date'] ) ) {
+                $n->set_end_date( $notice['end_date'] );
+            }
+
 			$this->notices[] = $n;
 
 		endforeach;
