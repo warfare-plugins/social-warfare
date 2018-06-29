@@ -55,13 +55,23 @@ class SWP_Notice_Loader {
 			return;
 		endif;
 
-		foreach( $cache_data['notices'] as $notice ):
+		foreach( $cache_data['notices'] as $notice ) :
+            if ( empty( $notice['key'] ) || empty( $notice['message'] ) ) {
+                continue;
+            }
 
 			$key     = $notice['key'];
 			$message = $notice['message'];
-			$ctas    = $notice['ctas'];
 
-			$this->notices[] = new SWP_Notice( $key, $message );
+            $n = new SWP_Notice( $key, $message );
+
+            if ( !empty ( $notice['ctas'] ) ) {
+                foreach( $notice['ctas'] as $cta) {
+                    $n->add_cta( $cta );
+                }
+            }
+
+			$this->notices[] = $n;
 
 		endforeach;
 	}
@@ -91,7 +101,7 @@ class SWP_Notice_Loader {
 	 *
 	 * All notices are stored in the $this->notices as an array of notice
 	 * objects. Since this is the last method called, all notices should be
-	 * present in the $this object for review. 
+	 * present in the $this object for review.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
 	 * @param  void
@@ -99,7 +109,7 @@ class SWP_Notice_Loader {
 	 *
 	 */
 	private function debug() {
-		if( true === _swp_debug( 'notices' ) ):
+		if( true === _swp_is_debug( 'notices' ) ):
 			var_dump($this);
 		endif;
 	}
