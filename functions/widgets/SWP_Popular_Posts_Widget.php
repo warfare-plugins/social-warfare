@@ -345,10 +345,10 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     /**
     * Update widget form values.
     *
-    * @since 1.0.0
+    * @since  1.0.0
     * @access public
-    * @param array $new_instance Updated values as input by the user in WP_Widget::form()
-    * @param array $old_instance Previously set values.
+    * @param  array $new_instance Updated values as input by the user in WP_Widget::form()
+    * @param  array $old_instance Previously set values.
     * @return array Sanitized array of final values.
     *
     */
@@ -381,11 +381,11 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     *
     * This sub-class over-rides this function from the parent class to generate the widget code.
     *
-    * @since 1.0.0
-    * @since 3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
+    * @since  1.0.0
+    * @since  3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
     * @access public
-    * @param array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
-    * @param array $instance The settings for the particular instance of the widget.
+    * @param  array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
+    * @param  array $instance The settings for the particular instance of the widget.
     *
     */
 	function widget( $args, $instance ) {
