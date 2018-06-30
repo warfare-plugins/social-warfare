@@ -31,7 +31,7 @@ class SWP_Notice_Loader {
 	 */
     public function __construct() {
 		$this->activate_json_notices();
-        $this->announce_stumble_upon_closing();
+        // $this->announce_stumble_upon_closing();
 		$this->debug();
     }
 
