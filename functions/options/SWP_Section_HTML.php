@@ -369,28 +369,21 @@ class SWP_Section_HTML extends SWP_Option {
     *
     */
     public function do_button_position_table() {
-        $static_options = [
-            'above'=> 'Above the Content',
-            'below' => 'Below the Content',
-            'both' => 'Both Above and Below the Content',
-            'none' => 'None/Manual Placement'
-        ];
-
         $default_types = ['page', 'post', 'home', 'archive_categories'];
 		$other_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
 
         $post_types = array_merge( $default_types, $other_types );
 
         $panel_locations = [
-            'above' => 'Above the Content',
-            'below' => 'Below the Content',
-            'both'  => 'Both Above and Below the Content',
-            'none'  => 'None/Manual Placement'
+            'above' => __( 'Above the Content', 'social-warfare' ),
+            'below' => __( 'Below the Content',  'social-warfare' ),
+            'both'  => __( 'Both Above and Below the Content', 'social-warfare' ),
+            'none'  => __( 'None/Manual Placement', 'social-warfare' )
         ];
 
         $float_locations = [
-            'on'    => 'On',
-            'off'   => 'Off'
+            'on'    => __( 'On','social_warfare'),
+            'off'   => __( 'Off', 'social_warfare')
         ];
 
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container" ';
@@ -512,19 +505,19 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '</div>';
 
             $html .= '<div class="sw-grid sw-col-300">';
-                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Category' ,'social-warfare' ) . '</p>';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Category', 'social-warfare' ) . '</p>';
             $html .= '</div>';
 
             $html .= '<div class="sw-grid sw-col-300 sw-fit">';
-                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Tag' ,'social-warfare' ) . '</p>';
+                $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Tag', 'social-warfare' ) . '</p>';
             $html .= '</div>';
 
-            $yummly_categories = new SWP_Option_Text( 'Yummly Categories', 'yummly_categories' );
+            $yummly_categories = new SWP_Option_Text( __( 'Yummly Categories', 'social-warfare' ), 'yummly_categories' );
             $categories_html = $yummly_categories->set_priority( 10 )
                 ->set_default( '' )
                 ->render_HTML_element();
 
-            $yummly_tags = new SWP_Option_Text( 'Yummly Tags', 'yummly_tags' );
+            $yummly_tags = new SWP_Option_Text( __( 'Yummly Tags', 'social-warfare'), 'yummly_tags' );
             $tags_html = $yummly_tags->set_priority( 10 )
                 ->set_default( '' )
                 ->render_HTML_element();
