@@ -55,6 +55,16 @@
 	float: left;
 }
 
+.swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper {
+    width: 63%;
+    float: left;
+}
+
+.swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper input {
+    width: 100%;    
+}
+
+
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper,
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper,
 .swpmb-field.swpmb-select-wrapper.swp_post_locationWrapper,
@@ -181,6 +191,16 @@
 	font-size: 24px;
 	float: right;
 	margin: 10px 40px 0 0;
+}
+/*
+#social_warfare .swp_share_recoveryWrapper {
+    margin-left: 33%;
+    width: 90%;
+
+} */
+
+#social_warfare #swp_recovery_url {
+    /* width: 100%; */
 }
 
 .ui-tooltip.sw-admin-hover-notice {
