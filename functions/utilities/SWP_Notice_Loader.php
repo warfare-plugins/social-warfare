@@ -31,7 +31,6 @@ class SWP_Notice_Loader {
 	 */
     public function __construct() {
 		$this->activate_json_notices();
-        // $this->announce_stumble_upon_closing();
 		$this->debug();
     }
 
@@ -99,25 +98,6 @@ class SWP_Notice_Loader {
 
 		endforeach;
 	}
-
-
-    /**
-     * "StumbleUpon is shutting down."
-     *
-     * The Message announcing that StumbleUpon is shutting down at the end of
-     * June, 2018.
-     *
-     * @since  3.0.9  | 09 JUN 2018 | Created the method.
-     * @since  3.0.10 | 27 JUN 2018 | Renamed to allow each method to make one notice.
-     * @param  void
-     * @return void
-     *
-     */
-    private function announce_stumble_upon_closing() {
-        $message = 'As of June 30th, 2018, StumbleUpon will no longer exist as a sharing platform. Instead, they are moving in with Mix. While this is exciting for Mix, <b>share counts will not be transferred, and Mix is not providing a share button or API. </b> You can read more about it <a href="https://help.stumbleupon.com/customer/en/portal/articles/2908172-transitioning-from-stumbleupon-to-mix" target="_blank">here</a>.';
-
-        $this->notices[] = new SWP_Notice( 'stumble_upon_closed', $message, 'notice-info' );
-    }
 
 
 	/**
