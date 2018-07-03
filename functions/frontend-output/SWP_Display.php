@@ -78,7 +78,6 @@ class SWP_Display {
      *
      */
     public function activate_buttons() {
-
     	// Fetch the user's settings
     	global $swp_user_options;
 
@@ -90,14 +89,12 @@ class SWP_Display {
         endif;
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
-        if (false == is_singular()) {
-
-            global $wp_filter;
-
+        if (false === is_singular() && false === $swp_user_options['full_content']) {
     		// Add the buttons to the excerpts
     		add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
         }
     }
+
 
     /**
      * Inserts the empty div for locating Pin images (with javascript).
