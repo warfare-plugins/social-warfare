@@ -381,4 +381,25 @@ class SWP_Notice {
     private function is_date( $string ) {
         return DateTime::createFromFormat( 'Y-m-d h:i:s', $string ) !== false;
     }
+
+
+    /**
+     * Prevents a CTA from being displayed on the notice.
+     *
+     * In cases where we require the user to take action, we need them
+     * to follow the directions in the message before removing the notice.
+     *
+     * @since  3.1.0 | 05 JUL 2018 | Created the method.
+     * @return SWP_Notice $this, for method chaining.  
+     *
+     */
+     public function remove_cta() {
+         if ( !empty( $this->actions ) ) {
+             $this->actions = array();
+         }
+
+         $this->no_cta = true;
+
+         return $this;
+     }
 }
