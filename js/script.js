@@ -333,6 +333,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var location = panel.data("float");
         var visible = panelIsVisible();
 
+        if ($(window).width() < panel.data("min-width") && $(".nc_wrapper").length) {
+            //* Mobile display with top/bottom mobile bar.
+            panel.hide();
+            return;
+        }
+
         if (!panel.length) {
             //* No buttons panel!
             if ($(window).width() > minWidth) {
