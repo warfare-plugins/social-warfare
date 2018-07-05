@@ -361,7 +361,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Note: All of the other logic for padding now lives in createFloatBar.
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
-        panelIsVisible() ? $(".nc_wrapper").fadeOut("slow") : $(".nc_wrapper").fadeIn("fast");
+        panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
     }
 
     function centerSidePanel() {
