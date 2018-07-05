@@ -267,7 +267,7 @@ class SWP_Notice {
             $action = "Thanks, I understand.";
         endif;
 
-        if ( !empty( $link ) ) :
+        if ( !empty( $link ) && '' !== $link ) :
             $link = ' href="' . $link . '" target="_blank"';
         endif;
 
