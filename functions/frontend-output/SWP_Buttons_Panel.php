@@ -90,37 +90,31 @@ class SWP_Buttons_Panel {
 	/**
 	 * The Construct Method
 	 *
-	 * @since  3.0.0 | 01 MAR 2018 | Created
-	 * @since  3.1.0 | 05 JUL 2018 | Created debug() & establish_post_data() methods.
-	 * @param  optional array $args The arguments passed in via shortcode.
-	 * @param  optional boolean $shortcode If a shortcode is calling this class.
-	 * @return void
+	 * @param optional array $args The arguments passed in via shortcode.
 	 *
 	 */
     public function __construct( $args = array(), $shortcode = false ) {
-        global $swp_social_networks;
-
-        $this->networks     = $swp_social_networks;
-		$this->args         = $args;
-        $this->content      = isset( $args['content'] ) ? $args['content'] : '';
+        global $swp_social_networks, $post;
+        $this->networks = $swp_social_networks;
+		$this->args = $args;
+        $this->establish_post_id();
+        $this->establish_post_data();
+        $this->content = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
 
-		$this->establish_post_id();
-		$this->establish_post_data();
-
-        if ( !isset( $this->post_data['ID'] ) ) :
+        if ( !isset( $this->post_id ) ) :
             return;
         endif;
 
         $this->localize_options();
 		$this->establish_share_data();
-		$this->establish_location();
+  	    $this->establish_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
-		$this->debug();
 
         add_action( 'wp_footer', array( $this, 'print_js_variables' ) );
 
+        $this->debug();
     }
 
 
@@ -196,49 +190,49 @@ class SWP_Buttons_Panel {
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
 			$this->post_id = $this->args['postID'];
-			return;
         endif;
 
-    	// Current argument.
+    		// Current argument.
 		if ( isset( $this->args['post_id'] ) ) :
 			$this->post_id = $this->args['post_id'];
-			return;
         endif;
 
         if ( isset ( $this->args['id'] ) ) :
-			$this->post_id = $args['id'];
-			return;
+          $this->post_id = $this->args['id'];
         endif;
 
-		global $post;
-		$this->post_id = $post->ID;
+        global $post;
+
+        if ( is_object( $post ) ) :
+            $this->post_id = $post->ID;
+        endif;
 	}
 
 
-	/**
-	 * Establish the post_data property.
-	 *
-	 * @since  3.1.0 | 05 JUL 2018 | Created
-	 * @param  void
-	 * @return void
-	 * 
-	 */
-	public function establish_post_data() {
-		if( !empty( $this->post_id ) ):
-			$post = get_post( $this->post_id );
-		endif;
+    /**
+     * Set the post data for this buttons panel.
+     *
+     * @since  3.1.0 | 05 JUL 2018 | Created
+     * @return none
+     * @access public
+     *
+     */
+    public function establish_post_data() {
+        if( !empty( $this->post_id ) ):
+            $post = get_post( $this->post_id );
+        endif;
 
-		if ( is_object( $post ) ) :
-			$this->post_data = array
-				'ID'           => $post->ID,
-				'post_type'    => $post->post_type,
-				'permalink'    => get_the_permalink( $post->ID ),
-				'post_title'   => $post->post_title,
-				'post_status'  => $post->post_status,
-				'post_content' => $post->post_content
-			);
-		endif;
-	}
+        if ( is_object( $post ) ) :
+            $this->post_data = array(
+                'ID'           => $post->ID,
+                'post_type'    => $post->post_type,
+                'permalink'    => get_the_permalink( $post->ID ),
+                'post_title'   => $post->post_title,
+                'post_status'  => $post->post_status,
+                'post_content' => $post->post_content
+            );
+        endif;
+    }
 
 
     /**
@@ -251,7 +245,7 @@ class SWP_Buttons_Panel {
      */
     public function establish_share_data() {
         global $SWP_Post_Caches;
-        $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_data['ID'] )->get_shares();
+        $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
         return $this;
     }
 
@@ -310,7 +304,7 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$post_setting = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
+		$post_setting = get_post_meta( $this->post_id, 'swp_post_location', true );
 
         if( is_array($post_setting) ) :
              $post_setting = $post_setting[0];
@@ -369,7 +363,7 @@ class SWP_Buttons_Panel {
 
 
     protected function establish_permalink() {
-        $this->permalink = get_permalink( $this->post_data['ID'] );
+        $this->permalink = get_permalink( $this->post_id );
     }
 
 
@@ -422,7 +416,7 @@ class SWP_Buttons_Panel {
 
         $user_settings = $this->location !== 'none';
 
-        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
+        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_id ) === 'publish';
 
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
 
@@ -442,7 +436,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function render_HTML( $echo = false ) {
-        if ( !isset( $this->post_data['ID'] ) ) :
+        if ( !isset( $this->post_id ) ) :
             return;
         endif;
 
@@ -529,11 +523,11 @@ class SWP_Buttons_Panel {
 	public function get_float_location() {
         $post_on = false;
 
-		if( is_home() && !is_front_page() || !isset( $this->post_data['ID'] ) ):
+		if( is_home() && !is_front_page() || !isset( $this->post_id ) ):
 			return 'none';
         endif;
 
-        $post_setting = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
+        $post_setting = get_post_meta( $this->post_id, 'swp_float_location', true );
 
         if( is_array( $post_setting ) ) :
              $post_setting = $post_setting[0];
@@ -848,10 +842,6 @@ class SWP_Buttons_Panel {
 
         if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
 
-          	if( true == _swp_is_debug('buttons_output')):
-        				echo 'Echoing, not returning. In SWP_Buttons_Panel on line ' . __LINE__;
-      			endif;
-
             echo $this->content;
         }
 
@@ -902,5 +892,19 @@ class SWP_Buttons_Panel {
         echo '<script type="text/javascript">
               var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
               </script>';
+    }
+
+    /**
+     * Holds the query paramters for debugging.
+     *
+     * @since 3.1.0 | 05 JUL 2018 | Created the method.
+     *
+     */
+    public function debug() {
+        if ( true === _swp_is_debug( 'buttons_panel' ) ) :
+            echo "<pre>";
+            var_dump($this);
+            echo "</pre>";
+        endif;
     }
 }
