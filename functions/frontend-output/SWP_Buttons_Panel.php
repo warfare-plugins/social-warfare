@@ -221,7 +221,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.1.0 | 05 JUL 2018 | Created
 	 * @param  void
 	 * @return void
-	 * 
+	 *
 	 */
 	public function establish_post_data() {
 		if( !empty( $this->post_id ) ):
@@ -902,5 +902,20 @@ class SWP_Buttons_Panel {
         echo '<script type="text/javascript">
               var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
               </script>';
+    }
+
+
+    /**
+     * Holds the query paramters for debugging.
+     *
+     * @since 3.1.0 | 05 JUL 2018 | Created the method.
+     *
+     */
+    public function debug() {
+        if ( true === _swp_is_debug( 'buttons_panel' ) ) :
+            echo "<pre>";
+            var_dump($this);
+            echo "</pre>";
+        endif;
     }
 }
