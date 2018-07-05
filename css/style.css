@@ -265,7 +265,7 @@ div.swp_social_panel:hover div.total_shares.total_sharesalt:not(:nth-child(1)) {
 
 .swp_social_panel .nc_tweetContainer.total_shares.total_sharesalt:before {
 	content: "o";
-	display: inline-block;
+	display: inline;
 	font-family: sw-icon-font;
 	margin-top: 7px;
 	vertical-align: top;
@@ -1158,7 +1158,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 
 .swp_social_panelSide .nc_tweetContainer.total_shares .swp_count {
 	color: #444;
-	display: block;
+	display: inline;
 	font-family: Lato, sans-serif;
 	height: 28px;
 	text-align: center;
