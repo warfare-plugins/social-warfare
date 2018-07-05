@@ -98,22 +98,7 @@ class SWP_Buttons_Panel {
         $this->networks = $swp_social_networks;
 		$this->args = $args;
         $this->establish_post_id();
-
-        if ( !is_object( $post ) ) :
-            $post = get_post ( $this->post_id );
-        endif;
-
-        if ( is_object( $post ) ) {
-            $this->post_data = [
-                'ID'           => $post->ID,
-                'post_type'    => $post->post_type,
-                'permalink'    => get_the_permalink( $post->ID ),
-                'post_title'   => $post->post_title,
-                'post_status'  => $post->post_status,
-                'post_content' => $post->post_content
-            ];
-        }
-
+        $this->establish_post_data();
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
 
@@ -129,11 +114,7 @@ class SWP_Buttons_Panel {
 
         add_action( 'wp_footer', array( $this, 'print_js_variables' ) );
 
-        if ( true === _swp_is_debug( 'show_button_panel_data' ) ) :
-                echo "<pre>";
-                var_dump($this);
-                echo "</pre>";
-        endif;
+        $this->debug();
     }
 
 
@@ -226,6 +207,32 @@ class SWP_Buttons_Panel {
             $this->post_id = $post->ID;
         endif;
 	}
+
+
+    /**
+     * Set the post data for this buttons panel.
+     *
+     * @since  3.1.0 | 05 JUL 2018 | Created
+     * @return none
+     * @access public
+     *
+     */
+    public function establish_post_data() {
+        if( !empty( $this->post_id ) ):
+            $post = get_post( $this->post_id );
+        endif;
+
+        if ( is_object( $post ) ) :
+            $this->post_data = array(
+                'ID'           => $post->ID,
+                'post_type'    => $post->post_type,
+                'permalink'    => get_the_permalink( $post->ID ),
+                'post_title'   => $post->post_title,
+                'post_status'  => $post->post_status,
+                'post_content' => $post->post_content
+            );
+        endif;
+    }
 
 
     /**
@@ -835,10 +842,6 @@ class SWP_Buttons_Panel {
 
         if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
 
-          	if( true == _swp_is_debug('buttons_output')):
-        				echo 'Echoing, not returning. In SWP_Buttons_Panel on line ' . __LINE__;
-      			endif;
-
             echo $this->content;
         }
 
@@ -889,5 +892,19 @@ class SWP_Buttons_Panel {
         echo '<script type="text/javascript">
               var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
               </script>';
+    }
+
+    /**
+     * Holds the query paramters for debugging.
+     *
+     * @since 3.1.0 | 05 JUL 2018 | Created the method.
+     *
+     */
+    public function debug() {
+        if ( true === _swp_is_debug( 'buttons_panel' ) ) :
+            echo "<pre>";
+            var_dump($this);
+            echo "</pre>";
+        endif;
     }
 }
