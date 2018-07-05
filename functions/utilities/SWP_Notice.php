@@ -35,6 +35,7 @@ class SWP_Notice {
         $this->init();
         $this->set_message( $message );
         $this->actions = array();
+        $this->no_cta = false;
 
 		// Add hooks to display our admin notices in the dashbaord and on our settings page.
         add_action( 'admin_notices', array( $this, 'print_HTML' ) );
@@ -295,7 +296,7 @@ class SWP_Notice {
 	 *
 	 */
     public function render_HTML() {
-        if ( empty( $this->actions) ) :
+        if ( empty( $this->actions) && false === $this->no_cta) :
             $this->add_cta();
         endif;
 
@@ -390,13 +391,12 @@ class SWP_Notice {
      * to follow the directions in the message before removing the notice.
      *
      * @since  3.1.0 | 05 JUL 2018 | Created the method.
-     * @return SWP_Notice $this, for method chaining.  
+     * @return SWP_Notice $this, for method chaining.
      *
      */
      public function remove_cta() {
-         if ( !empty( $this->actions ) ) {
-             $this->actions = array();
-         }
+         //* Force the ctas to an empty array so render can still loop over it.
+         $this->actions = array();
 
          $this->no_cta = true;
 
