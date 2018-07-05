@@ -256,24 +256,24 @@ class SWP_Notice {
     * @since  3.0.9 | 07 JUN 2018 | Created
     * @access public
     * @param  string $action Optional. The message to be displayed. Default "Thanks, I understand."
-    * @param  string $link Optional. The outbound link.
+    * @param  string $href Optional. The outbound href.
     * @param  string $class Optional. The CSS classname to assign to the CTA.
     * @param  string $timeframe
     * @return $this Allows for method chaining.
     *
     */
-    public function add_cta( $action = '', $link = '', $class = '' , $timeframe = 0 )  {
+    public function add_cta( $action = '', $href = '', $class = '' , $timeframe = 0 )  {
         if ( '' === $action ) :
             $action = "Thanks, I understand.";
         endif;
 
-        if ( !empty( $link ) && '' !== $link ) :
-            $link = ' href="' . $link . '" target="_blank"';
+        if ( !empty( $href ) && '' !== $href ) :
+            $href = ' href="' . $href . '" target="_blank"';
         endif;
 
         $cta              = array();
         $cta['action']    = $action;
-        $cta['link']      = $link;
+        $cta['href']      = $href;
         $cta['class']     = $class;
 		$cta['timeframe'] = $timeframe;
 
@@ -305,7 +305,7 @@ class SWP_Notice {
             $html .= '<div class="swp-actions">';
 
                 foreach( $this->actions as $cta) {
-                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" ' . $cta['link'] . ' data-timeframe="'.$cta['timeframe'].'">';
+                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" ' . $cta['href'] . ' data-timeframe="'.$cta['timeframe'].'">';
                         $html .= $cta['action'];
                     $html .= "</a>";
                 }
