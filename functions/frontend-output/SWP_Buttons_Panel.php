@@ -97,8 +97,13 @@ class SWP_Buttons_Panel {
         global $swp_social_networks, $post;
         $this->networks = $swp_social_networks;
 		$this->args = $args;
+        $this->establish_post_id();
 
-        if ( is_object( $post ) ) :
+        if ( !is_object( $post ) ) :
+            $post = get_post ( $this->post_id );
+        endif;
+
+        if ( is_object( $post ) ) {
             $this->post_data = [
                 'ID'           => $post->ID,
                 'post_type'    => $post->post_type,
@@ -107,16 +112,15 @@ class SWP_Buttons_Panel {
                 'post_status'  => $post->post_status,
                 'post_content' => $post->post_content
             ];
-        endif;
+        }
 
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
 
-        if ( !isset( $this->post_data['ID'] ) ) :
+        if ( !isset( $this->post_id ) ) :
             return;
         endif;
 
-        $this->establish_post_id();
         $this->localize_options();
 		$this->establish_share_data();
   	    $this->establish_location();
@@ -204,27 +208,22 @@ class SWP_Buttons_Panel {
 	public function establish_post_id() {
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
-			$this->post_data['ID'] = $this->args['postID'];
+			$this->post_id = $this->args['postID'];
         endif;
 
     		// Current argument.
 		if ( isset( $this->args['post_id'] ) ) :
-			$this->post_data['ID'] = $this->args['post_id'];
+			$this->post_id = $this->args['post_id'];
         endif;
 
         if ( isset ( $this->args['id'] ) ) :
-          $post = get_post( $this->args['id'] );
-          $post_data = [
-              'ID'           => $post->ID,
-              'post_type'    => $post->post_type,
-              'permalink'    => get_the_permalink( $post->ID ),
-              'post_title'   => $post->post_title,
-              'post_status'  => $post->post_status,
-              'post_content' => $post->post_content
-          ];
+          $this->post_id = $this->args['id'];
+        endif;
 
-          $this->post_data = array_merge( $this->post_data, $post_data );
+        global $post;
 
+        if ( is_object( $post ) ) :
+            $this->post_id = $post->ID;
         endif;
 	}
 
@@ -239,7 +238,7 @@ class SWP_Buttons_Panel {
      */
     public function establish_share_data() {
         global $SWP_Post_Caches;
-        $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_data['ID'] )->get_shares();
+        $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
         return $this;
     }
 
@@ -298,7 +297,7 @@ class SWP_Buttons_Panel {
 		 * to use this instead of the global options.
 		 *
 		 */
-		$post_setting = get_post_meta( $this->post_data['ID'], 'swp_post_location', true );
+		$post_setting = get_post_meta( $this->post_id, 'swp_post_location', true );
 
         if( is_array($post_setting) ) :
              $post_setting = $post_setting[0];
@@ -357,7 +356,7 @@ class SWP_Buttons_Panel {
 
 
     protected function establish_permalink() {
-        $this->permalink = get_permalink( $this->post_data['ID'] );
+        $this->permalink = get_permalink( $this->post_id );
     }
 
 
@@ -410,7 +409,7 @@ class SWP_Buttons_Panel {
 
         $user_settings = $this->location !== 'none';
 
-        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_data['ID'] ) === 'publish';
+        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_id ) === 'publish';
 
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
 
@@ -430,7 +429,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function render_HTML( $echo = false ) {
-        if ( !isset( $this->post_data['ID'] ) ) :
+        if ( !isset( $this->post_id ) ) :
             return;
         endif;
 
@@ -517,11 +516,11 @@ class SWP_Buttons_Panel {
 	public function get_float_location() {
         $post_on = false;
 
-		if( is_home() && !is_front_page() || !isset( $this->post_data['ID'] ) ):
+		if( is_home() && !is_front_page() || !isset( $this->post_id ) ):
 			return 'none';
         endif;
 
-        $post_setting = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
+        $post_setting = get_post_meta( $this->post_id, 'swp_float_location', true );
 
         if( is_array( $post_setting ) ) :
              $post_setting = $post_setting[0];
