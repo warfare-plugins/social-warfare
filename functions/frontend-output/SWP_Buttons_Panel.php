@@ -86,15 +86,19 @@ class SWP_Buttons_Panel {
      */
     public $total_shares = 0;
 
-
-	/**
-	 * The Construct Method
-	 *
+    /**
+     * The Construct Method
+ 	 *
 	 * @param optional array $args The arguments passed in via shortcode.
-	 *
-	 */
+     * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  3.1.0 | 05 JUL 2018 | Created debug() & establish_post_data() methods.
+	 * @param  optional array $args The arguments passed in via shortcode.
+	 * @param  optional boolean $shortcode If a shortcode is calling this class.
+	 * @return void
+     *
+     */
     public function __construct( $args = array(), $shortcode = false ) {
-        global $swp_social_networks, $post;
+        global $swp_social_networks;
         $this->networks = $swp_social_networks;
 		$this->args = $args;
         $this->establish_post_id();
@@ -111,10 +115,9 @@ class SWP_Buttons_Panel {
   	    $this->establish_location();
 		$this->establish_permalink();
         $this->establish_active_buttons();
+        $this->debug();
 
         add_action( 'wp_footer', array( $this, 'print_js_variables' ) );
-
-        $this->debug();
     }
 
 
@@ -190,15 +193,18 @@ class SWP_Buttons_Panel {
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
 			$this->post_id = $this->args['postID'];
+            return;
         endif;
 
-    		// Current argument.
+    	// Current argument.
 		if ( isset( $this->args['post_id'] ) ) :
 			$this->post_id = $this->args['post_id'];
+            return;
         endif;
 
         if ( isset ( $this->args['id'] ) ) :
-          $this->post_id = $this->args['id'];
+            $this->post_id = $this->args['id'];
+            return;
         endif;
 
         global $post;
@@ -215,6 +221,8 @@ class SWP_Buttons_Panel {
      * @since  3.1.0 | 05 JUL 2018 | Created
      * @return none
      * @access public
+     * @param void
+     * @return void
      *
      */
     public function establish_post_data() {
