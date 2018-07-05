@@ -64,25 +64,27 @@ class SWP_Notice_Loader {
 
             $n = new SWP_Notice( $key, $message );
 
-            if ( !empty ( $notice['ctas'] ) ) {
+            if ( !empty( $notice['ctas'] ) ) {
+
                 foreach( $notice['ctas'] as $cta) {
-                    $action = $cta[0];
-                    $link = '';
-                    $class = '';
-                    $timeframe = 0;
+                    $fields = [
+                        'action' => '',
+                        'link'   => '',
+                        'class'  => '',
+                        'timeframe' => 0
+                    ];
 
-                    if ( isset( $cta[1] ) ) {
-                        $link = $cta[1];
+                    $_cta = [];
+
+                    foreach( $fields as $field => $default ) {
+                        if ( isset( $cta[$field] ) ) {
+                            $_cta[$field] = $cta[$field];
+                        } else {
+                            $_cta[$field] = $default;
+                        }
                     }
 
-                    if ( isset( $cta[2] ) ) {
-                        $class = $cta[2];
-                    }
-
-                    if ( isset( $cta[3] ) ) {
-                        $timeframe = $cta[3];
-                    }
-                    $n->add_cta( $action, $link, $class, $timeframe );
+                    $n->add_cta( $_cta['action'], $_cta['link'], $_cta['class'], $_cta['timeframe'] );
                 }
             }
 
@@ -92,6 +94,10 @@ class SWP_Notice_Loader {
 
             if ( isset( $notice['end_date'] ) ) {
                 $n->set_end_date( $notice['end_date'] );
+            }
+
+            if ( isset( $notice['no_cta'] ) ) {
+                $n->remove_cta();
             }
 
 			$this->notices[] = $n;
