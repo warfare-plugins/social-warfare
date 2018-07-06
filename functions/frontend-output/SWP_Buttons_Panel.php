@@ -248,7 +248,7 @@ class SWP_Buttons_Panel {
     /**
      * Instantiates the share data from a given post ID.
      *
-     * @since 3.0.10 | 25 JUN 2018 | Created the method.
+     * @since 3.1.0 | 25 JUN 2018 | Created the method.
      * @return void
      * @access public
      *

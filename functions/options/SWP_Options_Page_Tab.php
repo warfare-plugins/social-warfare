@@ -12,7 +12,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     3.0.0  | 02 MAR 2017 | Created
- * @since     3.0.10 | 14 JUN 2018 | Updated to use set_key() method.
+ * @since     3.1.0 | 14 JUN 2018 | Updated to use set_key() method.
  * @access    public
  *
  */
@@ -52,7 +52,7 @@ class SWP_Options_Page_Tab extends SWP_Abstract {
 	* an object so the the "options" objects can easily be added to it later on.
 	*
 	* @since  3.0.0  | 3 MAR 2018 | Created
-	* @since  3.0.10 | 14 JUN 2018 | Update to use set_key() method.
+	* @since  3.1.0 | 14 JUN 2018 | Update to use set_key() method.
 	* @param  str $name The name of this tab.
 	* @param  str $key  The unique key for this tab.
 	*

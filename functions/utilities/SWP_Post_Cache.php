@@ -22,7 +22,7 @@
  * @package   SocialWarfare\Functions\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     3.0.10 | 20 JUN 2018 | Created
+ * @since     3.1.0 | 20 JUN 2018 | Created
  * @access    public
  *
  */
@@ -67,7 +67,7 @@ class SWP_Post_Cache {
 	 * asyncronous request to rebuild the cached data.
 	 *
 	 * @todo   Can we eliminate all post data except for the post_id?
-	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @since  3.1.0 | 20 JUN 2018 | Created
 	 * @param  integer $post_id The ID of the post
 	 * @return void
 	 *
@@ -92,7 +92,7 @@ class SWP_Post_Cache {
 	/**
 	 * A method for debugging and outputting the class object.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -119,7 +119,7 @@ class SWP_Post_Cache {
 	* This is the determining method to decide if a cache is fresh or if it
 	* needs to be rebuilt.
 	*
-	* @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+	* @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
 	* @access protected
 	* @param  void
 	* @return boolean True if fresh, false if expired and needs rebuilt.
@@ -159,7 +159,7 @@ class SWP_Post_Cache {
      /**
       * Determines how recently, in hours, the cache has been updated.
       *
-      * @since  3.0.10 | 19 JUN 2018 | Created the method.
+      * @since  3.1.0 | 19 JUN 2018 | Created the method.
       * @todo   Review
       * @param  void
       * @return int  The current age of the cache in hours.
@@ -193,7 +193,7 @@ class SWP_Post_Cache {
  	 *     4 Hours  - Medium Posts less than 60 days old.
  	 *     12 Hours - Old Posts Older than 60 days old.
  	 *
- 	 * @since  3.0.10 | 20 JUN 2018 | Created
+ 	 * @since  3.1.0 | 20 JUN 2018 | Created
  	 * @todo   Review
  	 * @param  void
  	 * @return integer The duration in hours that applies to this cache.
@@ -237,7 +237,7 @@ class SWP_Post_Cache {
 	 * is conducted in an asyncronous, non-blocking fashion.
 	 *
 	 * @TODO   Add the wp_remote_post to ping admin-ajax.php.
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -271,7 +271,7 @@ class SWP_Post_Cache {
 	 * other methods and run the action filter to allow third-party functions
 	 * to run during the cache rebuild process.
 	 *
-	 * @since  3.0.10 | 20 JUN 2018 | Created
+	 * @since  3.1.0 | 20 JUN 2018 | Created
 	 * @todo   Move all calls to cache rebuild methods into this method. This
 	 *         will become the one and only method that is used to rebuild this
 	 *         particular cache of data.
@@ -297,7 +297,7 @@ class SWP_Post_Cache {
      * because then the URL will be autoloaded with the post preventing the
      * need for an additional database query during page loads.
      *
-     * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
      * @access protected
      * @param  void
      * @return void
@@ -332,7 +332,7 @@ class SWP_Post_Cache {
      * because then the URL will be autoloaded with the post preventing the
      * need for an additional database query during page loads.
      *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @since 3.1.0 | 19 JUN 2018 | Ported from function to class method.
      * @access protected
      * @param  void
      * @return void
@@ -366,7 +366,7 @@ class SWP_Post_Cache {
     /**
      * Resets the cache timestamp to the current time in hours since Unix epoch.
      *
-     * @since 3.0.10 | 19 JUN 2018 | Ported from function to class method.
+     * @since 3.1.0 | 19 JUN 2018 | Ported from function to class method.
      * @access protected
      * @param  void
      * @return void
@@ -381,7 +381,7 @@ class SWP_Post_Cache {
 	/**
 	 * Removes the timestamp on certain hooks like when a post is updated.
 	 *
-	 * @since  3.0.10 | 19 JUN 2018 | Ported from function to class method.
+	 * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
 	 * @param  void
 	 * @return void
 	 *
@@ -403,7 +403,7 @@ class SWP_Post_Cache {
      * calculate_total_shares();                  $this->share_counts['total_shares'];
      * cache_share_counts();                      Stored in DB post meta.
      *
-     * @since  3.0.10 | 21 JUN 2018 | Created
+     * @since  3.1.0 | 21 JUN 2018 | Created
      * @access protected
      * @param  void
      * @return void
@@ -434,7 +434,7 @@ class SWP_Post_Cache {
      * @var permalinks Links to be checked for share counts during the
      *                 share count update process.
 	 *
-	 * @since  3.0.10 | 21 JUN 2018 | Created
+	 * @since  3.1.0 | 21 JUN 2018 | Created
 	 * @access private
 	 * @param  void
 	 * @return void
@@ -464,7 +464,7 @@ class SWP_Post_Cache {
     /**
      * Prepares outbound API links per network.
      *
-     * @since  3.0.10 | 25 JUN 2018 | Created the method.
+     * @since  3.1.0 | 25 JUN 2018 | Created the method.
      * @var    api_urls The array of outbound API request destinations.
      * @param  void
      * @return void
@@ -492,7 +492,7 @@ class SWP_Post_Cache {
 	 * using curl_multi will fetch raw responses from the network API's. The
 	 * results will be stored in $this->raw_api_responses array.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    raw_api_responses An array of responses from the API's.
 	 * @param  void
 	 * @return void All data is stored in local properties.
@@ -514,7 +514,7 @@ class SWP_Post_Cache {
 	 * $this->raw_api_responses property and use each network's parse method
 	 * to convert them into integers that we can use to tally up our share counts.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    parsed_api_responses An array of integers from parsing the responses.
 	 * @param  void
 	 * @return void Processed data is stored in local properties.
@@ -544,7 +544,7 @@ class SWP_Post_Cache {
 	 * database data. This one is ONLY used when the cache is not fresh and the
 	 * data is being rebuilt.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    share_counts An array of share count numbers.
 	 * @param  void
 	 * @return void All data stored in local properties.
@@ -581,7 +581,7 @@ class SWP_Post_Cache {
 	 * back to zero. This will prevent a post with 10K shares from keeping the
 	 * zero response.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -620,7 +620,7 @@ class SWP_Post_Cache {
 	/**
 	 * Gets the computed share data.
 	 *
-	 * @since  3.0.10 | 20 JUN 2018 | Created the method.
+	 * @since  3.1.0 | 20 JUN 2018 | Created the method.
 	 * @param  void
 	 * @return array $this->share_counts if it exists, or an empty array.
 	 *
@@ -640,7 +640,7 @@ class SWP_Post_Cache {
 	 * @todo Remove all fresh_cache() checks. This method needs to assume the
 	 * cache is always fresh and always return cached data.
 	 *
-	 * @since 3.0.10 | 21 JUN 2018 | Created the method.
+	 * @since 3.1.0 | 21 JUN 2018 | Created the method.
 	 * @access protected
 	 * @param  void
 	 * @return void

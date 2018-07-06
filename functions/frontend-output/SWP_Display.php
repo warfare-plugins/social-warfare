@@ -7,7 +7,7 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0  | 21 FEB 2018 | Refactored into a class-based system.
- * @since     3.0.10 | 18 JUN 2018 | Replaced brack array notation.
+ * @since     3.1.0 | 18 JUN 2018 | Replaced brack array notation.
  *
  */
 class SWP_Display {
@@ -40,7 +40,7 @@ class SWP_Display {
     /**
      * The class constructor.
      *
-     * @since 3.0.10 | Changed priority for wp_footer. Makes the buttons loads
+     * @since 3.1.0 | Changed priority for wp_footer. Makes the buttons loads
      *                 This post data instead of data in the loop.
      *
      */

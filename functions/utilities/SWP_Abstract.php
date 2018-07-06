@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     3.0.0  | 02 MAR 2018 | Created
- * @since     3.0.10 | 14 JUN 2018 | Added the set_key() method.
+ * @since     3.1.0 | 14 JUN 2018 | Added the set_key() method.
  * @access    public
  *
  */
@@ -368,7 +368,7 @@ class SWP_Abstract {
 	* Sets the key used by dependent sections and options.
 	*
 	* @since 3.0.0  | 01 MAR 2018 | Created
-	* @since 3.0.10 | 14 JUN 2018 | Migrated from child class to here.
+	* @since 3.1.0 | 14 JUN 2018 | Migrated from child class to here.
 	* @param string $key The unique key being assigned to this section.
 	* @return SWP_Options_Page_Section $this The updated object.
 	*
