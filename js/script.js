@@ -357,9 +357,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             }
         } else {
             if (visible) {
-                sidePanel.fadeOut(200);
+                sidePanel.css("opacity", 1).fadeOut(300).css("opacity", 0);
             } else {
-                sidePanel.fadeIn(200).css("display", "flex");
+                sidePanel.css("opacity", 0).fadeIn(300).css({opacity: 1, display: "flex"});
             }
         }
     }
