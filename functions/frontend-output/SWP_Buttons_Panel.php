@@ -99,12 +99,14 @@ class SWP_Buttons_Panel {
      */
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks;
-        $this->networks = $swp_social_networks;
-		$this->args = $args;
+
+        $this->networks     = $swp_social_networks;
+		$this->args         = $args;
+        $this->content      = isset( $args['content'] ) ? $args['content'] : '';
+        $this->is_shortcode = $shortcode;
+
         $this->establish_post_id();
         $this->establish_post_data();
-        $this->content = isset( $args['content'] ) ? $args['content'] : '';
-        $this->is_shortcode = $shortcode;
 
         if ( !isset( $this->post_id ) ) :
             return;
@@ -221,7 +223,7 @@ class SWP_Buttons_Panel {
      * @since  3.1.0 | 05 JUL 2018 | Created
      * @return none
      * @access public
-     * @param void
+     * @param  void
      * @return void
      *
      */
@@ -375,29 +377,35 @@ class SWP_Buttons_Panel {
     }
 
 
-    //* When we have known incompatability with other themes/plugins,
-    //* we can put those checks in here.
     /**
+     * When we have known incompatability with other themes/plugins,
+     * we can put those checks in here.
+     *
      * Checks for known conflicts with other plugins and themes.
      *
      * If there is a fatal conflict, returns true and exits printing.
      * If there are other conflicts, they are silently handled and can still
      * print.
      *
+     * @since  3.0.0 | 01 MAR 2018 | Created
+     * @param  void
      * @return bool $conflict True iff the conflict is fatal.
+     *
      */
     protected function has_plugin_conflict() {
-        $conflict = false;
+
 		// Disable subtitles plugin to prevent it from injecting subtitles
 		// into our share titles.
 		if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
 			remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
 		endif;
-        //* Disable on BuddyPress pages.
+
+		//* Disable on BuddyPress pages.
         if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
-            $conflict = true;
+            return true;
         endif;
-        return $conflict;
+
+		return false;
     }
 
 
@@ -413,7 +421,11 @@ class SWP_Buttons_Panel {
      *
      *
      * @return Boolean True if the buttons are okay to print, else false.
-     * @since 3.0.8  | 21 MAY 2018 | Added extra condition to check for content (for calls to social_warfare()).
+     * @since  3.0.8  | 21 MAY 2018 | Added extra condition to check for content
+     *                               (for calls to social_warfare()).
+     * @param  void
+     * @return void
+     * 
      */
     public function should_print() {
 
