@@ -123,7 +123,8 @@ class SWP_Option_Select extends SWP_Option {
     * @return string $html The fully qualified HTML for a select.
     */
     public function render_HTML_element() {
-        $value = swp_get_option( $this->key );
+        $value = $this->get_value();
+
 
         if ( isset( $value) ) :
             //* As of 4-24-18, 'active_networks' is the only array.
@@ -131,8 +132,6 @@ class SWP_Option_Select extends SWP_Option {
         else:
             $value = $this->default;
         endif;
-
-        $selected_user_option = swp_get_option($this->key);//$this->user_options[$this->key];
 
         $html = '<select name=' . $this->key . '>';
 
