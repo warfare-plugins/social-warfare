@@ -304,7 +304,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * Handwritten list of OG Meta types.
     *
     * @since  3.0.0  | 01 MAR 2018 | Created
-    * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+    * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
     * @param  void
     * @return array Custom Post Types.
     *
@@ -344,7 +344,7 @@ class SWP_Options_Page extends SWP_Abstract {
     * Provides the common placement choices for the buttons.
     *
     * @since  3.0.0  | 01 MAR 2018 | Created
-    * @since  3.0.10 | 13 JUN 2018 | Replaced Array bracket notation.
+    * @since  3.1.0 | 13 JUN 2018 | Replaced Array bracket notation.
     * @param  void
     * @return array Key/Value pairs of button placement options.
     *

@@ -13,7 +13,7 @@
  * @package   SocialWarfare\Functions\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     3.0.10 | 20 JUN 2018 | Created
+ * @since     3.1.0 | 20 JUN 2018 | Created
  * @access    public
  *
  */
@@ -33,7 +33,7 @@ class SWP_Post_Cache_Loader {
 	/**
 	 * Load the class and queue up the admin hooks.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -61,7 +61,7 @@ class SWP_Post_Cache_Loader {
 	 * instantiation of that object to call functions that we want to make sure
 	 * only ever get run once, like updating the cached data.
 	 *
-	 * @since  3.0.10 | 20 JUNE 2018 | Created
+	 * @since  3.1.0 | 20 JUNE 2018 | Created
 	 * @param  integer $post_id The ID of the post being requested.
 	 * @return object           The post_cache object for the post.
 	 *
@@ -86,7 +86,7 @@ class SWP_Post_Cache_Loader {
 	 *
 	 * @todo   Add the wp-die() or whatever command is needed to close a wp-ajax
 	 *         handler method.
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -104,7 +104,7 @@ class SWP_Post_Cache_Loader {
 	/**
 	 * Resets the cache timestamp so that it will rebuild during the next page load.
 	 *
-	 * @since  3.0.10 | 26 JUN 2018 | Created the method.
+	 * @since  3.1.0 | 26 JUN 2018 | Created the method.
 	 * @param  void
 	 * @return void
 	 *

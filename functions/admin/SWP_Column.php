@@ -11,7 +11,7 @@
  * @license   GPL-3.0+
  * @since     1.0.0  | UNKNOWN     | Created
  * @since     3.0.0  | 21 FEB 2018 | Refactored into a class-based system.
- * @since     3.0.10 | 14 JUN 2018 | Added number_format for numeric output.
+ * @since     3.1.0 | 14 JUN 2018 | Added number_format for numeric output.
  *
  */
 class SWP_Column {
@@ -66,7 +66,7 @@ class SWP_Column {
 	 * Populate the new column with the share count from the meta field
 	 *
 	 * @since  1.4.0  | 01 JAN 2018 | Created
-	 * @since  3.0.10 | 14 JUN 2018 | Added number_format
+	 * @since  3.1.0 | 14 JUN 2018 | Added number_format
 	 * @param  string $column_name The name of the column to be modified.
 	 * @param  int    $post_ID     The Post ID
 	 * @return void                The number is echoed to the screen.

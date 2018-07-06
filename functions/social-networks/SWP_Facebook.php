@@ -102,7 +102,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * method) allows us to hook in functions that will run during the cache
 	 * rebuild process by hooking into the swp_cache_rebuild hook.
 	 *
-	 * @since  3.0.10 | 26 JUN 2018 | Created
+	 * @since  3.1.0 | 26 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -121,7 +121,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * This is a standalone method because we only want to hook into the footer
 	 * and display the script during the cache rebuild process.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -135,7 +135,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	/**
 	 * Output the AJAX/JS for updating Facebook share counts.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void Output is printed directly to the screen.
 	 *
@@ -171,7 +171,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * The object will be instantiated by the Cache_Loader class and it will
 	 * then call this method from there.
 	 *
-	 * @since  3.0.10 | 25 JUN 2018 | Created
+	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *

@@ -14,7 +14,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     3.0.0  | 19 FEB 2018 | Created
- * @since     3.0.10 | 20 JUN 2018 | Added instantiate_frontend_classes()
+ * @since     3.1.0 | 20 JUN 2018 | Added instantiate_frontend_classes()
  *
  */
 class Social_Warfare {
@@ -27,7 +27,7 @@ class Social_Warfare {
 	 * It will then instantiate them all one by one.
 	 *
 	 * @since  3.0.0  | 19 FEB 2018 | Created
-	 * @since  3.0.10 | 20 JUN 2018 | Added instantiate_frontend_classes()
+	 * @since  3.1.0 | 20 JUN 2018 | Added instantiate_frontend_classes()
 	 * @param  void
 	 * @return void
 	 * @access public
@@ -204,7 +204,7 @@ class Social_Warfare {
 	/**
 	 * This method will load up all of the frontend-only classes.
 	 *
-	 * @since  3.0.10 | 20 JUNE 2018 | Created
+	 * @since  3.1.0 | 20 JUNE 2018 | Created
 	 * @param  void
 	 * @return void
 	 * @access private

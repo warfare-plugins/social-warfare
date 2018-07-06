@@ -41,7 +41,7 @@ The following will serve as an example docblock with instructions to follow.
 3.      *
 4.      * @since  3.0.8  | 16 MAY 2018 | Created the method.
 5.      * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
-6.      * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+6.      * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
 7.      * @param  void
 8.      * @return void
 9.      *

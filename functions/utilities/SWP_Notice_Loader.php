@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since  3.0.9  | 09 JUN 2018 | Created the class.
- * @since  3.0.10 | 27 JUN 2018 | Break each notice into it's own method.
+ * @since  3.1.0 | 27 JUN 2018 | Break each notice into it's own method.
  *
  */
 class SWP_Notice_Loader {
@@ -23,7 +23,7 @@ class SWP_Notice_Loader {
 	 * notices throughout the plugin.
 	 *
 	 * @since  3.0.9  | 09 JUN 2018 | Created.
-	 * @since  3.0.10 | 27 JUN 2018 | Updated to use separate methods per notice.
+	 * @since  3.1.0 | 27 JUN 2018 | Updated to use separate methods per notice.
 	 * @see    SWP_Notice.php
 	 * @param  void
 	 * @return void

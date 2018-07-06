@@ -7,7 +7,7 @@
  *
  * @since  3.0.0  | 08 MAY 2018 | Created
  * @since  3.0.6  | 14 MAY 2018 | Added local $last_migrated property.
- * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+ * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
  *
  */
 class SWP_Database_Migration {
@@ -87,7 +87,7 @@ class SWP_Database_Migration {
 	 *     ?swp_debug=get_last_migrated    | Outputs the last_updated version number.
 	 *     ?swp_debug=update_last_migrated | Updates the last_updated version number.
 	 *
-	 * @since  3.0.10 | 13 JUN 2018 | Created
+	 * @since  3.1.0 | 13 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 */
@@ -186,7 +186,7 @@ class SWP_Database_Migration {
      *
      * @since  3.0.8  | 16 MAY 2018 | Created the method.
      * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
-     * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+     * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
      * @param  void
      * @return void
      *
@@ -224,7 +224,7 @@ class SWP_Database_Migration {
 	  * A method for updating the post meta fields.
 	  *
 	  * @since  3.0.0  | 08 MAY 2018 | Created
-	  * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notations.
+	  * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notations.
 	  * @param  void
 	  * @return void
 	  *
@@ -417,7 +417,7 @@ class SWP_Database_Migration {
      *
      * This also deletes the previous keys once the migration is done.
      * @since  3.0.0  | 01 MAY 2018 | Created the function
-     * @since  3.0.10 | 13 JUN 2018 | Replaced array bracket notation.
+     * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
      * @param  void
      * @return void
      *

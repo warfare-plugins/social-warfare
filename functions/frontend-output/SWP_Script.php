@@ -16,7 +16,7 @@ class SWP_Script {
 	 * issue with LightSpeed cache.
 	 *
 	 * @since  1.0.0
-	 * @since  3.0.10 | 18 JUNE 2018 | Created add_hooks() and fix_compatability().
+	 * @since  3.1.0 | 18 JUNE 2018 | Created add_hooks() and fix_compatability().
 	 * @access public
 	 * @param  none
 	 * @return none
@@ -31,7 +31,7 @@ class SWP_Script {
 	/**
 	 * Add this classes methods to the appropiate hooks.
 	 *
-	 * @since  3.0.10 | 18 JUNE 2018 | Created
+	 * @since  3.1.0 | 18 JUNE 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
@@ -220,7 +220,7 @@ class SWP_Script {
 	/**
 	 * A method to fix compatibility with LiteSpeed Cache plugin.
 	 *
-	 * @since  3.0.10 | 18 JUN 2018 | Created
+	 * @since  3.1.0 | 18 JUN 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
