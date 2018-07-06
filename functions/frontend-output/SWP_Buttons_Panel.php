@@ -425,7 +425,7 @@ class SWP_Buttons_Panel {
      *                               (for calls to social_warfare()).
      * @param  void
      * @return void
-     * 
+     *
      */
     public function should_print() {
 
@@ -594,13 +594,15 @@ class SWP_Buttons_Panel {
 		endif;
 	}
 
+
     /**
      * Creates the fully qualified markup for floating button panel.
      *
+     * @since  3.0.0 | 01 MAR 2018 | Created
+     * @since  3.0.8 | 22 MAY 2018 | Added the $blacklist and in_array conditional.
      * @param  boolean $echo Whether or not to immediately echo the HTML.
      * @return string  $html The qualified markup for the panel.
-     * @since 3.0.0
-     * @since 3.0.8 | 22 MAY 2018 | Added the $blacklist and in_array conditional.
+     *
      */
     public function render_floating_HTML( $echo = true ) {
         $blacklist = ['none', 'top', 'bottom'];
@@ -750,6 +752,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.0 | 04 MAY 2018 | Created
 	 * @param  none
 	 * @return object An ordered array containing the social network objects.
+	 *
 	 */
     protected function get_dynamic_buttons_order() {
 		$order = array();
@@ -817,6 +820,7 @@ class SWP_Buttons_Panel {
      * @since  3.0.0 | 18 APR 2018 | Created
      * @param  none
      * @return string $html The fully qualified HTML to display share counts.
+     * @todo   Simplify that conditional. Maybe break it into another method.
      *
      */
     public function render_total_shares_html() {
@@ -838,11 +842,13 @@ class SWP_Buttons_Panel {
         return $html;
     }
 
+
     /**
      * Handles whether to echo the HTML or return it as a string.
      *
-     * @return mixed null if set to echo, else a string of HTML.
      * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+     * @param  void
+     * @return mixed null if set to echo, else a string of HTML.
      *
      */
     public function do_print() {
@@ -868,12 +874,13 @@ class SWP_Buttons_Panel {
         return $this->content;
     }
 
+
     /**
      * Runs checks before ordering a set of buttons.
      *
+     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
      * @param  string $content The WordPress content, if passed in.
      * @return function @see $this->do_print
-     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
      *
      */
     public function the_buttons( $content = null ) {
@@ -914,10 +921,13 @@ class SWP_Buttons_Panel {
               </script>';
     }
 
+
     /**
      * Holds the query paramters for debugging.
      *
-     * @since 3.1.0 | 05 JUL 2018 | Created the method.
+     * @since  3.1.0 | 05 JUL 2018 | Created the method.
+     * @param  void
+     * @return void
      *
      */
     public function debug() {
