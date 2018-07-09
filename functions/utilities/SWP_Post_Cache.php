@@ -279,15 +279,25 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-	public function rebuild_cached_data() {
-        $this->rebuild_share_counts();
-        $this->rebuild_pinterest_image();
-        $this->rebuild_open_graph_image();
-        $this->reset_timestamp();
+     public function rebuild_cached_data() {
+         $this->rebuild_share_counts();
+         $this->rebuild_pinterest_image();
+         $this->rebuild_open_graph_image();
+ 		$this->process_urls();
+         $this->reset_timestamp();
 
-		// A hook to run allowing third-party functions to run.
-		do_action( 'swp_cache_rebuild', $this->id );
-	}
+ 		// A hook to run allowing third-party functions to run.
+ 		do_action( 'swp_cache_rebuild', $this->id );
+ 	}
+
+
+ 	public function process_urls() {
+ 		foreach($swp_social_networks as $network):
+ 			if($network->is_active()):
+ 				SWP_URL_Management::process_url( $post_data['permalink'] , $network->key , $post_data['ID'] , false );
+ 			endif;
+ 		endforeach;
+ 	}
 
 
     /**
