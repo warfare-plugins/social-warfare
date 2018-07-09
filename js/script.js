@@ -335,7 +335,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         if ($(window).width() < panel.data("min-width") && $(".nc_wrapper").length) {
             //* Mobile display with top/bottom mobile bar.
-            panel.hide();
+            sidePanel.hide();
             return;
         }
 
