@@ -93,7 +93,7 @@ class SWP_URL_Management {
 	 *
 	 */
 	public function link_shortener( $array ) {
-		global $swp_user_options;
+		global $swp_user_options, $SWP_Post_Caches;
 
 		if ( $array['network'] == 'total_shares' ) :
 			return $array;
@@ -103,7 +103,7 @@ class SWP_URL_Management {
 		$network = $array['network'];
 		$postID = $array['postID'];
 
-	    if( $network === 'pinterest' || $network === 'stumbleupon' ):
+	    if( $network === 'pinterest' ):
 	        return $array;
 	    endif;
 
