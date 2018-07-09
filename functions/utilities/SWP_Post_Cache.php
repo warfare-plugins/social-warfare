@@ -292,6 +292,7 @@ class SWP_Post_Cache {
 
 
  	public function process_urls() {
+		global $swp_social_networks;
  		foreach($swp_social_networks as $network):
  			if($network->is_active()):
  				SWP_URL_Management::process_url( $post_data['permalink'] , $network->key , $post_data['ID'] , false );
