@@ -193,6 +193,22 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.1.0 (09 JUl 2018) =
+* Fixed incompatibility with Yoast update
+* Fixed side floating button fade effect.
+* Added option for post-specific share recovery
+* Added option to show/hide buttons before content.
+* Added "noopener noreferrer" to outbound links.
+* Added two Pinterest image selectors.
+* Added the Pinterest character counter.
+* Removed the StumbleUpon button.
+* Updated references of http to https where possible.
+* Updated the AffiliateWP download path.
+* Updated the Facebook share count system.
+* Updated notifications to read from WarfarePlugins server.
+* Major update to the metadata caching system.
+* Major updates on floating buttons and mobile buttons.
+
 = 3.0.9 (08 JUN 2018) =
 * Fix for slow page loads on some sites.
 * Added notice to warn that StumbleUpon is being removed at the end of the month.
