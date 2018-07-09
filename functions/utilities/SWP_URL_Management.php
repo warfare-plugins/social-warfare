@@ -122,7 +122,7 @@ class SWP_URL_Management {
 					$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );
 
 					// If the Cache is still fresh or a previous API request failed....
-					if ( ( $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+					if ( ( true === $array['fresh_cache'] && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 						if ( $existingURL ) :
 							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
@@ -173,7 +173,7 @@ class SWP_URL_Management {
 					$existingURL = get_post_meta( $postID,'bitly_link',true );
 
 					// If the cache is fresh or if the API has failed already....
-					if ( $existingURL || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+					if ( ( true === $array['fresh_cache'] && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 						// If we have a shortened URL in the cache....
 						if ( $existingURL ) :
@@ -348,7 +348,7 @@ class SWP_URL_Management {
 	 * @return string          The modified URL.
 	 * @access public static
 	 */
-	public static function process_url( $url, $network, $postID ) {
+	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
 		global $swp_user_options;
 
 		if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
@@ -358,6 +358,7 @@ class SWP_URL_Management {
 			$array['url'] = $url;
 			$array['network'] = $network;
 			$array['postID'] = $postID;
+            $array['fresh_cache'] = $is_cache_fresh;
 
 			if( !is_attachment() ):
 
@@ -372,7 +373,6 @@ class SWP_URL_Management {
 			return $array['url'];
 
 		endif;
-
 	}
 
 
