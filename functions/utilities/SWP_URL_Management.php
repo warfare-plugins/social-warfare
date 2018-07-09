@@ -107,7 +107,6 @@ class SWP_URL_Management {
 	        return $array;
 	    endif;
 
-
 		if( true === _swp_is_debug('bitly') ){
 	        echo swp_is_cache_fresh( $postID );
 	    }
@@ -127,11 +126,13 @@ class SWP_URL_Management {
 				// If Google Analytics is Activated....
 				if ( swp_get_option('google_analytics') == true ) :
 
+                    $post_cache = $SWP_Post_Caches->get_post_cache( $postID );
+
 					// If the link has already been shortened....
-					$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );
+					$existingURL = get_post_meta( $postID, 'bitly_link_' . $network, true );
 
 					// If the Cache is still fresh or a previous API request failed....
-					if ( ( true === swp_is_cache_fresh( $postID , true ) && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+					if ( ( true === $post_cache->is_cache_fresh() && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 						if ( $existingURL ) :
 							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
@@ -181,8 +182,10 @@ class SWP_URL_Management {
 
 					$existingURL = get_post_meta( $postID,'bitly_link',true );
 
+                    $post_cache = $SWP_Post_Caches->get_post_cache( $postID );
+
 					// If the cache is fresh or if the API has failed already....
-					if ( (true === swp_is_cache_fresh( $postID , true ) && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
+					if ( (true === $post_cache->is_cache_fresh() && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 						// If we have a shortened URL in the cache....
 						if ( $existingURL ) :
@@ -375,7 +378,7 @@ class SWP_URL_Management {
 				$array = apply_filters( 'swp_analytics' , $array );
 
 				// Run the link shortening hook filters, but not on Pinterest
-					$array = apply_filters( 'swp_link_shortening' , $array );
+				$array = apply_filters( 'swp_link_shortening' , $array );
 			endif;
 
 			return $array['url'];
