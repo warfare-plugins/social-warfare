@@ -120,12 +120,12 @@ class SWP_Post_Cache {
 	* needs to be rebuilt.
 	*
 	* @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
-	* @access protected
+	* @access public
 	* @param  void
 	* @return boolean True if fresh, false if expired and needs rebuilt.
 	*
 	*/
-	protected function is_cache_fresh() {
+	public function is_cache_fresh() {
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
 		 	return true;
