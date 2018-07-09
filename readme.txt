@@ -196,18 +196,21 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 = 3.1.0 (09 JUl 2018) =
 * Fixed incompatibility with Yoast update
 * Fixed side floating button fade effect.
+* Fixed the shares icon CSS in the side floating buttons.
 * Added option for post-specific share recovery
 * Added option to show/hide buttons before content.
 * Added "noopener noreferrer" to outbound links.
 * Added two Pinterest image selectors.
 * Added the Pinterest character counter.
+* Added Google Tag Manager compatibility for Click/Event Tracking
 * Removed the StumbleUpon button.
 * Updated references of http to https where possible.
-* Updated the AffiliateWP download path.
 * Updated the Facebook share count system.
 * Updated notifications to read from WarfarePlugins server.
 * Major update to the metadata caching system.
 * Major updates on floating buttons and mobile buttons.
+* Updated the plugin update processes.
+* Ensures all custom post types are showing in the "Position Share Buttons" display section.
 
 = 3.0.9 (08 JUN 2018) =
 * Fix for slow page loads on some sites.
