@@ -100,7 +100,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     'use strict';
 
     var swp = window.socialWarfarePlugin;
+    /*
+       Declare the padding variables globally so they are not re-calculated
+       after they have been modified by a function.
+    */
 
+    var paddingTop = absint($('body').css('padding-top').replace('px', ''));
+    var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
     function absint($int) {
         return parseInt($int, 10);
     }
@@ -243,8 +249,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : offset.left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-        var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-        var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
         var location = panel.data('float');
 
         if ($(window).width() < panel.data("min-width")) {
@@ -266,27 +270,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
 
-        if (panelIsVisible()) {
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == "bottom") {
-                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            } else {
-                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            }
-        } else {
-            var newPadding;
 
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == 'bottom') {
-                newPadding = paddingBottom + 50;
-                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-            } else {
-                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-                    newPadding = paddingTop + 50;
-                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
-                }
-            }
-        }
     }
 
 
@@ -367,8 +351,35 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Note: All of the other logic for padding now lives in createFloatBar.
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
+        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var location = panel.data("float");
+
         panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
+
+        if (panelIsVisible()) {
+            //* Return the padding to its default state.
+            if (location == "bottom") {
+                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
+            } else {
+                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
+            }
+        } else {
+            var newPadding;
+
+            // Add some padding to the page so it fits nicely at the top or bottom
+            if (location == 'bottom') {
+                newPadding = paddingBottom + 50;
+                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+            } else {
+                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
+                    newPadding = paddingTop + 50;
+                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
+                }
+            }
+        }
+        
     }
+
 
     function centerSidePanel() {
         var sidePanel = jQuery("[class*=float-position-center]");
@@ -387,6 +398,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         sidePanel.css("top", offset);
     }
+
 
     function initShareButtons() {
         if (0 !== $('.swp_social_panel').length) {
@@ -486,6 +498,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return false;
             });
         });
+
+        var pinterestButton = findPinterestSaveButton();
+
+        if (typeof pinterestButton != 'undefined') {
+            removePinterestButton(pinterestButton);
+        }
     }
 
     function handleWindowOpens() {
@@ -540,6 +558,44 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             }
         });
     }
+
+
+    //* The Pinterest Browser Extension create a single Save button.
+    //* Let's search and destroy.
+    function findPinterestSaveButton() {
+        var pinterestRed = "rgb(189, 8, 28)";
+        var pinterestZIndex = "8675309";
+        var pinterestBackgroundSize = "14px 14px";
+        var button = null;
+
+        document.querySelectorAll("span").forEach(function(el, index) {
+            var style = window.getComputedStyle(el);
+
+            if (style.backgroundColor == pinterestRed) {
+                if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
+                    button = el;
+                }
+            }
+        });
+
+        return button;
+    }
+
+    function removePinterestButton(button) {
+        var pinterestSquare = button.nextSibling;
+
+        if (typeof pinterestSquare != 'undefined'  && pinterestSquare.nodeName == 'SPAN') {
+            var style = window.getComputedStyle(pinterestSquare);
+            var size = "24px";
+
+            if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
+                pinterestSquare.remove()
+            }
+        }
+
+        button.remove();
+    }
+
 
     $(window).on('load' , function() {
         if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
