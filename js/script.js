@@ -100,7 +100,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     'use strict';
 
     var swp = window.socialWarfarePlugin;
+    /*
+       Declare the padding variables globally so they are not re-calculated
+       after they have been modified by a function.
+    */
 
+    var paddingTop = absint($('body').css('padding-top').replace('px', ''));
+    var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
     function absint($int) {
         return parseInt($int, 10);
     }
@@ -243,8 +249,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : offset.left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-        var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-        var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
         var location = panel.data('float');
 
         if ($(window).width() < panel.data("min-width")) {
@@ -267,7 +271,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
 
         if (panelIsVisible()) {
-            // Add some padding to the page so it fits nicely at the top or bottom
+            //* Return the padding to its default state.
             if (location == "bottom") {
                 $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
             } else {
