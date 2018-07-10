@@ -498,11 +498,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             });
         });
 
-        var pinterestButton = findPinterestSaveButton();
-
-        if (typeof pinterestButton != 'undefined') {
-            removePinterestButton(pinterestButton);
-        }
     }
 
     function handleWindowOpens() {
@@ -558,42 +553,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         });
     }
 
-
-    //* The Pinterest Browser Extension create a single Save button.
-    //* Let's search and destroy.
-    function findPinterestSaveButton() {
-        var pinterestRed = "rgb(189, 8, 28)";
-        var pinterestZIndex = "8675309";
-        var pinterestBackgroundSize = "14px 14px";
-        var button = null;
-
-        document.querySelectorAll("span").forEach(function(el, index) {
-            var style = window.getComputedStyle(el);
-
-            if (style.backgroundColor == pinterestRed) {
-                if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
-                    button = el;
-                }
-            }
-        });
-
-        return button;
-    }
-
-    function removePinterestButton(button) {
-        var pinterestSquare = button.nextSibling;
-
-        if (typeof pinterestSquare != 'undefined'  && pinterestSquare.nodeName == 'SPAN') {
-            var style = window.getComputedStyle(pinterestSquare);
-            var size = "24px";
-
-            if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
-                pinterestSquare.remove()
-            }
-        }
-
-        button.remove();
-    }
 
 
     $(window).on('load' , function() {
