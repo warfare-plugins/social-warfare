@@ -270,27 +270,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
 
-        if (panelIsVisible()) {
-            //* Return the padding to its default state.
-            if (location == "bottom") {
-                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            } else {
-                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            }
-        } else {
-            var newPadding;
 
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == 'bottom') {
-                newPadding = paddingBottom + 50;
-                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-            } else {
-                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-                    newPadding = paddingTop + 50;
-                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
-                }
-            }
-        }
     }
 
 
@@ -371,8 +351,35 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Note: All of the other logic for padding now lives in createFloatBar.
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
+        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var location = panel.data("float");
+
         panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
+
+        if (panelIsVisible()) {
+            //* Return the padding to its default state.
+            if (location == "bottom") {
+                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
+            } else {
+                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
+            }
+        } else {
+            var newPadding;
+
+            // Add some padding to the page so it fits nicely at the top or bottom
+            if (location == 'bottom') {
+                newPadding = paddingBottom + 50;
+                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+            } else {
+                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
+                    newPadding = paddingTop + 50;
+                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
+                }
+            }
+        }
+        
     }
+
 
     function centerSidePanel() {
         var sidePanel = jQuery("[class*=float-position-center]");
@@ -391,6 +398,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         sidePanel.css("top", offset);
     }
+
 
     function initShareButtons() {
         if (0 !== $('.swp_social_panel').length) {
