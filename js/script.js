@@ -490,6 +490,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return false;
             });
         });
+
+        var pinterestButton = findPinterestSaveButton();
+
+        if (typeof pinterestButton != 'undefined') {
+            removePinterestButton(pinterestButton);
+        }
     }
 
     function handleWindowOpens() {
