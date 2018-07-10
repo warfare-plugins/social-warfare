@@ -377,7 +377,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
-        
     }
 
 
