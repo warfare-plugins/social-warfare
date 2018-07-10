@@ -1808,6 +1808,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	position: absolute;
 	top: 0;
 	width: 0;
+    z-index: -10;
 }
 .fl-module-content .uabb-blog-posts .uabb-post-thumbnail .sw-pinit.lazyloaded {
 	display: block !important;
