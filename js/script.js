@@ -431,11 +431,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
 
-            if (disableOnAnchors === true) {
-                if (jQuery($image).parents().find("img").length) {
-                    return;
-                }
-            }
 
             if ($image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth) {
                 return;
