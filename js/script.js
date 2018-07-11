@@ -446,7 +446,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var pinMedia = false;
 
             if ('undefined' !== typeof swpPinIt.image_source) {
-                pinMedia = swpPinIt.image_source;
+                //* Create a temp image to force absolute paths
+                var i = new Image();
+                i.src = swpPinIt.image_source;
+                pinMedia = jQuery(i).src;
             } else if ($image.data('media')) {
                 pinMedia = $image.data('media');
             } else if ($(this).data('lazy-src')) {
