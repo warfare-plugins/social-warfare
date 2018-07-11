@@ -507,7 +507,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         var pinterestButton = findPinterestSaveButton();
 
-        if (typeof pinterestButton != 'undefined') {
+        if (typeof pinterestButton != 'undefined' && pinterestButton) {
             removePinterestButton(pinterestButton);
         }
     }
