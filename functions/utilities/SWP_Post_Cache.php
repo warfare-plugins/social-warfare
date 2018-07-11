@@ -295,7 +295,7 @@ class SWP_Post_Cache {
 		global $swp_social_networks;
  		foreach($swp_social_networks as $network):
  			if($network->is_active()):
- 				SWP_URL_Management::process_url( $post_data['permalink'] , $network->key , $post_data['ID'] , false );
+                SWP_URL_Management::process_url( $network->get_shareable_permalink() , $network->key , $this->id , false );
  			endif;
  		endforeach;
  	}
