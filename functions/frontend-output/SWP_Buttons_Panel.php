@@ -708,6 +708,7 @@ class SWP_Buttons_Panel {
 	 * @return object $this Allows for method chaining.
 	 *
 	 */
+
     public function establish_active_buttons() {
         $network_objects = array();
 
@@ -753,11 +754,15 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     protected function get_dynamic_buttons_order() {
+        global $swp_social_networks;
+        $buttons = $this->options['order_of_icons'];
 		$order = array();
+
 		if( !empty( $this->shares ) && is_array( $this->shares ) ):
 			arsort( $this->shares );
 			foreach( $this->shares as $key => $value ):
-				if($key !== 'total_shares'):
+				if($key !== 'total_shares' && in_array($key, $buttons)):
+
 					$order[$key] = $key;
 				endif;
 			endforeach;
