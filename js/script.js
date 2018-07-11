@@ -236,7 +236,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 
         //* If a horizontal panel does not exist,
-        if (typeof panel == "undefined") {
+        if (!panel.length) {
             return;
         }
 
@@ -351,6 +351,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var location = panel.data("float");
+
         panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
 
         if (panelIsVisible()) {
@@ -374,7 +375,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
+
     }
+
 
     function centerSidePanel() {
         var sidePanel = jQuery("[class*=float-position-center]");
@@ -393,6 +396,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         sidePanel.css("top", offset);
     }
+
 
     function initShareButtons() {
         if (0 !== $('.swp_social_panel').length) {
@@ -426,6 +430,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         // Iterate over the current set of matched elements.
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
+
 
             if ($image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth) {
                 return;
@@ -492,6 +497,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return false;
             });
         });
+
     }
 
     function handleWindowOpens() {
@@ -546,6 +552,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             }
         });
     }
+
+
 
     $(window).on('load' , function() {
         if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
