@@ -434,7 +434,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var $image = $(this);
 
             if (disableOnAnchors === true) {
-                if (jQuery($image).parents().find("img").length) {
+                if (jQuery($image).parents().find("a").length) {
                     return;
                 }
             }
