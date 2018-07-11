@@ -118,8 +118,6 @@ class SWP_Buttons_Panel {
 		$this->establish_permalink();
         $this->establish_active_buttons();
         $this->debug();
-
-        add_action( 'wp_footer', array( $this, 'print_js_variables' ) );
     }
 
 
@@ -901,24 +899,6 @@ class SWP_Buttons_Panel {
         }
 
         return $this->do_print();
-    }
-
-
-    /**
-     * Echoes selected admin settings from the database to javascript.
-     *
-     * @since  3.1.0 | 27 JUN 2018 | Created the method.
-     * @access public
-     * @return void
-     *
-     */
-    public function print_js_variables() {
-        global $swp_user_options;
-        $float_before_content = $swp_user_options['float_before_content'];
-
-        echo '<script type="text/javascript">
-              var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
-              </script>';
     }
 
 
