@@ -323,7 +323,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         if (!panel.length) {
             //* No buttons panel!
-            if ($(window).width() > minWidth) {
+            if ($(window).width() > sidePanel.data("min-width")) {
                 visible = false;
             } else {
                 visible = true;
