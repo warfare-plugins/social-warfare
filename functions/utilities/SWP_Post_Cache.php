@@ -291,13 +291,14 @@ class SWP_Post_Cache {
  	}
 
 
- 	public function process_urls() {
-		global $swp_social_networks;
- 		foreach($swp_social_networks as $network):
- 			if($network->is_active()):
-                SWP_URL_Management::process_url( get_permalink( $this->id ) , $network->key , $this->id , false );
- 			endif;
- 		endforeach;
+    public function process_urls() {
+       global $swp_social_networks;
+       $permalink = get_permalink( $this->id );
+        foreach($swp_social_networks as $network):
+            if($network->is_active()):
+                SWP_URL_Management::process_url( $permalink , $network->key , $this->id , false );
+            endif;
+        endforeach;
  	}
 
 
