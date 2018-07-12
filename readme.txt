@@ -194,7 +194,11 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 = 3.1.1 (12 JUl 2018) =
-* Fixed Javascript "minWidth" is undefined
+* Fixed Javascript "minWidth" is undefined.
+* Fixed which buttons are displayed when using Dynamic Sorting.
+* Fixed "Undefined Index: post_id" error. 
+* Changed default "Float Before Content" from "ON" to "OFF".
+* Removed excess printing of "Float Before Content" variable.
 
 = 3.1.0 (09 JUl 2018) =
 * Fixed incompatibility with Yoast update
