@@ -463,7 +463,7 @@ class SWP_Post_Cache {
 
             $this->permalinks[$key][] = get_permalink( $this->id );
 
-            if( true === $swp_user_options['recover_shares'] ) :
+            if( isset( $swp_user_options['recover_shares'] ) && true === $swp_user_options['recover_shares'] ) :
                 $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->id );
             endif;
 
