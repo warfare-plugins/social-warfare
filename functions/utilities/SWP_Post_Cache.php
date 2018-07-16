@@ -534,6 +534,11 @@ class SWP_Post_Cache {
 	 */
     private function parse_api_responses() {
         global $swp_social_networks;
+        
+        if ( empty( $this->raw_api_responses ) ) :
+            return;
+        endif;
+
         $this->parsed_api_responses = array();
 
         foreach( $this->raw_api_responses as $request => $responses ) {
