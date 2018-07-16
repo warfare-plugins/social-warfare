@@ -446,7 +446,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var pinMedia = false;
 
             if ('undefined' !== typeof swpPinIt.image_source) {
-                //* Create a temp image to force absolute paths
+                //* Create a temp image to force absolute paths via jQuery.
                 var i = new Image();
                 i.src = swpPinIt.image_source;
                 pinMedia = jQuery(i).src;
