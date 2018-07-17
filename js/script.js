@@ -246,20 +246,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             return;
         }
 
-
-        var offset = panel.offset();
         var backgroundColor = panel.data("float-color");
-        var left = panel.data("align") == "center" ? 0 : offset.left;
+        var left = panel.data("align") == "center" ? 0 : panel.offset().left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
         if (floatLocation == 'left' || floatLocation == 'right') {
             var barLocation = panel.data("float-mobile");
         } else {
             var barLocation = floatLocation;
-        }
-
-        if ($(".nc_wrapper").length) {
-            $(".nc_wrapper").remove();
         }
 
         wrapper.addClass(barLocation).hide().appendTo("body");
@@ -349,23 +343,29 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var location = panel.data("float");
-
-        panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
+        var newPadding = 0;
 
         if (panelIsVisible()) {
+            $(".nc_wrapper").hide();
+
+            newPadding = (location == "bottom") ? paddingBottom : paddingTop;
+
             //* Return the padding to its default state.
-            if (location == "bottom") {
-                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            } else {
-                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            }
+            // if (location == "bottom") {
+            //     newPadding = paddingBottom;
+            //     // $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
+            // } else {
+            //     newPadding = paddingBottom;
+            //
+            //     // $("body").animate({ "padding-top": paddingTop + "px" }, 0);
+            // }
         } else {
-            var newPadding;
+            $(".nc_wrapper").show();
 
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == 'bottom') {
                 newPadding = paddingBottom + 50;
-                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+                // $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
             } else {
                 if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
                     newPadding = paddingTop + 50;
@@ -373,6 +373,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
+        var paddingProp = "padding-" + location;
+        $("body").animate({paddingProp: newPadding}, 0);
 
     }
 
