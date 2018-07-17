@@ -234,6 +234,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function createFloatBar() {
         //* .swp_social_panelSide is the side floater.
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var floatLocation = panel.data("float")
 
         //* If a horizontal panel does not exist,
         if (typeof panel == "undefined") {
@@ -241,36 +242,32 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width" && panel.data("float") != "top" && panel.data("float") != "bottom")) {
+        if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
             return;
         }
+
 
         var offset = panel.offset();
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : offset.left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-        var location = panel.data('float');
 
-        if ($(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile")
-        }
-
-        if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile");
+        if (floatLocation == 'left' || floatLocation == 'right') {
+            var barLocation = panel.data("float-mobile");
+        } else {
+            var barLocation = floatLocation;
         }
 
         if ($(".nc_wrapper").length) {
             $(".nc_wrapper").remove();
         }
 
-        wrapper.addClass(location).hide().appendTo("body");
+        wrapper.addClass(barLocation).hide().appendTo("body");
 
         var clone = panel.clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
-
-
     }
 
 
@@ -299,8 +296,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function toggleMobileButtons() {
         var panel = $(".swp_social_panel").first();
-        var location = panel.data("float-mobile");
-        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+        // var direction = (location.indexOf("left") !== -1) ? "left" : "right";
         var visibility = panelIsVisible() ? "collapse" : "visible";
 
         //* Force side floating panel to be hidden.
@@ -313,7 +309,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function toggleSideButtons() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
+        var sidePanel = $(".swp_social_panelSide");
         var location = panel.data("float");
         var visible = panelIsVisible();
 
@@ -406,7 +402,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             centerSidePanel();
             swp.activateHoverStates();
             handleWindowOpens();
-            $(window).scrollTop();
             $(window).scroll(swp.throttle(50, function() {
                 toggleFloatingButtons();
             }));
