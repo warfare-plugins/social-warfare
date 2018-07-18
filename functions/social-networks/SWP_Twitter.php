@@ -39,13 +39,6 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->key     = 'twitter';
 		$this->default = 'true';
 
-        $arabic = "ئبيشببثرهخحهكمنشىهر خهىث ارخمنش رهثى ز ثاخ";
-        $japanese = "であ fdj は ら き り い へ おん lい lえ";
-        $russian = "йцукав аошщзфст моуьфь яшшшйцукав аошщзфст моуьфь яшшш";
-        //
-        // echo "My arabic text: $russian <br/>";
-        // echo "My normalized text: " , normalizer_normalize($russian);
-        // die;
 		$this->init_social_network();
 	}
 
