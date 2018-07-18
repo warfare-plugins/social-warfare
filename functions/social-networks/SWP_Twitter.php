@@ -39,6 +39,13 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->key     = 'twitter';
 		$this->default = 'true';
 
+        $arabic = "ئبيشببثرهخحهكمنشىهر خهىث ارخمنش رهثى ز ثاخ";
+        $japanese = "であ fdj は ら き り い へ おん lい lえ";
+        $russian = "йцукав аошщзфст моуьфь яшшшйцукав аошщзфст моуьфь яшшш";
+        //
+        // echo "My arabic text: $russian <br/>";
+        // echo "My normalized text: " , normalizer_normalize($russian);
+        // die;
 		$this->init_social_network();
 	}
 
@@ -140,9 +147,9 @@ class SWP_Twitter extends SWP_Social_Network {
 		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
         if ( gettype( $custom_tweet) === 'string' && !empty( $custom_tweet ) ) :
-            $custom_tweet = urlencode( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) );
+            $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) ) );
         else :
-            $custom_tweet = urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
+            $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) );
         endif;
 
 		$twitter_link = $this->get_shareable_permalink( $post_data );

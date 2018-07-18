@@ -233,7 +233,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function createFloatBar() {
         //* .swp_social_panelSide is the side floater.
+        if ($(".nc_wrapper").length) {
+            $(".nc_wrapper").remove();
+        }
+
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var floatLocation = panel.data("float")
 
         //* If a horizontal panel does not exist,
         if (typeof panel == "undefined") {
@@ -241,36 +246,26 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width" && panel.data("float") != "top" && panel.data("float") != "bottom")) {
+        if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
             return;
         }
 
-        var offset = panel.offset();
         var backgroundColor = panel.data("float-color");
-        var left = panel.data("align") == "center" ? 0 : offset.left;
+        var left = panel.data("align") == "center" ? 0 : panel.offset().left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-        var location = panel.data('float');
 
-        if ($(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile")
+        if (floatLocation == 'left' || floatLocation == 'right') {
+            var barLocation = panel.data("float-mobile");
+        } else {
+            var barLocation = floatLocation;
         }
 
-        if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile");
-        }
-
-        if ($(".nc_wrapper").length) {
-            $(".nc_wrapper").remove();
-        }
-
-        wrapper.addClass(location).hide().appendTo("body");
+        wrapper.addClass(barLocation).hide().appendTo("body");
 
         var clone = panel.clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
-
-
     }
 
 
@@ -280,9 +275,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var location = panel.data('float');
 
         if ($(window).width() < panel.data("min-width")) {
-            if (!$(".nc_wrapper").length) {
-                createFloatBar();
-            }
+            createFloatBar();
             toggleMobileButtons();
             toggleFloatingBar();
         }
@@ -299,8 +292,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function toggleMobileButtons() {
         var panel = $(".swp_social_panel").first();
-        var location = panel.data("float-mobile");
-        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+        // var direction = (location.indexOf("left") !== -1) ? "left" : "right";
         var visibility = panelIsVisible() ? "collapse" : "visible";
 
         //* Force side floating panel to be hidden.
@@ -313,7 +305,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function toggleSideButtons() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
+        var sidePanel = $(".swp_social_panelSide");
         var location = panel.data("float");
         var visible = panelIsVisible();
 
@@ -325,7 +317,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         if (!panel.length) {
             //* No buttons panel!
-            if ($(window).width() > minWidth) {
+            if ($(window).width() > sidePanel.data("min-width")) {
                 visible = false;
             } else {
                 visible = true;
@@ -353,23 +345,29 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var location = panel.data("float");
-
-        panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
+        var newPadding = 0;
 
         if (panelIsVisible()) {
+            $(".nc_wrapper").hide();
+
+            newPadding = (location == "bottom") ? paddingBottom : paddingTop;
+
             //* Return the padding to its default state.
-            if (location == "bottom") {
-                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            } else {
-                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            }
+            // if (location == "bottom") {
+            //     newPadding = paddingBottom;
+            //     // $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
+            // } else {
+            //     newPadding = paddingBottom;
+            //
+            //     // $("body").animate({ "padding-top": paddingTop + "px" }, 0);
+            // }
         } else {
-            var newPadding;
+            $(".nc_wrapper").show();
 
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == 'bottom') {
                 newPadding = paddingBottom + 50;
-                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+                // $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
             } else {
                 if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
                     newPadding = paddingTop + 50;
@@ -377,6 +375,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
+        var paddingProp = "padding-" + location;
+        $("body").animate({paddingProp: newPadding}, 0);
+
     }
 
 
@@ -405,7 +406,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             centerSidePanel();
             swp.activateHoverStates();
             handleWindowOpens();
-            $(window).scrollTop();
             $(window).scroll(swp.throttle(50, function() {
                 toggleFloatingButtons();
             }));
@@ -432,6 +432,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
 
+            if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+                if (jQuery($image).parents().filter("a").length) {
+                    return;
+                }
+            }
+
             if ($image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth) {
                 return;
             }
@@ -439,7 +445,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var pinMedia = false;
 
             if ('undefined' !== typeof swpPinIt.image_source) {
-                pinMedia = swpPinIt.image_source;
+                //* Create a temp image to force absolute paths via jQuery.
+                var i = new Image();
+                i.src = swpPinIt.image_source;
+                pinMedia = jQuery(i).src;
             } else if ($image.data('media')) {
                 pinMedia = $image.data('media');
             } else if ($(this).data('lazy-src')) {
@@ -500,7 +509,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         var pinterestButton = findPinterestSaveButton();
 
-        if (typeof pinterestButton != 'undefined') {
+        if (typeof pinterestButton != 'undefined' && pinterestButton) {
             removePinterestButton(pinterestButton);
         }
     }

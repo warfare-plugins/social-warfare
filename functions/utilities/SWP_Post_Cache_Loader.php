@@ -110,7 +110,7 @@ class SWP_Post_Cache_Loader {
 	 *
 	 */
 	public function update_post( $post_id ) {
-		$Post_Cache = new SWP_Post_Cache( $_POST['post_id'] );
+		$Post_Cache = new SWP_Post_Cache( $post_id );
 		$Post_Cache->delete_timestamp();
 	}
 
