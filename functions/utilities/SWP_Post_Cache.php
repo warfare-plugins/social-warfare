@@ -487,11 +487,9 @@ class SWP_Post_Cache {
 
         $this->api_urls = array();
 
-        foreach ( $this->permalinks as $network => $links ) {
-			$current_request = 0;
+        foreach ( $this->permalinks as $request => $links ) {
             foreach( $links as $url ) {
-                $this->api_urls[$current_request][$network] = $swp_social_networks[$network]->get_api_link( $url );
-				++$current_request;
+                $this->api_urls[$request][$network] = $swp_social_networks[$network]->get_api_link( $url );
 			}
         }
     }
@@ -534,7 +532,7 @@ class SWP_Post_Cache {
 	 */
     private function parse_api_responses() {
         global $swp_social_networks;
-        
+
         if ( empty( $this->raw_api_responses ) ) :
             return;
         endif;
@@ -619,7 +617,7 @@ class SWP_Post_Cache {
 
 			// We only update to newly fetched numbers if they're bigger than
 			// the old ones unless the url parameter is forcing it to take.
-            if ( $count <= $previous_count && false === _swp_is_debug( 'force_new_shares' ) ) {
+            if ( $count < $previous_count && false === _swp_is_debug( 'force_new_shares' ) ) {
                 $this->share_counts[$key] = $previous_count;
             }
 
