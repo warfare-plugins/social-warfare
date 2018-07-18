@@ -834,8 +834,6 @@ class SWP_Buttons_Panel {
 
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        echo "finderr Total shares: " . $this->shares['total_shares'] . "<br/>";
-
         if ( $this->shares['total_shares'] < $this->option('minimum_shares')
         || false == $this->option('total_shares')
         || $this->is_shortcode && !$totals_argument ) {
