@@ -254,6 +254,7 @@ class SWP_Buttons_Panel {
     public function establish_share_data() {
         global $SWP_Post_Caches;
         $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
+        // echo "The post cache", var_dump($SWP_Post_Caches->get_post_cache( $this->post_id ));
         return $this;
     }
 
@@ -513,6 +514,8 @@ class SWP_Buttons_Panel {
 
 		$defaults = array();
 		$defaults = apply_filters('swp_options_page_defaults' , $defaults );
+        // echo "<pre>";
+        // die(var_dump($defaults));
 
 		if( isset( $this->options[$key] ) ):
 			return $this->options[$key];
@@ -831,8 +834,9 @@ class SWP_Buttons_Panel {
 
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        if ( empty( $this->shares['total_shares'])
-        || $this->shares['total_shares'] < $this->option('minimum_shares')
+        echo "finderr Total shares: " . $this->shares['total_shares'] . "<br/>";
+
+        if ( $this->shares['total_shares'] < $this->option('minimum_shares')
         || false == $this->option('total_shares')
         || $this->is_shortcode && !$totals_argument ) {
             return '';
