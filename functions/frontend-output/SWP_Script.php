@@ -39,11 +39,12 @@ class SWP_Script {
 	public function add_hooks() {
 
 		// Queue up our footer hook function
-        add_filter( 'swp_footer_scripts' , array( $this, 'nonce' ) );
-        add_filter( 'swp_footer_scripts' , array( $this, 'frame_buster' ) );
+        add_filter( 'swp_footer_scripts', array( $this, 'nonce' ) );
+        add_filter( 'swp_footer_scripts', array( $this, 'frame_buster' ) );
+        add_filter( 'swp_footer_scripts', array( $this, 'float_before_content' ) );
 
         // Queue up our footer hook function
-        add_filter( 'swp_footer_scripts' , array( $this, 'click_tracking' ) );
+        add_filter( 'swp_footer_scripts', array( $this, 'click_tracking' ) );
 
 		// Queue up the Social Warfare scripts and styles
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -256,6 +257,24 @@ class SWP_Script {
     	// Create a nonce
     	$info['footer_output'] .= ' var swp_nonce = "'.wp_create_nonce().'";';
     	return $info;
+    }
+
+
+    /**
+     * Echoes selected admin settings from the database to javascript.
+     *
+     * @since  3.1.0 | 27 JUN 2018 | Created the method.
+     * @access public
+     * @return void
+     *
+     */
+    public function float_before_content( $vars ) {
+        global $swp_user_options;
+        $float_before_content = $swp_user_options['float_before_content'];
+
+        $vars['footer_output'] = "var swpFloatBeforeContent = " . json_encode($float_before_content) . ";";
+
+        return $vars;
     }
 
 

@@ -118,8 +118,6 @@ class SWP_Buttons_Panel {
 		$this->establish_permalink();
         $this->establish_active_buttons();
         $this->debug();
-
-        add_action( 'wp_footer', array( $this, 'print_js_variables' ) );
     }
 
 
@@ -256,6 +254,7 @@ class SWP_Buttons_Panel {
     public function establish_share_data() {
         global $SWP_Post_Caches;
         $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
+        // echo "The post cache", var_dump($SWP_Post_Caches->get_post_cache( $this->post_id ));
         return $this;
     }
 
@@ -515,6 +514,8 @@ class SWP_Buttons_Panel {
 
 		$defaults = array();
 		$defaults = apply_filters('swp_options_page_defaults' , $defaults );
+        // echo "<pre>";
+        // die(var_dump($defaults));
 
 		if( isset( $this->options[$key] ) ):
 			return $this->options[$key];
@@ -710,6 +711,7 @@ class SWP_Buttons_Panel {
 	 * @return object $this Allows for method chaining.
 	 *
 	 */
+
     public function establish_active_buttons() {
         $network_objects = array();
 
@@ -755,11 +757,15 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     protected function get_dynamic_buttons_order() {
+        global $swp_social_networks;
+        $buttons = $this->options['order_of_icons'];
 		$order = array();
+
 		if( !empty( $this->shares ) && is_array( $this->shares ) ):
 			arsort( $this->shares );
 			foreach( $this->shares as $key => $value ):
-				if($key !== 'total_shares'):
+				if($key !== 'total_shares' && in_array($key, $buttons)):
+
 					$order[$key] = $key;
 				endif;
 			endforeach;
@@ -828,8 +834,7 @@ class SWP_Buttons_Panel {
 
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        if ( empty( $this->shares['total_shares'])
-        || $this->shares['total_shares'] < $this->option('minimum_shares')
+        if ( $this->shares['total_shares'] < $this->option('minimum_shares')
         || false == $this->option('total_shares')
         || $this->is_shortcode && !$totals_argument ) {
             return '';
@@ -901,24 +906,6 @@ class SWP_Buttons_Panel {
         }
 
         return $this->do_print();
-    }
-
-
-    /**
-     * Echoes selected admin settings from the database to javascript.
-     *
-     * @since  3.1.0 | 27 JUN 2018 | Created the method.
-     * @access public
-     * @return void
-     *
-     */
-    public function print_js_variables() {
-        global $swp_user_options;
-        $float_before_content = $swp_user_options['float_before_content'];
-
-        echo '<script type="text/javascript">
-              var swpFloatBeforeContent = ' . json_encode($float_before_content) . ';
-              </script>';
     }
 
 

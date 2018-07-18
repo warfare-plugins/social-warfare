@@ -292,12 +292,13 @@ class SWP_Post_Cache {
 
 
  	public function process_urls() {
-		global $swp_social_networks;
- 		foreach($swp_social_networks as $network):
- 			if($network->is_active()):
- 				SWP_URL_Management::process_url( $post_data['permalink'] , $network->key , $post_data['ID'] , false );
- 			endif;
- 		endforeach;
+       global $swp_social_networks;
+       $permalink = get_permalink( $this->id );
+        foreach($swp_social_networks as $network):
+            if($network->is_active()):
+                SWP_URL_Management::process_url( $permalink , $network->key , $this->id , false );
+            endif;
+        endforeach;
  	}
 
 
@@ -462,7 +463,7 @@ class SWP_Post_Cache {
 
             $this->permalinks[$key][] = get_permalink( $this->id );
 
-            if( true === $swp_user_options['recover_shares'] ) :
+            if( isset( $swp_user_options['recover_shares'] ) && true === $swp_user_options['recover_shares'] ) :
                 $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->id );
             endif;
 
@@ -533,6 +534,11 @@ class SWP_Post_Cache {
 	 */
     private function parse_api_responses() {
         global $swp_social_networks;
+
+        if ( empty( $this->raw_api_responses ) ) :
+            return;
+        endif;
+
         $this->parsed_api_responses = array();
 
         foreach( $this->raw_api_responses as $request => $responses ) {
