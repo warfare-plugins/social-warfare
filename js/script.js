@@ -233,6 +233,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function createFloatBar() {
         //* .swp_social_panelSide is the side floater.
+        if ($(".nc_wrapper").length) {
+            $(".nc_wrapper").remove();
+        }
+
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var floatLocation = panel.data("float")
 
@@ -271,9 +275,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var location = panel.data('float');
 
         if ($(window).width() < panel.data("min-width")) {
-            if (!$(".nc_wrapper").length) {
-                createFloatBar();
-            }
+            createFloatBar();
             toggleMobileButtons();
             toggleFloatingBar();
         }
