@@ -140,9 +140,17 @@ class SWP_Twitter extends SWP_Social_Network {
 		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
         if ( gettype( $custom_tweet) === 'string' && !empty( $custom_tweet ) ) :
-            $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) ) );
+            if ( function_exists( 'normalizer_normalize' ) ) :
+                $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) ) );
+           else :
+               $custom_tweet = urlencode( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) );
+           endif;
         else :
-            $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) );
+            if ( function_exists( 'normalizer_normalize' ) ) :
+                $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) );
+            else :
+                $custom_tweet = urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
+            endif;
         endif;
 
 		$twitter_link = $this->get_shareable_permalink( $post_data );
