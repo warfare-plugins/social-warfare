@@ -324,7 +324,6 @@ class Social_Warfare {
             'CURL',
             'Localization',
             'Permalink',
-            'Plugin_Updater',
             'Database_Migration',
 			'URL_Management',
             'Notice',
