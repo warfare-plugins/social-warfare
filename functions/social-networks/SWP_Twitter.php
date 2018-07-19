@@ -139,24 +139,18 @@ class SWP_Twitter extends SWP_Social_Network {
 		// Check for a custom tweet from the post options.
 		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
-        if ( gettype( $custom_tweet) === 'string' && !empty( $custom_tweet ) ) :
-            if ( function_exists( 'normalizer_normalize' ) ) :
-                $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) ) );
-           else :
-               $custom_tweet = urlencode( html_entity_decode( $custom_tweet, ENT_COMPAT, 'UTF-8' ) );
-           endif;
+        $tweet = empty( $custom_tweet ) ? $title : $custom_tweet;
+
+        if ( function_exists( 'normalizer_normalize' ) ) :
+            $tweet = urlencode( normalizer_normalize( html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' ) ) );
         else :
-            if ( function_exists( 'normalizer_normalize' ) ) :
-                $custom_tweet = urlencode( normalizer_normalize( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) ) );
-            else :
-                $custom_tweet = urlencode( html_entity_decode( $title, ENT_COMPAT, 'UTF-8' ) );
-            endif;
+            $tweet = urlencode( html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' ) );
         endif;
 
 		$twitter_link = $this->get_shareable_permalink( $post_data );
 
 		// If the custom tweet contains a link, block Twitter for auto adding another one.
-		if ( false !== strpos( $custom_tweet , 'http' ) ) :
+		if ( false !== strpos( $tweet , 'http' ) ) :
 			$url_parameter = '&url=/';
 		else :
 			$url_parameter = '&url=' . $twitter_link;
@@ -165,7 +159,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$twitter_mention = get_post_meta( $post_data['ID'] , 'swp_twitter_mention' , true );
 
 		if (false != $twitter_mention):
-			$custom_tweet .= ' @'.str_replace('@','',$twitter_mention);
+			$tweet .= ' @'.str_replace('@','',$twitter_mention);
 		endif;
 
 		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $post_data['ID'] ) );
@@ -178,7 +172,7 @@ class SWP_Twitter extends SWP_Social_Network {
 			$via_parameter = '';
 		endif;
 
-        $parameters = $custom_tweet . $url_parameter . $via_parameter;
+        $parameters = $tweet . $url_parameter . $via_parameter;
 
         $intent_link = "https://twitter.com/intent/tweet?text=$parameters";
 
