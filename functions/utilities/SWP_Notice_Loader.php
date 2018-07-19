@@ -54,7 +54,9 @@ class SWP_Notice_Loader {
 			return;
 		endif;
 
-		foreach( $cache_data['notices'] as $notice ) :
+        $notices = array_merge($cache_data['notices'], apply_filters( 'swp_admin_notices', array() ) );
+
+		foreach( $notices as $notice ) :
             if ( empty( $notice['key'] ) || empty( $notice['message'] ) ) {
                 continue;
             }
