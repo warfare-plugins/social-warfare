@@ -6,6 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Allows plugins to use their own update API.
  *
+ * Class renamed from EDD_SL_Product_Updater to SWP_Plugin_Updater to ensure
+ * we are working with the expected version of the class.
+ *
+ * No other modifications were made. Provided by Easy Digital Downloads.
+ *
  * @author Easy Digital Downloads
  * @version 1.6.16
  */
