@@ -2,7 +2,6 @@
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
-if ( class_exists( 'EDD_SL_Plugin_Updater' ) ) return;
 
 /**
  * Allows plugins to use their own update API.
@@ -10,7 +9,7 @@ if ( class_exists( 'EDD_SL_Plugin_Updater' ) ) return;
  * @author Easy Digital Downloads
  * @version 1.6.16
  */
-class EDD_SL_Plugin_Updater {
+class SWP_EDD_SL_Plugin_Updater {
 
 	private $api_url     = '';
 	private $api_data    = array();
