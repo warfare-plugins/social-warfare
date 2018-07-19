@@ -286,12 +286,17 @@ class Social_Warfare {
 
         new SWP_JSON_Cache_Handler();
 
+        add_action('plugins_loaded', function() {
+            /**
+             * Instantiates all of our notices.
+             *
+             */
+            new SWP_Notice_Loader();
+        }, 50);
 
-        /**
-         * Instantiates all of our notices.
-         *
-         */
-        new SWP_Notice_Loader();
+        if ( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+            require_once SWP_PLUGIN_DIR . '/functions/utilities/EDD_SL_Plugin_Updater.php';
+        }
 	}
 
 
