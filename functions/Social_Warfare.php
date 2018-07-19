@@ -294,9 +294,7 @@ class Social_Warfare {
             new SWP_Notice_Loader();
         }, 50);
 
-        if ( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-            require_once SWP_PLUGIN_DIR . '/functions/utilities/EDD_SL_Plugin_Updater.php';
-        }
+        require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_EDD_SL_Plugin_Updater.php';
 	}
 
 
