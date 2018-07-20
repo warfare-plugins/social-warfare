@@ -572,6 +572,10 @@ class SWP_Post_Cache {
 
         $share_counts = array();
 
+        if ( empty( $this->parsed_api_responses ) ) :
+            return;
+        endif;
+
         foreach ( $this->parsed_api_responses as $request => $networks ) {
             foreach ( $networks as $key => $count_array ) {
                 foreach ( $count_array as $count ) {
@@ -605,6 +609,10 @@ class SWP_Post_Cache {
 	 */
     private function cache_share_counts() {
         $this->share_counts['total_shares'] = 0;
+
+        if ( empty( $this->share_counts ) ) :
+            return;
+        endif;
 
         foreach( $this->share_counts as $key => $count ) {
             if ( 'total_shares' === $key ) {
