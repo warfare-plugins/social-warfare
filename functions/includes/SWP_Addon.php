@@ -10,22 +10,27 @@ class SWP_Addon extends Social_Warfare {
         $this->core_required = '3.0.0';
         $this->store_url = 'https://warfareplugins.com';
         $this->site_url = swp_get_site_url();
+        $this->license_key = '';
+        $this->filepath = '';
+
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
+        add_action( 'wp_loaded', array( $this, 'establish_license_key' ) );
+        // add_action('plugins_loaded', function() {echo '<br>finderr plugins_loaded<br>';});
+
     }
 
 
     /**
-     * The callback function used to add a new instance of this /**
+      * The callback function used to add a new instance of this /**
       * to our swp_registrations filter.
       *
       * This should be the last item called in an addon's main file.
       *
-     * @param array $addons The array of addons currently activated.
-     */
+      * @param array $addons The array of addons currently activated.
+      */
     public function add_self( $addons ) {
-        $this->establish_license_key();
         $this->registered = $this->is_registered();
 
         $addons[] = $this;
@@ -99,20 +104,12 @@ class SWP_Addon extends Social_Warfare {
     }
 
     public function establish_license_key() {
-        $options = get_option( 'social_warfare_settings' );
-
-        if ( isset ( $options[ $this->key . '_license_key'] ) ) :
-            $this->license_key = $options[ $this->key . '_license_key'];
-        endif;
-
-        $this->license_key = '';
-    }
-
-    public function is_registered() {
-        // Get the plugin options from the database
-    	$options = get_option( 'social_warfare_settings', false );
-        $old_options = get_option( 'socialWarfareOptions', false );
-
+        // echo "<br>finderr establish_license_key for $this->key";
+        $options = get_option( 'social_warfare_settings', array() );
+        $old_options = get_option( 'socialWarfareOptions', array() );
+echo "<pre>";
+        // var_dump($options);
+echo "</pre>";
         if ( isset( $options[$this->key . '_license_key'] ) ) :
             $this->license_key = $options[$this->key . '_license_key'];
         elseif ( isset( $old_options[$this->key . '_license_key'] ) ) :
@@ -121,7 +118,11 @@ class SWP_Addon extends Social_Warfare {
             $this->license_key = '';
         endif;
 
+        // echo "<br> THiskey is $this->license_key<br/>";
 
+    }
+
+    public function is_registered() {
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
@@ -132,6 +133,10 @@ class SWP_Addon extends Social_Warfare {
     	$timestamp = isset ( $timestamp ) ? $timestamp  : 0;
 
     	$time_to_recheck = $timestamp + 604800;
+
+        if ($this->key == 'pro') {
+            // echo "Licence key: " . $this->license_key; die;
+        }
 
     	// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
     	if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) :
@@ -163,7 +168,7 @@ class SWP_Addon extends Social_Warfare {
     				$this->license_key = '';
 
                     $options[$this->key . '_license_key'] = '';
-					
+
     				update_option( 'social_warfare_settings' , $options );
 
                     return false;
@@ -191,9 +196,44 @@ class SWP_Addon extends Social_Warfare {
     }
 
     public function check_for_updates() {
-        if ( version_compare(SWP_VERSION, $this->core_required) >= 0 ) :
+        /**
+         * Note regarding keys:
+         *
+         * As I was testing, it seemd that the 'license' field trumps 'item_id'
+         * as far as product validation goes. For example:
+         *
+         * Set item_id to a Test Product id
+         * set license to a valid Test Product license
+         * Result: Finds updates for Test Product
+         *
+         * Set item_id to a Test Product id
+         * Set license to a valid Socail Warfare Pro license
+         * Result: Finds updates for Social Warfare Pro
+         *
+         * Set item_id to a Test Product id
+         * Set license to "x"
+         * Result: Finds no updates for anything.
+         *
+         */
 
-        endif;
+        //* $test_product_key pairs with item_id 189418, 'Test Product for Updates'
+        // $test_product_key = 'cf88c0df1bf351d2142ce82edb5a10be';
+
+        //* An expired Pro key.
+        // $expired_key = 'ab81a8227a5ee7a180ca2dbf89b5b935';
+
+        if ( !class_exists( 'SWP_Plugin_Updater' ) && defined( 'SWP_PLUGIN_DIR' ) ) {
+            require_once( SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php' );
+        }
+
+        $edd_updater = new SWP_Plugin_Updater( $this->store_url, $this->filepath, array(
+            'version' 	=> $this->version,		// current version number
+            'license' 	=> $this->license_key,	// license key (used get_option above to retrieve from DB)
+            'item_id'   => $this->product_id,
+            'author' 	=> 'Warfare Plugins',	// author of this plugin
+            'url'           => home_url(),
+            'beta'          => false // set to true if you wish customers to receive update notifications of beta releases
+        ) );
     }
 
     public function unregister_plugin() {
