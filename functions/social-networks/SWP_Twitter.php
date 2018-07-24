@@ -192,9 +192,23 @@ class SWP_Twitter extends SWP_Social_Network {
 	public function reset_share_count_source() {
 		$options = get_option('social_warfare_options');
 		if( !empty( $options['tweet_count_source']) && 'newsharecounts' == $options['tweet_count_source'] ) {
-			// Unset the tweet_count_source
-			// Turn share counts to OFF.
-			// Add deprication notice letting them know to sign up at a new service.
+            unset( $options['tweet_count_source'] );
+            $options['twitter_shares'] = false;
+
+            add_filter( 'swp_admin_notices', function($notices) {
+                $notice = array(
+                    'key'   => 'new_share_counts_admin_used_service',
+                    'message'   => 'Because New Share Counts is not in service, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
+                    array(
+                        'action'    => 'Thank you, I understand.',
+                        'timeframe' => 0
+                    ),
+                );
+
+                $notices[] = $notice;
+
+                return $notices;
+            });
 		}
 	}
 
