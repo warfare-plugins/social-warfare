@@ -296,6 +296,14 @@ class SWP_Post_Cache {
 	}
 
 
+	/**
+	 * Process the URLs for shortlinks, UTM, etc.
+	 *
+	 * @since  3.1.0 | 20 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 * 
+	 */
 	public function process_urls() {
     	global $swp_social_networks;
     	$permalink = get_permalink( $this->id );
