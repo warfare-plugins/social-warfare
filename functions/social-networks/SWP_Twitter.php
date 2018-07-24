@@ -65,7 +65,7 @@ class SWP_Twitter extends SWP_Social_Network {
 				return 'https://opensharecount.com/count.json?url='. $url;
 			}
 
-
+			// TwitCount 
 			if( 'twitcount' == $swp_user_options['tweet_count_source'] ) {}
 				return 'https://counts.twitcount.com/counts.php?url=' . $url;
 			}
