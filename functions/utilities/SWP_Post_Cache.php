@@ -279,27 +279,32 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-     public function rebuild_cached_data() {
-         $this->rebuild_share_counts();
-         $this->rebuild_pinterest_image();
-         $this->rebuild_open_graph_image();
- 		$this->process_urls();
-         $this->reset_timestamp();
+    public function rebuild_cached_data() {
 
- 		// A hook to run allowing third-party functions to run.
- 		do_action( 'swp_cache_rebuild', $this->id );
- 	}
+		// Only update the share counts if the post is published.
+		if( 'publish' == get_post_status( $this->id ) ):
+			$this->rebuild_share_counts();
+		endif;
+
+        $this->rebuild_pinterest_image();
+        $this->rebuild_open_graph_image();
+		$this->process_urls();
+        $this->reset_timestamp();
+
+		// A hook to allow third-party functions to run.
+		do_action( 'swp_cache_rebuild', $this->id );
+	}
 
 
- 	public function process_urls() {
-       global $swp_social_networks;
-       $permalink = get_permalink( $this->id );
-        foreach($swp_social_networks as $network):
-            if($network->is_active()):
-                SWP_URL_Management::process_url( $permalink , $network->key , $this->id , false );
+	public function process_urls() {
+    	global $swp_social_networks;
+    	$permalink = get_permalink( $this->id );
+        foreach( $swp_social_networks as $network ):
+            if( $network->is_active() ):
+                SWP_URL_Management::process_url( $permalink, $network->key, $this->id, false );
             endif;
         endforeach;
- 	}
+	}
 
 
     /**
