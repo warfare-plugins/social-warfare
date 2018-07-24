@@ -281,8 +281,7 @@ class SWP_Post_Cache {
 	 */
     public function rebuild_cached_data() {
 
-		// Only update the share counts if the post is published.
-		if( 'publish' == get_post_status( $this->id ) ):
+		if( true === should_shares_be_fetched() ):
 			$this->rebuild_share_counts();
 		endif;
 
@@ -297,12 +296,39 @@ class SWP_Post_Cache {
 
 
 	/**
+	 * Should we fetch share counts for this post?
+	 *
+	 * This method controls which instances we should be fetching share counts
+	 * and which instances whe shouldn't.
+	 *
+	 * @since  3.2.0 | 24 JUL 2018 | Created
+	 * @param  void
+	 * @return bool True: fetch share counts; False: don't fetch counts.
+	 *
+	 */
+	private function should_shares_be_fetched() {
+
+		// Only fetch on published posts
+		if( 'publish' !== get_post_status( $this->id ) ) {
+			return false;
+		}
+
+		// Don't fetch if all share counts are disabled.
+		if( false == swp_get_option('network_shares') && false == swp_get_options('total_shares'){
+			return false;
+		}
+
+		return true;
+	}
+
+
+	/**
 	 * Process the URLs for shortlinks, UTM, etc.
 	 *
 	 * @since  3.1.0 | 20 JUN 2018 | Created
 	 * @param  void
 	 * @return void
-	 * 
+	 *
 	 */
 	public function process_urls() {
     	global $swp_social_networks;
