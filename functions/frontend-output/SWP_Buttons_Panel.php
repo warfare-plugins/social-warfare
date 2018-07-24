@@ -228,9 +228,7 @@ class SWP_Buttons_Panel {
     public function establish_post_data() {
         if( !empty( $this->post_id ) ):
             $post = get_post( $this->post_id );
-        endif;
 
-        if ( is_object( $post ) ) :
             $this->post_data = array(
                 'ID'           => $post->ID,
                 'post_type'    => $post->post_type,
