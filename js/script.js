@@ -274,6 +274,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var panel = $(".swp_social_panel").first();
         var location = panel.data('float');
 
+        if (location == 'none') {
+            jQuery(".nc_wrapper, .swp_social_panelSide").hide();
+            return;
+        }
+
         if ($(window).width() < panel.data("min-width")) {
             createFloatBar();
             toggleMobileButtons();
@@ -343,7 +348,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Note: All of the other logic for padding now lives in createFloatBar.
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var panel = $(".swp_social_panel").first();
         var location = panel.data("float");
         var newPadding = 0;
 
