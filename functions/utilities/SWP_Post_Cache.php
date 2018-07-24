@@ -314,7 +314,7 @@ class SWP_Post_Cache {
 		}
 
 		// Don't fetch if all share counts are disabled.
-		if( false == swp_get_option('network_shares') && false == swp_get_options('total_shares'){
+		if( false == swp_get_option('network_shares') && false == swp_get_options('total_shares') ) {
 			return false;
 		}
 
