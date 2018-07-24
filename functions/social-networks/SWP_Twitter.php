@@ -195,6 +195,8 @@ class SWP_Twitter extends SWP_Social_Network {
             unset( $options['tweet_count_source'] );
             $options['twitter_shares'] = false;
 
+            update_option( 'social_warfare_settings', $options );
+
             add_filter( 'swp_admin_notices', function($notices) {
                 $notice = array(
                     'key'   => 'new_share_counts_admin_used_service',
