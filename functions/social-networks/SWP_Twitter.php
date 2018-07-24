@@ -39,6 +39,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->key     = 'twitter';
 		$this->default = 'true';
 
+		$this->reset_share_count_source();
 		$this->init_social_network();
 	}
 
@@ -52,17 +53,21 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function get_api_link( $url ) {
+
 		// Fetch the user's options
 		global $swp_user_options;
 
 		// If the user has enabled Twitter shares....
-		if ( swp_get_option('twitter_shares') && isset( $swp_user_options['tweet_count_source'] ) ) :
+		if( !empty( $swp_user_options['tweet_count_source'] ) ) {
 
-			// Return the correct Twitter JSON endpoint URL
-			if ('opensharecount' == $swp_user_options['tweet_count_source']) {
-				$request_url = 'https://opensharecount.com/count.json?url='. $url;
-			} else {
-				$request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
+			// Open Share Counts
+			if( 'opensharecount' == $swp_user_options['tweet_count_source'] ) {
+				return 'https://opensharecount.com/count.json?url='. $url;
+			}
+
+
+			if( 'twitcount' == $swp_user_options['tweet_count_source'] ) {}
+				return 'https://counts.twitcount.com/counts.php?url=' . $url;
 			}
 
 			// Debugging
@@ -70,15 +75,9 @@ class SWP_Twitter extends SWP_Social_Network {
 				echo '<b>Request URL:</b> ' . $request_url . '<br />';
 			}
 
-			return $request_url;
+		}
 
-		// If the user has not enabled Twitter shares....
-		else :
-
-			// Return nothing so we don't run an API call
-			return 0;
-
-		endif;
+		return 0;
 	}
 
 
@@ -178,6 +177,25 @@ class SWP_Twitter extends SWP_Social_Network {
 
 		return $intent_link;
 
+	}
+
+
+	/**
+	 * A method for resetting the share count source if they were using
+	 * newsharecounts.com which has shut down.
+	 *
+	 * @since  3.2.0 | 24 JUL 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function reset_share_count_source() {
+		$options = get_option('social_warfare_options');
+		if( !empty( $options['tweet_count_source']) && 'newsharecounts' == $options['tweet_count_source'] ) {
+			// Unset the tweet_count_source
+			// Turn share counts to OFF.
+			// Add deprication notice letting them know to sign up at a new service.
+		}
 	}
 
 }
