@@ -429,7 +429,6 @@ class SWP_Post_Cache {
 		$this->fetch_api_responses();
 		$this->parse_api_responses();
 		$this->calculate_network_shares();
-		$this->calculate_network_shares();
 		$this->cache_share_counts();
     }
 
@@ -621,9 +620,10 @@ class SWP_Post_Cache {
 			// the old ones unless the url parameter is forcing it to take.
             if ( $count <= $previous_count && false === _swp_is_debug( 'force_new_shares' ) ) {
                 $this->share_counts[$key] = $previous_count;
+                $this->share_counts['total_shares'] += $previous_count;
+            } else {
+                $this->share_counts['total_shares'] += $count;
             }
-
- 			$this->share_counts['total_shares'] += $this->share_counts[$key];
 
             delete_post_meta( $this->id, "_${key}_shares");
             update_post_meta( $this->id, "_${key}_shares", $this->share_counts[$key] );
