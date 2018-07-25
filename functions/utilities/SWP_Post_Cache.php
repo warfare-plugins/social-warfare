@@ -606,21 +606,32 @@ class SWP_Post_Cache {
 	 *
 	 */
     private function calculate_network_shares() {
-        global $swp_social_networks;
+        global $swp_social_networks, $swp_user_options;
 
         $share_counts = array();
 
+        $checked_networks = array();
+
         foreach ( $this->parsed_api_responses as $request => $networks ) {
-            foreach ( $networks as $key => $count_array ) {
+            foreach ( $networks as $network => $count_array ) {
                 foreach ( $count_array as $count ) {
-                    if ( !isset( $share_counts[$key] ) ) {
-                        $share_counts[$key] = 0;
+                    if ( !isset( $share_counts[$network] ) ) {
+                        $share_counts[$network] = 0;
                     }
 
-                    $share_counts[$key] += $count;
+                    $share_counts[$network] += $count;
                 }
-
+                $checked_networks[] = $network;
             }
+        }
+
+        //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
+        foreach( $swp_user_options['order_of_icons'] as $network ) {
+            if ( !in_array( $network, $checked_networks ) ) :
+                $count = get_post_meta( $this->id, "_${network}_shares", true );
+                $count = isset($count) ? $count : 0;
+                $share_counts[$network] = $count;
+            endif;
         }
 
         $this->share_counts = $share_counts;
