@@ -210,13 +210,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var visible = false;
         var scrollPos = $(window).scrollTop();
 
-
         $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
             var offset = $(this).offset();
 
+            //* Do not display floating buttons before the horizontal panel.
             if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-                //* Do not display floating buttons before the horizontal panel.
-                if (index === 0 && offset.top > scrollPos) {
+                var theContent = jQuery(".swp-content-locator").parent();
+
+                if (index === 0 && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
                     visible = true;
                 }
             }
