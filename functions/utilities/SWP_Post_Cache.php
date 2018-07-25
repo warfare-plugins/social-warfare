@@ -625,14 +625,18 @@ class SWP_Post_Cache {
             }
         }
 
-        //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
-        foreach( $swp_user_options['order_of_icons'] as $network ) {
-            if ( !in_array( $network, $checked_networks ) ) :
-                $count = get_post_meta( $this->id, "_${network}_shares", true );
-                $count = isset($count) ? $count : 0;
-                $share_counts[$network] = $count;
-            endif;
-        }
+        if ( isset( $swp_user_options['order_of_icons'] ) ) :
+
+            //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
+            foreach( $swp_user_options['order_of_icons'] as $network ) {
+                if ( !in_array( $network, $checked_networks ) ) :
+                    $count = get_post_meta( $this->id, "_${network}_shares", true );
+                    $count = isset($count) ? $count : 0;
+                    $share_counts[$network] = $count;
+                endif;
+            }
+            
+        endif;
 
         $this->share_counts = $share_counts;
     }
