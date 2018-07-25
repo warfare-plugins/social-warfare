@@ -194,25 +194,41 @@ class SWP_Shortcode {
             return;
         }
 
-        $whitelist = ['id', 'width', 'height', 'class'];
+        $whitelist = ['id', 'width', 'height', 'class', 'alignment'];
 
         //* Instantiate and santiize each of the $whitelist variables.
-        foreach( $whitelist as $field ) {
-            $$field = sanitize_text_field( trim ( $atts[$field] ) );
+        foreach( $whitelist as $var ) {
+            $$var = sanitize_text_field( trim ( $atts[$var] ) );
         }
 
         $src = wp_get_attachment_url( $id );
 
         if ( !empty( $width ) && !empty( $height ) ):
-            $style = ' style="width: ' . $width . 'px; height: ' . $height . 'px"';
+            $dimensions= ' width="' . $width . '"';
+            $dimensions .= ' height="' . $height . '"';
         else :
-            $style = '';
+            $dimensions = "";
+        endif;
+
+        if (!empty( $alignment ) ) :
+            switch ($alignment) {
+                case 'left':
+                    $alignment = 'style="text-align: left";';
+                    break;
+                case 'right':
+                    $alignment = 'style="text-align: right";';
+                    break;
+                case 'center':
+                    $alignment = 'style="text-align: center"';
+                    break;
+            }
         endif;
 
         $image = get_post( $id );
+        //* The description as set in the Media Gallery.
         $description = $image->post_content;
 
-        //* Pinterest limits the description to 500 characters,
+        //* Pinterest limits the description to 500 characters.
         if (strlen($description) > 500) {
             $alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
 
@@ -224,11 +240,12 @@ class SWP_Shortcode {
             endif;
         }
 
-        $html = '<img src="' . $src . '"';
-        $html .= ' class="' . $class . '"';
-        $html .= ' data-pin-description="' . $description . '"';
-        $html .= $style;
-        $html .= ' />';
+        $html = '<div class="swp-image-wrap" ' . $alignment . '>';
+            $html .= '<img src="' . $src . '"';
+            $html .= $dimensions;
+            $html .= ' data-pin-description="' . $description . '"';
+            $html .= ' />';
+        $html .= '</div>';
 
         return $html;
     }
