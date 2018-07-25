@@ -190,9 +190,7 @@ class SWP_Shortcode {
 
 
     public function pinterest_image( $atts ) {
-        if ( empty( $atts['id'] ) ) {
-            return;
-        }
+        global $post;
 
         $whitelist = ['id', 'width', 'height', 'class', 'alignment'];
 
@@ -201,7 +199,29 @@ class SWP_Shortcode {
             $$var = sanitize_text_field( trim ( $atts[$var] ) );
         }
 
-        $src = wp_get_attachment_url( $id );
+        if (empty($id)) {
+            $id = get_post_meta( $post->ID, 'swp_pinterest_image', true);
+            $src = get_post_meta( $post->ID, 'swp_pinterest_image_url', true );
+        } else {
+            $src = wp_get_attachment_url( $id );
+        }
+
+        $image = get_post( $id );
+
+        //* The description as set in the Media Gallery.
+        $description = $image->post_content;
+
+        //* Pinterest limits the description to 500 characters.
+        if (strlen($description) > 500) {
+            $alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
+
+            if ( !empty( $alt ) ) :
+                $description = $alt;
+            else:
+                //* Use the caption instead.
+                $description = $image->post_excerpt;
+            endif;
+        }
 
         if ( !empty( $width ) && !empty( $height ) ):
             $dimensions= ' width="' . $width . '"';
@@ -224,21 +244,7 @@ class SWP_Shortcode {
             }
         endif;
 
-        $image = get_post( $id );
-        //* The description as set in the Media Gallery.
-        $description = $image->post_content;
 
-        //* Pinterest limits the description to 500 characters.
-        if (strlen($description) > 500) {
-            $alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
-
-            if ( !empty( $alt) ) :
-                $description = $alt;
-            else:
-                //* Use the caption instead.
-                $description = $image->post_excerpt;
-            endif;
-        }
 
         $html = '<div class="swp-image-wrap" ' . $alignment . '>';
             $html .= '<img src="' . $src . '"';
