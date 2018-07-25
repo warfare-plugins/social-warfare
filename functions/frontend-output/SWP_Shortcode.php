@@ -199,7 +199,8 @@ class SWP_Shortcode {
             $$var = isset( $atts[$var] ) ? sanitize_text_field( trim ( $atts[$var] ) ) : "";
         }
 
-        if (empty($id)) {
+
+        if ( empty( $id ) ) {
             $id = get_post_meta( $post->ID, 'swp_pinterest_image', true);
             $src = get_post_meta( $post->ID, 'swp_pinterest_image_url', true );
         } else {
@@ -208,11 +209,16 @@ class SWP_Shortcode {
 
         $image = get_post( $id );
 
-        //* The description as set in the Media Gallery.
-        $description = $image->post_content;
+        //* Prefer the user-defined Pin Description.
+        $description = get_post_meta( $post->ID, 'swp_pinterest_description', true );
+
+        if ( empty( $description ) ) :
+            //* The description as set in the Media Gallery.
+            $description = $image->post_content;
+        endif;
 
         //* Pinterest limits the description to 500 characters.
-        if (strlen($description) > 500) {
+        if ( empty( $description) || strlen($description) > 500 ) {
             $alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
 
             if ( !empty( $alt ) ) :
@@ -224,14 +230,20 @@ class SWP_Shortcode {
         }
 
         if ( !empty( $width ) && !empty( $height ) ):
-            $dimensions= ' width="' . $width . '"';
+            $dimensions = ' width="' . $width . '"';
             $dimensions .= ' height="' . $height . '"';
         else :
             $dimensions = "";
         endif;
 
+        if ( empty( $class ) ) :
+            $class = "swp-pinterest-image";
+        endif;
+
         if (!empty( $alignment ) ) :
             switch ($alignment) {
+                default:
+                    $alignment = '';
                 case 'left':
                     $alignment = 'style="text-align: left";';
                     break;
@@ -244,11 +256,12 @@ class SWP_Shortcode {
             }
         endif;
 
-
+        echo "<pre>", var_dump($class), "</pre>";
 
         $html = '<div class="swp-image-wrap" ' . $alignment . '>';
             $html .= '<img src="' . $src . '"';
             $html .= $dimensions;
+            $html .= ' class="' . $class . '"';
             $html .= ' data-pin-description="' . $description . '"';
             $html .= ' />';
         $html .= '</div>';
