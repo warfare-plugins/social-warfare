@@ -437,6 +437,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         // Iterate over the current set of matched elements.
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
+            console.log(this)
 
             if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
                 if (jQuery($image).parents().filter("a").length) {
@@ -474,7 +475,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
             var pinDesc = '';
 
-            if ($image.data("pin-description").length) {
+            if (typeof $image.data("pin-description") != 'undefined') {
                 pinDesc = $image.data("pin-description");
             } else if ('undefined' !== typeof swpPinIt.image_description){
                 pinDesc = swpPinIt.image_description;
