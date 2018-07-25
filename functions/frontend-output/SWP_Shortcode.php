@@ -199,7 +199,6 @@ class SWP_Shortcode {
             $$var = isset( $atts[$var] ) ? sanitize_text_field( trim ( $atts[$var] ) ) : "";
         }
 
-
         if ( empty( $id ) ) {
             $id = get_post_meta( $post->ID, 'swp_pinterest_image', true);
             $src = get_post_meta( $post->ID, 'swp_pinterest_image_url', true );
@@ -256,10 +255,9 @@ class SWP_Shortcode {
             }
         endif;
 
-        echo "<pre>", var_dump($class), "</pre>";
-
-        $html = '<div class="swp-image-wrap" ' . $alignment . '>';
+        $html = '<div class="swp-pinterest-image-wrap" ' . $alignment . '>';
             $html .= '<img src="' . $src . '"';
+            $html .= $alignment;
             $html .= $dimensions;
             $html .= ' class="' . $class . '"';
             $html .= ' data-pin-description="' . $description . '"';
