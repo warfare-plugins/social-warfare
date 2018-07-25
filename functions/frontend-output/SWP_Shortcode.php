@@ -196,7 +196,7 @@ class SWP_Shortcode {
 
         //* Instantiate and santiize each of the $whitelist variables.
         foreach( $whitelist as $var ) {
-            $$var = sanitize_text_field( trim ( $atts[$var] ) );
+            $$var = isset( $atts[$var] ) ? sanitize_text_field( trim ( $atts[$var] ) ) : "";
         }
 
         if (empty($id)) {
