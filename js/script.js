@@ -474,7 +474,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
             var pinDesc = '';
 
-            if ('undefined' !== typeof swpPinIt.image_description){
+            if ($image.data("pin-description").length) {
+                pinDesc = $image.data("pin-description");
+            } else if ('undefined' !== typeof swpPinIt.image_description){
                 pinDesc = swpPinIt.image_description;
             } else if ($image.attr('title')) {
                 pinDesc = $image.attr('title');
