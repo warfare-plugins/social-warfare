@@ -196,7 +196,24 @@ class SWP_Shortcode {
 
         $id = trim( $atts['id'] );
 
+        if ( !empty( $atts['width'] ) && !empty( $atts['height'] ) ):
+            $width = trim( $atts['width'] );
+            $height = trim( $atts['height'] );
+            $src = wp_get_attachment_url( $id, array( $width, $height ) );
+        else :
+            $src = wp_get_attachment_url( $id );
+        endif;
+
         $image = get_post( $id );
+        $description = $image->post_content;;
+
+
+
+        $html = '<img src="' . $src . '"';
+        $html .= ' data-pin-description="' . $description;
+        $html .= ' />';
+
+        return $html;
     }
 
 }
