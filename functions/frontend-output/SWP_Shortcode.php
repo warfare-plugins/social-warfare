@@ -30,7 +30,6 @@ class SWP_Shortcode {
 		add_shortcode( 'total_shares', array ( $this, 'post_total_shares' ) );
 		add_shortcode( 'sitewide_shares', array ( $this, 'sitewide_total_shares' ) );
         add_shortcode( 'click_to_tweet', array( $this, 'click_to_tweet' ) );
-        add_shortcode( 'pinterest_image', array( $this, 'pinterest_image' ) );
 
 		/**
 		 * These are old legacy shortcodes that have been replaced with the ones seen above.
@@ -187,84 +186,4 @@ class SWP_Shortcode {
 
     	return $html;
     }
-
-
-    public function pinterest_image( $atts ) {
-        global $post;
-
-        $whitelist = ['id', 'width', 'height', 'class', 'alignment'];
-
-        //* Instantiate and santiize each of the $whitelist variables.
-        foreach( $whitelist as $var ) {
-            $$var = isset( $atts[$var] ) ? sanitize_text_field( trim ( $atts[$var] ) ) : "";
-        }
-
-        if ( empty( $id ) ) {
-            $id = get_post_meta( $post->ID, 'swp_pinterest_image', true);
-            $src = get_post_meta( $post->ID, 'swp_pinterest_image_url', true );
-        } else {
-            $src = wp_get_attachment_url( $id );
-        }
-
-        $image = get_post( $id );
-
-        //* Prefer the user-defined Pin Description.
-        $description = get_post_meta( $post->ID, 'swp_pinterest_description', true );
-
-        if ( empty( $description ) ) :
-            //* The description as set in the Media Gallery.
-            $description = $image->post_content;
-        endif;
-
-        //* Pinterest limits the description to 500 characters.
-        if ( empty( $description) || strlen($description) > 500 ) {
-            $alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
-
-            if ( !empty( $alt ) ) :
-                $description = $alt;
-            else:
-                //* Use the caption instead.
-                $description = $image->post_excerpt;
-            endif;
-        }
-
-        if ( !empty( $width ) && !empty( $height ) ):
-            $dimensions = ' width="' . $width . '"';
-            $dimensions .= ' height="' . $height . '"';
-        else :
-            $dimensions = "";
-        endif;
-
-        if ( empty( $class ) ) :
-            $class = "swp-pinterest-image";
-        endif;
-
-        if (!empty( $alignment ) ) :
-            switch ($alignment) {
-                default:
-                    $alignment = '';
-                case 'left':
-                    $alignment = 'style="text-align: left";';
-                    break;
-                case 'right':
-                    $alignment = 'style="text-align: right";';
-                    break;
-                case 'center':
-                    $alignment = 'style="text-align: center"';
-                    break;
-            }
-        endif;
-
-        $html = '<div class="swp-pinterest-image-wrap" ' . $alignment . '>';
-            $html .= '<img src="' . $src . '"';
-            $html .= $alignment;
-            $html .= $dimensions;
-            $html .= ' class="' . $class . '"';
-            $html .= ' data-pin-description="' . $description . '"';
-            $html .= ' />';
-        $html .= '</div>';
-
-        return $html;
-    }
-
 }
