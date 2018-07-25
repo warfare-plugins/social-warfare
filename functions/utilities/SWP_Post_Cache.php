@@ -281,7 +281,7 @@ class SWP_Post_Cache {
 	 */
     public function rebuild_cached_data() {
 
-		if( true === should_shares_be_fetched() ):
+		if( true === $this->should_shares_be_fetched() ):
 			$this->rebuild_share_counts();
 		endif;
 
