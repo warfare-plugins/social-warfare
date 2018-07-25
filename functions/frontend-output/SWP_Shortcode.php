@@ -26,10 +26,11 @@ class SWP_Shortcode {
 	 *
 	 */
     public function __construct() {
-		add_shortcode( 'social_warfare', array( $this , 'buttons_shortcode' ) );
-		add_shortcode( 'total_shares', array ( $this , 'post_total_shares' ) );
-		add_shortcode( 'sitewide_shares', array ( $this , 'sitewide_total_shares' ) );
-        add_shortcode( 'click_to_tweet', array( $this , 'click_to_tweet' ) );
+		add_shortcode( 'social_warfare', array( $this, 'buttons_shortcode' ) );
+		add_shortcode( 'total_shares', array ( $this, 'post_total_shares' ) );
+		add_shortcode( 'sitewide_shares', array ( $this, 'sitewide_total_shares' ) );
+        add_shortcode( 'click_to_tweet', array( $this, 'click_to_tweet' ) );
+        add_shortcode( 'pinterest_image', array( $this, 'pinterest_image' ) );
 
 		/**
 		 * These are old legacy shortcodes that have been replaced with the ones seen above.
@@ -185,6 +186,17 @@ class SWP_Shortcode {
         $html .= '</a>';
 
     	return $html;
+    }
+
+
+    public function pinterest_image( $atts ) {
+        if ( empty( $atts['id'] ) ) {
+            return;
+        }
+
+        $id = trim( $atts['id'] );
+
+        $image = get_post( $id );
     }
 
 }
