@@ -194,23 +194,40 @@ class SWP_Shortcode {
             return;
         }
 
-        $id = trim( $atts['id'] );
+        $whitelist = ['id', 'width', 'height', 'class'];
 
-        if ( !empty( $atts['width'] ) && !empty( $atts['height'] ) ):
-            $width = trim( $atts['width'] );
-            $height = trim( $atts['height'] );
-            $src = wp_get_attachment_url( $id, array( $width, $height ) );
+        //* Instantiate and santiize each of the $whitelist variables.
+        foreach( $whitelist as $field ) {
+            $$field = sanitize_text_field( trim ( $atts[$field] ) );
+        }
+
+        $src = wp_get_attachment_url( $id );
+
+        if ( !empty( $width ) && !empty( $height ) ):
+            $style = ' style="width: ' . $width . 'px; height: ' . $height . 'px"';
         else :
-            $src = wp_get_attachment_url( $id );
+            $style = '';
         endif;
 
         $image = get_post( $id );
-        $description = $image->post_content;;
+        $description = $image->post_content;
 
+        //* Pinterest limits the description to 500 characters,
+        if (strlen($description) > 500) {
+            $alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
 
+            if ( !empty( $alt) ) :
+                $description = $alt;
+            else:
+                //* Use the caption instead.
+                $description = $image->post_excerpt;
+            endif;
+        }
 
         $html = '<img src="' . $src . '"';
-        $html .= ' data-pin-description="' . $description;
+        $html .= ' class="' . $class . '"';
+        $html .= ' data-pin-description="' . $description . '"';
+        $html .= $style;
         $html .= ' />';
 
         return $html;
