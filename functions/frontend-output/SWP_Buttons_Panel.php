@@ -461,9 +461,6 @@ class SWP_Buttons_Panel {
 			return $this->content;
 		endif;
 
-        $total_shares_html = $this->render_total_shares_html();
-        $buttons = $this->render_buttons_html();
-
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
             ' swp_default_' . $this->option('default_colors') .
@@ -480,6 +477,9 @@ class SWP_Buttons_Panel {
             ">';
             //* This should be inserted via addon, not here.
             //'" data-emphasize="'.$this->option('emphasize_icons').'
+
+        $total_shares_html = $this->render_total_shares_html();
+        $buttons = $this->render_buttons_html();
 
         if ($this->option('totals_alignment') === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
