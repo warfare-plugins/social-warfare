@@ -305,7 +305,7 @@ class SWP_Notice {
             $html .= '<div class="swp-actions">';
 
                 foreach( $this->actions as $cta) {
-                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" ' . $cta['href'] . ' data-timeframe="'.$cta['timeframe'].'">';
+                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" href=""' . $cta['href'] . '" data-timeframe="' . $cta['timeframe'].'">';
                         $html .= $cta['action'];
                     $html .= "</a>";
                 }
