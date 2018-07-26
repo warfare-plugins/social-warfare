@@ -139,6 +139,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
         $tweet = empty( $custom_tweet ) ? $title : $custom_tweet;
+        $tweet = is_array( $tweet ) ? $tweet[0] : $tweet;
 
         if ( function_exists( 'normalizer_normalize' ) ) :
             $tweet = urlencode( normalizer_normalize( html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' ) ) );
