@@ -39,6 +39,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->key     = 'twitter';
 		$this->default = 'true';
 
+		$this->reset_share_count_source();
 		$this->init_social_network();
 	}
 
@@ -52,17 +53,21 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function get_api_link( $url ) {
+
 		// Fetch the user's options
 		global $swp_user_options;
 
 		// If the user has enabled Twitter shares....
-		if ( swp_get_option('twitter_shares') && isset( $swp_user_options['tweet_count_source'] ) ) :
+		if( !empty( $swp_user_options['tweet_count_source'] ) ) {
 
-			// Return the correct Twitter JSON endpoint URL
-			if ('opensharecount' == $swp_user_options['tweet_count_source']) {
-				$request_url = 'https://opensharecount.com/count.json?url='. $url;
-			} else {
-				$request_url = 'http://public.newsharecounts.com/count.json?url=' . $url;
+			// Open Share Counts
+			if( 'opensharecount' == $swp_user_options['tweet_count_source'] ) {
+				return 'https://opensharecount.com/count.json?url='. $url;
+			}
+
+			// TwitCount
+			if( 'twitcount' == $swp_user_options['tweet_count_source'] ) {
+				return 'https://counts.twitcount.com/counts.php?url=' . $url;
 			}
 
 			// Debugging
@@ -70,15 +75,9 @@ class SWP_Twitter extends SWP_Social_Network {
 				echo '<b>Request URL:</b> ' . $request_url . '<br />';
 			}
 
-			return $request_url;
+		}
 
-		// If the user has not enabled Twitter shares....
-		else :
-
-			// Return nothing so we don't run an API call
-			return 0;
-
-		endif;
+		return 0;
 	}
 
 
@@ -140,6 +139,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
         $tweet = empty( $custom_tweet ) ? $title : $custom_tweet;
+        $tweet = is_array( $tweet ) ? $tweet[0] : $tweet;
 
         if ( function_exists( 'normalizer_normalize' ) ) :
             $tweet = urlencode( normalizer_normalize( html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' ) ) );
@@ -178,6 +178,41 @@ class SWP_Twitter extends SWP_Social_Network {
 
 		return $intent_link;
 
+	}
+
+
+	/**
+	 * A method for resetting the share count source if they were using
+	 * newsharecounts.com which has shut down.
+	 *
+	 * @since  3.2.0 | 24 JUL 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function reset_share_count_source() {
+		$options = get_option('social_warfare_options');
+		if( !empty( $options['tweet_count_source']) && 'newsharecounts' == $options['tweet_count_source'] ) {
+            unset( $options['tweet_count_source'] );
+            $options['twitter_shares'] = false;
+
+            update_option( 'social_warfare_settings', $options );
+
+            add_filter( 'swp_admin_notices', function($notices) {
+                $notice = array(
+                    'key'   => 'new_share_counts_admin_used_service',
+                    'message'   => 'Because New Share Counts is not in service, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
+                    array(
+                        'action'    => 'Thank you, I understand.',
+                        'timeframe' => 0
+                    ),
+                );
+
+                $notices[] = $notice;
+
+                return $notices;
+            });
+		}
 	}
 
 }
