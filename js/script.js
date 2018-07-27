@@ -210,13 +210,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var visible = false;
         var scrollPos = $(window).scrollTop();
 
-
         $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
             var offset = $(this).offset();
 
+            //* Do not display floating buttons before the horizontal panel.
             if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-                //* Do not display floating buttons before the horizontal panel.
-                if (index === 0 && offset.top > scrollPos) {
+                var theContent = jQuery(".swp-content-locator").parent();
+
+                if (index === 0 && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
                     visible = true;
                 }
             }
@@ -273,6 +274,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         // Adjust the floating bar
         var panel = $(".swp_social_panel").first();
         var location = panel.data('float');
+
+        if (location == 'none') {
+            jQuery(".nc_wrapper, .swp_social_panelSide").hide();
+            return;
+        }
 
         if ($(window).width() < panel.data("min-width")) {
             createFloatBar();
@@ -343,7 +349,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Note: All of the other logic for padding now lives in createFloatBar.
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var panel = $(".swp_social_panel").first();
         var location = panel.data("float");
         var newPadding = 0;
 
@@ -431,6 +437,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         // Iterate over the current set of matched elements.
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
+            console.log(this)
 
             if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
                 if (jQuery($image).parents().filter("a").length) {
@@ -468,7 +475,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
             var pinDesc = '';
 
-            if ('undefined' !== typeof swpPinIt.image_description){
+            if (typeof $image.data("pin-description") != 'undefined') {
+                pinDesc = $image.data("pin-description");
+            } else if ('undefined' !== typeof swpPinIt.image_description){
                 pinDesc = swpPinIt.image_description;
             } else if ($image.attr('title')) {
                 pinDesc = $image.attr('title');

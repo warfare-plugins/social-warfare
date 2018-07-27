@@ -228,9 +228,7 @@ class SWP_Buttons_Panel {
     public function establish_post_data() {
         if( !empty( $this->post_id ) ):
             $post = get_post( $this->post_id );
-        endif;
 
-        if ( is_object( $post ) ) :
             $this->post_data = array(
                 'ID'           => $post->ID,
                 'post_type'    => $post->post_type,
@@ -463,9 +461,6 @@ class SWP_Buttons_Panel {
 			return $this->content;
 		endif;
 
-        $total_shares_html = $this->render_total_shares_html();
-        $buttons = $this->render_buttons_html();
-
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
             ' swp_default_' . $this->option('default_colors') .
@@ -482,6 +477,9 @@ class SWP_Buttons_Panel {
             ">';
             //* This should be inserted via addon, not here.
             //'" data-emphasize="'.$this->option('emphasize_icons').'
+
+        $total_shares_html = $this->render_total_shares_html();
+        $buttons = $this->render_buttons_html();
 
         if ($this->option('totals_alignment') === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
@@ -832,11 +830,17 @@ class SWP_Buttons_Panel {
     public function render_total_shares_html() {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
 
+        if ( false == $this->option('total_shares') ) {
+            return '';
+        }
+
+        if ( $this->shares['total_shares'] < $this->option('minimum_shares') ) {
+            return '';
+        }
+
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        if ( $this->shares['total_shares'] < $this->option('minimum_shares')
-        || false == $this->option('total_shares')
-        || $this->is_shortcode && !$totals_argument ) {
+        if ( $this->is_shortcode && !$totals_argument ) {
             return '';
         }
 
