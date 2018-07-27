@@ -238,7 +238,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             $(".nc_wrapper").remove();
         }
 
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var panel = $(".swp_social_panel");
         var floatLocation = panel.data("float")
 
         //* If a horizontal panel does not exist,
