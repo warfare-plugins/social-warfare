@@ -138,7 +138,6 @@ class SWP_Buttons_Panel {
 	private function localize_options() {
 		global $swp_user_options;
 		$this->options = array_merge( $swp_user_options, $this->args );
-        $this->post_data['options'] = $swp_user_options;
 	}
 
 
@@ -622,12 +621,6 @@ class SWP_Buttons_Panel {
 				$max_buttons = 5;
 			endif;
 
-	        // Acquire the social stats from the networks
-	        if ( isset( $array['url'] ) ) :
-	            $buttonsArray['url'] = $array['url'];
-	        else :
-	            $buttonsArray['url'] = get_permalink( $this->post_id );
-	        endif;
 
 	        if ( 'none' != $this->get_float_location() ) :
 	            $float_location =  $this->option('float_location');
