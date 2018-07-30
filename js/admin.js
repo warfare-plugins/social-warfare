@@ -231,7 +231,8 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
     function noticeClickHandlers() {
         jQuery(".swp-notice-cta").on("click", function(e) {
             e.preventDefault();
-            var link = e.target.href;
+            //* Do not use jQuery to get href. 
+            var link = e.target.getAttribute("href");
 
             if (typeof link == 'string' && link.length) {
                 window.open(link);

@@ -223,7 +223,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             }
 
             //* Do not display floating buttons if a panel is currently visible.
-            if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
+            if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
                 visible = true;
             }
         });
@@ -280,7 +280,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             return;
         }
 
-        if ($(window).width() < panel.data("min-width")) {
+          if ($(window).width() < panel.data("min-width")) {
             createFloatBar();
             toggleMobileButtons();
             toggleFloatingBar();
@@ -351,24 +351,19 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").first();
         var location = panel.data("float");
-        var newPadding = 0;
+        var newPadding = 0;1
 
         if (panelIsVisible()) {
             $(".nc_wrapper").hide();
 
             newPadding = (location == "bottom") ? paddingBottom : paddingTop;
 
-            //* Return the padding to its default state.
-            // if (location == "bottom") {
-            //     newPadding = paddingBottom;
-            //     // $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            // } else {
-            //     newPadding = paddingBottom;
-            //
-            //     // $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            // }
         } else {
             $(".nc_wrapper").show();
+
+            //* Show the top/bottom floating bar. Force its opacity to normal.
+            //* @see SWP_Buttons_Panel->render_HTML()
+            jQuery(".swp_social_panel.nc_floater").css("opacity", 1)
 
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == 'bottom') {
@@ -381,6 +376,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
+        
         var paddingProp = "padding-" + location;
         $("body").animate({paddingProp: newPadding}, 0);
 
@@ -437,7 +433,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         // Iterate over the current set of matched elements.
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
-            console.log(this)
 
             if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
                 if (jQuery($image).parents().filter("a").length) {
