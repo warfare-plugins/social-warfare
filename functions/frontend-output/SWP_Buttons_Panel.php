@@ -228,6 +228,10 @@ class SWP_Buttons_Panel {
         if( !empty( $this->post_id ) ):
             $post = get_post( $this->post_id );
 
+            if ( !is_object( $post ) ) :
+                return;
+            endif;
+
             $this->post_data = array(
                 'ID'           => $post->ID,
                 'post_type'    => $post->post_type,
@@ -456,8 +460,19 @@ class SWP_Buttons_Panel {
             return;
         endif;
 
+        $style = "";
+
 		if ( !$this->should_print() ) :
-			return $this->content;
+            //* Top and bottom floating buttons require a button panel present on the page.
+            $float_location = $this->get_float_location();
+
+            if ( true === $this->option( 'floating_panel' ) && 'top' ==  $float_location || 'bottom' == $float_location ) :
+                //* Using display: none interfere's with the element's position,
+                //* Which we need to be calculated correctly.
+                $style = 'opacity: 0;';
+            else :
+    			return $this->content;
+            endif;
 		endif;
 
 		// Create the HTML Buttons panel wrapper
@@ -467,6 +482,7 @@ class SWP_Buttons_Panel {
             ' swp_other_' . $this->option('hover_colors') .
             ' scale-' . $this->option('button_size') * 100 .
             ' scale-' . $this->option('button_alignment') .
+            '" style="' . $style .
             '" data-min-width="' . $this->option('float_screen_width') .
             '" data-panel-position="' . $this->option('location_post') .
             '" data-float="' . $this->get_float_location() .
@@ -511,8 +527,6 @@ class SWP_Buttons_Panel {
 
 		$defaults = array();
 		$defaults = apply_filters('swp_options_page_defaults' , $defaults );
-        // echo "<pre>";
-        // die(var_dump($defaults));
 
 		if( isset( $this->options[$key] ) ):
 			return $this->options[$key];
@@ -891,7 +905,7 @@ class SWP_Buttons_Panel {
         endif;
 
         if ( ! $this->should_print() ) :
-            return $this->args['content'];
+            // return $this->args['content'];
         endif;
 
         if ( null !== $content && gettype( $content ) === 'string' ) :
