@@ -1031,7 +1031,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 .swp_social_panelSide.swp_circles .nc_tweetContainer,
 .swp_social_panelSide.swp_circles .nc_tweetContainer a {
     width: 67.5px;
-	height: 67.5px;
+	height: 67.5px !important;
 	position: relative;
 }
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares),
