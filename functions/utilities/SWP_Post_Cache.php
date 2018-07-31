@@ -619,6 +619,10 @@ class SWP_Post_Cache {
                         $share_counts[$network] = 0;
                     }
 
+                    if ( !is_numeric($share_counts[$network]) ) {
+                        continue;
+                    }
+
                     $share_counts[$network] += $count;
                 }
                 $checked_networks[] = $network;
@@ -635,7 +639,7 @@ class SWP_Post_Cache {
                     $share_counts[$network] = $count;
                 endif;
             }
-            
+
         endif;
 
         $this->share_counts = $share_counts;
