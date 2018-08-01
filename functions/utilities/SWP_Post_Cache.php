@@ -113,7 +113,7 @@ class SWP_Post_Cache {
 	 *
 	 */
 	private function debug_message( $string ) {
-		if( isset( $_GET['swp_cache'] ) && 'rebuild' == $_GET['swp_cache'] ) {
+		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
 			echo $string;
 		}
 	}
@@ -326,7 +326,8 @@ class SWP_Post_Cache {
         global $swp_user_options;
         // Don't fetch if all share counts are disabled.
 
-		if( false === $swp_user_options['network_shares'] && false === $swp_user_options['total_shares'] ) {
+        // Don't fetch if all share counts are disabled.
+		if( false == swp_get_option( 'network_shares' ) && false == swp_get_option( 'total_shares' ) ) {
 			$this->debug_message( 'No Shares Fetched. Share counts are disabled in the settings.' );
 			return false;
 		}
@@ -677,6 +678,10 @@ class SWP_Post_Cache {
 	 */
     private function cache_share_counts() {
         $this->share_counts['total_shares'] = 0;
+
+        if ( empty( $this->share_counts ) ) :
+            return;
+        endif;
 
         foreach( $this->share_counts as $key => $count ) {
             if ( 'total_shares' === $key ) {
