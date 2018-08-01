@@ -43,7 +43,7 @@ class SWP_Mix extends SWP_Social_Network {
         $today = date("Y-m-d H:i:s");
 
         $this->check_stumble_upon_shares();
-        $this->init_social_netowrk();
+        $this->init_social_network();
 	}
 
 
