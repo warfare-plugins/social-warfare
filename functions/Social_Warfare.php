@@ -355,7 +355,7 @@ class Social_Warfare {
 			'Twitter',
             'Linkedin',
             'Pinterest',
-            'Stumble_Upon'
+            'Mix'
 		);
 		$this->load_files( '/functions/social-networks/', $social_networks);
 
