@@ -657,11 +657,11 @@ p.sw-subtitle.sw-registration-text {
 	border-color: #27313f;
 }
 
-.sw-stumbleupon-icon:before {
+.sw-mix-icon:before {
 	content: 'q';
 }
 
-.sw-s.sw-stumbleupon-icon {
+.sw-s.sw-mix-icon {
 	background-color: #ef5025;
 	border-color: #d34427;
 }

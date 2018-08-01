@@ -364,9 +364,9 @@ body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_tumblr:not
 	border: 1px solid #39475d;
 }
 
-.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_stumbleupon,
-html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_stumbleupon:hover,
-body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_stumbleupon:not(:hover) {
+.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_mix,
+html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_mix:hover,
+body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_mix:not(:hover) {
 	border: 1px solid #ef5025;
 }
 
@@ -460,9 +460,9 @@ body .swp_social_panel.swp_other_full_color:hover .swp_tumblr {
 	border: 1px solid #27313f;
 }
 
-.swp_social_panel.swp_default_full_color .swp_stumbleupon,
-html body .swp_social_panel.swp_individual_full_color .swp_stumbleupon:hover,
-body .swp_social_panel.swp_other_full_color:hover .swp_stumbleupon {
+.swp_social_panel.swp_default_full_color .swp_mix,
+html body .swp_social_panel.swp_individual_full_color .swp_mix:hover,
+body .swp_social_panel.swp_other_full_color:hover .swp_mix {
 	background: #ef5025;
 	border: 1px solid #d34427;
 }
@@ -559,9 +559,9 @@ body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_tumblr {
 	border-bottom: 3px solid #27313f;
 }
 
-.swp_social_panel.swp_three_dee.swp_default_full_color .swp_stumbleupon,
-html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_stumbleupon:hover,
-body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_stumbleupon {
+.swp_social_panel.swp_three_dee.swp_default_full_color .swp_mix,
+html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_mix:hover,
+body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_mix {
 	border-bottom: 3px solid #d34427;
 }
 
@@ -721,9 +721,9 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_tumblr a {
 	color: #39475d;
 }
 
-.swp_social_panel.swp_default_color_outlines .swp_stumbleupon a,
-html body .swp_social_panel.swp_individual_color_outlines .swp_stumbleupon a:hover,
-body .swp_social_panel.swp_other_color_outlines:hover .swp_stumbleupon a {
+.swp_social_panel.swp_default_color_outlines .swp_mix a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_mix a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_mix a {
 	color: #ef5025;
 }
 
@@ -817,9 +817,9 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_tumblr {
 	border: 1px solid #39475d;
 }
 
-.swp_social_panel.swp_default_color_outlines .swp_stumbleupon,
-html body .swp_social_panel.swp_individual_color_outlines .swp_stumbleupon:hover,
-body .swp_social_panel.swp_other_color_outlines:hover .swp_stumbleupon {
+.swp_social_panel.swp_default_color_outlines .swp_mix,
+html body .swp_social_panel.swp_individual_color_outlines .swp_mix:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_mix {
 	background: transparent;
 	border: 1px solid #ef5025;
 }
@@ -1269,7 +1269,7 @@ i.swp_tumblr_icon:before {
 	content: "r";
 }
 
-i.swp_stumbleupon_icon:before {
+i.swp_mix_icon:before {
 	content: "q";
 }
 

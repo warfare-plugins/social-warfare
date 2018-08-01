@@ -402,8 +402,8 @@ msgstr ""
 msgid "Pin"
 msgstr ""
 
-#: functions/social-networks/stumbleupon.php:100
-#: functions/social-networks/stumbleupon.php:104
+#: functions/social-networks/mix.php:100
+#: functions/social-networks/mix.php:104
 msgid "Stumble"
 msgstr ""
 

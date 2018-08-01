@@ -63,7 +63,7 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , '_pinterest_shares' );
 	    delete_post_meta( $id , '_pocket_shares' );
 	    delete_post_meta( $id , '_reddit_shares' );
-	    delete_post_meta( $id , '_stumbleupon_shares' );
+	    delete_post_meta( $id , '_mix_shares' );
 	    delete_post_meta( $id , '_tumblr_shares' );
 	    delete_post_meta( $id , '_twitter_shares' );
 	    delete_post_meta( $id , '_whatsapp_shares' );
@@ -80,7 +80,7 @@ class SWP_Compatibility {
 	    delete_post_meta( $id , 'bitly_link_pinterest' );
 	    delete_post_meta( $id , 'bitly_link_pocket' );
 	    delete_post_meta( $id , 'bitly_link_reddit' );
-	    delete_post_meta( $id , 'bitly_link_stumbleupon' );
+	    delete_post_meta( $id , 'bitly_link_mix' );
 	    delete_post_meta( $id , 'bitly_link_tumblr' );
 	    delete_post_meta( $id , 'bitly_link_twitter' );
 	    delete_post_meta( $id , 'bitly_link_whatsapp' );
