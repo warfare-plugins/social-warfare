@@ -66,4 +66,5 @@ class SWP_Mix extends SWP_Social_Network {
             delete_post_meta( $post->ID, '_stumbleupon_shares' );
         }
     }
+    
 }
