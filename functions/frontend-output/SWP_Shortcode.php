@@ -152,6 +152,8 @@ class SWP_Shortcode {
     	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
     	$atts['tweet'] = rtrim( $atts['tweet'] );
 
+        // die(var_dump($atts['tweet']));
+
     	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
 
     	if ( ! $user_twitter_handle ) :
@@ -164,7 +166,12 @@ class SWP_Shortcode {
     		$theme = $this->options['ctt_theme'];
     	endif;
 
-        $text = urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam ;
+        if ( function_exists( 'normalizer_normalize' ) ) :
+            $text = urlencode( normalizer_normalize ( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) )  . $urlParam ;
+        else :
+            $text = urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam ;
+        endif;
+
         $via = ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '');
 
 
