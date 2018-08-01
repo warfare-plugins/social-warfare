@@ -312,7 +312,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleSideButtons() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
         var sidePanel = $(".swp_social_panelSide");
-        var location = panel.data("float");
+        var location = sidePanel.data("float")
         var visible = panelIsVisible();
 
         if ($(window).width() < panel.data("min-width") && $(".nc_wrapper").length) {
@@ -376,7 +376,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
-        
+
         var paddingProp = "padding-" + location;
         $("body").animate({paddingProp: newPadding}, 0);
 

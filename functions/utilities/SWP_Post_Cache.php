@@ -105,6 +105,21 @@ class SWP_Post_Cache {
 
 
 	/**
+	 * A method for outputting debug notices when cache rebuild parameters are present.
+	 *
+	 * @since  3.2.0 | 31 JUL 2018 | Created
+	 * @param  string $string The message to be displayed.
+	 * @return void
+	 *
+	 */
+	private function debug_message( $string ) {
+		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+			echo $string;
+		}
+	}
+	
+
+	/**
 	 * SECTION #2: CHECKING IF THE CACHE IS FRESH
 	 *
 	 * The methods in this section are used to determine whether or not the
@@ -308,13 +323,15 @@ class SWP_Post_Cache {
 	 */
 	private function should_shares_be_fetched() {
 
-		// Only fetch on published posts
-		if( 'publish' !== get_post_status( $this->id ) ) {
+        // Don't fetch if all share counts are disabled.
+		if( false == swp_get_option( 'network_shares' ) && false == swp_get_option( 'total_shares' ) ) {
+			$this->debug_message( 'No Shares Fetched. Share counts are disabled in the settings.' );
 			return false;
 		}
 
-		// Don't fetch if all share counts are disabled.
-		if( false == swp_get_option('network_shares') && false == swp_get_options('total_shares') ) {
+		// Only fetch on published posts
+		if( 'publish' !== get_post_status( $this->id ) ) {
+			$this->debug_message( 'No Shares Fetched. This post is not yet published.' );
 			return false;
 		}
 
