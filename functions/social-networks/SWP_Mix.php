@@ -44,8 +44,6 @@ class SWP_Mix extends SWP_Social_Network {
 
         $this->check_stumble_upon_shares();
         $this->init_social_netowrk();
-
-
 	}
 
 
@@ -58,13 +56,13 @@ class SWP_Mix extends SWP_Social_Network {
 
         $stumble_shares = get_post_meta( $post->ID, '_stumbleupon_shares', true );
 
-        if ( empty ($stumble_shares ) ) :
+        if ( !is_numeric( $stumble_shares ) ) :
             return;
         endif;
 
-        if ( update_post_meta( $post->ID, '_mix_shares', (int) $stumble_shares ) ) {
+        if ( update_post_meta( $post->ID, '_mix_shares', (int) $stumble_shares ) ) :
             delete_post_meta( $post->ID, '_stumbleupon_shares' );
-        }
+        endif;
     }
-    
+
 }
