@@ -490,7 +490,7 @@ class Social_Warfare {
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
-require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
+// require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 
 /**
