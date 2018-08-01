@@ -67,9 +67,10 @@ class SWP_Options_Page extends SWP_Abstract {
 	 *
 	 */
 	public function __construct() {
+        global $swp_user_options;
 
 		// Fetch the initial user-set options.
-		$swp_user_options = swp_get_user_options( true );
+		// $swp_user_options = swp_get_user_options( true );
 
 		// Create a 'tabs' object to which we can begin adding tabs.
         $this->tabs = new stdClass();
@@ -261,7 +262,7 @@ class SWP_Options_Page extends SWP_Abstract {
     *
     */
     public function render_HTML() {
-        $swp_user_options = swp_get_user_options( true );
+        global $swp_user_options;
 
         //* Fetch all the addons the user has installed,
         //* whether or not they are actively registered.
