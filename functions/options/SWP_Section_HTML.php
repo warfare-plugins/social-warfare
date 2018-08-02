@@ -81,7 +81,7 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_admin_sidebar() {
         //* This is an array of fully qualified HTML strings, ready to print.
         $cache = get_option("swp_json_cache");
-        $html = '<div id="social-warfare-admin-sidebar">';
+        $html = '<div id="swp-admin-sidebar">';
 
         if ( $components = $cache['sidebar'] ) :
             foreach( $components as $component ) {
