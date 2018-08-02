@@ -79,35 +79,18 @@ class SWP_Section_HTML extends SWP_Option {
 	 *
 	 */
     public function do_admin_sidebar() {
-        $status_title =  __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' );
-        $support_link = __( 'Need help? Check out our <a href="https://warfareplugins.com/support/" target="_blank">Knowledgebase.' , 'social-warfare' );
-        $support_status = __( 'Opening a support ticket? Copy your System Status by clicking the button below.' , 'social-warfare' );
-        $get_status = __( 'Get System Status' , 'social-warfare' );
-        ob_start();
-        ?>
+        //* This is an array of fully qualified HTML strings, ready to print.
+        $components = apply_filters( 'swp_admin_sidebar', array() );
 
-    	<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">
-        	<a href="https://warfareplugins.com/affiliates/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/affiliate-300x150.jpg"></a>
-        	<a href="https://warfareplugins.com/support-categories/getting-started/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/starter-guide-300x150.jpg"></a>
-        	<a href="https://warfareplugins.com/how-to-measure-social-media-roi-using-google-analytics/" target="_blank"><img src="<?= SWP_PLUGIN_URL ?>/images/admin-options-page/measure-roi-300x150.jpg"></a>
-        	<p class="sw-support-notice sw-italic"><?= $support_link ?></a></p>
-        	<p class="sw-support-notice sw-italic"><?= $support_status ?></p>
-        	<a href="#" class="button sw-blue-button sw-system-status"><?= $get_status ?></a>
+        $html = '<div id="social-warfare-admin-sidebar">';
 
-        	<!-- Sytem Status Container -->
-        	<div class="sw-clearfix"></div>
-        	<div class="system-status-wrapper">
-            	<h4><?= $status_title ?></h4>
-            	<div class="system-status-container"><?= $this->system_status() ?></div>
-        	</div>
-    	</div>
+        foreach( $components as $component ) {
+            $html .= $section;
+        }
 
-        <?php
+        $html .= '</div>';
 
-        $this->html = ob_get_contents();
-        ob_end_clean();
-
-        return $this->html;
+        return $this->html = $html;
     }
 
 
