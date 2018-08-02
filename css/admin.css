@@ -61,7 +61,7 @@
 }
 
 .swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper input {
-    width: 100%;    
+    width: 100%;
 }
 
 
@@ -279,4 +279,60 @@ a.swp-notice-cta {
    font-size: 15px;
    line-height: 30px;
    margin-right: 50px;
+}
+
+#swp-admin-sidebar .swp-component {
+    padding: 20px;
+}
+
+#swp-admin-sidebar .swp-component.dark-text {
+    color: #333;
+}
+
+#swp-admin-sidebar .swp-component.light-text {
+    color: #eee;
+}
+
+#swp-admin-sidebar .swp-component {
+    font-size: 13px;
+}
+
+#swp-admin-sidebar .swp-component .dashicons {
+    font-size: 40px;
+    text-align: center;
+}
+
+#swp-admin-sidebar .swp-component .swp-component-title {
+    font-size: 26px;
+    text-align: center;
+}
+
+/*** Upgrade to Pro ***/
+
+#swp-admin-sidebar #upgrade {
+    background-color: #30394F;
+}
+
+#swp-admin-sidebar #upgrade .swp-component-cta {
+    background: #ee464f;
+}
+
+/*** Love the Plugin ***/
+
+#swp-admin-sidebar #love {
+    background-color: #71C069;
+}
+
+#swp-admin-sidebar #love .swp-component-cta {
+    background: #30394F;
+}
+
+/*** Need Help ***/
+
+#swp-admin-sidebar #help {
+    background-color: #c4c4c4;
+}
+
+#swp-admin-sidebar #help .swp-component-cta {
+    background: #30394F;
 }
