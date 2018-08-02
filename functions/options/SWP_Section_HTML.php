@@ -81,7 +81,8 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_admin_sidebar() {
         //* This is an array of fully qualified HTML strings, ready to print.
         $cache = get_option("swp_json_cache");
-        $html = '<div id="swp-admin-sidebar">';
+        $html = '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
+        $html .= '<div id="swp-admin-sidebar">';
 
         if ( $components = $cache['sidebar'] ) :
             foreach( $components as $component ) {
@@ -89,7 +90,7 @@ class SWP_Section_HTML extends SWP_Option {
                 $html .= html_entity_decode( $component);
             }
 
-            $html .= '</div>';
+            $html .= '</div></div>';
         endif;
 
         return $this->html = $html;
