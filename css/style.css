@@ -367,7 +367,7 @@ body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_tumblr:not
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_mix,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_mix:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_mix:not(:hover) {
-	border: 1px solid #ef5025;
+	border: 1px solid #f4812c;
 }
 
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_yummly,
@@ -463,8 +463,8 @@ body .swp_social_panel.swp_other_full_color:hover .swp_tumblr {
 .swp_social_panel.swp_default_full_color .swp_mix,
 html body .swp_social_panel.swp_individual_full_color .swp_mix:hover,
 body .swp_social_panel.swp_other_full_color:hover .swp_mix {
-	background: #ef5025;
-	border: 1px solid #d34427;
+	background: #f4812c;
+	border: 1px solid #c96a29;
 }
 
 .swp_social_panel.swp_default_full_color .swp_yummly,
@@ -562,7 +562,7 @@ body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_tumblr {
 .swp_social_panel.swp_three_dee.swp_default_full_color .swp_mix,
 html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_mix:hover,
 body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_mix {
-	border-bottom: 3px solid #d34427;
+	border-bottom: 3px solid #c96a29;
 }
 
 .swp_social_panel.swp_three_dee.swp_default_full_color .swp_yummly,
@@ -724,7 +724,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_tumblr a {
 .swp_social_panel.swp_default_color_outlines .swp_mix a,
 html body .swp_social_panel.swp_individual_color_outlines .swp_mix a:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_mix a {
-	color: #ef5025;
+	color: #f4812c;
 }
 
 .swp_social_panel.swp_default_color_outlines .swp_yummly a,
@@ -821,7 +821,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_tumblr {
 html body .swp_social_panel.swp_individual_color_outlines .swp_mix:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_mix {
 	background: transparent;
-	border: 1px solid #ef5025;
+	border: 1px solid #f4812c;
 }
 
 .swp_social_panel.swp_default_color_outlines .swp_yummly,
@@ -1270,7 +1270,7 @@ i.swp_tumblr_icon:before {
 }
 
 i.swp_mix_icon:before {
-	content: "q";
+	content: "g";
 }
 
 i.swp_reddit_icon:before {
