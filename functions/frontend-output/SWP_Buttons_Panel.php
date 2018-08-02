@@ -189,36 +189,25 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_post_id() {
-
-	// Legacy support.
-		if ( isset( $this->args['postID'] ) ) :
-			$this->post_id = $this->args['postID'];
-            return;
+    	// Legacy support.
+		if ( is_numeric( $this->args['postid'] ) ) :
+            return $this->post_id = $this->args['postid'];
         endif;
-
-
 
     	// Current argument.
-		if ( isset( $this->args['post_id'] ) ) :
-			$this->post_id = $this->args['post_id'];
-            return;
+		if ( is_numeric( $this->args['post_id'] ) ) :
+            return $this->post_id = $this->args['post_id'];
         endif;
 
-        if ( isset ( $this->args['id'] ) ) :
-            $this->post_id = $this->args['id'];
-            return;
+        if ( is_numeric( $this->args['id'] ) ) :
+            return $this->post_id = $this->args['id'];
         endif;
 
-        if ( $id = $this->args['url'] ) :
-            $id = url_to_postid( $url );
-
-            echo "URL is: ", var_dump($url);
-            if ( $id !== 0 ) :
-                $this->post_id = $id;
-                return;
+        if ( $url = $this->args['url'] ) :
+            if ( $id = url_to_postid( $url ) ) :
+                return $this->post_id = $id;
             endif;
         endif;
-
 
         //* We weren't provided any context for an ID, so default to the post.
         global $post;
