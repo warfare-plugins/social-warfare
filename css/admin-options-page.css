@@ -658,12 +658,12 @@ p.sw-subtitle.sw-registration-text {
 }
 
 .sw-mix-icon:before {
-	content: 'q';
+	content: 'g';
 }
 
 .sw-s.sw-mix-icon {
-	background-color: #ef5025;
-	border-color: #d34427;
+	background-color: #f4812c;
+	border-color: #c96a29;
 }
 
 .sw-reddit-icon:before {
