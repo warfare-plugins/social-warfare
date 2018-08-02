@@ -281,10 +281,6 @@ a.swp-notice-cta {
    margin-right: 50px;
 }
 
-#swp-admin-sidebar .swp-component {
-    padding: 20px;
-}
-
 #swp-admin-sidebar .swp-component.dark-text {
     color: #333;
 }
@@ -295,16 +291,43 @@ a.swp-notice-cta {
 
 #swp-admin-sidebar .swp-component {
     font-size: 13px;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
 }
 
-#swp-admin-sidebar .swp-component .dashicons {
+#swp-admin-sidebar .swp-component.text-center {
+    text-align: center;
+}
+
+#swp-admin-sidebar .swp-component-cta {
+    margin: 0 auto;
+    display: block;
+    padding: 10px 15px;
+    border: 0;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+#swp-admin-sidebar .swp-component-icon {
+    text-align: center;
+}
+
+#swp-admin-sidebar .swp-component-icon .dashicons {
     font-size: 40px;
+    width: 40px;
+    height: 40px;
     text-align: center;
 }
 
 #swp-admin-sidebar .swp-component .swp-component-title {
     font-size: 26px;
     text-align: center;
+    font-weight: bold;
 }
 
 /*** Upgrade to Pro ***/
