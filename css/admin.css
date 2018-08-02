@@ -311,6 +311,7 @@ a.swp-notice-cta {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #swp-admin-sidebar .swp-component-icon {
