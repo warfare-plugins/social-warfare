@@ -10,7 +10,7 @@
  * @package   SocialWarfare\Functions\Social-Networks
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since  3.3.0 | 03 AUG 2018 | Created the class.
+ * @since  3.3.0 | 03 AUG 2018 | Created.
  *
  */
 class SWP_Sidebar_Loader {
@@ -19,19 +19,13 @@ class SWP_Sidebar_Loader {
 	/**
 	 * Instantiate the class.
 	 *
-	 * The constructor will call up the methods that create each of the various
-	 * notices throughout the plugin.
-	 *
-	 * @since  3.0.9  | 09 JUN 2018 | Created.
-	 * @since  3.1.0 | 27 JUN 2018 | Updated to use separate methods per notice.
-	 * @see    SWP_Notice.php
+	 * @since  3.3.0 | 03 AUG 2018 | Created.
 	 * @param  void
 	 * @return void
 	 *
 	 */
     public function __construct() {
-		$this->activate_json_notices();
-		$this->debug();
+		$this->load_components();
     }
 
 
@@ -43,43 +37,20 @@ class SWP_Sidebar_Loader {
 	 * @return void
 	 *
 	 */
-	private function activate_json_notices() {
+	private function load_components() {
 		$cache_data = get_option('swp_json_cache');
 
 		if( false === $cache_data ):
 			return;
 		endif;
 
-		if( !is_array( $cache_data ) || empty($cache_data['notices']) ):
+		if( !is_array( $cache_data ) || empty($cache_data['sidebar']) ):
 			return;
 		endif;
 
-        $notices = array_merge($cache_data['notices'], apply_filters( 'swp_admin_notices', array() ) );
-
-		foreach( $notices as $data ) :
-            if ( empty( $data['key'] ) || empty( $data['message'] ) ) {
-                continue;
-            }
-
-            $ctas = !empty( $data['ctas'] ) ? $data['ctas'] : [];
-
-            $notice = new SWP_Notice( $data['key'], $data['message'], $ctas );
-
-            if ( isset( $data['start_date'] ) ) {
-                $n->set_start_date( $data['start_date'] );
-            }
-
-            if ( isset( $data['end_date'] ) ) {
-                $n->set_end_date( $data['end_date'] );
-            }
-
-            if ( isset( $data['no_cta'] ) ) {
-                $n->remove_cta();
-            }
-
-			$this->notices[] = $notice;
-
-		endforeach;
+        add_filter( 'swp_admin_sidebar', function( $components ) {
+            return array_merge( $components, $cache_data['sidebar'] );
+        });
 	}
 
 
