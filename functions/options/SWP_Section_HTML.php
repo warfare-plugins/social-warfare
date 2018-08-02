@@ -80,15 +80,17 @@ class SWP_Section_HTML extends SWP_Option {
 	 */
     public function do_admin_sidebar() {
         //* This is an array of fully qualified HTML strings, ready to print.
-        $components = apply_filters( 'swp_admin_sidebar', array() );
-
+        $cache = get_option("swp_json_cache");
         $html = '<div id="social-warfare-admin-sidebar">';
 
-        foreach( $components as $component ) {
-            $html .= $section;
-        }
+        if ( $components = $cache['sidebar'] ) :
+            foreach( $components as $component ) {
+                $component = html_entity_decode ( $component );
+                $html .= html_entity_decode( $component);
+            }
 
-        $html .= '</div>';
+            $html .= '</div>';
+        endif;
 
         return $this->html = $html;
     }
