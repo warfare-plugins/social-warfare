@@ -38,7 +38,7 @@ class SWP_Shortcode {
 		 *
 		 */
         add_shortcode( 'clickToTweet', array($this, 'click_to_tweet' ) );
-		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode_legacy' ) );
+		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode' ) );
 
 	}
 
@@ -75,25 +75,6 @@ class SWP_Shortcode {
 
 		$buttons_panel = new SWP_Buttons_Panel( $args, true );
 		return $buttons_panel->render_HTML();
-	}
-
-
-	/**
-	 * This is the legacy version of the social warfare button
-	 * shortcodes. It is used for nothing more than to call the
-	 * new version of the function. See above: $this->buttons_shortcode().
-	 *
-	 * This function will accept an array of arguments which WordPress
-	 * will create from the shortcode attributes.
-	 *
-	 * @since  3.0.0
-	 * @param  $atts Array An array converted from shortcode attributes.
-	 * @return string The HTML of the Social Warfare buttons.
-	 *
-	 */
-	public function buttons_shortcode_legacy( $settings ) {
-
-            return $this->buttons_shortcode( array() );
 	}
 
 
