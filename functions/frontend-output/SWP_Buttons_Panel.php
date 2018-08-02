@@ -189,6 +189,15 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_post_id() {
+        if ( $url = $this->args['url'] ) :
+            $id = url_to_postid( $url );
+
+            if ( $id !== 0 ) :
+                $this->post_id = $id;
+                return;
+            endif;
+        endif;
+
 		// Legacy support.
 		if ( isset( $this->args['postID'] ) ) :
 			$this->post_id = $this->args['postID'];
@@ -206,6 +215,7 @@ class SWP_Buttons_Panel {
             return;
         endif;
 
+        //* We weren't provided any context for an ID, so default to the post.
         global $post;
 
         if ( is_object( $post ) ) :
