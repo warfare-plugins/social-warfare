@@ -50,10 +50,8 @@ class Social_Warfare {
                 $this->instantiate_admin_classes();
             }
 
-			// Instantiate the frontend-only classes.
-			if( false === is_admin() ) {
-				$this->instantiate_frontend_classes();
-			}
+			// Instatiate classes that need to be defered.
+			add_action('plugins_loaded' , array( $this, 'instantiate_deferred_classes' ) , 100 );
 
         }
 
@@ -74,8 +72,23 @@ class Social_Warfare {
 	 *
 	 */
 	private function instantiate_classes() {
+
+
+		/**
+		 * The Global $swp_user_options Loader
+		 *
+		 * This creates and filters and manages the user options array.
+		 *
+		 */
         new SWP_User_Options();
 
+
+		/**
+		 * The Global Options Page Object
+		 *
+		 * This is created as a global so that all addons can modify it.
+		 *
+		 */
         global $SWP_Options_Page;
 
 
@@ -204,19 +217,6 @@ class Social_Warfare {
 
 
 	/**
-	 * This method will load up all of the frontend-only classes.
-	 *
-	 * @since  3.1.0 | 20 JUNE 2018 | Created
-	 * @param  void
-	 * @return void
-	 * @access private
-	 */
-	private function instantiate_frontend_classes() {
-
-
-	}
-
-	/**
 	 * This method will load up all of the admin-only classes.
 	 *
 	 * @since  3.0.0
@@ -286,18 +286,45 @@ class Social_Warfare {
 		 */
 		new SWP_User_Profile();
 
+
+		/**
+		 * The JSON Cache Handler
+		 *
+		 * This class fetches the JSON data from our home server and makes it
+		 * available to the plugin for important information like adding
+		 * dashboard notices or updating the sidebar in the admin settings page.
+		 *
+		 */
         new SWP_JSON_Cache_Handler();
+
+
+		/**
+		 * The Settings Page Sidebar Loader
+		 *
+		 * This class controls the sidebar on the settings page.
+		 *
+		 */
         new SWP_Sidebar_Loader();
 
-        add_action('plugins_loaded', function() {
-            /**
-             * Instantiates all of our notices.
-             *
-             */
-            new SWP_Notice_Loader();
-        }, 50);
+	}
 
-        require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
+
+	/**
+	 * Instatiate the classes that we want to load in a deferred manner.
+	 *
+	 * @since  3.3.0 | 06 AUG 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function insantiate_deferred_classes() {
+
+
+		/**
+		 * Instantiates all of our notices.
+		 *
+		 */
+		new SWP_Notice_Loader();
 	}
 
 
@@ -336,7 +363,8 @@ class Social_Warfare {
             'Notice_Loader',
             'Post_Cache_Loader',
             'Post_Cache',
-            'JSON_Cache_Handler'
+            'JSON_Cache_Handler',
+			'Plugin_Updater'
         );
         $this->load_files( '/functions/utilities/', $utilities);
 
