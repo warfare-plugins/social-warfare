@@ -36,6 +36,9 @@ class SWP_Option_Text extends SWP_Option {
     }
 
 
+    
+
+
     /**
     * Renders the HTML to create the <input type="text" /> element.
     *

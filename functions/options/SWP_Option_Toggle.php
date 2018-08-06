@@ -25,6 +25,11 @@ class SWP_Option_Toggle extends SWP_Option {
 		$this->default = true;
 	}
 
+    public function establish_values( $values ) {
+        $values[$this->key] = array( true, false );
+        return $values;
+    }
+
 
     /**
     * Creates the fully qulaified HTML for the checkbox/toggle module.
