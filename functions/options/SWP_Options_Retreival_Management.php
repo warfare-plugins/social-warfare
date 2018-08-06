@@ -1,16 +1,21 @@
 <?php
 
-class SWP_Options_Retreival_Management {
+class SWP_Options_Retrieval_Management {
 
 
 	public function __construct() {
 
 		// Retrieve the user's set options from the database.
-		$this->user_options = get_option('swp_')
+		$this->user_options = get_option( 'social_warfare_settings', false );
+
+        if ( false === $this->user_options ) {
+            return;
+        }
 
 		// Get the options data used to filter the user options.
-		$this->options_data = get_options('swp_options_data');
-		if( false == $this->options_data ):
+		$this->registered_options = get_option( 'swp_registered_options' );
+
+		if( false === $this->options_data ):
 			return;
 		endif;
 
@@ -23,7 +28,7 @@ class SWP_Options_Retreival_Management {
 		$swp_user_options = $this->user_options;
 
 		// Add all relevant option info to the database.
-		add_action('plugins_loaded', array( $this , 'store_options_data' ) , 1000 );
+		add_action( 'plugins_loaded', array( $this , 'store_options_data' ) , 1000 );
 
 	}
 
@@ -47,12 +52,11 @@ class SWP_Options_Retreival_Management {
 	 */
 	public function store_options_data() {
 
-		$old_options_data             = get_option( 'swp_options_data' );
-		$new_options_data             = array()
-		$new_options_data['defaults'] = apply_filters( 'swp_options_page_defaults', array() );
-		$new_options_data['options']  = apply_filters( 'swp_options_page_values' , array() );
-		if( $new_options_data != $old_options_data ) {
-			update_option( 'swp_options_data' , $new_options_data );
+		$new_registered_options['defaults'] = apply_filters( 'swp_options_page_defaults', array() );
+		$new_registered_options['options']  = apply_filters( 'swp_options_page_values' , array() );
+
+		if( $new_registered_options['options'] != $this->registered_options ) {
+			update_option( 'swp_registered_options' , $new_registered_options );
 		}
 	}
 
@@ -64,10 +68,18 @@ class SWP_Options_Retreival_Management {
 	 * @return [type] [description]
 	 */
 	private function filter_options() {
+        global $swp_user_options;
 
-		$options = $this->options_data['options'];
+		foreach( $this->registered_options as $key => $data ) {
+            if ( $data['type'] == 'none' || $data['type'] == 'text' ) :
+                continue;
+            endif;
 
-		// Do stuff.
+            if ( !in_array( $key, $this->registered_options ) ) :
+                unset( $this->registered_options[$key] );
+            endif;
+        }
+
 
 	}
 
