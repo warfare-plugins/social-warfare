@@ -39,8 +39,13 @@ class SWP_Option_Select extends SWP_Option {
         $this->choices = array();
     }
 
-    public function establish_values( $values ) {
-        $values[$this->key] = $this->choices;
+
+    public function register_available_values( $values ) {
+        $values[$this->key] = array(
+            'type'  => 'select',
+            'values'    => $this->choices
+        );
+
         return $values;
     }
 
