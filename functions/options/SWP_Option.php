@@ -99,6 +99,11 @@ class SWP_Option extends SWP_Abstract {
      *
      */
      public function establish_values( $values ) {
+         $values[$this->key] = array(
+             'type' => 'none',
+             'values'   => array()
+         );
+
          return $values;
      }
 
@@ -179,7 +184,7 @@ class SWP_Option extends SWP_Abstract {
 
         // Add this to our global list of defaults
         add_filter( 'swp_options_page_defaults' , array( $this , 'register_default' ) );
-        add_filter( 'swp_options_page_values', array( $this, 'establish_values' ) );
+        add_filter( 'swp_options_page_values', array( $this, 'register_available_values' ) );
 
         return $this;
     }

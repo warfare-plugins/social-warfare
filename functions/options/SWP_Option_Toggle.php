@@ -25,8 +25,13 @@ class SWP_Option_Toggle extends SWP_Option {
 		$this->default = true;
 	}
 
-    public function establish_values( $values ) {
-        $values[$this->key] = array( true, false );
+
+    public function register_available_values( $values ) {
+        $values[$this->key] = array(
+            'type'      => 'boolean',
+            'values'    => array( true, false )
+        );
+
         return $values;
     }
 

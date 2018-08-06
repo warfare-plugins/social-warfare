@@ -36,7 +36,13 @@ class SWP_Option_Text extends SWP_Option {
     }
 
 
-    
+    public function register_available_values( $values ) {
+        $values[$this->key] = array(
+            'type'  => 'text'
+        );
+
+        return $values;
+    }
 
 
     /**
