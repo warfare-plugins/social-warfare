@@ -1,9 +1,6 @@
 <?php
 
 class SWP_Addon extends Social_Warfare {
-    public static $key;
-    public static $license_key;
-
     public function __construct() {
         parent::__construct();
         $this->name = '';
@@ -16,11 +13,6 @@ class SWP_Addon extends Social_Warfare {
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
-    }
-
-
-    public static function is_addon_registered( $key ) {
-        return self::is_registered( $key );
     }
 
 
@@ -116,31 +108,25 @@ class SWP_Addon extends Social_Warfare {
         $this->license_key = '';
     }
 
-    public function is_registered( $key = null ) {
-        if ( null !== $key ) :
-            self::$key = $key;
-        else : 
-            self::$key = $this->key;
-        endif;
-
+    public function is_registered() {
         // Get the plugin options from the database
     	$options = get_option( 'social_warfare_settings', false );
         $old_options = get_option( 'socialWarfareOptions', false );
 
-        if ( isset( $options[self::$key . '_license_key'] ) ) :
-            self::$license_key = $options[self::$key . '_license_key'];
-        elseif ( isset( $old_options[self::$key . '_license_key'] ) ) :
-            self::$license_key = $old_options[self::$key . '_license_key'];
+        if ( isset( $options[$this->key . '_license_key'] ) ) :
+            $this->license_key = $options[$this->key . '_license_key'];
+        elseif ( isset( $old_options[$this->key . '_license_key'] ) ) :
+            $this->license_key = $old_options[$this->key . '_license_key'];
         else:
-            self::$license_key = '';
+            $this->license_key = '';
         endif;
 
 
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
-        if ( isset($options[self::$key.'_license_key_timestamp'] ) ) {
-            $timestamp = $options[self::$key . '_license_key_timestamp'];
+        if ( isset($options[$this->key.'_license_key_timestamp'] ) ) {
+            $timestamp = $options[$this->key . '_license_key_timestamp'];
         }
 
     	$timestamp = isset ( $timestamp ) ? $timestamp  : 0;
@@ -148,35 +134,35 @@ class SWP_Addon extends Social_Warfare {
     	$time_to_recheck = $timestamp + 604800;
 
     	// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
-    	if( !empty( self::$license_key)  && $current_time < $time_to_recheck ) :
+    	if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) :
     		return true;
         endif;
 
         // If a week has passed since the last check, ping our API to check the validity of the license key
-        if ( !empty( self::$license_key) ) :
+        if ( !empty( $this->license_key) ) :
 
             $data = array(
                 'edd_action' => 'check_license',
-                'item_id' => self::$product_id,
-                'license' => self::$license_key,
-                'url' => self::$site_url,
+                'item_id' => $this->product_id,
+                'license' => $this->license_key,
+                'url' => $this->site_url,
             );
 
-            $response = wp_remote_retrieve_body( wp_remote_post( self::$store_url , array('body' => $data, 'timeout' => 10 ) ) );
+            $response = wp_remote_retrieve_body( wp_remote_post( $this->store_url , array('body' => $data, 'timeout' => 10 ) ) );
 
     		if( false !== $response ) :
 
     			// Parse the response into an object
     			$license_data = json_decode( $response );
 
-                $options[self::$key . '_license_key_timestamp'] = $current_time;
+                $options[$this->key . '_license_key_timestamp'] = $current_time;
 
     			// If the license was invalid
     			if ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
     				$is_registered = false;
-    				self::$license_key = '';
+    				$this->license_key = '';
 
-                    $options[self::$key . '_license_key'] = '';
+                    $options[$this->key . '_license_key'] = '';
 
     				update_option( 'social_warfare_settings' , $options );
 
@@ -282,6 +268,4 @@ class SWP_Addon extends Social_Warfare {
 
     	die;
     }
-
-
 }
