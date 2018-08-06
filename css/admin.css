@@ -316,6 +316,10 @@ a.swp-notice-cta {
     width: 90%;
 }
 
+#swp-admin-sidebar button.swp-component-cta {
+    width: 100%;
+}
+
 #swp-admin-sidebar .swp-component-icon {
     text-align: center;
 }
