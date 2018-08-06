@@ -1,34 +1,150 @@
 <?php
 
+/**
+* A Class to create and filter the global $swp_user_options;
+*
+* This class ensures that if options have been added via updates or by installing
+* new addons that they are added to the user options array. Conversely, if
+* available options have disappeared from deactivating an addon, those options
+* will be removed from the global user options array.
+*
+* @package   SocialWarfare\Functions\Options
+* @copyright Copyright (c) 2018, Warfare Plugins, LLC
+* @license   GPL-3.0+
+* @since     3.3.0   | Created | 06 AUG 2018
+* @access    public
+*
+*/
 class SWP_User_options {
 
-
 	public function __construct() {
-		get_option('Our_Options_In_The_Database');
-		$this->remove_unavailable_options();
-		$this->set_defaults();
+
+		// Retrieve the user's set options from the database.
+		$this->user_options = get_option( 'social_warfare_settings', false );
+
+        if ( false === $this->user_options ) {
+            return;
+        }
+
+		// Get the options data used to filter the user options.
+		$this->registered_options = get_option( 'swp_registered_options', false );
+
+        // Filter the user options based on options, values, and defaults.
+		if( false !== $this->registered_options ) :
+            $this->remove_unavailable_options();
+			$this->correct_invalid_values();
+    		$this->add_option_defaults();
+		endif;
+
+		// Assign the user options to a globally accessible array.
+        global $swp_user_options;
+        $swp_user_options = $this->user_options;
+
+		// Add all relevant option info to the database.
+		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ) , 1000 );
 	}
+
 
 	/**
-	 * This will compare the User Options in the database against the SWP_Options_Page object. If it does
-	 * not exist in the SWP_Options_Page object, that means that the addon that offered this option is not
-	 * active or not registered so delete it from SWP_User_Options.
+	 * Store the options data in the database.
 	 *
-	 * But DO NOT remove registration keys or registration timestamps.
+	 * This will be an array of all available options, all of their available
+	 * values, and all of their defaults.
+	 *
+	 * This is loaded super late to ensure that all available options will have
+	 * already been added to the filter so that we can access them here.
+	 *
+	 * By loading late, it will not be available on this same page load for use
+	 * by the filters. It will be available on the next available page load.
+	 * However, this should only have to run on the page load when an addon is
+	 * activated or deactivated as they won't change any other time so this won't
+	 * be an issue.
+	 *
+	 * @since  3.3.0 | 06 AUG 2018 | Created
+	 * @param  void
+	 * @return void
 	 *
 	 */
-	public function remove_unavailable_options() {
+	public function store_registered_options_data() {
+		$new_registered_options = array();
+		$new_registered_options['values']   = apply_filters( 'swp_options_page_values', array() );
+        $new_registered_options['defaults'] = apply_filters( 'swp_options_page_defaults', array() );
 
+		if( $new_registered_options != $this->registered_options ) {
+			update_option( 'swp_registered_options', $new_registered_options );
+		}
 	}
+
 
 	/**
-	 * Instead of a giant array of defaults like we have now, have it sort the options against the SWP_Options_Page object.
-	 * Any User Option that isn't set, simply set it to it's default value.
+	 * Filter out non-existent options.
+	 *
+	 * This checks if an option is still registered and removes it from the user
+	 * options if it does not exist.
+	 *
+	 * @since  3.3.0 | 06 AUG 2018 | Created
+	 * @param  void
+	 * @return void
 	 *
 	 */
-	public function set_defaults() {
+	private function remove_unavailable_options() {
+        $defaults = $this->registered_options['defaults'];
 
+        foreach( $this->user_options as $key => $value) {
+            if ( !array_key_exists( $key, $defaults ) ) :
+                unset( $this->user_options[$key] );
+            endif;
+        }
 	}
 
 
+	/**
+	 * Correct any values that may be invalid.
+	 *
+	 * @since  3.3.0 | 06 AUG 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function correct_invalid_values() {
+		$values = $this->registered_options['values'];
+		$defaults = $this->registered_options['defaults'];
+
+		foreach( $this->user_options as $key => $value ) {
+			if( $values[$key]['type'] == 'select' && !in_array( $value, $values[$key]['values']) ) {
+				$this->user_options[$key] = $defaults[$key];
+			}
+		}
+	}
+
+
+	/**
+	 * Creates the default value for any new keys.
+	 *
+	 * @since  3.0.8  | 16 MAY 2018 | Created the method.
+	 * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
+	 * @since  3.1.0  | 13 JUN 2018 | Replaced array bracket notation.
+	 * @since  3.3.0  | 06 AUG 2018 | Moved from database migration class.
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function add_option_defaults() {
+		$defaults = $this->options_data['defaults'];
+
+		// Manually set the order_of_icons default.
+		$defaults['order_of_icons'] = array(
+			'google_plus' => 'google_plus',
+			'twitter'     => 'twitter',
+			'facebook'    => 'facebook',
+			'linkedin'    => 'linkedin',
+			'pinterest'   => 'pinterest'
+		);
+
+		foreach ( $defaults as $key => $value ) {
+			 if ( !array_key_exists( $key, $swp_user_options) ) :
+				 $this->user_options[$key] = $value;
+			 endif;
+		}
+    }
 }
