@@ -296,8 +296,6 @@ class Social_Warfare {
              */
             new SWP_Notice_Loader();
         }, 50);
-
-        require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
 	}
 
 
@@ -336,7 +334,8 @@ class Social_Warfare {
             'Notice_Loader',
             'Post_Cache_Loader',
             'Post_Cache',
-            'JSON_Cache_Handler'
+            'JSON_Cache_Handler',
+            'Plugin_Updater'
         );
         $this->load_files( '/functions/utilities/', $utilities);
 
