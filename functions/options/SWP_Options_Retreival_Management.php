@@ -13,9 +13,9 @@ class SWP_Options_Retrieval_Management {
         }
 
 		// Get the options data used to filter the user options.
-		$this->registered_options = get_option( 'swp_registered_options' );
+		$this->registered_options = get_option( 'swp_registered_option_values' );
 
-		if( false === $this->options_data ):
+		if( false === $this->registered_options ):
 			return;
 		endif;
 
@@ -51,12 +51,19 @@ class SWP_Options_Retrieval_Management {
 	 * @return [type] [description]
 	 */
 	public function store_options_data() {
+        global $swp_user_options;
 
-		$new_registered_options['defaults'] = apply_filters( 'swp_options_page_defaults', array() );
-		$new_registered_options['options']  = apply_filters( 'swp_options_page_values' , array() );
+		$new_registered_options  = apply_filters( 'swp_options_page_values' , array() );
 
-		if( $new_registered_options['options'] != $this->registered_options ) {
-			update_option( 'swp_registered_options' , $new_registered_options );
+        foreach( $swp_user_options as $key => $value ) {
+            //* Compare the stored registred available values against the freshly loaded available values.
+            if ( $this->registered_options[$key]!= $new_registered_options[$key] ) {
+                $this->registered_options[$key] = $new_registered_options[$key];
+            }
+        }
+
+		if( $new_registered_options != $this->registered_options ) {
+			update_option( 'swp_registered_option_values' , $new_registered_options );
 		}
 	}
 
@@ -70,17 +77,13 @@ class SWP_Options_Retrieval_Management {
 	private function filter_options() {
         global $swp_user_options;
 
-		foreach( $this->registered_options as $key => $data ) {
-            if ( $data['type'] == 'none' || $data['type'] == 'text' ) :
-                continue;
-            endif;
+        $defaults = apply_filters( 'swp_options_page_defaults', array() );
 
-            if ( !in_array( $key, $this->registered_options ) ) :
-                unset( $this->registered_options[$key] );
+        foreach( $swp_user_options as $key => $value) {
+            if ( !in_array( $key, $defaults ) ) :
+                unset( $swp_user_options[$key] );
             endif;
         }
-
-
 	}
 
 
@@ -120,6 +123,4 @@ class SWP_Options_Retrieval_Management {
 		if ( $updated ) {
 			update_option( 'social_warfare_settings', $swp_user_options );
 		}
-
-
 }
