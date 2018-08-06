@@ -74,6 +74,8 @@ class Social_Warfare {
 	 *
 	 */
 	private function instantiate_classes() {
+        new SWP_User_Options();
+
         global $SWP_Options_Page;
 
 
@@ -285,6 +287,7 @@ class Social_Warfare {
 		new SWP_User_Profile();
 
         new SWP_JSON_Cache_Handler();
+        new SWP_Sidebar_Loader();
 
         add_action('plugins_loaded', function() {
             /**
@@ -394,7 +397,7 @@ class Social_Warfare {
 
 
 		/**
-		 * The Widget Classes
+		 * The Widget ClassesMa
 		 *
 		 * These are the classes that create the widgets available for output in
 		 * WordPress. Built in is the Popular Posts widget, but these also
@@ -427,6 +430,7 @@ class Social_Warfare {
             'Settings_Link',
             'Shortcode_Generator',
             'User_Profile',
+            'Sidebar_Loader'
         );
         $this->load_files( '/functions/admin/', $admins );
 
@@ -440,6 +444,7 @@ class Social_Warfare {
 		 *
 		 */
         $options = array(
+            'User_Options',
             'Option',
             'Options_Page',
             'Options_Page_Tab',
@@ -490,7 +495,7 @@ class Social_Warfare {
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
-// require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
+require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
 require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 
 /**
