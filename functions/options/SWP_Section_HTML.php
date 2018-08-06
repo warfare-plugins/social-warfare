@@ -79,6 +79,8 @@ class SWP_Section_HTML extends SWP_Option {
 	 *
 	 */
     public function do_admin_sidebar() {
+        $status_title =  __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' );
+
         //* This is an array of fully qualified HTML strings, ready to print.
         $cache = get_option("swp_json_cache");
         $html = '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
@@ -90,8 +92,14 @@ class SWP_Section_HTML extends SWP_Option {
                 $html .= html_entity_decode( $component);
             }
 
-            $html .= '</div></div>';
+
         endif;
+
+        $html .= '<div class="system-status-wrapper">';
+            $html .= '<h4><?= $status_title ?></h4>';
+            $html .= '<div class="system-status-container"> '. $this->system_status() . '</div>';
+
+        $html .= '</div></div>';
 
         return $this->html = $html;
     }
@@ -152,7 +160,6 @@ class SWP_Section_HTML extends SWP_Option {
     			<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
     			<tr><td><b>Theme Name</b></td><td>' . $theme['Name'] . '</td></tr>
     			<tr><td><b>Theme Version</b></td><td>' . $theme['Version'] . '</td></tr>
-    			<tr><td><b>Caching Method</b></td><td>' . ucfirst($swp_user_options['cache_method']) . '</td></tr>
     			<tr><td><b>Active Plugins</b></td><td></td></tr>
     			<tr><td><b>Number of Active Plugins</b></td><td>' . count( $plugins ) . '</td></tr>
     			' . $pluginList . '
