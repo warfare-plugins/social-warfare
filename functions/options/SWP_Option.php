@@ -98,7 +98,7 @@ class SWP_Option extends SWP_Abstract {
      * to add their own values as valid options.
      *
      */
-     public function establish_values( $values ) {
+     public function register_available_values( $values ) {
          $values[$this->key] = array(
              'type' => 'none',
              'values'   => array()
@@ -183,7 +183,7 @@ class SWP_Option extends SWP_Abstract {
         $this->default = $value;
 
         // Add this to our global list of defaults
-        add_filter( 'swp_options_page_defaults' , array( $this , 'register_default' ) );
+        add_filter( 'swp_options_page_defaults', array( $this , 'register_default' ) );
         add_filter( 'swp_options_page_values', array( $this, 'register_available_values' ) );
 
         return $this;
