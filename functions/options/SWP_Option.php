@@ -93,6 +93,15 @@ class SWP_Option extends SWP_Abstract {
         $this->parent_size = ' sw-col-940 ';
     }
 
+    /**
+     * Child classes will add a call to apply_filters( 'swp_options_page_values')
+     * to add their own values as valid options.
+     *
+     */
+     public function establish_values( $values ) {
+         return $values;
+     }
+
 
     /**
     * Fetches the css class to match a given size given as a string.
@@ -169,7 +178,8 @@ class SWP_Option extends SWP_Abstract {
         $this->default = $value;
 
         // Add this to our global list of defaults
-        add_filter('swp_options_page_defaults' , array( $this , 'register_default' ) );
+        add_filter( 'swp_options_page_defaults' , array( $this , 'register_default' ) );
+        add_filter( 'swp_options_page_values', array( $this, 'establish_values' ) );
 
         return $this;
     }
@@ -306,4 +316,5 @@ class SWP_Option extends SWP_Abstract {
         return ' placeholder="' . $this->placeholder . '"';
 
     }
+
 }

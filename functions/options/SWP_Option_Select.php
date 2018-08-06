@@ -35,7 +35,13 @@ class SWP_Option_Select extends SWP_Option {
     public function __construct( $name, $key ) {
         parent::__construct( $name, $key );
 
+
         $this->choices = array();
+    }
+
+    public function establish_values( $values ) {
+        $values[$this->key] = $this->choices;
+        return $values;
     }
 
 
@@ -190,4 +196,5 @@ class SWP_Option_Select extends SWP_Option {
 
         return parent::set_default( $value );
     }
+
 }
