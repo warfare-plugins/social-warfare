@@ -312,6 +312,7 @@ a.swp-notice-cta {
     letter-spacing: 2px;
     font-weight: bold;
     cursor: pointer;
+    width: 90%;
 }
 
 #swp-admin-sidebar .swp-component-icon {
@@ -332,31 +333,3 @@ a.swp-notice-cta {
 }
 
 /*** Upgrade to Pro ***/
-
-#swp-admin-sidebar #upgrade {
-    background-color: #30394F;
-}
-
-#swp-admin-sidebar #upgrade .swp-component-cta {
-    background: #ee464f;
-}
-
-/*** Love the Plugin ***/
-
-#swp-admin-sidebar #love {
-    background-color: #71C069;
-}
-
-#swp-admin-sidebar #love .swp-component-cta {
-    background: #30394F;
-}
-
-/*** Need Help ***/
-
-#swp-admin-sidebar #help {
-    background-color: #c4c4c4;
-}
-
-#swp-admin-sidebar #help .swp-component-cta {
-    background: #30394F;
-}
