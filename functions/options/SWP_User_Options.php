@@ -130,7 +130,7 @@ class SWP_User_options {
 	 *
 	 */
 	private function add_option_defaults() {
-		$defaults = $this->options_data['defaults'];
+		$defaults = $this->registered_options['defaults'];
 
 		// Manually set the order_of_icons default.
 		$defaults['order_of_icons'] = array(
@@ -142,7 +142,7 @@ class SWP_User_options {
 		);
 
 		foreach ( $defaults as $key => $value ) {
-			 if ( !array_key_exists( $key, $swp_user_options) ) :
+			 if ( !array_key_exists( $key, $this->user_options ) ) :
 				 $this->user_options[$key] = $value;
 			 endif;
 		}
