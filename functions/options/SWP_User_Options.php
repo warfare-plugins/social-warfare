@@ -42,8 +42,24 @@ class SWP_User_options {
 
 		// Add all relevant option info to the database.
 		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ) , 1000 );
+
+		$this->debug();
 	}
 
+
+	/**
+	 * A function for debugging this class.
+	 *
+	 * @since  3.3.0 | 07 AUG 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function debug() {
+		if( true === _swp_is_debug( 'SWP_User_Options' ) ) {
+			var_dump( $this );
+		}
+	}
 
 	/**
 	 * Store the options data in the database.
