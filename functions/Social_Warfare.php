@@ -317,7 +317,7 @@ class Social_Warfare {
 	 * @return void
 	 *
 	 */
-	public function insantiate_deferred_classes() {
+	public function instantiate_deferred_classes() {
 
 
 		/**
