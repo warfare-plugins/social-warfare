@@ -263,7 +263,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         wrapper.addClass(barLocation).hide().appendTo("body");
 
-        var clone = panel.clone();
+        var clone = panel.first().clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
