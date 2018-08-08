@@ -191,28 +191,38 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function reset_share_count_source() {
-		$options = get_option('social_warfare_options');
+		$options = get_option( 'social_warfare_settings' );
+
 		if( !empty( $options['tweet_count_source']) && 'newsharecounts' == $options['tweet_count_source'] ) {
+
             unset( $options['tweet_count_source'] );
             $options['twitter_shares'] = false;
-
             update_option( 'social_warfare_settings', $options );
 
-            add_filter( 'swp_admin_notices', function($notices) {
-                $notice = array(
-                    'key'   => 'new_share_counts_admin_used_service',
-                    'message'   => 'Because New Share Counts is not in service, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
-                    array(
-                        'action'    => 'Thank you, I understand.',
-                        'timeframe' => 0
-                    ),
-                );
-
-                $notices[] = $notice;
-
-                return $notices;
-            });
+            add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice' ) );
 		}
 	}
+
+    /**
+     * Displays the admin notice about New Share Counts.
+     *
+     * @since  3.2.0 | Created 
+     * @param  array $notices All admin notices passed in the 'swp_admin_notices' hook.
+     * @return array $notices The updated notice array.
+     */
+    public function print_twitter_notice( $notices ) {
+        $notice = array(
+            'key'   => 'new_share_counts_admin_used_service',
+            'message'   => 'Because New Share Counts is not in service, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
+            array(
+                'action'    => 'Thank you, I understand.',
+                'timeframe' => 0
+            ),
+        );
+
+        $notices[] = $notice;
+
+        return $notices;
+    }
 
 }
