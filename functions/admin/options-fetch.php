@@ -134,8 +134,6 @@ function swp_update_options( $options ) {
 		return false;
 	}
 
-	unset( $options['orderOfIcons'] );
-
 	return update_option( 'social_warfare_settings', $options );
 }
 
