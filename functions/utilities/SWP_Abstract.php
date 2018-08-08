@@ -114,7 +114,6 @@ class SWP_Abstract {
         $this->user_options = get_option( 'social_warfare_settings' );
 
         add_action('plugins_loaded', array( $this , 'load_social_networks' ) , 1000 );
-
     }
 
 
@@ -131,6 +130,7 @@ class SWP_Abstract {
 		$this->networks = $swp_social_networks;
 	}
 
+
     public function get_property( $property ) {
         if ( property_exists( __CLASS__, $property ) ) {
             return $this->$property;
@@ -144,9 +144,12 @@ class SWP_Abstract {
 		return $this->networks;
     }
 
+
     public function get_user_icons() {
-        if ( isset( $this->user_options['order_of_icons'] ) ) :
-            $user_icons = $this->user_options['order_of_icons'];
+        $options = get_option( 'social_warfare_settings' );
+
+        if ( isset( $options['order_of_icons'] ) ) :
+            $user_icons = $options['order_of_icons'];
         else:
             $user_icons = [
     			'google_plus' => 'google_plus',
@@ -155,18 +158,6 @@ class SWP_Abstract {
     			'linkedin'    => 'linkedin',
     			'pinterest'   => 'pinterest'
     		];
-        endif;
-
-        if ( empty( $user_icons ) ):
-            $all_icons = $this->get_all_icons();
-            $defaults = array();
-
-            foreach( $all_icons as $network_key => $network_obj ) {
-                $defaults[$network_key] = $network_obj;
-            }
-
-            return $defaults;
-
         endif;
 
         if ( is_array( $user_icons ) && array_key_exists( 'active', $user_icons) ) :
@@ -195,6 +186,7 @@ class SWP_Abstract {
         return $this;
     }
 
+
     public function set_priority( $priority ) {
         if ( ! intval( $priority ) || $priority < 1) {
             $this->_throw("Requires an integer greater than 0.");
@@ -204,6 +196,7 @@ class SWP_Abstract {
 
         return $this;
     }
+
 
     /**
     * Creates a Javscript selector keyname  based on the object's name.
@@ -225,6 +218,7 @@ class SWP_Abstract {
 
         return strtolower( $key );
     }
+
 
     /**
     * Set the premium status of the object.
@@ -258,10 +252,12 @@ class SWP_Abstract {
 		return $this;
 	}
 
+
     public function get_priority_map( $object) {
 
         return array_values( $this->object_to_array( $object ) );
     }
+
 
     public function object_to_array ( $object ) {
         if(!is_object($object) && !is_array($object)):
@@ -270,6 +266,7 @@ class SWP_Abstract {
 
         return array_map( [$this, 'object_to_array'], (array) $object);
     }
+
 
     /**
     * Sorts all core, premium, and third-party items by their designated priority.
@@ -332,7 +329,6 @@ class SWP_Abstract {
 
         return array_merge( $this->sort_by_priority($left), [$pivot], $this->sort_by_priority($right) );
     }
-
 
 
     /**

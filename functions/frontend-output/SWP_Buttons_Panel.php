@@ -136,8 +136,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function localize_options() {
-		global $swp_user_options;
-		$this->options = array_merge( $swp_user_options, $this->args );
+        $options = get_option( 'social_warfare_settings', array() );
+		$this->options = array_merge( $options, $this->args );
 	}
 
 
@@ -739,7 +739,6 @@ class SWP_Buttons_Panel {
 
         //* Use global button settings.
         else :
-
 			// Order manually using the user's specified order.
             if ( $this->options['order_of_icons_method'] === 'manual' ) :
                 $order = $this->options['order_of_icons'];
