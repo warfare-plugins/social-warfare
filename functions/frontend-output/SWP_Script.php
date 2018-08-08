@@ -82,12 +82,11 @@ class SWP_Script {
      *
      * @since  1.0.0
      * @access public
-     * @global $swp_user_options
      * @param  void
      * @return void
      */
     public function enqueue_scripts() {
-    	global $swp_user_options;
+    	$options = get_option( 'social_warfare_settings ', array() );
 
     	$suffix = SWP_Script::get_suffix();
 
@@ -119,7 +118,6 @@ class SWP_Script {
      *
      */
     public function enqueue_admin_scripts( $screen ) {
-
         $this->enqueue_scripts();
 
     	$suffix = SWP_Script::get_suffix();
@@ -155,12 +153,10 @@ class SWP_Script {
      *
      */
     public function footer_functions() {
-
-    	global $swp_user_options;
+    	$options = get_option( 'social_warfare_settings ', array() );
 
     	// Fetch a few variables.
     	$info['postID']           = get_the_ID();
-    	$info['swp_user_options'] = $swp_user_options;
     	$info['footer_output']    = '';
 
     	// Pass the array through our custom filters.
@@ -185,9 +181,10 @@ class SWP_Script {
      *
      */
     public function click_tracking( $info ) {
+        $options = get_option( 'social_warfare_settings', array() );
 
 		// Output the JS variable for click tracking if it is turned on.
-    	if ( isset( $info['swp_user_options']['click_tracking'] ) && true === $info['swp_user_options']['click_tracking'] ) {
+    	if ( isset( $options['click_tracking'] ) && true === $options['click_tracking'] ) {
     		$info['footer_output'] .= 'var swpClickTracking = true;';
     	} else {
     		$info['footer_output'] .= 'var swpClickTracking = false;';
@@ -207,10 +204,9 @@ class SWP_Script {
      *
      */
     public function frame_buster( $info ) {
+    	$options = get_option( 'social_warfare_settings ', array() );
 
-    	global $swp_user_options;
-
-    	if ( true === $swp_user_options['frame_buster'] ) :
+    	if ( true === $options['frame_buster'] ) :
     		$info['footer_output'] .= PHP_EOL . 'function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "' . get_permalink() . '";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};';
     	endif;
 
@@ -269,8 +265,8 @@ class SWP_Script {
      *
      */
     public function float_before_content( $vars ) {
-        global $swp_user_options;
-        $float_before_content = $swp_user_options['float_before_content'];
+        $options = get_option( 'social_warfare_settings ', array() );
+        $float_before_content = $options['float_before_content'];
 
         $vars['footer_output'] = "var swpFloatBeforeContent = " . json_encode($float_before_content) . ";";
 
