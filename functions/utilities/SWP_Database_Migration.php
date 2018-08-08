@@ -34,10 +34,6 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
-
-		// Set up the defaults before directing into the template functions.
-		add_action( 'template_redirect' , array( $this , 'scan_for_new_defaults' ) );
-
 		// Queue up the migrate features to run after plugins are loaded.
         add_action( 'plugins_loaded', array( $this, 'init' ) );
     }
@@ -71,8 +67,6 @@ class SWP_Database_Migration {
         }
 
 		$this->debug_parameters();
-
-
     }
 
 
@@ -181,43 +175,7 @@ class SWP_Database_Migration {
         return count( $old_metadata ) === 0;
     }
 
-    /**
-     * Creates the default value for any new keys.
-     *
-     * @since  3.0.8  | 16 MAY 2018 | Created the method.
-     * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
-     * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
-     * @param  void
-     * @return void
-     *
-     */
-    public function scan_for_new_defaults() {
-        global $swp_user_options;
 
-        $updated = false;
-        $defaults = apply_filters( 'swp_options_page_defaults', array() );
-
-		// Manually set the order_of_icons default.
- 	 	$defaults['order_of_icons'] = array(
-			'google_plus' => 'google_plus',
-			'twitter'     => 'twitter',
-			'facebook'    => 'facebook',
-			'linkedin'    => 'linkedin',
-			'pinterest'   => 'pinterest'
-		);
-
-        foreach ($defaults as $key => $value ) {
-             if ( !array_key_exists( $key, $swp_user_options) ) :
-                 $swp_user_options[$key] = $value;
-                 $updated = true;
-             endif;
-        }
-
-        if ( $updated ) {
-            update_option( 'social_warfare_settings', $swp_user_options );
-        }
-
-     }
 
 
 	 /**
