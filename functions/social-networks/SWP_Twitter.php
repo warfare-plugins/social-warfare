@@ -186,7 +186,6 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * newsharecounts.com which has shut down.
 	 *
 	 * @since  3.2.0 | 24 JUL 2018 | Created
-	 * @since  3.3.0 | Moved anonymous function to named 'print_twitter_notice'.
 	 * @param  void
 	 * @return void
 	 *
@@ -207,8 +206,7 @@ class SWP_Twitter extends SWP_Social_Network {
     /**
      * Displays the admin notice about New Share Counts.
      *
-     * @since  3.2.0 | Created the notice
-     * @since  3.3.0 | Changed from anonymous function to named funciton.
+     * @since  3.2.0 | Created
      * @param  array $notices All admin notices passed in the 'swp_admin_notices' hook.
      * @return array $notices The updated notice array.
      */
