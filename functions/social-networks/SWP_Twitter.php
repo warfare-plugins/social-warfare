@@ -191,11 +191,12 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function reset_share_count_source() {
-		$options = get_option('social_warfare_options');
+		$options = get_option( 'social_warfare_settings' );
+
 		if( !empty( $options['tweet_count_source']) && 'newsharecounts' == $options['tweet_count_source'] ) {
+
             unset( $options['tweet_count_source'] );
             $options['twitter_shares'] = false;
-
             update_option( 'social_warfare_settings', $options );
 
             add_filter( 'swp_admin_notices', function($notices) {
