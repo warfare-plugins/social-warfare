@@ -525,8 +525,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return false;
             }
 
-            if($(this).data('link')) {
-                event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            if ($(this).data('link')) {
+                event.preventDefault();
 
                 var href = $(this).data('link');
                 var height, width, top, left, instance, windowFeatures;
@@ -541,30 +541,29 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                     width = 500;
                 }
 
-
                 top = window.screenY + (window.innerHeight - height) / 2;
                 left = window.screenX + (window.innerWidth - width) / 2;
 
-                windowFeatures = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-                instance = window.open(href, '_blank', windowFeatures);
+                windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+                instance = window.open(href, '_blank', windowAttributes);
 
-				if (true == swpClickTracking) {
-					if($(this).hasClass('nc_tweet')) {
-						var network = $(this).parents(".nc_tweetContainer").attr("data-network");
-					} else if ($(this).hasClass('swp_CTT')) {
-						var network = 'ctt';
-					}
+        				if (true == swpClickTracking) {
+          					if($(this).hasClass('nc_tweet')) {
+          						var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+          					} else if ($(this).hasClass('swp_CTT')) {
+          						var network = 'ctt';
+          					}
 
-					// If Google Analytics is Present on the Page
-	                if (typeof ga == "function" && true) {
-	                    ga('send', 'event', 'social_media', 'swp_' + network + '_share');
-	                }
+          					// If Google Analytics is Present on the Page
+  	                if (typeof ga == "function" && true) {
+  	                    ga('send', 'event', 'social_media', 'swp_' + network + '_share');
+  	                }
 
-					// If Google Tag Manager is Present on the Page
-					if ("object" == typeof dataLayer) {
-						dataLayer.push({'event':'swp_' + network + '_share'});
-					}
-				}
+          					// If Google Tag Manager is Present on the Page
+          					if ("object" == typeof dataLayer) {
+          						dataLayer.push({'event':'swp_' + network + '_share'});
+          					}
+        				}
 
                 return false;
             }
