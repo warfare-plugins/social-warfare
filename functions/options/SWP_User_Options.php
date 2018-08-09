@@ -116,14 +116,41 @@ class SWP_User_options {
 	 *
 	 */
 	private function remove_unavailable_options() {
+
         $defaults = $this->registered_options['defaults'];
 
-        foreach( $this->user_options as $key => $value) {
+        foreach( $this->user_options as $key => $value ) {
+
+            //* Manually filter the order of icons.
+            if ( $key == 'order_of_icons' ) :
+                $this->filter_order_of_icons( $value );
+            endif;
+
             if ( !array_key_exists( $key, $defaults ) ) :
                 unset( $this->user_options[$key] );
             endif;
         }
 	}
+
+
+    private function filter_order_of_icons( $user_icons = array() ) {
+        global $swp_social_networks;
+        $networks = array();
+
+        /* order_of_icons is an array of $network_key => $network_key
+         * So we need to create an array in that form.
+         * Yes, it is redundant, but that's how it is.
+         */
+        foreach( $swp_social_networks as $key => $object ) {
+            $networks[$key] = $key;
+        }
+
+        foreach( $user_icons as $network_key ) {
+            if ( !in_array( $network_key, $networks ) ) :
+                unset( $this->user_options['order_of_icons'][$key] );
+            endif;
+        }
+    }
 
 
 	/**
