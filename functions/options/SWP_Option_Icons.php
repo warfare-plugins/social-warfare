@@ -125,7 +125,7 @@ class SWP_Option_Icons extends SWP_Option {
     public function render_active_icons() {
         global $swp_user_options;
 
-        $all_icons = $this->get_all_icons();
+        $all_networks = $this->get_all_networks();
         $user_icons = $swp_user_options['order_of_icons'];
 
         $html = '<div class="sw-grid sw-col-300">';
@@ -148,8 +148,8 @@ class SWP_Option_Icons extends SWP_Option {
                         return;
                     endif;
 
-                    if ( array_key_exists( $network_key, $all_icons ) && isset( $all_icons[$network_key]) ) :
-                        $network = $all_icons[$network_key];
+                    if ( array_key_exists( $network_key, $all_networks ) && isset( $all_networks[$network_key]) ) :
+                        $network = $all_networks[$network_key];
 
                         $html .= $this->render_icon_HTML( $network );
                     endif;
@@ -175,23 +175,21 @@ class SWP_Option_Icons extends SWP_Option {
     *
     */
     public function render_inactive_icons() {
-        $all_icons = $this->get_all_icons();
+        global $swp_user_options;
+
+        $all_networks = $this->get_all_networks();
         $user_icons = $swp_user_options['order_of_icons'];
 
-        $first = reset( $all_icons );
+        $first_all = reset( $all_networks );
 
-        if ( gettype( $first ) === 'object' ) :
+        if ( gettype( $first_all ) === 'object' ) :
 
             //* Get the keys first, then diff the array.
-            $keys = array();
+            $keys = array_keys( $all_networks );
 
-            foreach( $all_icons as $object) {
-                $keys[] = $object->key;
-            }
+            $first_user = reset( $user_icons );
 
-            $first = reset( $user_icons );
-
-            if ( gettype( $first ) === 'object' ) :
+            if ( gettype( $first_user ) === 'object' ) :
                 $temp = array();
 
                 foreach( $user_icons as $object ) {
@@ -204,10 +202,10 @@ class SWP_Option_Icons extends SWP_Option {
 
             $inactive_icons = array_diff( $keys, $user_icons );
 
-        elseif ( array_key_exists( 0, $all_icons) ) :
+        elseif ( array_key_exists( 0, $all_networks) ) :
 
-            //* If $all_icons is numerically indexed, just diff the array.
-            $inactive_icons = array_diff( $all_icons, $user_icons );
+            //* If $all_networks is numerically indexed, just diff the array.
+            $inactive_icons = array_diff( $all_networks, $user_icons );
 
         endif;
 
@@ -219,7 +217,7 @@ class SWP_Option_Icons extends SWP_Option {
             $html .=  '<div class="sw-inactive sw-buttons-sort">';
             if ( count( $inactive_icons) > 0 ) :
                 foreach( $inactive_icons as $network_key) {
-                    $network = $all_icons[$network_key];
+                    $network = $all_networks[$network_key];
 
                     $html .= $this->render_icon_HTML( $network );
                 }
