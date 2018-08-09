@@ -134,22 +134,24 @@ class SWP_User_options {
 
 
     private function filter_order_of_icons( $user_icons = array() ) {
-        global $swp_social_networks;
-        $networks = array();
+        global $swp_user_options, $wp_social_networks;
 
-        /* order_of_icons is an array of $network_key => $network_key
-         * So we need to create an array in that form.
-         * Yes, it is redundant, but that's how it is.
-         */
-        foreach( $swp_social_networks as $key => $object ) {
-            $networks[$key] = $key;
-        }
+        $networks = $this->registered_options['values']['order_of_icons']['values'];
+        $user_icons = $this->user_options['order_of_icons'];
 
         foreach( $user_icons as $network_key ) {
-            if ( !in_array( $network_key, $networks ) ) :
-                unset( $this->user_options['order_of_icons'][$key] );
+            if ( !array_key_exists( $network_key, $networks ) ) :
+                unset( $user_icons[$network_key] );
             endif;
         }
+
+        if ( empty ( $user_icons ) ) :
+            $user_icons = $this->registered_options['defaults']['order_of_icons'];
+        endif;
+
+        // $this->user_options['order_of_icons'] = $user_icons;
+
+        $swp_user_options['order_of_icons'] = $user_icons;
     }
 
 
