@@ -134,7 +134,7 @@ class SWP_User_options {
 
 
     private function filter_order_of_icons( $user_icons = array() ) {
-        global $swp_user_options, $wp_social_networks;
+        global $swp_user_options;
 
         $networks = $this->registered_options['values']['order_of_icons']['values'];
         $user_icons = $this->user_options['order_of_icons'];
@@ -148,8 +148,6 @@ class SWP_User_options {
         if ( empty ( $user_icons ) ) :
             $user_icons = $this->registered_options['defaults']['order_of_icons'];
         endif;
-
-        // $this->user_options['order_of_icons'] = $user_icons;
 
         $swp_user_options['order_of_icons'] = $user_icons;
     }
