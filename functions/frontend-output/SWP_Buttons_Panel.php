@@ -519,16 +519,16 @@ class SWP_Buttons_Panel {
 
 
     protected function get_colors() {
-        $litmus = $this->option( 'default_colors' );
+        $default_colors = $this->option( 'default_colors' );
 
         //* They have gone from an Addon to Core.
-        if ( false === $litmus ) :
+        if ( false === $default_colors ) :
             return " swp_default_full_color
                      swp_individual_full_color
                      swp_other_full_color ";
         endif;
 
-        return " swp_default_{$this->option( 'default_colors' )}
+        return " swp_default_{$default_colors}
                  swp_individual_{$this->option( 'single_colors' )}
                  swp_other_{$this->option( 'hover_colors' )} ";
     }
@@ -557,7 +557,7 @@ class SWP_Buttons_Panel {
     protected function get_min_width() {
         $min_width = $this->option( 'float_screen_width' );
 
-        if ( false === $litmus ) :
+        if ( false === $min_width ) :
             return 'data-min-width="1100" ';
         endif;
 
@@ -578,7 +578,7 @@ class SWP_Buttons_Panel {
     protected function get_float_background() {
         $float_background_color = $this->option( 'float_background_color' );
 
-        if ( false === $litmus ) :
+        if ( false === $float_background_color ) :
             return " ";
         endif;
 
