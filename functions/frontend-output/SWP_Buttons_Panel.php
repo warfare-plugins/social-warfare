@@ -564,14 +564,6 @@ class SWP_Buttons_Panel {
         return " data-min-width='{$min_width}' ";
     }
 
-    // '" data-panel-position="' . $this->option('location_post') .
-    // '" data-float="' . $this->get_float_location() .
-    // '" data-float-mobile="' . $this->get_mobile_float_location() .
-    // '" data-count="' . $this->total_shares .
-    // '" data-float-color="' . $this->option('float_background_color') . '
-    //
-
-
     protected function get_float_position() {
         $location_post = $this->option( 'location_post' );
 
@@ -643,7 +635,7 @@ class SWP_Buttons_Panel {
 
         if( is_array( $post_setting ) ) :
              $post_setting = $post_setting[0];
-         endif;
+        endif;
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
@@ -719,8 +711,6 @@ class SWP_Buttons_Panel {
 	        if ( 'none' != $this->get_float_location() ) :
 	            $float_location =  $this->option('float_location');
 	            $class = "swp_float_" . $this->option('float_location');
-	        else :
-	            // $float_location = 'ignore';
 	        endif;
 
 	        if ( $this->options['float_style_source'] == true ) :
