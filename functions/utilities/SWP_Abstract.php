@@ -140,7 +140,7 @@ class SWP_Abstract {
     }
 
 
-    public function get_all_icons() {
+    public function get_all_networks() {
 		return $this->networks;
     }
 
