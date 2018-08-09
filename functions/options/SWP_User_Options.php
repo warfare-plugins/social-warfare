@@ -32,14 +32,13 @@ class SWP_User_options {
 		add_action( 'wp_loaded', array( $this, 'filter_options'), 100 );
 
 		// Assign the user options to a globally accessible array.
-        global $swp_user_options;
-        $swp_user_options = $this->user_options;
+
 
 		// Add all relevant option info to the database.
-		add_action( 'admin_footer', array( $this , 'store_registered_options_data' ) );
+		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 100 );
         add_action( 'admin_footer', array( $this, 'debug' ) );
 
-		// $this->debug();?
+		$this->debug();
 	}
 
 
@@ -55,6 +54,9 @@ class SWP_User_options {
 			$this->correct_invalid_values();
     		$this->add_option_defaults();
 		endif;
+
+        global $swp_user_options;
+        $swp_user_options = $this->user_options;
     }
 
 
@@ -71,6 +73,7 @@ class SWP_User_options {
 			echo "<pre>", var_export($this), "</pre>";
 		}
 	}
+
 
 	/**
 	 * Store the options data in the database.
@@ -116,8 +119,11 @@ class SWP_User_options {
 	 *
 	 */
 	private function remove_unavailable_options() {
+        $defaults = array_keys( $this->registered_options['defaults'] );
 
-        $defaults = $this->registered_options['defaults'];
+        $options = array_keys ( $this->user_options );
+
+        $available_options = array_intersect( $defaults, $options );
 
         foreach( $this->user_options as $key => $value ) {
 
@@ -126,10 +132,11 @@ class SWP_User_options {
                 $this->filter_order_of_icons( $value );
             endif;
 
-            if ( !array_key_exists( $key, $defaults ) ) :
+            if ( !in_array( $key, $available_options ) ) :
                 unset( $this->user_options[$key] );
             endif;
         }
+
 	}
 
 
@@ -138,7 +145,6 @@ class SWP_User_options {
 
         $networks = $this->registered_options['values']['order_of_icons']['values'];
         $user_icons = $this->user_options['order_of_icons'];
-
 
         foreach( $user_icons as $network_key ) {
             if ( !array_key_exists( $network_key, $networks ) ) :
