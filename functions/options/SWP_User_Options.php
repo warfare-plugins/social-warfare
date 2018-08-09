@@ -18,10 +18,10 @@
 class SWP_User_options {
 
 	public function __construct() {
-
 		// Retrieve the user's set options from the database.
 		$this->user_options = get_option( 'social_warfare_settings', false );
 
+        //* No options have been stored yet.
         if ( false === $this->user_options ) {
             return;
         }
@@ -29,22 +29,33 @@ class SWP_User_options {
 		// Get the options data used to filter the user options.
 		$this->registered_options = get_option( 'swp_registered_options', false );
 
-        // Filter the user options based on options, values, and defaults.
-		if( false !== $this->registered_options ) :
-            $this->remove_unavailable_options();
-			$this->correct_invalid_values();
-    		$this->add_option_defaults();
-		endif;
+		add_action( 'wp_loaded', array( $this, 'filter_options'), 100 );
 
 		// Assign the user options to a globally accessible array.
         global $swp_user_options;
         $swp_user_options = $this->user_options;
 
 		// Add all relevant option info to the database.
-		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ) , 1000 );
+		add_action( 'admin_footer', array( $this , 'store_registered_options_data' ) );
+        add_action( 'admin_footer', array( $this, 'debug' ) );
 
-		$this->debug();
+		// $this->debug();?
 	}
+
+
+    /**
+     * Compares what the admin wants to what is available to the admin.
+     *
+     * @return void
+     *
+     */
+    public function filter_options() {
+        if( false !== $this->registered_options ) :
+            $this->remove_unavailable_options();
+			$this->correct_invalid_values();
+    		$this->add_option_defaults();
+		endif;
+    }
 
 
 	/**
@@ -55,9 +66,9 @@ class SWP_User_options {
 	 * @return void
 	 *
 	 */
-	private function debug() {
-		if( true === _swp_is_debug( 'SWP_User_Options' ) ) {
-			var_dump( $this );
+	public function debug() {
+		if( true === _swp_is_debug( 'swp_user_options' ) ) {
+			echo "<pre>", var_export($this), "</pre>";
 		}
 	}
 
@@ -82,9 +93,10 @@ class SWP_User_options {
 	 *
 	 */
 	public function store_registered_options_data() {
-		$new_registered_options = array();
-		$new_registered_options['values']   = apply_filters( 'swp_options_page_values', array() );
-        $new_registered_options['defaults'] = apply_filters( 'swp_options_page_defaults', array() );
+		$new_registered_options = array(
+            'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
+            'values'    => apply_filters( 'swp_options_page_values', array() )
+        );
 
 		if( $new_registered_options != $this->registered_options ) {
 			update_option( 'swp_registered_options', $new_registered_options );
