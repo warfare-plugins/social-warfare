@@ -43,7 +43,24 @@ class SWP_Option_Icons extends SWP_Option {
         global $swp_user_options;
 
         parent::__construct( $name, $key );
+        add_filter( 'swp_options_page_defaults', array( $this , 'register_default' ) );
+
         $this->user_options = $swp_user_options;
+    }
+
+
+    public function register_default( $defaults = array() ) {
+        if ( !array_key_exists( 'order_of_icons', $defaults ) ) :
+            $defaults['order_of_icons'] = array(
+    			'google_plus' => 'google_plus',
+    			'twitter'     => 'twitter',
+    			'facebook'    => 'facebook',
+    			'linkedin'    => 'linkedin',
+    			'pinterest'   => 'pinterest'
+    		);
+        endif;
+
+        return $defaults;
     }
 
 
