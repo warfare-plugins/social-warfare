@@ -176,11 +176,7 @@ class SWP_Option_Icons extends SWP_Option {
     */
     public function render_inactive_icons() {
         $all_icons = $this->get_all_icons();
-        $user_icons = $this->get_user_icons();
-
-        if ( empty( $user_icons )  ) :
-            return $this;
-        endif;
+        $user_icons = $swp_user_options['order_of_icons'];
 
         $first = reset( $all_icons );
 
