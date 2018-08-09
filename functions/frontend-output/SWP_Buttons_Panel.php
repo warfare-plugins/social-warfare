@@ -479,32 +479,29 @@ class SWP_Buttons_Panel {
             endif;
 		endif;
 
+        $container =
+
 		// Create the HTML Buttons panel wrapper
-        $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
-            ' swp_default_' . $this->option('default_colors') .
-            ' swp_individual_' . $this->option('single_colors') .
-            ' swp_other_' . $this->option('hover_colors') .
-            ' scale-' . $this->option('button_size') * 100 .
-            ' scale-' . $this->option('button_alignment') .
-            '" style="' . $style .
-            '" data-min-width="' . $this->option('float_screen_width') .
-            '" data-panel-position="' . $this->option('location_post') .
+        $container = '<div class="swp_social_panel ' .
+            $this->get_shape() .
+            $this->get_colors() .
+            $this->get_scale() .
+            '"' . // end CSS classes
+            $this->get_min_width() .
+            $this->get_float_position() .
             '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
-            '" data-count="' . $this->total_shares .
-            '" data-float-color="' . $this->option('float_background_color') . '
-            ">';
-            //* This should be inserted via addon, not here.
-            //'" data-emphasize="'.$this->option('emphasize_icons').'
+            $this->get_float_background() .
+            '" style="' . $style . '" >';
 
-        $total_shares_html = $this->render_total_shares_html();
-        $buttons = $this->render_buttons_html();
+            $total_shares_html = $this->render_total_shares_html();
+            $buttons = $this->render_buttons_html();
 
-        if ($this->option('totals_alignment') === 'totals_left') :
-            $buttons = $total_shares_html . $buttons;
-        else:
-            $buttons .= $total_shares_html;
-        endif;
+            if ($this->option('totals_alignment') === 'totals_left') :
+                $buttons = $total_shares_html . $buttons;
+            else:
+                $buttons .= $total_shares_html;
+            endif;
 
         $html = $container . $buttons . '</div>';
         $this->html = $html;
@@ -517,6 +514,83 @@ class SWP_Buttons_Panel {
 
         return $html;
     }
+
+
+    protected function get_colors() {
+        $litmus = $this->option( 'default_colors' );
+
+        //* They have gone from an Addon to Core.
+        if ( false === $litmus ) :
+            return " swp_default_full_color
+                     swp_individual_full_color
+                     swp_other_full_color ";
+        endif;
+
+        return " swp_default_{$this->option( 'default_colors' )}
+                 swp_individual_{$this->option( 'single_colors' )}
+                 swp_other_{$this->option( 'hover_colors' )} ";
+    }
+
+
+    protected function get_shape() {
+        $button_shape = $this->option( 'button_shape' );
+
+        if ( false === $button_shape ) :
+            return " swp_flat_fresh ";
+        endif;
+
+        return " swp_{$button_shape} ";
+    }
+
+    protected function get_scale() {
+        $button_size = $this->option( 'button_size' );
+
+        if ( false === $button_size ) :
+            return " scale-100 ";
+        endif;
+
+        return ' scale-' . $button_size * 100;
+    }
+
+    protected function get_min_width() {
+        $min_width = $this->option( 'float_screen_width' );
+
+        if ( false === $litmus ) :
+            return 'data-min-width="1100" ';
+        endif;
+
+        return " data-min-width='{$min_width}' ";
+    }
+
+    // '" data-panel-position="' . $this->option('location_post') .
+    // '" data-float="' . $this->get_float_location() .
+    // '" data-float-mobile="' . $this->get_mobile_float_location() .
+    // '" data-count="' . $this->total_shares .
+    // '" data-float-color="' . $this->option('float_background_color') . '
+    //
+
+
+    protected function get_float_position() {
+        $location_post = $this->option( 'location_post' );
+
+        if ( false === $location_post ) :
+            return " ";
+        endif;
+
+        return '" data-float-location="' . $location_post . '"';
+    }
+
+
+    protected function get_float_background() {
+        $float_background_color = $this->option( 'float_background_color' );
+
+        if ( false === $litmus ) :
+            return " ";
+        endif;
+
+        return '" data-float-color="' . $float_background_color;
+    }
+
 
 
 	/**
