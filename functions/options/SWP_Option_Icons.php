@@ -44,6 +44,7 @@ class SWP_Option_Icons extends SWP_Option {
 
         parent::__construct( $name, $key );
         add_filter( 'swp_options_page_defaults', array( $this , 'register_default' ) );
+        add_filter( 'swp_options_page_values', array( $this, 'register_available_values' ) );
 
         $this->user_options = $swp_user_options;
     }
@@ -61,6 +62,27 @@ class SWP_Option_Icons extends SWP_Option {
         endif;
 
         return $defaults;
+    }
+
+
+    public function register_available_values( $values ) {
+        global $swp_social_networks;
+        $networks = array();
+
+        /* order_of_icons is an array of $network_key => $network_key
+         * So we need to create an array in that form.
+         * Yes, it is redundant, but that's how it is.
+         */
+        foreach( $swp_social_networks as $key => $object ) {
+            $networks[$key] = $key;
+        }
+
+        $values['order_of_icons'] = array(
+            'type' => 'none',
+            'values'   => $networks
+        );
+
+        return $values;
     }
 
 
@@ -101,11 +123,10 @@ class SWP_Option_Icons extends SWP_Option {
     *
     */
     public function render_active_icons() {
-		$all_icons = $this->get_all_icons();
-        $user_icons = $this->get_user_icons();
-        if ( empty($user_icons) ) :
-            $user_icons = array();
-        endif;
+        global $swp_user_options;
+
+        $all_icons = $this->get_all_icons();
+        $user_icons = $swp_user_options['order_of_icons'];
 
         $html = '<div class="sw-grid sw-col-300">';
             $html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
