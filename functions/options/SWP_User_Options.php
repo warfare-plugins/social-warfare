@@ -139,12 +139,14 @@ class SWP_User_options {
         $networks = $this->registered_options['values']['order_of_icons']['values'];
         $user_icons = $this->user_options['order_of_icons'];
 
+
         foreach( $user_icons as $network_key ) {
             if ( !array_key_exists( $network_key, $networks ) ) :
                 unset( $user_icons[$network_key] );
             endif;
         }
 
+        //* They did not have any Core icons set. Return to default icons.
         if ( empty ( $user_icons ) ) :
             $user_icons = $this->registered_options['defaults']['order_of_icons'];
         endif;
