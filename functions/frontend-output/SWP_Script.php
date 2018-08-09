@@ -86,8 +86,6 @@ class SWP_Script {
      * @return void
      */
     public function enqueue_scripts() {
-    	$options = get_option( 'social_warfare_settings ', array() );
-
     	$suffix = SWP_Script::get_suffix();
 
     	wp_enqueue_style(
@@ -153,8 +151,6 @@ class SWP_Script {
      *
      */
     public function footer_functions() {
-    	$options = get_option( 'social_warfare_settings ', array() );
-
     	// Fetch a few variables.
     	$info['postID']           = get_the_ID();
     	$info['footer_output']    = '';
@@ -181,7 +177,8 @@ class SWP_Script {
      *
      */
     public function click_tracking( $info ) {
-        $options = get_option( 'social_warfare_settings', array() );
+        global $swp_user_options;
+        $options = $swp_user_options;
 
 		// Output the JS variable for click tracking if it is turned on.
     	if ( isset( $options['click_tracking'] ) && true === $options['click_tracking'] ) {
@@ -204,7 +201,8 @@ class SWP_Script {
      *
      */
     public function frame_buster( $info ) {
-    	$options = get_option( 'social_warfare_settings ', array() );
+        global $swp_user_options;
+    	$options = $swp_user_options;
 
     	if ( true === $options['frame_buster'] ) :
     		$info['footer_output'] .= PHP_EOL . 'function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "' . get_permalink() . '";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};';
@@ -265,7 +263,9 @@ class SWP_Script {
      *
      */
     public function float_before_content( $vars ) {
-        $options = get_option( 'social_warfare_settings ', array() );
+        global $swp_user_options;
+    	$options = $swp_user_options;
+        
         $float_before_content = $options['float_before_content'];
 
         $vars['footer_output'] = "var swpFloatBeforeContent = " . json_encode($float_before_content) . ";";
