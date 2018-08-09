@@ -486,12 +486,14 @@ class SWP_Buttons_Panel {
             $this->get_shape() .
             $this->get_colors() .
             $this->get_scale() .
-            '"' . // end CSS classes
+            '" ' . // end CSS classes
             $this->get_min_width() .
             $this->get_float_position() .
+            $this->get_float_background() .
+            //* These below two data-attribute methods are inconsistent. But they
+            //* already existed and are used elsewhere, so I'm not touching them.
             '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
-            $this->get_float_background() .
             '" style="' . $style . '" >';
 
             $total_shares_html = $this->render_total_shares_html();
