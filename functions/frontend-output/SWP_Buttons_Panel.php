@@ -136,8 +136,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function localize_options() {
-        $options = get_option( 'social_warfare_settings', array() );
-		$this->options = array_merge( $options, $this->args );
+        global $swp_user_options;
+		$this->options = array_merge( $swp_user_options, $this->args );
 	}
 
 
