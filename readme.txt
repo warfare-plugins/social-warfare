@@ -194,6 +194,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 = 3.2.0 (13 AUG 2018) =
+* Shoutout to our Warfare Community beta testers- thank you so much!
 * Created shortcode for Pinterest Image.
 * Created Custom Pinterst Description on a per-image basis.
 * Fixed the Total Shares icon/counts not displaying.
