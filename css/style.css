@@ -301,8 +301,8 @@ span.swp_label {
 }
 
 .swp_social_panel.swp_pill .nc_tweetContainer {
-	-webkit-border-radius: 50px;
-	border-radius: 50px;
+	-webkit-border-radius: 50px !important;
+	border-radius: 50px !important;
 	border-width: 1px;
 }
 
