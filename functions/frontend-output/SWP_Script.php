@@ -265,7 +265,7 @@ class SWP_Script {
     public function float_before_content( $vars ) {
         global $swp_user_options;
     	$options = $swp_user_options;
-        
+
         $float_before_content = $options['float_before_content'];
 
         $vars['footer_output'] = "var swpFloatBeforeContent = " . json_encode($float_before_content) . ";";
