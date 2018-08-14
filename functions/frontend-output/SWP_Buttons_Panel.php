@@ -137,6 +137,7 @@ class SWP_Buttons_Panel {
 	 */
 	private function localize_options() {
         global $swp_user_options;
+
 		$this->options = array_merge( $swp_user_options, $this->args );
 	}
 
@@ -537,6 +538,7 @@ class SWP_Buttons_Panel {
     protected function get_shape() {
         $button_shape = $this->option( 'button_shape' );
 
+        //* They have gone from an Addon to Core.
         if ( false === $button_shape ) :
             return " swp_flat_fresh ";
         endif;
@@ -547,6 +549,7 @@ class SWP_Buttons_Panel {
     protected function get_scale() {
         $button_size = $this->option( 'button_size' );
 
+        //* They have gone from an Addon to Core.
         if ( false === $button_size ) :
             return " scale-100 ";
         endif;
@@ -557,6 +560,7 @@ class SWP_Buttons_Panel {
     protected function get_min_width() {
         $min_width = $this->option( 'float_screen_width' );
 
+        //* They have gone from an Addon to Core.
         if ( false === $min_width ) :
             return 'data-min-width="1100" ';
         endif;
@@ -567,6 +571,7 @@ class SWP_Buttons_Panel {
     protected function get_float_position() {
         $location_post = $this->option( 'location_post' );
 
+        //* They have gone from an Addon to Core.
         if ( false === $location_post ) :
             return " ";
         endif;
@@ -578,6 +583,7 @@ class SWP_Buttons_Panel {
     protected function get_float_background() {
         $float_background_color = $this->option( 'float_background_color' );
 
+        //* They have gone from an Addon to Core.
         if ( false === $float_background_color ) :
             return " ";
         endif;
