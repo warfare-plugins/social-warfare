@@ -213,6 +213,18 @@ class Social_Warfare {
 		global $SWP_Post_Caches;
 		$SWP_Post_Caches = new SWP_Post_Cache_Loader();
 
+
+        /**
+         * The Utility Class
+         *
+         * While the methods are all static functions that do not require
+         * a class instance to use, there are hooks that need to be set up
+         * in the class __construct() method.
+         *
+         */
+
+        new SWP_Utility();
+
 	}
 
 
@@ -364,7 +376,8 @@ class Social_Warfare {
             'Post_Cache_Loader',
             'Post_Cache',
             'JSON_Cache_Handler',
-			'Plugin_Updater'
+			'Plugin_Updater',
+            'Utility'
         );
         $this->load_files( '/functions/utilities/', $utilities);
 
@@ -523,8 +536,8 @@ class Social_Warfare {
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
-require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
-require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
+// require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
+// require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
 
 /**
  * Include the plugin's admin files.
