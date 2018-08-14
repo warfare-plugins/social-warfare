@@ -109,13 +109,66 @@ class SWP_Utility {
 
     }
 
-    public static function get_excerpt_by_id() {}
+    public static function get_the_excerpt( $post_id ) {
+        // Check if the post has an excerpt
+    	if ( has_excerpt() ) :
+    		$the_post = get_post( $post_id ); // Gets post ID
+    		$the_excerpt = $the_post->post_excerpt;
 
-    public static function debug() {}
+    	// If not, let's create an excerpt
+    	else :
+    		$the_post = get_post( $post_id ); // Gets post ID
+    		$the_excerpt = $the_post->post_content; // Gets post_content to be used as a basis for the excerpt
+    	endif;
 
-    public static function convert_smart_quotes() {}
+    	$excerpt_length = 100; // Sets excerpt length by word count
 
-    public static function get_post_types() {}
+    	// Filter out any inline script or style tags as well as their content
+    	if( !empty( $the_excerpt ) ):
+    		$the_excerpt = preg_replace('/(<script[^>]*>.+?<\/script>|<style[^>]*>.+?<\/style>)/s', '', $the_excerpt);
+    	endif;
+
+        $the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
+        $the_excerpt = preg_replace( '/\[[^\]]+\]/', '', $the_excerpt );
+        $the_excerpt = str_replace( ']]>', ']]&gt;', $the_excerpt );
+        $the_excerpt = strip_tags( $the_excerpt );
+        $excerpt_length = apply_filters( 'excerpt_length', 100 );
+        $excerpt_more = apply_filters( 'excerpt_more', ' ' . '[...]' );
+        $words = preg_split( "/[\n\r\t ]+/", $the_excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
+
+    	if ( count( $words ) > $excerpt_length ) :
+    		array_pop( $words );
+    		// array_push($words, '…');
+    		$the_excerpt = implode( ' ', $words );
+    	endif;
+
+    	$the_excerpt = preg_replace( "/\r|\n/", '', $the_excerpt );
+
+    	return $the_excerpt;
+    }
+
+    // public static function get_excerpt_by_id() {}
+
+    public static function debug( $key = '' ) {
+        return !empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) == strtolower( $key ) );
+    }
+
+    public static function convert_smart_quotes( $content ) {
+    	$content = str_replace( '"', '\'', $content );
+    	$content = str_replace( '&#8220;', '\'', $content );
+    	$content = str_replace( '&#8221;', '\'', $content );
+    	$content = str_replace( '&#8216;', '\'', $content );
+    	$content = str_replace( '&#8217;', '\'', $content );
+    	return $content;
+    }
+
+    public static function get_post_types() {
+		$types = get_post_types( array( 'public' => true, '_builtin' => false ), 'names' );
+
+        $types = array_merge( $types, array( 'post', 'page' ) );
+
+    	return apply_filters( 'swp_post_types', $types );
+    }
 
     public static function remove_screen_options() {}
 
