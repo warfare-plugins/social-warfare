@@ -19,6 +19,7 @@
  */
 class SWP_Utility {
 
+
     /**
      * Insantiates filterss and hooks, for admin and ajax.
      *
@@ -27,10 +28,22 @@ class SWP_Utility {
      */
     public function __construct() {
         add_action( 'wp_ajax_swp_store_settings', array( self, 'store_settings' ) );
-
+        add_filter( 'screen_options_show_screen', array( self, 'remove_screen_options' ), 10, 2 );
     }
 
 
+    /**
+     *
+     * Fetches a key from our filtered $swp_user_options.
+     *
+     * @since  3.0.0 | 24 APR 2018 | Created.
+     * @since  3.0.8 | 16 MAY 2018 | Added $options parameter.
+     * @since  3.3.0 | 14 AUG 2018 | Added $key validation, refactored method body.
+     * @param  string $key   The key associated with the option we want.
+     *
+     * @return mixed  $value The value of the option if set, or false.
+     *
+     */
     public static function get_option( $key = '' ) {
         if ( !isset( $key ) || !is_string( $key ) ) :
             return false;
@@ -45,6 +58,16 @@ class SWP_Utility {
         return false;
     }
 
+
+    /**
+     * Handle the options save request inside of admin-ajax.php
+     *
+     * @since  2.x.x | Unknown | Created.
+     * @since  3.0.9 | 31 MAY 2018 | Added call to wp_cache_delete to make sure settings save
+     * @since  3.3.0 | 14 AUG 2018 | Removed deprecated code.
+     *
+     * @return bool Whether or not the options were updated in the database.
+     */
     public static function store_settings() {
         if ( !check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
     		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
@@ -77,7 +100,16 @@ class SWP_Utility {
     }
 
 
-
+    /**
+     *  Rounds a number to the appropriate thousands.
+     *
+     * @since  2.x.x | Unknown | Created.
+     * @access public
+     * @param  float $number The float to be rounded.
+     *
+     * @return float A rounded number.
+     *
+     */
     public static function kilomega( $number = 0) {
         if ( empty( $number ) ) :
             return 0;
@@ -106,9 +138,23 @@ class SWP_Utility {
         endif;
 
         return number_format( $value, self::get_option( 'decimals' ), $decimal_point, $thousands_separator );
-
     }
 
+
+    /**
+     *  Process the excerpts for descriptions.
+     *
+     * While similar to WordPress's own get_the_excerpt, ours prevents
+     * infinite recursion from Social Warfare code.
+     *
+     * @since  1.0.0 | Created | Unknown.
+     * @since  2.2.4 | Updated | 6 March 2017 | Added the filter to remove the script and style tags.
+     * @access public
+     * @param  int $post_id The post ID to use when getting an exceprt.
+     *
+     * @return string The excerpt.
+     *
+     */
     public static function get_the_excerpt( $post_id ) {
         // Check if the post has an excerpt
     	if ( has_excerpt() ) :
@@ -147,21 +193,48 @@ class SWP_Utility {
     	return $the_excerpt;
     }
 
-    // public static function get_excerpt_by_id() {}
 
+    /**
+     * Checks to see if a debugging query paramter has been set.
+     *
+     * @since  2.1.0
+     * @since  3.3.0 | 14 AUG 2018 | Refactored to a one-liner.
+     * @access public
+     * @param  string $type The query paramter to check for.
+     *
+     * @return bool True if the specified key is set for debugging, else false.
+     *
+     */
     public static function debug( $key = '' ) {
         return !empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) == strtolower( $key ) );
     }
 
+    /**
+     * Converts curly quotes to straight quotes.
+     *
+     * @since  1.4.0
+     * @param  string $content The text to be filtered.
+     *
+     * @return string $content The filtered text.
+     *
+     */
     public static function convert_smart_quotes( $content ) {
-    	$content = str_replace( '"', '\'', $content );
-    	$content = str_replace( '&#8220;', '\'', $content );
-    	$content = str_replace( '&#8221;', '\'', $content );
-    	$content = str_replace( '&#8216;', '\'', $content );
-    	$content = str_replace( '&#8217;', '\'', $content );
+    	$content = str_replace( '"', "'", $content );
+    	$content = str_replace( '&#8220;', "'", $content );
+    	$content = str_replace( '&#8221;', "'", $content );
+    	$content = str_replace( '&#8216;', "'", $content );
+    	$content = str_replace( '&#8217;', "'", $content );
     	return $content;
     }
 
+
+    /**
+     * Returns post types supported by Social Warfare. Includes Custom Post Types.
+     *
+     * @since 2.x.x | Unknown | Created.
+     * @return array The names of registered post types.
+     *
+     */
     public static function get_post_types() {
 		$types = get_post_types( array( 'public' => true, '_builtin' => false ), 'names' );
 
@@ -170,18 +243,38 @@ class SWP_Utility {
     	return apply_filters( 'swp_post_types', $types );
     }
 
-    public static function remove_screen_options( $display, $wp_screen_object ){
+
+    /**
+     * A function to remove the screen options tab from our admin page
+     *
+     * @since 2.2.1 | Unknown | Created.
+     * @param bool Whether to show Screen Options tab. Default true.
+     * @param WP_Screen $wp_screen Current WP_Screen instance.
+     *
+     * @return boolean $display or false.
+     *
+     */
+    public static function remove_screen_options( $show_screen, $wp_screen ){
      	$blacklist = array('admin.php?page=social-warfare');
 
      	if ( in_array( $GLOBALS['pagenow'], $blacklist ) ) {
-     		$wp_screen_object->render_screen_layout();
-     		$wp_screen_object->render_per_page_options();
+     		$wp_screen->render_screen_layout();
+     		$wp_screen->render_per_page_options();
      		return false;
          }
 
-     	return $display;
+     	return $show_screen;
      }
 
+
+     /**
+      * Returns the URL of current website or network.
+      *
+      * @since 2.3.3 | 25 SEP 2017 | Created.
+      *
+      * @return string The URL of the site.
+      *
+      */
     public static function get_site_url() {
     	if( true == is_multisite() ) {
     		return network_site_url();
