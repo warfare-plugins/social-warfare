@@ -76,16 +76,38 @@ class SWP_Utils {
         wp_die();
     }
 
-    public static function socialWarfare( $content = false, $where = 'default', $echo = true ) {
-        return self::social_warfare( array( 'content' => $content, 'where' => $where, 'echo' => $echo ) );
-    }
 
-    public static function social_warfare( $args = array() ) {
-        $buttons_panel = new SWP_Buttons_Panel( $args );
-        return $buttons_panel->render_HTML();
-    }
 
-    public static function kilomega() {}
+    public static function kilomega( $number = 0) {
+        if ( empty( $number ) ) :
+            return 0;
+        endif;
+
+        $decimal_separator = self::get_option( 'decimal_separator');
+
+        if ( $number < 1000 ) :
+            return $number;
+        endif;
+
+        if ( $number < 1000000 ) {
+            $suffix = 'K';
+            $value = $number / 1000;
+        } else {
+            $suffix = 'M';
+            $value = $number / 1000000;
+        }
+
+        if ( 'period' == self::get_option( 'decimals' ) ) :
+            $decimal_point = '.';
+            $thousands_separator = ',';
+        else :
+            $decimal_point = ',';
+            $thousands_separator = '.';
+        endif;
+
+        return number_format( $value, self::get_option( 'decimals' ), $decimal_point, $thousands_separator );
+
+    }
 
     public static function get_excerpt_by_id() {}
 
