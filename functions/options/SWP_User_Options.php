@@ -173,7 +173,7 @@ class SWP_User_options {
 		$values = $this->registered_options['values'];
 
 		foreach( $this->user_options as $key => $value ) {
-			if( $values[$key]['type'] == 'select' && !in_array( $value, $values[$key]['values']) ) {
+			if( $values[$key]['type'] == 'select' && !array_key_exists( $value, $values[$key]['values']) ) {
 				$this->user_options[$key] = $defaults[$key];
 			}
 		}
