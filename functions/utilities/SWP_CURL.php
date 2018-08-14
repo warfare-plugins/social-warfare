@@ -14,7 +14,7 @@ class SWP_CURL {
 
 	public static function fetch_shares_via_curl_multi( $links ) {
 
-		if ( _swp_is_debug( 'is_cache_fresh' ) ) :
+		if ( SWP_Utility::debug( 'is_cache_fresh' ) ) :
 			  $started = time();
 			  echo "Starting multi curl request at : " . $started;
 		endif;

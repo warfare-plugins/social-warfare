@@ -9,7 +9,7 @@ class SWP_Addon extends Social_Warfare {
         $this->version = '';
         $this->core_required = '3.0.0';
         $this->store_url = 'https://warfareplugins.com';
-        $this->site_url = swp_get_site_url();
+        $this->site_url = SWP_Utility::get_site_url();
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
@@ -243,7 +243,7 @@ class SWP_Addon extends Social_Warfare {
     	}
 
     	if ( 'register' === $data['activity'] ) {
-    		$response = swp_register_plugin( $data['email'], swp_get_site_url() );
+    		$response = swp_register_plugin( $data['email'], SWP_Utility::get_site_url() );
 
     		if ( ! $response ) {
     			wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );

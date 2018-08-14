@@ -71,7 +71,7 @@ class SWP_Twitter extends SWP_Social_Network {
 			}
 
 			// Debugging
-			if ( _swp_is_debug( 'twitter' ) ) {
+			if ( SWP_Utility::debug( 'twitter' ) ) {
 				echo '<b>Request URL:</b> ' . $request_url . '<br />';
 			}
 
@@ -96,10 +96,10 @@ class SWP_Twitter extends SWP_Social_Network {
 		global $swp_user_options;
 
 		// If the user has enabled Twitter shares....
-		if ( swp_get_option('twitter_shares') ) :
+		if ( SWP_Utility::get_option('twitter_shares') ) :
 
 			// Debugging
-			if ( _swp_is_debug( 'twitter' ) ) :
+			if ( SWP_Utility::debug( 'twitter' ) ) :
 				echo '<b>Response:</b> ' . $response . '<br />';
 			endif;
 

@@ -178,7 +178,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
         // Get the public post Types
-    	$post_types = swp_get_post_types();
+    	$post_types = SWP_Utility::get_post_types();
 
     	if( !empty( $post_types ) ):
 
@@ -536,7 +536,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 					if ( $showCount == 'true' ) :
 						$postID = get_the_ID();
 						$shares = get_post_meta( $postID,'_' . $network,true );
-						$share_html = '<span class="swp_pop_count">' . swp_kilomega( $shares ) . ' ' . $countLabel . '</span>';
+						$share_html = '<span class="swp_pop_count">' . SWP_Utility::kilomega( $shares ) . ' ' . $countLabel . '</span>';
 
 					// If we are not supposed to show count numbers
 					else :

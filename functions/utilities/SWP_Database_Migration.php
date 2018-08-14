@@ -88,7 +88,7 @@ class SWP_Database_Migration {
 	public function debug_parameters() {
 
 		// Output an array of user options if called via a debugging parameter.
-		if ( true === _swp_is_debug('get_user_options') ) :
+		if ( true === SWP_Utility::debug('get_user_options') ) :
 			echo "<pre>";
 			var_export( get_option( 'social_warfare_settings', array() ) );
 			echo "</pre>";
@@ -96,28 +96,28 @@ class SWP_Database_Migration {
 		endif;
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
-		if ( true === _swp_is_debug('migrate_db') ) {
+		if ( true === SWP_Utility::debug('migrate_db') ) {
 			$this->migrate();
 		}
 
 		// Initialize database if explicitly being called via a debugging parameter.
-		if ( true === _swp_is_debug('initialize_db') ) {
+		if ( true === SWP_Utility::debug('initialize_db') ) {
 			$this->initialize_db();
 		}
 
 		// Update post meta if explicitly being called via a debugging parameter.
-		if ( true === _swp_is_debug('migrate_post_meta') ) {
+		if ( true === SWP_Utility::debug('migrate_post_meta') ) {
 			$this->update_post_meta();
 			$this->update_hidden_post_meta();
 		}
 
 		// Output the last_migrated status if called via a debugging parameter.
-		if ( true === _swp_is_Debug('get_last_migrated') ) {
+		if ( true === SWP_Utility::debug('get_last_migrated') ) {
 			$this->get_last_migrated( true );
 		}
 
 		// Update the last migrated status if called via a debugging parameter.
-		if ( true === _swp_is_Debug('update_last_migrated') ) {
+		if ( true === SWP_Utility::debug('update_last_migrated') ) {
 			$this->update_last_migrated();
 		}
 	}

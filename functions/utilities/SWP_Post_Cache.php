@@ -98,7 +98,7 @@ class SWP_Post_Cache {
 	 *
 	 */
 	private function debug() {
-		if( true === _swp_is_debug('swp_share_cache') ):
+		if( true === SWP_Utility::debug('swp_share_cache') ):
             echo "<pre>", var_dump( $this ), "</pre>";
 		endif;
 	}
@@ -327,7 +327,7 @@ class SWP_Post_Cache {
         // Don't fetch if all share counts are disabled.
 
         // Don't fetch if all share counts are disabled.
-		if( false == swp_get_option( 'network_shares' ) && false == swp_get_option( 'total_shares' ) ) {
+		if( false == SWP_Utility::get_option( 'network_shares' ) && false == SWP_Utility::get_option( 'total_shares' ) ) {
 			$this->debug_message( 'No Shares Fetched. Share counts are disabled in the settings.' );
 			return false;
 		}
@@ -696,7 +696,7 @@ class SWP_Post_Cache {
 
 			// We only update to newly fetched numbers if they're bigger than
 			// the old ones unless the url parameter is forcing it to take.
-            if ( $count <= $previous_count && false === _swp_is_debug( 'force_new_shares' ) ) {
+            if ( $count <= $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
                 $this->share_counts[$key] = $previous_count;
                 $this->share_counts['total_shares'] += $previous_count;
             } else {

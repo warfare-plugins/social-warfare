@@ -63,7 +63,7 @@ class SWP_URL_Management {
 	    	endif;
 
 	    	// Check if Analytics have been enabled or not
-	    	if ( true == swp_get_option('google_analytics') ) :
+	    	if ( true == SWP_Utility::get_option('google_analytics') ) :
 	            $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analytics_medium'] . '&utm_campaign=' . $options['analytics_campaign'] . '';
 
 	    		if ( strpos( $url,'?' ) !== false ) :
@@ -116,7 +116,7 @@ class SWP_URL_Management {
 				$access_token = $options['bitly_access_token'];
 
 				// If Google Analytics is Activated....
-				if ( swp_get_option('google_analytics') == true ) :
+				if ( SWP_Utility::get_option('google_analytics') == true ) :
 
 					// If the link has already been shortened....
 					$existingURL = get_post_meta( $postID,'bitly_link_' . $network,true );
@@ -125,13 +125,13 @@ class SWP_URL_Management {
 					if ( ( true === $array['fresh_cache'] && $existingURL) || (isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure') ) :
 
 						if ( $existingURL ) :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 							$array['url'] = $existingURL;
 							return $array;
 
 						// If the link has NOT already been shortened
 						else :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 							// ....Return the normal URL
 							return $array;
 
@@ -143,7 +143,7 @@ class SWP_URL_Management {
 						// If the API provides a shortened URL...
 						$shortURL = $this->make_bitly_url( urldecode( $url ) , $network , $access_token );
 						if ( $shortURL ) :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 							// Store the link in the cache and return it to the buttons
 							delete_post_meta( $postID,'bitly_link_' . $network );
@@ -153,7 +153,7 @@ class SWP_URL_Management {
 
 							// If the API does not provide a shortened URL....
 						else :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 							// Set a variable we'll check to avoid multiple calls to bitly upon the first failure
 							$_GLOBALS['sw']['bitly_status'] = 'failure';
@@ -177,7 +177,7 @@ class SWP_URL_Management {
 
 						// If we have a shortened URL in the cache....
 						if ( $existingURL ) :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 							// Save the link in a constant for use in other parts of the loops
 							$_GLOBALS['sw']['links'][ $postID ] = $existingURL;
@@ -188,7 +188,7 @@ class SWP_URL_Management {
 
 							// If we don't have a shortlink in the cache....
 						else :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 							// Return the normal URL
 							return $array;
@@ -200,7 +200,7 @@ class SWP_URL_Management {
 
 						// If we've already generated this link....
 						if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-							if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+							if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 							$array['url'] = $_GLOBALS['sw']['links'][ $postID ];
 							return $array;
@@ -221,7 +221,7 @@ class SWP_URL_Management {
 								delete_post_meta( $postID,'bitly_link_' . $network );
 								delete_post_meta( $postID,'bitly_link' );
 								update_post_meta( $postID,'bitly_link',$shortURL );
-								if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+								if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 								// Return the short URL
 								$array['url'] = $shortURL;
@@ -229,7 +229,7 @@ class SWP_URL_Management {
 
 								// If didn't get a shortened URL from their API....
 							else :
-								if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+								if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 								// Set a variable we'll check to avoid multiple calls to bitly upon the first failure
 								$_GLOBALS['sw']['bitly_status'] = 'failure';
@@ -251,7 +251,7 @@ class SWP_URL_Management {
 
 				// If Bitly is not activated or we don't have the credentials provided....
 			else :
-				if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+				if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 				// Return the normal URL
 				return $array;
@@ -261,7 +261,7 @@ class SWP_URL_Management {
 
 			// If link shortening is not activated....
 		else :
-			if( true === _swp_is_debug('bitly') ){ echo 'Bitly: '. __LINE__; }
+			if( true === SWP_Utility::debug('bitly') ){ echo 'Bitly: '. __LINE__; }
 
 			// Return the normal URL
 			return $array;

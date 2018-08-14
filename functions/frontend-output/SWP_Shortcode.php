@@ -94,7 +94,7 @@ class SWP_Shortcode {
 	 */
 	public function post_total_shares( $settings ) {
 			$total_shares = get_post_meta( get_the_ID() , '_total_shares', true );
-			$total_shares = swp_kilomega( $total_shares );
+			$total_shares = SWP_Utility::kilomega( $total_shares );
 			return $total_shares;
 	}
 
@@ -116,7 +116,7 @@ class SWP_Shortcode {
 	public function sitewide_total_shares( $settings ) {
 			global $wpdb;
 			$sum = $wpdb->get_results( "SELECT SUM(meta_value) AS total FROM $wpdb->postmeta WHERE meta_key = '_total_shares'" );
-			return swp_kilomega( $sum[0]->total );
+			return SWP_Utility::kilomega( $sum[0]->total );
 	}
 
     /**

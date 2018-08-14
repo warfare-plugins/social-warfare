@@ -218,7 +218,7 @@ class SWP_Utility {
      * @return string $content The filtered text.
      *
      */
-    public static function convert_smart_quotes( $content ) {
+    public static function SWP_Utility::convert_smart_quotes( $content ) {
     	$content = str_replace( '"', "'", $content );
     	$content = str_replace( '&#8220;', "'", $content );
     	$content = str_replace( '&#8221;', "'", $content );

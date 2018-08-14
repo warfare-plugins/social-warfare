@@ -156,7 +156,7 @@ class SWP_Pinterest extends SWP_Social_Network {
          $icon .= '</span>';
 
          if ( true === $this->are_shares_shown( $share_counts , $options ) ) :
-             $icon .= '<span class="swp_count">' . swp_kilomega( $share_counts[$this->key] ) . '</span>';
+             $icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
          else :
              $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
          endif;

@@ -509,7 +509,7 @@ class SWP_Buttons_Panel {
         $html = $container . $buttons . '</div>';
         $this->html = $html;
         if ( $echo ) :
-			if( true == _swp_is_debug('buttons_output')):
+			if( true == SWP_Utility::debug('buttons_output')):
 				echo 'Echoing, not returning. In SWP_Buttons_Panel on line '.__LINE__;
 			endif;
             echo $html;
@@ -927,7 +927,7 @@ class SWP_Buttons_Panel {
         }
 
         $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
-            $html .= '<span class="swp_count ">' . swp_kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
+            $html .= '<span class="swp_count ">' . SWP_Utility::kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
         $html .= '</div>';
 
         return $html;
@@ -1004,7 +1004,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function debug() {
-        if ( true === _swp_is_debug( 'buttons_panel' ) ) :
+        if ( true === SWP_Utility::debug( 'buttons_panel' ) ) :
             echo "<pre>";
             var_dump($this);
             echo "</pre>";

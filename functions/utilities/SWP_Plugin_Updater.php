@@ -510,7 +510,7 @@ class SWP_Plugin_Updater {
 	}
 
     private function debug() {
-        if ( true === _swp_is_debug( 'remove_plugin_transient' ) ) :
+        if ( true === SWP_Utility::debug( 'remove_plugin_transient' ) ) :
             add_filter('site_transient_update_plugins', function($transient_data) {
                 unset($transient_data->response['social-warfare-pro/social-warfare-pro.php']);
                 unset($transient_data->response['social-warfare-affiliatewp/social-warfare-affiliatewp.php']);

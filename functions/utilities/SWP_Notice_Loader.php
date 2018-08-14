@@ -96,7 +96,7 @@ class SWP_Notice_Loader {
 	 *
 	 */
 	private function debug() {
-		if( true === _swp_is_debug( 'notices' ) ):
+		if( true === SWP_Utility::debug( 'notices' ) ):
 			var_dump($this);
 		endif;
 	}
