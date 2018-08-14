@@ -238,7 +238,7 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_bitly_authentication_button() {
         $link = "https://bitly.com/oauth/authorize?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb&state=" . admin_url( 'admin-ajax.php' ) . "&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
 
-        if ( swp_get_option('bitly_access_token') ):
+        if ( SWP_Utility::get_option('bitly_access_token') ):
             $text = __( 'Connected', 'social-warfare' );
             $color = 'sw-green-button';
         else:

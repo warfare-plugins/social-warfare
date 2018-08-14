@@ -67,7 +67,7 @@ class SWP_Script {
     public static function get_suffix() {
     	$debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 
-    	if ( _swp_is_debug( 'script' ) ) {
+    	if ( SWP_Utility::debug( 'script' ) ) {
     		$debug = true;
     	}
 

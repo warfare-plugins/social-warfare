@@ -38,7 +38,7 @@ function swp_get_user_options( $admin = false ) {
 	 * Set the default og:type values for each post type
 	 *
 	 */
-	$swp_post_types = swp_get_post_types();
+	$swp_post_types = SWP_Utility::get_post_types();
 
 	// Make the side custom absorb the main custom color if they haven't set one yet.
 	if(empty($options['single_custom_color']) ):

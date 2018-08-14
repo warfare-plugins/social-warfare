@@ -70,7 +70,7 @@ class SWP_User_options {
 	 *
 	 */
 	public function debug() {
-		if( true === _swp_is_debug( 'swp_user_options' ) ) {
+		if( true === SWP_Utility::debug( 'swp_user_options' ) ) {
 			echo "<pre>", var_export($this), "</pre>";
 		}
 	}

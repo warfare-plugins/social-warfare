@@ -88,7 +88,7 @@ function is_swp_addon_registered($key) {
 
 		// Setup the API parameters
 		$license = $options[$key.'_license_key'];
-        $site_url = swp_get_site_url();
+        $site_url = SWP_Utility::get_site_url();
         $store_url = 'https://warfareplugins.com';
         $registration_array = array();
         $registration_array = apply_filters( 'swp_registrations' , $registration_array );
@@ -173,7 +173,7 @@ function swp_register_plugin() {
 		$name_key = $_POST['name_key'];
 		$license = $_POST['license_key'];
 		$item_id = $_POST['item_id'];
-        $site_url = swp_get_site_url();
+        $site_url = SWP_Utility::get_site_url();
         $store_url = 'https://warfareplugins.com';
 
         $api_params = array(
@@ -185,7 +185,7 @@ function swp_register_plugin() {
 
         $response =  wp_remote_retrieve_body( wp_remote_post( $store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
 
-		// $url ='https://warfareplugins.com/?edd_action=activate_license&item_id='.$item_id.'&license='.$license.'&url='.swp_get_site_url();
+		// $url ='https://warfareplugins.com/?edd_action=activate_license&item_id='.$item_id.'&license='.$license.'&url='.SWP_Utility::get_site_url();
 		// $response = swpp_file_get_contents_curl( $url );
 
 		if(false != $response){
@@ -251,7 +251,7 @@ function swp_unregister_plugin() {
 	$options = get_option( 'social_warfare_settings' );
 	$name_key = $_POST['name_key'];
 	$item_id = $_POST['item_id'];
-    $site_url = swp_get_site_url();
+    $site_url = SWP_Utility::get_site_url();
     $store_url = 'https://warfareplugins.com';
 
 	// Check to see if the license key is even in the options
@@ -320,7 +320,7 @@ function swp_ajax_passthrough() {
 	}
 
 	if ( 'register' === $data['activity'] ) {
-		$response = swp_register_plugin( $data['email'], swp_get_site_url() );
+		$response = swp_register_plugin( $data['email'], SWP_Utility::get_site_url() );
 
 		if ( ! $response ) {
 			wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
