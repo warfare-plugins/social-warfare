@@ -76,9 +76,14 @@ class SWP_Utils {
         wp_die();
     }
 
-    public static function socialWarfare() {}
+    public static function socialWarfare( $content = false, $where = 'default', $echo = true ) {
+        return self::social_warfare( array( 'content' => $content, 'where' => $where, 'echo' => $echo ) );
+    }
 
-    public static function social_warfare() {}
+    public static function social_warfare( $args = array() ) {
+        $buttons_panel = new SWP_Buttons_Panel( $args );
+        return $buttons_panel->render_HTML();
+    }
 
     public static function kilomega() {}
 
