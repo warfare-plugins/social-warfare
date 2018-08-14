@@ -170,9 +170,23 @@ class SWP_Utility {
     	return apply_filters( 'swp_post_types', $types );
     }
 
-    public static function remove_screen_options() {}
+    public static function remove_screen_options( $display, $wp_screen_object ){
+     	$blacklist = array('admin.php?page=social-warfare');
 
-    public static function get_site_url() {}
+     	if ( in_array( $GLOBALS['pagenow'], $blacklist ) ) {
+     		$wp_screen_object->render_screen_layout();
+     		$wp_screen_object->render_per_page_options();
+     		return false;
+         }
 
+     	return $display;
+     }
 
+    public static function get_site_url() {
+    	if( true == is_multisite() ) {
+    		return network_site_url();
+    	} else {
+    		return get_site_url();
+    	}
+    }
 }
