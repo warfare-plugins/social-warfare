@@ -57,6 +57,7 @@ class SWP_User_options {
 
         global $swp_user_options;
         $swp_user_options = $this->user_options;
+
     }
 
 
@@ -120,7 +121,6 @@ class SWP_User_options {
 	 */
 	private function remove_unavailable_options() {
         $defaults = array_keys( $this->registered_options['defaults'] );
-
         $options = array_keys ( $this->user_options );
 
         $available_options = array_intersect( $defaults, $options );
@@ -136,7 +136,6 @@ class SWP_User_options {
                 unset( $this->user_options[$key] );
             endif;
         }
-
 	}
 
 
@@ -170,14 +169,15 @@ class SWP_User_options {
 	 *
 	 */
 	private function correct_invalid_values() {
+        $defaults = $this->registered_options['defaults'];
 		$values = $this->registered_options['values'];
-		$defaults = $this->registered_options['defaults'];
 
 		foreach( $this->user_options as $key => $value ) {
 			if( $values[$key]['type'] == 'select' && !in_array( $value, $values[$key]['values']) ) {
 				$this->user_options[$key] = $defaults[$key];
 			}
 		}
+        // die;
 	}
 
 
