@@ -13,32 +13,86 @@
  * @package   SocialWarfare\Utilities
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     3.3.0 | 14 AUG 2018 | Created
+ * @since     3.3.0 | 14 AUG 2018 | Created.
  * @access    public
  *
  */
 class SWP_Utils {
-    public static function get_option(){}
 
-    public static function store_settings(){}
+    /**
+     * Insantiates filterss and hooks, for admin and ajax.
+     *
+     * @since  3.3.0 \ 14 AUG 2018 | Created.
+     *
+     */
+    public function __construct() {
+        add_action( 'wp_ajax_swp_store_settings', array( self, 'store_settings' ) );
 
-    public static function socialWarfare(){}
+    }
 
-    public static function social_warfare(){}
 
-    public static function kilomega(){}
+    public static function get_option( $key = '' ) {
+        if ( !isset( $key ) || !is_string( $key ) ) :
+            return false;
+        endif;
 
-    public static function get_excerpt_by_id(){}
+        global $swp_user_options;
 
-    public static function debug(){}
+        if ( array_key_exists( $key, $swp_user_options ) ) :
+            return $swp_user_options[$key];
+        endif;
 
-    public static function convert_smart_quotes(){}
+        return false;
+    }
 
-    public static function get_post_types(){}
+    public static function store_settings() {
+        if ( !check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
+    		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
+    		die;
+    	}
 
-    public static function remove_screen_options(){}
+        $data = wp_unslash( $_POST );
 
-    public static function get_site_url(){}
+    	if ( empty( $data['settings'] ) ) {
+    		wp_send_json_error( esc_html__( 'No settings to save.', 'social-warfare' ) );
+    		die;
+    	}
+
+        $settings = $data['settings'];
+
+        // Loop and check for checkbox values, convert them to boolean.
+    	foreach ( $data['settings'] as $key => $value ) {
+    		if ( 'true' == $value ) {
+    			$settings[$key] = true;
+    		} elseif ( 'false' == $value ) {
+    			$settings[$key] = false;
+    		} else {
+    			$settings[$key] = $value;
+    		}
+    	}
+
+        echo json_encode( update_option( 'social_warfare_settings', $settings ) );
+
+        wp_die();
+    }
+
+    public static function socialWarfare() {}
+
+    public static function social_warfare() {}
+
+    public static function kilomega() {}
+
+    public static function get_excerpt_by_id() {}
+
+    public static function debug() {}
+
+    public static function convert_smart_quotes() {}
+
+    public static function get_post_types() {}
+
+    public static function remove_screen_options() {}
+
+    public static function get_site_url() {}
 
 
 }
