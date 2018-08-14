@@ -491,25 +491,26 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             $image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
 
             $('.sw-pinit .sw-pinit-button').on('click', function() {
-                window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-                // Record the event if Google Analytics Click tracking is enabled
-                if (true === swpClickTracking) {
-                    var network = 'pin_image';
+                      window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 
-					// If Google Analytics is Present on the page.
-					if( 'function' == typeof ga) {
-						ga("send", "event", "social_media", "swp_" + network + "_share");
-					}
+                      // Record the event if Google Analytics Click tracking is enabled
+                      if (true === swpClickTracking) {
+                          var network = 'pin_image';
 
-					// If Google Tag Manager is Present on the Page
-					if ("object" == typeof dataLayer) {
-						dataLayer.push({'event':'swp_' + network + '_share'});
-					}
+                          // If Google Analytics is Present on the page.
+                          if( 'function' == typeof ga) {
+                              ga("send", "event", "social_media", "swp_" + network + "_share");
+                          }
 
-                }
-                return false;
+                          // If Google Tag Manager is Present on the Page
+                          if ("object" == typeof dataLayer) {
+                              dataLayer.push({'event':'swp_' + network + '_share'});
+                          }
+                      }
+
+                      return false;
+                  });
             });
-        });
 
         var pinterestButton = findPinterestSaveButton();
 
@@ -548,22 +549,22 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 instance = window.open(href, '_blank', windowAttributes);
 
         				if (true == swpClickTracking) {
-          					if($(this).hasClass('nc_tweet')) {
-          						var network = $(this).parents(".nc_tweetContainer").attr("data-network");
-          					} else if ($(this).hasClass('swp_CTT')) {
-          						var network = 'ctt';
-          					}
+                    if($(this).hasClass('nc_tweet')) {
+            				    var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+            				} else if ($(this).hasClass('swp_CTT')) {
+            				    var network = 'ctt';
+            				}
 
-          					// If Google Analytics is Present on the Page
-  	                if (typeof ga == "function" && true) {
-  	                    ga('send', 'event', 'social_media', 'swp_' + network + '_share');
-  	                }
+            					// If Google Analytics is Present on the Page
+            	      if (typeof ga == "function" && true) {
+            	          ga('send', 'event', 'social_media', 'swp_' + network + '_share');
+            	      }
 
-          					// If Google Tag Manager is Present on the Page
-          					if ("object" == typeof dataLayer) {
-          						dataLayer.push({'event':'swp_' + network + '_share'});
-          					}
-        				}
+            					// If Google Tag Manager is Present on the Page
+            				if ("object" == typeof dataLayer) {
+            				    dataLayer.push({'event':'swp_' + network + '_share'});
+            				}
+                }
 
                 return false;
             }
