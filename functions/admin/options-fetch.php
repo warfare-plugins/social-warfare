@@ -17,7 +17,7 @@ global $swp_user_options;
  * $swp_user_options Fetch the available options that the user has set
  * @var array An array of available options from the options page
  */
-$swp_user_options = swp_get_user_options( is_admin() );
+// $swp_user_options = swp_get_user_options( is_admin() );
 
 /**
  * A function to adjust the options and ensure that defaults are set
