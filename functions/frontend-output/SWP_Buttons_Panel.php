@@ -228,17 +228,19 @@ class SWP_Buttons_Panel {
     public function establish_post_data() {
         if( !empty( $this->post_id ) ):
             $post = get_post( $this->post_id );
-        endif;
-
-        if ( is_object( $post ) ) :
-            $this->post_data = array(
-                'ID'           => $post->ID,
-                'post_type'    => $post->post_type,
-                'permalink'    => get_the_permalink( $post->ID ),
-                'post_title'   => $post->post_title,
-                'post_status'  => $post->post_status,
-                'post_content' => $post->post_content
-            );
+            if ( isset( $post ) && is_object( $post ) ) :
+                $this->post_data = array(
+                    'ID'           => $post->ID,
+                    'post_type'    => $post->post_type,
+                    'permalink'    => get_the_permalink( $post->ID ),
+                    'post_title'   => $post->post_title,
+                    'post_status'  => $post->post_status,
+                    'post_content' => $post->post_content
+                );
+            endif;
+        else :
+            // If we can't find a post, then clear the post ID.
+            $this->post_id = null;
         endif;
     }
 
@@ -295,6 +297,11 @@ class SWP_Buttons_Panel {
         //* Establish a default.
         $this->location = 'none';
 
+        // Return if we don't have a post ID
+        if( !$this->post_id ) :
+            return;
+        endif;
+
 		// Return with the location set to none if we are on attachment pages.
 		if( is_attachment() ):
 			return;
@@ -342,7 +349,9 @@ class SWP_Buttons_Panel {
 
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
-            $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
+            if ( isset ( $this->post_data['post_type'] ) ) :
+                $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
+            endif;
             if ( isset( $location ) ) :
                 $this->location = $location;
             endif;
@@ -541,7 +550,7 @@ class SWP_Buttons_Panel {
 	public function get_float_location() {
         $post_on = false;
 
-		if( is_home() && !is_front_page() || !isset( $this->post_id ) ):
+		if( is_home() && !is_front_page() || !isset( $this->post_id ) || !$this->post_id ):
 			return 'none';
         endif;
 
