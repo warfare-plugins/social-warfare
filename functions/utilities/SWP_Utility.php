@@ -27,8 +27,8 @@ class SWP_Utility {
      *
      */
     public function __construct() {
-        add_action( 'wp_ajax_swp_store_settings', array( self, 'store_settings' ) );
-        add_filter( 'screen_options_show_screen', array( self, 'remove_screen_options' ), 10, 2 );
+        add_action( 'wp_ajax_swp_store_settings', array( 'SWP_Utility', 'store_settings' ) );
+        add_filter( 'screen_options_show_screen', array( 'SWP_Utility', 'remove_screen_options' ), 10, 2 );
     }
 
 
@@ -50,6 +50,10 @@ class SWP_Utility {
         endif;
 
         global $swp_user_options;
+
+        if ( !is_array( $swp_user_options ) ) :
+            return false;
+        endif;
 
         if ( array_key_exists( $key, $swp_user_options ) ) :
             return $swp_user_options[$key];
@@ -115,7 +119,7 @@ class SWP_Utility {
             return 0;
         endif;
 
-        $decimal_separator = self::get_option( 'decimal_separator');
+        $decimal_separator = 'SWP_Utility'::get_option( 'decimal_separator');
 
         if ( $number < 1000 ) :
             return $number;
@@ -129,7 +133,7 @@ class SWP_Utility {
             $value = $number / 1000000;
         }
 
-        if ( 'period' == self::get_option( 'decimals' ) ) :
+        if ( 'period' == 'SWP_Utility'::get_option( 'decimals' ) ) :
             $decimal_point = '.';
             $thousands_separator = ',';
         else :
@@ -137,7 +141,7 @@ class SWP_Utility {
             $thousands_separator = '.';
         endif;
 
-        return number_format( $value, self::get_option( 'decimals' ), $decimal_point, $thousands_separator );
+        return number_format( $value, 'SWP_Utility'::get_option( 'decimals' ), $decimal_point, $thousands_separator );
     }
 
 
