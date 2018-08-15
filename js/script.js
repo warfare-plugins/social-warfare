@@ -351,7 +351,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").first();
         var location = panel.data("float");
-        var newPadding = 0;1
+        var newPadding = 0;
 
         if (panelIsVisible()) {
             $(".nc_wrapper").hide();
