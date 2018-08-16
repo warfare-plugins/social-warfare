@@ -131,11 +131,6 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function generate_share_link( $post_data ) {
-
-
-
-
-
         $tweet = $this->get_tweet( $post_data );
 
 		$twitter_link = $this->get_shareable_permalink( $post_data );
@@ -168,7 +163,6 @@ class SWP_Twitter extends SWP_Social_Network {
         $intent_link = "https://twitter.com/intent/tweet?text=$parameters";
 
 		return $intent_link;
-
 	}
 
 
@@ -249,5 +243,4 @@ class SWP_Twitter extends SWP_Social_Network {
 
         return $tweet;
     }
-
 }
