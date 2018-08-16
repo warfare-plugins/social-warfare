@@ -545,8 +545,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 top = window.screenY + (window.innerHeight - height) / 2;
                 left = window.screenX + (window.innerWidth - width) / 2;
 
-                windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-                instance = window.open(href, '_blank', windowAttributes);
+                var windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+                var instance = window.open(href, '_blank', windowAttributes);
 
         				if (true == swpClickTracking) {
                     if($(this).hasClass('nc_tweet')) {
