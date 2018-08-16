@@ -193,7 +193,7 @@ class SWP_Twitter extends SWP_Social_Network {
 	public function reset_share_count_source() {
         global $swp_user_options;
 		$options = $swp_user_options;
-        
+
 		if( !empty( $options['tweet_count_source']) && 'newsharecounts' == $options['tweet_count_source'] ) {
 
             unset( $options['tweet_count_source'] );
@@ -203,6 +203,7 @@ class SWP_Twitter extends SWP_Social_Network {
             add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice' ) );
 		}
 	}
+
 
     /**
      * Displays the admin notice about New Share Counts.
@@ -224,6 +225,17 @@ class SWP_Twitter extends SWP_Social_Network {
         $notices[] = $notice;
 
         return $notices;
+    }
+
+
+    /**
+     * Retrieves tweet from database and converts to UTF-8 for Twitter.
+     *
+     * @return string $tweet The encoded tweet text.
+     * 
+     */
+    protected function get_tweet() {
+
     }
 
 }
