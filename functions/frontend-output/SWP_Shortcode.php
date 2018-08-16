@@ -126,7 +126,7 @@ class SWP_Shortcode {
      * @return string The html of a click to tweet
      */
     function click_to_tweet( $atts ) {
-        global $swp_user_options;
+        global $swp_user_options, $post;
         $this->options = $swp_user_options;
 
     	$url = SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
@@ -147,19 +147,15 @@ class SWP_Shortcode {
     		$theme = $this->options['ctt_theme'];
     	endif;
 
-        if ( function_exists( 'normalizer_normalize' ) ) :
-            $text = urlencode( normalizer_normalize ( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) )  . $urlParam ;
-        else :
-            $text = urlencode( html_entity_decode( $atts['tweet'], ENT_COMPAT, 'UTF-8' ) ) . $urlParam ;
-        endif;
+        $tweet = $this->get_tweet( $atts );
 
         $via = ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '');
-
+die('" href="https://twitter.com/share?text=' . $tweet . $via);
 
         $html = '<div class="sw-tweet-clear"></div>';
         $html .= '<a class="swp_CTT ' . $theme;
-        $html .= '" href="https://twitter.com/share?text=' . $text . $via;
-        $html .= '" data-link="https://twitter.com/share?text=' . $text . $via;
+        $html .= '" href="https://twitter.com/share?text=' . $tweet . $via;
+        $html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via;
         $html .= '" rel="nofollow noreferrer noopener" target="_blank">';
             $html .= '<span class="sw-click-to-tweet">';
                 $html .= '<span class="sw-ctt-text">';
@@ -173,5 +169,29 @@ class SWP_Shortcode {
         $html .= '</a>';
 
     	return $html;
+    }
+
+    /**
+     *
+     * Retrieves tweet from database and converts to UTF-8 for Twitter.
+     *
+     * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
+     * @param array $atts Shortcode attributes.
+     *
+     * @return string $tweet The encoded tweet text.
+     *
+     */
+    protected function get_tweet( $atts ) {
+        $max_tweet_length = 240;
+
+        // Check for a custom tweet from the post options.
+        $tweet = $atts['tweet'];
+
+        $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
+        $html_safe_tweet = htmlentities( $converted_tweet, ENT_COMPAT, 'UTF-8' );
+
+        $tweet = utf8_uri_encode( $converted_tweet, $max_tweet_length );
+
+        return $tweet;
     }
 }
