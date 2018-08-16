@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedi
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 3.5.1
 Tested up to: 4.9
-Stable tag: 3.1.1
+Stable tag: 3.2.1
 License: GNU General Public License v2.0 or later
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,9 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 3.2.1 (16 AUG 2018) =
+* Fixed a minor DOMDocument warning that was appearing when data-pin-description was ON
 
 = 3.2.0 (13 AUG 2018) =
 * Shoutout to our Warfare Community beta testers- thank you so much!
