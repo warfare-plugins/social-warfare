@@ -150,7 +150,6 @@ class SWP_Shortcode {
         $tweet = $this->get_tweet( $atts );
 
         $via = ($user_twitter_handle ? '&via=' . str_replace( '@','',$user_twitter_handle ) : '');
-die('" href="https://twitter.com/share?text=' . $tweet . $via);
 
         $html = '<div class="sw-tweet-clear"></div>';
         $html .= '<a class="swp_CTT ' . $theme;
