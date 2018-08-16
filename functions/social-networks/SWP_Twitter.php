@@ -132,20 +132,11 @@ class SWP_Twitter extends SWP_Social_Network {
 	 */
 	public function generate_share_link( $post_data ) {
 
-		// Generate a title for the share.
-		$title = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
 
-		// Check for a custom tweet from the post options.
-		$custom_tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
-        $tweet = empty( $custom_tweet ) ? $title : $custom_tweet;
-        $tweet = is_array( $tweet ) ? $tweet[0] : $tweet;
 
-        if ( function_exists( 'normalizer_normalize' ) ) :
-            $tweet = urlencode( normalizer_normalize( html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' ) ) );
-        else :
-            $tweet = urlencode( html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' ) );
-        endif;
+
+        $tweet = $this->get_tweet( $post_data );
 
 		$twitter_link = $this->get_shareable_permalink( $post_data );
 
@@ -229,13 +220,34 @@ class SWP_Twitter extends SWP_Social_Network {
 
 
     /**
+     *
      * Retrieves tweet from database and converts to UTF-8 for Twitter.
      *
+     * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
+     * @param array $post_data WordPress post data, such as 'ID' and 'post_content'.
+     *
      * @return string $tweet The encoded tweet text.
-     * 
+     *
      */
-    protected function get_tweet() {
+    protected function get_tweet( $post_data ) {
+        $max_tweet_length = 240;
 
+        // Check for a custom tweet from the post options.
+		$tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
+
+        if ( empty( $tweet ) ) :
+            //* Use the post title.
+            $tweet = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
+        elseif ( is_array( $tweet ) ) :
+            $tweet = $tweet[0];
+        endif;
+
+        $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
+        $html_safe_tweet = html_entity_decode( $converted_tweet, ENT_COMPAT, 'UTF-8' );
+
+        $tweet = utf8_uri_encode( $html_safe_tweet, $max_tweet_length );
+
+        return $tweet;
     }
 
 }
