@@ -3,7 +3,7 @@ if ( !class_exists('Puc_v4p4_Plugin_Package', false) ):
 
 	class Puc_v4p4_Plugin_Package extends Puc_v4p4_InstalledPackage {
 		/**
-		 * @var Puc_v4p4_Plugin_UpdateChecker
+		 * @var SWP_Puc_v4p4_Plugin_UpdateChecker
 		 */
 		protected $updateChecker;
 

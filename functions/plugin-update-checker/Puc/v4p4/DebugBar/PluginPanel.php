@@ -4,7 +4,7 @@ if ( !class_exists('Puc_v4p4_DebugBar_PluginPanel', false) ):
 
 	class Puc_v4p4_DebugBar_PluginPanel extends Puc_v4p4_DebugBar_Panel {
 		/**
-		 * @var Puc_v4p4_Plugin_UpdateChecker
+		 * @var SWP_Puc_v4p4_Plugin_UpdateChecker
 		 */
 		protected $updateChecker;
 
