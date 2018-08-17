@@ -33,7 +33,7 @@ if ( !class_exists('Puc_v4p4_Plugin_UpdateChecker', false) ):
 		 * @param string $optionName Where to store book-keeping info about update checks. Defaults to 'external_updates-$slug'.
 		 * @param string $muPluginFile Optional. The plugin filename relative to the mu-plugins directory.
 		 */
-		public function __construct($metadataUrl, $pluginFile, $slug = '', $checkPeriod = 12, $optionName = '', $muPluginFile = ''){
+		public function __construct($metadataUrl, $pluginFile, $slug = '', $checkPeriod =1, $optionName = '', $muPluginFile = ''){
 			$this->pluginAbsolutePath = $pluginFile;
 			$this->pluginFile = plugin_basename($this->pluginAbsolutePath);
 			$this->muPluginFile = $muPluginFile;

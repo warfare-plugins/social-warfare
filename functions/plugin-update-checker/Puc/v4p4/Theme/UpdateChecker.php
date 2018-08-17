@@ -12,7 +12,7 @@ if ( !class_exists('Puc_v4p4_Theme_UpdateChecker', false) ):
 		 */
 		protected $stylesheet;
 
-		public function __construct($metadataUrl, $stylesheet = null, $customSlug = null, $checkPeriod = 12, $optionName = '') {
+		public function __construct($metadataUrl, $stylesheet = null, $customSlug = null, $checkPeriod =1, $optionName = '') {
 			if ( $stylesheet === null ) {
 				$stylesheet = get_stylesheet();
 			}
