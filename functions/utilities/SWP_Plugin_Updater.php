@@ -1,17 +1,18 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Allows plugins to use their own update API.
  *
- * This class is built and created by the Author of the Easy Digital
- * Downloads eCommerce suite. It is used to ping EDD on our storefront
- * at periodic intervals in order to check for available updates. We
- * host this class here in core so that it can be accessed via each
- * installed premium addon to the plugin.
+ * Class renamed from EDD_SL_Product_Updater to SWP_Plugin_Updater to ensure
+ * we are working with the expected version of the class.
+ *
+ * No other modifications were made. Provided by Easy Digital Downloads.
  *
  * @author Easy Digital Downloads
- * @version 1.6.14
- *
+ * @version 1.6.16
  */
 class SWP_Plugin_Updater {
 
@@ -44,12 +45,23 @@ class SWP_Plugin_Updater {
 		$this->version     = $_api_data['version'];
 		$this->wp_override = isset( $_api_data['wp_override'] ) ? (bool) $_api_data['wp_override'] : false;
 		$this->beta        = ! empty( $this->api_data['beta'] ) ? true : false;
-		$this->cache_key   = md5( serialize( $this->slug . $this->api_data['license'] . $this->beta ) );
+		$this->cache_key   = 'edd_sl_' . md5( serialize( $this->slug . $this->api_data['license'] . $this->beta ) );
+        delete_option($this->cache_key);
 
 		$edd_plugin_data[ $this->slug ] = $this->api_data;
 
+		/**
+		 * Fires after the $edd_plugin_data is setup.
+		 *
+		 * @since x.x.x
+		 *
+		 * @param array $edd_plugin_data Array of EDD SL plugin data.
+		 */
+		do_action( 'post_edd_sl_plugin_updater_setup', $edd_plugin_data );
+
 		// Set up hooks.
 		$this->init();
+        $this->debug();
 
 	}
 
@@ -92,18 +104,17 @@ class SWP_Plugin_Updater {
 		}
 
 		if ( 'plugins.php' == $pagenow && is_multisite() ) {
-			return $_transient_data;
+			//* SWP return $_transient_data;
 		}
 
 		if ( ! empty( $_transient_data->response ) && ! empty( $_transient_data->response[ $this->name ] ) && false === $this->wp_override ) {
-			return $_transient_data;
+			//* SWP return $_transient_data;
 		}
 
 		$version_info = $this->get_cached_version_info();
 
 		if ( false === $version_info ) {
 			$version_info = $this->api_request( 'plugin_latest_version', array( 'slug' => $this->slug, 'beta' => $this->beta ) );
-
 			$this->set_version_info_cache( $version_info );
 
 		}
@@ -116,7 +127,7 @@ class SWP_Plugin_Updater {
 
 			}
 
-			$_transient_data->last_checked           = current_time( 'timestamp' );
+			$_transient_data->last_checked           = time();
 			$_transient_data->checked[ $this->name ] = $this->version;
 
 		}
@@ -141,7 +152,7 @@ class SWP_Plugin_Updater {
 		}
 
 		if( ! is_multisite() ) {
-			return;
+			//* return;
 		}
 
 		if ( $this->name != $file ) {
@@ -156,7 +167,6 @@ class SWP_Plugin_Updater {
 		$update_cache = is_object( $update_cache ) ? $update_cache : new stdClass();
 
 		if ( empty( $update_cache->response ) || empty( $update_cache->response[ $this->name ] ) ) {
-
 			$version_info = $this->get_cached_version_info();
 
 			if ( false === $version_info ) {
@@ -175,13 +185,12 @@ class SWP_Plugin_Updater {
 
 			}
 
-			$update_cache->last_checked = current_time( 'timestamp' );
+			$update_cache->last_checked = time();
 			$update_cache->checked[ $this->name ] = $this->version;
 
 			set_site_transient( 'update_plugins', $update_cache );
 
 		} else {
-
 			$version_info = $update_cache->response[ $this->name ];
 
 		}
@@ -190,37 +199,43 @@ class SWP_Plugin_Updater {
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'check_update' ) );
 
 		if ( ! empty( $update_cache->response[ $this->name ] ) && version_compare( $this->version, $version_info->new_version, '<' ) ) {
+            /** Note by Social Warfare Plugins:
+             *
+             * This adds EDD's version of the update notification.
+             * It is not the same style as WP's, and we don't want it.
+             *
+             */
 
-			// build a plugin list row, with update notification
-			$wp_list_table = _get_list_table( 'WP_Plugins_List_Table' );
-			# <tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange">
-			echo '<tr class="plugin-update-tr" id="' . $this->slug . '-update" data-slug="' . $this->slug . '" data-plugin="' . $this->slug . '/' . $file . '">';
-			echo '<td colspan="3" class="plugin-update colspanchange">';
-			echo '<div class="update-message notice inline notice-warning notice-alt">';
-
-			$changelog_link = self_admin_url( 'index.php?edd_sl_action=view_plugin_changelog&plugin=' . $this->name . '&slug=' . $this->slug . '&TB_iframe=true&width=772&height=911' );
-
-			if ( empty( $version_info->download_link ) ) {
-				printf(
-					__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'easy-digital-downloads' ),
-					esc_html( $version_info->name ),
-					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
-					esc_html( $version_info->new_version ),
-					'</a>'
-				);
-			} else {
-				printf(
-					__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'easy-digital-downloads' ),
-					esc_html( $version_info->name ),
-					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
-					esc_html( $version_info->new_version ),
-					'</a>',
-					'<a href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $this->name, 'upgrade-plugin_' . $this->name ) ) .'">',
-					'</a>'
-				);
-			}
-
-			do_action( "in_plugin_update_message-{$file}", $plugin, $version_info );
+			// // build a plugin list row, with update notification
+			// $wp_list_table = _get_list_table( 'WP_Plugins_List_Table' );
+			// # <tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange">
+			// echo '<tr class="plugin-update-tr" id="' . $this->slug . '-update" data-slug="' . $this->slug . '" data-plugin="' . $this->slug . '/' . $file . '">';
+			// echo '<td colspan="3" class="plugin-update colspanchange">';
+			// echo '<div class="update-message notice inline notice-warning notice-alt">';
+            //
+			// $changelog_link = self_admin_url( 'index.php?edd_sl_action=view_plugin_changelog&plugin=' . $this->name . '&slug=' . $this->slug . '&TB_iframe=true&width=772&height=911' );
+            //
+			// if ( empty( $version_info->download_link ) ) {
+			// 	printf(
+			// 		__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'easy-digital-downloads' ),
+			// 		esc_html( $version_info->name ),
+			// 		'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
+			// 		esc_html( $version_info->new_version ),
+			// 		'</a>'
+			// 	);
+			// } else {
+			// 	printf(
+			// 		__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'easy-digital-downloads' ),
+			// 		esc_html( $version_info->name ),
+			// 		'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
+			// 		esc_html( $version_info->new_version ),
+			// 		'</a>',
+			// 		'<a href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $this->name, 'upgrade-plugin_' . $this->name ) ) .'">',
+			// 		'</a>'
+			// 	);
+			// }
+            //
+			// do_action( "in_plugin_update_message-{$file}", $plugin, $version_info );
 
 			echo '</div></td></tr>';
 		}
@@ -237,7 +252,6 @@ class SWP_Plugin_Updater {
 	 * @return object $_data
 	 */
 	public function plugins_api_filter( $_data, $_action = '', $_args = null ) {
-
 		if ( $_action != 'plugin_information' ) {
 
 			return $_data;
@@ -452,6 +466,8 @@ class SWP_Plugin_Updater {
 	}
 
 	public function get_cached_version_info( $cache_key = '' ) {
+        //* SWP Force return false
+        return false;
 
 		if( empty( $cache_key ) ) {
 			$cache_key = $this->cache_key;
@@ -459,7 +475,7 @@ class SWP_Plugin_Updater {
 
 		$cache = get_option( $cache_key );
 
-		if( empty( $cache['timeout'] ) || current_time( 'timestamp' ) > $cache['timeout'] ) {
+		if( empty( $cache['timeout'] ) || time() > $cache['timeout'] ) {
 			return false; // Cache is expired
 		}
 
@@ -474,11 +490,12 @@ class SWP_Plugin_Updater {
 		}
 
 		$data = array(
-			'timeout' => strtotime( '+3 hours', current_time( 'timestamp' ) ),
+			'timeout' => strtotime( '+3 hours', time() ),
 			'value'   => json_encode( $value )
 		);
 
-		update_option( $cache_key, $data, 'no' );
+        //* SWP Do not store cache data.
+		// update_option( $cache_key, $data, 'no' );
 
 	}
 
@@ -491,5 +508,15 @@ class SWP_Plugin_Updater {
 	private function verify_ssl() {
 		return (bool) apply_filters( 'edd_sl_api_request_verify_ssl', true, $this );
 	}
+
+    private function debug() {
+        if ( true === _swp_is_debug( 'remove_plugin_transient' ) ) :
+            add_filter('site_transient_update_plugins', function($transient_data) {
+                unset($transient_data->response['social-warfare-pro/social-warfare-pro.php']);
+                unset($transient_data->response['social-warfare-affiliatewp/social-warfare-affiliatewp.php']);
+                return $transient_data;
+            }, 1);
+        endif;
+    }
 
 }

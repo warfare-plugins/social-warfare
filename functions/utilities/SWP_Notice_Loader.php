@@ -54,53 +54,30 @@ class SWP_Notice_Loader {
 			return;
 		endif;
 
-		foreach( $cache_data['notices'] as $notice ) :
-            if ( empty( $notice['key'] ) || empty( $notice['message'] ) ) {
+        $notices = array_merge($cache_data['notices'], apply_filters( 'swp_admin_notices', array() ) );
+
+		foreach( $notices as $data ) :
+            if ( empty( $data['key'] ) || empty( $data['message'] ) ) {
                 continue;
             }
 
-			$key     = $notice['key'];
-			$message = $notice['message'];
+            $ctas = !empty( $data['ctas'] ) ? $data['ctas'] : [];
 
-            $n = new SWP_Notice( $key, $message );
+            $notice = new SWP_Notice( $data['key'], $data['message'], $ctas );
 
-            if ( !empty( $notice['ctas'] ) ) {
-
-                foreach( $notice['ctas'] as $cta) {
-                    $fields = [
-                        'action' => '',
-                        'link'   => '',
-                        'class'  => '',
-                        'timeframe' => 0
-                    ];
-
-                    $_cta = [];
-
-                    foreach( $fields as $field => $default ) {
-                        if ( isset( $cta[$field] ) ) {
-                            $_cta[$field] = $cta[$field];
-                        } else {
-                            $_cta[$field] = $default;
-                        }
-                    }
-
-                    $n->add_cta( $_cta['action'], $_cta['link'], $_cta['class'], $_cta['timeframe'] );
-                }
+            if ( isset( $data['start_date'] ) ) {
+                $n->set_start_date( $data['start_date'] );
             }
 
-            if ( isset( $notice['start_date'] ) ) {
-                $n->set_start_date( $notice['start_date'] );
+            if ( isset( $data['end_date'] ) ) {
+                $n->set_end_date( $data['end_date'] );
             }
 
-            if ( isset( $notice['end_date'] ) ) {
-                $n->set_end_date( $notice['end_date'] );
-            }
-
-            if ( isset( $notice['no_cta'] ) ) {
+            if ( isset( $data['no_cta'] ) ) {
                 $n->remove_cta();
             }
 
-			$this->notices[] = $n;
+			$this->notices[] = $notice;
 
 		endforeach;
 	}

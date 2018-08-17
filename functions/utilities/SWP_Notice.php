@@ -30,11 +30,11 @@ class SWP_Notice {
 	 * @param string $message The message for this notice
 	 *
 	 */
-    public function __construct( $key, $message ) {
+    public function __construct( $key = "", $message = "", $ctas = array() ) {
         $this->set_key( $key );
         $this->init();
         $this->set_message( $message );
-        $this->actions = array();
+        $this->actions = $ctas;
         $this->no_cta = false;
 
 		// Add hooks to display our admin notices in the dashbaord and on our settings page.
@@ -262,20 +262,13 @@ class SWP_Notice {
     * @return $this Allows for method chaining.
     *
     */
-    public function add_cta( $action = '', $href = '', $class = '' , $timeframe = 0 )  {
-        if ( '' === $action ) :
-            $action = "Thanks, I understand.";
-        endif;
-
-        if ( !empty( $href ) && '' !== $href ) :
-            $href = ' href="' . $href . '" target="_blank"';
-        endif;
-
-        $cta              = array();
-        $cta['action']    = $action;
-        $cta['href']      = $href;
-        $cta['class']     = $class;
-		$cta['timeframe'] = $timeframe;
+    public function add_default_cta()  {
+        $cta = array();
+        $cta['action']    = "Thanks, I understand.";
+        $cta['href']      = '';
+        $cta['target']    = '_self';
+        $cta['class']     = '';
+		$cta['timeframe'] =  0;
 
         $this->actions[] = $cta;
 
@@ -296,8 +289,8 @@ class SWP_Notice {
 	 *
 	 */
     public function render_HTML() {
-        if ( empty( $this->actions) && false === $this->no_cta) :
-            $this->add_cta();
+        if ( empty( $this->actions ) && false === $this->no_cta) :
+            $this->add_default_cta();
         endif;
 
         $html = '<div class="swp-dismiss-notice notice notice-info " data-key="' . $this->key . '">';
@@ -305,7 +298,7 @@ class SWP_Notice {
             $html .= '<div class="swp-actions">';
 
                 foreach( $this->actions as $cta) {
-                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" ' . $cta['href'] . ' data-timeframe="'.$cta['timeframe'].'">';
+                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" href="' . $cta['href'] . '" target="' . $cta['target'] . '" data-timeframe="' . $cta['timeframe'].'">';
                         $html .= $cta['action'];
                     $html .= "</a>";
                 }

@@ -210,19 +210,20 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var visible = false;
         var scrollPos = $(window).scrollTop();
 
-
         $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
             var offset = $(this).offset();
 
+            //* Do not display floating buttons before the horizontal panel.
             if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-                //* Do not display floating buttons before the horizontal panel.
-                if (index === 0 && offset.top > scrollPos) {
+                var theContent = jQuery(".swp-content-locator").parent();
+
+                if (index === 0 && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
                     visible = true;
                 }
             }
 
             //* Do not display floating buttons if a panel is currently visible.
-            if (offset.top + $(this).height() > scrollPos && offset.top < scrollPos + $(window).height()) {
+            if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
                 visible = true;
             }
         });
@@ -233,7 +234,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function createFloatBar() {
         //* .swp_social_panelSide is the side floater.
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        if ($(".nc_wrapper").length) {
+            $(".nc_wrapper").remove();
+        }
+
+        var panel = $(".swp_social_panel");
+        var floatLocation = panel.data("float")
 
         //* If a horizontal panel does not exist,
         if (!panel.length) {
@@ -241,31 +247,23 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width" && panel.data("float") != "top" && panel.data("float") != "bottom")) {
+        if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
             return;
         }
 
-        var offset = panel.offset();
         var backgroundColor = panel.data("float-color");
-        var left = panel.data("align") == "center" ? 0 : offset.left;
+        var left = panel.data("align") == "center" ? 0 : panel.offset().left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-        var location = panel.data('float');
 
-        if ($(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile")
+        if (floatLocation == 'left' || floatLocation == 'right') {
+            var barLocation = panel.data("float-mobile");
+        } else {
+            var barLocation = floatLocation;
         }
 
-        if (offset.left < 100 || $(window).width() < panel.data("min-width")) {
-            location = panel.data("float-mobile");
-        }
+        wrapper.addClass(barLocation).hide().appendTo("body");
 
-        if ($(".nc_wrapper").length) {
-            $(".nc_wrapper").remove();
-        }
-
-        wrapper.addClass(location).hide().appendTo("body");
-
-        var clone = panel.clone();
+        var clone = panel.first().clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
@@ -277,10 +275,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var panel = $(".swp_social_panel").first();
         var location = panel.data('float');
 
-        if ($(window).width() < panel.data("min-width")) {
-            if (!$(".nc_wrapper").length) {
-                createFloatBar();
-            }
+        if (location == 'none') {
+            jQuery(".nc_wrapper, .swp_social_panelSide").hide();
+            return;
+        }
+
+          if ($(window).width() < panel.data("min-width")) {
+            createFloatBar();
             toggleMobileButtons();
             toggleFloatingBar();
         }
@@ -297,8 +298,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function toggleMobileButtons() {
         var panel = $(".swp_social_panel").first();
-        var location = panel.data("float-mobile");
-        var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+        // var direction = (location.indexOf("left") !== -1) ? "left" : "right";
         var visibility = panelIsVisible() ? "collapse" : "visible";
 
         //* Force side floating panel to be hidden.
@@ -311,8 +311,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function toggleSideButtons() {
         var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var sidePanel = $(".swp_social_panelSide").filter(":not(.mobile)");
-        var location = panel.data("float");
+        var sidePanel = $(".swp_social_panelSide");
+        var location = sidePanel.data("float")
         var visible = panelIsVisible();
 
         if ($(window).width() < panel.data("min-width") && $(".nc_wrapper").length) {
@@ -349,25 +349,26 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Note: All of the other logic for padding now lives in createFloatBar.
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+        var panel = $(".swp_social_panel").first();
         var location = panel.data("float");
-
-        panelIsVisible() ? $(".nc_wrapper").hide() : $(".nc_wrapper").show();
+        var newPadding = 0;1
 
         if (panelIsVisible()) {
-            //* Return the padding to its default state.
-            if (location == "bottom") {
-                $("body").animate({ "padding-bottom": paddingBottom + "px" }, 0);
-            } else {
-                $("body").animate({ "padding-top": paddingTop + "px" }, 0);
-            }
+            $(".nc_wrapper").hide();
+
+            newPadding = (location == "bottom") ? paddingBottom : paddingTop;
+
         } else {
-            var newPadding;
+            $(".nc_wrapper").show();
+
+            //* Show the top/bottom floating bar. Force its opacity to normal.
+            //* @see SWP_Buttons_Panel->render_HTML()
+            jQuery(".swp_social_panel.nc_floater").css("opacity", 1)
 
             // Add some padding to the page so it fits nicely at the top or bottom
             if (location == 'bottom') {
                 newPadding = paddingBottom + 50;
-                $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+                // $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
             } else {
                 if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
                     newPadding = paddingTop + 50;
@@ -375,6 +376,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 }
             }
         }
+
+        var paddingProp = "padding-" + location;
+        $("body").animate({paddingProp: newPadding}, 0);
 
     }
 
@@ -404,7 +408,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             centerSidePanel();
             swp.activateHoverStates();
             handleWindowOpens();
-            $(window).scrollTop();
             $(window).scroll(swp.throttle(50, function() {
                 toggleFloatingButtons();
             }));
@@ -431,6 +434,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         $('.swp-content-locator').parent().find('img').each(function() {
             var $image = $(this);
 
+            if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+                if (jQuery($image).parents().filter("a").length) {
+                    return;
+                }
+            }
 
             if ($image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth) {
                 return;
@@ -439,7 +447,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var pinMedia = false;
 
             if ('undefined' !== typeof swpPinIt.image_source) {
-                pinMedia = swpPinIt.image_source;
+                //* Create a temp image to force absolute paths via jQuery.
+                var i = new Image();
+                i.src = swpPinIt.image_source;
+                pinMedia = jQuery(i).src;
             } else if ($image.data('media')) {
                 pinMedia = $image.data('media');
             } else if ($(this).data('lazy-src')) {
@@ -459,7 +470,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
             var pinDesc = '';
 
-            if ('undefined' !== typeof swpPinIt.image_description){
+            if (typeof $image.data("pin-description") != 'undefined') {
+                pinDesc = $image.data("pin-description");
+            } else if ('undefined' !== typeof swpPinIt.image_description){
                 pinDesc = swpPinIt.image_description;
             } else if ($image.attr('title')) {
                 pinDesc = $image.attr('title');
@@ -498,6 +511,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             });
         });
 
+        var pinterestButton = findPinterestSaveButton();
+
+        if (typeof pinterestButton != 'undefined' && pinterestButton) {
+            removePinterestButton(pinterestButton);
+        }
     }
 
     function handleWindowOpens() {
@@ -553,6 +571,42 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         });
     }
 
+
+    //* The Pinterest Browser Extension create a single Save button.
+    //* Let's search and destroy.
+    function findPinterestSaveButton() {
+        var pinterestRed = "rgb(189, 8, 28)";
+        var pinterestZIndex = "8675309";
+        var pinterestBackgroundSize = "14px 14px";
+        var button = null;
+
+        document.querySelectorAll("span").forEach(function(el, index) {
+            var style = window.getComputedStyle(el);
+
+            if (style.backgroundColor == pinterestRed) {
+                if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
+                    button = el;
+                }
+            }
+        });
+
+        return button;
+    }
+
+    function removePinterestButton(button) {
+        var pinterestSquare = button.nextSibling;
+
+        if (typeof pinterestSquare != 'undefined'  && pinterestSquare.nodeName == 'SPAN') {
+            var style = window.getComputedStyle(pinterestSquare);
+            var size = "24px";
+
+            if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
+                pinterestSquare.remove()
+            }
+        }
+
+        button.remove();
+    }
 
 
     $(window).on('load' , function() {

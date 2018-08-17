@@ -286,12 +286,15 @@ class Social_Warfare {
 
         new SWP_JSON_Cache_Handler();
 
+        add_action('plugins_loaded', function() {
+            /**
+             * Instantiates all of our notices.
+             *
+             */
+            new SWP_Notice_Loader();
+        }, 50);
 
-        /**
-         * Instantiates all of our notices.
-         *
-         */
-        new SWP_Notice_Loader();
+        require_once SWP_PLUGIN_DIR . '/functions/utilities/SWP_Plugin_Updater.php';
 	}
 
 
@@ -324,7 +327,6 @@ class Social_Warfare {
             'CURL',
             'Localization',
             'Permalink',
-            'Plugin_Updater',
             'Database_Migration',
 			'URL_Management',
             'Notice',

@@ -105,6 +105,21 @@ class SWP_Post_Cache {
 
 
 	/**
+	 * A method for outputting debug notices when cache rebuild parameters are present.
+	 *
+	 * @since  3.2.0 | 31 JUL 2018 | Created
+	 * @param  string $string The message to be displayed.
+	 * @return void
+	 *
+	 */
+	private function debug_message( $string ) {
+		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+			echo $string;
+		}
+	}
+
+
+	/**
 	 * SECTION #2: CHECKING IF THE CACHE IS FRESH
 	 *
 	 * The methods in this section are used to determine whether or not the
@@ -279,27 +294,68 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-     public function rebuild_cached_data() {
-         $this->rebuild_share_counts();
-         $this->rebuild_pinterest_image();
-         $this->rebuild_open_graph_image();
- 		$this->process_urls();
-         $this->reset_timestamp();
+    public function rebuild_cached_data() {
 
- 		// A hook to run allowing third-party functions to run.
- 		do_action( 'swp_cache_rebuild', $this->id );
- 	}
+		if( true === $this->should_shares_be_fetched() ):
+			$this->rebuild_share_counts();
+		endif;
+
+        $this->rebuild_pinterest_image();
+        $this->rebuild_open_graph_image();
+		$this->process_urls();
+        $this->reset_timestamp();
+
+		// A hook to allow third-party functions to run.
+		do_action( 'swp_cache_rebuild', $this->id );
+	}
 
 
-    public function process_urls() {
-       global $swp_social_networks;
-       $permalink = get_permalink( $this->id );
-        foreach($swp_social_networks as $network):
-            if($network->is_active()):
-                SWP_URL_Management::process_url( $permalink , $network->key , $this->id , false );
+	/**
+	 * Should we fetch share counts for this post?
+	 *
+	 * This method controls which instances we should be fetching share counts
+	 * and which instances whe shouldn't.
+	 *
+	 * @since  3.2.0 | 24 JUL 2018 | Created
+	 * @param  void
+	 * @return bool True: fetch share counts; False: don't fetch counts.
+	 *
+	 */
+	private function should_shares_be_fetched() {
+
+        // Don't fetch if all share counts are disabled.
+		if( false == swp_get_option( 'network_shares' ) && false == swp_get_option( 'total_shares' ) ) {
+			$this->debug_message( 'No Shares Fetched. Share counts are disabled in the settings.' );
+			return false;
+		}
+
+		// Only fetch on published posts
+		if( 'publish' !== get_post_status( $this->id ) ) {
+			$this->debug_message( 'No Shares Fetched. This post is not yet published.' );
+			return false;
+		}
+
+		return true;
+	}
+
+
+	/**
+	 * Process the URLs for shortlinks, UTM, etc.
+	 *
+	 * @since  3.1.0 | 20 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function process_urls() {
+    	global $swp_social_networks;
+    	$permalink = get_permalink( $this->id );
+        foreach( $swp_social_networks as $network ):
+            if( $network->is_active() ):
+                SWP_URL_Management::process_url( $permalink, $network->key, $this->id, false );
             endif;
         endforeach;
- 	}
+	}
 
 
     /**
@@ -429,7 +485,6 @@ class SWP_Post_Cache {
 		$this->fetch_api_responses();
 		$this->parse_api_responses();
 		$this->calculate_network_shares();
-		$this->calculate_network_shares();
 		$this->cache_share_counts();
     }
 
@@ -463,7 +518,7 @@ class SWP_Post_Cache {
 
             $this->permalinks[$key][] = get_permalink( $this->id );
 
-            if( true === $swp_user_options['recover_shares'] ) :
+            if( isset( $swp_user_options['recover_shares'] ) && true === $swp_user_options['recover_shares'] ) :
                 $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->id );
             endif;
 
@@ -534,6 +589,11 @@ class SWP_Post_Cache {
 	 */
     private function parse_api_responses() {
         global $swp_social_networks;
+
+        if ( empty( $this->raw_api_responses ) ) :
+            return;
+        endif;
+
         $this->parsed_api_responses = array();
 
         foreach( $this->raw_api_responses as $request => $responses ) {
@@ -563,22 +623,37 @@ class SWP_Post_Cache {
 	 *
 	 */
     private function calculate_network_shares() {
-        global $swp_social_networks;
+        global $swp_social_networks, $swp_user_options;
 
         $share_counts = array();
 
+        $checked_networks = array();
+
         foreach ( $this->parsed_api_responses as $request => $networks ) {
-            foreach ( $networks as $key => $count_array ) {
+            foreach ( $networks as $network => $count_array ) {
                 foreach ( $count_array as $count ) {
-                    if ( !isset( $share_counts[$key] ) ) {
-                        $share_counts[$key] = 0;
+                    if ( !isset( $share_counts[$network] ) ) {
+                        $share_counts[$network] = 0;
                     }
 
-                    $share_counts[$key] += $count;
+                    $share_counts[$network] += $count;
                 }
-
+                $checked_networks[] = $network;
             }
         }
+
+        if ( isset( $swp_user_options['order_of_icons'] ) ) :
+
+            //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
+            foreach( $swp_user_options['order_of_icons'] as $network ) {
+                if ( !in_array( $network, $checked_networks ) ) :
+                    $count = get_post_meta( $this->id, "_${network}_shares", true );
+                    $count = isset($count) ? $count : 0;
+                    $share_counts[$network] = $count;
+                endif;
+            }
+
+        endif;
 
         $this->share_counts = $share_counts;
     }
@@ -601,6 +676,10 @@ class SWP_Post_Cache {
     private function cache_share_counts() {
         $this->share_counts['total_shares'] = 0;
 
+        if ( empty( $this->share_counts ) ) :
+            return;
+        endif;
+
         foreach( $this->share_counts as $key => $count ) {
             if ( 'total_shares' === $key ) {
                 continue;
@@ -616,9 +695,10 @@ class SWP_Post_Cache {
 			// the old ones unless the url parameter is forcing it to take.
             if ( $count <= $previous_count && false === _swp_is_debug( 'force_new_shares' ) ) {
                 $this->share_counts[$key] = $previous_count;
+                $this->share_counts['total_shares'] += $previous_count;
+            } else {
+                $this->share_counts['total_shares'] += $count;
             }
-
- 			$this->share_counts['total_shares'] += $this->share_counts[$key];
 
             delete_post_meta( $this->id, "_${key}_shares");
             update_post_meta( $this->id, "_${key}_shares", $this->share_counts[$key] );

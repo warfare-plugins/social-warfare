@@ -38,7 +38,7 @@
 	margin-top: 10px!important;
 }
 
-div.swp_social_panel .nc_tweetContainer {
+div.swp_social_panel .nc_tweetContainer:not(.total_shares):not(.total_sharesalt) {
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	cursor: pointer;
@@ -301,8 +301,8 @@ span.swp_label {
 }
 
 .swp_social_panel.swp_pill .nc_tweetContainer {
-	-webkit-border-radius: 50px;
-	border-radius: 50px;
+	-webkit-border-radius: 50px !important;
+	border-radius: 50px !important;
 	border-width: 1px;
 }
 
@@ -1031,7 +1031,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 .swp_social_panelSide.swp_circles .nc_tweetContainer,
 .swp_social_panelSide.swp_circles .nc_tweetContainer a {
     width: 67.5px;
-	height: 67.5px;
+	height: 67.5px !important;
 	position: relative;
 }
 .swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares),
@@ -1808,6 +1808,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	position: absolute;
 	top: 0;
 	width: 0;
+    z-index: -10;
 }
 .fl-module-content .uabb-blog-posts .uabb-post-thumbnail .sw-pinit.lazyloaded {
 	display: block !important;

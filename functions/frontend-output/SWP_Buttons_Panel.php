@@ -228,9 +228,11 @@ class SWP_Buttons_Panel {
     public function establish_post_data() {
         if( !empty( $this->post_id ) ):
             $post = get_post( $this->post_id );
-        endif;
 
-        if ( is_object( $post ) ) :
+            if ( !is_object( $post ) ) :
+                return;
+            endif;
+
             $this->post_data = array(
                 'ID'           => $post->ID,
                 'post_type'    => $post->post_type,
@@ -254,6 +256,7 @@ class SWP_Buttons_Panel {
     public function establish_share_data() {
         global $SWP_Post_Caches;
         $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
+        // echo "The post cache", var_dump($SWP_Post_Caches->get_post_cache( $this->post_id ));
         return $this;
     }
 
@@ -458,12 +461,20 @@ class SWP_Buttons_Panel {
             return;
         endif;
 
-		if ( !$this->should_print() ) :
-			return $this->content;
-		endif;
+        $style = "";
 
-        $total_shares_html = $this->render_total_shares_html();
-        $buttons = $this->render_buttons_html();
+		if ( !$this->should_print() ) :
+            //* Top and bottom floating buttons require a button panel present on the page.
+            $float_location = $this->get_float_location();
+
+            if ( true === $this->option( 'floating_panel' ) && 'top' ==  $float_location || 'bottom' == $float_location ) :
+                //* Using display: none interfere's with the element's position,
+                //* Which we need to be calculated correctly.
+                $style = 'opacity: 0;';
+            else :
+    			return $this->content;
+            endif;
+		endif;
 
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel swp_' . $this->option('button_shape') .
@@ -472,6 +483,7 @@ class SWP_Buttons_Panel {
             ' swp_other_' . $this->option('hover_colors') .
             ' scale-' . $this->option('button_size') * 100 .
             ' scale-' . $this->option('button_alignment') .
+            '" style="' . $style .
             '" data-min-width="' . $this->option('float_screen_width') .
             '" data-panel-position="' . $this->option('location_post') .
             '" data-float="' . $this->get_float_location() .
@@ -481,6 +493,9 @@ class SWP_Buttons_Panel {
             ">';
             //* This should be inserted via addon, not here.
             //'" data-emphasize="'.$this->option('emphasize_icons').'
+
+        $total_shares_html = $this->render_total_shares_html();
+        $buttons = $this->render_buttons_html();
 
         if ($this->option('totals_alignment') === 'totals_left') :
             $buttons = $total_shares_html . $buttons;
@@ -829,12 +844,17 @@ class SWP_Buttons_Panel {
     public function render_total_shares_html() {
         $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
 
+        if ( false == $this->option('total_shares') ) {
+            return '';
+        }
+
+        if ( $this->shares['total_shares'] < $this->option('minimum_shares') ) {
+            return '';
+        }
+
         $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
 
-        if ( empty( $this->shares['total_shares'])
-        || $this->shares['total_shares'] < $this->option('minimum_shares')
-        || false == $this->option('total_shares')
-        || $this->is_shortcode && !$totals_argument ) {
+        if ( $this->is_shortcode && !$totals_argument ) {
             return '';
         }
 
@@ -892,7 +912,7 @@ class SWP_Buttons_Panel {
         endif;
 
         if ( ! $this->should_print() ) :
-            return $this->args['content'];
+            // return $this->args['content'];
         endif;
 
         if ( null !== $content && gettype( $content ) === 'string' ) :

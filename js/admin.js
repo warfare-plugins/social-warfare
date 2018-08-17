@@ -231,8 +231,11 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
     function noticeClickHandlers() {
         jQuery(".swp-notice-cta").on("click", function(e) {
             e.preventDefault();
-            if (typeof e.target.href == 'string') {
-                window.open(e.target.href);
+            //* Do not use jQuery to get href. 
+            var link = e.target.getAttribute("href");
+
+            if (typeof link == 'string' && link.length) {
+                window.open(link);
             }
 
             var parent = jQuery(this).parents(".swp-dismiss-notice");
