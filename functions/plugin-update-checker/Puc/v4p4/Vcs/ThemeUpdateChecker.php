@@ -22,7 +22,7 @@ if ( !class_exists('Puc_v4p4_Vcs_ThemeUpdateChecker', false) ):
 		 * @param int $checkPeriod
 		 * @param string $optionName
 		 */
-		public function __construct($api, $stylesheet = null, $customSlug = null, $checkPeriod = 12, $optionName = '') {
+		public function __construct($api, $stylesheet = null, $customSlug = null, $checkPeriod =1, $optionName = '') {
 			$this->api = $api;
 			$this->api->setHttpFilterName($this->getUniqueName('request_update_options'));
 

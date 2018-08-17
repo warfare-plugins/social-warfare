@@ -6,7 +6,7 @@ if ( !class_exists('Puc_v4p4_Scheduler', false) ):
 	 * It calls @see Puc_v4p4_UpdateChecker::checkForUpdates() to perform the actual checks.
 	 */
 	class Puc_v4p4_Scheduler {
-		public $checkPeriod = 12; //How often to check for updates (in hours).
+		public $checkPeriod =1; //How often to check for updates (in hours).
 		public $throttleRedundantChecks = false; //Check less often if we already know that an update is available.
 		public $throttledCheckPeriod = 72;
 

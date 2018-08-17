@@ -22,7 +22,7 @@ if ( !class_exists('Puc_v4p4_Vcs_PluginUpdateChecker') ):
 		 * @param string $optionName
 		 * @param string $muPluginFile
 		 */
-		public function __construct($api, $pluginFile, $slug = '', $checkPeriod = 12, $optionName = '', $muPluginFile = '') {
+		public function __construct($api, $pluginFile, $slug = '', $checkPeriod =1, $optionName = '', $muPluginFile = '') {
 			$this->api = $api;
 			$this->api->setHttpFilterName($this->getUniqueName('request_info_options'));
 

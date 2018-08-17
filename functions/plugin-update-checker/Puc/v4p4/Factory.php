@@ -34,7 +34,7 @@ if ( !class_exists('Puc_v4p4_Factory', false) ):
 		 * @param string $muPluginFile The plugin filename relative to the mu-plugins directory.
 		 * @return Puc_v4p4_Plugin_UpdateChecker|Puc_v4p4_Theme_UpdateChecker|Puc_v4p4_Vcs_BaseChecker
 		 */
-		public static function buildUpdateChecker($metadataUrl, $fullPath, $slug = '', $checkPeriod = 12, $optionName = '', $muPluginFile = '') {
+		public static function buildUpdateChecker($metadataUrl, $fullPath, $slug = '', $checkPeriod =1, $optionName = '', $muPluginFile = '') {
 			$fullPath = self::normalizePath($fullPath);
 			$id = null;
 
