@@ -1,7 +1,7 @@
 <?php
-if ( !class_exists('Puc_v4p4_Vcs_PluginUpdateChecker') ):
+if ( !class_exists('SWP_Puc_v4p4_Vcs_PluginUpdateChecker') ):
 
-	class Puc_v4p4_Vcs_PluginUpdateChecker extends SWP_Puc_v4p4_Plugin_UpdateChecker implements Puc_v4p4_Vcs_BaseChecker {
+	class SWP_Puc_v4p4_Vcs_PluginUpdateChecker extends SWP_Puc_v4p4_Plugin_UpdateChecker implements Puc_v4p4_Vcs_BaseChecker {
 		/**
 		 * @var string The branch where to look for updates. Defaults to "master".
 		 */
@@ -13,7 +13,7 @@ if ( !class_exists('Puc_v4p4_Vcs_PluginUpdateChecker') ):
 		protected $api = null;
 
 		/**
-		 * Puc_v4p4_Vcs_PluginUpdateChecker constructor.
+		 * SWP_Puc_v4p4_Vcs_PluginUpdateChecker constructor.
 		 *
 		 * @param Puc_v4p4_Vcs_Api $api
 		 * @param string $pluginFile

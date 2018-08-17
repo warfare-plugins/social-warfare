@@ -63,7 +63,7 @@ if ( !class_exists('Puc_v4p4_Factory', false) ):
 				$checkerClass = $type . '_UpdateChecker';
 			} else {
 				//You can also use a VCS repository like GitHub.
-				$checkerClass = 'Vcs_' . $type . 'UpdateChecker';
+				$checkerClass = 'SWP_Vcs_' . $type . 'UpdateChecker';
 				$apiClass = $service . 'Api';
 			}
 
@@ -80,7 +80,7 @@ if ( !class_exists('Puc_v4p4_Factory', false) ):
 				);
 				return null;
 			}
-      
+
 			if ( !isset($apiClass) ) {
 				//Plain old update checker.
 				return new $checkerClass($metadataUrl, $id, $slug, $checkPeriod, $optionName, $muPluginFile);
@@ -127,7 +127,7 @@ if ( !class_exists('Puc_v4p4_Factory', false) ):
 			}
 			return $path;
 		}
-		
+
 		/**
 		 * Check if the path points to a plugin file.
 		 *
@@ -202,7 +202,7 @@ if ( !class_exists('Puc_v4p4_Factory', false) ):
 					$service = $knownServices[$host];
 				}
 			}
-      
+
 			return $service;
 		}
 
