@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists('SWP_Puc_v4p4_Plugin_UpdateChecker', false) ):
+if ( !class_exists('Puc_v4p4_Plugin_UpdateChecker', false) ):
 
 	/**
 	 * A custom plugin update checker.
@@ -8,7 +8,7 @@ if ( !class_exists('SWP_Puc_v4p4_Plugin_UpdateChecker', false) ):
 	 * @copyright 2018
 	 * @access public
 	 */
-	class SWP_Puc_v4p4_Plugin_UpdateChecker extends Puc_v4p4_UpdateChecker {
+	class Puc_v4p4_Plugin_UpdateChecker extends Puc_v4p4_UpdateChecker {
 		protected $updateTransient = 'update_plugins';
 		protected $translationType = 'plugin';
 

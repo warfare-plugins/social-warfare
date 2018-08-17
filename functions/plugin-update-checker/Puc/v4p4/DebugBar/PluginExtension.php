@@ -2,7 +2,7 @@
 if ( !class_exists('Puc_v4p4_DebugBar_PluginExtension', false) ):
 
 	class Puc_v4p4_DebugBar_PluginExtension extends Puc_v4p4_DebugBar_Extension {
-		/** @var SWP_Puc_v4p4_Plugin_UpdateChecker */
+		/** @var Puc_v4p4_Plugin_UpdateChecker */
 		protected $updateChecker;
 
 		public function __construct($updateChecker) {
