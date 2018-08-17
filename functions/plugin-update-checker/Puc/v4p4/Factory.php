@@ -32,7 +32,7 @@ if ( !class_exists('Puc_v4p4_Factory', false) ):
 		 * @param int $checkPeriod How often to check for updates (in hours).
 		 * @param string $optionName Where to store book-keeping info about update checks.
 		 * @param string $muPluginFile The plugin filename relative to the mu-plugins directory.
-		 * @return Puc_v4p4_Plugin_UpdateChecker|Puc_v4p4_Theme_UpdateChecker|Puc_v4p4_Vcs_BaseChecker
+		 * @return SWP_Puc_v4p4_Plugin_UpdateChecker|Puc_v4p4_Theme_UpdateChecker|Puc_v4p4_Vcs_BaseChecker
 		 */
 		public static function buildUpdateChecker($metadataUrl, $fullPath, $slug = '', $checkPeriod = 12, $optionName = '', $muPluginFile = '') {
 			$fullPath = self::normalizePath($fullPath);

@@ -8,7 +8,7 @@ if ( !class_exists('Puc_v4p4_Plugin_Ui', false) ):
 		private $manualCheckErrorTransient = '';
 
 		/**
-		 * @param Puc_v4p4_Plugin_UpdateChecker $updateChecker
+		 * @param SWP_Puc_v4p4_Plugin_UpdateChecker $updateChecker
 		 */
 		public function __construct($updateChecker) {
 			$this->updateChecker = $updateChecker;

@@ -13,7 +13,7 @@ require dirname(__FILE__) . '/Puc/v4p4/Autoloader.php';
 new Puc_v4p4_Autoloader();
 
 //Register classes defined in this file with the factory.
-Puc_v4_Factory::addVersion('Plugin_UpdateChecker', 'Puc_v4p4_Plugin_UpdateChecker', '4.4');
+Puc_v4_Factory::addVersion('Plugin_UpdateChecker', 'SWP_Puc_v4p4_Plugin_UpdateChecker', '4.4');
 Puc_v4_Factory::addVersion('Theme_UpdateChecker', 'Puc_v4p4_Theme_UpdateChecker', '4.4');
 
 Puc_v4_Factory::addVersion('Vcs_PluginUpdateChecker', 'Puc_v4p4_Vcs_PluginUpdateChecker', '4.4');
