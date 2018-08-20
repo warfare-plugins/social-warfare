@@ -39,7 +39,7 @@ if ( !class_exists('Puc_v4p4_DebugBar_Extension', false) ):
 		public function enqueuePanelDependencies() {
 			wp_enqueue_style(
 				'puc-debug-bar-style-v4',
-				$this->getLibraryUrl("/css/puc-debug-bar.css"),
+				$this->getLibraryUrl("/assets/css/puc-debug-bar.css"),
 				array('debug-bar'),
 				'20171124'
 			);

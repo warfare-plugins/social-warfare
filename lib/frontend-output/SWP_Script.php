@@ -90,7 +90,7 @@ class SWP_Script {
 
     	wp_enqueue_style(
     		'social_warfare',
-    		SWP_PLUGIN_URL . "/css/style{$suffix}.css",
+    		SWP_PLUGIN_URL . "/assets/css/style{$suffix}.css",
     		array(),
     		SWP_VERSION
     	);
@@ -122,7 +122,7 @@ class SWP_Script {
 
     	wp_enqueue_style(
     		'social_warfare_admin',
-    		SWP_PLUGIN_URL . "/css/admin{$suffix}.css",
+    		SWP_PLUGIN_URL . "/assets/css/admin{$suffix}.css",
     		array(),
     		SWP_VERSION
     	);
