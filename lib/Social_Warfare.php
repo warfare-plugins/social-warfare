@@ -494,7 +494,7 @@ class Social_Warfare {
 		 * needed in order to properly check for updates for addons.
 		 *
 		 */
-		require_once SWP_PLUGIN_DIR . '/lib/plugin-update-checker/plugin-update-checker.php';
+		require_once SWP_PLUGIN_DIR . '/lib/update-checker/plugin-update-checker.php';
 
 
 	}
