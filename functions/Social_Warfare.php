@@ -500,6 +500,17 @@ class Social_Warfare {
         );
         $this->load_files( '/functions/options/', $options );
 
+
+		/**
+		 * The Update Checker
+		 *
+		 * This loads the class which will in turn load all other class that are
+		 * needed in order to properly check for updates for addons.
+		 *
+		 */
+		require_once SWP_PLUGIN_DIR . '/functions/plugin-update-checker/plugin-update-checker.php';
+
+
 	}
 
 
