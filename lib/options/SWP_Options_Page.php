@@ -142,7 +142,7 @@ class SWP_Options_Page extends SWP_Abstract {
 			'manage_options',
 			'social-warfare',
 			array( $this, 'render_HTML'),
-			SWP_PLUGIN_URL . '/images/admin-options-page/socialwarfare-20x20.png'
+			SWP_PLUGIN_URL . '/assets/images/admin-options-page/socialwarfare-20x20.png'
 		);
 
 		// Hook into the CSS and Javascript Enqueue process for this specific page
@@ -189,7 +189,7 @@ class SWP_Options_Page extends SWP_Abstract {
 
         wp_enqueue_style(
             'swp_admin_options_css',
-            SWP_PLUGIN_URL . "/css/admin-options-page{$suffix}.css",
+            SWP_PLUGIN_URL . "/assets/css/admin-options-page{$suffix}.css",
             array(),
             SWP_VERSION
         );
@@ -713,8 +713,8 @@ class SWP_Options_Page extends SWP_Abstract {
 
                 //* Menu wrapper and tabs.
                 $html .= '<div class="sw-grid sw-col-700">';
-                    $html .= '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-light.png" />';
-                    $html .= '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/images/admin-options-page/social-warfare-pro-light.png" />';
+                    $html .= '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/assets/images/admin-options-page/social-warfare-light.png" />';
+                    $html .= '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/assets/images/admin-options-page/social-warfare-pro-light.png" />';
                     $html .= '<ul class="sw-header-menu">';
 
                     $tab_map = $this->sort_by_priority( $this->tabs );
