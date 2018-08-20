@@ -263,7 +263,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         wrapper.addClass(barLocation).hide().appendTo("body");
 
-        var clone = panel.clone();
+        var clone = panel.first().clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
@@ -351,7 +351,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").first();
         var location = panel.data("float");
-        var newPadding = 0;1
+        var newPadding = 0;
 
         if (panelIsVisible()) {
             $(".nc_wrapper").hide();
@@ -451,6 +451,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 var i = new Image();
                 i.src = swpPinIt.image_source;
                 pinMedia = jQuery(i).src;
+
+                if (typeof pinMedia == 'undefined') {
+                  pinMedia = jQuery(i).attr('src')
+                }
             } else if ($image.data('media')) {
                 pinMedia = $image.data('media');
             } else if ($(this).data('lazy-src')) {
@@ -491,25 +495,26 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             $image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
 
             $('.sw-pinit .sw-pinit-button').on('click', function() {
-                window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-                // Record the event if Google Analytics Click tracking is enabled
-                if (true === swpClickTracking) {
-                    var network = 'pin_image';
+                      window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 
-					// If Google Analytics is Present on the page.
-					if( 'function' == typeof ga) {
-						ga("send", "event", "social_media", "swp_" + network + "_share");
-					}
+                      // Record the event if Google Analytics Click tracking is enabled
+                      if (true === swpClickTracking) {
+                          var network = 'pin_image';
 
-					// If Google Tag Manager is Present on the Page
-					if ("object" == typeof dataLayer) {
-						dataLayer.push({'event':'swp_' + network + '_share'});
-					}
+                          // If Google Analytics is Present on the page.
+                          if( 'function' == typeof ga) {
+                              ga("send", "event", "social_media", "swp_" + network + "_share");
+                          }
 
-                }
-                return false;
+                          // If Google Tag Manager is Present on the Page
+                          if ("object" == typeof dataLayer) {
+                              dataLayer.push({'event':'swp_' + network + '_share'});
+                          }
+                      }
+
+                      return false;
+                  });
             });
-        });
 
         var pinterestButton = findPinterestSaveButton();
 
@@ -525,8 +530,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return false;
             }
 
-            if($(this).data('link')) {
-                event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            if ($(this).data('link')) {
+                event.preventDefault();
 
                 var href = $(this).data('link');
                 var height, width, top, left, instance, windowFeatures;
@@ -541,30 +546,29 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                     width = 500;
                 }
 
-
                 top = window.screenY + (window.innerHeight - height) / 2;
                 left = window.screenX + (window.innerWidth - width) / 2;
 
-                windowFeatures = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-                instance = window.open(href, '_blank', windowFeatures);
+                var windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+                var instance = window.open(href, '_blank', windowAttributes);
 
-				if (true == swpClickTracking) {
-					if($(this).hasClass('nc_tweet')) {
-						var network = $(this).parents(".nc_tweetContainer").attr("data-network");
-					} else if ($(this).hasClass('swp_CTT')) {
-						var network = 'ctt';
-					}
+        				if (true == swpClickTracking) {
+                    if($(this).hasClass('nc_tweet')) {
+            				    var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+            				} else if ($(this).hasClass('swp_CTT')) {
+            				    var network = 'ctt';
+            				}
 
-					// If Google Analytics is Present on the Page
-	                if (typeof ga == "function" && true) {
-	                    ga('send', 'event', 'social_media', 'swp_' + network + '_share');
-	                }
+            					// If Google Analytics is Present on the Page
+            	      if (typeof ga == "function" && true) {
+            	          ga('send', 'event', 'social_media', 'swp_' + network + '_share');
+            	      }
 
-					// If Google Tag Manager is Present on the Page
-					if ("object" == typeof dataLayer) {
-						dataLayer.push({'event':'swp_' + network + '_share'});
-					}
-				}
+            					// If Google Tag Manager is Present on the Page
+            				if ("object" == typeof dataLayer) {
+            				    dataLayer.push({'event':'swp_' + network + '_share'});
+            				}
+                }
 
                 return false;
             }
