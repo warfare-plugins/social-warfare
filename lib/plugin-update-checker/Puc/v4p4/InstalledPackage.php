@@ -53,7 +53,7 @@ if ( !class_exists('Puc_v4p4_InstalledPackage', false) ):
 		/**
 		 * Parse plugin or theme metadata from the header comment.
 		 *
-		 * This is basically a simplified version of the get_file_data() function from /wp-includes/functions.php.
+		 * This is basically a simplified version of the get_file_data() function from /wp-includes/lib.php.
 		 * It's intended as a utility for subclasses that detect updates by parsing files in a VCS.
 		 *
 		 * @param string|null $content File contents.

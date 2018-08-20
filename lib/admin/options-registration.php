@@ -8,12 +8,8 @@
  * @since     1.0.0
  */
 
-$premium_code = '';
-$email = '';
-
 // Fetch the registration keys from pro and all other addons
-$array = array();
-$registrations = apply_filters('swp_registrations' , $array);
+$registrations = apply_filters('swp_registrations' , array() );
 
 foreach($registrations as $registration):
     if ( ! empty( $swp_user_options[$registration['key'].'_license_key'] ) ) {

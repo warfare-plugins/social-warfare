@@ -22,7 +22,7 @@ class SWP_Column {
 	 * will queue up all the other methods by adding them to the necessary
 	 * WordPress action and filter hooks.
 	 *
-	 * NOTE: These "duplicate" hooks/functions are to cover both posts and pages.
+	 * NOTE: These "duplicate" hooks/lib are to cover both posts and pages.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @param  void
