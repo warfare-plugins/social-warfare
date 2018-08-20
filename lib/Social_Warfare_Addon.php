@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Addon extends Social_Warfare {
+class Social_Warfare_Addon extends Social_Warfare {
     public function __construct() {
         parent::__construct();
         $this->name = '';
