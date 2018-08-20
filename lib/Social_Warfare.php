@@ -376,7 +376,8 @@ class Social_Warfare {
             'Post_Cache_Loader',
             'Post_Cache',
             'JSON_Cache_Handler',
-			'Plugin_Updater'
+			'Plugin_Updater',
+            'Utility'
         );
         $this->load_files( '/lib/utilities/', $utilities);
 
@@ -546,8 +547,6 @@ class Social_Warfare {
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
 require_once SWP_PLUGIN_DIR . '/lib/admin/registration.php';
-// require_once SWP_PLUGIN_DIR . '/lib/admin/options-fetch.php';
-// require_once SWP_PLUGIN_DIR . '/lib/utilities/utility.php';
 
 /**
  * Include the plugin's admin files.
