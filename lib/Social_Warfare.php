@@ -379,7 +379,7 @@ class Social_Warfare {
 			'Plugin_Updater',
             'Utility'
         );
-        $this->load_files( '/functions/utilities/', $utilities);
+        $this->load_files( '/lib/utilities/', $utilities);
 
 
 		/**
@@ -401,7 +401,7 @@ class Social_Warfare {
             'Pinterest',
             'Mix'
 		);
-		$this->load_files( '/functions/social-networks/', $social_networks);
+		$this->load_files( '/lib/social-networks/', $social_networks);
 
 
         /**
@@ -415,7 +415,7 @@ class Social_Warfare {
         $includes = array(
             'Addon'
         );
-        $this->load_files( '/functions/includes/', $includes);
+        $this->load_files( '/lib/includes/', $includes);
 
 
 		/**
@@ -434,7 +434,7 @@ class Social_Warfare {
             'Script',
             'Shortcode',
         );
-        $this->load_files( '/functions/frontend-output/', $frontends );
+        $this->load_files( '/lib/frontend-output/', $frontends );
 
 
 		/**
@@ -450,7 +450,7 @@ class Social_Warfare {
             'Popular_Posts_Widget',
             'Widget',
         );
-        $this->load_files( '/functions/widgets/', $widgets );
+        $this->load_files( '/lib/widgets/', $widgets );
 
 
 		/**
@@ -473,7 +473,7 @@ class Social_Warfare {
             'User_Profile',
             'Sidebar_Loader'
         );
-        $this->load_files( '/functions/admin/', $admins );
+        $this->load_files( '/lib/admin/', $admins );
 
 
 		/**
@@ -498,7 +498,7 @@ class Social_Warfare {
             'Option_Icons',
 			'Addon_Registration',
         );
-        $this->load_files( '/functions/options/', $options );
+        $this->load_files( '/lib/options/', $options );
 
 
 		/**
@@ -508,7 +508,7 @@ class Social_Warfare {
 		 * needed in order to properly check for updates for addons.
 		 *
 		 */
-		require_once SWP_PLUGIN_DIR . '/functions/plugin-update-checker/plugin-update-checker.php';
+		require_once SWP_PLUGIN_DIR . '/lib/plugin-update-checker/plugin-update-checker.php';
 
 
 	}
@@ -546,15 +546,15 @@ class Social_Warfare {
 
 
 // TODO: These files need refactored into classes and to the appropriate sections above.
-require_once SWP_PLUGIN_DIR . '/functions/admin/registration.php';
-// require_once SWP_PLUGIN_DIR . '/functions/admin/options-fetch.php';
-// require_once SWP_PLUGIN_DIR . '/functions/utilities/utility.php';
+require_once SWP_PLUGIN_DIR . '/lib/admin/registration.php';
+// require_once SWP_PLUGIN_DIR . '/lib/admin/options-fetch.php';
+// require_once SWP_PLUGIN_DIR . '/lib/utilities/utility.php';
 
 /**
  * Include the plugin's admin files.
  *
  */
 if ( is_admin() ) {
-	require_once SWP_PLUGIN_DIR . '/functions/admin/swp_system_checker.php';
-	// require_once SWP_PLUGIN_DIR . '/functions/admin/options-page.php';
+	require_once SWP_PLUGIN_DIR . '/lib/admin/swp_system_checker.php';
+	// require_once SWP_PLUGIN_DIR . '/lib/admin/options-page.php';
 }
