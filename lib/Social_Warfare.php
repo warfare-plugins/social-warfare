@@ -19,7 +19,6 @@
  */
 class Social_Warfare {
 
-
 	/**
 	 * The magic method used to instantiate this class.
 	 *
@@ -403,19 +402,6 @@ class Social_Warfare {
 		);
 		$this->load_files( '/lib/social-networks/', $social_networks);
 
-
-        /**
-         * The Addon Classes
-         *
-         * This family of classes provide for the management of addons. These
-         * control the framework for registering addons, checking for updates
-         * for the addons, and other addon specific tasks.
-         *
-         */
-        $includes = array(
-            'Addon'
-        );
-        $this->load_files( '/lib/includes/', $includes);
 
 
 		/**
