@@ -1846,3 +1846,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 div[class*=custom_color][class^=_wrapper] {
     display: none;
 }
+
+.swp-pinterest-image-top {
+    margin-bottom: 20px;
+}
