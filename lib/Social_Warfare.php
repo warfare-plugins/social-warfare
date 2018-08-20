@@ -376,8 +376,7 @@ class Social_Warfare {
             'Post_Cache_Loader',
             'Post_Cache',
             'JSON_Cache_Handler',
-			'Plugin_Updater',
-            'Utility'
+			'Plugin_Updater'
         );
         $this->load_files( '/lib/utilities/', $utilities);
 
