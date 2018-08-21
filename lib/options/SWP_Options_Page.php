@@ -217,7 +217,7 @@ class SWP_Options_Page extends SWP_Abstract {
         wp_enqueue_media();
         wp_enqueue_script(
             'swp_admin_options_js',
-            SWP_PLUGIN_URL . "/js/admin-options-page{$suffix}.js",
+            SWP_PLUGIN_URL . "/assets/js/admin-options-page{$suffix}.js",
             array( 'jquery' ),
             SWP_VERSION
         );
