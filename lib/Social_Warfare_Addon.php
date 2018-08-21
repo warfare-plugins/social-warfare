@@ -1,8 +1,7 @@
 <?php
 
-class Social_Warfare_Addon extends Social_Warfare {
+class Social_Warfare_Addon {
     public function __construct( $args ) {
-        parent::__construct();
         $this->establish_class_properties( $args );
 
         $this->store_url = 'https://warfareplugins.com';
@@ -53,9 +52,7 @@ class Social_Warfare_Addon extends Social_Warfare {
 
 
     public function establish_license_key() {
-        $options = SWP_Utility::get_option( $this->key . '_license_key' );
-
-        $key = $options[ $this->key . '_license_key' ];
+        $key = SWP_Utility::get_option( $this->key . '_license_key' );
 
         if ( !$key ) :
             $old_options = get_option( 'socialWarfareOptions', false );
@@ -67,8 +64,6 @@ class Social_Warfare_Addon extends Social_Warfare {
         endif;
 
         $this->license_key = $key ? $key : '';
-        echo "licence key <br>";
-        die(var_dump($this->license_key));
     }
 
     public function is_registered() {
