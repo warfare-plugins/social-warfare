@@ -10,9 +10,11 @@ class Social_Warfare_Addon extends Social_Warfare {
         $this->core_required = '3.0.0';
         $this->store_url = 'https://warfareplugins.com';
         $this->site_url = SWP_Utility::get_site_url();
+
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
+
         add_filter( 'swp_registrations', array( $this, 'add_self' ) );
     }
 
@@ -34,70 +36,6 @@ class Social_Warfare_Addon extends Social_Warfare {
         return $addons;
     }
 
-    public function register_plugin() {
-        	// Check to ensure that license key was passed into the function
-        	if ( !empty( $_POST['license_key'] ) ) :
-
-        		// Grab the license key so we can use it below
-        		$key = $_POST['name_key'];
-        		$license = $_POST['license_key'];
-        		$item_id = $_POST['item_id'];
-                $this->store_url = 'https://warfareplugins.com';
-
-                $api_params = array(
-                    'edd_action' => 'activate_license',
-                    'item_id' => $item_id,
-                    'license' => $license,
-                    'url' => $this->site_url
-                );
-
-                $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
-
-        		if ( false != $response ) :
-
-        			// Parse the response into an object
-        			$license_data = json_decode( $response );
-
-        			// If the license is valid store it in the database
-        			if( isset($license_data->license) && 'valid' == $license_data->license ) :
-
-        				$current_time = time();
-        				$options = get_option( 'social_warfare_settings' );
-        				$options[$key.'_license_key'] = $license;
-        				$options[$key.'_license_key_timestamp'] = $current_time;
-        				update_option( 'social_warfare_settings' , $options );
-
-        				echo json_encode($license_data);
-        				wp_die();
-
-        			// If the license is not valid
-        			elseif( isset($license_data->license) &&  'invalid' == $license_data->license ) :
-        				echo json_encode($license_data);
-        				wp_die();
-
-        			// If some other status was returned
-        			else :
-        				$license_data['success'] = false;
-        				$license_data['data'] = 'Invaid response from the registration server.';
-        				echo json_encode($license_data);
-        				wp_die();
-        			endif;
-
-        		// If we didn't get a response from the registration server
-        		else :
-        			$license_data['success'] = false;
-        			$license_data['data'] = 'Failed to connect to registration server.';
-        			echo json_encode($license_data);
-        			wp_die();
-        		endif;
-            endif;
-
-    		$license_data['success'] = false;
-    		$license_data['data'] = 'Admin Ajax did not receive valid POST data.';
-    		echo json_encode($license_data);
-    		wp_die();
-
-    }
 
     public function establish_license_key() {
         $options = get_option( 'social_warfare_settings' );
@@ -197,6 +135,90 @@ class Social_Warfare_Addon extends Social_Warfare {
         endif;
     }
 
+    /**
+     * Request to EDD to activate the licence.
+     *
+     * @since  2.1.0
+     * @since  2.3.0 Hooked registration into the new EDD Software Licensing API
+     * @param  none
+     * @return JSON Encoded Array (Echoed) - The Response from the EDD API
+     *
+     */
+    public function register_plugin() {
+    	// Check to ensure that license key was passed into the function
+    	if ( !empty( $_POST['license_key'] ) ) :
+
+    		// Grab the license key so we can use it below
+    		$key = $_POST['name_key'];
+    		$license = $_POST['license_key'];
+    		$item_id = $_POST['item_id'];
+            $this->store_url = 'https://warfareplugins.com';
+
+            $api_params = array(
+                'edd_action' => 'activate_license',
+                'item_id' => $item_id,
+                'license' => $license,
+                'url' => $this->site_url
+            );
+
+            $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+
+    		if ( false != $response ) :
+
+    			// Parse the response into an object
+    			$license_data = json_decode( $response );
+
+    			// If the license is valid store it in the database
+    			if( isset($license_data->license) && 'valid' == $license_data->license ) :
+
+    				$current_time = time();
+    				$options = get_option( 'social_warfare_settings' );
+    				$options[$key.'_license_key'] = $license;
+    				$options[$key.'_license_key_timestamp'] = $current_time;
+    				update_option( 'social_warfare_settings' , $options );
+
+    				echo json_encode($license_data);
+    				wp_die();
+
+    			// If the license is not valid
+    			elseif( isset($license_data->license) &&  'invalid' == $license_data->license ) :
+    				echo json_encode($license_data);
+    				wp_die();
+
+    			// If some other status was returned
+    			else :
+    				$license_data['success'] = false;
+    				$license_data['data'] = 'Invaid response from the registration server.';
+    				echo json_encode($license_data);
+    				wp_die();
+    			endif;
+
+    		// If we didn't get a response from the registration server
+    		else :
+    			$license_data['success'] = false;
+    			$license_data['data'] = 'Failed to connect to registration server.';
+    			echo json_encode($license_data);
+    			wp_die();
+    		endif;
+        endif;
+
+		$license_data['success'] = false;
+		$license_data['data'] = 'Admin Ajax did not receive valid POST data.';
+		echo json_encode($license_data);
+		wp_die();
+
+    }
+
+
+    /**
+     * Request to EDD to deactivate the licence.
+     *
+     * @since  2.1.0
+     * @since  2.3.0 Hooked into the EDD Software Licensing API
+     * @param  none
+     * @return JSON Encoded Array (Echoed) - The Response from the EDD API
+     *
+     */
     public function unregister_plugin() {
         // Setup the variables needed for processing
     	$options = get_option( 'social_warfare_settings' );
