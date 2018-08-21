@@ -518,27 +518,10 @@ class Social_Warfare {
     }
 }
 
-
-/*******************************************************************************
- *
- *
- * WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING!
- *
- * EVERY FILE BELOW THIS POINT NEEDS TO BE REFACTORED. IT'S "REQUIRE_ONCE" THEN
- * NEEDS TO BE MIGRATED INTO THE CLASS ABOVE.
- *
- *
- * *****************************************************************************/
-
-
-// TODO: These files need refactored into classes and to the appropriate sections above.
-require_once SWP_PLUGIN_DIR . '/lib/admin/registration.php';
-
 /**
  * Include the plugin's admin files.
  *
  */
 if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/lib/admin/swp_system_checker.php';
-	// require_once SWP_PLUGIN_DIR . '/lib/admin/options-page.php';
 }
