@@ -13,6 +13,7 @@ class Social_Warfare_Addon extends Social_Warfare {
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
+        add_filter( 'swp_registrations', array( $this, 'add_self' ) );
     }
 
 
