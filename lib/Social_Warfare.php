@@ -482,7 +482,7 @@ class Social_Warfare {
             'Option_Textarea',
             'Section_HTML',
             'Option_Icons',
-			'Addon_Registration',
+			'Registration_Tab_Template',
         );
         $this->load_files( '/lib/options/', $options );
 
