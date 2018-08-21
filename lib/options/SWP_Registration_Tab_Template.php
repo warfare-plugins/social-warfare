@@ -1,6 +1,6 @@
 <?php
 
-class SWP_Addon_Registration extends SWP_Option {
+class SWP_Registration_Tab_Template extends SWP_Option {
     public $key = '';
     public $license_key = '';
     public $product_id = 0;
