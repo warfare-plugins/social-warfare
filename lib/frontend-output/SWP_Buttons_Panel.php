@@ -191,21 +191,21 @@ class SWP_Buttons_Panel {
 	 */
 	public function establish_post_id() {
     	// Legacy support.
-		if ( is_numeric( $this->args['postid'] ) ) :
+		if ( isset( $this->args['postid'] ) && is_numeric( $this->args['postid'] ) ) :
             return $this->post_id = $this->args['postid'];
         endif;
 
     	// Current argument.
-		if ( is_numeric( $this->args['post_id'] ) ) :
+		if ( isset( $this->args['post_id'] ) && is_numeric( $this->args['post_id'] ) ) :
             return $this->post_id = $this->args['post_id'];
         endif;
 
-        if ( is_numeric( $this->args['id'] ) ) :
+        if ( isset( $this->args['id'] ) && is_numeric( $this->args['id'] ) ) :
             return $this->post_id = $this->args['id'];
         endif;
 
-        if ( $url = $this->args['url'] ) :
-            if ( $id = url_to_postid( $url ) ) :
+        if ( isset( $this->args['url'] ) && is_numeric( $this->args['url'] ) ) :
+            if ( $id = url_to_postid( $this->args['url'] ) ) :
                 return $this->post_id = $id;
             endif;
         endif;
@@ -812,7 +812,7 @@ class SWP_Buttons_Panel {
         //* Use global button settings.
         else :
 			// Order manually using the user's specified order.
-            if ( $this->options['order_of_icons_method'] === 'manual' ) :
+            if ( !isset( $this->options['order_of_icons_method'] ) || $this->options['order_of_icons_method'] === 'manual' ) :
                 $order = $this->options['order_of_icons'];
 
 			// Order them dynamically according to share counts.
