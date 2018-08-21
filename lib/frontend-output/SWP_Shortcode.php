@@ -126,8 +126,7 @@ class SWP_Shortcode {
      * @return string The html of a click to tweet
      */
     function click_to_tweet( $atts ) {
-        global $swp_user_options, $post;
-        $this->options = $swp_user_options;
+        global $post;
 
     	$url = SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
     	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
@@ -138,13 +137,13 @@ class SWP_Shortcode {
     	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
 
     	if ( ! $user_twitter_handle ) :
-    		$user_twitter_handle = $this->options['twitter_id'];
+    		$user_twitter_handle = SWP_Utility::get_option( 'twitter_id' );
     	endif;
 
     	if ( isset( $atts['theme'] ) && $atts['theme'] != 'default' ) :
     		$theme = $atts['theme'];
     	else :
-    		$theme = $this->options['ctt_theme'];
+    		$theme = SWP_Utility::get_option( 'ctt_theme' );
     	endif;
 
         $tweet = $this->get_tweet( $atts );
