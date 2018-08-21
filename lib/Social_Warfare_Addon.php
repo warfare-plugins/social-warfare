@@ -1,21 +1,37 @@
 <?php
 
 class Social_Warfare_Addon extends Social_Warfare {
-    public function __construct() {
+    public function __construct( $args ) {
         parent::__construct();
-        $this->name = '';
-        $this->product_id = 0;
-        $this->key = '';
-        $this->version = '';
-        $this->core_required = '3.0.0';
+        $this->establish_class_properties( $args );
+
         $this->store_url = 'https://warfareplugins.com';
         $this->site_url = SWP_Utility::get_site_url();
+
+        $this->establish_license_key();
+        $this->registered = $this->is_registered();
 
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
         add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
 
         add_filter( 'swp_registrations', array( $this, 'add_self' ) );
+    }
+
+    private function establish_class_properties( $args ) {
+        $required= ['name', 'key', 'product_id', 'version', 'core_required'];
+
+        foreach($required as $key) {
+            if ( !isset( $args[$key] ) ) :
+                $message = "Hey developer, you must provide us this information for your class: <code>$key => \$value</code>";
+                throw new Exception($message);
+            endif;
+
+        }
+
+        foreach($args as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
 
@@ -28,8 +44,7 @@ class Social_Warfare_Addon extends Social_Warfare {
      * @param array $addons The array of addons currently activated.
      */
     public function add_self( $addons ) {
-        $this->establish_license_key();
-        $this->registered = $this->is_registered();
+        if ( $this->key == 'affiliatewp') return;
 
         $addons[] = $this;
 
@@ -38,9 +53,11 @@ class Social_Warfare_Addon extends Social_Warfare {
 
 
     public function establish_license_key() {
-        $key = SWP_Utility::get_option( $this->key . '_license_key' );
+        $options = SWP_Utility::get_option( $this->key . '_license_key' );
 
-        if ( !$key) :
+        $key = $options[ $this->key . '_license_key' ];
+
+        if ( !$key ) :
             $old_options = get_option( 'socialWarfareOptions', false );
 
             if ( isset( $old_options[$this->key . '_license_key']) ) :
@@ -50,6 +67,8 @@ class Social_Warfare_Addon extends Social_Warfare {
         endif;
 
         $this->license_key = $key ? $key : '';
+        echo "licence key <br>";
+        die(var_dump($this->license_key));
     }
 
     public function is_registered() {
@@ -233,7 +252,7 @@ class Social_Warfare_Addon extends Social_Warfare {
             'url' => $this->site_url,
         );
 
-       //* wp_remote_retrieve_body encodes to JSON for us. 
+       //* wp_remote_retrieve_body encodes to JSON for us.
         $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
 
 		$options = get_option( 'social_warfare_settings' );
