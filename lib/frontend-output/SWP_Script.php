@@ -97,7 +97,7 @@ class SWP_Script {
 
     	wp_enqueue_script(
     		'social_warfare_script',
-    		SWP_PLUGIN_URL . "/js/script{$suffix}.js",
+    		SWP_PLUGIN_URL . "assets/js/script{$suffix}.js",
     		array( 'jquery' ),
     		SWP_VERSION,
     		true
@@ -129,7 +129,7 @@ class SWP_Script {
 
     	wp_enqueue_script(
     		'social_warfare_admin_script',
-    		SWP_PLUGIN_URL . "/js/admin{$suffix}.js",
+    		SWP_PLUGIN_URL . "assets/js/admin{$suffix}.js",
     		array( 'jquery' ),
     		SWP_VERSION
     	);
