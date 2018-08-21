@@ -193,6 +193,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.2.2 (21 AUG 2018) =
+* Rebuilt and fully rectified the automatic updates processes.
+* Fixed javascript error that broke images when pinning from Pin On Hover button.
+
 = 3.2.1 (16 AUG 2018) =
 * Fixed a minor DOMDocument warning that was appearing when data-pin-description was ON
 
