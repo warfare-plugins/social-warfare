@@ -106,7 +106,7 @@ class SWP_Shortcode_Generator {
     *
     */
 	public function tinymce_register_plugin( $plugin_array ) {
-		$plugin_array['swp_shortcode_generator'] = SWP_PLUGIN_URL . '/js/sw-shortcode-generator.js';
+		$plugin_array['swp_shortcode_generator'] = SWP_PLUGIN_URL . '/assets/js/sw-shortcode-generator.js';
 		return $plugin_array;
 	}
 
