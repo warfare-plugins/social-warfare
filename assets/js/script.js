@@ -350,8 +350,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* Otherwise, it added the padding every time this was called.
     function toggleFloatingBar() {
         var panel = $(".swp_social_panel").first();
-        var location = panel.data("float");
         var newPadding = 0;
+
+        //* Are we on desktop or mobile?
+        if ($(window).width() > $(panel).data("min-width")) {
+            var location = $(panel).data("float");
+        } else {
+            var location = $(panel).data("float-mobile")
+        }
 
         if (panelIsVisible()) {
             $(".nc_wrapper").hide();
