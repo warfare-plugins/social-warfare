@@ -276,7 +276,7 @@ class SWP_Options_Page extends SWP_Abstract {
             if ( gettype($addon) !== 'object' ) :
                 continue;
             endif;
-            $registrations[] = new SWP_Addon_Registration( $addon );
+            $registrations[] = new SWP_Registration_Tab_Template( $addon );
             $active_addons .= " $addon->key ";
 
             if ( true === $addon->registered ) :
