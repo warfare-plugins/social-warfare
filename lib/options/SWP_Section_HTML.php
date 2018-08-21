@@ -91,14 +91,11 @@ class SWP_Section_HTML extends SWP_Option {
                 $component = html_entity_decode ( $component );
                 $html .= html_entity_decode( $component);
             }
-
-
         endif;
 
         $html .= '<div class="system-status-wrapper">';
             $html .= '<h4><?= $status_title ?></h4>';
             $html .= '<div class="system-status-container"> '. $this->system_status() . '</div>';
-
         $html .= '</div></div>';
 
         return $this->html = $html;
