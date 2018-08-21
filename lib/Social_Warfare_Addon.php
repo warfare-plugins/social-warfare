@@ -38,28 +38,21 @@ class Social_Warfare_Addon extends Social_Warfare {
 
 
     public function establish_license_key() {
-        $options = get_option( 'social_warfare_settings' );
+        $key = SWP_Utility::get_option( $this->key . '_license_key' );
 
-        if ( isset ( $options[ $this->key . '_license_key'] ) ) :
-            $this->license_key = $options[ $this->key . '_license_key'];
+        if ( !$key) :
+            $old_options = get_option( 'socialWarfareOptions', false );
+
+            if ( isset( $old_options[$this->key . '_license_key']) ) :
+                $key = isset( $old_options[$this->key . '_license_key']);
+            endif;
+
         endif;
 
-        $this->license_key = '';
+        $this->license_key = $key ? $key : '';
     }
 
     public function is_registered() {
-        // Get the plugin options from the database
-    	$options = get_option( 'social_warfare_settings', false );
-        $old_options = get_option( 'socialWarfareOptions', false );
-
-        if ( isset( $options[$this->key . '_license_key'] ) ) :
-            $this->license_key = $options[$this->key . '_license_key'];
-        elseif ( isset( $old_options[$this->key . '_license_key'] ) ) :
-            $this->license_key = $old_options[$this->key . '_license_key'];
-        else:
-            $this->license_key = '';
-        endif;
-
 
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
