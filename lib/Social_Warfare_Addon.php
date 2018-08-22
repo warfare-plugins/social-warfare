@@ -3,12 +3,12 @@
 class Social_Warfare_Addon {
     public function __construct( $args ) {
         $this->establish_class_properties( $args );
+        $this->establish_license_key();
 
         $this->store_url = 'https://warfareplugins.com';
         $this->site_url = SWP_Utility::get_site_url();
 
-        $this->establish_license_key();
-        $this->registered = $this->is_registered();
+        $this->is_registered = $this->establish_resgistration();
 
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
         add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
@@ -66,16 +66,15 @@ class Social_Warfare_Addon {
         $this->license_key = $key ? $key : '';
     }
 
-    public function is_registered() {
+    public function establish_resgistration() {
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
-        if ( SWP_Utility::get_option( $this->key.'_license_key_timestamp' ) ) :
+        if ( SWP_Utility::get_option( $this->key. '_license_key_timestamp' ) ) :
             $timestamp = SWP_Utility::get_option( $this->key.'_license_key_timestamp' );
         else:
             $timestamp =  0;
         endif;
-
     	$time_to_recheck = $timestamp + 604800;
 
     	// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
@@ -93,6 +92,7 @@ class Social_Warfare_Addon {
                 'license' => $this->license_key,
                 'url' => $this->site_url,
             );
+
 
             $response = wp_remote_retrieve_body( wp_remote_post( $this->store_url , array('body' => $data, 'timeout' => 10 ) ) );
 
