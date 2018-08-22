@@ -450,6 +450,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return;
             }
 
+            if ($image.hasClass('no_pin')) {
+                return;
+            }
+
             var pinMedia = false;
 
             if ('undefined' !== typeof swpPinIt.image_source) {
@@ -467,10 +471,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
             // Bail if we don't have any media to pin.
             if (false === pinMedia) {
-                return;
-            }
-
-            if ($image.hasClass('no_pin')) {
                 return;
             }
 
