@@ -19,10 +19,10 @@ class SWP_User_options {
 
 
 	public function __construct() {
-
+        $this->unfiltered_options = get_option( 'social_warfare_settings', false );
 		// Fetch the current options and the available options data.
 		$this->registered_options = get_option( 'swp_registered_options', false );
-		$this->user_options = get_option( 'social_warfare_settings', false );
+		$this->user_options = $this->unfiltered_options;
 
 		// Filter the options.
 		$this->filter_options();
