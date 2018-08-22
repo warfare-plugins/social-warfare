@@ -17,13 +17,20 @@
 */
 class SWP_User_options {
 
+
 	public function __construct() {
+        global $swp_user_options;
+
 		// Retrieve the user's set options from the database.
 		$this->user_options = get_option( 'social_warfare_settings', false );
 
+        // Assign the user options to a globally accessible array.
+        $swp_user_options = $this->user_options;
+
         //* No options have been stored yet.
         if ( false === $this->user_options ) {
-            return;
+            // If we return here, we'd never store the options later! Except on "Save Change" press.
+            // return;
         }
 
 		// Get the options data used to filter the user options.
@@ -31,7 +38,6 @@ class SWP_User_options {
 
 		add_action( 'wp_loaded', array( $this, 'filter_options'), 100 );
 
-		// Assign the user options to a globally accessible array.
 
 
 		// Add all relevant option info to the database.
@@ -55,8 +61,7 @@ class SWP_User_options {
     		$this->add_option_defaults();
 		endif;
 
-        global $swp_user_options;
-        $swp_user_options = $this->user_options;
+
 
     }
 
@@ -177,7 +182,6 @@ class SWP_User_options {
 				$this->user_options[$key] = $defaults[$key];
 			}
 		}
-        // die;
 	}
 
 
