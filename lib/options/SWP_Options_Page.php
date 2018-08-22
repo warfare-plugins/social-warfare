@@ -259,7 +259,7 @@ class SWP_Options_Page extends SWP_Abstract {
     public function render_HTML() {
         //* Fetch all the addons the user has installed,
         //* whether or not they are actively registered.
-        $addons = apply_filters( 'swp_registrations', [] );
+        $addons = apply_filters( 'swp_registrations', array() );
         $addon_templates = array();
         $registered = 0;
         $active_addons = '';
