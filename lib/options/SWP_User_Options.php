@@ -94,14 +94,23 @@ class SWP_User_options {
 	 *
 	 */
 	public function store_registered_options_data() {
+		$whitelist = $this->generate_whitelist();
 		$new_registered_options = array(
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
-            'values'    => apply_filters( 'swp_options_page_values', array() )
+            'values'    => apply_filters( 'swp_options_page_values', array() ),
+			'whitelist' => $whitelist;
         );
 
 		if( $new_registered_options != $this->registered_options ) {
 			update_option( 'swp_registered_options', $new_registered_options );
 		}
+	}
+
+
+	public function generate_whitelist() {
+		// Cycle through addon keys (e.g. 'pro', 'affiliateWP').
+		// Declare manually needed whitelist items (e.g. 'last_migrated')
+		return $whitelist;
 	}
 
 
