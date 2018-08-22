@@ -359,10 +359,7 @@ class SWP_Section_HTML extends SWP_Option {
     *
     */
     public function do_button_position_table() {
-        $default_types = ['page', 'post', 'home', 'archive_categories'];
-		$other_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
-
-        $post_types = array_merge( $default_types, $other_types );
+        $post_types = SWP_Utility::get_post_types();
 
         $panel_locations = [
             'above' => __( 'Above the Content', 'social-warfare' ),
