@@ -30,9 +30,9 @@ class SWP_User_options {
 		// Assign the options to the global.
 		global $swp_user_options;
 		$swp_user_options = $this->user_options;
-
+die(var_dump($swp_user_options));
 		// Defered to End of Cycle: Add all relevant option info to the database.
-		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 100 );
+		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ), 100 );
 
 		// Debug
         add_action( 'admin_footer', array( $this, 'debug' ) );
@@ -52,9 +52,6 @@ class SWP_User_options {
 			$this->correct_invalid_values();
     		$this->add_option_defaults();
 		endif;
-
-
-
     }
 
 
@@ -121,15 +118,21 @@ class SWP_User_options {
         $options = array_keys ( $this->user_options );
 
         $available_options = array_intersect( $defaults, $options );
+        $whitelist = [ 'last_migrated' ];
 
         foreach( $this->user_options as $key => $value ) {
+            $exception = false;
+
+            if ( strpos( $key, '_license_key' ) || in_array( $key, $whitelist ) ) :
+                $exception = true;
+            endif;
 
             //* Manually filter the order of icons.
             if ( $key == 'order_of_icons' ) :
                 $this->filter_order_of_icons( $value );
             endif;
 
-            if ( !in_array( $key, $available_options ) ) :
+            if ( !in_array( $key, $available_options ) && !$exception ) :
                 unset( $this->user_options[$key] );
             endif;
         }
