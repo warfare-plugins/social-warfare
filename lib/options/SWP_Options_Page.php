@@ -274,13 +274,13 @@ class SWP_Options_Page extends SWP_Abstract {
             $addon_templates[] = new SWP_Registration_Tab_Template( $addon );
             $active_addons .= " $addon->key ";
 
-            if ( true === $addon->registered ) :
+            if ( true === $addon->is_registered ) :
                 $registered_addons .= " $addon->key ";
                 $registered = 1;
             endif;
         }
 
-        $this->registered = $registered;
+        $this->is_registered = $registered;
 
         $this->init_registration_tab( $addon_templates );
 
@@ -704,7 +704,7 @@ class SWP_Options_Page extends SWP_Abstract {
     private function create_menu( $addons ) {
         //* Open the admin top menu wrapper.
         $html = '<div class="sw-header-wrapper">';
-            $html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . $this->registered . '">';
+            $html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . $this->is_registered . '">';
 
                 //* Menu wrapper and tabs.
                 $html .= '<div class="sw-grid sw-col-700">';
@@ -776,7 +776,7 @@ class SWP_Options_Page extends SWP_Abstract {
         $registered = false;
         $notices = apply_filters( 'swp_admin_notices', '' );
 
-        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->registered .'" swp-addons="' . $active_addons . '" swp-registrations="' . $registered_addons . '">';
+        $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->is_registered .'" swp-addons="' . $active_addons . '" swp-registrations="' . $registered_addons . '">';
             $container .= '<div class="swp-notice-wrapper">';
                 $container .= $notices;
             $container .= '</div>';
