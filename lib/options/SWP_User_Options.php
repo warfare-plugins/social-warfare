@@ -32,7 +32,7 @@ class SWP_User_options {
 		$swp_user_options = $this->user_options;
 
 		// Defered to End of Cycle: Add all relevant option info to the database.
-		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ), 100 );
+		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 10000 );
 
 		// Debug
         add_action( 'admin_footer', array( $this, 'debug' ) );
@@ -96,6 +96,7 @@ class SWP_User_options {
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
             'values'    => apply_filters( 'swp_options_page_values', array() )
         );
+        $registrations = apply_filters('swp_registrations', []);
 
         foreach($whitelist as $key) {
             if (isset( $this->unfiltered_options[$key] ) ) :
@@ -139,6 +140,8 @@ class SWP_User_options {
 	private function remove_unavailable_options() {
         $defaults = array_keys( $this->registered_options['defaults'] );
         $options = array_keys ( $this->user_options );
+
+
 
         $available_options = array_intersect( $defaults, $options );
 
