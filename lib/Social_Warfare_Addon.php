@@ -4,10 +4,6 @@ class Social_Warfare_Addon {
     public function __construct( $args ) {
         $this->establish_class_properties( $args );
         $this->establish_license_key();
-
-        $this->store_url = 'https://warfareplugins.com';
-        $this->site_url = SWP_Utility::get_site_url();
-
         $this->is_registered = $this->establish_resgistration();
 
         add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
@@ -31,15 +27,18 @@ class Social_Warfare_Addon {
         foreach($args as $key => $value) {
             $this->$key = $value;
         }
+
+        $this->store_url = 'https://warfareplugins.com';
+        $this->site_url = SWP_Utility::get_site_url();
     }
 
 
     /**
-     * The callback function used to add a new instance of this /**
-      * to our swp_registrations filter.
-      *
-      * This should be the last item called in an addon's main file.
-      *
+     * The callback function used to add a new instance of this 
+     * to our swp_registrations filter.
+     *
+     * This should be the last item called in an addon's main file.
+     *
      * @param array $addons The array of addons currently activated.
      */
     public function add_self( $addons ) {
