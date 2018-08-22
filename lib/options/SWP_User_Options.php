@@ -36,7 +36,6 @@ class SWP_User_options {
 
 		// Debug
         add_action( 'admin_footer', array( $this, 'debug' ) );
-
 	}
 
 
@@ -91,10 +90,20 @@ class SWP_User_options {
 	 *
 	 */
 	public function store_registered_options_data() {
-		$new_registered_options = array(
+        $whitelist = $this->generate_whitelist();
+
+        $new_registered_options = array(
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
             'values'    => apply_filters( 'swp_options_page_values', array() )
         );
+
+        foreach($whitelist as $key) {
+            if (isset( $this->unfiltered_options[$key] ) ) :
+                $new_registered_options["defaults"][$key] = $this->unfiltered_options[$key];
+                $new_registered_options["values"][$key]["type"] = "none";
+                $new_registered_options["values"][$key]["values"] = $this->unfiltered_options[$key];
+            endif;
+        }
 
 		if( $new_registered_options != $this->registered_options ) {
 			update_option( 'swp_registered_options', $new_registered_options );
@@ -106,8 +115,8 @@ class SWP_User_options {
         $addons = apply_filters( 'swp_registrations', array() );
 
         foreach( $addons as $addon ) {
-            $whitelist[] = $addon->key . 'license_key';
-            $whitelist[] = $addon->key . 'license_key_timestamp';
+            $whitelist[] = $addon->key . '_license_key';
+            $whitelist[] = $addon->key . '_license_key_timestamp';
         }
 
         $whitelist[] = 'last_migrated';
@@ -130,16 +139,10 @@ class SWP_User_options {
 	private function remove_unavailable_options() {
         $defaults = array_keys( $this->registered_options['defaults'] );
         $options = array_keys ( $this->user_options );
-        $whitelist = $this->generate_whitelist();
 
         $available_options = array_intersect( $defaults, $options );
-        $available_options = array_merge( $available_options, $whitelist );
 
         foreach( $this->user_options as $key => $value ) {
-
-            // if ( strpos( $key, '_license_key' ) || in_array( $key, $whitelist ) ) :
-            //     $exception = true;
-            // endif;
 
             //* Manually filter the order of icons.
             if ( $key == 'order_of_icons' ) :
