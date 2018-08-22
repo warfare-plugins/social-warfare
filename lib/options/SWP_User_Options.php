@@ -19,32 +19,24 @@ class SWP_User_options {
 
 
 	public function __construct() {
-        global $swp_user_options;
 
-		// Retrieve the user's set options from the database.
+		// Fetch the current options and the available options data.
+		$this->registered_options = get_option( 'swp_registered_options', false );
 		$this->user_options = get_option( 'social_warfare_settings', false );
 
-        // Assign the user options to a globally accessible array.
-        $swp_user_options = $this->user_options;
+		// Filter the options.
+		$this->filter_options();
 
-        //* No options have been stored yet.
-        if ( false === $this->user_options ) {
-            // If we return here, we'd never store the options later! Except on "Save Change" press.
-            // return;
-        }
+		// Assign the options to the global.
+		global $swp_user_options;
+		$swp_user_options = $this->user_options;
 
-		// Get the options data used to filter the user options.
-		$this->registered_options = get_option( 'swp_registered_options', false );
-
-		add_action( 'wp_loaded', array( $this, 'filter_options'), 100 );
-
-
-
-		// Add all relevant option info to the database.
+		// Defered to End of Cycle: Add all relevant option info to the database.
 		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 100 );
+
+		// Debug
         add_action( 'admin_footer', array( $this, 'debug' ) );
 
-		$this->debug();
 	}
 
 
