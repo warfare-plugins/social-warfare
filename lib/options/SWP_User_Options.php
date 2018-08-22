@@ -30,7 +30,7 @@ class SWP_User_options {
 		// Assign the options to the global.
 		global $swp_user_options;
 		$swp_user_options = $this->user_options;
-die(var_dump($swp_user_options));
+
 		// Defered to End of Cycle: Add all relevant option info to the database.
 		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ), 100 );
 
@@ -91,11 +91,9 @@ die(var_dump($swp_user_options));
 	 *
 	 */
 	public function store_registered_options_data() {
-		$whitelist = $this->generate_whitelist();
 		$new_registered_options = array(
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
-            'values'    => apply_filters( 'swp_options_page_values', array() ),
-			'whitelist' => $whitelist;
+            'values'    => apply_filters( 'swp_options_page_values', array() )
         );
 
 		if( $new_registered_options != $this->registered_options ) {
@@ -105,8 +103,15 @@ die(var_dump($swp_user_options));
 
 
 	public function generate_whitelist() {
-		// Cycle through addon keys (e.g. 'pro', 'affiliateWP').
-		// Declare manually needed whitelist items (e.g. 'last_migrated')
+        $addons = apply_filters( 'swp_registrations', array() );
+
+        foreach( $addons as $addon ) {
+            $whitelist[] = $addon->key . 'license_key';
+            $whitelist[] = $addon->key . 'license_key_timestamp';
+        }
+
+        $whitelist[] = 'last_migrated';
+
 		return $whitelist;
 	}
 
@@ -125,23 +130,23 @@ die(var_dump($swp_user_options));
 	private function remove_unavailable_options() {
         $defaults = array_keys( $this->registered_options['defaults'] );
         $options = array_keys ( $this->user_options );
+        $whitelist = $this->generate_whitelist();
 
         $available_options = array_intersect( $defaults, $options );
-        $whitelist = [ 'last_migrated' ];
+        $available_options = array_merge( $available_options, $whitelist );
 
         foreach( $this->user_options as $key => $value ) {
-            $exception = false;
 
-            if ( strpos( $key, '_license_key' ) || in_array( $key, $whitelist ) ) :
-                $exception = true;
-            endif;
+            // if ( strpos( $key, '_license_key' ) || in_array( $key, $whitelist ) ) :
+            //     $exception = true;
+            // endif;
 
             //* Manually filter the order of icons.
             if ( $key == 'order_of_icons' ) :
                 $this->filter_order_of_icons( $value );
             endif;
 
-            if ( !in_array( $key, $available_options ) && !$exception ) :
+            if ( !in_array( $key, $available_options ) ) :
                 unset( $this->user_options[$key] );
             endif;
         }
