@@ -34,7 +34,7 @@ class Social_Warfare_Addon {
 
 
     /**
-     * The callback function used to add a new instance of this 
+     * The callback function used to add a new instance of this
      * to our swp_registrations filter.
      *
      * This should be the last item called in an addon's main file.
@@ -227,7 +227,7 @@ class Social_Warfare_Addon {
         $response = array();
 
     	// Check to see if the license key is even in the options
-    	if ( SWP_Utility::get_option( $key.'_license_key' ) ) :
+    	if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
 
     		$response['success'] = true;
     		echo json_encode($response);
