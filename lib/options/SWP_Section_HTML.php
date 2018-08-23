@@ -536,7 +536,7 @@ class SWP_Section_HTML extends SWP_Option {
     public function do_bitly_start_date() {
         $post_types = SWP_Utility::get_post_types();
 
-        $float_locations = [
+        $booleans = [
             'on'    => __( 'On','social_warfare'),
             'off'   => __( 'Off', 'social_warfare')
         ];
@@ -584,20 +584,15 @@ class SWP_Section_HTML extends SWP_Option {
                     $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
                 $html .= '</div>';
 
-
                 $html .= '<div class="sw-grid sw-col-300 sw-fit">';
 
-                if ( $post !== 'home' && $post !== 'archive_categories' ) :
+                $float = new SWP_Option_Select( ucfirst( $post ), 'bitly_links_' . $post );
+                $float->set_priority( $priority )
+                    ->set_size( 'sw-col-300' )
+                    ->set_choices( $booleans )
+                    ->set_default( 'on' );
 
-                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
-                    $float->set_priority( $priority )
-                        ->set_size( 'sw-col-300' )
-                        ->set_choices( $float_locations )
-                        ->set_default( 'on' );
-
-                    $html .= $float->render_HTML_element();
-
-                endif;
+                $html .= $float->render_HTML_element();
 
                 $html .= '</div>';
 
