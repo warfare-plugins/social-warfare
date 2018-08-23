@@ -388,10 +388,9 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Floating Buttons (If Activated)' ,'social-warfare' ) . '</p>';
         $html .= '</div>';
 
-		$i = 0;
         foreach( $post_types as $index => $post ) {
 
-            $priority = ($i + 1) * 10; $i++;
+            $priority = ($index + 1) * 10;
 
             $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
@@ -527,6 +526,68 @@ class SWP_Section_HTML extends SWP_Option {
         $this->html = $html;
 
         return $this;
+    }
+
+
+    public function do_bitly_start_date() {
+        $post_types = SWP_Utility::get_post_types();
+
+        $float_locations = [
+            'on'    => __( 'On','social_warfare'),
+            'off'   => __( 'Off', 'social_warfare')
+        ];
+
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
+
+        $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+
+        $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Create Bitly Links?' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+
+
+        foreach( $post_types as $index => $post ) {
+
+            $priority = ($index + 1) * 10;
+
+            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
+
+                $html .= '<div class="sw-grid sw-col-300">';
+                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
+                $html .= '</div>';
+
+
+                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+
+                if ( $post !== 'home' && $post !== 'archive_categories' ) :
+
+                    $float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
+                    $float->set_priority( $priority )
+                        ->set_size( 'sw-col-300' )
+                        ->set_choices( $float_locations )
+                        ->set_default( 'on' );
+
+                    $html .= $float->render_HTML_element();
+
+                endif;
+
+                $html .= '</div>';
+
+            $html .= '</div>';
+
+        }
+
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $this;
+
     }
 
 
