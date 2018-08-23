@@ -149,7 +149,9 @@ class SWP_User_options {
 
             //* Manually filter the order of icons.
             if ( $key == 'order_of_icons' ) :
-                $this->filter_order_of_icons( $value );
+                $value = $this->filter_order_of_icons( $value );
+                $this->user_icons[$key] = $value;
+                continue;
             endif;
 
             if ( !in_array( $key, $available_options ) ) :
@@ -160,8 +162,6 @@ class SWP_User_options {
 
 
     private function filter_order_of_icons( $user_icons = array() ) {
-        global $swp_user_options;
-
         $networks = $this->registered_options['values']['order_of_icons']['values'];
         $user_icons = $this->user_options['order_of_icons'];
 
@@ -176,7 +176,7 @@ class SWP_User_options {
             $user_icons = $this->registered_options['defaults']['order_of_icons'];
         endif;
 
-        $swp_user_options['order_of_icons'] = $user_icons;
+        return $user_icons;
     }
 
 
