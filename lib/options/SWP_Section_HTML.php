@@ -547,15 +547,16 @@ class SWP_Section_HTML extends SWP_Option {
             $start_date = '';
         }
 
-        $html .= '<p class="sw-subtitle">I would like to generate bitly links for content created <b>on or after</b>&nbsp;';
+        $html .= '<p class="sw-subtitle sw-col-620" style="margin: 5px 0 15px">I would like to generate bitly links for content created <b>on or after</b>&nbsp;';
         $html .=     '<input
+                         style="float: right;"
                          type="text"
                          id="bitly_start_date"
                          name="bitly_start_date"
                          value="' . $start_date . '"
                       />
-                  <br/>';
-        $html .= 'Please enter your date in the following format: <code>YYYY-MM-DD</code></p>';
+                  </p>';
+        $html .= '<p class="sw-subtitle sw-col-620">Please enter start the date in the following format: <code style="float: right;">YYYY-MM-DD</code></p>';
 
         $html .= '<div class="sw-grid sw-col-300">';
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type' ,'social-warfare' ) . '</p>';
