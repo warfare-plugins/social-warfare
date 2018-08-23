@@ -98,7 +98,7 @@ class SWP_URL_Management {
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
 
-        Recently done.
+        // Recently done.
         if ( true == $array['fresh_cache'] ) :
             return $array;
         endif;
