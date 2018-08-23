@@ -47,6 +47,10 @@ class SWP_Section_HTML extends SWP_Option {
 
         parent::__construct( $name, $key );
 
+        if (empty( $this->default ) ) :
+            $this->set_default( ' ');
+        endif;
+
         $this->html = '';
     }
 
@@ -548,6 +552,7 @@ class SWP_Section_HTML extends SWP_Option {
             // die(var_dump($start_date));
             $start_date = '';
         }
+
 
         $html .= '<p class="sw-subtitle sw-col-620" style="margin: 5px 0 15px">I would like to generate bitly links for content created <b>on or after</b>&nbsp;';
         $html .=     '<input
