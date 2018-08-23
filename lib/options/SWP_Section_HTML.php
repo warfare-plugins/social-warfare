@@ -537,13 +537,15 @@ class SWP_Section_HTML extends SWP_Option {
             'off'   => __( 'Off', 'social_warfare')
         ];
 
-        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container" ';
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
         $html .= $this->render_dependency();
         $html .= $this->render_premium();
         $html .= '>';
 
         $start_date = SWP_Utility::get_option( 'bitly_start_date' );
+
         if ( !$start_date ) {
+            // die(var_dump($start_date));
             $start_date = '';
         }
 
@@ -551,8 +553,8 @@ class SWP_Section_HTML extends SWP_Option {
         $html .=     '<input
                          style="float: right;"
                          type="text"
-                         id="bitly_start_date"
-                         name="bitly_start_date"
+                         id="' . $this->key . '"
+                         name="' . $this->key . '"
                          value="' . $start_date . '"
                       />
                   </p>';
