@@ -438,19 +438,19 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         // Iterate over the current set of matched elements.
         $('.swp-content-locator').parent().find('img').each(function() {
-            var $image = $(this);
+            var image = $(this);
 
             if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-                if (jQuery($image).parents().filter("a").length) {
+                if (jQuery(image).parents().filter("a").length) {
                     return;
                 }
             }
 
-            if ($image.outerHeight() < swpPinIt.minHeight || $image.outerWidth() < swpPinIt.minWidth) {
+            if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
                 return;
             }
 
-            if ($image.hasClass('no_pin') || $image.hasClass('no-pin')) {
+            if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
                 return;
             }
 
@@ -461,12 +461,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 var i = new Image();
                 i.src = swpPinIt.image_source;
                 pinMedia = jQuery(i).src;
-            } else if ($image.data('media')) {
-                pinMedia = $image.data('media');
+            } else if (image.data('media')) {
+                pinMedia = image.data('media');
             } else if ($(this).data('lazy-src')) {
                 pinMedia = $(this).data('lazy-src');
-            } else if ($image[0].src) {
-                pinMedia = $image[0].src;
+            } else if (image[0].src) {
+                pinMedia = image[0].src;
             }
 
             // Bail if we don't have any media to pin.
@@ -476,25 +476,25 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
             var pinDesc = '';
 
-            if (typeof $image.data("pin-description") != 'undefined') {
-                pinDesc = $image.data("pin-description");
+            if (typeof image.data("pin-description") != 'undefined') {
+                pinDesc = image.data("pin-description");
             } else if ('undefined' !== typeof swpPinIt.image_description){
                 pinDesc = swpPinIt.image_description;
-            } else if ($image.attr('title')) {
-                pinDesc = $image.attr('title');
-            } else if ($image.attr('alt')) {
-                pinDesc = $image.attr('alt');
+            } else if (image.attr('title')) {
+                pinDesc = image.attr('title');
+            } else if (image.attr('alt')) {
+                pinDesc = image.attr('alt');
             }
 
             var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(options.pageURL) + '&is_video=false' + '&description=' +  encodeURIComponent(pinDesc);
-            var imageClasses = $image.attr('class');
-            var imageStyle = $image.attr('style');
+            var imageClasses = image.attr('class');
+            var imageStyle = image.attr('style');
 
-            $image.removeClass().attr('style', '').wrap(options.wrap);
+            image.removeClass().attr('style', '').wrap(options.wrap);
 
-            $image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+            image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
 
-            $image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+            image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
 
             $('.sw-pinit .sw-pinit-button').on('click', function() {
                       window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
