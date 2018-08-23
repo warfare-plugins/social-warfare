@@ -542,6 +542,21 @@ class SWP_Section_HTML extends SWP_Option {
         $html .= $this->render_premium();
         $html .= '>';
 
+        $start_date = SWP_Utility::get_option( 'bitly_start_date' );
+        if ( !$start_date ) {
+            $start_date = '';
+        }
+
+        $html .= '<p class="sw-subtitle">I would like to generate bitly links for content created <b>on or after</b>&nbsp;';
+        $html .=     '<input
+                         type="text"
+                         id="bitly_start_date"
+                         name="bitly_start_date"
+                         value="' . $start_date . '"
+                      />
+                  <br/>';
+        $html .= 'Please enter your date in the following format: <code>YYYY-MM-DD</code></p>';
+
         $html .= '<div class="sw-grid sw-col-300">';
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type' ,'social-warfare' ) . '</p>';
         $html .= '</div>';
