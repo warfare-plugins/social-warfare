@@ -450,7 +450,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return;
             }
 
-            if ($image.hasClass('no_pin')) {
+            if ($image.hasClass('no_pin') || $image.hasClass('no-pin')) {
                 return;
             }
 
