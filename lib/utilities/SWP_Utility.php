@@ -242,7 +242,7 @@ class SWP_Utility {
     public static function get_post_types() {
 		$types = get_post_types( array( 'public' => true, '_builtin' => false ), 'names' );
 
-        $types = array_merge( $types, array( 'post', 'page' ) );
+        $types = array_merge( array( 'home', 'archive_categories', 'post', 'page' ), $types );
 
     	return apply_filters( 'swp_post_types', $types );
     }
