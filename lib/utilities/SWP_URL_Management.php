@@ -124,14 +124,26 @@ class SWP_URL_Management {
             return $array;
         endif;
 
-        $start_date = SWP_Utility::get_option( 'bitly_start_date' );
+        $start_date = trim( SWP_Utility::get_option( 'bitly_start_date' ) );
 
         //* They have decided to only allow posts after a certain date.
         if ( $start_date ) :
-            $start_date = DateTime::createFromFormat('Y-m-d', $start_date);
-            $today = new DateTime();
 
-            if ( $start_date > $today ) :
+            if ( !is_object( $post ) || empty( $post->post_date ) ) :
+                return $array;
+            endif;
+
+            $start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
+
+            //* They did not format the date correctly.
+            if ( false == $start_date ) :
+                return $array;
+            endif;
+
+            $post_date = new DateTime( $post->post_date );
+
+            //* The post is
+            if ( $start_date > $post_date ) :
                 return $array;
             endif;
         endif;
