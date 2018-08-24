@@ -141,9 +141,8 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	public function print_facebook_script() {
-		global $swp_user_options;
 
-		if ( $swp_user_options['recover_shares'] == true ) {
+		if ( true === SWP_Utility::get_option( 'recover_shares' ) ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $this->post_id );
 		} else {
 			$alternateURL = false;
