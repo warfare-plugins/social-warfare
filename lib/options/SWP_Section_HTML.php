@@ -392,9 +392,11 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Floating Buttons (If Activated)' ,'social-warfare' ) . '</p>';
         $html .= '</div>';
 
+        //* Some indices are numeric, others are strings.
+        $i = 0;
         foreach( $post_types as $index => $post ) {
-
-            $priority = ($index + 1) * 10;
+            $i++;
+            $priority = $i * 10;
 
             $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
@@ -573,10 +575,11 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Create Bitly Links?' ,'social-warfare' ) . '</p>';
         $html .= '</div>';
 
-
+        //* Some indices are numeric, others are strings.
+        $i = 0;
         foreach( $post_types as $index => $post ) {
-
-            $priority = ($index + 1) * 10;
+            $i++;
+            $priority = $i * 10;
 
             $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
