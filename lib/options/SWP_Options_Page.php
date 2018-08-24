@@ -260,30 +260,31 @@ class SWP_Options_Page extends SWP_Abstract {
         //* Fetch all the addons the user has installed,
         //* whether or not they are actively registered.
         $addons = apply_filters( 'swp_registrations', array() );
+        $this->is_registered = 0;
         $addon_templates = array();
-        $registered = 0;
         $active_addons = '';
         $registered_addons = '';
 
-        foreach( $addons as $addon ) {
-            if ( gettype($addon) !== 'object' ) :
-                continue;
-            endif;
+        if ( !empty( $addons ) ) :
+
+            foreach( $addons as $addon ) {
+                if ( gettype($addon) !== 'object' ) :
+                    continue;
+                endif;
 
 
-            $addon_templates[] = new SWP_Registration_Tab_Template( $addon );
-            $active_addons .= " $addon->key ";
+                $addon_templates[] = new SWP_Registration_Tab_Template( $addon );
+                $active_addons .= " $addon->key ";
 
-            if ( true === $addon->is_registered ) :
-                $registered_addons .= " $addon->key ";
-                $registered = 1;
-            endif;
-        }
+                if ( true === $addon->is_registered ) :
+                    $registered_addons .= " $addon->key ";
+                    $this->is_registered = 1;
+                endif;
+            }
 
-        $this->is_registered = $registered;
+        endif;
 
         $this->init_registration_tab( $addon_templates );
-
         $menu = $this->create_menu( $addon_templates );
         $tabs = $this->create_tabs( $active_addons, $registered_addons );
 
