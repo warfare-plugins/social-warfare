@@ -352,7 +352,7 @@ class SWP_Social_Network {
 
 		$post_data = $panel_context['post_data'];
 		$share_counts = $panel_context['shares'];
-		$options = $panel_context['options'];
+        $post_data['options'] = $panel_context['options'];
 
 		$share_link = $this->generate_share_link( $post_data );
 
@@ -364,7 +364,7 @@ class SWP_Social_Network {
             $icon .= '</span>';
         $icon .= '</span>';
 
-        if ( true === $this->are_shares_shown( $share_counts , $options ) ) :
+        if ( true === $this->are_shares_shown( $share_counts , $panel_context['options'] ) ) :
             $icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
         else :
             $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
