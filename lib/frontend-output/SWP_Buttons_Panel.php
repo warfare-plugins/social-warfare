@@ -719,7 +719,7 @@ class SWP_Buttons_Panel {
 	            $class = "swp_float_" . $this->option('float_location');
 	        endif;
 
-	        if ( $this->options['float_style_source'] == true ) :
+	        if ( isset( $this->options['float_style_source'] ) && true == $this->options['float_style_source'] ) :
 	            $this->options['float_default_colors'] = $this->option('default_colors');
 	            $this->options['float_single_colors'] = $this->option('single_colors');
 	            $this->options['float_hover_colors'] = $this->option('hover_colors');
