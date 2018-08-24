@@ -29,11 +29,11 @@ define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
  * @TODO   THis should be removed after 31 DEC 2018.
  *
  */
-if ( file_exists( SWP_PLUGIN_DIR . '/functions/legacy/update-checker.php') ) :
-    require_once SWP_PLUGIN_DIR . '/functions/legacy/update-checker.php';
+if ( file_exists( SWP_PLUGIN_DIR . '/lib/legacy/update-checker.php') ) :
+    require_once SWP_PLUGIN_DIR . '/lib/legacy/update-checker.php';
 endif;
 add_filter('the_excerpt', 'do_shortcode', 1);
 
 // Load the main Social_Warfare class and fire up the plugin.
-require_once SWP_PLUGIN_DIR . '/functions/Social_Warfare.php';
+require_once SWP_PLUGIN_DIR . '/lib/Social_Warfare.php';
 new Social_Warfare();
