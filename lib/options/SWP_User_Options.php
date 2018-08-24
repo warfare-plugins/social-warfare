@@ -114,13 +114,16 @@ class SWP_User_options {
 
 	public function generate_whitelist() {
         $addons = apply_filters( 'swp_registrations', array() );
+        $whitelist = array('last_migrated');
+
+        if ( empty( $addons) ) {
+            return $whitelist;
+        }
 
         foreach( $addons as $addon ) {
             $whitelist[] = $addon->key . '_license_key';
             $whitelist[] = $addon->key . '_license_key_timestamp';
         }
-
-        $whitelist[] = 'last_migrated';
 
 		return $whitelist;
 	}
