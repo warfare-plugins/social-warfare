@@ -119,7 +119,6 @@ class SWP_Utility {
             return 0;
         endif;
 
-        $decimal_separator = 'SWP_Utility'::get_option( 'decimal_separator');
 
         if ( $number < 1000 ) :
             return $number;
@@ -133,7 +132,7 @@ class SWP_Utility {
             $value = $number / 1000000;
         }
 
-        if ( 'period' == 'SWP_Utility'::get_option( 'decimals' ) ) :
+        if ( 'period' == SWP_Utility::get_option( 'decimal_separator' ) ) :
             $decimal_point = '.';
             $thousands_separator = ',';
         else :
