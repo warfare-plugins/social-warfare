@@ -38,7 +38,7 @@ class SWP_Mix extends SWP_Social_Network {
 		$this->cta            = __( 'Share','social-warfare' );
 		$this->key            = 'mix';
 		$this->default        = 'false';
-		// $this->base_share_url = 'https://www.stumbleupon.com/submit?url=';
+		$this->base_share_url = 'https://mix.com/mixit?url=';
 
         $today = date("Y-m-d H:i:s");
 
