@@ -1,7 +1,7 @@
 <?php
 
 class Social_Warfare_Addon {
-    public function __construct( $args ) {
+    public function __construct( $args = array() ) {
         $this->establish_class_properties( $args );
         $this->establish_license_key();
         $this->is_registered = $this->establish_resgistration();
@@ -16,16 +16,16 @@ class Social_Warfare_Addon {
     private function establish_class_properties( $args ) {
         $required= ['name', 'key', 'product_id', 'version', 'core_required'];
 
+        foreach($args as $key => $value) {
+            $this->$key = $value;
+        }
+
         foreach($required as $key) {
-            if ( !isset( $args[$key] ) ) :
+            if ( !isset( $this->$key ) ) :
                 $message = "Hey developer, you must provide us this information for your class: <code>$key => \$value</code>";
                 throw new Exception($message);
             endif;
 
-        }
-
-        foreach($args as $key => $value) {
-            $this->$key = $value;
         }
 
         $this->store_url = 'https://warfareplugins.com';

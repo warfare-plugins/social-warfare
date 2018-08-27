@@ -298,7 +298,11 @@ class SWP_Notice {
             $html .= '<div class="swp-actions">';
 
                 foreach( $this->actions as $cta) {
-                    $html .= '<a class="swp-notice-cta ' . $cta['class'] . '" href="' . $cta['href'] . '" target="' . $cta['target'] . '" data-timeframe="' . $cta['timeframe'].'">';
+                    $class = isset( $cta['class'] ) ? $cta['class'] : '';
+                    $href = isset( $cta['href'] ) ? $cta['href'] : '';
+                    $target = isset( $cta['target'] ) ? $cta['target'] : '';
+                    $timeframe = isset( $cta['timeframe'] ) ?  $cta['timeframe'] : 0;
+                    $html .= '<a class="swp-notice-cta ' . $class . '" href="' . $href . '" target="' . $target . '" data-timeframe="' . $timeframe .'">';
                         $html .= $cta['action'];
                     $html .= "</a>";
                 }
@@ -330,11 +334,7 @@ class SWP_Notice {
             return $notices;
         endif;
 
-        if ( empty( $this->html ) ) :
-            $this->render_HTML();
-        endif;
-
-        return $notices .= $this->html;
+        return $this->html;
     }
 
 
