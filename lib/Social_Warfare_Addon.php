@@ -13,7 +13,7 @@ class Social_Warfare_Addon {
         add_filter( 'swp_registrations', array( $this, 'add_self' ) );
     }
 
-    private function establish_class_properties( $args ) {
+    private function establish_class_properties( $args = array () ) {
         $required= ['name', 'key', 'product_id', 'version', 'core_required'];
 
         foreach($args as $key => $value) {
@@ -22,7 +22,7 @@ class Social_Warfare_Addon {
 
         foreach($required as $key) {
             if ( !isset( $this->$key ) ) :
-                $message = "Hey developer, you must provide us this information for your class: <code>$key => \$value</code>";
+                $message = "Hey developer, you must provide us this information for your class: $key => \$value";
                 throw new Exception($message);
             endif;
 
