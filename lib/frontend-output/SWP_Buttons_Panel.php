@@ -905,12 +905,12 @@ class SWP_Buttons_Panel {
      *
      * @since  3.0.0 | 18 APR 2018 | Created
      * @param  none
+     *
      * @return string $html The fully qualified HTML to display share counts.
-     * @todo   Simplify that conditional. Maybe break it into another method.
      *
      */
     public function render_total_shares_html() {
-        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
+        $buttons = isset( $this->args['buttons'] ) ? strtolower( $this->args['buttons'] ) : array();
 
         if ( false == $this->option('total_shares') ) {
             return '';
