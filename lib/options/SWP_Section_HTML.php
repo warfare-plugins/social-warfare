@@ -86,7 +86,7 @@ class SWP_Section_HTML extends SWP_Option {
         $status_title =  __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' );
 
         //* This is an array of fully qualified HTML strings, ready to print.
-        $cache = get_option("swp_json_cache");
+        $cache = get_option( 'swp_json_cache' );
         $html = '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
         $html .= '<div id="swp-admin-sidebar">';
 
@@ -118,8 +118,6 @@ class SWP_Section_HTML extends SWP_Option {
         /**
     	 * System Status Generator
     	 */
-    	global $swp_user_options;
-
     	if ( ! function_exists( 'get_plugins' ) ) {
     		require_once ABSPATH . 'wp-admin/includes/plugin.php';
     	}
@@ -180,16 +178,11 @@ class SWP_Section_HTML extends SWP_Option {
 	 *
 	 */
     public function do_tweet_count_registration() {
-        global $swp_user_options;
-
         // Check for a default value
-        if ( isset( $swp_user_options['twitter_shares'] ) && $swp_user_options['twitter_shares'] == true ) :
+        if ( true == SWP_Utility::get_option( 'twitter_shares' ) ) :
             $status = 'on';
             $selected = 'checked';
-        elseif ( isset( $swp_user_options['twitter_shares'] ) && $swp_user_options['twitter_shares'] == false ) :
-            $status = 'off';
-            $selected = '';
-        else :
+        else:
             $status = 'off';
             $selected = '';
         endif;
