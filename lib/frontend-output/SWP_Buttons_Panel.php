@@ -941,17 +941,26 @@ class SWP_Buttons_Panel {
      *
      */
     public function do_print() {
-
         $this->render_HTML();
 
         //* Add the Panel markup based on the location.
-        if ( $this->location === 'both' ) :
-            $content = $this->html . $this->content . $this->html;
-        elseif ( $this->location === 'above' ) :
-            $content = $this->html . $this->content;
-        else :
-            $content = $this->content . $this->html;
-        endif;
+        switch ($this->location) {
+            case 'both' :
+                $content = $this->html . $this->content . $this->html;
+            break;
+            case 'above' :
+                $content = $this->html . $this->content;
+            break;
+            case 'below' :
+                $content = $this->content . $this->html;
+            break;
+
+            case 'none' :
+                $content = $this->content;
+            default :
+                $content = $this->content;
+            break;
+        }
 
         $this->content = $content;
 
