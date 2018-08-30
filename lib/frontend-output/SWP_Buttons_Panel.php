@@ -153,7 +153,15 @@ class SWP_Buttons_Panel {
 	 * @access public
 	 *
 	 */
-	public function set_option( $option , $value ) {
+	public function set_option( $option = '', $value = null ) {
+        if ( empty( $option ) ) :
+            $message = "Hey developer, " . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype($value) . ".";
+            throw new Exception($message);
+        elseif ( null == $value ) :
+            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " a second paramter: \$value (mixed type). You provided " . gettype($value) . ".";
+            throw new Exception($message);
+        endif;
+
 		$this->options[$this->options] = $value;
 		return $this;
 	}
@@ -170,7 +178,12 @@ class SWP_Buttons_Panel {
 	 * @access public
 	 *
 	 */
-	public function set_options( $options ) {
+	public function set_options( $options = array() ) {
+        if ( !is_array( $options) ) :
+            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " requires an arry of options. You provided " . gettype($options) . ".";
+            throw new Exception($message);
+        endif;
+
 		array_merge( $this->options , $options );
 		return $this;
 	}
@@ -346,8 +359,6 @@ class SWP_Buttons_Panel {
 
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
-            echo "<pre>";
-            die(Var_dump($this->post_data));
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
 
             if ( isset( $location ) ) :
@@ -410,9 +421,19 @@ class SWP_Buttons_Panel {
 
         $user_settings = $this->location !== 'none';
 
+        if (!$user_settings) {
+            echo "<br>User Settings Fault <br>", var_dump($this);
+        }
         $desired_conditions = is_main_query() && get_post_status( $this->post_id ) === 'publish';
 
+        if (!$desired_conditions) {
+            echo "<br>Desired conditions Fault <br>", var_dump($this);
+        }
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
+
+        if ($undesired_conditions) {
+            echo "<br>Undesired Conditions Fault <br>", var_dump($this);
+        }
 
 
         return $user_settings && $desired_conditions && !$undesired_conditions;
@@ -441,6 +462,7 @@ class SWP_Buttons_Panel {
              'top'    == SWP_Utility::get_option( 'float_mobile') ||
              'bottom' == SWP_Utility::get_option( 'float_mobile')
            ) :
+          echo "rendering HTML for \$this: <pre> ",  die(print_r($this));
 
              if ( true !== $this->option( 'floating_panel' ) ) :
                  return $this->content;
