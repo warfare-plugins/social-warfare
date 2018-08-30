@@ -270,7 +270,7 @@ class SWP_Buttons_Panel {
     public function establish_share_data() {
         global $SWP_Post_Caches;
         $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
-        // echo "The post cache", var_dump($SWP_Post_Caches->get_post_cache( $this->post_id ));
+
         return $this;
     }
 
@@ -352,13 +352,16 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		// If we are on the home page
-		if( is_front_page() ):
+		if( is_front_page() ) :
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
+
+            return;
         endif;
 
+
 		// If we are on a singular page
-		if ( is_singular() && !is_front_page() ) :
+		if ( is_singular() ) :
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
 
             if ( isset( $location ) ) :
@@ -366,6 +369,7 @@ class SWP_Buttons_Panel {
             endif;
 
         endif;
+
 
         if ( is_archive() || is_home() ) :
             $this->location = $this->options['location_archive_categories'];
@@ -416,25 +420,15 @@ class SWP_Buttons_Panel {
 
         //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
         if ( empty( $this->content ) && !isset( $this->args['content'] )  ) :
+            echo "<br><pre>No content. <br>", var_dump($this); die;
             return true;
         endif;
 
         $user_settings = $this->location !== 'none';
 
-        if (!$user_settings) {
-            echo "<br>User Settings Fault <br>", var_dump($this);
-        }
         $desired_conditions = is_main_query() && get_post_status( $this->post_id ) === 'publish';
 
-        if (!$desired_conditions) {
-            echo "<br>Desired conditions Fault <br>", var_dump($this);
-        }
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
-
-        if ($undesired_conditions) {
-            echo "<br>Undesired Conditions Fault <br>", var_dump($this);
-        }
-
 
         return $user_settings && $desired_conditions && !$undesired_conditions;
     }
@@ -457,17 +451,14 @@ class SWP_Buttons_Panel {
         endif;
 
         $style = "";
+        $float_mobile = SWP_Utility::get_option( 'float_mobile');
 
-        if ( !$this->should_print() &&
-             'top'    == SWP_Utility::get_option( 'float_mobile') ||
-             'bottom' == SWP_Utility::get_option( 'float_mobile')
-           ) :
-          echo "rendering HTML for \$this: <pre> ",  die(print_r($this));
-
+        if ( !$this->should_print() && ( 'top' == $float_mobile || 'bottom' == $float_mobile ) ) :
              if ( true !== $this->option( 'floating_panel' ) ) :
                  return $this->content;
              endif;
-             $style = 'opacity: 0;';
+
+             $style = ' opacity: 0; ';
          endif;
 
 		// Create the HTML Buttons panel wrapper
@@ -477,11 +468,10 @@ class SWP_Buttons_Panel {
             $this->get_scale() .
             '" ' . // end CSS classes
             $this->get_min_width() .
-            $this->get_float_position() .
             $this->get_float_background() .
             //* These below two data-attribute methods are inconsistent. But they
             //* already existed and are used elsewhere, so I'm not touching them.
-            // '" data-float="' . $this->get_float_location() .
+            '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" style="' . $style . '" >';
 
@@ -555,18 +545,6 @@ class SWP_Buttons_Panel {
 
         return " data-min-width='{$min_width}' ";
     }
-
-    protected function get_float_position() {
-        $location_post = $this->option( 'location_post' );
-
-        //* They have gone from an Addon to Core.
-        if ( false === $location_post ) :
-            return " ";
-        endif;
-
-        return '" data-float="' . $location_post . '"';
-    }
-
 
     protected function get_float_background() {
         $float_background_color = $this->option( 'float_background_color' );
@@ -657,13 +635,11 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_mobile_float_location() {
-		if( is_home() || is_front_page() ):
-			return 'none';
-		elseif( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
+		if( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
 			return $this->option('float_mobile');
-		else:
-			return 'none';
 		endif;
+
+        return 'none';
 	}
 
 
