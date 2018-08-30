@@ -517,7 +517,7 @@ class Social_Warfare {
 
 
     /**
-     * 
+     *
      * When we have known incompatability with other themes/plugins,
      * we can put those checks in here.
      *
@@ -538,7 +538,7 @@ class Social_Warfare {
 
         // Disable subtitles plugin to prevent it from injecting subtitles
         // into our share titles.
-        if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
+        if ( function_exists( 'is_plugin_active' ) && is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
             remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
         endif;
 
