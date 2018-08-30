@@ -136,7 +136,8 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function localize_options() {
-		$this->options = $this->args;
+        global $swp_user_options;
+		$this->options = array_merge( $swp_user_options, $this->args);
 	}
 
 
@@ -345,10 +346,14 @@ class SWP_Buttons_Panel {
 
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
+            echo "<pre>";
+            die(Var_dump($this->post_data));
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
+
             if ( isset( $location ) ) :
                 $this->location = $location;
             endif;
+
         endif;
 
         if ( is_archive() || is_home() ) :
@@ -405,9 +410,10 @@ class SWP_Buttons_Panel {
 
         $user_settings = $this->location !== 'none';
 
-        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_id ) === 'publish';
+        $desired_conditions = is_main_query() && get_post_status( $this->post_id ) === 'publish';
 
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
+
 
         return $user_settings && $desired_conditions && !$undesired_conditions;
     }
@@ -443,7 +449,7 @@ class SWP_Buttons_Panel {
          endif;
 
 		// Create the HTML Buttons panel wrapper
-        $container = '<div class="swp_social_panel ' .
+        $container = '<div class="swp_social_panel swp_horizontal_panel' .
             $this->get_shape() .
             $this->get_colors() .
             $this->get_scale() .
@@ -767,14 +773,14 @@ class SWP_Buttons_Panel {
         else :
 			// Order manually using the user's specified order.
             if ( !isset( $this->options['order_of_icons_method'] ) || $this->options['order_of_icons_method'] === 'manual' ) :
-                $order = $this->options['order_of_icons'];
+                $order = SWP_Utility::get_option( 'order_of_icons' );
 
 			// Order them dynamically according to share counts.
             else :
                 $order = $this->get_dynamic_buttons_order();
             endif;
 
-			$network_objects = $this->order_network_objects($order);
+			$network_objects = $this->get_ordered_network_objects( $order );
         endif;
 
         $this->networks = $network_objects;
@@ -812,15 +818,21 @@ class SWP_Buttons_Panel {
 
 
 	/**
-	 * A method to shuffle the array of network objects.
+	 * A method to arrange the array of network objects in proper order.
 	 *
 	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @since  3.3.0 | 30 AUG 2018 | Renamed from 'order_network_objects' to 'get_ordered_network_objects'
 	 * @param  array $order An ordered array of network keys.
 	 * @return array        An ordered array of network objects.
 	 *
 	 */
-	public function order_network_objects( $order ) {
+	public function get_ordered_network_objects( $order ) {
 		$network_objects = array();
+
+        if ( empty( $order ) ) :
+            $order = SWP_Utility::get_option( 'order_of_icons' );
+        endif;
+
 		foreach( $order as $network_key ) {
             foreach( $this->networks as $key => $network ) :
                 if ( $key === $network_key ) :
@@ -828,6 +840,7 @@ class SWP_Buttons_Panel {
                 endif;
             endforeach;
         }
+
 		return $network_objects;
 	}
 
