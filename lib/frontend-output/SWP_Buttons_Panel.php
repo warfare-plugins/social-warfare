@@ -982,6 +982,10 @@ class SWP_Buttons_Panel {
      *
      */
     public function the_buttons( $content = null ) {
+        if ( $this->has_plugin_conflict() ) {
+            return;
+        }
+
         if ( empty( $this->content ) ) :
             return $this->do_print();
         endif;
@@ -993,10 +997,6 @@ class SWP_Buttons_Panel {
         if ( null !== $content && gettype( $content ) === 'string' ) :
             $this->args['content'] = $content;
         endif;
-
-        if ( $this->has_plugin_conflict() ) {
-            return;
-        }
 
         return $this->do_print();
     }
