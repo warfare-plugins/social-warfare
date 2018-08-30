@@ -38,7 +38,7 @@ class Social_Warfare {
 	}
 
     public function init() {
-        if ( $this->has_plugin_conflict() ) :
+        if ( Social_Warfare::has_plugin_conflict() ) :
             return;
         endif;
 
@@ -534,7 +534,7 @@ class Social_Warfare {
      * @return bool True iff the conflict is fatal, else false.
      *
      */
-    protected function has_plugin_conflict() {
+    public static function has_plugin_conflict() {
 
         // Disable subtitles plugin to prevent it from injecting subtitles
         // into our share titles.
