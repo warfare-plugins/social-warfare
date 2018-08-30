@@ -100,6 +100,10 @@ class SWP_Buttons_Panel {
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks;
 
+        if ( $this->has_plugin_conflict() ) {
+            return;
+        }
+
         $this->networks     = $swp_social_networks;
 		$this->args         = $args;
         $this->content      = isset( $args['content'] ) ? $args['content'] : '';
@@ -982,10 +986,6 @@ class SWP_Buttons_Panel {
      *
      */
     public function the_buttons( $content = null ) {
-        if ( $this->has_plugin_conflict() ) {
-            return;
-        }
-
         if ( empty( $this->content ) ) :
             return $this->do_print();
         endif;
@@ -997,6 +997,8 @@ class SWP_Buttons_Panel {
         if ( null !== $content && gettype( $content ) === 'string' ) :
             $this->args['content'] = $content;
         endif;
+
+
 
         return $this->do_print();
     }
