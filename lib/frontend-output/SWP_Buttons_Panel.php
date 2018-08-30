@@ -136,9 +136,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function localize_options() {
-        global $swp_user_options;
-
-		$this->options = array_merge( $swp_user_options, $this->args );
+		$this->options = $this->args;
 	}
 
 
@@ -564,16 +562,10 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function option($key) {
-
-		$defaults = array();
-		$defaults = apply_filters('swp_options_page_defaults' , $defaults );
-
 		if( isset( $this->options[$key] ) ):
 			return $this->options[$key];
-		elseif( isset( $defaults[$key] ) ):
-			return $defaults[$key];
 		else:
-			return false;
+			return SWP_Utility::get_option( $key );
 		endif;
 	}
 
