@@ -455,7 +455,7 @@ class SWP_Buttons_Panel {
             $this->get_float_background() .
             //* These below two data-attribute methods are inconsistent. But they
             //* already existed and are used elsewhere, so I'm not touching them.
-            '" data-float="' . $this->get_float_location() .
+            // '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" style="' . $style . '" >';
 
@@ -538,7 +538,7 @@ class SWP_Buttons_Panel {
             return " ";
         endif;
 
-        return '" data-float-location="' . $location_post . '"';
+        return '" data-float="' . $location_post . '"';
     }
 
 
