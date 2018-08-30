@@ -137,8 +137,7 @@ class SWP_Buttons_Panel {
 	 */
 	private function localize_options() {
         global $swp_user_options;
-
-		$this->options = array_merge( $swp_user_options, $this->args );
+		$this->options = array_merge( $swp_user_options, $this->args);
 	}
 
 
@@ -189,34 +188,32 @@ class SWP_Buttons_Panel {
 	 * @access public
 	 *
 	 */
-	public function establish_post_id() {
-    	// Legacy support.
-		if ( isset( $this->args['postid'] ) && is_numeric( $this->args['postid'] ) ) :
+     public function establish_post_id() {
+         global $post;
+
+         if ( isset( $this->args['url'] ) ) :
+             if ( $id = url_to_postid( $this->args['url'] ) ) :
+                 return $this->post_id = $id;
+             endif;
+         endif;
+
+        // Legacy support.
+        if ( isset( $this->args['postid'] ) ) :
             return $this->post_id = $this->args['postid'];
         endif;
-
-    	// Current argument.
-		if ( isset( $this->args['post_id'] ) && is_numeric( $this->args['post_id'] ) ) :
+        // Current argument.
+        if ( isset( $this->args['post_id'] ) && is_numeric( $this->args['post_id'] ) ) :
             return $this->post_id = $this->args['post_id'];
         endif;
-
         if ( isset( $this->args['id'] ) && is_numeric( $this->args['id'] ) ) :
             return $this->post_id = $this->args['id'];
         endif;
 
-        if ( isset( $this->args['url'] ) && is_numeric( $this->args['url'] ) ) :
-            if ( $id = url_to_postid( $this->args['url'] ) ) :
-                return $this->post_id = $id;
-            endif;
-        endif;
-
         //* We weren't provided any context for an ID, so default to the post.
-        global $post;
-
         if ( is_object( $post ) ) :
             $this->post_id = $post->ID;
         endif;
-	}
+   	}
 
 
     /**
@@ -349,10 +346,14 @@ class SWP_Buttons_Panel {
 
 		// If we are on a singular page
 		if ( is_singular() && !is_front_page() ) :
+            echo "<pre>";
+            die(Var_dump($this->post_data));
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
+
             if ( isset( $location ) ) :
                 $this->location = $location;
             endif;
+
         endif;
 
         if ( is_archive() || is_home() ) :
@@ -383,38 +384,6 @@ class SWP_Buttons_Panel {
 
 
     /**
-     * When we have known incompatability with other themes/plugins,
-     * we can put those checks in here.
-     *
-     * Checks for known conflicts with other plugins and themes.
-     *
-     * If there is a fatal conflict, returns true and exits printing.
-     * If there are other conflicts, they are silently handled and can still
-     * print.
-     *
-     * @since  3.0.0 | 01 MAR 2018 | Created
-     * @param  void
-     * @return bool $conflict True iff the conflict is fatal.
-     *
-     */
-    protected function has_plugin_conflict() {
-
-		// Disable subtitles plugin to prevent it from injecting subtitles
-		// into our share titles.
-		if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
-			remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
-		endif;
-
-		//* Disable on BuddyPress pages.
-        if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
-            return true;
-        endif;
-
-		return false;
-    }
-
-
-    /**
      * Tells you true/false if the buttons should print on this page.
      *
      * Each variable is a boolean value. For the buttons to eligible for printing,
@@ -441,9 +410,10 @@ class SWP_Buttons_Panel {
 
         $user_settings = $this->location !== 'none';
 
-        $desired_conditions = is_main_query() && in_the_loop() && get_post_status( $this->post_id ) === 'publish';
+        $desired_conditions = is_main_query() && get_post_status( $this->post_id ) === 'publish';
 
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
+
 
         return $user_settings && $desired_conditions && !$undesired_conditions;
     }
@@ -467,23 +437,19 @@ class SWP_Buttons_Panel {
 
         $style = "";
 
-		if ( !$this->should_print() ) :
-            //* Top and bottom floating buttons require a button panel present on the page.
-            $float_location = $this->get_float_location();
+        if ( !$this->should_print() &&
+             'top'    == SWP_Utility::get_option( 'float_mobile') ||
+             'bottom' == SWP_Utility::get_option( 'float_mobile')
+           ) :
 
-            if ( true === $this->option( 'floating_panel' ) && 'top' ==  $float_location || 'bottom' == $float_location ) :
-                //* Using display: none interfere's with the element's position,
-                //* Which we need to be calculated correctly.
-                $style = 'opacity: 0;';
-            else :
-    			return $this->content;
-            endif;
-		endif;
-
-        $container =
+             if ( true !== $this->option( 'floating_panel' ) ) :
+                 return $this->content;
+             endif;
+             $style = 'opacity: 0;';
+         endif;
 
 		// Create the HTML Buttons panel wrapper
-        $container = '<div class="swp_social_panel ' .
+        $container = '<div class="swp_social_panel swp_horizontal_panel' .
             $this->get_shape() .
             $this->get_colors() .
             $this->get_scale() .
@@ -493,7 +459,7 @@ class SWP_Buttons_Panel {
             $this->get_float_background() .
             //* These below two data-attribute methods are inconsistent. But they
             //* already existed and are used elsewhere, so I'm not touching them.
-            '" data-float="' . $this->get_float_location() .
+            // '" data-float="' . $this->get_float_location() .
             '" data-float-mobile="' . $this->get_mobile_float_location() .
             '" style="' . $style . '" >';
 
@@ -576,7 +542,7 @@ class SWP_Buttons_Panel {
             return " ";
         endif;
 
-        return '" data-float-location="' . $location_post . '"';
+        return '" data-float="' . $location_post . '"';
     }
 
 
@@ -602,16 +568,10 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function option($key) {
-
-		$defaults = array();
-		$defaults = apply_filters('swp_options_page_defaults' , $defaults );
-
 		if( isset( $this->options[$key] ) ):
 			return $this->options[$key];
-		elseif( isset( $defaults[$key] ) ):
-			return $defaults[$key];
 		else:
-			return false;
+			return SWP_Utility::get_option( $key );
 		endif;
 	}
 
@@ -719,7 +679,7 @@ class SWP_Buttons_Panel {
 	            $class = "swp_float_" . $this->option('float_location');
 	        endif;
 
-	        if ( $this->options['float_style_source'] == true ) :
+	        if ( isset( $this->options['float_style_source'] ) && true == $this->options['float_style_source'] ) :
 	            $this->options['float_default_colors'] = $this->option('default_colors');
 	            $this->options['float_single_colors'] = $this->option('single_colors');
 	            $this->options['float_hover_colors'] = $this->option('hover_colors');
@@ -813,14 +773,14 @@ class SWP_Buttons_Panel {
         else :
 			// Order manually using the user's specified order.
             if ( !isset( $this->options['order_of_icons_method'] ) || $this->options['order_of_icons_method'] === 'manual' ) :
-                $order = $this->options['order_of_icons'];
+                $order = SWP_Utility::get_option( 'order_of_icons' );
 
 			// Order them dynamically according to share counts.
             else :
                 $order = $this->get_dynamic_buttons_order();
             endif;
 
-			$network_objects = $this->order_network_objects($order);
+			$network_objects = $this->get_ordered_network_objects( $order );
         endif;
 
         $this->networks = $network_objects;
@@ -858,15 +818,21 @@ class SWP_Buttons_Panel {
 
 
 	/**
-	 * A method to shuffle the array of network objects.
+	 * A method to arrange the array of network objects in proper order.
 	 *
 	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @since  3.3.0 | 30 AUG 2018 | Renamed from 'order_network_objects' to 'get_ordered_network_objects'
 	 * @param  array $order An ordered array of network keys.
 	 * @return array        An ordered array of network objects.
 	 *
 	 */
-	public function order_network_objects( $order ) {
+	public function get_ordered_network_objects( $order ) {
 		$network_objects = array();
+
+        if ( empty( $order ) ) :
+            $order = SWP_Utility::get_option( 'order_of_icons' );
+        endif;
+
 		foreach( $order as $network_key ) {
             foreach( $this->networks as $key => $network ) :
                 if ( $key === $network_key ) :
@@ -874,6 +840,7 @@ class SWP_Buttons_Panel {
                 endif;
             endforeach;
         }
+
 		return $network_objects;
 	}
 
@@ -905,12 +872,12 @@ class SWP_Buttons_Panel {
      *
      * @since  3.0.0 | 18 APR 2018 | Created
      * @param  none
+     *
      * @return string $html The fully qualified HTML to display share counts.
-     * @todo   Simplify that conditional. Maybe break it into another method.
      *
      */
     public function render_total_shares_html() {
-        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
+        $buttons = isset( $this->args['buttons'] ) ? strtolower( $this->args['buttons'] ) : array();
 
         if ( false == $this->option('total_shares') ) {
             return '';
@@ -943,17 +910,26 @@ class SWP_Buttons_Panel {
      *
      */
     public function do_print() {
-
         $this->render_HTML();
 
         //* Add the Panel markup based on the location.
-        if ( $this->location === 'both' ) :
-            $content = $this->html . $this->content . $this->html;
-        elseif ( $this->location === 'above' ) :
-            $content = $this->html . $this->content;
-        else :
-            $content = $this->content . $this->html;
-        endif;
+        switch ($this->location) {
+            case 'both' :
+                $content = $this->html . $this->content . $this->html;
+            break;
+            case 'above' :
+                $content = $this->html . $this->content;
+            break;
+            case 'below' :
+                $content = $this->content . $this->html;
+            break;
+
+            case 'none' :
+                $content = $this->content;
+            default :
+                $content = $this->content;
+            break;
+        }
 
         $this->content = $content;
 
@@ -987,9 +963,7 @@ class SWP_Buttons_Panel {
             $this->args['content'] = $content;
         endif;
 
-        if ( $this->has_plugin_conflict() ) {
-            return;
-        }
+
 
         return $this->do_print();
     }

@@ -148,7 +148,9 @@ class SWP_Twitter extends SWP_Social_Network {
 			$tweet .= ' @'.str_replace('@','',$twitter_mention);
 		endif;
 
-		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , SWP_User_Profile::get_author( $post_data['ID'] ) );
+        $author = SWP_User_Profile::get_author( $post_data['ID'] );
+
+		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , $author );
 
         if ( $user_twitter_handle ) :
 			$via_parameter = '&via=' . str_replace( '@','',$user_twitter_handle );

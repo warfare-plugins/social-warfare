@@ -1,7 +1,7 @@
 <?php
 
 class Social_Warfare_Addon {
-    public function __construct( $args ) {
+    public function __construct( $args = array() ) {
         $this->establish_class_properties( $args );
         $this->establish_license_key();
         $this->is_registered = $this->establish_resgistration();
@@ -13,19 +13,19 @@ class Social_Warfare_Addon {
         add_filter( 'swp_registrations', array( $this, 'add_self' ) );
     }
 
-    private function establish_class_properties( $args ) {
+    private function establish_class_properties( $args = array () ) {
         $required= ['name', 'key', 'product_id', 'version', 'core_required'];
-
-        foreach($required as $key) {
-            if ( !isset( $args[$key] ) ) :
-                $message = "Hey developer, you must provide us this information for your class: <code>$key => \$value</code>";
-                throw new Exception($message);
-            endif;
-
-        }
 
         foreach($args as $key => $value) {
             $this->$key = $value;
+        }
+
+        foreach($required as $key) {
+            if ( !isset( $this->$key ) ) :
+                $message = "Hey developer, you must provide us this information for your class: $key => \$value";
+                throw new Exception($message);
+            endif;
+
         }
 
         $this->store_url = 'https://warfareplugins.com';
@@ -34,7 +34,7 @@ class Social_Warfare_Addon {
 
 
     /**
-     * The callback function used to add a new instance of this 
+     * The callback function used to add a new instance of this
      * to our swp_registrations filter.
      *
      * This should be the last item called in an addon's main file.
@@ -227,7 +227,7 @@ class Social_Warfare_Addon {
         $response = array();
 
     	// Check to see if the license key is even in the options
-    	if ( SWP_Utility::get_option( $key.'_license_key' ) ) :
+    	if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
 
     		$response['success'] = true;
     		echo json_encode($response);

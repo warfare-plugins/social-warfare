@@ -93,6 +93,7 @@ class SWP_URL_Management {
 	 *
 	 */
 	public function link_shortener( $array ) {
+        global $post;
         $postID = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
@@ -123,9 +124,38 @@ class SWP_URL_Management {
             return $array;
         endif;
 
+        $start_date = trim( SWP_Utility::get_option( 'bitly_start_date' ) );
+
+        //* They have decided to only allow posts after a certain date.
+        if ( $start_date ) :
+
+            if ( !is_object( $post ) || empty( $post->post_date ) ) :
+                return $array;
+            endif;
+
+            $start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
+
+            //* They did not format the date correctly.
+            if ( false == $start_date ) :
+                return $array;
+            endif;
+
+            $post_date = new DateTime( $post->post_date );
+
+            //* The post is
+            if ( $start_date > $post_date ) :
+                return $array;
+            endif;
+        endif;
+
+        $links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
+
+        //* They have disabled bitly links on this post type.
+        if ( false == $links_enabled || 'off' == $links_enabled ) :
+            return $array;
+        endif;
 
         $network = $array['network'];
-
 
         if ( true == $google_analytics ) :
             $prior_bitly_url = get_post_meta( $postID, 'bitly_link_' . $network, true );
@@ -246,6 +276,7 @@ class SWP_URL_Management {
 	 */
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
 		global $swp_user_options;
+
 
 		if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
 			return $_GLOBALS['sw']['links'][ $postID ];

@@ -352,7 +352,7 @@ class SWP_Social_Network {
 
 		$post_data = $panel_context['post_data'];
 		$share_counts = $panel_context['shares'];
-		$options = $panel_context['options'];
+        $post_data['options'] = $panel_context['options'];
 
 		$share_link = $this->generate_share_link( $post_data );
 
@@ -364,7 +364,7 @@ class SWP_Social_Network {
             $icon .= '</span>';
         $icon .= '</span>';
 
-        if ( true === $this->are_shares_shown( $share_counts , $options ) ) :
+        if ( true === $this->are_shares_shown( $share_counts , $panel_context['options'] ) ) :
             $icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
         else :
             $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
@@ -391,25 +391,26 @@ class SWP_Social_Network {
 
 
 	/**
-	 * Are Shares Shown?
 	 *
-	 * This function returns a boolean letting the render_html method know
-	 * if we are supposed to be showing the share count or not.
+	 * Returns a boolean indicateding whether or not to display share counts.
 	 *
 	 * @since  3.0.0 | 18 APR 2018 | Created
+	 * @since  3.3.0 | 24 AUG 2018 | Removed use of $options, calls SWP::Utility instead.
+	 *
 	 * @param  array $share_counts The array of share counts
-	 * @param  array $options      The array of options from the button panel object.
-	 * @return bool                Do we show the share counts?
+	 * @param  array $options  DEPRECATED The array of options from the button panel object.
+	 *
+	 * @return bool  True if share counts should be displayed, else false.
 	 *
 	 */
-	public function are_shares_shown( $share_counts , $options ) {
+	public function are_shares_shown( $share_counts , $options = array()) {
 
 		// False if the share count is empty
 		if ( empty( $share_counts[$this->key] ) ) :
 			return false;
 
 		// False if the total share count is below the minimum
-		elseif( $share_counts['total_shares'] < $options['minimum_shares'] ):
+		elseif( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ):
 			return false;
 
 		// False if the share count is zero.
@@ -417,7 +418,7 @@ class SWP_Social_Network {
 			return false;
 
 		// False if network shares are turned off in the options.
-		elseif( false == $options['network_shares'] ):
+		elseif( false == SWP_Utility::get_option( 'network_shares' ) ):
 			return false;
 
 		else :

@@ -32,7 +32,7 @@ class SWP_User_options {
 		$swp_user_options = $this->user_options;
 
 		// Defered to End of Cycle: Add all relevant option info to the database.
-		add_action( 'plugins_loaded', array( $this , 'store_registered_options_data' ), 100 );
+		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 10000 );
 
 		// Debug
         add_action( 'admin_footer', array( $this, 'debug' ) );
@@ -96,6 +96,7 @@ class SWP_User_options {
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
             'values'    => apply_filters( 'swp_options_page_values', array() )
         );
+        $registrations = apply_filters('swp_registrations', []);
 
         foreach($whitelist as $key) {
             if (isset( $this->unfiltered_options[$key] ) ) :
@@ -113,13 +114,16 @@ class SWP_User_options {
 
 	public function generate_whitelist() {
         $addons = apply_filters( 'swp_registrations', array() );
+        $whitelist = array('last_migrated');
+
+        if ( empty( $addons) ) {
+            return $whitelist;
+        }
 
         foreach( $addons as $addon ) {
             $whitelist[] = $addon->key . '_license_key';
             $whitelist[] = $addon->key . '_license_key_timestamp';
         }
-
-        $whitelist[] = 'last_migrated';
 
 		return $whitelist;
 	}
@@ -140,13 +144,17 @@ class SWP_User_options {
         $defaults = array_keys( $this->registered_options['defaults'] );
         $options = array_keys ( $this->user_options );
 
+
+
         $available_options = array_intersect( $defaults, $options );
 
         foreach( $this->user_options as $key => $value ) {
 
             //* Manually filter the order of icons.
             if ( $key == 'order_of_icons' ) :
-                $this->filter_order_of_icons( $value );
+                $value = $this->filter_order_of_icons( $value );
+                $this->user_icons[$key] = $value;
+                continue;
             endif;
 
             if ( !in_array( $key, $available_options ) ) :
@@ -157,8 +165,6 @@ class SWP_User_options {
 
 
     private function filter_order_of_icons( $user_icons = array() ) {
-        global $swp_user_options;
-
         $networks = $this->registered_options['values']['order_of_icons']['values'];
         $user_icons = $this->user_options['order_of_icons'];
 
@@ -173,7 +179,7 @@ class SWP_User_options {
             $user_icons = $this->registered_options['defaults']['order_of_icons'];
         endif;
 
-        $swp_user_options['order_of_icons'] = $user_icons;
+        return $user_icons;
     }
 
 
