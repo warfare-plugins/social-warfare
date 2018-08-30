@@ -433,20 +433,16 @@ class SWP_Buttons_Panel {
 
         $style = "";
 
-		if ( !$this->should_print() ) :
-            //* Top and bottom floating buttons require a button panel present on the page.
-            $float_location = $this->get_float_location();
+        if ( !$this->should_print() &&
+             'top'    == SWP_Utility::get_option( 'float_mobile') ||
+             'bottom' == SWP_Utility::get_option( 'float_mobile')
+           ) :
 
-            if ( true === $this->option( 'floating_panel' ) && 'top' ==  $float_location || 'bottom' == $float_location ) :
-                //* Using display: none interfere's with the element's position,
-                //* Which we need to be calculated correctly.
-                $style = 'opacity: 0;';
-            else :
-    			return $this->content;
-            endif;
-		endif;
-
-        $container =
+             if ( true !== $this->option( 'floating_panel' ) ) :
+                 return $this->content;
+             endif;
+             $style = 'opacity: 0;';
+         endif;
 
 		// Create the HTML Buttons panel wrapper
         $container = '<div class="swp_social_panel ' .
