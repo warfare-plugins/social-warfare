@@ -35,7 +35,7 @@ class SWP_Database_Migration {
      */
     public function __construct() {
 		// Queue up the migrate features to run after plugins are loaded.
-        add_action( 'plugins_loaded', array( $this, 'init' ) );
+        add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
     }
 
 
@@ -86,6 +86,7 @@ class SWP_Database_Migration {
 	 * @return void
 	 */
 	public function debug_parameters() {
+        global $post, $swp_user_options;
 
 		// Output an array of user options if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_user_options') ) :
@@ -94,6 +95,35 @@ class SWP_Database_Migration {
 			echo "</pre>";
 			wp_die();
 		endif;
+
+        if ( true === SWP_Utility::debug('get_filtered_options') ) :
+            global $swp_user_options;
+            echo "<pre>";
+            var_export( $swp_user_options );
+            echo "</pre>";
+            wp_die();
+        endif;
+
+        if ( true == SWP_Utility::debug('get_post_meta') ) :
+            if ( !is_object( $post ) ) :
+                wp_die( "There is no post object for this url." );
+            endif;
+
+            $meta = get_post_meta( $post->ID );
+
+            if ($meta) :
+
+                echo "<pre>";
+                var_export( $meta );
+                echo "</pre>";
+                wp_die();
+
+            else :
+                wp_die( "No post meta for " . $post->post_title );
+            endif;
+
+        endif;
+
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_db') ) {
