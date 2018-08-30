@@ -119,7 +119,6 @@ class SWP_Utility {
             return 0;
         endif;
 
-        $decimal_separator = 'SWP_Utility'::get_option( 'decimal_separator');
 
         if ( $number < 1000 ) :
             return $number;
@@ -133,7 +132,7 @@ class SWP_Utility {
             $value = $number / 1000000;
         }
 
-        if ( 'period' == 'SWP_Utility'::get_option( 'decimals' ) ) :
+        if ( 'period' == SWP_Utility::get_option( 'decimal_separator' ) ) :
             $decimal_point = '.';
             $thousands_separator = ',';
         else :
@@ -141,7 +140,9 @@ class SWP_Utility {
             $thousands_separator = '.';
         endif;
 
-        return number_format( $value, 'SWP_Utility'::get_option( 'decimals' ), $decimal_point, $thousands_separator );
+        $display_number = number_format( $value, 'SWP_Utility'::get_option( 'decimals' ), $decimal_point, $thousands_separator ) . $suffix;
+
+        return $display_number;
     }
 
 
@@ -242,7 +243,7 @@ class SWP_Utility {
     public static function get_post_types() {
 		$types = get_post_types( array( 'public' => true, '_builtin' => false ), 'names' );
 
-        $types = array_merge( $types, array( 'post', 'page' ) );
+        $types = array_merge( array( 'home', 'archive_categories', 'post', 'page' ), $types );
 
     	return apply_filters( 'swp_post_types', $types );
     }

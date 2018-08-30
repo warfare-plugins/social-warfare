@@ -33,29 +33,29 @@ class Social_Warfare {
 	 *
 	 */
 	public function __construct() {
+        $this->core_version = SWP_VERSION;
+        add_action('plugins_loaded', array($this, 'init'));
+	}
 
-		// Block these classes from being loaded again if a child class attempts
-		// to run the parent::__construct() method.
-        if ( get_class($this) === 'Social_Warfare' ) {
+    public function init() {
+        if ( Social_Warfare::has_plugin_conflict() ) :
+            return;
+        endif;
 
-			// Loads the files for each class.
-            $this->load_classes();
+		// Loads the files for each class.
+        $this->load_classes();
 
-			// Instantiate all the core classes
-            $this->instantiate_classes();
+		// Instantiate all the core classes
+        $this->instantiate_classes();
 
-			// Instantiate the admin-only classes.
-            if( true === is_admin() ) {
-                $this->instantiate_admin_classes();
-            }
-
-			// Instatiate classes that need to be defered.
-			add_action('plugins_loaded' , array( $this, 'instantiate_deferred_classes' ) , 100 );
-
+		// Instantiate the admin-only classes.
+        if( true === is_admin() ) {
+            $this->instantiate_admin_classes();
         }
 
-        $this->core_version = SWP_VERSION;
-	}
+		// Instatiate classes that need to be defered.
+		add_action('plugins_loaded' , array( $this, 'instantiate_deferred_classes' ) , 100 );
+    }
 
 
 	/**
@@ -329,8 +329,6 @@ class Social_Warfare {
 	 *
 	 */
 	public function instantiate_deferred_classes() {
-
-
 		/**
 		 * Instantiates all of our notices.
 		 *
@@ -515,6 +513,41 @@ class Social_Warfare {
             $file = "SWP_" . $file;
             require_once SWP_PLUGIN_DIR . $path . $file . '.php';
         }
+    }
+
+
+    /**
+     *
+     * When we have known incompatability with other themes/plugins,
+     * we can put those checks in here.
+     *
+     * Checks for known conflicts with other plugins and themes.
+     *
+     * If there is a fatal conflict, returns true and exits printing.
+     * If there are other conflicts, they are silently handled and can still
+     * print.
+     *
+     * @since  3.0.0 | 01 MAR 2018 | Created
+     * @since  3.3.0 | 30 AUG 2018 | Moved from SWP_Buttons_Panel to Social_Warfare.
+     * @param  void
+     *
+     * @return bool True iff the conflict is fatal, else false.
+     *
+     */
+    public static function has_plugin_conflict() {
+
+        // Disable subtitles plugin to prevent it from injecting subtitles
+        // into our share titles.
+        if ( function_exists( 'is_plugin_active' ) && is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
+            remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
+        endif;
+
+        //* Disable on BuddyPress pages.
+        if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
+            return true;
+        endif;
+
+        return false;
     }
 }
 

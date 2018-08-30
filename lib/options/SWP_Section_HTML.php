@@ -47,6 +47,10 @@ class SWP_Section_HTML extends SWP_Option {
 
         parent::__construct( $name, $key );
 
+        if (empty( $this->default ) ) :
+            $this->set_default( ' ');
+        endif;
+
         $this->html = '';
     }
 
@@ -82,7 +86,7 @@ class SWP_Section_HTML extends SWP_Option {
         $status_title =  __( 'Press Ctrl+C to Copy this information.' , 'social-warfare' );
 
         //* This is an array of fully qualified HTML strings, ready to print.
-        $cache = get_option("swp_json_cache");
+        $cache = get_option( 'swp_json_cache' );
         $html = '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
         $html .= '<div id="swp-admin-sidebar">';
 
@@ -114,8 +118,6 @@ class SWP_Section_HTML extends SWP_Option {
         /**
     	 * System Status Generator
     	 */
-    	global $swp_user_options;
-
     	if ( ! function_exists( 'get_plugins' ) ) {
     		require_once ABSPATH . 'wp-admin/includes/plugin.php';
     	}
@@ -176,16 +178,11 @@ class SWP_Section_HTML extends SWP_Option {
 	 *
 	 */
     public function do_tweet_count_registration() {
-        global $swp_user_options;
-
         // Check for a default value
-        if ( isset( $swp_user_options['twitter_shares'] ) && $swp_user_options['twitter_shares'] == true ) :
+        if ( true == SWP_Utility::get_option( 'twitter_shares' ) ) :
             $status = 'on';
             $selected = 'checked';
-        elseif ( isset( $swp_user_options['twitter_shares'] ) && $swp_user_options['twitter_shares'] == false ) :
-            $status = 'off';
-            $selected = '';
-        else :
+        else:
             $status = 'off';
             $selected = '';
         endif;
@@ -359,10 +356,7 @@ class SWP_Section_HTML extends SWP_Option {
     *
     */
     public function do_button_position_table() {
-        $default_types = ['page', 'post', 'home', 'archive_categories'];
-		$other_types = get_post_types( ['public' => true, '_builtin' => false ], 'names' );
-
-        $post_types = array_merge( $default_types, $other_types );
+        $post_types = SWP_Utility::get_post_types();
 
         $panel_locations = [
             'above' => __( 'Above the Content', 'social-warfare' ),
@@ -391,10 +385,11 @@ class SWP_Section_HTML extends SWP_Option {
             $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Floating Buttons (If Activated)' ,'social-warfare' ) . '</p>';
         $html .= '</div>';
 
-		$i = 0;
+        //* Some indices are numeric, others are strings.
+        $i = 0;
         foreach( $post_types as $index => $post ) {
-
-            $priority = ($i + 1) * 10; $i++;
+            $i++;
+            $priority = $i * 10;
 
             $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
 
@@ -530,6 +525,83 @@ class SWP_Section_HTML extends SWP_Option {
         $this->html = $html;
 
         return $this;
+    }
+
+
+    public function do_bitly_start_date() {
+        $post_types = SWP_Utility::get_post_types();
+
+        $booleans = [
+            'on'    => __( 'On','social_warfare'),
+            'off'   => __( 'Off', 'social_warfare')
+        ];
+
+        $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+        $html .= $this->render_dependency();
+        $html .= $this->render_premium();
+        $html .= '>';
+
+        $start_date = SWP_Utility::get_option( 'bitly_start_date' );
+
+        if ( !$start_date ) {
+            // die(var_dump($start_date));
+            $start_date = '';
+        }
+
+
+        $html .= '<p class="sw-subtitle sw-col-620" style="margin: 5px 0 15px">I would like to generate bitly links for content created <b>on or after</b>&nbsp;';
+        $html .=     '<input
+                         style="float: right;"
+                         type="text"
+                         id="' . $this->key . '"
+                         name="' . $this->key . '"
+                         value="' . $start_date . '"
+                      />
+                  </p>';
+        $html .= '<p class="sw-subtitle sw-col-620">Please enter start the date in the following format: <code style="float: right;">YYYY-MM-DD</code></p>';
+
+        $html .= '<div class="sw-grid sw-col-300">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+
+        $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+            $html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Create Bitly Links?' ,'social-warfare' ) . '</p>';
+        $html .= '</div>';
+
+        //* Some indices are numeric, others are strings.
+        $i = 0;
+        foreach( $post_types as $index => $post ) {
+            $i++;
+            $priority = $i * 10;
+
+            $html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $post . '_wrapper">';
+
+                $html .= '<div class="sw-grid sw-col-300">';
+                    $html .= '<p class="sw-input-label">' . str_replace('_', ' & ', ucfirst($post)) . '</p>';
+                $html .= '</div>';
+
+                $html .= '<div class="sw-grid sw-col-300 sw-fit">';
+
+                $float = new SWP_Option_Select( ucfirst( $post ), 'bitly_links_' . $post );
+                $float->set_priority( $priority )
+                    ->set_size( 'sw-col-300' )
+                    ->set_choices( $booleans )
+                    ->set_default( 'on' );
+
+                $html .= $float->render_HTML_element();
+
+                $html .= '</div>';
+
+            $html .= '</div>';
+
+        }
+
+        $html .= '</div>';
+
+        $this->html = $html;
+
+        return $this;
+
     }
 
 
