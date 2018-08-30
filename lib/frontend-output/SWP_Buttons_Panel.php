@@ -100,10 +100,6 @@ class SWP_Buttons_Panel {
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks;
 
-        if ( $this->has_plugin_conflict() ) {
-            return;
-        }
-
         $this->networks     = $swp_social_networks;
 		$this->args         = $args;
         $this->content      = isset( $args['content'] ) ? $args['content'] : '';
@@ -381,38 +377,6 @@ class SWP_Buttons_Panel {
 
     protected function establish_permalink() {
         $this->permalink = get_permalink( $this->post_id );
-    }
-
-
-    /**
-     * When we have known incompatability with other themes/plugins,
-     * we can put those checks in here.
-     *
-     * Checks for known conflicts with other plugins and themes.
-     *
-     * If there is a fatal conflict, returns true and exits printing.
-     * If there are other conflicts, they are silently handled and can still
-     * print.
-     *
-     * @since  3.0.0 | 01 MAR 2018 | Created
-     * @param  void
-     * @return bool $conflict True iff the conflict is fatal.
-     *
-     */
-    protected function has_plugin_conflict() {
-
-		// Disable subtitles plugin to prevent it from injecting subtitles
-		// into our share titles.
-		if ( is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
-			remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
-		endif;
-
-		//* Disable on BuddyPress pages.
-        if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
-            return true;
-        endif;
-
-		return false;
     }
 
 
