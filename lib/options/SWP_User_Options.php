@@ -94,11 +94,9 @@ class SWP_User_options {
 
         $new_registered_options = array(
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
-            'values'    => apply_filters( 'swp_options_page_values', array() ),
-			'whitelist' => $whitelist
+            'values'    => apply_filters( 'swp_options_page_values', array() )
         );
 
-		/*
         foreach($whitelist as $key) {
             if (isset( $this->unfiltered_options[$key] ) ) :
                 $new_registered_options["defaults"][$key] = $this->unfiltered_options[$key];
@@ -106,7 +104,6 @@ class SWP_User_options {
                 $new_registered_options["values"][$key]["values"] = $this->unfiltered_options[$key];
             endif;
         }
-		*/
 
 		if( $new_registered_options != $this->registered_options ) {
 			update_option( 'swp_registered_options', $new_registered_options );
@@ -141,7 +138,6 @@ class SWP_User_options {
 	 */
 	private function remove_unavailable_options() {
         $defaults = array_keys( $this->registered_options['defaults'] );
-		$whitelist = $this->registered_options['whitelist'];
         $options = array_keys ( $this->user_options );
 
         $available_options = array_intersect( $defaults, $options );
@@ -153,7 +149,7 @@ class SWP_User_options {
                 $this->filter_order_of_icons( $value );
             endif;
 
-            if ( !in_array( $key, $available_options ) && !in_array( $key, $whitelist) ) :
+            if ( !in_array( $key, $available_options ) ) :
                 unset( $this->user_options[$key] );
             endif;
         }
