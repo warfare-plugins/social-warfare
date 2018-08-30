@@ -420,7 +420,6 @@ class SWP_Buttons_Panel {
 
         //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
         if ( empty( $this->content ) && !isset( $this->args['content'] )  ) :
-            echo "<br><pre>No content. <br>", var_dump($this); die;
             return true;
         endif;
 
