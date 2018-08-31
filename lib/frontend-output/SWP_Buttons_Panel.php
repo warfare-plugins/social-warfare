@@ -461,7 +461,7 @@ class SWP_Buttons_Panel {
          endif;
 
 		// Create the HTML Buttons panel wrapper
-        $container = '<div class="swp_social_panel swp_horizontal_panel' .
+        $container = '<div class="swp_social_panel swp_horizontal_panel ' .
             $this->get_shape() .
             $this->get_colors() .
             $this->get_scale() .
@@ -505,6 +505,7 @@ class SWP_Buttons_Panel {
                      swp_individual_full_color
                      swp_other_full_color ";
         endif;
+
 
         return " swp_default_{$default_colors}
                  swp_individual_{$this->option( 'single_colors' )}
@@ -698,11 +699,9 @@ class SWP_Buttons_Panel {
 	        $share_counts = $this->render_total_shares_HTML();
 	        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
 
-	        $container = '<div class="swp_social_panelSide swp_social_panel swp_'. $this->option('float_button_shape') .
-	            ' swp_default_' . $this->option('float_default_colors') .
-	            ' swp_individual_' . $this->option('float_single_colors') .
-	            ' swp_other_' . $this->option('float_hover_colors') . '
-	            ' . $this->option('transition') . '
+	        $container = '<div class="swp_social_panelSide swp_floating_panel swp_social_panel swp_' . $this->option('float_button_shape') .
+                $this->get_colors() .
+	            $this->option('transition') . '
 	            ' . $class . '
 	            ' . '" data-panel-position="' . $this->option('location_post') .
 	            ' scale-' . $this->option('float_size') * 100 .
