@@ -78,18 +78,16 @@ class SWP_Display {
      *
      */
     public function activate_buttons() {
-    	// Fetch the user's settings
-    	global $swp_user_options;
 
     	// Only hook into the_content filter if is_singular() is true or
     	// they don't use excerpts on the archive pages.
-        if( true === is_singular() || true === $swp_user_options['full_content'] ):
+        if( true === is_singular() || true === SWP_Utility::get_option( 'full_content' ) ):
             add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 20 );
             add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
         endif;
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
-        if (false === is_singular() && false === $swp_user_options['full_content']) {
+        if (false === is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
     		// Add the buttons to the excerpts
     		add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
         }
@@ -130,6 +128,7 @@ class SWP_Display {
 
         // Pass the content to the buttons constructor to place them inside.
     	$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
+        
         return $buttons_panel->the_buttons( $content );
     }
 
