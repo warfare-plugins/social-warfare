@@ -146,8 +146,8 @@ class SWP_Option extends SWP_Abstract {
             return $this->value;
         }
 
-        if ( isset( $this->user_options[$this->key] ) ) {
-            return $this->user_options[$this->key];
+        if ( false != SWP_Utility::get_option( $this->key ) ) {
+            return SWP_Utility::get_option( $this->key );
         }
 
         return $this->default;

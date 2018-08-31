@@ -219,7 +219,7 @@ class SWP_URL_Management {
 		// Fetch the user's options
 		$options = $swp_user_options;
 
-		if ( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) && true == false ) :
+		if ( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) ) :
 
 			// Store the short url to return to the plugin
 			$short_url = $bitly_lookup_response['data']['link_lookup'][0]['link'];
