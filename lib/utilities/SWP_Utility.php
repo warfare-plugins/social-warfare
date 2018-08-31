@@ -140,7 +140,8 @@ class SWP_Utility {
             $thousands_separator = '.';
         endif;
 
-        $display_number = number_format( $value, 'SWP_Utility'::get_option( 'decimals' ), $decimal_point, $thousands_separator ) . $suffix;
+		$decimals = SWP_Utility::get_option( 'decimals' );
+        $display_number = number_format( $value, $decimals, $decimal_point, $thousands_separator ) . $suffix;
 
         return $display_number;
     }
