@@ -96,6 +96,58 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     };
 })(this);
 
+/**
+ * I wanted to understand the code above, so this is a stripped down version.
+ *
+ * This one has no comments.
+ * Because we only use it with two arguments, I also removed the extra parameters
+ * (and their corresponding logic).
+ *
+ * The result should achieve the exact same effect as above.
+ * But! We should not use this. It is for informative purposes only.
+ *
+ */
+
+/*
+(function(window, undefined) {
+    var jqThrottle;
+    var swp = window.socialWarfarePlugin;
+
+    swp.throttle = jqThrottle = function(delay, callback) {
+        var timeoutID = 0;
+        var lastExec = 0;
+
+        function wrapper() {
+            var that = this;
+            var elapsed = +new Date() - lastExec;
+            var args = arguments;
+
+            function exec() {
+                lastExec = +new Date();
+                callback.apply(that, args);
+            }
+
+            function clear() {
+                timeoutID = undefined;
+            }
+
+            timeoutID && clearTimeout(timeoutID);
+
+            if (elapsed > delay) {
+                exec();
+            } else {
+                timeoutID = setTimeout(exec,  delay - elapsed);
+            }
+        }
+
+        if (swp.guid) {
+            wrapper.guid = callback.guid = callback.guid || swp.guid++;
+        }
+
+        return wrapper;
+    };
+ */
+
 (function(window, $, undefined) {
     'use strict';
 
