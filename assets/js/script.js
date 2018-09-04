@@ -673,22 +673,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var sidePanel = $('.swp_social_panelSide');
         var swp_hover = false;
 
-        $('.swp_social_panel').hover(
-            function () {
-                swp_hover = true;
-            },
-            function () {
-                swp_hover = false;
-            }
-        );
-
-        $(window).resize(swp.debounce(250, function() {
-            if ($('.swp_social_panel').length && false !== swp_hover) { } else {
-                window.swpAdjust = 1;
-                initShareButtons();
-            }
-        }));
-
         $(document.body).on('post-load', function() {
             initShareButtons();
         });
@@ -704,10 +688,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 $(sidePanel).animate({ top: newPosition }, 0);
             }, 105);
         }
-
-        //if(swp_isMobile.phone) {
-        //    $('.swp_whatsapp').addClass('mobile');
-        //}
 
         // Hide empty containers
         if(1 === $('.swp-content-locator').parent().children().length) {
