@@ -130,6 +130,10 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 (function( window, jQuery, undefined ) {
 	'use strict';
 
+  if (typeof $ == 'undefined') {
+      $ = jQuery;
+  }
+
 	socialWarfareAdmin.linkLength = function( input ) {
 		var tmp = '';
 
