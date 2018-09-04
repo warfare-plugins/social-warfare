@@ -38,8 +38,8 @@ function swpConditionalFields() {
   	}
 
   	function string_to_bool(string) {
-    		if(string === 'true') { string = true };
-    		if(string === 'false') { string = false };
+    		if (string === 'true') { string = true };
+    		if (string === 'false'){ string = false };
     		return string;
   	}
 
@@ -76,25 +76,23 @@ function swpConditionalFields() {
 
   		value = string_to_bool(value);
 
-          //* Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
+      //* Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
   		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 
   		if (window.location.href.indexOf("page=social-warfare") !== -1) {
-
-  			// If the required value matches and it's parent is also being shown, show this conditional field
-  			if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
-  				$(this).show();
-  			} else {
-  				$(this).hide();
-  			}
+    			// If the required value matches and it's parent is also being shown, show this conditional field
+    			if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
+      				$(this).show();
+    			} else {
+      				$(this).hide();
+    			}
   		} else {
-
-  			// If the required value matches, show this conditional field
-  			if ($.inArray(value, required) !== -1 || value === required) {
-  				$(this).show();
-  			} else {
-  				$(this).hide();
-  			}
+    			// If the required value matches, show this conditional field
+    			if ($.inArray(value, required) !== -1 || value === required) {
+      				$(this).show();
+    			} else {
+      				$(this).hide();
+    			}
   		}
   	});
 
@@ -115,17 +113,19 @@ function swpConditionalFields() {
 //* Only run on widgets.php
 if (window.location.href.indexOf("widgets.php") > -1) {
   	//* Make sure the elements exist before trying to read them.
+  	//*
   	var widgetFinder = setInterval(function() {
-  		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
+    		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
 
-  		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
-  		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
+    		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
+    		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
 
-          //* Force swpConditionalFields to run when the widget is opened or saved.
-  		$(swpWidget).on("click", swpConditionalFields);
-  		$(widgetSubmit).on("click", function() {
-  			setTimeout(swpConditionalFields, 600);
-  		});
+        //* Force swpConditionalFields to run when the widget is opened or saved.
+    		$(swpWidget).on("click", swpConditionalFields);
+
+    		$(widgetSubmit).on("click", function() {
+    		  	setTimeout(swpConditionalFields, 600);
+    		});
 
   	}, 50);
 }
@@ -138,13 +138,13 @@ if (window.location.href.indexOf("widgets.php") > -1) {
     }
 
   	socialWarfareAdmin.linkLength = function(input) {
-  		var tmp = '';
+    		var tmp = '';
 
-  		for (var i = 0; i < 23; i++) {
-  			tmp += 'o';
-  		}
+    		for (var i = 0; i < 23; i++) {
+    			tmp += 'o';
+    		}
 
-  		return input.replace(/(http:\/\/[\S]*)/g, tmp).length;
+    		return input.replace(/(http:\/\/[\S]*)/g, tmp).length;
   	};
 
     function updateCharactersRemaining(containerSelector, characterLimit) {
@@ -170,17 +170,16 @@ if (window.location.href.indexOf("widgets.php") > -1) {
   		if (typeof show === 'undefined') show = true;
 
   		if (show) {
-  			$(".custom_thumb_size").show();
-  		}
-          else {
-          	$(".custom_thumb_size").hide();
-          }
+  		  	$(".custom_thumb_size").show();
+  		} else {
+        	$(".custom_thumb_size").hide();
+      }
   	}
 
     function noticeClickHandlers() {
         $(".swp-notice-cta").on("click", function(e) {
             e.preventDefault();
-            //* Do not use $ to get href.
+            //* Do not use jQuery to get href.
             var link = e.target.getAttribute("href");
 
             if (typeof link == 'string' && link.length) {
@@ -208,89 +207,74 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 
     function createCharactersRemaining(selector, textLimit) {
-      $("#social_warfare #" + selector).parent().prepend('<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>');
+      var div = '<div class="swp_CountDown">
+                     <span class="counterNumber">' + textLimit + '</span> '
+                     + swp_localize_admin.swp_characters_remaining +
+                '</div>';
+
+      $("#social_warfare #" + selector).parent().prepend(div);
     }
 
   	$(document).ready(function() {
         noticeClickHandlers();
 
-  		if ($('#social_warfare.postbox').length) {
-          var textCounters = {
-              "swp_og_title": 60,
-              "swp_og_description": 150,
-              "swp_pinterest_description": 140,
-              "swp_custom_tweet": 280
-            };
+    		if ($('#social_warfare.postbox').length) {
+            var textCounters = {
+                "swp_og_title": 60,
+                "swp_og_description": 150,
+                "swp_pinterest_description": 140,
+                "swp_custom_tweet": 280
+              };
 
-            Object.entries(textCounters).map(function(entry) {
-              console.log(entry[0])
-                var selector = entry[0];
-                var textLimit = entry[1];
+              Object.entries(textCounters).map(function(entry) {
+                  var selector = entry[0];
+                  var textLimit = entry[1];
 
-                createCharactersRemaining(selector, textLimit);
-                updateCharactersRemaining(selector, textLimit);
+                  createCharactersRemaining(selector, textLimit);
+                  updateCharactersRemaining(selector, textLimit);
 
-                $("#social_warfare #" + selector).on("input", function() {
-                    updateCharactersRemaining(selector, textLimit);
-                });
-            });
+                  $("#social_warfare #" + selector).on("input", function() {
+                      updateCharactersRemaining(selector, textLimit);
+                  });
+              });
 
-      			// Setup an initilazation loop
-      			var swpPostInit = setInterval(function() {
-        				var swpOgImage  = $('.swp_og_imageWrapper ul.swpmb-media-list');
-        				var swpPinImage = $('.swp_pinterest_imageWrapper ul.swpmb-media-list');
+        			// Setup an initilazation loop
+        			var swpPostInit = setInterval(function() {
+          				var swpOgImage  = $('.swp_og_imageWrapper ul.swpmb-media-list');
+          				var swpPinImage = $('.swp_pinterest_imageWrapper ul.swpmb-media-list');
 
-        				var smWidth, smHeight;
+          				var smWidth, smHeight;
 
-        				// Check if the media list has been created yet
-        				if (swpOgImage.length && swpOgImage.is(':empty')) {
-        					// Setup the Open Graph Image Placeholder
-        					smWidth = swpOgImage.width();
-        					smHeight = smWidth * (9 / 16);
-        					swpOgImage.css({ height: smHeight + 'px' });
-        				} else {
-        					smHeight = swpOgImage.find('img').height();
-        					swpOgImage.css({ height: smHeight + 'px' });
-        				}
+          				// Check if the media list has been created yet
+          				if (swpOgImage.length && swpOgImage.is(':empty')) {
+          					// Setup the Open Graph Image Placeholder
+          					smWidth = swpOgImage.width();
+          					smHeight = smWidth * (9 / 16);
+          					swpOgImage.css({ height: smHeight + 'px' });
+          				} else {
+          					smHeight = swpOgImage.find('img').height();
+          					swpOgImage.css({ height: smHeight + 'px' });
+          				}
 
-        				var pinWidth, pinHeight;
+          				var pinWidth, pinHeight;
 
-        				if (swpPinImage.length && swpPinImage.is(':empty')) {
-        					// Setup the Open Graph Image Placeholder
-        					pinWidth = swpPinImage.width();
-        					pinHeight = pinWidth * (3 / 2);
-        					swpPinImage.css({ height: pinHeight + 'px' });
-        				} else {
-        					pinHeight = swpPinImage.find('img').height();
-        					swpPinImage.css({
-        						height: pinHeight + 'px'
-        					});
-        				}
+          				if (swpPinImage.length && swpPinImage.is(':empty')) {
+          					// Setup the Open Graph Image Placeholder
+          					pinWidth = swpPinImage.width();
+          					pinHeight = pinWidth * (3 / 2);
+          					swpPinImage.css({ height: pinHeight + 'px' });
+          				} else {
+          					pinHeight = swpPinImage.find('img').height();
+          					swpPinImage.css({
+          						height: pinHeight + 'px'
+          					});
+          				}
       			}, 1000);
-  		}
+    		}
 
-  		swpConditionalFields();
-  		$('.swp_popular_post_options select').on('change', function() {
-  			swpConditionalFields();
-  		});
-
-
-  		/*
-  		var customThumbnailSelect = $("#widget-swp_popular_posts_widget-2-thumb_size");
-
-  		if (customThumbnailSelect.value === 'custom') {
-  			toggleCustomThumbnailFields();
-  		}
-
-  		$(customThumbnailSelect).on("change", function(e) {
-  			console.log("changing");
-  			console.log(e.target.value);
-              if (e.target.value === 'custom') {
-              	toggleCustomThumbnailFields();
-              } else {
-              	toggleCustomThumbnailFields(false);
-              }
-  		});
-  		*/
+    		swpConditionalFields();
+    		$('.swp_popular_post_options select').on('change', function() {
+    		  	swpConditionalFields();
+    		});
   	});
 })(this, jQuery);
