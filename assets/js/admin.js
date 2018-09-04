@@ -26,7 +26,7 @@ var swpWidget, widgetSubmit;
 */
 function swpConditionalFields() {
     if (typeof $ == 'undefined') {
-      $ = $;
+      $ = jQuery;
     }
 
   	function swp_selected(name) {
