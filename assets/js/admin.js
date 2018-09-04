@@ -144,7 +144,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 		return input.replace( /(http:\/\/[\S]*)/g, tmp ).length;
 	};
 
-  function updateTextRemaining(containerSelector, characterLimit) {
+  function updateCharactersRemaining(containerSelector, characterLimit) {
       var input = $("#social_warfare #" + containerSelector );
   		var container = $("#social_warfare ." + containerSelector );
       var remaining = characterLimit - input.val().length
@@ -278,7 +278,6 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
     }
 
 	$( document ).ready( function() {
-
       noticeClickHandlers();
 
 		if ( jQuery( '#social_warfare.postbox' ).length ) {
@@ -290,81 +289,79 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
           };
 
           Object.entries(textCounters).map(function(entry) {
-                  var selector = entry[0];
-                  var textLimit = entry[1];
+              var selector = entry[0];
+              var textLimit = entry[1];
 
-                  createCharactersRemaining(selector, textLimit);
-                  updateCharactersRemaining(selector, textLimit);
-              )
+              createCharactersRemaining(selector, textLimit);
+              updateCharactersRemaining(selector, textLimit);
           })
 
 
-			// Add the CountDown Box for the Social Media Title
-			jQuery( '#social_warfare #swp_og_title' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+    			// Add the CountDown Box for the Social Media Title
+    			jQuery( '#social_warfare #swp_og_title' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
-			// Add the CountDown Box for the Social Media Description
-			jQuery( '#social_warfare #swp_og_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+    			// Add the CountDown Box for the Social Media Description
+    			jQuery( '#social_warfare #swp_og_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
-			// Add the CountDown Box for the Twitter Box
-			jQuery( '#social_warfare #swp_custom_tweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+    			// Add the CountDown Box for the Twitter Box
+    			jQuery( '#social_warfare #swp_custom_tweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
-            // Add the CountDown Box for the Pinterest Box
-			jQuery( '#social_warfare #swp_pinterest_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">140</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
+                // Add the CountDown Box for the Pinterest Box
+    			jQuery( '#social_warfare #swp_pinterest_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">140</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
 
 
-			smTitleRemaining();
-			jQuery( '#social_warfare textarea#swp_og_title' ).on( 'input', function() {
-				smTitleRemaining();
-			});
+    			smTitleRemaining();
+    			jQuery( '#social_warfare textarea#swp_og_title' ).on( 'input', function() {
+    				smTitleRemaining();
+    			});
 
-			smDescriptionRemaining();
-			jQuery( '#social_warfare textarea#swp_og_description' ).on( 'input', function() {
-				smDescriptionRemaining();
-			});
+    			smDescriptionRemaining();
+    			jQuery( '#social_warfare textarea#swp_og_description' ).on( 'input', function() {
+    				smDescriptionRemaining();
+    			});
 
-			twitterRemaining();
-			jQuery( '#social_warfare textarea#swp_customTweet' ).on( 'input', function() {
-				twitterRemaining();
-			});
+    			twitterRemaining();
+    			jQuery( '#social_warfare textarea#swp_customTweet' ).on( 'input', function() {
+    				twitterRemaining();
+    			});
 
-            swpPinterestRemaining();
-			jQuery( '#social_warfare textarea#swp_pinterest_description' ).on( 'input', function() {
-				swpPinterestRemaining();
-            });
+                swpPinterestRemaining();
+    			jQuery( '#social_warfare textarea#swp_pinterest_description' ).on( 'input', function() {
+    				swpPinterestRemaining();
+                });
 
-			// Setup an initilazation loop
-			var swpPostInit = setInterval( function() {
+    			// Setup an initilazation loop
+    			var swpPostInit = setInterval( function() {
+      				var swpOgImage  = jQuery( '.swp_og_imageWrapper ul.swpmb-media-list' );
+      				var swpPinImage = jQuery( '.swp_pinterest_imageWrapper ul.swpmb-media-list' );
 
-				var swpOgImage  = jQuery( '.swp_og_imageWrapper ul.swpmb-media-list' );
-				var swpPinImage = jQuery( '.swp_pinterest_imageWrapper ul.swpmb-media-list' );
+      				var smWidth, smHeight;
 
-				var smWidth, smHeight;
+      				// Check if the media list has been created yet
+      				if ( swpOgImage.length && swpOgImage.is( ':empty' ) ) {
+      					// Setup the Open Graph Image Placeholder
+      					smWidth = swpOgImage.width();
+      					smHeight = smWidth * ( 9 / 16 );
+      					swpOgImage.css({ height: smHeight + 'px' });
+      				} else {
+      					smHeight = swpOgImage.find( 'img' ).height();
+      					swpOgImage.css({ height: smHeight + 'px' });
+      				}
 
-				// Check if the media list has been created yet
-				if ( swpOgImage.length && swpOgImage.is( ':empty' ) ) {
-					// Setup the Open Graph Image Placeholder
-					smWidth = swpOgImage.width();
-					smHeight = smWidth * ( 9 / 16 );
-					swpOgImage.css({ height: smHeight + 'px' });
-				} else {
-					smHeight = swpOgImage.find( 'img' ).height();
-					swpOgImage.css({ height: smHeight + 'px' });
-				}
+      				var pinWidth, pinHeight;
 
-				var pinWidth, pinHeight;
-
-				if ( swpPinImage.length && swpPinImage.is( ':empty' ) ) {
-					// Setup the Open Graph Image Placeholder
-					pinWidth = swpPinImage.width();
-					pinHeight = pinWidth * ( 3 / 2 );
-					swpPinImage.css({ height: pinHeight + 'px' });
-				} else {
-					pinHeight = swpPinImage.find( 'img' ).height();
-					swpPinImage.css({
-						height: pinHeight + 'px'
-					});
-				}
-			}, 1000 );
+      				if ( swpPinImage.length && swpPinImage.is( ':empty' ) ) {
+      					// Setup the Open Graph Image Placeholder
+      					pinWidth = swpPinImage.width();
+      					pinHeight = pinWidth * ( 3 / 2 );
+      					swpPinImage.css({ height: pinHeight + 'px' });
+      				} else {
+      					pinHeight = swpPinImage.find( 'img' ).height();
+      					swpPinImage.css({
+      						height: pinHeight + 'px'
+      					});
+      				}
+    			}, 1000 );
 		}
 
 		swpConditionalFields();
