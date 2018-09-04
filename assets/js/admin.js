@@ -140,6 +140,20 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 		return input.replace( /(http:\/\/[\S]*)/g, tmp ).length;
 	};
 
+  function updateTextRemaining(containerSelector, characterLimit) {
+      var input = $("#social_warfare #" + containerSelector );
+  		var container = $("#social_warfare ." + containerSelector );
+      var remaining = characterLimit - input.val().length
+
+      if (text.length && remaining >= 0) {
+          container.find(".swp_CountDown").removeClass("swp_red").addClass("swp_blue")
+      } else {
+          container.find(".swp_CountDown").removeClass("swp_blue").addClass("swp_red")
+      }
+
+  		container.find(".counterNumber").text(remaining)
+  }
+
 	// Function for SM Title Counting
 	function smTitleRemaining() {
 		var smTitle = jQuery( '#social_warfare textarea#swp_og_title' ).val();
@@ -231,7 +245,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
     function noticeClickHandlers() {
         jQuery(".swp-notice-cta").on("click", function(e) {
             e.preventDefault();
-            //* Do not use jQuery to get href. 
+            //* Do not use jQuery to get href.
             var link = e.target.getAttribute("href");
 
             if (typeof link == 'string' && link.length) {
