@@ -300,28 +300,10 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
               createCharactersRemaining(selector, textLimit);
               updateCharactersRemaining(selector, textLimit);
 
-
+              $("#social_warfare #" + selector).on("input", function() {
+                  updateCharactersRemaining(selector, textLimit);
+              });
           });
-
-    			smTitleRemaining();
-    			$( '#social_warfare textarea#swp_og_title' ).on( 'input', function() {
-    				smTitleRemaining();
-    			});
-
-    			smDescriptionRemaining();
-    			$( '#social_warfare textarea#swp_og_description' ).on( 'input', function() {
-    				smDescriptionRemaining();
-    			});
-
-    			twitterRemaining();
-    			$( '#social_warfare textarea#swp_customTweet' ).on( 'input', function() {
-    				twitterRemaining();
-    			});
-
-                swpPinterestRemaining();
-    			$( '#social_warfare textarea#swp_pinterest_description' ).on( 'input', function() {
-    				swpPinterestRemaining();
-                });
 
     			// Setup an initilazation loop
     			var swpPostInit = setInterval( function() {
