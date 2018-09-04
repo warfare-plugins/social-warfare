@@ -299,21 +299,9 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
               createCharactersRemaining(selector, textLimit);
               updateCharactersRemaining(selector, textLimit);
-          })
 
 
-    			// Add the CountDown Box for the Social Media Title
-    			$( '#social_warfare #swp_og_title' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">60</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
-
-    			// Add the CountDown Box for the Social Media Description
-    			$( '#social_warfare #swp_og_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">150</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
-
-    			// Add the CountDown Box for the Twitter Box
-    			$( '#social_warfare #swp_custom_tweet' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">118</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
-
-                // Add the CountDown Box for the Pinterest Box
-    			$( '#social_warfare #swp_pinterest_description' ).parent().prepend( '<div class="swp_CountDown"><span class="counterNumber">140</span> ' + swp_localize_admin.swp_characters_remaining + '</div>' );
-
+          });
 
     			smTitleRemaining();
     			$( '#social_warfare textarea#swp_og_title' ).on( 'input', function() {
