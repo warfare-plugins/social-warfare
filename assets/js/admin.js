@@ -279,7 +279,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
 
   function createCharactersRemaining(selector, textLimit) {
-    $("#social_warfare #" + selector).paren().prepend('<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>');
+    $("#social_warfare #" + selector).parent().prepend('<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>');
   }
 
 	$( document ).ready( function() {
@@ -294,6 +294,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
           };
 
           Object.entries(textCounters).map(function(entry) {
+            console.log(entry[0])
               var selector = entry[0];
               var textLimit = entry[1];
 
