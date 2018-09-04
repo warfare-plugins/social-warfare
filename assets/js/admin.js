@@ -149,7 +149,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
   		var container = $("#social_warfare ." + containerSelector );
       var remaining = characterLimit - input.val().length
 
-      if (text.length && remaining >= 0) {
+      if (remaining >= 0) {
           container.find(".swp_CountDown").removeClass("swp_red").addClass("swp_blue")
       } else {
           container.find(".swp_CountDown").removeClass("swp_blue").addClass("swp_red")
