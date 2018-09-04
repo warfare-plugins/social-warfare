@@ -146,7 +146,7 @@ if (window.location.href.indexOf("widgets.php") > -1 ) {
 
   function updateCharactersRemaining(containerSelector, characterLimit) {
       var input = $("#social_warfare #" + containerSelector );
-  		var container = $("#social_warfare ." + containerSelector );
+  		var container = $("#social_warfare [class*='" + containerSelector + "'");
       var remaining = characterLimit - input.val().length
 
       if (remaining >= 0) {
