@@ -784,6 +784,35 @@
       $(preview).text($(textarea).val());
 	}
 
+  function addIconTooltips() {
+      $("[class*='sw-'][class*='-icon']").each(function(index, icon) {
+          var tooltip;
+
+          $(icon).hover(
+              //* mouseenter
+              function(event) {
+                  var network = event.target.dataset("network");
+
+                  //* Uppercase each part of the snake_cased name.
+                  if (network.indexOf("_")) {
+                    var words = network.split("_").map(function(word) {
+                        return word[0].toUpperCase() + word.splice(1, word.length)
+                    })
+                  }
+
+                  network = network[0].toUpperCase() + network.splice(1, network.length)
+                  tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>');
+                  $(this).appendChild(tooltip);
+
+              },
+              //* mouseleave
+              function(event) {
+                  $(this).removeChild(tooltip);
+              }
+        );
+      });
+  }
+
 	$(document).ready(function() {
   		handleSettingSave();
   		populateOptions();
