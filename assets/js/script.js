@@ -484,6 +484,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         };
 
         var options = $.extend(defaults, options);
+        var pinterestButton = findPinterestSaveButton();
+
+        if (typeof pinterestButton != 'undefined' && pinterestButton) {
+            removePinterestButton(pinterestButton);
+        }
 
         // Iterate over the current set of matched elements.
         $('.swp-content-locator').parent().find('img').each(function() {
@@ -540,38 +545,30 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var imageStyle = image.attr('style');
 
             image.removeClass().attr('style', '').wrap(options.wrap);
-
             image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-
             image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+        });
 
-            $('.sw-pinit .sw-pinit-button').on('click', function() {
-                      window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+        $('.sw-pinit .sw-pinit-button').on('click', function() {
+            window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 
-                      // Record the event if Google Analytics Click tracking is enabled
-                      if (true === swpClickTracking) {
-                          var network = 'pin_image';
+            // Record the event if Google Analytics Click tracking is enabled
+            if (true === swpClickTracking) {
+                var network = 'pin_image';
 
-                          // If Google Analytics is Present on the page.
-                          if( 'function' == typeof ga) {
-                              ga("send", "event", "social_media", "swp_" + network + "_share");
-                          }
+                // If Google Analytics is Present on the page.
+                if( 'function' == typeof ga) {
+                    ga("send", "event", "social_media", "swp_" + network + "_share");
+                }
 
-                          // If Google Tag Manager is Present on the Page
-                          if ("object" == typeof dataLayer) {
-                              dataLayer.push({'event':'swp_' + network + '_share'});
-                          }
-                      }
+                // If Google Tag Manager is Present on the Page
+                if ("object" == typeof dataLayer) {
+                    dataLayer.push({'event':'swp_' + network + '_share'});
+                }
+            }
 
-                      return false;
-                  });
-            });
-
-        var pinterestButton = findPinterestSaveButton();
-
-        if (typeof pinterestButton != 'undefined' && pinterestButton) {
-            removePinterestButton(pinterestButton);
-        }
+            return false;
+        });
     }
 
     function handleWindowOpens() {
@@ -584,10 +581,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             if ($(this).data('link')) {
                 event.preventDefault();
 
-                var href = $(this).data('link');
+                var href = $(this).data('link').replace('’', '\'');
                 var height, width, top, left, instance, windowFeatures;
-
-                href = href.replace('’', '\'');
 
                 if ($(this).hasClass('pinterest') || $(this).hasClass('buffer_link') || $(this).hasClass('flipboard')) {
                     height = 550;
@@ -610,7 +605,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             				    var network = 'ctt';
             				}
 
-            					// If Google Analytics is Present on the Page
+            				// If Google Analytics is Present on the Page
             	      if (typeof ga == "function" && true) {
             	          ga('send', 'event', 'social_media', 'swp_' + network + '_share');
             	      }
@@ -630,6 +625,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     //* The Pinterest Browser Extension create a single Save button.
     //* Let's search and destroy.
     function findPinterestSaveButton() {
+        //* Known constants used by Pinterest.
         var pinterestRed = "rgb(189, 8, 28)";
         var pinterestZIndex = "8675309";
         var pinterestBackgroundSize = "14px 14px";
@@ -673,8 +669,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     $(document).ready(function() {
         handleWindowOpens();
         initShareButtons();
+
         var sidePanel = $('.swp_social_panelSide');
         var swp_hover = false;
+
         $('.swp_social_panel').hover(
             function () {
                 swp_hover = true;
@@ -683,14 +681,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 swp_hover = false;
             }
         );
+
         $(window).resize(swp.debounce(250, function() {
             if ($('.swp_social_panel').length && false !== swp_hover) { } else {
                 window.swpAdjust = 1;
                 initShareButtons();
             }
         }));
-
-        // $(window).trigger('resize');
 
         $(document.body).on('post-load', function() {
             initShareButtons();
