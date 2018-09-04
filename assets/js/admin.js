@@ -207,10 +207,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 
     function createCharactersRemaining(selector, textLimit) {
-      var div = '<div class="swp_CountDown">
-                     <span class="counterNumber">' + textLimit + '</span> '
-                     + swp_localize_admin.swp_characters_remaining +
-                '</div>';
+      var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
 
       $("#social_warfare #" + selector).parent().prepend(div);
     }
