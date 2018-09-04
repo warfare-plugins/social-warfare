@@ -121,6 +121,20 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         Fetch and Store Facebook Counts
 
     ****************************************************************************/
+
+    socialWarfarePlugin.parseFacebookShares = function (response) {
+        // if('undefined' !== typeof request1[0].og_object) {
+        //     var f3 = absint(request1[0].og_object.likes.summary.total_count);
+        // } else {
+        //     var f3 = 0;
+        // }
+        //
+        return absint(response[0].share.share_count)   +
+               absint(response[0].share.comment_count) +
+               absint(response[0].og_object.likes.summary.total_count) || 0;
+    }
+
+
     socialWarfarePlugin.fetchFacebookShares = function() {
         /**
          * Run all the API calls
@@ -136,40 +150,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
              * Parse the responses, add up the activity, send the results to admin_ajax
              */
             if ('undefined' !== typeof request1[0].share) {
-                // var f1 = absint(request1[0].share.share_count);
-                // var f2 = absint(request1[0].share.comment_count);
-                //
-                // if('undefined' !== typeof request1[0].og_object) {
-                //     var f3 = absint(request1[0].og_object.likes.summary.total_count);
-                // } else {
-                //     var f3 = 0;
-                // }
+                var shares =  socialWarfarePlugin.parseFacebookShares(request1);
 
-                var shares =  absint(request1[0].share.share_count)   +
-                              absint(request1[0].share.comment_count) +
-                              absint(request1[0].og_object.likes.summary.total_count) || 0;
-
-                if (swp_post_recovery_url) {
-                    // if (typeof request2[0].share !== 'undefined') {
-                    //     var f4 = absint(request2[0].share.share_count);
-                    //     var f5 = absint(request2[0].share.comment_count);
-                    // } else {
-                    //     var f4 = 0, f5 = 0;
-                    // }
-                    //
-                    // if (typeof request2[0].og_object !== 'undefined') {
-                    //     var f6 = absint(request2[0].og_object.likes.summary.total_count);
-                    // } else {
-                    //     var f6 = 0
-                    // }
-
-                    shares += absint(request2[0].share.share_count)   +
-                              absint(request2[0].share.comment_count) +
-                              absint(request2[0].og_object.likes.summary.total_count) || 0;
-                    //
-                    // if (fShares !== fShares2) {
-                    //     fShares = fShares + fShares2;
-                    // }
+                swp_post_recovery_url) {
+                    shares +=  socialWarfarePlugin.parseFacebookShares(request2);
                 }
 
                 var swpPostData = {
@@ -184,7 +168,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             }
         });
     }
-
 
     /**
      * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
