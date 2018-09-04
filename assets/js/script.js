@@ -152,7 +152,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             if ('undefined' !== typeof request1[0].share) {
                 var shares =  socialWarfarePlugin.parseFacebookShares(request1);
 
-                swp_post_recovery_url) {
+                if (swp_post_recovery_url) {
                     shares +=  socialWarfarePlugin.parseFacebookShares(request2);
                 }
 
