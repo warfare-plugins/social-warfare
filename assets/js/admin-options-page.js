@@ -791,25 +791,31 @@
           $(icon).hover(
               //* mouseenter
               function(event) {
-                  var network = event.target.dataset("network");
+                  var network = $(event.target).data("network");
 
                   //* Uppercase each part of the snake_cased name.
-                  if (network.indexOf("_")) {
-                    var words = network.split("_").map(function(word) {
-                        return word[0].toUpperCase() + word.splice(1, word.length)
-                    })
+                  if (network.indexOf("_") > 0) {
+                      var words = network.split("_").map(function(word) {
+                          return word[0].toUpperCase() + word.slice(1, word.length)
+                      })
+
+                      network = words.join(" ");
                   }
 
-                  network = network[0].toUpperCase() + network.splice(1, network.length)
+                  console.log(network)
+
+                  network = network[0].toUpperCase() + network.slice(1, network.length)
+                  console.log(network)
                   tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>');
-                  $(this).appendChild(tooltip);
+                  console.log(tooltip)
+                  $(this).parents(".sw-grid").first().append(tooltip);
 
               },
               //* mouseleave
               function(event) {
-                  $(this).removeChild(tooltip);
+                  $(".swp-icon-tooltip").remove();
               }
-        );
+          );
       });
   }
 
@@ -828,6 +834,7 @@
   		getSystemStatus();
   		customUploaderInit();
   		set_ctt_preview();
+      addIconTooltips();
 	});
 
 
