@@ -916,3 +916,14 @@ div.error {
     padding: 0;
     opacity: .4;
 }
+
+.swp-icon-tooltip {
+    position: relative;
+    right: -5%;
+    top: -5%;
+    padding: 5px;
+    color: #333;
+    background: #dedede;
+    box-shadow: 1px 1px 5px #777;
+    border-radius: 4px;
+}
