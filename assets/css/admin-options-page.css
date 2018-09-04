@@ -601,7 +601,9 @@ p.sw-subtitle.sw-registration-text {
 	font-size: 15px;
 	line-height: 15px;
 	cursor: pointer;
+    max-width: 15px;
 }
+
 
 .sw-twitter-icon:before {
 	content: 's';
@@ -918,12 +920,15 @@ div.error {
 }
 
 .swp-icon-tooltip {
+    display: inline;
     position: relative;
-    right: -5%;
-    top: -5%;
-    padding: 5px;
-    color: #333;
-    background: #dedede;
-    box-shadow: 1px 1px 5px #777;
+    top: -40px;
+    padding: 8px 5px;
+    color: rgb(35, 40, 45);
+    background: #f2f2f299;
+    /* box-shadow: 1px 1px 5px #999; */
     border-radius: 4px;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    font-family: "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
 }
