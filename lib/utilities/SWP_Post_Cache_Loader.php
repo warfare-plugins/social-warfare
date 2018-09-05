@@ -39,6 +39,8 @@ class SWP_Post_Cache_Loader {
 	 *
 	 */
 	public function __construct() {
+        global $post;
+
         add_action( 'wp_ajax_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
         add_action( 'wp_ajax_nopriv_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
 
@@ -47,7 +49,15 @@ class SWP_Post_Cache_Loader {
 		 * cache to rebuild on the next page load.
 		 *
 		 */
-		add_action( 'save_post', array( $this, 'update_post' ) );
+
+        if ( !is_object( $post ) ) :
+            return;
+        endif;
+
+        if ( 'publish' == $post->post_status ) :
+            add_action( 'save_post', array( $this, 'update_post' ) );
+        endif;
+
 		add_action( 'publish_post', array( $this, 'update_post' ) );
 	}
 
