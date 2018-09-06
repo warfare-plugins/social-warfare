@@ -1,3 +1,7 @@
+#social_warfare.postbox {
+    display: none;  
+}
+
 .notAvailable {
 	opacity: 0.3;
 }
