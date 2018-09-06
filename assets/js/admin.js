@@ -212,45 +212,57 @@ if (window.location.href.indexOf("widgets.php") > -1) {
       $("#social_warfare #" + selector).parent().prepend(div);
     }
 
+    function updateImageInputs() {
+        $('ul.swpmb-media-list').each(function(index, image) {
+            // Check if the media list has been created yet
+            if ($(image).is(':empty')) {
+                if ($(image).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
+                    var height = $(image).width() * (3 / 2);
+                } else {
+                    // Setup the Open Graph Image Placeholder
+                    var height = $(image).width() * (9 / 16);
+                }
+
+                $(this).css("height", height);
+
+            } else {
+
+              $(this).find(".swpmb-overlay").click(updateImageInputs)
+            }
+        })
+    }
+
   	$(document).ready(function() {
         noticeClickHandlers();
 
     		if ($('#social_warfare.postbox').length) {
-            var textCounters = {
-                "swp_og_title": 60,
-                "swp_og_description": 150,
-                "swp_pinterest_description": 140,
-                "swp_custom_tweet": 280
+              var textCounters = {
+                  "swp_og_title": 60,
+                  "swp_og_description": 150,
+                  "swp_pinterest_description": 140,
+                  "swp_custom_tweet": 280
               };
 
               Object.keys(textCounters).map(function(selector) {
-                  var textLimit = textCounters[selector];
+                    var textLimit = textCounters[selector];
 
-                  createCharactersRemaining(selector, textLimit);
-                  updateCharactersRemaining(selector, textLimit);
+                    createCharactersRemaining(selector, textLimit);
+                    updateCharactersRemaining(selector, textLimit);
 
-                  $("#social_warfare #" + selector).on("input", function() {
-                      updateCharactersRemaining(selector, textLimit);
-                  });
+                    $("#social_warfare #" + selector).on("input", function() {
+                        updateCharactersRemaining(selector, textLimit);
+                    });
               });
 
-        			// Setup an initilazation loop
-        			setInterval(function() {
-                  $('ul.swpmb-media-list').each(function(index, image) {
-              				// Check if the media list has been created yet
-                      if ($(image).is(':empty')) {
-                          if ($(image).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
-                              var height = $(image).width() * (3 / 2);
-                          } else {
-                              // Setup the Open Graph Image Placeholder
-                    					var height = $(image).width() * (9 / 16);
-                          }
 
-                  				$(this).css("height", height);
-                      }
-                  })
+              var initializer = setInterval(function() {
+                  if (!$($(".swpmb-media-list").length)) return;
 
-      			}, 500);
+                  if ($(".swpmb-media-list").first().is(":empty")) {
+                      updateImageInputs();
+                      clearInterval(initializer);
+                  }
+              }, 10);
     		}
 
     		swpConditionalFields();
