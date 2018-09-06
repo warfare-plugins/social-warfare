@@ -208,11 +208,16 @@ if (window.location.href.indexOf("widgets.php") > -1) {
     function checkboxChange(event) {
         event.preventDefault();
 
-        var checked = !($(event.target).data("status") == 'on');
-        var checkbox = $($(event.target).data("field"))
+        var checked = !($(this).attr('status') == 'on');
+        var checkbox = $($(event.target).attr("field"));
 
-        $(event.target).attr("status", status)
-        checkbox.attr("checked", checked)
+        if (checked) {
+  				$(this).attr('status', 'on');
+  				checkbox.prop('checked', true);
+  			} else {
+  				$(this).attr('status', 'off');
+  				checkbox.prop('checked', false);
+  			}
     }
 
 
@@ -225,7 +230,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
     function updateImageInputs() {
         $('ul.swpmb-media-list').each(function(index, mediaList) {
             // Check if the media list has been created yet
-            console.log($(mediaList).children())
             if ($(mediaList).is(':empty')) {
 
                 if ($(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
