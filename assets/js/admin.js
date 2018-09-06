@@ -251,6 +251,18 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         })
     }
 
+    function putFieldsInContainers() {
+        var types = $(".swp-meta-container[data-type]")
+                    .map(function(container) {
+                        return $(this).data('type')
+                    })
+                    .get()
+
+        types.forEach(function(type) {
+            $(".swp-meta-container." + type).append($(".swpmb-field." + type));
+        });
+    }
+
   	$(document).ready(function() {
         noticeClickHandlers();
         $(".sw-checkbox-toggle").click(checkboxChange);
@@ -263,9 +275,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
                   "swp_custom_tweet": 280
               };
 
-              ['open-graph', 'pinterest', 'twitter', 'other'].forEach(function(type) {
-                  $(".swp-meta-container." + type).append($(".swpmb-field." + type));
-              });
+              putFieldsInContainers();
 
               Object.keys(textCounters).map(function(selector) {
                     var textLimit = textCounters[selector];
