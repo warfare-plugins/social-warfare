@@ -263,31 +263,34 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         });
     }
 
+    function createTextCounters() {
+        var textCounters = {
+            "swp_og_title": 60,
+            "swp_og_description": 150,
+            "swp_pinterest_description": 140,
+            "swp_custom_tweet": 280
+        };
+
+        Object.keys(textCounters).map(function(selector) {
+              var textLimit = textCounters[selector];
+
+              createCharactersRemaining(selector, textLimit);
+              updateCharactersRemaining(selector, textLimit);
+
+              $("#social_warfare #" + selector).on("input", function() {
+                  updateCharactersRemaining(selector, textLimit);
+              });
+        });
+    }
+
   	$(document).ready(function() {
         noticeClickHandlers();
         $(".sw-checkbox-toggle").click(checkboxChange);
 
     		if ($('#social_warfare.postbox').length) {
-              var textCounters = {
-                  "swp_og_title": 60,
-                  "swp_og_description": 150,
-                  "swp_pinterest_description": 140,
-                  "swp_custom_tweet": 280
-              };
-
+              createTextCounters();
               putFieldsInContainers();
-
-              Object.keys(textCounters).map(function(selector) {
-                    var textLimit = textCounters[selector];
-
-                    createCharactersRemaining(selector, textLimit);
-                    updateCharactersRemaining(selector, textLimit);
-
-                    $("#social_warfare #" + selector).on("input", function() {
-                        updateCharactersRemaining(selector, textLimit);
-                    });
-              });
-
+          		swpConditionalFields();
 
               //* Wait for the Rilis metabox to populate itself.
               var initializer = setInterval(function() {
@@ -305,9 +308,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
               }, 10);
     		}
 
-
-
-    		swpConditionalFields();
     		$('.swp_popular_post_options select').on('change', function() {
     		  	swpConditionalFields();
     		});
