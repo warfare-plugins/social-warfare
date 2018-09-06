@@ -223,9 +223,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
                 "swp_custom_tweet": 280
               };
 
-              Object.entries(textCounters).map(function(entry) {
-                  var selector = entry[0];
-                  var textLimit = entry[1];
+              Object.keys(textCounters).map(function(selector) {
+                  var textLimit = textCounters[selector];
 
                   createCharactersRemaining(selector, textLimit);
                   updateCharactersRemaining(selector, textLimit);
@@ -236,37 +235,22 @@ if (window.location.href.indexOf("widgets.php") > -1) {
               });
 
         			// Setup an initilazation loop
-        			var swpPostInit = setInterval(function() {
-          				var swpOgImage  = $('.swp_og_imageWrapper ul.swpmb-media-list');
-          				var swpPinImage = $('.swp_pinterest_imageWrapper ul.swpmb-media-list');
+        			setInterval(function() {
+                  $('ul.swpmb-media-list').each(function(index, image) {
+              				// Check if the media list has been created yet
+                      if ($(image).is(':empty')) {
+                          if ($(image).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
+                              var height = $(image).width() * (3 / 2);
+                          } else {
+                              // Setup the Open Graph Image Placeholder
+                    					var height = $(image).width() * (9 / 16);
+                          }
 
-          				var smWidth, smHeight;
+                  				$(this).css("height", height);
+                      }
+                  })
 
-          				// Check if the media list has been created yet
-          				if (swpOgImage.length && swpOgImage.is(':empty')) {
-          					// Setup the Open Graph Image Placeholder
-          					smWidth = swpOgImage.width();
-          					smHeight = smWidth * (9 / 16);
-          					swpOgImage.css({ height: smHeight + 'px' });
-          				} else {
-          					smHeight = swpOgImage.find('img').height();
-          					swpOgImage.css({ height: smHeight + 'px' });
-          				}
-
-          				var pinWidth, pinHeight;
-
-          				if (swpPinImage.length && swpPinImage.is(':empty')) {
-          					// Setup the Open Graph Image Placeholder
-          					pinWidth = swpPinImage.width();
-          					pinHeight = pinWidth * (3 / 2);
-          					swpPinImage.css({ height: pinHeight + 'px' });
-          				} else {
-          					pinHeight = swpPinImage.find('img').height();
-          					swpPinImage.css({
-          						height: pinHeight + 'px'
-          					});
-          				}
-      			}, 1000);
+      			}, 500);
     		}
 
     		swpConditionalFields();
