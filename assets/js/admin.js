@@ -205,6 +205,16 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         });
     }
 
+    function checkboxChange(event) {
+        event.preventDefault();
+
+        var checked = !($(event.target).data("status") == 'on');
+        var checkbox = $($(event.target).data("field"))
+
+        $(event.target).attr("status", status)
+        checkbox.attr("checked", checked)
+    }
+
 
     function createCharactersRemaining(selector, textLimit) {
       var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
@@ -213,27 +223,31 @@ if (window.location.href.indexOf("widgets.php") > -1) {
     }
 
     function updateImageInputs() {
-        $('ul.swpmb-media-list').each(function(index, image) {
+        $('ul.swpmb-media-list').each(function(index, mediaList) {
             // Check if the media list has been created yet
-            if ($(image).is(':empty')) {
-                if ($(image).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
-                    var height = $(image).width() * (3 / 2);
+            console.log($(mediaList).children())
+            if ($(mediaList).is(':empty')) {
+
+                if ($(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
+                    var height = $(mediaList).width() * (3 / 2);
                 } else {
                     // Setup the Open Graph Image Placeholder
-                    var height = $(image).width() * (9 / 16);
+                    var height = $(mediaList).width() * (9 / 16);
                 }
 
-                $(this).css("height", height);
+                $(mediaList).css("height", height);
 
             } else {
 
-              $(this).find(".swpmb-overlay").click(updateImageInputs)
+                $(mediaList).css("height", "initial").find(".swpmb-overlay").click(updateImageInputs);
             }
         })
     }
 
   	$(document).ready(function() {
         noticeClickHandlers();
+        $(".sw-checkbox-toggle").click(checkboxChange);
+
 
     		if ($('#social_warfare.postbox').length) {
               var textCounters = {
@@ -255,13 +269,19 @@ if (window.location.href.indexOf("widgets.php") > -1) {
               });
 
 
+              //* Wait for the Rilis metabox to populate itself.
               var initializer = setInterval(function() {
                   if (!$($(".swpmb-media-list").length)) return;
 
-                  if ($(".swpmb-media-list").first().is(":empty")) {
+                  updateImageInputs();
+                  clearInterval(initializer);
+
+                  //* Call updateImageInputs again to resize existing images.
+                  setTimeout(function() {
                       updateImageInputs();
-                      clearInterval(initializer);
-                  }
+                      $("#social_warfare.postbox").show();
+                  }, 1200);
+
               }, 10);
     		}
 
