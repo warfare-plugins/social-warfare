@@ -232,6 +232,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
             // Check if the media list has been created yet
             if ($(mediaList).is(':empty')) {
 
+                //* For the Pinterest image placeholder image.
                 if ($(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
                     var height = $(mediaList).width() * (3 / 2);
                 } else {
@@ -241,6 +242,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
                 $(mediaList).css("height", height);
 
+                //* Call this method again to reset heights based on actual image values.
+                setTimeout(updateImageInputs, 100);
             } else {
 
                 $(mediaList).css("height", "initial").find(".swpmb-overlay").click(updateImageInputs);
@@ -252,7 +255,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         noticeClickHandlers();
         $(".sw-checkbox-toggle").click(checkboxChange);
 
-
     		if ($('#social_warfare.postbox').length) {
               var textCounters = {
                   "swp_og_title": 60,
@@ -260,6 +262,10 @@ if (window.location.href.indexOf("widgets.php") > -1) {
                   "swp_pinterest_description": 140,
                   "swp_custom_tweet": 280
               };
+
+              ['open-graph', 'pinterest', 'twitter', 'other'].forEach(function(type) {
+                  $(".swp-meta-container." + type).append($(".swpmb-field." + type));
+              });
 
               Object.keys(textCounters).map(function(selector) {
                     var textLimit = textCounters[selector];
@@ -288,6 +294,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
               }, 10);
     		}
+
+
 
     		swpConditionalFields();
     		$('.swp_popular_post_options select').on('change', function() {
