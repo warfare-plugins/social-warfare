@@ -259,7 +259,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
                     .get()
 
         types.forEach(function(type) {
-            $(".swp-meta-container." + type).append($(".swpmb-field." + type));
+            $(".swp-meta-container[data-type=" + type + "").append($(".swpmb-field." + type));
         });
     }
 
