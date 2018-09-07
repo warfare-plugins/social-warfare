@@ -1,11 +1,3 @@
-@media print {
-    .swp_social_panel {
-        display: none;
-        opacity: 0;
-        visibility: collapse;
-    }
-}
-
 .swp_social_panel {
 	clear: both;
 	display: -webkit-box;
@@ -35,6 +27,14 @@
 	flex-wrap: wrap;
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
+}
+
+@media print {
+    .swp_social_panel {
+        display: none;
+        opacity: 0;
+        visibility: collapse;
+    }
 }
 
 .swp_social_panel:not(.nc_floater):not(.swp_social_panelSide) {
