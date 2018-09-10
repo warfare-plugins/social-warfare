@@ -45,8 +45,6 @@ class SWP_Display {
      *
      */
     public function __construct() {
-
-
 		// The global array of posts that have already been processed.
         global $swp_already_print;
 
@@ -78,6 +76,9 @@ class SWP_Display {
      *
      */
     public function activate_buttons() {
+        if ( Social_Warfare::has_plugin_conflict() ) :
+            return;
+        endif;
 
     	// Only hook into the_content filter if is_singular() is true or
     	// they don't use excerpts on the archive pages.
@@ -117,7 +118,6 @@ class SWP_Display {
     *
     */
     public function social_warfare_wrapper( $content ) {
-
 		// The global WordPress post object.
         global $post;
 
@@ -128,7 +128,7 @@ class SWP_Display {
 
         // Pass the content to the buttons constructor to place them inside.
     	$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
-        
+
         return $buttons_panel->the_buttons( $content );
     }
 
@@ -142,6 +142,9 @@ class SWP_Display {
 	 *
 	 */
     function floating_buttons() {
+        if ( Social_Warfare::has_plugin_conflict() ) :
+            return;
+        endif;
 
 		// Instantiate a new Buttons Panel.
         $side_panel = new SWP_Buttons_Panel( array( 'content' => "" ) );
