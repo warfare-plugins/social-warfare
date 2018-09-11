@@ -193,6 +193,16 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.3.0 (11 SEP 2018) =
+* Added CSS to hide buttons on print views.
+* Added Mix to the Social Networks.
+* Added "url" paramter to the shortcode.
+* Fixed plugin compatability issue with BuddyPress.
+* Fixed the decimal separator for share counts.
+* Updated the option-getting mechanism (`global $swp_user_options` is now deprecated).
+* Updated the sidebar in the Social Warfare settings page.
+* Updated the plugin file structure and organization.
+
 = 3.2.1 (16 AUG 2018) =
 * Fixed a minor DOMDocument warning that was appearing when data-pin-description was ON
 
