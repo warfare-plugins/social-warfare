@@ -883,8 +883,12 @@ class SWP_Buttons_Panel {
             return '';
         }
 
-        $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
-
+        $totals_argument = in_array( 'total', $buttons ) ||
+                           in_array( 'totals', $buttons ) ||
+                           SWP_Utility::get_option( 'total_shares' ) && count($buttons) < 1; // They just wrote [social_warfare] without specifying buttons.
+if (count($this->args['buttons'])) :
+        die(var_dump($buttons));
+endif;
         if ( $this->is_shortcode && !$totals_argument ) {
             return '';
         }
