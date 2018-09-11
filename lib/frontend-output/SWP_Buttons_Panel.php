@@ -756,6 +756,10 @@ class SWP_Buttons_Panel {
         if ( isset( $this->args['buttons'] ) ) :
             $this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
+            foreach($this->args['buttons'] as $i => $button) {
+                $this->args['buttons'][$i] = trim( $button );
+            }
+
             foreach ( $this->args['buttons'] as $counts_key ) {
                 $network_key = $this->display_name_to_key( $counts_key );
                 foreach( $this->networks as $key => $network ):
