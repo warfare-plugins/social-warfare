@@ -114,7 +114,7 @@ class SWP_User_options {
 
 	public function generate_whitelist() {
         $addons = apply_filters( 'swp_registrations', array() );
-        $whitelist = array('last_migrated');
+        $whitelist = array( 'last_migrated' );
 
         if ( empty( $addons) ) {
             return $whitelist;
@@ -143,9 +143,6 @@ class SWP_User_options {
 	private function remove_unavailable_options() {
         $defaults = array_keys( $this->registered_options['defaults'] );
         $options = array_keys ( $this->user_options );
-
-
-
         $available_options = array_intersect( $defaults, $options );
 
         foreach( $this->user_options as $key => $value ) {
