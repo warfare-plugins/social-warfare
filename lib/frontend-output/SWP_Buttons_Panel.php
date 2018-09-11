@@ -889,7 +889,6 @@ class SWP_Buttons_Panel {
                            in_array( 'totals', $this->args['buttons'] ) ||
                            SWP_Utility::get_option( 'total_shares' ) && count($this->args['buttons']) < 1; // They just wrote [social_warfare] without specifying buttons.
 
-        echo "<Pre>BUTTONS: <br>", var_dump($this->is_shortcode), var_dump($this->args['buttons']), var_dump(count($this->args['buttons'])), "</pre>";
         if ( $this->is_shortcode && !$totals_argument ) {
             return '';
         }
