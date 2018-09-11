@@ -187,6 +187,8 @@ class SWP_Section_HTML extends SWP_Option {
             $selected = '';
         endif;
 
+        $this->default = false;
+        $this->key = 'twitter_shares';
 
         $html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ' . $this->render_dependency() . '>';
 
