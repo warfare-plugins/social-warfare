@@ -873,8 +873,6 @@ class SWP_Buttons_Panel {
      *
      */
     public function render_total_shares_html() {
-        $buttons = isset( $this->args['buttons'] ) ? strtolower( $this->args['buttons'] ) : array();
-
         if ( false == $this->option('total_shares') ) {
             return '';
         }
@@ -883,12 +881,15 @@ class SWP_Buttons_Panel {
             return '';
         }
 
-        $totals_argument = in_array( 'total', $buttons ) ||
-                           in_array( 'totals', $buttons ) ||
-                           SWP_Utility::get_option( 'total_shares' ) && count($buttons) < 1; // They just wrote [social_warfare] without specifying buttons.
-if (count($this->args['buttons'])) :
-        die(var_dump($buttons));
-endif;
+        if ($this->is_shortcode) {
+            // die(var_dump(in_array('tota')))
+        }
+
+        $totals_argument = in_array( 'total', $this->args['buttons'] ) ||
+                           in_array( 'totals', $this->args['buttons'] ) ||
+                           SWP_Utility::get_option( 'total_shares' ) && count($this->args['buttons']) < 1; // They just wrote [social_warfare] without specifying buttons.
+
+        echo "<Pre>BUTTONS: <br>", var_dump($this->is_shortcode), var_dump($this->args['buttons']), var_dump(count($this->args['buttons'])), "</pre>";
         if ( $this->is_shortcode && !$totals_argument ) {
             return '';
         }
