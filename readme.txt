@@ -196,6 +196,8 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 = 3.3.1 (11 SEP 2018) =
 * Fixed the URL for post editor placeholder images.
 * Fixed the Twitter Count toggle.
+* Added backward compatability for swp_kilomega().
+* Added compatability for mb_convert_encoding().
 
 = 3.3.0 (11 SEP 2018) =
 * Added CSS to hide buttons on print views.
