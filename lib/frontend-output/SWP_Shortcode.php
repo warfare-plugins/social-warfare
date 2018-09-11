@@ -187,8 +187,8 @@ class SWP_Shortcode {
 
         $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
         $html_safe_tweet = htmlentities( $converted_tweet, ENT_COMPAT, 'UTF-8' );
-
         $tweet = utf8_uri_encode( $converted_tweet, $max_tweet_length );
+		$tweet = urlencode( $tweet );
 
         return $tweet;
     }
