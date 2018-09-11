@@ -285,7 +285,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
   	$(document).ready(function() {
         noticeClickHandlers();
-        $(".sw-checkbox-toggle").click(checkboxChange);
+        $(".sw-checkbox-toggle.swp-post-editor").click(checkboxChange);
 
     		if ($('#social_warfare.postbox').length) {
               createTextCounters();
