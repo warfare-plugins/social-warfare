@@ -185,10 +185,13 @@ class SWP_Shortcode {
         // Check for a custom tweet from the post options.
         $tweet = $atts['tweet'];
 
-        $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
-        $html_safe_tweet = htmlentities( $converted_tweet, ENT_COMPAT, 'UTF-8' );
-
+		if( function_exists( 'mb_convert_encoding' ) ):
+	        $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
+		endif;
+		
+		$html_safe_tweet = htmlentities( $converted_tweet, ENT_COMPAT, 'UTF-8' );
         $tweet = utf8_uri_encode( $converted_tweet, $max_tweet_length );
+		$tweet = urlencode( $tweet );
 
         return $tweet;
     }
