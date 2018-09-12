@@ -127,31 +127,31 @@ class SWP_URL_Management {
 	 */
 	public function link_shortener( $array ) {
         global $post;
+
         $postID = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
-
         $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
 
         // Recently done.
-        if ( true == $array['fresh_cache'] ) :
+        if ( true == $array['fresh_cache'] && $cached_bitly_link ) {
 
 			if( false !== $cached_bitly_link ) {
 				$array['url'] = $cached_bitly_link;
 			}
 
             return $array;
-        endif;
+        }
 
         // We need this information to make a bitly request.
-        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) :
+        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) {
             return $array;
-        endif;
+        }
 
         // These can not have bitly urls created.
-        if ( $array['network'] == 'total_shares' || $array['network'] == 'pinterest' ) :
+        if ( $array['network'] == 'total_shares' || $array['network'] == 'pinterest' ) {
             return $array;
-        endif;
+        }
 
         // We tried making a bitly request and it did not work.
         // Only one bitly url is needed for this post, and it exists.
