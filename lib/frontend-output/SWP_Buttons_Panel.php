@@ -867,13 +867,13 @@ class SWP_Buttons_Panel {
      * If share counts are active, renders the Total Share Counts HTML.
      *
      * @since  3.0.0 | 18 APR 2018 | Created
-     * @param  none
-     *
+     * @since  3.3.2 | 12 SEP 2018 | Moved strtolower to $totals_argument
+     * @param  void
      * @return string $html The fully qualified HTML to display share counts.
      *
      */
     public function render_total_shares_html() {
-        $buttons = isset( $this->args['buttons'] ) ? strtolower( $this->args['buttons'] ) : array();
+        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
 
         if ( false == $this->option('total_shares') ) {
             return '';
@@ -883,7 +883,8 @@ class SWP_Buttons_Panel {
             return '';
         }
 
-        $totals_argument = in_array( 'total', $buttons ) || in_array( 'totals', $buttons );
+        $totals_argument = in_array('total', array_map('strtolower', $buttons))
+            || in_array('totals', array_map('strtolower', $buttons));
 
         if ( $this->is_shortcode && !$totals_argument ) {
             return '';
