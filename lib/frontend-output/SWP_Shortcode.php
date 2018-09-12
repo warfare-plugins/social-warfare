@@ -152,8 +152,8 @@ class SWP_Shortcode {
 
         $html = '<div class="sw-tweet-clear"></div>';
         $html .= '<a class="swp_CTT ' . $theme;
-        $html .= '" href="https://twitter.com/share?text=' . $tweet . $via;
-        $html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via;
+        $html .= '" href="https://twitter.com/share?text=' . $tweet . $via . $url;
+        $html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via . $url;
         $html .= '" rel="nofollow noreferrer noopener" target="_blank">';
             $html .= '<span class="sw-click-to-tweet">';
                 $html .= '<span class="sw-ctt-text">';
