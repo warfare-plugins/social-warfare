@@ -128,7 +128,7 @@ class SWP_URL_Management {
 	public function link_shortener( $array ) {
         global $post;
 
-        $postID = $array['postID'];
+        $post_id = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
         $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
