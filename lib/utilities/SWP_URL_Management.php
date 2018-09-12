@@ -340,13 +340,9 @@ class SWP_URL_Management {
 	 *
 	 */
 	public function bitly_oauth_callback() {
-		$options = get_option( 'swp_user_options', array() );
+		$access_token = isset( $_GET['access_token'] ) ? $_GET['access_token'] : '';
 
-		// Set the premium code to null
-		$options['bitly_access_token'] = $_GET['access_token'];
-
-		// Update the options array with the premium code nulled
-		update_options( $options );
+		SWP_Utility::update_option( 'bitly_access_token', $access_token );
 
 		echo admin_url( 'admin.php?page=social-warfare' );
 	}
