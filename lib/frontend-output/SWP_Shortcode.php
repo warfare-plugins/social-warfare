@@ -128,8 +128,14 @@ class SWP_Shortcode {
         global $post;
 
         if ( strpos( $atts['tweet'], 'http' ) > -1 ) :
-            //* They included a link in the tweet text. Do not pass a &url paramter.
-            $url = '&url=';
+            /**
+             * They included a link in the tweet text. Do not pass a &url paramter.
+             *
+             * Twitter will diregard value if it is: empty, a whitespace, or %20.
+             * Instead, give it an invalid URL! It achieves the targeted effect. 
+             *
+            */
+            $url = '&url=x';
         else :
             $url = '&url=' . SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
         endif;
