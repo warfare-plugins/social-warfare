@@ -160,51 +160,34 @@ class SWP_URL_Management {
             return $array;
         endif;
 
-        // We tried making a bitly request and it did not work.
-        // Only one bitly url is needed for this post, and it exists.
-
-        $start_date = trim( SWP_Utility::get_option( 'bitly_start_date' ) );
-
         //* They have decided to only allow posts after a certain date.
-        if ( $start_date ) :
-
+        if ( $start_date ) {
             if ( !is_object( $post ) || empty( $post->post_date ) ) :
                 return $array;
             endif;
 
             $start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
-
             $post_date = new DateTime( $post->post_date );
 
-            //* The post is
+            //* The post is too new for $start_date.
             if ( $start_date > $post_date ) :
                 return $array;
             endif;
-
-        endif;
+        }
 
         $network = $array['network'];
-
         $url = urldecode( $array['url'] );
         $new_bitly_url = $this->make_bitly_url( $url , $network , $access_token );
 
-
         if ( $new_bitly_url ) {
-
             delete_post_meta( $postID, 'bitly_link_' . $network );
             update_post_meta( $postID, 'bitly_link_' . $network, $new_bitly_url );
             $array['url'] = $bitly_url;
-
         }
 
-
+        // Delete the meta fields and then update to keep the database clean and up to date.
         if ( false == $google_analytics ) {
-
-            // Delete the meta fields and then update to keep the database clean and up to date.
-            delete_post_meta( $postID,'bitly_link_' . $network );
-
-            // Save the link in a global so we can skip this part next time
-
+            delete_post_meta( $postID, 'bitly_link_' . $network );
         }
 
 	    return $array;
