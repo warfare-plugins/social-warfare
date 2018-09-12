@@ -131,7 +131,7 @@ class SWP_URL_Management {
         $postID = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
-        $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
+        $cached_bitly_link = $this->fetch_local_bitly_link( $postID, $array['network'] );
 
         // Recently done.
         if ( true == $array['fresh_cache'] ) {
