@@ -81,6 +81,39 @@ class SWP_URL_Management {
 
 
 	/**
+	 * Fetch the bitly link that is cached in the local database.
+	 *
+	 * When the cache is fresh, we just pull the existing bitly link from the
+	 * database rather than making an API call on every single page load.
+	 *
+	 * @since  3.3.2 | 12 SEP 2018 | Created
+	 * @param  int $post_id The post ID
+	 * @param  string $network The key for the current social network
+	 * @return mixed           string: The short url; false on failure.
+	 *
+	 */
+    public function fetch_local_bitly_link( $post_id, $network ) {
+
+		// If analytics are on, get a different link for each network.
+		if ( true == SWP_Utility::get_option('google_analytics') ) {
+        	$short_url = get_post_meta( $post_id, 'bitly_link_' . $network, true);
+
+	        if ( is_string( $short_url ) && strlen( $short_url ) ) {
+	            return $short_url;
+			}
+		}
+
+		// If analytics are off, just pull the general short link.
+        $short_url = get_post_meta( $post_id, 'bitly_link', true );
+        if ( is_string( $short_url ) && strlen( $short_url ) ) {
+            return $short_url;
+        }
+
+        return false;
+    }
+
+
+	/**
 	 * The Bitly Link Shortener Method
 	 *
 	 * This is the function used to manage shortened links via the Bitly link
@@ -94,59 +127,31 @@ class SWP_URL_Management {
 	 */
 	public function link_shortener( $array ) {
         global $post;
-        $postID = $array['postID'];
+
+        $post_id = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
+        $cached_bitly_link = $this->fetch_local_bitly_link( $postID, $array['network'] );
 
         // Recently done.
-        if ( true == $array['fresh_cache'] ) :
+        if ( true == $array['fresh_cache'] ) {
+
+			if( false !== $cached_bitly_link ) {
+				$array['url'] = $cached_bitly_link;
+			}
+
             return $array;
-        endif;
+        }
 
         // We need this information to make a bitly request.
-        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) :
+        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) {
             return $array;
-        endif;
+        }
 
         // These can not have bitly urls created.
-        if ( $array['network'] == 'total_shares' || $array['network'] == 'pinterest' ) :
+        if ( $array['network'] == 'total_shares' || $array['network'] == 'pinterest' ) {
             return $array;
-        endif;
-
-        // We tried making a bitly request and it did not work.
-        if ( isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure' ) :
-            return $array;
-        endif;
-
-        // Only one bitly url is needed for this post, and it exists.
-        if ( !$google_analytics && isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-            $array['url'] = $_GLOBALS['sw']['links'][ $postID ];
-            return $array;
-        endif;
-
-        $start_date = trim( SWP_Utility::get_option( 'bitly_start_date' ) );
-
-        //* They have decided to only allow posts after a certain date.
-        if ( $start_date ) :
-
-            if ( !is_object( $post ) || empty( $post->post_date ) ) :
-                return $array;
-            endif;
-
-            $start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
-
-            //* They did not format the date correctly.
-            if ( false == $start_date ) :
-                return $array;
-            endif;
-
-            $post_date = new DateTime( $post->post_date );
-
-            //* The post is
-            if ( $start_date > $post_date ) :
-                return $array;
-            endif;
-        endif;
+        }
 
         $links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
 
@@ -155,45 +160,35 @@ class SWP_URL_Management {
             return $array;
         endif;
 
+        //* They have decided to only allow posts after a certain date.
+        if ( $start_date ) {
+            if ( !is_object( $post ) || empty( $post->post_date ) ) :
+                return $array;
+            endif;
+
+            $start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
+            $post_date = new DateTime( $post->post_date );
+
+            //* The post is too new for $start_date.
+            if ( $start_date > $post_date ) :
+                return $array;
+            endif;
+        }
+
         $network = $array['network'];
-
-        if ( true == $google_analytics ) :
-            $prior_bitly_url = get_post_meta( $postID, 'bitly_link_' . $network, true );
-        else :
-            $prior_bitly_url = get_post_meta( $postID, 'bitly_link', true );
-        endif;
-
-
-        if ( $prior_bitly_url ) :
-            $array['url'] = $prior_bitly_url;
-            return $array;
-        endif;
-
-
         $url = urldecode( $array['url'] );
         $new_bitly_url = $this->make_bitly_url( $url , $network , $access_token );
 
-
-        if ( $new_bitly_url ) :
-
-            delete_post_meta( $postID,'bitly_link_' . $network );
-            update_post_meta( $postID,'bitly_link_' . $network, $new_bitly_url );
+        if ( $new_bitly_url ) {
+            delete_post_meta( $postID, 'bitly_link_' . $network );
+            update_post_meta( $postID, 'bitly_link_' . $network, $new_bitly_url );
             $array['url'] = $bitly_url;
+        }
 
-        else :
-            $_GLOBALS['sw']['bitly_status'] = 'failure';
-        endif;
-
-
-        if ( false == $google_analytics ) :
-
-            // Delete the meta fields and then update to keep the database clean and up to date.
-            delete_post_meta( $postID,'bitly_link_' . $network );
-
-            // Save the link in a global so we can skip this part next time
-            $_GLOBALS['sw']['links'][ $postID ] = $bitly_url;
-
-        endif;
+        // Delete the meta fields and then update to keep the database clean and up to date.
+        if ( false == $google_analytics ) {
+            delete_post_meta( $postID, 'bitly_link_' . $network );
+        }
 
 	    return $array;
 	}
@@ -277,29 +272,23 @@ class SWP_URL_Management {
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
 		global $swp_user_options;
 
+		// Fetch the parameters into an array for use by the filters
+		$array['url'] = $url;
+		$array['network'] = $network;
+		$array['postID'] = $postID;
+        $array['fresh_cache'] = $is_cache_fresh;
 
-		if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-			return $_GLOBALS['sw']['links'][ $postID ];
-		else :
-			// Fetch the parameters into an array for use by the filters
-			$array['url'] = $url;
-			$array['network'] = $network;
-			$array['postID'] = $postID;
-            $array['fresh_cache'] = $is_cache_fresh;
+		if( !is_attachment() ):
 
-			if( !is_attachment() ):
+			// Run the anaylitcs hook filters
 
-				// Run the anaylitcs hook filters
+			$array = apply_filters( 'swp_analytics' , $array );
 
-				$array = apply_filters( 'swp_analytics' , $array );
-
-				// Run the link shortening hook filters, but not on Pinterest
-				$array = apply_filters( 'swp_link_shortening' , $array );
-			endif;
-
-			return $array['url'];
-
+			// Run the link shortening hook filters, but not on Pinterest
+			$array = apply_filters( 'swp_link_shortening' , $array );
 		endif;
+
+		return $array['url'];
 	}
 
 
@@ -317,13 +306,9 @@ class SWP_URL_Management {
 	 *
 	 */
 	public function bitly_oauth_callback() {
-		$options = swp_get_user_options();
+		$access_token = isset( $_GET['access_token'] ) ? $_GET['access_token'] : '';
 
-		// Set the premium code to null
-		$options['bitly_access_token'] = $_GET['access_token'];
-
-		// Update the options array with the premium code nulled
-		swp_update_options( $options );
+		SWP_Utility::update_option( 'bitly_access_token', $access_token );
 
 		echo admin_url( 'admin.php?page=social-warfare' );
 	}
