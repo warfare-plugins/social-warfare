@@ -154,15 +154,7 @@ class SWP_URL_Management {
         endif;
 
         // We tried making a bitly request and it did not work.
-        // if ( isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure' ) :
-            // return $array;
-        // endif;
-
         // Only one bitly url is needed for this post, and it exists.
-        // if ( !$google_analytics && isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-        //     $array['url'] = $_GLOBALS['sw']['links'][ $postID ];
-        //     return $array;
-        // endif;
 
         $start_date = trim( SWP_Utility::get_option( 'bitly_start_date' ) );
 
@@ -214,26 +206,23 @@ class SWP_URL_Management {
         $new_bitly_url = $this->make_bitly_url( $url , $network , $access_token );
 
 
-        if ( $new_bitly_url ) :
+        if ( $new_bitly_url ) {
 
             delete_post_meta( $postID, 'bitly_link_' . $network );
             update_post_meta( $postID, 'bitly_link_' . $network, $new_bitly_url );
             $array['url'] = $bitly_url;
 
-        else :
-            // $_GLOBALS['sw']['bitly_status'] = 'failure';
-        endif;
+        }
 
 
-        if ( false == $google_analytics ) :
+        if ( false == $google_analytics ) {
 
             // Delete the meta fields and then update to keep the database clean and up to date.
             delete_post_meta( $postID,'bitly_link_' . $network );
 
             // Save the link in a global so we can skip this part next time
-            // $_GLOBALS['sw']['links'][ $postID ] = $bitly_url;
 
-        endif;
+        }
 
 	    return $array;
 	}
@@ -317,28 +306,23 @@ class SWP_URL_Management {
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
 		global $swp_user_options;
 
-		// if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-			// return $_GLOBALS['sw']['links'][ $postID ];
-		// else :
-			// Fetch the parameters into an array for use by the filters
-			$array['url'] = $url;
-			$array['network'] = $network;
-			$array['postID'] = $postID;
-            $array['fresh_cache'] = $is_cache_fresh;
+		// Fetch the parameters into an array for use by the filters
+		$array['url'] = $url;
+		$array['network'] = $network;
+		$array['postID'] = $postID;
+        $array['fresh_cache'] = $is_cache_fresh;
 
-			if( !is_attachment() ):
+		if( !is_attachment() ):
 
-				// Run the anaylitcs hook filters
+			// Run the anaylitcs hook filters
 
-				$array = apply_filters( 'swp_analytics' , $array );
+			$array = apply_filters( 'swp_analytics' , $array );
 
-				// Run the link shortening hook filters, but not on Pinterest
-				$array = apply_filters( 'swp_link_shortening' , $array );
-			endif;
+			// Run the link shortening hook filters, but not on Pinterest
+			$array = apply_filters( 'swp_link_shortening' , $array );
+		endif;
 
-			return $array['url'];
-
-		// endif;
+		return $array['url'];
 	}
 
 
