@@ -39,7 +39,6 @@ class SWP_Shortcode {
 		 */
         add_shortcode( 'clickToTweet', array($this, 'click_to_tweet' ) );
 		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode' ) );
-
 	}
 
 
@@ -128,11 +127,18 @@ class SWP_Shortcode {
     function click_to_tweet( $atts ) {
         global $post;
 
-    	$url = SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
-    	(strpos( $atts['tweet'],'http' ) !== false ? $urlParam = '&url=/' : $urlParam = '&url=' . $url );
-    	$atts['tweet'] = rtrim( $atts['tweet'] );
-
-        // die(var_dump($atts['tweet']));
+        if ( strpos( $atts['tweet'], 'http' ) > -1 ) :
+            /**
+             * They included a link in the tweet text. Do not pass a &url paramter.
+             *
+             * Twitter will diregard value if it is: empty, a whitespace, or %20.
+             * Instead, give it an invalid URL! It achieves the targeted effect. 
+             *
+            */
+            $url = '&url=x';
+        else :
+            $url = '&url=' . SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
+        endif;
 
     	$user_twitter_handle = get_post_meta( get_the_ID() , 'swp_twitter_username' , true );
 
@@ -152,8 +158,8 @@ class SWP_Shortcode {
 
         $html = '<div class="sw-tweet-clear"></div>';
         $html .= '<a class="swp_CTT ' . $theme;
-        $html .= '" href="https://twitter.com/share?text=' . $tweet . $via;
-        $html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via;
+        $html .= '" href="https://twitter.com/share?text=' . $tweet . $via . $url;
+        $html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via . $url;
         $html .= '" rel="nofollow noreferrer noopener" target="_blank">';
             $html .= '<span class="sw-click-to-tweet">';
                 $html .= '<span class="sw-ctt-text">';
@@ -182,15 +188,15 @@ class SWP_Shortcode {
     protected function get_tweet( $atts ) {
         $max_tweet_length = 240;
 
-        // Check for a custom tweet from the post options.
+        // Check for a custom tweet from the shortcode attributes. .
         $tweet = $atts['tweet'];
 
-		if( function_exists( 'mb_convert_encoding' ) ):
-	        $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
+		if ( function_exists( 'mb_convert_encoding' ) ) :
+	        $tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
 		endif;
-		
-		$html_safe_tweet = htmlentities( $converted_tweet, ENT_COMPAT, 'UTF-8' );
-        $tweet = utf8_uri_encode( $converted_tweet, $max_tweet_length );
+
+        $html_safe_tweet = htmlentities( $tweet, ENT_COMPAT, 'UTF-8' );
+        $tweet = utf8_uri_encode( $tweet, $max_tweet_length );
 		$tweet = urlencode( $tweet );
 
         return $tweet;
