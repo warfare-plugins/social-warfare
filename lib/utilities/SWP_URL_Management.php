@@ -134,7 +134,7 @@ class SWP_URL_Management {
         $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
 
         // Recently done.
-        if ( true == $array['fresh_cache'] && $cached_bitly_link ) {
+        if ( true == $array['fresh_cache'] ) {
 
 			if( false !== $cached_bitly_link ) {
 				$array['url'] = $cached_bitly_link;
