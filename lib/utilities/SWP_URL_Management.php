@@ -153,6 +153,13 @@ class SWP_URL_Management {
             return $array;
         }
 
+        $links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
+
+        //* They have disabled bitly links on this post type.
+        if ( false == $links_enabled || 'off' == $links_enabled ) :
+            return $array;
+        endif;
+
         // We tried making a bitly request and it did not work.
         // Only one bitly url is needed for this post, and it exists.
 
@@ -173,13 +180,6 @@ class SWP_URL_Management {
             if ( $start_date > $post_date ) :
                 return $array;
             endif;
-        endif;
-
-        $links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
-
-        //* They have disabled bitly links on this post type.
-        if ( false == $links_enabled || 'off' == $links_enabled ) :
-            return $array;
         endif;
 
         $network = $array['network'];
