@@ -180,22 +180,10 @@ class SWP_URL_Management {
             if ( $start_date > $post_date ) :
                 return $array;
             endif;
+
         endif;
 
         $network = $array['network'];
-
-        if ( true == $google_analytics ) :
-            $prior_bitly_url = get_post_meta( $postID, 'bitly_link_' . $network, true );
-        else :
-            $prior_bitly_url = get_post_meta( $postID, 'bitly_link', true );
-        endif;
-
-
-        if ( $prior_bitly_url ) :
-            $array['url'] = $prior_bitly_url;
-            return $array;
-        endif;
-
 
         $url = urldecode( $array['url'] );
         $new_bitly_url = $this->make_bitly_url( $url , $network , $access_token );
