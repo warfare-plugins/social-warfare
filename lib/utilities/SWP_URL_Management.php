@@ -81,6 +81,39 @@ class SWP_URL_Management {
 
 
 	/**
+	 * Fetch the bitly link that is cached in the local database.
+	 *
+	 * When the cache is fresh, we just pull the existing bitly link from the
+	 * database rather than making an API call on every single page load.
+	 *
+	 * @since  3.3.2 | 12 SEP 2018 | Created
+	 * @param  int $post_id The post ID
+	 * @param  string $network The key for the current social network
+	 * @return mixed           string: The short url; false on failure.
+	 *
+	 */
+    public function fetch_local_bitly_link( $post_id, $network ) {
+
+		// If analytics are on, get a different link for each network.
+		if ( true == SWP_Utility::get_option('google_analytics') ) {
+        	$short_url = get_post_meta( $post_id, 'bitly_link_' . $network, true);
+
+	        if ( is_string( $short_url ) && strlen( $short_url ) ) {
+	            return $short_url;
+			}
+		}
+
+		// If analytics are off, just pull the general short link.
+        $short_url = get_post_meta( $post_id, 'bitly_link', true );
+        if ( is_string( $short_url ) && strlen( $short_url ) ) {
+            return $short_url;
+        }
+
+        return false;
+    }
+
+
+	/**
 	 * The Bitly Link Shortener Method
 	 *
 	 * This is the function used to manage shortened links via the Bitly link
@@ -98,8 +131,15 @@ class SWP_URL_Management {
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
 
+        $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
+
         // Recently done.
         if ( true == $array['fresh_cache'] ) :
+
+			if( false !== $cached_bitly_link ) {
+				$array['url'] = $cached_bitly_link;
+			}
+
             return $array;
         endif;
 
@@ -114,15 +154,15 @@ class SWP_URL_Management {
         endif;
 
         // We tried making a bitly request and it did not work.
-        if ( isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure' ) :
-            return $array;
-        endif;
+        // if ( isset( $_GLOBALS['bitly_status'] ) && $_GLOBALS['bitly_status'] == 'failure' ) :
+            // return $array;
+        // endif;
 
         // Only one bitly url is needed for this post, and it exists.
-        if ( !$google_analytics && isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-            $array['url'] = $_GLOBALS['sw']['links'][ $postID ];
-            return $array;
-        endif;
+        // if ( !$google_analytics && isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
+        //     $array['url'] = $_GLOBALS['sw']['links'][ $postID ];
+        //     return $array;
+        // endif;
 
         $start_date = trim( SWP_Utility::get_option( 'bitly_start_date' ) );
 
@@ -176,12 +216,12 @@ class SWP_URL_Management {
 
         if ( $new_bitly_url ) :
 
-            delete_post_meta( $postID,'bitly_link_' . $network );
-            update_post_meta( $postID,'bitly_link_' . $network, $new_bitly_url );
+            delete_post_meta( $postID, 'bitly_link_' . $network );
+            update_post_meta( $postID, 'bitly_link_' . $network, $new_bitly_url );
             $array['url'] = $bitly_url;
 
         else :
-            $_GLOBALS['sw']['bitly_status'] = 'failure';
+            // $_GLOBALS['sw']['bitly_status'] = 'failure';
         endif;
 
 
@@ -191,7 +231,7 @@ class SWP_URL_Management {
             delete_post_meta( $postID,'bitly_link_' . $network );
 
             // Save the link in a global so we can skip this part next time
-            $_GLOBALS['sw']['links'][ $postID ] = $bitly_url;
+            // $_GLOBALS['sw']['links'][ $postID ] = $bitly_url;
 
         endif;
 
@@ -277,10 +317,9 @@ class SWP_URL_Management {
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
 		global $swp_user_options;
 
-
-		if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
-			return $_GLOBALS['sw']['links'][ $postID ];
-		else :
+		// if ( isset( $_GLOBALS['sw']['links'][ $postID ] ) ) :
+			// return $_GLOBALS['sw']['links'][ $postID ];
+		// else :
 			// Fetch the parameters into an array for use by the filters
 			$array['url'] = $url;
 			$array['network'] = $network;
@@ -299,7 +338,7 @@ class SWP_URL_Management {
 
 			return $array['url'];
 
-		endif;
+		// endif;
 	}
 
 
