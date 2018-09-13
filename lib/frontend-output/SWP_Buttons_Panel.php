@@ -393,6 +393,14 @@ class SWP_Buttons_Panel {
     }
 
 
+	/**
+	 * A method for fetching the permalink.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return void Values are stored in $this->permalink.
+	 *
+	 */
     protected function establish_permalink() {
         $this->permalink = get_permalink( $this->post_id );
     }
@@ -440,6 +448,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
 	 *                               location methods instead of the raw options value.
 	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->option() method to prevent undefined index error.
+	 * @since  3.3.1 | 13 SEP 2018 | Added get_alignment()
 	 * @param  boolean $echo Echo's the content or returns it if false.
 	 * @return string        The string of HTML.
 	 *
@@ -465,14 +474,15 @@ class SWP_Buttons_Panel {
             $this->get_shape() .
             $this->get_colors() .
             $this->get_scale() .
+			$this->get_alignment() .
             '" ' . // end CSS classes
             $this->get_min_width() .
             $this->get_float_background() .
             //* These below two data-attribute methods are inconsistent. But they
             //* already existed and are used elsewhere, so I'm not touching them.
-            '" data-float="' . $this->get_float_location() .
-            '" data-float-mobile="' . $this->get_mobile_float_location() .
-            '" style="' . $style . '" >';
+            '" data-float="' . $this->get_float_location() . '"' .
+            ' data-float-mobile="' . $this->get_mobile_float_location() . '"' .
+            ' style="' . $style . '" >';
 
             $total_shares_html = $this->render_total_shares_html();
             $buttons = $this->render_buttons_html();
@@ -495,6 +505,10 @@ class SWP_Buttons_Panel {
         return $html;
     }
 
+
+	protected function get_alignment() {
+		return ' scale-' . $this->option('button_alignment');
+	}
 
     protected function get_colors() {
         $default_colors = $this->option( 'default_colors' );
