@@ -131,7 +131,7 @@ class SWP_URL_Management {
         $post_id = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
-        $cached_bitly_link = $this->fetch_local_bitly_link( $postID, $array['network'] );
+        $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
 
         // Recently done.
         if ( true == $array['fresh_cache'] ) {
@@ -180,14 +180,14 @@ class SWP_URL_Management {
         $new_bitly_url = $this->make_bitly_url( $url , $network , $access_token );
 
         if ( $new_bitly_url ) {
-            delete_post_meta( $postID, 'bitly_link_' . $network );
-            update_post_meta( $postID, 'bitly_link_' . $network, $new_bitly_url );
+            delete_post_meta( $post_id, 'bitly_link_' . $network );
+            update_post_meta( $post_id, 'bitly_link_' . $network, $new_bitly_url );
             $array['url'] = $bitly_url;
         }
 
         // Delete the meta fields and then update to keep the database clean and up to date.
         if ( false == $google_analytics ) {
-            delete_post_meta( $postID, 'bitly_link_' . $network );
+            delete_post_meta( $post_id, 'bitly_link_' . $network );
         }
 
 	    return $array;
