@@ -445,7 +445,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function render_HTML( $echo = false ) {
-        if ( !isset( $this->post_id ) ) :
+        if ( !isset( $this->post_id ) || is_preview() ) :
             return;
         endif;
 
@@ -655,7 +655,7 @@ class SWP_Buttons_Panel {
     public function render_floating_HTML( $echo = true ) {
         $blacklist = ['none', 'top', 'bottom'];
 
-        if ( in_array( $this->option('float_location'), $blacklist ) ) :
+        if ( in_array( $this->option('float_location'), $blacklist ) || is_preview() ) :
             return '';
         endif;
 
