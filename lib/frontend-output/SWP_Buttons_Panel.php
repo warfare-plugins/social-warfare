@@ -531,7 +531,17 @@ class SWP_Buttons_Panel {
 	 */
     protected function get_colors( $float = false ) {
 
-		$default_colors = $this->option( 'default_colors' );
+
+		/**
+		 * If pro was installed, but no longer is installed or activated,
+		 * then this option won't exist and will return false. If so, then
+		 * we output the default core color/style classes.
+		 *
+		 */
+		if ( false === $this->option( 'default_colors' ) ) {
+			return " swp_default_full_color swp_individual_full_color swp_other_full_color ";
+		}
+
 
 		/**
 		 * If the buttons are the static horizontal buttons (not the float),
@@ -539,28 +549,35 @@ class SWP_Buttons_Panel {
 		 * horizontal buttons, then just output the CSS classes that are used
 		 * for the horizontal buttons.
 		 *
+		 * "float_style_source" on the options page is actually answering
+		 * the question "Do the floating buttons inherit their colors from
+		 * the horizontal buttons?" It will be true if they do, and false if
+		 * they don't.
+		 *
 		 */
 		if( false === $float || true === $this->options['float_style_source'] ) {
-
-			//* They have gone from an Addon to Core.
-			if ( false === $default_colors ) {
-				return " swp_default_full_color swp_individual_full_color swp_other_full_color ";
-			}
 
 			$default = $this->option( 'default_colors' );
 			$hover   = $this->option( 'hover_colors' );
 			$single  = $this->option( 'single_colors' );
-			return " swp_default_{$default} swp_individual_{$single} swp_other_{$hover} ";
 
+
+		/**
+		 * If this is a set of floating buttons and we are not inheriting
+		 * the color styles from the static floating buttons, then we need
+		 * to return the style classes that are specific to the floating
+		 * buttons being rendered.
+		 *
+		 */
 		} else {
 
-			$default = $this->option('float_default_colors');
 			$default = str_replace( 'float_', '', $this->option('float_default_colors') );
 			$hover   = str_replace( 'float_', '', $this->option( 'float_hover_colors' ) );
 			$single  = str_replace( 'float_', '', $this->option( 'float_single_colors' ) );
-			return " swp_default_{$default} swp_individual_{$single} swp_other_{$hover} ";
 
 		}
+
+		return " swp_default_{$default} swp_individual_{$single} swp_other_{$hover} ";
 
     }
 
