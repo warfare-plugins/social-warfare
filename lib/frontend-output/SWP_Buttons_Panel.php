@@ -556,11 +556,7 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		if( false === $float || true === $this->options['float_style_source'] ) {
-
-			$default = $this->option( 'default_colors' );
-			$hover   = $this->option( 'hover_colors' );
-			$single  = $this->option( 'single_colors' );
-
+			$prefix = '';
 
 		/**
 		 * If this is a set of floating buttons and we are not inheriting
@@ -570,13 +566,25 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		} else {
-
-			$default = str_replace( 'float_', '', $this->option('float_default_colors') );
-			$hover   = str_replace( 'float_', '', $this->option( 'float_hover_colors' ) );
-			$single  = str_replace( 'float_', '', $this->option( 'float_single_colors' ) );
-
+			$prefix = 'float_';
 		}
 
+
+		/**
+		 *
+		 * If it's a static, horizontal panel, there is no prefix. If it's
+		 * a floating panel, there is a prefix. However, the prefix needs
+		 * to be removed for the CSS class name that is actualy output.
+		 *
+		 * So here we fetch the appropriate color options, strip out the
+		 * "float_" prefix since we don't use that on the actual CSS
+		 * selector, and then return the CSS classes that will be added to
+		 * this buttons panel that is being rendered.
+		 *
+		 */
+		$default = str_replace( $prefix, '', $this->option( $prefix . 'default_colors' ) );
+		$hover   = str_replace( $prefix, '', $this->option( $prefix . 'hover_colors' ) );
+		$single  = str_replace( $prefix, '', $this->option( $prefix . 'single_colors' ) );
 		return " swp_default_{$default} swp_individual_{$single} swp_other_{$hover} ";
 
     }
