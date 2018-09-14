@@ -193,6 +193,9 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.3.2 (14 SEP 2018) =
+* Fixed a line of code that caused the 'social_warfare()' function to disappear.
+
 = 3.3.1 (11 SEP 2018) =
 * Fixed the URL for post editor placeholder images.
 * Fixed the Twitter Count toggle.
