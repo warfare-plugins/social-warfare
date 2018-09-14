@@ -18,3 +18,7 @@ function social_warfare( $args = array() ) {
     $buttons_panel = new SWP_Buttons_Panel( $args );
     return $buttons_panel->render_HTML();
 }
+
+function swp_kilomega( $number ) {
+    return SWP_Utiltiy::kilomega( $number );
+}

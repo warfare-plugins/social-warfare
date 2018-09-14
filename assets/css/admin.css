@@ -45,11 +45,11 @@
 	padding: 0;
 }
 
-#social_warfare .swp_small_image ul.swpmb-media-list {
+#social_warfare .swp_og_imageWrapper ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-og.jpg');
 }
 
-#social_warfare .swp_large_image ul.swpmb-media-list {
+#social_warfare .swp_pinterest_imageWrapper ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 

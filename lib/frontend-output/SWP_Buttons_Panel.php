@@ -393,6 +393,14 @@ class SWP_Buttons_Panel {
     }
 
 
+	/**
+	 * A method for fetching the permalink.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return void Values are stored in $this->permalink.
+	 *
+	 */
     protected function establish_permalink() {
         $this->permalink = get_permalink( $this->post_id );
     }
@@ -440,12 +448,13 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
 	 *                               location methods instead of the raw options value.
 	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->option() method to prevent undefined index error.
+	 * @since  3.3.1 | 13 SEP 2018 | Added get_alignment()
 	 * @param  boolean $echo Echo's the content or returns it if false.
 	 * @return string        The string of HTML.
 	 *
 	 */
     public function render_HTML( $echo = false ) {
-        if ( !isset( $this->post_id ) ) :
+        if ( !isset( $this->post_id ) || is_preview() ) :
             return;
         endif;
 
@@ -465,14 +474,15 @@ class SWP_Buttons_Panel {
             $this->get_shape() .
             $this->get_colors() .
             $this->get_scale() .
+			$this->get_alignment() .
             '" ' . // end CSS classes
             $this->get_min_width() .
             $this->get_float_background() .
             //* These below two data-attribute methods are inconsistent. But they
             //* already existed and are used elsewhere, so I'm not touching them.
-            '" data-float="' . $this->get_float_location() .
-            '" data-float-mobile="' . $this->get_mobile_float_location() .
-            '" style="' . $style . '" >';
+            '" data-float="' . $this->get_float_location() . '"' .
+            ' data-float-mobile="' . $this->get_mobile_float_location() . '"' .
+            ' style="' . $style . '" >';
 
             $total_shares_html = $this->render_total_shares_html();
             $buttons = $this->render_buttons_html();
@@ -496,67 +506,168 @@ class SWP_Buttons_Panel {
     }
 
 
-    protected function get_colors() {
-        $default_colors = $this->option( 'default_colors' );
-
-        //* They have gone from an Addon to Core.
-        if ( false === $default_colors ) :
-            return " swp_default_full_color
-                     swp_individual_full_color
-                     swp_other_full_color ";
-        endif;
+	protected function get_alignment() {
+		return ' scale-' . $this->option('button_alignment');
+	}
 
 
-        return " swp_default_{$default_colors}
-                 swp_individual_{$this->option( 'single_colors' )}
-                 swp_other_{$this->option( 'hover_colors' )} ";
+	/**
+	 * A function to get the color states for this buttons panel.
+	 *
+	 * All of the buttons contain 3 states: default, hover, and single. The
+	 * default state is what the buttons look like when not being interacted
+	 * with. The hover is what all the buttons in the panel look like when
+	 * the panel is being hovered. The single is what the individual button
+	 * being hovered will look like.
+	 *
+	 * This method handles generating the classes that the CSS can target to
+	 * ensure that all three of those states work.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  3.3.2 | 13 SEP 2018 | Modified to control float selectors better
+	 * @param  boolean $float Whether this is a floating panel or not.
+	 * @return string  The string of CSS classes to be used on the panel.
+	 *
+	 */
+    protected function get_colors( $float = false ) {
+
+
+		/**
+		 * If pro was installed, but no longer is installed or activated,
+		 * then this option won't exist and will return false. If so, then
+		 * we output the default core color/style classes.
+		 *
+		 */
+		if ( false === $this->option( 'default_colors' ) ) {
+			return " swp_default_full_color swp_individual_full_color swp_other_full_color ";
+		}
+
+
+		/**
+		 * If the buttons are the static horizontal buttons (not the float),
+		 * or if it is the float but we are inheriting the styles from the
+		 * horizontal buttons, then just output the CSS classes that are used
+		 * for the horizontal buttons.
+		 *
+		 * "float_style_source" on the options page is actually answering
+		 * the question "Do the floating buttons inherit their colors from
+		 * the horizontal buttons?" It will be true if they do, and false if
+		 * they don't.
+		 *
+		 */
+		$prefix = '';
+
+
+		/**
+		 * If this is a set of floating buttons and we are not inheriting
+		 * the color styles from the static floating buttons, then we need
+		 * to return the style classes that are specific to the floating
+		 * buttons being rendered.
+		 *
+		 */
+		if( true === $float && false === $this->options['float_style_source'] ) {
+			$prefix = 'float_';
+		}
+
+
+		/**
+		 *
+		 * If it's a static, horizontal panel, there is no prefix. If it's
+		 * a floating panel, there is a prefix. However, the prefix needs
+		 * to be removed for the CSS class name that is actualy output.
+		 *
+		 * So here we fetch the appropriate color options, strip out the
+		 * "float_" prefix since we don't use that on the actual CSS
+		 * selector, and then return the CSS classes that will be added to
+		 * this buttons panel that is being rendered.
+		 *
+		 */
+		$default = str_replace( $prefix, '', $this->option( $prefix . 'default_colors' ) );
+		$hover   = str_replace( $prefix, '', $this->option( $prefix . 'hover_colors' ) );
+		$single  = str_replace( $prefix, '', $this->option( $prefix . 'single_colors' ) );
+		return " swp_default_{$default} swp_other_{$hover} swp_individual_{$single} ";
+
     }
 
 
+	/**
+	 * A method to fetch/determine the shape of the current buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The string of the CSS class to be used.
+	 *
+	 */
     protected function get_shape() {
         $button_shape = $this->option( 'button_shape' );
 
         //* They have gone from an Addon to Core.
-        if ( false === $button_shape ) :
+        if ( false === $button_shape ) {
             return " swp_flat_fresh ";
-        endif;
+        }
 
         return " swp_{$button_shape} ";
     }
 
+
+	/**
+	 * A method to fetch/determine the size/scale of the panel.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The CSS class to be added to the panel.
+	 *
+	 */
     protected function get_scale() {
         $button_size = $this->option( 'button_size' );
 
         //* They have gone from an Addon to Core.
-        if ( false === $button_size ) :
+        if ( false === $button_size ) {
             return " scale-100 ";
-        endif;
+        }
 
         return ' scale-' . $button_size * 100;
     }
 
+
+	/**
+	 * A method for getting the minimum width of the buttons panel.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The HTML attribute to be added to the buttons panel.
+	 *
+	 */
     protected function get_min_width() {
         $min_width = $this->option( 'float_screen_width' );
 
         //* They have gone from an Addon to Core.
-        if ( false === $min_width ) :
+        if ( false === $min_width ) {
             return 'data-min-width="1100" ';
-        endif;
+        }
 
         return " data-min-width='{$min_width}' ";
     }
 
+
+	/**
+	 * A method to determin the background color of the floating buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The HTML attribute to be added to the buttons panel.
+	 *
+	 */
     protected function get_float_background() {
         $float_background_color = $this->option( 'float_background_color' );
 
         //* They have gone from an Addon to Core.
-        if ( false === $float_background_color ) :
+        if ( false === $float_background_color ) {
             return " ";
-        endif;
+        }
 
         return '" data-float-color="' . $float_background_color;
     }
-
 
 
 	/**
@@ -568,11 +679,11 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	private function option($key) {
-		if( isset( $this->options[$key] ) ):
+		if( isset( $this->options[$key] ) ) {
 			return $this->options[$key];
-		else:
+		} else {
 			return SWP_Utility::get_option( $key );
-		endif;
+		}
 	}
 
 
@@ -593,28 +704,28 @@ class SWP_Buttons_Panel {
 	public function get_float_location() {
         $post_on = false;
 
-		if( is_home() && !is_front_page() || !isset( $this->post_id ) ):
+		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
 			return 'none';
-        endif;
+        }
 
         $post_setting = get_post_meta( $this->post_id, 'swp_float_location', true );
 
-        if( is_array( $post_setting ) ) :
+        if( is_array( $post_setting ) ) {
              $post_setting = $post_setting[0];
-        endif;
+        }
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
-            if( 'off' === $post_setting) :
+            if( 'off' === $post_setting) {
                 return 'none';
-            endif;
+            }
 
 			$post_on = true;
 		};
 
-		if ( $post_on || is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) :
+		if ( $post_on || is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) {
 			return $this->option('float_location');
-		endif;
+		}
 
 		return 'none';
 	}
@@ -635,9 +746,9 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_mobile_float_location() {
-		if( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ):
+		if( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ) {
 			return $this->option('float_mobile');
-		endif;
+		}
 
         return 'none';
 	}
@@ -655,11 +766,11 @@ class SWP_Buttons_Panel {
     public function render_floating_HTML( $echo = true ) {
         $blacklist = ['none', 'top', 'bottom'];
 
-        if ( in_array( $this->option('float_location'), $blacklist ) ) :
+        if ( in_array( $this->option('float_location'), $blacklist ) || is_preview() ) {
             return '';
-        endif;
+        }
 
-		if( is_singular() && 'none' !== $this->get_float_location() ):
+		if( is_singular() && 'none' !== $this->get_float_location() ) {
 
             //* BEGIN Old boilerplate that needs to be refactored.
 	        $class = "";
@@ -667,32 +778,26 @@ class SWP_Buttons_Panel {
 	        $side = $this->option('float_location');
 	        $max_buttons = $this->option( 'float_button_count' );
 
-			if( false == $max_buttons || 0 == $max_buttons ):
+			if( false == $max_buttons || 0 == $max_buttons ) {
 				$max_buttons = 5;
-			endif;
+			}
 
 
-	        if ( 'none' != $this->get_float_location() ) :
+	        if ( 'none' != $this->get_float_location() ) {
 	            $float_location =  $this->option('float_location');
 	            $class = "swp_float_" . $this->option('float_location');
-	        endif;
-
-	        if ( isset( $this->options['float_style_source'] ) && true == $this->options['float_style_source'] ) :
-	            $this->options['float_default_colors'] = $this->option('default_colors');
-	            $this->options['float_single_colors'] = $this->option('single_colors');
-	            $this->options['float_hover_colors'] = $this->option('hover_colors');
-	        endif;
+	        }
 
 	        // *Get the vertical position
-	        if ($this->option('float_alignment')  ) :
+	        if ($this->option('float_alignment')  ) {
 	            $class .= " swp_side_" . $this->option('float_alignment');
-	        endif;
+	        }
 
 	        // *Set button size
-	        if ( isset($this->options['float_size']) ) :
+	        if ( isset($this->options['float_size']) ) {
 	            $position = $this->option('float_alignment');
 	            $class .= " scale-${size} float-position-${position}-${side}";
-	        endif;
+	        }
 
 	        //* END old boilerplate.
 
@@ -700,7 +805,7 @@ class SWP_Buttons_Panel {
 	        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
 
 	        $container = '<div class="swp_social_panelSide swp_floating_panel swp_social_panel swp_' . $this->option('float_button_shape') .
-                $this->get_colors() .
+                $this->get_colors(true) .
 	            $this->option('transition') . '
 	            ' . $class . '
 	            ' . '" data-panel-position="' . $this->option('location_post') .
@@ -712,21 +817,21 @@ class SWP_Buttons_Panel {
 	            '" data-transition="' . $this->option('transition') .
 	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
 
-	        if ($this->option('totals_alignment') === 'totals_left') :
+	        if ($this->option('totals_alignment') === 'totals_left') {
 	            $buttons = $share_counts . $buttons;
-	        else:
+	        } else {
 	            $buttons .= $share_counts;
-	        endif;
+	        }
 
 	        $html = $container . $buttons . '</div>';
 	        $this->html = $html;
 
-	        if ( $echo ) :
+	        if ( $echo ) {
 	            echo $html;
-	        endif;
+	        }
 
 	        return $html;
-		endif;
+		}
 
     }
 
@@ -871,12 +976,14 @@ class SWP_Buttons_Panel {
      * If share counts are active, renders the Total Share Counts HTML.
      *
      * @since  3.0.0 | 18 APR 2018 | Created
-     * @param  none
-     *
+     * @since  3.3.2 | 12 SEP 2018 | Moved strtolower to $totals_argument
+     * @param  void
      * @return string $html The fully qualified HTML to display share counts.
      *
      */
     public function render_total_shares_html() {
+        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
+
         if ( false == $this->option('total_shares') ) {
             return '';
         }
@@ -885,13 +992,8 @@ class SWP_Buttons_Panel {
             return '';
         }
 
-        if ($this->is_shortcode) {
-            // die(var_dump(in_array('tota')))
-        }
-
-        $totals_argument = in_array( 'total', $this->args['buttons'] ) ||
-                           in_array( 'totals', $this->args['buttons'] ) ||
-                           SWP_Utility::get_option( 'total_shares' ) && count($this->args['buttons']) < 1; // They just wrote [social_warfare] without specifying buttons.
+        $totals_argument = in_array('total', array_map('strtolower', $buttons))
+            || in_array('totals', array_map('strtolower', $buttons));
 
         if ( $this->is_shortcode && !$totals_argument ) {
             return '';
