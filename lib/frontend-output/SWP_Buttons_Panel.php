@@ -585,7 +585,7 @@ class SWP_Buttons_Panel {
 		$default = str_replace( $prefix, '', $this->option( $prefix . 'default_colors' ) );
 		$hover   = str_replace( $prefix, '', $this->option( $prefix . 'hover_colors' ) );
 		$single  = str_replace( $prefix, '', $this->option( $prefix . 'single_colors' ) );
-		return " swp_default_{$default} swp_individual_{$single} swp_other_{$hover} ";
+		return " swp_default_{$default} swp_other_{$hover} swp_individual_{$single} ";
 
     }
 
