@@ -288,4 +288,25 @@ class SWP_Utility {
     		return get_site_url();
     	}
     }
+
+    /**
+     * Updates an option in the Social Warfare settings.
+     *
+     * @since 3.3.2 | 12 SEP 2018 | Created.
+     *
+     * @param  string $key   The key under which the option needs to be stored.
+     * @param  mixed  $value The value at the key.
+     * @return bool          True if the option was updated, else false.
+     *
+     */
+    public static function update_option( $key, $value ) {
+        if ( empty( $key ) ) {
+            return false;
+        }
+
+        $options = get_option( 'social_warfare_settings', array() );
+        $options[$key] = $value;
+
+        return update_option( 'social_warfare_settings', $options );
+    }
 }
