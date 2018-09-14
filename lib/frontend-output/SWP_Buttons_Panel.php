@@ -555,8 +555,8 @@ class SWP_Buttons_Panel {
 		 * they don't.
 		 *
 		 */
-		if( false === $float || true === $this->options['float_style_source'] ) {
-			$prefix = '';
+		$prefix = '';
+
 
 		/**
 		 * If this is a set of floating buttons and we are not inheriting
@@ -565,7 +565,7 @@ class SWP_Buttons_Panel {
 		 * buttons being rendered.
 		 *
 		 */
-		} else {
+		if( true === $float && false === $this->options['float_style_source'] ) {
 			$prefix = 'float_';
 		}
 
