@@ -38,10 +38,6 @@ class Social_Warfare {
 	}
 
     public function init() {
-        if ( Social_Warfare::has_plugin_conflict() ) :
-            return;
-        endif;
-
 		// Loads the files for each class.
         $this->load_classes();
 
@@ -55,6 +51,7 @@ class Social_Warfare {
 
 		// Instatiate classes that need to be defered.
 		add_action('plugins_loaded' , array( $this, 'instantiate_deferred_classes' ) , 100 );
+        require_once SWP_PLUGIN_DIR . '/lib/utilities/functions.php';
     }
 
 
