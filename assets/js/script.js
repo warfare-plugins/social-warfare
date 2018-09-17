@@ -217,7 +217,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
                 var theContent = jQuery(".swp-content-locator").parent();
 
-                if (index === 0 && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
+                if (index === 0 && theContent.length && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
                     visible = true;
                 }
             }
