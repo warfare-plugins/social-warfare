@@ -309,4 +309,42 @@ class SWP_Utility {
 
         return update_option( 'social_warfare_settings', $options );
     }
+
+   /**
+    * Check the version range between core and addons.
+    *
+    * The idea here is that we can only maintain backwards compatibility to a
+    * reasonable, but limited, extent. As such, we will check if the version
+    * of core is within 6 version of pro. This will allow us to depracate and
+    * remove some really old backwards-compatibility workarounds that we've put
+    * in place.
+    *
+    * We want to be able to input two version (core and pro) and have it return
+    * a string/integer indicating how many versions they are different from one
+    * another. If the answer is greater than -6 and less than 6, we can fire up
+    * the pro addon.
+    *
+    * @param  [type] $old_version [description]
+    * @param  [type] $new_version [description]
+    * @return bool   True if the versions are compatible, else false.
+    *
+    */
+    public static function check_version_range( $core_version, $addon_version ) {
+        $core_versions = explode( '.', $core_version );
+        $addon_versions = explode( '.', $addon_version );
+
+        $version_difference = absint( $core_versions[1] - $addon_versions[1] );
+
+        //* Force plugin users to be on the same major version.
+        if ( $core_versions[0] != $addon_verisons[0] ) {
+            return false;
+        }
+
+        //* Require plugin users to be within nearby secondary versions.
+        if ( $version_difference < 5 ) {
+            return true;
+        }
+
+        return false;
+    }
 }
