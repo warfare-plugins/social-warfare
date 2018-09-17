@@ -324,8 +324,8 @@ class SWP_Utility {
     * another. If the answer is greater than -6 and less than 6, we can fire up
     * the pro addon.
     *
-    * @param  [type] $old_version [description]
-    * @param  [type] $new_version [description]
+    * @param  string $core_version The verison of Core currently installed.
+    * @param  string $addon_version The version of the addon currently installed.
     * @return bool   True if the versions are compatible, else false.
     *
     */
