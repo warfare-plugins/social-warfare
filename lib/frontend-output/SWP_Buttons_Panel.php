@@ -418,27 +418,30 @@ class SWP_Buttons_Panel {
      *
      *
      * @return Boolean True if the buttons are okay to print, else false.
-     * @since  3.0.8  | 21 MAY 2018 | Added extra condition to check for content
+     * @since  3.0.8 | 21 MAY 2018 | Added extra condition to check for content
      *                               (for calls to social_warfare()).
+     * @since  3.3.3 | 18 SEP 2018 | Added check for in_the_loop().
      * @param  void
      * @return void
      *
      */
     public function should_print() {
 
-        //* WordPress requires title and content. This indicates the buttons are called via social_warfare().
-        if ( empty( $this->content ) && !isset( $this->args['content'] )  ) :
+		/**
+		 * WordPress requires title and content. This indicates the buttons are
+		 * called via social_warfare() or via the shortcode.
+		 *
+		 */
+        if ( empty( $this->content ) && !isset( $this->args['content'] )  ) {
             return true;
-        endif;
+        }
 
-        $user_settings = $this->location !== 'none';
-
-        $desired_conditions = is_main_query() && get_post_status( $this->post_id ) === 'publish';
-
+        $user_settings        = 'none' !== $this->location;
+        $desired_conditions   = is_main_query() && in_the_loop() && get_post_status( $this->post_id ) === 'publish';
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
 
         return $user_settings && $desired_conditions && !$undesired_conditions;
-    }
+	}
 
 
 	/**
@@ -1052,24 +1055,36 @@ class SWP_Buttons_Panel {
      * Runs checks before ordering a set of buttons.
      *
      * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+     * @since  3.3.3 | 18 SEP 2018 | Added return value for should_print() condition.
      * @param  string $content The WordPress content, if passed in.
      * @return function @see $this->do_print
      *
      */
     public function the_buttons( $content = null ) {
-        if ( empty( $this->content ) ) :
+
+		/**
+		 * If the content is empty, it means that the user is calling a panel
+		 * of buttons directly using the social_warfare() function of the
+		 * [social_warfare] shortcode.
+		 *
+		 */
+		if ( empty( $this->content ) ) {
             return $this->do_print();
-        endif;
+        }
 
-        if ( ! $this->should_print() ) :
-            // return $this->args['content'];
-        endif;
 
-        if ( null !== $content && gettype( $content ) === 'string' ) :
+		/**
+		 * We have a standalone method designed to let us know if all the proper
+		 * desired conditions are met in order to allow us to print the buttons.
+		 *
+		 */
+        if ( !$this->should_print() ) {
+            return $this->content;
+        }
+
+        if ( null !== $content && gettype( $content ) === 'string' ) {
             $this->args['content'] = $content;
-        endif;
-
-
+        }
 
         return $this->do_print();
     }

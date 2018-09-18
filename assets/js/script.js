@@ -266,7 +266,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
                 var theContent = jQuery(".swp-content-locator").parent();
 
-                if (index === 0 && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
+                if (index === 0 && theContent.length && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
                     visible = true;
                 }
             }
@@ -508,23 +508,25 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                 return;
             }
 
-            var pinMedia = false;
+            var pinMedia;
 
             if ('undefined' !== typeof swpPinIt.image_source) {
-                //* Create a temp image to force absolute paths via jQuery.
-                var i = new Image();
-                i.src = swpPinIt.image_source;
-                pinMedia = jQuery(i).src;
+
+				//* Create a temp image to force absolute paths via jQuery.
+				var i = new Image();
+				i.src = swpPinIt.image_source;
+				pinMedia = jQuery(i).prop('src');
+
             } else if (image.data('media')) {
                 pinMedia = image.data('media');
             } else if ($(this).data('lazy-src')) {
                 pinMedia = $(this).data('lazy-src');
             } else if (image[0].src) {
                 pinMedia = image[0].src;
-            }
+            };
 
             // Bail if we don't have any media to pin.
-            if (false === pinMedia) {
+            if ( !pinMedia || 'undefined' === typeof pinMedia ) {
                 return;
             }
 
