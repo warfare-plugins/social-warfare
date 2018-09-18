@@ -136,21 +136,18 @@ class SWP_URL_Management {
 		$start_date = SWP_Utility::get_option( 'bitly_start_date' );
 
 
-		// echo "<pre>Cached bitly link: <br/>", var_dump($cached_bitly_link), "</pre>";
 
         // Recently done.
         if ( true == $array['fresh_cache'] ) {
-
 			if( false !== $cached_bitly_link ) {
 				$array['url'] = $cached_bitly_link;
 			}
-
             return $array;
         }
 
         // We need this information to make a bitly request.
         if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) {
-            return $array;
+			return $array;
         }
 
         // These can not have bitly urls created.
