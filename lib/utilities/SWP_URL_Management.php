@@ -307,8 +307,10 @@ class SWP_URL_Management {
 	 */
 	public function bitly_oauth_callback() {
 		$access_token = isset( $_GET['access_token'] ) ? $_GET['access_token'] : '';
+		$login = isset( $_GET['login'] ) ? $_GET['login'] : '';
 
 		SWP_Utility::update_option( 'bitly_access_token', $access_token );
+		SWP_Utility::update_option( 'bitly_access_login', $login);
 
 		echo admin_url( 'admin.php?page=social-warfare' );
 	}
