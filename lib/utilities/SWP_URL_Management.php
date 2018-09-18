@@ -135,6 +135,7 @@ class SWP_URL_Management {
         $cached_bitly_link = SWP_URL_Management::fetch_local_bitly_link( $post_id, $array['network'] );
 		$start_date = SWP_Utility::get_option( 'bitly_start_date' );
 
+
 		// echo "<pre>Cached bitly link: <br/>", var_dump($cached_bitly_link), "</pre>";
 
         // Recently done.
@@ -142,6 +143,7 @@ class SWP_URL_Management {
 
 			if( false !== $cached_bitly_link ) {
 				$array['url'] = $cached_bitly_link;
+				echo $cached_bitly_link;
 			}
 
             return $array;
@@ -229,8 +231,6 @@ class SWP_URL_Management {
 
 		// Fetch a response from the Bitly Shortening API
 		$response = SWP_CURL::file_get_contents_curl( $api_request_url );
-
-		echo "RESPONSE FROM BITLY: ", var_dump($response);
 
 		// Parse the JSON formated response into an array
 		$result = json_decode( $response , true );

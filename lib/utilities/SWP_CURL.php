@@ -101,6 +101,7 @@ class SWP_CURL {
 		curl_close( $ch );
 
 		if ( $curl_errno > 0 ) {
+			// echo curl_error ( $cont );
 			return false;
 		}
 
