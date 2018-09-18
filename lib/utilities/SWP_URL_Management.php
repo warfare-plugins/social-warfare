@@ -105,6 +105,7 @@ class SWP_URL_Management {
 
 		// If analytics are off, just pull the general short link.
         $short_url = get_post_meta( $post_id, 'bitly_link', true );
+
         if ( is_string( $short_url ) && strlen( $short_url ) ) {
             return $short_url;
         }
@@ -132,6 +133,8 @@ class SWP_URL_Management {
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
         $cached_bitly_link = SWP_URL_Management::fetch_local_bitly_link( $post_id, $array['network'] );
+
+		echo "<pre>Cached bitly link: <br/>", var_dump($cached_bitly_link), "</pre>";
 
         // Recently done.
         if ( true == $array['fresh_cache'] ) {
@@ -209,14 +212,11 @@ class SWP_URL_Management {
 	 *
 	 */
 	public static function make_bitly_url( $url, $network, $access_token ) {
-		// Set the format to json
-		$format = 'json';
-
 		// Create a link to reach the Bitly API
 		$api_request_url = 'https://api-ssl.bitly.com/v3/shorten';
 		$api_request_url .= "?access_token=$access_token";
 		$api_request_url .= "&longUrl=" . urlencode( $url );
-		$api_request_url .= "&format=$format";
+		$api_request_url .= "&format=json";
 
 		echo __METHOD__, "<pre>", var_dump($api_request_url), die;
 
