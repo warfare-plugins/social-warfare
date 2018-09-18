@@ -271,7 +271,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <p class="sw-authenticate-label"><?php __( 'Bitly Link Shortening', 'social-warfare' ) ?></p>
                 </div>
                 <div class="sw-grid sw-col-300">
-                    <a class="button <?= $target ?> <?= $color ?>" href="<?= $link ?>"><?= $text ?></a>
+                    <a  target="<?= $target ?>" class="button <?= $color ?>" href="<?= $link ?>"><?= $text ?></a>
                 </div>
                 <div class="sw-grid sw-col-300 sw-fit"></div>
             </div>
