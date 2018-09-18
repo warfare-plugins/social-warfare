@@ -270,8 +270,6 @@ class SWP_URL_Management {
 	 * @access public static
 	 */
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
-		global $swp_user_options;
-
 		// Fetch the parameters into an array for use by the filters
 		$array['url'] = $url;
 		$array['network'] = $network;
