@@ -209,43 +209,37 @@ class SWP_URL_Management {
 	 *
 	 */
 	public function make_bitly_url( $url, $network, $access_token ) {
-		global $swp_user_options;
+		// Set the format to json
+		$format = 'json';
 
-		// Fetch the user's options
-		$options = $swp_user_options;
+		// Create a link to reach the Bitly API
+		$api_request_url = 'https://api-ssl.bitly.com/v3/shorten';
+		$api_request_url .= "?access_token=$access_token";
+		$api_request_url .= "&longUrl=" . urlencode( $url );
+		$api_request_url .= "&format=$format";
 
-		if (  ) ) :
+		echo __METHOD__, "<pre>", var_dump($api_request_url), die;
 
+		// Fetch a response from the Bitly Shortening API
+		$data = SWP_CURL::file_get_contents_curl( $bitly_api );
 
-		else :
+		// Parse the JSON formated response into an array
+		$data = json_decode( $data , true );
 
-			// Set the format to json
-			$format = 'json';
+		// If the shortening succeeded....
+		if ( isset( $data['data']['url'] ) ) {
 
-			// Create a link to reach the Bitly API
-			$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token=' . $access_token . '&longUrl=' . urlencode( $url ) . '&format=' . $format;
+			// Store the short URL to return to the plugin
+			$short_url = $data['data']['url'];
 
-			// Fetch a response from the Bitly Shortening API
-			$data = SWP_CURL::file_get_contents_curl( $bitly_api );
+			// If the shortening failed....
+		} else {
 
-			// Parse the JSON formated response into an array
-			$data = json_decode( $data , true );
+			// Return a status of false
+			$short_url = false;
 
-			// If the shortening succeeded....
-			if ( isset( $data['data']['url'] ) ) :
+		}
 
-				// Store the short URL to return to the plugin
-				$short_url = $data['data']['url'];
-
-				// If the shortening failed....
-			else :
-
-				// Return a status of false
-				$short_url = false;
-
-			endif;
-
-		endif;
 
 		return $short_url;
 
