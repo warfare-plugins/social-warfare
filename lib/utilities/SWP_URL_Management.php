@@ -143,7 +143,6 @@ class SWP_URL_Management {
 
 			if( false !== $cached_bitly_link ) {
 				$array['url'] = $cached_bitly_link;
-				echo $cached_bitly_link;
 			}
 
             return $array;
