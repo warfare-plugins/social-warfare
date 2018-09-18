@@ -226,18 +226,28 @@ class SWP_Section_HTML extends SWP_Option {
     /**
     * Render the Bitly connection button on the Advanced tab.
     *
-    * @since  3.0.0 | 01 MAR 2018 | Created
+	* @see    https://dev.bitly.com/authentication.html
+	* @since  3.0.0 | 01 MAR 2018 | Created
     * @param  void
     * @return object $this The calling instance, for method chaining.
     *
     */
     public function do_bitly_authentication_button() {
+
+
+		//* The base URL for authorizing SW to work on a user's Bitly account.
         $link = "https://bitly.com/oauth/authorize";
+
+		//* client_id: The SWP application id, assigned by Bitly.
 		$link .= "?client_id=96c9b292c5503211b68cf4ab53f6e2f4b6d0defb";
+
+		//* state: Optional state to include in the redirect URI.
 		$link .= "&state=" . admin_url( 'admin-ajax.php' );
+
+		//* redirect_uri: The page to which a user was redirected upon successfully authenticating.
 		$link .= "&redirect_uri=https://warfareplugins.com/bitly_oauth.php";
 
-        if ( SWP_Utility::get_option('bitly_access_token') ):
+        if ( SWP_Utility::get_option('bitly_access_token') ) :
             $text = __( 'Connected', 'social-warfare' );
             $color = 'sw-green-button';
         else:
