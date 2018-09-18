@@ -133,8 +133,9 @@ class SWP_URL_Management {
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
         $cached_bitly_link = SWP_URL_Management::fetch_local_bitly_link( $post_id, $array['network'] );
+		$start_date = SWP_Utility::get_option( 'bitly_start_date' );
 
-		echo "<pre>Cached bitly link: <br/>", var_dump($cached_bitly_link), "</pre>";
+		// echo "<pre>Cached bitly link: <br/>", var_dump($cached_bitly_link), "</pre>";
 
         // Recently done.
         if ( true == $array['fresh_cache'] ) {
@@ -183,15 +184,21 @@ class SWP_URL_Management {
         $new_bitly_url = SWP_URL_Management::make_bitly_url( $url, $access_token );
 
         if ( $new_bitly_url ) {
-            delete_post_meta( $post_id, 'bitly_link_' . $network );
-            update_post_meta( $post_id, 'bitly_link_' . $network, $new_bitly_url );
-            $array['url'] = $bitly_url;
+			$meta_key = 'bitly_link';
+
+			if ( $google_analytics ) {
+				$meta_key .= "_$network";
+			}
+
+            delete_post_meta( $post_id, $meta_key );
+            update_post_meta( $post_id, $meta_key, $new_bitly_url );
+            $array['url'] = $new_bitly_url;
         }
 
-        // Delete the meta fields and then update to keep the database clean and up to date.
-        if ( false == $google_analytics ) {
-            delete_post_meta( $post_id, 'bitly_link_' . $network );
-        }
+        // // Delete the meta fields and then update to keep the database clean and up to date.
+        // if ( false == $google_analytics ) {
+        //     delete_post_meta( $post_id, 'bitly_link_' . $network );
+        // }
 
 	    return $array;
 	}
@@ -218,10 +225,12 @@ class SWP_URL_Management {
 		$api_request_url .= "&longUrl=" . urlencode( $url );
 		$api_request_url .= "&format=json";
 
-		echo __METHOD__, "<pre>", var_dump($api_request_url), die;
+		// echo __METHOD__, "<pre>", var_dump($api_request_url), die;
 
 		// Fetch a response from the Bitly Shortening API
-		$response = SWP_CURL::file_get_contents_curl( $bitly_api );
+		$response = SWP_CURL::file_get_contents_curl( $api_request_url );
+
+		echo "RESPONSE FROM BITLY: ", var_dump($response);
 
 		// Parse the JSON formated response into an array
 		$result = json_decode( $response , true );
