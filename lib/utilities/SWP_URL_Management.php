@@ -221,28 +221,19 @@ class SWP_URL_Management {
 		echo __METHOD__, "<pre>", var_dump($api_request_url), die;
 
 		// Fetch a response from the Bitly Shortening API
-		$data = SWP_CURL::file_get_contents_curl( $bitly_api );
+		$response = SWP_CURL::file_get_contents_curl( $bitly_api );
 
 		// Parse the JSON formated response into an array
-		$data = json_decode( $data , true );
+		$result = json_decode( $response , true );
 
 		// If the shortening succeeded....
-		if ( isset( $data['data']['url'] ) ) {
-
+		if ( isset( $result['data']['url'] ) ) {
 			// Store the short URL to return to the plugin
-			$short_url = $data['data']['url'];
-
-			// If the shortening failed....
-		} else {
-
-			// Return a status of false
-			$short_url = false;
-
+			return $result['data']['url'];
 		}
 
-
-		return $short_url;
-
+		// If the shortening failed....
+		return false
 	}
 
 
