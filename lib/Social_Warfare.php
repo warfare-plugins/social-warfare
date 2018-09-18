@@ -34,6 +34,7 @@ class Social_Warfare {
 	 */
 	public function __construct() {
         $this->core_version = SWP_VERSION;
+        require_once SWP_PLUGIN_DIR . '/lib/utilities/functions.php';
         add_action('plugins_loaded', array($this, 'init'));
 	}
 
@@ -51,7 +52,6 @@ class Social_Warfare {
 
 		// Instatiate classes that need to be defered.
 		add_action('plugins_loaded' , array( $this, 'instantiate_deferred_classes' ) , 100 );
-        require_once SWP_PLUGIN_DIR . '/lib/utilities/functions.php';
     }
 
 

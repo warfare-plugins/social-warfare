@@ -238,8 +238,11 @@ class SWP_Twitter extends SWP_Social_Network {
             $tweet = $tweet[0];
         endif;
 
-        $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
-        $html_safe_tweet = html_entity_decode( $converted_tweet, ENT_COMPAT, 'UTF-8' );
+        if ( function_exists( 'mb_convert_encoding' ) ) {
+            $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( 'charset' ) );
+        }
+
+        $html_safe_tweet = html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' );
         $tweet           = utf8_uri_encode( $html_safe_tweet, $max_tweet_length );
 		$tweet           = urlencode( $tweet );
 
