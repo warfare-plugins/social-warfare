@@ -114,7 +114,7 @@ class SWP_User_options {
 
 	public function generate_whitelist() {
         $addons = apply_filters( 'swp_registrations', array() );
-        $whitelist = array('last_migrated');
+        $whitelist = array('last_migrated', 'bitly_access_token', 'bitly_access_login');
 
         if ( empty( $addons) ) {
             return $whitelist;
