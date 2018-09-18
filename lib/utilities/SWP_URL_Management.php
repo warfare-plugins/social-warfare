@@ -233,7 +233,7 @@ class SWP_URL_Management {
 		}
 
 		// If the shortening failed....
-		return false
+		return false;
 	}
 
 
