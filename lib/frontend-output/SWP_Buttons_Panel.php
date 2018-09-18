@@ -420,7 +420,7 @@ class SWP_Buttons_Panel {
      * @return Boolean True if the buttons are okay to print, else false.
      * @since  3.0.8 | 21 MAY 2018 | Added extra condition to check for content
      *                               (for calls to social_warfare()).
-     * @since  3.3.3 | 18 SEP 2018 | Added check for in_the_loop(). 
+     * @since  3.3.3 | 18 SEP 2018 | Added check for in_the_loop().
      * @param  void
      * @return void
      *
@@ -441,7 +441,7 @@ class SWP_Buttons_Panel {
         $undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
 
         return $user_settings && $desired_conditions && !$undesired_conditions;
-	    }
+	}
 
 
 	/**
