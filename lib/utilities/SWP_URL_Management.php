@@ -180,7 +180,7 @@ class SWP_URL_Management {
 
         $network = $array['network'];
         $url = urldecode( $array['url'] );
-        $new_bitly_url = SWP_URL_Management::make_bitly_url( $url, $network, $access_token );
+        $new_bitly_url = SWP_URL_Management::make_bitly_url( $url, $access_token );
 
         if ( $new_bitly_url ) {
             delete_post_meta( $post_id, 'bitly_link_' . $network );
@@ -211,7 +211,7 @@ class SWP_URL_Management {
 	 * @access public
 	 *
 	 */
-	public static function make_bitly_url( $url, $network, $access_token ) {
+	public static function make_bitly_url( $url, $access_token ) {
 		// Create a link to reach the Bitly API
 		$api_request_url = 'https://api-ssl.bitly.com/v3/shorten';
 		$api_request_url .= "?access_token=$access_token";
