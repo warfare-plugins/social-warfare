@@ -177,7 +177,7 @@ class SWP_URL_Management {
 
         $network = $array['network'];
         $url = urldecode( $array['url'] );
-        $new_bitly_url = $this->make_bitly_url( $url, $network, $access_token );
+        $new_bitly_url = SWP_URL_Management::make_bitly_url( $url, $network, $access_token );
 
         if ( $new_bitly_url ) {
             delete_post_meta( $post_id, 'bitly_link_' . $network );
@@ -208,7 +208,7 @@ class SWP_URL_Management {
 	 * @access public
 	 *
 	 */
-	public function make_bitly_url( $url, $network, $access_token ) {
+	public static function make_bitly_url( $url, $network, $access_token ) {
 		// Set the format to json
 		$format = 'json';
 
