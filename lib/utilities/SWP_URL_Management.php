@@ -29,7 +29,7 @@ class SWP_URL_Management {
 	 */
 	public function __construct() {
 
-		add_filter( 'swp_link_shortening'  	, array( $this , 'link_shortener' ) );
+		add_filter( 'swp_link_shortening'  	, array( __CLASS__ , 'link_shortener' ) );
 		add_filter( 'swp_analytics' 		, array( $this , 'google_analytics' ) );
 		add_action( 'wp_ajax_nopriv_swp_bitly_oauth', array( $this , 'bitly_oauth_callback' ) );
 
@@ -92,7 +92,7 @@ class SWP_URL_Management {
 	 * @return mixed           string: The short url; false on failure.
 	 *
 	 */
-    public function fetch_local_bitly_link( $post_id, $network ) {
+    public static function fetch_local_bitly_link( $post_id, $network ) {
 
 		// If analytics are on, get a different link for each network.
 		if ( true == SWP_Utility::get_option('google_analytics') ) {
@@ -105,6 +105,7 @@ class SWP_URL_Management {
 
 		// If analytics are off, just pull the general short link.
         $short_url = get_post_meta( $post_id, 'bitly_link', true );
+
         if ( is_string( $short_url ) && strlen( $short_url ) ) {
             return $short_url;
         }
@@ -125,13 +126,15 @@ class SWP_URL_Management {
 	 * @access public
 	 *
 	 */
-	public function link_shortener( $array ) {
+	public static function link_shortener( $array ) {
         global $post;
 
         $post_id = $array['postID'];
         $google_analytics = SWP_Utility::get_option('google_analytics');
         $access_token = SWP_Utility::get_option( 'bitly_access_token' );
-        $cached_bitly_link = $this->fetch_local_bitly_link( $post_id, $array['network'] );
+        $cached_bitly_link = SWP_URL_Management::fetch_local_bitly_link( $post_id, $array['network'] );
+
+		echo "<pre>Cached bitly link: <br/>", var_dump($cached_bitly_link), "</pre>";
 
         // Recently done.
         if ( true == $array['fresh_cache'] ) {
@@ -177,7 +180,7 @@ class SWP_URL_Management {
 
         $network = $array['network'];
         $url = urldecode( $array['url'] );
-        $new_bitly_url = $this->make_bitly_url( $url , $network , $access_token );
+        $new_bitly_url = SWP_URL_Management::make_bitly_url( $url, $access_token );
 
         if ( $new_bitly_url ) {
             delete_post_meta( $post_id, 'bitly_link_' . $network );
@@ -208,50 +211,29 @@ class SWP_URL_Management {
 	 * @access public
 	 *
 	 */
-	public function make_bitly_url( $url, $network, $access_token ) {
-		global $swp_user_options;
+	public static function make_bitly_url( $url, $access_token ) {
+		// Create a link to reach the Bitly API
+		$api_request_url = 'https://api-ssl.bitly.com/v3/shorten';
+		$api_request_url .= "?access_token=$access_token";
+		$api_request_url .= "&longUrl=" . urlencode( $url );
+		$api_request_url .= "&format=json";
 
-		// Fetch the user's options
-		$options = $swp_user_options;
+		echo __METHOD__, "<pre>", var_dump($api_request_url), die;
 
-		if ( isset( $bitly_lookup_response['data']['link_lookup'][0]['link'] ) ) :
+		// Fetch a response from the Bitly Shortening API
+		$response = SWP_CURL::file_get_contents_curl( $bitly_api );
 
-			// Store the short url to return to the plugin
-			$short_url = $bitly_lookup_response['data']['link_lookup'][0]['link'];
+		// Parse the JSON formated response into an array
+		$result = json_decode( $response , true );
 
-			// If the lookup did not return a valid short link....
-		else :
+		// If the shortening succeeded....
+		if ( isset( $result['data']['url'] ) ) {
+			// Store the short URL to return to the plugin
+			return $result['data']['url'];
+		}
 
-			// Set the format to json
-			$format = 'json';
-
-			// Create a link to reach the Bitly API
-			$bitly_api = 'https://api-ssl.bitly.com/v3/shorten?access_token=' . $access_token . '&longUrl=' . urlencode( $url ) . '&format=' . $format;
-
-			// Fetch a response from the Bitly Shortening API
-			$data = SWP_CURL::file_get_contents_curl( $bitly_api );
-
-			// Parse the JSON formated response into an array
-			$data = json_decode( $data , true );
-
-			// If the shortening succeeded....
-			if ( isset( $data['data']['url'] ) ) :
-
-				// Store the short URL to return to the plugin
-				$short_url = $data['data']['url'];
-
-				// If the shortening failed....
-			else :
-
-				// Return a status of false
-				$short_url = false;
-
-			endif;
-
-		endif;
-
-		return $short_url;
-
+		// If the shortening failed....
+		return false
 	}
 
 
@@ -270,8 +252,6 @@ class SWP_URL_Management {
 	 * @access public static
 	 */
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
-		global $swp_user_options;
-
 		// Fetch the parameters into an array for use by the filters
 		$array['url'] = $url;
 		$array['network'] = $network;
@@ -285,7 +265,9 @@ class SWP_URL_Management {
 			$array = apply_filters( 'swp_analytics' , $array );
 
 			// Run the link shortening hook filters, but not on Pinterest
-			$array = apply_filters( 'swp_link_shortening' , $array );
+			// $array = apply_filters( 'swp_link_shortening' , $array );
+			$array = SWP_URL_Management::link_shortener($array);
+			// echo "<pre>Array after link_shortener(): <br>", var_dump($array), "</pre>";
 		endif;
 
 		return $array['url'];
