@@ -15,7 +15,11 @@ All WordPress coding standards should be followed. Anything not specifically def
 ### Variables and Class Names
 All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. 
 
-**PHP:** All names in PHP will use the Snake Case nomenclature. Independent function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix. 
+**PHP:** All names in PHP will use the Snake Case nomenclature. Independent/global function names will be preceded with the swp_ vendor prefix (e.g. swp_my_function_name). Methods and properties within classes do not require this prefix.
+
+In regard to variable names, avoid abbreviations (i.e. $my_var should be $my_variable). The only exception is words or terms where the abbreviation or acronym is the commonly excepted usage of the word in regular speech (e.g. ID or ATM).
+
+Avoid using id as a standalone variable name. Instead use a semantic identifier so it's clear to what the ID relates (e.g. $post_id).
 
 Classes will be snake cased as well, but will also have the first letter of each word capitalized. Class names will also use the singular and never plural (e.g. My_Thing, not My_Things). The first letter will be capitalized on variables containing an instance of a class as well (e.g. $Class = new SWP_Class() ).
 
@@ -26,7 +30,9 @@ Line breaks in PHP will be used generously to make the code more easily readable
 **CSS:** CSS selectors will use the snake_case nomenclature just as in our PHP code.
 
 ### Conditionals and Loops
-No inline/same-line conditionals or loops will be used, nor will we continue to use brace syntax. Rather we will use the colin/endif syntax.
+No inline/same-line conditionals or loops will be used, nor will be continue to use if/endif notation. Instead we will use brace notation.
+
+Avoid wrapping large blocks of code inside of conditionals. Instead, use a conditional with a return to stop the method from running the undesired code.
 
 ### Style Guidelines for Docblocking Class Methods
 Each file should begin with a docblock, as well as each function and class should be preceded with a docblock to explain it's purpose and functionality. There is no such thing as too much documentation on this project. The purpose is that any developer or even a non-developer should be able to easily browse each file and know exactly what is happening in that file.
