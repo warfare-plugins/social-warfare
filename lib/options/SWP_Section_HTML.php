@@ -242,12 +242,14 @@ class SWP_Section_HTML extends SWP_Option {
 			$text .= " for:<br/>" . SWP_Utility::get_option( 'bitly_access_login' );
             $color = 'sw-green-button';
 			$link = 'https://app.bitly.com/bitlinks/?actions=accountMain&actions=settings&actions=security';
+			$target = "_blank";
 
         } else {
 
 			//* Display the button, which takes them to a Bitly auth page.
             $text = __( 'Authenticate', 'social-warfare' );
             $color = 'sw-navy-button';
+			$target = "";
 
 			//* The base URL for authorizing SW to work on a user's Bitly account.
 	        $link = "https://bitly.com/oauth/authorize";
@@ -269,7 +271,7 @@ class SWP_Section_HTML extends SWP_Option {
                     <p class="sw-authenticate-label"><?php __( 'Bitly Link Shortening', 'social-warfare' ) ?></p>
                 </div>
                 <div class="sw-grid sw-col-300">
-                    <a class="button <?= $color ?>" href="<?= $link ?>"><?= $text ?></a>
+                    <a class="button <?= $target ?> <?= $color ?>" href="<?= $link ?>"><?= $text ?></a>
                 </div>
                 <div class="sw-grid sw-col-300 sw-fit"></div>
             </div>
