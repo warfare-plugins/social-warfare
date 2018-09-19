@@ -105,15 +105,23 @@ class SWP_Display {
 
 
     /**
-     * Inserts the empty div for locating Pin images (with javascript).
+     * Add the content locator div.
      *
-     * @since  3.0.6 | 14 MAY | Created the method.
+     * Inserts the empty div for locating Pin images (with javascript). We only
+     * add this to the content if the pinit button is active.
+     *
+     * @since  3.0.6 | 14 MAY 2018 | Created the method.
+     * @since  3.4.0 | 19 SEP 2018 | Added check for pinit_toggle option.
      * @param  string $content The WordPress content passed via filter.
-     * @return void
+     * @return string $content The modified string of content.
      *
      */
     public function add_content_locator( $content ) {
-        $content .= '<div class="swp-content-locator"></div>';
+
+		if( true === SWP_Utility::get_option( 'pinit_toggle' ) ) {
+        	$content .= '<div class="swp-content-locator"></div>';
+		}
+
         return $content;
     }
 
@@ -124,20 +132,21 @@ class SWP_Display {
     * @since  1.0.0
     * @param  string $content The content.
     * @return string $content The modified content
+    * @todo   Why is the $content passed to both the instantator and the method?
     *
     */
     public function social_warfare_wrapper( $content ) {
+
 		// The global WordPress post object.
         global $post;
 
       	// Ensure it's not an embedded post
       	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
-      		return $content;
+			return $content;
       	}
 
         // Pass the content to the buttons constructor to place them inside.
     	$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
-
         return $buttons_panel->the_buttons( $content );
     }
 
