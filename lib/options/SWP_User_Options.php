@@ -116,6 +116,11 @@ class SWP_User_options {
         $addons = apply_filters( 'swp_registrations', array() );
         $whitelist = array('last_migrated', 'bitly_access_token', 'bitly_access_login');
 
+		$post_types = get_post_types();
+		foreach( $post_types as $post_type ) {
+			$whitelist[] = 'swp_og_type_' . $post_type;
+		}
+
         if ( empty( $addons) ) {
             return $whitelist;
         }
