@@ -40,18 +40,26 @@ class SWP_Display {
     /**
      * The class constructor.
      *
-     * @since 3.1.0 | Changed priority for wp_footer. Makes the buttons loads
+     * @since  3.1.0 | Changed priority for wp_footer. Makes the buttons loads
      *                 This post data instead of data in the loop.
+     * @param  void
+     * @return void
      *
      */
     public function __construct() {
-		// The global array of posts that have already been processed.
+
+		/**
+		 * The global array of posts that have already been processed. This
+		 * allows us to ensure that we are not filtering the content from
+		 * the_content filter on the same post more than once.
+		 *
+		 */
         global $swp_already_print;
 
 		// The global array of the user-selected options.
         global $swp_user_options;
 
-		// Declare var as array if not already done so.
+		// Declare variable as array if not already done so.
         if ( !is_array( $swp_already_print ) ) {
             $swp_already_print = array();
         }
@@ -76,6 +84,8 @@ class SWP_Display {
      *
      */
     public function activate_buttons() {
+
+		// Bail if we're in the presence of a known conflict without a fix.
         if ( Social_Warfare::has_plugin_conflict() ) :
             return;
         endif;
@@ -89,7 +99,6 @@ class SWP_Display {
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
         if (false === is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
-    		// Add the buttons to the excerpts
     		add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
         }
     }
@@ -142,6 +151,8 @@ class SWP_Display {
 	 *
 	 */
     function floating_buttons() {
+
+		// Bail if we're in the presence of a known conflict with no fix.
         if ( Social_Warfare::has_plugin_conflict() ) :
             return;
         endif;
@@ -149,7 +160,7 @@ class SWP_Display {
 		// Instantiate a new Buttons Panel.
         $side_panel = new SWP_Buttons_Panel( array( 'content' => "" ) );
 
-		// Determine where the buttons are supposed to appear.
+		// Determine if the floating buttons are not supposed to print.
         $location = $side_panel->get_float_location();
         if ( 'none' === $location || 'ignore' === $location ) {
             return;
@@ -158,21 +169,20 @@ class SWP_Display {
 		// Render the html to output to the screen.
         $side_panel->render_floating_HTML( $echo = true );
 
-        return;
     }
 
 
     /**
      * The main social_warfare function used to create the buttons.
      *
-     * @since  1.4.0
+     * @since  3.0.0 | 01 MAR 2018 | A class based method created which clones
+     *                               the public facing function.
      * @param  array $array An array of options and information to pass into the
      *                      buttons function.
-     * @return string       The modified content
+     * @return string       The html for a panel of buttons.
      *
      */
     public static function social_warfare( $args = array() ) {
-
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
     	echo $Buttons_Panel->render_HTML();
     }
