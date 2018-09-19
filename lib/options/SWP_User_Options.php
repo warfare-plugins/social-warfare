@@ -18,24 +18,44 @@
 class SWP_User_options {
 
 
+	/**
+	 * The Constructor
+	 *
+	 * This is designed to pull in the user's options, filter them appropriately,
+	 * and then store them in the global $swp_user_options variable so that the
+	 * plugin can easily access them as needed.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  3.4.0 | 19 SEP 2018 | Refactored, cleaned, formatted.
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	public function __construct() {
-        $this->unfiltered_options = get_option( 'social_warfare_settings', false );
-		// Fetch the current options and the available options data.
-		$this->registered_options = get_option( 'swp_registered_options', false );
-		$this->user_options = $this->unfiltered_options;
 
-		// Filter the options.
-		$this->filter_options();
-
-		// Assign the options to the global.
-		global $swp_user_options;
-		$swp_user_options = $this->user_options;
+        $this->establish_option_data();
+		$this->filter_option_data();
+		$this->globalize_option_data();
 
 		// Defered to End of Cycle: Add all relevant option info to the database.
 		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 10000 );
-
-		// Debug
         add_action( 'admin_footer', array( $this, 'debug' ) );
+	}
+
+
+	/**
+	 * Pull the user options and registered options from the database and store
+	 * them in a local property.
+	 *
+	 * @since  3.4.0 | 19 SEP 2018 | Created
+     * @param  void
+	 * @return void
+	 *
+	 */
+	protected function establish_option_data() {
+		$this->unfiltered_options = get_option( 'social_warfare_settings', false );
+		$this->registered_options = get_option( 'swp_registered_options', false );
+		$this->user_options = $this->unfiltered_options;
 	}
 
 
@@ -45,27 +65,28 @@ class SWP_User_options {
      * @return void
      *
      */
-    public function filter_options() {
-        if( false !== $this->registered_options ) :
-            $this->remove_unavailable_options();
-			$this->correct_invalid_values();
-    		$this->add_option_defaults();
-		endif;
+    protected function filter_option_data() {
+        if( false === $this->registered_options ) {
+			return;
+		}
+
+        $this->remove_unavailable_options();
+		$this->correct_invalid_values();
+		$this->add_option_defaults();
     }
 
 
 	/**
-	 * A function for debugging this class.
+	 * Assign the options to the global.
 	 *
-	 * @since  3.3.0 | 07 AUG 2018 | Created
+	 * @since  3.4.0 | 19 SEP 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
 	 */
-	public function debug() {
-		if( true === SWP_Utility::debug( 'swp_user_options' ) ) {
-			echo "<pre>", var_export($this), "</pre>";
-		}
+	protected function globalize_option_data() {
+		global $swp_user_options;
+		$swp_user_options = $this->user_options;
 	}
 
 
@@ -96,14 +117,17 @@ class SWP_User_options {
             'defaults'  => apply_filters( 'swp_options_page_defaults', array() ),
             'values'    => apply_filters( 'swp_options_page_values', array() )
         );
-        $registrations = apply_filters('swp_registrations', []);
+        $registrations = apply_filters( 'swp_registrations', array() );
 
-        foreach($whitelist as $key) {
-            if (isset( $this->unfiltered_options[$key] ) ) :
-                $new_registered_options["defaults"][$key] = $this->unfiltered_options[$key];
-                $new_registered_options["values"][$key]["type"] = "none";
-                $new_registered_options["values"][$key]["values"] = $this->unfiltered_options[$key];
-            endif;
+        foreach( $whitelist as $key ) {
+            if ( !isset( $this->unfiltered_options[$key] ) ) {
+				continue;
+			}
+
+		    $new_registered_options["defaults"][$key] = $this->unfiltered_options[$key];
+            $new_registered_options["values"][$key]["type"] = "none";
+            $new_registered_options["values"][$key]["values"] = $this->unfiltered_options[$key];
+
         }
 
 		if( $new_registered_options != $this->registered_options ) {
@@ -111,9 +135,19 @@ class SWP_User_options {
 		}
 	}
 
-
+	/**
+	 * Generate a whitelist of items to NOT delete when filtering.
+	 *
+	 * @since  3.2.0 | 01 JUL 2018 | Created
+	 * @since  3.4.0 | 19 SEP 2018 | Added og:type to whitelist.
+	 * @todo   Make the og:type auto generate when the option is created in the
+	 *         options page class.
+	 * @param  void
+	 * @return array An array of whitelisted option keys.
+	 *
+	 */
 	public function generate_whitelist() {
-        $addons = apply_filters( 'swp_registrations', array() );
+        $addons    = apply_filters( 'swp_registrations', array() );
         $whitelist = array('last_migrated', 'bitly_access_token', 'bitly_access_login');
 
         if ( empty( $addons) ) {
@@ -220,4 +254,19 @@ class SWP_User_options {
 			 endif;
 		}
     }
+
+
+	/**
+	 * A function for debugging this class.
+	 *
+	 * @since  3.3.0 | 07 AUG 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function debug() {
+		if( true === SWP_Utility::debug( 'swp_user_options' ) ) {
+			echo "<pre>", var_export($this), "</pre>";
+		}
+	}
 }
