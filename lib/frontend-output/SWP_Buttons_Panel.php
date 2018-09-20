@@ -103,18 +103,19 @@ class SWP_Buttons_Panel {
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks;
 
+		// Setup necessary local properties.
         $this->networks     = $swp_social_networks;
 		$this->args         = $args;
         $this->content      = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
 
-        $this->establish_post_id();
-        $this->establish_post_data();
-
-        if ( !isset( $this->post_id ) ) :
+		// Bail if we were unable to establish a post_id.
+        if ( false === $this->establish_post_id() ) {
             return;
-        endif;
+        }
 
+		// Build the buttons_panel object.
+        $this->establish_post_data();
         $this->localize_options();
 		$this->establish_share_data();
   	    $this->establish_location();
@@ -203,7 +204,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.0 | 09 APR 2018 | Created
 	 * @since  3.4.0 | 20 SEP 2018 | Refactored to refine logic.
 	 * @param  array $args The array of args passed in.
-	 * @return void        Results are stored in a local property: $post_id
+	 * @return boolean     True on success; False on failure.
 	 *
 	 */
      public function establish_post_id() {
@@ -218,7 +219,7 @@ class SWP_Buttons_Panel {
  		foreach( $id_labels as $label ) {
  	        if ( isset( $this->args[$label] ) && is_numeric( $this->args[$label] ) ) {
  	            $this->post_id = $this->args[$label];
- 				return;
+ 				return true;
  	        }
  		}
 
@@ -230,7 +231,7 @@ class SWP_Buttons_Panel {
 		 */
         if ( isset( $this->args['url'] ) && $post_id_from_url = url_to_postid( $this->args['url'] ) ) {
 			$this->post_id = $post_id_from_url;
-			return;
+			return true;
 		}
 
 
@@ -242,7 +243,16 @@ class SWP_Buttons_Panel {
 		global $post;
         if ( is_object( $post ) ) :
             $this->post_id = $post->ID;
+			return true;
         endif;
+
+
+		/**
+		 * If we were completely unable to establish a post_id, then return
+		 * false.
+		 *
+		 */
+		return false;
 
    	}
 
@@ -258,22 +268,21 @@ class SWP_Buttons_Panel {
      *
      */
     public function establish_post_data() {
-        if( !empty( $this->post_id ) ):
-            $post = get_post( $this->post_id );
 
-            if ( !is_object( $post ) ) :
-                return;
-            endif;
+        $post = get_post( $this->post_id );
 
-            $this->post_data = array(
-                'ID'           => $post->ID,
-                'post_type'    => $post->post_type,
-                'permalink'    => get_the_permalink( $post->ID ),
-                'post_title'   => $post->post_title,
-                'post_status'  => $post->post_status,
-                'post_content' => $post->post_content
-            );
-        endif;
+        if ( !is_object( $post ) ) {
+            return;
+        }
+
+        $this->post_data = array(
+            'ID'           => $post->ID,
+            'post_type'    => $post->post_type,
+            'permalink'    => get_the_permalink( $post->ID ),
+            'post_title'   => $post->post_title,
+            'post_status'  => $post->post_status,
+            'post_content' => $post->post_content
+        );
     }
 
 
@@ -305,9 +314,9 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     public function establish_post_content() {
-        if( isset( $this->args['content'] ) ):
+        if( isset( $this->args['content'] ) ) {
 			$this->content = $args['content'];
-		endif;
+		}
     }
 
 
@@ -327,18 +336,21 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function establish_location() {
+
         //* Establish a default.
         $this->location = 'none';
 
 		// Return with the location set to none if we are on attachment pages.
-		if( is_attachment() ):
+		if( is_attachment() ) {
 			return;
-		endif;
+		}
 
 		// If there is no content, this must be called directly via function or shortcode.
-		if ( empty( $this->content ) && is_singular() ):
+		if ( empty( $this->content ) && is_singular() ) {
 			$this->location = 'above';
-		endif;
+			return;
+		}
+
 
 		/**
 		 * Location from the Post Options
@@ -349,9 +361,9 @@ class SWP_Buttons_Panel {
 		 */
 		$post_setting = get_post_meta( $this->post_id, 'swp_post_location', true );
 
-        if( is_array($post_setting) ) :
+        if( is_array($post_setting) ) {
              $post_setting = $post_setting[0];
-         endif;
+        }
 
 		// If the location is set in the post options, use that.
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
@@ -359,7 +371,7 @@ class SWP_Buttons_Panel {
 
             //* Exit early because this is a priority.
             return;
-		};
+		}
 
 
 		/**
@@ -370,28 +382,28 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		// If we are on the home page
-		if( is_front_page() ) :
+		if( is_front_page() ) {
             $home = $this->options['location_home'];
 			$this->location = isset( $home ) ? $home : 'none';
 
             return;
-        endif;
+        }
 
 
 		// If we are on a singular page
-		if ( is_singular() ) :
+		if ( is_singular() ) {
             $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
 
-            if ( isset( $location ) ) :
+            if ( isset( $location ) ) {
                 $this->location = $location;
-            endif;
+            }
 
-        endif;
+        }
 
 
-        if ( is_archive() || is_home() ) :
+        if ( is_archive() || is_home() ) {
             $this->location = $this->options['location_archive_categories'];
-        endif;
+        }
 	}
 
 
@@ -444,6 +456,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function should_print() {
+
 
 		/**
 		 * WordPress requires title and content. This indicates the buttons are
@@ -527,6 +540,14 @@ class SWP_Buttons_Panel {
     }
 
 
+	/**
+	 * A method to get the alignment when scale is set below 100%.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string A string of the appropriate CSS class to add to the panel.
+	 *
+	 */
 	protected function get_alignment() {
 		return ' scale-' . $this->option('button_alignment');
 	}
@@ -699,12 +720,13 @@ class SWP_Buttons_Panel {
 	 * @return mixed       The value of that option.
 	 *
 	 */
-	private function option($key) {
+	protected function option($key) {
+
 		if( isset( $this->options[$key] ) ) {
 			return $this->options[$key];
-		} else {
-			return SWP_Utility::get_option( $key );
 		}
+
+		return SWP_Utility::get_option( $key );
 	}
 
 
