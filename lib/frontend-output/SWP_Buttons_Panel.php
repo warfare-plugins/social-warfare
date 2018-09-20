@@ -127,13 +127,15 @@ class SWP_Buttons_Panel {
 	/**
 	 * Localize the global options
 	 *
-	 * The goal here is to move the global $swp_options array into a local property so that the options
-	 * for this specific instantiation of the buttons panel can have the options manipulated prior to
-	 * rendering the HTML for the panel. We can do this by using getters and setters or by passing in
-	 * arguments.
+	 * The goal here is to move the global $swp_options array into a local
+	 * property so that the options for this specific instantiation of the
+	 * buttons panel can have the options manipulated prior to rendering the
+	 * HTML for the panel. We can do this by using getters and setters or by
+	 * passing in arguments.
 	 *
 	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  array  $args Arguments that can be used to change the options of the buttons panel.
+	 * @param  array  $args Arguments that can be used to change the options of
+	 *                      the buttons panel.
 	 * @return none
 	 * @access private
 	 *
@@ -176,9 +178,9 @@ class SWP_Buttons_Panel {
 	 * This method allows you to change multiple options for the buttons panel.
 	 *
 	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  array  $this->options An array of options to be merged into the existing options.
-	 * @return object $this   Allows for method chaining.
-	 * @access public
+	 * @param  array  $this->options An array of options to be merged into the
+	 *                               existing options.
+	 * @return object $this          Allows for method chaining.
 	 *
 	 */
 	public function set_options( $options = array() ) {
@@ -199,36 +201,49 @@ class SWP_Buttons_Panel {
 	 * through unless the post ID has been passed in as an argument.
 	 *
 	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @since  3.4.0 | 20 SEP 2018 | Refactored to refine logic.
 	 * @param  array $args The array of args passed in.
-	 * @return none
-	 * @access public
+	 * @return void        Results are stored in a local property: $post_id
 	 *
 	 */
      public function establish_post_id() {
-         global $post;
 
-         if ( isset( $this->args['url'] ) ) :
-             if ( $id = url_to_postid( $this->args['url'] ) ) :
-                 return $this->post_id = $id;
-             endif;
-         endif;
 
-        // Legacy support.
-        if ( isset( $this->args['postid'] ) ) :
-            return $this->post_id = $this->args['postid'];
-        endif;
-        // Current argument.
-        if ( isset( $this->args['post_id'] ) && is_numeric( $this->args['post_id'] ) ) :
-            return $this->post_id = $this->args['post_id'];
-        endif;
-        if ( isset( $this->args['id'] ) && is_numeric( $this->args['id'] ) ) :
-            return $this->post_id = $this->args['id'];
-        endif;
+		/**
+         * Cycle through the available post_id labels, find which one was passed
+         * in and use it as the post_id for this panel of buttons.
+         *
+         */
+ 		$id_labels = array( 'id', 'post_id', 'postid' );
+ 		foreach( $id_labels as $label ) {
+ 	        if ( isset( $this->args[$label] ) && is_numeric( $this->args[$label] ) ) {
+ 	            $this->post_id = $this->args[$label];
+ 				return;
+ 	        }
+ 		}
 
-        //* We weren't provided any context for an ID, so default to the post.
+
+		/**
+		 * If the user provided a URL instead of an ID, let's see if we can
+		 * convert it into a valid WordPress ID for a post.
+		 *
+		 */
+        if ( isset( $this->args['url'] ) && $post_id_from_url = url_to_postid( $this->args['url'] ) ) {
+			$this->post_id = $post_id_from_url;
+			return;
+		}
+
+
+		/**
+		 * If the user didn't pass in any arguments related to an ID or URL then
+		 * we will just use the post id of the current post.
+		 *
+		 */
+		global $post;
         if ( is_object( $post ) ) :
             $this->post_id = $post->ID;
         endif;
+
    	}
 
 
