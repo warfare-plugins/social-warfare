@@ -121,7 +121,7 @@ class SWP_Column {
 		// Bail if we're not supposed to be ordering by social shares.
 		if ( 'Social Shares' !== $query->get( 'orderby' ) ) {
 			return;
-		endif;
+		}
 
 		// Order by the _total_shares using a numeric interpretation of the value.
  		$query->set( 'meta_key', '_total_shares' );
