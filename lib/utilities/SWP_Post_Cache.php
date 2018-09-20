@@ -207,14 +207,29 @@ class SWP_Post_Cache {
  	 *     1 Hour   - New Posts less than 21 days old.
  	 *     4 Hours  - Medium Posts less than 60 days old.
  	 *     12 Hours - Old Posts Older than 60 days old.
+ 	 *     24 Hours - Share counts are disabled, but we still need to fetch
+ 	 *                periodically for the admin post column and popular posts
+ 	 *                widget to have data to puplate correctly.
  	 *
  	 * @since  3.1.0 | 20 JUN 2018 | Created
- 	 * @todo   Review
+ 	 * @since  3.4.0 | Added check for share counts being active.
  	 * @param  void
  	 * @return integer The duration in hours that applies to this cache.
  	 *
  	 */
  	public function get_allowable_age() {
+
+
+		/**
+		 * Don't fetch share counts very often if share counts are disabled both
+		 * as totals and on the buttons. We will only fetch once in a while so
+		 * that we can cache the data and use it for things like the popular
+		 * posts calculations and the admin posts column.
+		 *
+		 */
+		if( false == SWP_Utility::get_option( 'network_shares' ) && false == SWP_Utility::get_option( 'total_shares' ) ) {
+			return 24;
+		}
 
  		// Integer in hours of the current age of the post.
  		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
@@ -222,9 +237,10 @@ class SWP_Post_Cache {
  		// If it's less than 21 days old.
  		if ( $post_age < ( 21 * 86400 ) ) {
  			return 1;
+		}
 
- 		// If it's less than 60 days old.
- 		} elseif ( $post_age < ( 60 * 86400 ) ) {
+		// If it's less than 60 days old.
+ 		if ( $post_age < ( 60 * 86400 ) ) {
  			return 4;
  		}
 
@@ -324,13 +340,6 @@ class SWP_Post_Cache {
 	 */
 	private function should_shares_be_fetched() {
         global $swp_user_options;
-        // Don't fetch if all share counts are disabled.
-
-        // Don't fetch if all share counts are disabled.
-		if( false == SWP_Utility::get_option( 'network_shares' ) && false == SWP_Utility::get_option( 'total_shares' ) ) {
-			$this->debug_message( 'No Shares Fetched. Share counts are disabled in the settings.' );
-			return false;
-		}
 
 		// Only fetch on published posts
 		if( 'publish' !== get_post_status( $this->id ) ) {
