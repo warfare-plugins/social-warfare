@@ -65,7 +65,7 @@ class SWP_Column {
 	/**
 	 * Populate the new column with the share count from the meta field
 	 *
-	 * @since  1.4.0  | 01 JAN 2018 | Created
+	 * @since  1.4.0 | 01 JAN 2018 | Created
 	 * @since  3.1.0 | 14 JUN 2018 | Added number_format
 	 * @param  string $column_name The name of the column to be modified.
 	 * @param  int    $post_ID     The Post ID
@@ -73,14 +73,19 @@ class SWP_Column {
 	 *
 	 */
 	public function populate_social_shares_column( $column_name, $post_ID ) {
-	 	if ( $column_name == 'swSocialShares' ) {
-	 		$answer = get_post_meta( $post_ID , '_total_shares' , true );
-			if( !empty( $answer ) ):
-	 			echo number_format( intval( $answer ) );
-			else:
-				echo 0;
-			endif;
+
+		// Exit if we're not processing our own column.
+		if ( $column_name !== 'swSocialShares' ) {
+			return;
 		}
+
+		// Get the share count, format it, echo it to the screen.
+ 		$count = get_post_meta( $post_ID , '_total_shares' , true );
+		if( !empty( $count ) ) {
+ 			echo number_format( intval( $count ) );
+		}
+
+		echo 0;
 	}
 
 
@@ -107,14 +112,19 @@ class SWP_Column {
     *
     */
 	public function swp_social_shares_orderby( $query ) {
+
+		// Bail if we're not even in the admin area.
 		if ( !is_admin() ) {
 	 		return;
 	 	}
-	 	$orderby = $query->get( 'orderby' );
 
-		if ( 'Social Shares' === $orderby ) {
-	 		$query->set( 'meta_key', '_total_shares' );
-	 		$query->set( 'orderby', 'meta_value_num' );
-	 	}
+		// Bail if we're not supposed to be ordering by social shares.
+		if ( 'Social Shares' !== $query->get( 'orderby' ) ) {
+			return;
+		endif;
+
+		// Order by the _total_shares using a numeric interpretation of the value.
+ 		$query->set( 'meta_key', '_total_shares' );
+ 		$query->set( 'orderby', 'meta_value_num' );
 	}
 }
