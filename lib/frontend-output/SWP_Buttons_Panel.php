@@ -8,6 +8,8 @@
  * @since     1.0.0
  */
 class SWP_Buttons_Panel {
+
+
 	/**
 	 * Options
 	 *
@@ -85,6 +87,7 @@ class SWP_Buttons_Panel {
      * @var integer $total_shares;
      */
     public $total_shares = 0;
+
 
     /**
      * The Construct Method
