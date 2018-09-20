@@ -892,22 +892,44 @@ class SWP_Buttons_Panel {
 	 * $this->networks property.
 	 *
 	 * @since  3.0.0 | 04 MAY 2018 | Created
-	 * @param  none
+	 * @param  void
 	 * @return object $this Allows for method chaining.
 	 *
 	 */
-
     public function establish_active_buttons() {
         $network_objects = array();
 
-        //* Specified buttons take precedence to global options.
-        if ( isset( $this->args['buttons'] ) ) :
+
+        /**
+         * If the user passed in an array of buttons either via the social_warfare()
+         * function of the [social_warfare buttons="buttons"] shortcode, these
+         * will take precedence over the buttons that are selected on the
+         * Social Warfare options page.
+         *
+         */
+        if ( isset( $this->args['buttons'] ) ) {
             $this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
-            foreach($this->args['buttons'] as $i => $button) {
-                $this->args['buttons'][$i] = trim( $button );
+
+			/**
+			 * Trim out white space. We need to trim any whitespace in case
+			 * folks put a space before or after any of the commas separating
+			 * the button names that were passed in.
+			 *
+			 * e.g. [social_warfare buttons="twitter, google_plus"]
+			 *
+			 */
+            foreach( $this->args['buttons'] as $index => $button ) {
+                $this->args['buttons'][$index] = trim( $button );
             }
 
+
+			/**
+			 * Loop through the passed-in array of buttons, find the global
+			 * Social_Network object associated to each network, and store them
+			 * in the $network_objects array.
+			 *
+			 */
             foreach ( $this->args['buttons'] as $counts_key ) {
                 $network_key = $this->display_name_to_key( $counts_key );
                 foreach( $this->networks as $key => $network ):
@@ -917,52 +939,70 @@ class SWP_Buttons_Panel {
                 endforeach;
             }
 
-        //* Use global button settings.
-        else :
-			// Order manually using the user's specified order.
-            if ( !isset( $this->options['order_of_icons_method'] ) || $this->options['order_of_icons_method'] === 'manual' ) :
-                $order = SWP_Utility::get_option( 'order_of_icons' );
+			// Store it in the $networks property and terminate the method.
+			$this->networks = $network_objects;
+			return $this;
 
-			// Order them dynamically according to share counts.
-            else :
-                $order = $this->get_dynamic_buttons_order();
-            endif;
+		}
 
-			$network_objects = $this->get_ordered_network_objects( $order );
-        endif;
-
-        $this->networks = $network_objects;
+        $order           = $this->get_order_of_icons();
+		$network_objects = $this->get_ordered_network_objects( $order );
+        $this->networks  = $network_objects;
         return $this;
     }
 
 
 	/**
-	 * A method to order the networks dynamically.
+	 * A method to control the order in which the buttons are output.
 	 *
-	 * @since  3.0.0 | 04 MAY 2018 | Created
-	 * @param  none
-	 * @return object An ordered array containing the social network objects.
+	 * @since  3.4.0 | 20 SEP 2018 | Created
+	 * @param  void
+	 * @return array The array of network names in their proper order.
 	 *
 	 */
-    protected function get_dynamic_buttons_order() {
-        global $swp_social_networks;
-        $buttons = $this->options['order_of_icons'];
-		$order = array();
+	protected function get_order_of_icons() {
+		global $swp_social_networks;
+		$default_buttons = SWP_Utility::get_option( 'order_of_icons' );
+		$order           = array();
 
-		if( !empty( $this->shares ) && is_array( $this->shares ) ):
-			arsort( $this->shares );
-			foreach( $this->shares as $key => $value ):
-				if($key !== 'total_shares' && in_array($key, $buttons)):
 
-					$order[$key] = $key;
-				endif;
-			endforeach;
-			$this->options['order_of_icons'] = $order;
-		else:
-			$order = $this->options['order_of_icons'];
-		endif;
+		/**
+		 * If the icons are set to be manually sorted, then we simply use the
+		 * order from the options page that the user has set.
+		 *
+		 */
+		if ( SWP_Utility::get_option( 'order_of_icons_method' ) === 'manual' ) {
+		    return $default_buttons;
+		}
+
+
+		/**
+		 * Even if it's not set to manual sorting, we will still use the manual
+		 * order of the buttons if we don't have any share counts by which to
+		 * process the order dynamically.
+		 *
+		 */
+		if( empty( $this->shares ) || !is_array( $this->shares ) || empty( array_filter( $this->shares ) ) ) {
+			return $default_buttons;
+		}
+
+
+		/**
+		 * If the icons are set to be ordered dynamically, and we passed the
+		 * check above then we will sort them based on how many shares each
+		 * network has.
+		 *
+		 */
+		arsort( $this->shares );
+		foreach( $this->shares as $network => $share_count ) {
+			if( $network !== 'total_shares' && in_array( $network, $default_buttons ) ) {
+				$order[$network] = $network;
+			}
+		}
+		$this->options['order_of_icons'] = $order;
 		return $order;
-    }
+		
+	}
 
 
 	/**
