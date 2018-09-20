@@ -980,28 +980,19 @@ class SWP_Buttons_Panel {
      *
      * @since  3.0.0 | 18 APR 2018 | Created
      * @since  3.3.2 | 12 SEP 2018 | Moved strtolower to $totals_argument
+     * @since  3.4.0 | 20 SEP 2018 | Moved display logic to should_total_shares_render()
      * @param  void
      * @return string $html The fully qualified HTML to display share counts.
      *
      */
     public function render_total_shares_html() {
-        $buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
 
-        if ( false == $this->option('total_shares') ) {
-            return '';
-        }
+		// Check if total shares should be rendered or not.
+		if( false === $this->should_total_shares_render() ) {
+			return;
+		}
 
-        if ( $this->shares['total_shares'] < $this->option('minimum_shares') ) {
-            return '';
-        }
-
-        $totals_argument = in_array('total', array_map('strtolower', $buttons))
-            || in_array('totals', array_map('strtolower', $buttons));
-
-        if ( $this->is_shortcode && !$totals_argument ) {
-            return '';
-        }
-
+		// Render the html for the total shares.
         $html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
             $html .= '<span class="swp_count ">' . SWP_Utility::kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
         $html .= '</div>';
@@ -1009,6 +1000,56 @@ class SWP_Buttons_Panel {
         return $html;
     }
 
+
+	/**
+	 * Should the total shares be rendered.
+	 *
+	 * @since  3.4.0 | 20 SEP 2018 | Created
+	 * @param  void
+	 * @return bool True: show shares; False: don't render them.
+	 *
+	 */
+	protected function should_total_shares_render() {
+
+
+		/**
+		 * If total shares are turned off and this isn't a shortcode then we're
+		 * not going to render any total shares.
+		 *
+		 */
+		if ( false == $this->option('total_shares') && false == $this->is_shortcode) {
+			return false;
+		}
+
+
+		/**
+		 * If minimum share counts are enabled and this post hasn't achieved
+		 * that threshold of shares yet, then we don't show them.
+		 *
+		 */
+		if ( $this->shares['total_shares'] < $this->option('minimum_shares') ) {
+			return false;
+		}
+
+
+		/**
+		 * If this is a shortcode, the buttons argument has been specifically
+		 * passed into the function, and no total/totals were passed in then
+		 * we do not render the total shares.
+		 *
+		 */
+		$buttons          = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
+		$total            = in_array('total', array_map('strtolower', $buttons) );
+		$totals           = in_array('totals', array_map('strtolower', $buttons) );
+		$shortcode_totals = ( empty( $buttons ) || $total || $totals );
+
+		if ( $this->is_shortcode && !$shortcode_totals ) {
+			return false;
+		}
+
+		// If none of the flags above get caught, return true.
+		return true;
+	}
 
     /**
      * Handles whether to echo the HTML or return it as a string.
