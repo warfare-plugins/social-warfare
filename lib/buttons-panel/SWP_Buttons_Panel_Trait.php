@@ -27,8 +27,8 @@
  *     get_mobile_float_location();
  *     get_order_of_icons();
  *     get_ordered_network_objects();
+ *     get_key_from_name();
  *
- *     display_name_to_key();
  *     debug();
  *
  *
@@ -49,7 +49,7 @@ trait SWP_Buttons_Panel_Trait {
 	* @return string The converted string.
 	*
 	*/
-   public function display_name_to_key( $string ) {
+   public function get_key_from_name( $string ) {
 	   return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
    }
 

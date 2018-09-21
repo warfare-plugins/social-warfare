@@ -27,7 +27,7 @@
  *
  * SECTION #4: Utility methods used throughout the class.
  * 	   NOTE: These are inherited from SWP_Buttons_Panel_Trait.
- *     display_name_to_key();
+ *     get_key_from_name();
  *     should_panel_display();
  *     get_alignment();
  *     get_colors();
@@ -501,8 +501,8 @@ class SWP_Buttons_Panel {
 			 * in the $network_objects array.
 			 *
 			 */
-			foreach ( $this->args['buttons'] as $counts_key ) {
-				$network_key = $this->display_name_to_key( $counts_key );
+			foreach ( $this->args['buttons'] as $network_name ) {
+				$network_key = $this->get_key_from_name( $network_name );
 				foreach( $this->networks as $key => $network ):
 					if( $network_key === $key ):
 						$network_objects[] = $network;
