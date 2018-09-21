@@ -26,9 +26,18 @@
  *     render_html();
  *
  * SECTION #4: Utility methods used throughout the class.
+ *
  * 	   NOTE: These are inherited from SWP_Buttons_Panel_Trait.
- *     get_key_from_name();
+ *
+ *     create_panel();
+ *
+ *     generate_panel_html();
+ *     generate_individual_buttons_html();
+ *     generate_total_shares_html();
+ *
  *     should_panel_display();
+ *     should_total_shares_display();
+ *
  *     get_alignment();
  *     get_colors();
  *     get_shape();
@@ -40,13 +49,9 @@
  *     get_mobile_float_location();
  *     get_order_of_icons();
  *     get_ordered_network_objects();
- *     render_buttons_html();
- *     render_total_shares_html();
- *     should_total_shares_display();
- *     do_print();
- *     generate_panel_html();
- *     debug();
+ *     get_key_from_name();
  *
+ *     debug();
  *
  *
  *
