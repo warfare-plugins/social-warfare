@@ -2,15 +2,18 @@
 /**
  * Functions to load the front end display for the
  *
+ * This used to be the SWP_Display class in /lib/frontend-output/
+ *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
- * @since     3.0.0  | 21 FEB 2018 | Refactored into a class-based system.
+ * @since     3.0.0 | 21 FEB 2018 | Refactored into a class-based system.
  * @since     3.1.0 | 18 JUN 2018 | Replaced brack array notation.
+ * @since     3.4.0 | 21 SEP 2018 | Ported from SWP_Display to SWP_Buttons_Panel_Loader
  *
  */
-class SWP_Display {
+class SWP_Buttons_panel_Loader {
 
 
 	/**

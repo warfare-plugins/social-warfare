@@ -60,8 +60,8 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 			//* END old boilerplate.
 
-			$share_counts = $this->render_total_shares_HTML();
-			$buttons = $this->render_buttons_HTML( (int) $max_buttons );
+			$share_counts = $this->generate_total_shares_html();
+			$buttons = $this->generate_individual_buttons_html( (int) $max_buttons );
 
 			$container = '<div class="swp_social_panelSide swp_floating_panel swp_social_panel swp_' . $this->get_option('float_button_shape') .
 				$this->get_colors(true) .
