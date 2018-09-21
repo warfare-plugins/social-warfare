@@ -100,6 +100,7 @@ div.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer {
 	-webkit-flex-flow: row wrap;
 	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
+	box-shadow:none;
 }
 
 .swp_social_panel:not(.nc_floater):not(.swp_social_panelSide).swp_shift {
