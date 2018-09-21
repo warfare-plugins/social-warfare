@@ -162,7 +162,6 @@ class SWP_Shortcode {
 		endif;
 
         $html_safe_tweet = htmlentities( $tweet, ENT_COMPAT, 'UTF-8' );
-        $tweet = utf8_uri_encode( $tweet, $max_tweet_length );
 		$tweet = urlencode( $tweet );
 
         return $tweet;
