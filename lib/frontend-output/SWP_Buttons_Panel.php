@@ -1,13 +1,61 @@
 <?php
 
 /**
- * Creates the Panel of share buttons based on options and settings.
+ * The Buttons_Panel object class.
+ *
+ * Creates the Panel of share buttons based on options and settings. The class
+ * is comprised of four main sections:
+ *
+ *
+ * TABLE OF CONTENTS:
+ *
+ * SECTION #1: Insantiate a post object & compile all necessary data.
+ *     __construct();
+ *     establish_post_data();
+ *     localize_options();
+ *     establish_share_data();
+ *     establish_location();
+ *     establish_permalink();
+ *     establish_active_buttons();
+ *
+ * SECTION #2: Allow developers to manipulate the object using setters.
+ *     set_option();
+ *     set_options();
+ *
+ * SECTION #3: Use the data to render out the HTML to display a panel of buttons.
+ *     render_html();
+ *
+ * SECTION #4: Utility methods used throughout the class.
+ *     display_name_to_key();
+ *     should_print();
+ *     get_alignment();
+ *     get_colors();
+ *     get_shape();
+ *     get_scale();
+ *     get_min_width();
+ *     get_float_background();
+ *     get_option();
+ *     get_float_location();
+ *     get_mobile_float_location();
+ *     get_order_of_icons();
+ *     get_ordered_network_objects();
+ *     render_buttons_html();
+ *     render_total_shares_html();
+ *     should_total_shares_render();
+ *     do_print();
+ *     generate_panel_html();
+ *     debug();
+ *
+ *
+ *
  *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0
- * 
+ * @since     3.0.0 | 01 MAR 2018 | Created
+ * @since     3.4.0 | 20 SEP 2018 | Moved the floating buttons panel out of this
+ *                                  class and into a child class of this class.
+ *
  */
 class SWP_Buttons_Panel {
 
@@ -15,9 +63,10 @@ class SWP_Buttons_Panel {
 	/**
 	 * Options
 	 *
-	 * We're using a local property to clone in the global $swp_user_options array. As a local options
-	 * we and other developers accessing this object can use getters and setters to change any options
-	 * possibly imaginable without affecting the global options.
+	 * We're using a local property to clone in the global $swp_user_options
+	 * array. As a local options we and other developers accessing this object
+	 * can use getters and setters to change any options possibly imaginable
+	 * without affecting the global options.
 	 *
 	 * @var array
 	 *
@@ -91,32 +140,70 @@ class SWP_Buttons_Panel {
     public $total_shares = 0;
 
 
+
+
+	/***************************************************************************
+	 *
+	 * SECTION #1: INSTANTIATE THE OBJECT
+	 *
+	 * This is the first of three sections. In this section, we will set up all
+	 * the necessary information in order to render out the buttons panel later.
+	 *
+	 *
+	 */
+
+
     /**
      * The Construct Method
+     *
+     * This method creates the Buttons_Panel object. It gathers all of the
+     * necessary data, the user options, the share counts, and stores it all in
+     * local properties. Later we will call the public method render_html()
+     * (e.g. $Buttons_Panel->render_html(); ) to actually render out the panel to
+     * the screen.
  	 *
-	 * @param optional array $args The arguments passed in via shortcode.
      * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @since  3.1.0 | 05 JUL 2018 | Created debug() & establish_post_data() methods.
-	 * @param  optional array $args The arguments passed in via shortcode.
-	 * @param  optional boolean $shortcode If a shortcode is calling this class.
+	 * @since  3.4.0 | 20 SEP 2018 | Moved establish_post_id() into a conditional.
+	 * @param  array optional $args The arguments passed in via shortcode.
+	 * @param  boolean optional $shortcode If a shortcode is calling this class.
 	 * @return void
      *
      */
     public function __construct( $args = array(), $shortcode = false ) {
         global $swp_social_networks;
 
-		// Setup necessary local properties.
+
+		/**
+		 * Pull in necessary data so that the methods below can use it to setup
+		 * the Buttons_panel object properly.
+		 *
+		 */
         $this->networks     = $swp_social_networks;
 		$this->args         = $args;
         $this->content      = isset( $args['content'] ) ? $args['content'] : '';
         $this->is_shortcode = $shortcode;
 
-		// Bail if we were unable to establish a post_id.
+
+		/**
+		 * The establish_post_id() runs several checks including fallback
+		 * methods to ensure that there is an available post_id for us to use.
+		 * However, if it fails to find a valid post_id, it will return false,
+		 * and if that is the case, we bail. We can't build a set of buttons
+		 * without one present.
+		 *
+		 */
         if ( false === $this->establish_post_id() ) {
             return;
         }
 
-		// Build the buttons_panel object.
+
+		/**
+		 * Step by step, these methods walk through the process of compiling
+		 * everything we'll need in order to render out a panel of buttons
+		 * according to the user options, the per post options, share counts, etc.
+		 *
+		 */
         $this->establish_post_data();
         $this->localize_options();
 		$this->establish_share_data();
@@ -125,76 +212,6 @@ class SWP_Buttons_Panel {
         $this->establish_active_buttons();
         $this->debug();
     }
-
-
-	/**
-	 * Localize the global options
-	 *
-	 * The goal here is to move the global $swp_options array into a local
-	 * property so that the options for this specific instantiation of the
-	 * buttons panel can have the options manipulated prior to rendering the
-	 * HTML for the panel. We can do this by using getters and setters or by
-	 * passing in arguments.
-	 *
-	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  array  $args Arguments that can be used to change the options of
-	 *                      the buttons panel.
-	 * @return none
-	 * @access private
-	 *
-	 */
-	private function localize_options() {
-        global $swp_user_options;
-		$this->options = array_merge( $swp_user_options, $this->args);
-	}
-
-
-	/**
-	 * Set an option
-	 *
-	 * This method allows you to change one of the options for the buttons panel.
-	 *
-	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  string $option The key of the option to be set.
-	 * @param  mixed  $value  The value to which we will set that option.
-	 * @return object $this   Allows for method chaining.
-	 * @access public
-	 *
-	 */
-	public function set_option( $option = '', $value = null ) {
-        if ( empty( $option ) ) :
-            $message = "Hey developer, " . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype($value) . ".";
-            throw new Exception($message);
-        elseif ( null == $value ) :
-            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " a second paramter: \$value (mixed type). You provided " . gettype($value) . ".";
-            throw new Exception($message);
-        endif;
-
-		$this->options[$this->options] = $value;
-		return $this;
-	}
-
-
-	/**
-	 * Set multiple options
-	 *
-	 * This method allows you to change multiple options for the buttons panel.
-	 *
-	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  array  $this->options An array of options to be merged into the
-	 *                               existing options.
-	 * @return object $this          Allows for method chaining.
-	 *
-	 */
-	public function set_options( $options = array() ) {
-        if ( !is_array( $options) ) :
-            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " requires an arry of options. You provided " . gettype($options) . ".";
-            throw new Exception($message);
-        endif;
-
-		array_merge( $this->options , $options );
-		return $this;
-	}
 
 
 	/**
@@ -259,36 +276,61 @@ class SWP_Buttons_Panel {
    	}
 
 
-    /**
-     * Set the post data for this buttons panel.
-     *
-     * @since  3.1.0 | 05 JUL 2018 | Created
-     * @return none
-     * @access public
-     * @param  void
-     * @return void
-     *
-     */
-    public function establish_post_data() {
+	/**
+	 * Set the post data for this buttons panel.
+	 *
+	 * @since  3.1.0 | 05 JUL 2018 | Created
+	 * @return none
+	 * @access public
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function establish_post_data() {
 
-        $post = get_post( $this->post_id );
+		// Fetch the post object.
+		$post = get_post( $this->post_id );
 
-        if ( !is_object( $post ) ) {
-            return;
-        }
+		// Bail if the post object failed.
+		if ( !is_object( $post ) ) {
+			return;
+		}
 
-        $this->post_data = array(
-            'ID'           => $post->ID,
-            'post_type'    => $post->post_type,
-            'permalink'    => get_the_permalink( $post->ID ),
-            'post_title'   => $post->post_title,
-            'post_status'  => $post->post_status,
-            'post_content' => $post->post_content
-        );
-    }
+		// Set up the post data.
+		$this->post_data = array(
+			'ID'           => $post->ID,
+			'post_type'    => $post->post_type,
+			'permalink'    => get_the_permalink( $post->ID ),
+			'post_title'   => $post->post_title,
+			'post_status'  => $post->post_status,
+			'post_content' => $post->post_content
+		);
+	}
 
 
-    /**
+	/**
+	 * Localize the global options
+	 *
+	 * The goal here is to move the global $swp_options array into a local
+	 * property so that the options for this specific instantiation of the
+	 * buttons panel can have the options manipulated prior to rendering the
+	 * HTML for the panel. We can do this by using getters and setters or by
+	 * passing in arguments.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  array  $args Arguments that can be used to change the options of
+	 *                      the buttons panel.
+	 * @return void
+	 * @access private
+	 *
+	 */
+	private function localize_options() {
+        global $swp_user_options;
+		$this->options = array_merge( $swp_user_options, $this->args);
+	}
+
+
+	/**
      * Instantiates the share data from a given post ID.
      *
      * @since 3.1.0 | 25 JUN 2018 | Created the method.
@@ -301,24 +343,6 @@ class SWP_Buttons_Panel {
         $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
 
         return $this;
-    }
-
-
-	/**
-	 * Establish the post content
-	 *
-	 * Take the content passed in via the $args and move it into a
-	 * local property.
-	 *
-	 * @since  3.0.0 | 18 APR 2018 | Created
-	 * @param  none
-	 * @return none Everything is stored in a local property.
-	 *
-	 */
-    public function establish_post_content() {
-        if( isset( $this->args['content'] ) ) {
-			$this->content = $args['content'];
-		}
     }
 
 
@@ -409,6 +433,216 @@ class SWP_Buttons_Panel {
 	}
 
 
+	/**
+	 * A method for fetching the permalink.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return void Values are stored in $this->permalink.
+	 *
+	 */
+	protected function establish_permalink() {
+		$this->permalink = get_permalink( $this->post_id );
+	}
+
+
+	/**
+	 * A method to establish the active buttons for this panel.
+	 *
+	 * First it will check to see if user arguments have been passed in. If not, it will
+	 * check to see if they are set to manual or dynamic sorting. If manual, we will use
+	 * the buttons in the order they were stored in the options array (they were set in
+	 * this order on the options page.) If dynamic, we will look at the share counts and
+	 * order them with the largest share counts appearing first.
+	 *
+	 * The results will be stored as an ordered array of network objects in the
+	 * $this->networks property.
+	 *
+	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @param  void
+	 * @return object $this Allows for method chaining.
+	 *
+	 */
+	public function establish_active_buttons() {
+		$network_objects = array();
+
+
+		/**
+		 * If the user passed in an array of buttons either via the social_warfare()
+		 * function of the [social_warfare buttons="buttons"] shortcode, these
+		 * will take precedence over the buttons that are selected on the
+		 * Social Warfare options page.
+		 *
+		 */
+		if ( isset( $this->args['buttons'] ) ) {
+			$this->args['buttons'] = explode( ',', $this->args['buttons'] );
+
+
+			/**
+			 * Trim out white space. We need to trim any whitespace in case
+			 * folks put a space before or after any of the commas separating
+			 * the button names that were passed in.
+			 *
+			 * e.g. [social_warfare buttons="twitter, google_plus"]
+			 *
+			 */
+			foreach( $this->args['buttons'] as $index => $button ) {
+				$this->args['buttons'][$index] = trim( $button );
+			}
+
+
+			/**
+			 * Loop through the passed-in array of buttons, find the global
+			 * Social_Network object associated to each network, and store them
+			 * in the $network_objects array.
+			 *
+			 */
+			foreach ( $this->args['buttons'] as $counts_key ) {
+				$network_key = $this->display_name_to_key( $counts_key );
+				foreach( $this->networks as $key => $network ):
+					if( $network_key === $key ):
+						$network_objects[] = $network;
+					endif;
+				endforeach;
+			}
+
+			// Store it in the $networks property and terminate the method.
+			$this->networks = $network_objects;
+			return $this;
+
+		}
+
+		$order           = $this->get_order_of_icons();
+		$network_objects = $this->get_ordered_network_objects( $order );
+		$this->networks  = $network_objects;
+		return $this;
+	}
+
+
+
+
+	/***************************************************************************
+	 *
+	 * SECTION #2: ALLOW DEVELOPERS ACCESS TO SETTERS
+	 *
+	 * This section allows developers to manipulate the Buttons_Panel object
+	 * prior to the final rendering of the html at the end.
+	 *
+	 *
+	 */
+
+
+	/**
+	 * Set an option
+	 *
+	 * This method allows you to change one of the options for the buttons panel.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  string $option The key of the option to be set.
+	 * @param  mixed  $value  The value to which we will set that option.
+	 * @return object $this   Allows for method chaining.
+	 * @access public
+	 *
+	 */
+	public function set_option( $option = '', $value = null ) {
+        if ( empty( $option ) ) :
+            $message = "Hey developer, " . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype($value) . ".";
+            throw new Exception($message);
+        elseif ( null == $value ) :
+            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " a second paramter: \$value (mixed type). You provided " . gettype($value) . ".";
+            throw new Exception($message);
+        endif;
+
+		$this->options[$this->options] = $value;
+		return $this;
+	}
+
+
+	/**
+	 * Set multiple options
+	 *
+	 * This method allows you to change multiple options for the buttons panel.
+	 *
+	 * @since  3.0.0 | 09 APR 2018 | Created
+	 * @param  array  $this->options An array of options to be merged into the
+	 *                               existing options.
+	 * @return object $this          Allows for method chaining.
+	 *
+	 */
+	public function set_options( $options = array() ) {
+        if ( !is_array( $options) ) :
+            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " requires an arry of options. You provided " . gettype($options) . ".";
+            throw new Exception($message);
+        endif;
+
+		array_merge( $this->options , $options );
+		return $this;
+	}
+
+
+
+
+	/***************************************************************************
+	 *
+	 * SECTION #3: RENDER THE FULLY QUALIFIED HTML FOR THE PANEL
+	 *
+	 * This section will use all of the data created by the object and process
+	 * it all into properly formatted html for display on the screen.
+	 *
+	 */
+
+
+	 /**
+      * Runs checks before ordering a set of buttons.
+      *
+      * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+      * @since  3.3.3 | 18 SEP 2018 | Added return value for should_print() condition.
+      * @param  string $content The WordPress content, if passed in.
+      * @return function @see $this->do_print
+      *
+      */
+     public function render_html( $content = null ) {
+
+ 		/**
+ 		 * If the content is empty, it means that the user is calling a panel
+ 		 * of buttons directly using the social_warfare() function of the
+ 		 * [social_warfare] shortcode.
+ 		 *
+ 		 */
+ 		if ( empty( $this->content ) ) {
+             return $this->do_print();
+         }
+
+
+ 		/**
+ 		 * We have a standalone method designed to let us know if all the proper
+ 		 * desired conditions are met in order to allow us to print the buttons.
+ 		 *
+ 		 */
+         if ( !$this->should_print() ) {
+             return $this->content;
+         }
+
+         if ( null !== $content && gettype( $content ) === 'string' ) {
+             $this->args['content'] = $content;
+         }
+
+         return $this->do_print();
+     }
+
+
+
+
+	 /***************************************************************************
+	  *
+	  * SECTION #4: UTILITY FUNCTION USED THROUGHOUT THE CLASS
+	  *
+	  * This section contains methods that are used by other methods throughout
+	  * the class to help organize and simplify logic throughout the class.
+	  *
+	  */
+
+
     /**
      * Takes a display name and returns the snake_cased key of that name.
      *
@@ -422,19 +656,6 @@ class SWP_Buttons_Panel {
      */
     public function display_name_to_key( $string ) {
         return preg_replace( '/[\s]+/', '_', strtolower( trim ( $string ) ) );
-    }
-
-
-	/**
-	 * A method for fetching the permalink.
-	 *
-	 * @since  3.0.0 | 01 MAR 2018 | Created
-	 * @param  void
-	 * @return void Values are stored in $this->permalink.
-	 *
-	 */
-    protected function establish_permalink() {
-        $this->permalink = get_permalink( $this->post_id );
     }
 
 
@@ -486,7 +707,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	protected function get_alignment() {
-		return ' scale-' . $this->option('button_alignment');
+		return ' scale-' . $this->get_option('button_alignment');
 	}
 
 
@@ -517,7 +738,7 @@ class SWP_Buttons_Panel {
 		 * we output the default core color/style classes.
 		 *
 		 */
-		if ( false === $this->option( 'default_colors' ) ) {
+		if ( false === $this->get_option( 'default_colors' ) ) {
 			return " swp_default_full_color swp_individual_full_color swp_other_full_color ";
 		}
 
@@ -561,9 +782,9 @@ class SWP_Buttons_Panel {
 		 * this buttons panel that is being rendered.
 		 *
 		 */
-		$default = str_replace( $prefix, '', $this->option( $prefix . 'default_colors' ) );
-		$hover   = str_replace( $prefix, '', $this->option( $prefix . 'hover_colors' ) );
-		$single  = str_replace( $prefix, '', $this->option( $prefix . 'single_colors' ) );
+		$default = str_replace( $prefix, '', $this->get_option( $prefix . 'default_colors' ) );
+		$hover   = str_replace( $prefix, '', $this->get_option( $prefix . 'hover_colors' ) );
+		$single  = str_replace( $prefix, '', $this->get_option( $prefix . 'single_colors' ) );
 		return " swp_default_{$default} swp_other_{$hover} swp_individual_{$single} ";
 
     }
@@ -578,7 +799,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     protected function get_shape() {
-        $button_shape = $this->option( 'button_shape' );
+        $button_shape = $this->get_option( 'button_shape' );
 
         //* They have gone from an Addon to Core.
         if ( false === $button_shape ) {
@@ -598,7 +819,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     protected function get_scale() {
-        $button_size = $this->option( 'button_size' );
+        $button_size = $this->get_option( 'button_size' );
 
         //* They have gone from an Addon to Core.
         if ( false === $button_size ) {
@@ -618,7 +839,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     protected function get_min_width() {
-        $min_width = $this->option( 'float_screen_width' );
+        $min_width = $this->get_option( 'float_screen_width' );
 
         //* They have gone from an Addon to Core.
         if ( false === $min_width ) {
@@ -638,7 +859,7 @@ class SWP_Buttons_Panel {
 	 *
 	 */
     protected function get_float_background() {
-        $float_background_color = $this->option( 'float_background_color' );
+        $float_background_color = $this->get_option( 'float_background_color' );
 
         //* They have gone from an Addon to Core.
         if ( false === $float_background_color ) {
@@ -657,7 +878,7 @@ class SWP_Buttons_Panel {
 	 * @return mixed       The value of that option.
 	 *
 	 */
-	protected function option($key) {
+	protected function get_option( $key ) {
 
 		if( isset( $this->options[$key] ) ) {
 			return $this->options[$key];
@@ -703,8 +924,8 @@ class SWP_Buttons_Panel {
 			$post_on = true;
 		};
 
-		if ( $post_on || is_singular() && true === $this->option('floating_panel') && 'on' === $this->option('float_location_' . $this->post_data['post_type'] ) ) {
-			return $this->option('float_location');
+		if ( $post_on || is_singular() && true === $this->get_option('floating_panel') && 'on' === $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
+			return $this->get_option('float_location');
 		}
 
 		return 'none';
@@ -726,85 +947,12 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function get_mobile_float_location() {
-		if( is_single() && true == $this->option('floating_panel') && 'on' == $this->option('float_location_' . $this->post_data['post_type'] ) ) {
-			return $this->option('float_mobile');
+		if( is_single() && true == $this->get_option('floating_panel') && 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
+			return $this->get_option('float_mobile');
 		}
 
         return 'none';
 	}
-
-
-	/**
-	 * A method to establish the active buttons for this panel.
-	 *
-	 * First it will check to see if user arguments have been passed in. If not, it will
-	 * check to see if they are set to manual or dynamic sorting. If manual, we will use
-	 * the buttons in the order they were stored in the options array (they were set in
-	 * this order on the options page.) If dynamic, we will look at the share counts and
-	 * order them with the largest share counts appearing first.
-	 *
-	 * The results will be stored as an ordered array of network objects in the
-	 * $this->networks property.
-	 *
-	 * @since  3.0.0 | 04 MAY 2018 | Created
-	 * @param  void
-	 * @return object $this Allows for method chaining.
-	 *
-	 */
-    public function establish_active_buttons() {
-        $network_objects = array();
-
-
-        /**
-         * If the user passed in an array of buttons either via the social_warfare()
-         * function of the [social_warfare buttons="buttons"] shortcode, these
-         * will take precedence over the buttons that are selected on the
-         * Social Warfare options page.
-         *
-         */
-        if ( isset( $this->args['buttons'] ) ) {
-            $this->args['buttons'] = explode( ',', $this->args['buttons'] );
-
-
-			/**
-			 * Trim out white space. We need to trim any whitespace in case
-			 * folks put a space before or after any of the commas separating
-			 * the button names that were passed in.
-			 *
-			 * e.g. [social_warfare buttons="twitter, google_plus"]
-			 *
-			 */
-            foreach( $this->args['buttons'] as $index => $button ) {
-                $this->args['buttons'][$index] = trim( $button );
-            }
-
-
-			/**
-			 * Loop through the passed-in array of buttons, find the global
-			 * Social_Network object associated to each network, and store them
-			 * in the $network_objects array.
-			 *
-			 */
-            foreach ( $this->args['buttons'] as $counts_key ) {
-                $network_key = $this->display_name_to_key( $counts_key );
-                foreach( $this->networks as $key => $network ):
-                    if( $network_key === $key ):
-                        $network_objects[] = $network;
-                    endif;
-                endforeach;
-            }
-
-			// Store it in the $networks property and terminate the method.
-			$this->networks = $network_objects;
-			return $this;
-
-		}
-
-        $order           = $this->get_order_of_icons();
-		$network_objects = $this->get_ordered_network_objects( $order );
-        $this->networks  = $network_objects;
-        return $this;
-    }
 
 
 	/**
@@ -869,7 +1017,7 @@ class SWP_Buttons_Panel {
 	 * @return array        An ordered array of network objects.
 	 *
 	 */
-	public function get_ordered_network_objects( $order ) {
+	protected function get_ordered_network_objects( $order ) {
 		$network_objects = array();
 
         if ( empty( $order ) ) :
@@ -888,7 +1036,15 @@ class SWP_Buttons_Panel {
 	}
 
 
-    public function render_buttons_HTML( $max_count = null) {
+	/**
+	 * Render the html for the indivial buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  integer $max_count The maximum number of buttons to display.
+	 * @return string             The compiled html for the buttons.
+	 *
+	 */
+    protected function render_buttons_html( $max_count = null) {
         $html = '';
         $count = 0;
 
@@ -952,7 +1108,7 @@ class SWP_Buttons_Panel {
 		 * not going to render any total shares.
 		 *
 		 */
-		if ( false == $this->option('total_shares') && false == $this->is_shortcode) {
+		if ( false == $this->get_option('total_shares') && false == $this->is_shortcode) {
 			return false;
 		}
 
@@ -962,7 +1118,7 @@ class SWP_Buttons_Panel {
 		 * that threshold of shares yet, then we don't show them.
 		 *
 		 */
-		if ( $this->shares['total_shares'] < $this->option('minimum_shares') ) {
+		if ( $this->shares['total_shares'] < $this->get_option('minimum_shares') ) {
 			return false;
 		}
 
@@ -985,45 +1141,6 @@ class SWP_Buttons_Panel {
 		// If none of the flags above get caught, return true.
 		return true;
 	}
-
-
-    /**
-     * Runs checks before ordering a set of buttons.
-     *
-     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
-     * @since  3.3.3 | 18 SEP 2018 | Added return value for should_print() condition.
-     * @param  string $content The WordPress content, if passed in.
-     * @return function @see $this->do_print
-     *
-     */
-    public function render_html( $content = null ) {
-
-		/**
-		 * If the content is empty, it means that the user is calling a panel
-		 * of buttons directly using the social_warfare() function of the
-		 * [social_warfare] shortcode.
-		 *
-		 */
-		if ( empty( $this->content ) ) {
-            return $this->do_print();
-        }
-
-
-		/**
-		 * We have a standalone method designed to let us know if all the proper
-		 * desired conditions are met in order to allow us to print the buttons.
-		 *
-		 */
-        if ( !$this->should_print() ) {
-            return $this->content;
-        }
-
-        if ( null !== $content && gettype( $content ) === 'string' ) {
-            $this->args['content'] = $content;
-        }
-
-        return $this->do_print();
-    }
 
 
 	/**
@@ -1073,7 +1190,7 @@ class SWP_Buttons_Panel {
 	 * @since  3.0.0 | 25 APR 2018 | Created
 	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
 	 *                               location methods instead of the raw options value.
-	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->option() method to prevent undefined index error.
+	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->get_option() method to prevent undefined index error.
 	 * @since  3.3.1 | 13 SEP 2018 | Added get_alignment()
 	 * @param  boolean $echo Echo's the content or returns it if false.
 	 * @return string        The string of HTML.
@@ -1088,7 +1205,7 @@ class SWP_Buttons_Panel {
         $float_mobile = SWP_Utility::get_option( 'float_mobile');
 
         if ( !$this->should_print() && ( 'top' == $float_mobile || 'bottom' == $float_mobile ) ) :
-             if ( true !== $this->option( 'floating_panel' ) ) :
+             if ( true !== $this->get_option( 'floating_panel' ) ) :
                  return $this->content;
              endif;
 
@@ -1113,7 +1230,7 @@ class SWP_Buttons_Panel {
             $total_shares_html = $this->render_total_shares_html();
             $buttons = $this->render_buttons_html();
 
-            if ($this->option('totals_alignment') === 'totals_left') :
+            if ($this->get_option('totals_alignment') === 'totals_left') :
                 $buttons = $total_shares_html . $buttons;
             else:
                 $buttons .= $total_shares_html;
