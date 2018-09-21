@@ -243,7 +243,6 @@ class SWP_Twitter extends SWP_Social_Network {
         }
 
         $html_safe_tweet = html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' );
-        $tweet           = utf8_uri_encode( $html_safe_tweet, $max_tweet_length );
 		$tweet           = urlencode( $tweet );
 
         return $tweet;
