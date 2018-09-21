@@ -12,7 +12,7 @@
  * SECTION #1: Insantiate a post object & compile all necessary data.
  *     __construct();
  *     establish_post_data();
- *     localize_options();
+ *     establish_local_options();
  *     establish_share_data();
  *     establish_location();
  *     establish_permalink();
@@ -205,7 +205,7 @@ class SWP_Buttons_Panel {
 		 *
 		 */
         $this->establish_post_data();
-        $this->localize_options();
+        $this->establish_local_options();
 		$this->establish_share_data();
   	    $this->establish_location();
 		$this->establish_permalink();
@@ -324,7 +324,7 @@ class SWP_Buttons_Panel {
 	 * @access private
 	 *
 	 */
-	private function localize_options() {
+	private function establish_local_options() {
         global $swp_user_options;
 		$this->options = array_merge( $swp_user_options, $this->args);
 	}
