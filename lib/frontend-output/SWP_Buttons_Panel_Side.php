@@ -25,7 +25,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	public function render_html( $echo = true ) {
 		$blacklist = ['none', 'top', 'bottom'];
 
-		if ( in_array( $this->option('float_location'), $blacklist ) || is_preview() ) {
+		if ( in_array( $this->get_option('float_location'), $blacklist ) || is_preview() ) {
 			return '';
 		}
 
@@ -33,9 +33,9 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 			//* BEGIN Old boilerplate that needs to be refactored.
 			$class = "";
-			$size = $this->option('float_size') * 100;
-			$side = $this->option('float_location');
-			$max_buttons = $this->option( 'float_button_count' );
+			$size = $this->get_option('float_size') * 100;
+			$side = $this->get_option('float_location');
+			$max_buttons = $this->get_option( 'float_button_count' );
 
 			if( false == $max_buttons || 0 == $max_buttons ) {
 				$max_buttons = 5;
@@ -43,18 +43,18 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 
 			if ( 'none' != $this->get_float_location() ) {
-				$float_location =  $this->option('float_location');
-				$class = "swp_float_" . $this->option('float_location');
+				$float_location =  $this->get_option('float_location');
+				$class = "swp_float_" . $this->get_option('float_location');
 			}
 
 			// *Get the vertical position
-			if ($this->option('float_alignment')  ) {
-				$class .= " swp_side_" . $this->option('float_alignment');
+			if ($this->get_option('float_alignment')  ) {
+				$class .= " swp_side_" . $this->get_option('float_alignment');
 			}
 
 			// *Set button size
 			if ( isset($this->options['float_size']) ) {
-				$position = $this->option('float_alignment');
+				$position = $this->get_option('float_alignment');
 				$class .= " scale-${size} float-position-${position}-${side}";
 			}
 
@@ -63,20 +63,20 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 			$share_counts = $this->render_total_shares_HTML();
 			$buttons = $this->render_buttons_HTML( (int) $max_buttons );
 
-			$container = '<div class="swp_social_panelSide swp_floating_panel swp_social_panel swp_' . $this->option('float_button_shape') .
+			$container = '<div class="swp_social_panelSide swp_floating_panel swp_social_panel swp_' . $this->get_option('float_button_shape') .
 				$this->get_colors(true) .
-				$this->option('transition') . '
+				$this->get_option('transition') . '
 				' . $class . '
-				' . '" data-panel-position="' . $this->option('location_post') .
-				' scale-' . $this->option('float_size') * 100 .
+				' . '" data-panel-position="' . $this->get_option('location_post') .
+				' scale-' . $this->get_option('float_size') * 100 .
 				'" data-float="' . $float_location .
 				'" data-count="' . count($this->networks) .
-				'" data-float-color="' . $this->option('float_background_color') .
-				'" data-min-width="' . $this->option('float_screen_width') .
-				'" data-transition="' . $this->option('transition') .
+				'" data-float-color="' . $this->get_option('float_background_color') .
+				'" data-min-width="' . $this->get_option('float_screen_width') .
+				'" data-transition="' . $this->get_option('transition') .
 				'" data-float-mobile="' . $this->get_mobile_float_location() .'">';
 
-			if ($this->option('totals_alignment') === 'totals_left') {
+			if ($this->get_option('totals_alignment') === 'totals_left') {
 				$buttons = $share_counts . $buttons;
 			} else {
 				$buttons .= $share_counts;
