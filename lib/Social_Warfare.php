@@ -130,11 +130,23 @@ class Social_Warfare {
 		 * The Shortcode Class
 		 *
 		 * Instantiate the class that will process all instances of the
+		 * click to tweets, total shares, and other shortcodes used in posts and
+		 * pages, and consequently convert those shortcodes into their
+		 * respective HTML output.
+		 *
+		 */
+		new SWP_Shortcode();
+
+
+		/**
+		 * The Buttons Panel Shortcode Class
+		 *
+		 * Instantiate the class that will process all instances of the
 		 * [social_warfare] shortcode used in posts and pages, and consequently
 		 * convert those shortcodes into sets of share buttons.
 		 *
 		 */
-		new SWP_Shortcode();
+		new SWP_Buttons_Panel_Shortcode();
 
 
 		/**
@@ -149,14 +161,14 @@ class Social_Warfare {
 
 
 		/**
-		 * The Display Class
+		 * The Buttons Panel Loader
 		 *
 		 * Instantiates the class that is used to queue up or hook the buttons
 		 * generator into WordPress' the_content() hook which allows us to
 		 * append our buttons to it.
 		 *
 		 */
-		new SWP_Display();
+		new SWP_Buttons_Panel_Loader();
 
 
 		/**
@@ -398,6 +410,23 @@ class Social_Warfare {
 		$this->load_files( '/lib/social-networks/', $social_networks);
 
 
+		/**
+		 * The Buttons Panel Classes
+		 *
+		 * These are the classes used to instantiate and render the buttons
+		 * panels across a WordPress site. It also controls the hooks and filters
+		 * which get the buttons panels added to them.
+		 *
+		 */
+		$buttons_panels = array(
+			'Buttons_Panel_Trait',
+			'Buttons_Panel',
+			'Buttons_Panel_Side',
+			'Buttons_Panel_Loader',
+			'Buttons_Panel_Shortcode',
+		);
+        $this->load_files( '/lib/buttons-panel/', $buttons_panels );
+
 
 		/**
 		 * The Frontend Output Classes
@@ -409,10 +438,7 @@ class Social_Warfare {
 		 *
 		 */
         $frontends = array(
-            'Buttons_Panel',
-			'Buttons_panel_Side',
             'Header_Output',
-            'Display',
             'Script',
             'Shortcode',
         );

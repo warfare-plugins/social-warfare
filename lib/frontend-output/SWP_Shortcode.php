@@ -14,6 +14,8 @@
  *
  */
 class SWP_Shortcode {
+
+
 	/**
 	 * Constructs a new SWP_Shortcodes instance
 	 *
@@ -26,7 +28,6 @@ class SWP_Shortcode {
 	 *
 	 */
     public function __construct() {
-		add_shortcode( 'social_warfare', array( $this, 'buttons_shortcode' ) );
 		add_shortcode( 'total_shares', array ( $this, 'post_total_shares' ) );
 		add_shortcode( 'sitewide_shares', array ( $this, 'sitewide_total_shares' ) );
         add_shortcode( 'click_to_tweet', array( $this, 'click_to_tweet' ) );
@@ -39,42 +40,6 @@ class SWP_Shortcode {
 		 *
 		 */
         add_shortcode( 'clickToTweet', array($this, 'click_to_tweet' ) );
-		add_shortcode( 'socialWarfare', array($this, 'buttons_shortcode' ) );
-	}
-
-
-	/**
-	 * Processing the shortcodes that populate a
-	 * set of social sharing buttons directly in a WordPress post.
-	 *
-	 * This function will accept an array of arguments which WordPress
-	 * will create from the shortcode attributes.
-	 *
-	 * @since  3.0.0
-	 * @param  $atts Array An array converted from shortcode attributes.
-	 *
-	 * 		content: The content for the Social Warfare function to filter. In the case of
-	 * 			shortcodes, this will be blank since this isn't a content filter.
-	 *
-	 * 		where: The buttons are designed to be appended to the content. This default
-	 * 			tells the buttons to append after the content. Since shortcodes don't have
-	 * 			any content, they'll just produce and return the HTML without any content.
-	 * 			This will likely never actually be set by the shortcode, but is necessary
-	 * 			for the HTML generator to know what to do.
-	 *
-	 * 		echo: True echos the HTML to the screen. False returns the HTML as a string.
-	 *
-	 * @return string The HTML of the Social Warfare buttons.
-	 *
-	 */
-	public function buttons_shortcode( $args ) {
-
-		if( !is_array($args) ):
-			$args = array();
-		endif;
-
-		$buttons_panel = new SWP_Buttons_Panel( $args, true );
-		return $buttons_panel->render_html();
 	}
 
 
