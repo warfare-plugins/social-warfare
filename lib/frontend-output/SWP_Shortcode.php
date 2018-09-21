@@ -31,6 +31,7 @@ class SWP_Shortcode {
 		add_shortcode( 'sitewide_shares', array ( $this, 'sitewide_total_shares' ) );
         add_shortcode( 'click_to_tweet', array( $this, 'click_to_tweet' ) );
 
+
 		/**
 		 * These are old legacy shortcodes that have been replaced with the ones seen above.
 		 * We're leaving these here to ensure that it won't break for anyone who has used these
@@ -73,7 +74,7 @@ class SWP_Shortcode {
 		endif;
 
 		$buttons_panel = new SWP_Buttons_Panel( $args, true );
-		return $buttons_panel->render_HTML();
+		return $buttons_panel->render_html();
 	}
 
 
@@ -132,7 +133,7 @@ class SWP_Shortcode {
              * They included a link in the tweet text. Do not pass a &url paramter.
              *
              * Twitter will diregard value if it is: empty, a whitespace, or %20.
-             * Instead, give it an invalid URL! It achieves the targeted effect. 
+             * Instead, give it an invalid URL! It achieves the targeted effect.
              *
             */
             $url = '&url=x';

@@ -410,6 +410,7 @@ class Social_Warfare {
 		 */
         $frontends = array(
             'Buttons_Panel',
+			'Buttons_panel_Side',
             'Header_Output',
             'Display',
             'Script',

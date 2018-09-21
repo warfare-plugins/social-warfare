@@ -48,6 +48,7 @@ class SWP_Display {
      */
     public function __construct() {
 
+
 		/**
 		 * The global array of posts that have already been processed. This
 		 * allows us to ensure that we are not filtering the content from
@@ -86,19 +87,19 @@ class SWP_Display {
     public function activate_buttons() {
 
 		// Bail if we're in the presence of a known conflict without a fix.
-        if ( Social_Warfare::has_plugin_conflict() ) :
+        if ( Social_Warfare::has_plugin_conflict() ) {
             return;
-        endif;
+        }
 
     	// Only hook into the_content filter if is_singular() is true or
     	// they don't use excerpts on the archive pages.
-        if( true === is_singular() || true === SWP_Utility::get_option( 'full_content' ) ):
+        if( is_singular() || true === SWP_Utility::get_option( 'full_content' ) ) {
             add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 20 );
             add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
-        endif;
+        }
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
-        if (false === is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
+        if ( !is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
     		add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
         }
     }
@@ -141,13 +142,13 @@ class SWP_Display {
         global $post;
 
       	// Ensure it's not an embedded post
-      	if (true === is_singular() && $post->ID !== get_queried_object_id()) {
+      	if ( is_singular() && $post->ID !== get_queried_object_id() ) {
 			return $content;
       	}
 
         // Pass the content to the buttons constructor to place them inside.
     	$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
-        return $buttons_panel->the_buttons( $content );
+        return $buttons_panel->render_html();
     }
 
 
@@ -162,12 +163,12 @@ class SWP_Display {
     function floating_buttons() {
 
 		// Bail if we're in the presence of a known conflict with no fix.
-        if ( Social_Warfare::has_plugin_conflict() ) :
+        if ( Social_Warfare::has_plugin_conflict() ) {
             return;
-        endif;
+        }
 
 		// Instantiate a new Buttons Panel.
-        $side_panel = new SWP_Buttons_Panel( array( 'content' => "" ) );
+        $side_panel = new SWP_Buttons_Panel_Side( array( 'content' => "" ) );
 
 		// Determine if the floating buttons are not supposed to print.
         $location = $side_panel->get_float_location();
@@ -176,7 +177,7 @@ class SWP_Display {
         }
 
 		// Render the html to output to the screen.
-        $side_panel->render_floating_HTML( $echo = true );
+        $side_panel->render_html( $echo = true );
 
     }
 
@@ -193,6 +194,6 @@ class SWP_Display {
      */
     public static function social_warfare( $args = array() ) {
         $Buttons_Panel = new SWP_Buttons_Panel( $args );
-    	echo $Buttons_Panel->render_HTML();
+    	echo $Buttons_Panel->render_html();
     }
 }
