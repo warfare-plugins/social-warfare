@@ -32,17 +32,17 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 *
 		 */
 		$blacklist = array( 'none', 'top', 'bottom' );
-		if ( in_array( $this->get_option('float_location'), $blacklist ) || is_preview() ) {
+		if ( in_array( $this->get_option('float_location'), $blacklist ) ) {
 			return '';
 		}
 
 
 		/**
-		 * Bail out if we're not on a single.php or if the floating buttons
-		 * are turned off.
+		 * Bail out if we're not on a single.php, if the floating buttons are
+		 * turned off, or if this is a post preview.
 		 *
 		 */
-		if( !is_singular() || 'none' === $this->get_float_location() ) {
+		if( !is_singular() || is_preview() || 'none' === $this->get_float_location() ) {
 			return '';
 		}
 
@@ -61,39 +61,12 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 		/**
 		 * Fetch the generated html for the total shares and for the individual
-		 * buttons.
+		 * buttons. Then concantenate them together.
 		 *
 		 */
 		$total_shares_html = $this->generate_total_shares_html();
-		$buttons_html      = $this->generate_individual_buttons_html( (int) $max_buttons );
-
-
-		/**
-		 * Generate the html for the wrapper container that will hold all of the
-		 * buttons.
-		 *
-		 */
-		$container = '<div class="' . $this->generate_css_classes() . '" '.
-		    ' data-panel-position="' . $this->get_option('location_post') .
-			' scale-' . $this->get_option('float_size') * 100 .
-			'" data-float="' . $this->get_option('float_location') .
-			'" data-count="' . count($this->networks) .
-			'" data-float-color="' . $this->get_option('float_background_color') .
-			'" data-min-width="' . $this->get_option('float_screen_width') .
-			'" data-transition="' . $this->get_option('transition') .
-			'" data-float-mobile="' . $this->get_mobile_float_location() .'">';
-
-
-		/**
-		 * Append the total shares html to the left or to the right of the
-		 * buttons html depending on the user's settings.
-		 *
-		 */
-		if ($this->get_option('totals_alignment') === 'totals_left') {
-			$buttons_html = $total_shares_html . $buttons_html;
-		} else {
-			$buttons_html .= $total_shares_html;
-		}
+		$networks_html     = $this->generate_individual_buttons_html( (int) $max_buttons );
+		$buttons_html      = $total_shares_html . $networks_html;
 
 
 		/**
@@ -101,13 +74,35 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 * up the wrapper container and then return the html to the caller.
 		 *
 		 */
-		$html = $container . $buttons_html . '</div>';
+		$html = $this->generate_panel_wrapper_html( $buttons_html );
 		$this->html = $html;
 
 		return $html;
 
 	}
 
+	/**
+	 * Generate the panel wrapper html and use it to wrap the html of the buttons.
+	 *
+	 * @since  3.4.0 | 21 SEP 2018 | Created
+	 * @param  string $buttons_html The html for the buttons and total shares.
+	 * @return string               The html with the panel wrapper added to it.
+	 */
+	protected function generate_panel_wrapper_html( $buttons_html ) {
+
+		$container  = '';
+		$container .= '<div class="' . $this->generate_css_classes() . '"';
+		$container .= ' data-panel-position="' . $this->get_option('location_post') . '"';
+		$container .= ' data-float="' . $this->get_option('float_location') . '"';
+		$container .= ' data-count="' . count($this->networks) . '"';
+		$container .= ' data-float-color="' . $this->get_option('float_background_color') . '"';
+		$container .= ' data-min-width="' . $this->get_option('float_screen_width') . '"';
+		$container .= ' data-transition="' . $this->get_option('transition') . '"';
+		$container .= ' data-float-mobile="' . $this->get_mobile_float_location() .'">';
+		$container .= $buttons_html;
+		$container .= '</div>';
+		return $container;
+	}
 
 	/**
 	 * Generate the CSS classes for the parent wrapper container.
