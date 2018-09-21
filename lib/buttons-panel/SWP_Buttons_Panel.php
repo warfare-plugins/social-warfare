@@ -9,7 +9,7 @@
  *
  * TABLE OF CONTENTS:
  *
- * SECTION #1: Insantiate a post object & compile all necessary data.
+ * SECTION #1: Insantiate a post object & compile all necessary data (protected).
  *     __construct();
  *     establish_post_data();
  *     establish_local_options();
@@ -18,14 +18,14 @@
  *     establish_permalink();
  *     establish_active_buttons();
  *
- * SECTION #2: Allow developers to manipulate the object using setters.
+ * SECTION #2: Allow developers to manipulate the object using setters (public).
  *     set_option();
  *     set_options();
  *
- * SECTION #3: Use the data to render out the HTML to display a panel of buttons.
+ * SECTION #3: Use the data to render out the HTML to display a panel of buttons (public).
  *     render_html();
  *
- * SECTION #4: Utility methods used throughout the class.
+ * SECTION #4: Utility methods used throughout the class (protected).
  *
  * 	   NOTE: These are inherited from SWP_Buttons_Panel_Trait.
  *
@@ -592,25 +592,27 @@ class SWP_Buttons_Panel {
 
 
 	/***************************************************************************
-	 *
-	 * SECTION #3: RENDER THE FULLY QUALIFIED HTML FOR THE PANEL
-	 *
-	 * This section will use all of the data created by the object and process
-	 * it all into properly formatted html for display on the screen.
-	 *
-	 */
+	 *                                                                         *
+	 * SECTION #3: RENDER THE FULLY QUALIFIED HTML FOR THE PANEL               *
+	 *                                                                         *
+	 * This section will use all of the data created by the object and process *
+	 * it all into properly formatted html for display on the screen.          *
+	 *                                                                         *
+	 ***************************************************************************/
 
 
 	 /**
       * Runs checks before ordering a set of buttons.
       *
       * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
-      * @since  3.3.3 | 18 SEP 2018 | Added return value for should_panel_display() condition.
+      * @since  3.3.3 | 18 SEP 2018 | Added return value for
+      *                               should_panel_display() condition.
+      * @since  3.4.0 | 21 SEP 2018 | Removed $content parameter.
       * @param  string $content The WordPress content, if passed in.
       * @return function @see $this->create_panel()
       *
       */
-     public function render_html( $content = null ) {
+    public function render_html() {
 
  		/**
  		 * If the content is empty, it means that the user is calling a panel
@@ -619,8 +621,8 @@ class SWP_Buttons_Panel {
  		 *
  		 */
  		if ( empty( $this->content ) ) {
-             return $this->create_panel();
-         }
+            return $this->create_panel();
+        }
 
 
  		/**
@@ -629,14 +631,9 @@ class SWP_Buttons_Panel {
  		 *
  		 */
          if ( !$this->should_panel_display() ) {
-             return $this->content;
-         }
+            return $this->content;
+        }
 
-         if ( null !== $content && gettype( $content ) === 'string' ) {
-             $this->args['content'] = $content;
-         }
-
-         return $this->create_panel();
-     }
-
+        return $this->create_panel();
+    }
 }

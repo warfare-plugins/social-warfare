@@ -38,6 +38,46 @@
 trait SWP_Buttons_Panel_Trait {
 
 
+	/**
+ 	* Handles whether to echo the HTML or return it as a string.
+ 	*
+ 	* @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+ 	* @param  void
+ 	* @return mixed null if set to echo, else a string of HTML.
+ 	*
+ 	*/
+    public function create_panel() {
+ 	   $this->generate_panel_html();
+
+ 	   //* Add the Panel markup based on the location.
+ 	   switch ($this->location) {
+ 		   case 'both' :
+ 			   $content = $this->html . $this->content . $this->html;
+ 		   break;
+ 		   case 'above' :
+ 			   $content = $this->html . $this->content;
+ 		   break;
+ 		   case 'below' :
+ 			   $content = $this->content . $this->html;
+ 		   break;
+
+ 		   case 'none' :
+ 			   $content = $this->content;
+ 		   default :
+ 			   $content = $this->content;
+ 		   break;
+ 	   }
+
+ 	   $this->content = $content;
+
+ 	   if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
+ 		   echo $this->content;
+ 	   }
+
+ 	   return $this->content;
+    }
+
+
    /**
 	* Takes a display name and returns the snake_cased key of that name.
 	*
@@ -535,46 +575,6 @@ trait SWP_Buttons_Panel_Trait {
 
 	   // If none of the flags above get caught, return true.
 	   return true;
-   }
-
-
-   /**
-	* Handles whether to echo the HTML or return it as a string.
-	*
-	* @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
-	* @param  void
-	* @return mixed null if set to echo, else a string of HTML.
-	*
-	*/
-   public function create_panel() {
-	   $this->generate_panel_html();
-
-	   //* Add the Panel markup based on the location.
-	   switch ($this->location) {
-		   case 'both' :
-			   $content = $this->html . $this->content . $this->html;
-		   break;
-		   case 'above' :
-			   $content = $this->html . $this->content;
-		   break;
-		   case 'below' :
-			   $content = $this->content . $this->html;
-		   break;
-
-		   case 'none' :
-			   $content = $this->content;
-		   default :
-			   $content = $this->content;
-		   break;
-	   }
-
-	   $this->content = $content;
-
-	   if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
-		   echo $this->content;
-	   }
-
-	   return $this->content;
    }
 
 

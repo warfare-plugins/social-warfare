@@ -180,7 +180,7 @@ class SWP_Buttons_panel_Loader {
         }
 
 		// Render the html to output to the screen.
-        $side_panel->render_html( $echo = true );
+        echo $side_panel->render_html();
 
     }
 
