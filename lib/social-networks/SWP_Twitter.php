@@ -57,24 +57,24 @@ class SWP_Twitter extends SWP_Social_Network {
 		// Fetch the user's options
 		global $swp_user_options;
 
-		// If the user has enabled Twitter shares....
-		if( !empty( $swp_user_options['tweet_count_source'] ) ) {
+		// If share counts aren't turned on.
+		if( false === SWP_Utility::get_option( 'twitter_shares' ) ) {
+			return 0;
+		}
 
-			// Open Share Counts
-			if( 'opensharecount' == $swp_user_options['tweet_count_source'] ) {
-				return 'https://opensharecount.com/count.json?url='. $url;
-			}
+		// Open Share Counts
+		if( 'opensharecount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
+			return 'https://opensharecount.com/count.json?url='. $url;
+		}
 
-			// TwitCount
-			if( 'twitcount' == $swp_user_options['tweet_count_source'] ) {
-				return 'https://counts.twitcount.com/counts.php?url=' . $url;
-			}
+		// TwitCount
+		if( 'twitcount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
+			return 'https://counts.twitcount.com/counts.php?url=' . $url;
+		}
 
-			// Debugging
-			if ( SWP_Utility::debug( 'twitter' ) ) {
-				echo '<b>Request URL:</b> ' . $request_url . '<br />';
-			}
-
+		// Debugging
+		if ( SWP_Utility::debug( 'twitter' ) ) {
+			echo '<b>Request URL:</b> ' . $request_url . '<br />';
 		}
 
 		return 0;
