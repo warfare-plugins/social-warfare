@@ -11,7 +11,7 @@
  * @access    public
  *
  */
-class SWP_Abstract {
+class SWP_Option_Abstract {
 
 
 	/**
