@@ -370,7 +370,6 @@ class Social_Warfare {
 		 */
 		$utilities = array(
 			'Utility_Trait',
-            'Abstract',
             'Compatibility',
             'CURL',
             'Localization',
@@ -494,6 +493,7 @@ class Social_Warfare {
 		 */
         $options = array(
             'User_Options',
+			'Option_Abstract',
             'Option',
             'Options_Page',
             'Options_Page_Tab',

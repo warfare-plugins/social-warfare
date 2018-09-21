@@ -23,7 +23,7 @@
 * @todo      Clean out all array bracket notations.
 *
 */
-class SWP_Options_Page extends SWP_Abstract {
+class SWP_Options_Page extends SWP_Option_Abstract {
 	/**
 	* The Options Page Tabs
 	*

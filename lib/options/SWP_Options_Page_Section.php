@@ -14,7 +14,7 @@
  * @since 3.0.0 | 01 MAR 2018 | Created
  *
  */
-class SWP_Options_Page_Section extends SWP_Abstract {
+class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
     /**
