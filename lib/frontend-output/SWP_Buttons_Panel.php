@@ -318,24 +318,22 @@ class SWP_Buttons_Panel {
 	 * passing in arguments.
 	 *
 	 * @since  3.0.0 | 09 APR 2018 | Created
-	 * @param  array  $args Arguments that can be used to change the options of
-	 *                      the buttons panel.
+	 * @param  void
 	 * @return void
-	 * @access private
 	 *
 	 */
-	private function establish_local_options() {
+	protected function establish_local_options() {
         global $swp_user_options;
 		$this->options = array_merge( $swp_user_options, $this->args);
 	}
 
 
 	/**
-     * Instantiates the share data from a given post ID.
+     * Establishes the share data from a given post ID.
      *
      * @since 3.1.0 | 25 JUN 2018 | Created the method.
-     * @return void
-     * @access public
+     * @param  void
+     * @return $this Allows for method chaining.
      *
      */
     public function establish_share_data() {
@@ -356,9 +354,8 @@ class SWP_Buttons_Panel {
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
 	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $post_setting isn't an array.
-	 * @param  none
-	 * @return none All values are stored in local properties.
-	 * @access public
+	 * @param  void
+	 * @return void All values are stored in local properties.
 	 *
 	 */
 	public function establish_location() {
@@ -898,7 +895,7 @@ class SWP_Buttons_Panel {
 	 *
 	 * @since  3.0.0 | 09 MAY 2018 | Created
 	 * @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
-	 * @param  none
+	 * @param  void
 	 * @return string A string containing the float bar location.
 	 *
 	 */
@@ -942,7 +939,7 @@ class SWP_Buttons_Panel {
 	 *
 	 * @since  3.0.0 | 09 MAY 2018 | Created
 	 * @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
-	 * @param  none
+	 * @param  void
 	 * @return string A string containing the float bar location.
 	 *
 	 */
