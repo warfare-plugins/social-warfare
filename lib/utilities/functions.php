@@ -21,7 +21,7 @@
  */
 function social_warfare( $args = array() ) {
     $buttons_panel = new SWP_Buttons_Panel( $args );
-    echo $buttons_panel->render_HTML();
+    echo $buttons_panel->render_html();
 }
 
 

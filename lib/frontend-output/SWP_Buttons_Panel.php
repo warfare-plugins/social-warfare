@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Creates the Panel of share buttons based on options and settings.
  *
@@ -6,6 +7,7 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     1.0.0
+ * 
  */
 class SWP_Buttons_Panel {
 
@@ -476,71 +478,6 @@ class SWP_Buttons_Panel {
 
 
 	/**
-	 * The method that renderes the button panel HTML.
-	 *
-	 * @since  3.0.0 | 25 APR 2018 | Created
-	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
-	 *                               location methods instead of the raw options value.
-	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->option() method to prevent undefined index error.
-	 * @since  3.3.1 | 13 SEP 2018 | Added get_alignment()
-	 * @param  boolean $echo Echo's the content or returns it if false.
-	 * @return string        The string of HTML.
-	 *
-	 */
-    public function render_HTML( $echo = false ) {
-        if ( !isset( $this->post_id ) || is_preview() ) :
-            return;
-        endif;
-
-        $style = "";
-        $float_mobile = SWP_Utility::get_option( 'float_mobile');
-
-        if ( !$this->should_print() && ( 'top' == $float_mobile || 'bottom' == $float_mobile ) ) :
-             if ( true !== $this->option( 'floating_panel' ) ) :
-                 return $this->content;
-             endif;
-
-             $style = ' opacity: 0; ';
-         endif;
-
-		// Create the HTML Buttons panel wrapper
-        $container = '<div class="swp_social_panel swp_horizontal_panel ' .
-            $this->get_shape() .
-            $this->get_colors() .
-            $this->get_scale() .
-			$this->get_alignment() .
-            '" ' . // end CSS classes
-            $this->get_min_width() .
-            $this->get_float_background() .
-            //* These below two data-attribute methods are inconsistent. But they
-            //* already existed and are used elsewhere, so I'm not touching them.
-            '" data-float="' . $this->get_float_location() . '"' .
-            ' data-float-mobile="' . $this->get_mobile_float_location() . '"' .
-            ' style="' . $style . '" >';
-
-            $total_shares_html = $this->render_total_shares_html();
-            $buttons = $this->render_buttons_html();
-
-            if ($this->option('totals_alignment') === 'totals_left') :
-                $buttons = $total_shares_html . $buttons;
-            else:
-                $buttons .= $total_shares_html;
-            endif;
-
-        $html = $container . $buttons . '</div>';
-        $this->html = $html;
-        if ( $echo ) :
-			if( true == SWP_Utility::debug('buttons_output')):
-				echo 'Echoing, not returning. In SWP_Buttons_Panel on line '.__LINE__;
-			endif;
-            echo $html;
-        endif;
-
-        return $html;
-    }
-
-
-	/**
 	 * A method to get the alignment when scale is set below 100%.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
@@ -797,88 +734,6 @@ class SWP_Buttons_Panel {
 	}
 
 
-    /**
-     * Creates the fully qualified markup for floating button panel.
-     *
-     * @since  3.0.0 | 01 MAR 2018 | Created
-     * @since  3.0.8 | 22 MAY 2018 | Added the $blacklist and in_array conditional.
-     * @param  boolean $echo Whether or not to immediately echo the HTML.
-     * @return string  $html The qualified markup for the panel.
-     *
-     */
-    public function render_floating_HTML( $echo = true ) {
-        $blacklist = ['none', 'top', 'bottom'];
-
-        if ( in_array( $this->option('float_location'), $blacklist ) || is_preview() ) {
-            return '';
-        }
-
-		if( is_singular() && 'none' !== $this->get_float_location() ) {
-
-            //* BEGIN Old boilerplate that needs to be refactored.
-	        $class = "";
-	        $size = $this->option('float_size') * 100;
-	        $side = $this->option('float_location');
-	        $max_buttons = $this->option( 'float_button_count' );
-
-			if( false == $max_buttons || 0 == $max_buttons ) {
-				$max_buttons = 5;
-			}
-
-
-	        if ( 'none' != $this->get_float_location() ) {
-	            $float_location =  $this->option('float_location');
-	            $class = "swp_float_" . $this->option('float_location');
-	        }
-
-	        // *Get the vertical position
-	        if ($this->option('float_alignment')  ) {
-	            $class .= " swp_side_" . $this->option('float_alignment');
-	        }
-
-	        // *Set button size
-	        if ( isset($this->options['float_size']) ) {
-	            $position = $this->option('float_alignment');
-	            $class .= " scale-${size} float-position-${position}-${side}";
-	        }
-
-	        //* END old boilerplate.
-
-	        $share_counts = $this->render_total_shares_HTML();
-	        $buttons = $this->render_buttons_HTML( (int) $max_buttons );
-
-	        $container = '<div class="swp_social_panelSide swp_floating_panel swp_social_panel swp_' . $this->option('float_button_shape') .
-                $this->get_colors(true) .
-	            $this->option('transition') . '
-	            ' . $class . '
-	            ' . '" data-panel-position="' . $this->option('location_post') .
-	            ' scale-' . $this->option('float_size') * 100 .
-	            '" data-float="' . $float_location .
-	            '" data-count="' . count($this->networks) .
-	            '" data-float-color="' . $this->option('float_background_color') .
-	            '" data-min-width="' . $this->option('float_screen_width') .
-	            '" data-transition="' . $this->option('transition') .
-	            '" data-float-mobile="' . $this->get_mobile_float_location() .'">';
-
-	        if ($this->option('totals_alignment') === 'totals_left') {
-	            $buttons = $share_counts . $buttons;
-	        } else {
-	            $buttons .= $share_counts;
-	        }
-
-	        $html = $container . $buttons . '</div>';
-	        $this->html = $html;
-
-	        if ( $echo ) {
-	            echo $html;
-	        }
-
-	        return $html;
-		}
-
-    }
-
-
 	/**
 	 * A method to establish the active buttons for this panel.
 	 *
@@ -1001,7 +856,7 @@ class SWP_Buttons_Panel {
 		}
 		$this->options['order_of_icons'] = $order;
 		return $order;
-		
+
 	}
 
 
@@ -1131,7 +986,47 @@ class SWP_Buttons_Panel {
 		return true;
 	}
 
+
     /**
+     * Runs checks before ordering a set of buttons.
+     *
+     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+     * @since  3.3.3 | 18 SEP 2018 | Added return value for should_print() condition.
+     * @param  string $content The WordPress content, if passed in.
+     * @return function @see $this->do_print
+     *
+     */
+    public function render_html( $content = null ) {
+
+		/**
+		 * If the content is empty, it means that the user is calling a panel
+		 * of buttons directly using the social_warfare() function of the
+		 * [social_warfare] shortcode.
+		 *
+		 */
+		if ( empty( $this->content ) ) {
+            return $this->do_print();
+        }
+
+
+		/**
+		 * We have a standalone method designed to let us know if all the proper
+		 * desired conditions are met in order to allow us to print the buttons.
+		 *
+		 */
+        if ( !$this->should_print() ) {
+            return $this->content;
+        }
+
+        if ( null !== $content && gettype( $content ) === 'string' ) {
+            $this->args['content'] = $content;
+        }
+
+        return $this->do_print();
+    }
+
+
+	/**
      * Handles whether to echo the HTML or return it as a string.
      *
      * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
@@ -1140,7 +1035,7 @@ class SWP_Buttons_Panel {
      *
      */
     public function do_print() {
-        $this->render_HTML();
+        $this->generate_panel_html();
 
         //* Add the Panel markup based on the location.
         switch ($this->location) {
@@ -1172,42 +1067,68 @@ class SWP_Buttons_Panel {
     }
 
 
-    /**
-     * Runs checks before ordering a set of buttons.
-     *
-     * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
-     * @since  3.3.3 | 18 SEP 2018 | Added return value for should_print() condition.
-     * @param  string $content The WordPress content, if passed in.
-     * @return function @see $this->do_print
-     *
-     */
-    public function the_buttons( $content = null ) {
+	/**
+	 * The method that renderes the button panel HTML.
+	 *
+	 * @since  3.0.0 | 25 APR 2018 | Created
+	 * @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
+	 *                               location methods instead of the raw options value.
+	 * @since  3.0.6 | 15 MAY 2018 | Uses $this->option() method to prevent undefined index error.
+	 * @since  3.3.1 | 13 SEP 2018 | Added get_alignment()
+	 * @param  boolean $echo Echo's the content or returns it if false.
+	 * @return string        The string of HTML.
+	 *
+	 */
+    public function generate_panel_html( $echo = false ) {
+        if ( !isset( $this->post_id ) || is_preview() ) :
+            return;
+        endif;
 
-		/**
-		 * If the content is empty, it means that the user is calling a panel
-		 * of buttons directly using the social_warfare() function of the
-		 * [social_warfare] shortcode.
-		 *
-		 */
-		if ( empty( $this->content ) ) {
-            return $this->do_print();
-        }
+        $style = "";
+        $float_mobile = SWP_Utility::get_option( 'float_mobile');
 
+        if ( !$this->should_print() && ( 'top' == $float_mobile || 'bottom' == $float_mobile ) ) :
+             if ( true !== $this->option( 'floating_panel' ) ) :
+                 return $this->content;
+             endif;
 
-		/**
-		 * We have a standalone method designed to let us know if all the proper
-		 * desired conditions are met in order to allow us to print the buttons.
-		 *
-		 */
-        if ( !$this->should_print() ) {
-            return $this->content;
-        }
+             $style = ' opacity: 0; ';
+         endif;
 
-        if ( null !== $content && gettype( $content ) === 'string' ) {
-            $this->args['content'] = $content;
-        }
+		// Create the HTML Buttons panel wrapper
+        $container = '<div class="swp_social_panel swp_horizontal_panel ' .
+            $this->get_shape() .
+            $this->get_colors() .
+            $this->get_scale() .
+			$this->get_alignment() .
+            '" ' . // end CSS classes
+            $this->get_min_width() .
+            $this->get_float_background() .
+            //* These below two data-attribute methods are inconsistent. But they
+            //* already existed and are used elsewhere, so I'm not touching them.
+            '" data-float="' . $this->get_float_location() . '"' .
+            ' data-float-mobile="' . $this->get_mobile_float_location() . '"' .
+            ' style="' . $style . '" >';
 
-        return $this->do_print();
+            $total_shares_html = $this->render_total_shares_html();
+            $buttons = $this->render_buttons_html();
+
+            if ($this->option('totals_alignment') === 'totals_left') :
+                $buttons = $total_shares_html . $buttons;
+            else:
+                $buttons .= $total_shares_html;
+            endif;
+
+        $html = $container . $buttons . '</div>';
+        $this->html = $html;
+        if ( $echo ) :
+			if( true == SWP_Utility::debug('buttons_output')):
+				echo 'Echoing, not returning. In SWP_Buttons_Panel on line '.__LINE__;
+			endif;
+            echo $html;
+        endif;
+
+        return $html;
     }
 
 
