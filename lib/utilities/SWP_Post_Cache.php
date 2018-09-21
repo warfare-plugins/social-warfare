@@ -312,10 +312,9 @@ class SWP_Post_Cache {
 	 */
     public function rebuild_cached_data() {
 
-		if( true === $this->should_shares_be_fetched() ):
-
+		if( true === $this->should_shares_be_fetched() ) {
 			$this->rebuild_share_counts();
-		endif;
+		}
 
         $this->rebuild_pinterest_image();
         $this->rebuild_open_graph_image();
@@ -362,11 +361,11 @@ class SWP_Post_Cache {
 	public function process_urls() {
     	global $swp_social_networks;
     	$permalink = get_permalink( $this->id );
-        foreach( $swp_social_networks as $network ):
-            if( $network->is_active() ):
+        foreach( $swp_social_networks as $network ) {
+            if( $network->is_active() ) {
                 SWP_URL_Management::process_url( $permalink, $network->key, $this->id, false );
-            endif;
-        endforeach;
+            }
+        }
 	}
 
 
