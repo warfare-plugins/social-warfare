@@ -7,7 +7,8 @@
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * @since     1.0.0
+ * @since     3.4.0 | 21 SEP 2018 | Moved from Buttons_Panel into its own child
+ *                                  class extending Buttons Panel.
  *
  */
 class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
