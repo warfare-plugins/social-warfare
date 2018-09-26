@@ -181,6 +181,15 @@ class SWP_Options_Page extends SWP_Option_Abstract {
     */
     public function admin_css() {
         $suffix = SWP_Script::get_suffix();
+		$wp_scripts = wp_scripts();
+
+		wp_enqueue_style(
+			'swp-admin-ui-css',
+            '//code.jquery.com/ui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.min.css',
+            false,
+            SWP_VERSION,
+            false
+		);
 
         wp_enqueue_style(
             'swp_admin_options_css',
@@ -216,6 +225,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
         wp_enqueue_script( 'jquery-ui-core' );
         wp_enqueue_script( 'jquery-ui-sortable' );
         wp_enqueue_script( 'jquery-ui-tooltip' );
+		wp_enqueue_script( 'jquery-ui-widget' );
+        wp_enqueue_script( 'jquery-ui-position' );
         wp_enqueue_media();
         wp_enqueue_script(
             'swp_admin_options_js',
