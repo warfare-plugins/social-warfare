@@ -187,16 +187,16 @@ img {
 }
 
 .sw-header-menu {
-	height: 75px;
+	height: 65px;
 	margin: 0;
 }
 
 .sw-header-menu li {
 	float: left;
 	margin: 0 15px;
-	font-size: 16px;
+	font-size: 14px;
 	display: table;
-	height: 75px;
+	height: 65px;
 }
 
 .sw-header-menu li:focus, .sw-header-menu li a:focus {
@@ -688,7 +688,7 @@ p.sw-subtitle.sw-registration-text {
 
 @media screen and (max-width: 1350px) {
 	.sw-header-menu li {
-		font-size: 12px;
+		font-size: 14px;
 		margin: 0 10px;
 	}
 }

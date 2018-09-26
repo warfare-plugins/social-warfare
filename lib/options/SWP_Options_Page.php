@@ -188,6 +188,13 @@ class SWP_Options_Page extends SWP_Option_Abstract {
             array(),
             SWP_VERSION
         );
+
+        wp_enqueue_style(
+    		'social_warfare_admin_mobile',
+    		SWP_PLUGIN_URL . "/assets/css/admin-mobile{$suffix}.css",
+    		array(),
+    		SWP_VERSION
+    	);
     }
 
 
