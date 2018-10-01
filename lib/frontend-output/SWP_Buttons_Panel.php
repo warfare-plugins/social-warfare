@@ -483,7 +483,7 @@ class SWP_Buttons_Panel {
             $this->get_float_background() .
             //* These below two data-attribute methods are inconsistent. But they
             //* already existed and are used elsewhere, so I'm not touching them.
-            '" data-float="' . $this->get_float_location() . '"' .
+            ' data-float="' . $this->get_float_location() . '"' .
             ' data-float-mobile="' . $this->get_mobile_float_location() . '"' .
             ' style="' . $style . '" >';
 
@@ -649,7 +649,7 @@ class SWP_Buttons_Panel {
             return 'data-min-width="1100" ';
         }
 
-        return " data-min-width='{$min_width}' ";
+        return " data-min-width='{$min_width}'";
     }
 
 
@@ -669,7 +669,7 @@ class SWP_Buttons_Panel {
             return " ";
         }
 
-        return '" data-float-color="' . $float_background_color;
+        return " data-float-color='{$float_background_color}'";
     }
 
 
