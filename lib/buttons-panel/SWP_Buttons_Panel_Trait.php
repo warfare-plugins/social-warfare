@@ -301,7 +301,7 @@ trait SWP_Buttons_Panel_Trait {
 		   return " ";
 	   }
 
-	   return '" data-float-color="' . $float_background_color;
+	   return ' data-float-color="' . $float_background_color;
    }
 
 
