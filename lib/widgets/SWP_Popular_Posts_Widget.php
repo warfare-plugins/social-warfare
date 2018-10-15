@@ -20,9 +20,12 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	/**
     * Class constructor.
     *
-    *  @since 1.0.0
-    *  @param none
-    *  @return none
+    * This function really doesn't do much except call the constructor from the
+    * parent class that's built into WordPress core.
+    *
+    *  @since  1.0.0 | 01 JAN 2018 | Created
+    *  @param  void
+    *  @return void
     *  @access public
     *
     */
@@ -34,12 +37,10 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
     /**
     * Sets commonly applied attributes.
     *
-    * @since 3.0.0 | 08 Feb 2018
-    * @access private
-    *
-    * @param string $name The name to be called.
-    * @param string $class The CSS class to be applied.
-    * @param string $value The default value for the element.
+    * @since  3.0.0 | 08 Feb 2018 | Created
+    * @param  string $name The name to be called.
+    * @param  string $class The CSS class to be applied.
+    * @param  string $value The default value for the element.
     * @return string The string filled with attribute/value pairs.
     *
     */
@@ -53,71 +54,20 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
         return $attributes;
     }
 
-    // *While it would be helpful to use this function in both form() and widget(),
-    // *we need to find a way to set the scope of the $$var variables to the calling function (form()/widget()).
-    // *Right now it will set the defaults, but can not make the previously set and adjusted default values available ot the calling parent.
-
-    // /**
-    // * Set the default values for widget settings.
-    // *
-    // * @since 3.0.0 | 10 Feb 2018
-    // * @access private
-    // *
-    // * @param array $instance The current instance settings.
-    // * @return array The instance values updated with default settings if not previously defined.
-    // */
-    // private function set_instance_defaults( $instance ) {
-    //     $vars = array();
-
-    //     $defaults = [
-    //         'title'         => "Popular Posts",
-    //         'count'         => "10",
-    //         'timeframe'     => "0",
-    //         'post_type'     => "post",
-    //         'network'       => "total_shares",
-    //         'showCount'     => "true",
-    //         'countLabel'    => "Total Shares",
-    //         'style'         => "style_01",
-    //         'thumbnails'    => "true",
-    //         'thumb_size'    => "100",
-    //         'thumb_width'   => "thumb_size",
-    //         'thumb_height'  => "thumb_size",
-    //         'font_size'     => "100",
-    //         'custom_bg'     => "#ffffff",
-    //         'custom_link'   => "#000000"
-    //     ];
-
-    //     // *If the user set their value for $var, set it to that.
-    //     // *Otherwise set it to the default display value.
-    //     foreach($defaults as $var => $display):
-    //         if (isset ($instance[$var])) {
-    //             $$var = esc_attr ($instance[$var]);
-    //         } else {
-    //             $$var = $display;
-    //         }
-
-    //         $vars[] = $$var;
-
-    //     endforeach;
-
-    //     return $vars;
-    // }
-
 
 	/**
 	 * Outputs the Settings Update form
 	 *
-	 * @since 1.0.0
-	 * @since 3.0.0 | Refactored using loops, $this->set_attributes(), and added custom thumb sizes
-	 *
-	 * @param array $instance Current settings.
-	 * @return none Output is echoed directly to the screen
+	 * @since  1.0.0 | 01 JAN 2018 | Created
+	 * @since  3.0.0 | 01 MAY 2018 | Refactored using loops, $this->set_attributes(),
+	 *                              and added custom thumb sizes
+	 * @param  array $instance Current settings.
+	 * @return void Output is echoed directly to the screen
 	 *
 	 */
 	function form( $instance ) {
-		global $swp_user_options;
 
-        $defaults = [
+        $defaults = array(
             'title'         => "Popular Posts",
             'count'         => "10",
             'timeframe'     => "0",
@@ -133,25 +83,29 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
             'font_size'     => "100",
             'custom_bg'     => "#ffffff",
             'custom_link'   => "#000000"
-        ];
+        );
 
-        // *If the user set their value for $var, set it to that.
-        // *Otherwise set it to the default display value.
+
+        /**
+         * If the user set their value for $var, set it to that. Otherwise set
+         * it to the default display value.
+         *
+         */
         foreach($defaults as $var => $display):
             if (isset ($instance[$var])) {
                 $$var = esc_attr ($instance[$var]);
             } else {
                 $$var = $display;
             }
-
         endforeach;
 
 		// Fetch the Social Warfare Options
+		global $swp_user_options;
 		$options = $swp_user_options;
-
 
 		// Fetch the networks that are active on this blog
 		$availableNetworks = $options['order_of_icons'];
+
 
 		// Build the Widget Form
 		$form = '<div class="swp_popular_post_options">';
