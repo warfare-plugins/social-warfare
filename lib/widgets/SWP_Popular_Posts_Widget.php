@@ -188,8 +188,8 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
             $form .= "<select {$this->set_attributes( 'post_type', 'widefat', null )}>";
 
     		// Loop through the Custom Post Type Options
-		    foreach($post_types as $post_type):
-	        	$form .= '<option value="' . $post_type . '" ' . selected($post_type, $post_type, false) . '>' . ucfirst( $post_type ) . '</option>';
+		    foreach($post_types as $this_post_type):
+	        	$form .= '<option value="' . $this_post_type . '" ' . selected($this_post_type, $post_type, false) . '>' . ucfirst( $this_post_type ) . '</option>';
             endforeach;
 
     		$form .= '</select>';
