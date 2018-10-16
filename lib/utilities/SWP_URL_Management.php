@@ -113,6 +113,14 @@ class SWP_URL_Management {
 
 
 		/**
+		 * Fetch the local bitly link. We'll use this one if Google Analytics is
+		 * not enabled. Otherwise we'll switch it out below.
+		 *
+		 */
+		$short_url = get_post_meta( $post_id, 'bitly_link', true );
+
+
+		/**
 		 * If Google analytics are enabled, we'll need to fetch a different
 		 * shortlink for each social network. If they are disabled, we just use
 		 * the same shortlink for all of them.
@@ -120,8 +128,6 @@ class SWP_URL_Management {
 		 */
 		if ( true == SWP_Utility::get_option('google_analytics') ) {
         	$short_url = get_post_meta( $post_id, 'bitly_link_' . $network, true);
-		} else {
-			$short_url = get_post_meta( $post_id, 'bitly_link', true );
 		}
 
 
