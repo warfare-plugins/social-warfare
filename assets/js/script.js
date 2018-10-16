@@ -711,12 +711,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
             pinitButton();
         }
+				window.clearCheckID = 0;
     });
 
     $(document).ready(function() {
         initPlugin();
 
-				setTimeoutl(function() {
+				window.clearCheckID = setTimeoutl(function() {
 					checkListeners(0, 5);
 				}, 2000);
 
