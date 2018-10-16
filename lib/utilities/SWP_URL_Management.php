@@ -225,17 +225,19 @@ class SWP_URL_Management {
 		 *
 		 */
         if ( $start_date ) {
-            if ( !is_object( $post ) || empty( $post->post_date ) ) :
+
+			// Bail if we don't have a valid post object or post_date.
+            if ( !is_object( $post ) || empty( $post->post_date ) ) {
                 return $array;
-            endif;
+            }
 
             $start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
-            $post_date = new DateTime( $post->post_date );
+            $post_date  = new DateTime( $post->post_date );
 
             //* The post is too new for $start_date.
-            if ( $start_date > $post_date ) :
+            if ( $start_date > $post_date ) {
                 return $array;
-            endif;
+            }
         }
 
 
