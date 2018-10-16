@@ -675,10 +675,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var sidePanel = $('.swp_social_panelSide');
         var swp_hover = false;
 
-        $(document.body).on('post-load', function() {
-            initShareButtons();
-        });
-
         if (0 !==  sidePanel.length) {
             // *If using top or bottom vertical positions, let CSS position the element.
             if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
