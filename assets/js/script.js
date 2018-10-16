@@ -662,7 +662,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     }
 
     function checkListeners(count, limit) {
-				if (limit > count) {
+				if (count > limit) {
 					return;
 				}
 
