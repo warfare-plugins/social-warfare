@@ -299,12 +299,17 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             return;
         }
 
-        //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width") && mobileFloatLocation != "top" && mobileFloatLocation != "bottom" ) {
-        // if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
-					  console.log("bail2")
+				//* No floating bars are used at all.
+	 			if ( floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom" ) {
             return;
         }
+
+        //* Or we are on desktop and not using top/bottom floaters:
+        if ($(window).width() > panel.data("min-width")) {
+				  	return;
+				}
+
+
 
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : panel.offset().left;
@@ -322,6 +327,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         var clone = panel.first().clone();
         clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
+
+				console.log(clone)
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
     }
