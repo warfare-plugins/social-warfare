@@ -292,27 +292,36 @@ class SWP_URL_Management {
 	 *
 	 */
 	public static function make_bitly_url( $url, $access_token ) {
-		// Create a link to reach the Bitly API
+
+
+		/**
+		 * First we need to compile the link that we'll use to contact the
+		 * Bitly API.
+		 *
+		 */
 		$api_request_url = 'https://api-ssl.bitly.com/v3/shorten';
 		$api_request_url .= "?access_token=$access_token";
 		$api_request_url .= "&longUrl=" . urlencode( $url );
 		$api_request_url .= "&format=json";
 
-		// echo __METHOD__, "<pre>", var_dump($api_request_url), die;
 
-		// Fetch a response from the Bitly Shortening API
+		/**
+		 * Fetch a response from the Bitly API and then parse it from JSON into
+		 * an array that we can use.
+		 *
+		 */
 		$response = SWP_CURL::file_get_contents_curl( $api_request_url );
+		$result   = json_decode( $response , true );
 
-		// Parse the JSON formated response into an array
-		$result = json_decode( $response , true );
 
-		// If the shortening succeeded....
+		/**
+		 * If we have a valid link, we'll use that. If not, we'll return false.
+		 *
+		 */
 		if ( isset( $result['data']['url'] ) ) {
-			// Store the short URL to return to the plugin
 			return $result['data']['url'];
 		}
 
-		// If the shortening failed....
 		return false;
 	}
 
