@@ -21,10 +21,9 @@ class SWP_URL_Management {
 	 * is to add the various methods to their approprate hooks for use later on in
 	 * modifying the links.
 	 *
-	 * @since 3.0.0 | 04 APR 2018 | Created
-	 * @param none
-	 * @return none
-	 * @access public
+	 * @since  3.0.0 | 04 APR 2018 | Created
+	 * @param  void
+	 * @return void
 	 *
 	 */
 	public function __construct() {
@@ -46,7 +45,6 @@ class SWP_URL_Management {
 	 * @since  3.4.0 | 16 OCT 2018 | Refactored, Simplified, Docblocked.
 	 * @param  array $array An array of arguments and data used in processing the URL.
 	 * @return array $array The modified array.
-	 * @access public
 	 *
 	 */
 	public function google_analytics( $array ) {
@@ -105,6 +103,7 @@ class SWP_URL_Management {
 	 * database rather than making an API call on every single page load.
 	 *
 	 * @since  3.3.2 | 12 SEP 2018 | Created
+	 * @since  3.4.0 | 16 OCT 2018 | Refactored, Simplified, Docblocked.
 	 * @param  int $post_id The post ID
 	 * @param  string $network The key for the current social network
 	 * @return mixed           string: The short url; false on failure.
@@ -112,19 +111,26 @@ class SWP_URL_Management {
 	 */
     public static function fetch_local_bitly_link( $post_id, $network ) {
 
-		// If analytics are on, get a different link for each network.
+
+		/**
+		 * If Google analytics are enabled, we'll need to fetch a different
+		 * shortlink for each social network. If they are disabled, we just use
+		 * the same shortlink for all of them.
+		 *
+		 */
 		if ( true == SWP_Utility::get_option('google_analytics') ) {
         	$short_url = get_post_meta( $post_id, 'bitly_link_' . $network, true);
-
-	        if ( is_string( $short_url ) && strlen( $short_url ) ) {
-	            return $short_url;
-			}
+		} else {
+			$short_url = get_post_meta( $post_id, 'bitly_link', true );
 		}
 
-		// If analytics are off, just pull the general short link.
-        $short_url = get_post_meta( $post_id, 'bitly_link', true );
 
-        if ( is_string( $short_url ) && strlen( $short_url ) ) {
+		/**
+		 * We need to make sure that the $short_url returned from get_post_meta()
+		 * is not false or an empty string. If so, we'll return false.
+		 *
+		 */
+        if ( !empty( $short_url ) ) {
             return $short_url;
         }
 
