@@ -661,7 +661,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         button.remove();
     }
 
-    function checkListeners(count, limit, clearID) {
+    function checkListeners(count, limit) {
 				if (limit > count) {
 					return;
 				}
@@ -669,13 +669,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				var panel = $('.swp_social_panel');
 
 				if (panel.length > 0) {
-					handleWindowOpens();
-					return clearInterval(clearID);
+					return handleWindowOpens();
 				}
 
 				setTimeout(function() {
 					  checkListeners(count++, limit)
-				})
+				});
 		}
 
 		function initSidePosition() {
@@ -718,8 +717,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     $(document).ready(function() {
         initPlugin();
 
-				window.clearCheckID = setTimeout(function() {
-					checkListeners(0, 5, window.clearCheckID);
+				setTimeout(function() {
+					checkListeners(0, 5);
 				}, 2000);
 
     });
