@@ -668,8 +668,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				var panel = $('.swp_social_panel');
 
-				if (panel.length < 1) {
-					return clearInterval(clearID)
+				if (panel.length > 0) {
+					handleWindowOpens();
+					return clearInterval(clearID);
 				}
 
 				setTimeout(function() {
@@ -717,8 +718,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     $(document).ready(function() {
         initPlugin();
 
-				window.clearCheckID = setTimeoutl(function() {
-					checkListeners(0, 5);
+				window.clearCheckID = setTimeout(function() {
+					checkListeners(0, 5, window.clearCheckID);
 				}, 2000);
 
     });
