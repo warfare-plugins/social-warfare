@@ -280,7 +280,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         return visible;
     }
 
-
+    /**
+     *  Clones a copy of the static buttons to use as a floating panel.
+     *
+     */
     function createFloatBar() {
         //* .swp_social_panelSide is the side floater.
         if ($(".nc_wrapper").length) {
@@ -288,7 +291,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         var panel = $(".swp_social_panel");
-        var floatLocation = panel.data("float")
+        var floatLocation = panel.data("float");
+				var mobileFloatLocation = panel.data("float-mobile");
 
         //* If a horizontal panel does not exist,
         if (typeof panel == "undefined") {
@@ -296,7 +300,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
+        if ($(window).width() > panel.data("min-width") && mobileFloatLocation != "top" && mobileFloatLocation != "bottom" ) {
+        // if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
+					  console.log("bail2")
             return;
         }
 
@@ -305,10 +311,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
         if (floatLocation == 'left' || floatLocation == 'right') {
-            var barLocation = panel.data("float-mobile");
+            var barLocation = mobileFloatLocation;
         } else {
             var barLocation = floatLocation;
         }
+
+				console.log("barLocation", barLocation)
 
         wrapper.addClass(barLocation).hide().appendTo("body");
 
@@ -736,7 +744,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     $(document).ready(function() {
         initPlugin();
 
-        //* Check every 2 seconds for buttons panels, in case they still need click handlers. 
+        //* Check every 2 seconds for buttons panels, in case they still need click handlers.
 				setTimeout(function() {
 					checkListeners(0, 5);
 				}, 2000);
