@@ -661,24 +661,28 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         button.remove();
     }
 
+		function initSidePosition() {
+				var sidePanel = $('.swp_social_panelSide');
+				// *If using top or bottom vertical positions, let CSS position the element.
+				if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
+
+				var buttonsHeight = $(sidePanel).height();
+				var windowHeight = $(window).height();
+				var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
+
+				setTimeout(function() {
+						$(sidePanel).animate({ top: newPosition }, 0);
+				}, 105);
+		}
+
 		function initPlugin() {
 				handleWindowOpens();
 				initShareButtons();
 
-				var sidePanel = $('.swp_social_panelSide');
 				var swp_hover = false;
 
-				if (0 !==  sidePanel.length) {
-						// *If using top or bottom vertical positions, let CSS position the element.
-						if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
-
-						var buttonsHeight = $(sidePanel).height();
-						var windowHeight = $(window).height();
-						var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
-
-						setTimeout(function() {
-								$(sidePanel).animate({ top: newPosition }, 0);
-						}, 105);
+				if (0 !== $('.swp_social_panelSide').length) {
+						initSidePosition();
 				}
 
 				// Hide empty containers
@@ -687,14 +691,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}
 		}
 
-
     $(window).on('load' , function() {
         if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
             pinitButton();
         }
     });
-
-
 
     $(document).ready(function() {
         initPlugin();
