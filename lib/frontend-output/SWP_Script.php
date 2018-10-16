@@ -177,11 +177,9 @@ class SWP_Script {
      *
      */
     public function click_tracking( $info ) {
-        global $swp_user_options;
-        $options = $swp_user_options;
 
 		// Output the JS variable for click tracking if it is turned on.
-    	if ( isset( $options['click_tracking'] ) && true === $options['click_tracking'] ) {
+    	if ( true === SWP_Utility::get_option( 'click_tracking' ) ) {
     		$info['footer_output'] .= 'var swpClickTracking = true;';
     	} else {
     		$info['footer_output'] .= 'var swpClickTracking = false;';
