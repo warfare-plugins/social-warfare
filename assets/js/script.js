@@ -663,18 +663,18 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
     function checkListeners(count, limit) {
 				if (count > limit) {
-					return;
+					  return;
 				}
 
 				var panel = $('.swp_social_panel');
 
-				if (panel.length > 0) {
-					return handleWindowOpens();
+				if (panel.length > 0 && panel.find(".swp_pinterest")) {
+					  return handleWindowOpens();
 				}
 
 				setTimeout(function() {
 					  checkListeners(count++, limit)
-				});
+				}, 2000);
 		}
 
 		function initSidePosition() {
