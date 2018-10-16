@@ -121,23 +121,58 @@ class SWP_URL_Management {
 	 * shortening service.
 	 *
 	 * @since  3.0.0 | 04 APR 2018 | Created
+	 * @since  3.4.0 | 16 OCT 2018 | Modified order of conditionals, docblocked.
 	 * @param  array $array An array of arguments and information.
 	 * @return array $array The modified array.
 	 * @access public
 	 *
 	 */
 	public static function link_shortener( $array ) {
+
+
+		/**
+		 * Pull together the information that we'll need to generate bitly links.
+		 *
+		 */
         global $post;
-
-        $post_id = $array['postID'];
-        $google_analytics = SWP_Utility::get_option('google_analytics');
-        $access_token = SWP_Utility::get_option( 'bitly_access_token' );
+        $post_id           = $array['postID'];
+        $google_analytics  = SWP_Utility::get_option('google_analytics');
+        $access_token      = SWP_Utility::get_option( 'bitly_access_token' );
         $cached_bitly_link = SWP_URL_Management::fetch_local_bitly_link( $post_id, $array['network'] );
-		$start_date = SWP_Utility::get_option( 'bitly_start_date' );
+		$start_date        = SWP_Utility::get_option( 'bitly_start_date' );
 
 
+		/**
+		 * If we don't have an access token or if Bitly links are implicitly
+		 * turned off on the options page, then let's just bail early and return
+		 * the array without modification.
+		 *
+		 */
+        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) {
+			return $array;
+        }
 
-        // Recently done.
+
+		/**
+		 * Bitly links can now be turned on or off at the post_type level on the
+		 * options page. So if the bitly links are turned off for our current
+		 * post type, let's bail and return the unmodified array.
+		 *
+		 */
+        $links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
+        if ( false == $links_enabled || 'off' == $links_enabled ) :
+            return $array;
+        endif;
+
+
+        /**
+         * If the chache is fresh and we have a valid bitly link stored in the
+         * database, then let's use our cached link.
+         *
+         * If the cache is fresh and we don't have a valid bitly link, we just
+         * return the unmodified array.
+         *
+         */
         if ( true == $array['fresh_cache'] ) {
 			if( false !== $cached_bitly_link ) {
 				$array['url'] = $cached_bitly_link;
@@ -145,24 +180,26 @@ class SWP_URL_Management {
             return $array;
         }
 
-        // We need this information to make a bitly request.
-        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) {
-			return $array;
-        }
 
-        // These can not have bitly urls created.
+		/**
+		 * We don't want bitly links generated for the total shares buttons
+		 * (since they don't have any links at all), and Pinterest doesn't allow
+		 * shortlinks on their network.
+		 *
+		 */
         if ( $array['network'] == 'total_shares' || $array['network'] == 'pinterest' ) {
             return $array;
         }
 
-        $links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
 
-        //* They have disabled bitly links on this post type.
-        if ( false == $links_enabled || 'off' == $links_enabled ) :
-            return $array;
-        endif;
-
-        //* They have decided to only allow posts after a certain date.
+		/**
+		 * Users can select a date prior to which articles will not get short
+		 * links. This is to prevent the case where some users get their quotas
+		 * filled up as soon as the option is turned on because it is generating
+		 * links for older articles. So this conditional checks the publish date
+		 * of an article and ensures that the article is eligible for links.
+		 *
+		 */
         if ( $start_date ) {
             if ( !is_object( $post ) || empty( $post->post_date ) ) :
                 return $array;
@@ -177,10 +214,23 @@ class SWP_URL_Management {
             endif;
         }
 
-        $network = $array['network'];
-        $url = urldecode( $array['url'] );
+
+		/**
+		 * If all checks have passed, let's generate a new bitly URL. If an
+		 * existing link exists for the link passed to the API, it won't generate
+		 * a new one, but will instead return the existing one.
+		 *
+		 */
+        $network       = $array['network'];
+        $url           = urldecode( $array['url'] );
         $new_bitly_url = SWP_URL_Management::make_bitly_url( $url, $access_token );
 
+
+		/**
+		 * If a link was successfully created, let's store it in the database,
+		 * let's store it in the url indice of the array, and then let's wrap up.
+		 *
+		 */
         if ( $new_bitly_url ) {
 			$meta_key = 'bitly_link';
 
@@ -192,11 +242,6 @@ class SWP_URL_Management {
             update_post_meta( $post_id, $meta_key, $new_bitly_url );
             $array['url'] = $new_bitly_url;
         }
-
-        // // Delete the meta fields and then update to keep the database clean and up to date.
-        // if ( false == $google_analytics ) {
-        //     delete_post_meta( $post_id, 'bitly_link_' . $network );
-        // }
 
 	    return $array;
 	}
