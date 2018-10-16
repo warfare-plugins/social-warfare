@@ -29,8 +29,8 @@ class SWP_URL_Management {
 	 */
 	public function __construct() {
 
-		add_filter( 'swp_link_shortening'  	, array( __CLASS__ , 'link_shortener' ) );
-		add_filter( 'swp_analytics' 		, array( $this , 'google_analytics' ) );
+		add_filter( 'swp_link_shortening'  	        , array( __CLASS__ , 'link_shortener' ) );
+		add_filter( 'swp_analytics' 		        , array( $this , 'google_analytics' ) );
 		add_action( 'wp_ajax_nopriv_swp_bitly_oauth', array( $this , 'bitly_oauth_callback' ) );
 
 	}
@@ -43,38 +43,56 @@ class SWP_URL_Management {
 	 * that are being shared on social media.
 	 *
 	 * @since  3.0.0 | 04 APR 2018 | Created
+	 * @since  3.4.0 | 16 OCT 2018 | Refactored, Simplified, Docblocked.
 	 * @param  array $array An array of arguments and data used in processing the URL.
 	 * @return array $array The modified array.
 	 * @access public
 	 *
 	 */
 	public function google_analytics( $array ) {
-		global $swp_user_options;
 
-	    // Fetch the user options
-	    $options = $swp_user_options;
-	    $url = $array['url'];
-	    $network = $array['network'];
 
-	    if( ( 'pinterest' === $network && isset( $swp_user_options['utm_on_pins']) && true === $swp_user_options['utm_on_pins']) || $network !== 'pinterest' ) :
+		/**
+		 * If Google UTM Analytics are disabled, then bail out early and return
+		 * the unmodified array.
+		 *
+		 */
+    	if ( false == SWP_Utility::get_option('google_analytics') ) {
+			return $array;
+		}
 
-	    	if ( true === is_attachment() ) :
-	    		return $array;
-	    	endif;
 
-	    	// Check if Analytics have been enabled or not
-	    	if ( true == SWP_Utility::get_option('google_analytics') ) :
-	            $url_string = 'utm_source=' . $network . '&utm_medium=' . $options['analytics_medium'] . '&utm_campaign=' . $options['analytics_campaign'] . '';
+		/**
+		 * If the network is Pinterest and UTM analtyics are disabled on
+		 * Pinterest links, then simply bail out and return the unmodified array.
+		 *
+		 */
+		if ( 'pinterest' === $array['network'] && false == SWP_Utility::get_option('utm_on_pins') ) {
+			return $array;
+		}
 
-	    		if ( strpos( $url,'?' ) !== false ) :
-	    			$array['url'] = $url . urlencode( '&' . $url_string );
-	    		else :
-	    			$array['url'] = $url . urlencode( '?' . $url_string );
-	    		endif;
-	    	endif;
 
-	    	return $array;
-	    endif;
+		/**
+		 * If we're on a WordPress attachment, then bail out early and return
+		 * the unmodified array.
+		 *
+		 */
+    	if ( true === is_attachment() ) {
+    		return $array;
+    	}
+
+
+		/**
+		 * If all of our checks are passed, then compile the UTM string, attach
+		 * it to the end of the URL, and return the modified array.
+		 *
+		 */
+		$separator     = ( true == strpos( $array['url'], '?' ) ? '&' : '?' );
+		$utm_source    = 'utm_source=' . $array['network'];
+		$utm_medium    = '&utm_medium=' . SWP_Utility::get_option( 'analytics_medium' );
+		$utm_campaign  = '&utm_campaign=' . SWP_Utility::get_option( 'analytics_campaign' );
+        $url_string    = $separator . $utm_source . $utm_medium . $utm_campaign;
+		$array['url'] .= $url_string;
 
 	    return $array;
 	}
