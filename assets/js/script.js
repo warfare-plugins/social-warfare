@@ -661,6 +661,22 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         button.remove();
     }
 
+    function checkListeners(count, limit, clearID) {
+				if (limit > count) {
+					return;
+				}
+
+				var panel = $('.swp_social_panel');
+
+				if (panel.length < 1) {
+					return clearInterval(clearID)
+				}
+
+				setTimeout(function() {
+					  checkListeners(count++, limit)
+				})
+		}
+
 		function initSidePosition() {
 				var sidePanel = $('.swp_social_panelSide');
 				// *If using top or bottom vertical positions, let CSS position the element.
@@ -700,7 +716,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     $(document).ready(function() {
         initPlugin();
 
-				setTimeout(initPlugin, 7 * 1000);
+				setTimeoutl(function() {
+					checkListeners(0, 5);
+				}, 2000);
 
     });
 })(this, jQuery);
