@@ -705,8 +705,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 
     /**
-     * [initPlugin description]
-     * @return {[type]} [description]
+     * Runs the initialization callbacks for button handlers and placement.
+     *
+     * @return void
+     *
      */
 		function initPlugin() {
 				handleWindowOpens();
@@ -734,6 +736,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     $(document).ready(function() {
         initPlugin();
 
+        //* Check every 2 seconds for buttons panels, in case they still need click handlers. 
 				setTimeout(function() {
 					checkListeners(0, 5);
 				}, 2000);
