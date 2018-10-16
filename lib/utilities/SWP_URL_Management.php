@@ -375,12 +375,43 @@ class SWP_URL_Management {
 	 *
 	 */
 	public function bitly_oauth_callback() {
-		$access_token = isset( $_GET['access_token'] ) ? $_GET['access_token'] : '';
-		$login = isset( $_GET['login'] ) ? $_GET['login'] : '';
 
+
+		/**
+		 * If no access token or bitly login username is provided, then we're
+		 * just going to store them in the database as empty strings.
+		 *
+		 */
+		$access_token = '';
+		$login        = '';
+
+
+		/**
+		 * If the callback contained a valid access token and login, then we'll
+		 * use those and store them in the options field of the database.
+		 *
+		 */
+		if( isset( $_GET['access_token'] ) && isset( $_GET['login'] ) ) {
+			$access_token = $_GET['access_token'];
+			$login        = $_GET['login'];
+		}
+
+
+		/**
+		 * Update our options field in the database with our new values.
+		 *
+		 */
 		SWP_Utility::update_option( 'bitly_access_token', $access_token );
 		SWP_Utility::update_option( 'bitly_access_login', $login);
 
+
+		/**
+		 * We have to echo out the link to the settings page so that the file
+		 * on our server that handles the handshake can initiate a nice clean
+		 * redirect and put the user back in their own admin dashboard on our
+		 * options page.
+		 *
+		 */
 		echo admin_url( 'admin.php?page=social-warfare' );
 	}
 }
