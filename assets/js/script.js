@@ -661,6 +661,32 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         button.remove();
     }
 
+		function initPlugin() {
+				handleWindowOpens();
+				initShareButtons();
+
+				var sidePanel = $('.swp_social_panelSide');
+				var swp_hover = false;
+
+				if (0 !==  sidePanel.length) {
+						// *If using top or bottom vertical positions, let CSS position the element.
+						if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
+
+						var buttonsHeight = $(sidePanel).height();
+						var windowHeight = $(window).height();
+						var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
+
+						setTimeout(function() {
+								$(sidePanel).animate({ top: newPosition }, 0);
+						}, 105);
+				}
+
+				// Hide empty containers
+				if( 1 === $('.swp-content-locator').parent().children().length) {
+						$('.swp-content-locator').parent().hide();
+				}
+		}
+
 
     $(window).on('load' , function() {
         if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
@@ -668,29 +694,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
     });
 
+
+
     $(document).ready(function() {
-        handleWindowOpens();
-        initShareButtons();
+        initPlugin();
 
-        var sidePanel = $('.swp_social_panelSide');
-        var swp_hover = false;
-
-        if (0 !==  sidePanel.length) {
-            // *If using top or bottom vertical positions, let CSS position the element.
-            if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
-
-            var buttonsHeight = $(sidePanel).height();
-            var windowHeight = $(window).height();
-            var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
-            setTimeout(function() {
-                $(sidePanel).animate({ top: newPosition }, 0);
-            }, 105);
-        }
-
-        // Hide empty containers
-        if(1 === $('.swp-content-locator').parent().children().length) {
-            $('.swp-content-locator').parent().hide();
-        }
+				setTimeout(initPlugin, 7 * 1000);
 
     });
 })(this, jQuery);
