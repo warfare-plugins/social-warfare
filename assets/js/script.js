@@ -661,6 +661,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         button.remove();
     }
 
+    /**
+     * Checks to see if we have a buttons panel. If so, forces a re-run of the handleWindowOpens callback.
+     *
+     * @param  number count The current iteration of the loop cycle.
+     * @param  number limit The maximum number of iterations for the loop cycle.
+     * @return void or function handleWindowOpens().
+     *
+     */
     function checkListeners(count, limit) {
 				if (count > limit) {
 					  return;
@@ -677,6 +685,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}, 2000);
 		}
 
+    /**
+     * Initializes the veritcal position for top/bottom floating buttons.
+     *
+     * @return void
+     */
 		function initSidePosition() {
 				var sidePanel = $('.swp_social_panelSide');
 				// *If using top or bottom vertical positions, let CSS position the element.
@@ -691,6 +704,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}, 105);
 		}
 
+    /**
+     * [initPlugin description]
+     * @return {[type]} [description]
+     */
 		function initPlugin() {
 				handleWindowOpens();
 				initShareButtons();
