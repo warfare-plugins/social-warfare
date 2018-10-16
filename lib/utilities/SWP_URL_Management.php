@@ -154,7 +154,6 @@ class SWP_URL_Management {
 	 * @since  3.4.0 | 16 OCT 2018 | Modified order of conditionals, docblocked.
 	 * @param  array $array An array of arguments and information.
 	 * @return array $array The modified array.
-	 * @access public
 	 *
 	 */
 	public static function link_shortener( $array ) {
@@ -290,7 +289,6 @@ class SWP_URL_Management {
 	 * @param  string $network      The social network on which this URL is being shared.
 	 * @param  string $access_token The user's Bitly access token.
 	 * @return string               The shortened URL.
-	 * @access public
 	 *
 	 */
 	public static function make_bitly_url( $url, $access_token ) {
@@ -331,26 +329,33 @@ class SWP_URL_Management {
 	 * @param  string $network The network on which the URL is being shared.
 	 * @param  int    $postID  The post ID.
 	 * @return string          The modified URL.
-	 * @access public static
+	 * @access public
+	 *
 	 */
 	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
-		// Fetch the parameters into an array for use by the filters
-		$array['url'] = $url;
-		$array['network'] = $network;
-		$array['postID'] = $postID;
+
+
+		/**
+		 * Bail out if this is an attachment page. We had reports of short links
+		 * being created on these.
+		 *
+		 */
+		if( is_attachment() ) {
+			return $array['url'];
+		}
+
+
+		/**
+		 * Compile all of the parameters passed in into an array so that we can
+		 * pass it through our custom filters (which only accept one paramter).
+		 *
+		 */
+		$array['url']         = $url;
+		$array['network']     = $network;
+		$array['postID']      = $postID;
         $array['fresh_cache'] = $is_cache_fresh;
-
-		if( !is_attachment() ):
-
-			// Run the anaylitcs hook filters
-
-			$array = apply_filters( 'swp_analytics' , $array );
-
-			// Run the link shortening hook filters, but not on Pinterest
-			// $array = apply_filters( 'swp_link_shortening' , $array );
-			$array = SWP_URL_Management::link_shortener($array);
-			// echo "<pre>Array after link_shortener(): <br>", var_dump($array), "</pre>";
-		endif;
+		$array                = apply_filters( 'swp_analytics' , $array );
+		$array                = SWP_URL_Management::link_shortener($array);
 
 		return $array['url'];
 	}
