@@ -191,13 +191,11 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         /**
          * Run all the API calls
          */
-        console.log("Making request to facebook.");
         $.when(
             $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url),
             (swp_post_recovery_url ? $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url) : '')
         )
         .then(function(request1, request2) {
-            console.log("Then!");
             /**
              * Parse the responses, add up the activity, send the results to admin_ajax
              */
@@ -213,8 +211,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
                     post_id: swp_post_id,
                     share_counts: shares
                 };
-
-                console.log("Facebook data is ", swpPostData);
 
                 $.post(swp_admin_ajax, swpPostData);
             }
@@ -249,6 +245,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
     function swpRestoreSizes() {
         $(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
         $(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
+
     }
 
 
@@ -309,8 +306,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				  	return;
 				}
 
-
-
         var backgroundColor = panel.data("float-color");
         var left = panel.data("align") == "center" ? 0 : panel.offset().left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
@@ -321,14 +316,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             var barLocation = floatLocation;
         }
 
-				console.log("barLocation", barLocation)
-
         wrapper.addClass(barLocation).hide().appendTo("body");
 
         var clone = panel.first().clone();
-        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
-
-				console.log(clone)
+        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper);
 
         $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
     }
@@ -719,6 +710,17 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}, 105);
 		}
 
+
+    //* Stores the user-defined mobile breakpoint in the socialWarfarePlugin object.
+    function establishBreakpoint() {
+			  var panel = $(".swp_social_panel");
+				socialWarfarePlugin.breakpoint = 1100;
+
+				if (panel.length && panel.data("min-width")) {
+						socialWarfarePlugin.breakpoint = parseInt(panel.data("min-width"));
+				}
+		}
+
     /**
      * Runs the initialization callbacks for button handlers and placement.
      *
@@ -726,6 +728,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
      *
      */
 		function initPlugin() {
+			  establishBreakpoint();
 				handleWindowOpens();
 				initShareButtons();
 
