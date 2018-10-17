@@ -391,6 +391,14 @@ trait SWP_Buttons_Panel_Trait {
 			   return $mobile_location;
 		   }
 	   }
+	   
+	   if ( is_archive() || is_category() ) {
+		   $float_enabled = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
+
+		   if ( 'on' == $float_enabled ) {
+			   return $mobile_location;
+		   }
+	   }
 
 	   if( is_single() && true == $this->get_option('floating_panel') && 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
 		   return $mobile_location;
