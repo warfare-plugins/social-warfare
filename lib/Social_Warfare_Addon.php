@@ -69,11 +69,10 @@ class Social_Warfare_Addon {
     	// Get the timestamps setup for comparison to see if a week has passed since our last check
     	$current_time = time();
 
-        if ( SWP_Utility::get_option( $this->key. '_license_key_timestamp' ) ) :
-            $timestamp = SWP_Utility::get_option( $this->key.'_license_key_timestamp' );
-        else:
+        if ( !( $timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' ) ) ) {
             $timestamp =  0;
-        endif;
+        }
+
     	$time_to_recheck = $timestamp + 604800;
 
     	// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
