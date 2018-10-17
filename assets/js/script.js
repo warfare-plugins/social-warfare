@@ -302,7 +302,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
         //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width")) {
+        if (!isMobile()) {
 				  	return;
 				}
 
@@ -335,7 +335,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             return;
         }
 
-          if ($(window).width() < panel.data("min-width")) {
+          if (isMobile()) {
             createFloatBar();
             toggleMobileButtons();
             toggleFloatingBar();
@@ -370,7 +370,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var location = sidePanel.data("float")
         var visible = panelIsVisible();
 
-        if ($(window).width() < panel.data("min-width") && $(".nc_wrapper").length) {
+        if (isMobile() && $(".nc_wrapper").length) {
             //* Mobile display with top/bottom mobile bar.
             sidePanel.hide();
             return;
@@ -378,7 +378,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         if (!panel.length) {
             //* No buttons panel!
-            if ($(window).width() > sidePanel.data("min-width")) {
+            if (!isMobile()) {
                 visible = false;
             } else {
                 visible = true;
@@ -408,7 +408,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var newPadding = 0;
 
         //* Are we on desktop or mobile?
-        if ($(window).width() > $(panel).data("min-width")) {
+        if (!isMobile()) {
             var location = $(panel).data("float");
         } else {
             var location = $(panel).data("float-mobile")
