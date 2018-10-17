@@ -287,7 +287,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
             $(".nc_wrapper").remove();
         }
 
-        var panel = $(".swp_social_panel");
+        var panel = $(".swp_social_panel").not(".swp_social_panelSide");
         var floatLocation = panel.data("float");
 				var mobileFloatLocation = panel.data("float-mobile");
 
@@ -297,12 +297,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         }
 
 				//* No floating bars are used at all.
-	 			if ( floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom" ) {
+	 			if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
             return;
         }
 
         //* Or we are on desktop and not using top/bottom floaters:
-        if (!isMobile()) {
+        if (!isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
 				  	return;
 				}
 
@@ -310,7 +310,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
         var left = panel.data("align") == "center" ? 0 : panel.offset().left;
         var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
-        if (floatLocation == 'left' || floatLocation == 'right') {
+        if (isMobile()) {
             var barLocation = mobileFloatLocation;
         } else {
             var barLocation = floatLocation;
