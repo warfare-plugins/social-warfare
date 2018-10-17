@@ -364,7 +364,8 @@ class SWP_URL_Management {
 		$array['postID']      = $postID;
         $array['fresh_cache'] = $is_cache_fresh;
 		$array                = apply_filters( 'swp_analytics' , $array );
-		$array                = SWP_URL_Management::link_shortener($array);
+		$array                = apply_filters( 'swp_link_shortening', $array);
+		// $array                = SWP_URL_Management::link_shortener($array);
 
 		return $array['url'];
 	}
