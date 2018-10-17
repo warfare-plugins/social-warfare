@@ -721,6 +721,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				}
 		}
 
+		//* Checks to see if the current viewport is within the defined mobile boundary.
+		function isMobile() {
+			  var currentWidth = $(window).width();
+				return currentWidth < socialWarfarePlugin.breakpoint;
+		}
+
     /**
      * Runs the initialization callbacks for button handlers and placement.
      *
