@@ -12,88 +12,88 @@
 var socialWarfarePlugin = socialWarfarePlugin || {};
 
 (function(window, undefined) {
-    // Internal method reference.
-    var jqThrottle;
+	// Internal method reference.
+	var jqThrottle;
 
-    var swp = window.socialWarfarePlugin;
+	var swp = window.socialWarfarePlugin;
 
-    swp.throttle = jqThrottle = function(delay, noTrailing, callback, debounceMode) {
-        // After wrapper has stopped being called, this timeout ensures that
-        // `callback` is executed at the proper times in `throttle` and `end`
-        // debounce modes.
-        var timeoutID,
+	swp.throttle = jqThrottle = function(delay, noTrailing, callback, debounceMode) {
+		// After wrapper has stopped being called, this timeout ensures that
+		// `callback` is executed at the proper times in `throttle` and `end`
+		// debounce modes.
+		var timeoutID,
 
-        // Keep track of the last time `callback` was executed.
-        lastExec = 0;
+			// Keep track of the last time `callback` was executed.
+			lastExec = 0;
 
-        // `noTrailing` defaults to falsy.
-        if (typeof noTrailing !== 'boolean') {
-            debounceMode = callback;
-            callback = noTrailing;
-            noTrailing = undefined;
-        }
+		// `noTrailing` defaults to falsy.
+		if (typeof noTrailing !== 'boolean') {
+			debounceMode = callback;
+			callback = noTrailing;
+			noTrailing = undefined;
+		}
 
-        // The `wrapper` function encapsulates all of the throttling / debouncing
-        // functionality and when executed will limit the rate at which `callback`
-        // is executed.
-        function wrapper() {
-            var that = this,
-            elapsed = +new Date() - lastExec,
-            args = arguments;
+		// The `wrapper` function encapsulates all of the throttling / debouncing
+		// functionality and when executed will limit the rate at which `callback`
+		// is executed.
+		function wrapper() {
+			var that = this,
+				elapsed = +new Date() - lastExec,
+				args = arguments;
 
-            // Execute `callback` and update the `lastExec` timestamp.
-            function exec() {
-                lastExec = +new Date();
-                callback.apply(that, args);
-            }
+			// Execute `callback` and update the `lastExec` timestamp.
+			function exec() {
+				lastExec = +new Date();
+				callback.apply(that, args);
+			}
 
-            // If `debounceMode` is true (atBegin) this is used to clear the flag
-            // to allow future `callback` executions.
-            function clear() {
-                timeoutID = undefined;
-            }
+			// If `debounceMode` is true (atBegin) this is used to clear the flag
+			// to allow future `callback` executions.
+			function clear() {
+				timeoutID = undefined;
+			}
 
-            if (debounceMode && ! timeoutID) {
-                // Since `wrapper` is being called for the first time and
-                // `debounceMode` is true (atBegin), execute `callback`.
-                exec();
-            }
+			if (debounceMode && !timeoutID) {
+				// Since `wrapper` is being called for the first time and
+				// `debounceMode` is true (atBegin), execute `callback`.
+				exec();
+			}
 
-            // Clear any existing timeout.
-            timeoutID && clearTimeout(timeoutID);
+			// Clear any existing timeout.
+			timeoutID && clearTimeout(timeoutID);
 
-            if (debounceMode === undefined && elapsed > delay) {
-                // In throttle mode, if `delay` time has been exceeded, execute
-                // `callback`.
-                exec();
-            } else if (noTrailing !== true) {
-                // In trailing throttle mode, since `delay` time has not been
-                // exceeded, schedule `callback` to execute `delay` ms after most
-                // recent execution.
-                //
-                // If `debounceMode` is true (atBegin), schedule `clear` to execute
-                // after `delay` ms.
-                //
-                // If `debounceMode` is false (at end), schedule `callback` to
-                // execute after `delay` ms.
-                timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-            }
-        }
+			if (debounceMode === undefined && elapsed > delay) {
+				// In throttle mode, if `delay` time has been exceeded, execute
+				// `callback`.
+				exec();
+			} else if (noTrailing !== true) {
+				// In trailing throttle mode, since `delay` time has not been
+				// exceeded, schedule `callback` to execute `delay` ms after most
+				// recent execution.
+				//
+				// If `debounceMode` is true (atBegin), schedule `clear` to execute
+				// after `delay` ms.
+				//
+				// If `debounceMode` is false (at end), schedule `callback` to
+				// execute after `delay` ms.
+				timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+			}
+		}
 
-        // Set the guid of `wrapper` function to the same of original callback, so
-        // it can be removed in jQuery 1.4+ .unbind or .die by using the original
-        // callback as a reference.
-        if (swp.guid) {
-            wrapper.guid = callback.guid = callback.guid || swp.guid++;
-        }
+		// Set the guid of `wrapper` function to the same of original callback, so
+		// it can be removed in jQuery 1.4+ .unbind or .die by using the original
+		// callback as a reference.
+		if (swp.guid) {
+			wrapper.guid = callback.guid = callback.guid || swp.guid++;
+		}
 
-        // Return the wrapper function.
-        return wrapper;
-    };
+		// Return the wrapper function.
+		return wrapper;
+	};
 
-    swp.debounce = function(delay, atBegin, callback) {
-        return callback === undefined ? jqThrottle(delay, atBegin, false) : jqThrottle(delay, callback, atBegin !== false);
-    };
+	swp.debounce = function(delay, atBegin, callback) {
+		return callback === undefined ? jqThrottle(delay, atBegin, false) : jqThrottle(delay, callback, atBegin !== false);
+	};
 })(this);
 
 /**
@@ -149,621 +149,738 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
  */
 
 (function(window, $, undefined) {
-    'use strict';
+	'use strict';
 
-      if (typeof $ == 'undefined') {
-          $ = jQuery;
-      }
+	if (typeof $ == 'undefined') {
+		$ = jQuery;
+	}
 
-    var swp = window.socialWarfarePlugin;
-    var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-    var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
+	var swp = window.socialWarfarePlugin;
+	var paddingTop = absint($('body').css('padding-top').replace('px', ''));
+	var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
 
-    function absint($int) {
-        return parseInt($int, 10);
-    }
+	function absint($int) {
+		return parseInt($int, 10);
+	}
 
-    function swp_trigger_events(event) {
-        var evt = $.Event(event);
-        $(window).trigger(evt);
-    }
+	function swp_trigger_events(event) {
+		var evt = $.Event(event);
+		$(window).trigger(evt);
+	}
 
-    /****************************************************************************
+	/****************************************************************************
 
-        Fetch and Store Facebook Counts
+	    Fetch and Store Facebook Counts
 
-    ****************************************************************************/
+	****************************************************************************/
 
-    socialWarfarePlugin.parseFacebookShares = function (response) {
-        // if('undefined' !== typeof request1[0].og_object) {
-        //     var f3 = absint(request1[0].og_object.likes.summary.total_count);
-        // } else {
-        //     var f3 = 0;
-        // }
-        //
-        return absint(response[0].share.share_count)   +
-               absint(response[0].share.comment_count) +
-               absint(response[0].og_object.likes.summary.total_count) || 0;
-    }
-
-
-    socialWarfarePlugin.fetchFacebookShares = function() {
-        /**
-         * Run all the API calls
-         */
-        $.when(
-            $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url),
-            (swp_post_recovery_url ? $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url) : '')
-        )
-        .then(function(request1, request2) {
-            /**
-             * Parse the responses, add up the activity, send the results to admin_ajax
-             */
-            if ('undefined' !== typeof request1[0].share) {
-                var shares =  socialWarfarePlugin.parseFacebookShares(request1);
-
-                if (swp_post_recovery_url) {
-                    shares +=  socialWarfarePlugin.parseFacebookShares(request2);
-                }
-
-                var swpPostData = {
-                    action: 'swp_facebook_shares_update',
-                    post_id: swp_post_id,
-                    share_counts: shares
-                };
-
-                $.post(swp_admin_ajax, swpPostData);
-            }
-        });
-    }
-
-    /**
-     * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
-     * @since 2.1.0
-     * @param none
-     * @return none
-     */
-    swp.activateHoverStates = function() {
-        swp_trigger_events('pre_activate_buttons');
-        $('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter',function(){
-            if (!$(this).hasClass('swp_nohover')) {
-                swpRestoreSizes();
-                var term_width = $(this).find('.swp_share').outerWidth();
-                var icon_width = $(this).find('i.sw').outerWidth();
-                var container_width = $(this).width();
-                var percentage_change = 1 + ((term_width + 35) / container_width);
-                $(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-                $(this).css({flex:percentage_change + ' 1 0%'});
-            }
-        });
-        $('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave',function() {
-            swpRestoreSizes();
-        });
-    }
+	socialWarfarePlugin.parseFacebookShares = function(response) {
+		// if('undefined' !== typeof request1[0].og_object) {
+		//     var f3 = absint(request1[0].og_object.likes.summary.total_count);
+		// } else {
+		//     var f3 = 0;
+		// }
+		//
+		return absint(response[0].share.share_count) +
+			absint(response[0].share.comment_count) +
+			absint(response[0].og_object.likes.summary.total_count) || 0;
+	}
 
 
-    function swpRestoreSizes() {
-        $(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
-        $(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
+	socialWarfarePlugin.fetchFacebookShares = function() {
+		/**
+		 * Run all the API calls
+		 */
+		$.when(
+				$.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url),
+				(swp_post_recovery_url ? $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url) : '')
+			)
+			.then(function(request1, request2) {
+				/**
+				 * Parse the responses, add up the activity, send the results to admin_ajax
+				 */
+				if ('undefined' !== typeof request1[0].share) {
+					var shares = socialWarfarePlugin.parseFacebookShares(request1);
 
-    }
+					if (swp_post_recovery_url) {
+						shares += socialWarfarePlugin.parseFacebookShares(request2);
+					}
 
+					var swpPostData = {
+						action: 'swp_facebook_shares_update',
+						post_id: swp_post_id,
+						share_counts: shares
+					};
 
-    //*  If any horiztonal buttons panel is currently visible on screen,
-    //*  returns true. Else, returns false.
-    function panelIsVisible() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var visible = false;
-        var scrollPos = $(window).scrollTop();
-
-        $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
-            var offset = $(this).offset();
-
-            //* Do not display floating buttons before the horizontal panel.
-            if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-                var theContent = jQuery(".swp-content-locator").parent();
-
-                if (index === 0 && theContent.length && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
-                    visible = true;
-                }
-            }
-
-            //* Do not display floating buttons if a panel is currently visible.
-            if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
-                visible = true;
-            }
-        });
-
-        return visible;
-    }
-
-    /**
-     *  Clones a copy of the static buttons to use as a floating panel.
-     *
-     */
-    function createFloatBar() {
-        //* .swp_social_panelSide is the side floater.
-        if ($(".nc_wrapper").length) {
-            $(".nc_wrapper").remove();
-        }
-
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide");
-        var floatLocation = panel.data("float");
-				var mobileFloatLocation = panel.data("float-mobile");
-
-        //* If a horizontal panel does not exist,
-        if (typeof panel == "undefined") {
-            return;
-        }
-
-				//* No floating bars are used at all.
-	 			if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
-            return;
-        }
-
-        //* Or we are on desktop and not using top/bottom floaters:
-        if (!isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
-				  	return;
+					$.post(swp_admin_ajax, swpPostData);
 				}
+			});
+	}
 
-        var backgroundColor = panel.data("float-color");
-        var left = panel.data("align") == "center" ? 0 : panel.offset().left;
-        var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-
-        if (isMobile()) {
-            var barLocation = mobileFloatLocation;
-        } else {
-            var barLocation = floatLocation;
-        }
-
-        wrapper.addClass(barLocation).hide().appendTo("body");
-
-        var clone = panel.first().clone();
-        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper);
-
-        $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
-    }
-
-
-    function toggleFloatingButtons() {
-        // Adjust the floating bar
-        var panel = $(".swp_social_panel").first();
-        var location = panel.data('float');
-
-        if (location == 'none') {
-            jQuery(".nc_wrapper, .swp_social_panelSide").hide();
-            return;
-        }
-
-          if (isMobile()) {
-            createFloatBar();
-            toggleMobileButtons();
-            toggleFloatingBar();
-        }
-
-        if (location == "right" || location == "left") {
-             toggleSideButtons();
-        }
-
-        if (location == "bottom" || location == "top") {
-            toggleFloatingBar();
-        }
-    }
+	/**
+	 * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
+	 * @since 2.1.0
+	 * @param none
+	 * @return none
+	 */
+	swp.activateHoverStates = function() {
+		swp_trigger_events('pre_activate_buttons');
+		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
+			if (!$(this).hasClass('swp_nohover')) {
+				swpRestoreSizes();
+				var term_width = $(this).find('.swp_share').outerWidth();
+				var icon_width = $(this).find('i.sw').outerWidth();
+				var container_width = $(this).width();
+				var percentage_change = 1 + ((term_width + 35) / container_width);
+				$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
+				$(this).css({
+					flex: percentage_change + ' 1 0%'
+				});
+			}
+		});
+		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', function() {
+			swpRestoreSizes();
+		});
+	}
 
 
-    function toggleMobileButtons() {
-        var panel = $(".swp_social_panel").first();
-        // var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-        var visibility = panelIsVisible() ? "collapse" : "visible";
+	function swpRestoreSizes() {
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
 
-        //* Force side floating panel to be hidden.
-        $(".swp_social_panelSide").hide();
-
-        //* Make sure hidden mobile buttons do not block clicks on content underneath.
-        $(".nc_wrapper").css("visibility", visibility);
-    }
+	}
 
 
-    function toggleSideButtons() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var sidePanel = $(".swp_social_panelSide");
-        var location = sidePanel.data("float")
-        var visible = panelIsVisible();
+	//*  If any horiztonal buttons panel is currently visible on screen,
+	//*  returns true. Else, returns false.
+	function panelIsVisible() {
+		var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+		var visible = false;
+		var scrollPos = $(window).scrollTop();
 
-        if (isMobile() && $(".nc_wrapper").length) {
-            //* Mobile display with top/bottom mobile bar.
-            sidePanel.hide();
-            return;
-        }
+		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
+			var offset = $(this).offset();
 
-        if (!panel.length) {
-            //* No buttons panel!
-            if (!isMobile()) {
-                visible = false;
-            } else {
-                visible = true;
-            }
-        }
+			//* Do not display floating buttons before the horizontal panel.
+			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+				var theContent = jQuery(".swp-content-locator").parent();
 
-        if (sidePanel.data("transition") == "slide") {
-            var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-            if (visible) {
-                sidePanel.css(direction, "-150px");
-            } else {
-                sidePanel.css(direction, "5px");
-            }
-        } else {
-            if (visible) {
-                sidePanel.css("opacity", 1).fadeOut(300).css("opacity", 0);
-            } else {
-                sidePanel.css("opacity", 0).fadeIn(300).css({opacity: 1, display: "flex"});
-            }
-        }
-    }
+				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
+					visible = true;
+				}
+			}
 
-    //* Note: All of the other logic for padding now lives in createFloatBar.
-    //* Otherwise, it added the padding every time this was called.
-    function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").first();
-        var newPadding = 0;
+			//* Do not display floating buttons if a panel is currently visible.
+			if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
+				visible = true;
+			}
+		});
 
-        //* Are we on desktop or mobile?
-        if (!isMobile()) {
-            var location = $(panel).data("float");
-        } else {
-            var location = $(panel).data("float-mobile")
-        }
+		return visible;
+	}
 
-        if (panelIsVisible()) {
-            $(".nc_wrapper").hide();
+	/**
+	 *  Clones a copy of the static buttons to use as a floating panel.
+	 *
+	 */
+	function createFloatBar() {
+		//* .swp_social_panelSide is the side floater.
+		if ($(".nc_wrapper").length) {
+			$(".nc_wrapper").remove();
+		}
 
-            newPadding = (location == "bottom") ? paddingBottom : paddingTop;
+		var panel = $(".swp_social_panel").not(".swp_social_panelSide");
+		var floatLocation = panel.data("float");
+		var mobileFloatLocation = panel.data("float-mobile");
 
-        } else {
-            $(".nc_wrapper").show();
+		//* If a horizontal panel does not exist,
+		if (typeof panel == "undefined") {
+			return;
+		}
 
-            //* Show the top/bottom floating bar. Force its opacity to normal.
-            //* @see SWP_Buttons_Panel->render_HTML()
-            jQuery(".swp_social_panel.nc_floater").css("opacity", 1)
+		//* No floating bars are used at all.
+		if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
+			return;
+		}
 
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == 'bottom') {
-                newPadding = paddingBottom + 50;
-                // $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-            } else {
-                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-                    newPadding = paddingTop + 50;
-                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
-                }
-            }
-        }
+		//* Or we are on desktop and not using top/bottom floaters:
+		if (!isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
+			return;
+		}
 
-        var paddingProp = "padding-" + location;
-        $("body").animate({paddingProp: newPadding}, 0);
+		var backgroundColor = panel.data("float-color");
+		var left = panel.data("align") == "center" ? 0 : panel.offset().left;
+		var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
-    }
+		if (isMobile()) {
+			var barLocation = mobileFloatLocation;
+		} else {
+			var barLocation = floatLocation;
+		}
 
+		wrapper.addClass(barLocation).hide().appendTo("body");
 
-    function centerSidePanel() {
-        var sidePanel = jQuery("[class*=float-position-center]");
+		var clone = panel.first().clone();
+		clone.addClass("nc_floater").css({
+			width: panel.outerWidth(true),
+			left: left
+		}).appendTo(wrapper);
 
-        if (!sidePanel.length) return;
-
-        var panelHeight = sidePanel.outerHeight();
-        var windowHeight = window.innerHeight;
-
-        if (panelHeight > windowHeight) {
-          sidePanel.css("top", 0);
-          return;
-        }
-
-        var offset = (windowHeight - panelHeight) / 2;
-
-        sidePanel.css("top", offset);
-    }
+		$(".swp_social_panel .swp_count").css({
+			transition: "padding .1s linear"
+		});
+	}
 
 
-    function initShareButtons() {
-        if (0 !== $('.swp_social_panel').length) {
-            createFloatBar();
-            centerSidePanel();
-            swp.activateHoverStates();
-            handleWindowOpens();
-            $(window).scroll(swp.throttle(50, function() {
-                toggleFloatingButtons();
-            }));
-            $(window).trigger('scroll');
-            // $('.swp_social_panel').css({'opacity':1});
-        }
-    }
+	function toggleFloatingButtons() {
+		// Adjust the floating bar
+		var panel = $(".swp_social_panel").first();
+		var location = panel.data('float');
 
-    /****************************************************************************
+		if (location == 'none') {
+			jQuery(".nc_wrapper, .swp_social_panelSide").hide();
+			return;
+		}
 
-        Pin It Hover Effect
+		if (isMobile()) {
+			createFloatBar();
+			toggleMobileButtons();
+			toggleFloatingBar();
+		}
 
-    ****************************************************************************/
+		if (location == "right" || location == "left") {
+			toggleSideButtons();
+		}
 
-    function pinitButton() {
-        var defaults = {
-            wrap: '<div class="sw-pinit" />',
-            pageURL: document.URL
-        };
+		if (location == "bottom" || location == "top") {
+			toggleFloatingBar();
+		}
+	}
 
-        var options = $.extend(defaults, options);
-        var pinterestButton = findPinterestSaveButton();
 
-        if (typeof pinterestButton != 'undefined' && pinterestButton) {
-            removePinterestButton(pinterestButton);
-        }
+	function toggleMobileButtons() {
+		var panel = $(".swp_social_panel").first();
+		// var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+		var visibility = panelIsVisible() ? "collapse" : "visible";
 
-        // Iterate over the current set of matched elements.
-        $('.swp-content-locator').parent().find('img').each(function() {
-            var image = $(this);
+		//* Force side floating panel to be hidden.
+		$(".swp_social_panelSide").hide();
 
-            if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-                if (jQuery(image).parents().filter("a").length) {
-                    return;
-                }
-            }
+		//* Make sure hidden mobile buttons do not block clicks on content underneath.
+		$(".nc_wrapper").css("visibility", visibility);
+	}
 
-            if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-                return;
-            }
 
-            if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-                return;
-            }
+	function toggleSideButtons() {
+		var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+		var sidePanel = $(".swp_social_panelSide");
+		var location = sidePanel.data("float")
+		var visible = panelIsVisible();
 
-            var pinMedia;
+		if (isMobile() && $(".nc_wrapper").length) {
+			//* Mobile display with top/bottom mobile bar.
+			sidePanel.hide();
+			return;
+		}
 
-            if ('undefined' !== typeof swpPinIt.image_source) {
+		if (!panel.length) {
+			//* No buttons panel!
+			if (!isMobile()) {
+				visible = false;
+			} else {
+				visible = true;
+			}
+		}
+
+		if (sidePanel.data("transition") == "slide") {
+			var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+			if (visible) {
+				sidePanel.css(direction, "-150px");
+			} else {
+				sidePanel.css(direction, "5px");
+			}
+		} else {
+			if (visible) {
+				sidePanel.css("opacity", 1).fadeOut(300).css("opacity", 0);
+			} else {
+				sidePanel.css("opacity", 0).fadeIn(300).css({
+					opacity: 1,
+					display: "flex"
+				});
+			}
+		}
+	}
+
+	//* Note: All of the other logic for padding now lives in createFloatBar.
+	//* Otherwise, it added the padding every time this was called.
+	function toggleFloatingBar() {
+		var panel = $(".swp_social_panel").first();
+		var newPadding = 0;
+
+		//* Are we on desktop or mobile?
+		if (!isMobile()) {
+			var location = $(panel).data("float");
+		} else {
+			var location = $(panel).data("float-mobile")
+		}
+
+		if (panelIsVisible()) {
+			$(".nc_wrapper").hide();
+
+			newPadding = (location == "bottom") ? paddingBottom : paddingTop;
+
+		} else {
+			$(".nc_wrapper").show();
+
+			//* Show the top/bottom floating bar. Force its opacity to normal.
+			//* @see SWP_Buttons_Panel->render_HTML()
+			jQuery(".swp_social_panel.nc_floater").css("opacity", 1)
+
+			// Add some padding to the page so it fits nicely at the top or bottom
+			if (location == 'bottom') {
+				newPadding = paddingBottom + 50;
+				// $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+			} else {
+				if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
+					newPadding = paddingTop + 50;
+					$('body').animate({
+						'padding-top': newPadding + 'px'
+					}, 0);
+				}
+			}
+		}
+
+		var paddingProp = "padding-" + location;
+		$("body").animate({
+			paddingProp: newPadding
+		}, 0);
+
+	}
+
+
+	function centerSidePanel() {
+		var sidePanel = jQuery("[class*=float-position-center]");
+
+		if (!sidePanel.length) return;
+
+		var panelHeight = sidePanel.outerHeight();
+		var windowHeight = window.innerHeight;
+
+		if (panelHeight > windowHeight) {
+			sidePanel.css("top", 0);
+			return;
+		}
+
+		var offset = (windowHeight - panelHeight) / 2;
+
+		sidePanel.css("top", offset);
+	}
+
+
+	function initShareButtons() {
+		if (0 !== $('.swp_social_panel').length) {
+			createFloatBar();
+			centerSidePanel();
+			swp.activateHoverStates();
+			handleButtonClicks();
+			$(window).scroll(swp.throttle(50, function() {
+				toggleFloatingButtons();
+			}));
+			$(window).trigger('scroll');
+			// $('.swp_social_panel').css({'opacity':1});
+		}
+	}
+
+	/****************************************************************************
+
+	    Pin It Hover Effect
+
+	****************************************************************************/
+
+	function pinitButton() {
+		var defaults = {
+			wrap: '<div class="sw-pinit" />',
+			pageURL: document.URL
+		};
+
+		var options = $.extend(defaults, options);
+		var pinterestButton = findPinterestSaveButton();
+
+		if (typeof pinterestButton != 'undefined' && pinterestButton) {
+			removePinterestButton(pinterestButton);
+		}
+
+		// Iterate over the current set of matched elements.
+		$('.swp-content-locator').parent().find('img').each(function() {
+			var image = $(this);
+
+			if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+				if (jQuery(image).parents().filter("a").length) {
+					return;
+				}
+			}
+
+			if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
+				return;
+			}
+
+			if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
+				return;
+			}
+
+			var pinMedia;
+
+			if ('undefined' !== typeof swpPinIt.image_source) {
 
 				//* Create a temp image to force absolute paths via jQuery.
 				var i = new Image();
 				i.src = swpPinIt.image_source;
 				pinMedia = jQuery(i).prop('src');
 
-            } else if (image.data('media')) {
-                pinMedia = image.data('media');
-            } else if ($(this).data('lazy-src')) {
-                pinMedia = $(this).data('lazy-src');
-            } else if (image[0].src) {
-                pinMedia = image[0].src;
-            };
+			} else if (image.data('media')) {
+				pinMedia = image.data('media');
+			} else if ($(this).data('lazy-src')) {
+				pinMedia = $(this).data('lazy-src');
+			} else if (image[0].src) {
+				pinMedia = image[0].src;
+			};
 
-            // Bail if we don't have any media to pin.
-            if ( !pinMedia || 'undefined' === typeof pinMedia ) {
-                return;
-            }
+			// Bail if we don't have any media to pin.
+			if (!pinMedia || 'undefined' === typeof pinMedia) {
+				return;
+			}
 
-            var pinDesc = '';
+			var pinDesc = '';
 
-            if (typeof image.data("pin-description") != 'undefined') {
-                pinDesc = image.data("pin-description");
-            } else if ('undefined' !== typeof swpPinIt.image_description){
-                pinDesc = swpPinIt.image_description;
-            } else if (image.attr('title')) {
-                pinDesc = image.attr('title');
-            } else if (image.attr('alt')) {
-                pinDesc = image.attr('alt');
-            }
+			if (typeof image.data("pin-description") != 'undefined') {
+				pinDesc = image.data("pin-description");
+			} else if ('undefined' !== typeof swpPinIt.image_description) {
+				pinDesc = swpPinIt.image_description;
+			} else if (image.attr('title')) {
+				pinDesc = image.attr('title');
+			} else if (image.attr('alt')) {
+				pinDesc = image.attr('alt');
+			}
 
-            var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(options.pageURL) + '&is_video=false' + '&description=' +  encodeURIComponent(pinDesc);
-            var imageClasses = image.attr('class');
-            var imageStyle = image.attr('style');
+			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(options.pageURL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
+			var imageClasses = image.attr('class');
+			var imageStyle = image.attr('style');
 
-            image.removeClass().attr('style', '').wrap(options.wrap);
-            image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-            image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
-        });
+			image.removeClass().attr('style', '').wrap(options.wrap);
+			image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+			image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+		});
 
-        $('.sw-pinit .sw-pinit-button').on('click', function() {
-            window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+		$('.sw-pinit .sw-pinit-button').on('click', function() {
+			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 
-            // Record the event if Google Analytics Click tracking is enabled
-            if (true === swpClickTracking) {
-                var network = 'pin_image';
+			// Record the event if Google Analytics Click tracking is enabled
+			if (true === swpClickTracking) {
+				var network = 'pin_image';
 
-                // If Google Analytics is Present on the page.
-                if( 'function' == typeof ga) {
-                    ga("send", "event", "social_media", "swp_" + network + "_share");
-                }
-
-                // If Google Tag Manager is Present on the Page
-                if ("object" == typeof dataLayer) {
-                    dataLayer.push({'event':'swp_' + network + '_share'});
-                }
-            }
-
-            return false;
-        });
-    }
-
-    function handleWindowOpens() {
-        $('.nc_tweet, a.swp_CTT').off('click');
-        $('.nc_tweet, a.swp_CTT').on('click', function(event) {
-            if ($(this).hasClass('noPop')) {
-                return false;
-            }
-
-            if ($(this).data('link')) {
-                event.preventDefault();
-
-                var href = $(this).data('link').replace('’', '\'');
-                var height, width, top, left, instance, windowFeatures;
-
-                if ($(this).hasClass('pinterest') || $(this).hasClass('buffer_link') || $(this).hasClass('flipboard')) {
-                    height = 550;
-                    width = 775;
-                } else {
-                    height = 270;
-                    width = 500;
-                }
-
-                top = window.screenY + (window.innerHeight - height) / 2;
-                left = window.screenX + (window.innerWidth - width) / 2;
-
-                var windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-                var instance = window.open(href, '_blank', windowAttributes);
-
-        				if (true == swpClickTracking) {
-                    if($(this).hasClass('nc_tweet')) {
-            				    var network = $(this).parents(".nc_tweetContainer").attr("data-network");
-            				} else if ($(this).hasClass('swp_CTT')) {
-            				    var network = 'ctt';
-            				}
-
-            				// If Google Analytics is Present on the Page
-            	      if (typeof ga == "function" && true) {
-            	          ga('send', 'event', 'social_media', 'swp_' + network + '_share');
-            	      }
-
-            					// If Google Tag Manager is Present on the Page
-            				if ("object" == typeof dataLayer) {
-            				    dataLayer.push({'event':'swp_' + network + '_share'});
-            				}
-                }
-
-                return false;
-            }
-        });
-    }
-
-
-    //* The Pinterest Browser Extension create a single Save button.
-    //* Let's search and destroy.
-    function findPinterestSaveButton() {
-        //* Known constants used by Pinterest.
-        var pinterestRed = "rgb(189, 8, 28)";
-        var pinterestZIndex = "8675309";
-        var pinterestBackgroundSize = "14px 14px";
-        var button = null;
-
-        document.querySelectorAll("span").forEach(function(el, index) {
-            var style = window.getComputedStyle(el);
-
-            if (style.backgroundColor == pinterestRed) {
-                if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
-                    button = el;
-                }
-            }
-        });
-
-        return button;
-    }
-
-    function removePinterestButton(button) {
-        var pinterestSquare = button.nextSibling;
-
-        if (typeof pinterestSquare != 'undefined'  && pinterestSquare.nodeName == 'SPAN') {
-            var style = window.getComputedStyle(pinterestSquare);
-            var size = "24px";
-
-            if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
-                pinterestSquare.remove()
-            }
-        }
-
-        button.remove();
-    }
-
-    /**
-     * Checks to see if we have a buttons panel. If so, forces a re-run of the handleWindowOpens callback.
-     *
-     * @param  number count The current iteration of the loop cycle.
-     * @param  number limit The maximum number of iterations for the loop cycle.
-     * @return void or function handleWindowOpens().
-     *
-     */
-    function checkListeners(count, limit) {
-				if (count > limit) {
-					  return;
+				// If Google Analytics is Present on the page.
+				if ('function' == typeof ga) {
+					ga("send", "event", "social_media", "swp_" + network + "_share");
 				}
 
-				var panel = $('.swp_social_panel');
+				// If Google Tag Manager is Present on the Page
+				if ("object" == typeof dataLayer) {
+					dataLayer.push({
+						'event': 'swp_' + network + '_share'
+					});
+				}
+			}
 
-				if (panel.length > 0 && panel.find(".swp_pinterest")) {
-					  return handleWindowOpens();
+			return false;
+		});
+	}
+
+
+	/**
+	 * Handle clicks on the buttons that open share windows. It fetches the
+	 * share link, it opens the share link into a new window, it sizes the
+	 * popout window, and makes sure the user is able to share the content.
+	 *
+	 * This also handles sending the events to Google Analytics and Google Tag
+	 * Manager if the user has that feature enabled.
+	 *
+	 * @since  1.0.0 | 01 JAN 2018 | Created
+	 * @param  void
+	 * @return bool Returns false on failure.
+	 *
+	 */
+	function handleButtonClicks() {
+
+
+		/**
+		 * In order to avoid the possibility that this function may be called
+		 * more than once, we remove all click handlers from our buttons prior
+		 * to activating the new click handler. Prior to this, there were some
+		 * unique instances where clicking on a button would cause multiple
+		 * share windows to pop out.
+		 *
+		 */
+		$( '.nc_tweet, a.swp_CTT' ).off( 'click' );
+		$( '.nc_tweet, a.swp_CTT' ).on( 'click', function( event ) {
+
+
+			/**
+			 * Some buttons that don't have popout share windows can use the
+			 * 'nopop' class to disable this click handler. This will then make
+			 * that button behave like a standard link and allow the browser's
+			 * default click handler to handle it. This is for things like the
+			 * email button.
+			 *
+			 */
+			if ( $(this).hasClass( 'noPop' ) ) {
+				return false;
+			}
+
+
+			/**
+			 * Our click handlers will use the data-link html attribute on the
+			 * button as the share URL when opening the share window. Therefore,
+			 * we need to make sure that this attribute exists.
+			 *
+			 */
+			if ( false == $(this).data( 'link' ) ) {
+				return false;
+			}
+
+			/**
+			 * Prevent the browser from handling the click.
+			 *
+			 */
+			event.preventDefault();
+
+
+			/**
+			 * Fetch the share link that we'll use to call the popout share
+			 * windows and then declare the variables that we'll be using later.
+			 *
+			 */
+			var href = $(this).data('link').replace('’', '\'');
+			var height, width, top, left, instance, windowAttributes;
+
+
+			/**
+			 * These are the default dimensions that are used by most of the
+			 * popout share windows. Additionally, a few of the windows have
+			 * their own javascript that will resize the window dynamically
+			 * once loaded.
+			 *
+			 */
+			height = 270;
+			width  = 500;
+
+
+			/**
+			 * Pinterest, Buffer, and Flipboard use a different size than the
+			 * rest so if it's one of those buttons, overwrite the defaults
+			 * that we set above.
+			 *
+			 */
+			if ( $(this).is( '.pinterest, .buffer_link, .flipboard') ) {
+				height = 550;
+				width  = 775;
+			}
+
+
+			/**
+			 * We'll measure the window and then run some calculations to ensure
+			 * that our popout share window opens perfectly centered on the
+			 * browser window.
+			 *
+			 */
+			top              = window.screenY + (window.innerHeight - height) / 2;
+			left             = window.screenX + (window.innerWidth - width) / 2;
+			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+			instance         = window.open(href, '_blank', windowAttributes);
+
+
+			/**
+			 * If click tracking has been enabled in the user settings, we'll
+			 * need to send the event via Googel Analytics. The swpClickTracking
+			 * variable will be dynamically generated via PHP and output in the
+			 * footer of the page.
+			 *
+			 */
+			if (true == swpClickTracking) {
+
+
+				/**
+				 * If a button was clicked, use the data-network attribute to
+				 * figure out which network is being shared. If it was a click
+				 * to tweet that was clicked on, just use ctt as the network.
+				 *
+				 */
+				if ( $(this).hasClass( 'nc_tweet' ) ) {
+					var network = $(this).parents('.nc_tweetContainer').data('network');
+				} else if ( $(this).hasClass( 'swp_CTT' ) ) {
+					var network = 'ctt';
 				}
 
-				setTimeout(function() {
-					  checkListeners(count++, limit)
-				}, 2000);
-		}
-
-    /**
-     * Initializes the veritcal position for top/bottom floating buttons.
-     *
-     * @return void
-     */
-		function initSidePosition() {
-				var sidePanel = $('.swp_social_panelSide');
-				// *If using top or bottom vertical positions, let CSS position the element.
-				if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
-
-				var buttonsHeight = $(sidePanel).height();
-				var windowHeight = $(window).height();
-				var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
-
-				setTimeout(function() {
-						$(sidePanel).animate({ top: newPosition }, 0);
-				}, 105);
-		}
-
-
-    //* Stores the user-defined mobile breakpoint in the socialWarfarePlugin object.
-    function establishBreakpoint() {
-			  var panel = $(".swp_social_panel");
-				socialWarfarePlugin.breakpoint = 1100;
-
-				if (panel.length && panel.data("min-width") || panel.data("min-width") == 0 ) {
-						socialWarfarePlugin.breakpoint = parseInt(panel.data("min-width"));
-				}
-		}
-
-		//* Checks to see if the current viewport is within the defined mobile boundary.
-		function isMobile() {
-			  var currentWidth = $(window).width();
-				return currentWidth < socialWarfarePlugin.breakpoint;
-		}
-
-    /**
-     * Runs the initialization callbacks for button handlers and placement.
-     *
-     * @return void
-     *
-     */
-		function initPlugin() {
-			  establishBreakpoint();
-				handleWindowOpens();
-				initShareButtons();
-
-				var swp_hover = false;
-
-				if (0 !== $('.swp_social_panelSide').length) {
-						initSidePosition();
+				/**
+				 * If Google Analytics is present on the page, we'll send the
+				 * event via their object and methods.
+				 *
+				 */
+				if ( 'function' == typeof ga ) {
+					ga('send', 'event', 'social_media', 'swp_' + network + '_share');
 				}
 
-				// Hide empty containers
-				if( 1 === $('.swp-content-locator').parent().children().length) {
-						$('.swp-content-locator').parent().hide();
+
+				/**
+				 * If Google Tag Manager is present on the page, we'll send the
+				 * event via their object and methods.
+				 *
+				 */
+				if ('object' == typeof dataLayer) {
+					dataLayer.push({'event': 'swp_' + network + '_share'});
 				}
+			}
+
+			return false;
+		});
+	}
+
+
+	//* The Pinterest Browser Extension create a single Save button.
+	//* Let's search and destroy.
+	function findPinterestSaveButton() {
+		//* Known constants used by Pinterest.
+		var pinterestRed = "rgb(189, 8, 28)";
+		var pinterestZIndex = "8675309";
+		var pinterestBackgroundSize = "14px 14px";
+		var button = null;
+
+		document.querySelectorAll("span").forEach(function(el, index) {
+			var style = window.getComputedStyle(el);
+
+			if (style.backgroundColor == pinterestRed) {
+				if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
+					button = el;
+				}
+			}
+		});
+
+		return button;
+	}
+
+	function removePinterestButton(button) {
+		var pinterestSquare = button.nextSibling;
+
+		if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
+			var style = window.getComputedStyle(pinterestSquare);
+			var size = "24px";
+
+			if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
+				pinterestSquare.remove()
+			}
 		}
 
-    $(window).on('load' , function() {
-        if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
-            pinitButton();
-        }
-				window.clearCheckID = 0;
-    });
+		button.remove();
+	}
 
-    $(document).ready(function() {
-        initPlugin();
+	/**
+	 * Checks to see if we have a buttons panel. If so, forces a re-run of the handleButtonClicks callback.
+	 *
+	 * @param  number count The current iteration of the loop cycle.
+	 * @param  number limit The maximum number of iterations for the loop cycle.
+	 * @return void or function handleButtonClicks().
+	 *
+	 */
+	function checkListeners(count, limit) {
+		if (count > limit) {
+			return;
+		}
 
-        //* Check every 2 seconds for buttons panels, in case they still need click handlers.
-				setTimeout(function() {
-					checkListeners(0, 5);
-				}, 2000);
+		var panel = $('.swp_social_panel');
 
-    });
+		if (panel.length > 0 && panel.find(".swp_pinterest")) {
+			return handleButtonClicks();
+		}
+
+		setTimeout(function() {
+			checkListeners(count++, limit)
+		}, 2000);
+	}
+
+	/**
+	 * Initializes the veritcal position for top/bottom floating buttons.
+	 *
+	 * @return void
+	 */
+	function initSidePosition() {
+		var sidePanel = $('.swp_social_panelSide');
+		// *If using top or bottom vertical positions, let CSS position the element.
+		if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
+
+		var buttonsHeight = $(sidePanel).height();
+		var windowHeight = $(window).height();
+		var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
+
+		setTimeout(function() {
+			$(sidePanel).animate({
+				top: newPosition
+			}, 0);
+		}, 105);
+	}
+
+
+	//* Stores the user-defined mobile breakpoint in the socialWarfarePlugin object.
+	function establishBreakpoint() {
+		var panel = $(".swp_social_panel");
+		socialWarfarePlugin.breakpoint = 1100;
+
+		if (panel.length && panel.data("min-width") || panel.data("min-width") == 0) {
+			socialWarfarePlugin.breakpoint = parseInt(panel.data("min-width"));
+		}
+	}
+
+	//* Checks to see if the current viewport is within the defined mobile boundary.
+	function isMobile() {
+		var currentWidth = $(window).width();
+		return currentWidth < socialWarfarePlugin.breakpoint;
+	}
+
+	/**
+	 * Runs the initialization callbacks for button handlers and placement.
+	 *
+	 * @return void
+	 *
+	 */
+	function initPlugin() {
+		establishBreakpoint();
+		handleButtonClicks();
+		initShareButtons();
+
+		var swp_hover = false;
+
+		if (0 !== $('.swp_social_panelSide').length) {
+			initSidePosition();
+		}
+
+		// Hide empty containers
+		if (1 === $('.swp-content-locator').parent().children().length) {
+			$('.swp-content-locator').parent().hide();
+		}
+	}
+
+	$(window).on('load', function() {
+		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+			pinitButton();
+		}
+		window.clearCheckID = 0;
+	});
+
+	$(document).ready(function() {
+		initPlugin();
+
+		//* Check every 2 seconds for buttons panels, in case they still need click handlers.
+		setTimeout(function() {
+			checkListeners(0, 5);
+		}, 2000);
+
+	});
 })(this, jQuery);
