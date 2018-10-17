@@ -716,7 +716,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			  var panel = $(".swp_social_panel");
 				socialWarfarePlugin.breakpoint = 1100;
 
-				if (panel.length && panel.data("min-width")) {
+				if (panel.length && panel.data("min-width") || panel.data("min-width") == 0 ) {
 						socialWarfarePlugin.breakpoint = parseInt(panel.data("min-width"));
 				}
 		}
