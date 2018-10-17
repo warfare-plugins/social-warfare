@@ -34,30 +34,13 @@ class SWP_Post_Cache_Loader {
 	 * Load the class and queue up the admin hooks.
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @since  3.4.0 | 17 OCT 2018 | Removed legacy AJAX methods (hooked here).
 	 * @param  void
 	 * @return void
 	 *
 	 */
 	public function __construct() {
-        global $post;
-
-        add_action( 'wp_ajax_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
-        add_action( 'wp_ajax_nopriv_swp_rebuild_cache', array( $this, 'rebuild_post_cache_data' ) );
-
-		/**
-		 * Reset the cache timestamp when a post is updated. This will cause the
-		 * cache to rebuild on the next page load.
-		 *
-		 */
-
-        if ( !is_object( $post ) ) :
-            return;
-        endif;
-
-        if ( 'publish' == $post->post_status ) :
-            add_action( 'save_post', array( $this, 'update_post' ) );
-        endif;
-
+        add_action( 'save_post', array( $this, 'update_post' ) );
 		add_action( 'publish_post', array( $this, 'update_post' ) );
 	}
 
@@ -78,36 +61,11 @@ class SWP_Post_Cache_Loader {
 	 */
     public function get_post_cache( $post_id ) {
 
-		if ( !array_key_exists( $post_id, $this->post_caches ) ) :
+		if ( empty( $this->post_caches[$post_id] ) ) {
 			$this->post_caches[$post_id] = new SWP_Post_Cache( $post_id );
-		endif;
+		}
 
 		return $this->post_caches[$post_id];
-	}
-
-
-	/**
-	 * Rebuild the cached data for a post cache.
-	 *
-	 * Since this class is loaded glboally, it can be made available for use by
-	 * admin ajax calls. This method will intercept/recieve the admin-ajax
-	 * request, instantiate a post cache object, and then instruct that object
-	 * to rebuild the post cache data.
-	 *
-	 * @todo   Add the wp-die() or whatever command is needed to close a wp-ajax
-	 *         handler method.
-	 * @since  3.1.0 | 25 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	public function rebuild_post_cache_data() {
-		echo 'test';
-		if( isset( $_POST['post_id'] ) ):
-			$Post_Cache = new SWP_Post_Cache( $_POST['post_id'] );
-			$Post_Cache->rebuild_cached_data();
-		endif;
-		wp_die();
 	}
 
 
@@ -115,11 +73,30 @@ class SWP_Post_Cache_Loader {
 	 * Resets the cache timestamp so that it will rebuild during the next page load.
 	 *
 	 * @since  3.1.0 | 26 JUN 2018 | Created the method.
+	 * @since  3.4.0 | 17 OCT 2018 | Moved publish conditional from constructor
+	 *                               into this method.
 	 * @param  void
 	 * @return void
 	 *
 	 */
 	public function update_post( $post_id ) {
+
+
+		/**
+		 * If the post isn't published, we don't need to do anything with the
+		 * post cache. Just ignore it.
+		 *
+		 */
+		if ( 'publish' !== get_post_status( $post_id ) ) {
+			return;
+		}
+
+
+		/**
+		 * Instantiate a post cache object for this post, and then call the
+		 * public method delete_timestamp();
+		 *
+		 */
 		$Post_Cache = new SWP_Post_Cache( $post_id );
 		$Post_Cache->delete_timestamp();
 	}

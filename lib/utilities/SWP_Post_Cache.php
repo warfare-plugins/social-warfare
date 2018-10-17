@@ -80,9 +80,9 @@ class SWP_Post_Cache {
         $this->establish_share_counts();
 
 		// If the cache is expired, trigger the rebuild processes.
-        if ( false === $this->is_cache_fresh() ):
+        if ( false === $this->is_cache_fresh() ){
 			$this->rebuild_cached_data();
-        endif;
+        }
 
 		// Debugging
 		$this->debug();
@@ -191,7 +191,6 @@ class SWP_Post_Cache {
         if ( !is_numeric( $last_checked_time ) ) :
             $last_checked_time = 0;
         endif;
-
 
  		// How many hours has it been since the cache was rebuilt?
      	$age = $current_time - $last_checked_time;
