@@ -90,36 +90,6 @@ class SWP_Post_Cache {
 
 
 	/**
-	 * A method for debugging and outputting the class object.
-	 *
-	 * @since  3.1.0 | 25 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	private function debug() {
-		if( true === SWP_Utility::debug('swp_share_cache') ):
-            echo "<pre>", var_dump( $this ), "</pre>";
-		endif;
-	}
-
-
-	/**
-	 * A method for outputting debug notices when cache rebuild parameters are present.
-	 *
-	 * @since  3.2.0 | 31 JUL 2018 | Created
-	 * @param  string $string The message to be displayed.
-	 * @return void
-	 *
-	 */
-	private function debug_message( $string ) {
-		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-			echo $string;
-		}
-	}
-
-
-	/**
 	 * SECTION #2: CHECKING IF THE CACHE IS FRESH
 	 *
 	 * The methods in this section are used to determine whether or not the
@@ -770,6 +740,36 @@ class SWP_Post_Cache {
 
         $total = get_post_meta( $this->id, '_total_shares', true );
         $this->share_counts['total_shares'] = $total ? $total : 0;
+	}
+
+
+	/**
+	 * A method for debugging and outputting the class object.
+	 *
+	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function debug() {
+		if( true === SWP_Utility::debug('swp_share_cache') ):
+            echo "<pre>", var_dump( $this ), "</pre>";
+		endif;
+	}
+
+
+	/**
+	 * A method for outputting debug notices when cache rebuild parameters are present.
+	 *
+	 * @since  3.2.0 | 31 JUL 2018 | Created
+	 * @param  string $string The message to be displayed.
+	 * @return void
+	 *
+	 */
+	private function debug_message( $string ) {
+		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+			echo $string;
+		}
 	}
 
 }
