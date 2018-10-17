@@ -384,15 +384,9 @@ trait SWP_Buttons_Panel_Trait {
    public function get_mobile_float_location() {
 	   $mobile_location = $this->get_option('float_mobile');
 
-	   if ( is_front_page() ) {
-		   $float_enabled = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
-
-		   if ( 'on' == $float_enabled ) {
-			   return $mobile_location;
-		   }
-	   }
-	   
-	   if ( is_archive() || is_category() ) {
+       //* Front page, archive, and categories do not have a global float option.
+       //* Instead they use options in the post editor (saved in post_meta). 
+	   if ( is_front_page() || is_archive() || is_category() ) {
 		   $float_enabled = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
 
 		   if ( 'on' == $float_enabled ) {
