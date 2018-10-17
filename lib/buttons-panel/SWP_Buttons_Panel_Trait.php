@@ -377,6 +377,7 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	* @since  3.0.0 | 09 MAY 2018 | Created
 	* @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
+	* @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category. 
 	* @param  void
 	* @return string A string containing the float bar location.
 	*
