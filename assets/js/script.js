@@ -782,8 +782,10 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		button.remove();
 	}
 
+
 	/**
-	 * Checks to see if we have a buttons panel. If so, forces a re-run of the handleButtonClicks callback.
+	 * Checks to see if we have a buttons panel. If so, forces a re-run of the
+	 * handleButtonClicks callback.
 	 *
 	 * @param  number count The current iteration of the loop cycle.
 	 * @param  number limit The maximum number of iterations for the loop cycle.
