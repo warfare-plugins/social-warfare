@@ -458,21 +458,66 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 
+	/**
+	 * This method is used to vertically center the floating buttons when they
+	 * are positioned on the left or right of the screen.
+	 *
+	 * @since  3.4.0 | 18 OCT 2018 | Created
+	 * @param  void
+	 * @param  void All changes are made to the dom.
+	 *
+	 */
 	function centerSidePanel() {
-		var sidePanel = jQuery("[class*=float-position-center]");
 
-		if (!sidePanel.length) return;
+		var sidePanel, panelHeight, windowHeight, offset;
 
-		var panelHeight = sidePanel.outerHeight();
-		var windowHeight = window.innerHeight;
 
+		/**
+		 * The side panel has unique classes that are used to let us know where
+		 * it should display. It can display at the top, the bottom, or centered
+		 * vertically. This is the class for centered: float-position-center.
+		 *
+		 */
+		sidePanel = jQuery("[class*=float-position-center]");
+
+
+		/**
+		 * If no such element exists, we obviously just need to bail out and
+		 * not try to center anything.
+		 *
+		 */
+		if (false == sidePanel.length) {
+			return;
+		}
+
+
+		/**
+		 * We'll need the height of the panel itself and the height of the
+		 * actual browser window in order to calculate how to center it.
+		 *
+		 */
+		panelHeight  = sidePanel.outerHeight();
+		windowHeight = window.innerHeight;
+
+
+		/**
+		 * If for some reason the panel is actually taller than the window
+		 * itself, just stick it to the top of the window and the bottom will
+		 * just have to overflow past the bottom of the screen.
+		 *
+		 */
 		if (panelHeight > windowHeight) {
 			sidePanel.css("top", 0);
 			return;
 		}
 
-		var offset = (windowHeight - panelHeight) / 2;
 
+		/**
+		 * Calculate the center position of panel and then apply the relevant
+		 * CSS to the panel.
+		 *
+		 */
+		offset = (windowHeight - panelHeight) / 2;
 		sidePanel.css("top", offset);
 	}
 
