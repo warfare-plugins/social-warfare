@@ -197,8 +197,6 @@ socialWarfare.createBarPanel = function() {
 		$(".nc_wrapper").remove();
 	}
 
-
-
 	//* No floating bars are used at all.
 	if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
 		return;
@@ -218,7 +216,8 @@ socialWarfare.createBarPanel = function() {
 
 	wrapper.addClass(barLocation).hide().appendTo("body");
 
-	socialWarfare.panels.bar = socialWarfare.panels.static.clone();
+	socialWarfare.panels.bar = socialWarfare.panels.static.first().clone();
+
 	socialWarfare.panels.bar.addClass("nc_floater").css({
 		width: socialWarfare.panels.static.outerWidth(true),
 		left: left
