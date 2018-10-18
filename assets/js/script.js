@@ -321,13 +321,13 @@ socialWarfare.toggleBarPanel = function() {
 	var newPadding = 0;
 
 	//* Are we on desktop or mobile?
-	if (!isMobile()) {
+	if (!socialWarfare.isMobile()) {
 		var location = $(panel).data("float");
 	} else {
 		var location = $(panel).data("float-mobile")
 	}
 
-	if (staticPanelIsVisible()) {
+	if (socialWarfare.staticPanelIsVisible()) {
 		$(".nc_wrapper").hide();
 
 		newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
@@ -370,18 +370,7 @@ socialWarfare.toggleBarPanel = function() {
  *
  */
 socialWarfare.centerSidePanel = function() {
-
-	var sidePanel, panelHeight, windowHeight, offset;
-
-
-	/**
-	 * The side panel has unique classes that are used to let us know where
-	 * it should display. It can display at the top, the bottom, or centered
-	 * vertically. This is the class for centered: float-position-center.
-	 *
-	 */
-	sidePanel = jQuery("[class*=float-position-center]");
-
+	var panelHeight, windowHeight, offset;
 
 	/**
 	 * If no such element exists, we obviously just need to bail out and
@@ -398,7 +387,7 @@ socialWarfare.centerSidePanel = function() {
 	 * actual browser window in order to calculate how to center it.
 	 *
 	 */
-	panelHeight = sidePanel.outerHeight();
+	panelHeight = socialWarfare.panels.side.outerHeight();
 	windowHeight = window.innerHeight;
 
 
@@ -409,8 +398,7 @@ socialWarfare.centerSidePanel = function() {
 	 *
 	 */
 	if (panelHeight > windowHeight) {
-		sidePanel.css("top", 0);
-		return;
+		return socialWarfare.panels.side.css("top", 0);
 	}
 
 
@@ -420,18 +408,18 @@ socialWarfare.centerSidePanel = function() {
 	 *
 	 */
 	offset = (windowHeight - panelHeight) / 2;
-	sidePanel.css("top", offset);
+	socialWarfare.panels.side.css("top", offset);
 }
 
 
 socialWarfare.initShareButtons = function() {
 	if (0 !== $('.swp_social_panel').length) {
-		createBarPanel();
-		centerSidePanel();
-		socialWarfareactivateHoverStates();
-		handleButtonClicks();
-		$(window).scroll(socialWarfarethrottle(50, function() {
-			toggleFloatingButtons();
+		socialWarfare.createBarPanel();
+		socialWarfare.centerSidePanel();
+		socialWarfare.activateHoverStates();
+		socialWarfare.handleButtonClicks();
+		$(window).scroll(socialWarfare.throttle(50, function() {
+			socialWarfare.toggleFloatingButtons();
 		}));
 		$(window).trigger('scroll');
 		// $('.swp_social_panel').css({'opacity':1});
