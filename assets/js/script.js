@@ -549,25 +549,34 @@ socialWarfare.pinitButton = function() {
 	$('.sw-pinit .sw-pinit-button').on('click', function() {
 		window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 
-		// Record the event if Google Analytics Click tracking is enabled
-		if (true === swpClickTracking) {
-			var network = 'pin_image';
+		socialWarfare.ga('pin_image');
+	});
+}
 
-			// If Google Analytics is Present on the page.
-			if ('function' == typeof ga) {
-				ga("send", "event", "social_media", "swp_" + network + "_share");
-			}
+socialWarfare.ga = function(event) {
+	// Record the event if Google Analytics Click tracking is enabled
+	if (true === swpClickTracking) {
 
-			// If Google Tag Manager is Present on the Page
-			if ("object" == typeof dataLayer) {
-				dataLayer.push({
-					'event': 'swp_' + network + '_share'
-				});
-			}
+		/**
+		 * If Google Analytics is present on the page, we'll send the
+		 * event via their object and methods.
+		 *
+		 */
+		if ("function" == typeof ga) {
+			ga("send", "event", "social_media", "swp_" + event + "_share");
 		}
 
-		return false;
-	});
+		/**
+		 * If Google Tag Manager is present on the page, we'll send the
+		 * event via their object and methods.
+		 *
+		 */
+		if ("object" == typeof dataLayer) {
+			dataLayer.push({
+				'event': 'swp_' + event + '_share'
+			});
+		}
+	}
 }
 
 
@@ -585,7 +594,7 @@ socialWarfare.pinitButton = function() {
  *
  */
 socialWarfare.handleButtonClicks = function() {
-
+	event.preventDefault();
 
 	/**
 	 * In order to avoid the possibility that this function may be called
@@ -597,8 +606,6 @@ socialWarfare.handleButtonClicks = function() {
 	 */
 	$('.nc_tweet, a.swp_CTT').off('click');
 	$('.nc_tweet, a.swp_CTT').on('click', function(event) {
-
-
 		/**
 		 * Some buttons that don't have popout share windows can use the
 		 * 'nopop' class to disable this click handler. This will then make
@@ -611,7 +618,6 @@ socialWarfare.handleButtonClicks = function() {
 			return false;
 		}
 
-
 		/**
 		 * Our click handlers will use the data-link html attribute on the
 		 * button as the share URL when opening the share window. Therefore,
@@ -623,20 +629,12 @@ socialWarfare.handleButtonClicks = function() {
 		}
 
 		/**
-		 * Prevent the browser from handling the click.
-		 *
-		 */
-		event.preventDefault();
-
-
-		/**
 		 * Fetch the share link that we'll use to call the popout share
 		 * windows and then declare the variables that we'll be using later.
 		 *
 		 */
 		var href = $(this).data('link').replace('’', '\'');
-		var height, width, top, left, instance, windowAttributes;
-
+		var height, width, top, left, instance, windowAttributes, network;
 
 		/**
 		 * These are the default dimensions that are used by most of the
@@ -647,7 +645,6 @@ socialWarfare.handleButtonClicks = function() {
 		 */
 		height = 270;
 		width = 500;
-
 
 		/**
 		 * Pinterest, Buffer, and Flipboard use a different size than the
@@ -660,7 +657,6 @@ socialWarfare.handleButtonClicks = function() {
 			width = 775;
 		}
 
-
 		/**
 		 * We'll measure the window and then run some calculations to ensure
 		 * that our popout share window opens perfectly centered on the
@@ -672,7 +668,6 @@ socialWarfare.handleButtonClicks = function() {
 		windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
 		instance         = window.open(href, '_blank', windowAttributes);
 
-
 		/**
 		 * If click tracking has been enabled in the user settings, we'll
 		 * need to send the event via Googel Analytics. The swpClickTracking
@@ -680,9 +675,7 @@ socialWarfare.handleButtonClicks = function() {
 		 * footer of the page.
 		 *
 		 */
-		if (false == swpClickTracking) {
-
-
+		if (true == swpClickTracking) {
 			/**
 			 * If a button was clicked, use the data-network attribute to
 			 * figure out which network is being shared. If it was a click
@@ -695,29 +688,8 @@ socialWarfare.handleButtonClicks = function() {
 				network = 'ctt';
 			}
 
-			/**
-			 * If Google Analytics is present on the page, we'll send the
-			 * event via their object and methods.
-			 *
-			 */
-			if ('function' == typeof ga) {
-				ga('send', 'event', 'social_media', 'swp_' + network + '_share');
-			}
-
-
-			/**
-			 * If Google Tag Manager is present on the page, we'll send the
-			 * event via their object and methods.
-			 *
-			 */
-			if ('object' == typeof dataLayer) {
-				dataLayer.push({
-					'event': 'swp_' + network + '_share'
-				});
-			}
+			socialWarfare.ga(network);
 		}
-
-		return false;
 	});
 }
 
@@ -761,7 +733,7 @@ socialWarfare.removePinterestButton = function(button) {
 		var style = window.getComputedStyle(pinterestSquare);
 		var size = "24px";
 
-    //* If the sibling is indeed the correct Pinterest sibling, destory it all. 
+    //* If the sibling is indeed the correct Pinterest sibling, destory it all.
 		if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
 			pinterestSquare.remove()
 		}
