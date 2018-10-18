@@ -90,10 +90,10 @@ socialWarfare.fetchFacebookShares = function() {
 			 * Parse the responses, add up the activity, send the results to admin_ajax
 			 */
 			if ('undefined' !== typeof request1[0].share) {
-				var shares = socialWarfare.parseFacebookShares(request1);
+				var shares = socialWarfare.parseFacebookShares(request1[0]);
 
 				if (swp_post_recovery_url) {
-					shares += socialWarfare.parseFacebookShares(request2);
+					shares += socialWarfare.parseFacebookShares(request2[0]);
 				}
 
 				var swpPostData = {
@@ -135,6 +135,7 @@ socialWarfare.activateHoverStates = function() {
 
 socialWarfare.resetStaticDimensions = function() {
 	$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
+	// socialWarfare.panels.static.removeAttr("style");
 	$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
 }
 
@@ -783,7 +784,8 @@ socialWwarfare.isMobile = function() {
 
 /**
  * Finds each kind of buttons panel, if it exists, and stores it to the
- * socialWarfare object for later reference.
+ * socialWarfare object for later reference. This is useful for reading data
+ * attributes of buttons panels without needing to fetch the panel every time.
  *
  * @return object The object which holds each of the kinds of buttons panels.
  */
@@ -826,8 +828,6 @@ socialWarefare.initPlugin = function() {
 	socialWarefare.handleButtonClicks();
 	socialWarefare.initShareButtons();
 
-	var swp_hover = false;
-
 	if (0 !== $('.swp_social_panelSide').length) {
 		socialWarefare.initSidePosition();
 	}
@@ -838,20 +838,20 @@ socialWarefare.initPlugin = function() {
 	}
 }
 
-	$(window).on('load', function() {
-		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
-			socialWarefare.pinitButton();
-		}
-		window.clearCheckID = 0;
-	});
+$(window).on('load', function() {
+	if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+		socialWarefare.pinitButton();
+	}
+	window.clearCheckID = 0;
+});
 
-	$(document).ready(function() {
-		socialWarefare.initPlugin();
+$(document).ready(function() {
+	socialWarefare.initPlugin();
 
-		//* Check every 2 seconds for buttons panels, in case they still need click handlers.
-		setTimeout(function() {
-			checkListeners(0, 5);
-		}, 2000);
+	//* Check every 2 seconds for buttons panels, in case they still need click handlers.
+	setTimeout(function() {
+		checkListeners(0, 5);
+	}, 2000);
 
-	});
+});
 })(this, jQuery);
