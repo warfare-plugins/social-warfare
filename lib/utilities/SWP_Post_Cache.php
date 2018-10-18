@@ -491,6 +491,11 @@ class SWP_Post_Cache {
     protected function rebuild_share_counts() {
 
 		$this->establish_permalinks();
+        $this->establish_api_request_urls();
+        $this->fetch_api_responses();
+        $this->parse_api_responses();
+        $this->calculate_network_shares();
+        $this->cache_share_counts();
 
     }
 
@@ -531,9 +536,6 @@ class SWP_Post_Cache {
             $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
         endforeach;
 
-        $this->establish_api_request_urls();
-
-
     }
 
 
@@ -559,8 +561,6 @@ class SWP_Post_Cache {
 			}
         }
 
-        $this->fetch_api_responses();
-
     }
 
 
@@ -583,8 +583,6 @@ class SWP_Post_Cache {
             $this->raw_api_responses[$current_request] = SWP_CURL::fetch_shares_via_curl_multi( $networks );
             $current_request++;
         }
-
-        $this->parse_api_responses();
 
     }
 
@@ -619,8 +617,6 @@ class SWP_Post_Cache {
                 $current_request++;
             }
         }
-
-        $this->calculate_network_shares();
 
     }
 
@@ -673,8 +669,6 @@ class SWP_Post_Cache {
         endif;
 
         $this->share_counts = $share_counts;
-
-        $this->cache_share_counts();
     }
 
 
