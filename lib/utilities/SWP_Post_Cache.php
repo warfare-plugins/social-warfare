@@ -230,43 +230,6 @@ class SWP_Post_Cache {
 	 */
 
 
-
-	/**
-	 * Trigger the Cache Rebuild
-	 *
-	 * This method will trigger a non-blocking request to admin-ajax. This
-	 * request will be intercepted/recieved by the Post_Cache_Loader class
-	 * during which it will load this post_cache object and call the
-	 * rebuild_cached_data() method below. This way the rebuilding of the cache
-	 * is conducted in an asyncronous, non-blocking fashion.
-	 *
-	 * @TODO   Add the wp_remote_post to ping admin-ajax.php.
-	 * @since  3.1.0 | 25 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	protected function trigger_cache_rebuild() {
-        //* Ping ajax to Post_Cache_Loader->
-        $data = array(
-            'method'    => 'POST',
-            'action'    => 'swp_rebuild_cache',
-            'post_id'   => $this->id
-        );
-
-        $args = array(
-            // 'timeout'   => 0.01,
-            'blocking'  => false,
-            'body'      => $data,
-            'cookies'   => $_COOKIE,
-            'sslverify' => false,
-        );
-
-        $var = wp_remote_post( admin_url( 'admin-ajax.php', $args ) );
-		var_dump($var);
-	}
-
-
 	/**
 	 * A method to rebuild all cached data
 	 *
