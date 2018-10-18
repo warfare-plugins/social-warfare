@@ -217,7 +217,8 @@ class SWP_User_options {
         $whitelist = array(
 			'last_migrated',
 			'bitly_access_token',
-			'bitly_access_login'
+			'bitly_access_login',
+			'bitly_authentication'
 		);
 
 
