@@ -73,7 +73,6 @@ class SWP_Post_Cache {
 	 *
 	 */
     public function __construct( $post_id ) {
-        global $swp_user_options;
 
 		// Set up the post data into local properties.
 		$this->post_id = $post_id;
@@ -289,7 +288,6 @@ class SWP_Post_Cache {
 	 *
 	 */
 	private function should_shares_be_fetched() {
-        global $swp_user_options;
 
 		// Only fetch on published posts
 		if( 'publish' !== get_post_status( $this->post_id ) ) {
@@ -668,7 +666,7 @@ class SWP_Post_Cache {
 	 *
 	 */
     private function calculate_network_shares() {
-        global $swp_social_networks, $swp_user_options;
+        global $swp_social_networks;
 
         $share_counts                 = array();
 		$share_counts['total_shares'] = 0;
@@ -701,7 +699,7 @@ class SWP_Post_Cache {
 		 * networks regardless of whether or not they have an API, and process
 		 * their share counts. Of course, most of these will be zeroes unless it
 		 * is a network that used to have share counts. If so, we will not
-		 * override the old share counts unless the using is using the debug
+		 * override the old share counts unless the user is using the debug
 		 * parameter to force it to do so.
 		 *
 		 */
@@ -819,10 +817,7 @@ class SWP_Post_Cache {
 
 
 	/**
-	 * Process the existing share data, or update it.
-	 *
-	 * @todo Remove all fresh_cache() checks. This method needs to assume the
-	 * cache is always fresh and always return cached data.
+	 * Fetch and return the cached share data from the database.
 	 *
 	 * @since 3.1.0 | 21 JUN 2018 | Created the method.
 	 * @access protected
@@ -833,10 +828,17 @@ class SWP_Post_Cache {
 	protected function establish_share_counts() {
 		global $swp_social_networks;
 
+
+		/**
+		 * Loop through the social networks and pull their share count from
+		 * the custom fields for this post.
+		 *
+		 */
 		foreach( $swp_social_networks as $network => $network_object ) {
-			if ( !isset( $swp_social_networks[$network] ) ) :
+
+			if ( !isset( $swp_social_networks[$network] ) ) {
 				continue;
-			endif;
+			}
 
             $count = get_post_meta( $this->post_id, '_' . $network . '_shares', true );
 			$this->share_counts[$network] = $count ? $count : 0;
