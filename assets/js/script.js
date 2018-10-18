@@ -28,90 +28,6 @@
 
 var socialWarfarePlugin = socialWarfarePlugin || {};
 
-(function(window, undefined) {
-	// Internal method reference.
-	var jqThrottle;
-
-	var swp = window.socialWarfarePlugin;
-
-	swp.throttle = jqThrottle = function(delay, noTrailing, callback, debounceMode) {
-		// After wrapper has stopped being called, this timeout ensures that
-		// `callback` is executed at the proper times in `throttle` and `end`
-		// debounce modes.
-		var timeoutID,
-
-			// Keep track of the last time `callback` was executed.
-			lastExec = 0;
-
-		// `noTrailing` defaults to falsy.
-		if (typeof noTrailing !== 'boolean') {
-			debounceMode = callback;
-			callback = noTrailing;
-			noTrailing = undefined;
-		}
-
-		// The `wrapper` function encapsulates all of the throttling / debouncing
-		// functionality and when executed will limit the rate at which `callback`
-		// is executed.
-		function wrapper() {
-			var that = this,
-				elapsed = +new Date() - lastExec,
-				args = arguments;
-
-			// Execute `callback` and update the `lastExec` timestamp.
-			function exec() {
-				lastExec = +new Date();
-				callback.apply(that, args);
-			}
-
-			// If `debounceMode` is true (atBegin) this is used to clear the flag
-			// to allow future `callback` executions.
-			function clear() {
-				timeoutID = undefined;
-			}
-
-			if (debounceMode && !timeoutID) {
-				// Since `wrapper` is being called for the first time and
-				// `debounceMode` is true (atBegin), execute `callback`.
-				exec();
-			}
-
-			// Clear any existing timeout.
-			timeoutID && clearTimeout(timeoutID);
-
-			if (debounceMode === undefined && elapsed > delay) {
-				// In throttle mode, if `delay` time has been exceeded, execute
-				// `callback`.
-				exec();
-			} else if (noTrailing !== true) {
-				// In trailing throttle mode, since `delay` time has not been
-				// exceeded, schedule `callback` to execute `delay` ms after most
-				// recent execution.
-				//
-				// If `debounceMode` is true (atBegin), schedule `clear` to execute
-				// after `delay` ms.
-				//
-				// If `debounceMode` is false (at end), schedule `callback` to
-				// execute after `delay` ms.
-				timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-			}
-		}
-
-		// Set the guid of `wrapper` function to the same of original callback, so
-		// it can be removed in jQuery 1.4+ .unbind or .die by using the original
-		// callback as a reference.
-		if (swp.guid) {
-			wrapper.guid = callback.guid = callback.guid || swp.guid++;
-		}
-
-		// Return the wrapper function.
-		return wrapper;
-	};
-
-	swp.debounce = function(delay, atBegin, callback) {
-		return callback === undefined ? jqThrottle(delay, atBegin, false) : jqThrottle(delay, callback, atBegin !== false);
-	};
-})(this);
 
 /**
  * I wanted to understand the code above, so this is a stripped down version.
@@ -125,12 +41,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
  *
  */
 
-/*
 (function(window, undefined) {
-    var jqThrottle;
-    var swp = window.socialWarfarePlugin;
 
-    swp.throttle = jqThrottle = function(delay, callback) {
+    socialWarfare.throttle = function(delay, callback) {
         var timeoutID = 0;
         var lastExec = 0;
 
@@ -163,7 +76,6 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
         return wrapper;
     };
- */
 
 (function(window, $, undefined) {
 	'use strict';
