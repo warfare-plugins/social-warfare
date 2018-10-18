@@ -30,6 +30,14 @@ class SWP_Post_Cache {
 
 
 	/**
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
+	 *
+	 */
+	use SWP_Debug_Trait;
+
+
+	/**
 	 * SECTION #1: SETTING UP THE CACHE OBJECT
 	 *
 	 * The methods in this section are used to set up the cache object by
@@ -862,21 +870,6 @@ class SWP_Post_Cache {
 
         $total = get_post_meta( $this->post_id, '_total_shares', true );
         $this->share_counts['total_shares'] = $total ? $total : 0;
-	}
-
-
-	/**
-	 * A method for debugging and outputting the class object.
-	 *
-	 * @since  3.1.0 | 25 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	protected function debug() {
-		if( true === SWP_Utility::debug('swp_share_cache') ):
-            echo "<pre>", var_dump( $this ), "</pre>";
-		endif;
 	}
 
 
