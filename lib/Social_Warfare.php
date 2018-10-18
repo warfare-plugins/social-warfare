@@ -369,7 +369,7 @@ class Social_Warfare {
 		 *
 		 */
 		$utilities = array(
-			'Utility_Trait',
+			'Debug_Trait',
             'Compatibility',
             'CURL',
             'Localization',
