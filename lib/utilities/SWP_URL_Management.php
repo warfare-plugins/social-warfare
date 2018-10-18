@@ -350,7 +350,7 @@ class SWP_URL_Management {
 		 *
 		 */
 		if( is_attachment() ) {
-			return $array['url'];
+			return $url;
 		}
 
 
@@ -362,7 +362,7 @@ class SWP_URL_Management {
 		$array['url']         = $url;
 		$array['network']     = $network;
 		$array['post_id']     = $post_id;
-        $array['fresh_cache'] = $is_cache_fresh;
+		$array['fresh_cache'] = $is_cache_fresh;
 		$array                = apply_filters( 'swp_analytics' , $array );
 		$array                = apply_filters( 'swp_link_shortening', $array);
 
