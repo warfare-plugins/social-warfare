@@ -185,14 +185,13 @@ socialWarfare.createFloatBar = function() {
 		$(".nc_wrapper").remove();
 	}
 
-	var panel = $(".swp_social_panel").not(".swp_social_panelSide");
-	var floatLocation = panel.data("float");
-	var mobileFloatLocation = panel.data("float-mobile");
-
 	//* If a horizontal panel does not exist,
-	if (typeof panel == "undefined") {
+	if (!socialWarfare.panels.static) {
 		return;
 	}
+
+	var floatLocation = socialWarfare.panels.static.data("float");
+	var mobileFloatLocation = panel.data("float-mobile");
 
 	//* No floating bars are used at all.
 	if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
@@ -200,15 +199,15 @@ socialWarfare.createFloatBar = function() {
 	}
 
 	//* Or we are on desktop and not using top/bottom floaters:
-	if (!isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
+	if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
 		return;
 	}
 
-	var backgroundColor = panel.data("float-color");
-	var left = panel.data("align") == "center" ? 0 : panel.offset().left;
+	var backgroundColor = socialWarfare.panels.static.data("float-color");
+	var left = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
 	var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 
-	if (isMobile()) {
+	if (socialWarfare.isMobile()) {
 		var barLocation = mobileFloatLocation;
 	} else {
 		var barLocation = floatLocation;
@@ -216,7 +215,7 @@ socialWarfare.createFloatBar = function() {
 
 	wrapper.addClass(barLocation).hide().appendTo("body");
 
-	var clone = panel.first().clone();
+	var clone = socialWarfare.panels.static.clone();
 	clone.addClass("nc_floater").css({
 		width: panel.outerWidth(true),
 		left: left
