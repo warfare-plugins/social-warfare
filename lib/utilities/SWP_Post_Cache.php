@@ -632,6 +632,12 @@ class SWP_Post_Cache {
     private function parse_api_responses() {
         global $swp_social_networks;
 
+
+		/**
+		 * If for any reason the $raw_api_responses property failed to get
+		 * populated just gracefully bail out and stop processing.
+		 *
+		 */
         if ( empty( $this->raw_api_responses ) ) {
             return;
         }
@@ -646,7 +652,6 @@ class SWP_Post_Cache {
                 $current_request++;
             }
         }
-
     }
 
 
@@ -660,6 +665,8 @@ class SWP_Post_Cache {
 	 * data is being rebuilt.
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @since  3.4.0 | 18 OCT 2018 | Refactored to ensure that force_new_shares
+	 *                               works the way that it's supposed to.
 	 * @var    share_counts An array of share count numbers.
 	 * @param  void
 	 * @return void All data stored in local properties.
@@ -668,6 +675,16 @@ class SWP_Post_Cache {
     private function calculate_network_shares() {
         global $swp_social_networks;
 
+
+		/**
+		 * If for any reason the $parsed_api_responses property failed to get
+		 * populated just gracefully bail out and stop processing.
+		 *
+		 */
+        if ( empty( $this->parsed_api_responses ) ) {
+            return;
+        }
+
         $share_counts                 = array();
 		$share_counts['total_shares'] = 0;
         $checked_networks             = array();
@@ -675,7 +692,7 @@ class SWP_Post_Cache {
 
 		/**
 		 * This loops through all of the parsed API responses and converts them
-		 * into share counts. The loop below will then go through all the
+		 * into share counts. The next loop below will then go through all the
 		 * remaining networks that didn't have API requests/responses.
 		 *
 		 */
