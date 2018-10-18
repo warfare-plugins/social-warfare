@@ -49,7 +49,15 @@ trait SWP_Debug_Trait {
 	/**
 	 * A method for debugging and outputting the class object.
 	 *
+	 * This method allows you to input a URL debug paramater into the browser's
+	 * address bar in order to easily output the entire contents of any given
+	 * object. It is called by using the lowercase name of the class without
+	 * the swp_ prefix. This is used following the ?swp_debug= parameter.
+	 *
+	 * Example: To debug SWP_Post_Cache, use ?swp_debug=post_cache.
+	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @since  3.4.0 | 18 OCT 2018 | Moved into this trait.
 	 * @param  void
 	 * @return void
 	 *
