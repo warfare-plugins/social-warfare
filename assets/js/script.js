@@ -783,7 +783,7 @@ socialWarfare.establishBreakpoint = function() {
 }
 
 //* Checks to see if the current viewport is within the defined mobile boundary.
-socialWwarfare.isMobile = function() {
+socialWarfare.isMobile = function() {
 	var currentWidth = $(window).width();
 	return currentWidth < socialWarfare.breakpoint;
 }
