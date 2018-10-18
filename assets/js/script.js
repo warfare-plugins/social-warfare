@@ -36,8 +36,8 @@ if (typeof $ == 'undefined') {
   	var $ = jQuery;
 }
 
-var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
+var paddingTop = parseInt($('body').css('padding-top').replace('px', ''));
+var paddingBottom = parseInt($('body').css('padding-bottom').replace('px', ''));
 
 socialWarfare.throttle = function(delay, callback) {
     var timeoutID = 0;
@@ -73,11 +73,6 @@ socialWarfare.throttle = function(delay, callback) {
     return wrapper;
 };
 
-
-function absint($int) {
-    return parseInt($int, 10);
-}
-
 socialWarfare.trigger = function(event) {
 	  $(window).trigger($.Event(event));
 }
@@ -90,14 +85,14 @@ socialWarfare.trigger = function(event) {
 
 	socialWarfare.parseFacebookShares = function(response) {
 		// if('undefined' !== typeof request1[0].og_object) {
-		//     var f3 = absint(request1[0].og_object.likes.summary.total_count);
+		//     var f3 = parseInt(request1[0].og_object.likes.summary.total_count);
 		// } else {
 		//     var f3 = 0;
 		// }
 		//
-		return absint(response[0].share.share_count) +
-			absint(response[0].share.comment_count) +
-			absint(response[0].og_object.likes.summary.total_count) || 0;
+		return (parseInt(response[0].share.share_count) +
+			     parseInt(response[0].share.comment_count) +
+		       parseInt(response[0].og_object.likes.summary.total_count)) || 0;
 	}
 
 
@@ -137,12 +132,12 @@ socialWarfare.trigger = function(event) {
 	 * @param none
 	 * @return none
 	 */
-	socialWarfareactivateHoverStates = function() {
-
+	socialWarfare.activateHoverStates = function() {
 		socialWarfare.trigger('pre_activate_buttons');
+
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
 			if (!$(this).hasClass('swp_nohover')) {
-				swpRestoreSizes();
+				socialWarfare.resetStaticDimensions();
 				var term_width = $(this).find('.swp_share').outerWidth();
 				var icon_width = $(this).find('i.sw').outerWidth();
 				var container_width = $(this).width();
@@ -153,22 +148,19 @@ socialWarfare.trigger = function(event) {
 				});
 			}
 		});
-		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', function() {
-			swpRestoreSizes();
-		});
+		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', socialWarfare.resetStaticDimensions);
 	}
 
 
-	socialWarfare.swpRestoreSizes = function() {
+	socialWarfare.resetStaticDimensions = function() {
 		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
 		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
-
 	}
 
 
 	//*  If any horiztonal buttons panel is currently visible on screen,
 	//*  returns true. Else, returns false.
-	function panelIsVisible() {
+	socialWarefare.panelIsVisible = function() {
 		var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 		var visible = false;
 		var scrollPos = $(window).scrollTop();
@@ -198,7 +190,7 @@ socialWarfare.trigger = function(event) {
 	 *  Clones a copy of the static buttons to use as a floating panel.
 	 *
 	 */
-	function createFloatBar() {
+	socialWarfare.createFloatBar = function() {
 		//* .swp_social_panelSide is the side floater.
 		if ($(".nc_wrapper").length) {
 			$(".nc_wrapper").remove();
@@ -247,7 +239,7 @@ socialWarfare.trigger = function(event) {
 	}
 
 
-	function toggleFloatingButtons() {
+	socialWarfare.toggleFloatingButtons = function() {
 		// Adjust the floating bar
 		var panel = $(".swp_social_panel").first();
 		var location = panel.data('float');
@@ -273,7 +265,7 @@ socialWarfare.trigger = function(event) {
 	}
 
 
-	function toggleMobileButtons() {
+	socialWarfare.toggleMobileButtons = function() {
 		var panel = $(".swp_social_panel").first();
 		// var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 		var visibility = panelIsVisible() ? "collapse" : "visible";
@@ -286,7 +278,7 @@ socialWarfare.trigger = function(event) {
 	}
 
 
-	function toggleSideButtons() {
+	socialWarfare.toggleSideButtons = function() {
 		var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 		var sidePanel = $(".swp_social_panelSide");
 		var location = sidePanel.data("float")
@@ -328,7 +320,7 @@ socialWarfare.trigger = function(event) {
 
 	//* Note: All of the other logic for padding now lives in createFloatBar.
 	//* Otherwise, it added the padding every time this was called.
-	function toggleFloatingBar() {
+	socialWarfare.toggleFloatingBar = function() {
 		var panel = $(".swp_social_panel").first();
 		var newPadding = 0;
 
@@ -382,7 +374,7 @@ socialWarfare.trigger = function(event) {
 	 * @param  void All changes are made to the dom.
 	 *
 	 */
-	function centerSidePanel() {
+	socialWarfare.centerSidePanel = function() {
 
 		var sidePanel, panelHeight, windowHeight, offset;
 
@@ -437,7 +429,7 @@ socialWarfare.trigger = function(event) {
 	}
 
 
-	function initShareButtons() {
+	socialWarfare.initShareButtons = function() {
 		if (0 !== $('.swp_social_panel').length) {
 			createFloatBar();
 			centerSidePanel();
@@ -457,7 +449,7 @@ socialWarfare.trigger = function(event) {
 
 	****************************************************************************/
 
-	function pinitButton() {
+	socialWarfare.pinitButton = function() {
 		var defaults = {
 			wrap: '<div class="sw-pinit" />',
 			pageURL: document.URL
@@ -569,7 +561,7 @@ socialWarfare.trigger = function(event) {
 	 * @return bool Returns false on failure.
 	 *
 	 */
-	function handleButtonClicks() {
+	socialWarfare.handleButtonClicks = function() {
 
 
 		/**
@@ -709,7 +701,7 @@ socialWarfare.trigger = function(event) {
 
 	//* The Pinterest Browser Extension create a single Save button.
 	//* Let's search and destroy.
-	function findPinterestSaveButton() {
+	socialWarfare.findPinterestSaveButton = function() {
 		//* Known constants used by Pinterest.
 		var pinterestRed = "rgb(189, 8, 28)";
 		var pinterestZIndex = "8675309";
@@ -729,7 +721,7 @@ socialWarfare.trigger = function(event) {
 		return button;
 	}
 
-	function removePinterestButton(button) {
+	socialWarfare.removePinterestButton = function(button) {
 		var pinterestSquare = button.nextSibling;
 
 		if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
@@ -754,7 +746,7 @@ socialWarfare.trigger = function(event) {
 	 * @return void or function handleButtonClicks().
 	 *
 	 */
-	function checkListeners(count, limit) {
+	socialWarfare.checkListeners = function(count, limit) {
 		if (count > limit) {
 			return;
 		}
@@ -775,14 +767,14 @@ socialWarfare.trigger = function(event) {
 	 *
 	 * @return void
 	 */
-	function initSidePosition() {
+	socialWarfare.initSidePosition = function() {
 		var sidePanel = $('.swp_social_panelSide');
 		// *If using top or bottom vertical positions, let CSS position the element.
 		if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
 
 		var buttonsHeight = $(sidePanel).height();
 		var windowHeight = $(window).height();
-		var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
+		var newPosition = parseInt((windowHeight / 2) - (buttonsHeight / 2));
 
 		setTimeout(function() {
 			$(sidePanel).animate({
@@ -793,7 +785,7 @@ socialWarfare.trigger = function(event) {
 
 
 	//* Stores the user-defined mobile breakpoint in the socialWarfare object.
-	function establishBreakpoint() {
+	socialWarfare.establishBreakpoint = function() {
 		var panel = $(".swp_social_panel");
 		socialWarfare.breakpoint = 1100;
 
@@ -803,7 +795,7 @@ socialWarfare.trigger = function(event) {
 	}
 
 	//* Checks to see if the current viewport is within the defined mobile boundary.
-	function isMobile() {
+	socialWwarfare.isMobile = function() {
 		var currentWidth = $(window).width();
 		return currentWidth < socialWarfare.breakpoint;
 	}
@@ -814,7 +806,7 @@ socialWarfare.trigger = function(event) {
 	 * @return void
 	 *
 	 */
-	function initPlugin() {
+	socialWarefare.initPlugin = function() {
 		establishBreakpoint();
 		handleButtonClicks();
 		initShareButtons();
