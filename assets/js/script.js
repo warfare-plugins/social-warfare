@@ -485,76 +485,96 @@ socialWarfare.pinitButton = function() {
 		socialWarfare.removePinterestButton(pinterestButton);
 	}
 
-	// Iterate over the current set of matched elements.
-	$('.swp-content-locator').parent().find('img').each(function() {
-		var image = $(this);
+	/**
+	 * Find all images and decide whether or not to give it a "Save" button.
+	 *
+	 */
+	$('.swp-content-locator').parent().find('img').each(socialWarfare.doSaveButton);
 
-		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-			if (jQuery(image).parents().filter("a").length) {
-				return;
-			}
-		}
-
-		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-			return;
-		}
-
-		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-			return;
-		}
-
-		var pinMedia;
-
-		if ('undefined' !== typeof swpPinIt.image_source) {
-
-			//* Create a temp image to force absolute paths via jQuery.
-			var i = new Image();
-			i.src = swpPinIt.image_source;
-			pinMedia = jQuery(i).prop('src');
-
-		} else if (image.data('media')) {
-			pinMedia = image.data('media');
-		} else if ($(this).data('lazy-src')) {
-			pinMedia = $(this).data('lazy-src');
-		} else if (image[0].src) {
-			pinMedia = image[0].src;
-		};
-
-		// Bail if we don't have any media to pin.
-		if (!pinMedia || 'undefined' === typeof pinMedia) {
-			return;
-		}
-
-		var pinDesc = '';
-
-		if (typeof image.data("pin-description") != 'undefined') {
-			pinDesc = image.data("pin-description");
-		} else if ('undefined' !== typeof swpPinIt.image_description) {
-			pinDesc = swpPinIt.image_description;
-		} else if (image.attr('title')) {
-			pinDesc = image.attr('title');
-		} else if (image.attr('alt')) {
-			pinDesc = image.attr('alt');
-		}
-
-		var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
-		var imageClasses = image.attr('class');
-		var imageStyle = image.attr('style');
-
-		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
-		image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
-	});
-
+  /**
+   * Attach a click handler to each of the newly created "Save" buttons.
+   * 
+   */
 	$('.sw-pinit .sw-pinit-button').on('click', function() {
 		window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-
 		socialWarfare.ga('pin_image');
 	});
 }
 
+socialWarfare.doSaveButton = function() {
+	var image = $(this);
+
+	if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+		if (jQuery(image).parents().filter("a").length) {
+			return;
+		}
+	}
+
+	if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
+		return;
+	}
+
+	if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
+		return;
+	}
+
+	var pinMedia;
+
+	if ('undefined' !== typeof swpPinIt.image_source) {
+
+		//* Create a temp image to force absolute paths via jQuery.
+		var i = new Image();
+		i.src = swpPinIt.image_source;
+		pinMedia = jQuery(i).prop('src');
+
+	} else if (image.data('media')) {
+		pinMedia = image.data('media');
+	} else if ($(this).data('lazy-src')) {
+		pinMedia = $(this).data('lazy-src');
+	} else if (image[0].src) {
+		pinMedia = image[0].src;
+	};
+
+	// Bail if we don't have any media to pin.
+	if (!pinMedia || 'undefined' === typeof pinMedia) {
+		return;
+	}
+
+	var pinDesc = '';
+
+	if (typeof image.data("pin-description") != 'undefined') {
+		pinDesc = image.data("pin-description");
+	} else if ('undefined' !== typeof swpPinIt.image_description) {
+		pinDesc = swpPinIt.image_description;
+	} else if (image.attr('title')) {
+		pinDesc = image.attr('title');
+	} else if (image.attr('alt')) {
+		pinDesc = image.attr('alt');
+	}
+
+	var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
+	var imageClasses = image.attr('class');
+	var imageStyle = image.attr('style');
+
+	image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
+	image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+	image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+}
+
+
+/**
+ * Fire an event for Google Analytics and GTM.
+ * @param  {[type]} event [description]
+ * @return {[type]}       [description]
+ */
 socialWarfare.ga = function(event) {
-	// Record the event if Google Analytics Click tracking is enabled
+	/**
+	 * If click tracking has been enabled in the user settings, we'll
+	 * need to send the event via Googel Analytics. The swpClickTracking
+	 * variable will be dynamically generated via PHP and output in the
+	 * footer of the page.
+	 *
+	 */
 	if (true === swpClickTracking) {
 
 		/**
@@ -668,28 +688,20 @@ socialWarfare.handleButtonClicks = function() {
 		windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
 		instance         = window.open(href, '_blank', windowAttributes);
 
+
 		/**
-		 * If click tracking has been enabled in the user settings, we'll
-		 * need to send the event via Googel Analytics. The swpClickTracking
-		 * variable will be dynamically generated via PHP and output in the
-		 * footer of the page.
+		 * If a button was clicked, use the data-network attribute to
+		 * figure out which network is being shared. If it was a click
+		 * to tweet that was clicked on, just use ctt as the network.
 		 *
 		 */
-		if (true == swpClickTracking) {
-			/**
-			 * If a button was clicked, use the data-network attribute to
-			 * figure out which network is being shared. If it was a click
-			 * to tweet that was clicked on, just use ctt as the network.
-			 *
-			 */
-			if ($(this).hasClass('nc_tweet')) {
-				network = $(this).parents('.nc_tweetContainer').data('network');
-			} else if ($(this).hasClass('swp_CTT')) {
-				network = 'ctt';
-			}
-
-			socialWarfare.ga(network);
+		if ($(this).hasClass('nc_tweet')) {
+			network = $(this).parents('.nc_tweetContainer').data('network');
+		} else if ($(this).hasClass('swp_CTT')) {
+			network = 'ctt';
 		}
+
+		socialWarfare.ga(network);
 	});
 }
 
