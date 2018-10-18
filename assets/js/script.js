@@ -131,7 +131,7 @@ socialWarfare.activateHoverStates = function() {
 		var termWidth = $(this).find('.swp_share').outerWidth();
 		var iconWidth = $(this).find('i.sw').outerWidth();
 		var containerWidth = $(this).width();
-		var change = 1 + ((term_width + 35) / containerWidth);
+		var change = 1 + ((termWidth + 35) / containerWidth);
 
 		$(this).find('.iconFiller').width(termWidth + iconWidth + 25 + 'px');
 		$(this).css("flex", change + ' 1 0%');
@@ -814,9 +814,9 @@ socialWarfare.establishPanels = function() {
 	};
 
 	//* TODO create the data-position attribute in PHP and print it on each set of buttons panel.
-	var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-	var sidePanel = $(".swp_social_panelSide").find("'[data-position]=side'").first();
-	var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
+	var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide");
+	var sidePanel = $(".swp_social_panelSide");
+	// var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
 
 	if (staticPanel) {
 		socialWarfare.panels.static = staticPanel;
@@ -825,10 +825,10 @@ socialWarfare.establishPanels = function() {
 	if (sidePanel) {
 		socialWarfare.panels.side = sidePanel;
 	}
-
-	if (barPanel) {
-		socialWarfare.panels.bar = barPanel
-	}
+	//
+	// if (barPanel) {
+	// 	socialWarfare.panels.bar = barPanel
+	// }
 
 	return socialWarfare.panels;
 }
