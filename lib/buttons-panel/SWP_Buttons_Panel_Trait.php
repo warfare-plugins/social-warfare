@@ -29,7 +29,6 @@
  *     get_ordered_network_objects();
  *     get_key_from_name();
  *
- *     debug();
  *
  *
  * @since 3.4.0 | 21 SEP 2018 | Created
@@ -377,7 +376,7 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	* @since  3.0.0 | 09 MAY 2018 | Created
 	* @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
-	* @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category. 
+	* @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category.
 	* @param  void
 	* @return string A string containing the float bar location.
 	*
@@ -655,22 +654,5 @@ trait SWP_Buttons_Panel_Trait {
 	   endif;
 
 	   return $html;
-   }
-
-
-   /**
-	* Holds the query paramters for debugging.
-	*
-	* @since  3.1.0 | 05 JUL 2018 | Created the method.
-	* @param  void
-	* @return void
-	*
-	*/
-   public function debug() {
-	   if ( true === SWP_Utility::debug( 'buttons_panel' ) ) :
-		   echo "<pre>";
-		   var_dump($this);
-		   echo "</pre>";
-	   endif;
    }
 }

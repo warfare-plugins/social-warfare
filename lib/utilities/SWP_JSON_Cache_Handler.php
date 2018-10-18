@@ -19,6 +19,14 @@ class SWP_JSON_Cache_Handler {
 
 
 	/**
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
+	 *
+	 */
+	use SWP_Debug_Trait;
+
+
+	/**
 	 * The fetched from the remote JSON file.
 	 *
 	 * @var string
@@ -128,20 +136,4 @@ class SWP_JSON_Cache_Handler {
 		return true;
 
 	}
-
-
-	/**
-	 * A method for debugging this class.
-	 *
-	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	private function debug() {
-		if( true === SWP_Utility::debug( 'json_fetch') ):
-			var_dump($this);
-		endif;
-	}
-
 }
