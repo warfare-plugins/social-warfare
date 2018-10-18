@@ -15,7 +15,7 @@
 * @access    public
 *
 */
-class SWP_User_options {
+class SWP_User_Options {
 
 
 	/**
@@ -48,6 +48,7 @@ class SWP_User_options {
 		// Defered to End of Cycle: Add all relevant option info to the database.
 		add_action( 'wp_loaded', array( $this , 'store_registered_options_data' ), 10000 );
         add_action( 'admin_footer', array( $this, 'debug' ) );
+		add_action( 'wp_footer', array( $this, 'debug' ) );
 	}
 
 
@@ -303,11 +304,11 @@ class SWP_User_options {
 
 
 			/**
-			 * If a given user option is not listed in the list of registered,
-			 * available options, we need to filter it out of the user options.
+			 * If a given user option is not listed in the list of registered
+			 * options, we need to filter it out of the user options.
 			 *
 			 */
-            if ( empty( $available_options[$key] ) ) {
+            if ( !in_array( $key, $available_options ) ) {
                 unset( $this->user_options[$key] );
             }
         }
