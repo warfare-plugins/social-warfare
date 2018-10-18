@@ -104,7 +104,7 @@ socialWarfare.fetchFacebookShares = function() {
 			if ('undefined' !== typeof response1[0].share) {
 				shares = socialWarfare.parseFacebookShares(response1[0]);
 
-				if (swp_post_recovery_url) {
+				if (swp_post_recovery_url && 'undefined' !== typeof response2[0].share) {
 					shares += socialWarfare.parseFacebookShares(response2[0]);
 				}
 
@@ -124,9 +124,16 @@ socialWarfare.fetchFacebookShares = function() {
  *
  */
 socialWarfare.parseFacebookShares = function(response) {
-	return (parseInt(response.share.share_count) +
-		     parseInt(response.share.comment_count) +
-	       parseInt(response.og_object.likes.summary.total_count)) || 0;
+	var total = 0;
+
+	total += parseInt(response.share.share_count);
+	total += parseInt(response.share.comment_count);
+
+	if (typeof response.og_object != 'undefined') {
+		total += parseInt(response.og_object.likes.summary.total_count);
+	}
+
+	return total;
 }
 
 
