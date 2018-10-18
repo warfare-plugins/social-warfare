@@ -356,15 +356,15 @@ class SWP_Post_Cache {
 		 * previously cached image so that we can see if anything has changed.
 		 *
 		 */
-		$$pinterest_image_url = wp_get_attachment_url( $pinterest_image_id );
-		$current_image_url    = get_post_meta( $this->post_id , 'swp_pinterest_image_url' , true );
+		$pinterest_image_url = wp_get_attachment_url( $pinterest_image_id );
+		$current_image_url   = get_post_meta( $this->post_id , 'swp_pinterest_image_url' , true );
 
 
 		/**
 		 * No need to update the database if the image URL has not changed
 		 *
 		 */
-		if( $$pinterest_image_url === $current_image_url ){
+		if( $pinterest_image_url === $current_image_url ){
 			return;
 		}
 
@@ -375,7 +375,7 @@ class SWP_Post_Cache {
 		 *
 		 */
 		delete_post_meta( $this->post_id,'swp_pinterest_image_url' );
-		update_post_meta( $this->post_id,'swp_pinterest_image_url' , $$pinterest_image_url );
+		update_post_meta( $this->post_id,'swp_pinterest_image_url' , $pinterest_image_url );
 
     }
 
@@ -395,27 +395,50 @@ class SWP_Post_Cache {
      *
      */
     public function rebuild_open_graph_image() {
+
+		// Fetch the social media image that was declared by the user.
         $image_id = get_post_meta( $this->post_id , 'swp_og_image' , true );
 
-        if ( $image_id ):
 
-            $cur_image_url = get_post_meta( $this->post_id , 'swp_open_graph_image_url' , true );
-            $new_image_url = wp_get_attachment_url( $image_id );
+		/**
+		 * If there is no user defined social media image, delete the cached
+		 * field, if it exists, and then return.
+		 *
+		 */
+        if ( false === $image_id ) {
+			delete_post_meta( $this->post_id,'swp_open_graph_image_url' );
+			return;
+		}
 
-            // No need to update the DB if the url hasn't changed
-            if( $cur_image_url !== $new_image_url ):
 
-                $image_data = wp_get_attachment_image_src( $image_id , 'full' );
-                delete_post_meta( $this->post_id , 'swp_open_graph_image_data' );
-                update_post_meta( $this->post_id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+		/**
+		 * Fetch the URL of the currently assigned image and the URL of the
+		 * previously cached image so that we can see if anything has changed.
+		 *
+		 */
+		$new_image_url     = wp_get_attachment_url( $image_id );
+		$current_image_url = get_post_meta( $this->post_id , 'swp_open_graph_image_url' , true );
 
-                delete_post_meta( $this->post_id,'swp_open_graph_image_url' );
-                update_post_meta( $this->post_id,'swp_open_graph_image_url' , $new_image_url );
+        // No need to update the DB if the url hasn't changed
+        if( $current_image_url === $new_image_url ) {
+			return;
+		}
 
-            endif;
-        else:
-            delete_post_meta( $this->post_id,'swp_open_graph_image_url' );
-        endif;
+
+		/**
+		 * For this image, we're going to cache both the URL and some image data.
+		 * When we generate the OG tags, we'll then have access to cached data
+		 * like the width and height of the image.
+		 *
+		 */
+        $image_data = wp_get_attachment_image_src( $image_id , 'full' );
+
+        delete_post_meta( $this->post_id , 'swp_open_graph_image_data' );
+        delete_post_meta( $this->post_id , 'swp_open_graph_image_url' );
+
+        update_post_meta( $this->post_id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+        update_post_meta( $this->post_id , 'swp_open_graph_image_url' , $new_image_url );
+
     }
 
 
