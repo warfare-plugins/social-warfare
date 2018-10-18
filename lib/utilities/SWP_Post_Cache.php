@@ -519,23 +519,55 @@ class SWP_Post_Cache {
 	 *
 	 */
     private function establish_permalinks() {
-        global $swp_social_networks, $swp_user_options;
+        global $swp_social_networks;
         $this->permalinks = array();
 
-        foreach( $swp_social_networks as $key => $object):
-            if ( !$object->active ) :
-                continue;
-            endif;
 
+		/**
+		 * Loop through the global social network objects, identify the active
+		 * networks, and find the permalinks to check for each one.
+		 *
+		 */
+        foreach( $swp_social_networks as $key => $object) {
+
+
+			/**
+			 * If this particular network isn't active, we need to skip it and
+			 * not fetch any share counts for it.
+			 *
+			 */
+			if ( false == $object->active ) {
+                continue;
+            }
+
+
+			/**
+			 * This is the standard, current permalink for the post. We use the
+			 * standard permalink by default for checking for share counts.
+			 *
+			 */
             $this->permalinks[$key][] = get_permalink( $this->post_id );
 
-            if( isset( $swp_user_options['recover_shares'] ) && true === $swp_user_options['recover_shares'] ) :
+
+			/**
+			 * If share count recovery is activated, we'll add a second permalink
+			 * to the array for each network. So now we'll have two permalinks
+			 * for which to fetch share counts.
+			 *
+			 */
+            if( true === SWP_Utility::get_option('recover_shares') ) {
                 $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->post_id );
-            endif;
+            }
 
+
+			/**
+			 * This filter allows third-parties to enable another permalink for
+			 * which to check for share counts.
+			 *
+			 */
             $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
-        endforeach;
 
+        }
     }
 
 
