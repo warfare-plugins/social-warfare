@@ -229,26 +229,24 @@ socialWarfare.createFloatBar = function() {
 
 socialWarfare.toggleFloatingButtons = function() {
 	// Adjust the floating bar
-	var panel = $(".swp_social_panel").first();
-	var location = panel.data('float');
+	var location = socialWarfare.panels.static.data('float');
 
 	if (location == 'none') {
-		jQuery(".nc_wrapper, .swp_social_panelSide").hide();
-		return;
+		return $(".nc_wrapper, .swp_social_panelSide").hide();
 	}
 
-	if (isMobile()) {
-		createFloatBar();
-		toggleMobileButtons();
-		toggleFloatingBar();
+	if (socialWarfare.isMobile()) {
+		socialWarfare.createFloatBar();
+		socialWarfare.toggleMobileButtons();
+		socialWarfare.toggleFloatingBar();
 	}
 
 	if (location == "right" || location == "left") {
-		toggleSideButtons();
+		socialWarfare.toggleSideButtons();
 	}
 
 	if (location == "bottom" || location == "top") {
-		toggleFloatingBar();
+		socialWarfare.toggleFloatingBar();
 	}
 }
 
