@@ -406,7 +406,7 @@ class SWP_Post_Cache {
 		 *
 		 */
         if ( false === $image_id ) {
-			delete_post_meta( $this->post_id,'swp_open_graph_image_url' );
+			delete_post_meta( $this->post_id, 'swp_open_graph_image_url' );
 			return;
 		}
 
@@ -417,7 +417,7 @@ class SWP_Post_Cache {
 		 *
 		 */
 		$new_image_url     = wp_get_attachment_url( $image_id );
-		$current_image_url = get_post_meta( $this->post_id , 'swp_open_graph_image_url' , true );
+		$current_image_url = get_post_meta( $this->post_id, 'swp_open_graph_image_url' , true );
 
         // No need to update the DB if the url hasn't changed
         if( $current_image_url === $new_image_url ) {
@@ -431,13 +431,13 @@ class SWP_Post_Cache {
 		 * like the width and height of the image.
 		 *
 		 */
-        $image_data = wp_get_attachment_image_src( $image_id , 'full' );
+        $image_data = wp_get_attachment_image_src( $image_id, 'full' );
 
-        delete_post_meta( $this->post_id , 'swp_open_graph_image_data' );
-        delete_post_meta( $this->post_id , 'swp_open_graph_image_url' );
+        delete_post_meta( $this->post_id, 'swp_open_graph_image_data' );
+        delete_post_meta( $this->post_id, 'swp_open_graph_image_url' );
 
-        update_post_meta( $this->post_id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
-        update_post_meta( $this->post_id , 'swp_open_graph_image_url' , $new_image_url );
+        update_post_meta( $this->post_id, 'swp_open_graph_image_data', json_encode( $image_data ) );
+        update_post_meta( $this->post_id, 'swp_open_graph_image_url', $new_image_url );
 
     }
 
