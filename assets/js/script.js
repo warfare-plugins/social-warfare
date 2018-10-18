@@ -78,22 +78,24 @@ socialWarfare.parseFacebookShares = function(response) {
 
 
 socialWarfare.fetchFacebookShares = function() {
+	var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
+	var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
 	/**
 	 * Run all the API calls
 	 */
 	$.when(
-			$.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url),
-			(swp_post_recovery_url ? $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url) : '')
+			$.get(url1),
+			$.get(url2)
 		)
-		.then(function(request1, request2) {
+		.then(function(response1, response2) {
 			/**
 			 * Parse the responses, add up the activity, send the results to admin_ajax
 			 */
-			if ('undefined' !== typeof request1[0].share) {
-				var shares = socialWarfare.parseFacebookShares(request1[0]);
+			if ('undefined' !== typeof response1[0].share) {
+				var shares = socialWarfare.parseFacebookShares(response1[0]);
 
 				if (swp_post_recovery_url) {
-					shares += socialWarfare.parseFacebookShares(request2[0]);
+					shares += socialWarfare.parseFacebookShares(response2[0]);
 				}
 
 				var swpPostData = {
