@@ -150,22 +150,37 @@ class SWP_Post_Cache {
       * @return int  The current age of the cache in hours.
       *
       */
-     protected function get_cache_age() {
+    protected function get_cache_age() {
 
-         // An integer in hours. Example: 424814 == Number of hourse since Unix epoch.
-     	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
 
-         // The integer in hours at time of storage since the Unix epoch.
-     	$last_checked_time = get_post_meta( $this->post_id, 'swp_cache_timestamp', true );
+		/**
+		 * Fetch the current time and the time that the cache was last updated
+		 * so that we can compare them to find out how old the cache is.
+		 *
+		 */
+     	$current_time      = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
+     	$last_updated_time = get_post_meta( $this->post_id, 'swp_cache_timestamp', true );
 
-        if ( !is_numeric( $last_checked_time ) ) :
-            $last_checked_time = 0;
-        endif;
 
- 		// How many hours has it been since the cache was rebuilt?
-     	$age = $current_time - $last_checked_time;
+		/**
+		 * If the meta field is empty or non-existent, get_post_meta() will
+		 * return false. If it does, we'll simply convert it to an integer (0)
+		 * so that we can use it in the mathematical comparisons.
+		 *
+		 */
+        if ( false == is_numeric( $last_updated_time ) ) {
+            $last_updated_time = 0;
+        }
 
-     	return $age;
+
+		/**
+		 * Compare the current time to the time the cache was last updated, and
+		 * determine the age of the cache.
+		 *
+		 */
+     	$cache_age = $current_time - $last_updated_time;
+
+     	return $cache_age;
     }
 
 
