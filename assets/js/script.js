@@ -5,6 +5,9 @@
  *
  * bool   swpClickTracking (SWP_Script.php)
  * object swpPinIt
+ * string swp_admin_ajax
+ * string swp_post_url
+ * string swp_post_recovery_url
  *
 */
 
@@ -80,6 +83,7 @@ socialWarfare.parseFacebookShares = function(response) {
 socialWarfare.fetchFacebookShares = function() {
 	var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
 	var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
+
 	/**
 	 * Run all the API calls
 	 */
@@ -98,13 +102,13 @@ socialWarfare.fetchFacebookShares = function() {
 					shares += socialWarfare.parseFacebookShares(response2[0]);
 				}
 
-				var swpPostData = {
+				var data = {
 					action: 'swp_facebook_shares_update',
 					post_id: swp_post_id,
 					share_counts: shares
 				};
 
-				$.post(swp_admin_ajax, swpPostData);
+				$.post(swp_admin_ajax, data);
 			}
 		});
 }
@@ -130,9 +134,7 @@ socialWarfare.activateHoverStates = function() {
 		var change = 1 + ((term_width + 35) / containerWidth);
 
 		$(this).find('.iconFiller').width(termWidth + iconWidth + 25 + 'px');
-		$(this).css({
-			flex: change + ' 1 0%'
-		});
+		$(this).css("flex", change + ' 1 0%');
 	});
 
 	$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', socialWarfare.resetStaticDimensions);
@@ -149,7 +151,6 @@ socialWarfare.resetStaticDimensions = function() {
 //*  If any horiztonal buttons panel is currently visible on screen,
 //*  returns true. Else, returns false.
 socialWarefare.panelIsVisible = function() {
-	var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 	var visible = false;
 	var scrollPos = $(window).scrollTop();
 
@@ -796,6 +797,7 @@ socialWwarfare.isMobile = function() {
  * @return object The object which holds each of the kinds of buttons panels.
  */
 socialWarefare.establishPanels = function() {
+	//* Initialize the panels object with the three known panel types.
 	socialWarfare.panels = {
 		static: null,
 		side: null,
@@ -829,22 +831,19 @@ socialWarefare.establishPanels = function() {
  *
  */
 socialWarefare.initPlugin = function() {
+
 	socialWarefare.establishPanels();
 	socialWarefare.establishBreakpoint();
 	socialWarefare.handleButtonClicks();
 	socialWarefare.initShareButtons();
 
-	if (0 !== $('.swp_social_panelSide').length) {
+	if (socialWarfare.panels.side) {
 		socialWarefare.initSidePosition();
-	}
-
-	// Hide empty containers
-	if (1 === $('.swp-content-locator').parent().children().length) {
-		$('.swp-content-locator').parent().hide();
 	}
 }
 
 $(window).on('load', function() {
+
 	if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
 		socialWarefare.pinitButton();
 	}
