@@ -150,7 +150,7 @@ socialWarfare.resetStaticDimensions = function() {
 
 //*  If any horiztonal buttons panel is currently visible on screen,
 //*  returns true. Else, returns false.
-socialWarefare.panelIsVisible = function() {
+socialWarefare.staticstaticPanelIsVisible = function() {
 	var visible = false;
 	var scrollPos = $(window).scrollTop();
 
@@ -179,7 +179,7 @@ socialWarefare.panelIsVisible = function() {
  *  Clones a copy of the static buttons to use as a floating panel.
  *
  */
-socialWarfare.createFloatBar = function() {
+socialWarfare.createBarPanel = function() {
 	//* .swp_social_panelSide is the side floater.
 	if ($(".nc_wrapper").length) {
 		$(".nc_wrapper").remove();
@@ -236,17 +236,17 @@ socialWarfare.toggleFloatingButtons = function() {
 	}
 
 	if (socialWarfare.isMobile()) {
-		socialWarfare.createFloatBar();
+		socialWarfare.createBarPanel();
 		socialWarfare.toggleMobileButtons();
-		socialWarfare.toggleFloatingBar();
+		socialWarfare.toggleBarPanel();
 	}
 
 	if (location == "right" || location == "left") {
-		socialWarfare.toggleSideButtons();
+		socialWarfare.toggleSidePanel();
 	}
 
 	if (location == "bottom" || location == "top") {
-		socialWarfare.toggleFloatingBar();
+		socialWarfare.toggleBarPanel();
 	}
 }
 
@@ -254,7 +254,7 @@ socialWarfare.toggleFloatingButtons = function() {
 socialWarfare.toggleMobileButtons = function() {
 	var panel = $(".swp_social_panel").first();
 	// var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-	var visibility = panelIsVisible() ? "collapse" : "visible";
+	var visibility = staticPanelIsVisible() ? "collapse" : "visible";
 
 	//* Force side floating panel to be hidden.
 	$(".swp_social_panelSide").hide();
@@ -264,11 +264,11 @@ socialWarfare.toggleMobileButtons = function() {
 }
 
 
-socialWarfare.toggleSideButtons = function() {
+socialWarfare.toggleSidePanel = function() {
 	var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
 	var sidePanel = $(".swp_social_panelSide");
 	var location = sidePanel.data("float")
-	var visible = panelIsVisible();
+	var visible = staticPanelIsVisible();
 
 	if (isMobile() && $(".nc_wrapper").length) {
 		//* Mobile display with top/bottom mobile bar.
@@ -304,9 +304,9 @@ socialWarfare.toggleSideButtons = function() {
 	}
 }
 
-//* Note: All of the other logic for padding now lives in createFloatBar.
+//* Note: All of the other logic for padding now lives in createBarPanel.
 //* Otherwise, it added the padding every time this was called.
-socialWarfare.toggleFloatingBar = function() {
+socialWarfare.toggleBarPanel = function() {
 	var panel = $(".swp_social_panel").first();
 	var newPadding = 0;
 
@@ -317,7 +317,7 @@ socialWarfare.toggleFloatingBar = function() {
 		var location = $(panel).data("float-mobile")
 	}
 
-	if (panelIsVisible()) {
+	if (staticPanelIsVisible()) {
 		$(".nc_wrapper").hide();
 
 		newPadding = (location == "bottom") ? paddingBottom : paddingTop;
@@ -417,7 +417,7 @@ socialWarfare.centerSidePanel = function() {
 
 socialWarfare.initShareButtons = function() {
 	if (0 !== $('.swp_social_panel').length) {
-		createFloatBar();
+		createBarPanel();
 		centerSidePanel();
 		socialWarfareactivateHoverStates();
 		handleButtonClicks();
