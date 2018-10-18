@@ -844,9 +844,9 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function get_shares() {
-		if ( !empty( $this->share_counts ) ) :
+		if ( !empty( $this->share_counts ) ) {
 			return $this->share_counts;
-		endif;
+		}
 
 		return array();
 	}
@@ -872,10 +872,6 @@ class SWP_Post_Cache {
 		 */
 		foreach( $swp_social_networks as $network => $network_object ) {
 
-			if ( !isset( $swp_social_networks[$network] ) ) {
-				continue;
-			}
-
             $count = get_post_meta( $this->post_id, '_' . $network . '_shares', true );
 			$this->share_counts[$network] = $count ? $count : 0;
 		}
@@ -898,5 +894,4 @@ class SWP_Post_Cache {
 			echo $string;
 		}
 	}
-
 }

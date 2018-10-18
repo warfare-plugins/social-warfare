@@ -64,9 +64,9 @@ trait SWP_Debug_Trait {
 	 */
 	protected function debug() {
 		$class_name = str_replace('swp_', '', strtolower( __CLASS__ ) );
-		if( true === SWP_Utility::debug( $class_name ) ):
+		if( true === SWP_Utility::debug( $class_name ) ) {
 			echo "<pre>", var_dump( $this ), "</pre>";
-		endif;
+		}
 	}
 
 
