@@ -50,7 +50,7 @@ socialWarfare.throttle = function(delay, callback) {
         }
     }
 
-    if (socialWarfareguid) {
+    if (socialWarfare.guid) {
         wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
     }
 
@@ -382,7 +382,7 @@ socialWarfare.centerSidePanel = function() {
 	 * not try to center anything.
 	 *
 	 */
-	if (false == sidePanel.length) {
+	if (!socialWarfare.panels.side) {
 		return;
 	}
 
@@ -746,7 +746,7 @@ socialWarfare.checkListeners = function(count, limit) {
 	}
 
 	setTimeout(function() {
-		checkListeners(count++, limit)
+		socialWarfare.checkListeners(count++, limit)
 	}, 2000);
 }
 
@@ -756,16 +756,16 @@ socialWarfare.checkListeners = function(count, limit) {
  * @return void
  */
 socialWarfare.initSidePosition = function() {
-	var sidePanel = $('.swp_social_panelSide');
-	// *If using top or bottom vertical positions, let CSS position the element.
-	if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
+	if (!socialWarfare.panels.side) {
+		return;
+	}
 
-	var buttonsHeight = $(sidePanel).height();
+	var buttonsHeight = $(socialWarfare.panels.side).height();
 	var windowHeight = $(window).height();
 	var newPosition = parseInt((windowHeight / 2) - (buttonsHeight / 2));
 
 	setTimeout(function() {
-		$(sidePanel).animate({
+		$(socialWarfare.panels.side).animate({
 			top: newPosition
 		}, 0);
 	}, 105);
@@ -808,7 +808,7 @@ socialWarfare.establishPanels = function() {
 	var sidePanel = $(".swp_social_panelSide").find("'[data-position]=side'").first();
 	var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
 
-	if (panel) {
+	if (staticPanel) {
 		socialWarfare.panels.static = staticPanel;
 	}
 
@@ -854,7 +854,7 @@ $(document).ready(function() {
 
 	//* Check every 2 seconds for buttons panels, in case they still need click handlers.
 	setTimeout(function() {
-		checkListeners(0, 5);
+		socialWarfare.checkListeners(0, 5);
 	}, 2000);
 
 });
