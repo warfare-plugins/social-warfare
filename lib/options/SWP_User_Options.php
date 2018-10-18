@@ -401,7 +401,7 @@ class SWP_User_Options {
 		$defaults = $this->registered_options['defaults'];
 
 		foreach ( $defaults as $key => $value ) {
-			 if ( empty( $this->user_options[$key] ) ) {
+			 if ( !isset( $this->user_options[$key] ) ) {
 				 $this->user_options[$key] = $value;
 			 }
 		}
