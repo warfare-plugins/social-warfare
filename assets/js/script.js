@@ -1,5 +1,12 @@
 /* global swpPinIt */
 
+/*
+ * Variables sent from PHP:
+ *
+ * bool swpClickTracking (SWP_Script.php)
+ *
+*/
+
 /*!
  * jQuery throttle / debounce - v1.1 - 3/7/2010
  * http://benalman.com/projects/jquery-throttle-debounce-plugin/
@@ -7,6 +14,16 @@
  * Copyright (c) 2010 "Cowboy" Ben Alman
  * Dual licensed under the MIT and GPL licenses.
  * http://benalman.com/about/license/
+ */
+
+/**
+ * TODO: Change socialWarfarePlugin to socialWarfare
+ * TODO: Remove swp. and replace it with socialWarfare.
+ * TODO: Scope all function to socialWarfare for consistency and to avoid
+ *       conflicts with other plugins.
+ * TODO: Replace the jqThrottle with our custom version of it.
+ *
+ * @type {[type]}
  */
 
 var socialWarfarePlugin = socialWarfarePlugin || {};
@@ -244,7 +261,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	}
 
 
-	function swpRestoreSizes() {
+	socialWarfare.swpRestoreSizes = function() {
 		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
 		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
 
@@ -496,7 +513,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		 * actual browser window in order to calculate how to center it.
 		 *
 		 */
-		panelHeight  = sidePanel.outerHeight();
+		panelHeight = sidePanel.outerHeight();
 		windowHeight = window.innerHeight;
 
 
@@ -665,8 +682,8 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		 * share windows to pop out.
 		 *
 		 */
-		$( '.nc_tweet, a.swp_CTT' ).off( 'click' );
-		$( '.nc_tweet, a.swp_CTT' ).on( 'click', function( event ) {
+		$('.nc_tweet, a.swp_CTT').off('click');
+		$('.nc_tweet, a.swp_CTT').on('click', function(event) {
 
 
 			/**
@@ -677,7 +694,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			 * email button.
 			 *
 			 */
-			if ( $(this).hasClass( 'noPop' ) ) {
+			if ($(this).hasClass('noPop')) {
 				return false;
 			}
 
@@ -688,7 +705,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			 * we need to make sure that this attribute exists.
 			 *
 			 */
-			if ( false == $(this).data( 'link' ) ) {
+			if (false == $(this).data('link')) {
 				return false;
 			}
 
@@ -716,7 +733,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			 *
 			 */
 			height = 270;
-			width  = 500;
+			width = 500;
 
 
 			/**
@@ -725,9 +742,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			 * that we set above.
 			 *
 			 */
-			if ( $(this).is( '.pinterest, .buffer_link, .flipboard') ) {
+			if ($(this).is('.pinterest, .buffer_link, .flipboard')) {
 				height = 550;
-				width  = 775;
+				width = 775;
 			}
 
 
@@ -750,7 +767,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			 * footer of the page.
 			 *
 			 */
-			if (true == swpClickTracking) {
+			if (false == swpClickTracking) {
 
 
 				/**
@@ -759,9 +776,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				 * to tweet that was clicked on, just use ctt as the network.
 				 *
 				 */
-				if ( $(this).hasClass( 'nc_tweet' ) ) {
-					var network = $(this).parents('.nc_tweetContainer').data('network');
-				} else if ( $(this).hasClass( 'swp_CTT' ) ) {
+				if ($(this).hasClass('nc_tweet')) {
+					network = $(this).parents('.nc_tweetContainer').data('network');
+				} else if ($(this).hasClass('swp_CTT')) {
 					var network = 'ctt';
 				}
 
@@ -770,7 +787,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				 * event via their object and methods.
 				 *
 				 */
-				if ( 'function' == typeof ga ) {
+				if ('function' == typeof ga) {
 					ga('send', 'event', 'social_media', 'swp_' + network + '_share');
 				}
 
@@ -781,7 +798,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				 *
 				 */
 				if ('object' == typeof dataLayer) {
-					dataLayer.push({'event': 'swp_' + network + '_share'});
+					dataLayer.push({
+						'event': 'swp_' + network + '_share'
+					});
 				}
 			}
 
