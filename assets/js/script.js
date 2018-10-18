@@ -127,7 +127,7 @@ socialWarfare.activateHoverStates = function() {
 		if ($(this).hasClass('swp_nohover')) {
 			return;
 		}
-		
+
 		socialWarfare.resetStaticDimensions();
 		var termWidth = $(this).find('.swp_share').outerWidth();
 		var iconWidth = $(this).find('i.sw').outerWidth();
@@ -181,7 +181,11 @@ socialWarfare.staticPanelIsVisible = function() {
  *
  */
 socialWarfare.createBarPanel = function() {
-	console.log("createBarPanel")
+	//* If a horizontal panel does not exist,
+	if (!socialWarfare.panels.static) {
+		return;
+	}
+
 	var floatLocation = socialWarfare.panels.static.data("float");
 	var mobileFloatLocation = socialWarfare.panels.static.data("float-mobile");
 	var backgroundColor = socialWarfare.panels.static.data("float-color");
@@ -193,23 +197,15 @@ socialWarfare.createBarPanel = function() {
 		$(".nc_wrapper").remove();
 	}
 
-	//* If a horizontal panel does not exist,
-	if (!socialWarfare.panels.static) {
-		console.log("bail1")
-		return;
-	}
+
 
 	//* No floating bars are used at all.
-	console.log(floatLocation)
-	console.log(mobileFloatLocation)
 	if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
-		console.log("bail2")
 		return;
 	}
 
 	//* Or we are on desktop and not using top/bottom floaters:
 	if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
-		console.log("bail3")
 		return;
 	}
 
