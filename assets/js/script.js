@@ -20,8 +20,8 @@ if (typeof $ == 'undefined') {
   	var $ = jQuery;
 }
 
-var paddingTop = parseInt($('body').css('padding-top').replace('px', ''));
-var paddingBottom = parseInt($('body').css('padding-bottom').replace('px', ''));
+socialWarfare.paddingTop = parseInt($('body').css('padding-top').replace('px', ''));
+socialWarfare.paddingBottom = parseInt($('body').css('padding-bottom').replace('px', ''));
 
 socialWarfare.throttle = function(delay, callback) {
     var timeoutID = 0;
@@ -264,9 +264,15 @@ socialWarfare.toggleMobileButtons = function() {
 }
 
 
+/**
+ * Toggle the display of a side panel, depending on static panel visibility.
+ *
+ * @return void
+ */
 socialWarfare.toggleSidePanel = function() {
 	var location = socialWarfare.panels.side.data("float")
 	var visible = socialWarfare.staticPanelIsVisible();
+	var direction;
 
 	if (socialWarfare.isMobile() && $(".nc_wrapper").length) {
 		//* Mobile display with top/bottom mobile bar.
@@ -276,7 +282,7 @@ socialWarfare.toggleSidePanel = function() {
 
 	//* No buttons panel!
 	if (!socialWarfare.panels.static) {
-		if (!isMobile()) {
+		if (!socialWarfare.isMobile()) {
 			visible = false;
 		} else {
 			visible = true;
@@ -285,7 +291,8 @@ socialWarfare.toggleSidePanel = function() {
 
 	if (socialWarfare.panels.side.data("transition") == "slide") {
 
-		var direction = (location.indexOf("left") !== -1) ? "left" : "right";
+		direction = (location.indexOf("left") !== -1) ? "left" : "right";
+
 		if (visible) {
 			socialWarfare.panels.side.css(direction, "-150px");
 		} else {
@@ -304,8 +311,11 @@ socialWarfare.toggleSidePanel = function() {
 	}
 }
 
-//* Note: All of the other logic for padding now lives in createBarPanel.
-//* Otherwise, it added the padding every time this was called.
+/**
+ * Toggle the display of a floating bar, depending on static panel visibility.
+ *
+ * @return void
+ */
 socialWarfare.toggleBarPanel = function() {
 	var panel = $(".swp_social_panel").first();
 	var newPadding = 0;
@@ -320,7 +330,7 @@ socialWarfare.toggleBarPanel = function() {
 	if (staticPanelIsVisible()) {
 		$(".nc_wrapper").hide();
 
-		newPadding = (location == "bottom") ? paddingBottom : paddingTop;
+		newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
 
 	} else {
 		$(".nc_wrapper").show();
@@ -331,11 +341,10 @@ socialWarfare.toggleBarPanel = function() {
 
 		// Add some padding to the page so it fits nicely at the top or bottom
 		if (location == 'bottom') {
-			newPadding = paddingBottom + 50;
-			// $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
+			newPadding = socialWarfare.paddingBottom + 50;
 		} else {
 			if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-				newPadding = paddingTop + 50;
+				newPadding = socialWarfare.paddingTop + 50;
 				$('body').animate({
 					'padding-top': newPadding + 'px'
 				}, 0);
