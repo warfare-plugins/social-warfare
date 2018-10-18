@@ -164,7 +164,7 @@ class SWP_URL_Management {
 		 *
 		 */
         global $post;
-        $post_id           = $array['postID'];
+        $post_id           = $array['post_id'];
         $google_analytics  = SWP_Utility::get_option('google_analytics');
         $access_token      = SWP_Utility::get_option( 'bitly_access_token' );
         $cached_bitly_link = SWP_URL_Management::fetch_local_bitly_link( $post_id, $array['network'] );
@@ -336,12 +336,12 @@ class SWP_URL_Management {
 	 * @since  3.0.0 | 04 APR 2018 | Created
 	 * @param  string $url     The URL to be modified.
 	 * @param  string $network The network on which the URL is being shared.
-	 * @param  int    $postID  The post ID.
+	 * @param  int    $post_id  The post ID.
 	 * @return string          The modified URL.
 	 * @access public
 	 *
 	 */
-	public static function process_url( $url, $network, $postID, $is_cache_fresh = true ) {
+	public static function process_url( $url, $network, $post_id, $is_cache_fresh = true ) {
 
 
 		/**
@@ -361,7 +361,7 @@ class SWP_URL_Management {
 		 */
 		$array['url']         = $url;
 		$array['network']     = $network;
-		$array['postID']      = $postID;
+		$array['post_id']     = $post_id;
         $array['fresh_cache'] = $is_cache_fresh;
 		$array                = apply_filters( 'swp_analytics' , $array );
 		$array                = apply_filters( 'swp_link_shortening', $array);
