@@ -198,12 +198,12 @@ class SWP_Post_Cache {
 		 */
 		$network_shares = SWP_Utility::get_option( 'network_shares' );
 		$total_shares   = SWP_Utility::get_option( 'total_shares' );
-		if( false == ( $networks_shares || $total_shares ) ) {
+		if( false == ( $network_shares || $total_shares ) ) {
 			return 24;
 		}
 
  		// Integer in hours of the current age of the post.
- 		$current_time     = floor( date( 'U' );
+ 		$current_time     = floor( date( 'U' ) );
 		$publication_time = get_post_time( 'U' , false , $this->id );
  		$post_age         = $current_time - $publication_time;
 
