@@ -78,9 +78,8 @@ function absint($int) {
     return parseInt($int, 10);
 }
 
-function swp_trigger_events(event) {
-		var evt = $.Event(event);
-		$(window).trigger(evt);
+socialWarfare.trigger = function(event) {
+	  $(window).trigger($.Event(event));
 }
 
 	/****************************************************************************
@@ -139,7 +138,8 @@ function swp_trigger_events(event) {
 	 * @return none
 	 */
 	swp.activateHoverStates = function() {
-		swp_trigger_events('pre_activate_buttons');
+
+		socialWarfare.trigger('pre_activate_buttons');
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
 			if (!$(this).hasClass('swp_nohover')) {
 				swpRestoreSizes();
