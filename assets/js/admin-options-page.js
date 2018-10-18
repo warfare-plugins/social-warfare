@@ -1,4 +1,4 @@
-/* global ajaxurl, swpAdminOptionsData, socialWarfarePlugin, wp */
+/* global ajaxurl, swpAdminOptionsData, socialWarfare, wp */
 (function(window, $, undefined) {
 	'use strict';
 
@@ -209,7 +209,7 @@
 			$(this).parents('li').addClass('sw-active-tab');
 
 			if ('swp_styles' === tab) {
-				socialWarfarePlugin.activateHoverStates();
+				socialWarfare.activateHoverStates();
 			}
 
 			swpConditionalFields();
@@ -247,21 +247,21 @@
 		$('form.sw-admin-settings-form input, form.sw-admin-settings-form select').on('change', function() {
 			swpConditionalFields();
 
-			socialWarfarePlugin.newOptions = fetchAllOptions();
+			socialWarfare.newOptions = fetchAllOptions();
 
 			saveColorToggle();
 		});
 
-		socialWarfarePlugin.defaultOptions = fetchAllOptions();
+		socialWarfare.defaultOptions = fetchAllOptions();
 	}
 
 	/*********************************************************
 		A Function to change the color of the save button
 	 *********************************************************/
 	function saveColorToggle() {
-		socialWarfarePlugin.newOptions = fetchAllOptions();
+		socialWarfare.newOptions = fetchAllOptions();
 
-		if (JSON.stringify(socialWarfarePlugin.newOptions) !== JSON.stringify(socialWarfarePlugin.defaultOptions)) {
+		if (JSON.stringify(socialWarfare.newOptions) !== JSON.stringify(socialWarfare.defaultOptions)) {
 			$('.sw-save-settings').removeClass('sw-navy-button').addClass('sw-red-button');
 		} else {
 			$('.sw-save-settings').removeClass('sw-red-button').addClass('sw-navy-button');
@@ -298,7 +298,7 @@
 					clearLoadingScreen();
 
 					// Reset the default options variable
-					socialWarfarePlugin.defaultOptions = fetchAllOptions();
+					socialWarfare.defaultOptions = fetchAllOptions();
 
 					saveColorToggle();
 				}
@@ -368,8 +368,8 @@
 		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
-		if ('undefined' === typeof socialWarfarePlugin.lastClass) {
-			socialWarfarePlugin.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
+		if ('undefined' === typeof socialWarfare.lastClass) {
+			socialWarfare.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
 		}
 
 		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
@@ -377,9 +377,9 @@
 
 
         $('.swp_social_panel').removeClass("swp_other_medium_gray");
-        $('.swp_social_panel').removeClass(socialWarfarePlugin.lastClass).addClass(buttonsClass);
+        $('.swp_social_panel').removeClass(socialWarfare.lastClass).addClass(buttonsClass);
 
-		socialWarfarePlugin.lastClass = buttonsClass;
+		socialWarfare.lastClass = buttonsClass;
 	}
 
 	/*********************************************************
@@ -499,15 +499,15 @@
 			});
 
 			// Declare a default lastClass based on the default HTML if we haven't declared one
-			if('undefined' === typeof socialWarfarePlugin.lastClass){
-  				socialWarfarePlugin.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
+			if('undefined' === typeof socialWarfare.lastClass){
+  				socialWarfare.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
 			}
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
-			$('.swp_social_panel').removeClass(socialWarfarePlugin.lastClass).addClass(buttonsClass);
+			$('.swp_social_panel').removeClass(socialWarfare.lastClass).addClass(buttonsClass);
 
-			socialWarfarePlugin.lastClass = buttonsClass;
+			socialWarfare.lastClass = buttonsClass;
 		});
 	}
 
@@ -541,7 +541,7 @@
     				});
   			}
 
-  			socialWarfarePlugin.activateHoverStates();
+  			socialWarfare.activateHoverStates();
   		});
 	}
 
