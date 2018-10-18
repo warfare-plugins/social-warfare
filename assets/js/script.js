@@ -127,7 +127,8 @@ socialWarfare.activateHoverStates = function() {
 		if ($(this).hasClass('swp_nohover')) {
 			return;
 		}
-		// socialWarfare.resetStaticDimensions();
+		
+		socialWarfare.resetStaticDimensions();
 		var termWidth = $(this).find('.swp_share').outerWidth();
 		var iconWidth = $(this).find('i.sw').outerWidth();
 		var containerWidth = $(this).width();
