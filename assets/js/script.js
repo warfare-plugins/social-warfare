@@ -182,7 +182,7 @@ socialWarfare.staticPanelIsVisible = function() {
  */
 socialWarfare.createBarPanel = function() {
 	//* If a horizontal panel does not exist,
-	if (!socialWarfare.panels.static) {
+	if (!socialWarfare.panels.static || !socialWarfare.panels.static.length) {
 		return;
 	}
 
@@ -289,7 +289,7 @@ socialWarfare.toggleSidePanel = function() {
 	}
 
 	//* No buttons panel! Manually re-define ${visibility}.
-	if (!socialWarfare.panels.static) {
+	if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
 		if (!socialWarfare.isMobile()) {
 			visible = false;
 		} else {
@@ -385,7 +385,7 @@ socialWarfare.centerSidePanel = function() {
 	 * not try to center anything.
 	 *
 	 */
-	if (!socialWarfare.panels.side) {
+	if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
 		return;
 	}
 
@@ -763,7 +763,7 @@ socialWarfare.checkListeners = function(count, limit) {
  * @return void
  */
 socialWarfare.initSidePosition = function() {
-	if (!socialWarfare.panels.side) {
+	if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
 		return;
 	}
 
