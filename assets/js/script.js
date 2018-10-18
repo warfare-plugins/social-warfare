@@ -18,7 +18,7 @@
 
 /**
  * TODO: Change socialWarfare to socialWarfare
- * TODO: Remove swp. and replace it with socialWarfare.
+ * TODO: Remove socialWarfare and replace it with socialWarfare.
  * TODO: Scope all function to socialWarfare for consistency and to avoid
  *       conflicts with other plugins.
  * TODO: Replace the jqThrottle with our custom version of it.
@@ -66,8 +66,8 @@ socialWarfare.throttle = function(delay, callback) {
         }
     }
 
-    if (swp.guid) {
-        wrapper.guid = callback.guid = callback.guid || swp.guid++;
+    if (socialWarfareguid) {
+        wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
     }
 
     return wrapper;
@@ -137,7 +137,7 @@ socialWarfare.trigger = function(event) {
 	 * @param none
 	 * @return none
 	 */
-	swp.activateHoverStates = function() {
+	socialWarfareactivateHoverStates = function() {
 
 		socialWarfare.trigger('pre_activate_buttons');
 		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
@@ -441,9 +441,9 @@ socialWarfare.trigger = function(event) {
 		if (0 !== $('.swp_social_panel').length) {
 			createFloatBar();
 			centerSidePanel();
-			swp.activateHoverStates();
+			socialWarfareactivateHoverStates();
 			handleButtonClicks();
-			$(window).scroll(swp.throttle(50, function() {
+			$(window).scroll(socialWarfarethrottle(50, function() {
 				toggleFloatingButtons();
 			}));
 			$(window).trigger('scroll');
