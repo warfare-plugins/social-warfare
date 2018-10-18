@@ -328,6 +328,7 @@ class SWP_Post_Cache {
      * need for an additional database query during page loads.
      *
      * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
+     * @since  3.4.0 | 18 OCT 2018 | Refactored, simplified, docblocked.
      * @access protected
      * @param  void
      * @return void
@@ -336,21 +337,46 @@ class SWP_Post_Cache {
     public function rebuild_pinterest_image() {
 
         // Check if a custom pinterest image has been declared
-    	$pin_image_id = get_post_meta( $this->post_id , 'swp_pinterest_image' , true );
+    	$pinterest_image_id = get_post_meta( $this->post_id , 'swp_pinterest_image' , true );
 
-    	if ( false !== $pin_image_id ) :
-    		$pin_image_url = wp_get_attachment_url( $pin_image_id );
-    		$cur_image_url = get_post_meta( $this->post_id , 'swp_pinterest_image_url' , true );
 
-    		// No need to update the database if the image URL has not changed
-    		if($pin_image_url !== $cur_image_url):
-    			delete_post_meta( $this->post_id,'swp_pinterest_image_url' );
-    			update_post_meta( $this->post_id,'swp_pinterest_image_url' , $pin_image_url );
-    		endif;
+		/**
+		 * If there is no user defined Pinterest image, delete the cached
+		 * field, if it exists, and then return.
+		 *
+		 */
+    	if ( false === $pinterest_image_id ) {
+			delete_post_meta( $this->post_id , 'swp_pinterest_image_url' );
+			return;
+		}
 
-    	else:
-    		delete_post_meta( $this->post_id , 'swp_pinterest_image_url' );
-    	endif;
+
+		/**
+		 * Fetch the URL of the currently assigned image and the URL of the
+		 * previously cached image so that we can see if anything has changed.
+		 *
+		 */
+		$$pinterest_image_url = wp_get_attachment_url( $pinterest_image_id );
+		$current_image_url    = get_post_meta( $this->post_id , 'swp_pinterest_image_url' , true );
+
+
+		/**
+		 * No need to update the database if the image URL has not changed
+		 *
+		 */
+		if( $$pinterest_image_url === $current_image_url ){
+			return;
+		}
+
+
+		/**
+		 * If the image has changed, we need to delete the old one and replace
+		 * it with the new one.
+		 *
+		 */
+		delete_post_meta( $this->post_id,'swp_pinterest_image_url' );
+		update_post_meta( $this->post_id,'swp_pinterest_image_url' , $$pinterest_image_url );
+
     }
 
 
