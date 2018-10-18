@@ -63,14 +63,14 @@ socialWarfare.trigger = function(event) {
     Fetch and Store Facebook Counts
 
 ****************************************************************************/
-
+/**
+ * Adds the share data from a facebook API response.
+ *
+ * @param  object response The API response received from Facebook.
+ * @return number The total shares summed from the request, or 0.
+ *
+ */
 socialWarfare.parseFacebookShares = function(response) {
-	// if('undefined' !== typeof request1[0].og_object) {
-	//     var f3 = parseInt(request1[0].og_object.likes.summary.total_count);
-	// } else {
-	//     var f3 = 0;
-	// }
-	//
 	return (parseInt(response[0].share.share_count) +
 		     parseInt(response[0].share.comment_count) +
 	       parseInt(response[0].og_object.likes.summary.total_count)) || 0;
