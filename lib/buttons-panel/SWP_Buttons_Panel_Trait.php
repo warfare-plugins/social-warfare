@@ -338,6 +338,9 @@ trait SWP_Buttons_Panel_Trait {
 	*/
    public function get_float_location() {
 	   $post_on = false;
+	   $location = $this->get_option( 'float_location' );
+	   $float_enabled = 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] );
+	   $float_enabled = $float_enabled && $this->get_option('floating_panel' );
 
 	   if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
 		   return 'none';
@@ -345,21 +348,20 @@ trait SWP_Buttons_Panel_Trait {
 
 	   $post_setting = get_post_meta( $this->post_id, 'swp_float_location', true );
 
-	   if( is_array( $post_setting ) ) {
-			$post_setting = $post_setting[0];
-	   }
-
 	   // If the location is set in the post options, use that.
-	   if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+	   if ( !empty( $post_setting ) ) {
 		   if( 'off' === $post_setting) {
 			   return 'none';
 		   }
 
-		   $post_on = true;
+		   if ( 'on' == $post_setting ) {
+			   return $location;
+		   }
 	   };
 
-	   if ( $post_on || is_singular() && true === $this->get_option('floating_panel') && 'on' === $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
-		   return $this->get_option('float_location');
+
+	   if ( $post_on || "default" == $post_setting || is_singular() && $float_enabled ) {
+		   return $location;
 	   }
 
 	   return 'none';
@@ -401,6 +403,19 @@ trait SWP_Buttons_Panel_Trait {
 	   }
 
 	   return 'none';
+   }
+
+
+   public function get_float_position() {
+	   $location = $this->get_option( 'float_location' );
+
+	   if ( 'left' == $location || 'right' == $location ) {
+		   return 'side';
+	   }
+
+	   if ( 'top' == $location || 'bottom' == $location ) {
+		   return 'bar';
+	   }
    }
 
 
@@ -633,6 +648,7 @@ trait SWP_Buttons_Panel_Trait {
 		   //* already existed and are used elsewhere, so I'm not touching them.
 		   '" data-float="' . $this->get_float_location() . '"' .
 		   ' data-float-mobile="' . $this->get_mobile_float_location() . '"' .
+
 		   ' style="' . $style . '" >';
 
 		   $total_shares_html = $this->generate_total_shares_html();
