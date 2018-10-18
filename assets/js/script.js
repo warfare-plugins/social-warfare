@@ -150,7 +150,7 @@ socialWarfare.resetStaticDimensions = function() {
 
 //*  If any horiztonal buttons panel is currently visible on screen,
 //*  returns true. Else, returns false.
-socialWarefare.staticPanelIsVisible = function() {
+socialWarfare.staticPanelIsVisible = function() {
 	var visible = false;
 	var scrollPos = $(window).scrollTop();
 
@@ -256,7 +256,7 @@ socialWarfare.toggleFloatingButtons = function() {
 
 /**
  * Toggle the visibilty of a mobile bar.
- * 
+ *
  * @return void
  */
 socialWarfare.toggleMobileButtons = function() {
@@ -268,7 +268,6 @@ socialWarfare.toggleMobileButtons = function() {
 	//* Make sure hidden mobile buttons do not block clicks on content underneath.
 	$(".nc_wrapper").css("visibility", visibility);
 }
-
 
 /**
  * Toggle the display of a side panel, depending on static panel visibility.
@@ -282,11 +281,11 @@ socialWarfare.toggleSidePanel = function() {
 
 	if (socialWarfare.isMobile() && $(".nc_wrapper").length) {
 		//* Mobile display with top/bottom mobile bar.
-		sidePanel.hide();
+		socialWarfare.panels.side.hide();
 		return;
 	}
 
-	//* No buttons panel!
+	//* No buttons panel! Manually re-define ${visibility}.
 	if (!socialWarfare.panels.static) {
 		if (!socialWarfare.isMobile()) {
 			visible = false;
@@ -796,7 +795,7 @@ socialWwarfare.isMobile = function() {
  *
  * @return object The object which holds each of the kinds of buttons panels.
  */
-socialWarefare.establishPanels = function() {
+socialWarfare.establishPanels = function() {
 	//* Initialize the panels object with the three known panel types.
 	socialWarfare.panels = {
 		static: null,
@@ -830,28 +829,28 @@ socialWarefare.establishPanels = function() {
  * @return void
  *
  */
-socialWarefare.initPlugin = function() {
+socialWarfare.initPlugin = function() {
 
-	socialWarefare.establishPanels();
-	socialWarefare.establishBreakpoint();
-	socialWarefare.handleButtonClicks();
-	socialWarefare.initShareButtons();
+	socialWarfare.establishPanels();
+	socialWarfare.establishBreakpoint();
+	socialWarfare.handleButtonClicks();
+	socialWarfare.initShareButtons();
 
 	if (socialWarfare.panels.side) {
-		socialWarefare.initSidePosition();
+		socialWarfare.initSidePosition();
 	}
 }
 
 $(window).on('load', function() {
 
 	if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
-		socialWarefare.pinitButton();
+		socialWarfare.pinitButton();
 	}
 	window.clearCheckID = 0;
 });
 
 $(document).ready(function() {
-	socialWarefare.initPlugin();
+	socialWarfare.initPlugin();
 
 	//* Check every 2 seconds for buttons panels, in case they still need click handlers.
 	setTimeout(function() {
