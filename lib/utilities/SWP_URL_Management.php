@@ -177,7 +177,7 @@ class SWP_URL_Management {
 		 * the array without modification.
 		 *
 		 */
-        if ( false == $access_token || true !== SWP_Utility::get_option( 'bitly_authentication' ) ) {
+        if ( false == $access_token || false == SWP_Utility::get_option( 'bitly_authentication' ) ) {
 			return $array;
         }
 
@@ -365,7 +365,6 @@ class SWP_URL_Management {
         $array['fresh_cache'] = $is_cache_fresh;
 		$array                = apply_filters( 'swp_analytics' , $array );
 		$array                = apply_filters( 'swp_link_shortening', $array);
-		// $array                = SWP_URL_Management::link_shortener($array);
 
 		return $array['url'];
 	}
