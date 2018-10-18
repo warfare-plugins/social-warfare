@@ -670,9 +670,17 @@ class SWP_Post_Cache {
     private function calculate_network_shares() {
         global $swp_social_networks, $swp_user_options;
 
-        $share_counts     = array();
-        $checked_networks = array();
+        $share_counts                 = array();
+		$share_counts['total_shares'] = 0;
+        $checked_networks             = array();
 
+
+		/**
+		 * This loops through all of the parsed API responses and converts them
+		 * into share counts. The loop below will then go through all the
+		 * remaining networks that didn't have API requests/responses.
+		 *
+		 */
         foreach ( $this->parsed_api_responses as $request => $networks ) {
             foreach ( $networks as $network => $count_array ) {
                 foreach ( $count_array as $count ) {
@@ -682,23 +690,65 @@ class SWP_Post_Cache {
 
                     $share_counts[$network] += $count;
                 }
+
                 $checked_networks[] = $network;
             }
         }
 
-        if ( isset( $swp_user_options['order_of_icons'] ) ) {
 
-            //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
-            foreach( $swp_user_options['order_of_icons'] as $network ) {
-                if ( in_array( $network, $checked_networks ) ) {
-					continue;
-				}
+		/**
+		 * After we processed the API responses, we'll now go through all active
+		 * networks regardless of whether or not they have an API, and process
+		 * their share counts. Of course, most of these will be zeroes unless it
+		 * is a network that used to have share counts. If so, we will not
+		 * override the old share counts unless the using is using the debug
+		 * parameter to force it to do so.
+		 *
+		 */
+        foreach( SWP_Utility::get_option( 'order_of_icons' ) as $network ) {
+			$count = 0;
 
-                $count = get_post_meta( $this->post_id, "_${network}_shares", true );
-                $count = isset($count) ? $count : 0;
-                $share_counts[$network] = $count;
 
-            }
+			/**
+			 * If this is a network that we checked above (that has an API),
+			 * then let's start by using the count fetched from the API.
+			 *
+			 */
+            if ( in_array( $network, $checked_networks ) ) {
+				$count = $share_counts[$network];
+			}
+
+
+			/**
+			 * Let's fetch the previous count that we have stored in the database
+			 * from the previous API calls so that we can run a comparison.
+			 *
+			 */
+			$previous_count = get_post_meta( $this->post_id, "_${network}_shares", true );
+			$previous_count = ( isset( $previous_count ) ? $previous_count : 0 );
+
+
+			/**
+			 * The ?swp_debug=force_new_shares will force it to update to the
+			 * newest numbers even if it is a lower number. If this debug
+			 * parameter is off, however, then we simply use whichever number is
+			 * highest between the current and previously fetched counts.
+			 *
+			 */
+			if ( $count < $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
+				$count = $previous_count;
+			}
+
+
+			/**
+			 * Iterate the total shares with our new numbers, and then store
+			 * this network's count in the local property for caching and
+			 * display later on.
+			 *
+			 */
+			$share_counts['total_shares'] += $count;
+            $share_counts[$network]        = $count;
+
         }
 
         $this->share_counts = $share_counts;
@@ -720,30 +770,26 @@ class SWP_Post_Cache {
 	 *
 	 */
     private function cache_share_counts() {
-        $this->share_counts['total_shares'] = 0;
 
+
+		/**
+		 * If the local property $share_counts is empty, then we won't have any
+		 * share counts to cache in the database so just bail out.
+		 *
+		 */
         if ( empty( $this->share_counts ) ) {
             return;
         }
 
+
+		/**
+		 * Loop through the share counts for each network and store the new
+		 * counts in the databse in custom fields.
+		 *
+		 */
         foreach( $this->share_counts as $key => $count ) {
             if ( 'total_shares' === $key ) {
                 continue;
-            }
-
-            $previous_count = get_post_meta( $this->post_id, "_${key}_shares", true);
-
-            if ( empty( $previous_count ) ) {
-                $previous_count = 0;
-            }
-
-			// We only update to newly fetched numbers if they're bigger than
-			// the old ones unless the url parameter is forcing it to take.
-            if ( $count <= $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
-                $this->share_counts[$key] = $previous_count;
-                $this->share_counts['total_shares'] += $previous_count;
-            } else {
-                $this->share_counts['total_shares'] += $count;
             }
 
             delete_post_meta( $this->post_id, "_${key}_shares");
