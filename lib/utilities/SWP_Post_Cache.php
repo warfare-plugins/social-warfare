@@ -674,6 +674,7 @@ class SWP_Post_Cache {
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @since  3.4.0 | 18 OCT 2018 | Refactored to ensure that force_new_shares
 	 *                               works the way that it's supposed to.
+	 * @since  3.4.0 | 18 OCT 2018 | Added array_unique to prevent double counts.
 	 * @var    share_counts An array of share count numbers.
 	 * @param  void
 	 * @return void All data stored in local properties.
@@ -705,6 +706,17 @@ class SWP_Post_Cache {
 		 */
         foreach ( $this->parsed_api_responses as $request => $networks ) {
             foreach ( $networks as $network => $count_array ) {
+
+
+				/**
+				 * Added a call to array_unique to eliminate duplicate share
+				 * counts when share recovery is active. In some cases, the
+				 * social networks detect the change in URL and return the same
+				 * share count for the current URL as well as the old, redirected
+				 * URL. This prevents the count from being doubled.
+				 *
+				 */
+				$count_array = array_unique( $count_array );
                 foreach ( $count_array as $count ) {
                     if ( !isset( $share_counts[$network] ) ) {
                         $share_counts[$network] = 0;
