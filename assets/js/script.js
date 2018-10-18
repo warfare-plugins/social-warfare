@@ -17,7 +17,7 @@
  */
 
 /**
- * TODO: Change socialWarfarePlugin to socialWarfare
+ * TODO: Change socialWarfare to socialWarfare
  * TODO: Remove swp. and replace it with socialWarfare.
  * TODO: Scope all function to socialWarfare for consistency and to avoid
  *       conflicts with other plugins.
@@ -26,7 +26,7 @@
  * @type {[type]}
  */
 
-window.socialWarfarePlugin = window.socialWarfarePlugin || {};
+window.socialWarfare = window.socialWarfare || {};
 
 
 (function(window, $) {
@@ -89,7 +89,7 @@ function swp_trigger_events(event) {
 
 	****************************************************************************/
 
-	socialWarfarePlugin.parseFacebookShares = function(response) {
+	socialWarfare.parseFacebookShares = function(response) {
 		// if('undefined' !== typeof request1[0].og_object) {
 		//     var f3 = absint(request1[0].og_object.likes.summary.total_count);
 		// } else {
@@ -102,7 +102,7 @@ function swp_trigger_events(event) {
 	}
 
 
-	socialWarfarePlugin.fetchFacebookShares = function() {
+	socialWarfare.fetchFacebookShares = function() {
 		/**
 		 * Run all the API calls
 		 */
@@ -115,10 +115,10 @@ function swp_trigger_events(event) {
 				 * Parse the responses, add up the activity, send the results to admin_ajax
 				 */
 				if ('undefined' !== typeof request1[0].share) {
-					var shares = socialWarfarePlugin.parseFacebookShares(request1);
+					var shares = socialWarfare.parseFacebookShares(request1);
 
 					if (swp_post_recovery_url) {
-						shares += socialWarfarePlugin.parseFacebookShares(request2);
+						shares += socialWarfare.parseFacebookShares(request2);
 					}
 
 					var swpPostData = {
@@ -792,20 +792,20 @@ function swp_trigger_events(event) {
 	}
 
 
-	//* Stores the user-defined mobile breakpoint in the socialWarfarePlugin object.
+	//* Stores the user-defined mobile breakpoint in the socialWarfare object.
 	function establishBreakpoint() {
 		var panel = $(".swp_social_panel");
-		socialWarfarePlugin.breakpoint = 1100;
+		socialWarfare.breakpoint = 1100;
 
 		if (panel.length && panel.data("min-width") || panel.data("min-width") == 0) {
-			socialWarfarePlugin.breakpoint = parseInt(panel.data("min-width"));
+			socialWarfare.breakpoint = parseInt(panel.data("min-width"));
 		}
 	}
 
 	//* Checks to see if the current viewport is within the defined mobile boundary.
 	function isMobile() {
 		var currentWidth = $(window).width();
-		return currentWidth < socialWarfarePlugin.breakpoint;
+		return currentWidth < socialWarfare.breakpoint;
 	}
 
 	/**
