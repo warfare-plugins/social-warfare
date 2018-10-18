@@ -51,8 +51,6 @@
  *     get_ordered_network_objects();
  *     get_key_from_name();
  *
- *     debug();
- *
  *
  *
  * @package   SocialWarfare\Functions
@@ -67,6 +65,7 @@ class SWP_Buttons_Panel {
 
 
 	use SWP_Buttons_Panel_Trait;
+	use SWP_Debug_Trait;
 
 
 	/**

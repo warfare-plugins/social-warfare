@@ -17,6 +17,14 @@ class SWP_Sidebar_Loader {
 
 
 	/**
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
+	 *
+	 */
+	use SWP_Debug_Trait;
+	
+
+	/**
 	 * Instantiate the class.
 	 *
 	 * @since  3.3.0 | 03 AUG 2018 | Created.
@@ -51,25 +59,6 @@ class SWP_Sidebar_Loader {
         add_filter( 'swp_admin_sidebar', function( $components ) {
             return array_merge( $components, $cache_data['sidebar'] );
         });
-	}
-
-
-	/**
-	 * A function for debugging this class.
-	 *
-	 * All notices are stored in the $this->notices as an array of notice
-	 * objects. Since this is the last method called, all notices should be
-	 * present in the $this object for review.
-	 *
-	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	private function debug() {
-		if( true === SWP_Utility::debug( 'notices' ) ):
-			var_dump($this);
-		endif;
 	}
 
 }

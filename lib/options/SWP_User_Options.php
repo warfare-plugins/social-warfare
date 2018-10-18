@@ -19,6 +19,14 @@ class SWP_User_options {
 
 
 	/**
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
+	 *
+	 */
+	use SWP_Debug_Trait;
+
+
+	/**
 	 * The Constructor
 	 *
 	 * This is designed to pull in the user's options, filter them appropriately,
@@ -397,19 +405,4 @@ class SWP_User_options {
 			 }
 		}
     }
-
-
-	/**
-	 * A function for debugging this class.
-	 *
-	 * @since  3.3.0 | 07 AUG 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	public function debug() {
-		if( true === SWP_Utility::debug( 'swp_user_options' ) ) {
-			echo "<pre>", var_export($this), "</pre>";
-		}
-	}
 }
