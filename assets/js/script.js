@@ -3,11 +3,14 @@
 /*
  * JS variables created on the server:
  *
- * bool   swpClickTracking (SWP_Script.php)
- * object swpPinIt
- * string swp_admin_ajax
- * string swp_post_url
- * string swp_post_recovery_url
+ * bool   	swpClickTracking (SWP_Script.php)
+ * bool   	swpFloatBeforeContent
+ *
+ * object 	swpPinIt
+ *
+ * string 	swp_admin_ajax
+ * string 	swp_post_url
+ * string 	swp_post_recovery_url
  *
 */
 
@@ -88,21 +91,24 @@ socialWarfare.fetchFacebookShares = function() {
 			$.get(url2)
 		)
 		.then(function(response1, response2) {
+			var shares = 0;
+			var data = {
+				action: 'swp_facebook_shares_update',
+				post_id: swp_post_id
+			};
+
 			/**
-			 * Parse the responses, add up the activity, send the results to admin_ajax
+			 * Parse the responses, add up the activity, send the results to admin_ajax.
+			 *
 			 */
 			if ('undefined' !== typeof response1[0].share) {
-				var shares = socialWarfare.parseFacebookShares(response1[0]);
+				shares = socialWarfare.parseFacebookShares(response1[0]);
 
 				if (swp_post_recovery_url) {
 					shares += socialWarfare.parseFacebookShares(response2[0]);
 				}
 
-				var data = {
-					action: 'swp_facebook_shares_update',
-					post_id: swp_post_id,
-					share_counts: shares
-				};
+				data.share_counts = shares;
 
 				$.post(swp_admin_ajax, data);
 			}
@@ -179,6 +185,7 @@ socialWarfare.staticPanelIsVisible = function() {
 	var visible = false;
 	var scrollPos = $(window).scrollTop();
 
+  //* Iterate each buttons panel, checking each to see if it is currently visible.
 	$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
 		var offset = $(this).offset();
 
@@ -186,6 +193,7 @@ socialWarfare.staticPanelIsVisible = function() {
 		if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
 			var theContent = jQuery(".swp-content-locator").parent();
 
+      //* We are in sight of an "Above the content" panel.
 			if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
 				visible = true;
 			}
@@ -206,7 +214,7 @@ socialWarfare.staticPanelIsVisible = function() {
  *
  */
 socialWarfare.createBarPanel = function() {
-	//* If a horizontal panel does not exist,
+	//* If a horizontal panel does not exist, we can not create a bar.
 	if (!socialWarfare.panels.static || !socialWarfare.panels.static.length) {
 		return;
 	}
@@ -216,6 +224,7 @@ socialWarfare.createBarPanel = function() {
 	var backgroundColor = socialWarfare.panels.static.data("float-color");
 	var left = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
 	var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+	var barLocation = '';
 
 	//* .swp_social_panelSide is the side floater.
 	if ($(".nc_wrapper").length) {
@@ -234,15 +243,18 @@ socialWarfare.createBarPanel = function() {
 
   //* Set the location (top or bottom) of the bar depending on
 	if (socialWarfare.isMobile()) {
-		var barLocation = mobileFloatLocation;
+		barLocation = mobileFloatLocation;
 	} else {
-		var barLocation = floatLocation;
+		barLocation = floatLocation;
 	}
 
+  //* Assign a CSS class to the wrapper based on the float-mobile location.
 	wrapper.addClass(barLocation).hide().appendTo("body");
 
+  //* Save the new buttons panel to our ${panels} object.
 	socialWarfare.panels.bar = socialWarfare.panels.static.first().clone();
 
+  //* Give the bar panel the appropriate classname and put it in its wrapper.
 	socialWarfare.panels.bar.addClass("nc_floater").css({
 		width: socialWarfare.panels.static.outerWidth(true),
 		left: left
@@ -263,6 +275,7 @@ socialWarfare.toggleFloatingButtons = function() {
 	// Adjust the floating bar
 	var location = socialWarfare.panels.static.data('float');
 
+  //* There are no floating buttons enabled, hide any that might exist.
 	if (location == 'none') {
 		return $(".nc_wrapper, .swp_social_panelSide").hide();
 	}
@@ -357,32 +370,42 @@ socialWarfare.toggleSidePanel = function() {
  */
 socialWarfare.toggleBarPanel = function() {
 	var panel = $(".swp_social_panel").first();
+	var paddingProp, location = '';
 	var newPadding = 0;
 
 	//* Set the location based on whether we are desktop or mobile.
 	if (!socialWarfare.isMobile()) {
-		var location = $(panel).data("float");
+		location = $(panel).data("float");
 	} else {
-		var location = $(panel).data("float-mobile")
+		location = $(panel).data("float-mobile")
 	}
 
 	if (socialWarfare.staticPanelIsVisible()) {
 
 		$(".nc_wrapper").hide();
 		newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
-
 	} else {
 
 		$(".nc_wrapper").show();
-		//* Show the top/bottom floating bar. Force its opacity to normal.
-		//* @see SWP_Buttons_Panel->render_HTML()
+
+		/**
+		 * Show the top/bottom floating bar. Force its opacity to normal.
+		 * @see SWP_Buttons_Panel->render_HTML()
+		 *
+		 */
 		$(".swp_social_panel.nc_floater").css("opacity", 1)
 
-		// Add some padding to the page so it fits nicely at the top or bottom.
+		/**
+		 * Add some padding to the page so it fits nicely at the top or bottom.
+		 *
+		 */
 		if (location == 'bottom') {
+
 			newPadding = socialWarfare.paddingBottom + 50;
 		} else {
+
 			if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
+
 				newPadding = socialWarfare.paddingTop + 50;
 				$('body').animate({
 					'padding-top': newPadding + 'px'
@@ -391,7 +414,8 @@ socialWarfare.toggleBarPanel = function() {
 		}
 	}
 
-	var paddingProp = "padding-" + location;
+  //* Create the CSS property name.
+	paddingProp = "padding-" + location;
 	$("body").animate({
 		paddingProp: newPadding
 	}, 0);
@@ -465,11 +489,12 @@ socialWarfare.initShareButtons = function() {
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 
+    //* Prevent the scroll event from over-triggering callbacks.
 		$(window).scroll(socialWarfare.throttle(50, function() {
 			socialWarfare.toggleFloatingButtons();
 		}));
+
 		$(window).trigger('scroll');
-		// $('.swp_social_panel').css({'opacity':1});
 	}
 }
 
@@ -493,7 +518,7 @@ socialWarfare.pinitButton = function() {
 
   /**
    * Attach a click handler to each of the newly created "Save" buttons.
-   * 
+   *
    */
 	$('.sw-pinit .sw-pinit-button').on('click', function() {
 		window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
