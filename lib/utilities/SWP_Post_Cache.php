@@ -76,7 +76,7 @@ class SWP_Post_Cache {
         global $swp_user_options;
 
 		// Set up the post data into local properties.
-		$this->id = $post_id;
+		$this->post_id = $post_id;
         $this->establish_share_counts();
 
 		// If the cache is expired, trigger the rebuild processes.
@@ -156,7 +156,7 @@ class SWP_Post_Cache {
      	$current_time = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
 
          // The integer in hours at time of storage since the Unix epoch.
-     	$last_checked_time = get_post_meta( $this->id, 'swp_cache_timestamp', true );
+     	$last_checked_time = get_post_meta( $this->post_id, 'swp_cache_timestamp', true );
 
         if ( !is_numeric( $last_checked_time ) ) :
             $last_checked_time = 0;
@@ -204,7 +204,7 @@ class SWP_Post_Cache {
 
  		// Integer in hours of the current age of the post.
  		$current_time     = floor( date( 'U' ) );
-		$publication_time = get_post_time( 'U' , false , $this->id );
+		$publication_time = get_post_time( 'U' , false , $this->post_id );
  		$post_age         = $current_time - $publication_time;
 
  		// If it's less than 21 days old.
@@ -258,7 +258,7 @@ class SWP_Post_Cache {
         $this->reset_timestamp();
 
 		// A hook to allow third-party functions to run.
-		do_action( 'swp_cache_rebuild', $this->id );
+		do_action( 'swp_cache_rebuild', $this->post_id );
 	}
 
 
@@ -277,7 +277,7 @@ class SWP_Post_Cache {
         global $swp_user_options;
 
 		// Only fetch on published posts
-		if( 'publish' !== get_post_status( $this->id ) ) {
+		if( 'publish' !== get_post_status( $this->post_id ) ) {
 			$this->debug_message( 'No Shares Fetched. This post is not yet published.' );
 			return false;
 		}
@@ -296,10 +296,10 @@ class SWP_Post_Cache {
 	 */
 	public function process_urls() {
     	global $swp_social_networks;
-    	$permalink = get_permalink( $this->id );
+    	$permalink = get_permalink( $this->post_id );
         foreach( $swp_social_networks as $network ) {
             if( $network->is_active() ) {
-                SWP_URL_Management::process_url( $permalink, $network->key, $this->id, false );
+                SWP_URL_Management::process_url( $permalink, $network->key, $this->post_id, false );
             }
         }
 	}
@@ -321,20 +321,20 @@ class SWP_Post_Cache {
     public function rebuild_pinterest_image() {
 
         // Check if a custom pinterest image has been declared
-    	$pin_image_id = get_post_meta( $this->id , 'swp_pinterest_image' , true );
+    	$pin_image_id = get_post_meta( $this->post_id , 'swp_pinterest_image' , true );
 
     	if ( false !== $pin_image_id ) :
     		$pin_image_url = wp_get_attachment_url( $pin_image_id );
-    		$cur_image_url = get_post_meta( $this->id , 'swp_pinterest_image_url' , true );
+    		$cur_image_url = get_post_meta( $this->post_id , 'swp_pinterest_image_url' , true );
 
     		// No need to update the database if the image URL has not changed
     		if($pin_image_url !== $cur_image_url):
-    			delete_post_meta( $this->id,'swp_pinterest_image_url' );
-    			update_post_meta( $this->id,'swp_pinterest_image_url' , $pin_image_url );
+    			delete_post_meta( $this->post_id,'swp_pinterest_image_url' );
+    			update_post_meta( $this->post_id,'swp_pinterest_image_url' , $pin_image_url );
     		endif;
 
     	else:
-    		delete_post_meta( $this->id , 'swp_pinterest_image_url' );
+    		delete_post_meta( $this->post_id , 'swp_pinterest_image_url' );
     	endif;
     }
 
@@ -354,26 +354,26 @@ class SWP_Post_Cache {
      *
      */
     public function rebuild_open_graph_image() {
-        $image_id = get_post_meta( $this->id , 'swp_og_image' , true );
+        $image_id = get_post_meta( $this->post_id , 'swp_og_image' , true );
 
         if ( $image_id ):
 
-            $cur_image_url = get_post_meta( $this->id , 'swp_open_graph_image_url' , true );
+            $cur_image_url = get_post_meta( $this->post_id , 'swp_open_graph_image_url' , true );
             $new_image_url = wp_get_attachment_url( $image_id );
 
             // No need to update the DB if the url hasn't changed
             if( $cur_image_url !== $new_image_url ):
 
                 $image_data = wp_get_attachment_image_src( $image_id , 'full' );
-                delete_post_meta( $this->id , 'swp_open_graph_image_data' );
-                update_post_meta( $this->id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+                delete_post_meta( $this->post_id , 'swp_open_graph_image_data' );
+                update_post_meta( $this->post_id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
 
-                delete_post_meta( $this->id,'swp_open_graph_image_url' );
-                update_post_meta( $this->id,'swp_open_graph_image_url' , $new_image_url );
+                delete_post_meta( $this->post_id,'swp_open_graph_image_url' );
+                update_post_meta( $this->post_id,'swp_open_graph_image_url' , $new_image_url );
 
             endif;
         else:
-            delete_post_meta( $this->id,'swp_open_graph_image_url' );
+            delete_post_meta( $this->post_id,'swp_open_graph_image_url' );
         endif;
     }
 
@@ -388,8 +388,8 @@ class SWP_Post_Cache {
      *
      */
     public function reset_timestamp() {
-        delete_post_meta( $this->id, 'swp_cache_timestamp' );
-    	update_post_meta( $this->id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+        delete_post_meta( $this->post_id, 'swp_cache_timestamp' );
+    	update_post_meta( $this->post_id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
     }
 
 
@@ -402,7 +402,7 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function delete_timestamp() {
-		delete_post_meta( $this->id, 'swp_cache_timestamp' );
+		delete_post_meta( $this->post_id, 'swp_cache_timestamp' );
 	}
 
 
@@ -458,10 +458,10 @@ class SWP_Post_Cache {
                 continue;
             endif;
 
-            $this->permalinks[$key][] = get_permalink( $this->id );
+            $this->permalinks[$key][] = get_permalink( $this->post_id );
 
             if( isset( $swp_user_options['recover_shares'] ) && true === $swp_user_options['recover_shares'] ) :
-                $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->id );
+                $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->post_id );
             endif;
 
             $this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
@@ -600,7 +600,7 @@ class SWP_Post_Cache {
             //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
             foreach( $swp_user_options['order_of_icons'] as $network ) {
                 if ( !in_array( $network, $checked_networks ) ) :
-                    $count = get_post_meta( $this->id, "_${network}_shares", true );
+                    $count = get_post_meta( $this->post_id, "_${network}_shares", true );
                     $count = isset($count) ? $count : 0;
                     $share_counts[$network] = $count;
                 endif;
@@ -640,7 +640,7 @@ class SWP_Post_Cache {
                 continue;
             }
 
-            $previous_count = get_post_meta( $this->id, "_${key}_shares", true);
+            $previous_count = get_post_meta( $this->post_id, "_${key}_shares", true);
 
             if ( empty( $previous_count ) ) {
                 $previous_count = 0;
@@ -655,12 +655,12 @@ class SWP_Post_Cache {
                 $this->share_counts['total_shares'] += $count;
             }
 
-            delete_post_meta( $this->id, "_${key}_shares");
-            update_post_meta( $this->id, "_${key}_shares", $this->share_counts[$key] );
+            delete_post_meta( $this->post_id, "_${key}_shares");
+            update_post_meta( $this->post_id, "_${key}_shares", $this->share_counts[$key] );
         }
 
-        delete_post_meta( $this->id, '_total_shares');
-        update_post_meta( $this->id, '_total_shares', $this->share_counts['total_shares'] );
+        delete_post_meta( $this->post_id, '_total_shares');
+        update_post_meta( $this->post_id, '_total_shares', $this->share_counts['total_shares'] );
     }
 
 
@@ -701,11 +701,11 @@ class SWP_Post_Cache {
 				continue;
 			endif;
 
-            $count = get_post_meta( $this->id, '_' . $network . '_shares', true );
+            $count = get_post_meta( $this->post_id, '_' . $network . '_shares', true );
 			$this->share_counts[$network] = $count ? $count : 0;
 		}
 
-        $total = get_post_meta( $this->id, '_total_shares', true );
+        $total = get_post_meta( $this->post_id, '_total_shares', true );
         $this->share_counts['total_shares'] = $total ? $total : 0;
 	}
 
