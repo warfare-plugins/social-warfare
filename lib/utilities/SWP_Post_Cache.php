@@ -287,7 +287,7 @@ class SWP_Post_Cache {
 	 * @return bool True: fetch share counts; False: don't fetch counts.
 	 *
 	 */
-	private function should_shares_be_fetched() {
+	protected function should_shares_be_fetched() {
 
 		// Only fetch on published posts
 		if( 'publish' !== get_post_status( $this->post_id ) ) {
@@ -511,12 +511,11 @@ class SWP_Post_Cache {
      *                 share count update process.
 	 *
 	 * @since  3.1.0 | 21 JUN 2018 | Created
-	 * @access private
 	 * @param  void
 	 * @return void
 	 *
 	 */
-    private function establish_permalinks() {
+    protected function establish_permalinks() {
         global $swp_social_networks;
         $this->permalinks = array();
 
@@ -578,7 +577,7 @@ class SWP_Post_Cache {
      * @return void
      *
      */
-    private function establish_api_request_urls() {
+    protected function establish_api_request_urls() {
         global $swp_social_networks;
         $this->api_urls = array();
 
@@ -606,7 +605,7 @@ class SWP_Post_Cache {
 	 * @return void All data is stored in local properties.
 	 *
 	 */
-    private function fetch_api_responses() {
+    protected function fetch_api_responses() {
 		$current_request = 0;
         foreach ( $this->api_urls as $request => $networks ) {
             $this->raw_api_responses[$current_request] = SWP_CURL::fetch_shares_via_curl_multi( $networks );
@@ -629,7 +628,7 @@ class SWP_Post_Cache {
 	 * @return void Processed data is stored in local properties.
 	 *
 	 */
-    private function parse_api_responses() {
+    protected function parse_api_responses() {
         global $swp_social_networks;
 
 
@@ -672,7 +671,7 @@ class SWP_Post_Cache {
 	 * @return void All data stored in local properties.
 	 *
 	 */
-    private function calculate_network_shares() {
+    protected function calculate_network_shares() {
         global $swp_social_networks;
 
 
@@ -784,7 +783,7 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-    private function cache_share_counts() {
+    protected function cache_share_counts() {
 
 
 		/**
@@ -874,7 +873,7 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-	private function debug() {
+	protected function debug() {
 		if( true === SWP_Utility::debug('swp_share_cache') ):
             echo "<pre>", var_dump( $this ), "</pre>";
 		endif;
@@ -889,7 +888,7 @@ class SWP_Post_Cache {
 	 * @return void
 	 *
 	 */
-	private function debug_message( $string ) {
+	protected function debug_message( $string ) {
 		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
 			echo $string;
 		}
