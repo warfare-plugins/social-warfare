@@ -754,7 +754,7 @@ socialWarfare.trigger = function(event) {
 		var panel = $('.swp_social_panel');
 
 		if (panel.length > 0 && panel.find(".swp_pinterest")) {
-			return handleButtonClicks();
+			return socialWarfare.handleButtonClicks();
 		}
 
 		setTimeout(function() {
@@ -800,6 +800,38 @@ socialWarfare.trigger = function(event) {
 		return currentWidth < socialWarfare.breakpoint;
 	}
 
+  /**
+   * Finds each kind of buttons panel, if it exists, and stores it to the
+   * socialWarfare object for later reference.
+   *
+   * @return object The object which holds each of the kinds of buttons panels. 
+   */
+	socialWarefare.establishPanels = function() {
+		socialWarfare.panels = {
+			static: null,
+			side: null,
+			bar: null
+		};
+
+		var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide").first();
+		var sidePanel = $(".swp_social_panelSide").find("'[data-position]=side'").first();
+		var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
+
+		if (panel) {
+			socialWarfare.panels.static = staticPanel;
+		}
+
+		if (sidePanel) {
+			socialWarfare.panels.side = sidePanel;
+		}
+
+		if (barPanel {
+			socialWarfare.panels.bar = barPanel
+		}
+
+		return socialWarfare.panels;
+	}
+
 	/**
 	 * Runs the initialization callbacks for button handlers and placement.
 	 *
@@ -807,9 +839,10 @@ socialWarfare.trigger = function(event) {
 	 *
 	 */
 	socialWarefare.initPlugin = function() {
-		establishBreakpoint();
-		handleButtonClicks();
-		initShareButtons();
+		socialWarefare.establishPanels();
+		socialWarefare.establishBreakpoint();
+		socialWarefare.handleButtonClicks();
+		socialWarefare.initShareButtons();
 
 		var swp_hover = false;
 
