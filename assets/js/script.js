@@ -74,9 +74,9 @@ socialWarfare.trigger = function(event) {
  *
  */
 socialWarfare.parseFacebookShares = function(response) {
-	return (parseInt(response[0].share.share_count) +
-		     parseInt(response[0].share.comment_count) +
-	       parseInt(response[0].og_object.likes.summary.total_count)) || 0;
+	return (parseInt(response.share.share_count) +
+		     parseInt(response.share.comment_count) +
+	       parseInt(response.og_object.likes.summary.total_count)) || 0;
 }
 
 
