@@ -150,7 +150,7 @@ socialWarfare.resetStaticDimensions = function() {
 
 //*  If any horiztonal buttons panel is currently visible on screen,
 //*  returns true. Else, returns false.
-socialWarefare.staticstaticPanelIsVisible = function() {
+socialWarefare.staticPanelIsVisible = function() {
 	var visible = false;
 	var scrollPos = $(window).scrollTop();
 
@@ -191,7 +191,7 @@ socialWarfare.createBarPanel = function() {
 	}
 
 	var floatLocation = socialWarfare.panels.static.data("float");
-	var mobileFloatLocation = panel.data("float-mobile");
+	var mobileFloatLocation = socialWarfare.panels.static.data("float-mobile");
 
 	//* No floating bars are used at all.
 	if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
@@ -217,7 +217,7 @@ socialWarfare.createBarPanel = function() {
 
 	var clone = socialWarfare.panels.static.clone();
 	clone.addClass("nc_floater").css({
-		width: panel.outerWidth(true),
+		width: socialWarfare.panels.static.outerWidth(true),
 		left: left
 	}).appendTo(wrapper);
 
@@ -265,19 +265,17 @@ socialWarfare.toggleMobileButtons = function() {
 
 
 socialWarfare.toggleSidePanel = function() {
-	var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-	var sidePanel = $(".swp_social_panelSide");
-	var location = sidePanel.data("float")
-	var visible = staticPanelIsVisible();
+	var location = socialWarfare.panels.side.data("float")
+	var visible = socialWarfare.staticPanelIsVisible();
 
-	if (isMobile() && $(".nc_wrapper").length) {
+	if (socialWarfare.isMobile() && $(".nc_wrapper").length) {
 		//* Mobile display with top/bottom mobile bar.
 		sidePanel.hide();
 		return;
 	}
 
-	if (!panel.length) {
-		//* No buttons panel!
+	//* No buttons panel!
+	if (!socialWarfare.panels.static) {
 		if (!isMobile()) {
 			visible = false;
 		} else {
@@ -285,18 +283,20 @@ socialWarfare.toggleSidePanel = function() {
 		}
 	}
 
-	if (sidePanel.data("transition") == "slide") {
+	if (socialWarfare.panels.side.data("transition") == "slide") {
+
 		var direction = (location.indexOf("left") !== -1) ? "left" : "right";
 		if (visible) {
-			sidePanel.css(direction, "-150px");
+			socialWarfare.panels.side.css(direction, "-150px");
 		} else {
-			sidePanel.css(direction, "5px");
+			socialWarfare.panels.side.css(direction, "5px");
 		}
 	} else {
+
 		if (visible) {
-			sidePanel.css("opacity", 1).fadeOut(300).css("opacity", 0);
+			socialWarfare.panels.side.css("opacity", 1).fadeOut(300).css("opacity", 0);
 		} else {
-			sidePanel.css("opacity", 0).fadeIn(300).css({
+			socialWarfare.panels.side.css("opacity", 0).fadeIn(300).css({
 				opacity: 1,
 				display: "flex"
 			});
