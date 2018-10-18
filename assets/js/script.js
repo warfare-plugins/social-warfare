@@ -226,7 +226,11 @@ socialWarfare.createBarPanel = function() {
 	});
 }
 
-
+/**
+ * Handler to toggle the display of either the side or bar floating buttons.
+ *
+ * @return void
+ */
 socialWarfare.toggleFloatingButtons = function() {
 	// Adjust the floating bar
 	var location = socialWarfare.panels.static.data('float');
