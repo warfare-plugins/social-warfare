@@ -254,14 +254,16 @@ socialWarfare.toggleFloatingButtons = function() {
 	}
 }
 
-
+/**
+ * Toggle the visibilty of a mobile bar.
+ * 
+ * @return void
+ */
 socialWarfare.toggleMobileButtons = function() {
-	var panel = $(".swp_social_panel").first();
-	// var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-	var visibility = staticPanelIsVisible() ? "collapse" : "visible";
+	var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
 
 	//* Force side floating panel to be hidden.
-	$(".swp_social_panelSide").hide();
+	socialWarfare.panels.side.hide();
 
 	//* Make sure hidden mobile buttons do not block clicks on content underneath.
 	$(".nc_wrapper").css("visibility", visibility);
