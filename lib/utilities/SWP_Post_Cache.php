@@ -582,7 +582,6 @@ class SWP_Post_Cache {
      */
     private function establish_api_request_urls() {
         global $swp_social_networks;
-
         $this->api_urls = array();
 
         foreach ( $this->permalinks as $network => $links ) {
@@ -635,9 +634,9 @@ class SWP_Post_Cache {
     private function parse_api_responses() {
         global $swp_social_networks;
 
-        if ( empty( $this->raw_api_responses ) ) :
+        if ( empty( $this->raw_api_responses ) ) {
             return;
-        endif;
+        }
 
         $this->parsed_api_responses = array();
 
@@ -671,7 +670,7 @@ class SWP_Post_Cache {
     private function calculate_network_shares() {
         global $swp_social_networks, $swp_user_options;
 
-        $share_counts = array();
+        $share_counts     = array();
         $checked_networks = array();
 
         foreach ( $this->parsed_api_responses as $request => $networks ) {
@@ -687,18 +686,20 @@ class SWP_Post_Cache {
             }
         }
 
-        if ( isset( $swp_user_options['order_of_icons'] ) ) :
+        if ( isset( $swp_user_options['order_of_icons'] ) ) {
 
             //* For defunct network shares (e.g. Google Plus, LinkedIn, StumbleUpon)
             foreach( $swp_user_options['order_of_icons'] as $network ) {
-                if ( !in_array( $network, $checked_networks ) ) :
-                    $count = get_post_meta( $this->post_id, "_${network}_shares", true );
-                    $count = isset($count) ? $count : 0;
-                    $share_counts[$network] = $count;
-                endif;
-            }
+                if ( in_array( $network, $checked_networks ) ) {
+					continue;
+				}
 
-        endif;
+                $count = get_post_meta( $this->post_id, "_${network}_shares", true );
+                $count = isset($count) ? $count : 0;
+                $share_counts[$network] = $count;
+
+            }
+        }
 
         $this->share_counts = $share_counts;
     }
@@ -721,9 +722,9 @@ class SWP_Post_Cache {
     private function cache_share_counts() {
         $this->share_counts['total_shares'] = 0;
 
-        if ( empty( $this->share_counts ) ) :
+        if ( empty( $this->share_counts ) ) {
             return;
-        endif;
+        }
 
         foreach( $this->share_counts as $key => $count ) {
             if ( 'total_shares' === $key ) {
