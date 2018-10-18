@@ -196,12 +196,16 @@ class SWP_Post_Cache {
 		 * posts calculations and the admin posts column.
 		 *
 		 */
-		if( false == SWP_Utility::get_option( 'network_shares' ) && false == SWP_Utility::get_option( 'total_shares' ) ) {
+		$network_shares = SWP_Utility::get_option( 'network_shares' );
+		$total_shares   = SWP_Utility::get_option( 'total_shares' );
+		if( false == ( $networks_shares || $total_shares ) ) {
 			return 24;
 		}
 
  		// Integer in hours of the current age of the post.
- 		$post_age = floor( date( 'U' ) - get_post_time( 'U' , false , $this->id ) );
+ 		$current_time     = floor( date( 'U' );
+		$publication_time = get_post_time( 'U' , false , $this->id );
+ 		$post_age         = $current_time - $publication_time;
 
  		// If it's less than 21 days old.
  		if ( $post_age < ( 21 * 86400 ) ) {
