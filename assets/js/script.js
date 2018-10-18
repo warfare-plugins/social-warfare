@@ -26,76 +26,62 @@
  * @type {[type]}
  */
 
-var socialWarfarePlugin = socialWarfarePlugin || {};
+window.socialWarfarePlugin = window.socialWarfarePlugin || {};
 
 
-/**
- * I wanted to understand the code above, so this is a stripped down version.
- *
- * This one has no comments.
- * Because we only use it with two arguments, I also removed the extra parameters
- * (and their corresponding logic).
- *
- * The result should achieve the exact same effect as above.
- * But! We should not use this. It is for informative purposes only.
- *
- */
+(function(window, $) {
+'use strict';
 
-(function(window, undefined) {
+if (typeof $ == 'undefined') {
+  	var $ = jQuery;
+}
 
-    socialWarfare.throttle = function(delay, callback) {
-        var timeoutID = 0;
-        var lastExec = 0;
+var paddingTop = absint($('body').css('padding-top').replace('px', ''));
+var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
 
-        function wrapper() {
-            var that = this;
-            var elapsed = +new Date() - lastExec;
-            var args = arguments;
+socialWarfare.throttle = function(delay, callback) {
+    var timeoutID = 0;
+    var lastExec = 0;
 
-            function exec() {
-                lastExec = +new Date();
-                callback.apply(that, args);
-            }
+    function wrapper() {
+        var that = this;
+        var elapsed = +new Date() - lastExec;
+        var args = arguments;
 
-            function clear() {
-                timeoutID = undefined;
-            }
-
-            timeoutID && clearTimeout(timeoutID);
-
-            if (elapsed > delay) {
-                exec();
-            } else {
-                timeoutID = setTimeout(exec,  delay - elapsed);
-            }
+        function exec() {
+            lastExec = +new Date();
+            callback.apply(that, args);
         }
 
-        if (swp.guid) {
-            wrapper.guid = callback.guid = callback.guid || swp.guid++;
+        function clear() {
+            timeoutID = undefined;
         }
 
-        return wrapper;
-    };
+        timeoutID && clearTimeout(timeoutID);
 
-(function(window, $, undefined) {
-	'use strict';
+        if (elapsed > delay) {
+            exec();
+        } else {
+            timeoutID = setTimeout(exec,  delay - elapsed);
+        }
+    }
 
-	if (typeof $ == 'undefined') {
-		$ = jQuery;
-	}
+    if (swp.guid) {
+        wrapper.guid = callback.guid = callback.guid || swp.guid++;
+    }
 
-	var swp = window.socialWarfarePlugin;
-	var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-	var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
+    return wrapper;
+};
 
-	function absint($int) {
-		return parseInt($int, 10);
-	}
 
-	function swp_trigger_events(event) {
+function absint($int) {
+    return parseInt($int, 10);
+}
+
+function swp_trigger_events(event) {
 		var evt = $.Event(event);
 		$(window).trigger(evt);
-	}
+}
 
 	/****************************************************************************
 
