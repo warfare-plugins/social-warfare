@@ -451,10 +451,10 @@ socialWarfare.pinitButton = function() {
 	};
 
 	var options = $.extend(defaults, options);
-	var pinterestButton = findPinterestSaveButton();
+	var pinterestButton = socialWarfare.findPinterestSaveButton();
 
 	if (typeof pinterestButton != 'undefined' && pinterestButton) {
-		removePinterestButton(pinterestButton);
+		socialWarfare.removePinterestButton(pinterestButton);
 	}
 
 	// Iterate over the current set of matched elements.
