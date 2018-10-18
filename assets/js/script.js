@@ -725,6 +725,7 @@ socialWarfare.handleButtonClicks = function() {
 /**
  * Looks for a "Save" button created by Pinterest addons.
  *
+ * @return HTMLNode if the Pinterest button is found, else NULL.
  */
 socialWarfare.findPinterestSaveButton = function() {
 	//* Known constants used by Pinterest.
@@ -733,6 +734,7 @@ socialWarfare.findPinterestSaveButton = function() {
 	var pinterestBackgroundSize = "14px 14px";
 	var button = null;
 
+  //* The Pinterest button is a <span/>, so check each span for a match.
 	document.querySelectorAll("span").forEach(function(el, index) {
 		var style = window.getComputedStyle(el);
 
@@ -754,10 +756,12 @@ socialWarfare.findPinterestSaveButton = function() {
 socialWarfare.removePinterestButton = function(button) {
 	var pinterestSquare = button.nextSibling;
 
+  //* The sibling to the Pinterest button is always a span.
 	if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
 		var style = window.getComputedStyle(pinterestSquare);
 		var size = "24px";
 
+    //* If the sibling is indeed the correct Pinterest sibling, destory it all. 
 		if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
 			pinterestSquare.remove()
 		}
