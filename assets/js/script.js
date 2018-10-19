@@ -216,6 +216,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 * their normal state once a user is no longer hovering over the buttons.
 	 *
 	 * @see activateHoverStates().
+	 * @param  void
 	 * @return void
 	 *
 	 */
@@ -228,6 +229,12 @@ window.socialWarfare = window.socialWarfare || {};
 	/**
 	 * Determines if a set of static buttons is currenty visible on the screen.
 	 *
+	 * We will use this to determine whether or not we should display a set of
+	 * floating buttons. Whenever the static buttons are visible, we hide the
+	 * floating buttons. Whenever the static buttons are not visible, we show
+	 * the floating buttons.
+	 *
+	 * @param  void
 	 * @return bool True if a static set of buttons is visible on the screen, else false.
 	 *
 	 */
@@ -262,19 +269,30 @@ window.socialWarfare = window.socialWarfare || {};
 	/**
 	 *  Clones a copy of the static buttons to use as a floating panel.
 	 *
+	 * We clone a set of the static horizontal buttons so that when we create
+	 * the floating set we can make the position match exactly. This way when
+	 * they are showing up and disappearing, it will create the allusion that
+	 * the static buttons are just getting glued to the edge of the screen and
+	 * following along with the user as they scroll.
+	 *
+	 * @since  1.0.0 | 01 JAN 2016 | Created
+	 * @param  void
+	 * @return void
+	 *
 	 */
 	socialWarfare.createBarPanel = function() {
+
 		//* If a horizontal panel does not exist, we can not create a bar.
 		if (!socialWarfare.panels.static || !socialWarfare.panels.static.length) {
 			return;
 		}
 
-		var floatLocation = socialWarfare.panels.static.data("float");
+		var floatLocation       = socialWarfare.panels.static.data("float");
 		var mobileFloatLocation = socialWarfare.panels.static.data("float-mobile");
-		var backgroundColor = socialWarfare.panels.static.data("float-color");
-		var left = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
-		var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-		var barLocation = '';
+		var backgroundColor     = socialWarfare.panels.static.data("float-color");
+		var left                = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
+		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+		var barLocation         = '';
 
 		//* .swp_social_panelSide is the side floater.
 		if ($(".nc_wrapper").length) {
@@ -319,7 +337,14 @@ window.socialWarfare = window.socialWarfare || {};
 	/**
 	 * Handler to toggle the display of either the side or bar floating buttons.
 	 *
+	 * We only show the floating buttons when the static horizontal buttons are
+	 * not in the visible view port. This function is used to toggle their
+	 * visibility when they need to be shown or hidden.
+	 *
+	 * @since  2.0.0 | 01 JAN 2016 | Created
+	 * @param  void
 	 * @return void
+	 * 
 	 */
 	socialWarfare.toggleFloatingButtons = function() {
 		// Adjust the floating bar
