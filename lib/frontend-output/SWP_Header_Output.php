@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Register and output open graph tags, Twitter cards, custom color CSS, and the icon fonts.
+ * Register and output the icon fonts.
  *
  * @package   SocialWarfare\Functions\Frontend-Output
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
