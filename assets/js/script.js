@@ -56,8 +56,8 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 * @param  integer   delay    How often in ms to allow the event to fire.
 	 * @param  function  callback The function to run if the timeout period is expired.
-	 * @return {[type]}            [description]
-	 * 
+	 * @return function           The callback function.
+	 *
 	 */
 	socialWarfare.throttle = function(delay, callback) {
 	    var timeoutID = 0;
@@ -95,7 +95,9 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * A simple wrapper for easily triggering DOM events.
+	 * A simple wrapper for easily triggering DOM events. This will allow us to
+	 * fire off our own custom events that our addons can then bind to in order
+	 * to run their own functions in sequence with ours here.
 	 *
 	 * @param  string event The name of the event to trigger.
 	 * @return void
@@ -107,17 +109,21 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Makes external requsts to fetch Facebook share counts.
+	 * Makes external requsts to fetch Facebook share counts. We fetch Facebook
+	 * share counts via the frontened Javascript because their API has harsh
+	 * rate limits that are IP Address based. So it's very easy for a website to
+	 * hit those limits and recieve temporary bans from accessing the share count
+	 * data. By using the front end, the IP Addresses are distributed to users,
+	 * are therefore spread out, and don't hit the rate limits.
 	 *
+	 * @param  void
 	 * @return void
+	 *
 	 */
 	socialWarfare.fetchFacebookShares = function() {
 		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
 		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
 
-		/**
-		 * Run all the API calls
-		 */
 		$.when(
 			$.get(url1),
 			$.get(url2)
@@ -144,7 +150,11 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Sums the share data from a facebook API response.
+	 * Sums the share data from a facebook API response. This is a utility
+	 * function used by socialWarfare.fetchFacebookShares to allow easy access
+	 * to parsing out the JSON response that we got from Facebook's API and
+	 * converting it into an integer that reflects the tally of all activity
+	 * on the URl in question including like, comments, and shares.
 	 *
 	 * @param  object response The API response received from Facebook.
 	 * @return number The total shares summed from the request, or 0.
