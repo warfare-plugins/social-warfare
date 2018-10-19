@@ -1,25 +1,28 @@
 /*
- * This is the primary javascript file used by the Social Warfare plugin. It is 
+ * This is the primary javascript file used by the Social Warfare plugin. It is
  * loaded both on the frontend and the backend. It is used to control all client
  * side manipulation of the HTML.
  *
+ *
  * Function Categories:
- * Activate/Initialize the Buttons Panels
- * Control the Floating Buttons Panels
- * Control the Pinterest Save Buttons on Images
- * Utility/Helper Functions
+ *
+ *     1. Initialization Functions
+ *     2. Floating Buttons Panel Controls
+ *     3. Pinterest Image Hover Save Buttons
+ *     4. Facebook Share Count Functions
+ *     5. Utility/Helper Functions
  *
  *
  * Javascript variables created on the server:
  *
- * bool   	swpClickTracking (SWP_Script.php)
- * bool   	swpFloatBeforeContent
+ *     bool   	swpClickTracking (SWP_Script.php)
+ *     bool   	swpFloatBeforeContent
  *
- * object 	swpPinIt
+ *     object 	swpPinIt
  *
- * string 	swp_admin_ajax
- * string 	swp_post_url
- * string 	swp_post_recovery_url
+ *     string 	swp_admin_ajax
+ *     string 	swp_post_url
+ *     string 	swp_post_recovery_url
  *
  */
 
@@ -45,7 +48,47 @@ window.socialWarfare = window.socialWarfare || {};
 
 	var $ = jQuery;
 
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #1: INITIALIZATION FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
 
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #2: FLOATING BUTTONS PANEL CONTROLS
+	 *
+	 *
+	 ***************************************************************************/
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #3: PINTEREST IMAGE HOVER SAVE BUTTONS
+	 *
+	 *
+	 ***************************************************************************/
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #4: FACEBOOK SHARE COUNT FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
+
+	/***************************************************************************
+	*
+	*
+	*    SECTION #5: UTILITY/HELPER FUNCTIONS
+	*
+	*
+	***************************************************************************/
+
+	 	 
 	/**
 	 * These variables measure the amount of padding at the top and bottom of
 	 * the page upon the dom loaded event. We grab these early on and keep them
