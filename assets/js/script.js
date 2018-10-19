@@ -1,5 +1,14 @@
 /**
  *
+ * Social Warfare - The Javascript
+ *
+ * @since 1.0.0 | 01 JAN 2016 | Created
+ * @since 3.4.0 | 19 OCT 2018 | Cleaned, Refactored, Simplified, Docblocked.
+ * @package   SocialWarfare\Assets\JS\
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * 
+ *
  * This is the primary javascript file used by the Social Warfare plugin. It is
  * loaded both on the frontend and the backend. It is used to control all client
  * side manipulation of the HTML.
