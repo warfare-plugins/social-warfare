@@ -1,4 +1,5 @@
-/*
+/**
+ *
  * This is the primary javascript file used by the Social Warfare plugin. It is
  * loaded both on the frontend and the backend. It is used to control all client
  * side manipulation of the HTML.
@@ -7,10 +8,11 @@
  * Function Categories:
  *
  *     1. Initialization Functions
- *     2. Floating Buttons Panel Controls
- *     3. Pinterest Image Hover Save Buttons
- *     4. Facebook Share Count Functions
- *     5. Utility/Helper Functions
+ *     2. Static Horizontal Button Panel Controls
+ *     3. Floating Buttons Panel Controls
+ *     4. Pinterest Image Hover Save Buttons
+ *     5. Facebook Share Count Functions
+ *     6. Utility/Helper Functions
  *
  *
  * Javascript variables created on the server:
@@ -56,39 +58,30 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 ***************************************************************************/
 
-	/***************************************************************************
-	 *
-	 *
-	 *    SECTION #2: FLOATING BUTTONS PANEL CONTROLS
-	 *
-	 *
-	 ***************************************************************************/
 
-	/***************************************************************************
+	/**
+	 * Load the plugin once the DOM has been loaded.
 	 *
-	 *
-	 *    SECTION #3: PINTEREST IMAGE HOVER SAVE BUTTONS
-	 *
-	 *
-	 ***************************************************************************/
+	 */
+	$(document).ready(function() {
 
-	/***************************************************************************
-	 *
-	 *
-	 *    SECTION #4: FACEBOOK SHARE COUNT FUNCTIONS
-	 *
-	 *
-	 ***************************************************************************/
+		// This is what fires up the entire plugin's JS functionality.
+		socialWarfare.initPlugin();
 
-	/***************************************************************************
-	*
-	*
-	*    SECTION #5: UTILITY/HELPER FUNCTIONS
-	*
-	*
-	***************************************************************************/
+		/**
+		 * In some instances, the click bindings were not being instantiated
+		 * properly when they were run as the DOM was loaded. So we built this
+		 * checkListers() function to recheck every 2 seconds, 5 total times, to
+		 * ensure that the buttons panel exist and activate the click bindings.
+		 *
+		 */
+		setTimeout(function() {
+			socialWarfare.checkListeners(0, 5);
+		}, 2000);
 
-	 	 
+	});
+
+
 	/**
 	 * These variables measure the amount of padding at the top and bottom of
 	 * the page upon the dom loaded event. We grab these early on and keep them
@@ -97,513 +90,27 @@ window.socialWarfare = window.socialWarfare || {};
 	 * buttons hover over menus or copyright information in the footer.
 	 *
 	 */
-	socialWarfare.paddingTop = parseInt($('body').css('padding-top').replace('px', ''));
+	socialWarfare.paddingTop    = parseInt($('body').css('padding-top').replace('px', ''));
 	socialWarfare.paddingBottom = parseInt($('body').css('padding-bottom').replace('px', ''));
 
 
 	/**
-	 * The throttle function is used to control how often an event can be fired.
-	 * We use this exclusively to control how often scroll events go off. In some
-	 * cases, the scroll event which controls when the floating buttons appear
-	 * or disappear, was firing so often on scroll that the floating buttons were
-	 * rapidly flickering in and out of view. This solves that.
-	 *
-	 * @param  integer   delay    How often in ms to allow the event to fire.
-	 * @param  function  callback The function to run if the timeout period is expired.
-	 * @return function           The callback function.
-	 *
-	 */
-	socialWarfare.throttle = function(delay, callback) {
-		var timeoutID = 0;
-		var lastExec = 0;
-
-		function wrapper() {
-			var that = this;
-			var elapsed = +new Date() - lastExec;
-			var args = arguments;
-
-			function exec() {
-				lastExec = +new Date();
-				callback.apply(that, args);
-			}
-
-			function clear() {
-				timeoutID = undefined;
-			}
-
-			timeoutID && clearTimeout(timeoutID);
-
-			if (elapsed > delay) {
-				exec();
-			} else {
-				timeoutID = setTimeout(exec, delay - elapsed);
-			}
-		}
-
-		if (socialWarfare.guid) {
-			wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
-		}
-
-		return wrapper;
-	};
-
-
-	/**
-	 * A simple wrapper for easily triggering DOM events. This will allow us to
-	 * fire off our own custom events that our addons can then bind to in order
-	 * to run their own functions in sequence with ours here.
-	 *
-	 * @param  string event The name of the event to trigger.
-	 * @return void
-	 *
-	 */
-	socialWarfare.trigger = function(event) {
-		$(window).trigger($.Event(event));
-	}
-
-
-	/**
-	 * Makes external requsts to fetch Facebook share counts. We fetch Facebook
-	 * share counts via the frontened Javascript because their API has harsh
-	 * rate limits that are IP Address based. So it's very easy for a website to
-	 * hit those limits and recieve temporary bans from accessing the share count
-	 * data. By using the front end, the IP Addresses are distributed to users,
-	 * are therefore spread out, and don't hit the rate limits.
+	 * Runs the initialization callbacks for button handlers and placement. This
+	 * is the function that fires up all of the javascript functionality for the
+	 * entire plugin. It handles button clicks, activating the panels, creating
+	 * and controlling the floating buttons, etc.
 	 *
 	 * @param  void
 	 * @return void
 	 *
 	 */
-	socialWarfare.fetchFacebookShares = function() {
-		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
-		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
+	socialWarfare.initPlugin = function() {
 
-		$.when(
-				$.get(url1),
-				$.get(url2)
-			)
-			.then(function(response1, response2) {
-				var shares = 0;
-				var data = {
-					action: 'swp_facebook_shares_update',
-					post_id: swp_post_id
-				};
+		socialWarfare.establishPanels();
+		socialWarfare.establishBreakpoint();
+		socialWarfare.handleButtonClicks();
+		socialWarfare.initShareButtons();
 
-				shares = socialWarfare.parseFacebookShares(response1[0]);
-
-				if (swp_post_recovery_url) {
-					shares += socialWarfare.parseFacebookShares(response2[0]);
-				}
-
-				data.share_counts = shares;
-
-				$.post(swp_admin_ajax, data);
-
-			});
-	}
-
-
-	/**
-	 * Sums the share data from a facebook API response. This is a utility
-	 * function used by socialWarfare.fetchFacebookShares to allow easy access
-	 * to parsing out the JSON response that we got from Facebook's API and
-	 * converting it into an integer that reflects the tally of all activity
-	 * on the URl in question including like, comments, and shares.
-	 *
-	 * @param  object response The API response received from Facebook.
-	 * @return number The total shares summed from the request, or 0.
-	 *
-	 */
-	socialWarfare.parseFacebookShares = function(response) {
-		var total = 0;
-
-		if ('undefined' !== typeof response.share) {
-			total += parseInt(response.share.share_count);
-			total += parseInt(response.share.comment_count);
-		}
-
-		if (typeof response.og_object != 'undefined') {
-			total += parseInt(response.og_object.likes.summary.total_count);
-		}
-
-		return total;
-	}
-
-
-	/**
-	 * This triggers the hover effect that you see when you hover over the
-	 * buttons in the panel. It measures the space needed to expand the button
-	 * to reveal the call to action for that network and then uses flex to
-	 * expand it and to shrink the other buttons to make room for the expansion.
-	 *
-	 * @since 2.1.0
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	socialWarfare.activateHoverStates = function() {
-		socialWarfare.trigger('pre_activate_buttons');
-
-		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
-
-			if ($(this).hasClass('swp_nohover')) {
-				return;
-			}
-
-			socialWarfare.resetStaticPanel();
-			var termWidth = $(this).find('.swp_share').outerWidth();
-			var iconWidth = $(this).find('i.sw').outerWidth();
-			var containerWidth = $(this).width();
-			var change = 1 + ((termWidth + 35) / containerWidth);
-
-			$(this).find('.iconFiller').width(termWidth + iconWidth + 25 + 'px');
-			$(this).css("flex", change + ' 1 0%');
-		});
-
-		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', socialWarfare.resetStaticPanel);
-	}
-
-
-	/**
-	 * Resets the static panels to their default styles. After they've been
-	 * expanded by activateHoverStates(), this function returns the buttons to
-	 * their normal state once a user is no longer hovering over the buttons.
-	 *
-	 * @see activateHoverStates().
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	socialWarfare.resetStaticPanel = function() {
-		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
-		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
-	}
-
-
-	/**
-	 * Determines if a set of static buttons is currenty visible on the screen.
-	 *
-	 * We will use this to determine whether or not we should display a set of
-	 * floating buttons. Whenever the static buttons are visible, we hide the
-	 * floating buttons. Whenever the static buttons are not visible, we show
-	 * the floating buttons.
-	 *
-	 * @param  void
-	 * @return bool True if a static set of buttons is visible on the screen, else false.
-	 *
-	 */
-	socialWarfare.staticPanelIsVisible = function() {
-		var visible = false;
-		var scrollPos = $(window).scrollTop();
-
-		//* Iterate each buttons panel, checking each to see if it is currently visible.
-		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
-			var offset = $(this).offset();
-
-			//* Do not display floating buttons before the horizontal panel.
-			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-				var theContent = jQuery(".swp-content-locator").parent();
-
-				//* We are in sight of an "Above the content" panel.
-				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
-					visible = true;
-				}
-			}
-
-			//* Do not display floating buttons if a panel is currently visible.
-			if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
-				visible = true;
-			}
-		});
-
-		return visible;
-	}
-
-
-	/**
-	 *  Clones a copy of the static buttons to use as a floating panel.
-	 *
-	 * We clone a set of the static horizontal buttons so that when we create
-	 * the floating set we can make the position match exactly. This way when
-	 * they are showing up and disappearing, it will create the allusion that
-	 * the static buttons are just getting glued to the edge of the screen and
-	 * following along with the user as they scroll.
-	 *
-	 * @since  1.0.0 | 01 JAN 2016 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	socialWarfare.createFloatHorizontalPanel = function() {
-
-		//* If a horizontal panel does not exist, we can not create a bar.
-		if (!socialWarfare.panels.static || !socialWarfare.panels.static.length) {
-			return;
-		}
-
-		var floatLocation       = socialWarfare.panels.static.data("float");
-		var mobileFloatLocation = socialWarfare.panels.static.data("float-mobile");
-		var backgroundColor     = socialWarfare.panels.static.data("float-color");
-		var left                = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
-		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-		var barLocation         = '';
-
-		//* .swp_social_panelSide is the side floater.
-		if ($(".nc_wrapper").length) {
-			$(".nc_wrapper").remove();
-		}
-
-		//* No floating bars are used at all.
-		if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
-			return;
-		}
-
-		//* Or we are on desktop and not using top/bottom floaters:
-		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
-			return;
-		}
-
-		//* Set the location (top or bottom) of the bar depending on
-		if (socialWarfare.isMobile()) {
-			barLocation = mobileFloatLocation;
-		} else {
-			barLocation = floatLocation;
-		}
-
-		//* Assign a CSS class to the wrapper based on the float-mobile location.
-		wrapper.addClass(barLocation).hide().appendTo("body");
-
-		//* Save the new buttons panel to our ${panels} object.
-		socialWarfare.panels.bar = socialWarfare.panels.static.first().clone();
-
-		//* Give the bar panel the appropriate classname and put it in its wrapper.
-		socialWarfare.panels.bar.addClass("nc_floater").css({
-			width: socialWarfare.panels.static.outerWidth(true),
-			left: left
-		}).appendTo(wrapper);
-
-		$(".swp_social_panel .swp_count").css({
-			transition: "padding .1s linear"
-		});
-	}
-
-
-	/**
-	 * Handler to toggle the display of either the side or bar floating buttons.
-	 *
-	 * We only show the floating buttons when the static horizontal buttons are
-	 * not in the visible view port. This function is used to toggle their
-	 * visibility when they need to be shown or hidden.
-	 *
-	 * @since  2.0.0 | 01 JAN 2016 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	socialWarfare.toggleFloatingButtons = function() {
-		// Adjust the floating bar
-		var location = socialWarfare.panels.static.data('float');
-
-		//* There are no floating buttons enabled, hide any that might exist.
-		if (location == 'none') {
-			return $(".nc_wrapper, .swp_social_panelSide").hide();
-		}
-
-		if (socialWarfare.isMobile()) {
-			socialWarfare.createFloatHorizontalPanel();
-			socialWarfare.toggleMobileButtons();
-			socialWarfare.toggleFloatingHorizontalPanel();
-		}
-
-		if (location == "right" || location == "left") {
-			socialWarfare.toggleFloatingVerticalPanel();
-		}
-
-		if (location == "bottom" || location == "top") {
-			socialWarfare.toggleFloatingHorizontalPanel();
-		}
-	}
-
-
-	/**
-	 * Toggle the visibilty of a mobile bar.
-	 *
-	 * @return void
-	 *
-	 */
-	socialWarfare.toggleMobileButtons = function() {
-
-		//* There are never any left/right floating buttons on mobile, so hide them.
-		socialWarfare.panels.side.hide();
-
-		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
-		$(".nc_wrapper").css("visibility", visibility);
-	}
-
-
-	/**
-	 * Toggle the display of a side panel, depending on static panel visibility.
-	 *
-	 * @return void
-	 *
-	 */
-	socialWarfare.toggleFloatingVerticalPanel = function() {
-		var location = socialWarfare.panels.side.data("float")
-		var visible = socialWarfare.staticPanelIsVisible();
-		var direction, style;
-
-		//* This is on mobile and does not use side panels.
-		if (socialWarfare.isMobile()) {
-			return socialWarfare.panels.side.hide();
-		}
-
-		//* No buttons panel! Manually re-define ${visibility}.
-		if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
-			if (!socialWarfare.isMobile()) {
-				visible = false;
-			} else {
-				visible = true;
-			}
-		}
-
-		if (socialWarfare.panels.side.data("transition") == "slide") {
-
-			direction = (location.indexOf("left") !== -1) ? "left" : "right";
-			style = visible ? "-150px" : "5px";
-
-			//* Update the side panel CSS with the direction and amount.
-			socialWarfare.panels.side.css(direction, style);
-		} else {
-			/**
-			 * We had problems with the fading buttons flickering rather than having
-			 * a smooth fade animation. The workaround was to manually control opacity,
-			 * fade, and opacity again.
-			 *
-			 */
-			if (visible) {
-				socialWarfare.panels.side.css("opacity", 1)
-					.fadeOut(300)
-					.css("opacity", 0);
-			} else {
-				socialWarfare.panels.side.css("opacity", 0)
-					.fadeIn(300)
-					.css("display", "flex")
-					.css("opacity", 1);
-			}
-		}
-	}
-
-
-	/**
-	 * Toggle the display of a floating bar, depending on static panel visibility.
-	 *
-	 * @return void
-	 *
-	 */
-	socialWarfare.toggleFloatingHorizontalPanel = function() {
-		var panel = $(".swp_social_panel").first();
-		var paddingProp, location = '';
-		var newPadding = 0;
-
-		//* Set the location based on whether we are desktop or mobile.
-		if (!socialWarfare.isMobile()) {
-			location = $(panel).data("float");
-		} else {
-			location = $(panel).data("float-mobile")
-		}
-
-		if (socialWarfare.staticPanelIsVisible()) {
-
-			$(".nc_wrapper").hide();
-			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
-		} else {
-
-			$(".nc_wrapper").show();
-
-			/**
-			 * Show the top/bottom floating bar. Force its opacity to normal.
-			 * @see SWP_Buttons_Panel->render_HTML()
-			 *
-			 */
-			$(".swp_social_panel.nc_floater").css("opacity", 1)
-
-			/**
-			 * Add some padding to the page so it fits nicely at the top or bottom.
-			 *
-			 */
-			if (location == 'bottom') {
-
-				newPadding = socialWarfare.paddingBottom + 50;
-			} else {
-
-				if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-
-					newPadding = socialWarfare.paddingTop + 50;
-					$('body').animate({
-						'padding-top': newPadding + 'px'
-					}, 0);
-				}
-			}
-		}
-
-		//* Create the CSS property name.
-		paddingProp = "padding-" + location;
-		$("body").animate({
-			paddingProp: newPadding
-		}, 0);
-
-	}
-
-
-	/**
-	 * This method is used to vertically center the floating buttons when they
-	 * are positioned on the left or right of the screen.
-	 *
-	 * @since  3.4.0 | 18 OCT 2018 | Created
-	 * @param  void
-	 * @param  void All changes are made to the dom.
-	 *
-	 */
-	socialWarfare.centerFloatSidePanel = function() {
-		var panelHeight, windowHeight, offset;
-
-		/**
-		 * If no such element exists, we obviously just need to bail out and
-		 * not try to center anything.
-		 *
-		 */
-		if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
-			return;
-		}
-
-
-		/**
-		 * We'll need the height of the panel itself and the height of the
-		 * actual browser window in order to calculate how to center it.
-		 *
-		 */
-		panelHeight = socialWarfare.panels.side.outerHeight();
-		windowHeight = window.innerHeight;
-
-
-		/**
-		 * If for some reason the panel is actually taller than the window
-		 * itself, just stick it to the top of the window and the bottom will
-		 * just have to overflow past the bottom of the screen.
-		 *
-		 */
-		if (panelHeight > windowHeight) {
-			return socialWarfare.panels.side.css("top", 0);
-		}
-
-
-		/**
-		 * Calculate the center position of panel and then apply the relevant
-		 * CSS to the panel.
-		 *
-		 */
-		offset = (windowHeight - panelHeight) / 2;
-		socialWarfare.panels.side.css("top", offset);
 	}
 
 
@@ -627,7 +134,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		socialWarfare.createFloatHorizontalPanel();
-		socialWarfare.centerFloatSidePanel();
+		socialWarfare.positionFloatSidePanel();
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 
@@ -656,161 +163,97 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Adds the "Save" button to images when the option is enabled.
+	 * Finds each kind of buttons panel, if it exists, and stores it to the
+	 * socialWarfare object for later reference. This is useful for reading data
+	 * attributes of buttons panels without needing to fetch the panel every time.
 	 *
-	 * This method will search and destroy any Pinterest save buttons that have
-	 * been added by the Pinterest browser extension and then render the html
-	 * needed to add our own proprietary Pinterest buttons on top of images.
-	 *
-	 * @param  void
-	 * @return void
-	 *
+	 * @return object The object which holds each of the kinds of buttons panels.
 	 */
-	socialWarfare.enablePinterestSaveButtons = function() {
-
-
-		/**
-		 * Search and Destroy: This will find any Pinterest buttons that were
-		 * added via their browser extension and then destroy them so that only
-		 * ours are on the page.
-		 *
-		 */
-		var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
-		if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
-			socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
-		}
-
-
-		/**
-		 * Find all images of the images that are in the content area by looking
-		 * for the .swp-content-locator div which is an empty div that we add via
-		 * the_content() hook just so that we can target it here. Then iterate
-		 * through them and determine if we should add a Pinterest save button.
-		 *
-		 */
-		$('.swp-content-locator').parent().find('img').each(socialWarfare.renderPinterestSaveButton);
-
-
-		/**
-		 * Attach a click handler to each of the newly created "Save" buttons,
-		 * and trigger the click tracking function.
-		 *
-		 */
-		$('.sw-pinit .sw-pinit-button').on('click', function() {
-			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-			socialWarfare.trackClick('pin_image');
-		});
-	}
-
-
-	/**
-	 * This function renders the HTML needed to print the save buttons on the images.
-	 *
-	 * @param  void
-	 * @since  void
-	 *
-	 */
-	socialWarfare.renderPinterestSaveButton = function() {
-		var image = $(this);
-
-		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-			if (jQuery(image).parents().filter("a").length) {
-				return;
-			}
-		}
-
-		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-			return;
-		}
-
-		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-			return;
-		}
-
-		var pinMedia;
-
-		if ('undefined' !== typeof swpPinIt.image_source) {
-
-			//* Create a temp image to force absolute paths via jQuery.
-			var i = new Image();
-			i.src = swpPinIt.image_source;
-			pinMedia = jQuery(i).prop('src');
-
-		} else if (image.data('media')) {
-			pinMedia = image.data('media');
-		} else if ($(this).data('lazy-src')) {
-			pinMedia = $(this).data('lazy-src');
-		} else if (image[0].src) {
-			pinMedia = image[0].src;
+	socialWarfare.establishPanels = function() {
+		//* Initialize the panels object with the three known panel types.
+		socialWarfare.panels = {
+			static: null,
+			side: null,
+			bar: null
 		};
 
-		// Bail if we don't have any media to pin.
-		if (!pinMedia || 'undefined' === typeof pinMedia) {
-			return;
+		//* TODO create the data-position attribute in PHP and print it on each set of buttons panel.
+		var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide");
+		var sidePanel = $(".swp_social_panelSide");
+		// var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
+
+		if (staticPanel) {
+			socialWarfare.panels.static = staticPanel;
 		}
 
-		var pinDesc = '';
-
-		if (typeof image.data("pin-description") != 'undefined') {
-			pinDesc = image.data("pin-description");
-		} else if ('undefined' !== typeof swpPinIt.image_description) {
-			pinDesc = swpPinIt.image_description;
-		} else if (image.attr('title')) {
-			pinDesc = image.attr('title');
-		} else if (image.attr('alt')) {
-			pinDesc = image.attr('alt');
+		if (sidePanel) {
+			socialWarfare.panels.side = sidePanel;
 		}
+		//
+		// if (barPanel) {
+		// 	socialWarfare.panels.bar = barPanel
+		// }
 
-		var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
-		var imageClasses = image.attr('class');
-		var imageStyle = image.attr('style');
+		return socialWarfare.panels;
+	}
 
-		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
-		image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #2: STATIC HORIZONTAL BUTTON PANEL CONTROLS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * This triggers the hover effect that you see when you hover over the
+	 * buttons in the panel. It measures the space needed to expand the button
+	 * to reveal the call to action for that network and then uses flex to
+	 * expand it and to shrink the other buttons to make room for the expansion.
+	 *
+	 * @since 2.1.0
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.activateHoverStates = function() {
+		socialWarfare.trigger('pre_activate_buttons');
+
+		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
+
+			if ($(this).hasClass('swp_nohover')) {
+				return;
+			}
+
+			socialWarfare.resetStaticPanel();
+			var termWidth      = $(this).find('.swp_share').outerWidth();
+			var iconWidth      = $(this).find('i.sw').outerWidth();
+			var containerWidth = $(this).width();
+			var change         = 1 + ((termWidth + 35) / containerWidth);
+
+			$(this).find('.iconFiller').width(termWidth + iconWidth + 25 + 'px');
+			$(this).css("flex", change + ' 1 0%');
+		});
+
+		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', socialWarfare.resetStaticPanel);
 	}
 
 
 	/**
-	 * Fire an event for Google Analytics and GTM.
+	 * Resets the static panels to their default styles. After they've been
+	 * expanded by activateHoverStates(), this function returns the buttons to
+	 * their normal state once a user is no longer hovering over the buttons.
 	 *
-	 * @since  2.3.0 | 01 JAN 2018 | Created
-	 * @param  string event A string identifying the button being clicked.
+	 * @see activateHoverStates().
+	 * @param  void
 	 * @return void
 	 *
 	 */
-	socialWarfare.trackClick = function(event) {
-
-
-		/**
-		 * If click tracking has been enabled in the user settings, we'll
-		 * need to send the event via Googel Analytics. The swpClickTracking
-		 * variable will be dynamically generated via PHP and output in the
-		 * footer of the page.
-		 *
-		 */
-		if (true === swpClickTracking) {
-
-			/**
-			 * If Google Analytics is present on the page, we'll send the
-			 * event via their object and methods.
-			 *
-			 */
-			if ("function" == typeof ga) {
-				ga("send", "event", "social_media", "swp_" + event + "_share");
-			}
-
-			/**
-			 * If Google Tag Manager is present on the page, we'll send the
-			 * event via their object and methods.
-			 *
-			 */
-			if ("object" == typeof dataLayer) {
-				dataLayer.push({
-					'event': 'swp_' + event + '_share'
-				});
-			}
-		}
+	socialWarfare.resetStaticPanel = function() {
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
 	}
 
 
@@ -905,10 +348,10 @@ window.socialWarfare = window.socialWarfare || {};
 			 * browser window.
 			 *
 			 */
-			top              = window.screenY + (window.innerHeight - height) / 2;
-			left             = window.screenX + (window.innerWidth - width) / 2;
+			top = window.screenY + (window.innerHeight - height) / 2;
+			left = window.screenX + (window.innerWidth - width) / 2;
 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-			instance         = window.open(href, '_blank', windowAttributes);
+			instance = window.open(href, '_blank', windowAttributes);
 
 
 			/**
@@ -928,6 +371,495 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #3: FLOATING BUTTONS PANEL CONTROLS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	*  Clones a copy of the static buttons to use as a floating panel.
+	*
+	* We clone a set of the static horizontal buttons so that when we create
+	* the floating set we can make the position match exactly. This way when
+	* they are showing up and disappearing, it will create the allusion that
+	* the static buttons are just getting glued to the edge of the screen and
+	* following along with the user as they scroll.
+	*
+	* @since  1.0.0 | 01 JAN 2016 | Created
+	* @param  void
+	* @return void
+	*
+	*/
+	socialWarfare.createFloatHorizontalPanel = function() {
+
+		//* If a horizontal panel does not exist, we can not create a bar.
+		if (!socialWarfare.panels.static || !socialWarfare.panels.static.length) {
+			return;
+		}
+
+		var floatLocation       = socialWarfare.panels.static.data("float");
+		var mobileFloatLocation = socialWarfare.panels.static.data("float-mobile");
+		var backgroundColor     = socialWarfare.panels.static.data("float-color");
+		var left                = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
+		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+		var barLocation         = '';
+
+		//* .swp_social_panelSide is the side floater.
+		if ($(".nc_wrapper").length) {
+			$(".nc_wrapper").remove();
+		}
+
+		//* No floating bars are used at all.
+		if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
+			return;
+		}
+
+		//* Or we are on desktop and not using top/bottom floaters:
+		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
+			return;
+		}
+
+		//* Set the location (top or bottom) of the bar depending on
+		if (socialWarfare.isMobile()) {
+			barLocation = mobileFloatLocation;
+		} else {
+			barLocation = floatLocation;
+		}
+
+		//* Assign a CSS class to the wrapper based on the float-mobile location.
+		wrapper.addClass(barLocation).hide().appendTo("body");
+
+		//* Save the new buttons panel to our ${panels} object.
+		socialWarfare.panels.bar = socialWarfare.panels.static.first().clone();
+
+		//* Give the bar panel the appropriate classname and put it in its wrapper.
+		socialWarfare.panels.bar.addClass("nc_floater").css({
+			width: socialWarfare.panels.static.outerWidth(true),
+			left: left
+		}).appendTo(wrapper);
+
+		$(".swp_social_panel .swp_count").css({
+			transition: "padding .1s linear"
+		});
+	}
+
+
+	/**
+	 * Determines if a set of static buttons is currenty visible on the screen.
+	 *
+	 * We will use this to determine whether or not we should display a set of
+	 * floating buttons. Whenever the static buttons are visible, we hide the
+	 * floating buttons. Whenever the static buttons are not visible, we show
+	 * the floating buttons.
+	 *
+	 * @param  void
+	 * @return bool True if a static set of buttons is visible on the screen, else false.
+	 *
+	 */
+ 	socialWarfare.staticPanelIsVisible = function() {
+ 		var visible = false;
+ 		var scrollPos = $(window).scrollTop();
+
+ 		//* Iterate each buttons panel, checking each to see if it is currently visible.
+ 		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
+ 			var offset = $(this).offset();
+
+ 			//* Do not display floating buttons before the horizontal panel.
+ 			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+ 				var theContent = jQuery(".swp-content-locator").parent();
+
+ 				//* We are in sight of an "Above the content" panel.
+ 				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
+ 					visible = true;
+ 				}
+ 			}
+
+ 			//* Do not display floating buttons if a panel is currently visible.
+ 			if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
+ 				visible = true;
+ 			}
+ 		});
+
+ 		return visible;
+ 	}
+
+
+	/**
+	 * Handler to toggle the display of either the side or bar floating buttons.
+	 *
+ 	 * We only show the floating buttons when the static horizontal buttons are
+ 	 * not in the visible view port. This function is used to toggle their
+ 	 * visibility when they need to be shown or hidden.
+ 	 *
+ 	 * @since  2.0.0 | 01 JAN 2016 | Created
+ 	 * @param  void
+ 	 * @return void
+ 	 *
+ 	 */
+ 	socialWarfare.toggleFloatingButtons = function() {
+ 		// Adjust the floating bar
+ 		var location = socialWarfare.panels.static.data('float');
+
+ 		//* There are no floating buttons enabled, hide any that might exist.
+ 		if (location == 'none') {
+ 			return $(".nc_wrapper, .swp_social_panelSide").hide();
+ 		}
+
+ 		if (socialWarfare.isMobile()) {
+ 			socialWarfare.createFloatHorizontalPanel();
+ 			socialWarfare.toggleMobileButtons();
+ 			socialWarfare.toggleFloatingHorizontalPanel();
+ 		}
+
+ 		if (location == "right" || location == "left") {
+ 			socialWarfare.toggleFloatingVerticalPanel();
+ 		}
+
+ 		if (location == "bottom" || location == "top") {
+ 			socialWarfare.toggleFloatingHorizontalPanel();
+ 		}
+ 	}
+
+
+ 	/**
+ 	 * Toggle the visibilty of a mobile bar.
+ 	 *
+ 	 * @return void
+ 	 *
+ 	 */
+ 	socialWarfare.toggleMobileButtons = function() {
+
+ 		//* There are never any left/right floating buttons on mobile, so hide them.
+ 		socialWarfare.panels.side.hide();
+
+ 		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
+ 		$(".nc_wrapper").css("visibility", visibility);
+ 	}
+
+
+ 	/**
+ 	 * Toggle the display of a side panel, depending on static panel visibility.
+ 	 *
+ 	 * @return void
+ 	 *
+ 	 */
+ 	socialWarfare.toggleFloatingVerticalPanel = function() {
+ 		var location = socialWarfare.panels.side.data("float")
+ 		var visible = socialWarfare.staticPanelIsVisible();
+ 		var direction, style;
+
+ 		//* This is on mobile and does not use side panels.
+ 		if (socialWarfare.isMobile()) {
+ 			return socialWarfare.panels.side.hide();
+ 		}
+
+ 		//* No buttons panel! Manually re-define ${visibility}.
+ 		if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
+ 			if (!socialWarfare.isMobile()) {
+ 				visible = false;
+ 			} else {
+ 				visible = true;
+ 			}
+ 		}
+
+ 		if (socialWarfare.panels.side.data("transition") == "slide") {
+
+ 			direction = (location.indexOf("left") !== -1) ? "left" : "right";
+ 			style = visible ? "-150px" : "5px";
+
+ 			//* Update the side panel CSS with the direction and amount.
+ 			socialWarfare.panels.side.css(direction, style);
+ 		} else {
+ 			/**
+ 			 * We had problems with the fading buttons flickering rather than having
+ 			 * a smooth fade animation. The workaround was to manually control opacity,
+ 			 * fade, and opacity again.
+ 			 *
+ 			 */
+ 			if (visible) {
+ 				socialWarfare.panels.side.css("opacity", 1)
+ 					.fadeOut(300)
+ 					.css("opacity", 0);
+ 			} else {
+ 				socialWarfare.panels.side.css("opacity", 0)
+ 					.fadeIn(300)
+ 					.css("display", "flex")
+ 					.css("opacity", 1);
+ 			}
+ 		}
+ 	}
+
+
+ 	/**
+ 	 * Toggle the display of a floating bar, depending on static panel visibility.
+ 	 *
+ 	 * @return void
+ 	 *
+ 	 */
+ 	socialWarfare.toggleFloatingHorizontalPanel = function() {
+ 		var panel = $(".swp_social_panel").first();
+ 		var paddingProp, location = '';
+ 		var newPadding = 0;
+
+ 		//* Set the location based on whether we are desktop or mobile.
+ 		if (!socialWarfare.isMobile()) {
+ 			location = $(panel).data("float");
+ 		} else {
+ 			location = $(panel).data("float-mobile")
+ 		}
+
+ 		if (socialWarfare.staticPanelIsVisible()) {
+
+ 			$(".nc_wrapper").hide();
+ 			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+ 		} else {
+
+ 			$(".nc_wrapper").show();
+
+ 			/**
+ 			 * Show the top/bottom floating bar. Force its opacity to normal.
+ 			 * @see SWP_Buttons_Panel->render_HTML()
+ 			 *
+ 			 */
+ 			$(".swp_social_panel.nc_floater").css("opacity", 1)
+
+ 			/**
+ 			 * Add some padding to the page so it fits nicely at the top or bottom.
+ 			 *
+ 			 */
+ 			if (location == 'bottom') {
+
+ 				newPadding = socialWarfare.paddingBottom + 50;
+ 			} else {
+
+ 				if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
+
+ 					newPadding = socialWarfare.paddingTop + 50;
+ 					$('body').animate({
+ 						'padding-top': newPadding + 'px'
+ 					}, 0);
+ 				}
+ 			}
+ 		}
+
+ 		//* Create the CSS property name.
+ 		paddingProp = "padding-" + location;
+ 		$("body").animate({
+ 			paddingProp: newPadding
+ 		}, 0);
+
+ 	}
+
+
+ 	/**
+ 	 * This method is used to vertically center the floating buttons when they
+ 	 * are positioned on the left or right of the screen.
+ 	 *
+ 	 * @since  3.4.0 | 18 OCT 2018 | Created
+ 	 * @param  void
+ 	 * @param  void All changes are made to the dom.
+ 	 *
+ 	 */
+ 	socialWarfare.positionFloatSidePanel = function() {
+ 		var panelHeight, windowHeight, offset;
+		var sidePanel = socialWarfare.panels.side;
+
+
+ 		/**
+ 		 * If no such element exists, we obviously just need to bail out and
+ 		 * not try to center anything.
+ 		 *
+ 		 */
+ 		if (!sidePanel || !sidePanel.length) {
+ 			return;
+ 		}
+
+
+		/**
+		 * We don't need to center the side panel buttons if the position is set
+		 * to top or bottom. This will isntead be directly controlled by the CSS
+		 * that is associated with these classes.
+		 *
+		 */
+		if( sidePanel.hasClass('swp_side_top') || sidePanel.hasClass('swp_side_bottom') ) {
+			return;
+		}
+
+
+ 		/**
+ 		 * We'll need the height of the panel itself and the height of the
+ 		 * actual browser window in order to calculate how to center it.
+ 		 *
+ 		 */
+ 		panelHeight = sidePanel.outerHeight();
+ 		windowHeight = window.innerHeight;
+
+
+ 		/**
+ 		 * If for some reason the panel is actually taller than the window
+ 		 * itself, just stick it to the top of the window and the bottom will
+ 		 * just have to overflow past the bottom of the screen.
+ 		 *
+ 		 */
+ 		if (panelHeight > windowHeight) {
+ 			return sidePanel.css("top", 0);
+ 		}
+
+
+ 		/**
+ 		 * Calculate the center position of panel and then apply the relevant
+ 		 * CSS to the panel.
+ 		 *
+ 		 */
+ 		offset = (windowHeight - panelHeight) / 2;
+ 		sidePanel.css("top", offset);
+ 	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #4: PINTEREST IMAGE HOVER SAVE BUTTONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	 /**
+ 	 * This reactivates and creates new image hover pin buttons when a page has
+ 	 * been loaded via AJAX. The 'load' event is the proper event that theme and
+ 	 * plugin creators are supposed to use when the AJAX load is complete.
+ 	 *
+ 	 */
+ 	$(window).on('load', function() {
+
+ 		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+ 			socialWarfare.enablePinterestSaveButtons();
+ 		}
+ 		window.clearCheckID = 0;
+ 	});
+
+
+	/**
+	 * Adds the "Save" button to images when the option is enabled.
+	 *
+	 * This method will search and destroy any Pinterest save buttons that have
+	 * been added by the Pinterest browser extension and then render the html
+	 * needed to add our own proprietary Pinterest buttons on top of images.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.enablePinterestSaveButtons = function() {
+
+
+		/**
+		 * Search and Destroy: This will find any Pinterest buttons that were
+		 * added via their browser extension and then destroy them so that only
+		 * ours are on the page.
+		 *
+		 */
+		var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
+		if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
+			socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+		}
+
+
+		/**
+		 * Find all images of the images that are in the content area by looking
+		 * for the .swp-content-locator div which is an empty div that we add via
+		 * the_content() hook just so that we can target it here. Then iterate
+		 * through them and determine if we should add a Pinterest save button.
+		 *
+		 */
+		$('.swp-content-locator').parent().find('img').each(socialWarfare.renderPinterestSaveButton);
+
+
+		/**
+		 * Attach a click handler to each of the newly created "Save" buttons,
+		 * and trigger the click tracking function.
+		 *
+		 */
+		$('.sw-pinit .sw-pinit-button').on('click', function() {
+			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+			socialWarfare.trackClick('pin_image');
+		});
+	}
+
+
+	/**
+	* This function renders the HTML needed to print the save buttons on the images.
+	*
+	* @param  void
+	* @since  void
+	*
+	*/
+	socialWarfare.renderPinterestSaveButton = function() {
+		var image = $(this);
+
+		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+			if (jQuery(image).parents().filter("a").length) {
+				return;
+			}
+		}
+
+		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
+			return;
+		}
+
+		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
+			return;
+		}
+
+		var pinMedia;
+
+		if ('undefined' !== typeof swpPinIt.image_source) {
+
+			//* Create a temp image to force absolute paths via jQuery.
+			var i = new Image();
+			i.src = swpPinIt.image_source;
+			pinMedia = jQuery(i).prop('src');
+
+		} else if (image.data('media')) {
+			pinMedia = image.data('media');
+		} else if ($(this).data('lazy-src')) {
+			pinMedia = $(this).data('lazy-src');
+		} else if (image[0].src) {
+			pinMedia = image[0].src;
+		};
+
+		// Bail if we don't have any media to pin.
+		if (!pinMedia || 'undefined' === typeof pinMedia) {
+			return;
+		}
+
+		var pinDesc = '';
+
+		if (typeof image.data("pin-description") != 'undefined') {
+			pinDesc = image.data("pin-description");
+		} else if ('undefined' !== typeof swpPinIt.image_description) {
+			pinDesc = swpPinIt.image_description;
+		} else if (image.attr('title')) {
+			pinDesc = image.attr('title');
+		} else if (image.attr('alt')) {
+			pinDesc = image.attr('alt');
+		}
+
+		var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
+		var imageClasses = image.attr('class');
+		var imageStyle = image.attr('style');
+
+		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
+		image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+	}
+
+
 	/**
 	 * Looks for a "Save" button created by Pinterest addons.
 	 *
@@ -938,10 +870,10 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.findPinterestBrowserSaveButtons = function() {
 
 		//* Known constants used by Pinterest.
-		var pinterestRed            = "rgb(189, 8, 28)";
-		var pinterestZIndex         = "8675309";
+		var pinterestRed = "rgb(189, 8, 28)";
+		var pinterestZIndex = "8675309";
 		var pinterestBackgroundSize = "14px 14px";
-		var button                  = null;
+		var button = null;
 
 		//* The Pinterest button is a <span/>, so check each span for a match.
 		document.querySelectorAll("span").forEach(function(el, index) {
@@ -980,6 +912,196 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #5: FACEBOOK SHARE COUNT FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * Makes external requsts to fetch Facebook share counts. We fetch Facebook
+	 * share counts via the frontened Javascript because their API has harsh
+	 * rate limits that are IP Address based. So it's very easy for a website to
+	 * hit those limits and recieve temporary bans from accessing the share count
+	 * data. By using the front end, the IP Addresses are distributed to users,
+	 * are therefore spread out, and don't hit the rate limits.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.fetchFacebookShares = function() {
+
+		// Compile the API links
+		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
+		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
+
+		// Use this to ensure that we wait until the API requests are done.
+		$.when( $.get( url1 ), $.get( url2 ) )
+		.then(function(response1, response2) {
+			var shares = 0;
+			var data   = {
+				action: 'swp_facebook_shares_update',
+				post_id: swp_post_id
+			};
+
+			shares = socialWarfare.parseFacebookShares(response1[0]);
+
+			if (swp_post_recovery_url) {
+				shares += socialWarfare.parseFacebookShares(response2[0]);
+			}
+
+			data.share_counts = shares;
+
+			$.post(swp_admin_ajax, data);
+
+		});
+	}
+
+
+	/**
+	 * Sums the share data from a facebook API response. This is a utility
+	 * function used by socialWarfare.fetchFacebookShares to allow easy access
+	 * to parsing out the JSON response that we got from Facebook's API and
+	 * converting it into an integer that reflects the tally of all activity
+	 * on the URl in question including like, comments, and shares.
+	 *
+	 * @param  object response The API response received from Facebook.
+	 * @return number The total shares summed from the request, or 0.
+	 *
+	 */
+	socialWarfare.parseFacebookShares = function(response) {
+		var total = 0;
+
+		if ('undefined' !== typeof response.share) {
+			total += parseInt(response.share.share_count);
+			total += parseInt(response.share.comment_count);
+		}
+
+		if (typeof response.og_object != 'undefined') {
+			total += parseInt(response.og_object.likes.summary.total_count);
+		}
+
+		return total;
+	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #6: UTILITY/HELPER FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * The throttle function is used to control how often an event can be fired.
+	 * We use this exclusively to control how often scroll events go off. In some
+	 * cases, the scroll event which controls when the floating buttons appear
+	 * or disappear, was firing so often on scroll that the floating buttons were
+	 * rapidly flickering in and out of view. This solves that.
+	 *
+	 * @param  integer   delay    How often in ms to allow the event to fire.
+	 * @param  function  callback The function to run if the timeout period is expired.
+	 * @return function           The callback function.
+	 *
+	 */
+	socialWarfare.throttle = function(delay, callback) {
+		var timeoutID = 0;
+		var lastExec = 0;
+
+		function wrapper() {
+			var that = this;
+			var elapsed = +new Date() - lastExec;
+			var args = arguments;
+
+			function exec() {
+				lastExec = +new Date();
+				callback.apply(that, args);
+			}
+
+			function clear() {
+				timeoutID = undefined;
+			}
+
+			timeoutID && clearTimeout(timeoutID);
+
+			if (elapsed > delay) {
+				exec();
+			} else {
+				timeoutID = setTimeout(exec, delay - elapsed);
+			}
+		}
+
+		if (socialWarfare.guid) {
+			wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
+		}
+
+		return wrapper;
+	};
+
+
+	/**
+	 * A simple wrapper for easily triggering DOM events. This will allow us to
+	 * fire off our own custom events that our addons can then bind to in order
+	 * to run their own functions in sequence with ours here.
+	 *
+	 * @param  string event The name of the event to trigger.
+	 * @return void
+	 *
+	 */
+	socialWarfare.trigger = function(event) {
+		$(window).trigger($.Event(event));
+	}
+
+
+	/**
+	 * Fire an event for Google Analytics and GTM.
+	 *
+	 * @since  2.3.0 | 01 JAN 2018 | Created
+	 * @param  string event A string identifying the button being clicked.
+	 * @return void
+	 *
+	 */
+	socialWarfare.trackClick = function(event) {
+
+
+		/**
+		 * If click tracking has been enabled in the user settings, we'll
+		 * need to send the event via Googel Analytics. The swpClickTracking
+		 * variable will be dynamically generated via PHP and output in the
+		 * footer of the page.
+		 *
+		 */
+		if (true === swpClickTracking) {
+
+			/**
+			 * If Google Analytics is present on the page, we'll send the
+			 * event via their object and methods.
+			 *
+			 */
+			if ("function" == typeof ga) {
+				ga("send", "event", "social_media", "swp_" + event + "_share");
+			}
+
+			/**
+			 * If Google Tag Manager is present on the page, we'll send the
+			 * event via their object and methods.
+			 *
+			 */
+			if ("object" == typeof dataLayer) {
+				dataLayer.push({
+					'event': 'swp_' + event + '_share'
+				});
+			}
+		}
+	}
+
+
 	/**
 	 * Checks to see if we have a buttons panel. If so, forces a re-run of the
 	 * handleButtonClicks callback.
@@ -1007,28 +1129,6 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Initializes the vertical position for top/bottom floating buttons.
-	 *
-	 * @return void
-	 */
-	socialWarfare.initSidePosition = function() {
-		if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
-			return;
-		}
-
-		var buttonsHeight = $(socialWarfare.panels.side).height();
-		var windowHeight  = $(window).height();
-		var newPosition   = parseInt((windowHeight / 2) - (buttonsHeight / 2));
-
-		setTimeout(function() {
-			$(socialWarfare.panels.side).animate({
-				top: newPosition
-			}, 0);
-		}, 105);
-	}
-
-
-	/**
 	 * Stores the user-defined mobile breakpoint in the socialWarfare object.
 	 *
 	 */
@@ -1051,76 +1151,4 @@ window.socialWarfare = window.socialWarfare || {};
 		return currentWidth < socialWarfare.breakpoint;
 	}
 
-
-	/**
-	 * Finds each kind of buttons panel, if it exists, and stores it to the
-	 * socialWarfare object for later reference. This is useful for reading data
-	 * attributes of buttons panels without needing to fetch the panel every time.
-	 *
-	 * @return object The object which holds each of the kinds of buttons panels.
-	 */
-	socialWarfare.establishPanels = function() {
-		//* Initialize the panels object with the three known panel types.
-		socialWarfare.panels = {
-			static: null,
-			side:   null,
-			bar:    null
-		};
-
-		//* TODO create the data-position attribute in PHP and print it on each set of buttons panel.
-		var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide");
-		var sidePanel   = $(".swp_social_panelSide");
-		// var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
-
-		if (staticPanel) {
-			socialWarfare.panels.static = staticPanel;
-		}
-
-		if (sidePanel) {
-			socialWarfare.panels.side = sidePanel;
-		}
-		//
-		// if (barPanel) {
-		// 	socialWarfare.panels.bar = barPanel
-		// }
-
-		return socialWarfare.panels;
-	}
-
-
-	/**
-	 * Runs the initialization callbacks for button handlers and placement.
-	 *
-	 * @return void
-	 *
-	 */
-	socialWarfare.initPlugin = function() {
-
-		socialWarfare.establishPanels();
-		socialWarfare.establishBreakpoint();
-		socialWarfare.handleButtonClicks();
-		socialWarfare.initShareButtons();
-
-		if (socialWarfare.panels.side) {
-			socialWarfare.initSidePosition();
-		}
-	}
-
-	$(window).on('load', function() {
-
-		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
-			socialWarfare.enablePinterestSaveButtons();
-		}
-		window.clearCheckID = 0;
-	});
-
-	$(document).ready(function() {
-		socialWarfare.initPlugin();
-
-		//* Check every 2 seconds for buttons panels, in case they still need click handlers.
-		setTimeout(function() {
-			socialWarfare.checkListeners(0, 5);
-		}, 2000);
-
-	});
 })(this, jQuery);
