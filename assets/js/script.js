@@ -11,7 +11,6 @@
  *        Property: socialWarfare.paddingTop
  *        Property: socialWarfare.paddingBottom
  *        Function: socialWarfare.initPlugin()
- *        Function: socialWarfare.initShareButtons()
  *        Function: socialWarfare.establishPanels()
  *
  *     2. Static Horizontal Button Panel Controls
@@ -125,26 +124,6 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Runs the initialization callbacks for button handlers and placement. This
-	 * is the function that fires up all of the javascript functionality for the
-	 * entire plugin. It handles button clicks, activating the panels, creating
-	 * and controlling the floating buttons, etc.
-	 *
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	socialWarfare.initPlugin = function() {
-
-		socialWarfare.establishPanels();
-		socialWarfare.establishBreakpoint();
-		socialWarfare.handleButtonClicks();
-		socialWarfare.initShareButtons();
-
-	}
-
-
-	/**
 	 * Initializes the buttons provided that they exist.
 	 *
 	 * This function will activate the hover effects for the buttons, it will
@@ -156,7 +135,10 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return void
 	 *
 	 */
-	socialWarfare.initShareButtons = function() {
+	socialWarfare.initPlugin = function() {
+
+		socialWarfare.establishPanels();
+		socialWarfare.establishBreakpoint();
 
 		// Bail out if no buttons panels exist.
 		if (!socialWarfare.panels.static && !socialWarfare.panels.side && !socialWarfare.panels.bar) {
@@ -167,6 +149,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.positionFloatSidePanel();
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
+		socialWarfare.toggleFloatingButtons();
 
 
 		/**
@@ -177,18 +160,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 * floating buttons to flicker.
 		 *
 		 */
-		$(window).scroll(socialWarfare.throttle(50, function() {
-			socialWarfare.toggleFloatingButtons();
-		}));
+		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons ));
 
-
-		/**
-		 * We trigger the scroll event once when the page is loaded so that way
-		 * the floating buttons will be toggled on/off to the appropriate state
-		 * as soon as the page is loaded even prior to the user actually scrolling.
-		 *
-		 */
-		$(window).trigger('scroll');
 	}
 
 
@@ -578,9 +551,9 @@ window.socialWarfare = window.socialWarfare || {};
  	 *
  	 */
  	socialWarfare.toggleFloatingVerticalPanel = function() {
- 		var location = socialWarfare.panels.side.data("float")
- 		var visible = socialWarfare.staticPanelIsVisible();
- 		var direction, style;
+		var direction, style, location, visible;
+ 		location = socialWarfare.panels.side.data("float")
+ 		visible  = socialWarfare.staticPanelIsVisible();
 
  		//* This is on mobile and does not use side panels.
  		if (socialWarfare.isMobile()) {
@@ -599,11 +572,14 @@ window.socialWarfare = window.socialWarfare || {};
  		if (socialWarfare.panels.side.data("transition") == "slide") {
 
  			direction = (location.indexOf("left") !== -1) ? "left" : "right";
- 			style = visible ? "-150px" : "5px";
+ 			style     = visible ? "-150px" : "5px";
 
  			//* Update the side panel CSS with the direction and amount.
  			socialWarfare.panels.side.css(direction, style);
+
  		} else {
+
+
  			/**
  			 * We had problems with the fading buttons flickering rather than having
  			 * a smooth fade animation. The workaround was to manually control opacity,
