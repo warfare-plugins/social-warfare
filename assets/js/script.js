@@ -5,23 +5,53 @@
  * side manipulation of the HTML.
  *
  *
- * Function Categories:
+ * Table of Contents:
  *
  *     1. Initialization Functions
+ *        Property: socialWarfare.paddingTop
+ *        Property: socialWarfare.paddingBottom
+ *        Function: socialWarfare.initPlugin()
+ *        Function: socialWarfare.initShareButtons()
+ *        Function: socialWarfare.establishPanels()
+ *
  *     2. Static Horizontal Button Panel Controls
+ *        Function: socialWarfare.activateHoverStates()
+ *        Function: socialWarfare.resetStaticPanel()
+ *        Function: socialWarfare.handleButtonClicks()
+ *
  *     3. Floating Buttons Panel Controls
+ *        Function: socialWarfare.createFloatHorizontalPanel()
+ *        Function: socialWarfare.staticPanelIsVisible()
+ *        Function: socialWarfare.toggleFloatingButtons()
+ *        Function: socialWarfare.toggleMobileButtons()
+ *        Function: socialWarfare.toggleFloatingVerticalPanel()
+ *        Function: socialWarfare.toggleFloatingHorizontalPanel()
+ *        Function: socialWarfare.positionFloatSidePanel()
+ *
  *     4. Pinterest Image Hover Save Buttons
+ *        Function: socialWarfare.enablePinterestSaveButtons()
+ *        Function: socialWarfare.renderPinterestSaveButton()
+ *        Function: socialWarfare.findPinterestBrowserSaveButtons()
+ *        Function: socialWarfare.removePinterestBrowserSaveButtons()
+ *
  *     5. Facebook Share Count Functions
+ *        Function: socialWarfare.fetchFacebookShares()
+ *        Function: socialWarfare.parseFacebookShares()
+ *
  *     6. Utility/Helper Functions
+ *        Function: socialWarfare.throttle()
+ *        Function: socialWarfare.trigger()
+ *        Function: socialWarfare.trackClick()
+ *        Function: socialWarfare.checkListeners()
+ *        Function: socialWarfare.establishBreakpoint()
+ *        Function: socialWarfare.isMobile()
  *
  *
  * Javascript variables created on the server:
  *
  *     bool   	swpClickTracking (SWP_Script.php)
  *     bool   	swpFloatBeforeContent
- *
  *     object 	swpPinIt
- *
  *     string 	swp_admin_ajax
  *     string 	swp_post_url
  *     string 	swp_post_recovery_url
@@ -71,7 +101,7 @@ window.socialWarfare = window.socialWarfare || {};
 		/**
 		 * In some instances, the click bindings were not being instantiated
 		 * properly when they were run as the DOM was loaded. So we built this
-		 * checkListers() function to recheck every 2 seconds, 5 total times, to
+		 * checkListeners() function to recheck every 2 seconds, 5 total times, to
 		 * ensure that the buttons panel exist and activate the click bindings.
 		 *
 		 */
