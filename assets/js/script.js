@@ -806,46 +806,97 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function() {
-		var image = $(this);
+		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyle;
+		image = $(this);
 
+
+		/**
+		 * This disables the Pinterest save buttosn on images that are anchors/links
+		 * if the user has them disabled on them in the options page. So if this
+		 * image is a link, we just bail out.
+		 *
+		 */
 		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
 			if (jQuery(image).parents().filter("a").length) {
 				return;
 			}
 		}
 
+
+		/**
+		 * In the option page, the user can set a minimum width and a minimum
+		 * height. Anything that isn't as large as these image dimensions will
+		 * be skipped. This is a JS variable that is generated and output by
+		 * the server.
+		 *
+		 */
 		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
 			return;
 		}
 
+
+		/**
+		 * We offer users the option to manually opt any image out of having a
+		 * Pinterest save button on it by simply adding either the no_pin class
+		 * or the no-pin class. There is also a checkbox in the media uploader
+		 * that when checked will add one of these classes. If this image has
+		 * one of these classes, just bail and skip this image.
+		 *
+		 */
 		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
 			return;
 		}
 
-		var pinMedia;
 
+		/**
+		 * If the swpPinIt.image_source variable exists, it means that the user
+		 * has opted to use their custom Pinterest image rather than having
+		 * visitors pin the actual image being hovered.
+		 *
+		 */
 		if ('undefined' !== typeof swpPinIt.image_source) {
 
-			//* Create a temp image to force absolute paths via jQuery.
+			/**
+			 * By creating a temporary image and then using jQuery to fetch the
+			 * URL of that image, it will convert any relative paths to
+			 * absolute paths. If we send a relative path image to Pinterest, it
+			 * will throw wonky errors.
+			 *
+			 */
 			var i = new Image();
 			i.src = swpPinIt.image_source;
 			pinMedia = jQuery(i).prop('src');
 
+
+		/**
+		 * Both media and lazy-src are data attributes used by some lazy loading
+		 * plugins. If we don't look for these, we're not able to add the save
+		 * button to lazy loaded images that have not been loaded when the
+		 * document has been loaded.
+		 *
+		 */
 		} else if (image.data('media')) {
 			pinMedia = image.data('media');
 		} else if ($(this).data('lazy-src')) {
 			pinMedia = $(this).data('lazy-src');
 		} else if (image[0].src) {
 			pinMedia = image[0].src;
-		};
+		}
 
 		// Bail if we don't have any media to pin.
 		if (!pinMedia || 'undefined' === typeof pinMedia) {
 			return;
 		}
 
-		var pinDesc = '';
 
+		/**
+		 * This is where we computate a description that will be used when the
+		 * image is shared to Pinterest. In order of precedence, we will use the
+		 * image's data-pin-description attribute, the custom Pinterest description
+		 * for the post passed from the server, the image title, or the image
+		 * description.
+		 *
+		 */
 		if (typeof image.data("pin-description") != 'undefined') {
 			pinDesc = image.data("pin-description");
 		} else if ('undefined' !== typeof swpPinIt.image_description) {
@@ -856,9 +907,9 @@ window.socialWarfare = window.socialWarfare || {};
 			pinDesc = image.attr('alt');
 		}
 
-		var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
-		var imageClasses = image.attr('class');
-		var imageStyle = image.attr('style');
+		bookmark     = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
+		imageClasses = image.attr('class');
+		imageStyle   = image.attr('style');
 
 		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
 		image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
