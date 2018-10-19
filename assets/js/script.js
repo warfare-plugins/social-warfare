@@ -1079,12 +1079,12 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.throttle = function(delay, callback) {
 		var timeoutID = 0;
-		var lastExec = 0;
+		var lastExec  = 0;
 
 		function wrapper() {
-			var that = this;
+			var that    = this;
 			var elapsed = +new Date() - lastExec;
-			var args = arguments;
+			var args    = arguments;
 
 			function exec() {
 				lastExec = +new Date();
@@ -1129,7 +1129,7 @@ window.socialWarfare = window.socialWarfare || {};
 	/**
 	 * Fire an event for Google Analytics and GTM.
 	 *
-	 * @since  2.3.0 | 01 JAN 2018 | Created
+	 * @since  2.4.0 | 18 OCT 2018 | Created
 	 * @param  string event A string identifying the button being clicked.
 	 * @return void
 	 *
@@ -1146,24 +1146,24 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		if (true === swpClickTracking) {
 
+
 			/**
 			 * If Google Analytics is present on the page, we'll send the
 			 * event via their object and methods.
 			 *
 			 */
-			if ("function" == typeof ga) {
-				ga("send", "event", "social_media", "swp_" + event + "_share");
+			if ('function' == typeof ga) {
+				ga('send', 'event', 'social_media', 'swp_' + event + '_share');
 			}
+
 
 			/**
 			 * If Google Tag Manager is present on the page, we'll send the
 			 * event via their object and methods.
 			 *
 			 */
-			if ("object" == typeof dataLayer) {
-				dataLayer.push({
-					'event': 'swp_' + event + '_share'
-				});
+			if ('object' == typeof dataLayer) {
+				dataLayer.push({ 'event': 'swp_' + event + '_share' });
 			}
 		}
 	}
@@ -1179,18 +1179,25 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.checkListeners = function(count, limit) {
+
+
+		/**
+		 * Once we've checked for the buttons panel a certain number of times,
+		 * we're simply going to bail out and stop checking.
+		 *
+		 */
 		if (count > limit) {
 			return;
 		}
 
 		var panel = $('.swp_social_panel');
 
-		if (panel.length > 0 && panel.find(".swp_pinterest")) {
+		if (panel.length > 0 && panel.find('.swp_pinterest')) {
 			return socialWarfare.handleButtonClicks();
 		}
 
 		setTimeout(function() {
-			socialWarfare.checkListeners(count++, limit)
+			socialWarfare.checkListeners(++count, limit)
 		}, 2000);
 	}
 
