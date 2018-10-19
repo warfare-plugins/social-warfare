@@ -7,7 +7,7 @@
  * @package   SocialWarfare\Assets\JS\
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
- * 
+ *
  *
  * This is the primary javascript file used by the Social Warfare plugin. It is
  * loaded both on the frontend and the backend. It is used to control all client
@@ -106,17 +106,6 @@ window.socialWarfare = window.socialWarfare || {};
 		// This is what fires up the entire plugin's JS functionality.
 		socialWarfare.initPlugin();
 
-		/**
-		 * In some instances, the click bindings were not being instantiated
-		 * properly when they were run as the DOM was loaded. So we built this
-		 * checkListeners() function to recheck every 2 seconds, 5 total times, to
-		 * ensure that the buttons panel exist and activate the click bindings.
-		 *
-		 */
-		setTimeout(function() {
-			socialWarfare.checkListeners(0, 5);
-		}, 2000);
-
 	});
 
 
@@ -159,6 +148,16 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 		socialWarfare.toggleFloatingButtons();
+
+
+		/**
+		 * In some instances, the click bindings were not being instantiated
+		 * properly when they were run as the DOM was loaded. So we built this
+		 * checkListeners() function to recheck every 2 seconds, 5 total times, to
+		 * ensure that the buttons panel exist and activate the click bindings.
+		 *
+		 */
+		setTimeout( socialWarfare.checkListeners(0, 5), 2000);
 
 
 		/**
