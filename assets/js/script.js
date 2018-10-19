@@ -1206,8 +1206,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.isMobile = function() {
-		var currentWidth = $(window).width();
-		return currentWidth < socialWarfare.breakpoint;
+		return $(window).width() < socialWarfare.breakpoint;
 	}
 
 })(this, jQuery);
