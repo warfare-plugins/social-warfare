@@ -925,20 +925,21 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.findPinterestBrowserSaveButtons = function() {
+		var pinterestRed, pinterestZIndex, pinterestBackgroundSize, button, style;
 
 		//* Known constants used by Pinterest.
-		var pinterestRed = "rgb(189, 8, 28)";
-		var pinterestZIndex = "8675309";
-		var pinterestBackgroundSize = "14px 14px";
-		var button = null;
+		pinterestRed = "rgb(189, 8, 28)";
+		pinterestZIndex = "8675309";
+		pinterestBackgroundSize = "14px 14px";
+		button = null;
 
 		//* The Pinterest button is a <span/>, so check each span for a match.
-		document.querySelectorAll("span").forEach(function(el, index) {
-			var style = window.getComputedStyle(el);
+		document.querySelectorAll("span").forEach(function(element, index) {
+			style = window.getComputedStyle(element);
 
 			if (style.backgroundColor == pinterestRed) {
 				if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
-					button = el;
+					button = element;
 				}
 			}
 		});
@@ -952,12 +953,13 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.removePinterestBrowserSaveButtons = function(button) {
-		var pinterestSquare = button.nextSibling;
+		var pinterestSquare, style, size;
+		pinterestSquare = button.nextSibling;
 
 		//* The sibling to the Pinterest button is always a span.
 		if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
-			var style = window.getComputedStyle(pinterestSquare);
-			var size = "24px";
+			style = window.getComputedStyle(pinterestSquare);
+			size = "24px";
 
 			//* If the sibling is indeed the correct Pinterest sibling, destory it all.
 			if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
