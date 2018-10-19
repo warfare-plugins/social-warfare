@@ -10,7 +10,7 @@
  * string 	swp_post_url
  * string 	swp_post_recovery_url
  *
-*/
+ */
 
 
 /**
@@ -32,7 +32,7 @@ window.socialWarfare = window.socialWarfare || {};
 (function(window, $) {
 	'use strict';
 
-  	var $ = jQuery;
+	var $ = jQuery;
 
 
 	/**
@@ -43,7 +43,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 * buttons hover over menus or copyright information in the footer.
 	 *
 	 */
-	socialWarfare.paddingTop    = parseInt($('body').css('padding-top').replace('px', ''));
+	socialWarfare.paddingTop = parseInt($('body').css('padding-top').replace('px', ''));
 	socialWarfare.paddingBottom = parseInt($('body').css('padding-bottom').replace('px', ''));
 
 
@@ -56,95 +56,105 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 * @param  integer   delay    How often in ms to allow the event to fire.
 	 * @param  function  callback The function to run if the timeout period is expired.
-	 * @return {[type]}            [description]
-	 * 
+	 * @return function           The callback function.
+	 *
 	 */
 	socialWarfare.throttle = function(delay, callback) {
-	    var timeoutID = 0;
-	    var lastExec = 0;
+		var timeoutID = 0;
+		var lastExec = 0;
 
-	    function wrapper() {
-	        var that = this;
-	        var elapsed = +new Date() - lastExec;
-	        var args = arguments;
+		function wrapper() {
+			var that = this;
+			var elapsed = +new Date() - lastExec;
+			var args = arguments;
 
-	        function exec() {
-	            lastExec = +new Date();
-	            callback.apply(that, args);
-	        }
+			function exec() {
+				lastExec = +new Date();
+				callback.apply(that, args);
+			}
 
-	        function clear() {
-	            timeoutID = undefined;
-	        }
+			function clear() {
+				timeoutID = undefined;
+			}
 
-	        timeoutID && clearTimeout(timeoutID);
+			timeoutID && clearTimeout(timeoutID);
 
-	        if (elapsed > delay) {
-	            exec();
-	        } else {
-	            timeoutID = setTimeout(exec,  delay - elapsed);
-	        }
-	    }
+			if (elapsed > delay) {
+				exec();
+			} else {
+				timeoutID = setTimeout(exec, delay - elapsed);
+			}
+		}
 
-	    if (socialWarfare.guid) {
-	        wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
-	    }
+		if (socialWarfare.guid) {
+			wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
+		}
 
-	    return wrapper;
+		return wrapper;
 	};
 
 
 	/**
-	 * A simple wrapper for easily triggering DOM events.
+	 * A simple wrapper for easily triggering DOM events. This will allow us to
+	 * fire off our own custom events that our addons can then bind to in order
+	 * to run their own functions in sequence with ours here.
 	 *
 	 * @param  string event The name of the event to trigger.
 	 * @return void
 	 *
 	 */
 	socialWarfare.trigger = function(event) {
-		  $(window).trigger($.Event(event));
+		$(window).trigger($.Event(event));
 	}
 
 
 	/**
-	 * Makes external requsts to fetch Facebook share counts.
+	 * Makes external requsts to fetch Facebook share counts. We fetch Facebook
+	 * share counts via the frontened Javascript because their API has harsh
+	 * rate limits that are IP Address based. So it's very easy for a website to
+	 * hit those limits and recieve temporary bans from accessing the share count
+	 * data. By using the front end, the IP Addresses are distributed to users,
+	 * are therefore spread out, and don't hit the rate limits.
 	 *
+	 * @param  void
 	 * @return void
+	 *
 	 */
 	socialWarfare.fetchFacebookShares = function() {
 		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
 		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
 
-		/**
-		 * Run all the API calls
-		 */
 		$.when(
-			$.get(url1),
-			$.get(url2)
-		)
-		.then(function(response1, response2) {
-			var shares = 0;
-			var data = {
-				action: 'swp_facebook_shares_update',
-				post_id: swp_post_id
-			};
+				$.get(url1),
+				$.get(url2)
+			)
+			.then(function(response1, response2) {
+				var shares = 0;
+				var data = {
+					action: 'swp_facebook_shares_update',
+					post_id: swp_post_id
+				};
 
-			shares = socialWarfare.parseFacebookShares(response1[0]);
+				shares = socialWarfare.parseFacebookShares(response1[0]);
 
-			if (swp_post_recovery_url) {
-				shares += socialWarfare.parseFacebookShares(response2[0]);
-			}
+				if (swp_post_recovery_url) {
+					shares += socialWarfare.parseFacebookShares(response2[0]);
+				}
 
-			data.share_counts = shares;
+				data.share_counts = shares;
 
-			$.post(swp_admin_ajax, data);
+				$.post(swp_admin_ajax, data);
 
-		});
+			});
 	}
 
 
 	/**
-	 * Sums the share data from a facebook API response.
+	 * Sums the share data from a facebook API response. This is a utility
+	 * function used by socialWarfare.fetchFacebookShares to allow easy access
+	 * to parsing out the JSON response that we got from Facebook's API and
+	 * converting it into an integer that reflects the tally of all activity
+	 * on the URl in question including like, comments, and shares.
 	 *
 	 * @param  object response The API response received from Facebook.
 	 * @return number The total shares summed from the request, or 0.
@@ -167,11 +177,14 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * rigger the resizes to the proper widths for the expansion on hover effect
+	 * This triggers the hover effect that you see when you hover over the
+	 * buttons in the panel. It measures the space needed to expand the button
+	 * to reveal the call to action for that network and then uses flex to
+	 * expand it and to shrink the other buttons to make room for the expansion.
 	 *
 	 * @since 2.1.0
-	 *
-	 * @return none
+	 * @param  void
+	 * @return void
 	 *
 	 */
 	socialWarfare.activateHoverStates = function() {
@@ -198,7 +211,9 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Resets the static panels to their default styles.
+	 * Resets the static panels to their default styles. After they've been
+	 * expanded by activateHoverStates(), this function returns the buttons to
+	 * their normal state once a user is no longer hovering over the buttons.
 	 *
 	 * @see activateHoverStates().
 	 * @return void
@@ -206,7 +221,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.resetStaticPanel = function() {
 		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
-		// socialWarfare.panels.static.removeAttr("style");
 		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
 	}
 
@@ -221,7 +235,7 @@ window.socialWarfare = window.socialWarfare || {};
 		var visible = false;
 		var scrollPos = $(window).scrollTop();
 
-	  //* Iterate each buttons panel, checking each to see if it is currently visible.
+		//* Iterate each buttons panel, checking each to see if it is currently visible.
 		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
 			var offset = $(this).offset();
 
@@ -229,7 +243,7 @@ window.socialWarfare = window.socialWarfare || {};
 			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
 				var theContent = jQuery(".swp-content-locator").parent();
 
-	      //* We are in sight of an "Above the content" panel.
+				//* We are in sight of an "Above the content" panel.
 				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
 					visible = true;
 				}
@@ -277,20 +291,20 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
-	  //* Set the location (top or bottom) of the bar depending on
+		//* Set the location (top or bottom) of the bar depending on
 		if (socialWarfare.isMobile()) {
 			barLocation = mobileFloatLocation;
 		} else {
 			barLocation = floatLocation;
 		}
 
-	  //* Assign a CSS class to the wrapper based on the float-mobile location.
+		//* Assign a CSS class to the wrapper based on the float-mobile location.
 		wrapper.addClass(barLocation).hide().appendTo("body");
 
-	  //* Save the new buttons panel to our ${panels} object.
+		//* Save the new buttons panel to our ${panels} object.
 		socialWarfare.panels.bar = socialWarfare.panels.static.first().clone();
 
-	  //* Give the bar panel the appropriate classname and put it in its wrapper.
+		//* Give the bar panel the appropriate classname and put it in its wrapper.
 		socialWarfare.panels.bar.addClass("nc_floater").css({
 			width: socialWarfare.panels.static.outerWidth(true),
 			left: left
@@ -311,7 +325,7 @@ window.socialWarfare = window.socialWarfare || {};
 		// Adjust the floating bar
 		var location = socialWarfare.panels.static.data('float');
 
-	  //* There are no floating buttons enabled, hide any that might exist.
+		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
 			return $(".nc_wrapper, .swp_social_panelSide").hide();
 		}
@@ -357,7 +371,7 @@ window.socialWarfare = window.socialWarfare || {};
 		var visible = socialWarfare.staticPanelIsVisible();
 		var direction, style;
 
-	  //* This is on mobile and does not use side panels.
+		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
 			return socialWarfare.panels.side.hide();
 		}
@@ -379,21 +393,21 @@ window.socialWarfare = window.socialWarfare || {};
 			//* Update the side panel CSS with the direction and amount.
 			socialWarfare.panels.side.css(direction, style);
 		} else {
-	    /**
-	     * We had problems with the fading buttons flickering rather than having
-	     * a smooth fade animation. The workaround was to manually control opacity,
-	     * fade, and opacity again.
-	     *
-	     */
+			/**
+			 * We had problems with the fading buttons flickering rather than having
+			 * a smooth fade animation. The workaround was to manually control opacity,
+			 * fade, and opacity again.
+			 *
+			 */
 			if (visible) {
 				socialWarfare.panels.side.css("opacity", 1)
-				                         .fadeOut(300)
-																 .css("opacity", 0);
+					.fadeOut(300)
+					.css("opacity", 0);
 			} else {
 				socialWarfare.panels.side.css("opacity", 0)
-				                         .fadeIn(300)
-																 .css("display", "flex")
-																 .css("opacity", 1);
+					.fadeIn(300)
+					.css("display", "flex")
+					.css("opacity", 1);
 			}
 		}
 	}
@@ -450,7 +464,7 @@ window.socialWarfare = window.socialWarfare || {};
 			}
 		}
 
-	  //* Create the CSS property name.
+		//* Create the CSS property name.
 		paddingProp = "padding-" + location;
 		$("body").animate({
 			paddingProp: newPadding
@@ -517,15 +531,15 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.initShareButtons = function() {
 		if (socialWarfare.panels.static ||
-			  socialWarfare.panels.side   ||
-			  socialWarfare.panels.bar ) {
+			socialWarfare.panels.side ||
+			socialWarfare.panels.bar) {
 
 			socialWarfare.createBarPanel();
 			socialWarfare.centerSidePanel();
 			socialWarfare.activateHoverStates();
 			socialWarfare.handleButtonClicks();
 
-	    //* Prevent the scroll event from over-triggering callbacks.
+			//* Prevent the scroll event from over-triggering callbacks.
 			$(window).scroll(socialWarfare.throttle(50, function() {
 				socialWarfare.toggleFloatingButtons();
 			}));
@@ -552,10 +566,10 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		$('.swp-content-locator').parent().find('img').each(socialWarfare.doSaveButton);
 
-	  /**
-	   * Attach a click handler to each of the newly created "Save" buttons.
-	   *
-	   */
+		/**
+		 * Attach a click handler to each of the newly created "Save" buttons.
+		 *
+		 */
 		$('.sw-pinit .sw-pinit-button').on('click', function() {
 			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 			socialWarfare.ga('pin_image');
@@ -744,10 +758,10 @@ window.socialWarfare = window.socialWarfare || {};
 			 * browser window.
 			 *
 			 */
-			top              = window.screenY + (window.innerHeight - height) / 2;
-			left             = window.screenX + (window.innerWidth - width) / 2;
+			top = window.screenY + (window.innerHeight - height) / 2;
+			left = window.screenX + (window.innerWidth - width) / 2;
 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-			instance         = window.open(href, '_blank', windowAttributes);
+			instance = window.open(href, '_blank', windowAttributes);
 
 
 			/**
@@ -779,7 +793,7 @@ window.socialWarfare = window.socialWarfare || {};
 		var pinterestBackgroundSize = "14px 14px";
 		var button = null;
 
-	  //* The Pinterest button is a <span/>, so check each span for a match.
+		//* The Pinterest button is a <span/>, so check each span for a match.
 		document.querySelectorAll("span").forEach(function(el, index) {
 			var style = window.getComputedStyle(el);
 
@@ -801,12 +815,12 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.removePinterestButton = function(button) {
 		var pinterestSquare = button.nextSibling;
 
-	  //* The sibling to the Pinterest button is always a span.
+		//* The sibling to the Pinterest button is always a span.
 		if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
 			var style = window.getComputedStyle(pinterestSquare);
 			var size = "24px";
 
-	    //* If the sibling is indeed the correct Pinterest sibling, destory it all.
+			//* If the sibling is indeed the correct Pinterest sibling, destory it all.
 			if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
 				pinterestSquare.remove()
 			}
