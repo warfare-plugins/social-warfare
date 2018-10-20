@@ -1207,17 +1207,20 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.establishBreakpoint = function() {
-		var panel = $(".swp_social_panel");
+		var panel = $('.swp_social_panel');
 		socialWarfare.breakpoint = 1100;
 
-		if (panel.length && panel.data("min-width") || panel.data("min-width") == 0) {
-			socialWarfare.breakpoint = parseInt(panel.data("min-width"));
+		if (panel.length && panel.data('min-width') || panel.data('min-width') == 0) {
+			socialWarfare.breakpoint = parseInt( panel.data('min-width') );
 		}
 	}
 
 
 	/**
-	 * Checks to see if the current viewport is within the defined mobile boundary.
+	 * Checks to see if the current viewport is within the defined mobile
+	 * breakpoint. The user sets a width in the options page. Any window
+	 * viewport that is not as wide as that width will trigger isMobile to
+	 * return as true.
 	 *
 	 */
 	socialWarfare.isMobile = function() {
