@@ -188,10 +188,8 @@ window.socialWarfare = window.socialWarfare || {};
 			bar: null
 		};
 
-		//* TODO create the data-position attribute in PHP and print it on each set of buttons panel.
 		var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide");
 		var sidePanel = $(".swp_social_panelSide");
-		// var barPanel = $(".swp_social_panelSide").find("'[data-position]=bar'").first();
 
 		if (staticPanel) {
 			socialWarfare.panels.static = staticPanel;
@@ -200,10 +198,6 @@ window.socialWarfare = window.socialWarfare || {};
 		if (sidePanel) {
 			socialWarfare.panels.side = sidePanel;
 		}
-		//
-		// if (barPanel) {
-		// 	socialWarfare.panels.bar = barPanel
-		// }
 
 		return socialWarfare.panels;
 	}
