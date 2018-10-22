@@ -9,7 +9,7 @@
 .swp_CountDown {
 	background-color: #CCC;
 	display: inline-block;
-	float: right;
+	/* float: right; */
 	padding: 5px 15px;
 	-webkit-border-radius: 3px 3px 0 0;
 	        border-radius: 3px 3px 0 0;
@@ -53,6 +53,7 @@
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 
+/*
 .swpmb-field.swpmb-textarea-wrapper.swp_og_title,
 .swpmb-field.swpmb-textarea-wrapper.swp_og_description,
 .swpmb-field.swpmb-textarea-wrapper.swp_pinterest_descriptionWrapper,
@@ -60,17 +61,22 @@
 	width: 63%;
 	float: left;
 }
+*/
 
+/*
 .swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper {
     width: 63%;
     float: left;
 }
+*/
 
+/*
 .swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper input {
     width: 100%;
 }
+*/
 
-
+/*
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper,
 .swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper,
 .swpmb-field.swpmb-select-wrapper.swp_post_locationWrapper,
@@ -85,17 +91,22 @@
 .swpmb-field.swpmb-select-wrapper.swp_float_locationWrapper select {
 	width:90%;
 }
+*/
+
 /*
 .swpmb-field.swpmb-image_advanced-wrapper.swp_small_image,
 .swpmb-field.swpmb-image_advanced-wrapper.swp_large_image {
 	width: 30%;
 	float: left;
 	margin-right: 3%;
-} */
+}
+*/
 
+/*
 #social_warfare .swpmb-label, #social_warfare .swpmb-input {
 	width: 100%;
 }
+*/
 
 #social_warfare .swpmb-field {
 	margin-top: 10px;
@@ -386,19 +397,54 @@ a.swp-notice-cta {
 	background-color: #ee464f;
 }
 
+/*
 .swp-meta-container {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
-    width: 90%;
-    margin: 0 auto;
+    /* justify-content: space-around; */
+    max-width: 90%;
+    /* margin: 0 auto; */
     position: relative;
 }
+*/
 
+/*
 .swpmb-field [class*=image] {
     flex-basis: 40%;
 }
 
 .swpmb-field :not([class*=image]) {
     flex-basis: 45%;
+}
+*/
+
+/*
+max-width 77% looked about right based on the mockup at
+https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d6f-af31cba9f8e2.png
+ */
+
+.swpmb-meta-container {
+	max-width: 77%;
+}
+
+.swpmb-child-half {
+	width: 40%;
+}
+
+.swpmb-image {
+	float: left;
+}
+
+.swpmb-left {
+	float: left;
+	margin-right: 10px;
+}
+
+.swpmb-right {
+	float: right;
+}
+
+.swpmb-toggle-wrapper {
+	max-width: 77%;
+	float: left;
 }
