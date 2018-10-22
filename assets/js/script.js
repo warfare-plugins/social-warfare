@@ -283,6 +283,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.handleButtonClicks = function() {
 
+
 		/**
 		 * In order to avoid the possibility that this function may be called
 		 * more than once, we remove all click handlers from our buttons prior
@@ -293,6 +294,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		$('.nc_tweet, a.swp_CTT').off('click');
 		$('.nc_tweet, a.swp_CTT').on('click', function(event) {
+
+
 			/**
 			 * Some buttons that don't have popout share windows can use the
 			 * 'nopop' class to disable this click handler. This will then make
@@ -304,6 +307,7 @@ window.socialWarfare = window.socialWarfare || {};
 			if ($(this).hasClass('noPop')) {
 				return false;
 			}
+
 
 			/**
 			 * Our click handlers will use the data-link html attribute on the
@@ -324,6 +328,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 */
 			event.preventDefault();
 
+
 			/**
 			 * Fetch the share link that we'll use to call the popout share
 			 * windows and then declare the variables that we'll be using later.
@@ -331,6 +336,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 */
 			var href = $(this).data('link').replace('’', '\'');
 			var height, width, top, left, instance, windowAttributes, network;
+
 
 			/**
 			 * These are the default dimensions that are used by most of the
@@ -342,6 +348,7 @@ window.socialWarfare = window.socialWarfare || {};
 			height = 270;
 			width = 500;
 
+
 			/**
 			 * Pinterest, Buffer, and Flipboard use a different size than the
 			 * rest so if it's one of those buttons, overwrite the defaults
@@ -352,6 +359,7 @@ window.socialWarfare = window.socialWarfare || {};
 				height = 550;
 				width = 775;
 			}
+
 
 			/**
 			 * We'll measure the window and then run some calculations to ensure
@@ -377,6 +385,7 @@ window.socialWarfare = window.socialWarfare || {};
 				network = 'ctt';
 			}
 
+			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
 	}
