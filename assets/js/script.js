@@ -915,13 +915,27 @@ window.socialWarfare = window.socialWarfare || {};
 			pinDesc = image.attr('alt');
 		}
 
-		bookmark     = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
-		imageClasses = image.attr('class');
-		imageStyle   = image.attr('style');
+		share_link = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
 
+
+		/**
+		 * In order to preserve all of the layout, positioning and style of the
+		 * image, we are going to fetch all of the classes and inline styles of
+		 * the image and move them onto the parent container in which we will be
+		 * wrapping the image.
+		 *
+		 */
+		imageClasses = image.attr('class');
+		imageStyles  = image.attr('style');
+
+		// Remove the image classes and styles. Create the wrapper div.
 		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
-		image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
+
+		// Append the button as the last element inside the wrapper div.
+		image.after('<a href="' + share_link + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+
+		// Add the removed classes and styles to the wrapper div.
+		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyles);
 	}
 
 
@@ -1009,20 +1023,20 @@ window.socialWarfare = window.socialWarfare || {};
 		// Use this to ensure that we wait until the API requests are done.
 		$.when( $.get( url1 ), $.get( url2 ) )
 		.then(function(response1, response2) {
-			var shares = 0;
-			var data   = {
-				action: 'swp_facebook_shares_update',
-				post_id: swp_post_id
-			};
+			var shares, data;
 
+			// Parse the shares and add them up into a running total.
 			shares = socialWarfare.parseFacebookShares(response1[0]);
-
 			if (swp_post_recovery_url) {
 				shares += socialWarfare.parseFacebookShares(response2[0]);
 			}
 
-			data.share_counts = shares;
-
+			// Compile the data and send out the AJAX request to store the count.
+			var data   = {
+				action: 'swp_facebook_shares_update',
+				post_id: swp_post_id,
+				share_counts: shares
+			};
 			$.post(swp_admin_ajax, data);
 
 		});
@@ -1183,19 +1197,34 @@ window.socialWarfare = window.socialWarfare || {};
 
 		/**
 		 * Once we've checked for the buttons panel a certain number of times,
-		 * we're simply going to bail out and stop checking.
+		 * we're simply going to bail out and stop checking. Right now, it is
+		 * set to run 5 times for a total of 10 seconds.
 		 *
 		 */
 		if (count > limit) {
 			return;
 		}
 
-		var panel = $('.swp_social_panel');
 
+		/**
+		 * The primary reason we are doing this is to ensure that a set of
+		 * buttons does indeed exist when the click bindings are created. So
+		 * this looks for the buttons and check's for their existence. If we
+		 * find them, we fire off the handleButtonClicks() function.
+		 *
+		 */
+		var panel = $('.swp_social_panel');
 		if (panel.length > 0 && panel.find('.swp_pinterest')) {
-			return socialWarfare.handleButtonClicks();
+			socialWarfare.handleButtonClicks();
+			return;
 		}
 
+
+		/**
+		 * If we haven't found any buttons panel, then after 2 more seconds,
+		 * we'll fire off this function again until the limit has been reached.
+		 *
+		 */
 		setTimeout(function() {
 			socialWarfare.checkListeners(++count, limit)
 		}, 2000);
@@ -1203,7 +1232,10 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Stores the user-defined mobile breakpoint in the socialWarfare object.
+	 * Stores the user-defined mobile breakpoint in the socialWarfare object. In
+	 * other functions, if the width of the current browser is smaller than this
+	 * breakpoint, we will switch over and use the mobile options for the buttons
+	 * panels.
 	 *
 	 */
 	socialWarfare.establishBreakpoint = function() {
