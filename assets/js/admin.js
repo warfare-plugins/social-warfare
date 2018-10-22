@@ -269,14 +269,18 @@ if (window.location.href.indexOf("widgets.php") > -1) {
      *
      */
     function putFieldsInContainers() {
-        $(".swp-meta-container[data-type]").map(function(container) {
-            var type = $(container).data('type');
-						if (!type) return;
-
+        $(".swp-meta-container[data-type]").map(function() {
+            var type = $(this).data('type');
+						if (!type) {
+							console.log("No type for this one.");
+							return;
+            } else {
+							console.log("found", type)
+						}
 						var field = $(".swpmb-field." + type);
 
 						if (field.length) {
-							$(".swp-meta-container[data-type=" + type).append();
+							$(this).append(field);
 						}
         });
     }
