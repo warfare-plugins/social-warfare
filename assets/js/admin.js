@@ -269,7 +269,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
      *
      */
     function putFieldsInContainers() {
-        $(".swp-meta-container[data-type]").map(function() {
+        $(".swpmb-meta-container[data-type]").map(function() {
             var type = $(this).data('type');
 						if (!type) {
 							return;
@@ -308,7 +308,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
     		if ($('#social_warfare.postbox').length) {
               createTextCounters();
-              putFieldsInContainers();
           		swpConditionalFields();
 
               //* Wait for the Rilis metabox to populate itself.
@@ -323,6 +322,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
                       updateImageInputs();
                       $("#social_warfare.postbox").show();
                   }, 1200);
+
+									putFieldsInContainers();
 
               }, 10);
     		}
