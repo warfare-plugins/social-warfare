@@ -189,13 +189,13 @@ window.socialWarfare = window.socialWarfare || {};
 		};
 
 		var staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
-		var sidePafloatingSidenel = $(".swp_social_panelSide");
+		var floatingSide = $(".swp_social_panelSide");
 
-		if (staticPanel) {
+		if (staticHorizontal) {
 			socialWarfare.panels.staticHorizontal = staticHorizontal;
 		}
 
-		if (sidePanel) {
+		if (floatingSide) {
 			socialWarfare.panels.floatingSide = floatingSide;
 		}
 
