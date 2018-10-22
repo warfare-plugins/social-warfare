@@ -139,7 +139,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.establishBreakpoint();
 
 		// Bail out if no buttons panels exist.
-		if (!socialWarfare.panels.static && !socialWarfare.panels.side && !socialWarfare.panels.bar) {
+		if (!socialWarfare.panels.staticHorizontal && !socialWarfare.panels.side && !socialWarfare.panels.floatingHorizontal) {
 			return;
 		}
 
@@ -183,20 +183,20 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.establishPanels = function() {
 		//* Initialize the panels object with the three known panel types.
 		socialWarfare.panels = {
-			static: null,
-			side: null,
-			bar: null
+			staticHorizontal: null,
+			floatingSide: null,
+			floatingHorizontal: null
 		};
 
-		var staticPanel = $(".swp_social_panel").not(".swp_social_panelSide");
-		var sidePanel = $(".swp_social_panelSide");
+		var staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
+		var sidePafloatingSidenel = $(".swp_social_panelSide");
 
 		if (staticPanel) {
-			socialWarfare.panels.static = staticPanel;
+			socialWarfare.panels.staticHorizontal = staticHorizontal;
 		}
 
 		if (sidePanel) {
-			socialWarfare.panels.side = sidePanel;
+			socialWarfare.panels.floatingSide = floatingSide;
 		}
 
 		return socialWarfare.panels;
@@ -411,14 +411,14 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.createFloatHorizontalPanel = function() {
 
 		//* If a horizontal panel does not exist, we can not create a bar.
-		if (!socialWarfare.panels.static || !socialWarfare.panels.static.length) {
+		if (!socialWarfare.panels.staticHorizontal || !socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
-		var floatLocation       = socialWarfare.panels.static.data("float");
-		var mobileFloatLocation = socialWarfare.panels.static.data("float-mobile");
-		var backgroundColor     = socialWarfare.panels.static.data("float-color");
-		var left                = socialWarfare.panels.static.data("align") == "center" ? 0 : socialWarfare.panels.static.offset().left;
+		var floatLocation       = socialWarfare.panels.staticHorizontal.data("float");
+		var mobileFloatLocation = socialWarfare.panels.staticHorizontal.data("float-mobile");
+		var backgroundColor     = socialWarfare.panels.staticHorizontal.data("float-color");
+		var left                = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
 		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 		var barLocation         = '';
 
@@ -448,11 +448,11 @@ window.socialWarfare = window.socialWarfare || {};
 		wrapper.addClass(barLocation).hide().appendTo("body");
 
 		//* Save the new buttons panel to our ${panels} object.
-		socialWarfare.panels.bar = socialWarfare.panels.static.first().clone();
+		socialWarfare.panels.floatingHorizontal = socialWarfare.panels.staticHorizontal.first().clone();
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
-		socialWarfare.panels.bar.addClass("nc_floater").css({
-			width: socialWarfare.panels.static.outerWidth(true),
+		socialWarfare.panels.floatingHorizontal.addClass("nc_floater").css({
+			width: socialWarfare.panels.staticHorizontal.outerWidth(true),
 			left: left
 		}).appendTo(wrapper);
 
@@ -516,7 +516,7 @@ window.socialWarfare = window.socialWarfare || {};
  	 */
  	socialWarfare.toggleFloatingButtons = function() {
  		// Adjust the floating bar
- 		var location = socialWarfare.panels.static.data('float');
+ 		var location = socialWarfare.panels.staticHorizontal.data('float');
 
  		//* There are no floating buttons enabled, hide any that might exist.
  		if (location == 'none') {
