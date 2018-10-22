@@ -252,19 +252,21 @@ if (window.location.href.indexOf("widgets.php") > -1) {
     }
 
     /**
-     * The third party module used to create metaboxes (on the server) does note
-     * have an easy means for visually organizing the markup.
-     *
-     * Our fix for this is to use the attribute `data-type` on a parent container
-     * created in SWP_Meta_Box_Loader->before_meta_boxes, or using the
-     * 'swp_meta_boxes' filter.
+     * The third party module used to create metaboxes (on the server) does not
+     * provide a way to organize the HTML.
+
+     * Our fix for this is to create a new parent container with the `data-type`
+     * attribute. The value of `data-type` represents the group of related
+     * functionality, such as 'heading', 'open-graph', or 'pinterest'.
      *
      * Then we move the related content (matched by CSS classnames) into the
      * appropriate container using javascript.
      *
      * @see PHP social-warfare-pro\lib\admin\SWP_Meta_Box_Loader->before_meta_boxes()
+     * @since 3.x.x | Created
+     * @since 3.4.0 | Wrote the docblock and added comments.
      * @return void
-     * 
+     *
      */
     function putFieldsInContainers() {
 			  //* Create an array of types from all elements with the attribute "data-type".
