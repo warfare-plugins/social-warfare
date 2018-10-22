@@ -269,15 +269,15 @@ if (window.location.href.indexOf("widgets.php") > -1) {
      *
      */
     function putFieldsInContainers() {
-			  //* Create an array of types from all elements with the attribute "data-type".
-        var types = $(".swp-meta-container[data-type]")
-                    .map(function(container) {
-                        return $(this).data('type')
-                    })
-                    .get()
+        $(".swp-meta-container[data-type]").map(function(container) {
+            var type = $(container).data('type');
+						if (!type) return;
 
-        types.forEach(function(type) {
-            $(".swp-meta-container[data-type=" + type + "").append($(".swpmb-field." + type));
+						var field = $(".swpmb-field." + type);
+
+						if (field.length) {
+							$(".swp-meta-container[data-type=" + type).append();
+						}
         });
     }
 
