@@ -272,11 +272,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         $(".swp-meta-container[data-type]").map(function() {
             var type = $(this).data('type');
 						if (!type) {
-							console.log("No type for this one.");
 							return;
-            } else {
-							console.log("found", type)
-						}
+            }
 						var field = $(".swpmb-field." + type);
 
 						if (field.length) {
