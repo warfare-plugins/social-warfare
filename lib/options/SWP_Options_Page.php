@@ -471,15 +471,46 @@ class SWP_Options_Page extends SWP_Option_Abstract {
         		$network_shares = new SWP_Option_Toggle( __( 'Button Counts', 'social-warfare' ), 'network_shares' );
         		$network_shares->set_default( true )
                     ->set_priority( 10 )
-                    ->set_size( 'sw-col-300' );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
                 //* totes => totals
                 $total_shares = new SWP_Option_Toggle( __( 'Total Counts', 'social-warfare' ), 'total_shares' );
                 $total_shares->set_default( true )
                     ->set_priority( 20 )
-                    ->set_size( 'sw-col-300' );
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
-            $share_counts->add_options( [$network_shares, $total_shares] );
+				//* swDecimals => decimals
+                $decimals = new SWP_Option_Select( __( 'Decimal Places', 'social-warfare' ), 'decimals' );
+                $decimals->set_choices( [
+                    '0' => 'Zero',
+                    '1' => 'One',
+                    '2' => 'Two',
+                ])
+                    ->set_default( '0' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
+					->set_priority( 40 );
+
+                //* swp_decimal_separator => decimal_separator
+                $decimal_separator = new SWP_Option_Select( __( 'Decimal Separator', 'social-warfare' ), 'decimal_separator' );
+                $decimal_separator->set_choices( [
+                    'period'    => 'Period',
+                    'comma'     => 'Comma',
+                ])
+                    ->set_default( 'period' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
+					->set_priority( 50 );
+
+                //* swTotesFormat => totals_alignment
+                $totals_alignment = new SWP_Option_Select( __( 'Alignment', 'social-warfare' ), 'totals_alignment' );
+                $totals_alignment->set_choices( [
+                    'totals_right'  => 'Right',
+                    'totals_left'   => 'Left'
+                ])
+                    ->set_default( 'totals_right' )
+                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
+					->set_priority( 60 );
+
+            $share_counts->add_options( [$network_shares, $total_shares, $decimals, $decimal_separator, $totals_alignment] );
 
             $button_position = new SWP_Options_Page_Section( __( 'Position Share Buttons', 'social-warfare' ), 'button_position' );
             $button_position->set_description( __( 'These settings let you decide where the share buttons should go for each post type.', 'social-warfare' ) )
@@ -605,42 +636,16 @@ class SWP_Options_Page extends SWP_Option_Abstract {
             $buttons_preview_section->add_option( $buttons_preview );
 
             $styles->add_section( $buttons_preview_section );
+			//
+			//
+            // $total_counts = new SWP_Options_Page_Section( __( 'Total Counts', 'social-warfare' ), 'total_counts' );
+            // $total_counts->set_description( __( 'Customize how the "Total Shares" section of your share buttons look.', 'social-warfare' ) )
+            //     ->set_priority( 20 )
+            //     ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
 
 
-            $total_counts = new SWP_Options_Page_Section( __( 'Total Counts', 'social-warfare' ), 'total_counts' );
-            $total_counts->set_description( __( 'Customize how the "Total Shares" section of your share buttons look.', 'social-warfare' ) )
-                ->set_priority( 20 )
-                ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
 
-                //* swDecimals => decimals
-                $decimals = new SWP_Option_Select( __( 'Decimal Places', 'social-warfare' ), 'decimals' );
-                $decimals->set_choices( [
-                    '0' => 'Zero',
-                    '1' => 'One',
-                    '2' => 'Two',
-                ])
-                    ->set_default( '0' )
-                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
-
-                //* swp_decimal_separator => decimal_separator
-                $decimal_separator = new SWP_Option_Select( __( 'Decimal Separator', 'social-warfare' ), 'decimal_separator' );
-                $decimal_separator->set_choices( [
-                    'period'    => 'Period',
-                    'comma'     => 'Comma',
-                ])
-                    ->set_default( 'period' )
-                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
-
-                //* swTotesFormat => totals_alignment
-                $totals_alignment = new SWP_Option_Select( __( 'Alignment', 'social-warfare' ), 'totals_alignment' );
-                $totals_alignment->set_choices( [
-                    'totals_right'  => 'Right',
-                    'totals_left'   => 'Left'
-                ])
-                    ->set_default( 'totals_right' )
-                    ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
-
-            $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
+            // $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
             $floating_share_buttons = new SWP_Options_Page_Section( __( 'Floating Share Buttons', 'social-warfare' ), 'floating_share_buttons' );
             $floating_share_buttons->set_description( __( 'If you would like to activate floating share buttons, turn this on.', 'social-warfare' ) )
@@ -704,7 +709,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 
-        $styles->add_sections( [$total_counts, $floating_share_buttons] );
+        $styles->add_sections( [/*$total_counts,*/ $floating_share_buttons] );
 
         $this->tabs->styles = $styles;
 
