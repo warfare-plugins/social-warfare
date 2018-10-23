@@ -225,6 +225,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
       // var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
       var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
 
+			//* Make the counter look like it is connected to the input.
+			$("#social_warfare #" + selector).css("border-top-right-radius", "0");
       $("#social_warfare #" + selector).parent().prepend(div);
     }
 
