@@ -613,6 +613,7 @@ class SWP_Buttons_Panel {
       */
     public function render_html() {
 
+
  		/**
  		 * If the content is empty, it means that the user is calling a panel
  		 * of buttons directly using the social_warfare() function of the
