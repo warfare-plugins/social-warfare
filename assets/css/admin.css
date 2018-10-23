@@ -318,9 +318,13 @@ a.swp-notice-cta {
 }
 
 /*
-max-width 77% looked about right based on the mockup at
-https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d6f-af31cba9f8e2.png
+ * mockup:
+ * https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d6f-af31cba9f8e2.png
  */
+
+ .swpmb-heading-wrapper h1 {
+     font-weight: bold;
+ }
 
 .swpmb-meta-container {
 	max-width: 88%;
@@ -344,6 +348,7 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
  */
 .swpmb-full-width-wrap {
 	order: 1;
+	width: 100%;
 }
 
 .swpmb-left-wrap,
@@ -401,7 +406,21 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 	padding: 10px;
 }
 
+.swpmb-field.inline-select .swpmb-input {
+	margin-top: 0;
+    display: inline;
+	float: right;
+	border-radius: 5px;
+}
 
+.swpmb-field .swpmb-label {
+	margin-bottom: none;
+}
+
+/* Give the "Other" options more space around them. */ 
+.swpmb-field.other {
+    margin: 15px 0;
+}
 
 #wp-content-editor-container {
 	display: none;
