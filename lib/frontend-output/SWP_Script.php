@@ -136,7 +136,8 @@ class SWP_Script {
 
     	wp_localize_script( 'social_warfare_admin_script', 'swp_localize_admin',
     		array(
-    			'swp_characters_remaining' => __( 'Characters Remaining', 'social-warfare' ),
+				// 'swp_characters_remaining' => __( 'Characters Remaining', 'social-warfare' ),
+    			'swp_characters_remaining' => '',
     		)
     	);
     }
