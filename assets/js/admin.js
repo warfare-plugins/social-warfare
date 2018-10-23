@@ -149,7 +149,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
     function updateCharactersRemaining(containerSelector, characterLimit) {
         var input = $("#social_warfare #" + containerSelector);
-    		var container = $("#social_warfare [class*='" + containerSelector + "'");
+    		var container = input.parent();
         var remaining = characterLimit - input.val().length
 
         if (containerSelector == "swp_custom_tweet") {
@@ -222,7 +222,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 
     function createCharactersRemaining(selector, textLimit) {
-      var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
+      // var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
+      var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
 
       $("#social_warfare #" + selector).parent().prepend(div);
     }
@@ -273,7 +274,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
      * @return {[type]} [description]
      */
 		function fillContainer(container) {
-			console.log("filling container ", container);
 			var positions = ['full-width', 'left', 'right'];
 			var type = $(container).data("type");
 
@@ -303,7 +303,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
      *
      */
     function putFieldsInContainers() {
-			console.log("putFieldsInContainers()");
         $(".swpmb-meta-container[data-type]").map(function(index, container) {
             var type = $(this).data('type');
 						if (!type) {
