@@ -339,6 +339,20 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         });
     }
 
+		function displayMetaBox() {
+				if (!$($(".swpmb-media-list").length)) return;
+
+				updateImageInputs();
+				clearInterval(initializer);
+				setupMetaBox();
+
+				//* Call updateImageInputs again to resize existing images.
+				setTimeout(function() {
+						updateImageInputs();
+						$("#social_warfare.postbox").show();
+				}, 400);
+		}
+
   	$(document).ready(function() {
         noticeClickHandlers();
         $(".sw-checkbox-toggle.swp-post-editor").click(checkboxChange);
@@ -348,21 +362,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
           		swpConditionalFields();
 
               //* Wait for the Rilis metabox to populate itself.
-              var initializer = setInterval(function() {
-                  if (!$($(".swpmb-media-list").length)) return;
-
-                  updateImageInputs();
-                  clearInterval(initializer);
-
-                  //* Call updateImageInputs again to resize existing images.
-                  setTimeout(function() {
-                      updateImageInputs();
-                      $("#social_warfare.postbox").show();
-                  }, 1200);
-
-									setupMetaBox();
-
-              }, 10);
+              var initializer = setInterval(displayMetaBox, 10);
     		}
 
     		$('.swp_popular_post_options select').on('change', function() {
