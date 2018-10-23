@@ -488,7 +488,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
                 ])
                     ->set_default( '0' )
                     ->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
-					->set_priority( 40 );
+					->set_priority( 30 );
 
                 //* swp_decimal_separator => decimal_separator
                 $decimal_separator = new SWP_Option_Select( __( 'Decimal Separator', 'social-warfare' ), 'decimal_separator' );
