@@ -339,30 +339,49 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 
 .swpmb-meta-container {
 	max-width: 77%;
-	display: block;
+	display: flex;
+	flex-flow: row wrap;
 }
 
-.swpmb-child-half {
-	width: 40%;
-}
-
-.swpmb-image {
-	float: left;
-}
-
+/**
+ * For the child containers.
+ * We want their content to stack vertically in the left/right columns.
+ */
 .swpmb-flex {
 	display: flex;
-	flex: 1;
 	flex-flow: column nowrap;
 }
 
-.swpmb-left {
-	width: 45%;
+/**
+ * The three main containers: full-width-wrap, left-wrap, and right-wrap.
+ *
+ */
+.swpmb-full-width-wrap {
+	order: 1;
 }
 
+.swpmb-left-wrap,
+.swpmb-right-wrap {
+	order: 2;
+	flex-basis: 40%;
+}
+
+.swpmb-left-wrap {
+	margin-right: 30px;
+}
+
+.swpmb-right-wrap {
+	align-content: last baseline;
+}
+
+/**
+ * Children of the left-wrap and right-wrap.
+ *
+ */
+.swpmb-left,
 .swpmb-right {
-	position: relative;
-	left: 50%;
+    flex: 1;
+	flex-basis: 95%;
 }
 
 .swpmb-toggle-wrapper {
