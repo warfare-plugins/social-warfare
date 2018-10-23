@@ -331,7 +331,6 @@ a.swp-notice-cta {
 }
 
 .swpmb-meta-container {
-	max-width: 88%;
 	display: flex;
 	flex-flow: row wrap;
 	margin: 25px 0;
@@ -352,7 +351,7 @@ a.swp-notice-cta {
  */
 .swpmb-full-width-wrap {
 	order: 1;
-	width: 100%;
+	width: 96.5%;
 }
 
 .swpmb-left-wrap,
@@ -377,7 +376,7 @@ a.swp-notice-cta {
 @media screen and (min-width: 997px) {
 	.swpmb-left-wrap,
 	.swpmb-right-wrap {
-		flex-basis: 48%;
+		flex-basis: 47%;
 	}
 }
 
