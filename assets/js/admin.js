@@ -283,8 +283,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 					if ($(container).find(className)) {
 						//* Only include child elements with the correct type.
 						var children = $(container).find(className)
-																			 .filter(function(child) {
-																				   return child.hasClass(type)
+																			 .filter(function(index, child) {
+																				   return $(child).hasClass(type)
 																			 })
 						if (children.length) {
 							var wrap = $(container).find(className + "-wrap");
