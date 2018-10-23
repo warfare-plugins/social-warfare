@@ -8,14 +8,14 @@
 
 .swp_CountDown {
 	background-color: #CCC;
-	display: inline-block;
-	/* float: right; */
+	display: block;
 	padding: 5px 15px;
 	-webkit-border-radius: 3px 3px 0 0;
 	        border-radius: 3px 3px 0 0;
 	color: #FFF;
 	font-weight: bold;
-	margin-top: -27px;
+	max-width: 200px;
+	float: right;
 }
 
 .swp_CountDown.swp_blue {
@@ -124,7 +124,8 @@
 }
 
 #social_warfare .swpmb-label {
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
+	display: inline;
 }
 
 #social_warfare h2.hndle span:before {
@@ -338,7 +339,7 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
  */
 
 .swpmb-meta-container {
-	max-width: 77%;
+	max-width: 88%;
 	display: flex;
 	flex-flow: row wrap;
 }
@@ -363,7 +364,7 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 .swpmb-left-wrap,
 .swpmb-right-wrap {
 	order: 2;
-	flex-basis: 40%;
+	flex-basis: 48%;
 }
 
 .swpmb-left-wrap {
@@ -384,8 +385,8 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 	flex-basis: 95%;
 }
 
-.swpmb-toggle-wrapper {
-	max-width: 77%;
+.swpmb-input textarea {
+	width: 100%;
 }
 
 #wp-content-editor-container {
