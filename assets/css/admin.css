@@ -417,11 +417,7 @@ a.swp-notice-cta {
 	margin-bottom: none;
 }
 
-/* Give the "Other" options more space around them. */ 
+/* Give the "Other" options more space around them. */
 .swpmb-field.other {
     margin: 15px 0;
-}
-
-#wp-content-editor-container {
-	display: none;
 }
