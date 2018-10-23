@@ -624,7 +624,7 @@ trait SWP_Buttons_Panel_Trait {
 		   return;
 	   }
 
-		$style = "";
+		$styles       = '';
 		$float_mobile = SWP_Utility::get_option( 'float_mobile');
 
 		if ( !$this->should_panel_display() && ( 'top' == $float_mobile || 'bottom' == $float_mobile ) ) {
@@ -652,21 +652,37 @@ trait SWP_Buttons_Panel_Trait {
 	}
 
 
+	/**
+	 * Combine the Total Shares html with the Buttons html.
+	 *
+	 * @since  3.4.0 | 23 OCT 2018 | Created
+	 * @param  void
+	 * @return string The html for the buttons and total shares.
+	 *
+	 */
 	protected function generate_buttons_and_totals_html() {
 
 		// Generate the html for the total shares and each button in the set.
 		$total_shares_html = $this->generate_total_shares_html();
-		$buttons           = $this->generate_individual_buttons_html();
+		$buttons_html      = $this->generate_individual_buttons_html();
 
-		if ($this->get_option('totals_alignment') === 'totals_left') {
-		   $buttons = $total_shares_html . $buttons;
-	   } else {
-		   $buttons .= $total_shares_html;
-	   }
+		if ( $this->get_option('totals_alignment') === 'totals_left' ) {
+			return $total_shares_html . $buttons_html;
+		}
 
-	   return $buttons;
+		return $buttons_html . $total_shares_html;
+
 	}
 
+
+	/**
+	 * Generate the html attributes attached to the container.
+	 *
+	 * @since  3.4.0 | 23 OCT 2018 | Created
+	 * @param  void
+	 * @return string The container data attributes.
+	 *
+	 */
 	protected function generate_attributes() {
 		$attributes  = $this->get_min_width();
 		$attributes .= $this->get_float_background();
