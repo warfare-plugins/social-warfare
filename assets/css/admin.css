@@ -124,7 +124,7 @@
 }
 
 #social_warfare .swpmb-label {
-	/* margin-bottom: 10px; */
+	margin-bottom: 10px;
 	display: inline;
 }
 
@@ -364,8 +364,29 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 .swpmb-left-wrap,
 .swpmb-right-wrap {
 	order: 2;
-	flex-basis: 48%;
 }
+
+@media screen and (max-width: 767px) {
+	.swpmb-left-wrap,
+	.swpmb-right-wrap {
+		flex-basis: 40%;
+	}
+}
+
+@media screen and (max-width: 996px) {
+	.swpmb-left-wrap,
+	.swpmb-right-wrap {
+		flex-basis: 44%;
+	}
+}
+
+@media screen and (min-width: 997px) {
+	.swpmb-left-wrap,
+	.swpmb-right-wrap {
+		flex-basis: 48%;
+	}
+}
+
 
 .swpmb-left-wrap {
 	margin-right: 30px;
@@ -388,6 +409,8 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 .swpmb-input textarea {
 	width: 100%;
 }
+
+
 
 #wp-content-editor-container {
 	display: none;
