@@ -326,6 +326,7 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
 	max-width: 88%;
 	display: flex;
 	flex-flow: row wrap;
+	margin: 25fpx 0;
 }
 
 /**
@@ -386,12 +387,18 @@ https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d
  */
 .swpmb-left,
 .swpmb-right {
-    flex: 1;
-	flex-basis: 95%;
+
+}
+
+.swpmb-input {
+	margin-top: 10px;
 }
 
 .swpmb-input textarea {
 	width: 100%;
+	resize: unset;
+	border-radius: 5px;
+	padding: 10px;
 }
 
 
