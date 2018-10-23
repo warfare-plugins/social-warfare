@@ -279,11 +279,17 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 			positions.forEach(function(position) {
 					var className = ".swpmb-" + position;
-					console.log(className)
-			    if ($(container).find("." + type + className)) {
-						console.log("found", $(container).find("." + type + className))
-						console.log("appending to ", $(className + "-wrap"));
-						$(container).find("." + type + className).appendTo($(container).find(className + "-wrap"));
+
+					if ($(container).find(className)) {
+						//* Only include child elements with the correct type.
+						var children = $(container).find(className)
+																			 .filter(function(child) {
+																				   return child.hasClass(type)
+																			 })
+						if (children.length) {
+							var wrap = $(container).find(className + "-wrap");
+							$(wrap).append(children);
+						}
 					}
 			});
 		}
@@ -301,11 +307,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         $(".swpmb-meta-container[data-type]").map(function(index, container) {
             var type = $(this).data('type');
 						if (!type) {
-							console.log("missing one");
 							return;
             }
-					  console.log(container);
-
 
 						var field = $(".swpmb-field." + type);
 
