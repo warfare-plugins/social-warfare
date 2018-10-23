@@ -52,9 +52,9 @@ trait SWP_Buttons_Panel_Trait {
     }
 
 
-	protected function append_panel_to_content() {4
+	protected function append_panel_to_content() {
 
-		
+
 		//* Add the Panel markup based on the location.
 		switch ($this->location) {
 			case 'both' :

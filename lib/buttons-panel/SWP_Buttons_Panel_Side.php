@@ -98,7 +98,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		$container .= ' data-float-color="' . $this->get_option('float_background_color') . '"';
 		$container .= ' data-min-width="' . $this->get_option('float_screen_width') . '"';
 		$container .= ' data-transition="' . $this->get_option('transition') . '"';
-		$container .= ' data-float-mobile="' . $this->get_mobile_float_location() .'">';
+		$container .= $this->get_mobile_float_location() .'>';
 		$container .= $buttons_html;
 		$container .= '</div>';
 		return $container;

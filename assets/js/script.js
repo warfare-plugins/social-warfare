@@ -139,7 +139,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.establishBreakpoint();
 
 		// Bail out if no buttons panels exist.
-		if (!socialWarfare.panels.staticHorizontal && !socialWarfare.panels.side && !socialWarfare.panels.floatingHorizontal) {
+		if (!socialWarfare.panels.staticHorizontal && !socialWarfare.panels.floatingSide && !socialWarfare.panels.floatingHorizontal) {
 			return;
 		}
 
@@ -548,7 +548,7 @@ window.socialWarfare = window.socialWarfare || {};
  	socialWarfare.toggleMobileButtons = function() {
 
  		//* There are never any left/right floating buttons on mobile, so hide them.
- 		socialWarfare.panels.side.hide();
+ 		socialWarfare.panels.floatingSide.hide();
 
  		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
  		$(".nc_wrapper").css("visibility", visibility);
@@ -563,16 +563,16 @@ window.socialWarfare = window.socialWarfare || {};
  	 */
  	socialWarfare.toggleFloatingVerticalPanel = function() {
 		var direction, style, location, visible;
- 		location = socialWarfare.panels.side.data("float")
+ 		location = socialWarfare.panels.floatingSide.data("float")
  		visible  = socialWarfare.staticPanelIsVisible();
 
  		//* This is on mobile and does not use side panels.
  		if (socialWarfare.isMobile()) {
- 			return socialWarfare.panels.side.hide();
+ 			return socialWarfare.panels.floatingSide.hide();
  		}
 
  		//* No buttons panel! Manually re-define ${visibility}.
- 		if (!socialWarfare.panels.side || !socialWarfare.panels.side.length) {
+ 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
  			if (!socialWarfare.isMobile()) {
  				visible = false;
  			} else {
@@ -580,13 +580,13 @@ window.socialWarfare = window.socialWarfare || {};
  			}
  		}
 
- 		if (socialWarfare.panels.side.data("transition") == "slide") {
+ 		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
 
  			direction = (location.indexOf("left") !== -1) ? "left" : "right";
  			style     = visible ? "-150px" : "5px";
 
  			//* Update the side panel CSS with the direction and amount.
- 			socialWarfare.panels.side.css(direction, style);
+ 			socialWarfare.panels.floatingSide.css(direction, style);
 
  		} else {
 
@@ -598,11 +598,11 @@ window.socialWarfare = window.socialWarfare || {};
  			 *
  			 */
  			if (visible) {
- 				socialWarfare.panels.side.css("opacity", 1)
+ 				socialWarfare.panels.floatingSide.css("opacity", 1)
  					.fadeOut(300)
  					.css("opacity", 0);
  			} else {
- 				socialWarfare.panels.side.css("opacity", 0)
+ 				socialWarfare.panels.floatingSide.css("opacity", 0)
  					.fadeIn(300)
  					.css("display", "flex")
  					.css("opacity", 1);
@@ -683,7 +683,7 @@ window.socialWarfare = window.socialWarfare || {};
  	 */
  	socialWarfare.positionFloatSidePanel = function() {
  		var panelHeight, windowHeight, offset;
-		var sidePanel = socialWarfare.panels.side;
+		var sidePanel = socialWarfare.panels.floatingSide;
 
 
  		/**
