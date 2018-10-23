@@ -254,7 +254,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
     /**
      * The third party module used to create metaboxes (on the server) does not
      * provide a way to organize the HTML.
-
+     *
      * Our fix for this is to create a new parent container with the `data-type`
      * attribute. The value of `data-type` represents the group of related
      * functionality, such as 'heading', 'open-graph', or 'pinterest'.
@@ -263,22 +263,57 @@ if (window.location.href.indexOf("widgets.php") > -1) {
      * appropriate container using javascript.
      *
      * @see PHP social-warfare-pro\lib\admin\SWP_Meta_Box_Loader->before_meta_boxes()
+     */
+    function setupMetaBox() {
+			putFieldsInContainers();
+		}
+
+    /**
+     * Creates the left, right, and full-width wraps for each container.
+     * @return {[type]} [description]
+     */
+		function fillContainer(container) {
+			console.log("filling container ", container);
+			var positions = ['full-width', 'left', 'right'];
+			var type = $(container).data("type");
+
+			positions.forEach(function(position) {
+					var className = ".swpmb-" + position;
+					console.log(className)
+			    if ($(container).find("." + type + className)) {
+						console.log("found", $(container).find("." + type + className))
+						console.log("appending to ", $(className + "-wrap"));
+						$(container).find("." + type + className).appendTo($(container).find(className + "-wrap"));
+					}
+			});
+		}
+
+
+    /**
+     *
      * @since 3.x.x | Created
      * @since 3.4.0 | Wrote the docblock and added comments.
      * @return void
      *
      */
     function putFieldsInContainers() {
-        $(".swpmb-meta-container[data-type]").map(function() {
+			console.log("putFieldsInContainers()");
+        $(".swpmb-meta-container[data-type]").map(function(index, container) {
             var type = $(this).data('type');
 						if (!type) {
+							console.log("missing one");
 							return;
             }
+					  console.log(container);
+
+
 						var field = $(".swpmb-field." + type);
 
 						if (field.length) {
 							$(this).append(field);
 						}
+
+						fillContainer(container);
         });
     }
 
@@ -323,7 +358,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
                       $("#social_warfare.postbox").show();
                   }, 1200);
 
-									putFieldsInContainers();
+									setupMetaBox();
 
               }, 10);
     		}
