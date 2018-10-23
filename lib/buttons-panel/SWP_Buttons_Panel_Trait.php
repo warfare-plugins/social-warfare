@@ -47,35 +47,41 @@ trait SWP_Buttons_Panel_Trait {
  	*/
     public function create_panel() {
  	   $this->generate_panel_html();
-
- 	   //* Add the Panel markup based on the location.
- 	   switch ($this->location) {
- 		   case 'both' :
- 			   $content = $this->html . $this->content . $this->html;
- 		   break;
- 		   case 'above' :
- 			   $content = $this->html . $this->content;
- 		   break;
- 		   case 'below' :
- 			   $content = $this->content . $this->html;
- 		   break;
-
- 		   case 'none' :
- 			   $content = $this->content;
- 		   default :
- 			   $content = $this->content;
- 		   break;
- 	   }
-
- 	   $this->content = $content;
-
- 	   if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
- 		   echo $this->content;
- 	   }
-
- 	   return $this->content;
+	   $this->append_panel_to_content();
+	   return $this->content;
     }
 
+
+	protected function append_panel_to_content() {4
+
+		
+		//* Add the Panel markup based on the location.
+		switch ($this->location) {
+			case 'both' :
+				$content = $this->html . $this->content . $this->html;
+			break;
+			case 'above' :
+				$content = $this->html . $this->content;
+			break;
+			case 'below' :
+				$content = $this->content . $this->html;
+			break;
+
+			case 'none' :
+				$content = $this->content;
+			default :
+				$content = $this->content;
+			break;
+		}
+
+		$this->content = $content;
+
+		if ( isset( $this->args['echo']) && true === $this->args['echo'] ) {
+			echo $this->content;
+		}
+
+		return $this->content;
+	}
 
 	/**
 	* Takes a display name and returns the snake_cased key of that name.
@@ -124,9 +130,10 @@ trait SWP_Buttons_Panel_Trait {
 		   return true;
 		}
 
+
 		$user_settings        = 'none' !== $this->location;
 		$desired_conditions   = is_main_query() && in_the_loop() && get_post_status( $this->post_id ) === 'publish';
-		$undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment();
+		$undesired_conditions = is_admin() || is_feed() || is_search() || is_attachment() || is_preview();
 
 		return $user_settings && $desired_conditions && !$undesired_conditions;
 	}
@@ -620,35 +627,17 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	public function generate_panel_html( $echo = false ) {
-		if ( !isset( $this->post_id ) || is_preview() ) {
-		   return;
-	   }
 
-		$styles       = '';
-		$float_mobile = SWP_Utility::get_option( 'float_mobile');
-
-		if ( !$this->should_panel_display() && ( 'top' == $float_mobile || 'bottom' == $float_mobile ) ) {
-			if ( true !== $this->get_option( 'floating_panel' ) ) {
-				return $this->content;
-			}
-
-			$styles = 'style="opacity: 0;" ';
-		}
-
-		// Generate the html for the wrapper div including classes & attributes.
 		$classes         = $this->generate_css_classes();
 		$attributes      = $this->generate_attributes();
 		$buttons         = $this->generate_buttons_and_totals_html();
-		$container_open  = '<div ' . $classes . $attributes . $styles . '>';
-		$container_close = '</div>';
-		$html            = $container_open . $buttons . $container_close;
-		$this->html      = $html;
+		$this->html      = '<div ' . $classes . $attributes . '>' . $buttons . '</div>';
 
-		if ( $echo ) {
-			echo $html;
+		if ( true == $echo ) {
+			echo $this->html;
 		}
 
-		return $html;
+		return $this->html;
 	}
 
 
