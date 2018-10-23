@@ -343,7 +343,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				if (!$($(".swpmb-media-list").length)) return;
 
 				updateImageInputs();
-				clearInterval(initializer);
+				clearInterval(window.initSWMetabox);
 				setupMetaBox();
 
 				//* Call updateImageInputs again to resize existing images.
@@ -362,7 +362,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
           		swpConditionalFields();
 
               //* Wait for the Rilis metabox to populate itself.
-              var initializer = setInterval(displayMetaBox, 10);
+              window.initSWMetabox = setInterval(displayMetaBox, 10);
     		}
 
     		$('.swp_popular_post_options select').on('change', function() {
