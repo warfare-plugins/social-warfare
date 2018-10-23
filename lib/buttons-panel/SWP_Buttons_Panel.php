@@ -615,25 +615,15 @@ class SWP_Buttons_Panel {
 
 
  		/**
- 		 * If the content is empty, it means that the user is calling a panel
- 		 * of buttons directly using the social_warfare() function of the
- 		 * [social_warfare] shortcode.
- 		 *
- 		 */
- 		if ( empty( $this->content ) ) {
-            return $this->create_panel();
-        }
-
-
- 		/**
  		 * We have a standalone method designed to let us know if all the proper
  		 * desired conditions are met in order to allow us to print the buttons.
  		 *
  		 */
-         if ( !$this->should_panel_display() ) {
-            return $this->content;
+        if ( true == $this->should_panel_display() ) {
+			$this->generate_panel_html();
+	 		$this->append_panel_to_content();
         }
 
-        return $this->create_panel();
+        return $this->content;
     }
 }
