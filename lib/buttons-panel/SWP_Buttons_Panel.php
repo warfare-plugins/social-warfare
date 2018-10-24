@@ -29,8 +29,6 @@
  *
  * 	   NOTE: These are inherited from SWP_Buttons_Panel_Trait.
  *
- *     create_panel();
- *
  *     generate_panel_html();
  *     generate_individual_buttons_html();
  *     generate_total_shares_html();
@@ -608,7 +606,6 @@ class SWP_Buttons_Panel {
       *                               should_panel_display() condition.
       * @since  3.4.0 | 21 SEP 2018 | Removed $content parameter.
       * @param  string $content The WordPress content, if passed in.
-      * @return function @see $this->create_panel()
       *
       */
     public function render_html() {
@@ -619,10 +616,22 @@ class SWP_Buttons_Panel {
  		 * desired conditions are met in order to allow us to print the buttons.
  		 *
  		 */
-        if ( true == $this->should_panel_display() ) {
-			$this->generate_panel_html();
-	 		$this->append_panel_to_content();
-        }
+        if ( false == $this->should_panel_display() ) {
+			return $this->content;
+		}
+
+
+		/**
+		 * Compile the entire buttons panel. Generate the CSS classes, generate
+		 * the html attributes, generate the html for the buttons and total
+		 * shares. Then attach it all to the content and return it to the caller.
+		 *
+		 */
+		$classes    = $this->generate_css_classes();
+		$attributes = $this->generate_attributes();
+		$buttons    = $this->generate_buttons_and_totals_html();
+		$this->html = '<div ' . $classes . $attributes . '>' . $buttons . '</div>';
+ 		$this->append_panel_to_content();
 
         return $this->content;
     }

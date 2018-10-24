@@ -37,21 +37,6 @@
 trait SWP_Buttons_Panel_Trait {
 
 
-	/**
- 	* Handles whether to echo the HTML or return it as a string.
- 	*
- 	* @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
- 	* @param  void
- 	* @return mixed null if set to echo, else a string of HTML.
- 	*
- 	*/
-    public function create_panel() {
- 	   $this->generate_panel_html();
-	   $this->append_panel_to_content();
-	   return $this->content;
-    }
-
-
 	protected function append_panel_to_content() {
 
 
@@ -288,6 +273,26 @@ trait SWP_Buttons_Panel_Trait {
 		}
 
 		return 'data-min-width="' . $min_width . '" ';
+	}
+
+
+	/**
+	* A method for getting the transition mode for the side floating buttons.
+	*
+	* @since  3.0.0 | 01 MAR 2018 | Created
+	* @param  void
+	* @return string The HTML attribute to be added to the buttons panel.
+	*
+	*/
+	protected function get_float_transition() {
+		$transition = $this->get_option( 'transition' );
+
+		//* They have gone from an Addon to Core.
+		if ( false === $transition ) {
+		   return 'data-transition="slide" ';
+		}
+
+		return 'data-transition="' . $transition . '" ';
 	}
 
 
@@ -615,33 +620,6 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* The method that renderes the button panel HTML.
-	*
-	* @since  3.0.0 | 25 APR 2018 | Created
-	* @since  3.0.3 | 09 MAY 2018 | Switched the button locations to use the
-	*                               location methods instead of the raw options value.
-	* @since  3.0.6 | 15 MAY 2018 | Uses $this->get_option() method to prevent undefined index error.
-	* @since  3.3.1 | 13 SEP 2018 | Added get_alignment()
-	* @param  boolean $echo Echo's the content or returns it if false.
-	* @return string        The string of HTML.
-	*
-	*/
-	public function generate_panel_html( $echo = false ) {
-
-		$classes         = $this->generate_css_classes();
-		$attributes      = $this->generate_attributes();
-		$buttons         = $this->generate_buttons_and_totals_html();
-		$this->html      = '<div ' . $classes . $attributes . '>' . $buttons . '</div>';
-
-		if ( true == $echo ) {
-			echo $this->html;
-		}
-
-		return $this->html;
-	}
-
-
-	/**
 	 * Combine the Total Shares html with the Buttons html.
 	 *
 	 * @since  3.4.0 | 23 OCT 2018 | Created
@@ -677,6 +655,7 @@ trait SWP_Buttons_Panel_Trait {
 		$attributes .= $this->get_float_background();
 		$attributes .= $this->get_float_location();
 		$attributes .= $this->get_mobile_float_location();
+		$attributes .= $this->get_float_transition();
 		return $attributes;
 	}
 
