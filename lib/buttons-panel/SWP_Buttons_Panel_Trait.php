@@ -99,6 +99,7 @@ trait SWP_Buttons_Panel_Trait {
 	* @since  3.0.8 | 21 MAY 2018 | Added extra condition to check for content
 	*                               (for calls to social_warfare()).
 	* @since  3.3.3 | 18 SEP 2018 | Added check for in_the_loop().
+	* @since  3.4.0 | 24 OCT 2018 | Added check for $this->post_data.
 	* @param  void
 	* @return void
 	*
