@@ -220,6 +220,28 @@ if (window.location.href.indexOf("widgets.php") > -1) {
   			}
     }
 
+    /**
+     * For the inputs which have a text counter, the labels are pushed too
+     * far above and need to be brought closer.
+     *
+     * Top/bottom margins have no apparent effect, so we'll use positioning instead.
+     *
+     * We'll move the label down, which looks like it displaces the whole
+     * container, so we also need to move the container back up.
+     *
+     * @param  string textareaID The textarea whose label is too close.
+     */
+		function repositionLabel(textareaID) {
+			console.log("repositinging " + textareaID);
+			var adjustment = 30;
+			var container = $("#" + textareaID).parent().parent();
+
+			console.log("Found this container", container);
+
+			container.css("top", -adjustment)
+			         .children(".swpmb-label").css("top", adjustment);
+		}
+
 
     function createCharactersRemaining(selector, textLimit) {
       // var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
@@ -227,6 +249,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 			//* Make the counter look like it is connected to the input.
 			$("#social_warfare #" + selector).css("border-top-right-radius", "0");
+			repositionLabel(selector)
       $("#social_warfare #" + selector).parent().prepend(div);
     }
 
