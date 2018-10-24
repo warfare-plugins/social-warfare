@@ -22,6 +22,16 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	public $panel_type = 'floating_side';
 
 
+	/**
+	 * Instantiate the object and prepare to have a buttons panel rendered. The
+	 * primary purpose of having a constructor in this child class is so that we
+	 * can add the $max_buttons property to the object.
+	 *
+	 * @since  3.4.0 | 24 OCT 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	public function __construct() {
 		parent::__construct();
 
@@ -43,7 +53,8 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 	/**
 	 * A method to determine whether or not the panel should be generated and
-	 * displayed on this page.
+	 * displayed on this page. This overrides a method of the same name in the
+	 * parent class.
 	 *
 	 * @since  3.4.0 | 24 OCT 2018 | Created
 	 * @param  void
@@ -78,7 +89,8 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 
 	/**
-	 * Generate the CSS classes for the parent wrapper container.
+	 * Generate the CSS classes for the parent wrapper container. This overrides
+	 * a method of the same name in the parent class.
 	 *
 	 * @since  3.4.0 | 21 SEP 2018 | Created
 	 * @param  void
