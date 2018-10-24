@@ -90,6 +90,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		$classes .= $this->get_colors(true);
 		$classes .= $this->get_option('transition');
 
+
 		/**
 		 * This controls whether the floating panel is going to be displayed on
 		 * the left side of the screen or the right side of the screen.
