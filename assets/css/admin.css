@@ -429,7 +429,8 @@ a.swp-notice-cta {
    width: 84px;
    height: 32px;
 }
-#social_warfare .sw-checkbox-on, .sw-checkbox-off {
+#social_warfare .sw-checkbox-on,
+#social_warfare .sw-checkbox-off {
    font-size: 12px;
    line-height: 32px;
 }

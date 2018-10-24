@@ -220,13 +220,30 @@ if (window.location.href.indexOf("widgets.php") > -1) {
   			}
     }
 
+    /**
+     * For the inputs which have a text counter, the labels are pushed too
+     * far above and need to be brought closer.
+     *
+     * Top/bottom margins have no apparent effect, so we'll use positioning instead.
+     *
+     * @param  string textareaID The textarea whose label is too close.
+     */
+		function updateTextareaStyle(textareaID) {
+			var style = {
+				top: "-25px",
+				position: "relative"
+			}
+
+			$("#" + textareaID).css("border-top-right-radius", 0) // Makes the character counter look connected to the input.
+			                   .parent().css(style);              // Positions the input closer to label.
+		}
+
 
     function createCharactersRemaining(selector, textLimit) {
       // var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
       var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
 
-			//* Make the counter look like it is connected to the input.
-			$("#social_warfare #" + selector).css("border-top-right-radius", "0");
+			updateTextareaStyle(selector)
       $("#social_warfare #" + selector).parent().prepend(div);
     }
 
