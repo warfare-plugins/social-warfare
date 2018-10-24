@@ -60,45 +60,19 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 
 		/**
-		 * Fetch the generated html for the total shares and for the individual
-		 * buttons. Then concantenate them together.
-		 *
-		 */
-		$total_shares_html = $this->generate_total_shares_html();
-		$networks_html     = $this->generate_individual_buttons_html( (int) $max_buttons );
-		$buttons_html      = $total_shares_html . $networks_html;
-
-
-		/**
 		 * Place the html for the buttons inside of the wrapper container, close
 		 * up the wrapper container and then return the html to the caller.
 		 *
 		 */
-		$html = $this->generate_panel_wrapper_html( $buttons_html );
-		$this->html = $html;
+		$classes    = $this->generate_css_classes();
+ 		$attributes = $this->generate_attributes();
+ 		$buttons    = $this->generate_total_shares_html() . $this->generate_individual_buttons_html();
+ 		$this->html = '<div ' . $classes . $attributes . '>' . $buttons . '</div>';
 
-		return $html;
-
-	}
-
-	/**
-	 * Generate the panel wrapper html and use it to wrap the html of the buttons.
-	 *
-	 * @since  3.4.0 | 21 SEP 2018 | Created
-	 * @param  string $buttons_html The html for the buttons and total shares.
-	 * @return string               The html with the panel wrapper added to it.
-	 */
-	protected function generate_panel_wrapper_html( $buttons_html ) {
-
-		$classes           = $this->generate_css_classes();
-		$attributes        = $this->generate_attributes();
-		$total_shares_html = $this->generate_total_shares_html();
-		$buttons_html      = $this->generate_individual_buttons_html();
-		$inner_html        = $total_shares_html . $buttons_html;
-		$this->html        = '<div ' . $classes . $attributes . '>' . $inner_html . '</div>';
-		return $this->html;
+ 		return $this->html;
 
 	}
+
 
 	/**
 	 * Generate the CSS classes for the parent wrapper container.
