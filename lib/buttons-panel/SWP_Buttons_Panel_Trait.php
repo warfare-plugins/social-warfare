@@ -408,6 +408,15 @@ trait SWP_Buttons_Panel_Trait {
 	}
 
 
+	/**
+	 * This method wraps the output of get_float_location into it's html
+	 * attribute that will be appended to the wrapper div of the buttons panel.
+	 *
+	 * @since  3.4.0 | 24 OCT 2018 | Created
+	 * @param  void
+	 * @return string The html attribute.
+	 * 
+	 */
 	public function get_float_location_attribute() {
 		return 'data-float="' . $this->get_float_location() . '" ';
 	}
