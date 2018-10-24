@@ -65,6 +65,16 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 
 		/**
+		 * If for some reason the post_data failed to populate, we just have to
+		 * bail out so the PHP doesn't throw undefined property errors.
+		 *
+		 */
+		if( empty( $this->post_data ) ) {
+			return false;
+		}
+
+
+		/**
 		 * We are only generating the floating buttons panel if it is set to
 		 * left or right. If it is set to none, top, or bottom, we don't need it.
 		 *
