@@ -520,21 +520,29 @@ trait SWP_Buttons_Panel_Trait {
 	* @return string             The compiled html for the buttons.
 	*
 	*/
-	protected function generate_individual_buttons_html( $max_count = null) {
+	protected function generate_individual_buttons_html() {
 		$html = '';
 		$count = 0;
 
 		foreach( $this->networks as $key => $network ) {
-		   if ( isset( $max_count) && $count === $max_count) :
-			   return $html;
-		   endif;
 
-		   // Pass in some context for this specific panel of buttons
-		   $context['shares'] = $this->shares;
-		   $context['options'] = $this->options;
-		   $context['post_data'] = $this->post_data;
-		   $html .= $network->render_HTML( $context );
-		   $count++;
+
+			/**
+			 * The floating buttons have a maximum number of buttons that can
+			 * be displayed at any given time. If that number is set, we bail
+			 * out once that maximum has been reached.
+			 *
+			 */
+			if ( false !== $this->max_buttons && $count == $this->max_buttons ) :
+			   return $html;
+			endif;
+
+			// Pass in some context for this specific panel of buttons
+			$context['shares']    = $this->shares;
+			$context['options']   = $this->options;
+			$context['post_data'] = $this->post_data;
+			$html .= $network->render_HTML( $context );
+			$count++;
 		}
 		return $html;
 	}
@@ -633,10 +641,33 @@ trait SWP_Buttons_Panel_Trait {
 		$total_shares_html = $this->generate_total_shares_html();
 		$buttons_html      = $this->generate_individual_buttons_html();
 
-		if ( $this->get_option('totals_alignment') === 'totals_left' ) {
+
+		/**
+		 * If this is a set of floating sidebar buttons, then we will attach
+		 * the total shares to the left which will then visually appear at the
+		 * top of the panel.
+		 *
+		 */
+		if( 'floating_side' === $this->panel_type ) {
 			return $total_shares_html . $buttons_html;
 		}
 
+
+		/**
+		 * If, in the options page, the user has set the total shares to appear
+		 * on the left, then we will concantenate the html to the left.
+		 *
+		 */
+		if( $this->get_option('totals_alignment') === 'totals_left' ) {
+			return $total_shares_html . $buttons_html;
+		}
+
+
+		/**
+		 * If it's not a set of floating buttons and it's not set to the left,
+		 * then we attach the total shares on the right.
+		 *
+		 */
 		return $buttons_html . $total_shares_html;
 
 	}
