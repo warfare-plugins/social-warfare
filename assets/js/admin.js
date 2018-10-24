@@ -205,7 +205,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         });
     }
 
-    function checkboxChange(event) {
+    function postEditorCheckboxChange(event) {
         event.preventDefault();
 
         var checked = !($(this).attr('status') == 'on');
@@ -374,7 +374,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
   	$(document).ready(function() {
         noticeClickHandlers();
-        $(".sw-checkbox-toggle.swp-post-editor").click(checkboxChange);
+        $(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
 
     		if ($('#social_warfare.postbox').length) {
               createTextCounters();
