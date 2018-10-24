@@ -85,12 +85,16 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		}
 
 
+		if( in_array( $this->get_float_location(), $blacklist ) ) {
+			return false;
+		}
+
 		/**
 		 * Bail out if we're not on a single.php, if the floating buttons are
 		 * turned off, or if this is a post preview.
 		 *
 		 */
-		if( !is_singular() || is_preview() || 'none' === $this->get_float_location() ) {
+		if( !is_singular() || is_admin() || is_feed() || is_search() || is_attachment() || is_preview() ) {
 			return false;
 		}
 
