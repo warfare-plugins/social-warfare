@@ -107,6 +107,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * If for some reason the post_data failed to populate, we just have to
+		 * bail out so the PHP doesn't throw undefined property errors.
+		 *
+		 */
+		if( empty( $this->post_data ) ) {
+			return false;
+		}
+
+
+		/**
 		* WordPress requires title and content. This indicates the buttons are
 		* called via social_warfare() or via the shortcode.
 		*
@@ -587,16 +597,6 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	protected function should_total_shares_display() {
-
-
-		/**
-		 * If for some reason the post_data failed to populate, we just have to
-		 * bail out so the PHP doesn't throw undefined property errors.
-		 *
-		 */
-		if( empty( $this->post_data ) ) {
-			return false;
-		}
 
 
 		/**
