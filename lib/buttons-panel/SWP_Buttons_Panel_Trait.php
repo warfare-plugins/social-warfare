@@ -360,34 +360,50 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	public function get_float_location() {
-		$post_on       = false;
-		$location      = $this->get_option( 'float_location' );
-		$float_enabled = 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] );
-		$float_enabled = $float_enabled && $this->get_option('floating_panel' );
+
+
+		/**
+		 * These are the float location settings all across the WordPress
+		 * ecosystem. There is a global on/off setting, a per post type on/off
+		 * setting, and even a setting on each individual post.
+		 *
+		 */
+		$float_location    = $this->get_option( 'float_location' );
+		$global_setting    = $this->get_option('floating_panel' );
+		$post_type_setting = 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] );
+		$post_setting      = get_post_meta( $this->post_id, 'swp_float_location', true );
 
 		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
-		   return 'data-float="none" ';
+			return 'none';
 		}
 
-		$post_setting = get_post_meta( $this->post_id, 'swp_float_location', true );
 
-		// If the location is set in the post options, use that.
-		if ( !empty( $post_setting ) ) {
-		   if( 'off' === $post_setting) {
-			   return 'data-float="none" ';
-		   }
-
-		   if ( 'on' == $post_setting ) {
-			   return 'data-float="' . $location . '" ';
-		   }
-		};
-
-
-		if ( $post_on || "default" == $post_setting || is_singular() && $float_enabled ) {
-		   return 'data-float="' . $location . '" ';
+		/**
+		 * If the location on this specific post is set to off, then we'll
+		 * disable floating locations. Anything else and we'll defer to the
+		 * global setting.
+		 *
+		 */
+		if ( !empty( $post_setting ) && 'off' === $post_setting ) {
+			return 'none';
 		}
 
-		return 'data-float="none" ';
+
+		/**
+		 * If everything checks out, we'll return the global float location. If
+		 * somehow nothing checked out, we'll return none.
+		 *
+		 */
+		if ( $global_setting && $post_type_setting ) {
+			return $float_location;
+		}
+
+		return 'none';
+	}
+
+
+	public function get_float_location_attribute() {
+		return 'data-float="' . $this->get_float_location() . '" ';
 	}
 
 
@@ -697,7 +713,7 @@ trait SWP_Buttons_Panel_Trait {
 	protected function generate_attributes() {
 		$attributes  = $this->get_min_width();
 		$attributes .= $this->get_float_background();
-		$attributes .= $this->get_float_location();
+		$attributes .= $this->get_float_location_attribute();
 		$attributes .= $this->get_mobile_float_location();
 		$attributes .= $this->get_float_transition();
 		return $attributes;
