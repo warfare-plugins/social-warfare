@@ -209,14 +209,15 @@ if (window.location.href.indexOf("widgets.php") > -1) {
         event.preventDefault();
 
         var checked = !($(this).attr('status') == 'on');
-        var checkbox = $($(event.target).attr("field"));
+				var selector = $(this).attr("field");
+        var checkbox = $(selector);
 
         if (checked) {
   				$(this).attr('status', 'on');
-  				checkbox.prop('checked', true);
+  				checkbox.prop('checked', true).prop('value', true);
   			} else {
   				$(this).attr('status', 'off');
-  				checkbox.prop('checked', false);
+  				checkbox.prop('checked', false).prop('value', false);
   			}
     }
 
