@@ -90,18 +90,14 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	 */
 	protected function generate_panel_wrapper_html( $buttons_html ) {
 
-		$container  = '';
-		$container .= '<div class="' . $this->generate_css_classes() . '"';
-		$container .= ' data-panel-position="' . $this->get_option('location_post') . '"';
-		$container .= ' data-float="' . $this->get_option('float_location') . '"';
-		$container .= ' data-count="' . count($this->networks) . '"';
-		$container .= ' data-float-color="' . $this->get_option('float_background_color') . '"';
-		$container .= ' data-min-width="' . $this->get_option('float_screen_width') . '"';
-		$container .= ' data-transition="' . $this->get_option('transition') . '"';
-		$container .= $this->get_mobile_float_location() .'>';
-		$container .= $buttons_html;
-		$container .= '</div>';
-		return $container;
+		$classes           = $this->generate_css_classes();
+		$attributes        = $this->generate_attributes();
+		$total_shares_html = $this->generate_total_shares_html();
+		$buttons_html      = $this->generate_individual_buttons_html();
+		$inner_html        = $total_shares_html . $buttons_html;
+		$this->html        = '<div ' . $classes . $attributes . '>' . $inner_html . '</div>';
+		return $this->html;
+
 	}
 
 	/**
@@ -114,11 +110,11 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	 */
 	protected function generate_css_classes() {
 
-		$classes = 'swp_social_panelSide swp_floating_panel swp_social_panel';
+		$classes = 'class="';
+		$classes .= 'swp_social_panelSide swp_floating_panel swp_social_panel';
 		$classes .= ' swp_' . $this->get_option('float_button_shape');
 		$classes .= $this->get_colors(true);
 		$classes .= $this->get_option('transition');
-
 
 		/**
 		 * This controls whether the floating panel is going to be displayed on
@@ -151,6 +147,8 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 			$position = $this->get_option('float_alignment');
 			$classes .= " scale-${size} float-position-${position}-${side}";
 		}
+
+		$classes .= '" ';
 
 		return $classes;
 	}
