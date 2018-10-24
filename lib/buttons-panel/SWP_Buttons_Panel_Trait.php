@@ -349,8 +349,8 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	public function get_float_location() {
-		$post_on = false;
-		$location = $this->get_option( 'float_location' );
+		$post_on       = false;
+		$location      = $this->get_option( 'float_location' );
 		$float_enabled = 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] );
 		$float_enabled = $float_enabled && $this->get_option('floating_panel' );
 
@@ -530,10 +530,11 @@ trait SWP_Buttons_Panel_Trait {
 			/**
 			 * The floating buttons have a maximum number of buttons that can
 			 * be displayed at any given time. If that number is set, we bail
-			 * out once that maximum has been reached.
+			 * out once that maximum has been reached. If that number is set to
+			 * zero, it represents unlimited buttons can be displayed.
 			 *
 			 */
-			if ( false !== $this->max_buttons && $count == $this->max_buttons ) :
+			if ( 0 !== $this->max_buttons && $count == $this->max_buttons ) :
 			   return $html;
 			endif;
 
@@ -544,6 +545,7 @@ trait SWP_Buttons_Panel_Trait {
 			$html .= $network->render_HTML( $context );
 			$count++;
 		}
+
 		return $html;
 	}
 
@@ -585,6 +587,16 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	protected function should_total_shares_display() {
+
+
+		/**
+		 * If for some reason the post_data failed to populate, we just have to
+		 * bail out so the PHP doesn't throw undefined property errors.
+		 *
+		 */
+		if( empty( $this->post_data ) ) {
+			return false;
+		}
 
 
 		/**

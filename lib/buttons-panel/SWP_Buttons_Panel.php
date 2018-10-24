@@ -158,12 +158,13 @@ class SWP_Buttons_Panel {
 
 
 	/**
-	 * The maximum number of buttons to display in the panel.
+	 * The maximum number of buttons to display in the panel. If set to zero,
+	 * the maximum number of buttons will be unlimited.
 	 *
-	 * @var mixed False for no max; integer for max.
+	 * @var integer $max_buttons
 	 *
 	 */
-	public $max_buttons = false;
+	public $max_buttons = 0;
 
 
 
