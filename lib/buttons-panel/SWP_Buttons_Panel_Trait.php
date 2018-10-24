@@ -373,6 +373,12 @@ trait SWP_Buttons_Panel_Trait {
 		$post_type_setting = 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] );
 		$post_setting      = get_post_meta( $this->post_id, 'swp_float_location', true );
 
+
+		/**
+		 * We don't use floating buttons on the home page or if we weren't able
+		 * to generate a proper post_id.
+		 *
+		 */
 		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
 			return 'none';
 		}
