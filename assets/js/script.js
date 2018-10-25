@@ -629,22 +629,17 @@ window.socialWarfare = window.socialWarfare || {};
  	 *
  	 */
  	socialWarfare.toggleFloatingHorizontalPanel = function() {
- 		var panel = $(".swp_social_panel").first();
+ 		var panel = socialWarfare.panels.floatingHorizontal.first();
  		var paddingProp, location = '';
  		var newPadding = 0;
-
- 		//* Set the location based on whether we are desktop or mobile.
- 		if (!socialWarfare.isMobile()) {
- 			location = $(panel).data("float");
- 		} else {
- 			location = $(panel).data("float-mobile")
- 		}
+		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 
  		if (socialWarfare.staticPanelIsVisible()) {
+			console.log("a static panel is visible rn.");
 
  			$(".nc_wrapper").hide();
 	 			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
-	 		} else {
+ 		} else {
 
  			$(".nc_wrapper").show();
 
@@ -653,7 +648,7 @@ window.socialWarfare = window.socialWarfare || {};
  			 * @see SWP_Buttons_Panel->render_HTML()
  			 *
  			 */
- 			$(".swp_social_panel.nc_floater").css("opacity", 1)
+ 			// $(".swp_social_panel.nc_floater").css("opacity", 1)
 
  			/**
  			 * Add some padding to the page so it fits nicely at the top or bottom.
@@ -667,9 +662,7 @@ window.socialWarfare = window.socialWarfare || {};
  				if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
 
  					newPadding = socialWarfare.paddingTop + 50;
- 					$('body').animate({
- 						'padding-top': newPadding + 'px'
- 					}, 0);
+
  				}
  			}
  		}
@@ -677,7 +670,7 @@ window.socialWarfare = window.socialWarfare || {};
  		//* Create the CSS property name.
  		paddingProp = "padding-" + location;
  		$("body").animate({
- 			paddingProp: newPadding
+ 			paddingProp: newPadding = "px"
  		}, 0);
 
  	}
