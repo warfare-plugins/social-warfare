@@ -198,8 +198,8 @@ class SWP_Buttons_panel_Loader {
         //* No floating buttons, we're done here.
 		if ( false == SWP_Utility::get_option( 'floating_panel' ) ||
 		     'off' == SWP_Utility::get_option( 'float_mobile' )   ||
-		     'off' == SWP_Utility::get_option( 'float_location_' + $post->post_type ) ) {
-
+		     'off' == SWP_Utility::get_option( 'float_location_' . $post->post_type ) ) {
+             die("bail1");
 			 return;
 		 }
 
@@ -208,6 +208,7 @@ class SWP_Buttons_panel_Loader {
 		//* A set of static buttons is already being generated for this request.
 		if ( 'none' != $post_meta_enabled_static &&
 	         'none' != SWP_Utility::get_option( 'location_' . $post->post_type ) ) {
+			die("bail2");
 			return;
 		}
 
@@ -215,7 +216,10 @@ class SWP_Buttons_panel_Loader {
 
 	    if ( 'off' != $post_meta_enabled_floating ) {
 	        // Print invisible staticHorizontal
-	        die( "finderr All conditions are met to print the staticHorzontal buttons. Alrighty!");
+			$staticHorizontal = new SWP_Buttons_Panel();
+			echo '<div style="display: none; visibility: collapse; opacity: 0">';
+			echo $staticHorizontal->render_html();
+			echo '</div>';
 	    }
 	}
 
