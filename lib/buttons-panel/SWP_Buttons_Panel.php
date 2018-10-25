@@ -470,11 +470,12 @@ class SWP_Buttons_Panel {
 	/**
 	 * A method to establish the active buttons for this panel.
 	 *
-	 * First it will check to see if user arguments have been passed in. If not, it will
-	 * check to see if they are set to manual or dynamic sorting. If manual, we will use
-	 * the buttons in the order they were stored in the options array (they were set in
-	 * this order on the options page.) If dynamic, we will look at the share counts and
-	 * order them with the largest share counts appearing first.
+	 * First it will check to see if user arguments have been passed in. If not,
+	 * it will check to see if they are set to manual or dynamic sorting. If
+	 * manual, we will use the buttons in the order they were stored in the
+	 * options array (they were set in this order on the options page.) If
+	 * dynamic, we will look at the share counts and order them with the largest
+	 * share counts appearing first.
 	 *
 	 * The results will be stored as an ordered array of network objects in the
 	 * $this->networks property.
