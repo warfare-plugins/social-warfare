@@ -418,7 +418,7 @@ window.socialWarfare = window.socialWarfare || {};
 		var floatLocation       = socialWarfare.panels.staticHorizontal.data("float");
 		var mobileFloatLocation = socialWarfare.panels.staticHorizontal.data("float-mobile");
 		var backgroundColor     = socialWarfare.panels.staticHorizontal.data("float-color");
-		var left                = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
+		// var left                = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
 		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 		var barLocation         = '';
 
@@ -445,19 +445,24 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Assign a CSS class to the wrapper based on the float-mobile location.
-		wrapper.addClass(barLocation).hide().appendTo("body");
+		wrapper.addClass(barLocation).hide().appendTo('body');
 
 		//* Save the new buttons panel to our ${panels} object.
 		socialWarfare.panels.floatingHorizontal = socialWarfare.panels.staticHorizontal.first().clone();
-
-		//* Give the bar panel the appropriate classname and put it in its wrapper.
-		socialWarfare.panels.floatingHorizontal.addClass("nc_floater").css({
-			width: socialWarfare.panels.staticHorizontal.outerWidth(true),
-			left: left
-		}).appendTo(wrapper);
+    socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
 
 		$(".swp_social_panel .swp_count").css({
 			transition: "padding .1s linear"
+		});
+	}
+
+	socialWarfare.updateFloatingHorizontalDimensions = function() {
+		var left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
+
+		//* Give the bar panel the appropriate classname and put it in its wrapper.
+		socialWarfare.panels.floatingHorizontal.css({
+			width: socialWarfare.panels.staticHorizontal.outerWidth(true),
+			left: left
 		});
 	}
 
@@ -632,8 +637,8 @@ window.socialWarfare = window.socialWarfare || {};
  		if (socialWarfare.staticPanelIsVisible()) {
 
  			$(".nc_wrapper").hide();
- 			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
- 		} else {
+	 			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+	 		} else {
 
  			$(".nc_wrapper").show();
 
