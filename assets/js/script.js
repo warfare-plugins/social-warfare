@@ -458,6 +458,11 @@ window.socialWarfare = window.socialWarfare || {};
 		});
 	}
 
+  /**
+   * Callback on window resize to update the width and position of a
+   * floatingHorizontal panel.
+   *
+   */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
 		if (!socialWarfare.panels.staticHorizontal) {
 			return;
@@ -508,7 +513,7 @@ window.socialWarfare = window.socialWarfare || {};
  			if ($(this).is(':visible') &&
 					offset.top + $(this).height() > scrollPos &&
 					offset.top < (scrollPos + $(window).height())) {
-						
+
  				visible = true;
  			}
  		});
