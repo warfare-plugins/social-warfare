@@ -504,7 +504,10 @@ window.socialWarfare = window.socialWarfare || {};
  			}
 
  			//* Do not display floating buttons if a panel is currently visible.
- 			if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
+ 			if ($(this).is(':visible') &&
+					offset.top + $(this).height() > scrollPos &&
+					offset.top < (scrollPos + $(window).height())) {
+
  				visible = true;
  			}
  		});
