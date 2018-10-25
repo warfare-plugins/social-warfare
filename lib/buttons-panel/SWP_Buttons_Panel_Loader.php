@@ -75,7 +75,7 @@ class SWP_Buttons_panel_Loader {
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
         add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
-		add_action( 'wp_footer', array( $this, 'maybe_add_static_panel' ) , 20 );
+		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback' ) , 20 );
     }
 
 
@@ -190,35 +190,71 @@ class SWP_Buttons_panel_Loader {
      * exists, we need to create a staticHorizontal so the floaters have
      * a target to clone.
      *
-     * @since 3.4.0 | 25 OCT 2018 | Created.
+     * @since  3.4.0 | 25 OCT 2018 | Created.
+     * @param  void
+     * @return void The rendered HTML is echoed to the screen.
+     *
      */
-	function maybe_add_static_panel() {
+	function add_static_panel_fallback() {
 		global $post;
 
-        //* No floating buttons, we're done here.
-		if ( false == SWP_Utility::get_option( 'floating_panel' ) ||
-		     'off' == SWP_Utility::get_option( 'float_mobile' )   ||
-		     'off' == SWP_Utility::get_option( 'float_location_' . $post->post_type ) ) {
-			 return;
-		 }
 
-        $post_meta_enabled_static = get_post_meta( $post->ID, 'swp_post_location', true);
+		/**
+		 * We'll gather up all of our data into some variables so that we can
+		 * clean up the conditionals below.
+		 *
+		 */
+		$floating_panel             = SWP_Utility::get_option( 'floating_panel' );
+		$float_mobile               = SWP_Utility::get_option( 'float_mobile' );
+		$float_location_post_type   = SWP_Utility::get_option( 'float_location_' . $post->post_type );
+		$float_location             = SWP_Utility::get_option( 'float_location' );
+		$location_post_type         = SWP_Utility::get_option( 'location_' . $post->post_type );
+        $post_meta_enabled_static   = get_post_meta( $post->ID, 'swp_post_location', true);
+	    $post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
 
-		//* A set of static buttons is already being generated for this request.
-		if ( 'none' != $post_meta_enabled_static &&
-	         'none' != SWP_Utility::get_option( 'location_' . $post->post_type ) ) {
+
+        /**
+         * We are only generating this if the user has floating buttons activated
+         * at least somewhere. If all floating options are off, just bail.
+         *
+         */
+		if ( false == $floating_panel && 'off' == $float_mobile && 'off' == $float_location_post_type ) {
 			return;
 		}
 
-	    $post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
 
-	    if ( 'off' != $post_meta_enabled_floating ) {
-	        // Print invisible staticHorizontal
-			$staticHorizontal = new SWP_Buttons_Panel();
-			echo '<div style="display: none; visibility: collapse; opacity: 0">';
-			echo $staticHorizontal->render_html();
-			echo '</div>';
-	    }
+
+		/**
+		 * This is a backup/fallback to provide a panel of buttons for the JS
+		 * to clone. Therefore if a set of buttons are already being printed, we
+		 * can just bail out because the JS will use the preexisting panel.
+		 *
+		 */
+		if ( 'none' != $post_meta_enabled_static && 'none' != $location_post_type ) {
+			return;
+		}
+
+
+		/**
+		 * Bail out if the floating options are set to off on this specific post.
+		 *
+		 */
+	    if ( 'off' == $post_meta_enabled_floating ) {
+			return;
+		}
+
+
+        /**
+         * If all the checks above get passed, then we'll go ahead and create a
+         * static horizontal buttons panel, wrap it in a wrapper to make it
+         * invisible, and echo it to the screen.
+         *
+         */
+		$staticHorizontal = new SWP_Buttons_Panel();
+		$html  = '<div style="display: none; visibility: collapse; opacity: 0">';
+		$html .= $staticHorizontal->render_html();
+		$html .= '</div>';
+		echo $html;
 	}
 
 
