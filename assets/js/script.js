@@ -468,8 +468,15 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
-		var left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
-		var width = socialWarfare.isMobile() ? "100%" : socialWarfare.panels.staticHorizontal.outerWidth(true);
+		var left, width = 0;
+
+		if (socialWarfare.isMobile()) {
+			left = 0;
+			width = "100%";
+		} else {
+			left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
+			width = socialWarfare.panels.staticHorizontal.outerWidth(true)
+		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
 		socialWarfare.panels.floatingHorizontal.css({
@@ -546,6 +553,7 @@ window.socialWarfare = window.socialWarfare || {};
  		if (socialWarfare.isMobile()) {
  			socialWarfare.toggleMobileButtons();
  			socialWarfare.toggleFloatingHorizontalPanel();
+			return;
  		}
 
  		if (location == "right" || location == "left") {
@@ -643,40 +651,28 @@ window.socialWarfare = window.socialWarfare || {};
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 
  		if (socialWarfare.staticPanelIsVisible()) {
-			console.log("a static panel is visible rn.");
 
- 			$(".nc_wrapper").hide();
-	 			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+				//* Restore the padding to initial values.
+				newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+				$(".nc_wrapper").hide();
  		} else {
 
- 			$(".nc_wrapper").show();
 
- 			/**
- 			 * Show the top/bottom floating bar. Force its opacity to normal.
- 			 * @see SWP_Buttons_Panel->render_HTML()
- 			 *
- 			 */
- 			// $(".swp_social_panel.nc_floater").css("opacity", 1)
+				// Add some padding to the page so it fits nicely at the top or bottom.
+				if (location == 'bottom') {
 
- 			/**
- 			 * Add some padding to the page so it fits nicely at the top or bottom.
- 			 *
- 			 */
- 			if (location == 'bottom') {
+						newPadding = socialWarfare.paddingBottom + 50;
+				} else if (panel.offset().top > $(window).scrollTop() + $(window).height()){
 
- 				newPadding = socialWarfare.paddingBottom + 50;
- 			} else {
-
- 				if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-
- 					newPadding = socialWarfare.paddingTop + 50;
-
- 				}
- 			}
+						newPadding = socialWarfare.paddingTop + 50;
+				}
+				$(".nc_wrapper").show();
  		}
 
  		//* Create the CSS property name.
  		paddingProp = "padding-" + location;
+
+    //* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
  		$("body").animate({
  			paddingProp: newPadding = "px"
  		}, 0);
