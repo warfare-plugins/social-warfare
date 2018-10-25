@@ -415,7 +415,7 @@ trait SWP_Buttons_Panel_Trait {
 	 * @since  3.4.0 | 24 OCT 2018 | Created
 	 * @param  void
 	 * @return string The html attribute.
-	 * 
+	 *
 	 */
 	public function get_float_location_attribute() {
 		return 'data-float="' . $this->get_float_location() . '" ';
@@ -684,25 +684,21 @@ trait SWP_Buttons_Panel_Trait {
 		// Generate the html for the total shares and each button in the set.
 		$total_shares_html = $this->generate_total_shares_html();
 		$buttons_html      = $this->generate_individual_buttons_html();
+		$is_side_floating  = ('floating_side' == $this->panel_type);
+		$is_left_aligned   = ('totals_left' == $this->get_option('totals_alignment'));
 
 
 		/**
-		 * If this is a set of floating sidebar buttons, then we will attach
-		 * the total shares to the left which will then visually appear at the
-		 * top of the panel.
+		 * $is_side_floating: If this is a set of floating sidebar buttons, then
+		 * we will attach the total shares to the left which will then visually
+		 * appear at the top of the panel.
+		 *
+		 * $is_left_aligned: If, in the options page, the user has set the total
+		 * shares to appear on the left, then we will concantenate the html to
+		 * the left.
 		 *
 		 */
-		if( 'floating_side' === $this->panel_type ) {
-			return $total_shares_html . $buttons_html;
-		}
-
-
-		/**
-		 * If, in the options page, the user has set the total shares to appear
-		 * on the left, then we will concantenate the html to the left.
-		 *
-		 */
-		if( $this->get_option('totals_alignment') === 'totals_left' ) {
+		if( $is_side_floating || $is_left_aligned ) {
 			return $total_shares_html . $buttons_html;
 		}
 
