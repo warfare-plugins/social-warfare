@@ -450,6 +450,7 @@ window.socialWarfare = window.socialWarfare || {};
 		//* Save the new buttons panel to our ${panels} object.
 		socialWarfare.panels.floatingHorizontal = socialWarfare.panels.staticHorizontal.first().clone();
     socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
+		socialWarfare.updateFloatingHorizontalDimensions();
 
 		$(".swp_social_panel .swp_count").css({
 			transition: "padding .1s linear"
