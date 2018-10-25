@@ -223,7 +223,6 @@ class SWP_Buttons_panel_Loader {
 		}
 
 
-
 		/**
 		 * This is a backup/fallback to provide a panel of buttons for the JS
 		 * to clone. Therefore if a set of buttons are already being printed, we
