@@ -154,6 +154,6 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 
 		$classes .= '" ';
 
-		return $classes;
+		$this->classes = $classes;
 	}
 }

@@ -699,7 +699,7 @@ trait SWP_Buttons_Panel_Trait {
 		 *
 		 */
 		if( $is_side_floating || $is_left_aligned ) {
-			return $total_shares_html . $buttons_html;
+			$this->inner_html = $total_shares_html . $buttons_html;
 		}
 
 
@@ -708,7 +708,7 @@ trait SWP_Buttons_Panel_Trait {
 		 * then we attach the total shares on the right.
 		 *
 		 */
-		return $buttons_html . $total_shares_html;
+		$this->inner_html = $buttons_html . $total_shares_html;
 
 	}
 
@@ -718,7 +718,8 @@ trait SWP_Buttons_Panel_Trait {
 	 *
 	 * @since  3.4.0 | 23 OCT 2018 | Created
 	 * @param  void
-	 * @return string The container data attributes.
+	 * @return void
+	 * @var    $this->attributes Stores panel html attributes as a string of text.
 	 *
 	 */
 	protected function generate_attributes() {
@@ -727,7 +728,7 @@ trait SWP_Buttons_Panel_Trait {
 		$attributes .= $this->get_float_location_attribute();
 		$attributes .= $this->get_mobile_float_location();
 		$attributes .= $this->get_float_transition();
-		return $attributes;
+		$this->attributes = $attributes;
 	}
 
 
@@ -736,7 +737,8 @@ trait SWP_Buttons_Panel_Trait {
 	 *
 	 * @since  3.4.0 | 23 OCT 2018 | Created
 	 * @param  void
-	 * @return string The class attribute and it's containing classes.
+	 * @return void
+	 * @var    $this->classes Stores panel classes as a string of text.
 	 *
 	 */
    protected function generate_css_classes() {
@@ -746,6 +748,22 @@ trait SWP_Buttons_Panel_Trait {
 		$classes .= $this->get_scale();
 		$classes .= $this->get_alignment();
 		$classes .= '" ';
-		return $classes;
+		$this->classes = $classes;
+   }
+
+
+	/**
+	 * A method used to combine the CSS classes for the panel wrapper, the
+	 * html attributes, and the html for the buttons and total shares into one
+	 * single string of html for output.
+	 *
+	 * @since  3.4.0 | 24 OCT 2018 | Created
+	 * @param  void
+	 * @return void
+	 * @var    $this->html Stores the fully compiled panel html as a string.
+	 *
+	 */
+   protected function combine_html_assets() {
+	   $this->html = '<div ' . $this->classes . $this->attributes . '>' . $this->inner_html . '</div>';
    }
 }
