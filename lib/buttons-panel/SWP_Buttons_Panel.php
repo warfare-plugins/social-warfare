@@ -646,10 +646,10 @@ class SWP_Buttons_Panel {
 		 * shares. Then attach it all to the content and return it to the caller.
 		 *
 		 */
-		$classes    = $this->generate_css_classes();
-		$attributes = $this->generate_attributes();
-		$buttons    = $this->generate_buttons_and_totals_html();
-		$this->html = '<div ' . $classes . $attributes . '>' . $buttons . '</div>';
+		$this->generate_css_classes();
+		$this->generate_attributes();
+		$this->generate_buttons_and_totals_html();
+		$this->combine_html_assets();
  		$this->append_panel_to_content();
 
         return $this->content;
