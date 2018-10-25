@@ -468,8 +468,15 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
-		var left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
-		var width = socialWarfare.isMobile() ? "100%" : socialWarfare.panels.staticHorizontal.outerWidth(true);
+		var left, width = 0;
+
+		if (socialWarfare.isMobile()) {
+			left = 0;
+			width = "100%";
+		} else {
+			left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
+			width = socialWarfare.panels.staticHorizontal.outerWidth(true)
+		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
 		socialWarfare.panels.floatingHorizontal.css({
