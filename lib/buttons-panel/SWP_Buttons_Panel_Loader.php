@@ -211,6 +211,7 @@ class SWP_Buttons_panel_Loader {
 		$location_post_type         = SWP_Utility::get_option( 'location_' . $post->post_type );
         $post_meta_enabled_static   = get_post_meta( $post->ID, 'swp_post_location', true);
 	    $post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
+		$acceptable_locations       = array( 'top', 'bottom' );
 
 
         /**
@@ -222,6 +223,18 @@ class SWP_Buttons_panel_Loader {
 			return;
 		}
 
+
+
+		/**
+		 * If both the floating buttons location and the mobile floating
+		 * location are not set to top or bottom, then just bail out because we
+		 * won't need this.
+		 *
+		 */
+		if(    !in_array( $float_location, $acceptable_locations )
+		    && !in_array( $float_mobile, $acceptable_locations ) ) {
+			return;
+		}
 
 		/**
 		 * This is a backup/fallback to provide a panel of buttons for the JS
