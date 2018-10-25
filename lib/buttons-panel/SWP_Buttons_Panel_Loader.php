@@ -199,7 +199,6 @@ class SWP_Buttons_panel_Loader {
 		if ( false == SWP_Utility::get_option( 'floating_panel' ) ||
 		     'off' == SWP_Utility::get_option( 'float_mobile' )   ||
 		     'off' == SWP_Utility::get_option( 'float_location_' . $post->post_type ) ) {
-             die("bail1");
 			 return;
 		 }
 
@@ -208,7 +207,6 @@ class SWP_Buttons_panel_Loader {
 		//* A set of static buttons is already being generated for this request.
 		if ( 'none' != $post_meta_enabled_static &&
 	         'none' != SWP_Utility::get_option( 'location_' . $post->post_type ) ) {
-			die("bail2");
 			return;
 		}
 
