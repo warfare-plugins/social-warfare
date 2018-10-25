@@ -535,7 +535,6 @@ window.socialWarfare = window.socialWarfare || {};
  		}
 
  		if (socialWarfare.isMobile()) {
- 			socialWarfare.createFloatHorizontalPanel();
  			socialWarfare.toggleMobileButtons();
  			socialWarfare.toggleFloatingHorizontalPanel();
  		}
