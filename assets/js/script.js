@@ -464,10 +464,11 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		var left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
+		var width = socialWarfare.isMobile() ? "100%" : socialWarfare.panels.staticHorizontal.outerWidth(true);
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
 		socialWarfare.panels.floatingHorizontal.css({
-			width: socialWarfare.panels.staticHorizontal.outerWidth(true),
+			width: width,
 			left: left
 		});
 	}
@@ -507,7 +508,7 @@ window.socialWarfare = window.socialWarfare || {};
  			if ($(this).is(':visible') &&
 					offset.top + $(this).height() > scrollPos &&
 					offset.top < (scrollPos + $(window).height())) {
-
+						
  				visible = true;
  			}
  		});
