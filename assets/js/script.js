@@ -168,7 +168,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 * floating buttons to flicker.
 		 *
 		 */
-		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons ));
+		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
+	  $(window).scroll(socialWarfare.throttle(50, socialWarafre.updateFloatingHorizontalDimensions));
 
 	}
 
@@ -458,6 +459,10 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
+		if (!socialWarfare.panels.staticHorizontal) {
+			return;
+		}
+
 		var left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
