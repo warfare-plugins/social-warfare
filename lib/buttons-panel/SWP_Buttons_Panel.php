@@ -306,8 +306,6 @@ class SWP_Buttons_Panel {
 	 * Set the post data for this buttons panel.
 	 *
 	 * @since  3.1.0 | 05 JUL 2018 | Created
-	 * @return none
-	 * @access public
 	 * @param  void
 	 * @return void
 	 *
