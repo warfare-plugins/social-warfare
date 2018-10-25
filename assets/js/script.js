@@ -169,7 +169,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
-	  $(window).scroll(socialWarfare.throttle(50, socialWarafre.updateFloatingHorizontalDimensions));
+	  $(window).resize(socialWarfare.throttle(200, socialWarfare.updateFloatingHorizontalDimensions));
 
 	}
 
