@@ -75,6 +75,7 @@ class SWP_Buttons_panel_Loader {
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
         add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
+		add_action( 'wp_footer', array( $this, 'maybe_add_static_panel' ) , 20 );
     }
 
 
@@ -183,6 +184,40 @@ class SWP_Buttons_panel_Loader {
         echo $side_panel->render_html();
 
     }
+
+    /**
+     * When floatingHorizontal buttons are desired, but not staticHorizontal
+     * exists, we need to create a staticHorizontal so the floaters have
+     * a target to clone.
+     *
+     * @since 3.4.0 | 25 OCT 2018 | Created.
+     */
+	function maybe_add_static_panel() {
+		global $post;
+
+        //* No floating buttons, we're done here.
+		if ( false == SWP_Utility::get_option( 'floating_panel' ) ||
+		     'off' == SWP_Utility::get_option( 'float_mobile' )   ||
+		     'off' == SWP_Utility::get_option( 'float_location_' + $post->post_type ) ) {
+
+			 return;
+		 }
+
+        $post_meta_enabled_static = get_post_meta( $post->ID, 'swp_post_location', true);
+
+		//* A set of static buttons is already being generated for this request.
+		if ( 'none' != $post_meta_enabled_static &&
+	         'none' != SWP_Utility::get_option( 'location_' . $post->post_type ) ) {
+			return;
+		}
+
+	    $post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
+
+	    if ( 'off' != $post_meta_enabled_floating ) {
+	        // Print invisible staticHorizontal
+	        die( "finderr All conditions are met to print the staticHorzontal buttons. Alrighty!");
+	    }
+	}
 
 
     /**
