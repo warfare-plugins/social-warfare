@@ -560,7 +560,7 @@ class SWP_Post_Cache {
 			 * for which to fetch share counts.
 			 *
 			 */
-            if( true === SWP_Utility::get_option('recover_shares') ) {
+            if( true === SWP_Utility::get_option('share_recovery') ) {
                 $this->permalinks[$key][] = SWP_Permalink::get_alt_permalink( $this->post_id );
             }
 
