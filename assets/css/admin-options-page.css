@@ -866,7 +866,7 @@ div.error {
 }
 
 .swp-icon-tooltip {
-    display: inline;
+    display: block;
     position: absolute;
     padding: 5px 3px;
 	text-align: center;
