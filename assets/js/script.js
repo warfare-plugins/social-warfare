@@ -825,9 +825,10 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function() {
-		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyle;
+		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyles, share_link;
 		image = $(this);
 
+    console.log(image);
 
 		/**
 		 * This disables the Pinterest save buttosn on images that are anchors/links
