@@ -792,6 +792,8 @@
               //* mouseenter
               function(event) {
                   var network = $(event.target).data("network");
+									var networkBounds = event.target.getBoundingClientRect();
+									var left, top;
 
                   //* Uppercase each part of the snake_cased name.
                   if (network.indexOf("_") > 0) {
@@ -804,7 +806,34 @@
                   //* Uppercase the first character of the network name.
                   network = network[0].toUpperCase() + network.slice(1, network.length)
 
-                  tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>');
+                  tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
+									document.body.append(tooltip);
+
+									var tooltipBounds = tooltip.getBoundingClientRect();
+
+									console.log(networkBounds)
+									console.log(tooltipBounds)
+
+									top  = networkBounds.top - 10 - tooltipBounds.height
+
+									//* If the tooltip is bigger than the network icon, center it above.
+									if (tooltipBounds.width > networkBounds.width) {
+							  		var delta = tooltipBounds.width - networkBounds.width;
+										console.log("Delta is", delta);
+										left = networkBounds.left - delta * 2;
+										console.log("Left is ", left);
+
+									} else {
+										console.log("smaller than")
+										left = networkBounds.left;
+									}
+
+									$(tooltip).css({
+										left:left,
+										top: top
+									});
+
+
                   $(this).parents(".sw-grid").first().append(tooltip);
               },
               //* mouseleave
