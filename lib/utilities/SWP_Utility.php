@@ -314,6 +314,17 @@ class SWP_Utility {
         return update_option( 'social_warfare_settings', $options );
     }
 
+	public static function delete_option( $key ) {
+		if ( empty( $key )  ) {
+			return false;
+		}
+
+		$options = get_option( 'social_warfare_settings', array() );
+		unset( $options[$key] );
+
+		return update_option( 'social_warfare_settings', $options); 
+	}
+
    /**
     * Check the version range between core and addons.
     *
