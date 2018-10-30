@@ -311,7 +311,17 @@ class SWP_URL_Management {
 		 *
 		 */
 		$response = SWP_CURL::file_get_contents_curl( $api_request_url );
+		error_log("Bitly response: ");
+		error_log(var_export($response, true));
 		$result   = json_decode( $response , true );
+		error_log("Parsed response: ");
+		error_log(var_export($result, true));
+
+        //* The user no longer uses Bitly for link shortening.
+		if ( isset( $result['status_txt'] ) && 'INVALID_ARG_ACCESS_TOKEN' == $result['status_txt'] )   {
+
+		}
+
 
 
 		/**
