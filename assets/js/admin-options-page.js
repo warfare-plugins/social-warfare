@@ -791,7 +791,8 @@
           $(icon).hover(
               //* mouseenter
               function(event) {
-                  var network = $(event.target).data("network");
+								  var target = event.target;
+                  var network = $(target).data("network");
 									var networkBounds = event.target.getBoundingClientRect();
 									var left, top;
 
@@ -811,20 +812,13 @@
 
 									var tooltipBounds = tooltip.getBoundingClientRect();
 
-									console.log(networkBounds)
-									console.log(tooltipBounds)
-
-									top  = networkBounds.top - 10 - tooltipBounds.height
+									top  = networkBounds.top - 110;
 
 									//* If the tooltip is bigger than the network icon, center it above.
 									if (tooltipBounds.width > networkBounds.width) {
 							  		var delta = tooltipBounds.width - networkBounds.width;
-										console.log("Delta is", delta);
-										left = networkBounds.left - delta * 2;
-										console.log("Left is ", left);
-
+										left = networkBounds.left - 25 - (delta * 2);
 									} else {
-										console.log("smaller than")
 										left = networkBounds.left;
 									}
 
@@ -833,8 +827,22 @@
 										top: top
 									});
 
+									  //* Name the function here so it can be removed with $.off().
+										function removeTooltip() {
+											$(".swp-icon-tooltip").remove();
+										}
 
                   $(this).parents(".sw-grid").first().append(tooltip);
+
+                  //* Give it a click listener to remove the tooltip after moving the mouse.
+									$(target).on("mousedown", function(e) {
+
+										$("body").mousemove(function() {
+											$(".swp-icon-tooltip").remove();
+											$("body").off("mousemove");
+										});
+									});
+
               },
               //* mouseleave
               function(event) {
