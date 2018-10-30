@@ -311,17 +311,16 @@ class SWP_URL_Management {
 		 *
 		 */
 		$response = SWP_CURL::file_get_contents_curl( $api_request_url );
-		error_log("Bitly response: ");
-		error_log(var_export($response, true));
 		$result   = json_decode( $response , true );
-		error_log("Parsed response: ");
-		error_log(var_export($result, true));
 
         //* The user no longer uses Bitly for link shortening.
 		if ( isset( $result['status_txt'] ) && 'INVALID_ARG_ACCESS_TOKEN' == $result['status_txt'] )   {
+            SWP_Utility::delete_option( 'bitly_access_token' );
+			SWP_Utility::delete_option( 'bitly_access_login' );
 
+			//* Turn Bitly link shortening off for the user.
+			SWP_Utility::update_option( 'bitly_authentication', false );
 		}
-
 
 
 		/**
