@@ -812,14 +812,14 @@
 
 									var tooltipBounds = tooltip.getBoundingClientRect();
 
-									top  = networkBounds.top - 110;
+									top  = networkBounds.top - 120;
 
 									//* If the tooltip is bigger than the network icon, center it above.
 									if (tooltipBounds.width > networkBounds.width) {
 							  		var delta = tooltipBounds.width - networkBounds.width;
-										left = networkBounds.left - 25 - (delta * 2);
+										left = networkBounds.left - 5 - (delta * 2);
 									} else {
-										left = networkBounds.left;
+										left = networkBounds.left - 10;
 									}
 
 									$(tooltip).css({

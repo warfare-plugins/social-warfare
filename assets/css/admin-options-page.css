@@ -868,14 +868,13 @@ div.error {
 .swp-icon-tooltip {
     display: block;
     position: absolute;
-    padding: 5px 3px;
+    padding: 10px;
 	text-align: center;
     color: rgb(35, 40, 45);
 	min-width: 75px;
-    background: #222;
-	color: #eee;
-    /* box-shadow: 1px 1px 5px #999; */
-    border-radius: 4px;
+    background: rgb(238, 70, 79);
+	color: #fff;
+    border-radius: 3px;
     font-size: 13px;
     letter-spacing: 1.2px;
     font-family: "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
