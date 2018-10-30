@@ -801,15 +801,11 @@
 
                       network = words.join(" ");
                   }
-
-                  console.log(network)
-
+                  //* Uppercase the first character of the network name.
                   network = network[0].toUpperCase() + network.slice(1, network.length)
-                  console.log(network)
-                  tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>');
-                  console.log(tooltip)
-                  $(this).parents(".sw-grid").first().append(tooltip);
 
+                  tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>');
+                  $(this).parents(".sw-grid").first().append(tooltip);
               },
               //* mouseleave
               function(event) {
