@@ -810,7 +810,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 * and trigger the click tracking function.
 		 *
 		 */
-		$('.sw-pinit .sw-pinit-button').on('click', function() {
+		$('.sw-pinit .sw-pinit-button').on('click', function(event) {
+			event.preventDefault();
 			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
 			socialWarfare.trackClick('pin_image');
 		});
