@@ -382,6 +382,15 @@ trait SWP_Buttons_Panel_Trait {
 		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
 			return 'none';
 		}
+		
+
+		/**
+		 * Do not print floating buttons on archive pages.
+		 *
+		 */
+		if ( !is_singular() ) {
+			return 'none';
+		}
 
 
 		/**
