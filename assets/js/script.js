@@ -656,6 +656,9 @@ window.socialWarfare = window.socialWarfare || {};
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
 			$(".nc_wrapper").hide();
+			if ($("#wpadminbar").length) {
+				$("#wpadminbar").css("top", "initial");
+			}
 		}
 
 		// Add some padding to the page so it fits nicely at the top or bottom.
