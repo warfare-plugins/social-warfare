@@ -117,8 +117,8 @@ window.socialWarfare = window.socialWarfare || {};
 	 * buttons hover over menus or copyright information in the footer.
 	 *
 	 */
-	socialWarfare.paddingTop    = parseInt($('body').css('padding-top').replace('px', ''));
-	socialWarfare.paddingBottom = parseInt($('body').css('padding-bottom').replace('px', ''));
+	socialWarfare.paddingTop    = parseInt($('body').css('padding-top'));
+	socialWarfare.paddingBottom = parseInt($('body').css('padding-bottom'));
 
 
 	/**
@@ -645,39 +645,38 @@ window.socialWarfare = window.socialWarfare || {};
  	 *
  	 */
  	socialWarfare.toggleFloatingHorizontalPanel = function() {
+		console.log("toggleFloatingHorizontalPanel()");
  		var panel = socialWarfare.panels.floatingHorizontal.first();
  		var paddingProp, location = '';
  		var newPadding = 0;
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 
  		if (socialWarfare.staticPanelIsVisible()) {
-
-				//* Restore the padding to initial values.
-				newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
-				$(".nc_wrapper").hide();
+			//* Restore the padding to initial values.
+			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+			$(".nc_wrapper").hide();
  		} else {
 
+			// Add some padding to the page so it fits nicely at the top or bottom.
+			if (location == 'bottom') {
+				newPadding = socialWarfare.paddingBottom + 50;
+			} else {
+				newPadding = socialWarfare.paddingTop + 50;
+			}
 
-				// Add some padding to the page so it fits nicely at the top or bottom.
-				if (location == 'bottom') {
-
-						newPadding = socialWarfare.paddingBottom + 50;
-				} else if (panel.offset().top > $(window).scrollTop() + $(window).height()){
-
-						newPadding = socialWarfare.paddingTop + 50;
-				}
-				$(".nc_wrapper").show();
+			$(".nc_wrapper").show();
  		}
 
  		//* Create the CSS property name.
  		paddingProp = "padding-" + location;
 
-    //* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
- 		$("body").animate({
- 			paddingProp: newPadding = "px"
- 		}, 0);
-
+        //* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
+ 		$("body").css(paddingProp, newPadding);
  	}
+
+	socialWarfare.updatePadding = function() {
+
+	}
 
 
  	/**
