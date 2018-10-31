@@ -645,38 +645,25 @@ window.socialWarfare = window.socialWarfare || {};
  	 *
  	 */
  	socialWarfare.toggleFloatingHorizontalPanel = function() {
-		console.log("toggleFloatingHorizontalPanel()");
  		var panel = socialWarfare.panels.floatingHorizontal.first();
- 		var paddingProp, location = '';
- 		var newPadding = 0;
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
+		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+		var paddingProp = "padding-" + location;
 
+		//* Restore the padding to initial values.
  		if (socialWarfare.staticPanelIsVisible()) {
-			//* Restore the padding to initial values.
-			newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
 			$(".nc_wrapper").hide();
- 		} else {
-
-			// Add some padding to the page so it fits nicely at the top or bottom.
-			if (location == 'bottom') {
-				newPadding = socialWarfare.paddingBottom + 50;
-			} else {
-				newPadding = socialWarfare.paddingTop + 50;
-			}
-
-			$(".nc_wrapper").show();
  		}
 
- 		//* Create the CSS property name.
- 		paddingProp = "padding-" + location;
+		// Add some padding to the page so it fits nicely at the top or bottom.
+		else {
+			newPadding += 50;
+			$(".nc_wrapper").show();
+ 		}
 
         //* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
  		$("body").css(paddingProp, newPadding);
  	}
-
-	socialWarfare.updatePadding = function() {
-
-	}
 
 
  	/**
