@@ -16,18 +16,18 @@
  *
  * Table of Contents:
  *
- *     1. Initialization Functions
+ *     #1. Initialization Functions
  *        Property: socialWarfare.paddingTop
  *        Property: socialWarfare.paddingBottom
  *        Function: socialWarfare.initPlugin()
  *        Function: socialWarfare.establishPanels()
  *
- *     2. Static Horizontal Button Panel Controls
+ *     #2. Static Horizontal Button Panel Controls
  *        Function: socialWarfare.activateHoverStates()
  *        Function: socialWarfare.resetStaticPanel()
  *        Function: socialWarfare.handleButtonClicks()
  *
- *     3. Floating Buttons Panel Controls
+ *     #3. Floating Buttons Panel Controls
  *        Function: socialWarfare.createFloatHorizontalPanel()
  *        Function: socialWarfare.staticPanelIsVisible()
  *        Function: socialWarfare.toggleFloatingButtons()
@@ -36,17 +36,17 @@
  *        Function: socialWarfare.toggleFloatingHorizontalPanel()
  *        Function: socialWarfare.positionFloatSidePanel()
  *
- *     4. Pinterest Image Hover Save Buttons
+ *     #4. Pinterest Image Hover Save Buttons
  *        Function: socialWarfare.enablePinterestSaveButtons()
  *        Function: socialWarfare.renderPinterestSaveButton()
  *        Function: socialWarfare.findPinterestBrowserSaveButtons()
  *        Function: socialWarfare.removePinterestBrowserSaveButtons()
  *
- *     5. Facebook Share Count Functions
+ *     #5. Facebook Share Count Functions
  *        Function: socialWarfare.fetchFacebookShares()
  *        Function: socialWarfare.parseFacebookShares()
  *
- *     6. Utility/Helper Functions
+ *     #6. Utility/Helper Functions
  *        Function: socialWarfare.throttle()
  *        Function: socialWarfare.trigger()
  *        Function: socialWarfare.trackClick()
