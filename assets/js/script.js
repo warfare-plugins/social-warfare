@@ -450,7 +450,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* Save the new buttons panel to our ${panels} object.
 		socialWarfare.panels.floatingHorizontal = socialWarfare.panels.staticHorizontal.first().clone();
-    socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
+	socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
 		socialWarfare.updateFloatingHorizontalDimensions();
 
 		$(".swp_social_panel .swp_count").css({
@@ -498,196 +498,204 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return bool True if a static set of buttons is visible on the screen, else false.
 	 *
 	 */
- 	socialWarfare.staticPanelIsVisible = function() {
- 		var visible = false;
- 		var scrollPos = $(window).scrollTop();
+	socialWarfare.staticPanelIsVisible = function() {
+		var visible = false;
+		var scrollPos = $(window).scrollTop();
 
- 		//* Iterate each buttons panel, checking each to see if it is currently visible.
- 		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
- 			var offset = $(this).offset();
+		//* Iterate each buttons panel, checking each to see if it is currently visible.
+		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
+			var offset = $(this).offset();
 
- 			//* Do not display floating buttons before the horizontal panel.
- 			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
- 				var theContent = jQuery(".swp-content-locator").parent();
+			//* Do not display floating buttons before the horizontal panel.
+			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+				var theContent = jQuery(".swp-content-locator").parent();
 
- 				//* We are in sight of an "Above the content" panel.
- 				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
- 					visible = true;
- 				}
- 			}
+				//* We are in sight of an "Above the content" panel.
+				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
+					visible = true;
+				}
+			}
 
- 			//* Do not display floating buttons if a panel is currently visible.
- 			if ($(this).is(':visible') &&
+			//* Do not display floating buttons if a panel is currently visible.
+			if ($(this).is(':visible') &&
 					offset.top + $(this).height() > scrollPos &&
 					offset.top < (scrollPos + $(window).height())) {
 
- 				visible = true;
- 			}
- 		});
+				visible = true;
+			}
+		});
 
- 		return visible;
- 	}
+		return visible;
+	}
 
 
 	/**
 	 * Handler to toggle the display of either the side or bar floating buttons.
 	 *
- 	 * We only show the floating buttons when the static horizontal buttons are
- 	 * not in the visible view port. This function is used to toggle their
- 	 * visibility when they need to be shown or hidden.
- 	 *
- 	 * @since  2.0.0 | 01 JAN 2016 | Created
- 	 * @param  void
- 	 * @return void
- 	 *
- 	 */
- 	socialWarfare.toggleFloatingButtons = function() {
- 		// Adjust the floating bar
- 		var location = socialWarfare.panels.staticHorizontal.data('float');
+	 * We only show the floating buttons when the static horizontal buttons are
+	 * not in the visible view port. This function is used to toggle their
+	 * visibility when they need to be shown or hidden.
+	 *
+	 * @since  2.0.0 | 01 JAN 2016 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleFloatingButtons = function() {
+		// Adjust the floating bar
+		var location = socialWarfare.panels.staticHorizontal.data('float');
 
- 		//* There are no floating buttons enabled, hide any that might exist.
- 		if (location == 'none') {
- 			return $(".nc_wrapper, .swp_social_panelSide").hide();
- 		}
+		//* There are no floating buttons enabled, hide any that might exist.
+		if (location == 'none') {
+			return $(".nc_wrapper, .swp_social_panelSide").hide();
+		}
 
- 		if (socialWarfare.isMobile()) {
- 			socialWarfare.toggleMobileButtons();
- 			socialWarfare.toggleFloatingHorizontalPanel();
+		if (socialWarfare.isMobile()) {
+			socialWarfare.toggleMobileButtons();
+			socialWarfare.toggleFloatingHorizontalPanel();
 			return;
- 		}
+		}
 
- 		if (location == "right" || location == "left") {
- 			socialWarfare.toggleFloatingVerticalPanel();
- 		}
+		if (location == "right" || location == "left") {
+			socialWarfare.toggleFloatingVerticalPanel();
+		}
 
- 		if (location == "bottom" || location == "top") {
- 			socialWarfare.toggleFloatingHorizontalPanel();
- 		}
- 	}
-
-
- 	/**
- 	 * Toggle the visibilty of a mobile bar.
- 	 *
- 	 * @return void
- 	 *
- 	 */
- 	socialWarfare.toggleMobileButtons = function() {
-
- 		//* There are never any left/right floating buttons on mobile, so hide them.
- 		socialWarfare.panels.floatingSide.hide();
-
- 		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
- 		$(".nc_wrapper").css("visibility", visibility);
- 	}
+		if (location == "bottom" || location == "top") {
+			socialWarfare.toggleFloatingHorizontalPanel();
+		}
+	}
 
 
- 	/**
- 	 * Toggle the display of a side panel, depending on static panel visibility.
- 	 *
- 	 * @return void
- 	 *
- 	 */
- 	socialWarfare.toggleFloatingVerticalPanel = function() {
-		var direction, style, location, visible;
- 		location = socialWarfare.panels.floatingSide.data("float")
- 		visible  = socialWarfare.staticPanelIsVisible();
+	/**
+	 * Toggle the visibilty of a mobile bar.
+	 *
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleMobileButtons = function() {
 
- 		//* This is on mobile and does not use side panels.
- 		if (socialWarfare.isMobile()) {
- 			return socialWarfare.panels.floatingSide.hide();
- 		}
+		//* There are never any left/right floating buttons on mobile, so hide them.
+		socialWarfare.panels.floatingSide.hide();
 
- 		//* No buttons panel! Manually re-define ${visibility}.
- 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
- 			if (!socialWarfare.isMobile()) {
- 				visible = false;
- 			} else {
- 				visible = true;
- 			}
- 		}
-
- 		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
-
- 			direction = (location.indexOf("left") !== -1) ? "left" : "right";
- 			style     = visible ? "-150px" : "5px";
-
- 			//* Update the side panel CSS with the direction and amount.
- 			socialWarfare.panels.floatingSide.css(direction, style);
-
- 		} else {
+		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
+		$(".nc_wrapper").css("visibility", visibility);
+	}
 
 
- 			/**
- 			 * We had problems with the fading buttons flickering rather than having
- 			 * a smooth fade animation. The workaround was to manually control opacity,
- 			 * fade, and opacity again.
- 			 *
- 			 */
- 			if (visible) {
- 				socialWarfare.panels.floatingSide.css("opacity", 1)
- 					.fadeOut(300)
- 					.css("opacity", 0);
- 			} else {
- 				socialWarfare.panels.floatingSide.css("opacity", 0)
- 					.fadeIn(300)
- 					.css("display", "flex")
- 					.css("opacity", 1);
- 			}
- 		}
- 	}
+	/**
+	 * Toggle the display of a side panel, depending on static panel visibility.
+	 *
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleFloatingVerticalPanel = function() {
+		var direction = '';
+		var location = socialWarfare.panels.floatingSide.data("float")
+		var visible  = socialWarfare.staticPanelIsVisible();
+
+		//* This is on mobile and does not use side panels.
+		if (socialWarfare.isMobile()) {
+			return socialWarfare.panels.floatingSide.hide();
+		}
+
+		//* No buttons panel! Manually re-define ${visibility}.
+		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
+			if (!socialWarfare.isMobile()) {
+				visible = false;
+			} else {
+				visible = true;
+			}
+		}
+
+		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
+
+			direction = (location.indexOf("left") !== -1) ? "left" : "right";
+			style     = visible ? "-150px" : "5px";
+
+			//* Update the side panel CSS with the direction and amount.
+			socialWarfare.panels.floatingSide.css(direction, style);
+
+		}
+
+		else {
+
+			/**
+			 * We had problems with the fading buttons flickering rather than having
+			 * a smooth fade animation. The workaround was to manually control opacity,
+			 * fade, and opacity again.
+			 *
+			 */
+			if (visible) {
+				socialWarfare.panels.floatingSide.css("opacity", 1)
+					.fadeOut(300)
+					.css("opacity", 0);
+			}
+
+			else {
+				socialWarfare.panels.floatingSide.css("opacity", 0)
+					.fadeIn(300)
+					.css("display", "flex")
+					.css("opacity", 1);
+			}
+		}
+	}
 
 
- 	/**
- 	 * Toggle the display of a floating bar, depending on static panel visibility.
- 	 *
- 	 * @return void
- 	 *
- 	 */
- 	socialWarfare.toggleFloatingHorizontalPanel = function() {
- 		var panel = socialWarfare.panels.floatingHorizontal.first();
+	/**
+	 * Toggle the display of a floating bar, depending on static panel visibility.
+	 *
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleFloatingHorizontalPanel = function() {
+		var panel = socialWarfare.panels.floatingHorizontal.first();
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
 		var paddingProp = "padding-" + location;
 
 		//* Restore the padding to initial values.
- 		if (socialWarfare.staticPanelIsVisible()) {
+		if (socialWarfare.staticPanelIsVisible()) {
 			$(".nc_wrapper").hide();
- 		}
+		}
 
 		// Add some padding to the page so it fits nicely at the top or bottom.
 		else {
 			newPadding += 50;
 			$(".nc_wrapper").show();
- 		}
 
-        //* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
- 		$("body").css(paddingProp, newPadding);
- 	}
+            //* Compensate for the margin-top added to <html> by #wpadminbar.
+			if ($("#wpadminbar").length) {
+				$("#wpadminbar").css("top", panel.parent().height());
+			}
+		}
+
+		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
+		$("body").css(paddingProp, newPadding);
+	}
 
 
- 	/**
- 	 * This method is used to vertically center the floating buttons when they
- 	 * are positioned on the left or right of the screen.
- 	 *
- 	 * @since  3.4.0 | 18 OCT 2018 | Created
- 	 * @param  void
- 	 * @param  void All changes are made to the dom.
- 	 *
- 	 */
- 	socialWarfare.positionFloatSidePanel = function() {
- 		var panelHeight, windowHeight, offset;
+	/**
+	 * This method is used to vertically center the floating buttons when they
+	 * are positioned on the left or right of the screen.
+	 *
+	 * @since  3.4.0 | 18 OCT 2018 | Created
+	 * @param  void
+	 * @param  void All changes are made to the dom.
+	 *
+	 */
+	socialWarfare.positionFloatSidePanel = function() {
+		var panelHeight, windowHeight, offset;
 		var sidePanel = socialWarfare.panels.floatingSide;
 
 
- 		/**
- 		 * If no such element exists, we obviously just need to bail out and
- 		 * not try to center anything.
- 		 *
- 		 */
- 		if (!sidePanel || !sidePanel.length) {
- 			return;
- 		}
+		/**
+		 * If no such element exists, we obviously just need to bail out and
+		 * not try to center anything.
+		 *
+		 */
+		if (!sidePanel || !sidePanel.length) {
+			return;
+		}
 
 
 		/**
@@ -701,34 +709,34 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 
- 		/**
- 		 * We'll need the height of the panel itself and the height of the
- 		 * actual browser window in order to calculate how to center it.
- 		 *
- 		 */
- 		panelHeight = sidePanel.outerHeight();
- 		windowHeight = window.innerHeight;
+		/**
+		 * We'll need the height of the panel itself and the height of the
+		 * actual browser window in order to calculate how to center it.
+		 *
+		 */
+		panelHeight = sidePanel.outerHeight();
+		windowHeight = window.innerHeight;
 
 
- 		/**
- 		 * If for some reason the panel is actually taller than the window
- 		 * itself, just stick it to the top of the window and the bottom will
- 		 * just have to overflow past the bottom of the screen.
- 		 *
- 		 */
- 		if (panelHeight > windowHeight) {
- 			return sidePanel.css("top", 0);
- 		}
+		/**
+		 * If for some reason the panel is actually taller than the window
+		 * itself, just stick it to the top of the window and the bottom will
+		 * just have to overflow past the bottom of the screen.
+		 *
+		 */
+		if (panelHeight > windowHeight) {
+			return sidePanel.css("top", 0);
+		}
 
 
- 		/**
- 		 * Calculate the center position of panel and then apply the relevant
- 		 * CSS to the panel.
- 		 *
- 		 */
- 		offset = (windowHeight - panelHeight) / 2;
- 		sidePanel.css("top", offset);
- 	}
+		/**
+		 * Calculate the center position of panel and then apply the relevant
+		 * CSS to the panel.
+		 *
+		 */
+		offset = (windowHeight - panelHeight) / 2;
+		sidePanel.css("top", offset);
+	}
 
 
 	/***************************************************************************
@@ -741,18 +749,18 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	 /**
- 	 * This reactivates and creates new image hover pin buttons when a page has
- 	 * been loaded via AJAX. The 'load' event is the proper event that theme and
- 	 * plugin creators are supposed to use when the AJAX load is complete.
- 	 *
- 	 */
- 	$(window).on('load', function() {
+	 * This reactivates and creates new image hover pin buttons when a page has
+	 * been loaded via AJAX. The 'load' event is the proper event that theme and
+	 * plugin creators are supposed to use when the AJAX load is complete.
+	 *
+	 */
+	$(window).on('load', function() {
 
- 		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
- 			socialWarfare.enablePinterestSaveButtons();
- 		}
- 		window.clearCheckID = 0;
- 	});
+		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+			socialWarfare.enablePinterestSaveButtons();
+		}
+		window.clearCheckID = 0;
+	});
 
 
 	/**
@@ -815,7 +823,7 @@ window.socialWarfare = window.socialWarfare || {};
 		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyles, share_link;
 		image = $(this);
 
-    console.log(image);
+	console.log(image);
 
 		/**
 		 * This disables the Pinterest save buttosn on images that are anchors/links
