@@ -224,6 +224,14 @@ class SWP_Buttons_panel_Loader {
 		}
 
 
+	    /**
+	     * Do not print top/bottom floating buttons on blog pages.
+	     *
+	     */
+		if ( !is_singular() ) {
+			return;
+		}
+
 
 		/**
 		 * If both the floating buttons location and the mobile floating
