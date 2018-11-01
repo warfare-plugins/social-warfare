@@ -906,7 +906,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 		/**
-		 * This is where we computate a description that will be used when the
+		 * This is where we compute a description that will be used when the
 		 * image is shared to Pinterest. In order of precedence, we will use the
 		 * image's data-pin-description attribute, the custom Pinterest description
 		 * for the post passed from the server, the image title, or the image
