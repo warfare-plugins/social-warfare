@@ -823,10 +823,8 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function() {
-		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyles, share_link;
+		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyles, shareLink;
 		image = $(this);
-
-	console.log(image);
 
 		/**
 		 * This disables the Pinterest save buttosn on images that are anchors/links
@@ -925,7 +923,7 @@ window.socialWarfare = window.socialWarfare || {};
 			pinDesc = image.attr('alt');
 		}
 
-		share_link = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
+		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
 
 
 		/**
@@ -942,7 +940,7 @@ window.socialWarfare = window.socialWarfare || {};
 		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
 
 		// Append the button as the last element inside the wrapper div.
-		image.after('<a href="' + share_link + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+		image.after('<a href="' + shareLink + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
 
 		// Add the removed classes and styles to the wrapper div.
 		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyles);
