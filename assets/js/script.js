@@ -656,7 +656,9 @@ window.socialWarfare = window.socialWarfare || {};
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
 			$(".nc_wrapper").hide();
-			if ($("#wpadminbar").length) {
+
+
+			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", "initial");
 			}
 		}
@@ -667,7 +669,7 @@ window.socialWarfare = window.socialWarfare || {};
 			$(".nc_wrapper").show();
 
             //* Compensate for the margin-top added to <html> by #wpadminbar.
-			if ($("#wpadminbar").length) {
+			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", panel.parent().height());
 			}
 		}
