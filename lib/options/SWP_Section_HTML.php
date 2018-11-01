@@ -90,8 +90,8 @@ class SWP_Section_HTML extends SWP_Option {
         $html = '<div class="sw-admin-sidebar sw-grid sw-col-220 sw-fit">';
         $html .= '<div id="swp-admin-sidebar">';
 
-        if ( $components = $cache['sidebar'] ) :
-            foreach( $components as $component ) {
+        if ( isset( $cache['sidebar'] ) ) :
+            foreach( $cache['sidebar'] as $component ) {
                 $component = html_entity_decode ( $component );
                 $html .= html_entity_decode( $component);
             }
