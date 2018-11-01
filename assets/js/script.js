@@ -419,7 +419,6 @@ window.socialWarfare = window.socialWarfare || {};
 		var floatLocation       = socialWarfare.panels.staticHorizontal.data("float");
 		var mobileFloatLocation = socialWarfare.panels.staticHorizontal.data("float-mobile");
 		var backgroundColor     = socialWarfare.panels.staticHorizontal.data("float-color");
-		// var left                = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
 		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
 		var barLocation         = '';
 
@@ -450,7 +449,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* Save the new buttons panel to our ${panels} object.
 		socialWarfare.panels.floatingHorizontal = socialWarfare.panels.staticHorizontal.first().clone();
-	socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
+		socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
 		socialWarfare.updateFloatingHorizontalDimensions();
 
 		$(".swp_social_panel .swp_count").css({
@@ -474,8 +473,9 @@ window.socialWarfare = window.socialWarfare || {};
 			left = 0;
 			width = "100%";
 		} else {
-			left = socialWarfare.panels.staticHorizontal.data("align") == "center" ? 0 : socialWarfare.panels.staticHorizontal.offset().left;
-			width = socialWarfare.panels.staticHorizontal.outerWidth(true)
+		    var content = $(".swp-content-locator").parent()
+			left = content.offset().left
+			width = content.width();
 		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
