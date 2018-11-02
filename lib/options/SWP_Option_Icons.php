@@ -123,10 +123,9 @@ class SWP_Option_Icons extends SWP_Option {
     *
     */
     public function render_active_icons() {
-        global $swp_user_options;
 
         $all_networks = $this->get_all_networks();
-        $user_icons = $swp_user_options['order_of_icons'];
+		$user_icons = SWP_Utility::get_option( 'order_of_icons' );
 
         $html = '<div class="sw-grid sw-col-300">';
             $html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
@@ -175,10 +174,8 @@ class SWP_Option_Icons extends SWP_Option {
     *
     */
     public function render_inactive_icons() {
-        global $swp_user_options;
-
         $all_networks = $this->get_all_networks();
-        $user_icons = $swp_user_options['order_of_icons'];
+		$user_icons = SWP_Utility::get_option( 'order_of_icons' );
 
         $first_all = reset( $all_networks );
 
