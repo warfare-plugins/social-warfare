@@ -130,9 +130,11 @@ class SWP_Database_Migration {
 
 		// Output an array of user options if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_user_options') ) :
-			echo "<pre>";
-			var_export( get_option( 'social_warfare_settings', array() ) );
-			echo "</pre>";
+			$options = get_option( 'social_warfare_settings', array() );
+			ksort( $options );
+
+
+			echo "<pre>", var_export( $options ), "</pre>";
 			wp_die();
 		endif;
 
@@ -149,7 +151,6 @@ class SWP_Database_Migration {
             add_action( 'template_redirect', array( $this, 'print_post_meta' ) );
 
         endif;
-
 
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
