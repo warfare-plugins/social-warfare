@@ -179,14 +179,14 @@ class SWP_Option_Icons extends SWP_Option {
 
         $first_all = reset( $all_networks );
 
-        if ( gettype( $first_all ) === 'object' ) :
+        if ( is_array( $all_networks ) ) {
 
             //* Get the keys first, then diff the array.
-            $keys = array_keys( $all_networks );
+            $network_keys = array_keys( $all_networks );
 
             $first_user = reset( $user_icons );
 
-            if ( gettype( $first_user ) === 'object' ) :
+            if ( is_object( $user_icons[0] ) ) {
                 $temp = array();
 
                 foreach( $user_icons as $object ) {
@@ -195,16 +195,18 @@ class SWP_Option_Icons extends SWP_Option {
 
                 $user_icons = $temp;
 
-            endif;
+            }
 
-            $inactive_icons = array_diff( $keys, $user_icons );
+            $inactive_icons = array_diff( $network_keys, $user_icons );
 
-        elseif ( array_key_exists( 0, $all_networks) ) :
+        }
 
-            //* If $all_networks is numerically indexed, just diff the array.
+		//* If $all_networks is numerically indexed, just diff the array.
+		else if ( array_key_exists( 0, $all_networks) ) {
+
             $inactive_icons = array_diff( $all_networks, $user_icons );
 
-        endif;
+        }
 
         $html = '<div class="sw-grid sw-col-300">';
             $html .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
