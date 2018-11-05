@@ -134,23 +134,8 @@ class SWP_Option_Icons extends SWP_Option {
             $html .= '<div class="sw-active sw-buttons-sort">';
 
             if ( count( $user_icons ) > 0 ):
-    			foreach( $user_icons as $network_key) {
-
-                    //* On updates, this is being passed as an object for some reason.
-                    if ( is_object( $network_key ) ) :
-
-                        $network_key = $network_key->key;
-
-                    //* This should not ever be reached. But if it does, fail gracefully.
-                    elseif ( !is_string( $network_key) ) :
-                        return;
-                    endif;
-
-                    if ( array_key_exists( $network_key, $all_networks ) && isset( $all_networks[$network_key] ) ) :
-                        $network = $all_networks[$network_key];
-
-                        $html .= $this->render_icon_HTML( $network );
-                    endif;
+    			foreach( $user_icons as $network_key ) {
+                    $html .= $this->render_icon_HTML( $all_networks[$network_key] );
                 }
             endif;
 
@@ -177,7 +162,7 @@ class SWP_Option_Icons extends SWP_Option {
 		$user_icons = SWP_Utility::get_option( 'order_of_icons' );
 		$network_keys = array();
 
-		foreach( $all_networks as $object) {
+		foreach( $all_networks as $object ) {
 			$network_keys[] = $object->key;
 		}
 
