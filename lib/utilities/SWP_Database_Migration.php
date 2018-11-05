@@ -77,30 +77,24 @@ class SWP_Database_Migration {
 			wp_die( "There is no post object for this url." );
 		endif;
 
-		$all_meta = get_post_meta( $post->ID );
+		$meta = get_post_meta( $post->ID );
 
-		if ( $all_meta ) :
+		if ( $meta ) :
 			$keys = array();
 			$swp_meta = array();
 
-			foreach ( $all_meta as $key => $value ) {
+			foreach ( $meta as $key => $value ) {
 
 				//* Only print Social Warfare meta keys.
-				if ( ( strpos( $key, 'swp_' ) === 0 ||
-				     ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
-					$keys[] = $key;
+				if ( ! ( strpos( $key, 'swp_' ) === 0 
+				    || ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
+					unset( $meta[$key] );
 				}
 			}
 
-			natsort( $keys );
+			ksort( $meta );
 
-			foreach( $keys as $key ) {
-				$swp_meta[$key] = $all_meta[$key];
-			}
-
-			echo "<pre>";
-			var_export( $swp_meta );
-			echo "</pre>";
+			echo "<pre>", var_export( $meta ), "</pre>";
 			wp_die();
 
 		else :
@@ -132,8 +126,6 @@ class SWP_Database_Migration {
 		if ( true === SWP_Utility::debug('get_user_options') ) :
 			$options = get_option( 'social_warfare_settings', array() );
 			ksort( $options );
-
-
 			echo "<pre>", var_export( $options ), "</pre>";
 			wp_die();
 		endif;
