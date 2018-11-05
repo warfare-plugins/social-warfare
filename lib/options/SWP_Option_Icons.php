@@ -133,7 +133,7 @@ class SWP_Option_Icons extends SWP_Option {
         $html .= '<div class="sw-grid sw-col-620 sw-fit">';
             $html .= '<div class="sw-active sw-buttons-sort">';
 
-            if ( count($user_icons) > 0 ):
+            if ( count( $user_icons ) > 0 ):
     			foreach( $user_icons as $network_key) {
 
                     //* On updates, this is being passed as an object for some reason.
@@ -175,23 +175,13 @@ class SWP_Option_Icons extends SWP_Option {
     public function render_inactive_icons() {
         $all_networks = $this->get_all_networks();
 		$user_icons = SWP_Utility::get_option( 'order_of_icons' );
+		$network_keys = array();
 
-        $first_all = reset( $all_networks );
+		foreach( $all_networks as $object) {
+			$network_keys[] = $object->key;
+		}
 
-		//* Get the keys first, then diff the array.
-        if ( is_array( $all_networks ) && is_object( $user_icons[0] ) ) {
-            $network_keys = array_keys( $all_networks );
-
-                $temp_keys = array();
-
-                foreach( $user_icons as $object ) {
-                    $temp_keys[] = $object->key;
-	            }
-
-			$user_icons = $temp_keys;
-        }
-
-        $inactive_icons = array_diff( $all_networks, $user_icons );
+		$inactive_icons = array_diff( $network_keys, $user_icons );
 
         $html = '<div class="sw-grid sw-col-300">';
             $html .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
