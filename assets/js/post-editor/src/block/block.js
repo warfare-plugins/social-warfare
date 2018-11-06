@@ -172,7 +172,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
 
- 		const update = ( event ) => {
+ 		const updateText = ( event ) => {
  			const attribute = event.target.name;
  			const value = event.target.value;
 
@@ -189,14 +189,14 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
  				          placeholder="Type your tweet. . . "
- 				          onChange={update}
+ 				          onChange={updateText}
  						  value={props.attributes.tweetText}
  			     />
 
  				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
  				<textarea name="displayText"
  				          placeholder="Type your tweet. . . "
- 				          onChange={update}
+ 				          onChange={updateText}
  						  value={props.attributes.displayText}
  				 />
 
