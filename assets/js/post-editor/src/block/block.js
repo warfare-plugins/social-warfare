@@ -178,7 +178,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		}
 
  		return (
- 			<div className={ props.className }>
+ 			<div className={ `${props.className} click-to-tweet-wrap` }>
+			    <p className="heading">Click to Tweet</p>
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
  				          placeholder="Type your tweet. . . "
