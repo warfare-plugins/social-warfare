@@ -37,7 +37,7 @@ registerBlockType( 'social-warfare/post-editor', {
 	],
 	attributes: {
 	   whichPost: { type: 'number', default: "this" },
-	   networks: { type: 'string', default: '' }
+	   buttons: { type: 'string', default: '' }
    },
 
 	/**
@@ -91,18 +91,7 @@ registerBlockType( 'social-warfare/post-editor', {
 	save: function( props ) {
 		return (
 			<div>
-				<p>— Hello from the frontend.</p>
-				<p>
-					CGB BLOCK: <code>post-editor</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+				[social_warfare buttons={props.attributes.buttons}]
 			</div>
 		);
 	},
