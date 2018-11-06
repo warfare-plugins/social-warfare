@@ -11,6 +11,7 @@ import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { getCurrentPostId } = wp.data.select( 'core/editor' );
 
 /**
  * Register: aa Gutenberg Block.
@@ -36,8 +37,9 @@ registerBlockType( 'social-warfare/post-editor', {
 		__( 'share buttons' )
 	],
 	attributes: {
-	   whichPost: { type: 'number', default: "this" },
-	   buttons: { type: 'string', default: '' }
+	   useThisPost: { type: 'number', default: "this" },
+	   buttons: { type: 'string', default: '' },
+	   postID: { type: 'number', default: 0}
    },
 
 	/**
@@ -49,25 +51,34 @@ registerBlockType( 'social-warfare/post-editor', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( props ) {
-		console.log("Props are ", props);
-
 		const updateSelectPost = ( event ) => {
 			event.preventDefault();
-			props.setAttributes({whichPost: event.target.value});
+			props.setAttributes( {useThisPost: event.target.value} );
 		}
 
         //* Saves the user input new networks.
 		const updateButtonsList = ( event ) => {
 			event.preventDefault();
-			props.setAttributes({buttons: event.target.value});
+			props.setAttributes( {buttons: event.target.value} );
 		}
 
+		const updatePostID = ( event ) => {
+			event.preventDefault();
+            const postID = getCurrentPostId();
+			const value = parseInt(event.target.value);
+
+			if ( isNaN( value ) || !value ) {
+				return;
+			}
+
+			props.setAttributes( { postID: value } )
+		}
 
 		// Creates a <p class='wp-block-cgb-block-post-editor'></p>.
 		return (
 			<div className={ props.className }>
 			    <p>Should the buttons reflect this post, or a a different post?</p>
-				<select   value={props.attributes.whichPost}
+				<select   value={props.attributes.useThisPost}
 				          onChange={updateSelectPost}
 			    >
 				  <option value="this">This post</option>
@@ -75,10 +86,10 @@ registerBlockType( 'social-warfare/post-editor', {
 			    </select>
 
 				{
-				  props.attributes.whichPost == "other" &&
+				  props.attributes.useThisPost == "other" &&
 				  <div>
 					  <p>Which post sholud we fetch SW settings and shares from?</p>
-					  <input type="text" />
+					  <input type="text" onChange ={updatePostID}/>
 				  </div>
 				}
 
@@ -86,7 +97,7 @@ registerBlockType( 'social-warfare/post-editor', {
 				<input value={props.attributes.buttons}
 				       type="text"
 					   onChange={updateButtonsList}
-			     />
+				/>
 			</div>
 		);
 	},
@@ -103,12 +114,12 @@ registerBlockType( 'social-warfare/post-editor', {
 		const buttons = props.attributes.buttons && props.attributes.buttons.length
 		                ? `buttons="${props.attributes.buttons}"` : '';
 
-		const id = props.attributes.whichPost == 'other'
-		                ? `id="${props.attributes.id}"` : '';
+		const postID = props.attributes.useThisPost == "other"
+		                ? `id="${props.attributes.postID}"` : '';
 
 		return (
 			<div>
-				[social_warfare {buttons} {id}]
+				[social_warfare {buttons} {postID}]
 			</div>
 		);
 	},
