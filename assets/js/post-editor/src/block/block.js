@@ -95,9 +95,15 @@ registerBlockType( 'social-warfare/post-editor', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
+		const buttons = props.attributes.buttons && props.attributes.buttons.length
+		                ? ${`buttons=` + props.attributes.buttons} : '';
+
+		const id = props.attributes.whichPost == 'other'
+		                ? ${`id=` + props.attributes.id} : '';
+
 		return (
 			<div>
-				[social_warfare buttons={props.attributes.buttons}]
+				[social_warfare {buttons} {id}]
 			</div>
 		);
 	},
