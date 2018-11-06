@@ -167,67 +167,32 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
-		const { useThisPost, buttons, postID } = props.attributes;
+	 edit: function( props ) {
+ 		const { tweetText, displayText } = props.attributes;
 
-		const updateWhichPost = ( event ) => {
-			console.log("updateWhichPost");
-			console.log("value", event.target.value);
-			props.setAttributes( {useThisPost: event.target.value} );
-		}
+ 		const update = ( event ) => {
+ 			const attribute = event.target.name;
+ 			const value = event.target.value;
+ 		}
 
-		const updateButtonsList = ( event ) => {
-			props.setAttributes( {buttons: event.target.value} );
-		}
+ 		return (
+ 			<div className={ props.className }>
+ 			    <p>Type your tweet as you want it to display <b><em>on Twitter</b></em>:</p>
+ 				<textarea name="tweetText"
+ 				          placeholder="Type your tweet. . . "
+ 				          onChange={update}
+ 						  value={props.attributes.tweetText}
+ 			     />
 
-		const updatePostID = ( event ) => {
-			console.log("updatePostID()");
-
-            const postID = getCurrentPostId();
-			const value = event.target.value;
-
-			if ( value == '' ) {
-				props.setAttributes( { postID: "" } )
-				return;
-			}
-
-			if ( isNaN( parseInt( value ) ) ) {
-				return;
-			}
-
-			props.setAttributes( { postID: parseInt(value) } )
-		}
-
-		return (
-			<div className={ props.className }>
-			    <p>Should the buttons reflect this post, or a a different post?</p>
-
-				<select   value={useThisPost == "other" && postID ? "other" : "this"}
-				          onChange={updateWhichPost}
-			    >
-				  <option value="this">This post</option>
-				  <option value="other">Another post</option>
-			    </select>
-
-				{
-				  props.attributes.useThisPost == "other" &&
-				  <div>
-					  <p>Which post should we fetch SW settings and shares from?</p>
-					  <input type="text"
-					         onChange ={updatePostID}
-							 value={props.attributes.postID}
-					  />
-				  </div>
-				}
-
-				<p>Which networks should we display? Leave blank to use your global settings. </p>
-				<input value={props.attributes.buttons}
-				       type="text"
-					   onChange={updateButtonsList}
-				/>
-			</div>
-		);
-	},
+ 				<p>Type your tweet as you want it to display <b><em>on the page</b></em>:</p>
+ 				<textarea name="displayText"
+ 				          placeholder="Type your tweet. . . "
+ 				          onChange={update}
+ 						  value={props.attributes.tweetText}
+ 				 />
+ 			</div>
+ 		);
+ 	},
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
