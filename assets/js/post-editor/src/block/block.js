@@ -169,7 +169,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	 edit: function( props ) {
- 		const { tweetText, displayText } = props.attributes;
+ 		const { tweetText, displayText, theme } = props.attributes;
+		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
 
  		const update = ( event ) => {
  			const attribute = event.target.name;
@@ -177,6 +178,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
 			props.setAttributes( { [attribute]: value } )
  		}
+
+		const updateTheme = ( event ) => {
+
+		}
 
  		return (
  			<div className={ `${props.className} click-to-tweet-block-wrap` }>
@@ -194,6 +199,18 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  				          onChange={update}
  						  value={props.attributes.displayText}
  				 />
+
+				 <p>Which theme would you like to use for this CTT?</p>
+				 <select name="theme"
+				         value={theme}
+						 onChange={updateTheme}
+				 >
+				   {
+					 styles.map( ( index ) => {
+						 return <option value={ "style" + index }>{styles[index]}</option>
+					 });
+				   }
+				 </select>
  			</div>
  		);
  	},
