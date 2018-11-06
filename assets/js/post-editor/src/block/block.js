@@ -57,22 +57,21 @@ registerBlockType( 'social-warfare/post-editor', {
 
 		const updateSelectPost = (event) => {
 			event.preventDefault();
-			console.log(event.target)
+			console.log("Value is");
 			console.log(event.target.value);
-			selectedPost = event.target.value;
+			props.setAttributes({whichPost: event.target.value});
 		}
 		// Creates a <p class='wp-block-cgb-block-post-editor'></p>.
 		return (
 			<div className={ props.className }>
 			    <p>Should the buttons reflect this post, or a a different post?</p>
-				<select value={selectedPost} onChange={updateSelectPost}>
+				<select value={props.attributes.whichPost} onChange={updateSelectPost}>
 				  <option value="this">This post</option>
 				  <option value="other">Another post</option>
 			    </select>
 
-
 				{
-				  selectedPost == "other" &&
+				  props.attributes.whichPost == "other" &&
 				  <div>
 					  <p>Which post sholud we fetch SW settings and shares from?</p>
 					  <input type="text" />
