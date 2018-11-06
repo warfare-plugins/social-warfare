@@ -30,9 +30,14 @@ registerBlockType( 'social-warfare/post-editor', {
 	icon: <i className="mce-ico mce-i-sw sw sw-social-warfare" />,
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'post-editor — CGB Block' ),
-		__( 'CGB Example' ),
-		__( 'create-guten-block' ),
+		__( 'sharing' ),
+		__( 'social sharing' ),
+		__( 'share buttons' ),
+		// Has a limit of 3 keywords. 
+		// __( 'facebook' ),
+		// __( 'twitter' ),
+		// __( 'pinterest' ),
+		// __( 'linkedin' ),
 	],
 
 	/**
