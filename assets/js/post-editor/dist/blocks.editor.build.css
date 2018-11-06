@@ -10,7 +10,7 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
-.wp-block-cgb-block-postg-editor {
+.wp-block-cgb-block-post-editor {
   background: #bada55;
   border: 0.2rem solid #292929;
   color: #292929;
