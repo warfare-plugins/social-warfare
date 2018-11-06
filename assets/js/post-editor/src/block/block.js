@@ -39,7 +39,7 @@ registerBlockType( 'social-warfare/post-editor', {
 	attributes: {
 	   useThisPost: { type: 'number', default: "this" },
 	   buttons: { type: 'string', default: '' },
-	   postID: { type: 'number', default: 0}
+	   postID: { type: 'number', default: ''}
    },
 
 	/**
@@ -88,7 +88,7 @@ registerBlockType( 'social-warfare/post-editor', {
 				{
 				  props.attributes.useThisPost == "other" &&
 				  <div>
-					  <p>Which post sholud we fetch SW settings and shares from?</p>
+					  <p>Which post should we fetch SW settings and shares from?</p>
 					  <input type="text" onChange ={updatePostID}/>
 				  </div>
 				}
