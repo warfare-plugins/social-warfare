@@ -52,8 +52,6 @@ registerBlockType( 'social-warfare/social-warfare', {
 		const { useThisPost, buttons, postID } = props.attributes;
 
 		const updateWhichPost = ( event ) => {
-			console.log("updateWhichPost");
-			console.log("value", event.target.value);
 			props.setAttributes( {useThisPost: event.target.value} );
 		}
 
@@ -62,8 +60,6 @@ registerBlockType( 'social-warfare/social-warfare', {
 		}
 
 		const updatePostID = ( event ) => {
-			console.log("updatePostID()");
-
             const postID = getCurrentPostId();
 			const value = event.target.value;
 
@@ -181,7 +177,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
 		const updateTheme = ( event ) => {
             const index = event.target.value;
-			console.log("Index for theme is ", index);
 
 			if ( parseInt(index) == 0 ) {
 				props.setAttributes( {theme: ''} );
@@ -231,13 +226,13 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	save: function( props ) {
 		const { tweetText, displayText } = props.attributes;
 
-		const theme = props.attributes.theme ? `theme="style${props.attributes.theme}` : '';
+		const theme = props.attributes.theme ? `style${props.attributes.theme}` : '';
 
 		if (!tweetText) return;
 
 		return (
 			<div>
-				[click_to_tweet tweet="{tweetText}" quote="{displayText}"]
+				[click_to_tweet tweet="{tweetText}" quote="{displayText}" theme="{theme}"]
 			</div>
 		);
 	},
