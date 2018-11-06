@@ -80,7 +80,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 		}
 
 		return (
-			<div className={ props.className }>
+			<div className={ `${props.className} social-warfare-block-wrap }>
 			    <p>Should the buttons reflect this post, or a a different post?</p>
 
 				<select   value={useThisPost == "other" && postID ? "other" : "this"}
