@@ -180,7 +180,13 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		}
 
 		const updateTheme = ( event ) => {
+            const index = event.target.value;
 
+			if ( parseInt(index) == 0 ) {
+				props.setAttribtes( {theme: ''});
+			} else {
+				props.setAttribtes( {theme: "style" + index});
+			}
 		}
 
  		return (
@@ -207,7 +213,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 				 >
 				   {
 					 styles.map( ( index ) => {
-						 return <option value={ "style" + index }>{styles[index]}</option>
+						 return <option value={index}>{styles[index]}</option>
 					 });
 				   }
 				 </select>
