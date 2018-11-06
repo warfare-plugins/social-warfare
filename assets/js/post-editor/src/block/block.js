@@ -181,11 +181,12 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
 		const updateTheme = ( event ) => {
             const index = event.target.value;
+			console.log("Index for theme is ", index);
 
 			if ( parseInt(index) == 0 ) {
-				props.setAttribtes( {theme: ''});
+				props.setAttributes( {theme: ''} );
 			} else {
-				props.setAttribtes( {theme: "style" + index});
+				props.setAttributes( {theme: index} );
 			}
 		}
 
@@ -212,9 +213,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 						 onChange={updateTheme}
 				 >
 				   {
-					 styles.map( ( index ) => {
-						 return <option value={index}>{styles[index]}</option>
-					 });
+					 styles.map( ( theme, index ) => <option value={index}>{theme}</option> )
 				   }
 				 </select>
  			</div>
@@ -231,6 +230,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 */
 	save: function( props ) {
 		const { tweetText, displayText } = props.attributes;
+
+		const theme = props.attributes.theme ? `theme="style${props.attributes.theme}` : '';
 
 		if (!tweetText) return;
 
