@@ -218,6 +218,7 @@ img {
 	text-decoration: none;
 	display: table-cell;
 	vertical-align: middle;
+	padding: 30px 0;
 }
 
 .sw-top-menu .sw-grid {
