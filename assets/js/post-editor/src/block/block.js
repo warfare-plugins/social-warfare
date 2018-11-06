@@ -101,10 +101,10 @@ registerBlockType( 'social-warfare/post-editor', {
 	 */
 	save: function( props ) {
 		const buttons = props.attributes.buttons && props.attributes.buttons.length
-		                ? `buttons=${props.attributes.buttons}` : '';
+		                ? `buttons="${props.attributes.buttons}"` : '';
 
 		const id = props.attributes.whichPost == 'other'
-		                ? `id=${props.attributes.id}` : '';
+		                ? `id="${props.attributes.id}"` : '';
 
 		return (
 			<div>
