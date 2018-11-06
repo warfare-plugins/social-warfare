@@ -443,16 +443,16 @@ a.swp-notice-cta {
 	margin: 15px 0;
 }
 
-.click-to-tweet-wrap {
+.click-to-tweet-block-wrap {
 	font-family: "SF Pro Text", "Helvetica", sans-serif;
 	font-size: 13px;
 }
 
-.click-to-tweet-wrap .heading {
+.click-to-tweet-block-wrap .heading {
 	font-weight: bold;
 }
 
-.click-to-tweet-wrap textarea {
+.click-to-tweet-block-wrap textarea {
 	width: 100%;
 	padding: 5px;
 }
