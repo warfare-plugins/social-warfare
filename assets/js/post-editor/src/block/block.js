@@ -39,6 +39,10 @@ registerBlockType( 'social-warfare/post-editor', {
 		// __( 'pinterest' ),
 		// __( 'linkedin' ),
 	],
+	attributes: {
+	   whichPost: { type: 'number', default: "this" },
+	   networks: { type: 'string', default: '' }
+   },
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -49,10 +53,12 @@ registerBlockType( 'social-warfare/post-editor', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( props ) {
-		var selectedPost = "this";
+		console.log("Props are ", props);
 
 		const updateSelectPost = (event) => {
 			event.preventDefault();
+			console.log(event.target)
+			console.log(event.target.value);
 			selectedPost = event.target.value;
 		}
 		// Creates a <p class='wp-block-cgb-block-post-editor'></p>.
