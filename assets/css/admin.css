@@ -443,10 +443,16 @@ a.swp-notice-cta {
 	margin: 15px 0;
 }
 
-.click-to-tweet-block-wrap {
+[class*="-block-wrap"] {
 	font-family: "SF Pro Text", "Helvetica", sans-serif;
 	font-size: 13px;
 }
+
+.social-warfare-block-wrap input,
+.social-warfare-block-wrap select {
+	width: 100%;
+}
+
 
 .click-to-tweet-block-wrap .heading {
 	font-weight: bold;
