@@ -53,10 +53,16 @@ registerBlockType( 'social-warfare/post-editor', {
 
 		const updateSelectPost = (event) => {
 			event.preventDefault();
-			console.log("Value is");
-			console.log(event.target.value);
 			props.setAttributes({whichPost: event.target.value});
 		}
+
+        //* Saves the user input new networks.
+		const updateButtonsList = (event) => {
+			event.preventDefault();
+			props.setAttributes({buttons: event.target.value)});
+		}
+
+
 		// Creates a <p class='wp-block-cgb-block-post-editor'></p>.
 		return (
 			<div className={ props.className }>
