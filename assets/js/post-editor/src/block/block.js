@@ -80,7 +80,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 		}
 
 		return (
-			<div className={ `${props.className} social-warfare-block-wrap }>
+			<div className={ `${props.className} social-warfare-block-wrap` }>
 			    <p>Should the buttons reflect this post, or a a different post?</p>
 
 				<select   value={useThisPost == "other" && postID ? "other" : "this"}
@@ -178,7 +178,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		}
 
  		return (
- 			<div className={ `${props.className} click-to-tweet-wrap` }>
+ 			<div className={ `${props.className} click-to-tweet-block-wrap` }>
 			    <p className="heading">Click to Tweet</p>
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
