@@ -33,7 +33,7 @@ registerBlockType( 'social-warfare/post-editor', {
 		__( 'sharing' ),
 		__( 'social sharing' ),
 		__( 'share buttons' ),
-		// Has a limit of 3 keywords. 
+		// Has a limit of 3 keywords.
 		// __( 'facebook' ),
 		// __( 'twitter' ),
 		// __( 'pinterest' ),
@@ -49,21 +49,32 @@ registerBlockType( 'social-warfare/post-editor', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( props ) {
+		var selectedPost = "this";
+
+		const updateSelectPost = (event) => {
+			event.preventDefault();
+			selectedPost = event.target.value;
+		}
 		// Creates a <p class='wp-block-cgb-block-post-editor'></p>.
 		return (
 			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<p>
-					CGB BLOCK: <code>post-editor</code> is a new Gutenberg block
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+			    <p>Should the buttons reflect this post, or a a different post?</p>
+				<select value={selectedPost} onChange={updateSelectPost}>
+				  <option value="this">This post</option>
+				  <option value="other">Another post</option>
+			    </select>
+
+
+				{
+				  selectedPost == "other" &&
+				  <div>
+					  <p>Which post sholud we fetch SW settings and shares from?</p>
+					  <input type="text" />
+				  </div>
+				}
+
+				<p>Display these networks: </p>
+				<input type="text" />
 			</div>
 		);
 	},
