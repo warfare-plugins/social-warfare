@@ -1262,6 +1262,14 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	vertical-align: middle;
 }
 
+.mce-ico.sw-social-warfare:before {
+	color: #ee464f;
+}
+
+.mce-ico.sw-social-warfare {
+	color: #ee464f;
+}
+
 i.swp_google_plus_icon:before {
 	content: "h";
 }
