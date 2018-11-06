@@ -51,15 +51,15 @@ registerBlockType( 'social-warfare/post-editor', {
 	edit: function( props ) {
 		console.log("Props are ", props);
 
-		const updateSelectPost = (event) => {
+		const updateSelectPost = ( event ) => {
 			event.preventDefault();
 			props.setAttributes({whichPost: event.target.value});
 		}
 
         //* Saves the user input new networks.
-		const updateButtonsList = (event) => {
+		const updateButtonsList = ( event ) => {
 			event.preventDefault();
-			props.setAttributes({buttons: event.target.value)});
+			props.setAttributes({buttons: event.target.value});
 		}
 
 
@@ -67,7 +67,9 @@ registerBlockType( 'social-warfare/post-editor', {
 		return (
 			<div className={ props.className }>
 			    <p>Should the buttons reflect this post, or a a different post?</p>
-				<select value={props.attributes.whichPost} onChange={updateSelectPost}>
+				<select   value={props.attributes.whichPost}
+				          onChange={updateSelectPost}
+			    >
 				  <option value="this">This post</option>
 				  <option value="other">Another post</option>
 			    </select>
@@ -81,7 +83,10 @@ registerBlockType( 'social-warfare/post-editor', {
 				}
 
 				<p>Display these networks: </p>
-				<input type="text" />
+				<input value={props.attributes.buttons}
+				       type="text"
+					   onChange={updateButtonsList}
+			     />
 			</div>
 		);
 	},
@@ -96,10 +101,10 @@ registerBlockType( 'social-warfare/post-editor', {
 	 */
 	save: function( props ) {
 		const buttons = props.attributes.buttons && props.attributes.buttons.length
-		                ? ${`buttons=` + props.attributes.buttons} : '';
+		                ? `buttons=${props.attributes.buttons}` : '';
 
 		const id = props.attributes.whichPost == 'other'
-		                ? ${`id=` + props.attributes.id} : '';
+		                ? `id=${props.attributes.id}` : '';
 
 		return (
 			<div>
