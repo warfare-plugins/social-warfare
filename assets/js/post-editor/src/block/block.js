@@ -145,8 +145,8 @@ registerBlockType( 'social-warfare/social-warfare', {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'social-warfare/click-to-tweet', {
-	title: __( 'Social Warfare' ), // Block title.
-	icon: <i className="mce-ico mce-i-sw sw sw-social-warfare" />,
+	title: __( 'Click To Tweet' ), // Block title.
+	icon: <i className="mce-ico mce-i-sw sw swp_twitter_icon" />,
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		// Has a limit of 3 keywords.
@@ -173,22 +173,24 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		const update = ( event ) => {
  			const attribute = event.target.name;
  			const value = event.target.value;
+
+			props.setAttributes( { [attribute]: value } )
  		}
 
  		return (
  			<div className={ props.className }>
- 			    <p>Type your tweet as you want it to display <b><em>on Twitter</b></em>:</p>
+ 			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
  				          placeholder="Type your tweet. . . "
  				          onChange={update}
  						  value={props.attributes.tweetText}
  			     />
 
- 				<p>Type your tweet as you want it to display <b><em>on the page</b></em>:</p>
+ 				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
  				<textarea name="displayText"
  				          placeholder="Type your tweet. . . "
  				          onChange={update}
- 						  value={props.attributes.tweetText}
+ 						  value={props.attributes.displayText}
  				 />
  			</div>
  		);
@@ -203,15 +205,13 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
-		const buttons = props.attributes.buttons && props.attributes.buttons.length
-		                ? `buttons="${props.attributes.buttons}"` : '';
+		const { tweetText, displayText } = props.attributes;
 
-		const postID = props.attributes.useThisPost == "other"
-		                ? `id="${props.attributes.postID}"` : '';
+		if (!tweetText) return;
 
 		return (
 			<div>
-				[social_warfare {buttons} {postID}]
+				[click_to_tweet tweet="{tweetText}" quote="{displayText}"]
 			</div>
 		);
 	},
