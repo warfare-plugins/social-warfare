@@ -442,3 +442,17 @@ a.swp-notice-cta {
 .wp-core-ui #social_warfare a.swpmb-add-media.button {
 	margin: 15px 0;
 }
+
+.click-to-tweet-wrap {
+	font-family: "SF Pro Text", "Helvetica", sans-serif;
+	font-size: 13px;
+}
+
+.click-to-tweet-wrap .heading {
+	font-weight: bold;
+}
+
+.click-to-tweet-wrap textarea {
+	width: 100%;
+	padding: 5px;
+}
