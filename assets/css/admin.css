@@ -434,3 +434,11 @@ a.swp-notice-cta {
    font-size: 12px;
    line-height: 32px;
 }
+
+#social_warfare p.description {
+	padding: 15px 0;
+}
+
+.wp-core-ui #social_warfare a.swpmb-add-media.button {
+	margin: 15px 0;
+}
