@@ -203,12 +203,11 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided.";
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
-				    <div className="head">
+				    <div className="head" onClick={toggleFocus}>
 					    {twitterIcon}
 						<div className="swp-preview">{text}</div>
 						<Dashicon className="swp-dashicon"
-						          icon="arrow-right"
-								  onClick={toggleFocus}
+						          icon="arrow-down"
 					    />
 					</div>
 	 			</div>
@@ -218,9 +217,11 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		//* Active state
  		return (
  			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
-                <div className="head">
-				    <p className="heading">Click to Tweet</p>
-					<Dashicon icon="arrow-up" onClick={toggleFocus} />
+                <div className="head" onClick={toggleFocus}>
+				    <p >Click to Tweet</p>
+					<Dashicon className="swp-dashicon"
+							  icon="arrow-up"
+					/>
 				</div>
 
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
