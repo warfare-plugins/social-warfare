@@ -45,6 +45,11 @@ registerBlockType( 'social-warfare/social-warfare', {
 	 */
 	edit: function( props ) {
 		const { useThisPost, buttons, postID } = props.attributes;
+		const icon = <i className="mce-ico mce-i-sw sw sw-social-warfare" />;
+
+		const toggleFocus = ( event ) => {
+			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
+		}
 
 		const updateWhichPost = ( event ) => {
 			props.setAttributes( {useThisPost: event.target.value} );
@@ -70,6 +75,19 @@ registerBlockType( 'social-warfare/social-warfare', {
 			props.setAttributes( { postID: parseInt(value) } )
 		}
 
+		//* Inactive state
+
+		if ( !props.attributes.hasFocus ) {
+			return (
+				<div className={ `${props.className} social-warfare-block-wrap` }>
+                    <div className="head" onClick={toggleFocus}>
+
+					</div>
+				</div>
+			);
+		}
+
+        //* Active state
 		return (
 			<div className={ `${props.className} social-warfare-block-wrap` }>
 			    <div className="head">
