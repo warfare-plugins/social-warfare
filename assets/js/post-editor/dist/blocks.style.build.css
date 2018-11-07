@@ -18,6 +18,8 @@
       align-items: center;
   -ms-flex-pack: justify;
       justify-content: space-between; }
+  [class*="-block-wrap"] .head p {
+    font-weight: bold; }
 
 [class*="-block-wrap"] input,
 [class*="-block-wrap"] select,
