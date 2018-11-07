@@ -1,10 +1,11 @@
+
 import './style.scss';
 import './editor.scss';
-import { Dashicon } from '@wordpress/components';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { getCurrentPostId } = wp.data.select( 'core/editor' );
+const Dashicon = wp.components.Dashicon;
 
 /**
  * Registers a new block provided a unique name and an object defining its
@@ -221,7 +222,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 				    <p className="heading">Click to Tweet</p>
 					<Dashicon icon="arrow-down" onClick={toggleFocus} />
 				</div>
- 			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
+
+				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
  				<textarea name="tweetText"
  				          placeholder="Type your tweet. . . "
@@ -229,9 +231,9 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  						  value={props.attributes.tweetText}
  			     />
 
- 				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
+				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
 
- 				<textarea name="displayText"
+ 				 <textarea name="displayText"
  				          placeholder="Type your tweet. . . "
  				          onChange={updateText}
  						  value={props.attributes.displayText}
@@ -247,7 +249,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 					 styles.map( ( theme, index ) => <option value={index}>{theme}</option> )
 				   }
 				 </select>
-				 </div>
  			</div>
  		);
  	},
