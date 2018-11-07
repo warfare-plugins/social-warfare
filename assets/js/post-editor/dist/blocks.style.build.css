@@ -72,11 +72,3 @@
     border-radius: 4px; }
   .swp-inactive-block .swp-dashicon {
     margin: 0 14px; }
-
-.wp-block-cgb-block-post-editor {
-  background: orangered;
-  border: 0.2rem solid #292929;
-  color: #292929;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
