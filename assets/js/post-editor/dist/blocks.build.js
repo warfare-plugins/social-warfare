@@ -71,7 +71,7 @@
 /*! dynamic exports provided */
 /***/ (function(module, exports) {
 
-eval("/**\n * #.# Common SCSS\n *\n * Can include things like variables and mixins\n * that are used across the project.\n*/\n\n// Colors.\n$twitter_blue: rgb(66, 156, 214);\n$social_warfare_red: rgb(211, 66, 80);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9jb21tb24uc2Nzcz81M2NlIl0sInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogIy4jIENvbW1vbiBTQ1NTXG4gKlxuICogQ2FuIGluY2x1ZGUgdGhpbmdzIGxpa2UgdmFyaWFibGVzIGFuZCBtaXhpbnNcbiAqIHRoYXQgYXJlIHVzZWQgYWNyb3NzIHRoZSBwcm9qZWN0LlxuKi9cblxuLy8gQ29sb3JzLlxuJHR3aXR0ZXJfYmx1ZTogcmdiKDY2LCAxNTYsIDIxNCk7XG4kc29jaWFsX3dhcmZhcmVfcmVkOiByZ2IoMjExLCA2NiwgODApO1xuXG5cblxuLy8vLy8vLy8vLy8vLy8vLy8vXG4vLyBXRUJQQUNLIEZPT1RFUlxuLy8gLi9zcmMvY29tbW9uLnNjc3Ncbi8vIG1vZHVsZSBpZCA9IDBcbi8vIG1vZHVsZSBjaHVua3MgPSAwIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTsiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///0\n");
+eval("//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///0\n");
 
 /***/ }),
 /* 1 */
