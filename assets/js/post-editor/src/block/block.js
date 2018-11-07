@@ -200,10 +200,26 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			props.setAttributes( {hasFocus: false} );
 		}
 
-		
+        //* Display the slim version for non-focused blocks.
+		if ( !props.attributes.hasFocus ) {
+			return (
+				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseEnter={startFocus}>
+				    {
+						props.attributes.displayText &&
+						<code>{props.attributes.displayText}</code>
+					}
+
+					{
+						!props.attributes.displayText &&
+						<code>No Click To Tweet text is provided.</code>
+					}
+	 			</div>
+
+			)
+		}
 
  		return (
- 			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseEnter={startFocus} onMouseLeave={stopFocus}>
+ 			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseLeave={stopFocus}>
 			    <p className="heading">Click to Tweet</p>
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
