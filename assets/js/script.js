@@ -592,6 +592,7 @@ window.socialWarfare = window.socialWarfare || {};
 		var direction = '';
 		var location = socialWarfare.panels.floatingSide.data("float")
 		var visible  = socialWarfare.staticPanelIsVisible();
+		var style = "";
 
 		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
