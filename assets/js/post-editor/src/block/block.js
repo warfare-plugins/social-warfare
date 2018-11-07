@@ -35,9 +35,10 @@ registerBlockType( 'social-warfare/social-warfare', {
 		__( 'share buttons' )
 	],
 	attributes: {
-	   useThisPost: { type: 'string', default: "this" },
-	   buttons: { type: 'string', default: '' },
-	   postID: { type: 'number', default: ''}
+	   hasFocus: { type: 'boolean', defualt: false },		//* Used only for editor to display either slim or full block.
+	   useThisPost: { type: 'string', default: "this" },	//* Option to use share data from this post, or another post.
+	   postID: { type: 'number', default: ''},              //* If ${useThisPost} == 'other', the ID of target post to fetch data from.
+	   buttons: { type: 'string', default: '' },			//* A csv of valid networks to display in the shortcode.
    },
 
 	/**
@@ -152,8 +153,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		__( 'ctt' )
 	],
 	attributes: {
-	   tweetText: { type: 'string', default: "" },
-	   displayText: { type: 'string', default: "" }
+	   tweetText: { type: 'string', default: "" },					//* The text to display in the popup dialogue.
+	   displayText: { type: 'string', default: "" }					//* The text to display in the post content CTT.
    },
 
 	/**
