@@ -75,7 +75,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 			    <div className="head">
 				    <p>Social Warfare Shortcode</p>
 					<Dashicon className="swp-dashicon"
-							  icon="arrow-right"
+							  icon="arrow-down"
 							  onClick={toggleFocus}
 					/>
 				</div>
@@ -220,7 +220,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
                 <div className="head">
 				    <p className="heading">Click to Tweet</p>
-					<Dashicon icon="arrow-down" onClick={toggleFocus} />
+					<Dashicon icon="arrow-up" onClick={toggleFocus} />
 				</div>
 
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
