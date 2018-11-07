@@ -202,19 +202,22 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
         //* Display the slim version for non-focused blocks.
 		if ( !props.attributes.hasFocus ) {
+		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided."
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseEnter={startFocus}>
-				    {
-						props.attributes.displayText &&
-						<code>{props.attributes.displayText}</code>
-					}
+				    <i className="mce-ico sw swp_twitter_icon" />
+					<div>
+					    {
+							props.attributes.displayText &&
+							<div className="swp-slim-preview-text">{props.attributes.displayText}</div>
+						}
 
-					{
-						!props.attributes.displayText &&
-						<code>No Click To Tweet text is provided.</code>
-					}
+						{
+							!props.attributes.displayText &&
+							<div className="swp-slim-preview-text"></div>
+						}
+					</div>
 	 			</div>
-
 			)
 		}
 
