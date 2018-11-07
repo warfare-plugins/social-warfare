@@ -1,18 +1,10 @@
-/**
- * BLOCK: post-editor
- *
- * Registering a basic block with Gutenberg.
- * Simple block, renders and saves the same content without any interactivity.
- */
-
-//  Import CSS.
 import './style.scss';
 import './editor.scss';
+import { Dashicon } from '@wordpress/components';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { getCurrentPostId } = wp.data.select( 'core/editor' );
-import { Dashicon } from '@wordpress/components';
 
 /**
  * Registers a new block provided a unique name and an object defining its
