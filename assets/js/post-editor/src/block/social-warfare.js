@@ -84,13 +84,10 @@ registerBlockType( 'social-warfare/social-warfare', {
 			                ? `id="${props.attributes.postID}"` : '';
 
 			return (
-				<div className="head">
+				<div className="head" onClick={toggleFocus}>
 				    <p>Social Warfare Shortcode</p>
 					<div className="swp-preview">[social_warfare {buttons} {postID}]</div>
-					<Dashicon className="swp-dashicon"
-							  icon="arrow-down"
-							  onClick={toggleFocus}
-					/>
+					<Dashicon className="swp-dashicon" icon="arrow-down" />
 				</div>
 
 			);
@@ -99,12 +96,9 @@ registerBlockType( 'social-warfare/social-warfare', {
         //* Active state
 		return (
 			<div className={ `${props.className} social-warfare-block-wrap` }>
-			    <div className="head">
+			    <div className="head" onClick={toggleFocus}>
 				    <p>Social Warfare Shortcode</p>
-					<Dashicon className="swp-dashicon"
-							  icon="arrow-down"
-							  onClick={toggleFocus}
-					/>
+					<Dashicon className="swp-dashicon" icon="arrow-down" />
 				</div>
 
 			    <p>Should the buttons reflect this post, or a a different post?</p>
