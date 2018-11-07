@@ -71,7 +71,14 @@ registerBlockType( 'social-warfare/social-warfare', {
 
 		return (
 			<div className={ `${props.className} social-warfare-block-wrap` }>
-			    <p className="heading">Social Warfare Shortcode</p>
+			    <div className="head">
+				    <p>Social Warfare Shortcode</p>
+					<Dashicon className="swp-dashicon"
+							  icon="arrow-right"
+							  onClick={toggleFocus}
+					/>
+				</div>
+
 			    <p>Should the buttons reflect this post, or a a different post?</p>
 
 				<select   value={useThisPost == "other" && postID ? "other" : "this"}
@@ -190,15 +197,19 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
 		}
 
-
         //* Inactive state
 		if ( !props.attributes.hasFocus ) {
 		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided.";
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
-				    {twitterIcon}
-					<div className="swp-slim-preview-text">{text}</div>
-					<Dashicon className="swp-dashicon" icon="arrow-right" onClick={toggleFocus} />
+				    <div className="head">
+					    {twitterIcon}
+						<div className="swp-preview">{text}</div>
+						<Dashicon className="swp-dashicon"
+						          icon="arrow-right"
+								  onClick={toggleFocus}
+					    />
+					</div>
 	 			</div>
 			)
 		}
@@ -206,9 +217,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		//* Active state
  		return (
  			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
-
-			    <p className="heading">Click to Tweet</p>
-				<Dashicon icon="arrow-down" onClick={toggleFocus} />
+                <div className="head">
+				    <p className="heading">Click to Tweet</p>
+					<Dashicon icon="arrow-down" onClick={toggleFocus} />
+				</div>
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
  				<textarea name="tweetText"
