@@ -153,6 +153,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		__( 'ctt' )
 	],
 	attributes: {
+	   hasFocus: { type: 'boolean', defualt: false },
 	   tweetText: { type: 'string', default: "" },					//* The text to display in the popup dialogue.
 	   displayText: { type: 'string', default: "" }					//* The text to display in the post content CTT.
    },
@@ -168,7 +169,12 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 edit: function( props ) {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
+		const focus = props.hasFocus ? "swp-active-block " : "swp-inactive-block";
 
+
+		/**
+		 * Local method delcarations.
+		 */
  		const updateText = ( event ) => {
  			const attribute = event.target.name;
  			const value = event.target.value;
@@ -186,8 +192,18 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			}
 		}
 
+		const startFocus = ( event ) => {
+			props.setAttributes( {hasFocus: true} );
+		}
+
+		const stopFocus = ( event ) => {
+			props.setAttributes( {hasFocus: false} );
+		}
+
  		return (
- 			<div className={ `${props.className} click-to-tweet-block-wrap` }>
+
+
+ 			<div className={ `${props.className} click-to-tweet-block-wrap ${foucs}` } onMouseOver={startFoucus} onMouseOut={stopFocus}>
 			    <p className="heading">Click to Tweet</p>
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
