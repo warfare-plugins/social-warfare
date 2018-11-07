@@ -1,6 +1,6 @@
 
+import '../common.scss';
 import './style.scss';
-import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
