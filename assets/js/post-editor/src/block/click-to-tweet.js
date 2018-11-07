@@ -45,7 +45,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 edit: function( props ) {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\'t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
-		const focus = props.attributes.hasFocus ? "swp-active-block " : "swp-inactive-block";
 		const background = props.attributes.hasFocus ? "violet" : "cyan";
 		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
 
@@ -77,7 +76,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		if ( !props.attributes.hasFocus ) {
 		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided.";
 			return (
-				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
+				<div className={ `${props.className} click-to-tweet-block-wrap swp-inactive-block` }>
 				    <div className="head" onClick={toggleFocus}>
 					    {twitterIcon}
 						<div className="swp-preview">{text}</div>
@@ -91,7 +90,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
 		//* Active state
  		return (
- 			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
+ 			<div className={ `${props.className} click-to-tweet-block-wrap swp-active-block` }>
                 <div className="head" onClick={toggleFocus}>
 				    <p >Click to Tweet</p>
 					<Dashicon className="swp-dashicon"
