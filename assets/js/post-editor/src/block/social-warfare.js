@@ -84,18 +84,19 @@ registerBlockType( 'social-warfare/social-warfare', {
 			                ? `id="${props.attributes.postID}"` : '';
 
 			return (
-				<div className="head" onClick={toggleFocus}>
-				    <p>Social Warfare Shortcode</p>
-					<div className="swp-preview">[social_warfare {buttons} {postID}]</div>
-					<Dashicon className="swp-dashicon" icon="arrow-down" />
+				<div className={ `${props.className} social-warfare-block-wrap swp-inactive-block` }>
+					<div className="head" onClick={toggleFocus}>
+					    {icon}
+						<div className="swp-preview">[social_warfare {buttons} {postID}]</div>
+						<Dashicon className="swp-dashicon" icon="arrow-down" />
+					</div>
 				</div>
-
 			);
 		}
 
         //* Active state
 		return (
-			<div className={ `${props.className} social-warfare-block-wrap` }>
+			<div className={ `${props.className} social-warfare-block-wrap swp-active-block` }>
 			    <div className="head" onClick={toggleFocus}>
 				    <p>Social Warfare Shortcode</p>
 					<Dashicon className="swp-dashicon" icon="arrow-down" />
