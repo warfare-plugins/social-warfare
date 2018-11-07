@@ -12,3 +12,12 @@
   max-width: 740px;
   padding: 2rem;
 }
+
+.social-warfare-block-wrap {
+	.heading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex: row nowrap;
+	}
+}

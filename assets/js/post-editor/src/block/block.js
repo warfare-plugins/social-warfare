@@ -12,6 +12,7 @@ import './editor.scss';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { getCurrentPostId } = wp.data.select( 'core/editor' );
+import { Dashicon } from '@wordpress/components';
 
 /**
  * Registers a new block provided a unique name and an object defining its
@@ -171,6 +172,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
 		const focus = props.attributes.hasFocus ? "swp-active-block " : "swp-inactive-block";
 		const background = props.attributes.hasFocus ? "violet" : "cyan";
+		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
 
 		/**
 		 * Local method delcarations.
@@ -192,39 +194,31 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			}
 		}
 
-		const startFocus = ( event ) => {
-			props.setAttributes( {hasFocus: true} );
+		const toggleFocus = ( event ) => {
+			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
 		}
 
-		const stopFocus = ( event ) => {
-			props.setAttributes( {hasFocus: false} );
-		}
 
-        //* Display the slim version for non-focused blocks.
+        //* Inactive state
 		if ( !props.attributes.hasFocus ) {
-		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided."
+		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided.";
 			return (
-				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseEnter={startFocus}>
-				    <i className="mce-ico sw swp_twitter_icon" />
-					<div>
-					    {
-							props.attributes.displayText &&
-							<div className="swp-slim-preview-text">{props.attributes.displayText}</div>
-						}
-
-						{
-							!props.attributes.displayText &&
-							<div className="swp-slim-preview-text"></div>
-						}
-					</div>
+				<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
+				    {twitterIcon}
+					<div className="swp-slim-preview-text">{text}</div>
+					<Dashicon className="swp-dashicon" icon="arrow-right" onClick={toggleFocus} />
 	 			</div>
 			)
 		}
 
+		//* Active state
  		return (
- 			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseLeave={stopFocus}>
+ 			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` }>
+
 			    <p className="heading">Click to Tweet</p>
+				<Dashicon icon="arrow-down" onClick={toggleFocus} />
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
+
  				<textarea name="tweetText"
  				          placeholder="Type your tweet. . . "
  				          onChange={updateText}
@@ -232,6 +226,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  			     />
 
  				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
+
  				<textarea name="displayText"
  				          placeholder="Type your tweet. . . "
  				          onChange={updateText}
@@ -239,6 +234,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  				 />
 
 				 <p>Which theme would you like to use for this CTT?</p>
+
 				 <select name="theme"
 				         value={theme}
 						 onChange={updateTheme}
@@ -247,6 +243,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 					 styles.map( ( theme, index ) => <option value={index}>{theme}</option> )
 				   }
 				 </select>
+				 </div>
  			</div>
  		);
  	},
