@@ -1,8 +1,62 @@
-/**
- * #.# Styles
- *
- * CSS for both Frontend+Backend.
- */
+ [class*="-block-wrap"] {
+ 	font-family: "SF Pro Text", "Helvetica", sans-serif;
+ 	font-size: 13px;
+ }
+
+ [class*="-block-wrap"] .heading {
+ 	font-weight: bold;
+ }
+
+ [class*="-block-wrap"] input,
+ [class*="-block-wrap"] select,
+ [class*="-block-wrap"] textarea,
+ [class*="-block-wrap"] code
+  {
+ 	display: block;
+ 	width: 100%;
+ 	padding: 5px;
+ 	height: 42px;
+ }
+
+ [class*="-block-wrap"] textarea {
+ 	height: 64px;
+ }
+
+
+ .social-warfare-block-wrap input,
+ .social-warfare-block-wrap select {
+ 	width: 100%;
+ }
+
+ /* Common styles for Gutenberg blocks. */
+ [class^="swp-"][class$="-block"] {
+ 	transition: all 900ms;
+ }
+
+ .swp-active-block {
+ 	height: 100%;
+ }
+
+ .swp-inactive-block {
+ 	height: 50px;
+ 	display: flex;
+ 	flex-flow: row nowrap;
+ 	align-items: center;
+ }
+
+ .swp-inactive-block i {
+ 	margin-right: 14px;
+ }
+
+ .swp-preview-text {
+ 	background: #F5F5F5;
+ 	width: 100%;
+ 	display: block;
+ 	font-family: 'SF Pro Text', 'Helvetica', sans-sans-serif;
+ 	font-size: 13px;
+ 	padding: 15px;
+ 	border-radius: 4px;
+ }
 
 .wp-block-cgb-block-post-editor  {
   background: $red;
