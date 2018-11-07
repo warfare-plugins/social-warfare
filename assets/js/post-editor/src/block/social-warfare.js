@@ -76,14 +76,23 @@ registerBlockType( 'social-warfare/social-warfare', {
 		}
 
 		//* Inactive state
-
 		if ( !props.attributes.hasFocus ) {
-			return (
-				<div className={ `${props.className} social-warfare-block-wrap` }>
-                    <div className="head" onClick={toggleFocus}>
+			const buttons = props.attributes.buttons && props.attributes.buttons.length
+			                ? `buttons="${props.attributes.buttons}"` : '';
 
-					</div>
+			const postID = props.attributes.useThisPost == "other"
+			                ? `id="${props.attributes.postID}"` : '';
+
+			return (
+				<div className="head">
+				    <p>Social Warfare Shortcode</p>
+					<div className="swp-preview">[social_warfare {buttons} {postID}]</div>
+					<Dashicon className="swp-dashicon"
+							  icon="arrow-down"
+							  onClick={toggleFocus}
+					/>
 				</div>
+
 			);
 		}
 
