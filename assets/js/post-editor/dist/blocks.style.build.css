@@ -61,7 +61,8 @@
       align-items: center;
   /* The preview displayed when the block is not active. */ }
   .swp-inactive-block i {
-    margin: 0 28px 0 14px; }
+    margin: 0 28px 0 14px;
+    font-size: 18px; }
   .swp-inactive-block .swp-preview {
     background: #F5F5F5;
     width: 100%;
