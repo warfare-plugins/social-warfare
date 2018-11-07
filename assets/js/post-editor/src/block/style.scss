@@ -53,6 +53,10 @@
  	flex-flow: row nowrap;
  	align-items: center;
 
+	i {
+		margin: 0 28px 0 14px;
+	}
+
 	/* The preview displayed when the block is not active. */
 	.swp-preview {
 	   background: #F5F5F5;
@@ -63,11 +67,12 @@
 	   padding: 15px;
 	   border-radius: 4px;
 	}
+
+	.swp-dashicon {
+	    margin: 0 14px;
+	}
  }
 
- .swp-inactive-block i {
- 	margin-right: 14px;
- }
 
 
 .wp-block-cgb-block-post-editor  {
