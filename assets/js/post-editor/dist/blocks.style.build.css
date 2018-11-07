@@ -1,1 +1,80 @@
-.wp-block-cgb-block-post-editor{background:#ff4500;border:0.2rem solid #292929;color:#292929;margin:0 auto;max-width:740px;padding:2rem}
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+[class*="-block-wrap"] {
+  font-family: "SF Pro Text", "Helvetica", sans-serif;
+  font-size: 13px; }
+
+[class*="-block-wrap"] .head {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: justify;
+      justify-content: space-between; }
+
+[class*="-block-wrap"] input,
+[class*="-block-wrap"] select,
+[class*="-block-wrap"] textarea,
+[class*="-block-wrap"] code {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  height: 42px; }
+
+[class*="-block-wrap"] textarea {
+  height: 64px; }
+
+.swp-dashicon.dashicons-arrow-up,
+.swp-dashicon.dashicons-arrow-down {
+  margin-right: 14px;
+  cursor: pointer; }
+
+.social-warfare-block-wrap input,
+.social-warfare-block-wrap select {
+  width: 100%; }
+
+/* Common styles for SWP Gutenberg blocks. */
+[class^="swp-"][class$="-block"] {
+  -webkit-transition: all 900ms;
+  -o-transition: all 900ms;
+  transition: all 900ms; }
+
+.swp-active-block {
+  height: 100%; }
+
+.swp-inactive-block {
+  height: 50px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+  -ms-flex-align: center;
+      align-items: center;
+  /* The preview displayed when the block is not active. */ }
+  .swp-inactive-block i {
+    margin: 0 28px 0 14px; }
+  .swp-inactive-block .swp-preview {
+    background: #F5F5F5;
+    width: 100%;
+    display: block;
+    font-family: 'SF Pro Text', 'Helvetica', sans-sans-serif;
+    font-size: 13px;
+    padding: 15px;
+    border-radius: 4px; }
+  .swp-inactive-block .swp-dashicon {
+    margin: 0 14px; }
+
+.wp-block-cgb-block-post-editor {
+  background: orangered;
+  border: 0.2rem solid #292929;
+  color: #292929;
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 2rem; }
