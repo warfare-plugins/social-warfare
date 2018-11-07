@@ -9,7 +9,7 @@
 	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: space-between;
- 	font-weight: bold;
+
  }
 
  [class*="-block-wrap"] input,
@@ -27,7 +27,7 @@
  	height: 64px;
  }
 
- .swp-dashicon.dashicons-arrow-right,
+ .swp-dashicon.dashicons-arrow-up,
  .swp-dashicon.dashicons-arrow-down {
 	 margin-right: 14px;
 	 cursor: pointer;
@@ -38,7 +38,7 @@
  	width: 100%;
  }
 
- /* Common styles for Gutenberg blocks. */
+ /* Common styles for SWP Gutenberg blocks. */
  [class^="swp-"][class$="-block"] {
  	transition: all 900ms;
  }
