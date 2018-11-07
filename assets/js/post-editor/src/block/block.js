@@ -169,8 +169,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 edit: function( props ) {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
-		const focus = props.hasFocus ? "swp-active-block " : "swp-inactive-block";
-
+		const focus = props.attributes.hasFocus ? "swp-active-block " : "swp-inactive-block";
+		const background = props.attributes.hasFocus ? "violet" : "cyan";
 
 		/**
 		 * Local method delcarations.
@@ -200,10 +200,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			props.setAttributes( {hasFocus: false} );
 		}
 
+		
+
  		return (
-
-
- 			<div className={ `${props.className} click-to-tweet-block-wrap ${foucs}` } onMouseOver={startFoucus} onMouseOut={stopFocus}>
+ 			<div className={ `${props.className} click-to-tweet-block-wrap ${focus}` } onMouseEnter={startFocus} onMouseLeave={stopFocus}>
 			    <p className="heading">Click to Tweet</p>
  			    <p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
  				<textarea name="tweetText"
