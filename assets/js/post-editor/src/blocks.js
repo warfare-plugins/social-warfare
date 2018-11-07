@@ -9,4 +9,5 @@
  * Webpack is compiling as the input file.
  */
 
-import './block/block.js';
+import './block/social-warfare.js';
+import './block/click-to-tweet.js';
