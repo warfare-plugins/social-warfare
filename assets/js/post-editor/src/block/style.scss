@@ -86,3 +86,24 @@
 	    margin: 0 14px;
 	}
  }
+
+ .click-to-tweet-block-wrap {
+	 textarea[name="tweetText"] {
+		 border-top-right-radius: 0px;
+	 }
+
+	 .block-characters-remaining {
+		 text-align: right;
+		 font-size: 12px;
+		 font-weight: normal;
+		 color: white;
+		 padding: 5px;
+		 border-radius: 2px;
+		 border-bottom-right-radius: 0;
+		 background: #429cd6;
+		 margin: 0;
+		 width: 50%;
+		 left: 50%;
+		 position: relative;
+	 }
+ }
