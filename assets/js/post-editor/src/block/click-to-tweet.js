@@ -54,6 +54,11 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		 */
 		const updateTweetText = ( event ) => {
   			const tweetText = event.target.value;
+
+			if ( !tweetText || !tweetText.length ) {
+				return props.setAttributes( { tweetText: '', overLimit: false } );
+			}
+
 			const overLimit = tweetText.length > characterLimit;
 
  			props.setAttributes( { overLimit, tweetText } );
