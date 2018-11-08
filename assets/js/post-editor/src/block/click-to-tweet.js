@@ -49,6 +49,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
 		const characterLimit = 280;
 		const color = props.attributes.overLimit ? "rgb(211, 66, 80)" : "";
+		const className = props.attributes.overLimit ? "over-limit" : "";
 
 		/**
 		 * Local method delcarations.
@@ -123,9 +124,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
                 <div style={ {width: "100%"} }>
-				    <p className="block-characters-remaining" style={ {border: "1px solid " + color } }>
-                        <span style={ {textAlign: "left"} }>Characters Remaining</span>
-					    <span className="count" style={ {color} }> {characterLimit - tweetText.length}</span>/280
+				    <p className={`block-characters-remaining ${className}`}>
+					    {characterLimit - tweetText.length}
 					</p>
 	 				<textarea name="tweetText"
 	 				          placeholder="Type your tweet. . . "
