@@ -48,6 +48,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\'t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
 		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
 		const characterLimit = 280;
+		const color = props.attributes.overLimit ? "rgb(211, 66, 80)" : "";
 
 		/**
 		 * Local method delcarations.
@@ -121,18 +122,24 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
- 				<textarea name="tweetText"
- 				          placeholder="Type your tweet. . . "
- 				          onChange={updateTweetText}
- 						  value={props.attributes.tweetText}
- 			     />
+                <div style={ {width: "100%"} }>
+				    <p className="block-characters-remaining" style={ {border: "1px solid " + color } }>
+                        <span style={ {textAlign: "left"} }>Characters Remaining</span>
+					    <span className="count" style={ {color} }> {characterLimit - tweetText.length}</span>/280
+					</p>
+	 				<textarea name="tweetText"
+	 				          placeholder="Type your tweet. . . "
+	 				          onChange={updateTweetText}
+	 						  value={tweetText}
+	 			     />
+				 </div>
 
 				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
 
  				 <textarea name="displayText"
  				          placeholder="Type your tweet. . . "
  				          onChange={updateDisplayText}
- 						  value={props.attributes.displayText}
+ 						  value={displayText}
  				 />
 
 				 <p>Which theme would you like to use for this CTT?</p>
