@@ -45,8 +45,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 edit: function( props ) {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\'t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
-		const background = props.attributes.hasFocus ? "violet" : "cyan";
 		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
+		const characterLimit = 280;
 
 		/**
 		 * Local method delcarations.
