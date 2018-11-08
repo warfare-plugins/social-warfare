@@ -51,11 +51,22 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		/**
 		 * Local method delcarations.
 		 */
- 		const updateText = ( event ) => {
+		const updateTweetText = ( event ) => {
+  			let text = event.target.value;
+
+			if (text.length > characterLimit) {
+				text = text.slice(0, characterLimit);
+				props.setAttributes( {overLimit: true} )
+			}
+
+ 			props.setAttributes( { tweetText: text } )
+  		}
+
+		const updateDisplayText = ( event ) => {
  			const attribute = event.target.name;
  			const value = event.target.value;
 
-			props.setAttributes( { [attribute]: value } )
+			props.setAttributes( { displayText: value } )
  		}
 
 		const updateTheme = ( event ) => {
