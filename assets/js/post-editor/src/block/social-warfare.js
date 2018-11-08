@@ -45,6 +45,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 	edit: function( props ) {
 		const { useThisPost, buttons, postID } = props.attributes;
 		const icon = <i className="mce-ico mce-i-sw sw sw-social-warfare" />;
+		const characterLimit = 240;
 
 		const toggleFocus = ( event ) => {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
@@ -101,7 +102,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 					<Dashicon className="swp-dashicon" icon="arrow-down" />
 				</div>
 
-			    <p>Should the buttons reflect this post, or a a different post?</p>
+			    <p>Should the buttons reflect this post, or a different post?</p>
 
 				<select   value={useThisPost == "other" && postID ? "other" : "this"}
 				          onChange={updateWhichPost}
