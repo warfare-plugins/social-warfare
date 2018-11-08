@@ -31,7 +31,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	attributes: {
 	   hasFocus: { type: 'boolean', defualt: false },
 	   tweetText: { type: 'string', default: "" },					//* The text to display in the popup dialogue.
-	   displayText: { type: 'string', default: "" }					//* The text to display in the post content CTT.
+	   displayText: { type: 'string', default: "" },				//* The text to display in the post content CTT.
 	   overLimit: { type: 'boolean', default: false },				//* If they are over the tweet limit.
    },
 
@@ -95,6 +95,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 						 : props.attributes.tweetText
 						     ? props.attributes.tweetText
 							 : "No Click To Tweet text is provided.";
+
+			console.log("Inactive text is ", text);
 
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap swp-inactive-block` }>
