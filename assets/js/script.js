@@ -364,19 +364,6 @@ window.socialWarfare = window.socialWarfare || {};
 				width = 775;
 			}
 
-
-			/**
-			 * We'll measure the window and then run some calculations to ensure
-			 * that our popout share window opens perfectly centered on the
-			 * browser window.
-			 *
-			 */
-			top = window.screenY + (window.innerHeight - height) / 2;
-			left = window.screenX + (window.innerWidth - width) / 2;
-			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-			instance = window.open(href, '_blank', windowAttributes);
-
-
 			/**
 			 * If a button was clicked, use the data-network attribute to
 			 * figure out which network is being shared. If it was a click
@@ -389,6 +376,17 @@ window.socialWarfare = window.socialWarfare || {};
 				network = 'ctt';
 			}
 
+
+			/**
+			 * We'll measure the window and then run some calculations to ensure
+			 * that our popout share window opens perfectly centered on the
+			 * browser window.
+			 *
+			 */
+			top = window.screenY + (window.innerHeight - height) / 2;
+ 			left = window.screenX + (window.innerWidth - width) / 2;
+ 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+ 			instance = window.open(href, network, windowAttributes);
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
@@ -421,7 +419,7 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.createFloatHorizontalPanel = function() {
 
 		//* If a horizontal panel does not exist, we can not create a bar.
-		if (!socialWarfare.panels.staticHorizontal || !socialWarfare.panels.staticHorizontal.length) {
+		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
 			return;
 		}
 
@@ -472,7 +470,7 @@ window.socialWarfare = window.socialWarfare || {};
    *
    */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
-		if (!socialWarfare.panels.staticHorizontal || !socialWarfare.panels.staticHorizontal.length) {
+		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
 			return;
 		}
 
@@ -658,6 +656,10 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingHorizontalPanel = function() {
+		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+			return;
+		}
+
 		var panel = socialWarfare.panels.floatingHorizontal.first();
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
