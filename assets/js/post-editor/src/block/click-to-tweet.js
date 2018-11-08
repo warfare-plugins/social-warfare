@@ -84,9 +84,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
 		}
 
-		console.log("onetwothree");
-
-
         //* Inactive state
 		if ( !props.attributes.hasFocus ) {
 			/**
@@ -98,8 +95,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 						 : props.attributes.tweetText
 						     ? props.attributes.tweetText
 							 : "No Click To Tweet text is provided.";
-
-			console.log("Inactive text is ", text);
 
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap swp-inactive-block` }>
