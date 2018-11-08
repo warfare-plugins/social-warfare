@@ -74,3 +74,19 @@
     border-radius: 4px; }
   .swp-inactive-block .swp-dashicon {
     margin: 0 14px; }
+
+.click-to-tweet-block-wrap textarea[name="tweetText"] {
+  border-top-right-radius: 0px; }
+
+.click-to-tweet-block-wrap .block-characters-remaining {
+  font-size: 16px;
+  font-weight: normal;
+  color: white;
+  padding: 5px;
+  border-radius: 2px;
+  border-bottom-right-radius: 0;
+  background: #429cd6;
+  margin: 0;
+  width: 50%;
+  left: 50%;
+  position: relative; }
