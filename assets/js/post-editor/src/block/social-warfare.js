@@ -45,7 +45,6 @@ registerBlockType( 'social-warfare/social-warfare', {
 	edit: function( props ) {
 		const { useThisPost, buttons, postID } = props.attributes;
 		const icon = <i className="mce-ico mce-i-sw sw sw-social-warfare" />;
-		const characterLimit = 240;
 
 		const toggleFocus = ( event ) => {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
