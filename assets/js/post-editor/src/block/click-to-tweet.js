@@ -86,7 +86,16 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
         //* Inactive state
 		if ( !props.attributes.hasFocus ) {
-		    const text = props.attributes.displayText ? props.attributes.displayText : "No Click To Tweet text is provided.";
+			/**
+			 * If no displayText is provided, fallback to use the tweetText.
+			 * Else display a "no text provided" messaged.
+			 */
+		    const text = props.attributes.displayText
+			             ? props.attributes.displayText
+						 : props.attributes.tweetText
+						     ? props.attributes.tweetText
+							 : "No Click To Tweet text is provided.";
+
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap swp-inactive-block` }>
 				    <div className="head" onClick={toggleFocus}>
