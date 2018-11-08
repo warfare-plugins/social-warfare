@@ -158,7 +158,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
-		const { tweetText, displayText } = props.attributes;
+		let { tweetText, displayText } = props.attributes;
+		if ( !displayText ) {
+			displayText = tweetText;
+		}
 
 		const theme = props.attributes.theme ? `style${props.attributes.theme}` : '';
 
