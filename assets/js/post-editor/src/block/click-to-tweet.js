@@ -84,6 +84,9 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
 		}
 
+		console.log("onetwothree");
+
+
         //* Inactive state
 		if ( !props.attributes.hasFocus ) {
 			/**
@@ -125,7 +128,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
  				<textarea name="tweetText"
  				          placeholder="Type your tweet. . . "
- 				          onChange={updateText}
+ 				          onChange={updateTweetText}
  						  value={props.attributes.tweetText}
  			     />
 
@@ -133,7 +136,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
  				 <textarea name="displayText"
  				          placeholder="Type your tweet. . . "
- 				          onChange={updateText}
+ 				          onChange={updateDisplayText}
  						  value={props.attributes.displayText}
  				 />
 
