@@ -97,12 +97,20 @@
 		 font-weight: normal;
 		 color: white;
 		 padding: 5px;
-		 border-radius: 2px;
-		 border-bottom-right-radius: 0;
-		 background: #429cd6;
+		 border-top-right-radius: 4px;
+		 border-top-left-radius: 4px;
+		 background: #30394F;
 		 margin: 0;
-		 width: 50%;
-		 left: 50%;
+		 float: right;
+		 max-width: 200px;
+		 padding: 5px 15px;
 		 position: relative;
+		 font-size: 13px;
+		 transition: all 300ms;
+	 }
+
+	 .block-characters-remaining.over-limit {
+		 background: #EE464F;
+		 color: #fff;
 	 }
  }
