@@ -463,7 +463,7 @@ window.socialWarfare = window.socialWarfare || {};
    *
    */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
-		if (!socialWarfare.panels.staticHorizontal && !socialWarfare.panels.staticHorizontal.length) {
+		if (!socialWarfare.panels.staticHorizontal || !socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
