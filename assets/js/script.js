@@ -83,10 +83,19 @@ window.socialWarfare = window.socialWarfare || {};
  * still be able to access our functions and variables from anywhere.
  *
  */
-(function(window, $) {
+(function(window, $, jQuery) {
 	'use strict';
 
-	var $ = jQuery;
+	if ( typeof $ != 'function' ) {
+		if ( typeof jQuery == 'function' ) {
+			var $ = jQuery;
+		}
+
+		else {
+			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
+            return;
+		}
+	}
 
 	/***************************************************************************
 	 *
