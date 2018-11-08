@@ -32,6 +32,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	   hasFocus: { type: 'boolean', defualt: false },
 	   tweetText: { type: 'string', default: "" },					//* The text to display in the popup dialogue.
 	   displayText: { type: 'string', default: "" }					//* The text to display in the post content CTT.
+	   overLimit: { type: 'boolean', default: false },				//* If they are over the tweet limit.
    },
 
 	/**
@@ -52,21 +53,16 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		 * Local method delcarations.
 		 */
 		const updateTweetText = ( event ) => {
-  			let text = event.target.value;
+  			const tweetText = event.target.value;
+			const overLimit = text.length > characterLimit;
 
-			if (text.length > characterLimit) {
-				text = text.slice(0, characterLimit);
-				props.setAttributes( {overLimit: true} )
-			}
-
- 			props.setAttributes( { tweetText: text } )
+ 			props.setAttributes( { overLimit, tweetText } );
   		}
 
 		const updateDisplayText = ( event ) => {
- 			const attribute = event.target.name;
- 			const value = event.target.value;
+ 			const displayText = event.target.value;
 
-			props.setAttributes( { displayText: value } )
+			props.setAttributes( { displayText } );
  		}
 
 		const updateTheme = ( event ) => {
