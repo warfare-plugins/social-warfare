@@ -515,10 +515,10 @@ window.socialWarfare = window.socialWarfare || {};
 
 			//* Do not display floating buttons before the horizontal panel.
 			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-				var theContent = jQuery(".swp-content-locator").parent();
+				var theContent = $(".swp-content-locator").parent();
 
 				//* We are in sight of an "Above the content" panel.
-				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
+				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + $(window).height())) {
 					visible = true;
 				}
 			}
@@ -847,7 +847,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-			if (jQuery(image).parents().filter("a").length) {
+			if ($(image).parents().filter("a").length) {
 				return;
 			}
 		}
@@ -895,7 +895,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 */
 			var i = new Image();
 			i.src = swpPinIt.image_source;
-			pinMedia = jQuery(i).prop('src');
+			pinMedia = $(i).prop('src');
 
 
 		/**
