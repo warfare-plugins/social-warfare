@@ -17,10 +17,10 @@ class SWP_Social_Network {
 
 
 	/**
-	 * SWP_Utility_Trait provides useful tool like error handling.
+	 * SWP_Debug_Trait provides useful tool like error handling.
 	 *
 	 */
-	use SWP_Utility_Trait;
+	use SWP_Debug_Trait;
 
 
 	/**

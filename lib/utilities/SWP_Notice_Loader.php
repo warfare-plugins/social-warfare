@@ -17,6 +17,14 @@ class SWP_Notice_Loader {
 
 
 	/**
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
+	 *
+	 */
+	use SWP_Debug_Trait;
+
+
+	/**
 	 * Instantiate the class.
 	 *
 	 * The constructor will call up the methods that create each of the various
@@ -81,24 +89,4 @@ class SWP_Notice_Loader {
 
 		endforeach;
 	}
-
-
-	/**
-	 * A function for debugging this class.
-	 *
-	 * All notices are stored in the $this->notices as an array of notice
-	 * objects. Since this is the last method called, all notices should be
-	 * present in the $this object for review.
-	 *
-	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	private function debug() {
-		if( true === SWP_Utility::debug( 'notices' ) ):
-			var_dump($this);
-		endif;
-	}
-
 }

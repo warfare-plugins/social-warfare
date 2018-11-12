@@ -16,7 +16,7 @@
  * @access    public
  *
  */
-class SWP_Options_Page_Tab extends SWP_Abstract {
+class SWP_Options_Page_Tab extends SWP_Option_Abstract {
 
 
 	/**

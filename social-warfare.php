@@ -3,7 +3,11 @@
  * Plugin Name: Social Warfare
  * Plugin URI:  https://warfareplugins.com
  * Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
+<<<<<<< HEAD
  * Version:     3.3.3
+=======
+ * Version:     3.3.92
+>>>>>>> development-3.4
  * Author:      Warfare Plugins
  * Author URI:  https://warfareplugins.com
  * Text Domain: social-warfare
@@ -16,7 +20,11 @@ defined( 'WPINC' ) || die;
  * Define plugin constants for use throughout the plugin (Version and Directories)
  *
  */
+<<<<<<< HEAD
 define( 'SWP_VERSION' , '3.3.3' );
+=======
+define( 'SWP_VERSION' , '3.3.92' );
+>>>>>>> development-3.4
 define( 'SWP_PLUGIN_FILE', __FILE__ );
 define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
@@ -36,4 +44,5 @@ add_filter('the_excerpt', 'do_shortcode', 1);
 
 // Load the main Social_Warfare class and fire up the plugin.
 require_once SWP_PLUGIN_DIR . '/lib/Social_Warfare.php';
+require_once SWP_PLUGIN_DIR . '/assets/js/post-editor/plugin.php';
 new Social_Warfare();

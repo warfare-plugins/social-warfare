@@ -1,801 +1,1284 @@
-/* global swpPinIt */
-
-/*!
- * jQuery throttle / debounce - v1.1 - 3/7/2010
- * http://benalman.com/projects/jquery-throttle-debounce-plugin/
+/**
  *
- * Copyright (c) 2010 "Cowboy" Ben Alman
- * Dual licensed under the MIT and GPL licenses.
- * http://benalman.com/about/license/
+ * Social Warfare - The Javascript
+ *
+ * @since 1.0.0 | 01 JAN 2016 | Created
+ * @since 3.4.0 | 19 OCT 2018 | Cleaned, Refactored, Simplified, Docblocked.
+ * @package   SocialWarfare\Assets\JS\
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ *
+ *
+ * This is the primary javascript file used by the Social Warfare plugin. It is
+ * loaded both on the frontend and the backend. It is used to control all client
+ * side manipulation of the HTML.
+ *
+ *
+ * Table of Contents:
+ *
+ *     #1. Initialization Functions
+ *        Property: socialWarfare.paddingTop
+ *        Property: socialWarfare.paddingBottom
+ *        Function: socialWarfare.initPlugin()
+ *        Function: socialWarfare.establishPanels()
+ *
+ *     #2. Static Horizontal Button Panel Controls
+ *        Function: socialWarfare.activateHoverStates()
+ *        Function: socialWarfare.resetStaticPanel()
+ *        Function: socialWarfare.handleButtonClicks()
+ *
+ *     #3. Floating Buttons Panel Controls
+ *        Function: socialWarfare.createFloatHorizontalPanel()
+ *        Function: socialWarfare.staticPanelIsVisible()
+ *        Function: socialWarfare.toggleFloatingButtons()
+ *        Function: socialWarfare.toggleMobileButtons()
+ *        Function: socialWarfare.toggleFloatingVerticalPanel()
+ *        Function: socialWarfare.toggleFloatingHorizontalPanel()
+ *        Function: socialWarfare.positionFloatSidePanel()
+ *
+ *     #4. Pinterest Image Hover Save Buttons
+ *        Function: socialWarfare.enablePinterestSaveButtons()
+ *        Function: socialWarfare.renderPinterestSaveButton()
+ *        Function: socialWarfare.findPinterestBrowserSaveButtons()
+ *        Function: socialWarfare.removePinterestBrowserSaveButtons()
+ *
+ *     #5. Facebook Share Count Functions
+ *        Function: socialWarfare.fetchFacebookShares()
+ *        Function: socialWarfare.parseFacebookShares()
+ *
+ *     #6. Utility/Helper Functions
+ *        Function: socialWarfare.throttle()
+ *        Function: socialWarfare.trigger()
+ *        Function: socialWarfare.trackClick()
+ *        Function: socialWarfare.checkListeners()
+ *        Function: socialWarfare.establishBreakpoint()
+ *        Function: socialWarfare.isMobile()
+ *
+ *
+ * Javascript variables created on the server:
+ *
+ *     bool   	swpClickTracking (SWP_Script.php)
+ *     bool   	swpFloatBeforeContent
+ *     object 	swpPinIt
+ *     string 	swp_admin_ajax
+ *     string 	swp_post_url
+ *     string 	swp_post_recovery_url
+ *
  */
 
-var socialWarfarePlugin = socialWarfarePlugin || {};
 
-(function(window, undefined) {
-    // Internal method reference.
-    var jqThrottle;
-
-    var swp = window.socialWarfarePlugin;
-
-    swp.throttle = jqThrottle = function(delay, noTrailing, callback, debounceMode) {
-        // After wrapper has stopped being called, this timeout ensures that
-        // `callback` is executed at the proper times in `throttle` and `end`
-        // debounce modes.
-        var timeoutID,
-
-        // Keep track of the last time `callback` was executed.
-        lastExec = 0;
-
-        // `noTrailing` defaults to falsy.
-        if (typeof noTrailing !== 'boolean') {
-            debounceMode = callback;
-            callback = noTrailing;
-            noTrailing = undefined;
-        }
-
-        // The `wrapper` function encapsulates all of the throttling / debouncing
-        // functionality and when executed will limit the rate at which `callback`
-        // is executed.
-        function wrapper() {
-            var that = this,
-            elapsed = +new Date() - lastExec,
-            args = arguments;
-
-            // Execute `callback` and update the `lastExec` timestamp.
-            function exec() {
-                lastExec = +new Date();
-                callback.apply(that, args);
-            }
-
-            // If `debounceMode` is true (atBegin) this is used to clear the flag
-            // to allow future `callback` executions.
-            function clear() {
-                timeoutID = undefined;
-            }
-
-            if (debounceMode && ! timeoutID) {
-                // Since `wrapper` is being called for the first time and
-                // `debounceMode` is true (atBegin), execute `callback`.
-                exec();
-            }
-
-            // Clear any existing timeout.
-            timeoutID && clearTimeout(timeoutID);
-
-            if (debounceMode === undefined && elapsed > delay) {
-                // In throttle mode, if `delay` time has been exceeded, execute
-                // `callback`.
-                exec();
-            } else if (noTrailing !== true) {
-                // In trailing throttle mode, since `delay` time has not been
-                // exceeded, schedule `callback` to execute `delay` ms after most
-                // recent execution.
-                //
-                // If `debounceMode` is true (atBegin), schedule `clear` to execute
-                // after `delay` ms.
-                //
-                // If `debounceMode` is false (at end), schedule `callback` to
-                // execute after `delay` ms.
-                timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-            }
-        }
-
-        // Set the guid of `wrapper` function to the same of original callback, so
-        // it can be removed in jQuery 1.4+ .unbind or .die by using the original
-        // callback as a reference.
-        if (swp.guid) {
-            wrapper.guid = callback.guid = callback.guid || swp.guid++;
-        }
-
-        // Return the wrapper function.
-        return wrapper;
-    };
-
-    swp.debounce = function(delay, atBegin, callback) {
-        return callback === undefined ? jqThrottle(delay, atBegin, false) : jqThrottle(delay, callback, atBegin !== false);
-    };
-})(this);
-
-(function(window, $, undefined) {
-    'use strict';
-
-    var swp = window.socialWarfarePlugin;
-    /*
-       Declare the padding variables globally so they are not re-calculated
-       after they have been modified by a function.
-    */
-
-    var paddingTop = absint($('body').css('padding-top').replace('px', ''));
-    var paddingBottom = absint($('body').css('padding-bottom').replace('px', ''));
-    function absint($int) {
-        return parseInt($int, 10);
-    }
-
-    function swp_trigger_events(event) {
-        var evt = $.Event(event);
-        $(window).trigger(evt);
-    }
-
-    /****************************************************************************
-
-        Fetch and Store Facebook Counts
-
-    ****************************************************************************/
-    var swpPostData = {};
-    socialWarfarePlugin.fetchFacebookShares = function() {
-        /**
-         * Run all the API calls
-         */
-        $.when(
-            $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url) ,
-            (swp_post_recovery_url ? $.get('https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url) : '')
-        )
-        .then(function(a, b) {
-            /**
-             * Parse the responses, add up the activity, send the results to admin_ajax
-             */
-            if('undefined' !== typeof a[0].share) {
-                var f1 = absint(a[0].share.share_count);
-                var f2 = absint(a[0].share.comment_count);
-                if('undefined' !== typeof a[0].og_object){
-                    var f3 = absint(a[0].og_object.likes.summary.total_count);
-                } else {
-                    var f3 = 0;
-                }
-                var fShares = f1 + f2 + f3;
-                if(swp_post_recovery_url) {
-                    if (typeof b[0].share !== 'undefined') {
-                        var f4 = absint(b[0].share.share_count);
-                        var f5 = absint(b[0].share.comment_count);
-                    } else {
-                        var f4 = 0, f5 = 0;
-                    }
-                    if (typeof b[0].og_object !== 'undefined') {
-                        var f6 = absint(b[0].og_object.likes.summary.total_count);
-                    } else {
-                        var f6 = 0
-                    }
-                    var fShares2 = f4 + f5 + f6;
-                    if (fShares !== fShares2) {
-                        fShares = fShares + fShares2;
-                    }
-                }
-                swpPostData = {
-                    action: 'swp_facebook_shares_update',
-                    post_id: swp_post_id,
-                    share_counts: fShares
-                };
-
-                $.post(swp_admin_ajax, swpPostData);
-            }
-        });
-    }
+/**
+ * The first thing we want to do is to declare our socialWarfare object. We are
+ * going to use this object to store all functions that our plugin uses. This will
+ * allow us to avoid any naming collisions as well as allowing us to keep things
+ * more neatly organized.
+ *
+ */
+window.socialWarfare = window.socialWarfare || {};
 
 
-    /**
-     * Activate Hover States: Trigger the resizes to the proper widths for the expansion on hover effect
-     * @since 2.1.0
-     * @param none
-     * @return none
-     */
-    swp.activateHoverStates = function() {
-        swp_trigger_events('pre_activate_buttons');
-        $('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter',function(){
-            if (!$(this).hasClass('swp_nohover')) {
-                swpRestoreSizes();
-                var term_width = $(this).find('.swp_share').outerWidth();
-                var icon_width = $(this).find('i.sw').outerWidth();
-                var container_width = $(this).width();
-                var percentage_change = 1 + ((term_width + 35) / container_width);
-                $(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-                $(this).css({flex:percentage_change + ' 1 0%'});
-            }
-        });
-        $('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave',function() {
-            swpRestoreSizes();
-        });
-    }
+/**
+ * This allows us to scope all variables and functions to within this anonymous
+ * function. However, since we are using a global object, socialWarfare, we will
+ * still be able to access our functions and variables from anywhere.
+ *
+ */
+(function(window, $, jQuery) {
+	'use strict';
 
+	if ( typeof $ != 'function' ) {
+		if ( typeof jQuery == 'function' ) {
+			var $ = jQuery;
+		}
 
-    function swpRestoreSizes() {
-        $(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
-        $(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
-    }
-
-
-    //*  If any horiztonal buttons panel is currently visible on screen,
-    //*  returns true. Else, returns false.
-    function panelIsVisible() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var visible = false;
-        var scrollPos = $(window).scrollTop();
-
-        $(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
-            var offset = $(this).offset();
-
-            //* Do not display floating buttons before the horizontal panel.
-            if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-                var theContent = jQuery(".swp-content-locator").parent();
-
-                if (index === 0 && theContent.length && theContent.offset().top > (scrollPos +  jQuery(window).height())) {
-                    visible = true;
-                }
-            }
-
-            //* Do not display floating buttons if a panel is currently visible.
-            if ((offset.top + $(this).height()) > scrollPos && offset.top < (scrollPos + $(window).height())) {
-                visible = true;
-            }
-        });
-
-        return visible;
-    }
-
-
-    function createFloatBar() {
-        //* .swp_social_panelSide is the side floater.
-        if ($(".nc_wrapper").length) {
-            $(".nc_wrapper").remove();
-        }
-
-        var panel = $(".swp_social_panel");
-        var floatLocation = panel.data("float")
-
-        //* If a horizontal panel does not exist,
-        if (typeof panel == "undefined") {
+		else {
+			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
             return;
-        }
-
-        //* Or we are on desktop and not using top/bottom floaters:
-        if ($(window).width() > panel.data("min-width") && floatLocation != "top" && floatLocation != "bottom") {
-            return;
-        }
-
-        var backgroundColor = panel.data("float-color");
-        var left = panel.data("align") == "center" ? 0 : panel.offset().left;
-        var wrapper = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
-
-        if (floatLocation == 'left' || floatLocation == 'right') {
-            var barLocation = panel.data("float-mobile");
-        } else {
-            var barLocation = floatLocation;
-        }
-
-        wrapper.addClass(barLocation).hide().appendTo("body");
-
-        var clone = panel.first().clone();
-        clone.addClass("nc_floater").css({width: panel.outerWidth(true), left: left}).appendTo(wrapper)
-
-        $(".swp_social_panel .swp_count").css({ transition: "padding .1s linear" });
-    }
-
-
-    function toggleFloatingButtons() {
-        // Adjust the floating bar
-        var panel = $(".swp_social_panel").first();
-        var location = panel.data('float');
-
-        if (location == 'none') {
-            jQuery(".nc_wrapper, .swp_social_panelSide").hide();
-            return;
-        }
-
-          if ($(window).width() < panel.data("min-width")) {
-            createFloatBar();
-            toggleMobileButtons();
-            toggleFloatingBar();
-        }
-
-        if (location == "right" || location == "left") {
-             toggleSideButtons();
-        }
-
-        if (location == "bottom" || location == "top") {
-            toggleFloatingBar();
-        }
-    }
-
-
-    function toggleMobileButtons() {
-        var panel = $(".swp_social_panel").first();
-        // var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-        var visibility = panelIsVisible() ? "collapse" : "visible";
-
-        //* Force side floating panel to be hidden.
-        $(".swp_social_panelSide").hide();
-
-        //* Make sure hidden mobile buttons do not block clicks on content underneath.
-        $(".nc_wrapper").css("visibility", visibility);
-    }
-
-
-    function toggleSideButtons() {
-        var panel = $(".swp_social_panel").not(".swp_social_panelSide").first();
-        var sidePanel = $(".swp_social_panelSide");
-        var location = sidePanel.data("float")
-        var visible = panelIsVisible();
-
-        if ($(window).width() < panel.data("min-width") && $(".nc_wrapper").length) {
-            //* Mobile display with top/bottom mobile bar.
-            sidePanel.hide();
-            return;
-        }
-
-        if (!panel.length) {
-            //* No buttons panel!
-            if ($(window).width() > sidePanel.data("min-width")) {
-                visible = false;
-            } else {
-                visible = true;
-            }
-        }
-
-        if (sidePanel.data("transition") == "slide") {
-            var direction = (location.indexOf("left") !== -1) ? "left" : "right";
-            if (visible) {
-                sidePanel.css(direction, "-150px");
-            } else {
-                sidePanel.css(direction, "5px");
-            }
-        } else {
-            if (visible) {
-                sidePanel.css("opacity", 1).fadeOut(300).css("opacity", 0);
-            } else {
-                sidePanel.css("opacity", 0).fadeIn(300).css({opacity: 1, display: "flex"});
-            }
-        }
-    }
-
-    //* Note: All of the other logic for padding now lives in createFloatBar.
-    //* Otherwise, it added the padding every time this was called.
-    function toggleFloatingBar() {
-        var panel = $(".swp_social_panel").first();
-        var newPadding = 0;
+		}
+	}
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #1: INITIALIZATION FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * Load the plugin once the DOM has been loaded.
+	 *
+	 */
+	$(document).ready(function() {
+
+		// This is what fires up the entire plugin's JS functionality.
+		socialWarfare.initPlugin();
+
+	});
+
+
+	/**
+	 * These variables measure the amount of padding at the top and bottom of
+	 * the page upon the dom loaded event. We grab these early on and keep them
+	 * stored so that we can add 50 pixels of padding whenever the floating
+	 * horizontal buttons are displayed. This will allow us to avoid having our
+	 * buttons hover over menus or copyright information in the footer.
+	 *
+	 */
+	socialWarfare.paddingTop    = parseInt($('body').css('padding-top'));
+	socialWarfare.paddingBottom = parseInt($('body').css('padding-bottom'));
+
+
+	/**
+	 * Initializes the buttons provided that they exist.
+	 *
+	 * This function will activate the hover effects for the buttons, it will
+	 * create the floting buttons, center vertically the side panel, handle
+	 * and set up the button clicks, and monitor the scroll activity in order to
+	 * show and hide any floating buttons.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.initPlugin = function() {
+
+		socialWarfare.establishPanels();
+		socialWarfare.establishBreakpoint();
+
+		// Bail out if no buttons panels exist.
+		if (!socialWarfare.panels.staticHorizontal && !socialWarfare.panels.floatingSide && !socialWarfare.panels.floatingHorizontal) {
+			return;
+		}
+
+		socialWarfare.createFloatHorizontalPanel();
+		socialWarfare.positionFloatSidePanel();
+		socialWarfare.activateHoverStates();
+		socialWarfare.handleButtonClicks();
+		socialWarfare.toggleFloatingButtons();
+
+
+		/**
+		 * In some instances, the click bindings were not being instantiated
+		 * properly when they were run as the DOM was loaded. So we built this
+		 * checkListeners() function to recheck every 2 seconds, 5 total times, to
+		 * ensure that the buttons panel exist and activate the click bindings.
+		 *
+		 */
+		setTimeout( socialWarfare.checkListeners(0, 5), 2000);
+
+
+		/**
+		 * This will allow us to monitor whether or not the static horizontal
+		 * buttons are inside the viewport as a user is scrolling the page. If
+		 * they are not in the viewport, we will display the floating buttons.
+		 * The throttle is to prevent it from firing non stop and causing the
+		 * floating buttons to flicker.
+		 *
+		 */
+		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
+		$(window).resize(socialWarfare.throttle(200, socialWarfare.updateFloatingHorizontalDimensions));
+
+	}
+
+
+	/**
+	 * Finds each kind of buttons panel, if it exists, and stores it to the
+	 * socialWarfare object for later reference. This is useful for reading data
+	 * attributes of buttons panels without needing to fetch the panel every time.
+	 *
+	 * @return object The object which holds each of the kinds of buttons panels.
+	 */
+	socialWarfare.establishPanels = function() {
+		//* Initialize the panels object with the three known panel types.
+		socialWarfare.panels = {
+			staticHorizontal: null,
+			floatingSide: null,
+			floatingHorizontal: null
+		};
+
+		var staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
+		var floatingSide = $(".swp_social_panelSide");
+
+		if (staticHorizontal) {
+			socialWarfare.panels.staticHorizontal = staticHorizontal;
+		}
+
+		if (floatingSide) {
+			socialWarfare.panels.floatingSide = floatingSide;
+		}
+
+		return socialWarfare.panels;
+	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #2: STATIC HORIZONTAL BUTTON PANEL CONTROLS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * This triggers the hover effect that you see when you hover over the
+	 * buttons in the panel. It measures the space needed to expand the button
+	 * to reveal the call to action for that network and then uses flex to
+	 * expand it and to shrink the other buttons to make room for the expansion.
+	 *
+	 * @since 2.1.0
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.activateHoverStates = function() {
+		socialWarfare.trigger('pre_activate_buttons');
+
+		$('.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer').on('mouseenter', function() {
+
+			if ($(this).hasClass('swp_nohover')) {
+				return;
+			}
+
+			socialWarfare.resetStaticPanel();
+			var termWidth      = $(this).find('.swp_share').outerWidth();
+			var iconWidth      = $(this).find('i.sw').outerWidth();
+			var containerWidth = $(this).width();
+			var change         = 1 + ((termWidth + 35) / containerWidth);
+
+			$(this).find('.iconFiller').width(termWidth + iconWidth + 25 + 'px');
+			$(this).css("flex", change + ' 1 0%');
+		});
+
+		$('.swp_social_panel:not(.swp_social_panelSide)').on('mouseleave', socialWarfare.resetStaticPanel);
+	}
+
+
+	/**
+	 * Resets the static panels to their default styles. After they've been
+	 * expanded by activateHoverStates(), this function returns the buttons to
+	 * their normal state once a user is no longer hovering over the buttons.
+	 *
+	 * @see activateHoverStates().
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.resetStaticPanel = function() {
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller").removeAttr("style");
+		$(".swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:not(.swp_nohover)").removeAttr("style");
+	}
+
+
+	/**
+	 * Handle clicks on the buttons that open share windows. It fetches the
+	 * share link, it opens the share link into a new window, it sizes the
+	 * popout window, and makes sure the user is able to share the content.
+	 *
+	 * This also handles sending the events to Google Analytics and Google Tag
+	 * Manager if the user has that feature enabled.
+	 *
+	 * @since  1.0.0 | 01 JAN 2018 | Created
+	 * @param  void
+	 * @return bool Returns false on failure.
+	 *
+	 */
+	socialWarfare.handleButtonClicks = function() {
+
+
+		/**
+		 * In order to avoid the possibility that this function may be called
+		 * more than once, we remove all click handlers from our buttons prior
+		 * to activating the new click handler. Prior to this, there were some
+		 * unique instances where clicking on a button would cause multiple
+		 * share windows to pop out.
+		 *
+		 */
+		$('.nc_tweet, a.swp_CTT').off('click');
+		$('.nc_tweet, a.swp_CTT').on('click', function(event) {
+
+
+			/**
+			 * Some buttons that don't have popout share windows can use the
+			 * 'nopop' class to disable this click handler. This will then make
+			 * that button behave like a standard link and allow the browser's
+			 * default click handler to handle it. This is for things like the
+			 * email button.
+			 *
+			 */
+			if ($(this).hasClass('noPop')) {
+				return false;
+			}
+
+
+			/**
+			 * Our click handlers will use the data-link html attribute on the
+			 * button as the share URL when opening the share window. Therefore,
+			 * we need to make sure that this attribute exists.
+			 *
+			 */
+			if (false == $(this).data('link')) {
+				return false;
+			}
+
+
+			/**
+			 * This needs to run after all of the bail out conditions above have
+			 * been run. We don't want to preventDefault if a condition exists
+			 * wherein we don't want to take over the event.
+			 *
+			 */
+			event.preventDefault();
+
+
+			/**
+			 * Fetch the share link that we'll use to call the popout share
+			 * windows and then declare the variables that we'll be using later.
+			 *
+			 */
+			var href = $(this).data('link').replace('’', '\'');
+			var height, width, top, left, instance, windowAttributes, network;
+
+
+			/**
+			 * These are the default dimensions that are used by most of the
+			 * popout share windows. Additionally, a few of the windows have
+			 * their own javascript that will resize the window dynamically
+			 * once loaded.
+			 *
+			 */
+			height = 270;
+			width = 500;
+
+
+			/**
+			 * Pinterest, Buffer, and Flipboard use a different size than the
+			 * rest so if it's one of those buttons, overwrite the defaults
+			 * that we set above.
+			 *
+			 */
+			if ($(this).is('.pinterest, .buffer_link, .flipboard')) {
+				height = 550;
+				width = 775;
+			}
+
+			/**
+			 * If a button was clicked, use the data-network attribute to
+			 * figure out which network is being shared. If it was a click
+			 * to tweet that was clicked on, just use ctt as the network.
+			 *
+			 */
+			if ($(this).hasClass('nc_tweet')) {
+				network = $(this).parents('.nc_tweetContainer').data('network');
+			} else if ($(this).hasClass('swp_CTT')) {
+				network = 'ctt';
+			}
+
+
+			/**
+			 * We'll measure the window and then run some calculations to ensure
+			 * that our popout share window opens perfectly centered on the
+			 * browser window.
+			 *
+			 */
+			top = window.screenY + (window.innerHeight - height) / 2;
+ 			left = window.screenX + (window.innerWidth - width) / 2;
+ 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+ 			instance = window.open(href, network, windowAttributes);
+			// Active Google Analytics event tracking for the button click.
+			socialWarfare.trackClick(network);
+		});
+	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #3: FLOATING BUTTONS PANEL CONTROLS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	*  Clones a copy of the static buttons to use as a floating panel.
+	*
+	* We clone a set of the static horizontal buttons so that when we create
+	* the floating set we can make the position match exactly. This way when
+	* they are showing up and disappearing, it will create the allusion that
+	* the static buttons are just getting glued to the edge of the screen and
+	* following along with the user as they scroll.
+	*
+	* @since  1.0.0 | 01 JAN 2016 | Created
+	* @param  void
+	* @return void
+	*
+	*/
+	socialWarfare.createFloatHorizontalPanel = function() {
+
+		//* If a horizontal panel does not exist, we can not create a bar.
+		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+			return;
+		}
+
+		var floatLocation       = socialWarfare.panels.staticHorizontal.data("float");
+		var mobileFloatLocation = socialWarfare.panels.staticHorizontal.data("float-mobile");
+		var backgroundColor     = socialWarfare.panels.staticHorizontal.data("float-color");
+		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+		var barLocation         = '';
+
+		//* .swp_social_panelSide is the side floater.
+		if ($(".nc_wrapper").length) {
+			$(".nc_wrapper").remove();
+		}
+
+		//* No floating bars are used at all.
+		if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
+			return;
+		}
+
+		//* Or we are on desktop and not using top/bottom floaters:
+		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
+			return;
+		}
+
+		//* Set the location (top or bottom) of the bar depending on
+		if (socialWarfare.isMobile()) {
+			barLocation = mobileFloatLocation;
+		} else {
+			barLocation = floatLocation;
+		}
+
+		//* Assign a CSS class to the wrapper based on the float-mobile location.
+		wrapper.addClass(barLocation).hide().appendTo('body');
+
+		//* Save the new buttons panel to our ${panels} object.
+		socialWarfare.panels.floatingHorizontal = socialWarfare.panels.staticHorizontal.first().clone();
+		socialWarfare.panels.floatingHorizontal.addClass('nc_floater').appendTo(wrapper);
+		socialWarfare.updateFloatingHorizontalDimensions();
+
+		$(".swp_social_panel .swp_count").css({
+			transition: "padding .1s linear"
+		});
+	}
+
+  /**
+   * Callback on window resize to update the width and position of a
+   * floatingHorizontal panel.
+   *
+   */
+	socialWarfare.updateFloatingHorizontalDimensions = function() {
+		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+			return;
+		}
+
+		var left, width = 0;
+
+		if (socialWarfare.isMobile()) {
+			left = 0;
+			width = "100%";
+		} else {
+		    var content = $(".swp-content-locator").parent()
+			left = content.offset().left
+			width = content.width();
+		}
+
+		//* Give the bar panel the appropriate classname and put it in its wrapper.
+		socialWarfare.panels.floatingHorizontal.css({
+			width: width,
+			left: left
+		});
+	}
+
+
+	/**
+	 * Determines if a set of static buttons is currenty visible on the screen.
+	 *
+	 * We will use this to determine whether or not we should display a set of
+	 * floating buttons. Whenever the static buttons are visible, we hide the
+	 * floating buttons. Whenever the static buttons are not visible, we show
+	 * the floating buttons.
+	 *
+	 * @param  void
+	 * @return bool True if a static set of buttons is visible on the screen, else false.
+	 *
+	 */
+	socialWarfare.staticPanelIsVisible = function() {
+		var visible = false;
+		var scrollPos = $(window).scrollTop();
+
+		//* Iterate each buttons panel, checking each to see if it is currently visible.
+		$(".swp_social_panel").not(".swp_social_panelSide, .nc_floater").each(function(index) {
+			var offset = $(this).offset();
+
+			//* Do not display floating buttons before the horizontal panel.
+			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+				var theContent = $(".swp-content-locator").parent();
+
+				//* We are in sight of an "Above the content" panel.
+				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + $(window).height())) {
+					visible = true;
+				}
+			}
+
+			//* Do not display floating buttons if a panel is currently visible.
+			if ($(this).is(':visible') &&
+					offset.top + $(this).height() > scrollPos &&
+					offset.top < (scrollPos + $(window).height())) {
+
+				visible = true;
+			}
+		});
+
+		return visible;
+	}
+
+
+	/**
+	 * Handler to toggle the display of either the side or bar floating buttons.
+	 *
+	 * We only show the floating buttons when the static horizontal buttons are
+	 * not in the visible view port. This function is used to toggle their
+	 * visibility when they need to be shown or hidden.
+	 *
+	 * @since  2.0.0 | 01 JAN 2016 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleFloatingButtons = function() {
+		// Adjust the floating bar
+		var location = socialWarfare.panels.staticHorizontal.data('float');
+
+		//* There are no floating buttons enabled, hide any that might exist.
+		if (location == 'none') {
+			return $(".nc_wrapper, .swp_social_panelSide").hide();
+		}
+
+		if (socialWarfare.isMobile()) {
+			socialWarfare.toggleMobileButtons();
+			socialWarfare.toggleFloatingHorizontalPanel();
+			return;
+		}
+
+		if (location == "right" || location == "left") {
+			socialWarfare.toggleFloatingVerticalPanel();
+		}
+
+		if (location == "bottom" || location == "top") {
+			socialWarfare.toggleFloatingHorizontalPanel();
+		}
+	}
+
+
+	/**
+	 * Toggle the visibilty of a mobile bar.
+	 *
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleMobileButtons = function() {
+
+		//* There are never any left/right floating buttons on mobile, so hide them.
+		socialWarfare.panels.floatingSide.hide();
+
+		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
+		$(".nc_wrapper").css("visibility", visibility);
+	}
+
+
+	/**
+	 * Toggle the display of a side panel, depending on static panel visibility.
+	 *
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleFloatingVerticalPanel = function() {
+		var direction = '';
+		var location = socialWarfare.panels.floatingSide.data("float")
+		var visible  = socialWarfare.staticPanelIsVisible();
+		var style = "";
+
+		//* This is on mobile and does not use side panels.
+		if (socialWarfare.isMobile()) {
+			return socialWarfare.panels.floatingSide.hide();
+		}
+
+		//* No buttons panel! Manually re-define ${visibility}.
+		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
+			if (!socialWarfare.isMobile()) {
+				visible = false;
+			} else {
+				visible = true;
+			}
+		}
+
+		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
+
+			direction = (location.indexOf("left") !== -1) ? "left" : "right";
+			style     = visible ? "-150px" : "5px";
+
+			//* Update the side panel CSS with the direction and amount.
+			socialWarfare.panels.floatingSide.css(direction, style);
+
+		}
+
+		else {
+
+			/**
+			 * We had problems with the fading buttons flickering rather than having
+			 * a smooth fade animation. The workaround was to manually control opacity,
+			 * fade, and opacity again.
+			 *
+			 */
+			if (visible) {
+				socialWarfare.panels.floatingSide.css("opacity", 1)
+					.fadeOut(300)
+					.css("opacity", 0);
+			}
+
+			else {
+				socialWarfare.panels.floatingSide.css("opacity", 0)
+					.fadeIn(300)
+					.css("display", "flex")
+					.css("opacity", 1);
+			}
+		}
+	}
+
+
+	/**
+	 * Toggle the display of a floating bar, depending on static panel visibility.
+	 *
+	 * @return void
+	 *
+	 */
+	socialWarfare.toggleFloatingHorizontalPanel = function() {
+		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+			return;
+		}
+
+		var panel = socialWarfare.panels.floatingHorizontal.first();
+		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
+		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
+		var paddingProp = "padding-" + location;
+
+		//* Restore the padding to initial values.
+		if (socialWarfare.staticPanelIsVisible()) {
+			$(".nc_wrapper").hide();
+
+
+			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
+				$("#wpadminbar").css("top", "initial");
+			}
+		}
+
+		// Add some padding to the page so it fits nicely at the top or bottom.
+		else {
+			newPadding += 50;
+			$(".nc_wrapper").show();
+
+            //* Compensate for the margin-top added to <html> by #wpadminbar.
+			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
+				$("#wpadminbar").css("top", panel.parent().height());
+			}
+		}
+
+		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
+		$("body").css(paddingProp, newPadding);
+	}
+
+
+	/**
+	 * This method is used to vertically center the floating buttons when they
+	 * are positioned on the left or right of the screen.
+	 *
+	 * @since  3.4.0 | 18 OCT 2018 | Created
+	 * @param  void
+	 * @param  void All changes are made to the dom.
+	 *
+	 */
+	socialWarfare.positionFloatSidePanel = function() {
+		var panelHeight, windowHeight, offset;
+		var sidePanel = socialWarfare.panels.floatingSide;
+
+
+		/**
+		 * If no such element exists, we obviously just need to bail out and
+		 * not try to center anything.
+		 *
+		 */
+		if (!sidePanel || !sidePanel.length) {
+			return;
+		}
+
+
+		/**
+		 * We don't need to center the side panel buttons if the position is set
+		 * to top or bottom. This will isntead be directly controlled by the CSS
+		 * that is associated with these classes.
+		 *
+		 */
+		if( sidePanel.hasClass('swp_side_top') || sidePanel.hasClass('swp_side_bottom') ) {
+			return;
+		}
+
+
+		/**
+		 * We'll need the height of the panel itself and the height of the
+		 * actual browser window in order to calculate how to center it.
+		 *
+		 */
+		panelHeight = sidePanel.outerHeight();
+		windowHeight = window.innerHeight;
+
+
+		/**
+		 * If for some reason the panel is actually taller than the window
+		 * itself, just stick it to the top of the window and the bottom will
+		 * just have to overflow past the bottom of the screen.
+		 *
+		 */
+		if (panelHeight > windowHeight) {
+			return sidePanel.css("top", 0);
+		}
+
+
+		/**
+		 * Calculate the center position of panel and then apply the relevant
+		 * CSS to the panel.
+		 *
+		 */
+		offset = (windowHeight - panelHeight) / 2;
+		sidePanel.css("top", offset);
+	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #4: PINTEREST IMAGE HOVER SAVE BUTTONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	 /**
+	 * This reactivates and creates new image hover pin buttons when a page has
+	 * been loaded via AJAX. The 'load' event is the proper event that theme and
+	 * plugin creators are supposed to use when the AJAX load is complete.
+	 *
+	 */
+	$(window).on('load', function() {
+
+		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+			socialWarfare.enablePinterestSaveButtons();
+		}
+		window.clearCheckID = 0;
+	});
+
+
+	/**
+	 * Adds the "Save" button to images when the option is enabled.
+	 *
+	 * This method will search and destroy any Pinterest save buttons that have
+	 * been added by the Pinterest browser extension and then render the html
+	 * needed to add our own proprietary Pinterest buttons on top of images.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.enablePinterestSaveButtons = function() {
+
+
+		/**
+		 * Search and Destroy: This will find any Pinterest buttons that were
+		 * added via their browser extension and then destroy them so that only
+		 * ours are on the page.
+		 *
+		 */
+		var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
+		if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
+			socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+		}
+
+
+		/**
+		 * Find all images of the images that are in the content area by looking
+		 * for the .swp-content-locator div which is an empty div that we add via
+		 * the_content() hook just so that we can target it here. Then iterate
+		 * through them and determine if we should add a Pinterest save button.
+		 *
+		 */
+		$('.swp-content-locator').parent().find('img').each(socialWarfare.renderPinterestSaveButton);
+
+
+		/**
+		 * Attach a click handler to each of the newly created "Save" buttons,
+		 * and trigger the click tracking function.
+		 *
+		 */
+		$('.sw-pinit .sw-pinit-button').on('click', function(event) {
+			event.preventDefault();
+			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+			socialWarfare.trackClick('pin_image');
+		});
+	}
+
+
+	/**
+	* This function renders the HTML needed to print the save buttons on the images.
+	*
+	* @param  void
+	* @since  void
+	*
+	*/
+	socialWarfare.renderPinterestSaveButton = function() {
+		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyles, shareLink;
+		image = $(this);
+
+		/**
+		 * This disables the Pinterest save buttosn on images that are anchors/links
+		 * if the user has them disabled on them in the options page. So if this
+		 * image is a link, we just bail out.
+		 *
+		 */
+		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+			if ($(image).parents().filter("a").length) {
+				return;
+			}
+		}
+
+
+		/**
+		 * In the option page, the user can set a minimum width and a minimum
+		 * height. Anything that isn't as large as these image dimensions will
+		 * be skipped. This is a JS variable that is generated and output by
+		 * the server.
+		 *
+		 */
+		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
+			return;
+		}
+
+
+		/**
+		 * We offer users the option to manually opt any image out of having a
+		 * Pinterest save button on it by simply adding either the no_pin class
+		 * or the no-pin class. There is also a checkbox in the media uploader
+		 * that when checked will add one of these classes. If this image has
+		 * one of these classes, just bail and skip this image.
+		 *
+		 */
+		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
+			return;
+		}
+
+
+		/**
+		 * If the swpPinIt.image_source variable exists, it means that the user
+		 * has opted to use their custom Pinterest image rather than having
+		 * visitors pin the actual image being hovered.
+		 *
+		 */
+		if ('undefined' !== typeof swpPinIt.image_source) {
+
+			/**
+			 * By creating a temporary image and then using jQuery to fetch the
+			 * URL of that image, it will convert any relative paths to
+			 * absolute paths. If we send a relative path image to Pinterest, it
+			 * will throw wonky errors.
+			 *
+			 */
+			var i = new Image();
+			i.src = swpPinIt.image_source;
+			pinMedia = $(i).prop('src');
+
+
+		/**
+		 * Both media and lazy-src are data attributes used by some lazy loading
+		 * plugins. If we don't look for these, we're not able to add the save
+		 * button to lazy loaded images that have not been loaded when the
+		 * document has been loaded.
+		 *
+		 */
+		} else if (image.data('media')) {
+			pinMedia = image.data('media');
+		} else if ($(this).data('lazy-src')) {
+			pinMedia = $(this).data('lazy-src');
+		} else if (image[0].src) {
+			pinMedia = image[0].src;
+		}
+
+		// Bail if we don't have any media to pin.
+		if (!pinMedia || 'undefined' === typeof pinMedia) {
+			return;
+		}
+
+
+		/**
+		 * This is where we compute a description that will be used when the
+		 * image is shared to Pinterest. In order of precedence, we will use the
+		 * image's data-pin-description attribute, the custom Pinterest description
+		 * for the post passed from the server, the image title, or the image
+		 * description.
+		 *
+		 */
+		if (typeof image.data("pin-description") != 'undefined') {
+			pinDesc = image.data("pin-description");
+		} else if ('undefined' !== typeof swpPinIt.image_description) {
+			pinDesc = swpPinIt.image_description;
+		} else if (image.attr('title')) {
+			pinDesc = image.attr('title');
+		} else if (image.attr('alt')) {
+			pinDesc = image.attr('alt');
+		}
+
+		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
+
+
+		/**
+		 * In order to preserve all of the layout, positioning and style of the
+		 * image, we are going to fetch all of the classes and inline styles of
+		 * the image and move them onto the parent container in which we will be
+		 * wrapping the image.
+		 *
+		 */
+		imageClasses = image.attr('class');
+		imageStyles  = image.attr('style');
+
+		// Remove the image classes and styles. Create the wrapper div.
+		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
+
+		// Append the button as the last element inside the wrapper div.
+		image.after('<a href="' + shareLink + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
+
+		// Add the removed classes and styles to the wrapper div.
+		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyles);
+	}
+
+
+	/**
+	 * Looks for a "Save" button created by Pinterest addons.
+	 *
+	 * @param  void
+	 * @return HTMLNode if the Pinterest button is found, else NULL.
+	 *
+	 */
+	socialWarfare.findPinterestBrowserSaveButtons = function() {
+		var pinterestRed, pinterestZIndex, pinterestBackgroundSize, button, style;
+
+		//* Known constants used by Pinterest.
+		pinterestRed = "rgb(189, 8, 28)";
+		pinterestZIndex = "8675309";
+		pinterestBackgroundSize = "14px 14px";
+		button = null;
+
+		//* The Pinterest button is a <span/>, so check each span for a match.
+		document.querySelectorAll("span").forEach(function(element, index) {
+			style = window.getComputedStyle(element);
+
+			if (style.backgroundColor == pinterestRed) {
+				if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
+					button = element;
+				}
+			}
+		});
+
+		return button;
+	}
+
+
+	/**
+	 * Removes the "save" button created by Pinterest Browser Extension.
+	 *
+	 */
+	socialWarfare.removePinterestBrowserSaveButtons = function(button) {
+		var pinterestSquare, style, size;
+		pinterestSquare = button.nextSibling;
+
+		//* The sibling to the Pinterest button is always a span.
+		if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
+			style = window.getComputedStyle(pinterestSquare);
+			size = "24px";
+
+			//* If the sibling is indeed the correct Pinterest sibling, destory it all.
+			if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
+				pinterestSquare.remove()
+			}
+		}
+
+		button.remove();
+	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #5: FACEBOOK SHARE COUNT FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * Makes external requsts to fetch Facebook share counts. We fetch Facebook
+	 * share counts via the frontened Javascript because their API has harsh
+	 * rate limits that are IP Address based. So it's very easy for a website to
+	 * hit those limits and recieve temporary bans from accessing the share count
+	 * data. By using the front end, the IP Addresses are distributed to users,
+	 * are therefore spread out, and don't hit the rate limits.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.fetchFacebookShares = function() {
+
+		// Compile the API links
+		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
+		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
+
+		// Use this to ensure that we wait until the API requests are done.
+		$.when( $.get( url1 ), $.get( url2 ) )
+		.then(function(response1, response2) {
+			var shares, data;
+
+			// Parse the shares and add them up into a running total.
+			shares = socialWarfare.parseFacebookShares(response1[0]);
+			if (swp_post_recovery_url) {
+				shares += socialWarfare.parseFacebookShares(response2[0]);
+			}
+
+			// Compile the data and send out the AJAX request to store the count.
+			var data   = {
+				action: 'swp_facebook_shares_update',
+				post_id: swp_post_id,
+				share_counts: shares
+			};
+			$.post(swp_admin_ajax, data);
+
+		});
+	}
+
+
+	/**
+	 * Sums the share data from a facebook API response. This is a utility
+	 * function used by socialWarfare.fetchFacebookShares to allow easy access
+	 * to parsing out the JSON response that we got from Facebook's API and
+	 * converting it into an integer that reflects the tally of all activity
+	 * on the URl in question including like, comments, and shares.
+	 *
+	 * @param  object response The API response received from Facebook.
+	 * @return number The total shares summed from the request, or 0.
+	 *
+	 */
+	socialWarfare.parseFacebookShares = function(response) {
+		var total = 0;
+
+		if ('undefined' !== typeof response.share) {
+			total += parseInt(response.share.share_count);
+			total += parseInt(response.share.comment_count);
+		}
+
+		if (typeof response.og_object != 'undefined') {
+			total += parseInt(response.og_object.likes.summary.total_count);
+		}
+
+		return total;
+	}
+
+
+	/***************************************************************************
+	 *
+	 *
+	 *    SECTION #6: UTILITY/HELPER FUNCTIONS
+	 *
+	 *
+	 ***************************************************************************/
+
+
+	/**
+	 * The throttle function is used to control how often an event can be fired.
+	 * We use this exclusively to control how often scroll events go off. In some
+	 * cases, the scroll event which controls when the floating buttons appear
+	 * or disappear, was firing so often on scroll that the floating buttons were
+	 * rapidly flickering in and out of view. This solves that.
+	 *
+	 * @param  integer   delay    How often in ms to allow the event to fire.
+	 * @param  function  callback The function to run if the timeout period is expired.
+	 * @return function           The callback function.
+	 *
+	 */
+	socialWarfare.throttle = function(delay, callback) {
+		var timeoutID = 0;
+		var lastExec  = 0;
+
+		function wrapper() {
+			var that    = this;
+			var elapsed = +new Date() - lastExec;
+			var args    = arguments;
+
+			function exec() {
+				lastExec = +new Date();
+				callback.apply(that, args);
+			}
+
+			function clear() {
+				timeoutID = undefined;
+			}
+
+			timeoutID && clearTimeout(timeoutID);
+
+			if (elapsed > delay) {
+				exec();
+			} else {
+				timeoutID = setTimeout(exec, delay - elapsed);
+			}
+		}
+
+		if (socialWarfare.guid) {
+			wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
+		}
+
+		return wrapper;
+	};
+
+
+	/**
+	 * A simple wrapper for easily triggering DOM events. This will allow us to
+	 * fire off our own custom events that our addons can then bind to in order
+	 * to run their own functions in sequence with ours here.
+	 *
+	 * @param  string event The name of the event to trigger.
+	 * @return void
+	 *
+	 */
+	socialWarfare.trigger = function(event) {
+		$(window).trigger($.Event(event));
+	}
+
+
+	/**
+	 * Fire an event for Google Analytics and GTM.
+	 *
+	 * @since  2.4.0 | 18 OCT 2018 | Created
+	 * @param  string event A string identifying the button being clicked.
+	 * @return void
+	 *
+	 */
+	socialWarfare.trackClick = function(event) {
+
+
+		/**
+		 * If click tracking has been enabled in the user settings, we'll
+		 * need to send the event via Googel Analytics. The swpClickTracking
+		 * variable will be dynamically generated via PHP and output in the
+		 * footer of the page.
+		 *
+		 */
+		if (true === swpClickTracking) {
+
+
+			/**
+			 * If Google Analytics is present on the page, we'll send the
+			 * event via their object and methods.
+			 *
+			 */
+			if ('function' == typeof ga) {
+				ga('send', 'event', 'social_media', 'swp_' + event + '_share');
+			}
+
+
+			/**
+			 * If Google Tag Manager is present on the page, we'll send the
+			 * event via their object and methods.
+			 *
+			 */
+			if ('object' == typeof dataLayer) {
+				dataLayer.push({ 'event': 'swp_' + event + '_share' });
+			}
+		}
+	}
+
+
+	/**
+	 * Checks to see if we have a buttons panel. If so, forces a re-run of the
+	 * handleButtonClicks callback.
+	 *
+	 * @param  number count The current iteration of the loop cycle.
+	 * @param  number limit The maximum number of iterations for the loop cycle.
+	 * @return void or function handleButtonClicks().
+	 *
+	 */
+	socialWarfare.checkListeners = function(count, limit) {
+
+
+		/**
+		 * Once we've checked for the buttons panel a certain number of times,
+		 * we're simply going to bail out and stop checking. Right now, it is
+		 * set to run 5 times for a total of 10 seconds.
+		 *
+		 */
+		if (count > limit) {
+			return;
+		}
+
+
+		/**
+		 * The primary reason we are doing this is to ensure that a set of
+		 * buttons does indeed exist when the click bindings are created. So
+		 * this looks for the buttons and check's for their existence. If we
+		 * find them, we fire off the handleButtonClicks() function.
+		 *
+		 */
+		var panel = $('.swp_social_panel');
+		if (panel.length > 0 && panel.find('.swp_pinterest')) {
+			socialWarfare.handleButtonClicks();
+			return;
+		}
+
+
+		/**
+		 * If we haven't found any buttons panel, then after 2 more seconds,
+		 * we'll fire off this function again until the limit has been reached.
+		 *
+		 */
+		setTimeout(function() {
+			socialWarfare.checkListeners(++count, limit)
+		}, 2000);
+	}
+
+
+	/**
+	 * Stores the user-defined mobile breakpoint in the socialWarfare object. In
+	 * other functions, if the width of the current browser is smaller than this
+	 * breakpoint, we will switch over and use the mobile options for the buttons
+	 * panels.
+	 *
+	 */
+	socialWarfare.establishBreakpoint = function() {
+		var panel = $('.swp_social_panel');
+		socialWarfare.breakpoint = 1100;
+
+		if (panel.length && panel.data('min-width') || panel.data('min-width') == 0) {
+			socialWarfare.breakpoint = parseInt( panel.data('min-width') );
+		}
+	}
+
+
+	/**
+	 * Checks to see if the current viewport is within the defined mobile
+	 * breakpoint. The user sets a width in the options page. Any window
+	 * viewport that is not as wide as that width will trigger isMobile to
+	 * return as true.
+	 *
+	 */
+	socialWarfare.isMobile = function() {
+		return $(window).width() < socialWarfare.breakpoint;
+	}
 
-        //* Are we on desktop or mobile?
-        if ($(window).width() > $(panel).data("min-width")) {
-            var location = $(panel).data("float");
-        } else {
-            var location = $(panel).data("float-mobile")
-        }
-
-        if (panelIsVisible()) {
-            $(".nc_wrapper").hide();
-
-            newPadding = (location == "bottom") ? paddingBottom : paddingTop;
-
-        } else {
-            $(".nc_wrapper").show();
-
-            //* Show the top/bottom floating bar. Force its opacity to normal.
-            //* @see SWP_Buttons_Panel->render_HTML()
-            jQuery(".swp_social_panel.nc_floater").css("opacity", 1)
-
-            // Add some padding to the page so it fits nicely at the top or bottom
-            if (location == 'bottom') {
-                newPadding = paddingBottom + 50;
-                // $('body').animate({ 'padding-bottom': newPadding + 'px' }, 0);
-            } else {
-                if (panel.offset().top > $(window).scrollTop() + $(window).height()) {
-                    newPadding = paddingTop + 50;
-                    $('body').animate({ 'padding-top': newPadding + 'px' }, 0);
-                }
-            }
-        }
-
-        var paddingProp = "padding-" + location;
-        $("body").animate({paddingProp: newPadding}, 0);
-
-    }
-
-
-    function centerSidePanel() {
-        var sidePanel = jQuery("[class*=float-position-center]");
-
-        if (!sidePanel.length) return;
-
-        var panelHeight = sidePanel.outerHeight();
-        var windowHeight = window.innerHeight;
-
-        if (panelHeight > windowHeight) {
-          sidePanel.css("top", 0);
-          return;
-        }
-
-        var offset = (windowHeight - panelHeight) / 2;
-
-        sidePanel.css("top", offset);
-    }
-
-
-    function initShareButtons() {
-        if (0 !== $('.swp_social_panel').length) {
-            createFloatBar();
-            centerSidePanel();
-            swp.activateHoverStates();
-            handleWindowOpens();
-            $(window).scroll(swp.throttle(50, function() {
-                toggleFloatingButtons();
-            }));
-            $(window).trigger('scroll');
-            // $('.swp_social_panel').css({'opacity':1});
-        }
-    }
-
-    /****************************************************************************
-
-        Pin It Hover Effect
-
-    ****************************************************************************/
-
-    function pinitButton() {
-        var defaults = {
-            wrap: '<div class="sw-pinit" />',
-            pageURL: document.URL
-        };
-
-        var options = $.extend(defaults, options);
-
-        // Iterate over the current set of matched elements.
-        $('.swp-content-locator').parent().find('img').each(function() {
-            var image = $(this);
-
-            if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-                if (jQuery(image).parents().filter("a").length) {
-                    return;
-                }
-            }
-
-            if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-                return;
-            }
-
-            if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-                return;
-            }
-
-            var pinMedia;
-
-            if ('undefined' !== typeof swpPinIt.image_source) {
-
-				//* Create a temp image to force absolute paths via jQuery.
-				var i = new Image();
-				i.src = swpPinIt.image_source;
-				pinMedia = jQuery(i).prop('src');
-
-            } else if (image.data('media')) {
-                pinMedia = image.data('media');
-            } else if ($(this).data('lazy-src')) {
-                pinMedia = $(this).data('lazy-src');
-            } else if (image[0].src) {
-                pinMedia = image[0].src;
-            };
-
-            // Bail if we don't have any media to pin.
-            if ( !pinMedia || 'undefined' === typeof pinMedia ) {
-                return;
-            }
-
-            var pinDesc = '';
-
-            if (typeof image.data("pin-description") != 'undefined') {
-                pinDesc = image.data("pin-description");
-            } else if ('undefined' !== typeof swpPinIt.image_description){
-                pinDesc = swpPinIt.image_description;
-            } else if (image.attr('title')) {
-                pinDesc = image.attr('title');
-            } else if (image.attr('alt')) {
-                pinDesc = image.attr('alt');
-            }
-
-            var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(options.pageURL) + '&is_video=false' + '&description=' +  encodeURIComponent(pinDesc);
-            var imageClasses = image.attr('class');
-            var imageStyle = image.attr('style');
-
-            image.removeClass().attr('style', '').wrap(options.wrap);
-
-            image.after('<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-
-            image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyle);
-
-            $('.sw-pinit .sw-pinit-button').on('click', function() {
-                      window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-
-                      // Record the event if Google Analytics Click tracking is enabled
-                      if (true === swpClickTracking) {
-                          var network = 'pin_image';
-
-                          // If Google Analytics is Present on the page.
-                          if( 'function' == typeof ga) {
-                              ga("send", "event", "social_media", "swp_" + network + "_share");
-                          }
-
-                          // If Google Tag Manager is Present on the Page
-                          if ("object" == typeof dataLayer) {
-                              dataLayer.push({'event':'swp_' + network + '_share'});
-                          }
-                      }
-
-                      return false;
-                  });
-            });
-
-        var pinterestButton = findPinterestSaveButton();
-
-        if (typeof pinterestButton != 'undefined' && pinterestButton) {
-            removePinterestButton(pinterestButton);
-        }
-    }
-
-    function handleWindowOpens() {
-        $('.nc_tweet, a.swp_CTT').off('click');
-        $('.nc_tweet, a.swp_CTT').on('click', function(event) {
-            if ($(this).hasClass('noPop')) {
-                return false;
-            }
-
-            if ($(this).data('link')) {
-                event.preventDefault();
-
-                var href = $(this).data('link');
-                var height, width, top, left, instance, windowFeatures;
-
-                href = href.replace('’', '\'');
-
-                if ($(this).hasClass('pinterest') || $(this).hasClass('buffer_link') || $(this).hasClass('flipboard')) {
-                    height = 550;
-                    width = 775;
-                } else {
-                    height = 270;
-                    width = 500;
-                }
-
-                top = window.screenY + (window.innerHeight - height) / 2;
-                left = window.screenX + (window.innerWidth - width) / 2;
-
-                var windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-                var instance = window.open(href, '_blank', windowAttributes);
-
-        				if (true == swpClickTracking) {
-                    if($(this).hasClass('nc_tweet')) {
-            				    var network = $(this).parents(".nc_tweetContainer").attr("data-network");
-            				} else if ($(this).hasClass('swp_CTT')) {
-            				    var network = 'ctt';
-            				}
-
-            					// If Google Analytics is Present on the Page
-            	      if (typeof ga == "function" && true) {
-            	          ga('send', 'event', 'social_media', 'swp_' + network + '_share');
-            	      }
-
-            					// If Google Tag Manager is Present on the Page
-            				if ("object" == typeof dataLayer) {
-            				    dataLayer.push({'event':'swp_' + network + '_share'});
-            				}
-                }
-
-                return false;
-            }
-        });
-    }
-
-
-    //* The Pinterest Browser Extension create a single Save button.
-    //* Let's search and destroy.
-    function findPinterestSaveButton() {
-        var pinterestRed = "rgb(189, 8, 28)";
-        var pinterestZIndex = "8675309";
-        var pinterestBackgroundSize = "14px 14px";
-        var button = null;
-
-        document.querySelectorAll("span").forEach(function(el, index) {
-            var style = window.getComputedStyle(el);
-
-            if (style.backgroundColor == pinterestRed) {
-                if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
-                    button = el;
-                }
-            }
-        });
-
-        return button;
-    }
-
-    function removePinterestButton(button) {
-        var pinterestSquare = button.nextSibling;
-
-        if (typeof pinterestSquare != 'undefined'  && pinterestSquare.nodeName == 'SPAN') {
-            var style = window.getComputedStyle(pinterestSquare);
-            var size = "24px";
-
-            if (style.width.indexOf(size) === 0 && style.height.indexOf(size) === 0) {
-                pinterestSquare.remove()
-            }
-        }
-
-        button.remove();
-    }
-
-
-    $(window).on('load' , function() {
-        if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
-            pinitButton();
-        }
-    });
-
-    $(document).ready(function() {
-        handleWindowOpens();
-        initShareButtons();
-        var sidePanel = $('.swp_social_panelSide');
-        var swp_hover = false;
-        $('.swp_social_panel').hover(
-            function () {
-                swp_hover = true;
-            },
-            function () {
-                swp_hover = false;
-            }
-        );
-        $(window).resize(swp.debounce(250, function() {
-            if ($('.swp_social_panel').length && false !== swp_hover) { } else {
-                window.swpAdjust = 1;
-                initShareButtons();
-            }
-        }));
-
-        // $(window).trigger('resize');
-
-        $(document.body).on('post-load', function() {
-            initShareButtons();
-        });
-
-        if (0 !==  sidePanel.length) {
-            // *If using top or bottom vertical positions, let CSS position the element.
-            if ($(sidePanel).attr("class").indexOf("swp_side") !== -1) return;
-
-            var buttonsHeight = $(sidePanel).height();
-            var windowHeight = $(window).height();
-            var newPosition = absint((windowHeight / 2) - (buttonsHeight / 2));
-            setTimeout(function() {
-                $(sidePanel).animate({ top: newPosition }, 0);
-            }, 105);
-        }
-
-        //if(swp_isMobile.phone) {
-        //    $('.swp_whatsapp').addClass('mobile');
-        //}
-
-        // Hide empty containers
-        if(1 === $('.swp-content-locator').parent().children().length) {
-            $('.swp-content-locator').parent().hide();
-        }
-
-    });
 })(this, jQuery);
-
-(function (global) {
-
-    var apple_phone         = /iPhone/i,
-        apple_ipod          = /iPod/i,
-        apple_tablet        = /iPad/i,
-        android_phone       = /(?=.*\bAndroid\b)(?=.*\bMobile\b)/i, // Match 'Android' AND 'Mobile'
-        android_tablet      = /Android/i,
-        amazon_phone        = /(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,
-        amazon_tablet       = /(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,
-        windows_phone       = /Windows Phone/i,
-        windows_tablet      = /(?=.*\bWindows\b)(?=.*\bARM\b)/i, // Match 'Windows' AND 'ARM'
-        other_blackberry    = /BlackBerry/i,
-        other_blackberry_10 = /BB10/i,
-        other_opera         = /Opera Mini/i,
-        other_chrome        = /(CriOS|Chrome)(?=.*\bMobile\b)/i,
-        other_firefox       = /(?=.*\bFirefox\b)(?=.*\bMobile\b)/i, // Match 'Firefox' AND 'Mobile'
-        seven_inch = new RegExp(
-            '(?:' +         // Non-capturing group
-
-            'Nexus 7' +     // Nexus 7
-
-            '|' +           // OR
-
-            'BNTV250' +     // B&N Nook Tablet 7 inch
-
-            '|' +           // OR
-
-            'Kindle Fire' + // Kindle Fire
-
-            '|' +           // OR
-
-            'Silk' +        // Kindle Fire, Silk Accelerated
-
-            '|' +           // OR
-
-            'GT-P1000' +    // Galaxy Tab 7 inch
-
-            ')',            // End non-capturing group
-
-            'i');           // Case-insensitive matching
-
-    var match = function(regex, userAgent) {
-        return regex.test(userAgent);
-    };
-
-    var IsMobileClass = function(userAgent) {
-        var ua = userAgent || navigator.userAgent;
-
-        // Facebook mobile app's integrated browser adds a bunch of strings that
-        // match everything. Strip it out if it exists.
-        var tmp = ua.split('[FBAN');
-        if (typeof tmp[1] !== 'undefined') {
-            ua = tmp[0];
-        }
-
-        // Twitter mobile app's integrated browser on iPad adds a "Twitter for
-        // iPhone" string. Same probable happens on other tablet platforms.
-        // This will confuse detection so strip it out if it exists.
-        tmp = ua.split('Twitter');
-        if (typeof tmp[1] !== 'undefined') {
-            ua = tmp[0];
-        }
-
-        this.apple = {
-            phone:  match(apple_phone, ua),
-            ipod:   match(apple_ipod, ua),
-            tablet: !match(apple_phone, ua) && match(apple_tablet, ua),
-            device: match(apple_phone, ua) || match(apple_ipod, ua) || match(apple_tablet, ua)
-        };
-        this.amazon = {
-            phone:  match(amazon_phone, ua),
-            tablet: !match(amazon_phone, ua) && match(amazon_tablet, ua),
-            device: match(amazon_phone, ua) || match(amazon_tablet, ua)
-        };
-        this.android = {
-            phone:  match(amazon_phone, ua) || match(android_phone, ua),
-            tablet: !match(amazon_phone, ua) && !match(android_phone, ua) && (match(amazon_tablet, ua) || match(android_tablet, ua)),
-            device: match(amazon_phone, ua) || match(amazon_tablet, ua) || match(android_phone, ua) || match(android_tablet, ua)
-        };
-        this.windows = {
-            phone:  match(windows_phone, ua),
-            tablet: match(windows_tablet, ua),
-            device: match(windows_phone, ua) || match(windows_tablet, ua)
-        };
-        this.other = {
-            blackberry:   match(other_blackberry, ua),
-            blackberry10: match(other_blackberry_10, ua),
-            opera:        match(other_opera, ua),
-            firefox:      match(other_firefox, ua),
-            chrome:       match(other_chrome, ua),
-            device:       match(other_blackberry, ua) || match(other_blackberry_10, ua) || match(other_opera, ua) || match(other_firefox, ua) || match(other_chrome, ua)
-        };
-        this.seven_inch = match(seven_inch, ua);
-        this.any = this.apple.device || this.android.device || this.windows.device || this.other.device || this.seven_inch;
-
-        // excludes 'other' devices and ipods, targeting touchscreen phones
-        this.phone = this.apple.phone || this.android.phone || this.windows.phone;
-
-        // excludes 7 inch devices, classifying as phone or tablet is left to the user
-        this.tablet = this.apple.tablet || this.android.tablet || this.windows.tablet;
-
-        if (typeof window === 'undefined') {
-            return this;
-        }
-    };
-
-    var instantiate = function() {
-        var IM = new IsMobileClass();
-        IM.Class = IsMobileClass;
-        return IM;
-    };
-
-    if (typeof module !== 'undefined' && module.exports && typeof window === 'undefined') {
-        //node
-        module.exports = IsMobileClass;
-    } else if (typeof module !== 'undefined' && module.exports && typeof window !== 'undefined') {
-        //browserify
-        module.exports = instantiate();
-    } else if (typeof define === 'function' && define.amd) {
-        //AMD
-        define('swp_isMobile', [], global.swp_isMobile = instantiate());
-    } else {
-        global.swp_isMobile = instantiate();
-    }
-
-})(this);

@@ -34,6 +34,7 @@ class SWP_Database_Migration {
      *
      */
     public function __construct() {
+		global $post;
 		// Queue up the migrate features to run after plugins are loaded.
         add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
     }
@@ -69,6 +70,38 @@ class SWP_Database_Migration {
 		$this->debug_parameters();
     }
 
+	public function print_post_meta() {
+		global $post;
+
+		if ( !is_object( $post ) ) :
+			wp_die( "There is no post object for this url." );
+		endif;
+
+		$meta = get_post_meta( $post->ID );
+
+		if ( $meta ) :
+			$keys = array();
+			$swp_meta = array();
+
+			foreach ( $meta as $key => $value ) {
+
+				//* Only print Social Warfare meta keys.
+				if ( ! ( strpos( $key, 'swp_' ) === 0 
+				    || ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
+					unset( $meta[$key] );
+				}
+			}
+
+			ksort( $meta );
+
+			echo "<pre>", var_export( $meta ), "</pre>";
+			wp_die();
+
+		else :
+			wp_die( "No post meta for " . $post->post_title );
+		endif;
+	}
+
 
 	/**
 	 * A method to allow for easier debugging of database migration functions.
@@ -88,11 +121,12 @@ class SWP_Database_Migration {
 	public function debug_parameters() {
         global $post, $swp_user_options;
 
+
 		// Output an array of user options if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_user_options') ) :
-			echo "<pre>";
-			var_export( get_option( 'social_warfare_settings', array() ) );
-			echo "</pre>";
+			$options = get_option( 'social_warfare_settings', array() );
+			ksort( $options );
+			echo "<pre>", var_export( $options ), "</pre>";
 			wp_die();
 		endif;
 
@@ -105,22 +139,8 @@ class SWP_Database_Migration {
         endif;
 
         if ( true == SWP_Utility::debug('get_post_meta') ) :
-            if ( !is_object( $post ) ) :
-                wp_die( "There is no post object for this url." );
-            endif;
 
-            $meta = get_post_meta( $post->ID );
-
-            if ($meta) :
-
-                echo "<pre>";
-                var_export( $meta );
-                echo "</pre>";
-                wp_die();
-
-            else :
-                wp_die( "No post meta for " . $post->post_title );
-            endif;
+            add_action( 'template_redirect', array( $this, 'print_post_meta' ) );
 
         endif;
 
