@@ -156,7 +156,7 @@ class SWP_Facebook extends SWP_Social_Network {
 					swp_post_id=' . (int) $this->post_id . ';
 					swp_post_url= "' . get_permalink() . '";
 					swp_post_recovery_url = "' . $alternateURL . '";
-					socialWarfarePlugin.fetchFacebookShares();
+					socialWarfare.fetchFacebookShares();
 				}
 			});
 			</script>

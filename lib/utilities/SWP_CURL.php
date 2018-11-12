@@ -49,11 +49,11 @@ class SWP_CURL {
 						curl_setopt( $curly[ $network ], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
 						curl_setopt( $curly[ $network ], CURLOPT_FAILONERROR, 0 );
 						curl_setopt( $curly[ $network ], CURLOPT_FOLLOWLOCATION, 0 );
-						curl_setopt( $curly[ $network ], CURLOPT_RETURNTRANSFER,1 );
+						curl_setopt( $curly[ $network ], CURLOPT_RETURNTRANSFER, 1 );
 						curl_setopt( $curly[ $network ], CURLOPT_SSL_VERIFYPEER, false );
 						curl_setopt( $curly[ $network ], CURLOPT_SSL_VERIFYHOST, false );
-						curl_setopt( $curly[ $network ], CURLOPT_TIMEOUT, 5 );
-						curl_setopt( $curly[ $network ], CURLOPT_CONNECTTIMEOUT, 5 );
+						curl_setopt( $curly[ $network ], CURLOPT_TIMEOUT, 3 );
+						curl_setopt( $curly[ $network ], CURLOPT_CONNECTTIMEOUT, 3 );
 						curl_setopt( $curly[ $network ], CURLOPT_NOSIGNAL, 1 );
 						curl_setopt( $curly[ $network ], CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
 						// curl_setopt($curly[$network], CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);

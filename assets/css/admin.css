@@ -1,17 +1,22 @@
+#social_warfare.postbox {
+    display: none;
+}
+
 .notAvailable {
 	opacity: 0.3;
 }
 
 .swp_CountDown {
 	background-color: #CCC;
-	display: inline-block;
-	float: right;
+	display: block;
 	padding: 5px 15px;
 	-webkit-border-radius: 3px 3px 0 0;
 	        border-radius: 3px 3px 0 0;
 	color: #FFF;
 	font-weight: bold;
-	margin-top: -27px;
+	max-width: 200px;
+	float: right;
+	font-size: 12px;
 }
 
 .swp_CountDown.swp_blue {
@@ -47,52 +52,10 @@
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 
-.swpmb-field.swpmb-textarea-wrapper.swp_og_title,
-.swpmb-field.swpmb-textarea-wrapper.swp_og_description,
-.swpmb-field.swpmb-textarea-wrapper.swp_pinterest_descriptionWrapper,
-.swpmb-field.swpmb-textarea-wrapper.swp_customTweetWrapper {
-	width: 63%;
-	float: left;
-}
-
-.swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper {
-    width: 63%;
-    float: left;
-}
-
-.swpmb-field.swpmb-text-wrapper.swp_share_recoveryWrapper input {
-    width: 100%;
-}
-
-
-.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper,
-.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper,
-.swpmb-field.swpmb-select-wrapper.swp_post_locationWrapper,
-.swpmb-field.swpmb-select-wrapper.swp_float_locationWrapper {
-	width:32%;
-	float:left;
-	min-width:320px;
-}
-.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extensionWrapper select,
-.swpmb-field.swpmb-select-wrapper.swp_pin_browser_extension_locationWrapper select,
-.swpmb-field.swpmb-select-wrapper.swp_post_locationWrapper select,
-.swpmb-field.swpmb-select-wrapper.swp_float_locationWrapper select {
-	width:90%;
-}
-
-.swpmb-field.swpmb-image_advanced-wrapper.swp_og_imageWrapper,
-.swpmb-field.swpmb-image_advanced-wrapper.swp_pinterest_imageWrapper {
-	width: 30%;
-	float: left;
-	margin-right: 3%;
-}
-
-#social_warfare .swpmb-label, #social_warfare .swpmb-input {
-	width: 100%;
-}
 
 #social_warfare .swpmb-field {
 	margin-top: 10px;
+	position: relative;
 }
 
 #social_warfare .swpmb-image-item,
@@ -100,6 +63,7 @@
 #social_warfare .swpmb-media-content .centered,
 #social_warfare .swpmb-media-content img {
 	width: 100%;
+    margin-bottom: -5px;
 	height: auto;
 	max-height: none;
 	-webkit-transform: none;
@@ -162,6 +126,7 @@
 
 #social_warfare .swpmb-label {
 	margin-bottom: 10px;
+	display: inline;
 }
 
 #social_warfare h2.hndle span:before {
@@ -169,38 +134,6 @@
 	margin-right: 10px;
 	font-family: "sw-icon-font";
 	vertical-align: middle;
-}
-
-#social_warfare .dashicons, #social_warfare .sw {
-	vertical-align: middle;
-	margin-right: 10px;
-	font-size: 18px;
-}
-
-#social_warfare .sw-premium-blocker {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-}
-
-#social_warfare .sw-premium-blocker:not(.no-icon):before {
-	font-family: 'sw-icon-font';
-	content: 'E';
-	font-size: 24px;
-	float: right;
-	margin: 10px 40px 0 0;
-}
-/*
-#social_warfare .swp_share_recoveryWrapper {
-    margin-left: 33%;
-    width: 90%;
-
-} */
-
-#social_warfare #swp_recovery_url {
-    /* width: 100%; */
 }
 
 .ui-tooltip.sw-admin-hover-notice {
@@ -324,15 +257,189 @@ a.swp-notice-cta {
     text-align: center;
 }
 
-#swp-admin-sidebar .swp-component-icon .dashicons {
-    font-size: 40px;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-}
 
 #swp-admin-sidebar .swp-component .swp-component-title {
     font-size: 26px;
     text-align: center;
     font-weight: bold;
+}
+
+/*********************************************************
+
+	Checkboxes
+
+*********************************************************/
+
+.sw-checkbox-toggle {
+	width: 150px;
+	height: 46px;
+	background-color: #30394f;
+	float: right;
+	margin: 5px 0;
+	cursor: pointer;
+	-webkit-border-radius: 4px;
+	        border-radius: 4px;
+	overflow: hidden;
+	position: relative;
+}
+
+.sw-checkbox-on, .sw-checkbox-off {
+	color: white;
+	font-size: 15px;
+	text-align: center;
+	line-height: 46px;
+	position: absolute;
+	top: 0;
+	width: 50%;
+	height: 100%;
+}
+
+.sw-checkbox-toggle[status="on"] .sw-checkbox-on {
+	left: 0;
+	background-color: #71C069;
+}
+
+.sw-checkbox-toggle[status="on"] .sw-checkbox-off,
+.sw-checkbox-toggle[status="off"] .sw-checkbox-on {
+	display: none;
+}
+
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-on {
+	display: none;
+}
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-off {
+	right: 0;
+	background-color: #ee464f;
+	display: block;
+}
+
+.sw-checkbox-toggle[status="off"] .sw-checkbox-off {
+	right: 0;
+	background-color: #ee464f;
+}
+
+/*
+ * mockup:
+ * https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d6f-af31cba9f8e2.png
+ */
+
+.swpmb-heading-wrapper h1 {
+     font-weight: bold;
+ }
+
+ .swpmb-meta-box {
+    margin: 25px 30px;
+}
+
+.swpmb-meta-container {
+	display: flex;
+	flex-flow: row wrap;
+	margin: 25px 0;
+}
+
+/**
+ * For the child containers.
+ * We want their content to stack vertically in the left/right columns.
+ */
+.swpmb-flex {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+/**
+ * The three main containers: full-width-wrap, left-wrap, and right-wrap.
+ *
+ */
+.swpmb-full-width-wrap {
+	order: 1;
+	width: 96.5%;
+}
+
+.swpmb-left-wrap,
+.swpmb-right-wrap {
+	order: 2;
+}
+
+@media screen and (max-width: 767px) {
+	.swpmb-left-wrap,
+	.swpmb-right-wrap {
+		flex-basis: 40%;
+	}
+}
+
+@media screen and (max-width: 996px) {
+	.swpmb-left-wrap,
+	.swpmb-right-wrap {
+		flex-basis: 44%;
+	}
+}
+
+@media screen and (min-width: 997px) {
+	.swpmb-left-wrap,
+	.swpmb-right-wrap {
+		flex-basis: 47%;
+	}
+}
+
+
+.swpmb-left-wrap {
+	margin-right: 30px;
+}
+
+.swpmb-right-wrap {
+	align-content: last baseline;
+}
+
+/**
+ * Children of the left-wrap and right-wrap.
+ *
+ */
+.swpmb-left,
+.swpmb-right {
+
+}
+
+.swpmb-input {
+	margin-top: 10px;
+}
+
+.swpmb-input textarea {
+	width: 100%;
+	resize: unset;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.swpmb-field.inline-select .swpmb-input {
+	margin-top: 0;
+    display: inline;
+	float: right;
+	border-radius: 5px;
+}
+
+.swpmb-field .swpmb-label {
+	margin-bottom: none;
+}
+
+/* Give the "Other" options more space around them. */
+.swpmb-field.other {
+    margin: 15px 0;
+}
+
+#social_warfare .sw-checkbox-toggle {
+   width: 84px;
+   height: 32px;
+}
+#social_warfare .sw-checkbox-on,
+#social_warfare .sw-checkbox-off {
+   font-size: 12px;
+   line-height: 32px;
+}
+
+#social_warfare p.description {
+	padding: 15px 0;
+}
+
+.wp-core-ui #social_warfare a.swpmb-add-media.button {
+	margin: 15px 0;
 }

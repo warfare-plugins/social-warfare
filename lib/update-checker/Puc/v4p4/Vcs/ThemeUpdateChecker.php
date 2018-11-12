@@ -81,8 +81,6 @@ if ( !class_exists('Puc_v4p4_Vcs_ThemeUpdateChecker', false) ):
 			return $update;
 		}
 
-		//FIXME: This is duplicated code. Both theme and plugin subclasses that use VCS share these methods.
-
 		public function setBranch($branch) {
 			$this->branch = $branch;
 			return $this;

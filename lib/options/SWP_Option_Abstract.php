@@ -11,14 +11,14 @@
  * @access    public
  *
  */
-class SWP_Abstract {
+class SWP_Option_Abstract {
 
 
 	/**
-	 * SWP_Utility_Trait provides useful tool like error handling.
+	 * SWP_Debug_Trait provides useful tool like error handling.
 	 *
 	 */
-	use SWP_Utility_Trait;
+	use SWP_Debug_Trait;
 
 
     /**

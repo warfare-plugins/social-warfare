@@ -16,6 +16,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class SWP_Plugin_Updater {
 
+
+	/**
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
+	 *
+	 */
+	use SWP_Debug_Trait;
+
+
 	private $api_url     = '';
 	private $api_data    = array();
 	private $name        = '';
@@ -508,15 +517,4 @@ class SWP_Plugin_Updater {
 	private function verify_ssl() {
 		return (bool) apply_filters( 'edd_sl_api_request_verify_ssl', true, $this );
 	}
-
-    private function debug() {
-        if ( true === SWP_Utility::debug( 'remove_plugin_transient' ) ) :
-            add_filter('site_transient_update_plugins', function($transient_data) {
-                unset($transient_data->response['social-warfare-pro/social-warfare-pro.php']);
-                unset($transient_data->response['social-warfare-affiliatewp/social-warfare-affiliatewp.php']);
-                return $transient_data;
-            }, 1);
-        endif;
-    }
-
 }

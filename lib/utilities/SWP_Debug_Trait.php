@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SWP_Utility_Trait
+ * SWP_Debug_Trait
  *
  * The purpose of this trait is to allow access to commonly used methods
  * throughout the various classes of the plugin without always having to
@@ -22,7 +22,7 @@
  * @since 3.0.0 | 07 APR 2018 | Created
  *
  */
-trait SWP_Utility_Trait {
+trait SWP_Debug_Trait {
 
 
 	/**
@@ -44,5 +44,32 @@ trait SWP_Utility_Trait {
             throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
         }
     }
+
+
+	/**
+	 * A method for debugging and outputting the class object.
+	 *
+	 * This method allows you to input a URL debug paramater into the browser's
+	 * address bar in order to easily output the entire contents of any given
+	 * object. It is called by using the lowercase name of the class without
+	 * the swp_ prefix. This is used following the ?swp_debug= parameter.
+	 *
+	 * Example: To debug SWP_Post_Cache, use ?swp_debug=post_cache.
+	 *
+	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @since  3.4.0 | 18 OCT 2018 | Moved into this trait.
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function debug() {
+		$class_name = str_replace('swp_', '', strtolower( __CLASS__ ) );
+		if( true === SWP_Utility::debug( $class_name ) ) {
+			echo "<pre>", var_dump( $this ), "</pre>";
+		}
+	}
+
+
+
 
 }

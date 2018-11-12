@@ -1,3 +1,11 @@
+@media print {
+    .swp_social_panel {
+        display: none;
+        opacity: 0;
+        visibility: collapse;
+    }
+}
+
 .swp_social_panel {
 	clear: both;
 	display: -webkit-box;
@@ -92,6 +100,7 @@ div.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer {
 	-webkit-flex-flow: row wrap;
 	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
+	box-shadow:none;
 }
 
 .swp_social_panel:not(.nc_floater):not(.swp_social_panelSide).swp_shift {
@@ -1251,6 +1260,14 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	font-size: 20px;
 	margin-right: 15px;
 	vertical-align: middle;
+}
+
+.mce-ico.sw-social-warfare:before {
+	color: #ee464f;
+}
+
+.mce-ico.sw-social-warfare {
+	color: #ee464f;
 }
 
 i.swp_google_plus_icon:before {

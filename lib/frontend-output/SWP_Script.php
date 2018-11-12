@@ -136,7 +136,8 @@ class SWP_Script {
 
     	wp_localize_script( 'social_warfare_admin_script', 'swp_localize_admin',
     		array(
-    			'swp_characters_remaining' => __( 'Characters Remaining', 'social-warfare' ),
+				// 'swp_characters_remaining' => __( 'Characters Remaining', 'social-warfare' ),
+    			'swp_characters_remaining' => '',
     		)
     	);
     }
@@ -177,11 +178,9 @@ class SWP_Script {
      *
      */
     public function click_tracking( $info ) {
-        global $swp_user_options;
-        $options = $swp_user_options;
 
 		// Output the JS variable for click tracking if it is turned on.
-    	if ( isset( $options['click_tracking'] ) && true === $options['click_tracking'] ) {
+    	if ( true === SWP_Utility::get_option( 'click_tracking' ) ) {
     		$info['footer_output'] .= 'var swpClickTracking = true;';
     	} else {
     		$info['footer_output'] .= 'var swpClickTracking = false;';
