@@ -4,7 +4,11 @@
  * Plugin URI:  https://warfareplugins.com
  * Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Version:     3.3.3
+=======
+ * Version:     3.3.92
+>>>>>>> development-3.4
 =======
  * Version:     3.3.92
 >>>>>>> development-3.4
@@ -21,7 +25,11 @@ defined( 'WPINC' ) || die;
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 define( 'SWP_VERSION' , '3.3.3' );
+=======
+define( 'SWP_VERSION' , '3.3.92' );
+>>>>>>> development-3.4
 =======
 define( 'SWP_VERSION' , '3.3.92' );
 >>>>>>> development-3.4
