@@ -419,7 +419,7 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.createFloatHorizontalPanel = function() {
 
 		//* If a horizontal panel does not exist, we can not create a bar.
-		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
@@ -470,7 +470,7 @@ window.socialWarfare = window.socialWarfare || {};
    *
    */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
-		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
@@ -656,7 +656,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingHorizontalPanel = function() {
-		if (!socialWarfare.panels.staticHorizontal.length || !socialWarfare.panels.staticHorizontal[0].length) {
+		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
