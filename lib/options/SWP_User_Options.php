@@ -214,12 +214,15 @@ class SWP_User_Options {
 	public function generate_whitelist() {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$post_types = get_post_types();
 		foreach( $post_types as $post_type ) {
 			$whitelist[] = 'swp_og_type_' . $post_type;
 		}
 
 =======
+=======
+>>>>>>> development-3.4
 
 		/**
 		 * The addons will contain the registration data items to ensure that
@@ -243,6 +246,9 @@ class SWP_User_Options {
 		 * return the existing whitelist from above.
 		 *
 		 */
+<<<<<<< HEAD
+>>>>>>> development-3.4
+=======
 >>>>>>> development-3.4
         if ( empty( $addons) ) {
             return $whitelist;
