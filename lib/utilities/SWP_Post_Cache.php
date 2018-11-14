@@ -270,17 +270,16 @@ class SWP_Post_Cache {
 	 */
     public function rebuild_cached_data() {
 
-		if( true === $this->should_shares_be_fetched() ) {
+		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
+	        $this->rebuild_pinterest_image();
+	        $this->rebuild_open_graph_image();
+			$this->process_urls();
+	        $this->reset_timestamp();
+
+			// A hook to allow third-party functions to run.
+			do_action( 'swp_cache_rebuild', $this->post_id );
 		}
-
-        $this->rebuild_pinterest_image();
-        $this->rebuild_open_graph_image();
-		$this->process_urls();
-        $this->reset_timestamp();
-
-		// A hook to allow third-party functions to run.
-		do_action( 'swp_cache_rebuild', $this->post_id );
 	}
 
 
@@ -295,11 +294,11 @@ class SWP_Post_Cache {
 	 * @return bool True: fetch share counts; False: don't fetch counts.
 	 *
 	 */
-	protected function should_shares_be_fetched() {
+	protected function is_post_published() {
 
 		// Only fetch on published posts
 		if( 'publish' !== get_post_status( $this->post_id ) ) {
-			$this->debug_message( 'No Shares Fetched. This post is not yet published.' );
+			$this->debug_message( 'No data updated. This post is not yet published.' );
 			return false;
 		}
 
