@@ -212,6 +212,8 @@ class SWP_User_Options {
 	 *
 	 */
 	public function generate_whitelist() {
+
+
 		/**
 		 * The addons will contain the registration data items to ensure that
 		 * when filtering occurs, we do not filter out license keys or tiemstamps.
