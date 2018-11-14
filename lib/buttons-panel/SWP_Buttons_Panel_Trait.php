@@ -35,28 +35,19 @@
  *
  */
 trait SWP_Buttons_Panel_Trait {
-
-
 	protected function append_panel_to_content() {
-
-
 		//* Add the Panel markup based on the location.
 		switch ($this->location) {
 			case 'both' :
 				$content = $this->html . $this->content . $this->html;
-			break;
 			case 'above' :
 				$content = $this->html . $this->content;
-			break;
 			case 'below' :
 				$content = $this->content . $this->html;
-			break;
-
 			case 'none' :
 				$content = $this->content;
 			default :
 				$content = $this->content;
-			break;
 		}
 
 		$this->content = $content;
@@ -112,7 +103,7 @@ trait SWP_Buttons_Panel_Trait {
 		 * bail out so the PHP doesn't throw undefined property errors.
 		 *
 		 */
-		if ( empty( $this->post_data ) ) {
+		if( empty( $this->post_data ) ) {
 			return false;
 		}
 
@@ -360,6 +351,8 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	public function get_float_location() {
+
+
 		/**
 		 * These are the float location settings all across the WordPress
 		 * ecosystem. There is a global on/off setting, a per post type on/off
@@ -377,34 +370,9 @@ trait SWP_Buttons_Panel_Trait {
 		 * to generate a proper post_id.
 		 *
 		 */
-		if( !isset( $this->post_id ) ) {
- 			return 'none';
- 		}
-
-
-		/**
-		 * We don't use floating buttons on the home page or if we weren't able
-		 * to generate a proper post_id.
-		 *
-		 */
-		if( is_home() && !is_front_page() ) {
-			$float_location = get_post_meta( $this->post_id, 'swp_float_location' );
-
-			switch ( $float_location ) {
-				case 'on' :
-				    return SWP_Utility::get_option( 'float_location' );
-				case 'off' :
-			        return 'none';
-				case 'default' :
-				    if ( 'on' == SWP_Utility::get_option( 'float_location_page' ) ) {
-						return SWP_Utility::get_option( 'float_location' );
-					}
-
-					return 'none';
-				default :
-				    return 'none';
-			}
- 		}
+		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
+			return 'none';
+		}
 
 
 		/**
