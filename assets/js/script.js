@@ -480,7 +480,7 @@ window.socialWarfare = window.socialWarfare || {};
 			left = 0;
 			width = "100%";
 		} else {
-		    var content = $(".swp-content-locator").parent()
+		    var content = socialWarfare.panels.staticHorizontal.parent()
 			left = content.offset().left
 			width = content.width();
 		}
