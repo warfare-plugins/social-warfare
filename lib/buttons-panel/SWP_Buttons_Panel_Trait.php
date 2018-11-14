@@ -35,19 +35,28 @@
  *
  */
 trait SWP_Buttons_Panel_Trait {
+
+
 	protected function append_panel_to_content() {
+
+
 		//* Add the Panel markup based on the location.
 		switch ($this->location) {
 			case 'both' :
 				$content = $this->html . $this->content . $this->html;
+			break;
 			case 'above' :
 				$content = $this->html . $this->content;
+			break;
 			case 'below' :
 				$content = $this->content . $this->html;
+			break;
+
 			case 'none' :
 				$content = $this->content;
 			default :
 				$content = $this->content;
+			break;
 		}
 
 		$this->content = $content;
@@ -373,7 +382,7 @@ trait SWP_Buttons_Panel_Trait {
 		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
 			return 'none';
 		}
-
+		
 
 		/**
 		 * Do not print floating buttons on archive pages.
