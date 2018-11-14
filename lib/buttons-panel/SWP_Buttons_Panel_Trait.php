@@ -382,7 +382,7 @@ trait SWP_Buttons_Panel_Trait {
 		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
 			return 'none';
 		}
-		
+
 
 		/**
 		 * Do not print floating buttons on archive pages.
@@ -641,26 +641,6 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
-		* If total shares are turned off and this isn't a shortcode then we're
-		* not going to render any total shares.
-		*
-		*/
-		if ( false == $this->get_option('total_shares') && false == $this->is_shortcode) {
-		   return false;
-		}
-
-
-		/**
-		* If minimum share counts are enabled and this post hasn't achieved
-		* that threshold of shares yet, then we don't show them.
-		*
-		*/
-		if ( $this->shares['total_shares'] < $this->get_option('minimum_shares') ) {
-		   return false;
-		}
-
-
-		/**
 		* If this is a shortcode, the buttons argument has been specifically
 		* passed into the function, and no total/totals were passed in then
 		* we do not render the total shares.
@@ -674,6 +654,27 @@ trait SWP_Buttons_Panel_Trait {
 		if ( $this->is_shortcode && !$shortcode_totals ) {
 		   return false;
 		}
+
+
+		/**
+		* If total shares are turned off and this isn't a shortcode then we're
+		* not going to render any total shares.
+		*
+		*/
+		if ( false == $this->get_option('total_shares') ) {
+		   return false;
+		}
+
+
+		/**
+		* If minimum share counts are enabled and this post hasn't achieved
+		* that threshold of shares yet, then we don't show them.
+		*
+		*/
+		if ( $this->shares['total_shares'] < $this->get_option('minimum_shares') ) {
+		   return false;
+		}
+
 
 		// If none of the flags above get caught, return true.
 		return true;
