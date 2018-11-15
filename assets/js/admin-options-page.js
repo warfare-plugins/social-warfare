@@ -841,11 +841,11 @@
 		$(".swp-icon-tooltip").remove();
 	}
 
-   function addIconTooltips() {
+	function addIconTooltips() {
 		$("[class*='sw-'][class*='-icon']").each(function(index, icon) {
 			$(icon).hover(createTooltip, removeTooltip);
 		});
-  }
+	}
 
 	$(document).ready(function() {
 		handleSettingSave();
