@@ -712,14 +712,15 @@ trait SWP_Buttons_Panel_Trait {
 			$this->inner_html = $total_shares_html . $buttons_html;
 		}
 
-
 		/**
 		 * If it's not a set of floating buttons and it's not set to the left,
 		 * then we attach the total shares on the right.
 		 *
 		 */
-		$this->inner_html = $buttons_html . $total_shares_html;
 
+		else {
+			$this->inner_html = $buttons_html . $total_shares_html;
+		}
 	}
 
 
