@@ -26,52 +26,51 @@ var swpWidget, widgetSubmit;
 */
 function swpConditionalFields() {
 	if (typeof $ == 'undefined') {
-	  $ = jQuery;
+		$ = jQuery;
 	}
 
 	function swp_selected(name) {
-			return $('select[name="' + name + '"]').val();
+		return $('select[name="' + name + '"]').val();
 	}
 
 	function swp_checked(name) {
-			return $('[name="' + name + '"]').prop('checked');
+		return $('[name="' + name + '"]').prop('checked');
 	}
 
 	function string_to_bool(string) {
-			if (string === 'true') { string = true };
-			if (string === 'false'){ string = false };
-			return string;
+		if (string === 'true') { string = true };
+		if (string === 'false'){ string = false };
+		return string;
 	}
 
 	// Loop through all the fields that have dependancies
 	$("[data-dep]").each(function() {
-
 		// Fetch the conditional values
 		var condition = $(this).data('dep');
 		var required = JSON.parse(JSON.stringify($(this).data('dep_val')));
 
 		// Check if we're on the options page or somewhere else
 		if (window.location.href.indexOf("page=social-warfare") === -1) {
-				var conditionEl = $(this).parents('.widgets-holder-wrap').find('[data-swp-name="' + condition + '"]');
+			var conditionEl = $(this).parents('.widgets-holder-wrap').find('[data-swp-name="' + condition + '"]');
 		} else {
-				var conditionEl = $('[name="' + condition + '"]')[0];
+			var conditionEl = $('[name="' + condition + '"]')[0];
 		}
 
 		var value;
 
 		if (typeof conditionEl === 'undefined') {
-				conditionEl = $('[name="' + condition + '"]')[0];
+			conditionEl = $('[name="' + condition + '"]')[0];
 
-				if (typeof conditionEl === 'undefined') {
-					conditionEl = $('[field$=' + condition + ']')[0];
-				}
+			if (typeof conditionEl === 'undefined') {
+				conditionEl = $('[field$=' + condition + ']')[0];
+			}
 		}
 
 		// Fetch the value of checkboxes or other input types
 		if ($(conditionEl).attr('type') == 'checkbox') {
-				value = $(conditionEl).prop('checked');
+			value = $(conditionEl).prop('checked');
 		} else {
-				value = $(conditionEl).val();
+			value = $(conditionEl).val();
 		}
 
 		value = string_to_bool(value);
@@ -80,19 +79,20 @@ function swpConditionalFields() {
 		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
 
 		if (window.location.href.indexOf("page=social-warfare") !== -1) {
-				// If the required value matches and it's parent is also being shown, show this conditional field
-				if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
-		} else {
-				// If the required value matches, show this conditional field
-				if ($.inArray(value, required) !== -1 || value === required) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
+			// If the required value matches and it's parent is also being shown, show this conditional field
+			if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+		}
+		else {
+			// If the required value matches, show this conditional field
+			if ($.inArray(value, required) !== -1 || value === required) {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
 		}
 	});
 
@@ -115,17 +115,17 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	//* Make sure the elements exist before trying to read them.
 	//*
 	var widgetFinder = setInterval(function() {
-			if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
+		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
 
-			swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
-			widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
+		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
+		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
 
 		//* Force swpConditionalFields to run when the widget is opened or saved.
-			$(swpWidget).on("click", swpConditionalFields);
+		$(swpWidget).on("click", swpConditionalFields);
 
-			$(widgetSubmit).on("click", function() {
-				setTimeout(swpConditionalFields, 600);
-			});
+		$(widgetSubmit).on("click", function() {
+			setTimeout(swpConditionalFields, 600);
+		});
 
 	}, 50);
 }
@@ -138,18 +138,18 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	}
 
 	socialWarfareAdmin.linkLength = function(input) {
-			var tmp = '';
+		var tmp = '';
 
-			for (var i = 0; i < 23; i++) {
-				tmp += 'o';
-			}
+		for (var i = 0; i < 23; i++) {
+			tmp += 'o';
+		}
 
-			return input.replace(/(http:\/\/[\S]*)/g, tmp).length;
+		return input.replace(/(http:\/\/[\S]*)/g, tmp).length;
 	};
 
 	function updateCharactersRemaining(containerSelector, characterLimit) {
 		var input = $("#social_warfare #" + containerSelector);
-			var container = input.parent();
+		var container = input.parent();
 		var remaining = characterLimit - input.val().length
 
 		if (containerSelector == "swp_custom_tweet") {
@@ -163,7 +163,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 			container.find(".swp_CountDown").removeClass("swp_blue").addClass("swp_red")
 		}
 
-			container.find(".counterNumber").text(remaining)
+		container.find(".counterNumber").text(remaining)
 	}
 
 	function toggleCustomThumbnailFields(show) {
@@ -173,7 +173,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 			$(".custom_thumb_size").show();
 		} else {
 			$(".custom_thumb_size").hide();
-	  }
+		}
 	}
 
 	function noticeClickHandlers() {
@@ -209,16 +209,16 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		event.preventDefault();
 
 		var checked = !($(this).attr('status') == 'on');
-				var selector = $(this).attr("field");
+		var selector = $(this).attr("field");
 		var checkbox = $(selector);
 
 		if (checked) {
-				$(this).attr('status', 'on');
-				checkbox.prop('checked', true).prop('value', true);
-			} else {
-				$(this).attr('status', 'off');
-				checkbox.prop('checked', false).prop('value', false);
-			}
+			$(this).attr('status', 'on');
+			checkbox.prop('checked', true).prop('value', true);
+		} else {
+			$(this).attr('status', 'off');
+			checkbox.prop('checked', false).prop('value', false);
+		}
 	}
 
 	/**
@@ -229,23 +229,23 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	 *
 	 * @param  string textareaID The textarea whose label is too close.
 	 */
-		function updateTextareaStyle(textareaID) {
-			var style = {
-				top: "-25px",
-				position: "relative"
-			}
-
-			$("#" + textareaID).css("border-top-right-radius", 0) // Makes the character counter look connected to the input.
-							   .parent().css(style);              // Positions the input closer to label.
+	function updateTextareaStyle(textareaID) {
+		var style = {
+			top: "-25px",
+			position: "relative"
 		}
+
+		$("#" + textareaID).css("border-top-right-radius", 0) // Makes the character counter look connected to the input.
+						   .parent().css(style);              // Positions the input closer to label.
+	}
 
 
 	function createCharactersRemaining(selector, textLimit) {
 	  // var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
-	  var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
+		var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
 
-			updateTextareaStyle(selector)
-	  $("#social_warfare #" + selector).parent().prepend(div);
+		updateTextareaStyle(selector)
+		$("#social_warfare #" + selector).parent().prepend(div);
 	}
 
 	function updateImageInputs() {
@@ -325,8 +325,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	function putFieldsInContainers() {
 		$(".swpmb-meta-container[data-type]").map(function(index, container) {
 			var type = $(this).data('type');
-						if (!type) {
-							return;
+			if (!type) {
+				return;
 			}
 
 			var field = $(".swpmb-field." + type);
@@ -359,19 +359,19 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		});
 	}
 
-		function displayMetaBox() {
-				if (!$($(".swpmb-media-list").length)) return;
+	function displayMetaBox() {
+		if (!$($(".swpmb-media-list").length)) return;
 
+		updateImageInputs();
+		clearInterval(window.initSWMetabox);
+		setupMetaBox();
+
+		//* Call updateImageInputs again to resize existing images.
+		setTimeout(function() {
 				updateImageInputs();
-				clearInterval(window.initSWMetabox);
-				setupMetaBox();
-
-				//* Call updateImageInputs again to resize existing images.
-				setTimeout(function() {
-						updateImageInputs();
-						$("#social_warfare.postbox").show();
-				}, 400);
-		}
+				$("#social_warfare.postbox").show();
+		}, 400);
+	}
 
 	$(document).ready(function() {
 		noticeClickHandlers();
