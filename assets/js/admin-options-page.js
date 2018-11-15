@@ -825,11 +825,6 @@
 
 		$(tooltip).css(css);
 
-		//* Name the function here so it can be removed with $.off().
-		function removeTooltip() {
-			$(".swp-icon-tooltip").remove();
-		}
-
 		$(this).parents(".sw-grid").first().append(tooltip);
 
 		//* Give it a click listener to remove the tooltip after moving the mouse.
@@ -840,6 +835,11 @@
 				$("body").off("mousemove");
 			});
 		});
+	}
+
+	//* Name the function here so it can be removed with $.off().
+	function removeTooltip() {
+		$(".swp-icon-tooltip").remove();
 	}
 
 	function removeTooltip(event) {
