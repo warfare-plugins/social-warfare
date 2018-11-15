@@ -784,12 +784,17 @@
 	  $(preview).text($(textarea).val());
 	}
 
+    // Addes a tooltip to a network icon, displaying the network's name.
 	function createTooltip(event) {
 		var target = event.target;
 		var network = $(target).data("network");
 		var networkBounds = event.target.getBoundingClientRect();
 		var tooltipBound = {};
-		var left, top;
+		var css = {
+			position: "absolute",
+			top: 0,
+			left: 0
+		}
 
 		//* Uppercase each part of a snake_cased name.
 		if (network.indexOf("_") > 0) {
@@ -813,15 +818,12 @@
 		//* If the tooltip is bigger than the network icon, center it above.
 		if (tooltipBounds.width > networkBounds.width) {
 			var delta = tooltipBounds.width - networkBounds.width;
-			left = networkBounds.left - 5 - (delta * 2);
+			css.left = networkBounds.left - 5 - (delta * 2);
 		} else {
-			left = networkBounds.left - 10;
+			css.left = networkBounds.left - 10;
 		}
 
-		$(tooltip).css({
-			left:left,
-			top: top
-		});
+		$(tooltip).css(css);
 
 		//* Name the function here so it can be removed with $.off().
 		function removeTooltip() {
