@@ -823,11 +823,10 @@
 		//* Give it a click listener to remove the tooltip after moving the mouse.
 		$(icon).on("mousedown", function(e) {
 
-			// $("body").mousemove(function() {
-			// 	removeTooltip();
-			// 	$("body").off("mousemove");
-			// });
-			$("body").mousemove(removeTooltip);
+			$("body").mousemove(function() {
+				removeTooltip();
+				$("body").off("mousemove");
+			});
 		});
 	}
 
