@@ -480,10 +480,16 @@ window.socialWarfare = window.socialWarfare || {};
 		if (socialWarfare.isMobile()) {
 			left = 0;
 			width = "100%";
-		} else {
-		    var content = socialWarfare.panels.staticHorizontal.parent()
-			left = content.offset().left
-			width = content.width();
+		}
+
+		else {
+			left = panel.offset().left
+			width = panel.width();
+
+			if (width == 100) {
+	            //* The panel had its width as 'auto', which is 100%
+				width = panel.parent().parent().width();
+			}
 		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
