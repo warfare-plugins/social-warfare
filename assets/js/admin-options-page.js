@@ -837,18 +837,13 @@
 		});
 	}
 
-	//* Name the function here so it can be removed with $.off().
-	function removeTooltip() {
-		$(".swp-icon-tooltip").remove();
-	}
-
 	function removeTooltip(event) {
 		$(".swp-icon-tooltip").remove();
 	}
 
    function addIconTooltips() {
 		$("[class*='sw-'][class*='-icon']").each(function(index, icon) {
-			$(icon).hover(createTooltip, $(".swp-icon-tooltip").remove);
+			$(icon).hover(createTooltip, removeTooltip);
 		});
   }
 
