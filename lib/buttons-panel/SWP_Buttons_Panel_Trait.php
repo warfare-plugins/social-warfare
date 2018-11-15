@@ -466,10 +466,10 @@ trait SWP_Buttons_Panel_Trait {
 		}
 
 		return 'data-float-mobile="none" ';
-		}
+	}
 
 
-		public function get_float_position() {
+	public function get_float_position() {
 		$location = $this->get_option( 'float_location' );
 
 		if ( 'left' == $location || 'right' == $location ) {
