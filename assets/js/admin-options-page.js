@@ -793,8 +793,8 @@
 		var tooltipBounds = {};
 		var knownMargin = 4; //* Paddig applied by CSS which must be accounted for.
 		var css = {
-			top: 0,
-			left: 0
+			top: $(icon).position().top - 50,
+			left: $(icon).position().left + knownMargin
 		}
 
 		//* Uppercase each part of a snake_cased name.
@@ -807,20 +807,12 @@
 		}
 
 		//* Uppercase the first character of the name.
-		network = network[0].toUpperCase() + network.slice(1, network.length)
-
-		// tooltipBounds = tooltip.getBoundingClientRect();
-
-		css.top = $(icon).position().top - 50;
-		css.left = $(icon).position().left + knownMargin;
-
+		network = network[0].toUpperCase() + network.slice(1, network.length);
 
 		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').css(css).get(0);
-
-
 		$(this).parents(".sw-grid").first().append(tooltip);
 
-        //* When tooltip is wider than icon, center tooltip over the icon. 
+        //* When tooltip is wider than icon, center tooltip over the icon.
 		if ($(tooltip).outerWidth() > $(icon).outerWidth()) {
 			var delta = $(tooltip).outerWidth() - $(icon).outerWidth();
 			css.left = css.left - (delta / 2);
