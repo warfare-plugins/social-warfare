@@ -809,22 +809,13 @@
 		//* Uppercase the first character of the name.
 		network = network[0].toUpperCase() + network.slice(1, network.length)
 
-		tooltipBounds = tooltip.getBoundingClientRect();
+		// tooltipBounds = tooltip.getBoundingClientRect();
 
-		css.top = networkBounds.top - 120;
+		css.top = $(icon).position().top - 50;
+		css.left = $(icon).position().left;
 
-		//* If the tooltip is bigger than the network icon, center it above.
-		if (tooltipBounds.width > networkBounds.width) {
-			var delta = tooltipBounds.width - networkBounds.width;
-			css.left = networkBounds.left - 5 - (delta * 2);
-		} else {
-			css.left = networkBounds.left - 10;
-		}
+		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').css(css).get(0);
 
-		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
-		document.body.append(tooltip);
-
-		$(tooltip).css(css);
 		$(this).parents(".sw-grid").first().append(tooltip);
 
 		//* Give it a click listener to remove the tooltip after moving the mouse.
