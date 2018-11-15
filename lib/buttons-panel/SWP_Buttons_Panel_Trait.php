@@ -710,6 +710,7 @@ trait SWP_Buttons_Panel_Trait {
 		 */
 		if( $is_side_floating || $is_left_aligned ) {
 			$this->inner_html = $total_shares_html . $buttons_html;
+			return;
 		}
 
 
