@@ -673,6 +673,10 @@ window.socialWarfare = window.socialWarfare || {};
 		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
 		var paddingProp = "padding-" + location;
 
+		if (location == 'off') {
+			return;
+		}
+
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
 			$(".nc_wrapper").hide();
@@ -695,6 +699,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
+		console.log("Updating padding " , paddingProp, "to be ", newPadding)
 		$("body").css(paddingProp, newPadding);
 	}
 
