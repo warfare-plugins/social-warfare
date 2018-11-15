@@ -791,8 +791,8 @@
 		var network = $(icon).data("network");
 		var networkBounds = icon.getBoundingClientRect();
 		var tooltipBounds = {};
+		var knownMargin = 4; //* Paddig applied by CSS which must be accounted for.
 		var css = {
-			position: "absolute",
 			top: 0,
 			left: 0
 		}
@@ -812,11 +812,21 @@
 		// tooltipBounds = tooltip.getBoundingClientRect();
 
 		css.top = $(icon).position().top - 50;
-		css.left = $(icon).position().left;
+		css.left = $(icon).position().left + knownMargin;
+
 
 		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').css(css).get(0);
 
+
 		$(this).parents(".sw-grid").first().append(tooltip);
+
+        //* When tooltip is wider than icon, center tooltip over the icon. 
+		if ($(tooltip).outerWidth() > $(icon).outerWidth()) {
+			var delta = $(tooltip).outerWidth() - $(icon).outerWidth();
+			css.left = css.left - (delta / 2);
+			$(tooltip).css(css);
+		}
+
 
 		//* Give it a click listener to remove the tooltip after moving the mouse.
 		$(icon).on("mousedown", function(e) {
