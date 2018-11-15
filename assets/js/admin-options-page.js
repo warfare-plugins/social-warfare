@@ -786,10 +786,11 @@
 
     // Addes a tooltip to a network icon, displaying the network's name.
 	function createTooltip(event) {
-		var target = event.target;
-		var network = $(target).data("network");
-		var networkBounds = event.target.getBoundingClientRect();
-		var tooltipBound = {};
+		var tooltip;
+		var icon = event.target;
+		var network = $(icon).data("network");
+		var networkBounds = icon.getBoundingClientRect();
+		var tooltipBounds = {};
 		var css = {
 			position: "absolute",
 			top: 0,
@@ -808,12 +809,9 @@
 		//* Uppercase the first character of the name.
 		network = network[0].toUpperCase() + network.slice(1, network.length)
 
-		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
-		document.body.append(tooltip);
-
 		tooltipBounds = tooltip.getBoundingClientRect();
 
-		top  = networkBounds.top - 120;
+		css.top = networkBounds.top - 120;
 
 		//* If the tooltip is bigger than the network icon, center it above.
 		if (tooltipBounds.width > networkBounds.width) {
@@ -823,17 +821,20 @@
 			css.left = networkBounds.left - 10;
 		}
 
-		$(tooltip).css(css);
+		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
+		document.body.append(tooltip);
 
+		$(tooltip).css(css);
 		$(this).parents(".sw-grid").first().append(tooltip);
 
 		//* Give it a click listener to remove the tooltip after moving the mouse.
-		$(target).on("mousedown", function(e) {
+		$(icon).on("mousedown", function(e) {
 
-			$("body").mousemove(function() {
-				$(".swp-icon-tooltip").remove();
-				$("body").off("mousemove");
-			});
+			// $("body").mousemove(function() {
+			// 	removeTooltip();
+			// 	$("body").off("mousemove");
+			// });
+			$("body").mousemove(removeTooltip);
 		});
 	}
 
