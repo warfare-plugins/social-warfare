@@ -475,14 +475,22 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		var left, width = 0;
+		var panel = socialWarfare.panels.staticHorizontal;
 
 		if (socialWarfare.isMobile()) {
 			left = 0;
 			width = "100%";
-		} else {
-		    var content = socialWarfare.panels.staticHorizontal.parent()
-			left = content.offset().left
-			width = content.width();
+		}
+
+		else {
+			left = panel.parent().parent().offset().left
+			width = panel.width();
+
+			if (width == 100) {
+				console.log("changing width");
+	            //* The panel had its width as 'auto', which is 100%
+				width = panel.parent().parent().width();
+			}
 		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
@@ -665,13 +673,17 @@ window.socialWarfare = window.socialWarfare || {};
 		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
 		var paddingProp = "padding-" + location;
 
+		if (location == 'off') {
+			return;
+		}
+
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
 			$(".nc_wrapper").hide();
 
 
 			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
-				$("#wpadminbar").css("top", "initial");
+				$("#wpadminbar").css("top", 0);
 			}
 		}
 
@@ -681,7 +693,7 @@ window.socialWarfare = window.socialWarfare || {};
 			$(".nc_wrapper").show();
 
             //* Compensate for the margin-top added to <html> by #wpadminbar.
-			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
+			if (socialWarfare.isMobile() && location == 'top' && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", panel.parent().height());
 			}
 		}
