@@ -483,10 +483,11 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		else {
-			left = panel.offset().left
+			left = panel.parent().parent().offset().left
 			width = panel.width();
 
 			if (width == 100) {
+				console.log("changing width");
 	            //* The panel had its width as 'auto', which is 100%
 				width = panel.parent().parent().width();
 			}
@@ -495,9 +496,7 @@ window.socialWarfare = window.socialWarfare || {};
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
 		socialWarfare.panels.floatingHorizontal.css({
 			width: width,
-			left: left,
-			//* They are not quite centered with the content when created this way. This margin helps.
-			marginLeft: "-27px"
+			left: left
 		});
 	}
 
