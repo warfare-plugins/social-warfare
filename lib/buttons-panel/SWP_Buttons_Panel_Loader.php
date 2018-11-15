@@ -75,7 +75,7 @@ class SWP_Buttons_panel_Loader {
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
         add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
-		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback' ) , 20 );
+		add_action( 'the_content', array( $this, 'add_static_panel_fallback' ) , 20 );
     }
 
 
@@ -195,7 +195,7 @@ class SWP_Buttons_panel_Loader {
      * @return void The rendered HTML is echoed to the screen.
      *
      */
-	function add_static_panel_fallback() {
+	function add_static_panel_fallback( $content ) {
 		global $post;
 
 
@@ -274,7 +274,7 @@ class SWP_Buttons_panel_Loader {
 		$html  = '<div style="display: none; visibility: collapse; opacity: 0">';
 		$html .= $staticHorizontal->render_html();
 		$html .= '</div>';
-		echo $html;
+		return $content . $html; 
 	}
 
 
