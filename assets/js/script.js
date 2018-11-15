@@ -475,6 +475,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		var left, width = 0;
+		var panel = socialWarfare.panels.staticHorizontal;
 
 		if (socialWarfare.isMobile()) {
 			left = 0;
