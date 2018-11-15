@@ -683,7 +683,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
-				$("#wpadminbar").css("top", "initial");
+				$("#wpadminbar").css("top", 0);
 			}
 		}
 
@@ -693,13 +693,12 @@ window.socialWarfare = window.socialWarfare || {};
 			$(".nc_wrapper").show();
 
             //* Compensate for the margin-top added to <html> by #wpadminbar.
-			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
+			if (socialWarfare.isMobile() && location == 'top' && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", panel.parent().height());
 			}
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-		console.log("Updating padding " , paddingProp, "to be ", newPadding)
 		$("body").css(paddingProp, newPadding);
 	}
 
