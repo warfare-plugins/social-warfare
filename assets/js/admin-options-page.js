@@ -2,113 +2,113 @@
 (function(window, $, undefined) {
 	'use strict';
 
-    window.onload = function() {
-        /*********************************************************
-    		Temporary patch for the custom color selects.
-    	*********************************************************/
-        /*
-        *  Temp patch on the Visual Options colors.
-        *  This makes the custom colors appear/disappear as necessary.
-        */
-        var panelSelector = "[name=default_colors],[name=hover_colors], [name=single_colors]";
-        var floatSelector = "[name=float_default_colors], [name=float_hover_colors], [name=float_single_colors]";
+	window.onload = function() {
+		/*********************************************************
+			Temporary patch for the custom color selects.
+		*********************************************************/
+		/*
+		*  Temp patch on the Visual Options colors.
+		*  This makes the custom colors appear/disappear as necessary.
+		*/
+		var panelSelector = "[name=default_colors],[name=hover_colors], [name=single_colors]";
+		var floatSelector = "[name=float_default_colors], [name=float_hover_colors], [name=float_single_colors]";
 
-        //* Hide the custom color inputs by default.
-        $("[name=custom_color],[name=custom_color_outlines],[name=float_custom_color],[name=float_custom_color_outlines]").parent().parent().hide();
+		//* Hide the custom color inputs by default.
+		$("[name=custom_color],[name=custom_color_outlines],[name=float_custom_color],[name=float_custom_color_outlines]").parent().parent().hide();
 
-        //* Show custom fields if they have already been selected.
-        $(panelSelector).each(function(index, select) {
-            var value = $(select).val();
-            var customColor = $("[name=custom_color]").parent().parent();
-            var customOutlines = $("[name=custom_color_outlines]").parent().parent();
+		//* Show custom fields if they have already been selected.
+		$(panelSelector).each(function(index, select) {
+			var value = $(select).val();
+			var customColor = $("[name=custom_color]").parent().parent();
+			var customOutlines = $("[name=custom_color_outlines]").parent().parent();
 
-            if (value.indexOf("custom") !== -1) {
-                //* A custom value is set for this input.
-                if (value.indexOf('outlines') > 0) {
-                    customOutlines.show();
-                } else {
-                    customColor.show();
-                }
-            }
-        });
-
-
-        //* Same, for floating button options.
-        $(floatSelector).each(function(index, select) {
-            var value = $(select).val();
-            var customColor = $("[name=float_custom_color]").parent().parent();
-            var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
-
-            if (value.indexOf("custom") !== -1) {
-                //* A custom value is set for this input.
-                if (value.indexOf('outlines') > 0) {
-                    customOutlines.show();
-                } else {
-                    customColor.show();
-                }
-            }
-        });
+			if (value.indexOf("custom") !== -1) {
+				//* A custom value is set for this input.
+				if (value.indexOf('outlines') > 0) {
+					customOutlines.show();
+				} else {
+					customColor.show();
+				}
+			}
+		});
 
 
-        //* Change handlers for style.
-        $(panelSelector).on("change", function(e) {
-            var value = e.target.value;
-            var customColor = $("[name=custom_color]").parent().parent();
-            var customOutlines = $("[name=custom_color_outlines]").parent().parent();
+		//* Same, for floating button options.
+		$(floatSelector).each(function(index, select) {
+			var value = $(select).val();
+			var customColor = $("[name=float_custom_color]").parent().parent();
+			var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
 
-            handleCustomColors(e, panelSelector, customColor, customOutlines, value);
-        });
+			if (value.indexOf("custom") !== -1) {
+				//* A custom value is set for this input.
+				if (value.indexOf('outlines') > 0) {
+					customOutlines.show();
+				} else {
+					customColor.show();
+				}
+			}
+		});
 
 
-        //* Same, for floating button options.
-        $(floatSelector).on("change", function(e) {
-            var value = e.target.value;
-            var customColor = $("[name=float_custom_color]").parent().parent();
-            var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
+		//* Change handlers for style.
+		$(panelSelector).on("change", function(e) {
+			var value = e.target.value;
+			var customColor = $("[name=custom_color]").parent().parent();
+			var customOutlines = $("[name=custom_color_outlines]").parent().parent();
 
-            customColor.hide();
-            customOutlines.hide();
+			handleCustomColors(e, panelSelector, customColor, customOutlines, value);
+		});
 
-            handleCustomColors(e, floatSelector, customColor, customOutlines, value);
-        });
-    }
 
-    function handleCustomColors(event, selector, customColor, customOutlines) {
-        //* Create a notice about the custom colors.
-        var colorNotice = '<div id="color-notice"><p><span class="color-dismiss"></span><b>Note:</b> Custom colors will not show up in the preview, but will on your site.</p></div>';
-        var visibility = {
-            customColor: false,
-            customOutlines: false
-        };
+		//* Same, for floating button options.
+		$(floatSelector).on("change", function(e) {
+			var value = e.target.value;
+			var customColor = $("[name=float_custom_color]").parent().parent();
+			var customOutlines = $("[name=float_custom_color_outlines]").parent().parent();
 
-        $(selector).each(function(index, select) {
-            var val = $(select).val();
-            //* Check to see if this or a sibling input has a custom_color selected.
-            if (val.indexOf("custom") !== -1) {
-                if (val.indexOf("outlines") > 0) {
-                    visibility.customOutlines = true;
-                } else {
-                    visibility.customColor = true;
-                }
-            }
-        });
+			customColor.hide();
+			customOutlines.hide();
 
-        //* Hide or show the inputs based on results from above.
-        visibility.customColor ? customColor.slideDown() : customColor.slideUp();
-        visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
+			handleCustomColors(e, floatSelector, customColor, customOutlines, value);
+		});
+	}
 
-        if (visibility.customColor || visibility.customOutlines) {
-            $("body").append(colorNotice);
-            $(".color-dismiss").on("click", function() {
-                $("#color-notice").fadeOut("slow");
-            });
-        } else {
-            if ($("#color-notice").length) {
-                $("#color-notice").fadeOut("slow");
-            }
-        }
+	function handleCustomColors(event, selector, customColor, customOutlines) {
+		//* Create a notice about the custom colors.
+		var colorNotice = '<div id="color-notice"><p><span class="color-dismiss"></span><b>Note:</b> Custom colors will not show up in the preview, but will on your site.</p></div>';
+		var visibility = {
+			customColor: false,
+			customOutlines: false
+		};
 
-    }
+		$(selector).each(function(index, select) {
+			var val = $(select).val();
+			//* Check to see if this or a sibling input has a custom_color selected.
+			if (val.indexOf("custom") !== -1) {
+				if (val.indexOf("outlines") > 0) {
+					visibility.customOutlines = true;
+				} else {
+					visibility.customColor = true;
+				}
+			}
+		});
+
+		//* Hide or show the inputs based on results from above.
+		visibility.customColor ? customColor.slideDown() : customColor.slideUp();
+		visibility.customOutlines ? customOutlines.slideDown() : customOutlines.slideUp();
+
+		if (visibility.customColor || visibility.customOutlines) {
+			$("body").append(colorNotice);
+			$(".color-dismiss").on("click", function() {
+				$("#color-notice").fadeOut("slow");
+			});
+		} else {
+			if ($("#color-notice").length) {
+				$("#color-notice").fadeOut("slow");
+			}
+		}
+
+	}
 
 
 	/*********************************************************
@@ -119,13 +119,13 @@
 
 		if (document.body.createTextRange) {
 
-    		range = document.body.createTextRange();
-	  		range.moveToElementText(element);
-		  	range.select();
+			range = document.body.createTextRange();
+			range.moveToElementText(element);
+			range.select();
 
-    } else if (window.getSelection) {
+	} else if (window.getSelection) {
 
-    	selection = window.getSelection();
+		selection = window.getSelection();
 			range = document.createRange();
 
 			range.selectNodeContents(element);
@@ -144,19 +144,19 @@
 
 		// Loop through all the inputs
 		$('form.sw-admin-settings-form input, form.sw-admin-settings-form select, form.sw-admin-settings-form textarea').each(function() {
-  			var $field = $(this);
+			var $field = $(this);
 
-  			var name = $field.attr('name');
-  			var value;
+			var name = $field.attr('name');
+			var value;
 
-  			if ('checkbox' === $field.attr('type')) {
-    				value = $field.prop('checked');
-  			} else {
-    				value = $field.val();
-  			}
+			if ('checkbox' === $field.attr('type')) {
+					value = $field.prop('checked');
+			} else {
+					value = $field.val();
+			}
 
 
-		  	values[name] = value;
+			values[name] = value;
 		});
 
 		// Create the objects
@@ -164,8 +164,8 @@
 
 		// Loop through each active network
 		$('.sw-active i').each(function() {
-  			var network = $(this).data('network');
-  			values.order_of_icons[network] = network;
+			var network = $(this).data('network');
+			values.order_of_icons[network] = network;
 		});
 
 		return values;
@@ -291,7 +291,7 @@
 
 			// Send the POST request
 			$.post({
-                url: ajaxurl,
+				url: ajaxurl,
 				data: data,
 				success: function(response) {
 					// Clear the loading screen
@@ -351,19 +351,19 @@
 	function updateTheme() {
 		var visualTheme  = getParsedValue("button_shape");
 		var dColorSet    = getParsedValue("default_colors");
-        var iColorSet    = getParsedValue("single_colors");
+		var iColorSet    = getParsedValue("single_colors");
 		var oColorSet    = getParsedValue("hover_colors");
 
-        function getParsedValue(selector) {
-            var value = $('select[name="' + selector + '"]').val();
+		function getParsedValue(selector) {
+			var value = $('select[name="' + selector + '"]').val();
 
-            if (value.indexOf("custom") === 0) {
-                var prefix = selector.slice(0, selector.indexOf("_"));
-                return prefix + "_full_color";
-            }
+			if (value.indexOf("custom") === 0) {
+				var prefix = selector.slice(0, selector.indexOf("_"));
+				return prefix + "_full_color";
+			}
 
-            return value;
-        }
+			return value;
+		}
 
 		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
@@ -376,8 +376,8 @@
 		var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
 
 
-        $('.swp_social_panel').removeClass("swp_other_medium_gray");
-        $('.swp_social_panel').removeClass(socialWarfare.lastClass).addClass(buttonsClass);
+		$('.swp_social_panel').removeClass("swp_other_medium_gray");
+		$('.swp_social_panel').removeClass(socialWarfare.lastClass).addClass(buttonsClass);
 
 		socialWarfare.lastClass = buttonsClass;
 	}
@@ -388,7 +388,7 @@
 
 	function updateButtonPreviews() {
 
-        //* Maps out the button themes.
+		//* Maps out the button themes.
 		var defaults = {
 			full_color: 'Full Color',
 			light_gray: 'Light Gray',
@@ -402,7 +402,7 @@
 			custom_color_outlines: 'Custom Color Outlines'
 		};
 
-        //* Defines which themes are available per style.
+		//* Defines which themes are available per style.
 		var availableOptions = {
 			flat_fresh: defaults,
 			leaf: defaults,
@@ -477,30 +477,30 @@
 			$('select[name="default_colors"] option, select[name="single_colors"] option, select[name="hover_colors"] option').remove();
 
 			$.each(availableOptions[visualTheme], function(index, value) {
-  				if (index === dColorSet || (dColor == false && i == 0)) {
-    					$('select[name="default_colors"]').append('<option value="' + index + '" selected>' + value + '</option>');
-  				} else {
-    					$('select[name="default_colors"]').append('<option value="' + index + '">' + value + '</option>');
-  				}
+				if (index === dColorSet || (dColor == false && i == 0)) {
+						$('select[name="default_colors"]').append('<option value="' + index + '" selected>' + value + '</option>');
+				} else {
+						$('select[name="default_colors"]').append('<option value="' + index + '">' + value + '</option>');
+				}
 
-  				if (index === iColorSet || (iColor == false && i == 0)) {
-    					$('select[name="single_colors"]').append('<option value="' + index + '" selected>' + value + '</option>');
-  				} else {
-    					$('select[name="single_colors"]').append('<option value="' + index + '">' + value + '</option>');
-  				}
+				if (index === iColorSet || (iColor == false && i == 0)) {
+						$('select[name="single_colors"]').append('<option value="' + index + '" selected>' + value + '</option>');
+				} else {
+						$('select[name="single_colors"]').append('<option value="' + index + '">' + value + '</option>');
+				}
 
-  				if (index === oColorSet || (oColor == false && i == 0)) {
-    					$('select[name="hover_colors"]').append('<option value="' + index + '" selected>' + value + '</option>');
-  				} else {
-    					$('select[name="hover_colors"]').append('<option value="' + index + '">' + value + '</option>');
-  				}
+				if (index === oColorSet || (oColor == false && i == 0)) {
+						$('select[name="hover_colors"]').append('<option value="' + index + '" selected>' + value + '</option>');
+				} else {
+						$('select[name="hover_colors"]').append('<option value="' + index + '">' + value + '</option>');
+				}
 
-  				++i;
+				++i;
 			});
 
 			// Declare a default lastClass based on the default HTML if we haven't declared one
 			if('undefined' === typeof socialWarfare.lastClass){
-  				socialWarfare.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
+				socialWarfare.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
 			}
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
@@ -516,33 +516,33 @@
 	 *********************************************************/
 	function updateScale() {
 		$('select[name="button_size"],select[name="button_alignment"]').on('change', function() {
-  			$('.swp_social_panel').css({ width: '100%' });
+			$('.swp_social_panel').css({ width: '100%' });
 
-  			var width = $('.swp_social_panel').width();
-  			var scale = $('select[name="button_size"]').val();
-  			var align = $('select[name="button_alignment"]').val();
-  			var newWidth;
+			var width = $('.swp_social_panel').width();
+			var scale = $('select[name="button_size"]').val();
+			var align = $('select[name="button_alignment"]').val();
+			var newWidth;
 
-  			if ((align == 'full_width' && scale != 1) || scale >= 1) {
-    				newWidth = width / scale;
+			if ((align == 'full_width' && scale != 1) || scale >= 1) {
+					newWidth = width / scale;
 
-    				$('.swp_social_panel').css('cssText', 'width:' + newWidth + 'px!important;');
+					$('.swp_social_panel').css('cssText', 'width:' + newWidth + 'px!important;');
 
-    				$('.swp_social_panel').css({
-    					transform: 'scale(' + scale + ')',
-    					'transform-origin': 'left'
-    				});
-  			} else if (align != 'full_width' && scale < 1) {
-    				newWidth = width / scale;
+					$('.swp_social_panel').css({
+						transform: 'scale(' + scale + ')',
+						'transform-origin': 'left'
+					});
+			} else if (align != 'full_width' && scale < 1) {
+					newWidth = width / scale;
 
-    				$('.swp_social_panel').css({
-      					transform: 'scale(' + scale + ')',
-      					'transform-origin': align
-    				});
-  			}
+					$('.swp_social_panel').css({
+						transform: 'scale(' + scale + ')',
+						'transform-origin': align
+					});
+			}
 
-  			socialWarfare.activateHoverStates();
-  		});
+			socialWarfare.activateHoverStates();
+		});
 	}
 
 	/*********************************************************
@@ -552,322 +552,310 @@
 		var $cttOptions = $('select[name="ctt_theme"]');
 
 		$cttOptions.on('change', function() {
-  			var newStyle = $('select[name="ctt_theme"]').val();
+			var newStyle = $('select[name="ctt_theme"]').val();
 
-  			$('.swp_CTT').attr('class', 'swp_CTT').addClass(newStyle);
+			$('.swp_CTT').attr('class', 'swp_CTT').addClass(newStyle);
 		});
 
 		$cttOptions.trigger('change');
 	}
 
 	function toggleRegistration(status , key) {
-        var adminWrapper = $(".sw-admin-wrapper");
-        var addons = adminWrapper.attr("swp-addons");
-        var registeredAddons = adminWrapper.attr("swp-registrations");
+		var adminWrapper = $(".sw-admin-wrapper");
+		var addons = adminWrapper.attr("swp-addons");
+		var registeredAddons = adminWrapper.attr("swp-registrations");
 
-        //* Toggle visibility of the registration input field for {key}.
+		//* Toggle visibility of the registration input field for {key}.
 		$('.registration-wrapper.' + key).attr('registration', status);
 
-        if (1 === parseInt(status)) {
-            adminWrapper.attr('sw-registered', status);
-            $('.sw-top-menu').attr('sw-registered', status);
-            addAttrValue(adminWrapper, "swp-registrations", key);
-        } else {
-            removeAttrValue(adminWrapper, "swp-registrations", key);
-        }
+		if (1 === parseInt(status)) {
+			adminWrapper.attr('sw-registered', status);
+			$('.sw-top-menu').attr('sw-registered', status);
+			addAttrValue(adminWrapper, "swp-registrations", key);
+		} else {
+			removeAttrValue(adminWrapper, "swp-registrations", key);
+		}
 	}
 
-    //* Removes a string from a given attribute.
-    function removeAttrValue(el, attribute, removal) {
-        var value = $(el).attr(attribute);
-        var startIndex = value.indexOf(removal);
-        if (startIndex === -1) return;
+	//* Removes a string from a given attribute.
+	function removeAttrValue(el, attribute, removal) {
+		var value = $(el).attr(attribute);
+		var startIndex = value.indexOf(removal);
+		if (startIndex === -1) return;
 
-        var stopIndex = startIndex + removal.length;
-        var newValue = value.slice(0, startIndex) + value.slice(stopIndex);
+		var stopIndex = startIndex + removal.length;
+		var newValue = value.slice(0, startIndex) + value.slice(stopIndex);
 
-        $(el).attr(attribute, newValue);
-    }
+		$(el).attr(attribute, newValue);
+	}
 
-    //* Adds a string to a given attribute.
-    function addAttrValue(el, attribute, addition) {
-        var value = $(el).attr(attribute);
-        if (value.includes(addition)) return;
+	//* Adds a string to a given attribute.
+	function addAttrValue(el, attribute, addition) {
+		var value = $(el).attr(attribute);
+		if (value.includes(addition)) return;
 
-        $(el).attr(attribute, value + addition);
-    }
+		$(el).attr(attribute, value + addition);
+	}
 
 	/*******************************************************
 		Register the Plugin
 	*******************************************************/
 	function registerPlugin(key,item_id) {
-  		var registered = false;
-  		var data = {
-  			action: 'swp_register_plugin',
-  			security: swpAdminOptionsData.registerNonce,
-  			activity: 'register',
-  			name_key: key,
-  			item_id: item_id,
-  			license_key: $('input[name="' + key + '_license_key"]').val()
-  		};
+		var registered = false;
+		var data = {
+			action: 'swp_register_plugin',
+			security: swpAdminOptionsData.registerNonce,
+			activity: 'register',
+			name_key: key,
+			item_id: item_id,
+			license_key: $('input[name="' + key + '_license_key"]').val()
+		};
 
-  		loadingScreen();
+		loadingScreen();
 
-  		$.post(ajaxurl, data, function(response) {
-  			// If the response was a failure...
-  			response = JSON.parse(response);
+		$.post(ajaxurl, data, function(response) {
+			// If the response was a failure...
+			response = JSON.parse(response);
 
-  			if (!response.success) {
-  				alert('Failure: ' + response.data);
-  			} else {
-  				toggleRegistration('1' , key);
-  				registered = true;
-  			}
+			if (!response.success) {
+				alert('Failure: ' + response.data);
+			} else {
+				toggleRegistration('1' , key);
+				registered = true;
+			}
 
-        window.location.reload(true);
-  			clearLoadingScreen();
+		window.location.reload(true);
+			clearLoadingScreen();
 
-  		});
+		});
 
-  		return registered;
+		return registered;
 	}
 
 	/*******************************************************
 		Unregister the Plugin
 	*******************************************************/
 	function unregisterPlugin(key,item_id) {
-  		var unregistered = false;
-  		var ajaxData = {
-  			action: 'swp_unregister_plugin',
-  			security: swpAdminOptionsData.registerNonce,
-  			activity: 'unregister',
-  			name_key: key,
-  			item_id: item_id,
-  		};
+		var unregistered = false;
+		var ajaxData = {
+			action: 'swp_unregister_plugin',
+			security: swpAdminOptionsData.registerNonce,
+			activity: 'unregister',
+			name_key: key,
+			item_id: item_id,
+		};
 
-  		loadingScreen();
+		loadingScreen();
 
-  		// Ping the home server to create a registration log
-  		$.post(ajaxurl, ajaxData, function(response) {
-  			// If the response was a failure...
-  			//
-  			response = JSON.parse(response);
-  			if (!response.success) {
-  				alert('Failure: ' + response.data);
-  			} else {
-  				// If the response was a success
-  				$('input[name="'+key+'_license_key"]').val('');
-  				toggleRegistration('0' , key);
-  				unregistered = true;
-  			}
+		// Ping the home server to create a registration log
+		$.post(ajaxurl, ajaxData, function(response) {
+			// If the response was a failure...
+			//
+			response = JSON.parse(response);
+			if (!response.success) {
+				alert('Failure: ' + response.data);
+			} else {
+				// If the response was a success
+				$('input[name="'+key+'_license_key"]').val('');
+				toggleRegistration('0' , key);
+				unregistered = true;
+			}
 
-              //* Passing in true forces reload from the server rather than cache.
-              window.location.reload(true);
-  			clearLoadingScreen();
-  		});
+			  //* Passing in true forces reload from the server rather than cache.
+			  window.location.reload(true);
+			clearLoadingScreen();
+		});
 
 
-  		return unregistered;
+		return unregistered;
 	}
 
 	function handleRegistration() {
-  		$('.register-plugin').on('click', function() {
-  			var key = $(this).attr('swp-addon');
-  			var item_id = $(this).attr('swp-item-id');
-  			registerPlugin(key,item_id);
-  			return false;
-  		});
+		$('.register-plugin').on('click', function() {
+			var key = $(this).attr('swp-addon');
+			var item_id = $(this).attr('swp-item-id');
+			registerPlugin(key,item_id);
+			return false;
+		});
 
-  		$('.unregister-plugin').on('click', function() {
-  			var key = $(this).attr('swp-addon');
-  			var item_id = $(this).attr('swp-item-id');
-  			unregisterPlugin(key,item_id);
-  			return false;
-  		});
+		$('.unregister-plugin').on('click', function() {
+			var key = $(this).attr('swp-addon');
+			var item_id = $(this).attr('swp-item-id');
+			unregisterPlugin(key,item_id);
+			return false;
+		});
 	}
 
 	/*******************************************************
 		Make the buttons sortable
 	*******************************************************/
 	function sortableInit() {
-  		$('.sw-buttons-sort.sw-active').sortable({
-    			connectWith: '.sw-buttons-sort.sw-inactive',
-    			update: function() {
-    				saveColorToggle();
-    			}
-  		});
+		$('.sw-buttons-sort.sw-active').sortable({
+				connectWith: '.sw-buttons-sort.sw-inactive',
+				update: function() {
+					saveColorToggle();
+				}
+		});
 
-  		$('.sw-buttons-sort.sw-inactive').sortable({
-    			connectWith: '.sw-buttons-sort.sw-active',
-    			update: function() {
-    				saveColorToggle();
-    			}
-  		});
+		$('.sw-buttons-sort.sw-inactive').sortable({
+				connectWith: '.sw-buttons-sort.sw-active',
+				update: function() {
+					saveColorToggle();
+				}
+		});
 	}
 
 	function getSystemStatus() {
-  		$('.sw-system-status').on('click', function(event) {
-    			// Block the default action
-    			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+		$('.sw-system-status').on('click', function(event) {
+				// Block the default action
+				event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-    			$('.system-status-wrapper').slideToggle();
+				$('.system-status-wrapper').slideToggle();
 
-    			selectText($('.system-status-container').get(0));
-  		});
+				selectText($('.system-status-container').get(0));
+		});
 	}
 
 	/*********************************************************
 		A Function for image upload buttons
 	*********************************************************/
 	function customUploaderInit() {
-  		var customUploader;
+		var customUploader;
 
-  		$('.swp_upload_image_button').click(function(e) {
-    			e.preventDefault();
+		$('.swp_upload_image_button').click(function(e) {
+				e.preventDefault();
 
-    			var inputField = $(this).attr('for');
+				var inputField = $(this).attr('for');
 
-    			// If the uploader object has already been created, reopen the dialog
-    			if (customUploader) {
-    				customUploader.open();
+				// If the uploader object has already been created, reopen the dialog
+				if (customUploader) {
+					customUploader.open();
 
-    				return;
-    			}
+					return;
+				}
 
-    			// Extend the wp.media object
-    			customUploader = wp.media.frames.file_frame = wp.media({
-    				title: 'Choose Image',
-    				button: {
-    					text: 'Choose Image'
-    				},
-    				multiple: false
-    			});
+				// Extend the wp.media object
+				customUploader = wp.media.frames.file_frame = wp.media({
+					title: 'Choose Image',
+					button: {
+						text: 'Choose Image'
+					},
+					multiple: false
+				});
 
-    			// When a file is selected, grab the URL and set it as the text field's value
-    			customUploader.on('select', function() {
-    				var attachment = customUploader.state().get('selection').first().toJSON();
+				// When a file is selected, grab the URL and set it as the text field's value
+				customUploader.on('select', function() {
+					var attachment = customUploader.state().get('selection').first().toJSON();
 
-    				$('input[name="' + inputField + '"').val(attachment.url);
-    			});
+					$('input[name="' + inputField + '"').val(attachment.url);
+				});
 
-    			// Open the uploader dialog
-    			customUploader.open();
-  		});
+				// Open the uploader dialog
+				customUploader.open();
+		});
 	}
 
 	function set_ctt_preview() {
-      var preview = $("#ctt_preview");
-      var select = $("select[name=ctt_theme]");
+	  var preview = $("#ctt_preview");
+	  var select = $("select[name=ctt_theme]");
 
-      if (!preview.length) {
-      	preview = $('<style id="ctt_preview"></style>');
-      	$("head").append(preview);
-      }
+	  if (!preview.length) {
+		preview = $('<style id="ctt_preview"></style>');
+		$("head").append(preview);
+	  }
 
-      if ($(select).val() === "none") {
-      	update_ctt_preview();
-      }
+	  if ($(select).val() === "none") {
+		update_ctt_preview();
+	  }
 
-      $(select).on("change", function(e) {
-      	if (e.target.value === 'none') {
-      		update_ctt_preview();
-      	}
-      });
+	  $(select).on("change", function(e) {
+		if (e.target.value === 'none') {
+			update_ctt_preview();
+		}
+	  });
 
-      $("textarea[name=ctt_css]").on("keyup", update_ctt_preview);
+	  $("textarea[name=ctt_css]").on("keyup", update_ctt_preview);
 	}
 
 	function update_ctt_preview() {
-	  	var preview = $("#ctt_preview");
-      var textarea = $("textarea[name=ctt_css]");
+		var preview = $("#ctt_preview");
+	  var textarea = $("textarea[name=ctt_css]");
 
-      $(preview).text($(textarea).val());
+	  $(preview).text($(textarea).val());
 	}
 
-  function addIconTooltips() {
-      $("[class*='sw-'][class*='-icon']").each(function(index, icon) {
-          var tooltip;
+    // Addes a tooltip to a network icon, displaying the network's name.
+	function createTooltip(event) {
+		var tooltip;
+		var icon = event.target;
+		var network = $(icon).data("network");
+		var networkBounds = icon.getBoundingClientRect();
+		var tooltipBounds = {};
+		var knownMargin = 4; //* Paddig applied by CSS which must be accounted for.
+		var css = {
+			top: $(icon).position().top - 50,
+			left: $(icon).position().left + knownMargin
+		}
 
-          $(icon).hover(
-              //* mouseenter
-              function(event) {
-								  var target = event.target;
-                  var network = $(target).data("network");
-									var networkBounds = event.target.getBoundingClientRect();
-									var left, top;
+		//* Uppercase each part of a snake_cased name.
+		if (network.indexOf("_") > 0) {
+			var words = network.split("_").map(function(word) {
+				return word[0].toUpperCase() + word.slice(1, word.length)
+			});
 
-                  //* Uppercase each part of the snake_cased name.
-                  if (network.indexOf("_") > 0) {
-                      var words = network.split("_").map(function(word) {
-                          return word[0].toUpperCase() + word.slice(1, word.length)
-                      })
+			network = words.join(" ");
+		}
 
-                      network = words.join(" ");
-                  }
-                  //* Uppercase the first character of the network name.
-                  network = network[0].toUpperCase() + network.slice(1, network.length)
+		//* Uppercase the first character of the name.
+		network = network[0].toUpperCase() + network.slice(1, network.length);
 
-                  tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
-									document.body.append(tooltip);
+		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').css(css).get(0);
+		$(this).parents(".sw-grid").first().append(tooltip);
 
-									var tooltipBounds = tooltip.getBoundingClientRect();
+        //* When tooltip is wider than icon, center tooltip over the icon.
+		if ($(tooltip).outerWidth() > $(icon).outerWidth()) {
+			var delta = $(tooltip).outerWidth() - $(icon).outerWidth();
+			css.left = css.left - (delta / 2);
+			$(tooltip).css(css);
+		}
 
-									top  = networkBounds.top - 120;
 
-									//* If the tooltip is bigger than the network icon, center it above.
-									if (tooltipBounds.width > networkBounds.width) {
-							  		var delta = tooltipBounds.width - networkBounds.width;
-										left = networkBounds.left - 5 - (delta * 2);
-									} else {
-										left = networkBounds.left - 10;
-									}
+		//* Give it a click listener to remove the tooltip after moving the mouse.
+		$(icon).on("mousedown", function(e) {
 
-									$(tooltip).css({
-										left:left,
-										top: top
-									});
+			$("body").mousemove(function() {
+				removeTooltip();
+				$("body").off("mousemove");
+			});
+		});
+	}
 
-									  //* Name the function here so it can be removed with $.off().
-										function removeTooltip() {
-											$(".swp-icon-tooltip").remove();
-										}
+	function removeTooltip(event) {
+		$(".swp-icon-tooltip").remove();
+	}
 
-                  $(this).parents(".sw-grid").first().append(tooltip);
-
-                  //* Give it a click listener to remove the tooltip after moving the mouse.
-									$(target).on("mousedown", function(e) {
-
-										$("body").mousemove(function() {
-											$(".swp-icon-tooltip").remove();
-											$("body").off("mousemove");
-										});
-									});
-
-              },
-              //* mouseleave
-              function(event) {
-                  $(".swp-icon-tooltip").remove();
-              }
-          );
-      });
-  }
+	function addIconTooltips() {
+		$("[class*='sw-'][class*='-icon']").each(function(index, icon) {
+			$(icon).hover(createTooltip, removeTooltip);
+		});
+	}
 
 	$(document).ready(function() {
-  		handleSettingSave();
-  		populateOptions();
-  		headerMenuInit();
-  		tabNavInit();
-  		checkboxesInit();
-  		updateButtonPreviews();
-  		swpConditionalFields();
-  		updateCttDemo();
-  		updateScale();
-  		handleRegistration();
-  		sortableInit();
-  		getSystemStatus();
-  		customUploaderInit();
-  		set_ctt_preview();
-      addIconTooltips();
+		handleSettingSave();
+		populateOptions();
+		headerMenuInit();
+		tabNavInit();
+		checkboxesInit();
+		updateButtonPreviews();
+		swpConditionalFields();
+		updateCttDemo();
+		updateScale();
+		handleRegistration();
+		sortableInit();
+		getSystemStatus();
+		customUploaderInit();
+		set_ctt_preview();
+	  addIconTooltips();
 	});
 
 

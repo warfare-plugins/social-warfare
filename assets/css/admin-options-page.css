@@ -867,11 +867,9 @@ div.error {
 }
 
 .swp-icon-tooltip {
-    display: block;
     position: absolute;
     padding: 10px;
 	text-align: center;
-    color: #30394f;
 	min-width: 75px;
     background: #ced3dc;
 	color: #fff;
