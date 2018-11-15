@@ -784,76 +784,70 @@
 	  $(preview).text($(textarea).val());
 	}
 
+	function createTooltip(event) {
+		var target = event.target;
+		var network = $(target).data("network");
+		var networkBounds = event.target.getBoundingClientRect();
+		var tooltipBound = {};
+		var left, top;
 
+		//* Uppercase each part of a snake_cased name.
+		if (network.indexOf("_") > 0) {
+			var words = network.split("_").map(function(word) {
+				return word[0].toUpperCase() + word.slice(1, word.length)
+			});
+
+			network = words.join(" ");
+		}
+
+		//* Uppercase the first character of the name.
+		network = network[0].toUpperCase() + network.slice(1, network.length)
+
+		tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
+		document.body.append(tooltip);
+
+		tooltipBounds = tooltip.getBoundingClientRect();
+
+		top  = networkBounds.top - 120;
+
+		//* If the tooltip is bigger than the network icon, center it above.
+		if (tooltipBounds.width > networkBounds.width) {
+			var delta = tooltipBounds.width - networkBounds.width;
+			left = networkBounds.left - 5 - (delta * 2);
+		} else {
+			left = networkBounds.left - 10;
+		}
+
+		$(tooltip).css({
+			left:left,
+			top: top
+		});
+
+		//* Name the function here so it can be removed with $.off().
+		function removeTooltip() {
+			$(".swp-icon-tooltip").remove();
+		}
+
+		$(this).parents(".sw-grid").first().append(tooltip);
+
+		//* Give it a click listener to remove the tooltip after moving the mouse.
+		$(target).on("mousedown", function(e) {
+
+			$("body").mousemove(function() {
+				$(".swp-icon-tooltip").remove();
+				$("body").off("mousemove");
+			});
+		});
+	}
+
+	function removeTooltip(event) {
+		$(".swp-icon-tooltip").remove();
+	}
 
    function addIconTooltips() {
 		$("[class*='sw-'][class*='-icon']").each(function(index, icon) {
-			var tooltip;
-
-		$(icon).hover(
-			//* mouseenter handler
-			function(event) {
-				var target = event.target;
-				var network = $(target).data("network");
-				var networkBounds = event.target.getBoundingClientRect();
-				var tooltipBound = {};
-				var left, top;
-
-				//* Uppercase each part of a snake_cased name.
-				if (network.indexOf("_") > 0) {
-					var words = network.split("_").map(function(word) {
-						return word[0].toUpperCase() + word.slice(1, word.length)
-					});
-
-					network = words.join(" ");
-				}
-
-			    //* Uppercase the first character of the name.
-			    network = network[0].toUpperCase() + network.slice(1, network.length)
-
-				tooltip = $('<span class="swp-icon-tooltip">' + network + '</span>').get(0);
-				document.body.append(tooltip);
-
-				tooltipBounds = tooltip.getBoundingClientRect();
-
-				top  = networkBounds.top - 120;
-
-				//* If the tooltip is bigger than the network icon, center it above.
-				if (tooltipBounds.width > networkBounds.width) {
-					var delta = tooltipBounds.width - networkBounds.width;
-					left = networkBounds.left - 5 - (delta * 2);
-				} else {
-					left = networkBounds.left - 10;
-				}
-
-				$(tooltip).css({
-					left:left,
-					top: top
-				});
-
-				//* Name the function here so it can be removed with $.off().
-				function removeTooltip() {
-					$(".swp-icon-tooltip").remove();
-				}
-
-				$(this).parents(".sw-grid").first().append(tooltip);
-
-				//* Give it a click listener to remove the tooltip after moving the mouse.
-				$(target).on("mousedown", function(e) {
-
-					$("body").mousemove(function() {
-						$(".swp-icon-tooltip").remove();
-						$("body").off("mousemove");
-					});
-				});
-
-			  },
-			  //* mouseleave handler
-			  function(event) {
-				  $(".swp-icon-tooltip").remove();
-			  }
-		  );
-	  });
+			$(icon).hover(createTooltip, $(".swp-icon-tooltip").remove);
+		});
   }
 
 	$(document).ready(function() {
