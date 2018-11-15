@@ -489,7 +489,9 @@ window.socialWarfare = window.socialWarfare || {};
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
 		socialWarfare.panels.floatingHorizontal.css({
 			width: width,
-			left: left
+			left: left,
+			//* They are not quite centered with the content when created this way. This margin helps.
+			marginLeft: "-27px"
 		});
 	}
 
