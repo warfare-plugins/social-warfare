@@ -64,7 +64,7 @@ class SWP_Notice_Loader {
 		 * simply fetching what was stored.
 		 *
 		 */
-		$cache_data = get_option('swp_json_cache');
+		$cache_data = get_option( 'swp_json_cache' );
 
 
 		/**
@@ -72,9 +72,9 @@ class SWP_Notice_Loader {
 		 * bail out because we have no notices to process.
 		 *
 		 */
-		if( false === $cache_data ):
+		if( false === $cache_data ) {
 			return;
-		endif;
+		}
 
 
 		/**
@@ -82,9 +82,9 @@ class SWP_Notice_Loader {
 		 * that we have no notices to print so just bail out.
 		 *
 		 */
-		if( !is_array( $cache_data ) || empty($cache_data['notices']) ):
+		if( !is_array( $cache_data ) || empty( $cache_data['notices'] ) ) {
 			return;
-		endif;
+		}
 
 
 		/**
