@@ -483,13 +483,13 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		else {
-			left = panel.parent().parent().offset().left
+			left = panel.offset().left;
 			width = panel.width();
 
 			if (width == 100) {
 				console.log("changing width");
 	            //* The panel had its width as 'auto', which is 100%
-				width = panel.parent().parent().width();
+				width = panel.parent().width();
 			}
 		}
 
