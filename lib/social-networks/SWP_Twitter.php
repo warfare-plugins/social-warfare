@@ -226,6 +226,29 @@ class SWP_Twitter extends SWP_Social_Network {
     }
 
 
+	/**
+     * Displays the admin notice about Open Share Counts.
+     *
+     * @since  3.4.0 | 16 NOV 2018 | Created
+     * @param  array $notices All admin notices passed in the 'swp_admin_notices' hook.
+     * @return array $notices The updated notice array.
+     */
+    public function print_twitter_notice_opensharecount( $notices ) {
+        $notice = array(
+            'key'   => 'opensharecount_deprecated_service',
+            'message'   => 'Open Share Counts is no longer in service. For performance reasons, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
+            array(
+                'action'    => 'Thank you, I understand.',
+                'timeframe' => 0
+            ),
+        );
+
+        $notices[] = $notice;
+
+        return $notices;
+    }
+
+
     /**
      *
      * Retrieves tweet from database and converts to UTF-8 for Twitter.
