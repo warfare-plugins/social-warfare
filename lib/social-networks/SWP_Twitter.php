@@ -197,10 +197,9 @@ class SWP_Twitter extends SWP_Social_Network {
 		if ( 'opensharecount' == $source ) {
 			SWP_Utility::update_option( 'twitter_shares', false );
 
-			return add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice_opensharecount' ) );
+			return $this->print_twitter_notice_opensharecount();
 		}
 	}
-
 
 
     /**
@@ -233,19 +232,10 @@ class SWP_Twitter extends SWP_Social_Network {
      * @param  array $notices All admin notices passed in the 'swp_admin_notices' hook.
      * @return array $notices The updated notice array.
      */
-    public function print_twitter_notice_opensharecount( $notices ) {
-        $notice = array(
-            'key'   => 'opensharecount_deprecated_service',
-            'message'   => 'Open Share Counts is no longer in service. For performance reasons, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
-            array(
-                'action'    => 'Thank you, I understand.',
-                'timeframe' => 0
-            ),
-        );
+    public function print_twitter_notice_opensharecount() {
+		$message = 'Open Share Counts is no longer in service. For performance reasons, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.';
 
-        $notices[] = $notice;
-
-        return $notices;
+        new SWP_Notice('opensharecount_deprecated_service', $message );
     }
 
 
