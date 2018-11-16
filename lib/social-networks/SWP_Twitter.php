@@ -39,7 +39,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->key     = 'twitter';
 		$this->default = 'true';
 
-		$this->reset_share_count_source();
+		$this->reset_invalid_share_count_sources();
 		$this->init_social_network();
 	}
 
@@ -56,6 +56,7 @@ class SWP_Twitter extends SWP_Social_Network {
 
 		// Fetch the user's options
 		global $swp_user_options;
+		$this->request_url = 0;
 
 		// If share counts aren't turned on.
 		if( false === SWP_Utility::get_option( 'twitter_shares' ) ) {
@@ -75,12 +76,8 @@ class SWP_Twitter extends SWP_Social_Network {
 
 		// TwitCount
 		if( 'twitcount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
-			return 'https://counts.twitcount.com/counts.php?url=' . $url;
-		}
-
-		// Debugging
-		if ( SWP_Utility::debug( 'twitter' ) ) {
-			echo '<b>Request URL:</b> ' . $request_url . '<br />';
+			$this->request_url = 'https://counts.twitcount.com/counts.php?url=' . $url;
+			return $this->request_url;
 		}
 
 		return 0;
@@ -100,27 +97,16 @@ class SWP_Twitter extends SWP_Social_Network {
 
 		// Fetch the user's options
 		global $swp_user_options;
+		$this->response = 0;
 
 		// If the user has enabled Twitter shares....
-		if ( SWP_Utility::get_option('twitter_shares') ) :
+		if ( true == SWP_Utility::get_option('twitter_shares') ) {
+			$response       = json_decode( $response, true );
+			$this->response = isset( $response['count'] ) ? intval( $response['count'] ) : 0;
+			return $this->response;
+		}
 
-			// Debugging
-			if ( SWP_Utility::debug( 'twitter' ) ) :
-				echo '<b>Response:</b> ' . $response . '<br />';
-			endif;
-
-			// Parse the response to get the actual number
-			$response = json_decode( $response, true );
-
-			return isset( $response['count'] )?intval( $response['count'] ):0;
-
-		// If the user has not enabled Twitter shares....
-		else :
-
-			// Return the number 0
-			return 0;
-
-		endif;
+		return 0;
 	}
 
 
@@ -176,53 +162,26 @@ class SWP_Twitter extends SWP_Social_Network {
 
 	/**
 	 * A method for resetting the share count source if they were using
-	 * newsharecounts.com which has shut down.
+	 * a share count service that has since shut down.
 	 *
 	 * @since  3.2.0 | 24 JUL 2018 | Created
 	 * @param  void
 	 * @return void
 	 *
 	 */
-	public function reset_share_count_source() {
+	public function reset_invalid_share_count_sources() {
 		$source = SWP_Utility::get_option( 'tweet_count_source' );
 
-		if( 'newsharecounts' == $source ) {
-
-			SWP_Utility::delete_option( 'tweet_count_source' );
+		if ( 'newsharecounts' == $source ) {
 			SWP_Utility::update_option( 'twitter_shares', false );
-
-            return add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice' ) );
+			$this->print_tweet_count_deprecation_notice( 'New Share Counts', 'newsharecounts' );
 		}
 
 		if ( 'opensharecount' == $source ) {
 			SWP_Utility::update_option( 'twitter_shares', false );
-
-			return $this->print_twitter_notice_opensharecount();
+			$this->print_tweet_count_deprecation_notice( 'Open Share Counts', 'opensharecount' );
 		}
 	}
-
-
-    /**
-     * Displays the admin notice about New Share Counts.
-     *
-     * @since  3.2.0 | Created
-     * @param  array $notices All admin notices passed in the 'swp_admin_notices' hook.
-     * @return array $notices The updated notice array.
-     */
-    public function print_twitter_notice( $notices ) {
-        $notice = array(
-            'key'   => 'new_share_counts_admin_used_service',
-            'message'   => 'Because New Share Counts is not in service, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.',
-            array(
-                'action'    => 'Thank you, I understand.',
-                'timeframe' => 0
-            ),
-        );
-
-        $notices[] = $notice;
-
-        return $notices;
-    }
 
 
 	/**
@@ -231,21 +190,20 @@ class SWP_Twitter extends SWP_Social_Network {
      * @since  3.4.0 | 16 NOV 2018 | Created
      * @param  array $notices All admin notices passed in the 'swp_admin_notices' hook.
      * @return array $notices The updated notice array.
+     *
      */
-    public function print_twitter_notice_opensharecount() {
-		$message = 'Open Share Counts is no longer in service. For performance reasons, we have switched your Tweet Count Registration to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.';
+    public function print_tweet_count_deprecation_notice( $service_name , $service_key ) {
+		$message = $service_name . ' is no longer in service. For performance reasons, we have switched your Tweet Counts to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.';
 
-        new SWP_Notice('opensharecount_deprecated_service', $message );
+        new SWP_Notice( $service_key . '_deprecation_notice', $message );
     }
 
 
     /**
-     *
      * Retrieves tweet from database and converts to UTF-8 for Twitter.
      *
      * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
      * @param array $post_data WordPress post data, such as 'ID' and 'post_content'.
-     *
      * @return string $tweet The encoded tweet text.
      *
      */

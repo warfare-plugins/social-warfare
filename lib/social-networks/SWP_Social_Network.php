@@ -17,7 +17,8 @@ class SWP_Social_Network {
 
 
 	/**
-	 * SWP_Debug_Trait provides useful tool like error handling.
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
 	 *
 	 */
 	use SWP_Debug_Trait;
