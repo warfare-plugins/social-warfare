@@ -184,15 +184,23 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function reset_share_count_source() {
+		$source = SWP_Utility::get_option( 'tweet_count_source' );
 
-		if( 'newsharecounts' == SWP_Utility::get_option( 'tweet_count_source' ) ) {
+		if( 'newsharecounts' == $source ) {
 
 			SWP_Utility::delete_option( 'tweet_count_source' );
 			SWP_Utility::update_option( 'twitter_shares', false );
 
-            add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice' ) );
+            return add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice' ) );
+		}
+
+		if ( 'opensharecount' == $source ) {
+			SWP_Utility::update_option( 'twitter_shares', false );
+
+			return add_filter( 'swp_admin_notices', array( $this, 'print_twitter_notice_opensharecount' ) );
 		}
 	}
+
 
 
     /**
