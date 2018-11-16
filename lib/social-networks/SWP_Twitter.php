@@ -62,10 +62,16 @@ class SWP_Twitter extends SWP_Social_Network {
 			return 0;
 		}
 
-		// Open Share Counts
-		if( 'opensharecount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
-			return 'https://opensharecount.com/count.json?url='. $url;
-		}
+		/**
+         * Since this service is shut down and is no loner working, it is now
+         * causing slow page loads when he API requests are running. As such, we
+         * are removing the service. Making it return 0 means that it will no
+         * longer run the API requests.
+         *
+         */
+        if( 'opensharecount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
+            return 0;
+        }
 
 		// TwitCount
 		if( 'twitcount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
