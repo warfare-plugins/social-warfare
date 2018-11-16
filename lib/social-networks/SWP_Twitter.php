@@ -39,7 +39,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->key     = 'twitter';
 		$this->default = 'true';
 
-		$this->reset_invalid_share_count_sources();
+		$this->handle_invalid_share_count_sources();
 		$this->init_social_network();
 	}
 
@@ -169,17 +169,17 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * @return void
 	 *
 	 */
-	public function reset_invalid_share_count_sources() {
+	public function handle_invalid_share_count_sources() {
 		$source = SWP_Utility::get_option( 'tweet_count_source' );
 
 		if ( 'newsharecounts' == $source ) {
 			SWP_Utility::update_option( 'twitter_shares', false );
-			$this->print_tweet_count_deprecation_notice( 'New Share Counts', 'newsharecounts' );
+			$this->register_tweet_count_deprecation_notice( 'New Share Counts', 'newsharecounts' );
 		}
 
 		if ( 'opensharecount' == $source ) {
 			SWP_Utility::update_option( 'twitter_shares', false );
-			$this->print_tweet_count_deprecation_notice( 'Open Share Counts', 'opensharecount' );
+			$this->register_tweet_count_deprecation_notice( 'Open Share Counts', 'opensharecount' );
 		}
 	}
 
@@ -192,7 +192,7 @@ class SWP_Twitter extends SWP_Social_Network {
      * @return array $notices The updated notice array.
      *
      */
-    public function print_tweet_count_deprecation_notice( $service_name , $service_key ) {
+    public function register_tweet_count_deprecation_notice( $service_name , $service_key ) {
 		$message = $service_name . ' is no longer in service. For performance reasons, we have switched your Tweet Counts to "OFF". To re-activate tweet counts, please visit Settings -> Social Identity -> Tweet Count Registration and follow the directions for one of our alternative counting services.';
 
         new SWP_Notice( $service_key . '_deprecation_notice', $message );
