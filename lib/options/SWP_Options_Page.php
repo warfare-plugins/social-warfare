@@ -798,7 +798,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
         $sidebar = new SWP_Section_HTML( 'Sidebar' );
         $tab_map = $this->sort_by_priority( $this->tabs );
         $registered = false;
-        $notices = apply_filters( 'swp_admin_notices', '' );
+        $notices = apply_filters( 'swp_admin_notices', array() );
 
         $container = '<div class="sw-admin-wrapper" sw-registered="'. $this->is_registered .'" swp-addons="' . $active_addons . '" swp-registrations="' . $registered_addons . '">';
             $container .= '<div class="swp-notice-wrapper">';
