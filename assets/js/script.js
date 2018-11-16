@@ -486,10 +486,17 @@ window.socialWarfare = window.socialWarfare || {};
 			left = panel.offset().left;
 			width = panel.width();
 
-			if (width == 100) {
+			//* The panel width is 'auto', which evaluates to 100%
+			if (width == 100 || width == 0) {
+				var parent = panel.parent();
+
+                //* Ignore the invisible wrapper div, it has no width.
+				if (parent.hasClass("swp-hidden-panel-wrap")) {
+					parent = parent.parent();
+				}
+
 				console.log("changing width");
-	            //* The panel had its width as 'auto', which is 100%
-				width = panel.parent().width();
+				width = parent.width();
 			}
 		}
 
