@@ -92,7 +92,7 @@ class SWP_Notice_Loader {
 		 * that array to instantiate a notice object.
 		 *
 		 */
-		foreach( $notices as $data ) {
+		foreach( $cache_data['notices'] as $data ) {
 
 
 			/**
