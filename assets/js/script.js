@@ -478,7 +478,6 @@ window.socialWarfare = window.socialWarfare || {};
 		var panel = socialWarfare.panels.staticHorizontal;
 
 		if (socialWarfare.isMobile()) {
-			left = 0;
 			width = "100%";
 		}
 
@@ -495,7 +494,6 @@ window.socialWarfare = window.socialWarfare || {};
 					parent = parent.parent();
 				}
 
-				console.log("changing width");
 				width = parent.width();
 			}
 		}
