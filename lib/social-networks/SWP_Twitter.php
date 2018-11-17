@@ -11,6 +11,8 @@
  * @since     1.0.0 | Unknown     | Created
  * @since     2.2.4 | 02 MAY 2017 | Refactored functions & updated docblocking
  * @since     3.0.0 | 07 APR 2018 | Rebuilt into a class-based system.
+ * @since     3.4.0 | 16 NOV 2018 | Removed Open Share Counts API.
+ * @since     3.4.0 | 16 NOV 2018 | Added local properties for debugging.
  *
  */
 class SWP_Twitter extends SWP_Social_Network {
@@ -51,6 +53,8 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * not have an active API endpoint and will not make a remote call.
 	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @since  3.4.0 | 16 NOV 2018 | Removed Open Share Counts API.
+	 * @since  3.4.0 | 16 NOV 2018 | Added local property for debugging.
 	 * @var    $request_url Stored in a local property to allow us to output it
 	 *                      via the debug method when ?swp_debug=twitter is used.
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
@@ -92,6 +96,7 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * Parse the response to get the share count
 	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @since  3.4.0 | 16 NOV 2018 | Added local property for debugging.
 	 * @access public
 	 * @var    $this->response Stored in a local property to allow us to output it
 	 *                         via the debug method when ?swp_debug=twitter is used.
