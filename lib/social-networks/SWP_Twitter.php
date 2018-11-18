@@ -52,6 +52,9 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * If a zero is returned, the cURL processes will no that this network does
 	 * not have an active API endpoint and will not make a remote call.
 	 *
+	 * This method is called by the SWP_Post_Cache class when rebuilding the
+	 * cached share count data.
+	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
 	 * @since  3.4.0 | 16 NOV 2018 | Removed Open Share Counts API.
 	 * @since  3.4.0 | 16 NOV 2018 | Added local property for debugging.
@@ -95,6 +98,9 @@ class SWP_Twitter extends SWP_Social_Network {
 	/**
 	 * Parse the response to get the share count
 	 *
+	 * This method is called by the SWP_Post_Cache class when rebuilding the
+	 * cached share count data.
+	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
 	 * @since  3.4.0 | 16 NOV 2018 | Added local property for debugging.
 	 * @access public
@@ -128,47 +134,118 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * dialogue.
 	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @since  3.4.0 | 17 NOV 2018 | Stripped down into smaller, subordinate methods.
 	 * @param  array $post_data The array of information passed in from the buttons panel.
 	 * @return string The generated link
-	 * @access public
 	 *
 	 */
 	public function generate_share_link( $post_data ) {
-        $tweet = $this->get_tweet( $post_data );
 
-		$twitter_link = $this->get_shareable_permalink( $post_data );
-
-		// If the custom tweet contains a link, block Twitter for auto adding another one.
-		if ( false !== strpos( $tweet , 'http' ) ) :
-			$url_parameter = '&url=/';
-		else :
-			$url_parameter = '&url=' . $twitter_link;
-		endif;
-
-		$twitter_mention = get_post_meta( $post_data['ID'] , 'swp_twitter_mention' , true );
-
-		if (false != $twitter_mention):
-			$tweet .= ' @'.str_replace('@','',$twitter_mention);
-		endif;
-
-        $author = SWP_User_Profile::get_author( $post_data['ID'] );
-
-		$user_twitter_handle 	= get_the_author_meta( 'swp_twitter' , $author );
-
-        if ( $user_twitter_handle ) :
-			$via_parameter = '&via=' . str_replace( '@','',$user_twitter_handle );
-		elseif ( $post_data['options']['twitter_id'] ) :
-			$via_parameter = '&via=' . str_replace( '@','',$post_data['options']['twitter_id'] );
-		else :
-			$via_parameter = '';
-		endif;
-
-        $parameters = $tweet . $url_parameter . $via_parameter;
-
-        $intent_link = "https://twitter.com/intent/tweet?text=$parameters";
+        $tweet         = $this->get_tweet( $post_data );
+		$url_parameter = $this->get_url_parameter( $tweet, $post_data );
+		$via_parameter = $this->get_via_parameter( $post_data );
+        $parameters    = $tweet . $url_parameter . $via_parameter;
+        $intent_link   = 'https://twitter.com/intent/tweet?text=' . $parameters;
 
 		return $intent_link;
 	}
+
+
+	/**
+	 * This is the method that generates the via=username section of the share link.
+	 *
+	 * @since  3.4.0 | 19 NOV 2018 | Created
+	 * @param  array $post_data The array of information passed in from the buttons panel.
+	 * @return sting The via=username section of the share link.
+	 *
+	 */
+	protected function get_via_parameter( $post_data ) {
+
+
+		/**
+		 * Find out who the author of this post is, then check that author's
+		 * profile to see if they have filled out their Twitter username. If so,
+		 * we'll use that for this post instead of the global Twitter username.
+		 *
+		 */
+		$author = SWP_User_Profile::get_author( $post_data['ID'] );
+		$user_twitter_handle = get_the_author_meta( 'swp_twitter' , $author );
+		if ( $user_twitter_handle ) {
+			return '&via=' . str_replace( '@','',$user_twitter_handle );
+		}
+
+
+		/**
+		 * Next we'll check to see if a Twitter username has been filled out on
+		 * the global options page. If so, we'll use that as a backup.
+		 *
+		 */
+		if ( SWP_Utility::get_option( 'twitter_id' ) ) {
+			return '&via=' . str_replace( '@', '', SWP_Utility::get_option( 'twitter_id' ) );
+		}
+
+		return '';
+	}
+
+
+	/**
+	 * The method that generates the URL parameter of the share link.
+	 *
+	 * @since  3.4.0 | 17 NOV 2018 | Created
+	 * @param  string $tweet     The tweet being shared.
+	 * @param  array  $post_data The array of information passed in from the buttons panel.
+	 * @return string The url parameter to be concatenated to the share link.
+	 *
+	 */
+	protected function get_url_parameter( $tweet , $post_data ) {
+
+
+		/**
+		 * If the custom tweet already contains a link in it, then setting this
+		 * parameter to a forward slash will stop Twitter from adding its own
+		 * link, AKA a second link in the tweet.
+		 *
+		 */
+		if ( false !== strpos( $tweet , 'http' ) ) {
+			return $url_parameter = '&url=/';
+		}
+
+		$twitter_link = $this->get_shareable_permalink( $post_data );
+		return '&url=' . $twitter_link;
+	}
+
+
+    /**
+     * Retrieves tweet from database and converts to UTF-8 for Twitter.
+     *
+     * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
+     * @param array $post_data WordPress post data, such as 'ID' and 'post_content'.
+     * @return string $tweet The encoded tweet text.
+     *
+     */
+    protected function get_tweet( $post_data ) {
+
+
+        /**
+         * If the user has drafted a custom tweet for this post, it will be
+         * stored in the swp_custom_tweet custom field. We will check and use
+         * this if it is available.
+         *
+         */
+		$tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
+
+
+		/**
+		 * If the user has not filled out the custom tweet field, then we will
+		 * use the title of the post instead.
+		 *
+		 */
+        if ( empty( $tweet ) ) {
+            $tweet = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
+        }
+
+		return urlencode( $tweet );
+    }
 
 
 	/**
@@ -182,7 +259,7 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * @return void
 	 *
 	 */
-	public function handle_invalid_share_count_sources() {
+	protected function handle_invalid_share_count_sources() {
 
 		// Fetch the user's Twitter share count source/service.
 		$source = SWP_Utility::get_option( 'tweet_count_source' );
@@ -210,36 +287,4 @@ class SWP_Twitter extends SWP_Social_Network {
 			new SWP_Notice( $source . '_deprecation_notice', $message );
 		}
 	}
-
-
-    /**
-     * Retrieves tweet from database and converts to UTF-8 for Twitter.
-     *
-     * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
-     * @param array $post_data WordPress post data, such as 'ID' and 'post_content'.
-     * @return string $tweet The encoded tweet text.
-     *
-     */
-    protected function get_tweet( $post_data ) {
-        $max_tweet_length = 240;
-
-        // Check for a custom tweet from the post options.
-		$tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
-
-        if ( empty( $tweet ) ) :
-            //* Use the post title.
-            $tweet = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
-        elseif ( is_array( $tweet ) ) :
-            $tweet = $tweet[0];
-        endif;
-
-        if ( function_exists( 'mb_convert_encoding' ) ) {
-            $converted_tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( 'charset' ) );
-        }
-
-        $html_safe_tweet = html_entity_decode( $tweet, ENT_COMPAT, 'UTF-8' );
-		$tweet           = urlencode( $tweet );
-
-        return $tweet;
-    }
 }
