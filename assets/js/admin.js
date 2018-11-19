@@ -132,7 +132,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 (function(window, jQuery, undefined) {
 	'use strict';
-    //* Media uploader bug is somewhere in this IIFE. 
+
 	if (typeof $ == 'undefined') {
 		$ = jQuery;
 	}
@@ -252,6 +252,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		$('ul.swpmb-media-list').each(function(index, mediaList) {
 			// Check if the media list has been created yet
 			if ($(mediaList).is(':empty')) {
+				console.log("list is empty")
 
 				//* For the Pinterest image placeholder image.
 				if ($(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
@@ -264,10 +265,10 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				$(mediaList).css("height", height);
 
 				//* Call this method again to reset heights based on actual image values.
-				setTimeout(updateImageInputs, 100);
 			} else {
+				console.log("list is filled")
+				$(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(updateImageInputs);
 
-				$(mediaList).css("height", "initial").find(".swpmb-overlay").click(updateImageInputs);
 			}
 		})
 	}
@@ -361,10 +362,10 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 	function displayMetaBox() {
 		if (!$($(".swpmb-media-list").length)) return;
-
-		updateImageInputs();
 		clearInterval(window.initSWMetabox);
+
 		setupMetaBox();
+		$('ul.swpmb-media-list').find(".swpmb-overlay").click(updateImageInputs);
 
 		//* Call updateImageInputs again to resize existing images.
 		setTimeout(function() {
