@@ -247,7 +247,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		$("#social_warfare #" + selector).parent().prepend(div);
 	}
 
-	function resizeImageFields() {
+	socialWarfareAdmin.resizeImageFields = function() {
 		$('ul.swpmb-media-list').each(function(index, mediaList) {
 			// Check if the media list has been created yet
 			if ($(mediaList).is(':empty')) {
@@ -263,7 +263,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 				$(mediaList).css("height", height);
 			} else {
-				$(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(resizeImageFields);
+				$(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
 			}
 		})
 	}
@@ -359,8 +359,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		clearInterval(window.initSWMetabox);
 
 		setupMetaBox();
-		$('ul.swpmb-media-list').find(".swpmb-overlay").click(resizeImageFields);
-		setInterval(resizeImageFields, 100)
+		$('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
 		$("#social_warfare.postbox").show();
 	}
 
