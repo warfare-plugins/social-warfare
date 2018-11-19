@@ -359,6 +359,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		clearInterval(window.initSWMetabox);
 
 		setupMetaBox();
+		//* Just needs a little extra time for some reason.
+		setTimeout(socialWarfareAdmin.resizeImageFields, 200)
 		$('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
 		$("#social_warfare.postbox").show();
 	}
