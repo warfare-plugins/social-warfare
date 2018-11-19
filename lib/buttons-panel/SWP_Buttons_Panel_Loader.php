@@ -271,7 +271,7 @@ class SWP_Buttons_panel_Loader {
          *
          */
 		$staticHorizontal = new SWP_Buttons_Panel();
-		$html  = '<div style="display: none; visibility: collapse; opacity: 0">';
+		$html  = '<div class="swp-hidden-panel-wrap" style="display: none; visibility: collapse; opacity: 0">';
 		$html .= $staticHorizontal->render_html();
 		$html .= '</div>';
 		return $content . $html;

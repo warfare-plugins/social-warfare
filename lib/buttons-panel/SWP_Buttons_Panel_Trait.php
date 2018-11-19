@@ -466,10 +466,10 @@ trait SWP_Buttons_Panel_Trait {
 		}
 
 		return 'data-float-mobile="none" ';
-		}
+	}
 
 
-		public function get_float_position() {
+	public function get_float_position() {
 		$location = $this->get_option( 'float_location' );
 
 		if ( 'left' == $location || 'right' == $location ) {
@@ -641,18 +641,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
-		* If this is a shortcode, the buttons argument has been specifically
-		* passed into the function, and no total/totals were passed in then
-		* we do not render the total shares.
+		* If this is a shortcode and the buttons argument has been specifically
+		* passed into the function, then we will use that buttons argument to
+		* determine whether or not to display the total shares.
 		*
 		*/
-		$buttons          = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
-		$total            = in_array('total', array_map('strtolower', $buttons) );
-		$totals           = in_array('totals', array_map('strtolower', $buttons) );
-		$shortcode_totals = ( empty( $buttons ) || $total || $totals );
-
-		if ( $this->is_shortcode && !$shortcode_totals ) {
-		   return false;
+		$buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
+		if ( $this->is_shortcode && !empty( $buttons ) ) {
+			$total = in_array('total', array_map('strtolower', $buttons) );
+			$totals = in_array('totals', array_map('strtolower', $buttons) );
+			return ( $total || $totals );
 		}
 
 
@@ -710,6 +708,7 @@ trait SWP_Buttons_Panel_Trait {
 		 */
 		if( $is_side_floating || $is_left_aligned ) {
 			$this->inner_html = $total_shares_html . $buttons_html;
+			return;
 		}
 
 		/**

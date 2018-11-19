@@ -86,7 +86,7 @@ class SWP_Database_Migration {
 			foreach ( $meta as $key => $value ) {
 
 				//* Only print Social Warfare meta keys.
-				if ( ! ( strpos( $key, 'swp_' ) === 0 
+				if ( ! ( strpos( $key, 'swp_' ) === 0
 				    || ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
 					unset( $meta[$key] );
 				}
@@ -408,11 +408,11 @@ class SWP_Database_Migration {
             'force_new_shares'                  => false,
             'cache_method'                      => 'advanced',
             'order_of_icons' =>  array(
-                'twitter'    => 'Twitter',
-                'linkedIn'   => 'LinkedIn',
-                'pinterest'  => 'Pinterest',
-                'facebook'   => 'Facebook',
-                'google_plus' => 'Google Plus',
+                'twitter'    => 'twitter',
+                'linkedIn'   => 'linkedin',
+                'pinterest'  => 'pinterest',
+                'facebook'   => 'facebook',
+                'google_plus' => 'google_plus',
             ),
         );
 
