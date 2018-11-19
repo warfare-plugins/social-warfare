@@ -86,6 +86,7 @@ function swpConditionalFields() {
 				$(this).hide();
 			}
 		}
+
 		else {
 			// If the required value matches, show this conditional field
 			if ($.inArray(value, required) !== -1 || value === required) {
@@ -241,9 +242,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 
 	function createCharactersRemaining(selector, textLimit) {
-	  // var div = '<div class="swp_CountDown"><span class="counterNumber">' + textLimit + '</span> ' + swp_localize_admin.swp_characters_remaining + '</div>';
 		var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
-
 		updateTextareaStyle(selector)
 		$("#social_warfare #" + selector).parent().prepend(div);
 	}
@@ -315,7 +314,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		});
 	}
 
-
 	/**
 	 *
 	 * @since 3.x.x | Created
@@ -349,14 +347,14 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		};
 
 		Object.keys(textCounters).map(function(selector) {
-			  var textLimit = textCounters[selector];
+			var textLimit = textCounters[selector];
 
-			  createCharactersRemaining(selector, textLimit);
-			  updateCharactersRemaining(selector, textLimit);
+			createCharactersRemaining(selector, textLimit);
+			updateCharactersRemaining(selector, textLimit);
 
-			  $("#social_warfare #" + selector).on("input", function() {
+			$("#social_warfare #" + selector).on("input", function() {
 				  updateCharactersRemaining(selector, textLimit);
-			  });
+			});
 		});
 	}
 
@@ -369,25 +367,22 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 		//* Call updateImageInputs again to resize existing images.
 		setTimeout(function() {
-				updateImageInputs();
-				$("#social_warfare.postbox").show();
+			updateImageInputs();
+			$("#social_warfare.postbox").show();
 		}, 400);
 	}
 
 	$(document).ready(function() {
 		noticeClickHandlers();
-		$(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
 
-			if ($('#social_warfare.postbox').length) {
-			  createTextCounters();
-				swpConditionalFields();
+		if ($('#social_warfare.postbox').length) {
+			createTextCounters();
+			swpConditionalFields();
+			$(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
+			$('.swp_popular_post_options select').on('change', swpConditionalFields);
 
-			  //* Wait for the Rilis metabox to populate itself.
-			  window.initSWMetabox = setInterval(displayMetaBox, 10);
-			}
-
-			$('.swp_popular_post_options select').on('change', function() {
-				swpConditionalFields();
-			});
+			//* Wait for the Rilis metabox to populate itself.
+			window.initSWMetabox = setInterval(displayMetaBox, 10);
+		}
 	});
 })(this, jQuery);
