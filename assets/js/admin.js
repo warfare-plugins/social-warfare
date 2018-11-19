@@ -247,7 +247,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		$("#social_warfare #" + selector).parent().prepend(div);
 	}
 
-	function updateImageInputs() {
+	function resizeImageFields() {
 		$('ul.swpmb-media-list').each(function(index, mediaList) {
 			// Check if the media list has been created yet
 			if ($(mediaList).is(':empty')) {
@@ -266,7 +266,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				//* Call this method again to reset heights based on actual image values.
 			} else {
 				console.log("list is filled")
-				$(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(updateImageInputs);
+				$(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(resizeImageFields);
 
 			}
 		})
@@ -363,11 +363,11 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		clearInterval(window.initSWMetabox);
 
 		setupMetaBox();
-		$('ul.swpmb-media-list').find(".swpmb-overlay").click(updateImageInputs);
+		$('ul.swpmb-media-list').find(".swpmb-overlay").click(resizeImageFields);
 
-		//* Call updateImageInputs again to resize existing images.
+		//* Call resizeImageFields again to resize existing images.
 		setTimeout(function() {
-			updateImageInputs();
+			resizeImageFields();
 			$("#social_warfare.postbox").show();
 		}, 400);
 	}
