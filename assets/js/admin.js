@@ -262,12 +262,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				}
 
 				$(mediaList).css("height", height);
-
-				//* Call this method again to reset heights based on actual image values.
 			} else {
-				console.log("list is filled")
 				$(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(resizeImageFields);
-
 			}
 		})
 	}
@@ -364,12 +360,8 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 		setupMetaBox();
 		$('ul.swpmb-media-list').find(".swpmb-overlay").click(resizeImageFields);
-
-		//* Call resizeImageFields again to resize existing images.
-		setTimeout(function() {
-			resizeImageFields();
-			$("#social_warfare.postbox").show();
-		}, 400);
+		setInterval(resizeImageFields, 100)
+		$("#social_warfare.postbox").show();
 	}
 
 	$(document).ready(function() {
