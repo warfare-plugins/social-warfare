@@ -132,7 +132,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 (function(window, jQuery, undefined) {
 	'use strict';
-
+    //* Media uploader bug is somewhere in this IIFE. 
 	if (typeof $ == 'undefined') {
 		$ = jQuery;
 	}
