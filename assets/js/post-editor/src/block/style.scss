@@ -52,6 +52,12 @@
 	 color: rgb(211, 66, 80);
  }
 
+ .swp-block-icon {
+	 margin: 0 28px 0 14px;
+	 font-size: 18px;
+	 width: 32px;
+ }
+
  .swp-active-block {
  	height: 100%;
 
@@ -68,8 +74,7 @@
  	flex-flow: row nowrap;
  	align-items: center;
 
-	i,
-	.swp-block-icon {
+	i {
 		margin: 0 28px 0 14px;
 		font-size: 18px;
 		width: 32px;
