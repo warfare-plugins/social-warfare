@@ -414,26 +414,27 @@ class SWP_Social_Network {
 		}
 
 		// False if the share count is empty
-		if ( empty( $share_counts[$this->key] ) ) :
+		if ( empty( $share_counts[$this->key] ) ) {
 			return false;
+		}
 
 		// False if the total share count is below the minimum
-		elseif( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ):
+		if( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ) {
 			return false;
+		}
 
 		// False if the share count is zero.
-		elseif( $share_counts[$this->key] = 0 ):
+		if( $share_counts[$this->key] = 0 ) {
 			return false;
+		}
 
 		// False if network shares are turned off in the options.
-		elseif( false == $options['network_shares'] ):
+		if( false == $options['network_shares'] ) {
 			return false;
+		}
 
-		else :
-			return true;
-		endif;
+		return true;
 
-		return $this;
 	}
 
 
