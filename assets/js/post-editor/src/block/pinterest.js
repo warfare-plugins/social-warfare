@@ -60,42 +60,41 @@ registerBlockType( 'social-warfare/pinterest', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	 edit: function( props ) {
-			const icon = '';
-			const toggleFocus = ( event ) => {
-					props.setAttributes( { hasFocus: !props.attributes.hasFocus } );
-				}
-
-			const attributes = {
-				//* key: 'Display Text',
-				id: 'Post or Image ID',
-				width: 'Width',
-				height: 'Height',
-				className: 'Custom CSS class',
-				alignment: 'Alignment (left, right, or center)'
+		const icon = '';
+		const toggleFocus = ( event ) => {
+				props.setAttributes( { hasFocus: !props.attributes.hasFocus } );
 			}
 
-            //* Create the attribute="value" string for the shortcode.
-			const attributeString = Object.keys(attributes).reduce((string, attr) => {
-				if (!props.attributes[attr]) return string;
-
-				string += ` ${attr}="${props[attr]}"`
-
-			}, '');
+		const attributes = {
+			//* key: 'Display Text',
+			id: 'Post ID or Image ID',
+			width: 'Width (in pixels)',
+			height: 'Height (in pixels)',
+			className: 'Custom CSS class',
+			alignment: 'Alignment. You may enter one of: left, right, center'
+		}
 
 		const updateAttribute = ( event ) => {
+			console.log('updateAttribute')
+			console.log('key', event.target.name, 'value', event.target.value)
 			props.setAttributes( { [event.target.name]: event.target.value } )
 		}
 
 		//* Inactive state
 		if ( !props.attributes.hasFocus ) {
+
+			//* Create the attribute="value" string for the shortcode.
+			const attributeString = Object.entries(props.attributes).reduce((string, [attr, value]) => {
+				if (!value.length || typeof value == 'undefined') return string;
+                return string += ` ${attr}="${value}"`
+			}, '');
+
 			return (
 				<div className={ `${props.className} pinterest-block-wrap swp-inactive-block` }>
 					<div className="head" onClick={toggleFocus}>
 						{icon}
 						<div className="swp-preview">[pinterest_image{attributeString}]</div>
-						<Dashicon className="swp-dashicon"
-								  icon="arrow-down"
-						/>
+						<Dashicon className="swp-dashicon" icon="arrow-down" />
 					</div>
 				</div>
 			);
@@ -105,15 +104,15 @@ registerBlockType( 'social-warfare/pinterest', {
 		return (
 			<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
 			    <p>Leave a field blank to use default values.</p>
-
 				{
-					Object.entries(attributes).map(([key, displayText]) => {
+					Object.entries(attributes).map(([name, displayText]) => {
 						return (
 							<div>
 								<div>{displayText}</div>
-								<input name={key}
+								<input name={name}
 								       type="text"
-									   onBlur={updateAttribute}
+									   onChange={updateAttribute}
+									   value={props.attributes[name] || ''}
 							     />
 							</div>
 						)
@@ -121,10 +120,8 @@ registerBlockType( 'social-warfare/pinterest', {
 				}
 
 				<div className="head" onClick={toggleFocus}>
-					<p >Click to Tweet</p>
-					<Dashicon className="swp-dashicon"
-							  icon="arrow-up"
-					/>
+					<p>Pinterest Image</p>
+					<Dashicon className="swp-dashicon" icon="arrow-up" />
 				</div>
 			</div>
 		);
