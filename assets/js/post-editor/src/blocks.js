@@ -11,3 +11,4 @@
 
 import './block/social-warfare.js';
 import './block/click-to-tweet.js';
+import './block/pinterest.js';
