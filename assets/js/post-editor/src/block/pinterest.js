@@ -104,12 +104,12 @@ registerBlockType( 'social-warfare/pinterest', {
 					<p>Pinterest Image</p>
 					<Dashicon className="swp-dashicon" icon="arrow-up" />
 				</div>
-			    <p>Leave a field blank to use default values.</p>
+			    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>
 				{
 					Object.entries(attributes).map(([name, displayText]) => {
 						return (
 							<div>
-								<div>{displayText}</div>
+								<p>{displayText}</p>
 								<input name={name}
 								       type="text"
 									   onChange={updateAttribute}
