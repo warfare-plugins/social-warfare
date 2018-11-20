@@ -2,10 +2,12 @@
 import '../common.scss';
 import './style.scss';
 
-console.log('pinterest.js')
+// Give the page 10 seconds to load before bailing. 
+const timeout = (+new Date) + 10000;
 
 //* The socialWarfare object does not exist at the time this file is loaded, so wait for it first.
 const checker = setInterval(() => {
+	if (+new Date > timeout) clearTimeout(checker);
 	if (!socialWarfare) return;
 
 	clearInterval(checker);
