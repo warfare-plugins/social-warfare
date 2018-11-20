@@ -46,6 +46,11 @@
   font-size: 22px;
   color: #d34250; }
 
+.swp-block-icon {
+  margin: 0 28px 0 14px;
+  font-size: 18px;
+  width: 32px; }
+
 .swp-active-block {
   height: 100%; }
   .swp-active-block .swp-inner-block-50 {
@@ -62,8 +67,7 @@
   -ms-flex-align: center;
       align-items: center;
   /* The preview displayed when the block is not active. */ }
-  .swp-inactive-block i,
-  .swp-inactive-block .swp-block-icon {
+  .swp-inactive-block i {
     margin: 0 28px 0 14px;
     font-size: 18px;
     width: 32px; }
