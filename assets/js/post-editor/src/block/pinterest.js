@@ -49,9 +49,9 @@ const checker = setInterval(() => {
 		category: 'social-warfare', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 		keywords: [
 			// Has a limit of 3 keywords.
-			__( 'social' ),
+			__( 'share' ),
+			__( 'pin' ),
 			__( 'tailwind' ),
-			__( 'marketing' ),
 		],
 		attributes: {
 		   hasFocus: { type: 'boolean', defualt: false },

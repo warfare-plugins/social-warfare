@@ -31,9 +31,9 @@ registerBlockType( 'social-warfare/social-warfare', {
 	category: 'social-warfare', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		// Has a limit of 3 keywords.
-		__( 'sharing' ),
-		__( 'social sharing' ),
-		__( 'share buttons' )
+		__( 'share' ),
+		__( 'button' ),
+		__( 'tweet' )
 	],
 	attributes: {
 	   hasFocus: { type: 'boolean', defualt: false },		//* Used only for editor to display either slim or full block.

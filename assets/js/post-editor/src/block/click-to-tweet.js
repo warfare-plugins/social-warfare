@@ -27,8 +27,8 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	keywords: [
 		// Has a limit of 3 keywords.
 		__( 'twitter' ),
-		__( 'tweet' ),
-		__( 'ctt' )
+		__( 'quote' ),
+		__( 'share' )
 	],
 	attributes: {
 	   hasFocus: { type: 'boolean', defualt: false },
