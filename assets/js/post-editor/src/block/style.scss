@@ -54,6 +54,12 @@
 
  .swp-active-block {
  	height: 100%;
+
+	.swp-inner-block-50 {
+		width: 50%;
+		display: inline-block;
+		padding: 0 5px;
+	}
  }
 
  .swp-inactive-block {
