@@ -44,7 +44,7 @@
 
  /* Common styles for SWP Gutenberg blocks. */
  [class^="wp-block-social-warfare"] {
- 	transition: all 900ms;
+ 	transition: all 300ms;
 
 	.head {
 		height: 55px;
@@ -63,6 +63,15 @@
 	 height: 32px;
  }
 
+ [class^="wp-block-social-warfare"] .head {
+	border-bottom: 1px solid rgba(255, 255, 255, 0);
+ }
+
+ .is-hovered [class^="wp-block-social-warfare"] .head,
+ .is-selected [class^="wp-block-social-warfare"] .head {
+	 border-bottom: 1px solid #e2e4e7;
+ }
+
  .swp-active-block {
  	height: 100%;
 
@@ -73,7 +82,7 @@
 	}
 
 	.head {
-		border-bottom: 1px solid #e2e4e7;
+		// border-bottom: 1px solid #e2e4e7;
 	}
 
 	.head > div {
@@ -102,10 +111,6 @@
  	display: flex;
  	flex-flow: row nowrap;
  	align-items: center;
-
-	.head {
-		border-bottom: 1px solid rgba(255, 255, 255, 0);
-	}
 
 	/* The preview displayed when the block is not active. */
 	.swp-preview {
