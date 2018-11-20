@@ -56,6 +56,7 @@
 	 margin: 0 28px 0 14px;
 	 font-size: 18px;
 	 width: 32px;
+	 height: 32px;
  }
 
  .swp-active-block {
@@ -65,6 +66,17 @@
 		width: 50%;
 		display: inline-block;
 		padding: 0 5px;
+	}
+
+	.head > div {
+		display: flex;
+		flex-flow: row no-wrap;
+		justify-content: center;
+	}
+
+	.head .swp-block-icon,
+	.head .swp-block-title {
+		display: inline-block;
 	}
  }
 
