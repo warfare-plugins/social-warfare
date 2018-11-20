@@ -275,6 +275,13 @@ class SWP_Script {
         return $vars;
     }
 
+    /**
+     * Creates the `socialWarfare` object and initializes it with server-side data.
+     *
+     * @since 3.4.0 | 20 NOV 2018 | Created
+     * @return void
+     * 
+     */
 	function localize_variables() {
 
 		$addons = array();
