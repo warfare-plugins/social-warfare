@@ -25,14 +25,14 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	keywords: [
 		// Has a limit of 3 keywords.
 		__( 'social' ),
-		__( 'tailwind' )
+		__( 'tailwind' ),
 		__( 'marketing' ),
 	],
 	attributes: {
 	   hasFocus: { type: 'boolean', defualt: false },
 	   id: { type: 'number', default: 0},
-	   width: { type: 'number', default: },
-	   height: { type: 'number', default: },
+	   width: { type: 'number', default: 0 },
+	   height: { type: 'number', default: 0 },
 	   className: { type: 'string', default: ''},
 	   alignment: { type: 'string', default: ''},
    },
@@ -46,31 +46,51 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	 edit: function( props ) {
+		   const icon = '';
+		   console.log('props', props)
+
+		   const toggleFocus = ( event ) => {
+	   			props.setAttributes( { hasFocus: !props.attributes.hasFocus } );
+	   		}
+
+		   const attributes = ['id', 'width', 'height', 'className', 'alignment']
+		   const attributeString = attributes.reduce((string, attr) => {
+			    if (!props.attributes[attr]) return string;
+
+				if (props.attributes)
+
+				string += ` ${attr}="${props[attr]}"`
+
+			}, '');
+
+		//* Inactive state
+		if ( !props.attributes.hasFocus ) {
+
 			return (
 				<div className={ `${props.className} pinterest-block-wrap swp-inactive-block` }>
-				    <div className="head" onClick={toggleFocus}>
-					    {twitterIcon}
-						<div className="swp-preview">{text}</div>
+					<div className="head" onClick={toggleFocus}>
+						{icon}
+						<div className="swp-preview">[pinterest_image{attributeString}]</div>
 						<Dashicon className="swp-dashicon"
-						          icon="arrow-down"
-					    />
+								  icon="arrow-down"
+						/>
 					</div>
-	 			</div>
-			)
+				</div>
+			);
 		}
 
 		//* Active state
- 		return (
- 			<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
-                <div className="head" onClick={toggleFocus}>
-				    <p >Click to Tweet</p>
+		return (
+			<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
+				<div className="head" onClick={toggleFocus}>
+					<p >Click to Tweet</p>
 					<Dashicon className="swp-dashicon"
 							  icon="arrow-up"
 					/>
 				</div>
- 			</div>
- 		);
- 	},
+			</div>
+		);
+	},
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
