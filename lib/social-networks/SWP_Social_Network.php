@@ -407,10 +407,10 @@ class SWP_Social_Network {
 	 */
 	public function are_shares_shown( $share_counts , $options = array()) {
 
-		// Cast a string 'true'/'false' to a boolean true/false in case it was 
+		// Cast a string 'true'/'false' to a boolean true/false in case it was
 		// passed in via the shortcode.
 		if( is_string( $options['network_shares'] ) ) {
-			$options['network_shares'] = ($options['network_shares'] === 'true');
+			$options['network_shares'] = (strtolower( $options['network_shares'] ) === 'true');
 		}
 
 		// False if the share count is empty
