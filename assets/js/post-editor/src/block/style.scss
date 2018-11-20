@@ -64,6 +64,10 @@
 		padding: 0 5px;
 	}
 
+	.head {
+		border-bottom: 1px solid rgb(25, 30, 35);
+	}
+
 	.head > div {
 		display: flex;
 		flex-flow: row no-wrap;
