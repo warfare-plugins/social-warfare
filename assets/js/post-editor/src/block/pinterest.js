@@ -2,7 +2,7 @@
 import '../common.scss';
 import './style.scss';
 
-// Give the page 10 seconds to load before bailing. 
+// Give the page 10 seconds to load before bailing.
 const timeout = (+new Date) + 10000;
 
 //* The socialWarfare object does not exist at the time this file is loaded, so wait for it first.
@@ -114,8 +114,10 @@ const checker = setInterval(() => {
 			return (
 				<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
 					<div className="head" onClick={toggleFocus}>
-					    {icon}
-						<p>Pinterest Image</p>
+					    <div>
+						    {icon}
+							<p className="swp-block-title">Pinterest Image</p>
+						</div>
 						<Dashicon className="swp-dashicon" icon="arrow-up" />
 					</div>
 				    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>

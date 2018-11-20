@@ -116,8 +116,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		return (
  			<div className={ `${props.className} click-to-tweet-block-wrap swp-active-block` }>
                 <div className="head" onClick={toggleFocus}>
-					{icon}
-				    <p >Click to Tweet</p>
+				    <div>
+						{icon}
+					    <p className="swp-block-title">Click to Tweet</p>
+					</div>
 					<Dashicon className="swp-dashicon"
 							  icon="arrow-up"
 					/>
