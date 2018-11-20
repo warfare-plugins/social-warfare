@@ -141,7 +141,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
 
  				 <textarea name="displayText"
- 				          placeholder="Type your tweet. . . "
+ 				          placeholder="Type your quote. . . "
  				          onChange={updateDisplayText}
  						  value={displayText}
  				 />
