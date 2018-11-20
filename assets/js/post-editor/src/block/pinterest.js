@@ -18,7 +18,7 @@ const Dashicon = wp.components.Dashicon;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'social-warfare/click-to-tweet', {
+registerBlockType( 'social-warfare/pinterest', {
 	title: __( 'Pinterest Image' ), // Block title.
 	icon: '',
 	category: 'social-warfare', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
@@ -65,7 +65,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 
 		//* Inactive state
 		if ( !props.attributes.hasFocus ) {
-
 			return (
 				<div className={ `${props.className} pinterest-block-wrap swp-inactive-block` }>
 					<div className="head" onClick={toggleFocus}>
