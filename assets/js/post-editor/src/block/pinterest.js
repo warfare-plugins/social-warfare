@@ -123,8 +123,11 @@ const checker = setInterval(() => {
 				    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>
 					{
 						Object.entries(attributes).map(([name, displayText]) => {
+							if (name == 'alignment') return;
+							const className = name == 'width' || name == 'height' ? "swp-inner-block-50" : '';
+
 							return (
-								<div className="swp-inner-block-50">
+								<div className={className}>
 									<p>{displayText}</p>
 									<input name={name}
 									       type="text"
