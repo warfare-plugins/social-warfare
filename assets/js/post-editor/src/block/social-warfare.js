@@ -52,7 +52,6 @@ registerBlockType( 'social-warfare/social-warfare', {
 	 */
 	edit: function( props ) {
 		const { useThisPost, buttons, postID } = props.attributes;
-		const icon = <i className="mce-ico mce-i-sw sw sw-social-warfare" />;
 
 		const toggleFocus = ( event ) => {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
@@ -105,7 +104,10 @@ registerBlockType( 'social-warfare/social-warfare', {
 		return (
 			<div className={ `${props.className} social-warfare-block-wrap swp-active-block` }>
 			    <div className="head" onClick={toggleFocus}>
-					<p className="swp-block-title">Social Warfare Shortcode</p>
+				    <div>
+					    {icon}
+						<p className="swp-block-title">Social Warfare Shortcode</p>
+					</div>
 					<Dashicon className="swp-dashicon" icon="arrow-down" />
 				</div>
 
