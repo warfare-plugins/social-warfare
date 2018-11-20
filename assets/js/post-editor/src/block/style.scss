@@ -87,6 +87,14 @@
 	.head .swp-block-title {
 		display: inline-block;
 	}
+
+	p {
+		margin: 25px 0 5px 0;
+	}
+
+	.head p {
+		margin: initial;
+	}
  }
 
  .swp-inactive-block {
