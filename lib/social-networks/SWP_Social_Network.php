@@ -355,6 +355,7 @@ class SWP_Social_Network {
 		$share_counts = $panel_context['shares'];
         $post_data['options'] = $panel_context['options'];
 
+
 		$share_link = $this->generate_share_link( $post_data );
 
         // Build the button.
@@ -406,6 +407,12 @@ class SWP_Social_Network {
 	 */
 	public function are_shares_shown( $share_counts , $options = array()) {
 
+		// Cast a string 'true'/'false' to a boolean true/false in case it was 
+		// passed in via the shortcode.
+		if( is_string( $options['network_shares'] ) ) {
+			$options['network_shares'] = ($options['network_shares'] === 'true');
+		}
+
 		// False if the share count is empty
 		if ( empty( $share_counts[$this->key] ) ) :
 			return false;
@@ -419,7 +426,7 @@ class SWP_Social_Network {
 			return false;
 
 		// False if network shares are turned off in the options.
-		elseif( false == SWP_Utility::get_option( 'network_shares' ) ):
+		elseif( false == $options['network_shares'] ):
 			return false;
 
 		else :
