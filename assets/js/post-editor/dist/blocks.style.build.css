@@ -37,10 +37,12 @@
   width: 100%; }
 
 /* Common styles for SWP Gutenberg blocks. */
-[class^="swp-"][class$="-block"] {
+[class^="wp-block-social-warfare"] {
   -webkit-transition: all 900ms;
   -o-transition: all 900ms;
   transition: all 900ms; }
+  [class^="wp-block-social-warfare"] .head {
+    height: 55px; }
 
 .swp-block-icon {
   margin: 0 28px 0 14px;
@@ -82,6 +84,8 @@
     margin: 0 28px 0 14px;
     font-size: 18px;
     width: 32px; }
+  .swp-inactive-block .head {
+    border-bottom: 1px solid rgba(255, 255, 255, 0); }
   .swp-inactive-block .swp-preview {
     background: #F5F5F5;
     width: 100%;
