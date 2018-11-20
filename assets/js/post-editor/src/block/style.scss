@@ -43,8 +43,12 @@
  }
 
  /* Common styles for SWP Gutenberg blocks. */
- [class^="swp-"][class$="-block"] {
+ [class^="wp-block-social-warfare"] {
  	transition: all 900ms;
+
+	.head {
+		height: 55px;
+	}
  }
 
  .swp-block-icon {
@@ -56,7 +60,6 @@
 
  .swp-active-block {
  	height: 100%;
-
 
 	.swp-inner-block-50 {
 		width: 50%;
@@ -91,6 +94,10 @@
 		margin: 0 28px 0 14px;
 		font-size: 18px;
 		width: 32px;
+	}
+
+	.head {
+		border-bottom: 1px solid rgba(255, 255, 255, 0);
 	}
 
 	/* The preview displayed when the block is not active. */
