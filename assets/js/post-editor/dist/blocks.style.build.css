@@ -43,6 +43,9 @@
   transition: all 900ms; }
   [class^="wp-block-social-warfare"] .head {
     height: 55px; }
+  [class^="wp-block-social-warfare"] svg {
+    width: 32px;
+    height: 32px; }
 
 .swp-block-icon {
   margin: 0 28px 0 14px;
