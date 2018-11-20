@@ -112,6 +112,7 @@ const checker = setInterval(() => {
 			return (
 				<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
 					<div className="head" onClick={toggleFocus}>
+					    {icon}
 						<p>Pinterest Image</p>
 						<Dashicon className="swp-dashicon" icon="arrow-up" />
 					</div>
