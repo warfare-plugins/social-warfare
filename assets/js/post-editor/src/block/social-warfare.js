@@ -105,6 +105,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 		return (
 			<div className={ `${props.className} social-warfare-block-wrap swp-active-block` }>
 			    <div className="head" onClick={toggleFocus}>
+				    {icon}
 				    <p>Social Warfare Shortcode</p>
 					<Dashicon className="swp-dashicon" icon="arrow-down" />
 				</div>
