@@ -61,7 +61,8 @@
   -ms-flex-align: center;
       align-items: center;
   /* The preview displayed when the block is not active. */ }
-  .swp-inactive-block i {
+  .swp-inactive-block i,
+  .swp-inactive-block .swp-block-icon {
     margin: 0 28px 0 14px;
     font-size: 18px; }
   .swp-inactive-block .swp-preview {
