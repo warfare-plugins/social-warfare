@@ -42,14 +42,11 @@
   -o-transition: all 900ms;
   transition: all 900ms; }
 
-[class*="block"] i.sw-social-warfare {
-  font-size: 22px;
-  color: #d34250; }
-
 .swp-block-icon {
   margin: 0 28px 0 14px;
   font-size: 18px;
-  width: 32px; }
+  width: 32px;
+  height: 32px; }
 
 .swp-active-block {
   height: 100%; }
@@ -57,6 +54,18 @@
     width: 50%;
     display: inline-block;
     padding: 0 5px; }
+  .swp-active-block .head > div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row no-wrap;
+        flex-flow: row no-wrap;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+  .swp-active-block .head .swp-block-icon,
+  .swp-active-block .head .swp-block-title {
+    display: inline-block; }
 
 .swp-inactive-block {
   min-height: 50px;
