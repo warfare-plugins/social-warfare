@@ -20,7 +20,7 @@ const Dashicon = wp.components.Dashicon;
 registerBlockType( 'social-warfare/social-warfare', {
 	title: __( 'Social Warfare' ), // Block title.
 	icon: <i className="mce-ico mce-i-sw sw sw-social-warfare" />,
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'social-warfare', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		// Has a limit of 3 keywords.
 		__( 'sharing' ),
