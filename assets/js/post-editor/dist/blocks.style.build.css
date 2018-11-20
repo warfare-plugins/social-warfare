@@ -54,6 +54,8 @@
     width: 50%;
     display: inline-block;
     padding: 0 5px; }
+  .swp-active-block .head {
+    border-bottom: 1px solid #191e23; }
   .swp-active-block .head > div {
     display: -ms-flexbox;
     display: flex;
