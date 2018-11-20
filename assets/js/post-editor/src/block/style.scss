@@ -47,10 +47,6 @@
  	transition: all 900ms;
  }
 
- [class*="block"] i.swp_twitter_icon {
-	 color: #429cd6;
- }
-
 [class*="block"] i.sw-social-warfare {
 	 font-size: 22px;
 	 color: rgb(211, 66, 80);
@@ -70,6 +66,7 @@
 	.swp-block-icon {
 		margin: 0 28px 0 14px;
 		font-size: 18px;
+		width: 32px;
 	}
 
 	/* The preview displayed when the block is not active. */
