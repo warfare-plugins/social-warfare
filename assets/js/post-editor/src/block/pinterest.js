@@ -4,6 +4,7 @@ import './style.scss';
 
 console.log('pinterest.js')
 
+//* The socialWarfare object does not exist at the time this file is loaded, so wait for it first.
 const checker = setInterval(() => {
 	if (!socialWarfare) return;
 
