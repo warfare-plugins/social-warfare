@@ -7,6 +7,8 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
 const { getCurrentPostId } = wp.data.select( 'core/editor' );
 const Dashicon = wp.components.Dashicon;
 
+const icon = <div className="swp-block-icon" style={ {color: '#429cd6'} }><Dashicon icon="twitter"/></div>
+
 /**
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -20,7 +22,7 @@ const Dashicon = wp.components.Dashicon;
  */
 registerBlockType( 'social-warfare/click-to-tweet', {
 	title: __( 'Click To Tweet' ), // Block title.
-	icon: <i className="mce-ico mce-i-sw sw swp_twitter_icon" />,
+	icon: icon,
 	category: 'social-warfare', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		// Has a limit of 3 keywords.
@@ -46,7 +48,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 edit: function( props ) {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\'t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
-		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
 		const characterLimit = 280;
 		const color = props.attributes.overLimit ? "rgb(211, 66, 80)" : "";
 		const className = props.attributes.overLimit ? "over-limit" : "";
@@ -101,7 +102,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap swp-inactive-block` }>
 				    <div className="head" onClick={toggleFocus}>
-					    {twitterIcon}
+					    {icon}
 						<div className="swp-preview">{text}</div>
 						<Dashicon className="swp-dashicon"
 						          icon="arrow-down"
