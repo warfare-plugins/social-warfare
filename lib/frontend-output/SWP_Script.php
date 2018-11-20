@@ -280,10 +280,9 @@ class SWP_Script {
      *
      * @since 3.4.0 | 20 NOV 2018 | Created
      * @return void
-     * 
+     *
      */
 	function localize_variables() {
-
 		$addons = array();
 
 		foreach( apply_filters( 'swp_registrations', array() ) as $addon ) {
@@ -294,6 +293,7 @@ class SWP_Script {
 		    'addons'	=> $addons,
 			'swpFloatBeforeContent'	=> SWP_Utility::get_option( 'float_before_content' )
 		);
+
 		wp_localize_script( 'social_warfare_script', 'socialWarfare', $data );
 	}
 
