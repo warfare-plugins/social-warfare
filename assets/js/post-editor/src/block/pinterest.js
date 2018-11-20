@@ -85,8 +85,6 @@ const checker = setInterval(() => {
 			}
 
 			const updateAttribute = ( event ) => {
-				console.log('updateAttribute')
-				console.log('key', event.target.name, 'value', event.target.value)
 				props.setAttributes( { [event.target.name]: event.target.value } )
 			}
 
@@ -122,6 +120,7 @@ const checker = setInterval(() => {
 					</div>
 				    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>
 					{
+						//* All attributes except `alignment`.
 						Object.entries(attributes).map(([name, displayText]) => {
 							if (name == 'alignment') return;
 							const className = name == 'width' || name == 'height' ? "swp-inner-block-50" : '';
@@ -138,6 +137,19 @@ const checker = setInterval(() => {
 							)
 						})
 					}
+
+          <div>
+					  <p>Alignment</p>
+						<select name="alignment"
+										value={props.attributes.alignment ? props.attributes.alignment : ''}
+										onChange={updateAttribute}
+						>
+								<option value="">Default</option>
+								<option value="left">Left</option>
+								<option value="center">Center</option>
+								<option value="right">Right</option>
+						</select>
+					</div>
 				</div>
 			);
 		},
