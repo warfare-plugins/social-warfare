@@ -63,3 +63,17 @@ function post_editor_cgb_editor_assets() {
 
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'post_editor_cgb_editor_assets' );
+
+function add_block_category( $categories, $post ) {
+    return array_merge(
+        $categories,
+        array(
+            array(
+                'slug' => 'social-warfare',
+                'title' => __( 'Social Warfare', 'social-warfare' ),
+                'icon'  => '<i className="mce-ico mce-i-sw sw sw-social-warfare" />',
+            ),
+        )
+    );
+}
+add_filter( 'block_categories', 'add_block_category', 10, 2 );
