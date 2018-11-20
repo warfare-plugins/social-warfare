@@ -119,7 +119,7 @@ const checker = setInterval(() => {
 					{
 						Object.entries(attributes).map(([name, displayText]) => {
 							return (
-								<div style={{width: '48%'}}>
+								<div className="swp-inner-block-50">
 									<p>{displayText}</p>
 									<input name={name}
 									       type="text"
