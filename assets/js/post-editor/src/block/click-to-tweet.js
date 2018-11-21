@@ -104,9 +104,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 				    <div className="head" onClick={toggleFocus}>
 					    {icon}
 						<div className="swp-preview">{text}</div>
-						<Dashicon className="swp-dashicon"
-						          icon="arrow-down"
-					    />
+						<Dashicon className="swp-dashicon" icon="arrow-down" />
 					</div>
 	 			</div>
 			)
@@ -120,13 +118,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 						{icon}
 					    <p className="swp-block-title">Click to Tweet</p>
 					</div>
-					<Dashicon className="swp-dashicon"
-							  icon="arrow-up"
-					/>
+					<Dashicon className="swp-dashicon" icon="arrow-up" />
 				</div>
 
-				<p>Inserts a <pre style={ {display: 'inline'} }>[click_to_tweet]</pre> shortcode. Leave a field blank to use values based on your global settings. <a href="#">Learn more</a></p>
-
+				<p>Inserts a <pre style={ {display: 'inline'} }>[click_to_tweet]</pre> shortcode. <a href="#">Learn more</a></p>
 
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
