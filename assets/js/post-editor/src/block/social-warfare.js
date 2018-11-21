@@ -57,8 +57,8 @@ registerBlockType( 'social-warfare/social-warfare', {
 			props.setAttributes( {hasFocus: !props.attributes.hasFocus} );
 		}
 
-		const updateWhichPost = ( event ) => {
-			props.setAttributes( {useThisPost: event.target.value} );
+		const updateAttributes = ( event ) => {
+			props.setAttributes( {[event.target.name]: event.target.value} );
 		}
 
 		const updateButtonsList = ( event ) => {
@@ -113,8 +113,9 @@ registerBlockType( 'social-warfare/social-warfare', {
 
 			    <p>Should the buttons reflect this post, or a different post?</p>
 
-				<select   value={useThisPost == "other" && postID ? "other" : "this"}
-				          onChange={updateWhichPost}
+				<select   name='useThisPost'
+				          value={props.attributes.useThisPost == "other" ? "other" : "this"}
+				          onChange={updateAttributes}
 			    >
 				  <option value="this">This post</option>
 				  <option value="other">Another post</option>
