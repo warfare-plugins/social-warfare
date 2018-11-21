@@ -251,8 +251,6 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		$('ul.swpmb-media-list').each(function(index, mediaList) {
 			// Check if the media list has been created yet
 			if ($(mediaList).is(':empty')) {
-				console.log("list is empty")
-
 				//* For the Pinterest image placeholder image.
 				if ($(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
 					var height = $(mediaList).width() * (3 / 2);
@@ -359,10 +357,17 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		clearInterval(window.initSWMetabox);
 
 		setupMetaBox();
-		//* Just needs a little extra time for some reason.
-		setTimeout(socialWarfareAdmin.resizeImageFields, 200)
+		setTimeout(socialWarfareAdmin.resizeImageFields, 200) //* Just needs a little extra time for some reason.
 		$('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
+		socialWarfareAdmin.addImageEditListeners()
+
 		$("#social_warfare.postbox").show();
+	}
+
+    //* These elements are only created once an image exists
+	socialWarfareAdmin.addImageEditListeners = function() {
+		$('.swpmb-edit-media, .swpmb-remove-media').off(socialWarfareAdmin.resizeImageFields);
+		$('.swpmb-edit-media, .swpmb-remove-media').on(socialWarfareAdmin.resizeImageFields);
 	}
 
 	$(document).ready(function() {
