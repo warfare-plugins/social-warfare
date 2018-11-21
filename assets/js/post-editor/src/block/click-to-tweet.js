@@ -128,7 +128,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
                 <div style={ {width: "100%"} }>
-				    <p className={`block-characters-remaining ${className}`} style={ {marginBottom: -17}}>
+				    <p className={`block-characters-remaining ${className}`} style={ {marginTop: -33}}>
 					    {characterLimit - tweetText.length}
 					</p>
 	 				<textarea name="tweetText"
