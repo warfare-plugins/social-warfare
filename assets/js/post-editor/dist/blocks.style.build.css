@@ -51,6 +51,7 @@
   height: 32px; }
 
 [class^="wp-block-social-warfare"] .head {
+  cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0);
   -webkit-transition: border 0.3s;
   -o-transition: border 0.3s;

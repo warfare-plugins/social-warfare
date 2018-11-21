@@ -61,9 +61,12 @@
 	 height: 32px;
  }
 
- [class^="wp-block-social-warfare"] .head {
-	border-bottom: 1px solid rgba(255, 255, 255, 0); // transparent border to maintain same height.
-    transition: border 0.3s;
+ [class^="wp-block-social-warfare"]  {
+	 .head {
+		cursor: pointer;
+		border-bottom: 1px solid rgba(255, 255, 255, 0); // transparent border to maintain same height.
+		transition: border 0.3s;
+	}
  }
 
  .is-selected [class^="wp-block-social-warfare"].swp-active-block .head {
@@ -79,9 +82,6 @@
 		padding: 0 5px;
 	}
 
-	.head {
-		// border-bottom: 1px solid #e2e4e7;
-	}
 
 	.head > div {
 		display: flex;
