@@ -45,7 +45,7 @@
  /* Common styles for SWP Gutenberg blocks. */
  [class^="wp-block-social-warfare"] {
 	.head {
-		height: 55px;
+		min-height: 55px;
 	}
 
 	svg {
