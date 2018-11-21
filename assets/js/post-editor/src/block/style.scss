@@ -63,10 +63,11 @@
 
  [class^="wp-block-social-warfare"] .head {
 	border-bottom: 1px solid rgba(255, 255, 255, 0); // transparent border to maintain same height.
+    transition: border 0.3s;
  }
 
- .is-selected [class^="wp-block-social-warfare"] .head {
-	 border-bottom: 1px solid #e2e4e7;
+ .is-selected [class^="wp-block-social-warfare"].swp-active-block .head {
+    border-bottom: 1px solid #e2e4e7;
  }
 
  .swp-active-block {
