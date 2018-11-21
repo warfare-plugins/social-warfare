@@ -125,6 +125,9 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 					/>
 				</div>
 
+				<p>Inserts a <pre style={ {display: 'inline'} }>[click_to_tweet]</pre> shortcode. Leave a field blank to use values based on your global settings. <a href="#">Learn more</a></p>
+
+
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
                 <div style={ {width: "100%"} }>

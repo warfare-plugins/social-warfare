@@ -111,6 +111,8 @@ registerBlockType( 'social-warfare/social-warfare', {
 					<Dashicon className="swp-dashicon" icon="arrow-down" />
 				</div>
 
+				<p>Inserts a <pre style={ {display: 'inline'} }>[social_warfare]</pre> shortcode. Leave a field blank to use values based on your global settings. <a href="#">Learn more</a></p>
+
 			    <p>Should the buttons reflect this post, or a different post?</p>
 
 				<select   name='useThisPost'
