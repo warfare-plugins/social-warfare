@@ -51,9 +51,12 @@
   height: 32px; }
 
 [class^="wp-block-social-warfare"] .head {
-  border-bottom: 1px solid rgba(255, 255, 255, 0); }
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  -webkit-transition: border 0.3s;
+  -o-transition: border 0.3s;
+  transition: border 0.3s; }
 
-.is-selected [class^="wp-block-social-warfare"] .head {
+.is-selected [class^="wp-block-social-warfare"].swp-active-block .head {
   border-bottom: 1px solid #e2e4e7; }
 
 .swp-active-block {
