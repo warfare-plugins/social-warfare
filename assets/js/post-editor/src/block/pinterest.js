@@ -118,7 +118,7 @@ const checker = setInterval(() => {
 						</div>
 						<Dashicon className="swp-dashicon" icon="arrow-up" />
 					</div>
-				    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings. <a href="#">Learn more</a></p>
+				    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>
 					{
 						//* All attributes except `alignment`.
 						Object.entries(attributes).map(([name, displayText]) => {

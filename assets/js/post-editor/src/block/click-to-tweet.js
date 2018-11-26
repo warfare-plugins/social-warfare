@@ -121,7 +121,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 					<Dashicon className="swp-dashicon" icon="arrow-up" />
 				</div>
 
-				<p>Inserts a <pre style={ {display: 'inline'} }>[click_to_tweet]</pre> shortcode. <a href="#">Learn more</a></p>
+				<p>Inserts a <pre style={ {display: 'inline'} }>[click_to_tweet]</pre> shortcode. <a href="https://warfareplugins.com/support/click-to-tweet/">Learn more</a></p>
 
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
