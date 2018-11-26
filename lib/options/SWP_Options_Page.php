@@ -394,7 +394,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			->set_description( 'If you want to try Social Warfare blocks with Gutenberg, turn this on. <br/><b>Currently tested with Gutenberg 4.5.1</b>. <em><br/>We are keeping up the best we can, but Gutenberg development is very rapid and can break our blocks overnight. If this happens, please turn this setting OFF. Your shortcodes will stay in place.</em>' )
 			->set_information_link( 'https://warfareplugins.com/support' );
 
-			$gutenberg_switch = new SWP_Option_Toggle( __( 'Enable Gutenberg Blocks'), 'social-warfare' );
+			$gutenberg_switch = new SWP_Option_Toggle( __( 'Enable Gutenberg Blocks'), 'gutenberg_switch' );
 			$gutenberg_switch->set_default( true )
 			    ->set_size( 'sw-col-300' );
 
