@@ -17,10 +17,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Block Initializer.
- */
 
+
+ add_action( 'init', 'register_gutenberg_blocks' );
+
+/**
+ * Block Initializer. Registers and loads the CSS and JS for
+ * Gutenberg blocks in the post editor.
+ *
+ * @since 3.4.0 | 26 NOV 2018 | Created.
+ */
  function register_gutenberg_blocks() {
 	 $scripts = array(
  		'editor_script' => 'social-warfare-block-js',
@@ -48,9 +54,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	register_block_type( 'social-warfare/pinterest-image', $scripts);
  }
 
-
- add_action( 'init', 'register_gutenberg_blocks' );
-
+/**
+ * Create the custom Social Warfare category for Gutenberg blocks.
+ *
+ * @param array $categories The registerd Gutenberg categories.
+ * @param Object $post The WP post being edited, to optionally conditionally load blocks.
+ * @since 3.4.0 | 26 NOV 2018 | Created.
+ */
  function add_block_category( $categories, $post ) {
      return array_merge(
          $categories,
