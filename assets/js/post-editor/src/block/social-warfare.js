@@ -3,7 +3,6 @@ import './style.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { getCurrentPostId } = wp.data.select( 'core/editor' );
 const Dashicon = wp.components.Dashicon;
 const icon = (<div className="swp-block-icon">
 				<svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 32 32" enable-background="new 0 0 32 32">
@@ -66,7 +65,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 		}
 
 		const updatePostID = ( event ) => {
-            const postID = getCurrentPostId();
+            const postID = wp.data.select('core/editor').getCurrentPostId();
 			const value = event.target.value;
 
 			if ( value == '' ) {
