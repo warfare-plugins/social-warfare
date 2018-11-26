@@ -1,5 +1,4 @@
 <?php
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -19,7 +18,7 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) ) {
  function register_gutenberg_blocks() {
 	 $scripts = array(
  		'editor_script' => 'social-warfare-block-js',
- 		'block-script'	=> 'social-warfare-block-js'
+ 		'block_script'	=> 'social-warfare-block-js'
  	);
 
  	wp_register_style(
