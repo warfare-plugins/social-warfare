@@ -1563,11 +1563,9 @@ div.sw-pinit a.sw-pinit-button:visited {
 	box-shadow: none;
 	color: #fff;
 	font-family: Lato,sans-serif;
-	font-size: 20px;
 	font-size: 15px;
-	height: 34px !important;
-	width: 120px !important;
-	text-align: center !important;
+	height: 32px;
+	line-height: 32px;
 	opacity: 0;
 	padding: 0 20px;
 	position: absolute;
@@ -1576,6 +1574,14 @@ div.sw-pinit a.sw-pinit-button:visited {
 	-webkit-transition: opacity 0.5s;
 	transition: opacity 0.5s;
 	z-index: 200;
+}
+
+.wp-block-gallery div.sw-pinit a.sw-pinit-button,
+.blocks-gallery-item div.sw-pinit a.sw-pinit-button,
+.blocks-gallery-item div.sw-pinit a.sw-pinit-button:visited {
+	height: 34px !important;
+	width: 120px !important;
+	text-align: center;
 }
 
 div.sw-pinit:hover a.sw-pinit-button,
