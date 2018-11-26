@@ -44,11 +44,12 @@
 	padding: 0;
 }
 
-#social_warfare .swp_og_imageWrapper ul.swpmb-media-list {
+#social_warfare .open-graph ul.swpmb-media-list,
+#social_warfare .twitter ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-og.jpg');
 }
 
-#social_warfare .swp_pinterest_imageWrapper ul.swpmb-media-list {
+#social_warfare .pinterest ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 
@@ -408,6 +409,7 @@ a.swp-notice-cta {
 	resize: unset;
 	border-radius: 5px;
 	padding: 10px;
+	min-height: 120px;
 }
 
 .swpmb-field.inline-select .swpmb-input {

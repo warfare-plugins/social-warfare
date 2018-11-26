@@ -389,6 +389,17 @@ class SWP_Options_Page extends SWP_Option_Abstract {
         $advanced = new SWP_Options_Page_Tab( __( 'Advanced', 'social-warfare' ), 'advanced' );
         $advanced->set_priority( 40 );
 
+		$gutenberg = new SWP_Options_Page_Section( __( 'Gutenberg Blocks<sup>beta</sup>', 'social-warfare' ), 'gutenberg' );
+		$gutenberg->set_priority( 5 )
+			->set_description( 'If you want to try Social Warfare blocks with Gutenberg, turn this on. <b>Currently tested with Gutenberg 4.5.1</b>. <em><br/>We are keeping up the best we can, but Gutenberg development is very rapid and can break our blocks overnight. <br/>If this happens, please turn this setting OFF. Your shortcodes will stay in place.</em>' );
+			// ->set_information_link( 'https://warfareplugins.com/support/using-shortcodes-and-php-snippets/' );
+
+			$gutenberg_switch = new SWP_Option_Toggle( __( 'Enable Gutenberg Blocks'), 'gutenberg_switch' );
+			$gutenberg_switch->set_default( true )
+			    ->set_size( 'sw-col-300' );
+
+			$gutenberg->add_option( $gutenberg_switch );
+
         $frame_buster = new SWP_Options_Page_Section( __( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
         $frame_buster->set_priority( 10 )
             ->set_description( __( 'If you want to stop content pirates from framing your content, turn this on.', 'social-warfare' ) )
@@ -401,20 +412,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
             $frame_buster->add_option( $frame_buster_toggle );
 
-        // $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ), 'caching_method' );
-        // $caching_method->set_priority( 60 );
-            //
-            // //* cacheMethod => cache_method
-            // $cache_method = new SWP_Option_Select( __( 'Cache Rebuild Method', 'social-warfare' ), 'cache_method' );
-            // $cache_method->set_choices( [
-            //     'advanced'  => __( 'Advanced Cache Triggering', 'social-warfare' ),
-            //     'legacy'    => __( 'Legacy Cache Rebuilding During Page Loads', 'social-warfare' )
-            // ])
-            //     ->set_default( 'advanced' )
-            //     ->set_size( 'sw-col-300' );
-            //
-            // $caching_method->add_option( $cache_method );
-
         $full_content = new SWP_Options_Page_Section( __( 'Full Content vs. Excerpts', 'social-warfare' ), 'full_content' );
         $full_content->set_priority( 70 )
              ->set_description( __( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.', 'social-warfare' ) )
@@ -426,7 +423,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
             $full_content->add_option( $full_content_toggle );
 
-        $advanced->add_sections( [$frame_buster, $full_content] );
+        $advanced->add_sections( [$gutenberg, $frame_buster, $full_content] );
 
         $this->tabs->advanced = $advanced;
 

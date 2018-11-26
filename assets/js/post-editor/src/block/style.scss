@@ -13,14 +13,19 @@
 	p {
 		font-weight: bold;
 	}
-
  }
 
  [class*="-block-wrap"] input,
  [class*="-block-wrap"] select,
- [class*="-block-wrap"] textarea,
- [class*="-block-wrap"] code
-  {
+ [class*="-block-wrap"] textarea {
+	display: block;
+	width: 100%;
+	padding: 5px;
+	height: 42px;
+	border: 1px solid #e2e4e7
+}
+
+ [class*="-block-wrap"] code {
  	display: block;
  	width: 100%;
  	padding: 5px;
@@ -43,21 +48,65 @@
  }
 
  /* Common styles for SWP Gutenberg blocks. */
- [class^="swp-"][class$="-block"] {
- 	transition: all 900ms;
+ [class^="wp-block-social-warfare"] {
+	.head {
+		min-height: 55px;
+	}
+
+	svg {
+		width: 24px;
+		height: 24px;
+	}
  }
 
- [class*="block"] i.swp_twitter_icon {
-	 color: #429cd6;
+ .swp-block-icon {
+	 margin: 0 28px 0 14px;
+	 font-size: 18px;
+	 width: 32px;
+	 height: 32px;
  }
 
-[class*="block"] i.sw-social-warfare {
-	 font-size: 22px;
-	 color: rgb(211, 66, 80);
+ [class^="wp-block-social-warfare"]  {
+	 .head {
+		cursor: pointer;
+		border-bottom: 1px solid rgba(255, 255, 255, 0); // transparent border to maintain same height.
+		transition: border 0.3s;
+	}
+ }
+
+ .is-selected [class^="wp-block-social-warfare"].swp-active-block .head {
+    border-bottom: 1px solid #e2e4e7;
  }
 
  .swp-active-block {
  	height: 100%;
+
+	.swp-inner-block-50 {
+		width: 50%;
+		display: inline-block;
+		padding: 0 1px;
+	}
+
+
+	.head > div {
+		display: flex;
+		flex-flow: row no-wrap;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.head .swp-block-icon,
+	.head .swp-block-title {
+		display: inline-block;
+	}
+
+	p {
+		margin: 25px 0 5px 0;
+	}
+
+	.head p {
+		margin: initial;
+	}
  }
 
  .swp-inactive-block {
@@ -65,11 +114,6 @@
  	display: flex;
  	flex-flow: row nowrap;
  	align-items: center;
-
-	i {
-		margin: 0 28px 0 14px;
-		font-size: 18px;
-	}
 
 	/* The preview displayed when the block is not active. */
 	.swp-preview {
