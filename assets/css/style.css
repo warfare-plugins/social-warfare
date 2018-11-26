@@ -1566,8 +1566,8 @@ div.sw-pinit a.sw-pinit-button:visited {
 	font-size: 20px;
 	font-size: 15px;
 	height: 32px !important;
-	max-width: 100px !important;
-	line-height: 32px !important;
+	width: auto;
+	max-width: auto;
 	opacity: 0;
 	padding: 0 20px;
 	position: absolute;
