@@ -22,17 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
  function register_gutenberg_blocks() {
-     // wp_register_script(
-     //     'gutenberg-boilerplate-es5-step01',
-     //     plugins_url( 'step-01/block.js', __FILE__ ),
-     //     array( 'wp-blocks', 'wp-element' )
-     // );
-     //
+	 $scripts = array(
+ 		'editor_script' => 'social-warfare-block-js',
+ 		'block-script'	=> 'social-warfare-block-js'
+ 	);
 
  	wp_enqueue_style(
- 		'social-warfare-block-css', // Handle.
- 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
- 		array( 'wp-blocks' ) // Dependency to include the CSS after it.
+ 		'social-warfare-block-css',
+ 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ),
+ 		array( 'wp-blocks' )
  	);
 
 	wp_enqueue_script(
@@ -42,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		true
 	);
 
-     register_block_type( 'gutenberg-boilerplate-es5/hello-world-step-01', array(
-         'editor_script' => 'gutenberg-boilerplate-es5-step01',
-     ) );
+	register_block_type( 'social-warfare/social-warfare', $scripts);
+	register_block_type( 'social-warfare/click-to-tweet', $scripts);
+	register_block_type( 'social-warfare/pinterest-image', $scripts);
  }
 
 
