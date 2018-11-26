@@ -36,5 +36,4 @@ add_filter('the_excerpt', 'do_shortcode', 1);
 
 // Load the main Social_Warfare class and fire up the plugin.
 require_once SWP_PLUGIN_DIR . '/lib/Social_Warfare.php';
-require_once SWP_PLUGIN_DIR . '/assets/js/post-editor/plugin.php';
 new Social_Warfare();
