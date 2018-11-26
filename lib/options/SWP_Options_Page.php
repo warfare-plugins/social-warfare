@@ -412,20 +412,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
             $frame_buster->add_option( $frame_buster_toggle );
 
-        // $caching_method = new SWP_Options_Page_Section( __( 'Caching Method', 'social-warfare' ), 'caching_method' );
-        // $caching_method->set_priority( 60 );
-            //
-            // //* cacheMethod => cache_method
-            // $cache_method = new SWP_Option_Select( __( 'Cache Rebuild Method', 'social-warfare' ), 'cache_method' );
-            // $cache_method->set_choices( [
-            //     'advanced'  => __( 'Advanced Cache Triggering', 'social-warfare' ),
-            //     'legacy'    => __( 'Legacy Cache Rebuilding During Page Loads', 'social-warfare' )
-            // ])
-            //     ->set_default( 'advanced' )
-            //     ->set_size( 'sw-col-300' );
-            //
-            // $caching_method->add_option( $cache_method );
-
         $full_content = new SWP_Options_Page_Section( __( 'Full Content vs. Excerpts', 'social-warfare' ), 'full_content' );
         $full_content->set_priority( 70 )
              ->set_description( __( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.', 'social-warfare' ) )
