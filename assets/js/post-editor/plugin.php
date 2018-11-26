@@ -27,12 +27,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  		'block-script'	=> 'social-warfare-block-js'
  	);
 
- 	wp_register_script(
+ 	wp_register_style(
  		'social-warfare-block-css',
  		plugins_url( '/post-editor/dist/blocks.style.build.css', dirname( __FILE__ ) ),
  		array( 'wp-blocks' ),
 		true
  	);
+
+	wp_enqueue_style('social-warfare-block-css');
 
 	wp_register_script(
 		'social-warfare-block-js',
