@@ -11,6 +11,7 @@ html[lang] .site * i.sw {
 	font-family: sw-icon-font !important;
 }
 
+div {}
 .swp_social_panel {
 	clear: both;
 	display: -webkit-box;
