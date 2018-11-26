@@ -20,4 +20,64 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Block Initializer.
  */
-require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
+
+ function register_gutenberg_blocks() {
+     // wp_register_script(
+     //     'gutenberg-boilerplate-es5-step01',
+     //     plugins_url( 'step-01/block.js', __FILE__ ),
+     //     array( 'wp-blocks', 'wp-element' )
+     // );
+     //
+
+ 	wp_enqueue_style(
+ 		'social-warfare-block-css', // Handle.
+ 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+ 		array( 'wp-blocks' ) // Dependency to include the CSS after it.
+ 	);
+
+	wp_enqueue_script(
+		'social-warfare-block-js',
+		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ),
+		array( 'wp-blocks', 'wp-i18n', 'wp-element' ),
+		true
+	);
+
+     register_block_type( 'gutenberg-boilerplate-es5/hello-world-step-01', array(
+         'editor_script' => 'gutenberg-boilerplate-es5-step01',
+     ) );
+ }
+
+
+ add_action( 'init', 'register_gutenberg_blocks' );
+
+ add_action( 'enqueue_block_assets', 'register_gutenberg_assets' );
+
+ /**
+  * Enqueue Gutenberg block assets for backend editor.
+  *
+  * `wp-blocks`: includes block type registration and related functions.
+  * `wp-element`: includes the WordPress Element abstraction for describing the structure of your blocks.
+  * `wp-i18n`: To internationalize the block's text.
+  *
+  * @since 1.0.0
+  */
+ function post_editor_cgb_editor_assets() {
+ 	// Scripts.
+
+ }
+
+ add_action( 'enqueue_block_editor_assets', 'post_editor_cgb_editor_assets' );
+
+ function add_block_category( $categories, $post ) {
+     return array_merge(
+         $categories,
+         array(
+             array(
+                 'slug' => 'social-warfare',
+                 'title' => __( 'Social Warfare', 'social-warfare' ),
+                 'icon'  => '<i className="mce-ico mce-i-sw sw sw-social-warfare" />',
+             ),
+         )
+     );
+ }
+ add_filter( 'block_categories', 'add_block_category', 10, 2 );
