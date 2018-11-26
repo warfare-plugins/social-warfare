@@ -7,6 +7,8 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
 const { getCurrentPostId } = wp.data.select( 'core/editor' );
 const Dashicon = wp.components.Dashicon;
 
+const icon = <div className="swp-block-icon" style={ {color: '#429cd6'} }><Dashicon icon="twitter"/></div>
+
 /**
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -20,13 +22,13 @@ const Dashicon = wp.components.Dashicon;
  */
 registerBlockType( 'social-warfare/click-to-tweet', {
 	title: __( 'Click To Tweet' ), // Block title.
-	icon: <i className="mce-ico mce-i-sw sw swp_twitter_icon" />,
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	icon: icon,
+	category: 'social-warfare', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		// Has a limit of 3 keywords.
 		__( 'twitter' ),
-		__( 'tweet' ),
-		__( 'ctt' )
+		__( 'quote' ),
+		__( 'share' )
 	],
 	attributes: {
 	   hasFocus: { type: 'boolean', defualt: false },
@@ -46,7 +48,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 edit: function( props ) {
  		const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\'t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
-		const twitterIcon = <i className="mce-ico sw swp_twitter_icon" />;
 		const characterLimit = 280;
 		const color = props.attributes.overLimit ? "rgb(211, 66, 80)" : "";
 		const className = props.attributes.overLimit ? "over-limit" : "";
@@ -101,11 +102,9 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 			return (
 				<div className={ `${props.className} click-to-tweet-block-wrap swp-inactive-block` }>
 				    <div className="head" onClick={toggleFocus}>
-					    {twitterIcon}
+					    {icon}
 						<div className="swp-preview">{text}</div>
-						<Dashicon className="swp-dashicon"
-						          icon="arrow-down"
-					    />
+						<Dashicon className="swp-dashicon" icon="arrow-down" />
 					</div>
 	 			</div>
 			)
@@ -115,16 +114,19 @@ registerBlockType( 'social-warfare/click-to-tweet', {
  		return (
  			<div className={ `${props.className} click-to-tweet-block-wrap swp-active-block` }>
                 <div className="head" onClick={toggleFocus}>
-				    <p >Click to Tweet</p>
-					<Dashicon className="swp-dashicon"
-							  icon="arrow-up"
-					/>
+				    <div>
+						{icon}
+					    <p className="swp-block-title">Click to Tweet</p>
+					</div>
+					<Dashicon className="swp-dashicon" icon="arrow-up" />
 				</div>
+
+				<p>Inserts a <pre style={ {display: 'inline'} }>[click_to_tweet]</pre> shortcode. <a href="https://warfareplugins.com/support/click-to-tweet/">Learn more</a></p>
 
 				<p>Type your tweet as you want it to display <b><em>on Twitter</em></b>:</p>
 
                 <div style={ {width: "100%"} }>
-				    <p className={`block-characters-remaining ${className}`}>
+				    <p className={`block-characters-remaining ${className}`} style={ {marginTop: -33}}>
 					    {characterLimit - tweetText.length}
 					</p>
 	 				<textarea name="tweetText"
@@ -134,10 +136,10 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 			     />
 				 </div>
 
-				<p>Type your tweet as you want it to display <b><em>on the page</em></b>:</p>
+				<p>Type your quote as you want it to display <b><em>on the page</em></b>:</p>
 
  				 <textarea name="displayText"
- 				          placeholder="Type your tweet. . . "
+ 				          placeholder="Type your quote. . . "
  				          onChange={updateDisplayText}
  						  value={displayText}
  				 />

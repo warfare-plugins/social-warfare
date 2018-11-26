@@ -51,7 +51,9 @@ class SWP_Script {
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
         // Queue up our hook function
-        add_action( 'wp_footer' , array( $this, 'footer_functions' ) , 99 );
+		add_action( 'wp_footer' , array( $this, 'footer_functions' ) , 99 );
+		add_action( 'wp_footer' , array( $this, 'localize_variables' ) , 99 );
+		add_action( 'admin_footer' , array( $this, 'localize_variables' ) , 99 );
 
 	}
 
@@ -265,12 +267,35 @@ class SWP_Script {
         global $swp_user_options;
     	$options = $swp_user_options;
 
+
         $float_before_content = $options['float_before_content'];
 
         $vars['footer_output'] = "var swpFloatBeforeContent = " . json_encode($float_before_content) . ";";
 
         return $vars;
     }
+
+    /**
+     * Creates the `socialWarfare` object and initializes it with server-side data.
+     *
+     * @since 3.4.0 | 20 NOV 2018 | Created
+     * @return void
+     *
+     */
+	function localize_variables() {
+		$addons = array();
+
+		foreach( apply_filters( 'swp_registrations', array() ) as $addon ) {
+            $addons[] = $addon->key;
+		}
+
+		$data = array(
+		    'addons'	=> $addons,
+			'swpFloatBeforeContent'	=> SWP_Utility::get_option( 'float_before_content' )
+		);
+
+		wp_localize_script( 'social_warfare_script', 'socialWarfare', $data );
+	}
 
 
 	/**

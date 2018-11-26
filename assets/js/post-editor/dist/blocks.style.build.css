@@ -17,7 +17,13 @@
 
 [class*="-block-wrap"] input,
 [class*="-block-wrap"] select,
-[class*="-block-wrap"] textarea,
+[class*="-block-wrap"] textarea {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  height: 42px;
+  border: 1px solid #e2e4e7; }
+
 [class*="-block-wrap"] code {
   display: block;
   width: 100%;
@@ -37,20 +43,51 @@
   width: 100%; }
 
 /* Common styles for SWP Gutenberg blocks. */
-[class^="swp-"][class$="-block"] {
-  -webkit-transition: all 900ms;
-  -o-transition: all 900ms;
-  transition: all 900ms; }
+[class^="wp-block-social-warfare"] .head {
+  min-height: 55px; }
 
-[class*="block"] i.swp_twitter_icon {
-  color: #429cd6; }
+[class^="wp-block-social-warfare"] svg {
+  width: 24px;
+  height: 24px; }
 
-[class*="block"] i.sw-social-warfare {
-  font-size: 22px;
-  color: #d34250; }
+.swp-block-icon {
+  margin: 0 28px 0 14px;
+  font-size: 18px;
+  width: 32px;
+  height: 32px; }
+
+[class^="wp-block-social-warfare"] .head {
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  -webkit-transition: border 0.3s;
+  -o-transition: border 0.3s;
+  transition: border 0.3s; }
+
+.is-selected [class^="wp-block-social-warfare"].swp-active-block .head {
+  border-bottom: 1px solid #e2e4e7; }
 
 .swp-active-block {
   height: 100%; }
+  .swp-active-block .swp-inner-block-50 {
+    width: 50%;
+    display: inline-block;
+    padding: 0 1px; }
+  .swp-active-block .head > div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row no-wrap;
+        flex-flow: row no-wrap;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+  .swp-active-block .head .swp-block-icon,
+  .swp-active-block .head .swp-block-title {
+    display: inline-block; }
+  .swp-active-block p {
+    margin: 25px 0 5px 0; }
+  .swp-active-block .head p {
+    margin: initial; }
 
 .swp-inactive-block {
   min-height: 50px;
@@ -61,9 +98,6 @@
   -ms-flex-align: center;
       align-items: center;
   /* The preview displayed when the block is not active. */ }
-  .swp-inactive-block i {
-    margin: 0 28px 0 14px;
-    font-size: 18px; }
   .swp-inactive-block .swp-preview {
     background: #F5F5F5;
     width: 100%;
