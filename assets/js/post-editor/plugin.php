@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	wp_register_script(
 		'social-warfare-block-js',
 		plugins_url( '/post-editor/dist/blocks.build.js', dirname( __FILE__ ) ),
-		array( 'wp-blocks', 'wp-i18n', 'wp-element' ),
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
 		true
 	);
 
