@@ -27,15 +27,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  		'block-script'	=> 'social-warfare-block-js'
  	);
 
- 	wp_enqueue_style(
+ 	wp_register_script(
  		'social-warfare-block-css',
- 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ),
- 		array( 'wp-blocks' )
+ 		plugins_url( '/post-editor/dist/blocks.style.build.css', dirname( __FILE__ ) ),
+ 		array( 'wp-blocks' ),
+		true
  	);
 
-	wp_enqueue_script(
+	wp_register_script(
 		'social-warfare-block-js',
-		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ),
+		plugins_url( '/post-editor/dist/blocks.build.js', dirname( __FILE__ ) ),
 		array( 'wp-blocks', 'wp-i18n', 'wp-element' ),
 		true
 	);
@@ -48,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
  add_action( 'init', 'register_gutenberg_blocks' );
 
- add_action( 'enqueue_block_assets', 'register_gutenberg_assets' );
+ // add_action( 'enqueue_block_assets', 'register_gutenberg_blocks' );
 
  /**
   * Enqueue Gutenberg block assets for backend editor.
