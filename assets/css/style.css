@@ -6,6 +6,11 @@
     }
 }
 
+/* For non-English sites */
+html[lang] .site * i.sw {
+	font-family: sw-icon-font !important;
+}
+
 .swp_social_panel {
 	clear: both;
 	display: -webkit-box;
