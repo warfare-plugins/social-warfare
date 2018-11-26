@@ -51,24 +51,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
  add_action( 'init', 'register_gutenberg_blocks' );
 
- // add_action( 'enqueue_block_assets', 'register_gutenberg_blocks' );
-
- /**
-  * Enqueue Gutenberg block assets for backend editor.
-  *
-  * `wp-blocks`: includes block type registration and related functions.
-  * `wp-element`: includes the WordPress Element abstraction for describing the structure of your blocks.
-  * `wp-i18n`: To internationalize the block's text.
-  *
-  * @since 1.0.0
-  */
- function post_editor_cgb_editor_assets() {
- 	// Scripts.
-
- }
-
- add_action( 'enqueue_block_editor_assets', 'post_editor_cgb_editor_assets' );
-
  function add_block_category( $categories, $post ) {
      return array_merge(
          $categories,
