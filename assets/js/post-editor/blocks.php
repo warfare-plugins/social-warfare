@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) ) {
+if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) ) {
 	add_action( 'init', 'register_gutenberg_blocks' );
 	add_filter( 'block_categories', 'add_block_category', 10, 2 );
 }
