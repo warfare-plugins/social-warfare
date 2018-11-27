@@ -83,6 +83,7 @@ class SWP_Column {
  		$count = get_post_meta( $post_ID , '_total_shares' , true );
 		if( !empty( $count ) ) {
  			echo SWP_Utility::kilomega( $count );
+			return;
 		}
 
 		echo 0;
