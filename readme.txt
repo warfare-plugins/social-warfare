@@ -27,7 +27,7 @@ You can choose from the top social networks sharing buttons, including:
 * Google+
 * Pinterest
 * LinkedIn
-* StumbleUpon
+* Mix
 
 You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
