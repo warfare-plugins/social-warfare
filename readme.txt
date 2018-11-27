@@ -27,7 +27,7 @@ You can choose from the top social networks sharing buttons, including:
 * Google+
 * Pinterest
 * LinkedIn
-* StumbleUpon
+* Mix
 
 You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
@@ -193,13 +193,25 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
-= 3.3.3 (19 SEP 2018)
-* Fixed the social_warfare() function so it now outputs buttons as it did before.
-* Fixed a call to undefined function regarding mb_convert_encoding().
-* Fixed an "undefined index" error in the javascript.
-* Fixed a bug that would sometimes make Yoast's og:description disappear.
-* Fixed a "return value in write context" PHP error.
-* Fixed Bitly authentication, link generation, and link usage with the buttons.
+= 3.4.0 (27 NOV 2018) =
+* Props to our Warfare Community beta testers- you guys rock!
+* Added support for Gutenberg blocks Social Warfare and Click To Tweet (as of Gutenberg 4.5.1)
+* Added option in Advanced tab to disable Gutenberg blocks.
+* Added interactive components to the Admin sidebar.
+* Added a tooltip to network icons in the settings page.
+* Updated JS to open share links in windows instead of tabs.
+* Updated Social Warfare settings page to be mobile responsive.
+* Updated the cURL request timeout duration to be shorter.
+* Fixed extra whitespace when floating buttons are present on mobile.
+* Fixed bug during post caching which prevented shares from updating.
+* Fixed error 'invalid argument supplied foreach' regarding `$network` objects.
+* Fixed 'Social Shares' total counts column in Admin view.
+* Fixed Popular Posts widget from defaulting to the wrong post type.
+* Fixed use of 'total' and 'totals' in the [social_warfare] shortcode.
+* Fixed totals only appearing on one set of buttons.
+* Fixed minor cosmetic detail on the buttons panel (removed an underline).
+* Fixed tweet character encoding.
+* Refactored the script.js file (frontend JavaScript)
 
 = 3.3.2 (14 SEP 2018) =
 * Fixed a line of code that caused the 'social_warfare()' function to disappear.
