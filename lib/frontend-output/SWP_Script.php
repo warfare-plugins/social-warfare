@@ -291,7 +291,7 @@ class SWP_Script {
 
 		$data = array(
 		    'addons'	=> $addons,
-			'swpFloatBeforeContent'	=> SWP_Utility::get_option( 'float_before_content' )
+			'floatBeforeContent'	=> SWP_Utility::get_option( 'float_before_content' )
 		);
 
 		wp_localize_script( 'social_warfare_script', 'socialWarfare', $data );

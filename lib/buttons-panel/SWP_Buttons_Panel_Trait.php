@@ -512,7 +512,7 @@ trait SWP_Buttons_Panel_Trait {
 		* process the order dynamically.
 		*
 		*/
-		if( empty( $this->shares ) || !is_array( $this->shares ) || empty( array_filter( $this->shares ) ) ) {
+		if( empty( $this->shares ) || !is_array( $this->shares ) ) {
 		   return $default_buttons;
 		}
 
