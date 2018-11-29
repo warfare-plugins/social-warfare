@@ -492,7 +492,12 @@ window.socialWarfare = window.socialWarfare || {};
 		var width = "100%";
 		var left  = 0;
 		var panel = socialWarfare.panels.staticHorizontal;
+		var parent = panel.parent();
 
+		//* Ignore the invisible wrapper div, it has no width.
+		if (parent.hasClass("swp-hidden-panel-wrap")) {
+			parent = parent.parent();
+		}
 
 		if( 'undefined' !== typeof panel.offset().left ) {
 			left = panel.offset().left;
@@ -502,15 +507,12 @@ window.socialWarfare = window.socialWarfare || {};
 			width = panel.width();
 		}
 
+		if( left == 0 ) {
+			left = parent.offset().left;
+		}
+
 		//* The panel width is 'auto', which evaluates to 100%
 		if (width == 100 || width == 0) {
-			var parent = panel.parent();
-
-            //* Ignore the invisible wrapper div, it has no width.
-			if (parent.hasClass("swp-hidden-panel-wrap")) {
-				parent = parent.parent();
-			}
-
 			width = parent.width();
 		}
 
