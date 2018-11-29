@@ -115,7 +115,30 @@ window.socialWarfare = window.socialWarfare || {};
 		// This is what fires up the entire plugin's JS functionality.
 		socialWarfare.initPlugin();
 
+
+		/**
+		 * On resize, we're going to purge and re-init the entirety of the
+		 * socialWarfare functions. This will fully reset all of the floating
+		 * buttons which will allow for a clean transition if the size change
+		 * causes the isMobile() check to flip from true to false or vica versa.
+		 *
+		 */
+		$(window).resize(socialWarfare.onWindowResize);
+
 	});
+
+
+	/**
+	 * This will cause our resize event to wait until the user is fully done
+	 * resizing the window prior to resetting and rebuilding the buttons and
+	 * their positioning and re-initializing the plugin JS functions.
+	 *
+	 */
+	var wait;
+	socialWarfare.onWindowResize = function(){
+	  clearTimeout(wait);
+	  wait = setTimeout(socialWarfare.initPlugin, 100 );
+	}
 
 
 	/**
@@ -178,7 +201,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
-		$(window).resize(socialWarfare.throttle(200, socialWarfare.updateFloatingHorizontalDimensions));
+		// $(window).resize(socialWarfare.throttle(200, socialWarfare.updateFloatingHorizontalDimensions));
 
 	}
 
@@ -440,9 +463,9 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Or we are on desktop and not using top/bottom floaters:
-		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
-			return;
-		}
+		// if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
+		//	return;
+		// }
 
 		//* Set the location (top or bottom) of the bar depending on
 		if (socialWarfare.isMobile()) {
@@ -475,6 +498,7 @@ window.socialWarfare = window.socialWarfare || {};
 		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
+
 
 		// If there is no floating set, just bail.
 		if(!socialWarfare.panels.floatingHorizontal) {
@@ -580,8 +604,12 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingButtons = function() {
+
 		// Adjust the floating bar
 		var location = socialWarfare.panels.staticHorizontal.data('float');
+		if( true == socialWarfare.isMobile() ) {
+			var location = socialWarfare.panels.staticHorizontal.data('float-mobile');
+		}
 
 		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
@@ -591,6 +619,7 @@ window.socialWarfare = window.socialWarfare || {};
 		if (socialWarfare.isMobile()) {
 			socialWarfare.toggleMobileButtons();
 			socialWarfare.toggleFloatingHorizontalPanel();
+			console.log('mobile');
 			return;
 		}
 
@@ -636,6 +665,7 @@ window.socialWarfare = window.socialWarfare || {};
 		if (socialWarfare.isMobile()) {
 			return socialWarfare.panels.floatingSide.hide();
 		}
+		socialWarfare.panels.floatingSide.show();
 
 		//* No buttons panel! Manually re-define ${visibility}.
 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
