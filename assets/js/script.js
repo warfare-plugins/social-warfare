@@ -201,7 +201,6 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
-		// $(window).resize(socialWarfare.throttle(200, socialWarfare.updateFloatingHorizontalDimensions));
 
 	}
 
@@ -463,9 +462,9 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Or we are on desktop and not using top/bottom floaters:
-		// if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
-		//	return;
-		// }
+		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
+			return;
+		}
 
 		//* Set the location (top or bottom) of the bar depending on
 		if (socialWarfare.isMobile()) {
@@ -619,7 +618,6 @@ window.socialWarfare = window.socialWarfare || {};
 		if (socialWarfare.isMobile()) {
 			socialWarfare.toggleMobileButtons();
 			socialWarfare.toggleFloatingHorizontalPanel();
-			console.log('mobile');
 			return;
 		}
 
