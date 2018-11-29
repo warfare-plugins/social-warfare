@@ -346,7 +346,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		var textCounters = {
 			"swp_og_title": 60,
 			"swp_og_description": 150,
-			"swp_pinterest_description": 140,
+			"swp_pinterest_description": 500,
 			"swp_custom_tweet": 280
 		};
 
