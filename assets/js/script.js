@@ -474,15 +474,19 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
-		var left, width = 0;
+		var width = 0;
 		var panel = socialWarfare.panels.staticHorizontal;
+
+		var left = 0;
+		if( 'undefined' !== typeof panel.offset().left ) {
+			var left = panel.offset().left;
+		}
 
 		if (socialWarfare.isMobile()) {
 			width = "100%";
 		}
 
 		else {
-			left = panel.offset().left;
 			width = panel.width();
 
 			//* The panel width is 'auto', which evaluates to 100%
