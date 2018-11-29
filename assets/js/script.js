@@ -461,11 +461,6 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
-		//* Or we are on desktop and not using top/bottom floaters:
-		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
-			return;
-		}
-
 		//* Set the location (top or bottom) of the bar depending on
 		if (socialWarfare.isMobile()) {
 			barLocation = mobileFloatLocation;
