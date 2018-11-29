@@ -58,7 +58,7 @@
  * Javascript variables created on the server:
  *
  *     bool   	swpClickTracking (SWP_Script.php)
- *     bool   	swpFloatBeforeContent
+ *     bool   	socialWarfare.floatBeforeContent
  *     object 	swpPinIt
  *     string 	swp_admin_ajax
  *     string 	swp_post_url
@@ -470,32 +470,50 @@ window.socialWarfare = window.socialWarfare || {};
    *
    */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
+
+		// If there is no static set to measure, just bail out.
 		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
-		var left, width = 0;
-		var panel = socialWarfare.panels.staticHorizontal;
-
-		if (socialWarfare.isMobile()) {
-			width = "100%";
+		// If there is no floating set, just bail.
+		if(!socialWarfare.panels.floatingHorizontal) {
+			return;
 		}
 
-		else {
+
+		/**
+		 * We'll create the default width and left properties here. Then we'll
+		 * attempt to pull these properties from the actual panel that we are
+		 * cloning below. If those measurements exist, we clone them. If not,
+		 * we use these defaults.
+		 *
+		 */
+		var width = "100%";
+		var left  = 0;
+		var panel = socialWarfare.panels.staticHorizontal;
+		var parent = panel.parent();
+
+		//* Ignore the invisible wrapper div, it has no width.
+		if (parent.hasClass("swp-hidden-panel-wrap")) {
+			parent = parent.parent();
+		}
+
+		if( 'undefined' !== typeof panel.offset().left ) {
 			left = panel.offset().left;
+		}
+
+		if( 'undefined' !== typeof panel.width() ) {
 			width = panel.width();
+		}
 
-			//* The panel width is 'auto', which evaluates to 100%
-			if (width == 100 || width == 0) {
-				var parent = panel.parent();
+		if( left == 0 ) {
+			left = parent.offset().left;
+		}
 
-                //* Ignore the invisible wrapper div, it has no width.
-				if (parent.hasClass("swp-hidden-panel-wrap")) {
-					parent = parent.parent();
-				}
-
-				width = parent.width();
-			}
+		//* The panel width is 'auto', which evaluates to 100%
+		if (width == 100 || width == 0) {
+			width = parent.width();
 		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
@@ -527,7 +545,7 @@ window.socialWarfare = window.socialWarfare || {};
 			var offset = $(this).offset();
 
 			//* Do not display floating buttons before the horizontal panel.
-			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+			if (typeof socialWarfare.floatBeforeContent != 'undefined' && false == socialWarfare.floatBeforeContent) {
 				var theContent = $(".swp-content-locator").parent();
 
 				//* We are in sight of an "Above the content" panel.
