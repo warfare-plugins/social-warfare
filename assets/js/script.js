@@ -1,4 +1,4 @@
-oa/**
+/**
  *
  * Social Warfare - The Javascript
  *
