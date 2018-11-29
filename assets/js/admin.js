@@ -135,6 +135,10 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	'use strict';
 
 	if (typeof jQuery != 'function') {
+		// moving here until we refactor and use $ agian. 
+		console.log("Social Warfare requires jQuery, or jQuery as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
+        return;
+
 		if (typeof jQuery == 'function') {
 			jQuery = jQuery;
 		}
