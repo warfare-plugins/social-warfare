@@ -498,7 +498,7 @@ window.socialWarfare = window.socialWarfare || {};
 			left = panel.offset().left;
 		}
 
-		if( 'undefined' !== panel.width() ) {
+		if( 'undefined' !== typeof panel.width() ) {
 			width = panel.width();
 		}
 
