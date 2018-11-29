@@ -134,8 +134,18 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 (function(window, jQuery, undefined) {
 	'use strict';
 
-	if (typeof $ == 'undefined') {
-		$ = jQuery;
+	if (typeof $ != 'function') {
+		if (typeof jQuery == 'function') {
+			$ = jQuery;
+		}
+		else if (typeof window.jQuery == 'function') {
+		    $ = window.jQuery
+		}
+
+		else {
+			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
+			return;
+		}
 	}
 
 	socialWarfareAdmin.linkLength = function(input) {
