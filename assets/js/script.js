@@ -1,4 +1,4 @@
-/**
+oa/**
  *
  * Social Warfare - The Javascript
  *
@@ -58,7 +58,7 @@
  * Javascript variables created on the server:
  *
  *     bool   	swpClickTracking (SWP_Script.php)
- *     bool   	swpFloatBeforeContent
+ *     bool   	socialWarfare.floatBeforeContent
  *     object 	swpPinIt
  *     string 	swp_admin_ajax
  *     string 	swp_post_url
@@ -527,7 +527,7 @@ window.socialWarfare = window.socialWarfare || {};
 			var offset = $(this).offset();
 
 			//* Do not display floating buttons before the horizontal panel.
-			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
+			if (typeof socialWarfare.floatBeforeContent != 'undefined' && false == socialWarfare.floatBeforeContent) {
 				var theContent = $(".swp-content-locator").parent();
 
 				//* We are in sight of an "Above the content" panel.
