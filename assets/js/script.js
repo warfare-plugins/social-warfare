@@ -470,24 +470,39 @@ window.socialWarfare = window.socialWarfare || {};
    *
    */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
+
+		// If there is no static set to measure, just bail out.
 		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
-		var width = 0;
+		// If there is no floating set, just bail.
+		if(!socialWarfare.panels.floatingHorizontal) {
+			return;
+		}
+
+
+		/**
+		 * We'll create the default width and left properties here. Then we'll
+		 * attempt to pull these properties from the actual panel that we are
+		 * cloning below. If those measurements exist, we clone them. If not,
+		 * we use these defaults.
+		 *
+		 */
+		var width = "100%";
+		var left  = 0;
 		var panel = socialWarfare.panels.staticHorizontal;
 
-		var left = 0;
+		
 		if( 'undefined' !== typeof panel.offset().left ) {
-			var left = panel.offset().left;
+			left = panel.offset().left;
 		}
 
-		if (socialWarfare.isMobile()) {
-			width = "100%";
-		}
-
-		else {
+		if( 'undefined' !== panel.width() ) {
 			width = panel.width();
+		}
+
+		if (false == socialWarfare.isMobile()) {
 
 			//* The panel width is 'auto', which evaluates to 100%
 			if (width == 100 || width == 0) {
