@@ -329,9 +329,14 @@ window.socialWarfare = window.socialWarfare || {};
 			 * default click handler to handle it. This is for things like the
 			 * email button.
 			 *
+			 * This used to return false, but that cancels the default event
+			 * from firing. The whole purpose of this exclusion is to allow the
+			 * original event to fire so returning without a value allows it to
+			 * work.
+			 *
 			 */
 			if ($(this).hasClass('noPop')) {
-				return false;
+				return;
 			}
 
 
@@ -342,7 +347,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 *
 			 */
 			if (false == $(this).data('link')) {
-				return false;
+				return;
 			}
 
 
