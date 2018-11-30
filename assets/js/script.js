@@ -336,7 +336,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 *
 			 */
 			if ($(this).hasClass('noPop')) {
-				return;
+				return event;
 			}
 
 
