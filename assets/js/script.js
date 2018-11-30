@@ -754,7 +754,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-
+        $("body").css(paddingProp, newPadding);
 	}
 
 
