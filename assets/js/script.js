@@ -166,6 +166,10 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.initPlugin = function() {
+		$("body").css({
+			paddingTop: socialWarfare.paddingTop,
+			paddingBottom: socialWarfare.paddingBottom
+		});
 
 		socialWarfare.establishPanels();
 		socialWarfare.establishBreakpoint();
@@ -347,7 +351,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 *
 			 */
 			if ('undefined' == typeof $(this).data('link')) {
-				return;
+				return event;
 			}
 
 
@@ -750,7 +754,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-		$("body").css(paddingProp, newPadding);
+
 	}
 
 
