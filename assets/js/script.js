@@ -346,7 +346,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 * we need to make sure that this attribute exists.
 			 *
 			 */
-			if (false == $(this).data('link')) {
+			if ('undefined' == typeof $(this).data('link')) {
 				return;
 			}
 
