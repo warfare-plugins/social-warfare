@@ -349,6 +349,20 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		});
 	}
 
+    //* This method exists ONLY for version 3.4.1 of Social Warfare.
+	//* The next version should have a more long-term sustainable way to manage
+	//* post-editor fields with dependencies.
+	function setTempConditionalField() {
+		jQuery('[field=#swp_twitter_use_open_graph]').click(function(event) {
+			var status = jQuery("#swp_twitter_use_open_graph").val()
+			if (status == 'false') {
+				jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+			} else {
+				jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+			}
+		});
+	}
+
 
 	/**
 	 * The third party module used to create metaboxes (on the server) does not
@@ -365,6 +379,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	 */
 	function displayMetaBox() {
 		if (!jQuery(jQuery(".swpmb-media-list").length)) return;
+
 		clearInterval(window.initSWMetabox);
 
 		putFieldsInContainers();
@@ -374,6 +389,16 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		setTimeout(socialWarfareAdmin.resizeImageFields, 600);
 		setTimeout(socialWarfareAdmin.resizeImageFields, 1400);
 		setTimeout(socialWarfareAdmin.resizeImageFields, 3000);
+
+        //* Begin Temp code only for 3.4.1
+		var status = jQuery("#swp_twitter_use_open_graph").val()
+		if (status == 'false') {
+			jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+		} else {
+			jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+		}
+		setTempConditionalField();
+		//* End Temp code
 
 		jQuery('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
 		socialWarfareAdmin.addImageEditListeners()
