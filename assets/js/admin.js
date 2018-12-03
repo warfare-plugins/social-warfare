@@ -354,14 +354,18 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	//* post-editor fields with dependencies.
 	function setTempConditionalField() {
 		jQuery('[field=#swp_twitter_use_open_graph]').click(function(event) {
-			var status = jQuery("#swp_twitter_use_open_graph").val()
-			if (status == 'false') {
-				jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
-			} else {
+			var target = jQuery("#swp_twitter_use_open_graph");
+
+			if (target.attr('value') == 'true') {
 				jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+				target.attr('value', 'true');
+			} else {
+				jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+				target.attr('value', 'false');
 			}
+
+			socialWarfareAdmin.resizeImageFields();
 		});
-		socialWarfareAdmin.resizeImageFields();
 	}
 
 
