@@ -406,6 +406,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		//* End Temp code
 
 		jQuery('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
+		jQuery("#social_warfare.ui-sortable-handle").click(socialWarfareAdmin.resizeImageFields);  //* The open/close handle WP gives us. Images need to be resized if it was closed then opened.
 		socialWarfareAdmin.addImageEditListeners()
 
 		jQuery("#social_warfare.postbox").show();
