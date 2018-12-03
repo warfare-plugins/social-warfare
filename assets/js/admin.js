@@ -361,6 +361,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
 			}
 		});
+		socialWarfareAdmin.resizeImageFields();
 	}
 
 
