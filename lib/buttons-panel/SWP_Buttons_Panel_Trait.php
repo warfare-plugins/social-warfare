@@ -375,6 +375,17 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * If the floaters are implicitly turned on at the post level, then that
+		 * means the user wants them to float on this post regardless of the
+		 * global settings.
+		 *
+		 */
+		if( 'on' === $post_setting ) {
+			return $float_location;
+		}
+		
+
+		/**
 		 * We don't use floating buttons on the home page or if we weren't able
 		 * to generate a proper post_id.
 		 *

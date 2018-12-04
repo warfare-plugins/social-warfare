@@ -87,7 +87,7 @@ class SWP_Buttons_panel_Loader {
         add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
         add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
 		add_filter( 'the_content', array( $this, 'add_static_panel_fallback_content' ) , 20 );
-		add_action( 'the_footer', array( $this, 'add_static_panel_fallback_footer' ) , 20 );
+		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback_footer' ) , 20 );
     }
 
 
