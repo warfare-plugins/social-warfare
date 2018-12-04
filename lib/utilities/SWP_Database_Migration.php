@@ -86,8 +86,14 @@ class SWP_Database_Migration {
 			foreach ( $meta as $key => $value ) {
 
 				//* Only print Social Warfare meta keys.
-				if ( ! ( strpos( $key, 'swp_' ) === 0
+				if ( ( strpos( $key, 'swp_' ) === 0
 				    || ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
+					$meta[$key] = $value[0];
+				}
+
+				else {
+					//* Everything comes in as an array, pull out the first value.
+
 					unset( $meta[$key] );
 				}
 			}

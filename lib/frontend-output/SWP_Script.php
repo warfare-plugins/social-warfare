@@ -52,8 +52,6 @@ class SWP_Script {
 
         // Queue up our hook function
 		add_action( 'wp_footer' , array( $this, 'footer_functions' ) , 99 );
-		add_action( 'wp_footer' , array( $this, 'localize_variables' ) , 99 );
-		add_action( 'admin_footer' , array( $this, 'localize_variables' ) , 99 );
 
 	}
 
@@ -105,6 +103,8 @@ class SWP_Script {
     		true
     	);
 
+		$this->localize_variables();
+
     }
 
 
@@ -142,6 +142,8 @@ class SWP_Script {
     			'swp_characters_remaining' => '',
     		)
     	);
+
+		$this->localize_variables();
     }
 
 

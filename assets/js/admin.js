@@ -135,7 +135,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	'use strict';
 
 	if (typeof jQuery != 'function') {
-		// moving here until we refactor and use $ agian. 
+		// moving here until we refactor and use $ agian.
 		console.log("Social Warfare requires jQuery, or jQuery as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
         return;
 
@@ -275,26 +275,9 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 				jQuery(mediaList).css("height", height);
 			} else {
-				jQuery(mediaList).css("height", "initial") // .find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
+				jQuery(mediaList).css("height", "initial");
 			}
 		})
-	}
-
-	/**
-	 * The third party module used to create metaboxes (on the server) does not
-	 * provide a way to organize the HTML.
-	 *
-	 * Our fix for this is to create a new parent container with the `data-type`
-	 * attribute. The value of `data-type` represents the group of related
-	 * functionality, such as 'heading', 'open-graph', or 'pinterest'.
-	 *
-	 * Then we move the related content (matched by CSS classnames) into the
-	 * appropriate container using javascript.
-	 *
-	 * @see PHP social-warfare-pro\lib\admin\SWP_Meta_Box_Loader->before_meta_boxes()
-	 */
-	function setupMetaBox() {
-		putFieldsInContainers();
 	}
 
 	/**
@@ -303,19 +286,19 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	 */
 	function fillContainer(container) {
 		var positions = ['full-width', 'left', 'right'];
-		var type = jQuery(container).data("type");
+		var type = jQuery(container).data('type');
 
 		positions.forEach(function(position) {
-			var className = ".swpmb-" + position;
+			var className = '.swpmb-' + position;
 
 			if (jQuery(container).find(className)) {
 				//* Only include child elements with the correct type.
 				var children = jQuery(container).find(className)
-											 .filter(function(index, child) {
-												   return jQuery(child).hasClass(type)
-											 })
+												.filter(function(index, child) {
+												    return jQuery(child).hasClass(type)
+												})
 				if (children.length) {
-					var wrap = jQuery(container).find(className + "-wrap");
+					var wrap = jQuery(container).find(className + '-wrap');
 					jQuery(wrap).append(children);
 				}
 			}
@@ -366,13 +349,64 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		});
 	}
 
+    //* This method exists ONLY for version 3.4.1 of Social Warfare.
+	//* The next version should have a more long-term sustainable way to manage
+	//* post-editor fields with dependencies.
+	function setTempConditionalField() {
+		jQuery('[field=#swp_twitter_use_open_graph]').click(function(event) {
+			var target = jQuery("#swp_twitter_use_open_graph");
+
+			if (target.attr('value') == 'true') {
+				jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+				target.attr('value', 'true');
+			} else {
+				jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+				target.attr('value', 'false');
+			}
+
+			socialWarfareAdmin.resizeImageFields();
+		});
+	}
+
+
+	/**
+	 * The third party module used to create metaboxes (on the server) does not
+	 * provide a way to organize the HTML.
+	 *
+	 * Our fix for this is to create a new parent container with the `data-type`
+	 * attribute. The value of `data-type` represents the group of related
+	 * functionality, such as 'heading', 'open-graph', or 'pinterest'.
+	 *
+	 * Then we move the related content (matched by CSS classnames) into the
+	 * appropriate container using javascript.
+	 *
+	 * @see PHP social-warfare-pro\lib\admin\SWP_Meta_Box_Loader->before_meta_boxes()
+	 */
 	function displayMetaBox() {
 		if (!jQuery(jQuery(".swpmb-media-list").length)) return;
+
 		clearInterval(window.initSWMetabox);
 
-		setupMetaBox();
-		setTimeout(socialWarfareAdmin.resizeImageFields, 200) //* Just needs a little extra time for some reason.
+		putFieldsInContainers();
+
+        //* Metabox is loaded via Ajax, but we want to resize known images ASAP.
+		//* Even a couple extra times if need be.
+		setTimeout(socialWarfareAdmin.resizeImageFields, 600);
+		setTimeout(socialWarfareAdmin.resizeImageFields, 1400);
+		setTimeout(socialWarfareAdmin.resizeImageFields, 3000);
+
+        //* Begin Temp code only for 3.4.1
+		var status = jQuery("#swp_twitter_use_open_graph").val()
+		if (status == 'false') {
+			jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+		} else {
+			jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+		}
+		setTempConditionalField();
+		//* End Temp code
+
 		jQuery('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
+		jQuery("#social_warfare.ui-sortable-handle").click(socialWarfareAdmin.resizeImageFields);  //* The open/close handle WP gives us. Images need to be resized if it was closed then opened.
 		socialWarfareAdmin.addImageEditListeners()
 
 		jQuery("#social_warfare.postbox").show();
