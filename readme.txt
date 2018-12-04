@@ -197,6 +197,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * Fixed JS error in Admin (`TypeError $ is not defined`)
 * Fixed placement of mobile floating buttons.
 * Fixed breakpoint transition for mobile buttons.
+* Fixed option registration when Pro is temporarily deactivated.
 * Updated cURL method so API requests are faster.
 * Removed references to Open Share Count.
 
