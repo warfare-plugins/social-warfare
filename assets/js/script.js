@@ -712,6 +712,12 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	socialWarfare.hasReferencePanel = function() {
+		return typeof socialWarfare.panels.staticHorizontal != 'undefined' &&
+		              socialWarfare.panels.staticHorizontal.length > 0
+	}
+
+
 	/**
 	 * Toggle the display of a floating bar, depending on static panel visibility.
 	 *
@@ -719,7 +725,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingHorizontalPanel = function() {
-		if (!socialWarfare.panels.staticHorizontal.length) {
+		if (!socialWarfare.hasReferencePanel()) {
 			return;
 		}
 
@@ -754,7 +760,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-       $("body").css(paddingProp, newPadding);
+        $("body").css(paddingProp, newPadding);
 	}
 
 
