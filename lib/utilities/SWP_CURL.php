@@ -67,11 +67,27 @@ class SWP_CURL {
 
 		// execute the handles
 		$running = null;
-		do {
-			curl_multi_exec( $mh, $running );
-		} while ($running > 0);
 
-		  // get content and remove handles
+		do {
+		   $mrc = curl_multi_exec($mh, $running);
+		}
+
+		while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
+
+		while ($running && $mrc == CURLM_OK) {
+			if (curl_multi_select($mh) == -1) {
+				usleep(1);
+			}
+
+			do {
+				$mrc = curl_multi_exec($mh, $running);
+			}
+
+			while ($mrc == CURLM_CALL_MULTI_PERFORM);
+		}
+
+	  // get content and remove handles
 		foreach ( $curly as $network => $content ) {
 			$result[ $network ] = curl_multi_getcontent( $content );
 			curl_multi_remove_handle( $mh, $content );
