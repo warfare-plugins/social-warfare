@@ -193,6 +193,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.4.1 (4 DEC 2018) =
+* Fixed JS error in Admin (`TypeError $ is not defined`)
+* Fixed placement of mobile floating buttons.
+* Fixed breakpoint transition for mobile buttons.
+* Updated cURL method so API requests are faster.
+
 = 3.4.0 (27 NOV 2018) =
 * Added support for Gutenberg blocks Social Warfare and Click To Tweet (as of Gutenberg 4.5.1)
 * Added option in Advanced tab to disable Gutenberg blocks.
