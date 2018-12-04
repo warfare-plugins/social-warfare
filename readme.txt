@@ -198,6 +198,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * Fixed placement of mobile floating buttons.
 * Fixed breakpoint transition for mobile buttons.
 * Updated cURL method so API requests are faster.
+* Removed references to Open Share Count.
 
 = 3.4.0 (27 NOV 2018) =
 * Added support for Gutenberg blocks Social Warfare and Click To Tweet (as of Gutenberg 4.5.1)
