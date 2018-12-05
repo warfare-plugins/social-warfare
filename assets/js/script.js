@@ -729,6 +729,11 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
+		// If there is no floating set, just bail.
+		if(!socialWarfare.panels.floatingHorizontal) {
+			return;
+		}
+
 		var panel = socialWarfare.panels.floatingHorizontal.first();
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
