@@ -383,7 +383,7 @@ trait SWP_Buttons_Panel_Trait {
 		if( 'on' === $post_setting ) {
 			return $float_location;
 		}
-		
+
 
 		/**
 		 * We don't use floating buttons on the home page or if we weren't able
@@ -504,6 +504,7 @@ trait SWP_Buttons_Panel_Trait {
 	protected function get_order_of_icons() {
 		global $swp_social_networks;
 		$default_buttons = SWP_Utility::get_option( 'order_of_icons' );
+		$sort_method     = SWP_Utility::get_option( 'order_of_icons_method' );
 		$order           = array();
 
 
@@ -511,9 +512,13 @@ trait SWP_Buttons_Panel_Trait {
 		* If the icons are set to be manually sorted, then we simply use the
 		* order from the options page that the user has set.
 		*
+		* Adding a check for false, because this option is pro only and will
+		* return false if it is not available in core, and therefore will default
+		* to the manual sorting method.
+		*
 		*/
-		if ( SWP_Utility::get_option( 'order_of_icons_method' ) === 'manual' ) {
-		   return $default_buttons;
+		if ( 'manual' === $sort_method || false === $sort_method ) {
+			return $default_buttons;
 		}
 
 
