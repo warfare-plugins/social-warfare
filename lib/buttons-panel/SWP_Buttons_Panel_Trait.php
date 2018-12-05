@@ -497,6 +497,7 @@ trait SWP_Buttons_Panel_Trait {
 	* A method to control the order in which the buttons are output.
 	*
 	* @since  3.4.0 | 20 SEP 2018 | Created
+	* @since  3.4.2 | 05 DEC 2018 | Added check for false sort_method for core.
 	* @param  void
 	* @return array The array of network names in their proper order.
 	*
