@@ -144,7 +144,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
      *
      * This method must be defined in child class.
      */
-	abstract function render_form_HTML( $settings );
+	abstract function generate_form_HTML( $settings );
 
     /**
      * Creates the markup for a WordPress widget
@@ -154,5 +154,5 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
      *
      * This method must be defined in child class.
      */
-	abstract function render_widget_HTML( $args, $settings );
+	abstract function generate_widget_HTML( $args, $settings );
 }
