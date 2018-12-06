@@ -12,14 +12,26 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
     * parent class that's built into WordPress core.
     *
     *  @since  1.0.0 | 01 JAN 2018 | Created
-    *  @param  void
-    *  @return void
-    *  @access public
     *
+	*  @param string $id_base         Optional Base ID for the widget, lowercase and unique. If left empty,
+	*                                a portion of the widget's class name will be used Has to be unique.
+	*  @param string $name            Name for the widget displayed on the configuration page.
+	*  @param array  $widget_options  Optional. Widget options. See wp_register_sidebar_widget() for information
+	*                                on accepted arguments. Default empty array.
+	*  @param array  $control_options Optional. Widget control options. See wp_register_widget_control() for
+	*                                information on accepted arguments. Default empty array.
+	*  @access public
     */
 	function __construct( $args ) {
-		parent::__construct( false, $args['name'] );
-		add_action( 'widgets_init', array( $this , 'register_self' ) );
+		$this->data = $args;
+		parent::__construct( $this->data['key'], $this->data['name'], array(), array() );
+
+		add_action( 'plugins_loaded', array( $this , 'init' ) );
+	}
+
+
+	function init() {
+		add_action( 'widgets_init', array( $this, 'register_self' ) );
 	}
 
 	/**
@@ -50,8 +62,8 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 	 * @param  none
 	 * @return none
 	 */
-	function register_self() {
-		register_widget( $this->key );
+	public function register_self() {
+		register_widget( $this->data['key'] );
 	}
 
 
@@ -70,7 +82,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 	function form( $settings ) {
         $defaults = array(
             'title'         => "SW Widget"
-            // ...
+            // ... 
         );
 
 		$settings = array_merge( $settings, $defaults );
