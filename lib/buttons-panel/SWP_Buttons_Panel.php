@@ -393,7 +393,7 @@ class SWP_Buttons_Panel {
 		}
 
 		// If there is no content, this must be called directly via function or shortcode.
-		if ( empty( $this->content ) && is_singular() ) {
+		if ( empty( $this->content ) ) {
 			$this->location = 'above';
 			return;
 		}
