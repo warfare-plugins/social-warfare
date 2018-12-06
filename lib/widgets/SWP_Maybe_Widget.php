@@ -18,7 +18,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
     *
     */
 	function __construct( $args ) {
-		parent::__construct( false, $name = $args['name'] );
+		parent::__construct( false, $args['name'] );
 		add_action( 'widgets_init', array( $this , 'register_self' ) );
 	}
 
