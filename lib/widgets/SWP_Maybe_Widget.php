@@ -93,10 +93,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
     * @return array Sanitized array of final values.
     *
     */
-	function update( $new_settings, $old_settings ) {
-		//* Do checks on $new_settings to make sure data is valid.
-		return $old_settings;
-	}
+	abstract function update( $new_settings, $old_settings );
 
 
     /**
@@ -118,7 +115,6 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
         }
 
 		echo '<div class="widget-text swp_widget_box">';
-
 
 		    if( isset( $args['before_title'] ) ) {
 		        echo $args['before_title'];
