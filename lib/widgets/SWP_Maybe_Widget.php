@@ -17,8 +17,9 @@ class SWP_Maybe_Widget extends WP_Widget {
     *  @access public
     *
     */
-	function __construct() {
-		parent::__construct( false, $name = 'Social Warfare: Popular Posts' );
+	function __construct( $args ) {
+		parent::__construct( false, $name = $args['name'] );
+		add_action( 'widgets_init', array( $this , 'register_self' ) );
 	}
 
 
@@ -42,19 +43,6 @@ class SWP_Maybe_Widget extends WP_Widget {
         return $attributes;
     }
 
-	/**
-	 * The magic method used to instantiate this class.
-	 *
-	 * @since  3.0.0
-	 * @param  none
-	 * @return none
-	 * @access public
-	 *
-	 */
-	public function __construct() {
-		add_action( 'widgets_init', array( $this , 'register_widgets' ) );
-	}
-
 
 	/**
 	 * The function that runs on the widgets_init hook and registers
@@ -64,8 +52,8 @@ class SWP_Maybe_Widget extends WP_Widget {
 	 * @param  none
 	 * @return none
 	 */
-	function register_widgets() {
-		register_widget( 'swp_popular_posts_widget' );
+	function register_self() {
+		register_widget( $this->key );
 	}
 
 
@@ -124,9 +112,6 @@ class SWP_Maybe_Widget extends WP_Widget {
     *
     */
 	function widget( $args, $settings ) {
-		/**
-		 * BUILD OUT THE WIDGET
-		 */
 
         // Output the "Before Widget" content
         if( isset( $args['before_widget'] ) ) :
@@ -137,7 +122,7 @@ class SWP_Maybe_Widget extends WP_Widget {
 		echo '<div class="widget-text swp_widget_box" style="' . $styles[ $style ]['wrapper'] . '">';
 
 		// Check if title is set
-		if ( $title ) :
+		if ( $args['title'] ) :
 
             // Output the "Before Title" content
             if( isset( $args['before_title'] ) ) :
@@ -152,102 +137,6 @@ class SWP_Maybe_Widget extends WP_Widget {
             endif;
 		endif;
 
-		// If a custom timeframe is not being used....
-		if ( $timeframe == 0 ) :
-
-			// Create the arguments for a query without a timeframe
-			$swp_args = array(
-				'posts_per_page' 	=> $count,
-				'post_type' 		=> $post_type,
-				'meta_key' 			=> '_' . $network,
-				'orderby' 			=> 'meta_value_num',
-				'order' 			=> 'DESC',
-				'update_post_meta_cache' => false,
-				'cache_results'     => false,
-				'ignore_sticky_posts' => 1
-			);
-
-			// If a custom timeframe is being used....
-		else :
-
-			// Create the arguments for a query with a timeframe
-			$swp_args = array(
-				'posts_per_page' 	=> $count,
-				'post_type' 		=> $post_type,
-				'meta_key' 			=> '_' . $network,
-				'orderby' 			=> 'meta_value_num',
-				'order' 			=> 'DESC',
-				'update_post_meta_cache' => false,
-				'cache_results'     => false,
-				'ignore_sticky_posts' => 1,
-				'date_query'    	=> array(
-					'column'  		=> 'post_date',
-					'after'   		=> '- ' . $timeframe . ' days',
-				),
-			);
-		endif;
-
-		// Reset the main query
-		wp_reset_postdata();
-
-		// Query and fetch the posts
-		$swq = new WP_Query( $swp_args );
-
-		// Begin the loop
-		if ( $swq->have_posts() ) :
-			$i = 1;
-			while ( $swq->have_posts() ) :
-
-				if ( $i <= $count ) :
-					$swq->the_post();
-
-					// If we are supposed to show count numbers....
-					if ( $showCount == 'true' ) :
-						$postID = get_the_ID();
-						$shares = get_post_meta( $postID,'_' . $network,true );
-						$share_html = '<span class="swp_pop_count">' . SWP_Utility::kilomega( $shares ) . ' ' . $countLabel . '</span>';
-
-					// If we are not supposed to show count numbers
-					else :
-						$share_html = '';
-					endif;
-
-					// If we are supposed to show thumbnails
-					if ( $thumbnails == 'true' && has_post_thumbnail() ) :
-						$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id() , 'thumbnail' );
-						$thumbnail_html = '<a href="' . get_the_permalink() . '">';
-
-						if ($thumb_size === 'custom') :
-                            $thumb_width = preg_replace("/[^0-9]/", "", $thumb_width);
-                            $thumb_height = preg_replace("/[^0-9]/", "", $thumb_height);
-
-							$thumbnail_html .= '<img style="width:' . $thumb_width . 'px;height:' . $thumb_height . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
-						else:
-							$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
-						endif;
-
-						$thumbnail_html .= '</a>';
-
-						// If we are not supposed to show thumbnails
-					else :
-						$thumbnail_html = '';
-					endif;
-
-					// Generate the HTML for a link
-					$link_html = '<a style="font-size:' . $font_size . '%;' . $styles[ $style ]['links'] . '" class="swp_popularity" href="' . get_the_permalink() . '"><b>' . get_the_title() . '</b>' . $share_html . '</a>';
-
-					// Output the post to the site
-					echo '<div class="swp_popular_post">' . $thumbnail_html . '' . $link_html . '</div>';
-					echo '<div class="swp_clearfix"></div>';
-
-				endif;
-
-			// End the loop
-			endwhile;
-		endif;
-
-		// Reset the main query so as not to interfere with other queries on the same page
-		wp_reset_postdata();
 		echo '</div>';
 
         // Output the "After Widget" content
@@ -261,11 +150,9 @@ class SWP_Maybe_Widget extends WP_Widget {
      *
      * This is how users customize the widget to meet their own needs.
      *
-     * @var [type]
+     * @note Must be defined in child class.
      */
-	abstract function render_form_HTML() {
-		//* Must be defined in child class.
-	}
+	abstract function render_form_HTML();
 
     /**
      * Creates the markup for a WordPress widget
@@ -273,9 +160,7 @@ class SWP_Maybe_Widget extends WP_Widget {
      * This is the draggable, sortable container which holds the
      * form data. This is how users can add or remove the Widget from sidebar.
      *
+     * @note Must be defined in child class.
      */
-	abstract function render_widget_HTML() {
-		//* Must be defined in child class.
-
-	}
+	abstract function render_widget_HTML();
 }
