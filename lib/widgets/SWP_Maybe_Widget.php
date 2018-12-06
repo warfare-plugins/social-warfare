@@ -22,6 +22,25 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 		add_action( 'widgets_init', array( $this , 'register_self' ) );
 	}
 
+	/**
+     * Creates the markup for the form (settings) inside the widget.
+     *
+     * This is how users customize the widget to meet their own needs.
+     *
+     * This method must be defined in child class.
+     */
+	abstract function generate_form_HTML( $settings );
+
+    /**
+     * Creates the markup for a WordPress widget
+     *
+     * This is the draggable, sortable container which holds the
+     * form data. This is how users can add or remove the Widget from sidebar.
+     *
+     * This method must be defined in child class.
+     */
+	abstract function generate_widget_HTML( $args, $settings );
+
 
 	/**
 	 * The function that runs on the widgets_init hook and registers
@@ -114,23 +133,4 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
             echo $args['after_widget'];
         }
 	}
-
-    /**
-     * Creates the markup for the form (settings) inside the widget.
-     *
-     * This is how users customize the widget to meet their own needs.
-     *
-     * This method must be defined in child class.
-     */
-	abstract function generate_form_HTML( $settings );
-
-    /**
-     * Creates the markup for a WordPress widget
-     *
-     * This is the draggable, sortable container which holds the
-     * form data. This is how users can add or remove the Widget from sidebar.
-     *
-     * This method must be defined in child class.
-     */
-	abstract function generate_widget_HTML( $args, $settings );
 }
