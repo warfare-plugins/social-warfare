@@ -23,27 +23,6 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 	}
 
 
-    /**
-    * Sets commonly applied attributes.
-    *
-    * @since  3.0.0 | 08 Feb 2018 | Created
-    * @param  string $name The name to be called.
-    * @param  string $class The CSS class to be applied.
-    * @param  string $value The default value for the element.
-    * @return string The string filled with attribute/value pairs.
-    *
-    */
-    private function set_attributes( $name, $class, $value) {
-        $attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
-
-        if ( isset( $value) ) {
-            $attributes .= " value=\"{$value}\" ";
-        }
-
-        return $attributes;
-    }
-
-
 	/**
 	 * The function that runs on the widgets_init hook and registers
 	 * our widget with WordPress.
@@ -85,6 +64,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 
     /**
     * Update widget form values.
+	* Inherited from WP_Widget.
     *
     * @since  1.0.0
     * @access public
@@ -93,7 +73,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
     * @return array Sanitized array of final values.
     *
     */
-	abstract function update( $new_settings, $old_settings );
+	abstract function update( $new_settings = array(), $old_settings  = array());
 
 
     /**
