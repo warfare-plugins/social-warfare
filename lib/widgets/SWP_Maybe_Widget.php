@@ -3,7 +3,7 @@
 /**
 *
 */
-class SWP_Maybe_Widget extends WP_Widget {
+abstract class SWP_Maybe_Widget extends WP_Widget {
 
 	/**
     * Class constructor.
@@ -113,36 +113,28 @@ class SWP_Maybe_Widget extends WP_Widget {
     */
 	function widget( $args, $settings ) {
 
-        // Output the "Before Widget" content
-        if( isset( $args['before_widget'] ) ) :
+        if( isset( $args['before_widget'] ) ) {
             echo $args['before_widget'];
-        endif;
+        }
 
-		// Begin output of the widget html
-		echo '<div class="widget-text swp_widget_box" style="' . $styles[ $style ]['wrapper'] . '">';
+		echo '<div class="widget-text swp_widget_box">';
 
-		// Check if title is set
-		if ( $args['title'] ) :
 
-            // Output the "Before Title" content
-            if( isset( $args['before_title'] ) ) :
-                echo $args['before_title'];
-            endif;
+		    if( isset( $args['before_title'] ) ) {
+		        echo $args['before_title'];
+		    }
 
-			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</span>';
+			echo '<span class="widgettitle widget-title swp_popular_posts_title">' . $title . '</span>';
 
-            // Output the "After Title" content
-            if( isset( $args['after_title'] ) ) :
-                echo $args['after_title'];
-            endif;
-		endif;
+		    if( isset( $args['after_title'] ) ) {
+		        echo $args['after_title'];
+		    }
 
 		echo '</div>';
 
-        // Output the "After Widget" content
-        if( isset( $args['after_widget'] ) ) :
+        if( isset( $args['after_widget'] ) ) {
             echo $args['after_widget'];
-        endif;
+        }
 	}
 
     /**
@@ -150,9 +142,9 @@ class SWP_Maybe_Widget extends WP_Widget {
      *
      * This is how users customize the widget to meet their own needs.
      *
-     * @note Must be defined in child class.
+     * This method must be defined in child class.
      */
-	abstract function render_form_HTML();
+	abstract function render_form_HTML( $settings );
 
     /**
      * Creates the markup for a WordPress widget
@@ -160,7 +152,7 @@ class SWP_Maybe_Widget extends WP_Widget {
      * This is the draggable, sortable container which holds the
      * form data. This is how users can add or remove the Widget from sidebar.
      *
-     * @note Must be defined in child class.
+     * This method must be defined in child class.
      */
-	abstract function render_widget_HTML();
+	abstract function render_widget_HTML( $args, $settings );
 }
