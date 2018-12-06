@@ -81,11 +81,11 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
     *
     * This sub-class over-rides this function from the parent class to generate the widget code.
     *
-    * @since  1.0.0
-    * @since  3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
+    * @since  3.5.0
     * @access public
     * @param  array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
-    * @param  array $instance The settings for the particular instance of the widget.
+    *                         These arguments are passed in from the `register_sidebar()` function.
+	* @param  array $instance The settings for the particular instance of the widget.
     *
     */
 	function widget( $args, $settings ) {
@@ -105,6 +105,8 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 		    if( isset( $args['after_title'] ) ) {
 		        echo $args['after_title'];
 		    }
+
+			echo $this->generate_widget_HTML();
 
 		echo '</div>';
 
