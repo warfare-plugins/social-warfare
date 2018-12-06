@@ -56,7 +56,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 
 
 	/**
-	 * Builds the interior of the widget. The part we care about most. 
+	 * Builds the interior of the widget. The part we care about most.
 	 *
 	 * Must override WP_Widget->form().
 	 *
@@ -86,16 +86,23 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
     /**
     * Handler for saving new settings.
     *
-	* Must override WP_Widget->update().
+	* By default will always save changed settings.
+	* Please override in child class to filter and sanitize data.
     *
     * @since  1.0.0
     * @access public
     * @param  array $new_instance Updated values as input by the user in WP_Widget::form()
     * @param  array $old_instance Previously set values.
-    * @return array Sanitized array of final values.
+    * @return array The new values to store in the database.
     *
     */
-	abstract function update( $new_settings = array(), $old_settings  = array());
+	public function update( $new_settings = array(), $old_settings  = array()) {
+		if ($new_settings == $old_settings) {
+			return false;
+		}
+
+		return $new_settings;
+	}
 
 
     /**
@@ -110,7 +117,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 	* @param  array $instance The settings for the particular instance of the widget.
     *
     */
-	function widget( $args, $settings ) {
+	public function widget( $args, $settings ) {
 
         if( isset( $args['before_widget'] ) ) {
             echo $args['before_widget'];
