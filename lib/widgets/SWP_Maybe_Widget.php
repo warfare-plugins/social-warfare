@@ -56,7 +56,9 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 
 
 	/**
-	 * Outputs the Settings Update form
+	 * Builds the interior of the widget. The part we care about most. 
+	 *
+	 * Must override WP_Widget->form().
 	 *
 	 * @since  1.0.0 | 01 JAN 2018 | Created
 	 * @since  3.0.0 | 01 MAY 2018 | Refactored using loops, $this->set_attributes(),
@@ -82,8 +84,9 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 
 
     /**
-    * Update widget form values.
-	* Inherited from WP_Widget.
+    * Handler for saving new settings.
+    *
+	* Must override WP_Widget->update().
     *
     * @since  1.0.0
     * @access public
@@ -96,9 +99,9 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 
 
     /**
-    * Echoes the widget content.
+    * Builds the widget, including data passed in from `register_sidebar`
     *
-    * This sub-class over-rides this function from the parent class to generate the widget code.
+    * Must override WP_Widget->widget().
     *
     * @since  3.5.0
     * @access public
