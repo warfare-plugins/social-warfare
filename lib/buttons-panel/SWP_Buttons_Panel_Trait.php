@@ -517,19 +517,6 @@ trait SWP_Buttons_Panel_Trait {
 	}
 
 
-	public function get_float_position() {
-		$location = $this->get_option( 'float_location' );
-
-		if ( 'left' == $location || 'right' == $location ) {
-		   return 'data-float-mobile="side" ';
-		}
-
-		if ( 'top' == $location || 'bottom' == $location ) {
-		   return 'data-float-mobile="bar" ';
-		}
-	}
-
-
 	/**
 	* A method to control the order in which the buttons are output.
 	*
