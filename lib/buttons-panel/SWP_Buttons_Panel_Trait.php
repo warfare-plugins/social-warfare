@@ -363,6 +363,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * If we failed to populate a post id, then we just bail out and won't
+		 * be showing any.
+		 *
+		 */
+		if( false == isset( $this->post_id ) ) {
+			return 'none';
+		}
+
+
+		/**
 		 * These are the float location settings all across the WordPress
 		 * ecosystem. There is a global on/off setting, a per post type on/off
 		 * setting, and even a setting on each individual post.
@@ -386,11 +396,10 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
-		 * We don't use floating buttons on the home page or if we weren't able
-		 * to generate a proper post_id.
+		 * We don't use floating buttons on the home page.
 		 *
 		 */
-		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
+		if( is_home() && !is_front_page() ) {
 			return 'none';
 		}
 
@@ -458,7 +467,24 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	public function get_mobile_float_location() {
+		$float_location  = $this->get_option( 'float_location' );
 		$mobile_location = $this->get_option('float_mobile');
+
+
+		/**
+		 * If the $mobile_location is set to false, it means that this option
+		 * is not available which means that pro is not installed. As such,
+		 * we'll it to the defaults.
+		 *
+		 */
+		if( false === $mobile_location ) {
+			if( true == in_array( $float_location , array('left','right') ) ) {
+				$mobile_location = 'none';
+			} else {
+				$mobile_location = $float_location;
+			}
+		}
+
 
 		//* Front page, archive, and categories do not have a global float option.
 		//* Instead they use options in the post editor (saved in post_meta).
