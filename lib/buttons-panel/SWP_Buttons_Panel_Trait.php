@@ -509,7 +509,7 @@ trait SWP_Buttons_Panel_Trait {
 		   return 'data-float-mobile="none" ';
 		}
 
-		if( is_single() && true == $this->get_option('floating_panel') && 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
+		if( is_singular() && true == $this->get_option('floating_panel') && 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
 		   return 'data-float-mobile="' . $mobile_location . '" ';
 		}
 
