@@ -462,6 +462,7 @@ trait SWP_Buttons_Panel_Trait {
 	* @since  3.0.0 | 09 MAY 2018 | Created
 	* @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
 	* @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category.
+	* @since  3.4.2 | 07 DEC 2018 | Added conditions for false mobile locations.
 	* @param  void
 	* @return string A string containing the float bar location.
 	*
@@ -478,6 +479,16 @@ trait SWP_Buttons_Panel_Trait {
 		 *
 		 */
 		if( false === $mobile_location ) {
+
+
+			/**
+			 * If the main floating buttons are set to left or right, then the
+			 * user won't get any floating buttons at all once those go away.
+			 * Switching from side to top/bottom is a pro only feature. If they
+			 * have them already set to top/bottom then we will just keep that
+			 * setting as no actual transition is needed.
+			 *
+			 */
 			if( true == in_array( $float_location , array('left','right') ) ) {
 				$mobile_location = 'none';
 			} else {
