@@ -14,19 +14,12 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 
  * Gutenberg blocks in the post editor.
  *
  * @since 3.4.0 | 26 NOV 2018 | Created.
+ * @since 3.4.2 | 10 DEC 2018 | Removed dependencies from wp_register_style
  */
  function register_gutenberg_blocks() {
-	 //* All of our block scripts are compiled to a single, common file.
-	 $scripts = array(
- 		'editor_script' => 'social-warfare-block-js',
- 		'block_script'	=> 'social-warfare-block-js'
- 	);
-
  	wp_register_style(
  		'social-warfare-block-css',
- 		plugins_url( '/post-editor/dist/blocks.style.build.css', dirname( __FILE__ ) ),
- 		array( 'wp-blocks' ),
-		true
+ 		plugins_url( '/post-editor/dist/blocks.style.build.css', dirname( __FILE__ ) )
  	);
 
 	wp_register_script(
@@ -37,6 +30,12 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 
 	);
 
 	wp_enqueue_style('social-warfare-block-css');
+
+	//* All of our block scripts are compiled to a single, common file.
+	$scripts = array(
+	   'editor_script' => 'social-warfare-block-js',
+	   'block_script'	=> 'social-warfare-block-js'
+   );
 
 	register_block_type( 'social-warfare/social-warfare', $scripts);
 	register_block_type( 'social-warfare/click-to-tweet', $scripts);
