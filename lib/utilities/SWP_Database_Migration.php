@@ -79,7 +79,11 @@ class SWP_Database_Migration {
 
 		$meta = get_post_meta( $post->ID );
 
-		if ( $meta ) :
+		if ( !$meta ) {
+            $meta = array();
+		}
+
+		else {
 			$keys = array();
 			$swp_meta = array();
 
@@ -100,12 +104,19 @@ class SWP_Database_Migration {
 
 			ksort( $meta );
 
-			echo "<pre>", var_export( $meta ), "</pre>";
-			wp_die();
 
-		else :
-			wp_die( "No post meta for " . $post->post_title );
-		endif;
+		}
+
+		$post_fields = array('ID', 'author', 'date_gmt', 'title', 'excerpt', 'status');
+
+		foreach( $post_fields as $field ) {
+			$meta["post_$field"] =  $post["post_$field"];
+		}
+
+		$meta['post_permalink'] = get_permalink( $post->ID ) ;
+
+		echo "<pre>", var_export( $meta ), "</pre>";
+		wp_die();
 	}
 
 
