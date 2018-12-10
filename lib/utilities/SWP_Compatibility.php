@@ -68,7 +68,7 @@ class SWP_Compatibility {
 
 		foreach( $meta_keys as $key ) {
 			foreach( $blacklist as $forbidden ) {
-				if ( strpos( $forbidden, strtolower( $key ) ) ) {
+				if ( strpos( $forbidden, $key ) ) {
 					unset( $meta_keys[$key] );
 				}
 			}
