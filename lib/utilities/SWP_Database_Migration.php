@@ -82,29 +82,22 @@ class SWP_Database_Migration {
 		if ( !$meta ) {
             $meta = array();
 		}
-
 		else {
 			$keys = array();
 			$swp_meta = array();
 
 			foreach ( $meta as $key => $value ) {
-
-				//* Only print Social Warfare meta keys.
 				if ( ( strpos( $key, 'swp_' ) === 0
 				    || ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
+					//* Everything comes in as an array, pull out the first value.
 					$meta[$key] = $value[0];
 				}
-
 				else {
-					//* Everything comes in as an array, pull out the first value.
-
+					//* Only print Social Warfare meta keys.
 					unset( $meta[$key] );
 				}
 			}
-
 			ksort( $meta );
-
-
 		}
 
 		$post_fields = array('ID', 'author', 'date_gmt', 'title', 'excerpt', 'status');
