@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) ) {
+if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'register_block_type' ) ) {
 	add_action( 'init', 'register_gutenberg_blocks' );
 	add_filter( 'block_categories', 'add_block_category', 10, 2 );
 }
@@ -16,6 +16,7 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 
  * @since 3.4.0 | 26 NOV 2018 | Created.
  */
  function register_gutenberg_blocks() {
+	 //* All of our block scripts are compiled to a single, common file.
 	 $scripts = array(
  		'editor_script' => 'social-warfare-block-js',
  		'block_script'	=> 'social-warfare-block-js'
@@ -28,14 +29,14 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 
 		true
  	);
 
-	wp_enqueue_style('social-warfare-block-css');
-
 	wp_register_script(
 		'social-warfare-block-js',
 		plugins_url( '/post-editor/dist/blocks.build.js', dirname( __FILE__ ) ),
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
 		true
 	);
+
+	wp_enqueue_style('social-warfare-block-css');
 
 	register_block_type( 'social-warfare/social-warfare', $scripts);
 	register_block_type( 'social-warfare/click-to-tweet', $scripts);
