@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// @since 3.4.2 | 10 DEC 2018 | Changed function check from 'is_gutenberg_page' to 'register_block_type'
 if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'register_block_type' ) ) {
 	add_action( 'init', 'register_gutenberg_blocks' );
 	add_filter( 'block_categories', 'add_block_category', 10, 2 );
