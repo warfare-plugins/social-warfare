@@ -134,8 +134,10 @@ class SWP_Buttons_panel_Loader {
      *
      */
     public function add_content_locator( $content ) {
+		$pinit_toggle         = SWP_Utility::get_option( 'pinit_toggle' );
+		$float_before_content = SWP_Utility::get_option( 'float_before_content' );
 
-		if( true === SWP_Utility::get_option( 'pinit_toggle' ) ) {
+		if( $pinit_toggle || $float_before_content ) ) {
         	$content .= '<div class="swp-content-locator"></div>';
 		}
 
