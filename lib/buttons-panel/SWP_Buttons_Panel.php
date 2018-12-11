@@ -394,7 +394,7 @@ class SWP_Buttons_Panel {
 		}
 
 		// If there is no content, this must be called directly via function or shortcode.
-		if ( empty( $this->content ) && true == $this->shortcode ) {
+		if ( empty( $this->content ) && true == $this->is_shortcode ) {
 			$this->location = 'above';
 			return;
 		}
