@@ -125,10 +125,19 @@ class SWP_Buttons_panel_Loader {
      * Add the content locator div.
      *
      * Inserts the empty div for locating Pin images (with javascript). We only
-     * add this to the content if the pinit button is active.
+     * add this to the content if we need it.
+     *
+     * 1. If the Pinit Image Hover Buttons are active we'll use this locator div
+     * to ensure that we are only adding the "save" button to images that are in
+     * the content area.
+     *
+     * 2. If the "float_before_content" otpion is turned off, we'll use this
+     * locator div to determine where the content is and then not display the
+     * buttons panel unless we are past the top of the content area.
      *
      * @since  3.0.6 | 14 MAY 2018 | Created the method.
      * @since  3.4.0 | 19 SEP 2018 | Added check for pinit_toggle option.
+     * @since  3.4.2 | 11 DEC 2018 | Added check for float_before_content option. 
      * @param  string $content The WordPress content passed via filter.
      * @return string $content The modified string of content.
      *
@@ -137,7 +146,7 @@ class SWP_Buttons_panel_Loader {
 		$pinit_toggle         = SWP_Utility::get_option( 'pinit_toggle' );
 		$float_before_content = SWP_Utility::get_option( 'float_before_content' );
 
-		if( $pinit_toggle || $float_before_content ) ) {
+		if( $pinit_toggle || !$float_before_content ) {
         	$content .= '<div class="swp-content-locator"></div>';
 		}
 
