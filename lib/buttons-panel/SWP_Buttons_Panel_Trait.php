@@ -468,17 +468,21 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	*/
 	public function get_mobile_float_location() {
-		$float_location  = $this->get_option( 'float_location' );
-		$mobile_location = $this->get_option('float_mobile');
+		$global_float_toggle    = $this->get_option( 'floating_panel' );
+		$post_type_float_toggle = $this->get_option( 'float_location_' . $this->post_data['post_type'] );
+		$float_location         = $this->get_option( 'float_location' );
+		$mobile_location        = $this->get_option( 'float_mobile' );
 
 
 		/**
 		 * If the $mobile_location is set to false, it means that this option
-		 * is not available which means that pro is not installed. As such,
-		 * we'll it to the defaults.
+		 * is not available which means that pro is not installed. If this
+		 * option were available, it would return as a string.
+		 * As such, we'll set it to the defaults that are available in core.
 		 *
 		 */
 		if( false === $mobile_location ) {
+			$mobile_location = $float_location;
 
 
 			/**
@@ -489,10 +493,8 @@ trait SWP_Buttons_Panel_Trait {
 			 * setting as no actual transition is needed.
 			 *
 			 */
-			if( true == in_array( $float_location , array('left','right') ) ) {
+			if( true === in_array( $float_location, array( 'left','right' ) ) ) {
 				$mobile_location = 'none';
-			} else {
-				$mobile_location = $float_location;
 			}
 		}
 
@@ -509,7 +511,7 @@ trait SWP_Buttons_Panel_Trait {
 		   return 'data-float-mobile="none" ';
 		}
 
-		if( is_singular() && true == $this->get_option('floating_panel') && 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
+		if( is_singular() && true === $global_float_toggle && 'on' === $post_type_float_toggle ) {
 		   return 'data-float-mobile="' . $mobile_location . '" ';
 		}
 
