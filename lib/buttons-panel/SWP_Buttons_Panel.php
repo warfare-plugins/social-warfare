@@ -192,7 +192,8 @@ class SWP_Buttons_Panel {
 	 * @since  3.1.0 | 05 JUL 2018 | Created debug() & establish_post_data() methods.
 	 * @since  3.4.0 | 20 SEP 2018 | Moved establish_post_id() into a conditional.
 	 * @param  array optional $args The arguments passed in via shortcode.
-	 * @param  boolean optional $shortcode If a shortcode is calling this class.
+	 * @param  boolean optional $shortcode If a shortcode/direct function
+	 *                          is calling this class.
 	 * @return void
      *
      */
@@ -393,7 +394,7 @@ class SWP_Buttons_Panel {
 		}
 
 		// If there is no content, this must be called directly via function or shortcode.
-		if ( empty( $this->content ) ) {
+		if ( empty( $this->content ) && true == $this->shortcode ) {
 			$this->location = 'above';
 			return;
 		}
