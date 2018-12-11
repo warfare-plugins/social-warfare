@@ -370,7 +370,7 @@ class SWP_Buttons_Panel {
 
 
 	/**
-	 * Establish Location
+	 * Establish the Location of the Buttons Panel
 	 *
 	 * A method to handle figuring out where in the content these buttons are
 	 * supposed to appear. It has to check the global options, the options set
@@ -379,21 +379,47 @@ class SWP_Buttons_Panel {
 	 *
 	 * @since  3.0.0 | 10 APR 2018 | Created
 	 * @since  3.0.7 | 15 MAY 2018 | Added conditionals to ensure $post_setting isn't an array.
+	 * @since  3.4.2 | 11 DEC 2018 | Added check for $this->is_shortcode.
 	 * @param  void
 	 * @return void All values are stored in local properties.
 	 *
 	 */
 	public function establish_location() {
 
-        //* Establish a default.
+
+		/**
+		 * Establish the default as none. If nothing gets caught in the
+		 * conditionals below, the buttons should not be displayed so we'll
+		 * return with the location set to 'none'.
+		 *
+		 */
         $this->location = 'none';
 
-		// Return with the location set to none if we are on attachment pages.
+
+		/**
+		 * In previous versions, we had reports of buttons showing up on media
+		 * attachment pages. This prevents that from happening by returning with
+		 * $this->location still set to 'none'.
+		 *
+		 */
 		if( is_attachment() ) {
 			return;
 		}
 
-		// If there is no content, this must be called directly via function or shortcode.
+
+		/**
+		 * If this class is instantiated via the [social_warfare] shortcode or
+		 * the social_warfare() function, then it will pass in during
+		 * instantiation a paramter which will toggle our local property of
+		 * $this->is_shortcode from falst to true.
+		 *
+		 * If it is being called directly, the content will be blank, but we will
+		 * want to append our buttons at least once in order to actually return
+		 * some html to be printed on the screen. As such, any option that results
+		 * in the buttons being appended once (in this case we'll use above) is
+		 * what we need.
+		 *
+		 */
 		if ( empty( $this->content ) && true == $this->is_shortcode ) {
 			$this->location = 'above';
 			return;
@@ -409,15 +435,27 @@ class SWP_Buttons_Panel {
 		 */
 		$post_setting = get_post_meta( $this->post_id, 'swp_post_location', true );
 
+
+		/**
+		 * Since we passed true in as the third parameter of get_post_meta(), it
+		 * should never return an array of items, but in a few rare instances,
+		 * we saw it doing so anyways. If this does happen, we'll just pull the
+		 * first item from the array and use that instead.
+		 *
+		 */
         if( is_array($post_setting) ) {
              $post_setting = $post_setting[0];
         }
 
-		// If the location is set in the post options, use that.
+
+		/**
+		 * This checks to see if the user has implicitly set the buttons location
+		 * at the post level in the post editor. If so, we use this instead of
+		 * using any of the global or post type settings for the location.
+		 *
+		 */
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
 			$this->location = $post_setting;
-
-            //* Exit early because this is a priority.
             return;
 		}
 
@@ -426,31 +464,45 @@ class SWP_Buttons_Panel {
 		 * Global Location Settings
 		 *
 		 * Decide which post type we're on and pull the location setting
-		 * for that type from the global options.
+		 * for that post type from the global options.
 		 *
 		 */
-		// If we are on the home page
-		if( is_front_page() ) {
-            $home = $this->options['location_home'];
-			$this->location = isset( $home ) ? $home : 'none';
 
+
+		/**
+		 * If we are on the home page of the site then we'll use the location_home
+		 * option from the settings page. This conditional needs to come prior
+		 * to the singular() check because some home pages use WordPress pages
+		 * which would make that conditional evaluate as true. But we want this
+		 * one to trump that one so this comes first.
+		 *
+		 */
+        $home_location = $this->get_option( 'location_home' );
+		if( is_front_page() && !empty( $home_location ) ) {
+			$this->location = $home_location;
             return;
         }
 
 
-		// If we are on a singular page
-		if ( is_singular() ) {
-            $location = $this->options[ 'location_' . $this->post_data['post_type'] ];
-
-            if ( isset( $location ) ) {
-                $this->location = $location;
-            }
-
+		/**
+		 * If we are on a singular() post/page and we have a valid location
+		 * setting for this particular post type, then we'll use that setting.
+		 *
+		 * If this is set to FALSE then it means that this option was not
+		 * available for some reason as all valid values for this option are
+		 * strings. As such, we'll leave the location setting to 'none'.
+		 *
+		 */
+        $post_type_location = $this->get_option( 'location_' . $this->post_data['post_type'] );
+		if ( is_singular() && !empty( $post_type_location ) ) {
+            $this->location = $post_type_location;
+			return;
         }
 
-
+		// If we are on the blogroll or an archive listing.
         if ( is_archive() || is_home() ) {
-            $this->location = $this->options['location_archive_categories'];
+            $this->location = $this->get_option( 'location_archive_categories' );
+			return;
         }
 	}
 
