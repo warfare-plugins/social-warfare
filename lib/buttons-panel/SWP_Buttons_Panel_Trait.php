@@ -475,6 +475,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * If the float location is completely set to none, then we won't have
+		 * any floating buttons on mobile either.
+		 *
+		 */
+		if( 'none' == $this->get_float_location() ) {
+			$mobile_location = 'none';
+		}
+
+
+		/**
 		 * If the $mobile_location is set to false, it means that this option
 		 * is not available which means that pro is not installed. If this
 		 * option were available, it would return as a string.
