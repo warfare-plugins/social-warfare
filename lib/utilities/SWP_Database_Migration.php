@@ -130,7 +130,8 @@ class SWP_Database_Migration {
 
 		$posts = get_posts(array(
 			'meta_key'	=> 'swp_float_location',
-			'meta_value'	=> 'on'
+			'meta_value'	=> 'on',
+			'post_type'	=> $post_type
 		));
 
 		$count = 0;
