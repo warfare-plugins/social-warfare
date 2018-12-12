@@ -328,7 +328,18 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A function to avoid getting undefined index notices.
+	* Get one of the user options.
+	*
+	* This function acts just like the global SWP_Utility:get_option() method.
+	* In fact, it even uses that function as a fallback. Basically, when the
+	* Buttons_Panel class is instantiated, a user has the option to pass in an
+	* array of options. These will be merged with the global $swp_user_options,
+	* and stored in the $this->options property.
+	*
+	* First, we check if the option exists in our local options property. Second,
+	* we use the SWP_Utility::get_option() method which will pull the option
+	* from the global settings as well as handle things like requests for
+	* options that may not exist (return false).
 	*
 	* @since  3.0.5 | 10 MAY 2018 | Created
 	* @param  string $key The name of the option.
@@ -337,10 +348,12 @@ trait SWP_Buttons_Panel_Trait {
 	*/
 	protected function get_option( $key ) {
 
+		// Check if this option exists in this panel's localized options.
 		if( isset( $this->options[$key] ) ) {
 		   return $this->options[$key];
 		}
 
+		// As a backup, use the option as it exists in the global user options.
 		return SWP_Utility::get_option( $key );
 	}
 
