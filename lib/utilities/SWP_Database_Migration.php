@@ -126,7 +126,27 @@ class SWP_Database_Migration {
      *
      */
 	public function reset_post_meta_float_location( $post_type ) {
-		
+		global $wpdb;
+
+		$posts = get_posts(array(
+			'meta_key'	=> 'swp_float_location',
+			'meta_value'	=> 'on'
+		));
+
+		$count = 0;
+
+		foreach ($posts as $post) {
+			$changed = update_post_meta( $post->ID, 'swp_float_location', 'default' );
+            if ($changed) {
+				$count++;
+			}
+		}
+        if ($count) {
+			echo "Success! $count ${post_type}s updated.";
+		} else {
+			echo "No matching posts were found to update.";
+		}
+		wp_die();
 	}
 
 
