@@ -129,6 +129,7 @@ class SWP_Database_Migration {
 		global $wpdb;
 
 		$posts = get_posts(array(
+			'numberposts' => -1,
 			'meta_key'	=> 'swp_float_location',
 			'meta_value'	=> 'on',
 			'post_type'	=> $post_type
