@@ -103,13 +103,30 @@ class SWP_Database_Migration {
 		$post_fields = array('ID', 'author', 'date_gmt', 'title', 'excerpt', 'status');
 
 		foreach( $post_fields as $field ) {
-			$meta["post_$field"] =  $post["post_$field"];
+			$key = "post_$field";
+			$meta["post_$field"] =  $post->$key;
 		}
 
 		$meta['post_permalink'] = get_permalink( $post->ID ) ;
 
 		echo "<pre>", var_export( $meta ), "</pre>";
 		wp_die();
+	}
+
+    /**
+     *
+     * This is a patch.
+     *
+     * Sets the value of all Pages' post_meta `swp_float_location` to 'default'.
+     *
+	 * @since 3.4.2 | 12 DEC 2018 | Created
+     *
+     * @param string $post_type The type of posts you want to rest.
+     * @return void
+     *
+     */
+	public function reset_post_meta_float_location( $post_type ) {
+		
 	}
 
 
@@ -153,6 +170,19 @@ class SWP_Database_Migration {
             add_action( 'template_redirect', array( $this, 'print_post_meta' ) );
 
         endif;
+
+        /**
+         * v3.4.1 brought to our attention that the default value for
+         * post meta `swp_float_location` is 'on' instead of 'deafult'.
+         *
+         *This debug paramter has an optional paramter, `post_type`, which defaults to 'page'.
+         *
+         * @since 3.4.2
+         */
+		if ( true == SWP_Utility::debug('reset_float_location') ) {
+			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
+			$this->reset_post_meta_float_location( $post_type );
+		}
 
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
@@ -234,9 +264,6 @@ class SWP_Database_Migration {
 
         return count( $old_metadata ) === 0;
     }
-
-
-
 
 	 /**
 	  * A method for updating the post meta fields.
