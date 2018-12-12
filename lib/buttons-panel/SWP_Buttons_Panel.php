@@ -449,7 +449,7 @@ class SWP_Buttons_Panel {
 
 
 		/**
-		 * This checks to see if the user has implicitly set the buttons location
+		 * This checks to see if the user has explicitly set the buttons location
 		 * at the post level in the post editor. If so, we use this instead of
 		 * using any of the global or post type settings for the location.
 		 *
