@@ -4,7 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) ) {
+// @since 3.4.2 | 10 DEC 2018 | Changed function check from 'is_gutenberg_page' to 'register_block_type'
+if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'register_block_type' ) ) {
 	add_action( 'init', 'register_gutenberg_blocks' );
 	add_filter( 'block_categories', 'add_block_category', 10, 2 );
 }
@@ -14,21 +15,13 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 
  * Gutenberg blocks in the post editor.
  *
  * @since 3.4.0 | 26 NOV 2018 | Created.
+ * @since 3.4.2 | 10 DEC 2018 | Removed dependencies from wp_register_style
  */
  function register_gutenberg_blocks() {
-	 $scripts = array(
- 		'editor_script' => 'social-warfare-block-js',
- 		'block_script'	=> 'social-warfare-block-js'
- 	);
-
  	wp_register_style(
  		'social-warfare-block-css',
- 		plugins_url( '/post-editor/dist/blocks.style.build.css', dirname( __FILE__ ) ),
- 		array( 'wp-blocks' ),
-		true
+ 		plugins_url( '/post-editor/dist/blocks.style.build.css', dirname( __FILE__ ) )
  	);
-
-	wp_enqueue_style('social-warfare-block-css');
 
 	wp_register_script(
 		'social-warfare-block-js',
@@ -36,6 +29,14 @@ if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
 		true
 	);
+
+	wp_enqueue_style('social-warfare-block-css');
+
+	//* All of our block scripts are compiled to a single, common file.
+	$scripts = array(
+	   'editor_script' => 'social-warfare-block-js',
+	   'block_script'	=> 'social-warfare-block-js'
+   );
 
 	register_block_type( 'social-warfare/social-warfare', $scripts);
 	register_block_type( 'social-warfare/click-to-tweet', $scripts);
