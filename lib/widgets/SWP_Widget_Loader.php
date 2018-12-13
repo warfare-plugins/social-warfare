@@ -40,9 +40,9 @@ class SWP_Widget_Loder {
 		$widgets = array_merge(array( 'swp_popular_posts_widget' ), $widgets );
 
 		foreach( $widgets as $widget ) {
-			
+			if ( class_exists( $widget ) ) {
+				register_widget( $widget );
+			}
 		}
-
-		register_widget(  );
 	}
 }
