@@ -36,8 +36,12 @@ class SWP_Widget_Loder {
 	 */
 	function register_widgets() {
 		$widgets = apply_filters( 'swp_widgets', array() );
-        // Apply default values after filtering to guarantee ours are included.
-		$widgets = array_merge(array( 'swp_popular_posts_widget' ), $widgets );
+		// Apply default values after filtering to guarantee ours are included.
+
+		if (!is_array($widgets)) {
+			$widgets = array();
+		}
+		$widgets = array_merge( array( 'swp_popular_posts_widget' ), $widgets );
 
 		foreach( $widgets as $widget ) {
 			if ( class_exists( $widget ) ) {
