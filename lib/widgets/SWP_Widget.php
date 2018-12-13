@@ -26,11 +26,6 @@ abstract class SWP_Widget extends WP_Widget {
 		$this->data = $args;
 		parent::__construct( $this->data['key'], $this->data['name'], array(), array() );
 
-		add_action( 'plugins_loaded', array( $this , 'init' ) );
-	}
-
-
-	function init() {
 		add_action( 'widgets_init', array( $this, 'register_self' ) );
 	}
 
@@ -55,15 +50,16 @@ abstract class SWP_Widget extends WP_Widget {
 
 
 	/**
-	 * The function that runs on the widgets_init hook and registers
-	 * our widget with WordPress.
+	 * 
 	 *
 	 * @since  3.0.0
-	 * @param  none
-	 * @return none
+	 * @param  array $widgets The list of SWP widgets being registered.
+	 * @filter hook Hooks into `swp_widgets`
+	 *
 	 */
-	public function register_self() {
-		register_widget( $this->data['key'] );
+	public function register_self( $widgets ) {
+		$widgets[] = strtolower( $this->key );
+		return $widgets;
 	}
 
 
