@@ -707,6 +707,15 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * Find out if the total shares are activated on the settings page. We
+		 * will overwrite this variable if the user has passed in a 'buttons'
+		 * argument and instead use what they've passed in.
+		 *
+		 */
+		$are_total_shares_active = $this->get_option('total_shares');
+
+
+		/**
 		* If this is a shortcode and the buttons argument has been specifically
 		* passed into the function, then we will use that buttons argument to
 		* determine whether or not to display the total shares.
@@ -716,16 +725,17 @@ trait SWP_Buttons_Panel_Trait {
 		if ( $this->is_shortcode && !empty( $buttons ) ) {
 			$total = in_array('total', array_map('strtolower', $buttons) );
 			$totals = in_array('totals', array_map('strtolower', $buttons) );
-			return ( $total || $totals );
+			$are_total_shares_active = ( $total || $totals );
 		}
 
 
 		/**
-		* If total shares are turned off and this isn't a shortcode then we're
-		* not going to render any total shares.
+		* If total shares are turned off or this is a shortcode with a buttons
+		* parameter that didn't include totals then we're not going to render
+		* any total shares.
 		*
 		*/
-		if ( false == $this->get_option('total_shares') ) {
+		if ( false == $are_total_shares_active ) {
 		   return false;
 		}
 
