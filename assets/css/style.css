@@ -1219,8 +1219,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 .nc_floater {
 	margin: 10px 0;
 	position: relative;
-	left: 304px;
-	width: 740px;
+	/* left: 304px; */
+	/* width: 740px; */
 }
 
 .swp_social_panelSide.hideCounts a {
