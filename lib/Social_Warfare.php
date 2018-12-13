@@ -449,10 +449,16 @@ class Social_Warfare {
 		 * The Widget Classes
 		 *
 		 * These are the classes that create the widgets available for output in
-		 * WordPress. Built in is the Popular Posts widget, but these also
-		 * provide the framework for extensibility so that more widgets can be
-		 * created later via addons.
+		 * WordPress.
+		 * We include our SWP_Widget, which extends the WP_Widget as required,
+		 * but also provides other utility methods specific to our plugin.
 		 *
+		 * The Popular Posts widget provides users options for displaying posts
+		 * by share counts.
+		 *
+		 * The Widget Loader creates a filter hook for adding more widgets
+		 * as addons.
+		 * 
 		 */
 		$widgets = array(
             'Popular_Posts_Widget',
