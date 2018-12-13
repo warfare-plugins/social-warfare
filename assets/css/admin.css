@@ -16,6 +16,7 @@
 	font-weight: bold;
 	max-width: 200px;
 	float: right;
+	font-size: 12px;
 }
 
 .swp_CountDown.swp_blue {
@@ -43,11 +44,12 @@
 	padding: 0;
 }
 
-#social_warfare .swp_og_imageWrapper ul.swpmb-media-list {
+#social_warfare .open-graph ul.swpmb-media-list,
+#social_warfare .twitter ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-og.jpg');
 }
 
-#social_warfare .swp_pinterest_imageWrapper ul.swpmb-media-list {
+#social_warfare .pinterest ul.swpmb-media-list {
 	background-image: url('../images/img-placeholder-pin.jpg');
 }
 
@@ -407,6 +409,7 @@ a.swp-notice-cta {
 	resize: unset;
 	border-radius: 5px;
 	padding: 10px;
+	min-height: 120px;
 }
 
 .swpmb-field.inline-select .swpmb-input {
@@ -433,4 +436,12 @@ a.swp-notice-cta {
 #social_warfare .sw-checkbox-off {
    font-size: 12px;
    line-height: 32px;
+}
+
+#social_warfare p.description {
+	padding: 15px 0;
+}
+
+.wp-core-ui #social_warfare a.swpmb-add-media.button {
+	margin: 15px 0;
 }

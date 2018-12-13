@@ -6,6 +6,11 @@
     }
 }
 
+/* For non-English sites */
+html[lang] .site * i.sw {
+	font-family: sw-icon-font !important;
+}
+
 .swp_social_panel {
 	clear: both;
 	display: -webkit-box;
@@ -1214,8 +1219,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 .nc_floater {
 	margin: 10px 0;
 	position: relative;
-	left: 304px;
-	width: 740px;
+	/* left: 304px; */
+	/* width: 740px; */
 }
 
 .swp_social_panelSide.hideCounts a {
@@ -1260,6 +1265,14 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	font-size: 20px;
 	margin-right: 15px;
 	vertical-align: middle;
+}
+
+.mce-ico.sw-social-warfare:before {
+	color: #ee464f;
+}
+
+.mce-ico.sw-social-warfare {
+	color: #ee464f;
 }
 
 i.swp_google_plus_icon:before {
@@ -1550,7 +1563,6 @@ div.sw-pinit a.sw-pinit-button:visited {
 	box-shadow: none;
 	color: #fff;
 	font-family: Lato,sans-serif;
-	font-size: 20px;
 	font-size: 15px;
 	height: 32px;
 	line-height: 32px;
@@ -1562,6 +1574,14 @@ div.sw-pinit a.sw-pinit-button:visited {
 	-webkit-transition: opacity 0.5s;
 	transition: opacity 0.5s;
 	z-index: 200;
+}
+
+.wp-block-gallery div.sw-pinit a.sw-pinit-button,
+.blocks-gallery-item div.sw-pinit a.sw-pinit-button,
+.blocks-gallery-item div.sw-pinit a.sw-pinit-button:visited {
+	height: 34px !important;
+	width: 120px !important;
+	text-align: center;
 }
 
 div.sw-pinit:hover a.sw-pinit-button,

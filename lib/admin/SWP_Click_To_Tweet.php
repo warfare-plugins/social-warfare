@@ -103,6 +103,9 @@ class SWP_Click_To_Tweet {
 	 *
 	 */
 	public function tinymce_register_plugin( $plugin_array ) {
+		if ( true == SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists ( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
+			return $plugin_array;
+		}
 		$plugin_array['click_to_tweet'] = plugins_url( '/assets/js/clickToTweet.js', __FILE__ );
 		return $plugin_array;
 	}

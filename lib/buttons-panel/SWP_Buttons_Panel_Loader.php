@@ -40,6 +40,17 @@ class SWP_Buttons_panel_Loader {
 	public $options;
 
 
+	/**
+	 * Content_Loaded
+	 *
+	 * A public method that we can check to see if the content hook has been
+	 * processed or not.
+	 *
+	 * @var bool
+	 */
+	public $content_loaded = false;
+
+
     /**
      * The class constructor.
      *
@@ -75,7 +86,8 @@ class SWP_Buttons_panel_Loader {
         // Hook into the template_redirect so that is_singular() conditionals will be ready
         add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
         add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
-		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback' ) , 20 );
+		add_filter( 'the_content', array( $this, 'add_static_panel_fallback_content' ) , 20 );
+		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback_footer' ) , 20 );
     }
 
 
@@ -113,17 +125,28 @@ class SWP_Buttons_panel_Loader {
      * Add the content locator div.
      *
      * Inserts the empty div for locating Pin images (with javascript). We only
-     * add this to the content if the pinit button is active.
+     * add this to the content if we need it.
+     *
+     * 1. If the Pinit Image Hover Buttons are active we'll use this locator div
+     * to ensure that we are only adding the "save" button to images that are in
+     * the content area.
+     *
+     * 2. If the "float_before_content" otpion is turned off, we'll use this
+     * locator div to determine where the content is and then not display the
+     * buttons panel unless we are past the top of the content area.
      *
      * @since  3.0.6 | 14 MAY 2018 | Created the method.
      * @since  3.4.0 | 19 SEP 2018 | Added check for pinit_toggle option.
+     * @since  3.4.2 | 11 DEC 2018 | Added check for float_before_content option. 
      * @param  string $content The WordPress content passed via filter.
      * @return string $content The modified string of content.
      *
      */
     public function add_content_locator( $content ) {
+		$pinit_toggle         = SWP_Utility::get_option( 'pinit_toggle' );
+		$float_before_content = SWP_Utility::get_option( 'float_before_content' );
 
-		if( true === SWP_Utility::get_option( 'pinit_toggle' ) ) {
+		if( $pinit_toggle || !$float_before_content ) {
         	$content .= '<div class="swp-content-locator"></div>';
 		}
 
@@ -185,6 +208,59 @@ class SWP_Buttons_panel_Loader {
 
     }
 
+
+	/**
+	 * Add the hidden panel to the content if it is available. If the content()
+	 * hook is not available, we will attempt later to add it to the footer.
+	 *
+	 * @since  3.4.2 | 04 DEC 2018 | Created
+	 * @param string $content The post content to be modified
+	 * @return string The modified post content
+	 *
+	 */
+	public function add_static_panel_fallback_content( $content ) {
+
+		// Record that the post conent hook has indeed loaded.
+		$this->content_loaded = true;
+
+		// Bail if we don't need these fallback buttons.
+		if( false === $this->should_float_fallback_display() ) {
+			return $content;
+		}
+
+		// Generate the buttons and return the modified content.
+		return $this->generate_static_panel_fallback( $content );
+	}
+
+
+	/**
+	 * Add the static fallback buttons to the footer if the content() failed
+	 * to get loaded in the above function.
+	 *
+	 * @since 3.4.2 | 04 DEC 2018 | Created
+	 * @param void
+	 * @return void
+	 *
+	 */
+	public function add_static_panel_fallback_footer() {
+
+
+		// Bail if the content hook was successfully loaded.
+		if( true === $this->content_loaded ) {
+			return;
+		}
+
+		// Bail if we don't need these buttons.
+		if( false === $this->should_float_fallback_display() ) {
+			return;
+		}
+
+		// Generate the static panel fallback and echo it to the screen.
+		echo $this->generate_static_panel_fallback();
+
+	}
+
+
     /**
      * When floatingHorizontal buttons are desired, but not staticHorizontal
      * exists, we need to create a staticHorizontal so the floaters have
@@ -195,7 +271,34 @@ class SWP_Buttons_panel_Loader {
      * @return void The rendered HTML is echoed to the screen.
      *
      */
-	function add_static_panel_fallback() {
+	public function generate_static_panel_fallback( $content = '' ) {
+		global $post;
+
+
+        /**
+         * If all the checks above get passed, then we'll go ahead and create a
+         * static horizontal buttons panel, wrap it in a wrapper to make it
+         * invisible, and echo it to the screen.
+         *
+         */
+		$staticHorizontal = new SWP_Buttons_Panel();
+		$html  = '<div class="swp-hidden-panel-wrap" style="display: none; visibility: collapse; opacity: 0">';
+		$html .= $staticHorizontal->render_html();
+		$html .= '</div>';
+		return $content . $html;
+	}
+
+
+	/**
+	 * A method to determine if we need to output a set of hidden horizontal
+	 * buttons that can be cloned into the floating buttons on the top or bottom.
+	 *
+	 * @since  3.4.2 | 04 NOV 2018
+	 * @param  void
+	 * @return bool
+	 *
+	 */
+	public function should_float_fallback_display() {
 		global $post;
 
 
@@ -209,27 +312,44 @@ class SWP_Buttons_panel_Loader {
 		$float_location_post_type   = SWP_Utility::get_option( 'float_location_' . $post->post_type );
 		$float_location             = SWP_Utility::get_option( 'float_location' );
 		$location_post_type         = SWP_Utility::get_option( 'location_' . $post->post_type );
-        $post_meta_enabled_static   = get_post_meta( $post->ID, 'swp_post_location', true);
-	    $post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
+		$post_meta_enabled_static   = get_post_meta( $post->ID, 'swp_post_location', true);
+		$post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
 		$acceptable_locations       = array( 'top', 'bottom' );
 
 
-        /**
-         * We are only generating this if the user has floating buttons activated
-         * at least somewhere. If all floating options are off, just bail.
-         *
-         */
-		if ( false == $floating_panel && 'off' == $float_mobile && 'off' == $float_location_post_type ) {
-			return;
+		/**
+		 * Bail out if the floating options are set to off on this specific post.
+		 *
+		 */
+		if ( 'off' == $post_meta_enabled_floating ) {
+			return false;
 		}
 
 
-	    /**
-	     * Do not print top/bottom floating buttons on blog pages.
-	     *
-	     */
+		/**
+		 * Autimatically be true if set to on for this post.
+		 *
+		 */
+		if ( 'on' == $post_meta_enabled_floating ) {
+			return true;
+		}
+
+		/**
+		 * We are only generating this if the user has floating buttons activated
+		 * at least somewhere. If all floating options are off, just bail.
+		 *
+		 */
+		if ( false == $floating_panel && 'off' == $float_mobile && 'off' == $float_location_post_type ) {
+			return false;
+		}
+
+
+		/**
+		 * Do not print top/bottom floating buttons on blog pages.
+		 *
+		 */
 		if ( !is_singular() ) {
-			return;
+			return false;
 		}
 
 
@@ -240,8 +360,8 @@ class SWP_Buttons_panel_Loader {
 		 *
 		 */
 		if(    !in_array( $float_location, $acceptable_locations )
-		    && !in_array( $float_mobile, $acceptable_locations ) ) {
-			return;
+			&& !in_array( $float_mobile, $acceptable_locations ) ) {
+			return false;
 		}
 
 		/**
@@ -251,30 +371,11 @@ class SWP_Buttons_panel_Loader {
 		 *
 		 */
 		if ( 'none' != $post_meta_enabled_static && 'none' != $location_post_type ) {
-			return;
+			return false;
 		}
 
+		return true;
 
-		/**
-		 * Bail out if the floating options are set to off on this specific post.
-		 *
-		 */
-	    if ( 'off' == $post_meta_enabled_floating ) {
-			return;
-		}
-
-
-        /**
-         * If all the checks above get passed, then we'll go ahead and create a
-         * static horizontal buttons panel, wrap it in a wrapper to make it
-         * invisible, and echo it to the screen.
-         *
-         */
-		$staticHorizontal = new SWP_Buttons_Panel();
-		$html  = '<div style="display: none; visibility: collapse; opacity: 0">';
-		$html .= $staticHorizontal->render_html();
-		$html .= '</div>';
-		echo $html;
 	}
 
 
