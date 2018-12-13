@@ -202,6 +202,9 @@ class SWP_Database_Migration {
          * @since 3.4.2
          */
 		if ( true == SWP_Utility::debug('reset_float_location') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.')
+			}
 			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
 			$this->reset_post_meta_float_location( $post_type );
 		}
@@ -209,27 +212,42 @@ class SWP_Database_Migration {
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_db') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.')
+			}
 			$this->migrate();
 		}
 
 		// Initialize database if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('initialize_db') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.')
+			}
 			$this->initialize_db();
 		}
 
 		// Update post meta if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_post_meta') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.')
+			}
 			$this->update_post_meta();
 			$this->update_hidden_post_meta();
 		}
 
 		// Output the last_migrated status if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_last_migrated') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.')
+			}
 			$this->get_last_migrated( true );
 		}
 
 		// Update the last migrated status if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('update_last_migrated') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.')
+			}
 			$this->update_last_migrated();
 		}
 	}
