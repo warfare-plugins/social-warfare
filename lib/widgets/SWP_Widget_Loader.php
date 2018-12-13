@@ -35,7 +35,14 @@ class SWP_Widget_Loder {
 	 * @return none
 	 */
 	function register_widgets() {
-		register_widget( 'swp_popular_posts_widget' );
-	}
+		$widgets = apply_filters( 'swp_widgets', array() );
+        // Apply default values after filtering to guarantee ours are included.
+		$widgets = array_merge(array( 'swp_popular_posts_widget' ), $widgets );
 
+		foreach( $widgets as $widget ) {
+			
+		}
+
+		register_widget(  );
+	}
 }
