@@ -3,7 +3,7 @@
 /**
 *
 */
-abstract class SWP_Maybe_Widget extends WP_Widget {
+abstract class SWP_Widget extends WP_Widget {
 
 	/**
     * Class constructor.
@@ -82,7 +82,7 @@ abstract class SWP_Maybe_Widget extends WP_Widget {
 	function form( $settings ) {
         $defaults = array(
             'title'         => "SW Widget"
-            // ... 
+            // ...
         );
 
 		$settings = array_merge( $settings, $defaults );
