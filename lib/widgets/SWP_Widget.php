@@ -50,9 +50,9 @@ abstract class SWP_Widget extends WP_Widget {
 
 
 	/**
-	 * 
+	 * Hooks into the SWP_Widget_Loder autoregistration.
 	 *
-	 * @since  3.0.0
+	 * @since  3.5.0 | 13 DEC 2018 | Created
 	 * @param  array $widgets The list of SWP widgets being registered.
 	 * @filter hook Hooks into `swp_widgets`
 	 *
@@ -64,7 +64,7 @@ abstract class SWP_Widget extends WP_Widget {
 
 
 	/**
-	 * Builds the interior of the widget. The part we care about most.
+	 * Builds the display of the widget. The part we care about most.
 	 *
 	 * Must override WP_Widget->form().
 	 *
