@@ -79,33 +79,76 @@ class SWP_Database_Migration {
 
 		$meta = get_post_meta( $post->ID );
 
-		if ( $meta ) :
+		if ( !$meta ) {
+            $meta = array();
+		}
+		else {
 			$keys = array();
 			$swp_meta = array();
 
 			foreach ( $meta as $key => $value ) {
-
-				//* Only print Social Warfare meta keys.
 				if ( ( strpos( $key, 'swp_' ) === 0
 				    || ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_') === 0 ) ) {
+					//* Everything comes in as an array, pull out the first value.
 					$meta[$key] = $value[0];
 				}
-
 				else {
-					//* Everything comes in as an array, pull out the first value.
-
+					//* Only print Social Warfare meta keys.
 					unset( $meta[$key] );
 				}
 			}
-
 			ksort( $meta );
+		}
 
-			echo "<pre>", var_export( $meta ), "</pre>";
-			wp_die();
+		$post_fields = array('ID', 'author', 'date_gmt', 'title', 'excerpt', 'status');
 
-		else :
-			wp_die( "No post meta for " . $post->post_title );
-		endif;
+		foreach( $post_fields as $field ) {
+			$key = "post_$field";
+			$meta["post_$field"] =  $post->$key;
+		}
+
+		$meta['post_permalink'] = get_permalink( $post->ID ) ;
+
+		echo "<pre>", var_export( $meta ), "</pre>";
+		wp_die();
+	}
+
+    /**
+     *
+     * This is a patch.
+     *
+     * Sets the value of all Pages' post_meta `swp_float_location` to 'default'.
+     *
+	 * @since 3.4.2 | 12 DEC 2018 | Created
+     *
+     * @param string $post_type The type of posts you want to rest.
+     * @return void
+     *
+     */
+	public function reset_post_meta_float_location( $post_type ) {
+		global $wpdb;
+
+		$posts = get_posts(array(
+			'numberposts' => -1,
+			'meta_key'	=> 'swp_float_location',
+			'meta_value'	=> 'on',
+			'post_type'	=> $post_type
+		));
+
+		$count = 0;
+
+		foreach ($posts as $post) {
+			$changed = update_post_meta( $post->ID, 'swp_float_location', 'default' );
+            if ($changed) {
+				$count++;
+			}
+		}
+        if ($count) {
+			echo "Success! $count ${post_type}s updated.";
+		} else {
+			echo "No matching posts were found to update.";
+		}
+		wp_die();
 	}
 
 
@@ -150,30 +193,61 @@ class SWP_Database_Migration {
 
         endif;
 
+        /**
+         * v3.4.1 brought to our attention that the default value for
+         * post meta `swp_float_location` is 'on' instead of 'deafult'.
+         *
+         *This debug paramter has an optional paramter, `post_type`, which defaults to 'page'.
+         *
+         * @since 3.4.2
+         */
+		if ( true == SWP_Utility::debug('reset_float_location') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
+			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
+			$this->reset_post_meta_float_location( $post_type );
+		}
+
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_db') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
 			$this->migrate();
 		}
 
 		// Initialize database if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('initialize_db') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
 			$this->initialize_db();
 		}
 
 		// Update post meta if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_post_meta') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
 			$this->update_post_meta();
 			$this->update_hidden_post_meta();
 		}
 
 		// Output the last_migrated status if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_last_migrated') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
 			$this->get_last_migrated( true );
 		}
 
 		// Update the last migrated status if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('update_last_migrated') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
 			$this->update_last_migrated();
 		}
 	}
@@ -230,9 +304,6 @@ class SWP_Database_Migration {
 
         return count( $old_metadata ) === 0;
     }
-
-
-
 
 	 /**
 	  * A method for updating the post meta fields.

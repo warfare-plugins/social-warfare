@@ -328,7 +328,18 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A function to avoid getting undefined index notices.
+	* Get one of the user options.
+	*
+	* This function acts just like the global SWP_Utility:get_option() method.
+	* In fact, it even uses that function as a fallback. Basically, when the
+	* Buttons_Panel class is instantiated, a user has the option to pass in an
+	* array of options. These will be merged with the global $swp_user_options,
+	* and stored in the $this->options property.
+	*
+	* First, we check if the option exists in our local options property. Second,
+	* we use the SWP_Utility::get_option() method which will pull the option
+	* from the global settings as well as handle things like requests for
+	* options that may not exist (return false).
 	*
 	* @since  3.0.5 | 10 MAY 2018 | Created
 	* @param  string $key The name of the option.
@@ -337,10 +348,12 @@ trait SWP_Buttons_Panel_Trait {
 	*/
 	protected function get_option( $key ) {
 
+		// Check if this option exists in this panel's localized options.
 		if( isset( $this->options[$key] ) ) {
 		   return $this->options[$key];
 		}
 
+		// As a backup, use the option as it exists in the global user options.
 		return SWP_Utility::get_option( $key );
 	}
 
@@ -363,6 +376,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * If we failed to populate a post id, then we just bail out and won't
+		 * be showing any.
+		 *
+		 */
+		if( false == isset( $this->post_id ) ) {
+			return 'none';
+		}
+
+
+		/**
 		 * These are the float location settings all across the WordPress
 		 * ecosystem. There is a global on/off setting, a per post type on/off
 		 * setting, and even a setting on each individual post.
@@ -375,11 +398,21 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
-		 * We don't use floating buttons on the home page or if we weren't able
-		 * to generate a proper post_id.
+		 * If the floaters are implicitly turned on at the post level, then that
+		 * means the user wants them to float on this post regardless of the
+		 * global settings.
 		 *
 		 */
-		if( is_home() && !is_front_page() || !isset( $this->post_id ) ) {
+		if( 'on' === $post_setting ) {
+			return $float_location;
+		}
+
+
+		/**
+		 * We don't use floating buttons on the home page.
+		 *
+		 */
+		if( is_home() && !is_front_page() ) {
 			return 'none';
 		}
 
@@ -442,12 +475,52 @@ trait SWP_Buttons_Panel_Trait {
 	* @since  3.0.0 | 09 MAY 2018 | Created
 	* @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
 	* @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category.
+	* @since  3.4.2 | 07 DEC 2018 | Added conditions for false mobile locations.
 	* @param  void
 	* @return string A string containing the float bar location.
 	*
 	*/
 	public function get_mobile_float_location() {
-		$mobile_location = $this->get_option('float_mobile');
+		$global_float_toggle    = $this->get_option( 'floating_panel' );
+		$post_type_float_toggle = $this->get_option( 'float_location_' . $this->post_data['post_type'] );
+		$float_location         = $this->get_option( 'float_location' );
+		$mobile_location        = $this->get_option( 'float_mobile' );
+
+
+		/**
+		 * If the float location is completely set to none, then we won't have
+		 * any floating buttons on mobile either.
+		 *
+		 */
+		if( 'none' == $this->get_float_location() ) {
+			$mobile_location = 'none';
+		}
+
+
+		/**
+		 * If the $mobile_location is set to false, it means that this option
+		 * is not available which means that pro is not installed. If this
+		 * option were available, it would return as a string.
+		 * As such, we'll set it to the defaults that are available in core.
+		 *
+		 */
+		if( false === $mobile_location ) {
+			$mobile_location = $float_location;
+
+
+			/**
+			 * If the main floating buttons are set to left or right, then the
+			 * user won't get any floating buttons at all once those go away.
+			 * Switching from side to top/bottom is a pro only feature. If they
+			 * have them already set to top/bottom then we will just keep that
+			 * setting as no actual transition is needed.
+			 *
+			 */
+			if( true === in_array( $float_location, array( 'left','right' ) ) ) {
+				$mobile_location = 'none';
+			}
+		}
+
 
 		//* Front page, archive, and categories do not have a global float option.
 		//* Instead they use options in the post editor (saved in post_meta).
@@ -461,7 +534,7 @@ trait SWP_Buttons_Panel_Trait {
 		   return 'data-float-mobile="none" ';
 		}
 
-		if( is_single() && true == $this->get_option('floating_panel') && 'on' == $this->get_option('float_location_' . $this->post_data['post_type'] ) ) {
+		if( is_singular() && true === $global_float_toggle && 'on' === $post_type_float_toggle ) {
 		   return 'data-float-mobile="' . $mobile_location . '" ';
 		}
 
@@ -469,23 +542,11 @@ trait SWP_Buttons_Panel_Trait {
 	}
 
 
-	public function get_float_position() {
-		$location = $this->get_option( 'float_location' );
-
-		if ( 'left' == $location || 'right' == $location ) {
-		   return 'data-float-mobile="side" ';
-		}
-
-		if ( 'top' == $location || 'bottom' == $location ) {
-		   return 'data-float-mobile="bar" ';
-		}
-	}
-
-
 	/**
 	* A method to control the order in which the buttons are output.
 	*
 	* @since  3.4.0 | 20 SEP 2018 | Created
+	* @since  3.4.2 | 05 DEC 2018 | Added check for false sort_method for core.
 	* @param  void
 	* @return array The array of network names in their proper order.
 	*
@@ -493,6 +554,7 @@ trait SWP_Buttons_Panel_Trait {
 	protected function get_order_of_icons() {
 		global $swp_social_networks;
 		$default_buttons = SWP_Utility::get_option( 'order_of_icons' );
+		$sort_method     = SWP_Utility::get_option( 'order_of_icons_method' );
 		$order           = array();
 
 
@@ -500,9 +562,13 @@ trait SWP_Buttons_Panel_Trait {
 		* If the icons are set to be manually sorted, then we simply use the
 		* order from the options page that the user has set.
 		*
+		* Adding a check for false, because this option is pro only and will
+		* return false if it is not available in core, and therefore will default
+		* to the manual sorting method.
+		*
 		*/
-		if ( SWP_Utility::get_option( 'order_of_icons_method' ) === 'manual' ) {
-		   return $default_buttons;
+		if ( 'manual' === $sort_method || false === $sort_method ) {
+			return $default_buttons;
 		}
 
 
@@ -641,6 +707,15 @@ trait SWP_Buttons_Panel_Trait {
 
 
 		/**
+		 * Find out if the total shares are activated on the settings page. We
+		 * will overwrite this variable if the user has passed in a 'buttons'
+		 * argument and instead use what they've passed in.
+		 *
+		 */
+		$are_total_shares_active = $this->get_option('total_shares');
+
+
+		/**
 		* If this is a shortcode and the buttons argument has been specifically
 		* passed into the function, then we will use that buttons argument to
 		* determine whether or not to display the total shares.
@@ -650,16 +725,17 @@ trait SWP_Buttons_Panel_Trait {
 		if ( $this->is_shortcode && !empty( $buttons ) ) {
 			$total = in_array('total', array_map('strtolower', $buttons) );
 			$totals = in_array('totals', array_map('strtolower', $buttons) );
-			return ( $total || $totals );
+			$are_total_shares_active = ( $total || $totals );
 		}
 
 
 		/**
-		* If total shares are turned off and this isn't a shortcode then we're
-		* not going to render any total shares.
+		* If total shares are turned off or this is a shortcode with a buttons
+		* parameter that didn't include totals then we're not going to render
+		* any total shares.
 		*
 		*/
-		if ( false == $this->get_option('total_shares') ) {
+		if ( false == $are_total_shares_active ) {
 		   return false;
 		}
 

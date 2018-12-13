@@ -1,9 +1,9 @@
 === WordPress Social Sharing Plugin - Social Warfare ===
 Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia, cdegraff1, ckmahoney
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
-Requires at least: 3.5.1
-Tested up to: 4.9
-Stable tag: 3.4.1
+Requires at least: 4.5.0
+Tested up to: 5.0.0
+Stable tag: 3.4.2
 License: GNU General Public License v2.0 or later
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,11 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 3.4.2 (13 DEC 2018) =
+* Fixed floating bottom disappear on mobile when pro is deactivated.
+* Fixed blocks disappearing after Gutenberg update.
+* Fixed buttons accidentally showing up on pages created with content builders.
 
 = 3.4.1 (4 DEC 2018) =
 * Fixed JS error in Admin (`TypeError $ is not defined`)

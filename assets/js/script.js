@@ -572,7 +572,8 @@ window.socialWarfare = window.socialWarfare || {};
 			var offset = $(this).offset();
 
 			//* Do not display floating buttons before the horizontal panel.
-			if (typeof socialWarfare.floatBeforeContent != 'undefined' && false == socialWarfare.floatBeforeContent) {
+			//* PHP json_encode() maps `true` to "1" and `false` to "".
+			if (typeof socialWarfare.floatBeforeContent != 'undefined' && "1" != socialWarfare.floatBeforeContent) {
 				var theContent = $(".swp-content-locator").parent();
 
 				//* We are in sight of an "Above the content" panel.
@@ -726,6 +727,11 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.toggleFloatingHorizontalPanel = function() {
 		if (!socialWarfare.hasReferencePanel()) {
+			return;
+		}
+
+		// If there is no floating set, just bail.
+		if(!socialWarfare.panels.floatingHorizontal) {
 			return;
 		}
 
