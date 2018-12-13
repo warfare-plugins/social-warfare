@@ -27,12 +27,12 @@ class SWP_Widget_Loder {
 
 
 	/**
-	 * The function that runs on the widgets_init hook and registers
-	 * our widget with WordPress.
+	 * Autoregisters all widgets which extend SWP_Widget.
 	 *
-	 * @since  3.0.0
-	 * @param  none
-	 * @return none
+	 * @since  Since 3.5.0 | 13 DEC 2018 Ported from SWP_Widget
+	 * @filter swp_popular_posts_widget
+	 * @return void
+	 *
 	 */
 	function register_widgets() {
 		$widgets = apply_filters( 'swp_widgets', array() );
