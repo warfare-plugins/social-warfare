@@ -9,7 +9,7 @@
 * @since     3.0.0 | 22 FEB 2018 | Class Created
 *
 */
-class SWP_Widget {
+class SWP_Widget_Loder {
 
 
 	/**
