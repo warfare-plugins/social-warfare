@@ -193,6 +193,11 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.4.2 (13 DEC 2018) =
+* Fixed floating bottom disappear on mobile when pro is deactivated.
+* Fixed blocks disappearing after Gutenberg update.
+* Fixed buttons accidentally showing up on pages created with content builders.
+
 = 3.4.1 (4 DEC 2018) =
 * Fixed JS error in Admin (`TypeError $ is not defined`)
 * Fixed placement of mobile floating buttons.
