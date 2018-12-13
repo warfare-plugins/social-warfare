@@ -183,14 +183,14 @@ class Social_Warfare {
 
 
 		/**
-		 * The Widget Class
+		 * The Widget Loader Class
 		 *
 		 * Instantiate the class that registers and output the "Popular Posts"
 		 * widget. If other widgets are added later, this class will fire those
 		 * up as well.
 		 *
 		 */
-		new SWP_Widget();
+		new SWP_Widget_Loader();
 
 
         /**
@@ -446,7 +446,7 @@ class Social_Warfare {
 
 
 		/**
-		 * The Widget ClassesMa
+		 * The Widget Classes
 		 *
 		 * These are the classes that create the widgets available for output in
 		 * WordPress. Built in is the Popular Posts widget, but these also
@@ -457,6 +457,7 @@ class Social_Warfare {
 		$widgets = array(
             'Popular_Posts_Widget',
             'Widget',
+			'Widget_Loader'
         );
         $this->load_files( '/lib/widgets/', $widgets );
 
