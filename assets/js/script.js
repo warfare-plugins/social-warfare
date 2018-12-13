@@ -58,7 +58,7 @@
  * Javascript variables created on the server:
  *
  *     bool   	swpClickTracking (SWP_Script.php)
- *     bool   	swpFloatBeforeContent
+ *     bool   	socialWarfare.floatBeforeContent
  *     object 	swpPinIt
  *     string 	swp_admin_ajax
  *     string 	swp_post_url
@@ -83,10 +83,19 @@ window.socialWarfare = window.socialWarfare || {};
  * still be able to access our functions and variables from anywhere.
  *
  */
-(function(window, $) {
+(function(window, $, jQuery) {
 	'use strict';
 
-	var $ = jQuery;
+	if ( typeof $ != 'function' ) {
+		if ( typeof jQuery == 'function' ) {
+			var $ = jQuery;
+		}
+
+		else {
+			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
+            return;
+		}
+	}
 
 	/***************************************************************************
 	 *
@@ -106,7 +115,30 @@ window.socialWarfare = window.socialWarfare || {};
 		// This is what fires up the entire plugin's JS functionality.
 		socialWarfare.initPlugin();
 
+
+		/**
+		 * On resize, we're going to purge and re-init the entirety of the
+		 * socialWarfare functions. This will fully reset all of the floating
+		 * buttons which will allow for a clean transition if the size change
+		 * causes the isMobile() check to flip from true to false or vica versa.
+		 *
+		 */
+		$(window).resize(socialWarfare.onWindowResize);
+
 	});
+
+
+	/**
+	 * This will cause our resize event to wait until the user is fully done
+	 * resizing the window prior to resetting and rebuilding the buttons and
+	 * their positioning and re-initializing the plugin JS functions.
+	 *
+	 */
+	var wait;
+	socialWarfare.onWindowResize = function(){
+	  clearTimeout(wait);
+	  wait = setTimeout(socialWarfare.initPlugin, 100 );
+	}
 
 
 	/**
@@ -134,6 +166,10 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.initPlugin = function() {
+		$("body").css({
+			paddingTop: socialWarfare.paddingTop,
+			paddingBottom: socialWarfare.paddingBottom
+		});
 
 		socialWarfare.establishPanels();
 		socialWarfare.establishBreakpoint();
@@ -169,7 +205,6 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
-		$(window).resize(socialWarfare.throttle(200, socialWarfare.updateFloatingHorizontalDimensions));
 
 	}
 
@@ -298,9 +333,14 @@ window.socialWarfare = window.socialWarfare || {};
 			 * default click handler to handle it. This is for things like the
 			 * email button.
 			 *
+			 * This used to return false, but that cancels the default event
+			 * from firing. The whole purpose of this exclusion is to allow the
+			 * original event to fire so returning without a value allows it to
+			 * work.
+			 *
 			 */
 			if ($(this).hasClass('noPop')) {
-				return false;
+				return event;
 			}
 
 
@@ -310,8 +350,8 @@ window.socialWarfare = window.socialWarfare || {};
 			 * we need to make sure that this attribute exists.
 			 *
 			 */
-			if (false == $(this).data('link')) {
-				return false;
+			if ('undefined' == typeof $(this).data('link')) {
+				return event;
 			}
 
 
@@ -355,19 +395,6 @@ window.socialWarfare = window.socialWarfare || {};
 				width = 775;
 			}
 
-
-			/**
-			 * We'll measure the window and then run some calculations to ensure
-			 * that our popout share window opens perfectly centered on the
-			 * browser window.
-			 *
-			 */
-			top = window.screenY + (window.innerHeight - height) / 2;
-			left = window.screenX + (window.innerWidth - width) / 2;
-			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-			instance = window.open(href, '_blank', windowAttributes);
-
-
 			/**
 			 * If a button was clicked, use the data-network attribute to
 			 * figure out which network is being shared. If it was a click
@@ -380,6 +407,17 @@ window.socialWarfare = window.socialWarfare || {};
 				network = 'ctt';
 			}
 
+
+			/**
+			 * We'll measure the window and then run some calculations to ensure
+			 * that our popout share window opens perfectly centered on the
+			 * browser window.
+			 *
+			 */
+			top = window.screenY + (window.innerHeight - height) / 2;
+ 			left = window.screenX + (window.innerWidth - width) / 2;
+ 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+ 			instance = window.open(href, network, windowAttributes);
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
@@ -412,7 +450,7 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.createFloatHorizontalPanel = function() {
 
 		//* If a horizontal panel does not exist, we can not create a bar.
-		if (!socialWarfare.panels.staticHorizontal || !socialWarfare.panels.staticHorizontal.length) {
+		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
@@ -429,11 +467,6 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* No floating bars are used at all.
 		if (floatLocation != 'top' && floatLocation != 'bottom' && mobileFloatLocation != "top" && mobileFloatLocation != "bottom") {
-			return;
-		}
-
-		//* Or we are on desktop and not using top/bottom floaters:
-		if (!socialWarfare.isMobile() && floatLocation != 'top' && floatLocation != 'bottom') {
 			return;
 		}
 
@@ -463,19 +496,51 @@ window.socialWarfare = window.socialWarfare || {};
    *
    */
 	socialWarfare.updateFloatingHorizontalDimensions = function() {
-		if (!socialWarfare.panels.staticHorizontal) {
+
+		// If there is no static set to measure, just bail out.
+		if (!socialWarfare.panels.staticHorizontal.length) {
 			return;
 		}
 
-		var left, width = 0;
 
-		if (socialWarfare.isMobile()) {
-			left = 0;
-			width = "100%";
-		} else {
-		    var content = $(".swp-content-locator").parent()
-			left = content.offset().left
-			width = content.width();
+		// If there is no floating set, just bail.
+		if(!socialWarfare.panels.floatingHorizontal) {
+			return;
+		}
+
+
+		/**
+		 * We'll create the default width and left properties here. Then we'll
+		 * attempt to pull these properties from the actual panel that we are
+		 * cloning below. If those measurements exist, we clone them. If not,
+		 * we use these defaults.
+		 *
+		 */
+		var width = "100%";
+		var left  = 0;
+		var panel = socialWarfare.panels.staticHorizontal;
+		var parent = panel.parent();
+
+		//* Ignore the invisible wrapper div, it has no width.
+		if (parent.hasClass("swp-hidden-panel-wrap")) {
+			parent = parent.parent();
+		}
+
+		if( 'undefined' !== typeof panel.offset().left ) {
+			left = panel.offset().left;
+		}
+
+		if( 'undefined' !== typeof panel.width() ) {
+			width = panel.width();
+		}
+
+		if( left == 0 ) {
+			left = parent.offset().left;
+		}
+
+		//* The panel width is 'auto', which evaluates to 100%
+		if (width == 100 || width == 0) {
+			width = parent.width();
 		}
 
 		//* Give the bar panel the appropriate classname and put it in its wrapper.
@@ -507,11 +572,12 @@ window.socialWarfare = window.socialWarfare || {};
 			var offset = $(this).offset();
 
 			//* Do not display floating buttons before the horizontal panel.
-			if (typeof swpFloatBeforeContent != 'undefined' && false === swpFloatBeforeContent) {
-				var theContent = jQuery(".swp-content-locator").parent();
+			//* PHP json_encode() maps `true` to "1" and `false` to "".
+			if (typeof socialWarfare.floatBeforeContent != 'undefined' && "1" != socialWarfare.floatBeforeContent) {
+				var theContent = $(".swp-content-locator").parent();
 
 				//* We are in sight of an "Above the content" panel.
-				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + jQuery(window).height())) {
+				if (index === 0 && theContent.length && theContent.offset().top > (scrollPos + $(window).height())) {
 					visible = true;
 				}
 			}
@@ -542,8 +608,12 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingButtons = function() {
+
 		// Adjust the floating bar
 		var location = socialWarfare.panels.staticHorizontal.data('float');
+		if( true == socialWarfare.isMobile() ) {
+			var location = socialWarfare.panels.staticHorizontal.data('float-mobile');
+		}
 
 		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
@@ -592,11 +662,13 @@ window.socialWarfare = window.socialWarfare || {};
 		var direction = '';
 		var location = socialWarfare.panels.floatingSide.data("float")
 		var visible  = socialWarfare.staticPanelIsVisible();
+		var style = "";
 
 		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
 			return socialWarfare.panels.floatingSide.hide();
 		}
+		socialWarfare.panels.floatingSide.show();
 
 		//* No buttons panel! Manually re-define ${visibility}.
 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
@@ -641,6 +713,12 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	socialWarfare.hasReferencePanel = function() {
+		return typeof socialWarfare.panels.staticHorizontal != 'undefined' &&
+		              socialWarfare.panels.staticHorizontal.length > 0
+	}
+
+
 	/**
 	 * Toggle the display of a floating bar, depending on static panel visibility.
 	 *
@@ -648,10 +726,23 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingHorizontalPanel = function() {
+		if (!socialWarfare.hasReferencePanel()) {
+			return;
+		}
+
+		// If there is no floating set, just bail.
+		if(!socialWarfare.panels.floatingHorizontal) {
+			return;
+		}
+
 		var panel = socialWarfare.panels.floatingHorizontal.first();
 		var location = socialWarfare.isMobile() ? $(panel).data("float-mobile") : $(panel).data("float");
 		var newPadding = (location == "bottom") ? socialWarfare.paddingBottom : socialWarfare.paddingTop;
 		var paddingProp = "padding-" + location;
+
+		if (location == 'off') {
+			return;
+		}
 
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
@@ -659,7 +750,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
-				$("#wpadminbar").css("top", "initial");
+				$("#wpadminbar").css("top", 0);
 			}
 		}
 
@@ -669,13 +760,13 @@ window.socialWarfare = window.socialWarfare || {};
 			$(".nc_wrapper").show();
 
             //* Compensate for the margin-top added to <html> by #wpadminbar.
-			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
+			if (socialWarfare.isMobile() && location == 'top' && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", panel.parent().height());
 			}
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-		$("body").css(paddingProp, newPadding);
+        $("body").css(paddingProp, newPadding);
 	}
 
 
@@ -835,7 +926,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-			if (jQuery(image).parents().filter("a").length) {
+			if ($(image).parents().filter("a").length) {
 				return;
 			}
 		}
@@ -883,7 +974,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 */
 			var i = new Image();
 			i.src = swpPinIt.image_source;
-			pinMedia = jQuery(i).prop('src');
+			pinMedia = $(i).prop('src');
 
 
 		/**

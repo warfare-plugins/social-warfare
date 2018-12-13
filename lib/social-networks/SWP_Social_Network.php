@@ -17,7 +17,8 @@ class SWP_Social_Network {
 
 
 	/**
-	 * SWP_Debug_Trait provides useful tool like error handling.
+	 * SWP_Debug_Trait provides useful tool like error handling and a debug
+	 * method which outputs the contents of the current object.
 	 *
 	 */
 	use SWP_Debug_Trait;
@@ -354,6 +355,7 @@ class SWP_Social_Network {
 		$share_counts = $panel_context['shares'];
         $post_data['options'] = $panel_context['options'];
 
+
 		$share_link = $this->generate_share_link( $post_data );
 
         // Build the button.
@@ -405,27 +407,34 @@ class SWP_Social_Network {
 	 */
 	public function are_shares_shown( $share_counts , $options = array()) {
 
+		// Cast a string 'true'/'false' to a boolean true/false in case it was
+		// passed in via the shortcode.
+		if( is_string( $options['network_shares'] ) ) {
+			$options['network_shares'] = (strtolower( $options['network_shares'] ) === 'true');
+		}
+
 		// False if the share count is empty
-		if ( empty( $share_counts[$this->key] ) ) :
+		if ( empty( $share_counts[$this->key] ) ) {
 			return false;
+		}
 
 		// False if the total share count is below the minimum
-		elseif( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ):
+		if( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ) {
 			return false;
+		}
 
 		// False if the share count is zero.
-		elseif( $share_counts[$this->key] = 0 ):
+		if( $share_counts[$this->key] = 0 ) {
 			return false;
+		}
 
 		// False if network shares are turned off in the options.
-		elseif( false == SWP_Utility::get_option( 'network_shares' ) ):
+		if( false == $options['network_shares'] ) {
 			return false;
+		}
 
-		else :
-			return true;
-		endif;
+		return true;
 
-		return $this;
 	}
 
 
