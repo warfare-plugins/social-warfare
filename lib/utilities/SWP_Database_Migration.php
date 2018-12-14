@@ -200,7 +200,7 @@ class SWP_Database_Migration {
 			$cutoff = strpos($options, '</pre>');
 			$options = substr($options, 0, $cutoff);
 
-			$fetched_options = eval( $options . ';' );
+			$fetched_options = eval( 'return ' .  $options . ';' );
 			die(var_dump($fetched_options));
 		}
 
