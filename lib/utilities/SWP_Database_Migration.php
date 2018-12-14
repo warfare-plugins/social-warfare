@@ -213,12 +213,14 @@ class SWP_Database_Migration {
 				wp_die('No Social Warfare found.');
 			}
 
-			$cutoff = strpos($options, '</pre>');
 			$options = str_replace('<pre>', '', $options);
+			$cutoff = strpos($options, '</pre>');
 			$options = substr($options, 0, $cutoff);
 
+			$array = 'return ' . $options . ';';
+
             try {
-				$fetched_options = eval( 'return ' .  $options . ';' );
+				$fetched_options = eval( $array );
 			}
 			catch (ParseError $e) {
                 $message = 'Error evaluating fetched data. <br/>';
@@ -244,7 +246,7 @@ class SWP_Database_Migration {
 				$new_options = array_merge( get_option('social_warfare_settings'), $fetched_options );
 
 				if (update_option( 'social_warfare_settings', $new_options )) {
-					wp_die('Settings updated to match ' . $_GET['swp_url']);
+					wp_die('Social Warfare settings updated to match ' . $_GET['swp_url']);
 				}
 				else {
 					wp_die('Tried to update settings to match ' . $_GET['swp_url'] . ', but something went wrong or no options changed.');
