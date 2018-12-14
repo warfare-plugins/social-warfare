@@ -186,6 +186,9 @@ class SWP_Database_Migration {
 		// }
 
 		if ( true == SWP_Utility::debug('load_options') ) {
+			if (!is_admin()) {
+				wp_die('You do not have authorization to view this page.');
+			}
 			$options = file_get_contents($_GET['swp_url'] . '?swp_debug=get_user_options');
 
 			//* Bad url.
