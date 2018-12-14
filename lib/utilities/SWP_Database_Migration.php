@@ -209,6 +209,12 @@ class SWP_Database_Migration {
 					if (strpos( $key, 'license' ) > 0) {
 						unset( $fetched_options[$key] );
 					}
+					if (strpos( $key, 'token' ) > 0) {
+						unset( $fetched_options[$key] );
+					}
+					if (strpos( $key, 'login' ) > 0) {
+						unset( $fetched_options[$key] );
+					}
 				}
 				//* Preserve filtered data, such as license keys.
 				$new_options = array_merge( get_option('social_warfare_settings'), $fetched_options );
