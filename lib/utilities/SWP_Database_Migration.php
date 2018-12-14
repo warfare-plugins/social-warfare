@@ -214,7 +214,7 @@ class SWP_Database_Migration {
 					wp_die('Settings updated to match ' . $_GET['swp_url']);
 				}
 				else {
-					wp_die('Tried to update settings to match ' . $_GET['swp_url'] . ', but something went wrong');
+					wp_die('Tried to update settings to match ' . $_GET['swp_url'] . ', but something went wrong or no options changed.');
 				}
 			}
 
