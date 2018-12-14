@@ -179,28 +179,42 @@ class SWP_Database_Migration {
 			wp_die();
 		endif;
 
-		// Output an array of user options if called via a debugging parameter.
+		// /**
+		//  * Output text representation of array of user options if called via a debugging parameter.
+		//  * Text is formatted for use with `eval`.
+		//  *
+		//  * @since 3.5.0 | 14 DEC 2018 | Created.
+		//  */
 		// if ( true === SWP_Utility::debug('get_user_options_raw') ) {
 		// 	$options = get_option( 'social_warfare_settings', array() );
-		// 	die(var_export($options));
+		// 	die(var_export('return ' . $options . ';'));
 		// }
 
+
+        /**
+         * Migrates options from $_GET['swp_url'] to the current site.
+         *
+         * @since 3.4.2
+         */
 		if ( true == SWP_Utility::debug('load_options') ) {
 			if (!is_admin()) {
 				wp_die('You do not have authorization to view this page.');
 			}
+
 			$options = file_get_contents($_GET['swp_url'] . '?swp_debug=get_user_options');
 
 			//* Bad url.
-			if (!$options) wp_die('nothing found');
+			if (!$options) {
+				wp_die('nothing found');
+            }
 
 			$pre = strpos($options, '<pre>');
 			if ($pre != 0) {
 				wp_die('No Social Warfare found.');
 			}
 
-			$options = str_replace('<pre>', '', $options);
 			$cutoff = strpos($options, '</pre>');
+			$options = str_replace('<pre>', '', $options);
 			$options = substr($options, 0, $cutoff);
 
 			$fetched_options = eval( 'return ' .  $options . ';' );
