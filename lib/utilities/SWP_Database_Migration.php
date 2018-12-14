@@ -189,11 +189,11 @@ class SWP_Database_Migration {
 			$options = file_get_contents($_GET['swp_url'] . '?swp_debug=get_user_options');
 
 			//* Bad url.
-			if (!$options) die('nothing found');
+			if (!$options) wp_die('nothing found');
 
 			$pre = strpos($options, '<pre>');
 			if ($pre != 0) {
-				die('No Social Warfare found.');
+				wp_die('No Social Warfare found.');
 			}
 
 			$options = str_replace('<pre>', '', $options);
@@ -201,7 +201,16 @@ class SWP_Database_Migration {
 			$options = substr($options, 0, $cutoff);
 
 			$fetched_options = eval( 'return ' .  $options . ';' );
-			die(var_dump($fetched_options));
+			if (is_array( $fetched_options) ) {
+				if (update_option( 'social_warfare_settings', $fetched_options )) {
+					wp_die('Settings updated to match ' . $_GET['swp_url']);
+				}
+				else {
+					wp_die('Tried to update settings to match ' . $_GET['swp_url'] . ', but something went wrong');
+				}
+			}
+
+            wp_die('No changes made.');
 		}
 
         if ( true === SWP_Utility::debug('get_filtered_options') ) :
