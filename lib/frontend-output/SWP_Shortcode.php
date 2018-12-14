@@ -112,11 +112,10 @@ class SWP_Shortcode {
     		$user_twitter_handle = SWP_Utility::get_option( 'twitter_id' );
     	endif;
 
-    	if ( isset( $atts['theme'] ) && $atts['theme'] != 'default' ) :
+		$theme = SWP_Utility::get_option( 'ctt_theme' );
+    	if ( !empty( $atts['theme'] ) && $atts['theme'] != 'default' ) {
     		$theme = $atts['theme'];
-    	else :
-    		$theme = SWP_Utility::get_option( 'ctt_theme' );
-    	endif;
+    	}
 
         $tweet = $this->get_tweet( $atts );
 
