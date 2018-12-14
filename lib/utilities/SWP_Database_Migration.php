@@ -202,7 +202,10 @@ class SWP_Database_Migration {
 
 			$fetched_options = eval( 'return ' .  $options . ';' );
 			if (is_array( $fetched_options) ) {
-				if (update_option( 'social_warfare_settings', $fetched_options )) {
+				//* Preserve filtered data, such as license keys.
+				$new_options = array_merge( get_option('social_warfare_settings'), $fetched_options );
+
+				if (update_option( 'social_warfare_settings', $new_options )) {
 					wp_die('Settings updated to match ' . $_GET['swp_url']);
 				}
 				else {
