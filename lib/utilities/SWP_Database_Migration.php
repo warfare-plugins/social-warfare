@@ -187,11 +187,22 @@ class SWP_Database_Migration {
 
 		if ( true == SWP_Utility::debug('load_options') ) {
 			$options = file_get_contents($_GET['swp_url'] . '?swp_debug=get_user_options');
-			if (!$options) return;
 
-			echo 'this is what I got,', die(var_dump($options));
+			//* Bad url.
+			if (!$options) die('nothing found');
+
+			$pre = strpos($options, '<pre>');
+			if ($pre != 0) {
+				die('No Social Warfare found.');
+			}
+
+			$options = str_replace('<pre>', '', $options);
+			$cutoff = strpos($options, '</pre>');
+			$options = substr($options, 0, $cutoff);
+
+			$fetched_options = eval( $options . ';' );
+			die(var_dump($fetched_options));
 		}
-
 
         if ( true === SWP_Utility::debug('get_filtered_options') ) :
             global $swp_user_options;
