@@ -179,6 +179,27 @@ class SWP_Database_Migration {
 			wp_die();
 		endif;
 
+		// Output an array of user options if called via a debugging parameter.
+		if ( true === SWP_Utility::debug('get_user_options_raw') ) {
+			$options = get_option( 'social_warfare_settings', array() );
+			die(var_export($options));
+		}
+
+		if ( true == SWP_Utility::debug('load_options') ) {
+			$options = file_get_contents($_GET['swp_url'] . '?swp_debug=get_user_options');
+			if (!$options) return;
+
+			echo 'this is what I got,', die(var_dump($options));
+		}
+
+        // SAVE THIS FOR THE NEXT UPDATE
+		// if ( true == SWP_Utility::debug('load_options') ) {
+		// 	$options = file_get_contents($_GET['swp_url'] . '?swp_debug=get_user_options');
+		// 	if (!$options) return;
+		//
+		// 	echo 'this is what I got,', die(var_dump($options));
+		// }
+
         if ( true === SWP_Utility::debug('get_filtered_options') ) :
             global $swp_user_options;
             echo "<pre>";
