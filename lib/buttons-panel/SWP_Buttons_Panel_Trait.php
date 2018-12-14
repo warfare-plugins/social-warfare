@@ -40,23 +40,41 @@ trait SWP_Buttons_Panel_Trait {
 	protected function append_panel_to_content() {
 
 
-		//* Add the Panel markup based on the location.
-		switch ($this->location) {
-			case 'both' :
-				$content = $this->html . $this->content . $this->html;
-			break;
-			case 'above' :
-				$content = $this->html . $this->content;
-			break;
-			case 'below' :
-				$content = $this->content . $this->html;
-			break;
+		/**
+		 * If the panel type is static_horizontal, then the switch below will
+		 * determine the lcoation setting and append the html to the content
+		 * according to that location.
+		 *
+		 */
+		if( $this->panel_type === 'static_horizontal' ) {
+			switch ($this->location) {
+				case 'both' :
+					$content = $this->html . $this->content . $this->html;
+				break;
+				case 'above' :
+					$content = $this->html . $this->content;
+				break;
+				case 'below' :
+					$content = $this->content . $this->html;
+				break;
 
-			case 'none' :
-				$content = $this->content;
-			default :
-				$content = $this->content;
-			break;
+				case 'none' :
+					$content = $this->content;
+				default :
+					$content = $this->content;
+				break;
+			}
+		}
+
+
+		/**
+		 * If the panel type is floating_side, then forget the content because
+		 * it will be empty. Instead just replace the content to be returned
+		 * with the generated html for the panel.
+		 *
+		 */
+		if( $this->panel_type === 'floating_side' ) {
+			$content = $this->html;
 		}
 
 		$this->content = $content;
