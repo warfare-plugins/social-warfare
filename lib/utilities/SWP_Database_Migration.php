@@ -217,7 +217,17 @@ class SWP_Database_Migration {
 			$options = str_replace('<pre>', '', $options);
 			$options = substr($options, 0, $cutoff);
 
-			$fetched_options = eval( 'return ' .  $options . ';' );
+            try {
+				$fetched_options = eval( 'return ' .  $options . ';' );
+			}
+			catch (ParseError $e) {
+                $message = 'Error evaluating fetched data. <br/>';
+				$message .= 'Message from error: ' . $e->getMessage() . '<br/>';
+				$message .= 'Fetched data: <br/>';
+				$message .= var_export($fetched_options, 1);
+				wp_die($message);
+			}
+
 			if (is_array( $fetched_options) ) {
 				foreach( $fetched_options as $key => $value) {
 					if (strpos( $key, 'license' ) > 0) {
