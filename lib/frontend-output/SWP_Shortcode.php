@@ -175,6 +175,17 @@ class SWP_Shortcode {
 
 
 		/**
+		 * If the Theme is set to false, it means that the user is on the free
+		 * version of the plugin and as such, the only available theme is the
+		 * first/default theme.
+		 *
+		 */
+		if( false === $theme ) {
+			$theme = 'style1';
+		}
+
+
+		/**
 		 * This will generate the user's custom Tweet that will be used to
 		 * prepopulate the share dialogue box when an end user clicks on the
 		 * actual Click to Tweet.
