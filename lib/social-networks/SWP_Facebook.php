@@ -178,8 +178,12 @@ class SWP_Facebook extends SWP_Social_Network {
 	public function facebook_shares_update() {
 		global $swp_user_options;
 
-		$activity = $_POST['share_counts'];
-		$post_id = $_POST['post_id'];
+		if (!is_numeric( $_POST['share_counts'] ) || !is_numeric( $_POST['post_id'] ) ) {
+			wp_die();
+		}
+
+		$activity = (int) $_POST['share_counts'];
+		$post_id  = (int) $_POST['post_id'];
 
 		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
@@ -187,8 +191,6 @@ class SWP_Facebook extends SWP_Social_Network {
 			delete_post_meta( $post_id, '_facebook_shares' );
 			update_post_meta( $post_id, '_facebook_shares', $activity );
 		endif;
-
-		echo 'Logged ' . $activity . ' shares.';
 
 		wp_die();
 	}
