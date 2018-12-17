@@ -137,7 +137,7 @@ class SWP_Buttons_panel_Loader {
      *
      * @since  3.0.6 | 14 MAY 2018 | Created the method.
      * @since  3.4.0 | 19 SEP 2018 | Added check for pinit_toggle option.
-     * @since  3.4.2 | 11 DEC 2018 | Added check for float_before_content option. 
+     * @since  3.4.2 | 11 DEC 2018 | Added check for float_before_content option.
      * @param  string $content The WordPress content passed via filter.
      * @return string $content The modified string of content.
      *
@@ -282,7 +282,7 @@ class SWP_Buttons_panel_Loader {
          *
          */
 		$staticHorizontal = new SWP_Buttons_Panel();
-		$html  = '<div class="swp-hidden-panel-wrap" style="display: none; visibility: collapse; opacity: 0">';
+		$html  = '<div class="swp-hidden-panel-wrap" style="visibility: collapse; opacity: 0; height: 1px; max-height: 1px; min-height: 0px">';
 		$html .= $staticHorizontal->render_html();
 		$html .= '</div>';
 		return $content . $html;
