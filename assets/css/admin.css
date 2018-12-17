@@ -215,6 +215,10 @@ a.swp-notice-cta {
    margin-right: 50px;
 }
 
+#swp-admin-sidebar {
+	margin-top:-20px;
+}
+
 #swp-admin-sidebar .swp-component.dark-text {
     color: #333;
 }
@@ -226,7 +230,7 @@ a.swp-notice-cta {
 #swp-admin-sidebar .swp-component {
     font-size: 13px;
     padding: 20px;
-    margin: 20px;
+    margin: 20px 0;
     border-radius: 8px;
 }
 
