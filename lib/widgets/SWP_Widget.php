@@ -26,7 +26,8 @@ abstract class SWP_Widget extends WP_Widget {
 		$this->data = $args;
 		parent::__construct( $this->data['key'], $this->data['name'], array(), array() );
 
-		add_action( 'widgets_init', array( $this, 'register_self' ) );
+
+  		add_filter( 'swp_widgets', array( $this, 'register_self' ) );
 	}
 
 	/**
@@ -58,7 +59,7 @@ abstract class SWP_Widget extends WP_Widget {
 	 *
 	 */
 	public function register_self( $widgets ) {
-		$widgets[] = strtolower( $this->key );
+		$widgets[] = strtolower( $this->id_base );
 		return $widgets;
 	}
 
