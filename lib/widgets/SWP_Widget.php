@@ -22,9 +22,12 @@ abstract class SWP_Widget extends WP_Widget {
 	*                                information on accepted arguments. Default empty array.
 	*  @access public
     */
-	function __construct( $args ) {
-		$this->data = $args;
-		parent::__construct( $this->data['key'], $this->data['name'], array(), array() );
+	function __construct( $key, $name, $widget ) {
+		$this->data = $widget;
+		$this->key = $key;
+		$widget['key'] = $key;
+		$widget['name'] = $name;
+		parent::__construct( $key, $name, $widget );
 
   		add_filter( 'swp_widgets', array( $this, 'register_self' ) );
 	}
@@ -119,7 +122,6 @@ abstract class SWP_Widget extends WP_Widget {
     *
     */
 	public function widget( $args, $settings ) {
-
         if( isset( $args['before_widget'] ) ) {
             echo $args['before_widget'];
         }
