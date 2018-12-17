@@ -31,16 +31,16 @@ abstract class SWP_Widget extends WP_Widget {
 	}
 
 	/**
-     * Creates the markup for the form (settings) inside the widget.
+     * Creates the markup for the <form> (settings) inside the widget.
      *
-     * This is how users customize the widget to meet their own needs.
+     * This is how users customize the widget to meet their needs.
      *
      * This method must be defined in child class.
      */
 	abstract function generate_form_HTML( $settings );
 
     /**
-     * Creates the markup for a WordPress widget
+     * Creates the frontend display markup for a WordPress widget
      *
      * This is the draggable, sortable container which holds the
      * form data. This is how users can add or remove the Widget from sidebar.
@@ -76,7 +76,7 @@ abstract class SWP_Widget extends WP_Widget {
 	 * @return void Output is echoed directly to the screen
 	 *
 	 */
-	function form( $settings ) {
+	public function form( $settings ) {
         $defaults = array(
             'title'         => "SW Widget"
             // ...
@@ -85,7 +85,7 @@ abstract class SWP_Widget extends WP_Widget {
 		$settings = array_merge( $settings, $defaults );
 
 		$form = '<div class="swp_widget">';
-		$form .= $this->render_form_HTML( $settings );
+		$form .= $this->generate_form_HTML( $settings );
 		$form .= '</div>';
 
 		echo $form;
