@@ -26,7 +26,6 @@ abstract class SWP_Widget extends WP_Widget {
 		$this->data = $args;
 		parent::__construct( $this->data['key'], $this->data['name'], array(), array() );
 
-
   		add_filter( 'swp_widgets', array( $this, 'register_self' ) );
 	}
 
@@ -77,13 +76,6 @@ abstract class SWP_Widget extends WP_Widget {
 	 *
 	 */
 	public function form( $settings ) {
-        $defaults = array(
-            'title'         => "SW Widget"
-            // ...
-        );
-
-		$settings = array_merge( $settings, $defaults );
-
 		$form = '<div class="swp_widget">';
 		$form .= $this->generate_form_HTML( $settings );
 		$form .= '</div>';
