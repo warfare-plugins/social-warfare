@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
 */
@@ -27,6 +26,8 @@ abstract class SWP_Widget extends WP_Widget {
 		$this->key = $key;
 		$widget['key'] = $key;
 		$widget['name'] = $name;
+
+		// call WP_Widget constructor
 		parent::__construct( $key, $name, $widget );
 
   		add_filter( 'swp_widgets', array( $this, 'register_self' ) );
@@ -79,6 +80,7 @@ abstract class SWP_Widget extends WP_Widget {
 	 *
 	 */
 	public function form( $settings ) {
+
 		$form = '<div class="swp_widget">';
 		$form .= $this->generate_form_HTML( $settings );
 		$form .= '</div>';
@@ -101,10 +103,6 @@ abstract class SWP_Widget extends WP_Widget {
     *
     */
 	public function update( $new_settings = array(), $old_settings  = array()) {
-		if ($new_settings == $old_settings) {
-			return false;
-		}
-
 		return $new_settings;
 	}
 
