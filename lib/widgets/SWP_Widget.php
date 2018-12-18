@@ -49,14 +49,14 @@ abstract class SWP_Widget extends WP_Widget {
      * This method must be defined in child class.
      *
      */
-	abstract function generate_widget_title( $args, $settings );
+	abstract function generate_widget_title( $title );
 
 	/**
      * Creates the frontend display of the main widget contents.
      * This method must be defined in child class.
      *
      */
-	abstract function generate_widget_HTML( $args, $settings );
+	abstract function generate_widget_HTML( $settings );
 
 
 	/**
@@ -145,7 +145,7 @@ abstract class SWP_Widget extends WP_Widget {
 		    }
 
 			echo '<div class="swp-widget-content">'
-			     . $this->generate_widget_HTML( $settings );
+			     . $this->generate_widget_HTML( $settings )
 				 .'</div>';
 
 		echo '</div>';
