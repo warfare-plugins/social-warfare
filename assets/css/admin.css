@@ -450,7 +450,7 @@ a.swp-notice-cta {
 	margin: 15px 0;
 }
 
-
+.swfw-input-field,
 .swfw-follow-field {
 	display: flex;
 	flex-flow: row nowrap;
@@ -467,13 +467,18 @@ a.swp-notice-cta {
 	font-weight: bold;
 }
 
-.swfw-follow-field label {
+.swfw-widget label {
 	font-size: 14px;
     width: 100px;
+}
+
+.swfw-follow-field label {
     text-align: right;
 }
 
-.swfw-follow-field select,
+
+.swfw-input-field input,
+.swfw-input-field select,
 .swfw-follow-field input {
 	padding: 15px;
 	width: 50%;
