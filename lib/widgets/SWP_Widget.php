@@ -36,19 +36,25 @@ abstract class SWP_Widget extends WP_Widget {
 	/**
      * Creates the markup for the <form> (settings) inside the widget.
      *
-     * This is how users customize the widget to meet their needs.
-     *
-     * This method must be defined in child class.
-     */
-	abstract function generate_form_HTML( $settings );
-
-    /**
-     * Creates the frontend display markup for a WordPress widget
-     *
      * This is the draggable, sortable container which holds the
      * form data. This is how users can add or remove the Widget from sidebar.
      *
      * This method must be defined in child class.
+     *
+     */
+	abstract function generate_form_HTML( $settings );
+
+	/**
+     * Creates the frontend display title for the widget.
+     * This method must be defined in child class.
+     *
+     */
+	abstract function generate_widget_title( $args, $settings );
+
+	/**
+     * Creates the frontend display of the main widget contents.
+     * This method must be defined in child class.
+     *
      */
 	abstract function generate_widget_HTML( $args, $settings );
 
@@ -130,13 +136,17 @@ abstract class SWP_Widget extends WP_Widget {
 		        echo $args['before_title'];
 		    }
 
-			echo '<span class="widgettitle widget-title swp_popular_posts_title">' . $title . '</span>';
+            echo '<div class="swp-widget-title">'
+			     . $this->generate_widget_title( $settings['title'] )
+				 . '</div>';
 
 		    if( isset( $args['after_title'] ) ) {
 		        echo $args['after_title'];
 		    }
 
-			echo $this->generate_widget_HTML();
+			echo '<div class="swp-widget-content">'
+			     . $this->generate_widget_HTML( $settings );
+				 .'</div>';
 
 		echo '</div>';
 
