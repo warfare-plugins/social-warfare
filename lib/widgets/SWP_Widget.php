@@ -129,6 +129,7 @@ abstract class SWP_Widget extends WP_Widget {
         if( isset( $args['before_widget'] ) ) {
             echo $args['before_widget'];
         }
+		$title = isset( $settings['title'] ) ? $settings['title'] : '';
 
 		echo '<div class="widget-text swp_widget_box">';
 
@@ -137,7 +138,7 @@ abstract class SWP_Widget extends WP_Widget {
 		    }
 
             echo '<div class="swp-widget-title">'
-			     . $this->generate_widget_title( $settings['title'] )
+			     . $this->generate_widget_title( $title )
 				 . '</div>';
 
 		    if( isset( $args['after_title'] ) ) {
