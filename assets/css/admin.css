@@ -473,6 +473,7 @@ a.swp-notice-cta {
     text-align: right;
 }
 
+.swfw-follow-field select,
 .swfw-follow-field input {
 	padding: 15px;
 	width: 50%;
