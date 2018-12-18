@@ -87,7 +87,7 @@ abstract class SWP_Widget extends WP_Widget {
 	 */
 	public function form( $settings ) {
 
-		$form = '<div class="swp_widget">';
+		$form = '<div class="swp-widget swp_widget">';
 		$form .= $this->generate_form_HTML( $settings );
 		$form .= '</div>';
 
