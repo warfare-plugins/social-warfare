@@ -449,3 +449,33 @@ a.swp-notice-cta {
 .wp-core-ui #social_warfare a.swpmb-add-media.button {
 	margin: 15px 0;
 }
+
+
+.swfw-follow-field {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 380px;
+	height: 50px;
+	margin: 15px auto;
+}
+
+.swfw-follow-field-icon {
+	font-size: 30px;
+	line-height: 22px;
+	font-weight: bold;
+}
+
+.swfw-follow-field label {
+	font-size: 14px;
+    width: 100px;
+    text-align: right;
+}
+
+.swfw-follow-field input {
+	padding: 15px;
+	width: 50%;
+	height: 100%;
+	border-radius: 4px;
+}
