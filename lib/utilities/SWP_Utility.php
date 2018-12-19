@@ -88,13 +88,42 @@ class SWP_Utility {
  		  2. meta_key_exists()
  		    - (maybe?) pairs ith register_post_meta, and returns false if not registered.
   		 */
+
+        // Sometimes a boolean value is stored in the meta as a string.
+		if ( 'false' === $value ) {
+ 			return false;
+ 		}
+
+		if ( 'true' === $value ) {
+			return true;
+		}
+
  		return $value;
  	}
 
+	/**
+	 * Fetches a meta key we know to be an array.
+	 * @param  [type] $id  [description]
+	 * @param  [type] $key [description]
+	 * @return [type]      [description]
+	 */
 	public static function get_meta_array( $id, $key ) {
 		$value = get_post_meta( $id, $key, false );
+
+		// Sometimes a boolean value is stored in the meta as a string.
+		if ( 'false' === $value ) {
+ 			return false;
+ 		}
+
+		if ( 'true' === $value ) {
+			return true;
+		}
+		
+		//* Do the same kind of checks/filtering as above.
 		return is_array( $value ) ? $value : false;
 	}
+
+
 
 
     /**
