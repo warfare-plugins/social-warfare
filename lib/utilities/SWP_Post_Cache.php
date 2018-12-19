@@ -324,6 +324,40 @@ class SWP_Post_Cache {
         }
 	}
 
+	/**
+     * Store image url, id, and metadata in post_meta for quicker access later.
+     *
+     * @param  string $meta_key The image field to update. Known examples include
+     *                          'swp_open_graph_image' and 'swp_pinterest_image'
+     * @param  int    $new_id The attachment ID to update.
+     * @return void
+     */
+	public function update_image_cache( $meta_key ) {
+		$image_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
+
+		if ( false === $image_id ) {
+			return delete_post_meta( $this->post_id, $meta_key );
+		}
+
+		/**
+		 * Fetch the URL of the currently assigned image and the URL of the
+		 * previously cached image so that we can see if anything has changed.
+		 *
+		 */
+        $image_data   = wp_get_attachment_image_src( $image_id, 'full_size' );
+		$previous_url = SWP_Utility::get_meta( $this->post_id, $meta_key.'_url' );
+		$new_url = $data[0];
+
+		if( $new_url === $previous_url ) {
+			return;
+		}
+
+        delete_post_meta( $this->post_id, $meta_key.'_data' );
+        delete_post_meta( $this->post_id, $meta_key.'_url' );
+        update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $image_data ) );
+        update_post_meta( $this->post_id, $meta_key.'_url', $new_url );
+	}
+
 
     /**
      * Pinterest Image
