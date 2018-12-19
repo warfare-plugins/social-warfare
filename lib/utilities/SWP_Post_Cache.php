@@ -269,7 +269,6 @@ class SWP_Post_Cache {
 	 *
 	 */
     public function rebuild_cached_data() {
-
 		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
 			$this->update_image_cache( 'swp_pinterest_image' );
@@ -327,35 +326,39 @@ class SWP_Post_Cache {
 	/**
      * Store image url, id, and metadata in post_meta for quicker access later.
      *
-     * @since  3.5.0 | 19 DEC 2018 | Merged old methods into this new method. 
+     * @since  3.5.0 | 19 DEC 2018 | Merged old methods into this new method.
      * @param  string $meta_key The image field to update. Known examples include
-     *                          'swp_open_graph_image' and 'swp_pinterest_image'
+     *                          swp_og_image, swp_pinterest_image, swp_twitter_image
      * @param  int    $new_id The attachment ID to update.
      * @return void
      */
 	public function update_image_cache( $meta_key ) {
-		$image_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
+		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
 		if ( false === $image_id ) {
 			return delete_post_meta( $this->post_id, $meta_key );
 		}
 
 		/**
-		 * Fetch the URL of the currently assigned image and the URL of the
+		 * Fetch the URL of the new image and the URL of the
 		 * previously cached image so that we can see if anything has changed.
 		 *
 		 */
-        $image_data   = wp_get_attachment_image_src( $image_id, 'full_size' );
-		$previous_url = SWP_Utility::get_meta( $this->post_id, $meta_key.'_url' );
-		$new_url = $data[0];
+        $new_data   = wp_get_attachment_image_src( $new_id, 'full_size' );
+		$old_url = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_url' );
 
-		if( $new_url === $previous_url ) {
+		if ( !empty($new_data) && $new_data[0] === $old_url[0] ) {
 			return;
 		}
 
         delete_post_meta( $this->post_id, $meta_key.'_data' );
         delete_post_meta( $this->post_id, $meta_key.'_url' );
-        update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $image_data ) );
+
+		if ( empty( $new_data ) ) {
+			return;
+		}
+
+        update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
         update_post_meta( $this->post_id, $meta_key.'_url', $new_url );
 	}
 
