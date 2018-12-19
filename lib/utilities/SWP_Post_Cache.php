@@ -327,6 +327,7 @@ class SWP_Post_Cache {
 	/**
      * Store image url, id, and metadata in post_meta for quicker access later.
      *
+     * @since  3.5.0 | 19 DEC 2018 | Merged old methods into this new method. 
      * @param  string $meta_key The image field to update. Known examples include
      *                          'swp_open_graph_image' and 'swp_pinterest_image'
      * @param  int    $new_id The attachment ID to update.
