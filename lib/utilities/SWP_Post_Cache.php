@@ -272,7 +272,7 @@ class SWP_Post_Cache {
 		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
 			$this->update_image_cache( 'swp_pinterest_image' );
-			$this->update_image_cache( 'swp_open_graph_image' );
+			$this->update_image_cache( 'swp_og_image' );
 			$this->process_urls();
 	        $this->reset_timestamp();
 
@@ -335,7 +335,7 @@ class SWP_Post_Cache {
 	public function update_image_cache( $meta_key ) {
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
-		if ( false === $image_id ) {
+		if ( false === $new_id ) {
 			return delete_post_meta( $this->post_id, $meta_key );
 		}
 
@@ -345,21 +345,21 @@ class SWP_Post_Cache {
 		 *
 		 */
         $new_data   = wp_get_attachment_image_src( $new_id, 'full_size' );
-		$old_url = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_url' );
+		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_data' );
 
-		if ( !empty($new_data) && $new_data[0] === $old_url[0] ) {
+		if ( is_array($new_data) && $new_data[0] === $old_data[0] ) {
 			return;
 		}
 
         delete_post_meta( $this->post_id, $meta_key.'_data' );
         delete_post_meta( $this->post_id, $meta_key.'_url' );
 
-		if ( empty( $new_data ) ) {
+		if ( !is_array($new_data) ) {
 			return;
 		}
 
         update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
-        update_post_meta( $this->post_id, $meta_key.'_url', $new_url );
+        update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
 	}
 
 
