@@ -70,7 +70,6 @@ class SWP_Header_Output {
 
     	// Get the global options and the post ID
     	$info['postID'] = get_the_ID();
-    	$info['html_output'] = '';
 
 
     	/**
@@ -91,11 +90,7 @@ class SWP_Header_Output {
 
 
     	/**
-    	 * A filter to take the values from above and compile them into their html format
-    	 *
-    	 * This filter will take the values from $info['meta_tag_values'] and compile
-    	 * them into html stored at $info['html_output']. $info['html_output'] is
-    	 * a string that gets added (.=) to by each hook.
+    	 * Assembles the meta tags, CSS, icon font, and other items that go in <head>
     	 *
     	 * Note: Each meta tag should begin with PHP_EOL for clean structured HTML output
     	 *
@@ -105,11 +100,11 @@ class SWP_Header_Output {
     	 * @return array $info The modified array with the 'html_output' index populated.
     	 *
     	 */
-    	$info = apply_filters( 'swp_header_html' , $info );
+    	$meta_html = apply_filters( 'swp_header_html', '' );
 
-    	if ( $info['html_output'] ) :
+    	if ( $meta_html ) :
     		echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->';
-    		echo $info['html_output'];
+    		echo $meta_html;
     		echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->' . PHP_EOL . PHP_EOL;
     	endif;
     }
@@ -128,10 +123,10 @@ class SWP_Header_Output {
      * @return array  $info The modified array
      *
      */
-    function output_font_css( $info = array() ) {
+    function output_font_css( $meta_html ) {
         //* Make sure we only output the style once.
-        if ( !empty( $info['html_output'] ) && strpos( $info['html_output'], 'font-family: "sw-icon-font"' ) ) :
-            return $info;
+        if ( !empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
+            return $meta_html;
         endif;
 
         $style = '<style>@font-face {font-family: "sw-icon-font";src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
@@ -140,13 +135,13 @@ class SWP_Header_Output {
 		if ( true === is_admin() ) {
 			echo $style;
 		} else {
-            if ( empty( $info['html_output'] ) ) :
-                $info['html_output'] = '';
+            if ( empty( $meta_html ) ) :
+                $meta_html = '';
             endif;
 
-			$info['html_output'] .= $style;
+			$meta_html .= $style;
 		}
 
-        return $info;
+        return $meta_html;
     }
 }
