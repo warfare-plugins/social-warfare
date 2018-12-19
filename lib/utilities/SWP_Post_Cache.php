@@ -272,8 +272,8 @@ class SWP_Post_Cache {
 
 		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
-	        $this->rebuild_pinterest_image();
-	        $this->rebuild_open_graph_image();
+			$this->update_image_cache( 'swp_pinterest_image' );
+			$this->update_image_cache( 'swp_open_graph_image' );
 			$this->process_urls();
 	        $this->reset_timestamp();
 
@@ -357,128 +357,6 @@ class SWP_Post_Cache {
         update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $image_data ) );
         update_post_meta( $this->post_id, $meta_key.'_url', $new_url );
 	}
-
-
-    /**
-     * Pinterest Image
-     *
-     * Convert the pinterest image ID to a URL and store it in a meta field
-     * because then the URL will be autoloaded with the post preventing the
-     * need for an additional database query during page loads.
-     *
-     * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
-     * @since  3.4.0 | 18 OCT 2018 | Refactored, simplified, docblocked.
-     * @access protected
-     * @param  void
-     * @return void
-     *
-     */
-    public function rebuild_pinterest_image() {
-
-        // Check if a custom pinterest image has been declared
-    	$pinterest_image_id = get_post_meta( $this->post_id , 'swp_pinterest_image' , true );
-
-
-		/**
-		 * If there is no user defined Pinterest image, delete the cached
-		 * field, if it exists, and then return.
-		 *
-		 */
-    	if ( false === $pinterest_image_id ) {
-			delete_post_meta( $this->post_id , 'swp_pinterest_image_url' );
-			return;
-		}
-
-
-		/**
-		 * Fetch the URL of the currently assigned image and the URL of the
-		 * previously cached image so that we can see if anything has changed.
-		 *
-		 */
-		$pinterest_image_url = wp_get_attachment_url( $pinterest_image_id );
-		$current_image_url   = get_post_meta( $this->post_id , 'swp_pinterest_image_url' , true );
-
-
-		/**
-		 * No need to update the database if the image URL has not changed
-		 *
-		 */
-		if( $pinterest_image_url === $current_image_url ){
-			return;
-		}
-
-
-		/**
-		 * If the image has changed, we need to delete the old one and replace
-		 * it with the new one.
-		 *
-		 */
-		delete_post_meta( $this->post_id,'swp_pinterest_image_url' );
-		update_post_meta( $this->post_id,'swp_pinterest_image_url' , $pinterest_image_url );
-
-    }
-
-
-    /**
-
-     * Open Graph Image
-     *
-     * Convert the open graph image ID to a URL and store it in a meta field
-     * because then the URL will be autoloaded with the post preventing the
-     * need for an additional database query during page loads.
-     *
-     * @since 3.1.0 | 19 JUN 2018 | Ported from function to class method.
-     * @access protected
-     * @param  void
-     * @return void
-     *
-     */
-    public function rebuild_open_graph_image() {
-
-		// Fetch the social media image that was declared by the user.
-        $image_id = get_post_meta( $this->post_id , 'swp_og_image' , true );
-
-
-		/**
-		 * If there is no user defined social media image, delete the cached
-		 * field, if it exists, and then return.
-		 *
-		 */
-        if ( false === $image_id ) {
-			delete_post_meta( $this->post_id, 'swp_open_graph_image_url' );
-			return;
-		}
-
-
-		/**
-		 * Fetch the URL of the currently assigned image and the URL of the
-		 * previously cached image so that we can see if anything has changed.
-		 *
-		 */
-		$new_image_url     = wp_get_attachment_url( $image_id );
-		$current_image_url = get_post_meta( $this->post_id, 'swp_open_graph_image_url' , true );
-
-        // No need to update the DB if the url hasn't changed
-        if( $current_image_url === $new_image_url ) {
-			return;
-		}
-
-
-		/**
-		 * For this image, we're going to cache both the URL and some image data.
-		 * When we generate the OG tags, we'll then have access to cached data
-		 * like the width and height of the image.
-		 *
-		 */
-        $image_data = wp_get_attachment_image_src( $image_id, 'full' );
-
-        delete_post_meta( $this->post_id, 'swp_open_graph_image_data' );
-        delete_post_meta( $this->post_id, 'swp_open_graph_image_url' );
-
-        update_post_meta( $this->post_id, 'swp_open_graph_image_data', json_encode( $image_data ) );
-        update_post_meta( $this->post_id, 'swp_open_graph_image_url', $new_image_url );
-
-    }
 
 
     /**
