@@ -74,9 +74,20 @@ class SWP_Utility {
      *
      * * @TODO This needs to go through SWP meta filters.
      */
-
 	public static function get_meta( $id, $key ) {
 		$value = get_post_meta( $id, $key, true );
+		/*
+		  WordPress offers functions that might help us filter meta values.
+		  Offline right now but I think they can work something like this
+		  1. register_post_meta()
+		    - In the addon, we register the meta key`
+			- In SWP_Utility::get_meta, check if the key is registered.
+			- If no, imeediately return false
+			- the last paramter is a meta validation callback. We can let the callback check to see if the addon is registered.
+
+		  2. meta_key_exists()
+		    - (maybe?) pairs ith register_post_meta, and returns false if not registered.
+ 		 */
 		return $value;
 	}
 
