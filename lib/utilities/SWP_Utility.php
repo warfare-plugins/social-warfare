@@ -110,7 +110,7 @@ class SWP_Utility {
 	public static function get_meta_array( $id, $key ) {
 		$value = get_post_meta( $id, $key, false );
 
-		// Sometimes a boolean value is stored in the meta as a string.
+		// Sometimes a boolean value ideas stored in the meta as a string.
 		if ( 'false' === $value ) {
  			return false;
  		}
@@ -118,7 +118,12 @@ class SWP_Utility {
 		if ( 'true' === $value ) {
 			return true;
 		}
-		
+
+        //* I think everything fetched form meta is returned as a string.
+		if (is_string($value)) {
+			$value = json_decode($value);
+		}
+
 		//* Do the same kind of checks/filtering as above.
 		return is_array( $value ) ? $value : false;
 	}
