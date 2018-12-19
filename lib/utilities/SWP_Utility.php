@@ -108,7 +108,7 @@ class SWP_Utility {
 	 * @return [type]      [description]
 	 */
 	public static function get_meta_array( $id, $key ) {
-		$value = get_post_meta( $id, $key, false );
+		$value = get_post_meta( $id, $key, true );
 
 		// Sometimes a boolean value ideas stored in the meta as a string.
 		if ( 'false' === $value ) {
