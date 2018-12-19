@@ -62,6 +62,24 @@ class SWP_Utility {
         return false;
     }
 
+	/**
+     *
+     * Fetches a meta value.
+     *
+     * @since  3.5.0 | 19 DEC 2018 | Created.
+	 * @param  int    $id    The post id to fetch meta from.
+     * @param  string $key   The key associated with the option we want.
+     *
+     * @return mixed  $value The value of the option if set, or false.
+     *
+     * * @TODO This needs to go through SWP meta filters.
+     */
+
+	public static function get_meta( $id, $key ) {
+		$value = get_post_meta( $id, $key, true );
+		return $value;
+	}
+
 
     /**
      * Handle the options save request inside of admin-ajax.php
