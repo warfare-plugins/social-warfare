@@ -42,13 +42,10 @@ class Social_Warfare_Addon {
      * @param array $addons The array of addons currently activated.
      */
     public function add_self( $addons ) {
-        if ( $this->key == 'affiliatewp') return;
-
         $addons[] = $this;
 
         return $addons;
     }
-
 
     public function establish_license_key() {
         $key = SWP_Utility::get_option( $this->key . '_license_key' );
@@ -90,7 +87,6 @@ class Social_Warfare_Addon {
                 'license' => $this->license_key,
                 'url' => $this->site_url,
             );
-
 
             $response = wp_remote_retrieve_body( wp_remote_post( $this->store_url , array('body' => $data, 'timeout' => 10 ) ) );
 
