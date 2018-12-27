@@ -1,24 +1,26 @@
 <?php
+
 /**
+* A wrapper for WP_Widget.
+*
+* This class allows us finer control over how we create widgets, how the data
+* is stored, and how the product is displayed on the front end.
+*
+* It handles widget registration and loading in WordPress so the child class can
+* focus only on what its intention is.
 *
 */
 abstract class SWP_Widget extends WP_Widget {
 
+
 	/**
-    * Class constructor.
-    *
-    * This function really doesn't do much except call the constructor from the
-    * parent class that's built into WordPress core.
+    *  Applies metadata about this widget to WP_Widget.
     *
     *  @since  1.0.0 | 01 JAN 2018 | Created
-    *
-	*  @param string $id_base         Optional Base ID for the widget, lowercase and unique. If left empty,
-	*                                a portion of the widget's class name will be used Has to be unique.
-	*  @param string $name            Name for the widget displayed on the configuration page.
-	*  @param array  $widget_options  Optional. Widget options. See wp_register_sidebar_widget() for information
-	*                                on accepted arguments. Default empty array.
-	*  @param array  $control_options Optional. Widget control options. See wp_register_widget_control() for
-	*                                information on accepted arguments. Default empty array.
+    *  @param $key The unique classname of the Widget.
+	*  @param $name The display name for WP Admin -> Appearance -> Widgets.
+	*  @param $widget array Fields required by wordpress.
+	*                       At a minimum, ['classname' => '', 'description' => '']
 	*  @access public
     */
 	function __construct( $key, $name, $widget ) {
@@ -27,11 +29,11 @@ abstract class SWP_Widget extends WP_Widget {
 		$widget['key'] = $key;
 		$widget['name'] = $name;
 
-		// call WP_Widget constructor
 		parent::__construct( $key, $name, $widget );
 
   		add_filter( 'swp_widgets', array( $this, 'register_self' ) );
 	}
+
 
 	/**
      * Creates the markup for the <form> (settings) inside the widget.
