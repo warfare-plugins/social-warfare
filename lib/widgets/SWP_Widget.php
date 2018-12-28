@@ -14,15 +14,15 @@ abstract class SWP_Widget extends WP_Widget {
 
 
 	/**
-    *  Applies metadata about this widget to WP_Widget.
-    *
-    *  @since  1.0.0 | 01 JAN 2018 | Created
-    *  @param $key The unique classname of the Widget.
+	*  Applies metadata about this widget to WP_Widget.
+	*
+	*  @since  1.0.0 | 01 JAN 2018 | Created
+	*  @param $key The unique classname of the Widget.
 	*  @param $name The display name for WP Admin -> Appearance -> Widgets.
 	*  @param $widget array Fields required by wordpress.
 	*                       At a minimum, ['classname' => '', 'description' => '']
 	*  @access public
-    */
+	*/
 	function __construct( $key, $name, $widget ) {
 		$this->data = $widget;
 		$this->key = $key;
@@ -31,33 +31,33 @@ abstract class SWP_Widget extends WP_Widget {
 
 		parent::__construct( $key, $name, $widget );
 
-  		add_filter( 'swp_widgets', array( $this, 'register_self' ) );
+		  add_filter( 'swp_widgets', array( $this, 'register_self' ) );
 	}
 
 
 	/**
-     * Creates the markup for the <form> (settings) inside the widget.
-     *
-     * This is the draggable, sortable container which holds the
-     * form data. This is how users can add or remove the Widget from sidebar.
-     *
-     * This method must be defined in child class.
-     *
-     */
+	 * Creates the markup for the <form> (settings) inside the widget.
+	 *
+	 * This is the draggable, sortable container which holds the
+	 * form data. This is how users can add or remove the Widget from sidebar.
+	 *
+	 * This method must be defined in child class.
+	 *
+	 */
 	abstract function generate_form_HTML( $settings );
 
 	/**
-     * Creates the frontend display title for the widget.
-     * This method must be defined in child class.
-     *
-     */
+	 * Creates the frontend display title for the widget.
+	 * This method must be defined in child class.
+	 *
+	 */
 	abstract function generate_widget_title( $title );
 
 	/**
-     * Creates the frontend display of the main widget contents.
-     * This method must be defined in child class.
-     *
-     */
+	 * Creates the frontend display of the main widget contents.
+	 * This method must be defined in child class.
+	 *
+	 */
 	abstract function generate_widget_HTML( $settings );
 
 
@@ -97,64 +97,69 @@ abstract class SWP_Widget extends WP_Widget {
 	}
 
 
-    /**
-    * Handler for saving new settings.
-    *
+	/**
+	* Handler for saving new settings.
+	*
 	* By default will always save changed settings.
 	* Please override in child class to filter and sanitize data.
-    *
-    * @since  1.0.0
-    * @access public
-    * @param  array $new_instance Updated values as input by the user in WP_Widget::form()
-    * @param  array $old_instance Previously set values.
-    * @return array The new values to store in the database.
-    *
-    */
+	*
+	* @since  1.0.0
+	* @access public
+	* @param  array $new_instance Updated values as input by the user in WP_Widget::form()
+	* @param  array $old_instance Previously set values.
+	* @return array The new values to store in the database.
+	*
+	*/
 	public function update( $new_settings = array(), $old_settings  = array()) {
 		return $new_settings;
 	}
 
 
-    /**
-    * Builds the widget, including data passed in from `register_sidebar`
-    *
-    * Must override WP_Widget->widget().
-    *
-    * @since  3.5.0
-    * @access public
-    * @param  array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
-    *                         These arguments are passed in from the `register_sidebar()` function.
+	/**
+	* Builds the widget, including data passed in from `register_sidebar`
+	*
+	* Must override WP_Widget->widget().
+	*
+	* The theme or another plugin may have added in the 'before_title',
+	* 'after_title', 'before_widget', and 'after_widget' fields in the
+	* $args array by the `register_sidebar()` function.
+	*
+	* Whether or not we use them, we still need to account for them here.
+	*
+	* @since  3.5.0
+	* @access public
+	* @param  array $args Exgra data passed in by register_sidebar().
 	* @param  array $instance The settings for the particular instance of the widget.
-    *
-    */
+	*
+	*/
 	public function widget( $args, $settings ) {
-        if( isset( $args['before_widget'] ) ) {
-            echo $args['before_widget'];
-        }
+		if( isset( $args['before_widget'] ) ) {
+			echo $args['before_widget'];
+		}
 		$title = isset( $settings['title'] ) ? $settings['title'] : '';
 
 		echo '<div class="widget-text swp_widget_box">';
 
-		    if( isset( $args['before_title'] ) ) {
-		        echo $args['before_title'];
-		    }
+			if( isset( $args['before_title'] ) ) {
+				echo $args['before_title'];
+			}
 
-            echo '<div class="swp-widget-title">'
-			     . $this->generate_widget_title( $title )
+			echo '<div class="swp-widget-title">'
+				 . $this->generate_widget_title( $title )
 				 . '</div>';
 
-		    if( isset( $args['after_title'] ) ) {
-		        echo $args['after_title'];
-		    }
+			if( isset( $args['after_title'] ) ) {
+				echo $args['after_title'];
+			}
 
 			echo '<div class="swp-widget-content">'
-			     . $this->generate_widget_HTML( $settings )
+				 . $this->generate_widget_HTML( $settings )
 				 .'</div>';
 
 		echo '</div>';
 
-        if( isset( $args['after_widget'] ) ) {
-            echo $args['after_widget'];
-        }
+		if( isset( $args['after_widget'] ) ) {
+			echo $args['after_widget'];
+		}
 	}
 }
