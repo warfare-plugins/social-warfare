@@ -8,21 +8,6 @@
 class SWP_Tumblr_Auth {
 
 
-	/**
-	 * The user's API secret.
-	 * @var string $client_secret;
-	 *
-	 */
-	protected $client_key = '';
-
-
-	/**
-	 * The user's API secret.
-	 * @var string $client_secret;
-	 *
-	 */
-	protected $client_secret = '';
-
 	public function __construct() {
 		$this->load_files();
 
@@ -87,6 +72,8 @@ class SWP_Tumblr_Auth {
 	public function do_follower_count_request() {
 		$this->client = new Tumblr\API\Client($this->$consumer_key, $this->$consumer_secret);
 		$client->setToken($token, $tokenSecret);
+
+		$url = 'api.tumblr.com/v2/blog/{blog-identifier}/followers';
 	}
 
 
