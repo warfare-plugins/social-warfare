@@ -40,18 +40,18 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 	 * @return mixed True iff the credentials exist, else false.
 	 */
 	public function do_authentication_request() {
-		$fb = new Facebook\Facebook([
-			'app_id' => '{app-id}',
-			'app_secret' => '{app-secret}',
-			'default_graph_version' => 'v2.10',
-		]);
+		$fb = new Facebook\Facebook(array(
+			'app_id' => '2194481457470892',
+			'app_secret' => '6ba6cfd0e6f5930a7578f110baefc178',
+			'default_graph_version' => 'v3.2',
+		));
 
 		$helper = $fb->getRedirectLoginHelper();
 
-		$permissions = ['email']; // Optional permissions
-		$loginUrl = $helper->getLoginUrl('https://warfareplugins.com/authentications/facebook', $permissions);
+		$permissions = ['email', 'manage_page']; // Optional permissions
+		$login_url = $helper->getLoginUrl('https://warfareplugins.com/authentications/facebook', $permissions);
 
-		echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+		return $login_url;
 	}
 
 
