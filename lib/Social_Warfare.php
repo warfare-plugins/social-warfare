@@ -513,6 +513,7 @@ class Social_Warfare {
 			'Section_HTML',
 			'Option_Icons',
 			'Registration_Tab_Template',
+			'Option_Button'
 		);
 		$this->load_files( '/lib/options/', $options );
 
