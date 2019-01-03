@@ -10,11 +10,15 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 
 	public function __construct() {
 		$this->key = 'facebook';
+		$this->client_key = '2194481457470892';
+		$this->client_secret = '6ba6cfd0e6f5930a7578f110baefc178';
 		$this->load_files();
 
 		if ( !$this->establish_credentials() ) {
 			$this->do_authentication_request();
 		}
+
+		parent::__construct();
 	}
 
 
@@ -39,10 +43,10 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 	 * @param void
 	 * @return mixed True iff the credentials exist, else false.
 	 */
-	public function do_authentication_request() {
+	public function get_authorization_link() {
 		$fb = new Facebook\Facebook(array(
-			'app_id' => '2194481457470892',
-			'app_secret' => '6ba6cfd0e6f5930a7578f110baefc178',
+			'app_id' => $this->get_client_key(),
+			'app_secret' => $this->get_client_secret(),
 			'default_graph_version' => 'v3.2',
 		));
 
