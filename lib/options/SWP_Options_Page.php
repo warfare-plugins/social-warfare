@@ -597,7 +597,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			 */
 			if ( !$instance->has_credentials ) {
 				$link = $instance->get_authorization_link();
-				$option = new SWP_Option_Button( 'Authorize ' . ucfirst( $network_key ), $network_key, $link );
+				$option = new SWP_Option_Button( 'Authorize ' . ucfirst( $network_key ), $network_key, 'swp-authorization-button', $link );
 				$authorization_options[$network_key] = $option;
 			}
 			else {
