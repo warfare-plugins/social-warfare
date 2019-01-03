@@ -14,11 +14,11 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 		$this->client_secret = '6ba6cfd0e6f5930a7578f110baefc178';
 		$this->load_files();
 
-		if ( !$this->establish_credentials() ) {
-			$this->do_authentication_request();
-		}
+		$this->establish_credentials();
 
 		parent::__construct();
+
+
 	}
 
 
@@ -30,7 +30,7 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 	 * @return void
 	 */
 	public function load_files() {
-		require_once('./Facebook/autoload.php');
+		require_once(__DIR__ . '/Facebook/autoload.php');
 	}
 
 
@@ -45,8 +45,8 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 	 */
 	public function get_authorization_link() {
 		$fb = new Facebook\Facebook(array(
-			'app_id' => $this->get_client_key(),
-			'app_secret' => $this->get_client_secret(),
+			'app_id' => $this->client_key,
+			'app_secret' => $this->client_secret,
 			'default_graph_version' => 'v3.2',
 		));
 
