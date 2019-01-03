@@ -24,9 +24,11 @@ class SWP_Option_Button extends SWP_Option {
 	* @param string $name The display name for the toggle.
 	* @param string $key The database key for the user setting.
 	*/
-	public function __construct( $name, $key, $link ) {
+	public function __construct( $name, $key, $class, $link ) {
 		parent::__construct( $name, $key );
-		$this->default = true;
+		$this->link = isset( $link ) ? $link : '';
+		$this->class = isset( $class ) ? $class : '';
+
 	}
 
 
@@ -52,11 +54,20 @@ class SWP_Option_Button extends SWP_Option {
 		$html .= '>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<p class="">' . $this->name . '</p>';
+				$html .= '<p class="">' . ucfirst( $this->key ) . '</p>';
 			$html .= '</div>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<button field="#' . $this->key . '">' . $this->name . '</button>';
+				if ( !empty( $this->link ) ) {
+					// Apply a wrapper anchor tag.
+					$html .= '<a href="' . $this->link .'" class="' . $this->class . '">' ;
+					$html .= '<div id="' . strtolower($this->key) . '" field="#' . $this->key . '">' . $this->name . '</div>';
+					$html .= '</a>';
+				}
+				else {
+					// Just show a button. Use the id to target it with JS.
+					$html .= '<div id="' . strtolower($this->key) . '" class="' . $this->class . '" field="#' . $this->key . '">' . $this->name . '</div>';
+				}
 			$html .= '</div>';
 
 		$html .= '</div>';
