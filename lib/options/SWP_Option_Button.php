@@ -46,8 +46,6 @@ class SWP_Option_Button extends SWP_Option {
 	* @return SWP_Option_Toggle $this The calling object, for method chaining.
 	*/
 	public function render_HTML() {
-		$checked = $status === 'on' ? ' checked ' : '';
-
 		$html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
 		$html .= $this->render_premium();
