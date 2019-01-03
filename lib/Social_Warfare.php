@@ -525,9 +525,13 @@ class Social_Warfare {
 		 *
 		 * Because each of these are organized by vendor, the existing
 		 * load_files method will not work and instead must be loaded manually.
+		 *
+		 * Note that none of them are currently instantiated.
+		 * Instead, we need to wait for the swp_authorizations hoook to fire,
+		 * then instantiate them all on a need-only basis.
+		 *
 		 */
 		require_once __DIR__ . '/authentications/SWP_Auth_Controller.php';
-		// require_once '/authentications/pinterest/SWP_Pinterest_Auth.php';
 		require_once __DIR__ . '/authentications/facebook/SWP_Facebook_Auth.php';
 		require_once __DIR__ . '/authentications/tumblr/SWP_Tumblr_Auth.php';
 		require_once __DIR__ . '/authentications/vimeo/SWP_Vimeo_Auth.php';
