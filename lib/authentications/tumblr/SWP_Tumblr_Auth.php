@@ -30,9 +30,8 @@ class SWP_Tumblr_Auth {
 		 *  Dummy data for testing.
 		 *  Two options for production.
 		 *  1. Leave valid production API keys in plain text here.
-		 *  2. Fetch keys from warfareplugins.com using the user's swp_license_key as a password to receive keys.
+		 *  2. Fetch keys from warfareplugins.com using the user's swp_license_key as a password to receive ke		$this->client_key = '417XX50OsviGipm7S0d3CoQq7tYI8pR2sDDXgOj6NPODxlTcU0';
 		 */
-		$this->client_key = '417XX50OsviGipm7S0d3CoQq7tYI8pR2sDDXgOj6NPODxlTcU0';
 		$this->client_secret = 'v00cOcheNGOrOoHzU6WnU1AbleQQZmGUSRr44rjJsSG3u6mUbg';
 
 		if ( $this->establish_credentials() ) {
