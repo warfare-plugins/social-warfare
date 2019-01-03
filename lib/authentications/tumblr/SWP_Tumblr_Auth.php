@@ -9,6 +9,7 @@ class SWP_Tumblr_Auth extends SWP_Auth_Controller {
 
 
 	public function __construct() {
+		$this->key = 'tumblr';
 		$this->load_files();
 
 		/**
