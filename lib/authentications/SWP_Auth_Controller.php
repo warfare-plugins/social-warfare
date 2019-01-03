@@ -48,12 +48,15 @@ abstract class SWP_Auth_Controller {
 	protected $consumer_secret = '';
 
 
-
 	/**
 	 * @TODO Start writing network-specific constructors, then abstract them here.
 	 */
 	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'establish_authorizations' ) );
 	}
+
+
+	
 
 
 	/**
@@ -65,7 +68,7 @@ abstract class SWP_Auth_Controller {
 	 *
 	 */
 	public function get_consumer_key() {
-		return $this->has_credentials ? $this->consuemr_key : false;
+		return $this->has_credentials ? $this->consumer_key : false;
 	}
 
 
@@ -78,7 +81,7 @@ abstract class SWP_Auth_Controller {
 	 *
 	 */
 	public function get_consumer_secret() {
-		return $this->has_credentials ? $this->consuemr_secret : false;
+		return $this->has_credentials ? $this->consumer_secret : false;
 	}
 
 
@@ -121,7 +124,7 @@ abstract class SWP_Auth_Controller {
 	 *
 	 * @TODO Some networks may only have a key and no secret.
 	 * Right now both are required, so find a way to distinguish the two.
-	 * 
+	 *
 	 */
 	public function establish_credentials() {
 		$consumer_key = SWP_Utility::get_option( $this->key . '_auth_token' );
