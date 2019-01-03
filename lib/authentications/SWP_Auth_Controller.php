@@ -108,4 +108,33 @@ abstract class SWP_Auth_Controller {
 	}
 
 
+	/**
+	 * Fetches stored client credentials.
+	 *
+	 * A returned value of `false` indicates that the user needs to
+	 * go through the authentication process. Retun value of `true`
+	 * means we can proceed with th request.
+	 *
+	 * @since 3.5.0 | 03 JAN 2018 | Created.
+	 * @param void
+	 * @return bool True iff the credentials exist, else false.
+	 *
+	 * @TODO Some networks may only have a key and no secret.
+	 * Right now both are required, so find a way to distinguish the two.
+	 * 
+	 */
+	public function establish_credentials() {
+		$consumer_key = SWP_Utility::get_option( $this->key . '_auth_token' );
+		$consumer_secret = SWP_Utility::get_option( $this->key . '_auth_secret' );
+
+		if ( false == $consumer_key || false ==  $consumer_secret ) {
+			return false;
+		}
+
+		$this->consumer_key = $consumer_key;
+		$this->consuemr_secret = $consumer_secret;
+		return $this->has_credentials = true;
+	}
+
+
 }
