@@ -554,6 +554,20 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		$registration->add_section( $wrap );
 
+		if ( count( $authorizations ) > 0 ) {
+
+			$auths = new SWP_Options_Page_Section( __( 'Social Network Authorization', 'social-warfare' ), 'addon_authorizations' );
+			$auths->set_priority( 20 );
+
+				foreach( $authorizations as $auth ) {
+					$auths->add_option( $auth );
+				}
+
+			$registration->add_section( $auths );
+		} else {
+			// die(var_dump( 'no authorizations to process. ' ) );
+		}
+
 		$this->tabs->registration = $registration;
 
 		return $this;
@@ -592,6 +606,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$authorization_options[$network_key] = $option;
 			}
 		}
+
 
 		return $authorization_options;
 	}
