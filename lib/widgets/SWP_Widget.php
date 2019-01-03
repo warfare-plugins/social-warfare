@@ -110,7 +110,7 @@ abstract class SWP_Widget extends WP_Widget {
 	* @return array The new values to store in the database.
 	*
 	*/
-	public function update( $new_settings = array(), $old_settings  = array()) {
+	public function update( $new_settings, $old_settings ) {
 		return $new_settings;
 	}
 
