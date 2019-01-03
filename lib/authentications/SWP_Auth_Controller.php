@@ -18,6 +18,10 @@ abstract class SWP_Auth_Controller {
 
 	/**
 	 * The Social Warfare API key.
+	 *
+	 * This must be manually set on a per-network basis in the
+	 * SWFW_Follow_Network __construct() method.
+	 *
 	 * @var string $client_secret;
 	 *
 	 */
@@ -26,6 +30,10 @@ abstract class SWP_Auth_Controller {
 
 	/**
 	 * The Social Warfare API secret.
+	 *
+	 * This must be manually set on a per-network basis in the 
+	 * SWFW_Follow_Network __construct() method.
+	 *
 	 * @var string $client_secret;
 	 *
 	 */
@@ -52,11 +60,8 @@ abstract class SWP_Auth_Controller {
 	 * @TODO Start writing network-specific constructors, then abstract them here.
 	 */
 	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'establish_authorizations' ) );
+		$this->establish_credentials();
 	}
-
-
-	
 
 
 	/**
@@ -86,32 +91,6 @@ abstract class SWP_Auth_Controller {
 
 
 	/**
-	 * Provides the user's API key, if it exists.
-	 *
-	 * @since 3.5.0 | 03 JAN 2018 | Created.
-	 * @param void
-	 * @return mixed String if the key exists, else false.
-	 *
-	 */
-	public function get_client_key() {
-		return $this->has_credentials ? $this->client_key : false;
-	}
-
-
-	/**
-	 * Provides the user's API secret, if it exists.
-	 *
-	 * @since 3.5.0 | 03 JAN 2018 | Created.
-	 * @param void
-	 * @return mixed String if the key exists, else false.
-	 *
-	 */
-	public function get_client_secret() {
-		return $this->has_credentials ? $this->client_secret : false;
-	}
-
-
-	/**
 	 * Fetches stored client credentials.
 	 *
 	 * A returned value of `false` indicates that the user needs to
@@ -137,6 +116,11 @@ abstract class SWP_Auth_Controller {
 		$this->consumer_key = $consumer_key;
 		$this->consuemr_secret = $consumer_secret;
 		return $this->has_credentials = true;
+	}
+
+	public function add_to_authorizations( $network_keys ) {
+		// die(var_dump(' adding this to the list of things that need', $this->key));
+		return array_merge( $network_keys, array( $this->key ) );
 	}
 
 
