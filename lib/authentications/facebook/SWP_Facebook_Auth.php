@@ -52,7 +52,7 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 
 		$helper = $fb->getRedirectLoginHelper();
 
-		$permissions = ['email', 'manage_page']; // Optional permissions
+		$permissions = ['email', 'manage_pages']; // Optional permissions
 		$login_url = $helper->getLoginUrl('https://warfareplugins.com/authentications/facebook', $permissions);
 
 		return $login_url;
