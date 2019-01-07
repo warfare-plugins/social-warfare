@@ -10,15 +10,12 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 
 	public function __construct() {
 		$this->key = 'facebook';
-		$this->client_key = '2194481457470892';
-		$this->client_secret = '6ba6cfd0e6f5930a7578f110baefc178';
+
 		$this->load_files();
 
 		$this->establish_credentials();
 
 		parent::__construct();
-
-
 	}
 
 
@@ -44,19 +41,6 @@ class SWP_Facebook_Auth extends SWP_Auth_Controller {
 	 * @return mixed True iff the credentials exist, else false.
 	 */
 	public function get_authorization_link() {
-		$fb = new Facebook\Facebook(array(
-			'app_id' => $this->client_key,
-			'app_secret' => $this->client_secret,
-			'default_graph_version' => 'v3.2',
-		));
-
-		$helper = $fb->getRedirectLoginHelper();
-
-		$permissions = ['email', 'manage_pages']; // Optional permissions
-		$login_url = $helper->getLoginUrl('https://warfareplugins.com/authentications/facebook', $permissions);
-
-		return $login_url;
+		return add_query_arg('return_address', admin_url('?page=social-warfare'), 'https://warfareplugins.com/authorizations/facebook/request_token.php');
 	}
-
-
 }
