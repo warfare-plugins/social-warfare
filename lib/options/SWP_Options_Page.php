@@ -117,6 +117,19 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	public function load_deferred_options() {
 		$this->tabs->display->sections->button_position->options->button_position_table->do_button_position_table();
+
+		$authorizations  = $this->establish_authorizations();
+		if ( count( $authorizations ) > 0 ) {
+
+			$auths = new SWP_Options_Page_Section( __( 'Social Network Authorization', 'social-warfare' ), 'addon_authorizations' );
+			$auths->set_priority( 20 );
+
+				foreach( $authorizations as $auth ) {
+					$auths->add_option( $auth );
+				}
+
+			$this->tabs->social_identity->add_section( $auths );
+		}
 	}
 
 
@@ -541,7 +554,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	*/
 	protected function init_registration_tab( $addons ) {
 		$registration = new SWP_Options_Page_Tab( __( 'Registration', 'social-warfare' ), 'registration' );
-		$authorizations  = $this->establish_authorizations();
+
 
 		$registration->set_priority( 50 );
 
@@ -553,20 +566,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				}
 
 		$registration->add_section( $wrap );
-
-		if ( count( $authorizations ) > 0 ) {
-
-			$auths = new SWP_Options_Page_Section( __( 'Social Network Authorization', 'social-warfare' ), 'addon_authorizations' );
-			$auths->set_priority( 20 );
-
-				foreach( $authorizations as $auth ) {
-					$auths->add_option( $auth );
-				}
-
-			$registration->add_section( $auths );
-		} else {
-			// die(var_dump( 'no authorizations to process. ' ) );
-		}
 
 		$this->tabs->registration = $registration;
 
@@ -587,8 +586,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		$authorization_options = array();
 		foreach ( $authorizations as $network_key ) {
-			$Class = 'SWP_' . ucfirst( $network_key ) . '_Auth';
-			$instance = new $Class();
+			// $Class = 'SWP_' . ucfirst( $network_key ) . '_Auth';
+			$instance = new SWP_Auth_Controller ( $network_key );
 
 			/**
 			 * We either have a consumer key for an authorized network,
@@ -654,7 +653,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				->set_default( '' );
 
 		$sitewide_identity->add_options( [$twitter_id, $pinterest_id, $facebook_publisher_url, $facebook_app_id] );
-
 		$social_identity->add_section( $sitewide_identity );
 
 		$this->tabs->social_identity = $social_identity;
