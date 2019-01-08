@@ -4,8 +4,22 @@
  * This serves as a collection of common methods for getting, fetching,
  * and storing client keys and secrets.
  *
+ * Since all of the actual handshakes take place on the warfareplugins.com server,
+ * SWP application keys and secrets live in those files.
+ * The server is also where we keep the network-specific SDKs.
+ *
+ * This class only tells us if we have access for a network, and if not,
+ * which link we should use to request access.
+ *
  */
-abstract class SWP_Auth_Controller {
+class SWP_Auth_Controller {
+
+	/**
+	 * The network this controller interfaces.
+	 * @var string $network
+	 *
+	 */
+	public $network = '';
 
 
 	/**
@@ -31,7 +45,7 @@ abstract class SWP_Auth_Controller {
 	/**
 	 * The Social Warfare API secret.
 	 *
-	 * This must be manually set on a per-network basis in the 
+	 * This must be manually set on a per-network basis in the
 	 * SWFW_Follow_Network __construct() method.
 	 *
 	 * @var string $client_secret;
@@ -59,7 +73,13 @@ abstract class SWP_Auth_Controller {
 	/**
 	 * @TODO Start writing network-specific constructors, then abstract them here.
 	 */
-	public function __construct() {
+	public function __construct( $network_key ) {
+		if ( empty( $network_key ) ) {
+			error_log('Please provide a network_key when constructing an SWP_Auth_Controller.');
+			return;
+		}
+
+		$this->network = $network_key;
 		$this->establish_credentials();
 	}
 
@@ -106,8 +126,8 @@ abstract class SWP_Auth_Controller {
 	 *
 	 */
 	public function establish_credentials() {
-		$consumer_key = SWP_Utility::get_option( $this->key . '_auth_token' );
-		$consumer_secret = SWP_Utility::get_option( $this->key . '_auth_secret' );
+		$consumer_key = SWP_Utility::get_option( $this->network . '_auth_token' );
+		$consumer_secret = SWP_Utility::get_option( $this->network . '_auth_secret' );
 
 		if ( false == $consumer_key || false ==  $consumer_secret ) {
 			return false;
@@ -118,9 +138,23 @@ abstract class SWP_Auth_Controller {
 		return $this->has_credentials = true;
 	}
 
+
 	public function add_to_authorizations( $network_keys ) {
-		// die(var_dump(' adding this to the list of things that need', $this->key));
 		return array_merge( $network_keys, array( $this->key ) );
+	}
+
+	/**
+	 * Checks the cache to see if we need to make a new request.
+	 * If so, run the request.
+	 * Else return the cached value.
+	 *
+	 * @since 3.5.0 | 03 JAN 2018 | Created.
+	 * @param void
+	 * @return mixed True iff the credentials exist, else false.
+	 */
+	public function get_authorization_link() {
+		$request_url = 'https://warfareplugins.com/authorizations/' . $this->network . '/request_token.php';
+		return add_query_arg('return_address', admin_url('?page=social-warfare'), $request_url);
 	}
 
 
