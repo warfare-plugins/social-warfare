@@ -12,7 +12,7 @@
  * which link we should use to request access.
  *
  */
-class SWP_Auth_Controller {
+class SWP_Auth_Helper {
 
 	/**
 	 * The network this controller interfaces.
