@@ -70,9 +70,6 @@ class SWP_Auth_Helper {
 	protected $consumer_secret = '';
 
 
-	/**
-	 * @TODO Start writing network-specific constructors, then abstract them here.
-	 */
 	public function __construct( $network_key ) {
 		if ( empty( $network_key ) ) {
 			error_log('Please provide a network_key when constructing an SWP_Auth_Controller.');
@@ -126,33 +123,30 @@ class SWP_Auth_Helper {
 	 *
 	 */
 	public function establish_credentials() {
-		$consumer_key = SWP_Utility::get_option( $this->network . '_auth_token' );
-		$consumer_secret = SWP_Utility::get_option( $this->network . '_auth_secret' );
+		$consumer_key = SWP_Utility::get_option( $this->network . '_access_token' );
 
-		if ( false == $consumer_key || false ==  $consumer_secret ) {
+		if ( false === $consumer_key || empty( $consumer_key ) ) {
 			return false;
 		}
 
 		$this->consumer_key = $consumer_key;
-		$this->consuemr_secret = $consumer_secret;
 		return $this->has_credentials = true;
 	}
 
 
 	public function add_to_authorizations( $network_keys ) {
-		return array_merge( $network_keys, array( $this->key ) );
+		return array_merge( $network_keys, array( $this->network ) );
 	}
 
 	/**
-	 * Checks the cache to see if we need to make a new request.
-	 * If so, run the request.
-	 * Else return the cached value.
+	 * Prepares a Log In url for the requested network.
 	 *
 	 * @since 3.5.0 | 03 JAN 2018 | Created.
 	 * @param void
-	 * @return mixed True iff the credentials exist, else false.
+	 * @return string The URL which handles the oAuth handshakes.
 	 */
 	public function get_authorization_link() {
+		// die(var_dump('get_authorization_link  ' . $this->network));
 		$request_url = 'https://warfareplugins.com/authorizations/' . $this->network . '/request_token.php';
 		return add_query_arg('return_address', admin_url('?page=social-warfare'), $request_url);
 	}
