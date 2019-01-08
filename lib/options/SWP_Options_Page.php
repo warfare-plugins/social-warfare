@@ -583,11 +583,10 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	public function establish_authorizations() {
 		$authorizations = apply_filters( 'swp_authorizations', array() );
-
 		$authorization_options = array();
-		foreach ( $authorizations as $network_key ) {
-			// $Class = 'SWP_' . ucfirst( $network_key ) . '_Auth';
-			$instance = new SWP_Auth_Controller ( $network_key );
+
+		foreach ( $authorizations as $network_key) {
+			$instance = new SWP_Auth_Helper ( $network_key );
 
 			/**
 			 * We either have a consumer key for an authorized network,
