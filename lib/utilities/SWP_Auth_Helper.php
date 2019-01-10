@@ -4,6 +4,9 @@
  * This serves as a collection of common methods for getting, fetching,
  * and storing client keys and secrets.
  *
+ * Unlinke other classes, this is not immediately instantiated on plugin load.
+ * Instead it is created on a need-only basis. 
+ *
  * Since all of the actual handshakes take place on the warfareplugins.com server,
  * SWP application keys and secrets live in those files.
  * The server is also where we keep the network-specific SDKs.
