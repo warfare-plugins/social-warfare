@@ -5,7 +5,7 @@
  * and storing client keys and secrets.
  *
  * Unlinke other classes, this is not immediately instantiated on plugin load.
- * Instead it is created on a need-only basis. 
+ * Instead it is created on a need-only basis.
  *
  * Since all of the actual handshakes take place on the warfareplugins.com server,
  * SWP application keys and secrets live in those files.
@@ -16,6 +16,7 @@
  *
  */
 class SWP_Auth_Helper {
+
 
 	/**
 	 * The network this controller interfaces.
@@ -67,10 +68,10 @@ class SWP_Auth_Helper {
 
 	/**
 	 * The user's API secret.
-	 * @var string $consumer_secret;
+	 * @var string $access_secret;
 	 *
 	 */
-	protected $consumer_secret = '';
+	protected $access_secret = '';
 
 
 	public function __construct( $network_key ) {
@@ -92,8 +93,8 @@ class SWP_Auth_Helper {
 	 * @return mixed String if the key exists, else false.
 	 *
 	 */
-	public function get_consumer_key() {
-		return $this->has_credentials ? $this->consumer_key : false;
+	public function get_access_token() {
+		return $this->has_credentials ? $this->access_token : false;
 	}
 
 
@@ -105,8 +106,8 @@ class SWP_Auth_Helper {
 	 * @return mixed String if the key exists, else false.
 	 *
 	 */
-	public function get_consumer_secret() {
-		return $this->has_credentials ? $this->consumer_secret : false;
+	public function get_access_secret() {
+		return $this->has_credentials ? $this->access_secret : false;
 	}
 
 
@@ -126,13 +127,13 @@ class SWP_Auth_Helper {
 	 *
 	 */
 	public function establish_credentials() {
-		$consumer_key = SWP_Utility::get_option( $this->network . '_access_token' );
+		$access_token = SWP_Credential_Helper::get_token( $this->network );
 
-		if ( false === $consumer_key || empty( $consumer_key ) ) {
+		if ( false === $access_token || empty( $access_token ) ) {
 			return false;
 		}
 
-		$this->consumer_key = $consumer_key;
+		$this->access_token = $access_token;
 		return $this->has_credentials = true;
 	}
 
@@ -140,6 +141,7 @@ class SWP_Auth_Helper {
 	public function add_to_authorizations( $network_keys ) {
 		return array_merge( $network_keys, array( $this->network ) );
 	}
+
 
 	/**
 	 * Prepares a Log In url for the requested network.
