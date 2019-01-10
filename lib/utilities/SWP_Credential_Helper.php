@@ -71,7 +71,7 @@ class SWP_Credential_Helper {
 		$tokens = $this->get_authorizations();
 		$network_key = base64_encode( $network );
 
-		if ( !empty( $tokens[$network_key] ) ) {
+		if ( isset( $tokens[$network_key] ) ) {
 			unset( $tokens[$network_key][$field] );
 			return true;
 		}
@@ -96,12 +96,12 @@ class SWP_Credential_Helper {
 	 */
 	protected function options_page_scan_url() {
 		// We have a new access_token.
-		if ( !empty($_GET['network'] && !empty( $_GET['access_token'] ) ) ) {
+		if ( isset($_GET['network'] && isset( $_GET['access_token'] ) ) ) {
 			$this->store_access_token( $_GET['network'], 'access_token', $_GET['access_token'] );
 		}
 
 		// We have a new access_secret.
-		if ( !empty($_GET['network'] && !empty( $_GET['access_secret'] ) ) ) {
+		if ( isset($_GET['network'] && isset( $_GET['access_secret'] ) ) ) {
 			$this->store_access_token( $_GET['network'], 'access_secret', $_GET['access_secret'] );
 		}
 	}
