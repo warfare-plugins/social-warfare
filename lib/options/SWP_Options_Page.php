@@ -600,18 +600,17 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			$instance = new SWP_Auth_Helper ( $network_key );
 
 			/**
-			 * We either have a consumer key for an authorized network,
+			 * We either have an access token for an authorized network,
 			 * Or we need to get one.
 			 *
 			 */
 			if ( !$instance->has_credentials ) {
 				$link = $instance->get_authorization_link();
-				$option = new SWP_Option_Button( 'Authorize ' . ucfirst( $network_key ), $network_key, 'swp-authorization-button', $link );
+				$option = new SWP_Option_Button( 'Authorize ' . ucfirst( $network_key ), $network_key, 'button sw-navy-button swp-authorization-button', $link );
 				$authorization_options[$network_key] = $option;
 			}
 			else {
-				$api_key = $instance->get_consumer_key();
-				$option = new SWP_Option_Authorized( $network_key, $api_key );
+				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, 'button sw-green-button swp-revoke-button', $link );
 				$authorization_options[$network_key] = $option;
 			}
 		}
