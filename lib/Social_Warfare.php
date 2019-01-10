@@ -358,9 +358,11 @@ class Social_Warfare {
 	 */
 	private function load_classes() {
 
-		// Require WordPress' core plugin class.
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		// The Social Warfare core Addon class.
+		require_once SWP_PLUGIN_DIR . '/lib/Social_Warfare_Addon.php';
 
+		// WordPress functions for plugin operations.
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		/**
 		 * Utility Classes
