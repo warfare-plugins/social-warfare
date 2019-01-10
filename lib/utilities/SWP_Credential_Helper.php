@@ -26,6 +26,11 @@ class SWP_Credential_Helper {
 	}
 
 
+	public static function get_instance() {
+		return new SWP_Credential_Helper();
+	}
+
+
 	/**
 	 * Retrieve a token granted by a third party service.
 	 *
@@ -43,6 +48,7 @@ class SWP_Credential_Helper {
 	 */
 	public static function get_token( $network, $field = 'access_token' ) {
 		$tokens = self::get_authorizations();
+		$tokens = SWP_Credential_Helper::get_instance()->get_authorizations();
 		$network_key = base64_encode( $network );
 
 		if ( empty ( $tokens[$network_key] ) ) {
