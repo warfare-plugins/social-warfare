@@ -33,27 +33,27 @@ class Social_Warfare {
 	 *
 	 */
 	public function __construct() {
-        $this->core_version = SWP_VERSION;
-        require_once SWP_PLUGIN_DIR . '/lib/utilities/functions.php';
-        add_action('plugins_loaded', array($this, 'init'));
+		$this->core_version = SWP_VERSION;
+		require_once SWP_PLUGIN_DIR . '/lib/utilities/functions.php';
+		add_action('plugins_loaded', array($this, 'init'));
 	}
 
-    public function init() {
+	public function init() {
 		// Loads the files for each class.
-        $this->load_classes();
+		$this->load_classes();
 
 		// Instantiate all the core classes
-        $this->instantiate_classes();
+		$this->instantiate_classes();
 
 		// Instantiate the admin-only classes.
-        if( true === is_admin() ) {
-            $this->instantiate_admin_classes();
-        }
+		if( true === is_admin() ) {
+			$this->instantiate_admin_classes();
+		}
 
 		// Instatiate classes that need to be defered.
 		add_action('plugins_loaded' , array( $this, 'instantiate_deferred_classes' ) , 100 );
 		require_once SWP_PLUGIN_DIR . '/assets/js/post-editor/blocks.php';
-    }
+	}
 
 
 	/**
@@ -77,7 +77,7 @@ class Social_Warfare {
 		 * This creates and filters and manages the user options array.
 		 *
 		 */
-        new SWP_User_Options();
+		new SWP_User_Options();
 
 
 		/**
@@ -86,7 +86,7 @@ class Social_Warfare {
 		 * This is created as a global so that all addons can modify it.
 		 *
 		 */
-        global $SWP_Options_Page;
+		global $SWP_Options_Page;
 
 
 		/**
@@ -105,7 +105,7 @@ class Social_Warfare {
 		 *
 		 */
 		$Localization = new SWP_Localization();
-        $Localization->init();
+		$Localization->init();
 
 
 		/**
@@ -193,22 +193,22 @@ class Social_Warfare {
 		new SWP_Widget();
 
 
-        /**
-         * Database Migration
-         *
-         * Converts camelCased variable names to the new snake_case option names.
-         *
-         */
-        new SWP_Database_Migration();
+		/**
+		 * Database Migration
+		 *
+		 * Converts camelCased variable names to the new snake_case option names.
+		 *
+		 */
+		new SWP_Database_Migration();
 
 
-        /**
-         * The Options Page Class
-         *
-         * Instantiates the class that will load the plugin options page.
-         *
-         */
-        $SWP_Options_Page = new SWP_Options_Page();
+		/**
+		 * The Options Page Class
+		 *
+		 * Instantiates the class that will load the plugin options page.
+		 *
+		 */
+		$SWP_Options_Page = new SWP_Options_Page();
 
 
 		/**
@@ -223,16 +223,16 @@ class Social_Warfare {
 		$SWP_Post_Caches = new SWP_Post_Cache_Loader();
 
 
-        /**
-         * The Utility Class
-         *
-         * While the methods are all static functions that do not require
-         * a class instance to use, there are hooks that need to be set up
-         * in the class __construct() method.
-         *
-         */
+		/**
+		 * The Utility Class
+		 *
+		 * While the methods are all static functions that do not require
+		 * a class instance to use, there are hooks that need to be set up
+		 * in the class __construct() method.
+		 *
+		 */
 
-        new SWP_Utility();
+		new SWP_Utility();
 
 	}
 
@@ -316,7 +316,7 @@ class Social_Warfare {
 		 * dashboard notices or updating the sidebar in the admin settings page.
 		 *
 		 */
-        new SWP_JSON_Cache_Handler();
+		new SWP_JSON_Cache_Handler();
 
 
 		/**
@@ -325,7 +325,7 @@ class Social_Warfare {
 		 * This class controls the sidebar on the settings page.
 		 *
 		 */
-        new SWP_Sidebar_Loader();
+		new SWP_Sidebar_Loader();
 
 	}
 
@@ -358,9 +358,11 @@ class Social_Warfare {
 	 */
 	private function load_classes() {
 
-		// Require WordPress' core plugin class.
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		// The Social Warfare core Addon class. 
+		require_once SWP_PLUGIN_DIR . '/lib/Social_Warfare_Addon.php';
 
+		// WordPress functions for plugin operations.
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		/**
 		 * Utility Classes
@@ -371,21 +373,21 @@ class Social_Warfare {
 		 */
 		$utilities = array(
 			'Debug_Trait',
-            'Compatibility',
-            'CURL',
-            'Localization',
-            'Permalink',
-            'Database_Migration',
+			'Compatibility',
+			'CURL',
+			'Localization',
+			'Permalink',
+			'Database_Migration',
 			'URL_Management',
-            'Notice',
-            'Notice_Loader',
-            'Post_Cache_Loader',
-            'Post_Cache',
-            'JSON_Cache_Handler',
+			'Notice',
+			'Notice_Loader',
+			'Post_Cache_Loader',
+			'Post_Cache',
+			'JSON_Cache_Handler',
 			'Plugin_Updater',
-            'Utility'
-        );
-        $this->load_files( '/lib/utilities/', $utilities);
+			'Utility'
+		);
+		$this->load_files( '/lib/utilities/', $utilities);
 
 
 		/**
@@ -403,9 +405,9 @@ class Social_Warfare {
 			'Google_Plus',
 			'Facebook',
 			'Twitter',
-            'Linkedin',
-            'Pinterest',
-            'Mix'
+			'Linkedin',
+			'Pinterest',
+			'Mix'
 		);
 		$this->load_files( '/lib/social-networks/', $social_networks);
 
@@ -425,7 +427,7 @@ class Social_Warfare {
 			'Buttons_Panel_Loader',
 			'Buttons_Panel_Shortcode',
 		);
-        $this->load_files( '/lib/buttons-panel/', $buttons_panels );
+		$this->load_files( '/lib/buttons-panel/', $buttons_panels );
 
 
 		/**
@@ -437,12 +439,12 @@ class Social_Warfare {
 		 * and styles being enqueued for output, and other things like that.
 		 *
 		 */
-        $frontends = array(
-            'Header_Output',
-            'Script',
-            'Shortcode',
-        );
-        $this->load_files( '/lib/frontend-output/', $frontends );
+		$frontends = array(
+			'Header_Output',
+			'Script',
+			'Shortcode',
+		);
+		$this->load_files( '/lib/frontend-output/', $frontends );
 
 
 		/**
@@ -455,10 +457,10 @@ class Social_Warfare {
 		 *
 		 */
 		$widgets = array(
-            'Popular_Posts_Widget',
-            'Widget',
-        );
-        $this->load_files( '/lib/widgets/', $widgets );
+			'Popular_Posts_Widget',
+			'Widget',
+		);
+		$this->load_files( '/lib/widgets/', $widgets );
 
 
 		/**
@@ -473,15 +475,15 @@ class Social_Warfare {
 		 * for Social Warfare.
 		 *
 		 */
-        $admins = array(
-            'Click_To_Tweet',
-            'Column',
-            'Settings_Link',
-            'Shortcode_Generator',
-            'User_Profile',
-            'Sidebar_Loader'
-        );
-        $this->load_files( '/lib/admin/', $admins );
+		$admins = array(
+			'Click_To_Tweet',
+			'Column',
+			'Settings_Link',
+			'Shortcode_Generator',
+			'User_Profile',
+			'Sidebar_Loader'
+		);
+		$this->load_files( '/lib/admin/', $admins );
 
 
 		/**
@@ -492,22 +494,22 @@ class Social_Warfare {
 		 * with it to add their own options.
 		 *
 		 */
-        $options = array(
-            'User_Options',
+		$options = array(
+			'User_Options',
 			'Option_Abstract',
-            'Option',
-            'Options_Page',
-            'Options_Page_Tab',
-            'Options_Page_Section',
-            'Option_Toggle',
-            'Option_Select',
-            'Option_Text',
-            'Option_Textarea',
-            'Section_HTML',
-            'Option_Icons',
+			'Option',
+			'Options_Page',
+			'Options_Page_Tab',
+			'Options_Page_Section',
+			'Option_Toggle',
+			'Option_Select',
+			'Option_Text',
+			'Option_Textarea',
+			'Section_HTML',
+			'Option_Icons',
 			'Registration_Tab_Template',
-        );
-        $this->load_files( '/lib/options/', $options );
+		);
+		$this->load_files( '/lib/options/', $options );
 
 
 		/**
@@ -523,57 +525,57 @@ class Social_Warfare {
 	}
 
 
-    /**
-     * Loads an array of related files.
-     *
-     * @param  string   $path  The relative path to the files home.
-     * @param  array    $files The name of the files (classes), no vendor prefix.
-     * @return none     The files are loaded into memory.
-     *
-     */
-    private function load_files( $path, $files ) {
-        foreach( $files as $file ) {
+	/**
+	 * Loads an array of related files.
+	 *
+	 * @param  string   $path  The relative path to the files home.
+	 * @param  array    $files The name of the files (classes), no vendor prefix.
+	 * @return none     The files are loaded into memory.
+	 *
+	 */
+	private function load_files( $path, $files ) {
+		foreach( $files as $file ) {
 
-            //* Add our vendor prefix to the file name.
-            $file = "SWP_" . $file;
-            require_once SWP_PLUGIN_DIR . $path . $file . '.php';
-        }
-    }
+			//* Add our vendor prefix to the file name.
+			$file = "SWP_" . $file;
+			require_once SWP_PLUGIN_DIR . $path . $file . '.php';
+		}
+	}
 
 
-    /**
-     *
-     * When we have known incompatability with other themes/plugins,
-     * we can put those checks in here.
-     *
-     * Checks for known conflicts with other plugins and themes.
-     *
-     * If there is a fatal conflict, returns true and exits printing.
-     * If there are other conflicts, they are silently handled and can still
-     * print.
-     *
-     * @since  3.0.0 | 01 MAR 2018 | Created
-     * @since  3.3.0 | 30 AUG 2018 | Moved from SWP_Buttons_Panel to Social_Warfare.
-     * @param  void
-     *
-     * @return bool True iff the conflict is fatal, else false.
-     *
-     */
-    public static function has_plugin_conflict() {
+	/**
+	 *
+	 * When we have known incompatability with other themes/plugins,
+	 * we can put those checks in here.
+	 *
+	 * Checks for known conflicts with other plugins and themes.
+	 *
+	 * If there is a fatal conflict, returns true and exits printing.
+	 * If there are other conflicts, they are silently handled and can still
+	 * print.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  3.3.0 | 30 AUG 2018 | Moved from SWP_Buttons_Panel to Social_Warfare.
+	 * @param  void
+	 *
+	 * @return bool True iff the conflict is fatal, else false.
+	 *
+	 */
+	public static function has_plugin_conflict() {
 
-        // Disable subtitles plugin to prevent it from injecting subtitles
-        // into our share titles.
-        if ( function_exists( 'is_plugin_active' ) && is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
-            remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
-        endif;
+		// Disable subtitles plugin to prevent it from injecting subtitles
+		// into our share titles.
+		if ( function_exists( 'is_plugin_active' ) && is_plugin_active( 'subtitles/subtitles.php' ) && class_exists( 'Subtitles' ) ) :
+			remove_filter( 'the_title', array( Subtitles::getinstance(), 'the_subtitle' ), 10, 2 );
+		endif;
 
-        //* Disable on BuddyPress pages.
-        if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
-            return true;
-        endif;
+		//* Disable on BuddyPress pages.
+		if ( function_exists( 'is_buddypress' ) && is_buddypress() ) :
+			return true;
+		endif;
 
-        return false;
-    }
+		return false;
+	}
 }
 
 /**
