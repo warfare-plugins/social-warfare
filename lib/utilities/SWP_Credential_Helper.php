@@ -42,7 +42,7 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	public static function get_token( $network, $field = 'access_token' ) {
-		$tokens = $this->get_authorizations();
+		$tokens = self::get_authorizations();
 		$network_key = base64_encode( $network );
 
 		if ( empty ( $tokens[$network_key] ) ) {
@@ -97,12 +97,12 @@ class SWP_Credential_Helper {
 	protected function options_page_scan_url() {
 		// We have a new access_token.
 		if ( isset( $_GET['network'] )  && isset( $_GET['access_token'] ) ) {
-			$this->store_access_token( $_GET['network'], 'access_token', $_GET['access_token'] );
+			$updated = $this->store_data( $_GET['network'], 'access_token', $_GET['access_token'] );
 		}
 
 		// We have a new access_secret.
 		if ( isset( $_GET['network'] ) && isset( $_GET['access_secret'] ) ) {
-			$this->store_access_token( $_GET['network'], 'access_secret', $_GET['access_secret'] );
+			$this->store_data( $_GET['network'], 'access_secret', $_GET['access_secret'] );
 		}
 	}
 
@@ -122,10 +122,11 @@ class SWP_Credential_Helper {
 	 * @return bool  			True iff updated, else false.
 	 *
 	 */
-	protected function store_access_token( $network, $field, $data ) {
-		$network_key = base64_decode( $network );
+	protected function store_data( $network, $field, $data ) {
+		$network_key = base64_encode( $network );
 
 		$tokens = $this->get_authorizations();
+
 		if ( empty( $tokens[$network_key] ) ) {
 			$tokens[$network_key] = array();
 		}
