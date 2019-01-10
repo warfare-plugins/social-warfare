@@ -96,12 +96,12 @@ class SWP_Credential_Helper {
 	 */
 	protected function options_page_scan_url() {
 		// We have a new access_token.
-		if ( isset($_GET['network'] && isset( $_GET['access_token'] ) ) ) {
+		if ( isset( $_GET['network'] )  && isset( $_GET['access_token'] ) ) {
 			$this->store_access_token( $_GET['network'], 'access_token', $_GET['access_token'] );
 		}
 
 		// We have a new access_secret.
-		if ( isset($_GET['network'] && isset( $_GET['access_secret'] ) ) ) {
+		if ( isset( $_GET['network'] ) && isset( $_GET['access_secret'] ) ) {
 			$this->store_access_token( $_GET['network'], 'access_secret', $_GET['access_secret'] );
 		}
 	}
