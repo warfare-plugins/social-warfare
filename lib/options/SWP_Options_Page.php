@@ -610,7 +610,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$authorization_options[$network_key] = $option;
 			}
 			else {
-				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, 'button sw-green-button swp-revoke-button', $link );
+				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, 'button sw-green-button swp-revoke-button', '#' );
 				$authorization_options[$network_key] = $option;
 			}
 		}
