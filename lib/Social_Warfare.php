@@ -384,7 +384,8 @@ class Social_Warfare {
 			'JSON_Cache_Handler',
 			'Plugin_Updater',
 			'Utility',
-			'Auth_Helper'
+			'Auth_Helper',
+			'Credential_Helper'
 		);
 		$this->load_files( '/lib/utilities/', $utilities);
 
