@@ -54,6 +54,16 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
+	 * A utility for reading access tokens.
+	 *
+	 * When instantiated, the helper checks the URL for new access_token grants.
+	 * 
+	 * @var object $credential_helper;
+	 */
+	public $credential_helper;
+
+
+	/**
 	 * The magic construct method to instatiate the options object.
 	 *
 	 * This class method provides the framework for the entire options page.
@@ -69,6 +79,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	public function __construct() {
 		// Create a 'tabs' object to which we can begin adding tabs.
 		$this->tabs = new stdClass();
+		$this->$credential_helper = new SWP_Credential_Helper();
 
 
 		/**
