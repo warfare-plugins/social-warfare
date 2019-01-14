@@ -12,12 +12,14 @@ class SWP_SVG {
 
 	/**
 	 * Attempt to retrieve an SVG string.
+	 * 
 	 * @param  string $key The function to call. Most often a network key.
 	 * @return mixed  String if the SVG exists, else false.
 	 *
 	 */
 	public static function get( $key ) {
 
+		// Prevent 'Undefined function' errors by confirming the method exists.
 		if ( method_exists( get_called_class(), $key ) ) {
 			return self::$key();
 		}
