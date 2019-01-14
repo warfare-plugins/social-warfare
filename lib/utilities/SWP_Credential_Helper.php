@@ -20,7 +20,7 @@ class SWP_Credential_Helper {
 	public function __construct() {
 
 
-		if ( $_GET['page'] == 'social-warfare' ) {
+		if ( !empty( $_GET['page'] ) == 'social-warfare' ) {
 			$this->options_page_scan_url();
 		}
 	}
