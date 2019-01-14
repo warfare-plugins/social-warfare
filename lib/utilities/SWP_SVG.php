@@ -1,12 +1,31 @@
 <?php
+/**
+ * Holds SVG strings.
+ * Right now all methods return network icons. T
+ *
+ *  @package   SocialWarfare\Utilities
+ *  @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ *  @license   GPL-3.0+
+ *  @since     3.5.0  | 14 JAN 2019 | Created.
+ */
 class SWP_SVG {
+
+	/**
+	 * Attempt to retrieve an SVG string.
+	 * @param  string $key The function to call. Most often a network key.
+	 * @return mixed  String if the SVG exists, else false.
+	 *
+	 */
 	public static function get( $key ) {
+
 		if ( method_exists( get_called_class(), $key ) ) {
 			return self::$key();
 		}
 
 		return false;
 	}
+
+
 	public static function blogger() {
 		 return
 			'<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
