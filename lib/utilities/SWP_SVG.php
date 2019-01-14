@@ -1,7 +1,7 @@
 <?php
 /**
  * Holds SVG strings.
- * Right now all methods return network icons. T
+ * Right now all methods return network icons. 
  *
  *  @package   SocialWarfare\Utilities
  *  @copyright Copyright (c) 2018, Warfare Plugins, LLC
@@ -12,7 +12,7 @@ class SWP_SVG {
 
 	/**
 	 * Attempt to retrieve an SVG string.
-	 * 
+	 *
 	 * @param  string $key The function to call. Most often a network key.
 	 * @return mixed  String if the SVG exists, else false.
 	 *
