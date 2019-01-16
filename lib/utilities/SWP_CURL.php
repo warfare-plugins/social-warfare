@@ -98,10 +98,10 @@ class SWP_CURL {
 	  return $result;
 	}
 
-	public static function file_get_contents_curl( $url ) {
+	public static function file_get_contents_curl( $url, $headers = null) {
 		$ch = curl_init();
+		
 		curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_HEADER, 0 );
 		curl_setopt( $ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
 		curl_setopt( $ch, CURLOPT_FAILONERROR, 0 );
 		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 0 );
@@ -112,6 +112,14 @@ class SWP_CURL {
 		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 5 );
 		curl_setopt( $ch, CURLOPT_NOSIGNAL, 1 );
 		curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+
+		if ( $headers ) {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers );
+		}
+		else {
+			curl_setopt( $ch, CURLOPT_HEADER, 0 );
+		}
+
 		$cont = @curl_exec( $ch );
 		$curl_errno = curl_errno( $ch );
 		curl_close( $ch );
