@@ -149,11 +149,29 @@ class SWP_Auth_Helper {
 	 * @since 3.5.0 | 03 JAN 2018 | Created.
 	 * @param void
 	 * @return string The URL which handles the oAuth handshakes.
+	 *
 	 */
 	public function get_authorization_link() {
-		// die(var_dump('get_authorization_link  ' . $this->network));
 		$request_url = 'https://warfareplugins.com/authorizations/' . $this->network . '/request_token.php';
 		return add_query_arg('return_address', admin_url('?page=social-warfare'), $request_url);
+	}
+
+	/**
+	 * The target URL that either prompts the user to revoke API access,
+	 * or the goes to the network-native UI for reovking access.
+	 *
+	 * @since 3.5.0 | 15 JAN 2019 | Created.
+	 * @param void
+	 * @return string The URL which handles the revoke access action.
+	 *
+	 */
+	public function get_revoke_link() {
+		switch( $this->network ) {
+			case 'pinterest' :
+				return 'https://www.pinterest.com/settings#apps';
+			default:
+				return false;
+		}
 	}
 
 
