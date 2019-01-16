@@ -17,17 +17,21 @@
 class SWP_Credential_Helper {
 
 
+	private static $instance;
+
+
 	public function __construct() {
-
-
-		if ( !empty( $_GET['page'] ) == 'social-warfare' ) {
+		if ( !empty( $_GET['page'] ) && !empty( $_GET['network'] ) ) {
 			$this->options_page_scan_url();
 		}
 	}
 
 
 	public static function get_instance() {
-		return new SWP_Credential_Helper();
+		if ( empty( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
 
@@ -74,15 +78,10 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	public static function delete_token( $network, $field = 'access_token' ) {
-		$tokens = $this->get_authorizations();
+		$tokens = self::get_instance()->get_authorizations();
 		$network_key = base64_encode( $network );
 
-		if ( isset( $tokens[$network_key] ) ) {
-			unset( $tokens[$network_key][$field] );
-			return true;
-		}
-
-		return false;
+		return self::get_instance()->store_data( $network, $field, '' );
 	}
 
 
