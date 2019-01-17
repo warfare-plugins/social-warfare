@@ -594,10 +594,12 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	public function establish_authorizations() {
 		$authorizations = apply_filters( 'swp_authorizations', array() );
+
 		$authorization_options = array();
 
 		foreach ( $authorizations as $network_key) {
 			$instance = new SWP_Auth_Helper ( $network_key );
+
 
 			/**
 			 * We either have an access token for an authorized network,
@@ -610,9 +612,23 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$authorization_options[$network_key] = $option;
 			}
 			else {
-				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, 'button sw-green-button swp-revoke-button', '#' );
+				$link = $instance->get_revoke_link();
+				// @TODO This is the production code to use.
+				// if ( false == $link ) {
+				// 	continue;
+				// }
+				//
+
+				if ( false == $link ) {
+					$link = '';
+				}
+
+				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, 'button sw-green-button swp-revoke-button', $link );
 				$authorization_options[$network_key] = $option;
+
 			}
+
+
 		}
 
 
