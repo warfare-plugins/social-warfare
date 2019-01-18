@@ -107,28 +107,6 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * Load the plugin once the DOM has been loaded.
-	 *
-	 */
-	$(document).ready(function() {
-
-		// This is what fires up the entire plugin's JS functionality.
-		socialWarfare.initPlugin();
-
-
-		/**
-		 * On resize, we're going to purge and re-init the entirety of the
-		 * socialWarfare functions. This will fully reset all of the floating
-		 * buttons which will allow for a clean transition if the size change
-		 * causes the isMobile() check to flip from true to false or vica versa.
-		 *
-		 */
-		$(window).resize(socialWarfare.onWindowResize);
-
-	});
-
-
-	/**
 	 * This will cause our resize event to wait until the user is fully done
 	 * resizing the window prior to resetting and rebuilding the buttons and
 	 * their positioning and re-initializing the plugin JS functions.
@@ -1359,5 +1337,26 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.isMobile = function() {
 		return $(window).width() < socialWarfare.breakpoint;
 	}
+
+	/**
+	 * Load the plugin once the DOM has been loaded.
+	 *
+	 */
+	$(document).ready(function() {
+
+		// This is what fires up the entire plugin's JS functionality.
+		socialWarfare.initPlugin();
+
+
+		/**
+		 * On resize, we're going to purge and re-init the entirety of the
+		 * socialWarfare functions. This will fully reset all of the floating
+		 * buttons which will allow for a clean transition if the size change
+		 * causes the isMobile() check to flip from true to false or vica versa.
+		 *
+		 */
+		$(window).resize(socialWarfare.onWindowResize);
+
+	});
 
 })(this, jQuery);
