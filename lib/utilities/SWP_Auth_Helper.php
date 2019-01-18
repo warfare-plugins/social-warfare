@@ -133,6 +133,11 @@ class SWP_Auth_Helper {
 			return false;
 		}
 
+		$access_secret = SWP_Credential_Helper::get_token( $this->network, 'access_secret' );
+		if ( !empty( $access_secret ) ) {
+			$this->access_secret = $access_secret;
+		}
+
 		$this->access_token = $access_token;
 		return $this->has_credentials = true;
 	}
