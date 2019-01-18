@@ -27,10 +27,10 @@ class SWP_Shortcode {
 	 * @return none
 	 *
 	 */
-    public function __construct() {
+	public function __construct() {
 		add_shortcode( 'total_shares', array ( $this, 'post_total_shares' ) );
 		add_shortcode( 'sitewide_shares', array ( $this, 'sitewide_total_shares' ) );
-        add_shortcode( 'click_to_tweet', array( $this, 'click_to_tweet' ) );
+		add_shortcode( 'click_to_tweet', array( $this, 'click_to_tweet' ) );
 
 
 		/**
@@ -39,7 +39,7 @@ class SWP_Shortcode {
 		 * ones in the past. The ones above adhere to our code style guide.
 		 *
 		 */
-        add_shortcode( 'clickToTweet', array( $this, 'click_to_tweet' ) );
+		add_shortcode( 'clickToTweet', array( $this, 'click_to_tweet' ) );
 	}
 
 
@@ -85,15 +85,15 @@ class SWP_Shortcode {
 	}
 
 
-    /**
-     * The function to build the click to tweets
-     *
-     * @param  array $atts The shortcode key/value attributes.
-     * @return string The html of a click to tweet
-     *
-     */
-    function click_to_tweet( $atts ) {
-        global $post;
+	/**
+	 * The function to build the click to tweets
+	 *
+	 * @param  array $atts The shortcode key/value attributes.
+	 * @return string The html of a click to tweet
+	 *
+	 */
+	function click_to_tweet( $atts ) {
+		global $post;
 
 
 		/**
@@ -109,9 +109,9 @@ class SWP_Shortcode {
 		 *
 		*/
 		$url = '&url=' . SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
-        if ( strpos( $atts['tweet'], 'http' ) > -1 ) {
-            $url = '&url=x';
-        }
+		if ( strpos( $atts['tweet'], 'http' ) > -1 ) {
+			$url = '&url=x';
+		}
 
 
 		/**
@@ -124,7 +124,6 @@ class SWP_Shortcode {
 		$twitter_handle        = SWP_Utility::get_option( 'twitter_id' );
 		$author                = SWP_User_Profile::get_author( get_the_ID() );
 		$author_twitter_handle = get_the_author_meta( 'swp_twitter', $author );
-    	$post_twitter_handle   = get_post_meta( get_the_ID(), 'swp_twitter_username' , true );
 
 
 		/**
@@ -133,19 +132,7 @@ class SWP_Shortcode {
 		 *
 		 */
 		if ( false !== $author_twitter_handle ) {
-    		$twitter_handle = $author_twitter_handle;
-    	}
-
-
-		/**
-		 * If the user has input a Twitter username into a custom field called
-		 * 'swp_twitter_username' at the post level, then this will override
-		 * the global username and the author username and we'll use the post
-		 * level username instead.
-		 *
-		 */
-		if( false !== $post_twitter_handle ) {
-			$twitter_handle = $post_twitter_handle;
+			$twitter_handle = $author_twitter_handle;
 		}
 
 
@@ -169,9 +156,9 @@ class SWP_Shortcode {
 		 *
 		 */
 		$theme = SWP_Utility::get_option( 'ctt_theme' );
-    	if ( !empty( $atts['theme'] ) && $atts['theme'] != 'default' ) {
-    		$theme = $atts['theme'];
-    	}
+		if ( !empty( $atts['theme'] ) && $atts['theme'] != 'default' ) {
+			$theme = $atts['theme'];
+		}
 
 
 		/**
@@ -191,7 +178,7 @@ class SWP_Shortcode {
 		 * actual Click to Tweet.
 		 *
 		 */
-        $tweet = $this->get_tweet( $atts );
+		$tweet = $this->get_tweet( $atts );
 
 
 		/**
@@ -199,48 +186,48 @@ class SWP_Shortcode {
 		 * actual string of html that will be returned and output to the screen.
 		 *
 		 */
-        $html = '<div class="sw-tweet-clear"></div>';
-        $html .= '<a class="swp_CTT ' . $theme;
-        $html .= '" href="https://twitter.com/share?text=' . $tweet . $via . $url;
-        $html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via . $url;
-        $html .= '" rel="nofollow noreferrer noopener" target="_blank">';
-            $html .= '<span class="sw-click-to-tweet">';
-                $html .= '<span class="sw-ctt-text">';
-                    $html .= $atts['quote'];
-                $html .= '</span>';
-                $html .= '<span class="sw-ctt-btn">';
-                    $html .= __( 'Click To Tweet','social-warfare' );
-                    $html .= '<i class="sw swp_twitter_icon"></i>';
-            $html .= '</span>';
-            $html .= '</span>';
-        $html .= '</a>';
+		$html = '<div class="sw-tweet-clear"></div>';
+		$html .= '<a class="swp_CTT ' . $theme;
+		$html .= '" href="https://twitter.com/share?text=' . $tweet . $via . $url;
+		$html .= '" data-link="https://twitter.com/share?text=' . $tweet . $via . $url;
+		$html .= '" rel="nofollow noreferrer noopener" target="_blank">';
+			$html .= '<span class="sw-click-to-tweet">';
+				$html .= '<span class="sw-ctt-text">';
+					$html .= $atts['quote'];
+				$html .= '</span>';
+				$html .= '<span class="sw-ctt-btn">';
+					$html .= __( 'Click To Tweet','social-warfare' );
+					$html .= '<i class="sw swp_twitter_icon"></i>';
+			$html .= '</span>';
+			$html .= '</span>';
+		$html .= '</a>';
 
-    	return $html;
-    }
+		return $html;
+	}
 
-    /**
-     *
-     * Retrieves tweet from database and converts to UTF-8 for Twitter.
-     *
-     * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
-     * @param array $atts Shortcode attributes.
-     *
-     * @return string $tweet The encoded tweet text.
-     *
-     */
-    protected function get_tweet( $atts ) {
-        $max_tweet_length = 240;
+	/**
+	 *
+	 * Retrieves tweet from database and converts to UTF-8 for Twitter.
+	 *
+	 * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
+	 * @param array $atts Shortcode attributes.
+	 *
+	 * @return string $tweet The encoded tweet text.
+	 *
+	 */
+	protected function get_tweet( $atts ) {
+		$max_tweet_length = 240;
 
-        // Check for a custom tweet from the shortcode attributes. .
-        $tweet = $atts['tweet'];
+		// Check for a custom tweet from the shortcode attributes. .
+		$tweet = $atts['tweet'];
 
 		if ( function_exists( 'mb_convert_encoding' ) ) :
-	        $tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
+			$tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
 		endif;
 
-        $html_safe_tweet = htmlentities( $tweet, ENT_COMPAT, 'UTF-8' );
+		$html_safe_tweet = htmlentities( $tweet, ENT_COMPAT, 'UTF-8' );
 		$tweet = urlencode( $tweet );
 
-        return $tweet;
-    }
+		return $tweet;
+	}
 }
