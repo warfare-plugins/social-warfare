@@ -83,7 +83,7 @@ window.socialWarfare = window.socialWarfare || {};
  * still be able to access our functions and variables from anywhere.
  *
  */
-(function(window, $, jQuery) {
+(function(window, $) {
 	'use strict';
 
 	if ( typeof $ != 'function' ) {
@@ -93,7 +93,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		else {
 			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
-            return;
+			return;
 		}
 	}
 
@@ -415,9 +415,9 @@ window.socialWarfare = window.socialWarfare || {};
 			 *
 			 */
 			top = window.screenY + (window.innerHeight - height) / 2;
- 			left = window.screenX + (window.innerWidth - width) / 2;
- 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
- 			instance = window.open(href, network, windowAttributes);
+			 left = window.screenX + (window.innerWidth - width) / 2;
+			 windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+			 instance = window.open(href, network, windowAttributes);
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
@@ -715,7 +715,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 	socialWarfare.hasReferencePanel = function() {
 		return typeof socialWarfare.panels.staticHorizontal != 'undefined' &&
-		              socialWarfare.panels.staticHorizontal.length > 0
+					  socialWarfare.panels.staticHorizontal.length > 0
 	}
 
 
@@ -759,14 +759,14 @@ window.socialWarfare = window.socialWarfare || {};
 			newPadding += 50;
 			$(".nc_wrapper").show();
 
-            //* Compensate for the margin-top added to <html> by #wpadminbar.
+			//* Compensate for the margin-top added to <html> by #wpadminbar.
 			if (socialWarfare.isMobile() && location == 'top' && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", panel.parent().height());
 			}
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-        $("body").css(paddingProp, newPadding);
+		$("body").css(paddingProp, newPadding);
 	}
 
 
