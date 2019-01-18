@@ -100,12 +100,14 @@ class SWP_Database_Migration {
 			ksort( $meta );
 		}
 
-		$post_fields = array('ID', 'author', 'date_gmt', 'title', 'excerpt', 'status', 'type');
+		$post_fields = array('author', 'date_gmt', 'title', 'excerpt', 'status', 'type');
 
 		foreach( $post_fields as $field ) {
 			$key = "post_$field";
 			$meta["post_$field"] =  $post->$key;
 		}
+
+		$meta['\$post->ID'] = $post->ID;
 
 		$meta['post_permalink'] = get_permalink( $post->ID ) ;
 
