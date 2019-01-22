@@ -587,10 +587,26 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.toggleFloatingButtons = function() {
 
+
+		// If buttons are on the page, there must be either a static horizontal
+		if (socialWarfare.panels.staticHorizontal.length) {
+			var panel = socialWarfare.panels.staticHorizontal;
+		}
+
+		// Or a side floating panel.
+		else if (socialWarfare.panels.floatingSide.length) {
+			var panel = socialWarfare.panels.floatingSide;
+		}
+
+		else {
+			return;
+		}
+
 		// Adjust the floating bar
-		var location = socialWarfare.panels.staticHorizontal.data('float');
+		var location = panel.data('float');
+
 		if( true == socialWarfare.isMobile() ) {
-			var location = socialWarfare.panels.staticHorizontal.data('float-mobile');
+			var location = panel.data('float-mobile');
 		}
 
 		//* There are no floating buttons enabled, hide any that might exist.
