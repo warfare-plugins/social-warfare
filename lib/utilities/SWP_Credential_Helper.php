@@ -51,8 +51,7 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	public static function get_token( $network, $field = 'access_token' ) {
-		$tokens = self::get_authorizations();
-		$tokens = SWP_Credential_Helper::get_instance()->get_authorizations();
+		$tokens = self::get_instance()->get_authorizations();
 		$network_key = base64_encode( $network );
 
 		if ( empty ( $tokens[$network_key] ) ) {
@@ -154,7 +153,7 @@ class SWP_Credential_Helper {
 	 * @return array  					The authorizations, or an empty array.
 	 *
 	 */
-	private function get_authorizations() {
+	public function get_authorizations() {
 		$encoded_tokens = get_option( 'swp_authorizations', array() );
 		if ( empty( $encoded_tokens ) ) {
 			return array();
@@ -176,7 +175,7 @@ class SWP_Credential_Helper {
 	 * @return bool  					True iff the options were successfully updated.
 	 *
 	 */
-	private function update_authorizations( $raw_tokens ) {
+	public function update_authorizations( $raw_tokens ) {
 		if ( !is_array( $raw_tokens ) ) {
 			error_log( 'SWP_Credential_Helper->update_options() requires parameter 1 to be an array.' );
 			return false;
