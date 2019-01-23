@@ -170,10 +170,15 @@ class SWP_Auth_Helper {
 	 * @return string The URL which handles the revoke access action.
 	 *
 	 */
-	public function get_revoke_link() {
+	public function get_revoke_access_url() {
 		switch( $this->network ) {
+
 			case 'pinterest' :
 				return 'https://www.pinterest.com/settings#apps';
+
+			case 'twitter' :
+				return 'https://twitter.com/settings/sessions';
+
 			default:
 				return false;
 		}
