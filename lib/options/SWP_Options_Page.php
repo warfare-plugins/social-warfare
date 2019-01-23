@@ -612,13 +612,20 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$authorization_options[$network_key] = $option;
 			}
 			else {
-				$link = $instance->get_revoke_link();
+				$link = $instance->get_revoke_access_url();
 				// @TODO This is the production code to use.
+				//
+				// /**
+				//  * This network does not provide a direct link to revoke access.
+				//  * The user needs to manually revoke from within their dashboard.
+				//  *
+				//  */
 				// if ( false == $link ) {
 				// 	continue;
 				// }
 				//
 
+				// This is temp code for development.
 				if ( false == $link ) {
 					$link = '';
 				}
