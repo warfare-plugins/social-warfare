@@ -132,7 +132,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$authorizations  = $this->establish_authorizations();
 		if ( count( $authorizations ) > 0 ) {
 
-			$auths = new SWP_Options_Page_Section( __( 'Social Network Authorization', 'social-warfare' ), 'addon_authorizations' );
+			$auths = new SWP_Options_Page_Section( __( 'Social Network Connection', 'social-warfare' ), 'addon_authorizations' );
 			$auths->set_priority( 20 );
 
 				foreach( $authorizations as $auth ) {
