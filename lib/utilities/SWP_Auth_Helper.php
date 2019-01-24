@@ -161,9 +161,11 @@ class SWP_Auth_Helper {
 		return add_query_arg('return_address', admin_url('?page=social-warfare'), $request_url);
 	}
 
+
 	/**
-	 * The target URL that either prompts the user to revoke API access,
-	 * or the goes to the network-native UI for reovking access.
+	 * Provides a URL to revoke access to connected apps.
+	 *
+	 * Requires that the user already be logged in to the network.
 	 *
 	 * @since 3.5.0 | 15 JAN 2019 | Created.
 	 * @param void
@@ -173,11 +175,23 @@ class SWP_Auth_Helper {
 	public function get_revoke_access_url() {
 		switch( $this->network ) {
 
+			case 'facebook' :
+				return 'https://www.facebook.com/settings?tab=applications';
+
+			case 'instagram' :
+				return 'https://www.instagram.com/accounts/manage_access/';
+
 			case 'pinterest' :
 				return 'https://www.pinterest.com/settings#apps';
 
 			case 'twitter' :
 				return 'https://twitter.com/settings/sessions';
+
+			case 'tumblr' :
+				return 'https://www.tumblr.com/settings/apps';
+
+			case 'vimeo' :
+				return 'https://vimeo.com/settings/apps';
 
 			default:
 				return false;
