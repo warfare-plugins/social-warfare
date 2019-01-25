@@ -17,40 +17,7 @@
 class SWP_Credential_Helper {
 
 
-	private static $instance;
-
-	/**
-	 * Sets up URL hooks.
-	 *
-	 * At the time of writing, the only instance of this class is held in
-	 * SWP_Options_Page.
-	 *
-	 * @since 3.5.0 | 10 JAN 2019 | Created.
-	 * @param void
-	 * @return void
-	 *
-	 */
-	public function __construct() {
-		if ( !empty( $_GET['page'] ) && !empty( $_GET['network'] ) ) {
-			$this->options_page_scan_url();
-		}
-
-	}
-
-	/**
-	 * Utility method for using the only single instance of this class.
-	 *
-	 * @since 3.5.0 | 10 JAN 2019 | Created.
-	 * @param void
-	 * @return void
-	 *
-	 */
-	public static function get_instance() {
-		if ( empty( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
+	public static $swp_authorizations;
 
 
 	/**
@@ -68,20 +35,23 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	public static function get_token( $network, $field = 'access_token' ) {
-		$tokens = self::get_instance()->get_authorizations();
-		$network_key = base64_encode( $network );
+		$encoded_tokens = self::get_authorizations();
+		$encoded_key = base64_encode( $network );
+		$encoded_field = base64_encode( $field );
 
-		if ( empty ( $tokens[$network_key] ) ) {
+		// We do not have any data for this network.
+		if ( empty ( $encoded_tokens[$encoded_key] ) ) {
 			return false;
 		}
 
 
-		if ( !empty( $tokens[$network_key][$field] ) ) {
-			$encoded_token = $tokens[$network_key][$field];
-			return false;
+		if ( !empty( $encoded_tokens[$encoded_key][$encoded_field] ) ) {
+			$encoded_token = $encoded_tokens[$encoded_key][$encoded_field];
+			return base64_decode( $encoded_token );
 		}
 
-		return base64_decode( $encoded_token );
+		// We do not have the requested type of token for this network.
+		return false;
 	}
 
 
@@ -95,10 +65,8 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	public static function delete_token( $network, $field = 'access_token' ) {
-		$tokens = self::get_instance()->get_authorizations();
-		$network_key = base64_encode( $network );
-
-		return self::get_instance()->store_data( $network, $field, '' );
+		// No encoding/decoding necessary. It is handled in store_data.
+		return self::store_data( $network, $field, '' );
 	}
 
 
@@ -116,18 +84,46 @@ class SWP_Credential_Helper {
 	 * @return void
 	 *
 	 */
-	protected function options_page_scan_url() {
-		$network = $_GET['network'];
+	public static function options_page_scan_url() {
+		if ( empty( $_GET['network'] ) || empty( $_GET['access_token'] ) ) {
+			return false;
+		}
 
 		// We have a new access_token.
-		if ( isset( $_GET['access_token'] ) ) {
-			$this->store_data( $network, 'access_token', $_GET['access_token'] );
+		$network = $_GET['network'];
+		self::store_data( $network, 'access_token', $_GET['access_token'] );
+
+		// Not every network uses access_secret.
+		if ( isset( $_GET['access_secret'] ) ) {
+			self::store_data( $network, 'access_secret', $_GET['access_secret'] );
+		}
+	}
+
+
+	/**
+	 * Fetches and prepares options for use by SWP_Credential_Helper.
+	 *
+	 * The encoding is not secure, but it obfuscates the data.
+	 *
+	 * @since 3.5.0 | 10 JAN 2018 | Created.
+	 * @param  array $authorizations	The data to store.
+	 * @return array  					The authorizations, or an empty array.
+	 *
+	 */
+	public static function get_authorizations() {
+		if ( !empty( self::$swp_authorizations ) ) {
+			return self::$swp_authorizations;
 		}
 
-		// We have a new access_secret.
-		if ( isset( $_GET['access_secret'] ) ) {
-			$this->store_data( $network, 'access_secret', $_GET['access_secret'] );
+		$encoded_json = get_option( 'swp_authorizations', array() );
+		if ( empty( $encoded_json ) ) {
+			return array();
 		}
+
+		$encoded_tokens = json_decode( base64_decode( $encoded_json ), true );
+		self::$swp_authorizations = $encoded_tokens;
+
+		return $encoded_tokens;
 	}
 
 
@@ -145,38 +141,26 @@ class SWP_Credential_Helper {
 	 * @return bool  			True iff updated, else false.
 	 *
 	 */
-	protected function store_data( $network, $field, $data ) {
-		$network_key = base64_encode( $network );
+	public static function store_data( $network, $field, $data ) {
+		$encoded_key = base64_encode( $network );
+		$encoded_field = base64_encode( $field );
+		$encoded_data = base64_encode( $data );
 
-		$tokens = $this->get_authorizations();
+		$encoded_tokens = self::get_authorizations();
 
-		if ( empty( $tokens[$network_key] ) ) {
-			$tokens[$network_key] = array();
+		/**
+		 * A network may have both an access key and access secret.
+		 * Setting $tokens[$network_key] as an array keeps the network
+		 * open for arbitrary data storage.
+		 *
+		 */
+		if ( empty( $encoded_tokens[$encoded_key] ) ) {
+			$encoded_tokens[$encoded_key] = array();
 		}
 
-		$tokens[$network_key][$field] = base64_encode( $data );
+		$encoded_tokens[$encoded_key][$encoded_field] = $encoded_data;
 
-		return $this->update_authorizations( $tokens );
-	}
-
-
-	/**
-	 * Fetches and prepares options for use by SWP_Credential_Helper.
-	 *
-	 * The encoding is not secure, but it obfuscates the data.
-	 *
-	 * @since 3.5.0 | 10 JAN 2018 | Created.
-	 * @param  array $authorizations	The data to store.
-	 * @return array  					The authorizations, or an empty array.
-	 *
-	 */
-	public function get_authorizations() {
-		$encoded_tokens = get_option( 'swp_authorizations', array() );
-		if ( empty( $encoded_tokens ) ) {
-			return array();
-		}
-
-		return json_decode( base64_decode( $encoded_tokens ), true );
+		return self::update_authorizations( $encoded_tokens );
 	}
 
 
@@ -190,13 +174,15 @@ class SWP_Credential_Helper {
 	 * @return bool  					True iff the options were successfully updated.
 	 *
 	 */
-	public function update_authorizations( $raw_tokens ) {
-		if ( !is_array( $raw_tokens ) ) {
+	public static function update_authorizations( $encoded_tokens ) {
+		if ( !is_array( $encoded_tokens ) ) {
 			error_log( 'SWP_Credential_Helper->update_options() requires parameter 1 to be an array.' );
 			return false;
 		}
 
-		$encoded_tokens = base64_encode( json_encode( $raw_tokens ) );
-		return update_option( 'swp_authorizations', $encoded_tokens );
+		$encoded_json = base64_encode( json_encode( $encoded_tokens ) );
+
+		self::$swp_authorizations = $encoded_tokens;
+		return update_option( 'swp_authorizations', $encoded_json );
 	}
 }
