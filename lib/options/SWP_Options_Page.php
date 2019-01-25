@@ -924,7 +924,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	public function delete_network_tokens() {
 		$network = $_POST['network'];
-		error_log('Deleting tokens for network ' . $network);
 		SWP_Credential_Helper::delete_token($network);
 		SWP_Credential_Helper::delete_token($network, 'access_secret');
 	}
