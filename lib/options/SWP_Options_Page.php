@@ -106,6 +106,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		// Checks the URL for a new access_token.
 		SWP_Credential_Helper::options_page_scan_url();
+
+		add_action( 'wp_ajax_swp_delete_network_tokens', array( $this, 'delete_network_tokens' ) );
 	}
 
 
@@ -909,5 +911,21 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$container .= '</div>';
 
 		return $container;
+	}
+
+
+	/**
+	 * Called when a 'Revoke Access' button is clicked on the Social Identity tab.
+	 *
+	 * @since 3.5.0 | 25 JAN 2019 | Created.
+	 * @param void
+	 * @return void
+	 *
+	 */
+	public function delete_network_tokens() {
+		$network = $_POST['network'];
+		error_log('Deleting tokens for network ' . $network);
+		SWP_Credential_Helper::delete_token($network);
+		SWP_Credential_Helper::delete_token($network, 'access_secret');
 	}
 }
