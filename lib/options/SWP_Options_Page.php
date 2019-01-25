@@ -613,31 +613,22 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$link = $instance->get_revoke_access_url();
 
 				/**
-				 * JavaScript needs to delete the toens on button click.
+				 * JavaScript needs to delete the tokens when this button is clicked.
 				 * The SWP_Option_Button does not provide access for data-attributes,
 				 * so we'll hack together a CSS classname to parse in JS.
 				 *
 				 */
 				$js_class = 'swp-network-'.$network_key;
 
-				// @TODO This is the production code to use.
-				//
-				// /**
-				//  * This network does not provide a direct link to revoke access.
-				//  * The user needs to manually revoke from within their dashboard.
-				//  *
-				//  */
-				// if ( false == $link ) {
-				// 	continue;
-				// }
-				//
-
 				// This is temp code for development.
 				if ( false == $link ) {
 					$link = '';
 				}
 
-				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, "button sw-green-button swp-revoke-button $js_class", $link );
+				$name = 'Revoke access for ' . ucfirst ( $network_key );
+				$class = "button sw-green-button swp-revoke-button $js_class";
+				$option = new SWP_Option_Button( $name, $network_key, $class, $link, true );
+
 				$authorization_options[$network_key] = $option;
 			}
 
