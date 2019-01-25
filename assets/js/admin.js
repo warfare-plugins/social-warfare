@@ -450,13 +450,11 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		 jQuery.post({
 			 url: ajaxurl,
 			 data: {
-				 action: 'delete_token',
+				 action: 'swp_delete_network_tokens',
 				 network: network
 			 },
-			 complete: window.location.reload
+			 complete: function() {window.location.reload(true)}
 		 });
-
-
 	}
 
 
