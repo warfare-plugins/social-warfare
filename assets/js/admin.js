@@ -137,13 +137,13 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	if (typeof jQuery != 'function') {
 		// moving here until we refactor and use $ agian.
 		console.log("Social Warfare requires jQuery, or jQuery as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
-        return;
+		return;
 
 		if (typeof jQuery == 'function') {
 			jQuery = jQuery;
 		}
 		else if (typeof window.jQuery == 'function') {
-		    jQuery = window.jQuery
+			jQuery = window.jQuery
 		}
 
 		else {
@@ -295,7 +295,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				//* Only include child elements with the correct type.
 				var children = jQuery(container).find(className)
 												.filter(function(index, child) {
-												    return jQuery(child).hasClass(type)
+													return jQuery(child).hasClass(type)
 												})
 				if (children.length) {
 					var wrap = jQuery(container).find(className + '-wrap');
@@ -349,7 +349,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		});
 	}
 
-    //* This method exists ONLY for version 3.4.1 of Social Warfare.
+	//* This method exists ONLY for version 3.4.1 of Social Warfare.
 	//* The next version should have a more long-term sustainable way to manage
 	//* post-editor fields with dependencies.
 	function setTempConditionalField() {
@@ -389,13 +389,13 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 
 		putFieldsInContainers();
 
-        //* Metabox is loaded via Ajax, but we want to resize known images ASAP.
+		//* Metabox is loaded via Ajax, but we want to resize known images ASAP.
 		//* Even a couple extra times if need be.
 		setTimeout(socialWarfareAdmin.resizeImageFields, 600);
 		setTimeout(socialWarfareAdmin.resizeImageFields, 1400);
 		setTimeout(socialWarfareAdmin.resizeImageFields, 3000);
 
-        //* Begin Temp code only for 3.4.1
+		//* Begin Temp code only for 3.4.1
 		var status = jQuery("#swp_twitter_use_open_graph").val()
 		if (status == 'false') {
 			jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
@@ -412,14 +412,62 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		jQuery("#social_warfare.postbox").show();
 	}
 
-    //* These elements are only created once an image exists
+	//* These elements are only created once an image exists
 	socialWarfareAdmin.addImageEditListeners = function() {
 		jQuery('.swpmb-edit-media, .swpmb-remove-media').off(socialWarfareAdmin.resizeImageFields);
 		jQuery('.swpmb-edit-media, .swpmb-remove-media').on(socialWarfareAdmin.resizeImageFields);
 	}
 
+	socialWarfareAdmin.revokeNetworkConnection = function(event) {
+		var button, index, networkAndTail, network;
+		button = event.target;
+		// The network is stored in a classname `swp-network-$network`.
+		console.log('target object', button)
+
+		// First find the target class, then parse that class for a network name.
+		index = button.className.indexOf('swp-network');
+		index = 1 + button.className.indexOf('-', 4+index);
+
+		networkAndTail = button.className.slice(index);
+
+		index = networkAndTail.indexOf(' ');
+
+		if ( -1 == index ) {
+			// This was the last class in the selector
+			network = networkAndTail;
+		}
+
+		else {
+			// There are more classes after the selector.
+			network = networkAndTail.slice(0, index)
+		}
+
+		/**
+		 *  The disconnect URL opens in a new tab. While the user is distracted,
+		 *  make an ajax request to delete these credentials and reload the page.
+		 */
+
+		 jQuery.post({
+			 url: ajaxurl,
+			 data: {
+				 action: 'delete_token',
+				 network: network
+			 },
+			 complete: window.location.reload
+		 });
+
+
+	}
+
+
+	socialWarfareAdmin.addEventListeners = function() {
+		$('.swp-revoke-button').on('click', socialWarfareAdmin.revokeNetworkConnection)
+	}
+
 	jQuery(document).ready(function() {
 		noticeClickHandlers();
+		socialWarfareAdmin.addEventListeners();
+
 
 		if (jQuery('#social_warfare.postbox').length) {
 			createTextCounters();
