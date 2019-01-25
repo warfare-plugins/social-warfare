@@ -24,8 +24,9 @@ class SWP_Option_Button extends SWP_Option {
 	* @param string $name The display name for the toggle.
 	* @param string $key The database key for the user setting.
 	*/
-	public function __construct( $name, $key, $class, $link ) {
+	public function __construct( $name, $key, $class, $link, $new_tab = false ) {
 		parent::__construct( $name, $key );
+		$this->new_tab = $new_tab;
 		$this->link = isset( $link ) ? $link : '';
 		$this->class = isset( $class ) ? $class : '';
 
@@ -48,6 +49,8 @@ class SWP_Option_Button extends SWP_Option {
 	* @return SWP_Option_Toggle $this The calling object, for method chaining.
 	*/
 	public function render_HTML() {
+		$target = $this->new_tab ? 'target="_blank"' : '';
+
 		$html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
 		$html .= $this->render_premium();
@@ -60,7 +63,7 @@ class SWP_Option_Button extends SWP_Option {
 			$html .= '<div class="sw-grid ' . $this->size . '">';
 				if ( !empty( $this->link ) ) {
 					// Apply a wrapper anchor tag.
-					$html .= '<a href="' . $this->link .'" class="' . $this->class . '">' ;
+					$html .= '<a href="' . $this->link .'" class="' . $this->class . '" ' . $target .'>' ;
 					$html .= '<div id="' . strtolower($this->key) . '" field="#' . $this->key . '">' . $this->name . '</div>';
 					$html .= '</a>';
 				}
