@@ -54,16 +54,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	 * A utility for reading access tokens.
-	 *
-	 * When instantiated, the helper checks the URL for new access_token grants.
-	 *
-	 * @var object $credential_helper;
-	 */
-	public $credential_helper;
-
-
-	/**
 	 * The magic construct method to instatiate the options object.
 	 *
 	 * This class method provides the framework for the entire options page.
@@ -79,7 +69,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	public function __construct() {
 		// Create a 'tabs' object to which we can begin adding tabs.
 		$this->tabs = new stdClass();
-		$this->credential_helper = new SWP_Credential_Helper();
 
 
 		/**
@@ -113,6 +102,10 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		 *
 		 */
 		add_action( 'admin_menu', array( $this, 'options_page') );
+
+
+		// Checks the URL for a new access_token.
+		SWP_Credential_Helper::options_page_scan_url();
 	}
 
 
@@ -600,19 +593,33 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		foreach ( $authorizations as $network_key) {
 			$instance = new SWP_Auth_Helper ( $network_key );
 
+			$access_token = $instance->get_access_token();
+
+
 
 			/**
 			 * We either have an access token for an authorized network,
 			 * Or we need to get one.
 			 *
 			 */
-			if ( !$instance->has_credentials ) {
+			if ( false == $access_token ) {
 				$link = $instance->get_authorization_link();
 				$option = new SWP_Option_Button( 'Authorize ' . ucfirst( $network_key ), $network_key, 'button sw-navy-button swp-authorization-button', $link );
 				$authorization_options[$network_key] = $option;
+
 			}
 			else {
+				// Provide the option to revoke the connection.
 				$link = $instance->get_revoke_access_url();
+
+				/**
+				 * JavaScript needs to delete the toens on button click.
+				 * The SWP_Option_Button does not provide access for data-attributes,
+				 * so we'll hack together a CSS classname to parse in JS.
+				 *
+				 */
+				$js_class = 'swp-network-'.$network_key;
+
 				// @TODO This is the production code to use.
 				//
 				// /**
@@ -630,9 +637,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					$link = '';
 				}
 
-				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, 'button sw-green-button swp-revoke-button', $link );
+				$option = new SWP_Option_Button( 'Revoke access for ' . ucfirst ( $network_key ), $network_key, "button sw-green-button swp-revoke-button $js_class", $link );
 				$authorization_options[$network_key] = $option;
-
 			}
 
 
