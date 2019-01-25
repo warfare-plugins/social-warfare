@@ -19,14 +19,32 @@ class SWP_Credential_Helper {
 
 	private static $instance;
 
-
+	/**
+	 * Sets up URL hooks.
+	 *
+	 * At the time of writing, the only instance of this class is held in
+	 * SWP_Options_Page.
+	 *
+	 * @since 3.5.0 | 10 JAN 2019 | Created.
+	 * @param void
+	 * @return void
+	 *
+	 */
 	public function __construct() {
 		if ( !empty( $_GET['page'] ) && !empty( $_GET['network'] ) ) {
 			$this->options_page_scan_url();
 		}
+
 	}
 
-
+	/**
+	 * Utility method for using the only single instance of this class.
+	 *
+	 * @since 3.5.0 | 10 JAN 2019 | Created.
+	 * @param void
+	 * @return void
+	 *
+	 */
 	public static function get_instance() {
 		if ( empty( self::$instance ) ) {
 			self::$instance = new self();
@@ -41,8 +59,7 @@ class SWP_Credential_Helper {
 	 * We use base64_encode so that no network name or token is stored as
 	 * plaintext in the database.
 	 *
-	 * This is not the same as hashing it like a password, as a malicious user
-	 * could base64_decode any data in these fields to get the original values.
+	 * This is not the same as hashing it like a password.
 	 *
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
 	 * @param  string $network The host service that provided the token.
@@ -58,8 +75,9 @@ class SWP_Credential_Helper {
 			return false;
 		}
 
-		$encoded_token = $tokens[$network_key][$field];
-		if ( empty( $encoded_token ) ) {
+
+		if ( !empty( $tokens[$network_key][$field] ) ) {
+			$encoded_token = $tokens[$network_key][$field];
 			return false;
 		}
 
@@ -99,26 +117,27 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	protected function options_page_scan_url() {
+		$network = $_GET['network'];
+
 		// We have a new access_token.
-		if ( isset( $_GET['network'] )  && isset( $_GET['access_token'] ) ) {
-			$updated = $this->store_data( $_GET['network'], 'access_token', $_GET['access_token'] );
+		if ( isset( $_GET['access_token'] ) ) {
+			$this->store_data( $network, 'access_token', $_GET['access_token'] );
 		}
 
 		// We have a new access_secret.
-		if ( isset( $_GET['network'] ) && isset( $_GET['access_secret'] ) ) {
-			$this->store_data( $_GET['network'], 'access_secret', $_GET['access_secret'] );
+		if ( isset( $_GET['access_secret'] ) ) {
+			$this->store_data( $network, 'access_secret', $_GET['access_secret'] );
 		}
 	}
 
 
 	/**
-	 * Retrieve a token granted by a third party service.
+	 * Save a token granted by a third party service.
 	 *
 	 * We use base64_encode so that no network name or token is stored as
 	 * plaintext in the database.
 	 *
-	 * This is not the same as hashing it like a password, as a malicious user
-	 * could base64_decode any data in these fields to get the original values.
+	 * This is not the same as hashing it like a password.
 	 *
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
 	 * @param  string $network 	The host service that provided the token.
@@ -142,13 +161,11 @@ class SWP_Credential_Helper {
 
 
 	/**
-	 * Fetches and prepares options for use by $this.
+	 * Fetches and prepares options for use by SWP_Credential_Helper.
 	 *
-	 * The encoding is not secure, but it obfuscates the data. This makes it
-	 * more difficult for malicious to access sensitive information.
+	 * The encoding is not secure, but it obfuscates the data.
 	 *
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
-	 * @access private	Any other function that wants this data needs to use other helper methods.
 	 * @param  array $authorizations	The data to store.
 	 * @return array  					The authorizations, or an empty array.
 	 *
@@ -166,11 +183,9 @@ class SWP_Credential_Helper {
 	/**
 	 * Encodes and stores the options in the database.
 	 *
-	 * The encoding is not secure, but it obfuscates the data. This makes it
-	 * more difficult for malicious to access sensitive information.
+	 * The encoding is not secure, but it obfuscates the data.
 	 *
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
-	 * @access private	Any other function that wants this data needs to use other helper methods.
 	 * @param  array $authorizations	The data to store.
 	 * @return bool  					True iff the options were successfully updated.
 	 *
