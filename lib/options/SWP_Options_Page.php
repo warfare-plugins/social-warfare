@@ -1,8 +1,4 @@
 <?php
-//* For options whose database name has changed, it is notated as follows:
-//* prevOption => new_option
-//* @see SWP_Database_Migration
-
 /**
 * The core Social Warfare admin settings page.
 *

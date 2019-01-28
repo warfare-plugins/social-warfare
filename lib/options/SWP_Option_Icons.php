@@ -1,5 +1,4 @@
 <?PHP
-
 /**
  * SWP_Option_Icons: The class used to display available netowrks on the options
  * page.
@@ -217,7 +216,6 @@ class SWP_Option_Icons extends SWP_Option {
 		endif;
 
 		$html .= '></i>';
-
 
 		return $html;
 	}
