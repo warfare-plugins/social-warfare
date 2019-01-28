@@ -134,11 +134,17 @@ class SWP_Option_Icons extends SWP_Option {
 			$html .= '<div class="sw-active sw-buttons-sort">';
 
 			foreach( $user_icons as $network_key ) {
-
-				 // The user no longer has the addon with this $network_key.
-				if ( !in_array( $network_key, $all_networks) ) {
+				// The user no longer has the addon with this $network_key.
+				if ( !array_key_exists( $network_key, $all_networks ) ) {
 					continue;
 				}
+
+				$network = $all_networks[$network_key];
+
+				if ( false == $network->active ) {
+					continue;
+				}
+
 				$html .= $this->render_icon_HTML( $all_networks[$network_key] );
 			}
 
@@ -178,13 +184,12 @@ class SWP_Option_Icons extends SWP_Option {
 		$html .=  '<div class="sw-grid sw-col-620 sw-fit">';
 			$html .=  '<div class="sw-inactive sw-buttons-sort">';
 
-			if ( count( $inactive_icons) > 0 ) :
-				foreach( $inactive_icons as $network_key) {
-					$network = $all_networks[$network_key];
+			foreach( $inactive_icons as $network_key) {
+				$network = $all_networks[$network_key];
 
-					$html .= $this->render_icon_HTML( $network );
-				}
-			endif;
+
+				$html .= $this->render_icon_HTML( $network );
+			}
 
 			$html .= '</div>';
 		$html .= '</div>';
