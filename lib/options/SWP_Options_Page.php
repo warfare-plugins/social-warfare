@@ -589,30 +589,26 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	public function establish_authorizations() {
 		$authorizations = apply_filters( 'swp_authorizations', array() );
-
 		$authorization_options = array();
 
+		// Set up an 'Authorize' or 'Disconnect' button for social network oAuth.
 		foreach ( $authorizations as $network_key) {
-			$instance = new SWP_Auth_Helper ( $network_key );
 
+			$instance = new SWP_Auth_Helper ( $network_key );
 			$access_token = $instance->get_access_token();
 
-
-
-			/**
-			 * We either have an access token for an authorized network,
-			 * Or we need to get one.
-			 *
-			 */
+			// No access tokens exists for this network.
 			if ( false == $access_token ) {
 				$link = $instance->get_authorization_link();
-				$option = new SWP_Option_Button( 'Authorize ' . ucfirst( $network_key ), $network_key, 'button sw-navy-button swp-authorization-button', $link );
+				$display_text = 'Authorize ' . ucfirst( $network_key );
+				$option = new SWP_Option_Button( $display_text, $network_key, 'button sw-green-button swp-authorization-button', $link );
 				$authorization_options[$network_key] = $option;
-
 			}
+
+			// Provide the option to revoke the connection.
 			else {
-				// Provide the option to revoke the connection.
 				$link = $instance->get_revoke_access_url();
+				$display_text = 'Disconnect ' . ucfirst ( $network_key );
 
 				/**
 				 * JavaScript needs to delete the tokens when this button is clicked.
@@ -621,19 +617,11 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				 *
 				 */
 				$js_class = 'swp-network-'.$network_key;
-
-				// This is temp code for development.
-				if ( false == $link ) {
-					$link = '';
-				}
-
-				$name = 'Revoke access for ' . ucfirst ( $network_key );
-				$class = "button sw-green-button swp-revoke-button $js_class";
-				$option = new SWP_Option_Button( $name, $network_key, $class, $link, true );
+				$class = "button sw-navy-button swp-revoke-button $js_class";
+				$option = new SWP_Option_Button( $display_text, $network_key, $class, $link, true );
 
 				$authorization_options[$network_key] = $option;
 			}
-
 
 		}
 
