@@ -133,11 +133,14 @@ class SWP_Option_Icons extends SWP_Option {
 		$html .= '<div class="sw-grid sw-col-620 sw-fit">';
 			$html .= '<div class="sw-active sw-buttons-sort">';
 
-			if ( count( $user_icons ) > 0 ) :
-				foreach( $user_icons as $network_key ) {
-					$html .= $this->render_icon_HTML( $all_networks[$network_key] );
+			foreach( $user_icons as $network_key ) {
+
+				 // The user no longer has the addon with this $network_key.
+				if ( !in_array( $network_key, $all_networks) ) {
+					continue;
 				}
-			endif;
+				$html .= $this->render_icon_HTML( $all_networks[$network_key] );
+			}
 
 			$html .= '</div>';
 		$html .= '</div>';
