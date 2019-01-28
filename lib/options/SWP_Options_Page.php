@@ -602,7 +602,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$link = $instance->get_authorization_link();
 				$display_text = 'Authorize ' . ucfirst( $network_key );
 				$option = new SWP_Option_Button( $display_text, $network_key, 'button sw-green-button swp-authorization-button', $link );
-				$authorization_options[$network_key] = $option;
+
 			}
 
 			// Provide the option to revoke the connection.
@@ -620,8 +620,10 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$class = "button sw-navy-button swp-revoke-button $js_class";
 				$option = new SWP_Option_Button( $display_text, $network_key, $class, $link, true );
 
-				$authorization_options[$network_key] = $option;
 			}
+
+			$option->set_size( 'sw-col-300' );
+			$authorization_options[$network_key] = $option;
 
 		}
 
