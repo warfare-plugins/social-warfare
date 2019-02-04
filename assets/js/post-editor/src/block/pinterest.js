@@ -8,8 +8,7 @@ const timeout = (+new Date) + 10000;
 //* The socialWarfare object does not exist at the time this file is loaded, so wait for it first.
 const checker = setInterval(() => {
 	if (+new Date > timeout) clearTimeout(checker);
-	if (!socialWarfare) return;
-
+	if (typeof socialWarfare == 'undefined') return;
 	clearInterval(checker);
 	if ( !socialWarfare.addons || !socialWarfare.addons.includes('pro') ) {
 		return;
@@ -22,12 +21,12 @@ const checker = setInterval(() => {
 	const icon = (<div className="swp-block-icon">
 					<svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" >
 						<g>
-						    <path fill="#cd2029" d="M16,3.9C9.3,3.9,3.9,9.3,3.9,16c0,4.9,3,9.2,7.2,11.1c0-0.8,0-1.9,0.2-2.8c0.2-1,1.6-6.6,1.6-6.6
-						        s-0.4-0.8-0.4-1.9c0-1.8,1-3.1,2.3-3.1c1.1,0,1.6,0.8,1.6,1.8c0,1.1-0.7,2.8-1.1,4.3c-0.3,1.3,0.6,2.3,1.9,2.3
-						        c2.3,0,3.8-2.9,3.8-6.4c0-2.6-1.8-4.6-5-4.6c-3.7,0-5.9,2.7-5.9,5.8c0,1.1,0.3,1.8,0.8,2.4c0.2,0.3,0.3,0.4,0.2,0.7
-						        c-0.1,0.2-0.2,0.8-0.2,1c-0.1,0.3-0.3,0.4-0.6,0.3c-1.7-0.7-2.5-2.5-2.5-4.6c0-3.4,2.9-7.5,8.6-7.5c4.6,0,7.6,3.3,7.6,6.9
-						        c0,4.7-2.6,8.3-6.5,8.3c-1.3,0-2.5-0.7-2.9-1.5c0,0-0.7,2.8-0.9,3.3c-0.3,0.9-0.8,1.9-1.2,2.6c1.1,0.3,2.2,0.5,3.4,0.5
-						        c6.7,0,12.1-5.4,12.1-12.1C28.1,9.3,22.7,3.9,16,3.9z"/>
+							<path fill="#cd2029" d="M16,3.9C9.3,3.9,3.9,9.3,3.9,16c0,4.9,3,9.2,7.2,11.1c0-0.8,0-1.9,0.2-2.8c0.2-1,1.6-6.6,1.6-6.6
+								s-0.4-0.8-0.4-1.9c0-1.8,1-3.1,2.3-3.1c1.1,0,1.6,0.8,1.6,1.8c0,1.1-0.7,2.8-1.1,4.3c-0.3,1.3,0.6,2.3,1.9,2.3
+								c2.3,0,3.8-2.9,3.8-6.4c0-2.6-1.8-4.6-5-4.6c-3.7,0-5.9,2.7-5.9,5.8c0,1.1,0.3,1.8,0.8,2.4c0.2,0.3,0.3,0.4,0.2,0.7
+								c-0.1,0.2-0.2,0.8-0.2,1c-0.1,0.3-0.3,0.4-0.6,0.3c-1.7-0.7-2.5-2.5-2.5-4.6c0-3.4,2.9-7.5,8.6-7.5c4.6,0,7.6,3.3,7.6,6.9
+								c0,4.7-2.6,8.3-6.5,8.3c-1.3,0-2.5-0.7-2.9-1.5c0,0-0.7,2.8-0.9,3.3c-0.3,0.9-0.8,1.9-1.2,2.6c1.1,0.3,2.2,0.5,3.4,0.5
+								c6.7,0,12.1-5.4,12.1-12.1C28.1,9.3,22.7,3.9,16,3.9z"/>
 						</g>
 					</svg>
 				</div>);
@@ -94,7 +93,7 @@ const checker = setInterval(() => {
 				//* Create the attribute="value" string for the shortcode.
 				const attributeString = Object.entries(props.attributes).reduce((string, [attr, value]) => {
 					if (!value.length || typeof value == 'undefined') return string;
-	                return string += ` ${attr}="${value}"`
+					return string += ` ${attr}="${value}"`
 				}, '');
 
 				return (
@@ -110,47 +109,50 @@ const checker = setInterval(() => {
 
 			//* Active state
 			return (
-				<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
-					<div className="head" onClick={toggleFocus}>
-					    <div>
-						    {icon}
-							<p className="swp-block-title">Pinterest Image</p>
+				<div className='social-warfare-admin-block'>
+					<div className={ `${props.className} pinterest-block-wrap swp-active-block` }>
+						<div className="head" onClick={toggleFocus}>
+							<div>
+								{icon}
+								<p className="swp-block-title">Pinterest Image</p>
+							</div>
+							<Dashicon className="swp-dashicon" icon="arrow-up" />
 						</div>
-						<Dashicon className="swp-dashicon" icon="arrow-up" />
-					</div>
-				    <p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>
-					{
-						//* All attributes except `alignment`.
-						Object.entries(attributes).map(([name, displayText]) => {
-							if (name == 'alignment') return;
-							const className = name == 'width' || name == 'height' ? "swp-inner-block-50" : '';
+						<p>Inserts a <pre style={ {display: 'inline'} }>[pinterest_image]</pre> shortcode. Leave a field blank to use values based on your global settings.</p>
+						{
+							//* All attributes except `alignment`.
+							Object.entries(attributes).map(([name, displayText]) => {
+								if (name == 'alignment') return;
+								const className = name == 'width' || name == 'height' ? "swp-inner-block-50" : '';
 
-							return (
-								<div className={className}>
-									<p>{displayText}</p>
-									<input name={name}
-									       type="text"
-										   onChange={updateAttribute}
-										   value={props.attributes[name] || ''}
-								     />
-								</div>
-							)
-						})
-					}
+								return (
+									<div className={className}>
+										<p>{displayText}</p>
+										<input name={name}
+											   type="text"
+											   onChange={updateAttribute}
+											   value={props.attributes[name] || ''}
+										 />
+									</div>
+								)
+							})
+						}
 
-          <div>
-					  <p>Alignment</p>
-						<select name="alignment"
-										value={props.attributes.alignment ? props.attributes.alignment : ''}
-										onChange={updateAttribute}
-						>
-								<option value="">Default</option>
-								<option value="left">Left</option>
-								<option value="center">Center</option>
-								<option value="right">Right</option>
-						</select>
+			  <div>
+						  <p>Alignment</p>
+							<select name="alignment"
+											value={props.attributes.alignment ? props.attributes.alignment : ''}
+											onChange={updateAttribute}
+							>
+									<option value="">Default</option>
+									<option value="left">Left</option>
+									<option value="center">Center</option>
+									<option value="right">Right</option>
+							</select>
+						</div>
 					</div>
-				</div>
+			</div>
+
 			);
 		},
 
