@@ -866,18 +866,19 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.enablePinterestSaveButtons = function() {
 
-
+console.log('looking for btns')
 		/**
 		 * Search and Destroy: This will find any Pinterest buttons that were
 		 * added via their browser extension and then destroy them so that only
 		 * ours are on the page.
 		 *
 		 */
-		var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
-		if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
-			socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
-		}
-
+		jQuery('img').on('mouseenter', function() {
+			var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
+			if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
+				socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+			}
+		});
 
 		/**
 		 * Find all images of the images that are in the content area by looking
@@ -1042,10 +1043,11 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.findPinterestBrowserSaveButtons = function() {
-		var pinterestRed, pinterestZIndex, pinterestBackgroundSize, button, style;
+		var pinterestRed, pinterestRed2019, pinterestZIndex, pinterestBackgroundSize, button, style;
 
 		//* Known constants used by Pinterest.
 		pinterestRed = "rgb(189, 8, 28)";
+		pinterestRed2019 = "rgb(230, 0, 35)";
 		pinterestZIndex = "8675309";
 		pinterestBackgroundSize = "14px 14px";
 		button = null;
@@ -1054,7 +1056,7 @@ window.socialWarfare = window.socialWarfare || {};
 		document.querySelectorAll("span").forEach(function(element, index) {
 			style = window.getComputedStyle(element);
 
-			if (style.backgroundColor == pinterestRed) {
+			if (style.backgroundColor == pinterestRed || style.backgroundColor == pinterestRed2019) {
 				if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
 					button = element;
 				}
