@@ -1,40 +1,43 @@
- [class*="-block-wrap"] {
- 	font-family: "SF Pro Text", "Helvetica", sans-serif;
- 	font-size: 13px;
- }
+/* Wrap all styles in the parent SW wrapper to prevent namespace collisions. */
+.social-warfare-admin-block {
 
- [class*="-block-wrap"] .head {
-	width: 100%;
-    display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-	justify-content: space-between;
+	 [class*="-block-wrap"] {
+		 font-family: "SF Pro Text", "Helvetica", sans-serif;
+		 font-size: 13px;
+	 }
 
-	p {
-		font-weight: bold;
+	 [class*="-block-wrap"] .head {
+		width: 100%;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: space-between;
+
+		p {
+			font-weight: bold;
+		}
+	 }
+
+	 [class*="-block-wrap"] input,
+	 [class*="-block-wrap"] select,
+	 [class*="-block-wrap"] textarea {
+		display: block;
+		width: 100%;
+		padding: 5px;
+		height: 42px;
+		border: 1px solid #e2e4e7
 	}
- }
 
- [class*="-block-wrap"] input,
- [class*="-block-wrap"] select,
- [class*="-block-wrap"] textarea {
-	display: block;
-	width: 100%;
-	padding: 5px;
-	height: 42px;
-	border: 1px solid #e2e4e7
-}
+	 [class*="-block-wrap"] code {
+		 display: block;
+		 width: 100%;
+		 padding: 5px;
+		 height: 42px;
+	 }
 
- [class*="-block-wrap"] code {
- 	display: block;
- 	width: 100%;
- 	padding: 5px;
- 	height: 42px;
- }
-
- [class*="-block-wrap"] textarea {
- 	height: 64px;
- }
+	 [class*="-block-wrap"] textarea {
+		 height: 64px;
+	 }
 
  .swp-dashicon.dashicons-arrow-up,
  .swp-dashicon.dashicons-arrow-down {
@@ -44,7 +47,7 @@
 
  .social-warfare-block-wrap input,
  .social-warfare-block-wrap select {
- 	width: 100%;
+	 width: 100%;
  }
 
  /* Common styles for SWP Gutenberg blocks. */
@@ -75,11 +78,11 @@
  }
 
  .is-selected [class^="wp-block-social-warfare"].swp-active-block .head {
-    border-bottom: 1px solid #e2e4e7;
+	border-bottom: 1px solid #e2e4e7;
  }
 
  .swp-active-block {
- 	height: 100%;
+	 height: 100%;
 
 	.swp-inner-block-50 {
 		width: 50%;
@@ -110,10 +113,10 @@
  }
 
  .swp-inactive-block {
- 	min-height: 50px;
- 	display: flex;
- 	flex-flow: row nowrap;
- 	align-items: center;
+	 min-height: 50px;
+	 display: flex;
+	 flex-flow: row nowrap;
+	 align-items: center;
 
 	/* The preview displayed when the block is not active. */
 	.swp-preview {
@@ -127,7 +130,7 @@
 	}
 
 	.swp-dashicon {
-	    margin: 0 14px;
+		margin: 0 14px;
 	}
  }
 
@@ -158,3 +161,5 @@
 		 color: #fff;
 	 }
  }
+
+}
