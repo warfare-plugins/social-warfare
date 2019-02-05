@@ -412,10 +412,16 @@
 				light_gray: 'Light Gray',
 				medium_gray: 'Medium Gray',
 				dark_gray: 'Dark Gray'
-			},
+			};,
 			connected: defaults,
 			shift: defaults,
-			boxed: defaults
+			boxed: defaults,
+			modern: defaults,
+			minimal: {
+				light_gray: 'Light Gray',
+				medium_gray: 'Medium Gray',
+				dark_gray: 'Dark Gray'
+			};
 		};
 
 		// Check if we are on the admin page
@@ -784,7 +790,7 @@
 	  jQuery(preview).text(jQuery(textarea).val());
 	}
 
-    // Addes a tooltip to a network icon, displaying the network's name.
+	// Addes a tooltip to a network icon, displaying the network's name.
 	function createTooltip(event) {
 		var tooltip;
 		var icon = event.target;
@@ -812,7 +818,7 @@
 		tooltip = jQuery('<span class="swp-icon-tooltip">' + network + '</span>').css(css).get(0);
 		jQuery(this).parents(".sw-grid").first().append(tooltip);
 
-        //* When tooltip is wider than icon, center tooltip over the icon.
+		//* When tooltip is wider than icon, center tooltip over the icon.
 		if (jQuery(tooltip).outerWidth() > jQuery(icon).outerWidth()) {
 			var delta = jQuery(tooltip).outerWidth() - jQuery(icon).outerWidth();
 			css.left = css.left - (delta / 2);
