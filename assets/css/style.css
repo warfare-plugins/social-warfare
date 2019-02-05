@@ -1335,6 +1335,14 @@ i.swp_flipboard_icon:before {
 	content: "C";
 }
 
+i.swp_vimeo_icon:before {
+	content: "t";
+}
+
+i.swp_instagram_icon:before {
+	content: "d";
+}
+
 .sw-social-warfare:before {
 	content: "p";
 }
