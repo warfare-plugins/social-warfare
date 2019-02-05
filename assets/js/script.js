@@ -435,12 +435,17 @@ window.socialWarfare = window.socialWarfare || {};
 		var floatLocation       = socialWarfare.panels.staticHorizontal.data("float");
 		var mobileFloatLocation = socialWarfare.panels.staticHorizontal.data("float-mobile");
 		var backgroundColor     = socialWarfare.panels.staticHorizontal.data("float-color");
-		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+		var wrapper             = $('<div class="nc_wrapper swp_floating_horizontal_wrapper" style="background-color:' + backgroundColor + '"></div>');
 		var barLocation         = '';
 
 		//* .swp_social_panelSide is the side floater.
 		if ($(".nc_wrapper").length) {
 			$(".nc_wrapper").remove();
+		}
+
+		//* repeating the code above for the new selector.
+		if ($(".swp_floating_horizontal_wrapper").length) {
+			$(".swp_floating_horizontal_wrapper").remove();
 		}
 
 		//* No floating bars are used at all.
@@ -611,7 +616,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
-			return $(".nc_wrapper, .swp_social_panelSide").hide();
+			return $(".nc_wrapper, .swp_floating_horizontal_wrapper, .swp_social_panelSide").hide();
 		}
 
 		if (socialWarfare.isMobile()) {
@@ -642,7 +647,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.panels.floatingSide.hide();
 
 		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
-		$(".nc_wrapper").css("visibility", visibility);
+		$(".nc_wrapper, .swp_floating_horizontal_wrapper").css("visibility", visibility);
 	}
 
 
@@ -740,7 +745,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
-			$(".nc_wrapper").hide();
+			$(".nc_wrapper, .swp_floating_horizontal_wrapper").hide();
 
 
 			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
@@ -751,7 +756,7 @@ window.socialWarfare = window.socialWarfare || {};
 		// Add some padding to the page so it fits nicely at the top or bottom.
 		else {
 			newPadding += 50;
-			$(".nc_wrapper").show();
+			$(".nc_wrapper, .swp_floating_horizontal_wrapper").show();
 
 			//* Compensate for the margin-top added to <html> by #wpadminbar.
 			if (socialWarfare.isMobile() && location == 'top' && $("#wpadminbar").length) {
