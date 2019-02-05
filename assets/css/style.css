@@ -1926,7 +1926,6 @@ div[class*=custom_color][class^=_wrapper] {
 .swp_dark .total_shares.total_sharesalt,
 .swp_dark .swp_count,
 .swp_dark .swp_label {
-  color: #999 !important;
 }
 .swp_dark .swp_share_link:hover {
   background: #444;
