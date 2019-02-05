@@ -1887,7 +1887,7 @@ div[class*=custom_color][class^=_wrapper] {
 .swp-pinterest-image-top {
 	margin-bottom: 20px;
 }
-.swp_modern, .swp_minimal {
+.swp_modern, .swp_dark {
   background: #fff;
   height: 62px;
   padding: 0;
@@ -1895,39 +1895,40 @@ div[class*=custom_color][class^=_wrapper] {
   border: 1px solid #eee;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 4px 5px 0 rgba(0, 0, 0, 0.014), 0 4px 15px 0 rgba(0, 0, 0, 0.09);
 }
-.swp_modern .swp_share_button, .swp_minimal .swp_share_button {
+.swp_modern .swp_share_button, .swp_dark .swp_share_button {
   border: none !important;
   border-radius: 0 !important;
   margin: 0 !important;
   height: 60px !important;
+  padding-bottom: 1px;
 }
-.swp_modern .swp_share_button.total_shares.total_sharesalt, .swp_minimal .swp_share_button.total_shares.total_sharesalt {
+.swp_modern .swp_share_button.total_shares.total_sharesalt, .swp_dark .swp_share_button.total_shares.total_sharesalt {
   padding: 15px !important;
 }
-.swp_modern .swp_share_link, .swp_minimal .swp_share_link {
+.swp_modern .swp_share_link, .swp_dark .swp_share_link {
   border-radius: 0;
   padding: 15px;
   height: 60px !important;
 }
-.swp_modern .iconFiller, .swp_minimal .iconFiller {
+.swp_modern .iconFiller, .swp_dark .iconFiller {
   margin-bottom: 10px !important;
 }
-.swp_modern .nc_wrapper.bottom, .swp_minimal .nc_wrapper.bottom {
+.swp_modern .nc_wrapper.bottom, .swp_dark .nc_wrapper.bottom {
   background: transparent !important;
 }
 
-.swp_minimal .swp_share_button {
+.swp_dark .swp_share_button {
   background: #222 !important;
   border-color: #222 !important;
   margin: 0 !important;
   height: 62px !important;
 }
-.swp_minimal .total_shares.total_sharesalt,
-.swp_minimal .swp_count,
-.swp_minimal .swp_label {
+.swp_dark .total_shares.total_sharesalt,
+.swp_dark .swp_count,
+.swp_dark .swp_label {
   color: #999 !important;
 }
-.swp_minimal .swp_share_link:hover {
+.swp_dark .swp_share_link:hover {
   background: #444;
 }
 
