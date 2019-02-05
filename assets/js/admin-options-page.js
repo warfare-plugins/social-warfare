@@ -369,7 +369,11 @@
 
 		// Declare a default lastClass based on the default HTML if we haven't declared one
 		if ('undefined' === typeof socialWarfare.lastClass) {
-			socialWarfare.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
+			var panel = $(".swp_social_panel");
+			if (!panel.length) {
+				return;
+			}
+			socialWarfare.lastClass = panel.get().className;
 		}
 
 		// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
@@ -387,6 +391,10 @@
 	*********************************************************/
 
 	function updateButtonPreviews() {
+		// Check if we are on the admin page
+		if (0 === jQuery('select[name="button_shape"]').length) {
+			return;
+		}
 
 		//* Maps out the button themes.
 		var defaults = {
@@ -412,28 +420,41 @@
 				light_gray: 'Light Gray',
 				medium_gray: 'Medium Gray',
 				dark_gray: 'Dark Gray'
-			};,
+			},
 			connected: defaults,
 			shift: defaults,
 			boxed: defaults,
-			modern: defaults,
-			minimal: {
+			modern: {
+				full_color: 'Full Color',
 				light_gray: 'Light Gray',
 				medium_gray: 'Medium Gray',
-				dark_gray: 'Dark Gray'
-			};
+				dark_gray: 'Dark Gray',
+				light_gray_outlines: 'Light Gray Outlines',
+				medium_gray_outlines: 'Medium Gray Outlines',
+				dark_gray_outlines: 'Dark Gray Outlines',
+				color_outlines: 'Color Outlines',
+				custom_color: 'Custom Color',
+				custom_color_outlines: 'Custom Color Outlines'
+			},
+			dark: {
+				light_gray_outlines: 'Light Gray Outlines',
+				medium_gray_outlines: 'Medium Gray Outlines',
+				dark_gray_outlines: 'Dark Gray Outlines',
+				color_outlines: 'Color Outlines',
+				custom_color: 'Custom Color',
+				custom_color_outlines: 'Custom Color Outlines'
+			}
 		};
-
-		// Check if we are on the admin page
-		if (0 === jQuery('select[name="button_shape"]').length) {
-			return;
-		}
 
 		// Update the items and previews on the initial page load
 		var visualTheme = jQuery('select[name="button_shape"]').val();
 		var dColorSet   = jQuery('select[name="default_colors"]').val();
 		var iColorSet   = jQuery('select[name="single_colors"]').val();
 		var oColorSet   = jQuery('select[name="hover_colors"]').val();
+
+		var themeOptions = jQuery('select[name="button_shape"]').find('option').map(function(index, option) {
+			return option.value;
+		});
 
 		jQuery('select[name="default_colors"] option, select[name="single_colors"] option, select[name="hover_colors"] option').remove();
 
@@ -508,8 +529,19 @@
 			if('undefined' === typeof socialWarfare.lastClass){
 				socialWarfare.lastClass = 'swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_full_color';
 			}
+
 			// Put together the new classes, remove the old ones, add the new ones, store the new ones for removal next time.
 			var buttonsClass = 'swp_' + visualTheme + ' swp_default_' + dColorSet + ' swp_individual_' + iColorSet + ' swp_other_' + oColorSet;
+			console.log('last class', socialWarfare.lastClass)
+			console.log('updating to new style', visualTheme)
+			console.log("class is ", $('.swp_social_panel').get().clasName);
+
+			console.log('themeOptions', themeOptions)
+
+			// Remove the previous theme.
+			themeOptions.map(function(index, option) {
+				jQuery('.swp_social_panel').removeClass('swp_' + option.value);
+			})
 
 			jQuery('.swp_social_panel').removeClass(socialWarfare.lastClass).addClass(buttonsClass);
 
