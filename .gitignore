@@ -7,3 +7,5 @@ remote-sync.json
 functions/utilities/testing.php
 .imdone/config.json
 node_modules
+assets/css/style.scss
+assets/css/converted_style.tmp
