@@ -62,54 +62,54 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 *
 	 */
 	public function parse_api_response( $response ) {
-        $response = preg_replace( '/^receiveCount\((.*)\)$/', "\\1", $response );
-    	$response = json_decode( $response, true );
-    	return isset( $response['count'] ) ? intval( $response['count'] ) : 0;
-    }
+		$response = preg_replace( '/^receiveCount\((.*)\)$/', "\\1", $response );
+		$response = json_decode( $response, true );
+		return isset( $response['count'] ) ? intval( $response['count'] ) : 0;
+	}
 
 
-    /**
-     * Create the HTML to display the share button
-     *
-     * @since  1.0.0
-     * @since  3.0.0 | 01 MAY 2018 | Re-wrote the function to a class method.
-     * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
-     * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image.
-     * @access public
-     * @return array $panel_context Array of
-     *                   ['post_data']  => metadata about the post;
-     *                   ['shares']     => share count data
-     *                   ['options']    => swp_user_options
-     * @param  bool $echo If true, this will immediately echo its code rather than save it for later.
-     *
-     */
-     public function render_HTML( $panel_context, $echo = false ) {
-        global $swp_user_options;
-        $post_id = $panel_context['post_data']['ID'];
+	/**
+	 * Create the HTML to display the share button
+	 *
+	 * @since  1.0.0
+	 * @since  3.0.0 | 01 MAY 2018 | Re-wrote the function to a class method.
+	 * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
+	 * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image.
+	 * @access public
+	 * @return array $panel_context Array of
+	 *                   ['post_data']  => metadata about the post;
+	 *                   ['shares']     => share count data
+	 *                   ['options']    => swp_user_options
+	 * @param  bool $echo If true, this will immediately echo its code rather than save it for later.
+	 *
+	 */
+	 public function render_HTML( $panel_context, $echo = false ) {
+		global $swp_user_options;
+		$post_id = $panel_context['post_data']['ID'];
 		$post_url = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
 
-        $options = $swp_user_options;
-        $metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
+		$options = $swp_user_options;
+		$metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
 
-        if ( !empty( $metabox_pinterest_image ) ) :
-            $pinterest_image = $metabox_pinterest_image;
+		if ( !empty( $metabox_pinterest_image ) ) :
+			$pinterest_image = $metabox_pinterest_image;
 
-        elseif ( isset($options['pinterest_fallback']) && $options['pinterest_fallback'] == 'featured' ):
-            $pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
+		elseif ( isset($options['pinterest_fallback']) && $options['pinterest_fallback'] == 'featured' ):
+			$pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 
-        else :
-            $pinterest_image = '';
+		else :
+			$pinterest_image = '';
 
-        endif;
+		endif;
 
-        if ( !empty( $options['pinterest_id'] ) ) :
- 			$pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
- 		else :
- 			$pinterest_username = '';
- 		endif;
+		if ( !empty( $options['pinterest_id'] ) ) :
+			 $pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
+		 else :
+			 $pinterest_username = '';
+		 endif;
 
-        $title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
-        $pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
+		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
+		$pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
 
 		if( is_array( $pinterest_description ) && !empty( $pinterest_description ) ) {
 			$pinterest_description = $pinterest_description[0];
@@ -117,70 +117,70 @@ class SWP_Pinterest extends SWP_Social_Network {
 			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
 		}
 
-        if ( empty( $pinterest_description ) ) :
-            $pinterest_description = $title;
-        endif;
+		if ( empty( $pinterest_description ) ) :
+			$pinterest_description = $title;
+		endif;
 
-        $pinterest_description .= $pinterest_username;
+		$pinterest_description .= $pinterest_username;
 
-        if ( !empty( $pinterest_image ) ) :
-       		$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet" data-count="0" ' .
+		if ( !empty( $pinterest_image ) ) :
+			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet" data-count="0" ' .
 						'data-link="https://pinterest.com/pin/create/button/' .
 						'?url=' . $panel_context['post_data']['permalink'] .
 						'&media=' . urlencode( $pinterest_image ) .
 						'&description=' . urlencode( $pinterest_description ) .
 					'">';
-       	else :
-       		$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet noPop" ' .
+		   else :
+			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet noPop" ' .
 						'onClick="var e=document.createElement(\'script\');
 						   e.setAttribute(\'type\',\'text/javascript\');
 						   e.setAttribute(\'charset\',\'UTF-8\');
 						   e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
 						   document.body.appendChild(e);
 						" >';
-       	endif;
+		   endif;
 
-         //* Begin parent class method.
+		 //* Begin parent class method.
 
-         $post_data = $panel_context['post_data'];
-         $share_counts = $panel_context['shares'];
-         $options = $panel_context['options'];
-         $share_link = $this->generate_share_link( $post_data );
+		 $post_data = $panel_context['post_data'];
+		 $share_counts = $panel_context['shares'];
+		 $options = $panel_context['options'];
+		 $share_link = $this->generate_share_link( $post_data );
 
-         // Build the button.
-         $icon = '<span class="iconFiller">';
-             $icon.= '<span class="spaceManWilly">';
-                 $icon.= '<i class="sw swp_'.$this->key.'_icon"></i>';
-                 $icon.= '<span class="swp_share">' . $this->cta . '</span>';
-             $icon .= '</span>';
-         $icon .= '</span>';
+		 // Build the button.
+		 $icon = '<span class="iconFiller">';
+			 $icon.= '<span class="spaceManWilly">';
+				 $icon.= '<i class="sw swp_'.$this->key.'_icon"></i>';
+				 $icon.= '<span class="swp_share">' . $this->cta . '</span>';
+			 $icon .= '</span>';
+		 $icon .= '</span>';
 
-         if ( true === $this->are_shares_shown( $share_counts , $options ) ) :
-             $icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
-         else :
-             $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
-         endif;
+		 if ( true === $this->are_shares_shown( $share_counts , $options ) ) :
+			 $icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
+		 else :
+			 $icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
+		 endif;
 
-         // Build the wrapper.
-         $html = '<div class="nc_tweetContainer swp_'.$this->key.'" data-network="'.$this->key.'">';
-             $html .= $anchor;
-                 // Put the button inside.
-                 $html .= $icon;
-             $html.= '</a>';
-         $html.= '</div>';
+		 // Build the wrapper.
+		 $html = '<div class="nc_tweetContainer swp_share_button swp_'.$this->key.'" data-network="'.$this->key.'">';
+			 $html .= $anchor;
+				 // Put the button inside.
+				 $html .= $icon;
+			 $html.= '</a>';
+		 $html.= '</div>';
 
-         // Store these buttons so that we don't have to generate them for each set
-         $this->html = $html;
+		 // Store these buttons so that we don't have to generate them for each set
+		 $this->html = $html;
 
-         if ( $echo ) :
-             echo $html;
-         endif;
+		 if ( $echo ) :
+			 echo $html;
+		 endif;
 
-         return $html;
-     }
+		 return $html;
+	 }
 
 
- 	public function generate_share_link( $post_data ) {
-        return 0;
- 	}
+	 public function generate_share_link( $post_data ) {
+		return 0;
+	 }
 }

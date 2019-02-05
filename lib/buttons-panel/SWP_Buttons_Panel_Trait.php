@@ -705,7 +705,7 @@ trait SWP_Buttons_Panel_Trait {
 		}
 
 		// Render the html for the total shares.
-		$html = '<div class="nc_tweetContainer total_shares total_sharesalt" >';
+		$html = '<div class="nc_tweetContainer swp_share_button total_shares total_sharesalt" >';
 		   $html .= '<span class="swp_count ">' . SWP_Utility::kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares','social-warfare' ) . '</span></span>';
 		$html .= '</div>';
 
