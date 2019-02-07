@@ -1939,4 +1939,118 @@ div[class*=custom_color][class^=_wrapper] {
   background: #444;
 }
 
+/* Network-specific styles
+------------------------------- */
+.swp-facebook {
+  background: #3A589E;
+  border-color: #324E85;
+}
+
+.swp-facebook  a {
+  color: #3A589E;
+}
+
+.swp-facebook  a:hover {
+  background: #324E85;
+  color: #fff;
+}
+
+.swp-instagram {
+  background: #E4425F;
+  border-color: #DA3075;
+}
+
+.swp-instagram a {
+  color: #E4425F;
+}
+
+.swp-instagram a:hover {
+  background: #DA3075;
+  color: #fff;
+}
+
+.swp-linkedin {
+  background: #0D77B7;
+  border-color: #0D6C9C;
+}
+
+.swp-linkedin a {
+  color: #0D77B7;
+}
+
+.swp-linkedin a:hover {
+  background: #0D6C9C;
+  color: #fff;
+}
+
+.swp-pinterest {
+  background: #CD202A;
+  border-color: #AC1F25;
+}
+
+.swp-pinterest a {
+  color: #CD202A;
+}
+
+.swp-pinterest a:hover {
+  background: #AC1F25;
+  color: #fff;
+}
+
+.swp-reddit {
+  background: #F04B23;
+  border-color: #D33F27;
+}
+
+.swp-reddit a {
+  color: #F04B23;
+}
+
+.swp-reddit a:hover {
+  background: #D33F27;
+  color: #fff;
+}
+
+.swp-tumblr {
+  background: #39475D;
+  border-color: #27313F;
+}
+
+.swp-tumblr a {
+  color: #39475D;
+}
+
+.swp-tumblr a:hover {
+  background: #27313F;
+  color: #fff;
+}
+
+.swp-twitter {
+  background: #429CD6;
+  border-color: #3C87B2;
+}
+
+.swp-twitter a {
+  color: #429CD6;
+}
+
+.swp-twitter a:hover {
+  background: #3C87B2;
+  color: #fff;
+}
+
+.swp-vimeo {
+  background: #21B7EB;
+  border-color: #069BD1;
+}
+
+.swp-vimeo a {
+  color: #21B7EB;
+}
+.swp-vimeo a:hover {
+  background: #069BD1;
+  color: #fff;
+}
+
+
 /*# sourceMappingURL=converted_style.tmp.map */
