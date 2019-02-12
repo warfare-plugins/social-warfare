@@ -439,7 +439,7 @@ class SWP_Utility {
 	 * @return exit           End all program exectution and return to SW.
 	 *
 	 */
-	public static function settings_page_redirect( $params ) {
+	public static function settings_page_redirect( $params = '' ) {
 		$destination = admin_url('?page=social-warfare');
 
 		if ( is_string($params) && 0 == strpos( $params, '&' ) ) {
@@ -452,7 +452,6 @@ class SWP_Utility {
 			}
 		}
 
-		header('Location: ' . $destination);
-		exit();
+		return $destination;
 	}
 }
