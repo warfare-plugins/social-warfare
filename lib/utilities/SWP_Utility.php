@@ -429,4 +429,30 @@ class SWP_Utility {
 
 		return false;
 	}
+
+	/**
+	 * Immediately redirect to the Social Warfare settings page.
+	 *
+	 * @since  3.5.0  | 12 FEB 2019 | Created.
+	 * @param  string $params The pre-formatted string of query args.
+	 * @param  array  $params And asssociative array to format as query args.
+	 * @return exit           End all program exectution and return to SW.
+	 *
+	 */
+	public static function settings_page_redirect( $params ) {
+		$destination = admin_url('?page=social-warfare');
+
+		if ( is_string($params) && 0 == strpos( $params, '&' ) ) {
+			$destination .= $params;
+		}
+
+		if ( is_array($params) ) {
+			foreach($params as $key => $value) {
+				$destination = add_query_arg($key, $value, $destination);
+			}
+		}
+
+		header('Location: ' . $destination);
+		exit();
+	}
 }
