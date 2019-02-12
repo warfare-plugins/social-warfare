@@ -414,11 +414,18 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		$('.swpmb-edit-media, .swpmb-remove-media').on(socialWarfareAdmin.resizeImageFields);
 	}
 
+	// The network key is stored in a classname `swp-network-$network`.
+	// @see SWP_Options_Page->establish_authorizations()
 	socialWarfareAdmin.revokeNetworkConnection = function(event) {
 		var button, index, networkAndTail, network;
 		button = event.target;
-		// The network is stored in a classname `swp-network-$network`.
-		console.log('target object', button)
+		if ($(event.target).is('div')) {
+			// This is the inner div holding the network text.
+			button = event.target.parentNode;
+		}
+		else {
+			button = event.target;
+		}
 
 		// First find the target class, then parse that class for a network name.
 		index = button.className.indexOf('swp-network');
@@ -449,7 +456,17 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				 action: 'swp_delete_network_tokens',
 				 network: network
 			 },
-			 complete: function() {window.location.reload(true)}
+			 success: function(r) {
+				 var response = JSON.parse(r)
+				 if (response.ok) {
+					 window.location.href = response.url
+				 }
+				 else {
+					 console.log('bad response', response)
+				 }
+				 // should be redirected by server back to ?page=social-warfare
+			 }
+			 // complete: function(/*try again*/) {window.location.reload(1)}
 		 });
 	}
 
