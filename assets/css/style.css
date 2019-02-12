@@ -1343,6 +1343,31 @@ i.swp_instagram_icon:before {
 	content: "d";
 }
 
+i.swp_blogger_icon:before {
+	content: "m";
+}
+
+i.swp_medium_icon:before {
+	content: "e";
+}
+
+i.swp_periscope_icon:before {
+	content: "c";
+}
+
+i.swp_snapchat_icon:before {
+	content: "u";
+}
+
+i.swp_ello_icon:before {
+	content: "l";
+}
+
+i.swp_flickr_icon:before {
+	content: "i";
+}
+
+
 .sw-social-warfare:before {
 	content: "p";
 }
