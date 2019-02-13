@@ -2109,16 +2109,16 @@ div[class*=custom_color][class^=_wrapper] {
 
 .swp-snapchat {
   background: #fffc00;
-  border-color: #fefefe;
+  border-color: #000;
 }
 
 .swp-snapchat a {
-  color: #fefefe;
+  color: #000;
 }
 
 .swp-snapchat a:hover {
   background: #fffc00;
-  color: #fefefe;
+  color: #000;
 }
 
 .swp-tumblr {
