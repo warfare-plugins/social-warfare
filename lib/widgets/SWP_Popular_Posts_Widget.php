@@ -443,8 +443,9 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 			'meta_key' 			=> '_' . $network,
 			'orderby' 			=> 'meta_value_num',
 			'order' 			=> 'DESC',
-			'update_post_meta_cache' => false,
 			'cache_results'     => false,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
 			'ignore_sticky_posts' => 1
 		);
 
