@@ -285,6 +285,7 @@ class SWP_Script {
 	 *
 	 */
 	function localize_variables() {
+		global $post;
 		$addons = apply_filters( 'swp_registrations', array() );
 		$addon_vars = apply_filters( 'swp_addon_javascript_variables', array() );
 
@@ -294,6 +295,7 @@ class SWP_Script {
 
 		$data = array(
 			'addons'	=> $addons,
+			'post_id' => $post->ID,
 			'floatBeforeContent'	=> SWP_Utility::get_option( 'float_before_content' )
 		);
 
