@@ -30,7 +30,7 @@
  *     #3. Floating Buttons Panel Controls
  *        Function: socialWarfare.createFloatHorizontalPanel()
  *        Function: socialWarfare.staticPanelIsVisible()
- *        Function: socialWarfare.toggleFloatingButtons()
+ *        Function: socialWarfare.updateFloatingButtons()
  *        Function: socialWarfare.toggleMobileButtons()
  *        Function: socialWarfare.toggleFloatingVerticalPanel()
  *        Function: socialWarfare.toggleFloatingHorizontalPanel()
@@ -161,7 +161,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.positionFloatSidePanel();
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
-		socialWarfare.toggleFloatingButtons();
+		socialWarfare.updateFloatingButtons();
 
 
 		/**
@@ -185,7 +185,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		$(window).scroll(function() {
-			socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons)
+			socialWarfare.throttle(50, socialWarfare.updateFloatingButtons)
 		});
 
 	}
@@ -594,7 +594,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return void
 	 *
 	 */
-	socialWarfare.toggleFloatingButtons = function() {
+	socialWarfare.updateFloatingButtons = function() {
 
 		// If buttons are on the page, there must be either a static horizontal
 		if (socialWarfare.panels.staticHorizontal.length) {
