@@ -171,7 +171,9 @@ window.socialWarfare = window.socialWarfare || {};
 		 * ensure that the buttons panel exist and activate the click bindings.
 		 *
 		 */
-		setTimeout( socialWarfare.checkListeners(0, 5), 2000);
+		setTimeout(function() {
+			socialWarfare.checkListeners(0, 5)
+		}, 2000);
 
 
 		/**
@@ -182,7 +184,9 @@ window.socialWarfare = window.socialWarfare || {};
 		 * floating buttons to flicker.
 		 *
 		 */
-		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
+		$(window).scroll(function() {
+			socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons)
+		});
 
 	}
 
@@ -592,7 +596,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.toggleFloatingButtons = function() {
 
-
 		// If buttons are on the page, there must be either a static horizontal
 		if (socialWarfare.panels.staticHorizontal.length) {
 			var panel = socialWarfare.panels.staticHorizontal;
@@ -871,7 +874,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.enablePinterestSaveButtons = function() {
 
-console.log('looking for btns')
 		/**
 		 * Search and Destroy: This will find any Pinterest buttons that were
 		 * added via their browser extension and then destroy them so that only
@@ -969,7 +971,7 @@ console.log('looking for btns')
 			 * By creating a temporary image and then using jQuery to fetch the
 			 * URL of that image, it will convert any relative paths to
 			 * absolute paths. If we send a relative path image to Pinterest, it
-			 * will throw wonky errors.
+			 * will throw errors.
 			 *
 			 */
 			var i = new Image();
