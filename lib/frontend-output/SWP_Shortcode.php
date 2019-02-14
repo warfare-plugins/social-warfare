@@ -95,6 +95,11 @@ class SWP_Shortcode {
 	function click_to_tweet( $atts ) {
 		global $post;
 
+		// This is the Add Post editor for a new post, so no $post. 
+		if ( !is_object( $post ) ) {
+			return $atts;
+		}
+
 
 		/**
 		 * If they included a link in the tweet text, we need to not pass a URL
