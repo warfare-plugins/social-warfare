@@ -29,6 +29,7 @@ class SWP_Utility {
 	public function __construct() {
 		add_action( 'wp_ajax_swp_store_settings', array( 'SWP_Utility', 'store_settings' ) );
 		add_filter( 'screen_options_show_screen', array( 'SWP_Utility', 'remove_screen_options' ), 10, 2 );
+		add_action( 'wp_ajax_swp_reset_post_meta', array ( 'SWP_Utility' , 'reset_post_meta' ) );
 	}
 
 
@@ -453,5 +454,33 @@ class SWP_Utility {
 		}
 
 		return $destination;
+	}
+
+	/**
+	 * Ajax callback to delete all post meta for a post.
+	 *
+	 * @since  3.5.0  | 14 FEB 2019 | Created.
+	 * @return bool   True iff reset, else false.
+	 *
+	 */
+	public static function reset_post_meta() {
+		$post_id = $_POST['post_id'];
+		if ( empty( $post_id ) ) {
+			wp_die(0);
+		}
+
+		$all_meta = get_post_meta( $post_id );
+
+		foreach ( $all_meta as $meta_key => $value ) {
+			// Confirm this is a social warfare meta key.
+			if ( ( strpos( $meta_key, 'swp_' ) === 0 ||
+				 ( strpos( $meta_key, '_shares' ) > 0 ) &&
+				   strpos( $meta_key, '_') === 0 ) ) {
+				//* Everything comes in as an array, pull out the first value.
+				delete_post_meta( $post_id, $meta_key );
+			}
+		}
+
+		wp_die(1);
 	}
 }
