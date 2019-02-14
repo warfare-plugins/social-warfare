@@ -206,16 +206,9 @@ window.socialWarfare = window.socialWarfare || {};
 			floatingHorizontal: null
 		};
 
-		var staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
-		var floatingSide = $(".swp_social_panelSide");
-
-		if (staticHorizontal.length != 0) {
-			socialWarfare.panels.staticHorizontal = staticHorizontal;
-		}
-
-		if (floatingSide.length != 0) {
-			socialWarfare.panels.floatingSide = floatingSide;
-		}
+		// Set each type of panel as a jQuery object (with 0 or more panels)
+		socialWarfare.panels.staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
+		socialWarfare.panels.floatingSide = $(".swp_social_panelSide");
 
 		return socialWarfare.panels;
 	}
