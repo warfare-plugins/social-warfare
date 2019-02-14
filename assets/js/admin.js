@@ -315,10 +315,10 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 				return;
 			}
 
-			var field = $(".swpmb-field." + type);
+			var fields = $(".swpmb-field." + type);
 
-			if (field.length) {
-				$(this).append(field);
+			if (fields.length) {
+				$(this).append(fields);
 			}
 
 			fillContainer(container);
@@ -470,24 +470,62 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		 });
 	}
 
+	socialWarfareAdmin.triggerDeletePostMeta = function(event) {
+		event.preventDefault()
+		var message = "This will delete all Social Warfare meta keys for this post, including Open Graph, Twitter, and Pinterest descriptions and images. If you want to keep these, please copy them to an offline file first, and paste them back in after the reset. To reset, enter reset_post_meta";
+		var prompt = window.prompt(message, 'reset_or_cancel');
+		console.log('prompt', prompt)
+		if (prompt == 'reset_post_meta') {
+			jQuery.post({
+				url: ajaxurl,
+				data: {
+					action: 'swp_reset_post_meta',
+					post_id: socialWarfare.post_id
+				},
+				complete: function(response) {
+					socialWarfareAdmin.resetMetaFields()
+				}
+			})
+		}
+	}
+
+
+	socialWarfareAdmin.resetMetaFields = function() {
+		$('#social_warfare.postbox').find('input[type=text], textarea').val('');
+		$('#social_warfare.postbox').find('select').val('default');
+
+	}
+
 
 	socialWarfareAdmin.addEventListeners = function() {
 		$('.swp-revoke-button').on('click', socialWarfareAdmin.revokeNetworkConnection)
+		$('#swp_reset_button').on('click', socialWarfareAdmin.triggerDeletePostMeta)
+	}
+
+	socialWarfareAdmin.createResetButton = function() {
+		var parent = $("#swp_reset_button");
+
+		var button = jQuery('<button class="button">Reset Post Meta</button>')
+		button.on('click', socialWarfareAdmin.triggerDeletePostMeta)
+
+		parent.append(button)
 	}
 
 	$(document).ready(function() {
 		noticeClickHandlers();
-		socialWarfareAdmin.addEventListeners();
-
 
 		if ($('#social_warfare.postbox').length) {
 			createTextCounters();
+			socialWarfareAdmin.createResetButton();
 			swpConditionalFields();
+
 			$(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
 			$('.swp_popular_post_options select').on('change', swpConditionalFields);
 
 			//* Wait for the Rilis metabox to populate itself.
 			window.initSWMetabox = setInterval(displayMetaBox, 10);
 		}
+
+		socialWarfareAdmin.addEventListeners();
 	});
 })(this, jQuery);
