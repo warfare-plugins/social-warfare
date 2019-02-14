@@ -636,7 +636,7 @@ class SWP_Post_Cache {
 					if ( !is_numeric( $count ) ) {
 						continue;
 					}
-					
+
 					if ( !isset( $share_counts[$network] ) ) {
 						$share_counts[$network] = 0;
 					}
@@ -692,6 +692,16 @@ class SWP_Post_Cache {
 				$count = $previous_count;
 			}
 
+
+			/**
+			 * If using multiple URLs (share recovery) && the host API returns
+			 * the same data for both urls, the duplicate counts need
+			 * to be skipped so they are not displayed as double.
+			 *
+			 */
+			if ( $share_counts[$network] == $count ) {
+				continue;
+			}
 
 			/**
 			 * Iterate the total shares with our new numbers, and then store
