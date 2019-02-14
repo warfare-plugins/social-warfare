@@ -43,7 +43,6 @@
  *     get_min_width();
  *     get_float_background();
  *     get_option();
- *     get_float_location();
  *     get_mobile_float_location();
  *     get_order_of_icons();
  *     get_ordered_network_objects();
@@ -85,7 +84,7 @@ class SWP_Buttons_Panel {
 	 * @var array
 	 *
 	 */
-    public $options = array();
+	public $options = array();
 
 
 	/**
@@ -131,30 +130,30 @@ class SWP_Buttons_Panel {
 
 
 	/**
-     * The fully qualified HTML for the Buttons Panel.
-     *
-     * @var string $html;
-     *
-     */
-    public $html = '';
+	 * The fully qualified HTML for the Buttons Panel.
+	 *
+	 * @var string $html;
+	 *
+	 */
+	public $html = '';
 
 
 	/**
-     * The array of active buttons for $this Social Panel.
-     *
-     * @var array $active_buttons;
-     *
-     */
-    public $active_buttons = array();
+	 * The array of active buttons for $this Social Panel.
+	 *
+	 * @var array $active_buttons;
+	 *
+	 */
+	public $active_buttons = array();
 
 
 	/**
-     * The sum of share counts across active networks.
-     *
-     * @var integer $total_shares;
-     *
-     */
-    public $total_shares = 0;
+	 * The sum of share counts across active networks.
+	 *
+	 * @var integer $total_shares;
+	 *
+	 */
+	public $total_shares = 0;
 
 
 	/**
@@ -179,26 +178,26 @@ class SWP_Buttons_Panel {
 	 */
 
 
-    /**
-     * The Construct Method
-     *
-     * This method creates the Buttons_Panel object. It gathers all of the
-     * necessary data, the user options, the share counts, and stores it all in
-     * local properties. Later we will call the public method render_html()
-     * (e.g. $Buttons_Panel->render_html(); ) to actually render out the panel to
-     * the screen.
- 	 *
-     * @since  3.0.0 | 01 MAR 2018 | Created
+	/**
+	 * The Construct Method
+	 *
+	 * This method creates the Buttons_Panel object. It gathers all of the
+	 * necessary data, the user options, the share counts, and stores it all in
+	 * local properties. Later we will call the public method render_html()
+	 * (e.g. $Buttons_Panel->render_html(); ) to actually render out the panel to
+	 * the screen.
+	  *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @since  3.1.0 | 05 JUL 2018 | Created debug() & establish_post_data() methods.
 	 * @since  3.4.0 | 20 SEP 2018 | Moved establish_post_id() into a conditional.
 	 * @param  array optional $args The arguments passed in via shortcode.
 	 * @param  boolean optional $shortcode If a shortcode/direct function
 	 *                          is calling this class.
 	 * @return void
-     *
-     */
-    public function __construct( $args = array(), $shortcode = false ) {
-        global $swp_social_networks;
+	 *
+	 */
+	public function __construct( $args = array(), $shortcode = false ) {
+		global $swp_social_networks;
 
 
 		/**
@@ -206,10 +205,10 @@ class SWP_Buttons_Panel {
 		 * the Buttons_panel object properly.
 		 *
 		 */
-        $this->networks     = $swp_social_networks;
+		$this->networks     = $swp_social_networks;
 		$this->args         = $args;
-        $this->content      = isset( $args['content'] ) ? $args['content'] : '';
-        $this->is_shortcode = $shortcode;
+		$this->content      = isset( $args['content'] ) ? $args['content'] : '';
+		$this->is_shortcode = $shortcode;
 
 
 		/**
@@ -220,9 +219,9 @@ class SWP_Buttons_Panel {
 		 * without one present.
 		 *
 		 */
-        if ( false === $this->establish_post_id() ) {
-            return;
-        }
+		if ( false === $this->establish_post_id() ) {
+			return;
+		}
 
 
 		/**
@@ -231,14 +230,14 @@ class SWP_Buttons_Panel {
 		 * according to the user options, the per post options, share counts, etc.
 		 *
 		 */
-        $this->establish_post_data();
-        $this->establish_local_options();
+		$this->establish_post_data();
+		$this->establish_local_options();
 		$this->establish_share_data();
-  	    $this->establish_location();
+		  $this->establish_location();
 		$this->establish_permalink();
-        $this->establish_active_buttons();
-        $this->debug();
-    }
+		$this->establish_active_buttons();
+		$this->debug();
+	}
 
 
 	/**
@@ -253,21 +252,21 @@ class SWP_Buttons_Panel {
 	 * @return boolean     True on success; False on failure.
 	 *
 	 */
-     public function establish_post_id() {
+	 public function establish_post_id() {
 
 
 		/**
-         * Cycle through the available post_id labels, find which one was passed
-         * in and use it as the post_id for this panel of buttons.
-         *
-         */
- 		$id_labels = array( 'id', 'post_id', 'postid' );
- 		foreach( $id_labels as $label ) {
- 	        if ( isset( $this->args[$label] ) && is_numeric( $this->args[$label] ) ) {
- 	            $this->post_id = $this->args[$label];
- 				return true;
- 	        }
- 		}
+		 * Cycle through the available post_id labels, find which one was passed
+		 * in and use it as the post_id for this panel of buttons.
+		 *
+		 */
+		 $id_labels = array( 'id', 'post_id', 'postid' );
+		 foreach( $id_labels as $label ) {
+			 if ( isset( $this->args[$label] ) && is_numeric( $this->args[$label] ) ) {
+				 $this->post_id = $this->args[$label];
+				 return true;
+			 }
+		 }
 
 
 		/**
@@ -275,7 +274,7 @@ class SWP_Buttons_Panel {
 		 * convert it into a valid WordPress ID for a post.
 		 *
 		 */
-        if ( isset( $this->args['url'] ) && $post_id_from_url = url_to_postid( $this->args['url'] ) ) {
+		if ( isset( $this->args['url'] ) && $post_id_from_url = url_to_postid( $this->args['url'] ) ) {
 			$this->post_id = $post_id_from_url;
 			return true;
 		}
@@ -287,10 +286,10 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		global $post;
-        if ( is_object( $post ) ) :
-            $this->post_id = $post->ID;
+		if ( is_object( $post ) ) :
+			$this->post_id = $post->ID;
 			return true;
-        endif;
+		endif;
 
 
 		/**
@@ -300,7 +299,7 @@ class SWP_Buttons_Panel {
 		 */
 		return false;
 
-   	}
+	   }
 
 
 	/**
@@ -348,25 +347,25 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	protected function establish_local_options() {
-        global $swp_user_options;
+		global $swp_user_options;
 		$this->options = array_merge( $swp_user_options, $this->args);
 	}
 
 
 	/**
-     * Establishes the share data from a given post ID.
-     *
-     * @since 3.1.0 | 25 JUN 2018 | Created the method.
-     * @param  void
-     * @return $this Allows for method chaining.
-     *
-     */
-    public function establish_share_data() {
-        global $SWP_Post_Caches;
-        $this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
+	 * Establishes the share data from a given post ID.
+	 *
+	 * @since 3.1.0 | 25 JUN 2018 | Created the method.
+	 * @param  void
+	 * @return $this Allows for method chaining.
+	 *
+	 */
+	public function establish_share_data() {
+		global $SWP_Post_Caches;
+		$this->shares = $SWP_Post_Caches->get_post_cache( $this->post_id )->get_shares();
 
-        return $this;
-    }
+		return $this;
+	}
 
 
 	/**
@@ -393,7 +392,7 @@ class SWP_Buttons_Panel {
 		 * return with the location set to 'none'.
 		 *
 		 */
-        $this->location = 'none';
+		$this->location = 'none';
 
 
 		/**
@@ -443,9 +442,9 @@ class SWP_Buttons_Panel {
 		 * first item from the array and use that instead.
 		 *
 		 */
-        if( is_array($post_setting) ) {
-             $post_setting = $post_setting[0];
-        }
+		if( is_array($post_setting) ) {
+			 $post_setting = $post_setting[0];
+		}
 
 
 		/**
@@ -456,7 +455,7 @@ class SWP_Buttons_Panel {
 		 */
 		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
 			$this->location = $post_setting;
-            return;
+			return;
 		}
 
 
@@ -477,11 +476,11 @@ class SWP_Buttons_Panel {
 		 * one to trump that one so this comes first.
 		 *
 		 */
-        $home_location = $this->get_option( 'location_home' );
+		$home_location = $this->get_option( 'location_home' );
 		if( is_front_page() && !empty( $home_location ) ) {
 			$this->location = $home_location;
-            return;
-        }
+			return;
+		}
 
 
 		/**
@@ -493,17 +492,17 @@ class SWP_Buttons_Panel {
 		 * strings. As such, we'll leave the location setting to 'none'.
 		 *
 		 */
-        $post_type_location = $this->get_option( 'location_' . $this->post_data['post_type'] );
+		$post_type_location = $this->get_option( 'location_' . $this->post_data['post_type'] );
 		if ( is_singular() && !empty( $post_type_location ) ) {
-            $this->location = $post_type_location;
+			$this->location = $post_type_location;
 			return;
-        }
+		}
 
 		// If we are on the blogroll or an archive listing.
-        if ( is_archive() || is_home() ) {
-            $this->location = $this->get_option( 'location_archive_categories' );
+		if ( is_archive() || is_home() ) {
+			$this->location = $this->get_option( 'location_archive_categories' );
 			return;
-        }
+		}
 	}
 
 
@@ -620,13 +619,13 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function set_option( $option = '', $value = null ) {
-        if ( empty( $option ) ) :
-            $message = "Hey developer, " . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype($value) . ".";
-            throw new Exception($message);
-        elseif ( null == $value ) :
-            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " a second paramter: \$value (mixed type). You provided " . gettype($value) . ".";
-            throw new Exception($message);
-        endif;
+		if ( empty( $option ) ) :
+			$message = "Hey developer, " . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype($value) . ".";
+			throw new Exception($message);
+		elseif ( null == $value ) :
+			$message = "Hey developer, " . __CLASS__ . __METHOD__ . " a second paramter: \$value (mixed type). You provided " . gettype($value) . ".";
+			throw new Exception($message);
+		endif;
 
 		$this->options[$this->options] = $value;
 		return $this;
@@ -645,10 +644,10 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function set_options( $options = array() ) {
-        if ( !is_array( $options) ) :
-            $message = "Hey developer, " . __CLASS__ . __METHOD__ . " requires an arry of options. You provided " . gettype($options) . ".";
-            throw new Exception($message);
-        endif;
+		if ( !is_array( $options) ) :
+			$message = "Hey developer, " . __CLASS__ . __METHOD__ . " requires an arry of options. You provided " . gettype($options) . ".";
+			throw new Exception($message);
+		endif;
 
 		array_merge( $this->options , $options );
 		return $this;
@@ -668,26 +667,26 @@ class SWP_Buttons_Panel {
 
 
 	 /**
-      * Runs checks before ordering a set of buttons.
-      *
-      * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
-      * @since  3.3.3 | 18 SEP 2018 | Added return value for
-      *                               should_panel_display() condition.
-      * @since  3.4.0 | 21 SEP 2018 | Removed $content parameter.
-      * @since  3.4.0 | 24 OCT 2018 | Simplified, combined with method from the
-      *                               side panel child class.
-      * @param  string $content The WordPress content, if passed in.
-      *
-      */
-    public function render_html() {
+	  * Runs checks before ordering a set of buttons.
+	  *
+	  * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+	  * @since  3.3.3 | 18 SEP 2018 | Added return value for
+	  *                               should_panel_display() condition.
+	  * @since  3.4.0 | 21 SEP 2018 | Removed $content parameter.
+	  * @since  3.4.0 | 24 OCT 2018 | Simplified, combined with method from the
+	  *                               side panel child class.
+	  * @param  string $content The WordPress content, if passed in.
+	  *
+	  */
+	public function render_html() {
 
 
- 		/**
- 		 * We have a standalone method designed to let us know if all the proper
- 		 * desired conditions are met in order to allow us to print the buttons.
- 		 *
- 		 */
-        if ( false == $this->should_panel_display() ) {
+		 /**
+		  * We have a standalone method designed to let us know if all the proper
+		  * desired conditions are met in order to allow us to print the buttons.
+		  *
+		  */
+		if ( false == $this->should_panel_display() ) {
 			return $this->content;
 		}
 
@@ -702,8 +701,8 @@ class SWP_Buttons_Panel {
 		$this->generate_attributes();
 		$this->generate_buttons_and_totals_html();
 		$this->combine_html_assets();
- 		$this->append_panel_to_content();
+		 $this->append_panel_to_content();
 
-        return $this->content;
-    }
+		return $this->content;
+	}
 }
