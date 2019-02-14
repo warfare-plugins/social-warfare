@@ -209,11 +209,11 @@ window.socialWarfare = window.socialWarfare || {};
 		var staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
 		var floatingSide = $(".swp_social_panelSide");
 
-		if (staticHorizontal) {
+		if (staticHorizontal.length != 0) {
 			socialWarfare.panels.staticHorizontal = staticHorizontal;
 		}
 
-		if (floatingSide) {
+		if (floatingSide.length != 0) {
 			socialWarfare.panels.floatingSide = floatingSide;
 		}
 
