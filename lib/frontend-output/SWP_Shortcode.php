@@ -122,8 +122,7 @@ class SWP_Shortcode {
 		 *
 		 */
 		$twitter_handle        = SWP_Utility::get_option( 'twitter_id' );
-		$author                = SWP_User_Profile::get_author( get_the_ID() );
-		$author_twitter_handle = get_the_author_meta( 'swp_twitter', $author );
+		$author_twitter_handle = get_the_author_meta( 'swp_twitter', $post->post_author );
 
 
 		/**
@@ -131,7 +130,7 @@ class SWP_Shortcode {
 		 * override the global Twitter username with the author level username.
 		 *
 		 */
-		if ( false !== $author_twitter_handle ) {
+		if ( false !== $author_twitter_handle && !empty( $author_twitter_handle ) ) {
 			$twitter_handle = $author_twitter_handle;
 		}
 
