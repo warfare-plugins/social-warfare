@@ -163,9 +163,26 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		var container = input.parent();
 		var remaining = characterLimit - input.val().length
 
+		// Account for the permalink + whitespace being added to the tweet.
 		if (containerSelector == "swp_custom_tweet") {
-		  //* Account for the permalink + whitespace being added to the tweet.
-		  remaining -= $("#sample-permalink").text().length + 1;
+			var permalinkLength = 0;
+
+			// Classic Editor
+			if ($("#sample-permalink").length) {
+				permalinkLength = $("#sample-permalink").text().length;
+			}
+
+			// Gutenberg Editor
+			else if ($("#wp-admin-bar-view a").length) {
+				permalinkLength = $("#wp-admin-bar-view a").attr('href').length;
+			}
+
+			if ($("#swp-twitter-handle").length) {
+				var twitterHandle = $("#swp-twitter-handle").text();
+				remaining -= twitterHandle.length;
+			}
+
+			remaining -= permalinkLength;
 		}
 
 		if (remaining >= 0) {
@@ -326,6 +343,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	}
 
 	function createTextCounters() {
+		// map CSS selector to the character limit.
 		var textCounters = {
 			"swp_og_title": 60,
 			"swp_og_description": 150,
@@ -508,7 +526,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		var button = jQuery('<button class="button">Reset Post Meta</button>')
 		button.on('click', socialWarfareAdmin.triggerDeletePostMeta)
 
-		parent.append(button)
+		parent.after(button)
 	}
 
 	$(document).ready(function() {
