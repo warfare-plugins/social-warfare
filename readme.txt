@@ -1,9 +1,9 @@
 === WordPress Social Sharing Plugin - Social Warfare ===
 Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia, cdegraff1, ckmahoney
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
-Requires at least: 3.5.1
-Tested up to: 4.9
-Stable tag: 3.3.2
+Requires at least: 4.5.0
+Tested up to: 5.0.0
+Stable tag: 3.4.2
 License: GNU General Public License v2.0 or later
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
@@ -27,7 +27,7 @@ You can choose from the top social networks sharing buttons, including:
 * Google+
 * Pinterest
 * LinkedIn
-* StumbleUpon
+* Mix
 
 You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
@@ -192,6 +192,39 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 3.4.2 (13 DEC 2018) =
+* Fixed floating bottom disappear on mobile when pro is deactivated.
+* Fixed blocks disappearing after Gutenberg update.
+* Fixed buttons accidentally showing up on pages created with content builders.
+
+= 3.4.1 (4 DEC 2018) =
+* Fixed JS error in Admin (`TypeError $ is not defined`)
+* Fixed placement of mobile floating buttons.
+* Fixed breakpoint transition for mobile buttons.
+* Fixed option registration when Pro is temporarily deactivated.
+* Updated cURL method so API requests are faster.
+* Removed references to Open Share Count.
+
+= 3.4.0 (27 NOV 2018) =
+* Props to our Warfare Community beta testers- you guys rock!
+* Added support for Gutenberg blocks Social Warfare and Click To Tweet (as of Gutenberg 4.5.1)
+* Added option in Advanced tab to disable Gutenberg blocks.
+* Added interactive components to the Admin sidebar.
+* Added a tooltip to network icons in the settings page.
+* Updated JS to open share links in windows instead of tabs.
+* Updated Social Warfare settings page to be mobile responsive.
+* Updated the cURL request timeout duration to be shorter.
+* Fixed extra whitespace when floating buttons are present on mobile.
+* Fixed bug during post caching which prevented shares from updating.
+* Fixed error 'invalid argument supplied foreach' regarding `$network` objects.
+* Fixed 'Social Shares' total counts column in Admin view.
+* Fixed Popular Posts widget from defaulting to the wrong post type.
+* Fixed use of 'total' and 'totals' in the [social_warfare] shortcode.
+* Fixed totals only appearing on one set of buttons.
+* Fixed minor cosmetic detail on the buttons panel (removed an underline).
+* Fixed tweet character encoding.
+* Refactored the script.js file (frontend JavaScript)
 
 = 3.3.2 (14 SEP 2018) =
 * Fixed a line of code that caused the 'social_warfare()' function to disappear.

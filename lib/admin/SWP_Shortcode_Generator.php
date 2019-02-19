@@ -106,6 +106,9 @@ class SWP_Shortcode_Generator {
     *
     */
 	public function tinymce_register_plugin( $plugin_array ) {
+		if( true == SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' )  && is_gutenberg_page() ) {
+			return $plugin_array;
+		}
 		$plugin_array['swp_shortcode_generator'] = SWP_PLUGIN_URL . '/assets/js/sw-shortcode-generator.js';
 		return $plugin_array;
 	}
