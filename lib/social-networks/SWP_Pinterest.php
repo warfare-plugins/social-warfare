@@ -183,4 +183,22 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 public function generate_share_link( $post_data ) {
 		return 0;
 	 }
+
+	 /**
+	  * Trims the text of a pinterest description down to the 500 character max.
+	  *
+	  * @since  3.5.0 | 21 FEB 2019 | Created.
+	  * @param  string $pinterst_description The target Pinterest description.
+	  * @return string The same pinterest description, capped at 500 characters.
+	  *
+	  */
+	 public static function trim_pinterest_description( $pinterest_description ) {
+		 if ( strlen( $pinterest_description ) > 500 ) {
+			 $read_more = '... read more at ' . $permalink;
+			 $pinterest_description = substr( $title . ': ' . the_excerpt(), 0, 500 - strlen( $read_more ) );
+			 $pinterest_description .= $read_more;
+		 }
+
+		 return $pinterst_description;
+	 }
 }
