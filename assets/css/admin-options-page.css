@@ -337,7 +337,10 @@ input.sw-admin-input {
 			border-radius: 4px;
 }
 
-a.button.sw-navy-button, a.button.sw-blue-button, a.button.sw-green-button, a.button.sw-red-button {
+/* old selectors */
+a.button.sw-navy-button, a.button.sw-blue-button, a.button.sw-green-button, a.button.sw-red-button,
+/* 2019 selector */
+.swp-button {
 	padding: 15px 30px;
 	height: auto;
 	line-height: 1;
@@ -877,4 +880,21 @@ div.error {
 	font-size: 13px;
 	letter-spacing: 1.2px;
 	font-family: "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+}
+
+.swp-authorization-button {
+	padding: 0;
+	color: white;
+	text-decoration: none;
+	font-size: 15px;
+	line-height: 15px;
+}
+
+.swp-authorization-button > div {
+	display: flex;
+	padding: 15px 30px;
+}
+
+.swp-authorization-button i.sw {
+	padding-right: 10px;
 }
