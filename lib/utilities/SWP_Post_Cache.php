@@ -699,7 +699,7 @@ class SWP_Post_Cache {
 			 * to be skipped so they are not displayed as double.
 			 *
 			 */
-			if ( $share_counts[$network] == $count ) {
+			if ( !empty( $share_counts[$network] ) && $share_counts[$network] == $count ) {
 				continue;
 			}
 
