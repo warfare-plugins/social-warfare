@@ -898,3 +898,7 @@ div.error {
 .swp-authorization-button i.sw {
 	padding-right: 10px;
 }
+
+.swp-authorization-button:hover {
+	color: white;
+}
