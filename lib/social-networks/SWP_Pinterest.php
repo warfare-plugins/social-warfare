@@ -93,20 +93,15 @@ class SWP_Pinterest extends SWP_Social_Network {
 
 		if ( !empty( $metabox_pinterest_image ) ) :
 			$pinterest_image = $metabox_pinterest_image;
-
 		elseif ( isset($options['pinterest_fallback']) && $options['pinterest_fallback'] == 'featured' ):
 			$pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
-
 		else :
 			$pinterest_image = '';
-
 		endif;
 
-		if ( !empty( $options['pinterest_id'] ) ) :
+		if ( !empty( $options['pinterest_id'] ) ) {
 			 $pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
-		 else :
-			 $pinterest_username = '';
-		 endif;
+		 }
 
 		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
 		$pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
@@ -122,6 +117,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 		endif;
 
 		$pinterest_description .= $pinterest_username;
+		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description);
 
 		if ( !empty( $pinterest_image ) ) :
 			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
@@ -188,7 +184,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  * Trims the text of a pinterest description down to the 500 character max.
 	  *
 	  * @since  3.5.0 | 21 FEB 2019 | Created.
-	  * @param  string $pinterst_description The target Pinterest description.
+	  * @param  string $pinterest_description The target Pinterest description.
 	  * @return string The same pinterest description, capped at 500 characters.
 	  *
 	  */
@@ -199,6 +195,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 			 $pinterest_description .= $read_more;
 		 }
 
-		 return $pinterst_description;
+		 return $pinterest_description;
 	 }
 }
