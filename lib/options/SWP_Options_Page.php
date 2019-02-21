@@ -596,8 +596,9 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			// No access tokens exists for this network.
 			if ( false == $access_token ) {
 				$link = $instance->get_authorization_link();
-				$display_text = 'Authorize ' . ucfirst( $network_key );
-				$option = new SWP_Option_Button( $display_text, $network_key, 'button sw-green-button swp-authorization-button', $link );
+				$display_text = $instance->get_auth_button_text();
+				$classname = "swp-button swp-{$network_key} swp-authorization-button";
+				$option = new SWP_Option_Button( $display_text, $network_key, $classname, $link );
 
 			}
 
