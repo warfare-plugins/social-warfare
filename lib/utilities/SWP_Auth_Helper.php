@@ -27,6 +27,14 @@ class SWP_Auth_Helper {
 
 
 	/**
+	 * Alias of $network.
+	 * @var string $key
+	 *
+	 */
+	public $key = '';
+
+
+	/**
 	 * Whether or not we have registered credentials for this network.
 	 * @var bool $has_credentials;
 	 *
@@ -81,6 +89,7 @@ class SWP_Auth_Helper {
 		}
 
 		$this->network = $network_key;
+		$this->key = $network_key;
 		$this->establish_credentials();
 	}
 
@@ -198,5 +207,13 @@ class SWP_Auth_Helper {
 		}
 	}
 
+	public function get_auth_button_text() {
+		switch ( $this->network ) {
+			case 'facebook' :
+				return '<i class="sw swp_facebook_icon"></i> Continue with Facebook';
 
+			default :
+				return '<i class="sw swp_'.$this->key.'_icon"></i> Login with ' . ucfirst( $this->key );
+		}
+	}
 }
