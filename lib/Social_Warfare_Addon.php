@@ -42,7 +42,7 @@ class Social_Warfare_Addon {
 	 * The callback function used to add a new instance of this
 	 * to our swp_registrations filter.
 	 *
-	 * This should be the last item called in an addon's main file.
+	 * This should be the last item called in an addon's main class.
 	 *
 	 * @param array $addons The array of addons currently activated.
 	 */
