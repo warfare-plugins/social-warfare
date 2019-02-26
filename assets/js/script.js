@@ -184,10 +184,14 @@ window.socialWarfare = window.socialWarfare || {};
 		 * floating buttons to flicker.
 		 *
 		 */
+		var time = Date.now();
+		var wait = 50;
 		$(window).scroll(function() {
-			socialWarfare.throttle(50, socialWarfare.updateFloatingButtons)
+			if ((time + wait - Date.now()) < 0) {
+				socialWarfare.updateFloatingButtons();
+				time = Date.now();
+			}
 		});
-
 	}
 
 
@@ -588,7 +592,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.updateFloatingButtons = function() {
-
 		// If buttons are on the page, there must be either a static horizontal
 		if (socialWarfare.panels.staticHorizontal.length) {
 			var panel = socialWarfare.panels.staticHorizontal;
@@ -606,7 +609,7 @@ window.socialWarfare = window.socialWarfare || {};
 		// Adjust the floating bar
 		var location = panel.data('float');
 
-		if( true == socialWarfare.isMobile() ) {
+		if (true == socialWarfare.isMobile()) {
 			var location = panel.data('float-mobile');
 		}
 
@@ -655,37 +658,28 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.toggleFloatingVerticalPanel = function() {
 		var direction = '';
-		var location = socialWarfare.panels.floatingSide.data("float")
+		var location = socialWarfare.panels.floatingSide.data("float");
 		var visible  = socialWarfare.staticPanelIsVisible();
-		var style = "";
+		var offset = "";
 
 		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
 			return socialWarfare.panels.floatingSide.hide();
 		}
-		socialWarfare.panels.floatingSide.show();
 
-		//* No buttons panel! Manually re-define ${visibility}.
 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
-			if (!socialWarfare.isMobile()) {
-				visible = false;
-			} else {
-				visible = true;
-			}
+			// No buttons panel! Update `visible` to hide floaters.
+			visible = true;
 		}
 
 		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
-
-			direction = (location.indexOf("left") !== -1) ? "left" : "right";
-			style     = visible ? "-150px" : "5px";
-
+			direction = location;
+			offset     = visible ? "-150px" : "5px";
 			//* Update the side panel CSS with the direction and amount.
-			socialWarfare.panels.floatingSide.css(direction, style);
-
+			socialWarfare.panels.floatingSide.css(direction, offset).show();
 		}
 
 		else {
-
 			/**
 			 * We had problems with the fading buttons flickering rather than having
 			 * a smooth fade animation. The workaround was to manually control opacity,
@@ -1188,39 +1182,44 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return function           The callback function.
 	 *
 	 */
-	socialWarfare.throttle = function(delay, callback) {
-		var timeoutID = 0;
-		var lastExec  = 0;
+	// socialWarfare.throttle = function(delay, callback) {
+	// 	var timeoutID = 0;
+	// 	// The previous time `callback` was called.
+	// 	var lastExec  = 0;
+	//
+	// 	function wrapper() {
+	// 		var wrap    = this;
+	// 		var elapsed = +new Date() - lastExec;
+	// 		var args    = arguments;
+	//
+	// 		function exec() {
+	// 			lastExec = +new Date();
+	// 			callback.apply(wrap, args);
+	// 		}
+	//
+	// 		function clear() {
+	// 			timeoutID = 0;
+	// 			lastExec = 0;
+	// 		}
+	//
+	// 		timeoutID && clearTimeout(timeoutID);
+	//
+	// 		if (elapsed > delay) {
+	// 			exec();
+	// 		} else {
+	// 			timeoutID = setTimeout(exec, delay - elapsed);
+	// 		}
+	// 	}
+	//
+	// 	if (socialWarfare.guid) {
+	// 		wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
+	// 	}
+	//
+	// 	console.log(wrapper)
+	//
+	// 	return wrapper;
+	// };
 
-		function wrapper() {
-			var that    = this;
-			var elapsed = +new Date() - lastExec;
-			var args    = arguments;
-
-			function exec() {
-				lastExec = +new Date();
-				callback.apply(that, args);
-			}
-
-			function clear() {
-				timeoutID = undefined;
-			}
-
-			timeoutID && clearTimeout(timeoutID);
-
-			if (elapsed > delay) {
-				exec();
-			} else {
-				timeoutID = setTimeout(exec, delay - elapsed);
-			}
-		}
-
-		if (socialWarfare.guid) {
-			wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
-		}
-
-		return wrapper;
-	};
 
 
 	/**
@@ -1364,6 +1363,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		// This is what fires up the entire plugin's JS functionality.
 		socialWarfare.initPlugin();
+		socialWarfare.panels.floatingSide.hide();
 
 
 		/**

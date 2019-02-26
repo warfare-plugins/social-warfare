@@ -101,7 +101,10 @@ class SWP_Pinterest extends SWP_Social_Network {
 
 		if ( !empty( $options['pinterest_id'] ) ) {
 			 $pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
-		 }
+		}
+		else {
+			$pinterest_username = '';
+		}
 
 		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
 		$pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
