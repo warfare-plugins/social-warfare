@@ -117,7 +117,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 			$pinterest_description = $title;
 		endif;
 
-		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
+		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, SWP_Pinterest::get_via() );
 
 		if ( !empty( $pinterest_image ) ) :
 			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
@@ -210,6 +210,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  */
 	 public static function get_via() {
 		$via = SWP_Utility::get_option( 'pinterest_id' );
+
 		$pinterest_username = '';
 		if ( isset( $via ) ) {
 			$pinterst_username = ' via @' . str_replace( '@' , '' , $via );
