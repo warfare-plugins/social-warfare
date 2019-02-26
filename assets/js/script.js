@@ -107,19 +107,6 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * This will cause our resize event to wait until the user is fully done
-	 * resizing the window prior to resetting and rebuilding the buttons and
-	 * their positioning and re-initializing the plugin JS functions.
-	 *
-	 */
-	var wait;
-	socialWarfare.onWindowResize = function(){
-	  clearTimeout(wait);
-	  wait = setTimeout(socialWarfare.initPlugin, 100 );
-	}
-
-
-	/**
 	 * These variables measure the amount of padding at the top and bottom of
 	 * the page upon the dom loaded event. We grab these early on and keep them
 	 * stored so that we can add 50 pixels of padding whenever the floating
@@ -185,13 +172,26 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		var time = Date.now();
-		var wait = 50;
+		var scrollDelay = 50;
 		$(window).scroll(function() {
-			if ((time + wait - Date.now()) < 0) {
+			if ((time + scrollDelay - Date.now()) < 0) {
 				socialWarfare.updateFloatingButtons();
 				time = Date.now();
 			}
 		});
+	}
+
+
+	/**
+	 * This will cause our resize event to wait until the user is fully done
+	 * resizing the window prior to resetting and rebuilding the buttons and
+	 * their positioning and re-initializing the plugin JS functions.
+	 *
+	 */
+	var resizeWait;
+	socialWarfare.onWindowResize = function(){
+	  clearTimeout(resizeWait);
+	  resizeWait = setTimeout(socialWarfare.initPlugin, 100 );
 	}
 
 
