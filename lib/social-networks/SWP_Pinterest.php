@@ -99,11 +99,9 @@ class SWP_Pinterest extends SWP_Social_Network {
 			$pinterest_image = '';
 		endif;
 
-		if ( !empty( $options['pinterest_id'] ) ) {
-			 $pinterest_username = ' via @' . str_replace( '@' , '' , $options['pinterest_id'] );
-		}
-		else {
-			$pinterest_username = '';
+		$pinterest_username = '';
+		if ( !empty( SWP_Utility::get_option( 'pinterest_id' ) ) ) {
+			 $pinterest_username = ' via @' . str_replace( '@' , '' , SWP_Utility::get_option( 'pinterest_id' ) );
 		}
 
 		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
@@ -119,8 +117,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 			$pinterest_description = $title;
 		endif;
 
-		$pinterest_description .= $pinterest_username;
-		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description);
+		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
 
 		if ( !empty( $pinterest_image ) ) :
 			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
@@ -191,13 +188,33 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  * @return string The same pinterest description, capped at 500 characters.
 	  *
 	  */
-	 public static function trim_pinterest_description( $pinterest_description ) {
+	 public static function trim_pinterest_description( $pinterest_description, $via ) {
 		 if ( strlen( $pinterest_description ) > 500 ) {
-			 $read_more = '... read more at ' . $permalink;
-			 $pinterest_description = substr( $title . ': ' . the_excerpt(), 0, 500 - strlen( $read_more ) );
+			 $read_more = '... read more at ' . get_the_permalink();
+			 $cutoff = 500 - strlen( $read_more );
+
+			 $pinterest_description = substr( $pinterest_description, 0, $cutoff );
 			 $pinterest_description .= $read_more;
 		 }
 
 		 return $pinterest_description;
+	 }
+
+	 /**
+	  * Fetches the user's @via for Pinterest, if it exists.
+	  *
+	  * @since  3.5.1 | 26 FEB 2019 | Created.
+	  * @param  void
+	  * @return string The '@via $username', or an empty string.
+	  *
+	  */
+	 public static function get_via() {
+		$via = SWP_Utility::get_option( 'pinterest_id' );
+		$pinterest_username = '';
+		if ( isset( $via ) ) {
+			$pinterst_username = ' via @' . str_replace( '@' , '' , $via );
+		}
+
+		return $pinterest_username;
 	 }
 }
