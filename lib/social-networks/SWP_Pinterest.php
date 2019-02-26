@@ -2,7 +2,7 @@
 /**
  * Pinterest
  *
- * Class to add a Pinterst share button to the available buttons
+ * Class to add a Pinterest share button to the available buttons
  *
  * @package   SocialWarfare\Functions\Social-Networks
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
@@ -209,7 +209,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 			  */
 			 if ( strlen( $pinterest_description) + strlen( $via ) > 500 ) {
 				 $cutoff = 500 - strlen( $via );
-				 $pinterst_description = substr( $pinterst_description, 0, $cutoff );
+				 $pinterest_description = substr( $pinterest_description, 0, $cutoff );
 			 }
 
 			 $pinterest_description .= $via;
