@@ -30,7 +30,7 @@
  *     #3. Floating Buttons Panel Controls
  *        Function: socialWarfare.createFloatHorizontalPanel()
  *        Function: socialWarfare.staticPanelIsVisible()
- *        Function: socialWarfare.toggleFloatingButtons()
+ *        Function: socialWarfare.updateFloatingButtons()
  *        Function: socialWarfare.toggleMobileButtons()
  *        Function: socialWarfare.toggleFloatingVerticalPanel()
  *        Function: socialWarfare.toggleFloatingHorizontalPanel()
@@ -83,7 +83,7 @@ window.socialWarfare = window.socialWarfare || {};
  * still be able to access our functions and variables from anywhere.
  *
  */
-(function(window, $, jQuery) {
+(function(window, $) {
 	'use strict';
 
 	if ( typeof $ != 'function' ) {
@@ -93,7 +93,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		else {
 			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
-            return;
+			return;
 		}
 	}
 
@@ -104,28 +104,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 *
 	 ***************************************************************************/
-
-
-	/**
-	 * Load the plugin once the DOM has been loaded.
-	 *
-	 */
-	$(document).ready(function() {
-
-		// This is what fires up the entire plugin's JS functionality.
-		socialWarfare.initPlugin();
-
-
-		/**
-		 * On resize, we're going to purge and re-init the entirety of the
-		 * socialWarfare functions. This will fully reset all of the floating
-		 * buttons which will allow for a clean transition if the size change
-		 * causes the isMobile() check to flip from true to false or vica versa.
-		 *
-		 */
-		$(window).resize(socialWarfare.onWindowResize);
-
-	});
 
 
 	/**
@@ -183,7 +161,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.positionFloatSidePanel();
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
-		socialWarfare.toggleFloatingButtons();
+		socialWarfare.updateFloatingButtons();
 
 
 		/**
@@ -193,7 +171,9 @@ window.socialWarfare = window.socialWarfare || {};
 		 * ensure that the buttons panel exist and activate the click bindings.
 		 *
 		 */
-		setTimeout( socialWarfare.checkListeners(0, 5), 2000);
+		setTimeout(function() {
+			socialWarfare.checkListeners(0, 5)
+		}, 2000);
 
 
 		/**
@@ -204,7 +184,9 @@ window.socialWarfare = window.socialWarfare || {};
 		 * floating buttons to flicker.
 		 *
 		 */
-		$(window).scroll(socialWarfare.throttle(50, socialWarfare.toggleFloatingButtons));
+		$(window).scroll(function() {
+			socialWarfare.throttle(50, socialWarfare.updateFloatingButtons)
+		});
 
 	}
 
@@ -224,16 +206,9 @@ window.socialWarfare = window.socialWarfare || {};
 			floatingHorizontal: null
 		};
 
-		var staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
-		var floatingSide = $(".swp_social_panelSide");
-
-		if (staticHorizontal) {
-			socialWarfare.panels.staticHorizontal = staticHorizontal;
-		}
-
-		if (floatingSide) {
-			socialWarfare.panels.floatingSide = floatingSide;
-		}
+		// Set each type of panel as a jQuery object (with 0 or more panels)
+		socialWarfare.panels.staticHorizontal = $(".swp_social_panel").not(".swp_social_panelSide");
+		socialWarfare.panels.floatingSide = $(".swp_social_panelSide");
 
 		return socialWarfare.panels;
 	}
@@ -415,9 +390,9 @@ window.socialWarfare = window.socialWarfare || {};
 			 *
 			 */
 			top = window.screenY + (window.innerHeight - height) / 2;
- 			left = window.screenX + (window.innerWidth - width) / 2;
- 			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
- 			instance = window.open(href, network, windowAttributes);
+			 left = window.screenX + (window.innerWidth - width) / 2;
+			 windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+			 instance = window.open(href, network, windowAttributes);
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
@@ -457,12 +432,17 @@ window.socialWarfare = window.socialWarfare || {};
 		var floatLocation       = socialWarfare.panels.staticHorizontal.data("float");
 		var mobileFloatLocation = socialWarfare.panels.staticHorizontal.data("float-mobile");
 		var backgroundColor     = socialWarfare.panels.staticHorizontal.data("float-color");
-		var wrapper             = $('<div class="nc_wrapper" style="background-color:' + backgroundColor + '"></div>');
+		var wrapper             = $('<div class="nc_wrapper swp_floating_horizontal_wrapper" style="background-color:' + backgroundColor + '"></div>');
 		var barLocation         = '';
 
 		//* .swp_social_panelSide is the side floater.
 		if ($(".nc_wrapper").length) {
 			$(".nc_wrapper").remove();
+		}
+
+		//* repeating the code above for the new selector.
+		if ($(".swp_floating_horizontal_wrapper").length) {
+			$(".swp_floating_horizontal_wrapper").remove();
 		}
 
 		//* No floating bars are used at all.
@@ -607,17 +587,32 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return void
 	 *
 	 */
-	socialWarfare.toggleFloatingButtons = function() {
+	socialWarfare.updateFloatingButtons = function() {
+
+		// If buttons are on the page, there must be either a static horizontal
+		if (socialWarfare.panels.staticHorizontal.length) {
+			var panel = socialWarfare.panels.staticHorizontal;
+		}
+
+		// Or a side floating panel.
+		else if (socialWarfare.panels.floatingSide.length) {
+			var panel = socialWarfare.panels.floatingSide;
+		}
+
+		else {
+			return;
+		}
 
 		// Adjust the floating bar
-		var location = socialWarfare.panels.staticHorizontal.data('float');
+		var location = panel.data('float');
+
 		if( true == socialWarfare.isMobile() ) {
-			var location = socialWarfare.panels.staticHorizontal.data('float-mobile');
+			var location = panel.data('float-mobile');
 		}
 
 		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
-			return $(".nc_wrapper, .swp_social_panelSide").hide();
+			return $(".nc_wrapper, .swp_floating_horizontal_wrapper, .swp_social_panelSide").hide();
 		}
 
 		if (socialWarfare.isMobile()) {
@@ -648,7 +643,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.panels.floatingSide.hide();
 
 		var visibility = socialWarfare.staticPanelIsVisible() ? "collapse" : "visible";
-		$(".nc_wrapper").css("visibility", visibility);
+		$(".nc_wrapper, .swp_floating_horizontal_wrapper").css("visibility", visibility);
 	}
 
 
@@ -715,7 +710,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 	socialWarfare.hasReferencePanel = function() {
 		return typeof socialWarfare.panels.staticHorizontal != 'undefined' &&
-		              socialWarfare.panels.staticHorizontal.length > 0
+					  socialWarfare.panels.staticHorizontal.length > 0
 	}
 
 
@@ -746,7 +741,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* Restore the padding to initial values.
 		if (socialWarfare.staticPanelIsVisible()) {
-			$(".nc_wrapper").hide();
+			$(".nc_wrapper, .swp_floating_horizontal_wrapper").hide();
 
 
 			if (socialWarfare.isMobile() && $("#wpadminbar").length) {
@@ -757,16 +752,16 @@ window.socialWarfare = window.socialWarfare || {};
 		// Add some padding to the page so it fits nicely at the top or bottom.
 		else {
 			newPadding += 50;
-			$(".nc_wrapper").show();
+			$(".nc_wrapper, .swp_floating_horizontal_wrapper").show();
 
-            //* Compensate for the margin-top added to <html> by #wpadminbar.
+			//* Compensate for the margin-top added to <html> by #wpadminbar.
 			if (socialWarfare.isMobile() && location == 'top' && $("#wpadminbar").length) {
 				$("#wpadminbar").css("top", panel.parent().height());
 			}
 		}
 
 		//* Update padding to be either initial values, or to use padding for floatingHorizontal panels.
-        $("body").css(paddingProp, newPadding);
+		$("body").css(paddingProp, newPadding);
 	}
 
 
@@ -872,18 +867,18 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.enablePinterestSaveButtons = function() {
 
-
 		/**
 		 * Search and Destroy: This will find any Pinterest buttons that were
 		 * added via their browser extension and then destroy them so that only
 		 * ours are on the page.
 		 *
 		 */
-		var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
-		if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
-			socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
-		}
-
+		jQuery('img').on('mouseenter', function() {
+			var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
+			if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
+				socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+			}
+		});
 
 		/**
 		 * Find all images of the images that are in the content area by looking
@@ -969,7 +964,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 * By creating a temporary image and then using jQuery to fetch the
 			 * URL of that image, it will convert any relative paths to
 			 * absolute paths. If we send a relative path image to Pinterest, it
-			 * will throw wonky errors.
+			 * will throw errors.
 			 *
 			 */
 			var i = new Image();
@@ -1048,10 +1043,11 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.findPinterestBrowserSaveButtons = function() {
-		var pinterestRed, pinterestZIndex, pinterestBackgroundSize, button, style;
+		var pinterestRed, pinterestRed2019, pinterestZIndex, pinterestBackgroundSize, button, style;
 
 		//* Known constants used by Pinterest.
 		pinterestRed = "rgb(189, 8, 28)";
+		pinterestRed2019 = "rgb(230, 0, 35)";
 		pinterestZIndex = "8675309";
 		pinterestBackgroundSize = "14px 14px";
 		button = null;
@@ -1060,7 +1056,7 @@ window.socialWarfare = window.socialWarfare || {};
 		document.querySelectorAll("span").forEach(function(element, index) {
 			style = window.getComputedStyle(element);
 
-			if (style.backgroundColor == pinterestRed) {
+			if (style.backgroundColor == pinterestRed || style.backgroundColor == pinterestRed2019) {
 				if (style.backgroundSize == pinterestBackgroundSize && style.zIndex == pinterestZIndex) {
 					button = element;
 				}
@@ -1359,5 +1355,26 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.isMobile = function() {
 		return $(window).width() < socialWarfare.breakpoint;
 	}
+
+	/**
+	 * Load the plugin once the DOM has been loaded.
+	 *
+	 */
+	$(document).ready(function() {
+
+		// This is what fires up the entire plugin's JS functionality.
+		socialWarfare.initPlugin();
+
+
+		/**
+		 * On resize, we're going to purge and re-init the entirety of the
+		 * socialWarfare functions. This will fully reset all of the floating
+		 * buttons which will allow for a clean transition if the size change
+		 * causes the isMobile() check to flip from true to false or vica versa.
+		 *
+		 */
+		$(window).resize(socialWarfare.onWindowResize);
+
+	});
 
 })(this, jQuery);

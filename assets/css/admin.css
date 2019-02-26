@@ -1,5 +1,5 @@
 #social_warfare.postbox {
-    display: none;
+	display: none;
 }
 
 .notAvailable {
@@ -11,7 +11,7 @@
 	display: block;
 	padding: 5px 15px;
 	-webkit-border-radius: 3px 3px 0 0;
-	        border-radius: 3px 3px 0 0;
+			border-radius: 3px 3px 0 0;
 	color: #FFF;
 	font-weight: bold;
 	max-width: 200px;
@@ -35,12 +35,12 @@
 	display: block;
 	width: 100%;
 	-webkit-background-size: cover;
-	        background-size: cover;
+			background-size: cover;
 	background-position-x: center;
 	background-repeat: no-repeat;
 	background-color: #ccc;
 	-webkit-border-radius: 4px;
-	        border-radius: 4px;
+			border-radius: 4px;
 	padding: 0;
 }
 
@@ -64,12 +64,12 @@
 #social_warfare .swpmb-media-content .centered,
 #social_warfare .swpmb-media-content img {
 	width: 100%;
-    margin-bottom: -5px;
+	margin-bottom: -5px;
 	height: auto;
 	max-height: none;
 	-webkit-transform: none;
-	    -ms-transform: none;
-	        transform: none;
+		-ms-transform: none;
+			transform: none;
 }
 
 .wp-core-ui #social_warfare a.swpmb-add-media.button {
@@ -83,7 +83,7 @@
 	padding: 15px 25px;
 	margin: 0;
 	-webkit-box-shadow: none;
-	        box-shadow: none;
+			box-shadow: none;
 	border: none;
 	height: auto;
 }
@@ -142,11 +142,11 @@
 	color: #fff;
 	padding: 15px;
 	-webkit-border-radius: 2px;
-	        border-radius: 2px;
+			border-radius: 2px;
 	margin: 15px 0;
 	border: 0;
 	-webkit-box-shadow: none;
-	        box-shadow: none;
+			box-shadow: none;
 	max-width: none;
 	padding: 20px;
 }
@@ -164,47 +164,47 @@
 /* Adds the border between sections. */
 [class$=title_wrapper] ~ [class$=title_wrapper] {
 	border-top: 1px solid #CED3DC;
-    padding-top: 40px;
+	padding-top: 40px;
 }
 
 .swp-notice-wrapper {
-    max-width: 73%;
-    margin-top: -15px;
-    margin-bottom: 15px;
+	max-width: 73%;
+	margin-top: -15px;
+	margin-bottom: 15px;
 }
 
 .swp-notice {
-    padding: 10px 15px;
-    padding: 20px;
+	padding: 10px 15px;
+	padding: 20px;
 }
 
 .swp-actions {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .swp-notice a {
-    cursor: hover;
-    text-decoration: underline;
-    margin: 0 10px;
+	cursor: hover;
+	text-decoration: underline;
+	margin: 0 10px;
 }
 
 .swp-dismiss-notice.notice.notice-info {
-    font-size: 15px;
-    line-height: 25px;
+	font-size: 15px;
+	line-height: 25px;
 }
 
 .swp-dismiss-notice.notice.notice-info {
-    border-left-color: #D34250;
-    padding: 20px;
-    margin: 15px 0 15px;
+	border-left-color: #D34250;
+	padding: 20px;
+	margin: 15px 0 15px;
 }
 
 .swp-dismiss-notice.notice.notice-info p {
-    font-size: 15px;
-    line-height: 25px;
-    padding: 0;
-    margin: 0 0 20px;
+	font-size: 15px;
+	line-height: 25px;
+	padding: 0;
+	margin: 0 0 20px;
 }
 
 a.swp-notice-cta {
@@ -215,54 +215,58 @@ a.swp-notice-cta {
    margin-right: 50px;
 }
 
+#swp-admin-sidebar {
+	margin-top:-20px;
+}
+
 #swp-admin-sidebar .swp-component.dark-text {
-    color: #333;
+	color: #333;
 }
 
 #swp-admin-sidebar .swp-component.light-text {
-    color: #eee;
+	color: #eee;
 }
 
 #swp-admin-sidebar .swp-component {
-    font-size: 13px;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 8px;
+	font-size: 13px;
+	padding: 20px;
+	margin: 20px 0;
+	border-radius: 8px;
 }
 
 #swp-admin-sidebar .swp-component.text-center {
-    text-align: center;
+	text-align: center;
 }
 
 #swp-admin-sidebar .swp-component-cta {
-    margin: 0 auto;
-    display: block;
-    padding: 10px 15px;
-    border: 0;
-    border-radius: 4px;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 90%;
+	margin: 0 auto;
+	display: block;
+	padding: 10px 15px;
+	border: 0;
+	border-radius: 4px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: bold;
+	cursor: pointer;
+	width: 90%;
 }
 
 #swp-admin-sidebar button.swp-component-cta {
-    width: 100%;
+	width: 100%;
 }
 
 #swp-admin-sidebar .swp-component-icon {
-    text-align: center;
+	text-align: center;
 }
 
 
 #swp-admin-sidebar .swp-component .swp-component-title {
-    font-size: 26px;
-    text-align: center;
-    font-weight: bold;
+	font-size: 26px;
+	text-align: center;
+	font-weight: bold;
 }
 
 /*********************************************************
@@ -279,7 +283,7 @@ a.swp-notice-cta {
 	margin: 5px 0;
 	cursor: pointer;
 	-webkit-border-radius: 4px;
-	        border-radius: 4px;
+			border-radius: 4px;
 	overflow: hidden;
 	position: relative;
 }
@@ -325,11 +329,11 @@ a.swp-notice-cta {
  */
 
 .swpmb-heading-wrapper h1 {
-     font-weight: bold;
+	 font-weight: bold;
  }
 
  .swpmb-meta-box {
-    margin: 25px 30px;
+	margin: 25px 30px;
 }
 
 .swpmb-meta-container {
@@ -414,7 +418,7 @@ a.swp-notice-cta {
 
 .swpmb-field.inline-select .swpmb-input {
 	margin-top: 0;
-    display: inline;
+	display: inline;
 	float: right;
 	border-radius: 5px;
 }
@@ -425,7 +429,7 @@ a.swp-notice-cta {
 
 /* Give the "Other" options more space around them. */
 .swpmb-field.other {
-    margin: 15px 0;
+	margin: 15px 0;
 }
 
 #social_warfare .sw-checkbox-toggle {

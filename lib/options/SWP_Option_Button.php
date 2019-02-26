@@ -1,6 +1,10 @@
 <?php
 
-class SWP_Option_Toggle extends SWP_Option {
+/**
+ * A button with a CTA. The immediate use case is for network authorizations.
+ *
+ */
+class SWP_Option_Button extends SWP_Option {
 
 
 	/**
@@ -20,9 +24,12 @@ class SWP_Option_Toggle extends SWP_Option {
 	* @param string $name The display name for the toggle.
 	* @param string $key The database key for the user setting.
 	*/
-	public function __construct( $name, $key ) {
+	public function __construct( $name, $key, $class, $link, $new_tab = false ) {
 		parent::__construct( $name, $key );
-		$this->default = true;
+		$this->new_tab = $new_tab;
+		$this->link = isset( $link ) ? $link : '';
+		$this->class = isset( $class ) ? $class : '';
+
 	}
 
 
@@ -42,14 +49,7 @@ class SWP_Option_Toggle extends SWP_Option {
 	* @return SWP_Option_Toggle $this The calling object, for method chaining.
 	*/
 	public function render_HTML() {
-		//* Map the default boolean to on/off.
-		$status = $this->default ? 'on' : 'off';
-
-		if ( isset( $this->user_options[$this->key] ) ) :
-			$status = $this->user_options[$this->key] === true ? 'on' : 'off';
-		endif;
-
-		$checked = $status === 'on' ? ' checked ' : '';
+		$target = $this->new_tab ? 'target="_blank"' : '';
 
 		$html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
@@ -57,16 +57,20 @@ class SWP_Option_Toggle extends SWP_Option {
 		$html .= '>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<p class="sw-checkbox-label">' . $this->name . '</p>';
+				$html .= '<p class="sw-input-label">' . ucfirst( $this->key ) . '</p>';
 			$html .= '</div>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
-					$html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
-					$html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
-				$html .= '</div>';
-
-				$html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '"' . $checked . '/>';
+				if ( !empty( $this->link ) ) {
+					// Apply a wrapper anchor tag.
+					$html .= '<a href="' . $this->link .'" class="' . $this->class . '" ' . $target .'>' ;
+					$html .= '<div id="' . strtolower($this->key) . '" field="#' . $this->key . '">' . $this->name . '</div>';
+					$html .= '</a>';
+				}
+				else {
+					// Just show a button. Use the id to target it with JS.
+					$html .= '<div id="' . strtolower($this->key) . '" class="' . $this->class . '" field="#' . $this->key . '">' . $this->name . '</div>';
+				}
 			$html .= '</div>';
 
 		$html .= '</div>';

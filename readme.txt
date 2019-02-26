@@ -2,8 +2,8 @@
 Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia, cdegraff1, ckmahoney
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
-Tested up to: 5.0.0
-Stable tag: 3.4.2
+Tested up to: 5.0
+Stable tag: 3.5.0
 License: GNU General Public License v2.0 or later
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
@@ -192,6 +192,21 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 3.5.0 (26 FEB 2019) =
+* Fixed the side floating buttons not showing on some themes.
+* Fixed 'operand type' notice when making cURL share count request.
+* Fixed Facebook shares displaying double the value.
+* Fixed the Pinterest description sometimes being too long when pinning.
+* Escaped the Pinterest description before sending to the client.
+* Fixed a missing @via tag for Click to Tweets.
+* Fixed the CSS selector for Gutenberg blocks.
+* Updated location of Total Shares and Share Counts options.
+* Updated og:image tags to include a name attribute (for LinkedIn).
+* Updated the Frame Buster feature.
+* Updated the pinterest button search & destroy method.
+* Fixed notice when there are no inactive icons.
+* Added interface for handling oAuth handshakes.
 
 = 3.4.2 (13 DEC 2018) =
 * Fixed floating bottom disappear on mobile when pro is deactivated.

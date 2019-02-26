@@ -1,9 +1,9 @@
 @media print {
-    .swp_social_panel {
-        display: none;
-        opacity: 0;
-        visibility: collapse;
-    }
+	.swp_social_panel {
+		display: none;
+		opacity: 0;
+		visibility: collapse;
+	}
 }
 
 /* For non-English sites */
@@ -43,11 +43,11 @@ html[lang] .site * i.sw {
 }
 
 @media print {
-    .swp_social_panel {
-        display: none;
-        opacity: 0;
-        visibility: collapse;
-    }
+	.swp_social_panel {
+		display: none;
+		opacity: 0;
+		visibility: collapse;
+	}
 }
 
 .swp_social_panel:not(.nc_floater):not(.swp_social_panelSide) {
@@ -109,7 +109,7 @@ div.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer {
 }
 
 .swp_social_panel:not(.nc_floater):not(.swp_social_panelSide).swp_shift {
- 	padding:0 10px;
+	 padding:0 10px;
 }
 
 .swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:nth-child(1) {
@@ -241,8 +241,8 @@ span.spaceManWilly {
 }
 
 .swp_social_panel .total_sharesalt {
-    background: transparent !important;
-    border: none !important;
+	background: transparent !important;
+	border: none !important;
 }
 
 .swp_social_panel div.total_shares.total_sharesalt,
@@ -251,7 +251,7 @@ span.spaceManWilly {
 	border: none;
 	color: #474b4d;
 	margin-left: 0!important;
-    margin-bottom: 10px !important;
+	margin-bottom: 10px !important;
 }
 
 div.swp_social_panel:hover div.total_shares.total_sharesalt:not(:nth-child(1)) {
@@ -365,7 +365,7 @@ body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_twitter:no
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_facebook,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_facebook:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_facebook:not(:hover) {
-	border: 1px solid #3a589e;
+	border: 1px solid #4267B2;
 }
 
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_pinterest,
@@ -457,7 +457,7 @@ body .swp_social_panel.swp_other_full_color:hover .swp_twitter {
 .swp_social_panel.swp_default_full_color .swp_facebook,
 html body .swp_social_panel.swp_individual_full_color .swp_facebook:hover,
 body .swp_social_panel.swp_other_full_color:hover .swp_facebook {
-	background: #3a589e;
+	background: #4267B2;
 	border: 1px solid #2e4675;
 }
 
@@ -722,7 +722,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_google_plus a {
 .swp_social_panel.swp_default_color_outlines .swp_facebook a,
 html body .swp_social_panel.swp_individual_color_outlines .swp_facebook a:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_facebook a {
-	color: #3a589e;
+	color: #4267B2;
 }
 
 .swp_social_panel.swp_default_color_outlines .swp_pinterest a,
@@ -815,7 +815,7 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_twitter {
 html body .swp_social_panel.swp_individual_color_outlines .swp_facebook:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_facebook {
 	background: transparent;
-	border: 1px solid #3a589e;
+	border: 1px solid #4267B2;
 }
 
 .swp_social_panel.swp_default_color_outlines .swp_pinterest,
@@ -911,8 +911,8 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	transition: all 0.2s linear;
 
 	z-index: 9998;
-    margin: 10px 5px !important;
-    padding: 0;
+	margin: 10px 5px !important;
+	padding: 0;
 
 	-webkit-box-direction: normal;
 	-moz-box-direction: normal;
@@ -938,10 +938,10 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide[class*=swp_side] {
-    height: auto;
-    display: flex;
-    position: fixed;
-    padding: 30px 0;
+	height: auto;
+	display: flex;
+	position: fixed;
+	padding: 30px 0;
 }
 
 .swp_social_panelSide.fade {
@@ -949,15 +949,15 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 }
 
 .swp_social_panelSide.swp_float_right {
-    align-content: flex-end;
+	align-content: flex-end;
 }
 
 .swp_social_panelSide.swp_side_top {
-    top: 15px;
+	top: 15px;
 }
 
 .swp_social_panelSide.swp_side_bottom {
-    bottom: 15px;
+	bottom: 15px;
 }
 
 .swp_social_panelSide.swp_side_center {
@@ -1045,14 +1045,14 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 
 .swp_social_panelSide.swp_boxed .nc_tweetContainer, .swp_social_panelSide.swp_circles .nc_tweetContainer {
 	margin-bottom: 5px;
-    width: 67.5px !important;
+	width: 67.5px !important;
 }
 
 .swp_social_panelSide.swp_boxed .nc_tweetContainer,
 .swp_social_panelSide.swp_boxed .nc_tweetContainer a,
 .swp_social_panelSide.swp_circles .nc_tweetContainer,
 .swp_social_panelSide.swp_circles .nc_tweetContainer a {
-    width: 67.5px;
+	width: 67.5px;
 	height: 67.5px !important;
 	position: relative;
 }
@@ -1334,6 +1334,39 @@ i.swp_hacker_news_icon:before {
 i.swp_flipboard_icon:before {
 	content: "C";
 }
+
+i.swp_vimeo_icon:before {
+	content: "t";
+}
+
+i.swp_instagram_icon:before {
+	content: "d";
+}
+
+i.swp_blogger_icon:before {
+	content: "m";
+}
+
+i.swp_medium_icon:before {
+	content: "e";
+}
+
+i.swp_periscope_icon:before {
+	content: "c";
+}
+
+i.swp_snapchat_icon:before {
+	content: "u";
+}
+
+i.swp_ello_icon:before {
+	content: "l";
+}
+
+i.swp_flickr_icon:before {
+	content: "i";
+}
+
 
 .sw-social-warfare:before {
 	content: "p";
@@ -1845,7 +1878,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	position: absolute;
 	top: 0;
 	width: 0;
-    z-index: -10;
+	z-index: -10;
 }
 .fl-module-content .uabb-blog-posts .uabb-post-thumbnail .sw-pinit.lazyloaded {
 	display: block !important;
@@ -1857,33 +1890,277 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 }
 
 .float-position-top-left {
-    transform-origin: top left;
+	transform-origin: top left;
 }
 
 .float-position-center-left {
-    transform-origin: center left;
+	transform-origin: center left;
 }
 
 .float-position-bottom-left {
-    transform-origin: bottom left;
+	transform-origin: bottom left;
 }
 
 .float-position-top-right {
-    transform-origin: top right;
+	transform-origin: top right;
 }
 
 .float-position-center-right {
-    transform-origin: center right;
+	transform-origin: center right;
 }
 
 .float-position-bottom-right {
-    transform-origin: bottom right;
+	transform-origin: bottom right;
 }
 
 div[class*=custom_color][class^=_wrapper] {
-    display: none;
+	display: none;
 }
 
 .swp-pinterest-image-top {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
+.swp_modern, .swp_dark {
+  background: #fff;
+  height: 62px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 4px 5px 0 rgba(0, 0, 0, 0.014), 0 4px 15px 0 rgba(0, 0, 0, 0.09);
+}
+.swp_modern .swp_share_button, .swp_dark .swp_share_button {
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  height: 60px !important;
+  padding-bottom: 1px;
+}
+.swp_modern .swp_share_button.total_shares.total_sharesalt, .swp_dark .swp_share_button.total_shares.total_sharesalt {
+  padding: 15px !important;
+}
+.swp_modern .swp_share_link, .swp_dark .swp_share_link {
+  border-radius: 0;
+  padding: 15px;
+  height: 60px !important;
+}
+.swp_modern .iconFiller, .swp_dark .iconFiller {
+  margin-bottom: 10px !important;
+}
+.swp_modern .nc_wrapper.bottom, .swp_dark .nc_wrapper.bottom {
+  background: transparent !important;
+}
+
+.swp_dark .swp_share_button {
+  background: #222 !important;
+  border-color: #222 !important;
+  margin: 0 !important;
+  height: 62px !important;
+}
+.swp_dark .total_shares.total_sharesalt,
+.swp_dark .swp_count,
+.swp_dark .swp_label {
+}
+.swp_dark .swp_share_link:hover {
+  background: #444;
+}
+
+/* Network-specific styles
+------------------------------- */
+.swp-blogger {
+  background: #f57d00;
+  border-color: #fefefe;
+}
+
+.swp-blogger  a {
+  color: #f57d00;
+}
+
+.swp-blogger  a:hover {
+  background: #f57d00;
+  color: #fff;
+}
+
+.swp-ello {
+  background: #000;
+  border-color: #fff;
+}
+
+.swp-ello  a {
+  color: #000;
+}
+
+.swp-facebook  a:hover {
+  background: #fff;
+  color: #000;
+}
+
+.swp-facebook {
+  background: #4267B2;
+  border-color: #324E85;
+}
+
+.swp-facebook  a {
+  color: #4267B2;
+}
+
+.swp-facebook  a:hover {
+  background: #324E85;
+  color: #fff;
+}
+
+.swp-flickr {
+  background: #0063dc;
+  border-color: #ff0084;
+}
+
+.swp-flickr  a {
+  color: #0063dc;
+}
+
+.swp-flickr  a:hover {
+  background: #ff0084;
+  color: #fff;
+}
+
+.swp-instagram {
+  background: #E4425F;
+  border-color: #DA3075;
+}
+
+.swp-instagram a {
+  color: #E4425F;
+}
+
+.swp-instagram a:hover {
+  background: #DA3075;
+  color: #fff;
+}
+
+.swp-linkedin {
+  background: #0D77B7;
+  border-color: #0D6C9C;
+}
+
+.swp-linkedin a {
+  color: #0D77B7;
+}
+
+.swp-linkedin a:hover {
+  background: #0D6C9C;
+  color: #fff;
+}
+
+.swp-medium {
+  background: #00ab6c;
+  border-color: #fefefe;
+}
+
+.swp-medium a {
+  color: #00ab6c;
+}
+
+.swp-medium a:hover {
+  background: #00ab6c;
+  color: #fff;
+}
+
+
+.swp-periscope {
+  background: #40a4c4;
+  border-color: #e94f3c;
+}
+
+.swp-periscope a {
+  color: #40a4c4;
+}
+
+.swp-periscope a:hover {
+  background: #e94f3c;
+  color: #fff;
+}
+
+.swp-pinterest {
+  background: #CD202A;
+  border-color: #AC1F25;
+}
+
+.swp-pinterest a {
+  color: #CD202A;
+}
+
+.swp-pinterest a:hover {
+  background: #AC1F25;
+  color: #fff;
+}
+
+.swp-reddit {
+  background: #F04B23;
+  border-color: #D33F27;
+}
+
+.swp-reddit a {
+  color: #F04B23;
+}
+
+.swp-reddit a:hover {
+  background: #D33F27;
+  color: #fff;
+}
+
+.swp-snapchat {
+  background: #fffc00;
+  border-color: #000;
+}
+
+.swp-snapchat a {
+  color: #000;
+}
+
+.swp-snapchat a:hover {
+  background: #fffc00;
+  color: #000;
+}
+
+.swp-tumblr {
+  background: #39475D;
+  border-color: #27313F;
+}
+
+.swp-tumblr a {
+  color: #39475D;
+}
+
+.swp-tumblr a:hover {
+  background: #27313F;
+  color: #fff;
+}
+
+.swp-twitter {
+  background: #429CD6;
+  border-color: #3C87B2;
+}
+
+.swp-twitter a {
+  color: #429CD6;
+}
+
+.swp-twitter a:hover {
+  background: #3C87B2;
+  color: #fff;
+}
+
+.swp-vimeo {
+  background: #21B7EB;
+  border-color: #069BD1;
+}
+
+.swp-vimeo a {
+  color: #21B7EB;
+}
+.swp-vimeo a:hover {
+  background: #069BD1;
+  color: #fff;
+}
+
+
+/*# sourceMappingURL=converted_style.tmp.map */
