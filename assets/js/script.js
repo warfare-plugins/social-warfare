@@ -185,7 +185,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		var time = Date.now();
-		var wait = 150;
+		var wait = 50;
 		$(window).scroll(function() {
 			if ((time + wait - Date.now()) < 0) {
 				socialWarfare.updateFloatingButtons();
@@ -1221,15 +1221,6 @@ window.socialWarfare = window.socialWarfare || {};
 	// 	return wrapper;
 	// };
 
-	socialWarfare.throttle = function(wait, fn) {
-	  var time = Date.now();
-	  return function() {
-			if ((time + wait - Date.now()) < 0) {
-			fn();
-			time = Date.now();
-		  }
-	  }
-	}
 
 
 	/**
