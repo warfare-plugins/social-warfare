@@ -592,7 +592,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.updateFloatingButtons = function() {
-		console.log('updateFloatingButtons()')
 		// If buttons are on the page, there must be either a static horizontal
 		if (socialWarfare.panels.staticHorizontal.length) {
 			var panel = socialWarfare.panels.staticHorizontal;
@@ -604,13 +603,11 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		else {
-			console.log('bail');
 			return;
 		}
 
 		// Adjust the floating bar
 		var location = panel.data('float');
-		console.log('location', location)
 
 		if( true == socialWarfare.isMobile() ) {
 			var location = panel.data('float-mobile');
@@ -618,12 +615,10 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
-			console.log('none')
 			return $(".nc_wrapper, .swp_floating_horizontal_wrapper, .swp_social_panelSide").hide();
 		}
 
 		if (socialWarfare.isMobile()) {
-			console.log('mobile')
 			socialWarfare.toggleMobileButtons();
 			socialWarfare.toggleFloatingHorizontalPanel();
 			return;
@@ -636,8 +631,6 @@ window.socialWarfare = window.socialWarfare || {};
 		if (location == "bottom" || location == "top") {
 			socialWarfare.toggleFloatingHorizontalPanel();
 		}
-
-		console.log('end funk')
 	}
 
 
@@ -664,7 +657,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingVerticalPanel = function() {
-		console.log('toggle');
 		var direction = '';
 		var location = socialWarfare.panels.floatingSide.data("float")
 		var visible  = socialWarfare.staticPanelIsVisible();
@@ -672,24 +664,18 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
-			console.log('isMobile()')
 			return socialWarfare.panels.floatingSide.hide();
 		}
-		socialWarfare.panels.floatingSide.show();
 
 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
 			// No buttons panel! Update `visible`.
 			visible = true;
 		}
 
-		console.log('visible', visible)
-
 		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
 
 			direction = (location.indexOf("left") != -1) ? "left" : "right";
 			style     = visible ? "-150px" : "5px";
-			console.log('direction', direction)
-			console.log('style', style)
 			//* Update the side panel CSS with the direction and amount.
 			socialWarfare.panels.floatingSide.css(direction, style);
 		}
