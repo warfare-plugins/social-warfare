@@ -195,7 +195,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 			  * anything. We need to trim it before appending the @via.
 			  *
 			  */
-			 $read_more = '... read more ' . $via;
+			 $read_more = '... ' . $via;
 			 $cutoff = 500 - strlen( $read_more );
 
 			 $pinterest_description = substr( $pinterest_description, 0, $cutoff );
@@ -204,7 +204,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 		 else {
 			 /**
 			  * The description length + via length would be too long, so
-			  * trim a little bit of description so via will fit. 
+			  * trim a little bit of description so via will fit.
 			  *
 			  */
 			 if ( strlen( $pinterest_description) + strlen( $via ) > 500 ) {
@@ -212,9 +212,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 				 $pinterst_description = substr( $pinterst_description, 0, $cutoff );
 			 }
 
-			 $pinterst_description .= $via;
+			 $pinterest_description .= $via;
 		 }
-
 		 return $pinterest_description;
 	 }
 
@@ -231,7 +230,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 
 		$pinterest_username = '';
 		if ( isset( $via ) ) {
-			$pinterst_username = ' via @' . str_replace( '@' , '' , $via );
+			$pinterest_username = ' via @' . str_replace( '@' , '' , $via );
 		}
 
 		return $pinterest_username;
