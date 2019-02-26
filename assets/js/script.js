@@ -609,7 +609,7 @@ window.socialWarfare = window.socialWarfare || {};
 		// Adjust the floating bar
 		var location = panel.data('float');
 
-		if( true == socialWarfare.isMobile() ) {
+		if (true == socialWarfare.isMobile()) {
 			var location = panel.data('float-mobile');
 		}
 
@@ -658,9 +658,9 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.toggleFloatingVerticalPanel = function() {
 		var direction = '';
-		var location = socialWarfare.panels.floatingSide.data("float")
+		var location = socialWarfare.panels.floatingSide.data("float");
 		var visible  = socialWarfare.staticPanelIsVisible();
-		var style = "";
+		var offset = "";
 
 		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
@@ -668,16 +668,15 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
-			// No buttons panel! Update `visible`.
+			// No buttons panel! Update `visible` to hide floaters.
 			visible = true;
 		}
 
 		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
-
-			direction = (location.indexOf("left") != -1) ? "left" : "right";
-			style     = visible ? "-150px" : "5px";
+			direction = location;
+			offset     = visible ? "-150px" : "5px";
 			//* Update the side panel CSS with the direction and amount.
-			socialWarfare.panels.floatingSide.css(direction, style);
+			socialWarfare.panels.floatingSide.css(direction, offset).show();
 		}
 
 		else {
