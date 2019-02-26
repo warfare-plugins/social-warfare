@@ -184,10 +184,14 @@ window.socialWarfare = window.socialWarfare || {};
 		 * floating buttons to flicker.
 		 *
 		 */
+		var time = Date.now();
+		var wait = 150;
 		$(window).scroll(function() {
-			socialWarfare.throttle(50, socialWarfare.updateFloatingButtons)
+			if ((time + wait - Date.now()) < 0) {
+				socialWarfare.updateFloatingButtons();
+				time = Date.now();
+			}
 		});
-
 	}
 
 
@@ -588,7 +592,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.updateFloatingButtons = function() {
-
+		console.log('updateFloatingButtons()')
 		// If buttons are on the page, there must be either a static horizontal
 		if (socialWarfare.panels.staticHorizontal.length) {
 			var panel = socialWarfare.panels.staticHorizontal;
@@ -600,11 +604,13 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 		else {
+			console.log('bail');
 			return;
 		}
 
 		// Adjust the floating bar
 		var location = panel.data('float');
+		console.log('location', location)
 
 		if( true == socialWarfare.isMobile() ) {
 			var location = panel.data('float-mobile');
@@ -612,10 +618,12 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* There are no floating buttons enabled, hide any that might exist.
 		if (location == 'none') {
+			console.log('none')
 			return $(".nc_wrapper, .swp_floating_horizontal_wrapper, .swp_social_panelSide").hide();
 		}
 
 		if (socialWarfare.isMobile()) {
+			console.log('mobile')
 			socialWarfare.toggleMobileButtons();
 			socialWarfare.toggleFloatingHorizontalPanel();
 			return;
@@ -628,6 +636,8 @@ window.socialWarfare = window.socialWarfare || {};
 		if (location == "bottom" || location == "top") {
 			socialWarfare.toggleFloatingHorizontalPanel();
 		}
+
+		console.log('end funk')
 	}
 
 
@@ -654,6 +664,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.toggleFloatingVerticalPanel = function() {
+		console.log('toggle');
 		var direction = '';
 		var location = socialWarfare.panels.floatingSide.data("float")
 		var visible  = socialWarfare.staticPanelIsVisible();
@@ -661,31 +672,29 @@ window.socialWarfare = window.socialWarfare || {};
 
 		//* This is on mobile and does not use side panels.
 		if (socialWarfare.isMobile()) {
+			console.log('isMobile()')
 			return socialWarfare.panels.floatingSide.hide();
 		}
 		socialWarfare.panels.floatingSide.show();
 
-		//* No buttons panel! Manually re-define ${visibility}.
 		if (!socialWarfare.panels.floatingSide || !socialWarfare.panels.floatingSide.length) {
-			if (!socialWarfare.isMobile()) {
-				visible = false;
-			} else {
-				visible = true;
-			}
+			// No buttons panel! Update `visible`.
+			visible = true;
 		}
+
+		console.log('visible', visible)
 
 		if (socialWarfare.panels.floatingSide.data("transition") == "slide") {
 
-			direction = (location.indexOf("left") !== -1) ? "left" : "right";
+			direction = (location.indexOf("left") != -1) ? "left" : "right";
 			style     = visible ? "-150px" : "5px";
-
+			console.log('direction', direction)
+			console.log('style', style)
 			//* Update the side panel CSS with the direction and amount.
 			socialWarfare.panels.floatingSide.css(direction, style);
-
 		}
 
 		else {
-
 			/**
 			 * We had problems with the fading buttons flickering rather than having
 			 * a smooth fade animation. The workaround was to manually control opacity,
@@ -1188,39 +1197,53 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return function           The callback function.
 	 *
 	 */
-	socialWarfare.throttle = function(delay, callback) {
-		var timeoutID = 0;
-		var lastExec  = 0;
+	// socialWarfare.throttle = function(delay, callback) {
+	// 	var timeoutID = 0;
+	// 	// The previous time `callback` was called.
+	// 	var lastExec  = 0;
+	//
+	// 	function wrapper() {
+	// 		var wrap    = this;
+	// 		var elapsed = +new Date() - lastExec;
+	// 		var args    = arguments;
+	//
+	// 		function exec() {
+	// 			lastExec = +new Date();
+	// 			callback.apply(wrap, args);
+	// 		}
+	//
+	// 		function clear() {
+	// 			timeoutID = 0;
+	// 			lastExec = 0;
+	// 		}
+	//
+	// 		timeoutID && clearTimeout(timeoutID);
+	//
+	// 		if (elapsed > delay) {
+	// 			exec();
+	// 		} else {
+	// 			timeoutID = setTimeout(exec, delay - elapsed);
+	// 		}
+	// 	}
+	//
+	// 	if (socialWarfare.guid) {
+	// 		wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
+	// 	}
+	//
+	// 	console.log(wrapper)
+	//
+	// 	return wrapper;
+	// };
 
-		function wrapper() {
-			var that    = this;
-			var elapsed = +new Date() - lastExec;
-			var args    = arguments;
-
-			function exec() {
-				lastExec = +new Date();
-				callback.apply(that, args);
-			}
-
-			function clear() {
-				timeoutID = undefined;
-			}
-
-			timeoutID && clearTimeout(timeoutID);
-
-			if (elapsed > delay) {
-				exec();
-			} else {
-				timeoutID = setTimeout(exec, delay - elapsed);
-			}
-		}
-
-		if (socialWarfare.guid) {
-			wrapper.guid = callback.guid = callback.guid || socialWarfareguid++;
-		}
-
-		return wrapper;
-	};
+	socialWarfare.throttle = function(wait, fn) {
+	  var time = Date.now();
+	  return function() {
+			if ((time + wait - Date.now()) < 0) {
+			fn();
+			time = Date.now();
+		  }
+	  }
+	}
 
 
 	/**
@@ -1364,6 +1387,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		// This is what fires up the entire plugin's JS functionality.
 		socialWarfare.initPlugin();
+		socialWarfare.panels.floatingSide.hide();
 
 
 		/**
