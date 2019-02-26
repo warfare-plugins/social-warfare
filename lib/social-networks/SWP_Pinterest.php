@@ -190,8 +190,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  */
 	 public static function trim_pinterest_description( $pinterest_description, $via ) {
 		 if ( strlen( $pinterest_description ) > 500 ) {
-			 // Trim down the description, then add the @via. 
-			 $read_more = '... read more at ' . get_the_permalink();
+			 // Trim down the description, then add the @via.
+			 $read_more = '... read more ' . $via;
 			 $cutoff = 500 - strlen( $read_more );
 
 			 $pinterest_description = substr( $pinterest_description, 0, $cutoff );
