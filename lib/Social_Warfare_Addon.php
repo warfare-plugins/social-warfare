@@ -1,252 +1,253 @@
 <?php
 
 class Social_Warfare_Addon {
-    public function __construct( $args = array() ) {
-        $this->establish_class_properties( $args );
-        $this->establish_license_key();
-        $this->is_registered = $this->establish_resgistration();
+	public function __construct( $args = array() ) {
+		$this->establish_class_properties( $args );
+		$this->establish_license_key();
+		$this->is_registered = $this->establish_resgistration();
 
-        add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
-        add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
-        add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
+		add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
+		add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
+		add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
 
-        add_filter( 'swp_registrations', array( $this, 'add_self' ) );
-    }
+		add_filter( 'swp_registrations', array( $this, 'add_self' ) );
+	}
 
-    private function establish_class_properties( $args = array () ) {
-        $required= ['name', 'key', 'product_id', 'version', 'core_required'];
+	private function establish_class_properties( $args = array () ) {
+		$required= ['name', 'key', 'version'];
 
-        foreach($args as $key => $value) {
-            $this->$key = $value;
-        }
+		foreach($args as $key => $value) {
+			$this->$key = $value;
+		}
 
-        foreach($required as $key) {
-            if ( !isset( $this->$key ) ) :
-                $message = "Hey developer, you must provide us this information for your class: $key => \$value";
-                throw new Exception($message);
-            endif;
+		foreach($required as $key) {
+			if ( !isset( $this->$key ) ) :
+				$message = "Hey developer, you must provide us this information for your class: $key => \$value";
+				throw new Exception($message);
+			endif;
+		}
+		if ( isset( $this->product_id ) && empty ( $this->store_url ) ) {
+			$message = "You provided `product_id` without a `store_url`. Please provide `store_url` as a top level domain, such as 'https://warfareplugins.com'.";
+			throw new Exception($message);
+			// $this->store_url = 'https://warfareplugins.com';
+		}
 
-        }
-
-        $this->store_url = 'https://warfareplugins.com';
-        $this->site_url = SWP_Utility::get_site_url();
-    }
-
-
-    /**
-     * The callback function used to add a new instance of this
-     * to our swp_registrations filter.
-     *
-     * This should be the last item called in an addon's main file.
-     *
-     * @param array $addons The array of addons currently activated.
-     */
-    public function add_self( $addons ) {
-        if ( $this->key == 'affiliatewp') return;
-
-        $addons[] = $this;
-
-        return $addons;
-    }
+		if ( isset( $this->product_id ) && empty ( $this->site_url ) ) {
+			$this->store_url = SWP_Utility::get_site_url();
+		}
+	}
 
 
-    public function establish_license_key() {
-        $key = SWP_Utility::get_option( $this->key . '_license_key' );
+	/**
+	 * The callback function used to add a new instance of this
+	 * to our swp_registrations filter.
+	 *
+	 * This should be the last item called in an addon's main class.
+	 *
+	 * @param array $addons The array of addons currently activated.
+	 */
+	public function add_self( $addons ) {
+		$addons[] = $this;
 
-        if ( !$key ) :
-            $old_options = get_option( 'socialWarfareOptions', false );
+		return $addons;
+	}
 
-            if ( isset( $old_options[$this->key . '_license_key']) ) :
-                $key = isset( $old_options[$this->key . '_license_key']);
-            endif;
+	public function establish_license_key() {
+		$key = SWP_Utility::get_option( $this->key . '_license_key' );
 
-        endif;
+		if ( !$key ) :
+			$old_options = get_option( 'socialWarfareOptions', false );
 
-        $this->license_key = $key ? $key : '';
-    }
+			if ( isset( $old_options[$this->key . '_license_key']) ) :
+				$key = isset( $old_options[$this->key . '_license_key']);
+			endif;
 
-    public function establish_resgistration() {
-    	// Get the timestamps setup for comparison to see if a week has passed since our last check
-    	$current_time = time();
+		endif;
 
-        if ( !( $timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' ) ) ) {
-            $timestamp =  0;
-        }
+		$this->license_key = $key ? $key : '';
+	}
 
-    	$time_to_recheck = $timestamp + 604800;
+	public function establish_resgistration() {
+		// Get the timestamps setup for comparison to see if a week has passed since our last check
+		$current_time = time();
 
-    	// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
-    	if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) :
-    		return true;
-        endif;
+		if ( !( $timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' ) ) ) {
+			$timestamp =  0;
+		}
 
-        // If a week has passed since the last check, ping our API to check the validity of the license key
-        if ( !empty( $this->license_key) ) :
-            global $swp_user_options;
+		$time_to_recheck = $timestamp + 604800;
 
-            $data = array(
-                'edd_action' => 'check_license',
-                'item_id' => $this->product_id,
-                'license' => $this->license_key,
-                'url' => $this->site_url,
-            );
+		// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
+		if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) :
+			return true;
+		endif;
 
+		// If a week has passed since the last check, ping our API to check the validity of the license key
+		if ( !empty( $this->license_key) ) :
+			global $swp_user_options;
 
-            $response = wp_remote_retrieve_body( wp_remote_post( $this->store_url , array('body' => $data, 'timeout' => 10 ) ) );
+			$data = array(
+				'edd_action' => 'check_license',
+				'item_id' => $this->product_id,
+				'license' => $this->license_key,
+				'url' => $this->site_url,
+			);
 
-    		if( false !== $response ) :
-    			$license_data = json_decode( $response );
+			$response = wp_remote_retrieve_body( wp_remote_post( $this->store_url , array('body' => $data, 'timeout' => 10 ) ) );
 
-                $swp_user_options[$this->key . '_license_key_timestamp'] = $current_time;
+			if( false !== $response ) :
+				$license_data = json_decode( $response );
 
-    			// If the license was invalid
-    			if ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
-    				$this->license_key = '';
+				$swp_user_options[$this->key . '_license_key_timestamp'] = $current_time;
 
-                    $swp_user_options[$this->key . '_license_key'] = '';
+				// If the license was invalid
+				if ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
+					$this->license_key = '';
 
-    				update_option( 'social_warfare_settings' , $swp_user_options );
+					$swp_user_options[$this->key . '_license_key'] = '';
 
-                    return false;
+					update_option( 'social_warfare_settings' , $swp_user_options );
 
-    			// If the property is some other status, just go with it.
-    			else :
-    				update_option( 'social_warfare_settings' , $swp_user_options );
+					return false;
 
-                    return true;
-    			endif;
+				// If the property is some other status, just go with it.
+				else :
+					update_option( 'social_warfare_settings' , $swp_user_options );
 
-    		// If we recieved no response from the server, we'll just check again next week
-    		else :
-    			$swp_user_options[$key.'_license_key_timestamp'] = $current_time;
-    			update_option( 'social_warfare_settings' , $swp_user_options );
+					return true;
+				endif;
 
-                return true;
-    		endif;
-    	endif;
+			// If we recieved no response from the server, we'll just check again next week
+			else :
+				$swp_user_options[$key.'_license_key_timestamp'] = $current_time;
+				update_option( 'social_warfare_settings' , $swp_user_options );
 
-    	return false;
-    }
+				return true;
+			endif;
+		endif;
 
-    public function check_for_updates() {
-        if ( version_compare(SWP_VERSION, $this->core_required) >= 0 ) :
+		return false;
+	}
 
-        endif;
-    }
+	public function check_for_updates() {
+		if ( version_compare(SWP_VERSION, $this->core_required) >= 0 ) :
 
-    /**
-     * Request to EDD to activate the licence.
-     *
-     * @since  2.1.0
-     * @since  2.3.0 Hooked registration into the new EDD Software Licensing API
-     * @param  none
-     * @return JSON Encoded Array (Echoed) - The Response from the EDD API
-     *
-     */
-    public function register_plugin() {
-    	// Check to ensure that license key was passed into the function
-    	if ( !empty( $_POST['license_key'] ) ) :
+		endif;
+	}
 
-    		// Grab the license key so we can use it below
-    		$key = $_POST['name_key'];
-    		$license = $_POST['license_key'];
-    		$item_id = $_POST['item_id'];
-            $this->store_url = 'https://warfareplugins.com';
+	/**
+	 * Request to EDD to activate the licence.
+	 *
+	 * @since  2.1.0
+	 * @since  2.3.0 Hooked registration into the new EDD Software Licensing API
+	 * @param  none
+	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
+	 *
+	 */
+	public function register_plugin() {
+		// Check to ensure that license key was passed into the function
+		if ( !empty( $_POST['license_key'] ) ) :
 
-            $api_params = array(
-                'edd_action' => 'activate_license',
-                'item_id' => $item_id,
-                'license' => $license,
-                'url' => $this->site_url
-            );
+			// Grab the license key so we can use it below
+			$key = $_POST['name_key'];
+			$license = $_POST['license_key'];
+			$item_id = $_POST['item_id'];
+			$this->store_url = 'https://warfareplugins.com';
 
-            $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+			$api_params = array(
+				'edd_action' => 'activate_license',
+				'item_id' => $item_id,
+				'license' => $license,
+				'url' => $this->site_url
+			);
 
-    		if ( false != $response ) :
+			$response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
 
-    			// Parse the response into an object
-    			$license_data = json_decode( $response );
+			if ( false != $response ) :
 
-    			// If the license is valid store it in the database
-    			if( isset($license_data->license) && 'valid' == $license_data->license ) :
+				// Parse the response into an object
+				$license_data = json_decode( $response );
 
-    				$current_time = time();
-    				$options = get_option( 'social_warfare_settings' );
-    				$options[$key.'_license_key'] = $license;
-    				$options[$key.'_license_key_timestamp'] = $current_time;
-    				update_option( 'social_warfare_settings' , $options );
+				// If the license is valid store it in the database
+				if( isset($license_data->license) && 'valid' == $license_data->license ) :
 
-    				echo json_encode($license_data);
-    				wp_die();
+					$current_time = time();
+					$options = get_option( 'social_warfare_settings' );
+					$options[$key.'_license_key'] = $license;
+					$options[$key.'_license_key_timestamp'] = $current_time;
+					update_option( 'social_warfare_settings' , $options );
 
-    			// If the license is not valid
-    			elseif( isset($license_data->license) &&  'invalid' == $license_data->license ) :
-    				echo json_encode($license_data);
-    				wp_die();
+					echo json_encode($license_data);
+					wp_die();
 
-    			// If some other status was returned
-    			else :
-    				$license_data['success'] = false;
-    				$license_data['data'] = 'Invaid response from the registration server.';
-    				echo json_encode($license_data);
-    				wp_die();
-    			endif;
+				// If the license is not valid
+				elseif( isset($license_data->license) &&  'invalid' == $license_data->license ) :
+					echo json_encode($license_data);
+					wp_die();
 
-    		// If we didn't get a response from the registration server
-    		else :
-    			$license_data['success'] = false;
-    			$license_data['data'] = 'Failed to connect to registration server.';
-    			echo json_encode($license_data);
-    			wp_die();
-    		endif;
-        endif;
+				// If some other status was returned
+				else :
+					$license_data['success'] = false;
+					$license_data['data'] = 'Invaid response from the registration server.';
+					echo json_encode($license_data);
+					wp_die();
+				endif;
+
+			// If we didn't get a response from the registration server
+			else :
+				$license_data['success'] = false;
+				$license_data['data'] = 'Failed to connect to registration server.';
+				echo json_encode($license_data);
+				wp_die();
+			endif;
+		endif;
 
 		$license_data['success'] = false;
 		$license_data['data'] = 'Admin Ajax did not receive valid POST data.';
 		echo json_encode($license_data);
 		wp_die();
 
-    }
+	}
 
 
-    /**
-     * Request to EDD to deactivate the licence.
-     *
-     * @since  2.1.0
-     * @since  2.3.0 Hooked into the EDD Software Licensing API
-     * @param  none
-     * @return JSON Encoded Array (Echoed) - The Response from the EDD API
-     *
-     */
-    public function unregister_plugin() {
-        // Setup the variables needed for processing
-    	$options = get_option( 'social_warfare_settings' );
-    	$key = $_POST['name_key'];
-    	$item_id = $_POST['item_id'];
-        $response = array();
+	/**
+	 * Request to EDD to deactivate the licence.
+	 *
+	 * @since  2.1.0
+	 * @since  2.3.0 Hooked into the EDD Software Licensing API
+	 * @param  none
+	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
+	 *
+	 */
+	public function unregister_plugin() {
+		// Setup the variables needed for processing
+		$options = get_option( 'social_warfare_settings' );
+		$key = $_POST['name_key'];
+		$item_id = $_POST['item_id'];
+		$response = array();
 
-    	// Check to see if the license key is even in the options
-    	if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
+		// Check to see if the license key is even in the options
+		if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
 
-    		$response['success'] = true;
-    		echo json_encode($response);
-            wp_die();
+			$response['success'] = true;
+			echo json_encode($response);
+			wp_die();
 
-    	endif;
+		endif;
 
 		// Grab the license key so we can use it below
 		$license = $options[$key.'_license_key'];
 
-        // Setup the API request parameters
-        $api_params = array(
-            'edd_action' => 'deactivate_license',
-            'item_id' => $item_id,
-            'license' => $license,
-            'url' => $this->site_url,
-        );
+		// Setup the API request parameters
+		$api_params = array(
+			'edd_action' => 'deactivate_license',
+			'item_id' => $item_id,
+			'license' => $license,
+			'url' => $this->site_url,
+		);
 
-       //* wp_remote_retrieve_body encodes to JSON for us.
-        $response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+	   //* wp_remote_retrieve_body encodes to JSON for us.
+		$response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
 
 		$options = get_option( 'social_warfare_settings' );
 		$options[$key.'_license_key'] = '';
@@ -254,46 +255,46 @@ class Social_Warfare_Addon {
 
 		echo $response;
 
-        wp_die();
-    }
+		wp_die();
+	}
 
-    public function ajax_passthrough() {
-        if ( ! check_ajax_referer( 'swp_plugin_registration', 'security', false ) ) {
-    		wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
-    		die;
-    	}
+	public function ajax_passthrough() {
+		if ( ! check_ajax_referer( 'swp_plugin_registration', 'security', false ) ) {
+			wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
+			die;
+		}
 
-    	$data = wp_unslash( $_POST ); // Input var okay.
+		$data = wp_unslash( $_POST ); // Input var okay.
 
-    	if ( ! isset( $data['activity'], $data['email'] ) ) {
-    		wp_send_json_error( esc_html__( 'Required fields missing.', 'social-warfare' ) );
-    		die;
-    	}
+		if ( ! isset( $data['activity'], $data['email'] ) ) {
+			wp_send_json_error( esc_html__( 'Required fields missing.', 'social-warfare' ) );
+			die;
+		}
 
-    	if ( 'register' === $data['activity'] ) {
-    		$response = swp_register_plugin( $data['email'], SWP_Utility::get_site_url() );
+		if ( 'register' === $data['activity'] ) {
+			$response = swp_register_plugin( $data['email'], SWP_Utility::get_site_url() );
 
-    		if ( ! $response ) {
-    			wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
-    			die;
-    		}
+			if ( ! $response ) {
+				wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
+				die;
+			}
 
-    		$response['message'] = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
-    	}
+			$response['message'] = esc_html__( 'Plugin successfully registered!', 'social-warfare' );
+		}
 
-    	if ( 'unregister' === $data['activity'] && isset( $data['key'] ) ) {
-    		$response = swp_unregister_plugin( $data['email'], $data['key'] );
+		if ( 'unregister' === $data['activity'] && isset( $data['key'] ) ) {
+			$response = swp_unregister_plugin( $data['email'], $data['key'] );
 
-    		if ( ! $response ) {
-    			wp_send_json_error( esc_html__( 'Plugin could not be unregistered.', 'social-warfare' ) );
-    			die;
-    		}
+			if ( ! $response ) {
+				wp_send_json_error( esc_html__( 'Plugin could not be unregistered.', 'social-warfare' ) );
+				die;
+			}
 
-    		$response['message'] = esc_html__( 'Plugin successfully unregistered!', 'social-warfare' );
-    	}
+			$response['message'] = esc_html__( 'Plugin successfully unregistered!', 'social-warfare' );
+		}
 
-    	wp_send_json_success( $response );
+		wp_send_json_success( $response );
 
-    	die;
-    }
+		die;
+	}
 }

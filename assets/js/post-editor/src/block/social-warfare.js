@@ -65,7 +65,7 @@ registerBlockType( 'social-warfare/social-warfare', {
 		}
 
 		const updatePostID = ( event ) => {
-            const postID = wp.data.select('core/editor').getCurrentPostId();
+			const postID = wp.data.select('core/editor').getCurrentPostId();
 			const value = event.target.value;
 
 			if ( value == '' ) {
@@ -83,61 +83,65 @@ registerBlockType( 'social-warfare/social-warfare', {
 		//* Inactive state
 		if ( !props.attributes.hasFocus ) {
 			const buttons = props.attributes.buttons && props.attributes.buttons.length
-			                ? `buttons="${props.attributes.buttons}"` : '';
+							? `buttons="${props.attributes.buttons}"` : '';
 
 			const postID = props.attributes.useThisPost == "other"
-			                ? `id="${props.attributes.postID}"` : '';
+							? `id="${props.attributes.postID}"` : '';
 
 			return (
-				<div className={ `${props.className} social-warfare-block-wrap swp-inactive-block` }>
-					<div className="head" onClick={toggleFocus}>
-					    {icon}
-						<div className="swp-preview">[social_warfare {buttons} {postID}]</div>
-						<Dashicon className="swp-dashicon" icon="arrow-down" />
+				<div className='social-warfare-admin-block'>
+					<div className={ `${props.className} social-warfare-block-wrap swp-inactive-block` }>
+						<div className="head" onClick={toggleFocus}>
+							{icon}
+							<div className="swp-preview">[social_warfare {buttons} {postID}]</div>
+							<Dashicon className="swp-dashicon" icon="arrow-down" />
+						</div>
 					</div>
 				</div>
 			);
 		}
 
-        //* Active state
+		//* Active state
 		return (
-			<div className={ `${props.className} social-warfare-block-wrap swp-active-block` }>
-			    <div className="head" onClick={toggleFocus}>
-				    <div>
-					    {icon}
-						<p className="swp-block-title">Social Warfare Shortcode</p>
+			<div className='social-warfare-admin-block'>
+				<div className={ `${props.className} social-warfare-block-wrap swp-active-block` }>
+					<div className="head" onClick={toggleFocus}>
+						<div>
+							{icon}
+							<p className="swp-block-title">Social Warfare Shortcode</p>
+						</div>
+						<Dashicon className="swp-dashicon" icon="arrow-down" />
 					</div>
-					<Dashicon className="swp-dashicon" icon="arrow-down" />
+
+					<p>Inserts a <pre style={ {display: 'inline'} }>[social_warfare]</pre> shortcode. Leave a field blank to use values based on your global settings. <a href="https://warfareplugins.com/support/using-shortcodes-and-php-snippets/">Learn more</a></p>
+
+					<p>Should the buttons reflect this post, or a different post?</p>
+
+					<select   name='useThisPost'
+							  value={props.attributes.useThisPost == "other" ? "other" : "this"}
+							  onChange={updateAttributes}
+					>
+					  <option value="this">This post</option>
+					  <option value="other">Another post</option>
+					</select>
+
+					{
+					  props.attributes.useThisPost == "other" &&
+					  <div>
+						  <p>Which post should we fetch SW settings and shares from?</p>
+						  <input type="text"
+								 onChange ={updatePostID}
+								 value={props.attributes.postID}
+						  />
+					  </div>
+					}
+
+					<p>Which networks should we display? Leave blank to use your global settings. </p>
+					<input value={props.attributes.buttons}
+						   type="text"
+						   onChange={updateButtonsList}
+					/>
 				</div>
-
-				<p>Inserts a <pre style={ {display: 'inline'} }>[social_warfare]</pre> shortcode. Leave a field blank to use values based on your global settings. <a href="https://warfareplugins.com/support/using-shortcodes-and-php-snippets/">Learn more</a></p>
-
-			    <p>Should the buttons reflect this post, or a different post?</p>
-
-				<select   name='useThisPost'
-				          value={props.attributes.useThisPost == "other" ? "other" : "this"}
-				          onChange={updateAttributes}
-			    >
-				  <option value="this">This post</option>
-				  <option value="other">Another post</option>
-			    </select>
-
-				{
-				  props.attributes.useThisPost == "other" &&
-				  <div>
-					  <p>Which post should we fetch SW settings and shares from?</p>
-					  <input type="text"
-					         onChange ={updatePostID}
-							 value={props.attributes.postID}
-					  />
-				  </div>
-				}
-
-				<p>Which networks should we display? Leave blank to use your global settings. </p>
-				<input value={props.attributes.buttons}
-				       type="text"
-					   onChange={updateButtonsList}
-				/>
 			</div>
 		);
 	},
@@ -152,10 +156,10 @@ registerBlockType( 'social-warfare/social-warfare', {
 	 */
 	save: function( props ) {
 		const buttons = props.attributes.buttons && props.attributes.buttons.length
-		                ? `buttons="${props.attributes.buttons}"` : '';
+						? `buttons="${props.attributes.buttons}"` : '';
 
 		const postID = props.attributes.useThisPost == "other"
-		                ? `id="${props.attributes.postID}"` : '';
+						? `id="${props.attributes.postID}"` : '';
 
 		return (
 			<div>

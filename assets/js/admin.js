@@ -25,16 +25,16 @@ var swpWidget, widgetSubmit;
 * @return none
 */
 function swpConditionalFields() {
-	// if (typeof jQuery == 'undefined') {
-	// 	jQuery = jQuery;
-	// }
+	if (typeof $ == 'undefined') {
+		$ = jQuery;
+	}
 
 	function swp_selected(name) {
-		return jQuery('select[name="' + name + '"]').val();
+		return $('select[name="' + name + '"]').val();
 	}
 
 	function swp_checked(name) {
-		return jQuery('[name="' + name + '"]').prop('checked');
+		return $('[name="' + name + '"]').prop('checked');
 	}
 
 	function string_to_bool(string) {
@@ -44,33 +44,33 @@ function swpConditionalFields() {
 	}
 
 	// Loop through all the fields that have dependancies
-	jQuery("[data-dep]").each(function() {
+	$("[data-dep]").each(function() {
 		// Fetch the conditional values
-		var condition = jQuery(this).data('dep');
-		var required = JSON.parse(JSON.stringify(jQuery(this).data('dep_val')));
+		var condition = $(this).data('dep');
+		var required = JSON.parse(JSON.stringify($(this).data('dep_val')));
 
 		// Check if we're on the options page or somewhere else
 		if (window.location.href.indexOf("page=social-warfare") === -1) {
-			var conditionEl = jQuery(this).parents('.widgets-holder-wrap').find('[data-swp-name="' + condition + '"]');
+			var conditionEl = $(this).parents('.widgets-holder-wrap').find('[data-swp-name="' + condition + '"]');
 		} else {
-			var conditionEl = jQuery('[name="' + condition + '"]')[0];
+			var conditionEl = $('[name="' + condition + '"]')[0];
 		}
 
 		var value;
 
 		if (typeof conditionEl === 'undefined') {
-			conditionEl = jQuery('[name="' + condition + '"]')[0];
+			conditionEl = $('[name="' + condition + '"]')[0];
 
 			if (typeof conditionEl === 'undefined') {
-				conditionEl = jQuery('[fieldjQuery=' + condition + ']')[0];
+				conditionEl = $('[field$=' + condition + ']')[0];
 			}
 		}
 
 		// Fetch the value of checkboxes or other input types
-		if (jQuery(conditionEl).attr('type') == 'checkbox') {
-			value = jQuery(conditionEl).prop('checked');
+		if ($(conditionEl).attr('type') == 'checkbox') {
+			value = $(conditionEl).prop('checked');
 		} else {
-			value = jQuery(conditionEl).val();
+			value = $(conditionEl).val();
 		}
 
 		value = string_to_bool(value);
@@ -80,19 +80,19 @@ function swpConditionalFields() {
 
 		if (window.location.href.indexOf("page=social-warfare") !== -1) {
 			// If the required value matches and it's parent is also being shown, show this conditional field
-			if (jQuery.inArray(value, required) !== -1 && jQuery(conditionEl).parent('.sw-grid').is(':visible') ) {
-				jQuery(this).show();
+			if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
+				$(this).show();
 			} else {
-				jQuery(this).hide();
+				$(this).hide();
 			}
 		}
 
 		else {
 			// If the required value matches, show this conditional field
-			if (jQuery.inArray(value, required) !== -1 || value === required) {
-				jQuery(this).show();
+			if ($.inArray(value, required) !== -1 || value === required) {
+				$(this).show();
 			} else {
-				jQuery(this).hide();
+				$(this).hide();
 			}
 		}
 	});
@@ -104,10 +104,10 @@ function swpConditionalFields() {
 		|| 'custom_color_outlines'     === swp_selected('float_single_colors')
 		|| 'custom_color'              === swp_selected('float_hover_colors')
 		  || 'custom_color_outlines'     === swp_selected('float_hover_colors')) {
-		jQuery('.sideCustomColor_wrapper').slideDown();
+		$('.sideCustomColor_wrapper').slideDown();
 
 	} else {
-		jQuery('.sideCustomColor_wrapper').slideUp();
+		$('.sideCustomColor_wrapper').slideUp();
 	}
 }
 
@@ -118,36 +118,32 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	var widgetFinder = setInterval(function() {
 		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
 
-		swpWidget = jQuery("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
-		widgetSubmit = jQuery(swpWidget).find("[idjQuery=savewidget]")[0];
+		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
+		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
 
 		//* Force swpConditionalFields to run when the widget is opened or saved.
-		jQuery(swpWidget).on("click", swpConditionalFields);
+		$(swpWidget).on("click", swpConditionalFields);
 
-		jQuery(widgetSubmit).on("click", function() {
+		$(widgetSubmit).on("click", function() {
 			setTimeout(swpConditionalFields, 600);
 		});
 
 	}, 50);
 }
 
-(function(window, jQuery, undefined) {
+(function(window, jQuery) {
 	'use strict';
 
-	if (typeof jQuery != 'function') {
-		// moving here until we refactor and use $ agian.
-		console.log("Social Warfare requires jQuery, or jQuery as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
-        return;
+	if (typeof $ != 'function') {
 
 		if (typeof jQuery == 'function') {
-			jQuery = jQuery;
+			$ = jQuery;
 		}
 		else if (typeof window.jQuery == 'function') {
-		    jQuery = window.jQuery
+			$ = window.jQuery
 		}
-
 		else {
-			console.log("Social Warfare requires jQuery, or jQuery as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
+			console.log("Social Warfare requires jQuery, or $ as an alias of jQuery. Please make sure your theme provides access to jQuery before activating Social Warfare.");
 			return;
 		}
 	}
@@ -163,13 +159,30 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	};
 
 	function updateCharactersRemaining(containerSelector, characterLimit) {
-		var input = jQuery("#social_warfare #" + containerSelector);
+		var input = $("#social_warfare #" + containerSelector);
 		var container = input.parent();
 		var remaining = characterLimit - input.val().length
 
+		// Account for the permalink + whitespace being added to the tweet.
 		if (containerSelector == "swp_custom_tweet") {
-		  //* Account for the permalink + whitespace being added to the tweet.
-		  remaining -= jQuery("#sample-permalink").text().length + 1;
+			var permalinkLength = 0;
+
+			// Classic Editor
+			if ($("#sample-permalink").length) {
+				permalinkLength = $("#sample-permalink").text().length;
+			}
+
+			// Gutenberg Editor
+			else if ($("#wp-admin-bar-view a").length) {
+				permalinkLength = $("#wp-admin-bar-view a").attr('href').length;
+			}
+
+			if ($("#swp-twitter-handle").length) {
+				var twitterHandle = $("#swp-twitter-handle").text();
+				remaining -= twitterHandle.length;
+			}
+
+			remaining -= permalinkLength;
 		}
 
 		if (remaining >= 0) {
@@ -185,25 +198,25 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 		if (typeof show === 'undefined') show = true;
 
 		if (show) {
-			jQuery(".custom_thumb_size").show();
+			$(".custom_thumb_size").show();
 		} else {
-			jQuery(".custom_thumb_size").hide();
+			$(".custom_thumb_size").hide();
 		}
 	}
 
 	function noticeClickHandlers() {
-		jQuery(".swp-notice-cta").on("click", function(e) {
+		$(".swp-notice-cta").on("click", function(e) {
 			e.preventDefault();
-			//* Do not use jQuery to get href.
+			//* Do not use $ to get href.
 			var link = e.target.getAttribute("href");
 
 			if (typeof link == 'string' && link.length) {
 				window.open(link);
 			}
 
-			var parent = jQuery(this).parents(".swp-dismiss-notice");
+			var parent = $(this).parents(".swp-dismiss-notice");
 
-			jQuery.post({
+			$.post({
 				url: ajaxurl,
 				data: {
 					action: 'dismiss',
@@ -223,15 +236,15 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	function postEditorCheckboxChange(event) {
 		event.preventDefault();
 
-		var checked = !(jQuery(this).attr('status') == 'on');
-		var selector = jQuery(this).attr("field");
-		var checkbox = jQuery(selector);
+		var checked = !($(this).attr('status') == 'on');
+		var selector = $(this).attr("field");
+		var checkbox = $(selector);
 
 		if (checked) {
-			jQuery(this).attr('status', 'on');
+			$(this).attr('status', 'on');
 			checkbox.prop('checked', true).prop('value', true);
 		} else {
-			jQuery(this).attr('status', 'off');
+			$(this).attr('status', 'off');
 			checkbox.prop('checked', false).prop('value', false);
 		}
 	}
@@ -250,7 +263,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 			position: "relative"
 		}
 
-		jQuery("#" + textareaID).css("border-top-right-radius", 0) // Makes the character counter look connected to the input.
+		$("#" + textareaID).css("border-top-right-radius", 0) // Makes the character counter look connected to the input.
 						   .parent().css(style);              // Positions the input closer to label.
 	}
 
@@ -258,24 +271,24 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	function createCharactersRemaining(selector, textLimit) {
 		var div = '<div class="swp_CountDown"><span class="counterNumber">' + -textLimit + '</span></div>';
 		updateTextareaStyle(selector)
-		jQuery("#social_warfare #" + selector).parent().prepend(div);
+		$("#social_warfare #" + selector).parent().prepend(div);
 	}
 
 	socialWarfareAdmin.resizeImageFields = function() {
-		jQuery('ul.swpmb-media-list').each(function(index, mediaList) {
+		$('ul.swpmb-media-list').each(function(index, mediaList) {
 			// Check if the media list has been created yet
-			if (jQuery(mediaList).is(':empty')) {
+			if ($(mediaList).is(':empty')) {
 				//* For the Pinterest image placeholder image.
-				if (jQuery(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
-					var height = jQuery(mediaList).width() * (3 / 2);
+				if ($(mediaList).parents(".swpmb-field").attr("class").indexOf("pinterest") > 0) {
+					var height = $(mediaList).width() * (3 / 2);
 				} else {
 					// Setup the Open Graph Image Placeholder
-					var height = jQuery(mediaList).width() * (9 / 16);
+					var height = $(mediaList).width() * (9 / 16);
 				}
 
-				jQuery(mediaList).css("height", height);
+				$(mediaList).css("height", height);
 			} else {
-				jQuery(mediaList).css("height", "initial");
+				$(mediaList).css("height", "initial");
 			}
 		})
 	}
@@ -286,20 +299,20 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	 */
 	function fillContainer(container) {
 		var positions = ['full-width', 'left', 'right'];
-		var type = jQuery(container).data('type');
+		var type = $(container).data('type');
 
 		positions.forEach(function(position) {
 			var className = '.swpmb-' + position;
 
-			if (jQuery(container).find(className)) {
+			if ($(container).find(className)) {
 				//* Only include child elements with the correct type.
-				var children = jQuery(container).find(className)
+				var children = $(container).find(className)
 												.filter(function(index, child) {
-												    return jQuery(child).hasClass(type)
+													return $(child).hasClass(type)
 												})
 				if (children.length) {
-					var wrap = jQuery(container).find(className + '-wrap');
-					jQuery(wrap).append(children);
+					var wrap = $(container).find(className + '-wrap');
+					$(wrap).append(children);
 				}
 			}
 		});
@@ -313,16 +326,16 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	 *
 	 */
 	function putFieldsInContainers() {
-		jQuery(".swpmb-meta-container[data-type]").map(function(index, container) {
-			var type = jQuery(this).data('type');
+		$(".swpmb-meta-container[data-type]").map(function(index, container) {
+			var type = $(this).data('type');
 			if (!type) {
 				return;
 			}
 
-			var field = jQuery(".swpmb-field." + type);
+			var fields = $(".swpmb-field." + type);
 
-			if (field.length) {
-				jQuery(this).append(field);
+			if (fields.length) {
+				$(this).append(fields);
 			}
 
 			fillContainer(container);
@@ -330,6 +343,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	}
 
 	function createTextCounters() {
+		// map CSS selector to the character limit.
 		var textCounters = {
 			"swp_og_title": 60,
 			"swp_og_description": 150,
@@ -343,24 +357,24 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 			createCharactersRemaining(selector, textLimit);
 			updateCharactersRemaining(selector, textLimit);
 
-			jQuery("#social_warfare #" + selector).on("input", function() {
+			$("#social_warfare #" + selector).on("input", function() {
 				  updateCharactersRemaining(selector, textLimit);
 			});
 		});
 	}
 
-    //* This method exists ONLY for version 3.4.1 of Social Warfare.
+	//* This method exists ONLY for version 3.4.1 of Social Warfare.
 	//* The next version should have a more long-term sustainable way to manage
 	//* post-editor fields with dependencies.
 	function setTempConditionalField() {
-		jQuery('[field=#swp_twitter_use_open_graph]').click(function(event) {
-			var target = jQuery("#swp_twitter_use_open_graph");
+		$('[field=#swp_twitter_use_open_graph]').click(function(event) {
+			var target = $("#swp_twitter_use_open_graph");
 
 			if (target.attr('value') == 'true') {
-				jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+				$('.swpmb-meta-container[data-type=twitter]').slideUp()
 				target.attr('value', 'true');
 			} else {
-				jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+				$('.swpmb-meta-container[data-type=twitter]').slideDown()
 				target.attr('value', 'false');
 			}
 
@@ -383,52 +397,153 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	 * @see PHP social-warfare-pro\lib\admin\SWP_Meta_Box_Loader->before_meta_boxes()
 	 */
 	function displayMetaBox() {
-		if (!jQuery(jQuery(".swpmb-media-list").length)) return;
+		if (!$($(".swpmb-media-list").length)) return;
 
 		clearInterval(window.initSWMetabox);
 
 		putFieldsInContainers();
 
-        //* Metabox is loaded via Ajax, but we want to resize known images ASAP.
+		//* Metabox is loaded via Ajax, but we want to resize known images ASAP.
 		//* Even a couple extra times if need be.
 		setTimeout(socialWarfareAdmin.resizeImageFields, 600);
 		setTimeout(socialWarfareAdmin.resizeImageFields, 1400);
 		setTimeout(socialWarfareAdmin.resizeImageFields, 3000);
 
-        //* Begin Temp code only for 3.4.1
-		var status = jQuery("#swp_twitter_use_open_graph").val()
+		//* Begin Temp code only for 3.4.1
+		var status = $("#swp_twitter_use_open_graph").val()
 		if (status == 'false') {
-			jQuery('.swpmb-meta-container[data-type=twitter]').slideDown()
+			$('.swpmb-meta-container[data-type=twitter]').slideDown()
 		} else {
-			jQuery('.swpmb-meta-container[data-type=twitter]').slideUp()
+			$('.swpmb-meta-container[data-type=twitter]').slideUp()
 		}
 		setTempConditionalField();
 		//* End Temp code
 
-		jQuery('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
-		jQuery("#social_warfare.ui-sortable-handle").click(socialWarfareAdmin.resizeImageFields);  //* The open/close handle WP gives us. Images need to be resized if it was closed then opened.
+		$('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
+		$("#social_warfare.ui-sortable-handle").click(socialWarfareAdmin.resizeImageFields);  //* The open/close handle WP gives us. Images need to be resized if it was closed then opened.
 		socialWarfareAdmin.addImageEditListeners()
 
-		jQuery("#social_warfare.postbox").show();
+		$("#social_warfare.postbox").show();
 	}
 
-    //* These elements are only created once an image exists
+	//* These elements are only created once an image exists
 	socialWarfareAdmin.addImageEditListeners = function() {
-		jQuery('.swpmb-edit-media, .swpmb-remove-media').off(socialWarfareAdmin.resizeImageFields);
-		jQuery('.swpmb-edit-media, .swpmb-remove-media').on(socialWarfareAdmin.resizeImageFields);
+		$('.swpmb-edit-media, .swpmb-remove-media').off(socialWarfareAdmin.resizeImageFields);
+		$('.swpmb-edit-media, .swpmb-remove-media').on(socialWarfareAdmin.resizeImageFields);
 	}
 
-	jQuery(document).ready(function() {
+	// The network key is stored in a classname `swp-network-$network`.
+	// @see SWP_Options_Page->establish_authorizations()
+	socialWarfareAdmin.revokeNetworkConnection = function(event) {
+		var button, index, networkAndTail, network;
+		button = event.target;
+		if ($(event.target).is('div')) {
+			// This is the inner div holding the network text.
+			button = event.target.parentNode;
+		}
+		else {
+			button = event.target;
+		}
+
+		// First find the target class, then parse that class for a network name.
+		index = button.className.indexOf('swp-network');
+		index = 1 + button.className.indexOf('-', 4+index);
+
+		networkAndTail = button.className.slice(index);
+
+		index = networkAndTail.indexOf(' ');
+
+		if ( -1 == index ) {
+			// This was the last class in the selector
+			network = networkAndTail;
+		}
+
+		else {
+			// There are more classes after the selector.
+			network = networkAndTail.slice(0, index)
+		}
+
+		/**
+		 *  The disconnect URL opens in a new tab. While the user is distracted,
+		 *  make an ajax request to delete these credentials and reload the page.
+		 */
+
+		 $.post({
+			 url: ajaxurl,
+			 data: {
+				 action: 'swp_delete_network_tokens',
+				 network: network
+			 },
+			 success: function(r) {
+				 var response = JSON.parse(r)
+				 if (response.ok) {
+					 window.location.href = response.url
+				 }
+				 else {
+					 console.log('bad response', response)
+				 }
+				 // should be redirected by server back to ?page=social-warfare
+			 }
+			 // complete: function(/*try again*/) {window.location.reload(1)}
+		 });
+	}
+
+	socialWarfareAdmin.triggerDeletePostMeta = function(event) {
+		event.preventDefault()
+		var message = "This will delete all Social Warfare meta keys for this post, including Open Graph, Twitter, and Pinterest descriptions and images. If you want to keep these, please copy them to an offline file first, and paste them back in after the reset. To reset, enter reset_post_meta";
+		var prompt = window.prompt(message, 'reset_or_cancel');
+		console.log('prompt', prompt)
+		if (prompt == 'reset_post_meta') {
+			jQuery.post({
+				url: ajaxurl,
+				data: {
+					action: 'swp_reset_post_meta',
+					post_id: socialWarfare.post_id
+				},
+				complete: function(response) {
+					socialWarfareAdmin.resetMetaFields()
+				}
+			})
+		}
+	}
+
+
+	socialWarfareAdmin.resetMetaFields = function() {
+		$('#social_warfare.postbox').find('input[type=text], textarea').val('');
+		$('#social_warfare.postbox').find('select').val('default');
+
+	}
+
+
+	socialWarfareAdmin.addEventListeners = function() {
+		$('.swp-revoke-button').on('click', socialWarfareAdmin.revokeNetworkConnection)
+		$('#swp_reset_button').on('click', socialWarfareAdmin.triggerDeletePostMeta)
+	}
+
+	socialWarfareAdmin.createResetButton = function() {
+		var parent = $("#swp_reset_button");
+
+		var button = jQuery('<button class="button">Reset Post Meta</button>')
+		button.on('click', socialWarfareAdmin.triggerDeletePostMeta)
+
+		parent.after(button)
+	}
+
+	$(document).ready(function() {
 		noticeClickHandlers();
 
-		if (jQuery('#social_warfare.postbox').length) {
+		if ($('#social_warfare.postbox').length) {
 			createTextCounters();
+			socialWarfareAdmin.createResetButton();
 			swpConditionalFields();
-			jQuery(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
-			jQuery('.swp_popular_post_options select').on('change', swpConditionalFields);
+
+			$(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
+			$('.swp_popular_post_options select').on('change', swpConditionalFields);
 
 			//* Wait for the Rilis metabox to populate itself.
 			window.initSWMetabox = setInterval(displayMetaBox, 10);
 		}
+
+		socialWarfareAdmin.addEventListeners();
 	});
 })(this, jQuery);
