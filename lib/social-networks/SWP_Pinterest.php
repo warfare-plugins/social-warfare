@@ -190,7 +190,11 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  */
 	 public static function trim_pinterest_description( $pinterest_description, $via ) {
 		 if ( strlen( $pinterest_description ) > 500 ) {
-			 // Trim down the description, then add the @via.
+			 /**
+			  * The provided description is too long before we have added
+			  * anything. We need to trim it before appending the @via.
+			  *
+			  */
 			 $read_more = '... read more ' . $via;
 			 $cutoff = 500 - strlen( $read_more );
 
@@ -198,7 +202,11 @@ class SWP_Pinterest extends SWP_Social_Network {
 			 $pinterest_description .= $read_more;
 		 }
 		 else {
-			 // Just append the @via to the description.
+			 /**
+			  * The description length + via length would be too long, so
+			  * trim a little bit of description so via will fit. 
+			  *
+			  */
 			 if ( strlen( $pinterest_description) + strlen( $via ) > 500 ) {
 				 $cutoff = 500 - strlen( $via );
 				 $pinterst_description = substr( $pinterst_description, 0, $cutoff );
