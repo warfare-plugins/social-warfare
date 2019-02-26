@@ -387,8 +387,7 @@ class Social_Warfare {
 			'Plugin_Updater',
 			'Utility',
 			'Auth_Helper',
-			'Credential_Helper',
-			'SVG'
+			'Credential_Helper'
 		);
 		$this->load_files( '/lib/utilities/', $utilities);
 
