@@ -196,7 +196,6 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 = 3.5.0 (26 FEB 2019) =
 * Fixed the side floating buttons not showing on some themes.
 * Fixed 'operand type' notice when making cURL share count request.
-* Fixed Facebook shares displaying double the value.
 * Fixed the Pinterest description sometimes being too long when pinning.
 * Escaped the Pinterest description before sending to the client.
 * Fixed a missing @via tag for Click to Tweets.
@@ -266,7 +265,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 = 3.2.0 (13 AUG 2018) =
 * Shoutout to our Warfare Community beta testers- thank you so much!
 * Created shortcode for Pinterest Image.
-* Created Custom Pinterst Description on a per-image basis.
+* Created Custom Pinterest Description on a per-image basis.
 * Fixed the Total Shares icon/counts not displaying.
 * Fixed many JS related issues on floating and mobile buttons.
 * Fixed an issue where some buttons did not display on some posts (after 'post_updated' fires).

@@ -131,7 +131,7 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 	}, 50);
 }
 
-(function(window, jQuery) {
+(function(window, $) {
 	'use strict';
 
 	if (typeof $ != 'function') {

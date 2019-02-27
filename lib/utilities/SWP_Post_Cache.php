@@ -534,7 +534,6 @@ class SWP_Post_Cache {
 			$this->raw_api_responses[$current_request] = SWP_CURL::fetch_shares_via_curl_multi( $networks );
 			$current_request++;
 		}
-
 	}
 
 
@@ -649,6 +648,8 @@ class SWP_Post_Cache {
 		}
 
 
+
+
 		/**
 		 * After we processed the API responses, we'll now go through all active
 		 * networks regardless of whether or not they have an API, and process
@@ -690,17 +691,6 @@ class SWP_Post_Cache {
 			 */
 			if ( $count < $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
 				$count = $previous_count;
-			}
-
-
-			/**
-			 * If using multiple URLs (share recovery) && the host API returns
-			 * the same data for both urls, the duplicate counts need
-			 * to be skipped so they are not displayed as double.
-			 *
-			 */
-			if ( !empty( $share_counts[$network] ) && $share_counts[$network] == $count ) {
-				continue;
 			}
 
 			/**
