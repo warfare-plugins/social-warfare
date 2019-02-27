@@ -193,6 +193,14 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.5.1 (27 FEB 2019) =
+* Fixed the total share displaying an incorrect value.
+* Fixed PHP notices about 'undefined variable'.
+* Fixed floating buttons not showing or hiding as expected.
+* Fixed SWP Addon error.
+* Restored Custom Color CSS being applied to the page.
+
+
 = 3.5.0 (26 FEB 2019) =
 * Fixed the side floating buttons not showing on some themes.
 * Fixed 'operand type' notice when making cURL share count request.
