@@ -1,5 +1,5 @@
 /* global ajaxurl, swpAdminOptionsData, socialWarfare, wp */
-(function(window, jQuery, undefined) {
+(function(window, $) {
 	'use strict';
 
 	window.onload = function() {
