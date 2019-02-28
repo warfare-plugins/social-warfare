@@ -70,6 +70,32 @@ class SWP_Database_Migration {
 		$this->debug_parameters();
 	}
 
+
+	/**
+	 * Removes sensitive data from otherwise arbitrary data.
+	 *
+	 * @since 3.5.2  | 28 FEB 2019 | Created.
+	 * @param  array $options The information to filter.
+	 * @return array $options The same but without licenses or tokens.
+	 *
+	 */
+	public static function filter_options( $options ) {
+		foreach( $options as $key => $value) {
+			if (strpos( $key, 'license' ) > 0) {
+				unset( $options[$key] );
+			}
+			if (strpos( $key, 'token' ) > 0) {
+				unset( $options[$key] );
+			}
+			if (strpos( $key, 'login' ) > 0) {
+				unset( $options[$key] );
+			}
+		}
+
+		return $options;
+	}
+
+
 	public function print_post_meta() {
 		global $post;
 
