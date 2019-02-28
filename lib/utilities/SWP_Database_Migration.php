@@ -95,7 +95,6 @@ class SWP_Database_Migration {
 		return $options;
 	}
 
-
 	public function print_post_meta() {
 		global $post;
 
@@ -202,6 +201,7 @@ class SWP_Database_Migration {
 		// Output an array of user options if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_user_options') ) :
 			$options = get_option( 'social_warfare_settings', array() );
+			$options = SWP_Database_Migration::filter_options( $options );
 			ksort( $options );
 			echo "<pre>", var_export( $options ), "</pre>";
 			wp_die();
@@ -287,7 +287,7 @@ class SWP_Database_Migration {
 		if ( true === SWP_Utility::debug('get_filtered_options') ) :
 			global $swp_user_options;
 			echo "<pre>";
-			var_export( $swp_user_options );
+			var_export( SWP_Database_Migration::filter_options( $swp_user_options ) );
 			echo "</pre>";
 			wp_die();
 		endif;
