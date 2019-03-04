@@ -1,6 +1,11 @@
 <?php
 /**
- * Functions to load the front end display for the
+ * This serves as a controller to direct the output of buttons panels.
+ *
+ * Button placement options, as provided in the settings page,
+ * are applied in the logic of this class. We also create the
+ * content locator, and fallback panels for horizontal floating
+ * panels. 
  *
  * This used to be the SWP_Display class in /lib/frontend-output/
  *

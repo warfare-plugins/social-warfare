@@ -70,6 +70,31 @@ class SWP_Database_Migration {
 		$this->debug_parameters();
 	}
 
+
+	/**
+	 * Removes sensitive data from otherwise arbitrary data.
+	 *
+	 * @since 3.5.2  | 28 FEB 2019 | Created.
+	 * @param  array $options The information to filter.
+	 * @return array $options The same but without licenses or tokens.
+	 *
+	 */
+	public static function filter_options( $options ) {
+		foreach( $options as $key => $value) {
+			if (strpos( $key, 'license' ) > 0) {
+				unset( $options[$key] );
+			}
+			if (strpos( $key, 'token' ) > 0) {
+				unset( $options[$key] );
+			}
+			if (strpos( $key, 'login' ) > 0) {
+				unset( $options[$key] );
+			}
+		}
+
+		return $options;
+	}
+
 	public function print_post_meta() {
 		global $post;
 
@@ -176,6 +201,7 @@ class SWP_Database_Migration {
 		// Output an array of user options if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_user_options') ) :
 			$options = get_option( 'social_warfare_settings', array() );
+			$options = SWP_Database_Migration::filter_options( $options );
 			ksort( $options );
 			echo "<pre>", var_export( $options ), "</pre>";
 			wp_die();
@@ -261,7 +287,7 @@ class SWP_Database_Migration {
 		if ( true === SWP_Utility::debug('get_filtered_options') ) :
 			global $swp_user_options;
 			echo "<pre>";
-			var_export( $swp_user_options );
+			var_export( SWP_Database_Migration::filter_options( $swp_user_options ) );
 			echo "</pre>";
 			wp_die();
 		endif;
