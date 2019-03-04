@@ -77,27 +77,16 @@ class SWP_Utility {
 	 */
 	 public static function get_meta( $id, $key ) {
 		 $value = get_post_meta( $id, $key, true );
-		 /*
-		   WordPress offers functions that might help us filter meta values.
-		   Offline right now but I think they can work something like this
-		   1. register_post_meta()
-			 - In the addon, we register the meta key`
-			 - In SWP_Utility::get_meta, check if the key is registered.
-			 - If no, imeediately return false
-			 - the last paramter is a meta validation callback. We can let the callback check to see if the addon is registered.
 
-		   2. meta_key_exists()
-			 - (maybe?) pairs ith register_post_meta, and returns false if not registered.
-		   */
-
-		// Sometimes a boolean value is stored in the meta as a string.
-		if ( 'false' === $value ) {
-			 return false;
+		 // Sometimes a boolean value is stored in the meta as a string.
+		 if ( 'false' === $value ) {
+			  return false;
 		 }
 
-		if ( 'true' === $value ) {
-			return true;
-		}
+		 if ( 'true' === $value ) {
+			 return true;
+		 }
+		 // echo "<br>".__METHOD__, var_dump($id), var_dump($key), var_dump($value);
 
 		 return $value;
 	 }
