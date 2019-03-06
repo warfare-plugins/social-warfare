@@ -178,7 +178,7 @@ class SWP_Buttons_panel_Loader {
 		 *
 		 */
 		if( isset( $this->already_filtered[$post->ID] ) ) {
-			return;
+			return $content;
 		}
 
 
