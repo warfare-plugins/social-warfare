@@ -181,6 +181,11 @@ class SWP_Buttons_panel_Loader {
 			return $content;
 		}
 
+		// Ensure it's not an embedded post
+		if ( is_singular() && $post->ID !== get_queried_object_id() ) {
+			return $content;
+		}
+
 
 		/**
 		 * Add this post's ID to the $already_printed local property so that we
@@ -189,11 +194,6 @@ class SWP_Buttons_panel_Loader {
 		 *
 		 */
 		$this->already_filtered[$post->ID] = true;
-
-		// Ensure it's not an embedded post
-		if ( is_singular() && $post->ID !== get_queried_object_id() ) {
-			return $content;
-		}
 
 		// Pass the content to the buttons constructor to place them inside.
 		$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
