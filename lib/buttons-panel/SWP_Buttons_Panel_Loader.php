@@ -5,9 +5,7 @@
  * Button placement options, as provided in the settings page,
  * are applied in the logic of this class. We also create the
  * content locator, and fallback panels for horizontal floating
- * panels. 
- *
- * This used to be the SWP_Display class in /lib/frontend-output/
+ * panels.
  *
  * @package   SocialWarfare\Functions
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
