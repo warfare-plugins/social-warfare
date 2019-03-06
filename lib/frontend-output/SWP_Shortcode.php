@@ -95,7 +95,7 @@ class SWP_Shortcode {
 	function click_to_tweet( $atts ) {
 		global $post;
 
-		// This is the Add Post editor for a new post, so no $post. 
+		// This is the Add Post editor for a new post, so no $post.
 		if ( !is_object( $post ) ) {
 			return $atts;
 		}
@@ -147,7 +147,7 @@ class SWP_Shortcode {
 		 *
 		 */
 		$via = '';
-		if( false !== $twitter_handle ) {
+		if( !empty( $twitter_handle ) ) {
 			$via = '&via=' . $twitter_handle;
 		}
 
