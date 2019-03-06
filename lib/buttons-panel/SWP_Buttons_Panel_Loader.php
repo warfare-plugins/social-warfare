@@ -103,23 +103,28 @@ class SWP_Buttons_panel_Loader {
 	 *
 	 */
 	public function activate_buttons() {
+		global $post;
+
+		if ( true == SWP_Utility::get_option( 'full_content' ) && !is_singular() ) {
+			add_filter('the_content',  array( $this, 'social_warfare_wrapper' ) , 20 );
+			return;
+		}
+
+		if ( $post->ID != get_queried_object_id()) {
+			return;
+		}
 
 		// Bail if we're in the presence of a known conflict without a fix.
 		if ( Social_Warfare::has_plugin_conflict() ) {
 			return;
 		}
 
-		// Only hook into the_content filter if is_singular() is true or
-		// they don't use excerpts on the archive pages.
-		if( is_singular() || true === SWP_Utility::get_option( 'full_content' ) ) {
-			add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 20 );
-			add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
+		add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
+		if ( true == SWP_Utility::get_option( 'location_'. $post->post_type ) ) {
+			add_filter('the_content',  array( $this, 'social_warfare_wrapper' ) , 20 );
+			return;
 		}
 
-		// If we're not on is_singlular, we'll hook into the excerpt.
-		if ( !is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
-			add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
-		}
 	}
 
 
@@ -170,26 +175,6 @@ class SWP_Buttons_panel_Loader {
 		// The global WordPress post object.
 		global $post;
 
-
-		/**
-		 * If this post has already been processed through this filter, it's ID
-		 * will exist in this array and we will make sure that we don't process
-		 * it a second time.
-		 *
-		 */
-		if( isset( $this->already_filtered[$post->ID] ) ) {
-			return $content;
-		}
-
-
-		/**
-		 * Add this post's ID to the $already_printed local property so that we
-		 * can ensure that we don't process any posts a second time through this
-		 * filter.
-		 *
-		 */
-		$this->already_filtered[$post->ID] = true;
-
 		// Ensure it's not an embedded post
 		if ( is_singular() && $post->ID !== get_queried_object_id() ) {
 			return $content;
@@ -227,7 +212,6 @@ class SWP_Buttons_panel_Loader {
 
 		// Render the html to output to the screen.
 		echo $side_panel->render_html();
-
 	}
 
 
@@ -266,7 +250,6 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function add_static_panel_fallback_footer() {
 
-
 		// Bail if the content hook was successfully loaded.
 		if( true === $this->content_loaded ) {
 			return;
@@ -295,7 +278,6 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function generate_static_panel_fallback( $content = '' ) {
 		global $post;
-
 
 		/**
 		 * If all the checks above get passed, then we'll go ahead and create a
@@ -401,7 +383,6 @@ class SWP_Buttons_panel_Loader {
 		}
 
 		return true;
-
 	}
 
 
