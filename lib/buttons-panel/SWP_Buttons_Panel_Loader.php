@@ -5,7 +5,7 @@
  * Button placement options, as provided in the settings page,
  * are applied in the logic of this class. We also create the
  * content locator, and fallback panels for horizontal floating
- * panels. 
+ * panels.
  *
  * This used to be the SWP_Display class in /lib/frontend-output/
  *
@@ -73,19 +73,16 @@ class SWP_Buttons_panel_Loader {
 		 * allows us to ensure that we are not filtering the content from
 		 * the_content filter on the same post more than once.
 		 *
+		 * At one point, ID's were added by the button class during processing
+		 * to a global array. Later it was removed and went unused. Now we are
+		 * controlling it entirely in this class. ID's will be added in the
+		 * $this->social_warfare_wrapper method.
+		 *
 		 */
-		global $swp_already_print;
+		$this->already_filtered = array();
 
 		// The global array of the user-selected options.
 		global $swp_user_options;
-
-		// Declare variable as array if not already done so.
-		if ( !is_array( $swp_already_print ) ) {
-			$swp_already_print = array();
-		}
-
-		// Move these two globals into local properties.
-		$this->already_printed = $swp_already_print;
 		$this->options = $swp_user_options;
 
 		// Hook into the template_redirect so that is_singular() conditionals will be ready
@@ -173,10 +170,30 @@ class SWP_Buttons_panel_Loader {
 		// The global WordPress post object.
 		global $post;
 
-		  // Ensure it's not an embedded post
-		  if ( is_singular() && $post->ID !== get_queried_object_id() ) {
+
+		/**
+		 * If this post has already been processed through this filter, it's ID
+		 * will exist in this array and we will make sure that we don't process
+		 * it a second time.
+		 *
+		 */
+		if( isset( $this->already_filtered[$post->ID] ) ) {
+			return;
+		}
+
+
+		/**
+		 * Add this post's ID to the $already_printed local property so that we
+		 * can ensure that we don't process any posts a second time through this
+		 * filter.
+		 *
+		 */
+		$this->already_filtered[$post->ID] = true;
+
+		// Ensure it's not an embedded post
+		if ( is_singular() && $post->ID !== get_queried_object_id() ) {
 			return $content;
-		  }
+		}
 
 		// Pass the content to the buttons constructor to place them inside.
 		$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
