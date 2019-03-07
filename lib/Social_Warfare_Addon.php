@@ -230,8 +230,7 @@ class Social_Warfare_Addon {
 		if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
 
 			$response['success'] = true;
-			echo json_encode($response);
-			wp_die();
+			wp_die(json_encode($response));
 
 		endif;
 
@@ -248,14 +247,17 @@ class Social_Warfare_Addon {
 
 	   //* wp_remote_retrieve_body encodes to JSON for us.
 		$response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+		if ( empty( $response ) ) {
+			$response['success'] = false;
+			$response['message'] = 'Error making deactivation request to ' . $this->store_url;
+			wp_die( json_encode( $response ) );
+		}
 
 		$options = get_option( 'social_warfare_settings' );
 		$options[$key.'_license_key'] = '';
 		update_option( 'social_warfare_settings' , $options );
 
-		echo $response;
-
-		wp_die();
+		wp_die($response);
 	}
 
 	public function ajax_passthrough() {
