@@ -4,7 +4,7 @@
 
 	window.onload = function() {
 		/*********************************************************
-			Temporary patch for the custom color selects.
+			Temporary patch for the custom color se lects.
 		*********************************************************/
 		/*
 		*  Temp patch on the Visual Options colors.
@@ -603,7 +603,7 @@
 		var addons = adminWrapper.attr("swp-addons");
 		var registeredAddons = adminWrapper.attr("swp-registrations");
 
-		//* Toggle visibility of the registration input field for {key}.
+		// Toggle visibility of the registration input field for {key}.
 		jQuery('.registration-wrapper.' + key).attr('registration', status);
 
 		if (1 === parseInt(status)) {
@@ -636,9 +636,9 @@
 	}
 
 	/*******************************************************
-		Register the Plugin
+		Register an addon.
 	*******************************************************/
-	function registerPlugin(key,item_id) {
+	function registerPlugin(key, item_id) {
 		var registered = false;
 		var data = {
 			action: 'swp_register_plugin',
@@ -655,15 +655,22 @@
 			// If the response was a failure...
 			response = JSON.parse(response);
 
+			if (typeof response != 'object') {
+				// bad response
+				throw 'Error making addon registration request. Passed in this data ', data, ' and got this response', response;
+				return;
+			}
+
 			if (!response.success) {
-				alert('Failure: ' + response.data);
+				var message = "This license key is not currently active. Please check the status of your key at https://warfareplugins.com/my-account/license-keys/;
+				alert(message)
 			} else {
 				toggleRegistration('1' , key);
 				registered = true;
 			}
 
-		window.location.reload(true);
 			clearLoadingScreen();
+		// window.location.reload(true);
 
 		});
 
@@ -689,6 +696,8 @@
 		jQuery.post(ajaxurl, ajaxData, function(response) {
 			// If the response was a failure...
 			//
+			console.log('raw response', response);
+			console.log('parsed response', JSON.parse(response))
 			response = JSON.parse(response);
 			if (!response.success) {
 				alert('Failure: ' + response.data);
@@ -699,9 +708,8 @@
 				unregistered = true;
 			}
 
-			  //* Passing in true forces reload from the server rather than cache.
-			  window.location.reload(true);
 			clearLoadingScreen();
+			  // window.location.reload(true);
 		});
 
 
