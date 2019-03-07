@@ -288,7 +288,7 @@
 				data: data,
 				success: function(response) {
 					// Clear the loading screen
-					clearLoadingScreen();
+					clearLoadingScreen(true);
 
 					// Reset the default options variable
 					socialWarfare.defaultOptions = fetchAllOptions();
@@ -305,8 +305,9 @@
 		jQuery('body').append('<div class="sw-loading-bg"><div class="sw-loading-message">Saving Changes</div></div>');
 	}
 
-	function clearLoadingScreen() {
-		jQuery('.sw-loading-message').html('Success!').removeClass('sw-loading-message').addClass('sw-loading-complete');
+	function clearLoadingScreen(isSuccess) {
+		var message = (isSuccess) ? 'Success!' : '';
+		jQuery('.sw-loading-message').html(message).removeClass('sw-loading-message').addClass('sw-loading-complete');
 
 		jQuery('.sw-loading-bg').delay(1000).fadeOut(1000);
 
@@ -654,7 +655,7 @@
 				registered = true;
 			}
 
-			clearLoadingScreen();
+			clearLoadingScreen(registered);
 			window.location.reload(true);
 		});
 
@@ -690,7 +691,7 @@
 				unregistered = true;
 			}
 
-			clearLoadingScreen();
+			clearLoadingScreen(unregistered);
 			window.location.reload(true);
 		});
 
