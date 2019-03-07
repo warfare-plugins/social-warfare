@@ -647,7 +647,7 @@
 			}
 
 			if (!response.success) {
-				var message = "This license key is not currently active. Please check the status of your key at https://warfareplugins.com/my-account/license-keys/;
+				var message = "This license key is not currently active. Please check the status of your key at https://warfareplugins.com/my-account/license-keys/";
 				alert(message)
 			} else {
 				toggleRegistration('1' , key);
