@@ -670,7 +670,7 @@
 			}
 
 			clearLoadingScreen();
-		// window.location.reload(true);
+			window.location.reload(true);
 
 		});
 
@@ -694,13 +694,11 @@
 
 		// Ping the home server to create a registration log
 		jQuery.post(ajaxurl, ajaxData, function(response) {
-			// If the response was a failure...
-			//
-			console.log('raw response', response);
-			console.log('parsed response', JSON.parse(response))
 			response = JSON.parse(response);
+
 			if (!response.success) {
-				alert('Failure: ' + response.data);
+				var message = 'Sorry, we had trouble deactivating your key. Please let us know about this at https://warfareplugins.com/subit-ticket';
+				alert(message);
 			} else {
 				// If the response was a success
 				jQuery('input[name="'+key+'_license_key"]').val('');
@@ -709,7 +707,7 @@
 			}
 
 			clearLoadingScreen();
-			  // window.location.reload(true);
+			window.location.reload(true);
 		});
 
 
@@ -719,14 +717,14 @@
 	function handleRegistration() {
 		jQuery('.register-plugin').on('click', function() {
 			var key = jQuery(this).attr('swp-addon');
-			var item_id = jQuery(this).attr('swp-item-id');
+			var item_id = jQuery(this).attr('swp-item-id').trim();
 			registerPlugin(key,item_id);
 			return false;
 		});
 
 		jQuery('.unregister-plugin').on('click', function() {
 			var key = jQuery(this).attr('swp-addon');
-			var item_id = jQuery(this).attr('swp-item-id');
+			var item_id = jQuery(this).attr('swp-item-id').trim();
 			unregisterPlugin(key,item_id);
 			return false;
 		});
