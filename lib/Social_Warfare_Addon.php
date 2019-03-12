@@ -27,9 +27,9 @@ class Social_Warfare_Addon {
 			endif;
 		}
 		if ( isset( $this->product_id ) && empty ( $this->store_url ) ) {
-			// $message = "You provided `product_id` without a `store_url`. Please provide `store_url` as a top level domain, such as 'https://warfareplugins.com'.";
-			// throw new Exception($message);
 			$this->store_url = 'https://warfareplugins.com';
+			$message = "You provided `product_id` without a `store_url`. Please provide `store_url` as a top level domain. Using default value " . $this->store_url;
+			error_log( $message );
 		}
 	}
 
