@@ -5,9 +5,7 @@
  * Button placement options, as provided in the settings page,
  * are applied in the logic of this class. We also create the
  * content locator, and fallback panels for horizontal floating
- * panels. 
- *
- * This used to be the SWP_Display class in /lib/frontend-output/
+ * panels.
  *
  * This used to be the SWP_Display class in /lib/frontend-output/
  *
@@ -75,16 +73,19 @@ class SWP_Buttons_panel_Loader {
 		 * allows us to ensure that we are not filtering the content from
 		 * the_content filter on the same post more than once.
 		 *
-		 * At one point, ID's were added by the button class during processing
-		 * to a global array. Later it was removed and went unused. Now we are
-		 * controlling it entirely in this class. ID's will be added in the
-		 * $this->social_warfare_wrapper method.
-		 *
 		 */
-		$this->already_filtered = array();
+		global $swp_already_print;
 
 		// The global array of the user-selected options.
 		global $swp_user_options;
+
+		// Declare variable as array if not already done so.
+		if ( !is_array( $swp_already_print ) ) {
+			$swp_already_print = array();
+		}
+
+		// Move these two globals into local properties.
+		$this->already_printed = $swp_already_print;
 		$this->options = $swp_user_options;
 
 		// Hook into the template_redirect so that is_singular() conditionals will be ready
@@ -105,28 +106,23 @@ class SWP_Buttons_panel_Loader {
 	 *
 	 */
 	public function activate_buttons() {
-		global $post;
-
-		if ( true == SWP_Utility::get_option( 'full_content' ) && !is_singular() ) {
-			add_filter('the_content',  array( $this, 'social_warfare_wrapper' ) , 20 );
-			return;
-		}
-
-		if ( $post->ID != get_queried_object_id()) {
-			return;
-		}
 
 		// Bail if we're in the presence of a known conflict without a fix.
 		if ( Social_Warfare::has_plugin_conflict() ) {
 			return;
 		}
 
-		add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
-		if ( true == SWP_Utility::get_option( 'location_'. $post->post_type ) ) {
-			add_filter('the_content',  array( $this, 'social_warfare_wrapper' ) , 20 );
-			return;
+		// Only hook into the_content filter if is_singular() is true or
+		// they don't use excerpts on the archive pages.
+		if( is_singular() || true === SWP_Utility::get_option( 'full_content' ) ) {
+			add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 20 );
+			add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
 		}
 
+		// If we're not on is_singlular, we'll hook into the excerpt.
+		if ( !is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
+			add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
+		}
 	}
 
 
@@ -177,10 +173,10 @@ class SWP_Buttons_panel_Loader {
 		// The global WordPress post object.
 		global $post;
 
-		// Ensure it's not an embedded post
-		if ( is_singular() && $post->ID !== get_queried_object_id() ) {
+		  // Ensure it's not an embedded post
+		  if ( is_singular() && $post->ID !== get_queried_object_id() ) {
 			return $content;
-		}
+		  }
 
 		// Pass the content to the buttons constructor to place them inside.
 		$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
@@ -214,6 +210,7 @@ class SWP_Buttons_panel_Loader {
 
 		// Render the html to output to the screen.
 		echo $side_panel->render_html();
+
 	}
 
 
@@ -252,6 +249,7 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function add_static_panel_fallback_footer() {
 
+
 		// Bail if the content hook was successfully loaded.
 		if( true === $this->content_loaded ) {
 			return;
@@ -280,6 +278,7 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function generate_static_panel_fallback( $content = '' ) {
 		global $post;
+
 
 		/**
 		 * If all the checks above get passed, then we'll go ahead and create a
@@ -385,6 +384,7 @@ class SWP_Buttons_panel_Loader {
 		}
 
 		return true;
+
 	}
 
 
