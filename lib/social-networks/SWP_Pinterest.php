@@ -99,27 +99,38 @@ class SWP_Pinterest extends SWP_Social_Network {
 			$pinterest_image = '';
 		endif;
 
-		$pinterest_username = '';
-		$pinterest_id = SWP_Utility::get_option( 'pinterest_id' );
-		if ( !empty( $pinterest_id ) ) {
-			 $pinterest_username = ' via @' . str_replace( '@' , '' , $pinterest_id );
+		if ( !empty( $pinterest_image ) ) {
+			$pinterest_username = '';
+			$pinterest_id = SWP_Utility::get_option( 'pinterest_id' );
+
+			if ( !empty( $pinterest_id ) ) {
+				 $pinterest_username = ' via @' . str_replace( '@' , '' , $pinterest_id );
+			}
+
+			$description_source = SWP_Utility::get_option( 'pinit_image_description' );
+
+			if ( 'alt_text' == $description_source ) {
+				$pinterest_description = get_post_meta($post->ID, '_wp_attachment_image_alt', true);
+			}
+
+			else {
+				$pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
+
+				if( is_array( $pinterest_description ) && !empty( $pinterest_description ) ) {
+					$pinterest_description = $pinterest_description[0];
+					delete_post_meta( $post_id , 'swp_pinterest_description' );
+					update_post_meta( $post_id , 'swp_pinterest_description', $pinterest_description );
+				}
+
+				$pinterest_username = SWP_Pinterest::get_via();
+				$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
+			}
+
+			if ( empty( $pinterest_description ) ) {
+				$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
+				$pinterest_description = $title;
+			}
 		}
-
-		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
-		$pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
-
-		if( is_array( $pinterest_description ) && !empty( $pinterest_description ) ) {
-			$pinterest_description = $pinterest_description[0];
-			// delete_post_meta( $post_id , 'swp_pinterest_description' );
-			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
-		}
-
-		if ( empty( $pinterest_description ) ) :
-			$pinterest_description = $title;
-		endif;
-
-		$pinterest_username = SWP_Pinterest::get_via();
-		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
 
 		if ( !empty( $pinterest_image ) ) :
 			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
