@@ -406,7 +406,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		$gutenberg = new SWP_Options_Page_Section( __( 'Gutenberg Blocks<sup>beta</sup>', 'social-warfare' ), 'gutenberg' );
 		$gutenberg->set_priority( 5 )
-			->set_description( 'If you want to try Social Warfare blocks with Gutenberg, turn this on. <b>Tested with: WP Core 4.9, WP Core 5.0.3</b>. <em><br/>We are keeping up the best we can, but Gutenberg development is very rapid and can break our blocks overnight. <br/>If this happens, please turn this setting OFF. Your shortcodes will stay in place.</em>' );
+			->set_description( 'If you want to try Social Warfare blocks with Gutenberg, turn this on. <b>Tested with: WP Core 4.9, WP Core 5.1</b>. <em><br/>We are keeping up the best we can, but Gutenberg development is very rapid and can break our blocks overnight. <br/>If this happens, please turn this setting OFF. Your shortcodes will stay in place.</em>' );
 			// ->set_information_link( 'https://warfareplugins.com/support/using-shortcodes-and-php-snippets/' );
 
 			$gutenberg_switch = new SWP_Option_Toggle( __( 'Enable Gutenberg Blocks'), 'gutenberg_switch' );
