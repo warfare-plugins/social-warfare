@@ -230,9 +230,9 @@ class SWP_Pinterest extends SWP_Social_Network {
 		$pinterest_username = '';
 		$via = SWP_Utility::get_option( 'pinterest_id' );
 
-		if ( isset( $via ) ) {
+		if ( !empty( $via ) ) {
 			$pinterest_username = ' via @' . str_replace( '@' , '' , $via );
-		} 
+		}
 		return $pinterest_username;
 	 }
 }
