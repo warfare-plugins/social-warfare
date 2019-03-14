@@ -453,7 +453,7 @@ class SWP_Buttons_Panel {
 		 * using any of the global or post type settings for the location.
 		 *
 		 */
-		if ( !empty( $post_setting ) && 'default' != $post_setting ) {
+		if ( is_singular() && !empty( $post_setting ) && 'default' != $post_setting ) {
 			$this->location = $post_setting;
 			return;
 		}
