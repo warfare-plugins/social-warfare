@@ -90,10 +90,11 @@ class SWP_Pinterest extends SWP_Social_Network {
 
 		$options = $swp_user_options;
 		$metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
+		$pinterst_image_id = get_post_meta( $post_id, 'swp_pinterest_image', true );
 
-		if ( !empty( $metabox_pinterest_image ) ) :
-			$pinterest_image = $metabox_pinterest_image;
-		elseif ( isset($options['pinterest_fallback']) && $options['pinterest_fallback'] == 'featured' ):
+		if ( is_numeric( $pinterst_image_id ) && !empty( $pinterst_image_id ) ) :
+			$pinterest_image = $pinterst_image_id;
+		elseif ( isset($options['pinterest_fallback'] ) && $options['pinterest_fallback'] == 'featured' ) :
 			$pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 		else :
 			$pinterest_image = '';
@@ -110,7 +111,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 			$description_source = SWP_Utility::get_option( 'pinit_image_description' );
 
 			if ( 'alt_text' == $description_source ) {
-				$pinterest_description = get_post_meta($post->ID, '_wp_attachment_image_alt', true);
+				$pinterest_description = get_post_meta( $pinterest_image, '_wp_attachment_image_alt', true) ;
 			}
 
 			else {
