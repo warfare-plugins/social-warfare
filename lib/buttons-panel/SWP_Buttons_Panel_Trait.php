@@ -571,7 +571,7 @@ trait SWP_Buttons_Panel_Trait {
 	*/
 	protected function get_order_of_icons() {
 		global $swp_social_networks;
-		$default_buttons = SWP_Utility::get_option( 'order_of_icons' );
+		$active_networks = SWP_Utility::get_option( 'order_of_icons' );
 		$sort_method     = SWP_Utility::get_option( 'order_of_icons_method' );
 		$order           = array();
 
@@ -586,7 +586,7 @@ trait SWP_Buttons_Panel_Trait {
 		*
 		*/
 		if ( 'manual' === $sort_method || false === $sort_method ) {
-			return $default_buttons;
+			return $active_networks;
 		}
 
 
@@ -597,7 +597,7 @@ trait SWP_Buttons_Panel_Trait {
 		*
 		*/
 		if( empty( $this->shares ) || !is_array( $this->shares ) ) {
-		   return $default_buttons;
+		   return $active_networks;
 		}
 
 
@@ -609,13 +609,12 @@ trait SWP_Buttons_Panel_Trait {
 		*/
 		arsort( $this->shares );
 		foreach( $this->shares as $network => $share_count ) {
-		   if( $network !== 'total_shares' && in_array( $network, $default_buttons ) ) {
+		   if( $network != 'total_shares' && in_array( $network, $active_networks ) ) {
 			   $order[$network] = $network;
 		   }
 		}
 		$this->options['order_of_icons'] = $order;
 		return $order;
-
 	}
 
 

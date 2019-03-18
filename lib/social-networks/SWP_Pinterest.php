@@ -31,8 +31,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 */
 	public function __construct() {
 		// Upinterest_descriptionate the class properties for this network
-		$this->name           = __( 'Pinterest','social-warfare' );
-		$this->cta            = __( 'Pin','social-warfare' );
+		$this->name           = __( 'Pinterest', 'social-warfare' );
+		$this->cta            = __( 'Pin', 'social-warfare' );
 		$this->key            = 'pinterest';
 		$this->default        = 'true';
 		$this->base_share_url = 'https://pinterest.com/pin/create/button/?url=';
@@ -118,7 +118,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 			$pinterest_description = $title;
 		endif;
 
-		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, SWP_Pinterest::get_via() );
+		$pinterest_username = SWP_Pinterest::get_via();
+		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
 
 		if ( !empty( $pinterest_image ) ) :
 			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
@@ -142,7 +143,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 		 $post_data = $panel_context['post_data'];
 		 $share_counts = $panel_context['shares'];
 		 $options = $panel_context['options'];
-		 $share_link = $this->generate_share_link( $post_data );
 
 		 // Build the button.
 		 $icon = '<span class="iconFiller">';
@@ -189,7 +189,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  * @return string The same pinterest description, capped at 500 characters.
 	  *
 	  */
-	 public static function trim_pinterest_description( $pinterest_description, $via ) {
+	 public static function trim_pinterest_description( $pinterest_description, $via = '') {
 		 if ( strlen( $pinterest_description ) > 500 ) {
 			 /**
 			  * The provided description is too long before we have added
@@ -208,7 +208,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 			  * trim a little bit of description so via will fit.
 			  *
 			  */
-			 if ( strlen( $pinterest_description) + strlen( $via ) > 500 ) {
+			 if ( strlen( $pinterest_description ) + strlen( $via ) > 500 ) {
 				 $cutoff = 500 - strlen( $via );
 				 $pinterest_description = substr( $pinterest_description, 0, $cutoff );
 			 }
@@ -226,14 +226,13 @@ class SWP_Pinterest extends SWP_Social_Network {
 	  * @return string The '@via $username', or an empty string.
 	  *
 	  */
-	 public static function get_via() {
+	public static function get_via() {
+		$pinterest_username = '';
 		$via = SWP_Utility::get_option( 'pinterest_id' );
 
-		$pinterest_username = '';
-		if ( isset( $via ) ) {
+		if ( !empty( $via ) ) {
 			$pinterest_username = ' via @' . str_replace( '@' , '' , $via );
 		}
-
 		return $pinterest_username;
 	 }
 }

@@ -335,9 +335,22 @@ class SWP_Post_Cache {
 	public function update_image_cache( $meta_key ) {
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
+
+		/**
+		 * If there is no image ID from the meta field, we need to delete this
+		 * and all related fields just in case there used to be an image but it
+		 * was removed. Prior to deleting these fields, the Pinterest image
+		 * URL and data generated here would persist after the image was
+		 * deleted from the meta field.
+		 *
+		 */
 		if ( false === $new_id ) {
-			return delete_post_meta( $this->post_id, $meta_key );
+			delete_post_meta( $this->post_id, $meta_key.'_data' );
+			delete_post_meta( $this->post_id, $meta_key.'_url' );
+			delete_post_meta( $this->post_id, $meta_key );
+			return;
 		}
+
 
 		/**
 		 * Fetch the URL of the new image and the URL of the
@@ -347,16 +360,13 @@ class SWP_Post_Cache {
 		$new_data   = wp_get_attachment_image_src( $new_id, 'full_size' );
 		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_data' );
 
-		if ( is_array($new_data) && $new_data[0] === $old_data[0] ) {
+		if ( false == $new_data || is_array($new_data) && $new_data[0] === $old_data[0] ) {
 			return;
 		}
 
 		delete_post_meta( $this->post_id, $meta_key.'_data' );
 		delete_post_meta( $this->post_id, $meta_key.'_url' );
 
-		if ( !is_array($new_data) ) {
-			return;
-		}
 
 		update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
