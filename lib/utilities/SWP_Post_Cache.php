@@ -347,16 +347,13 @@ class SWP_Post_Cache {
 		$new_data   = wp_get_attachment_image_src( $new_id, 'full_size' );
 		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_data' );
 
-		if ( is_array($new_data) && $new_data[0] === $old_data[0] ) {
+		if ( false == $new_data || is_array($new_data) && $new_data[0] === $old_data[0] ) {
 			return;
 		}
 
 		delete_post_meta( $this->post_id, $meta_key.'_data' );
 		delete_post_meta( $this->post_id, $meta_key.'_url' );
 
-		if ( !is_array($new_data) ) {
-			return;
-		}
 
 		update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
