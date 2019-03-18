@@ -141,11 +141,11 @@ class SWP_Twitter extends SWP_Social_Network {
 	 */
 	public function generate_share_link( $post_data ) {
 
-        $tweet         = $this->get_tweet( $post_data );
+		$tweet         = $this->get_tweet( $post_data );
 		$url_parameter = $this->get_url_parameter( $tweet, $post_data );
 		$via_parameter = $this->get_via_parameter( $post_data );
-        $parameters    = $tweet . $url_parameter . $via_parameter;
-        $intent_link   = 'https://twitter.com/intent/tweet?text=' . $parameters;
+		$parameters    = $tweet . $url_parameter . $via_parameter;
+		$intent_link   = 'https://twitter.com/intent/tweet?text=' . $parameters;
 
 		return $intent_link;
 	}
@@ -170,8 +170,8 @@ class SWP_Twitter extends SWP_Social_Network {
 		 */
 		$author = SWP_User_Profile::get_author( $post_data['ID'] );
 		$user_twitter_handle = get_the_author_meta( 'swp_twitter' , $author );
-		if ( $user_twitter_handle ) {
-			return '&via=' . str_replace( '@','',$user_twitter_handle );
+		if ( !empty( $user_twitter_handle ) ) {
+			return '&via=' . str_replace( '@', '', $user_twitter_handle );
 		}
 
 
@@ -180,8 +180,9 @@ class SWP_Twitter extends SWP_Social_Network {
 		 * the global options page. If so, we'll use that as a backup.
 		 *
 		 */
-		if ( SWP_Utility::get_option( 'twitter_id' ) ) {
-			return '&via=' . str_replace( '@', '', SWP_Utility::get_option( 'twitter_id' ) );
+		$twitter_id = SWP_Utility::get_option( 'twitter_id' );
+		if ( !empty( $twitter_id ) ) {
+			return '&via=' . str_replace( '@', '', $twitter_id );
 		}
 
 		return '';
@@ -215,23 +216,23 @@ class SWP_Twitter extends SWP_Social_Network {
 	}
 
 
-    /**
-     * Retrieves tweet from database and converts to UTF-8 for Twitter.
-     *
-     * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
-     * @param array $post_data WordPress post data, such as 'ID' and 'post_content'.
-     * @return string $tweet The encoded tweet text.
-     *
-     */
-    protected function get_tweet( $post_data ) {
+	/**
+	 * Retrieves tweet from database and converts to UTF-8 for Twitter.
+	 *
+	 * @since  3.3.0 | 16 AUG 2018 | Created. Ported code from $this->generate_share_link.
+	 * @param array $post_data WordPress post data, such as 'ID' and 'post_content'.
+	 * @return string $tweet The encoded tweet text.
+	 *
+	 */
+	protected function get_tweet( $post_data ) {
 
 
-        /**
-         * If the user has drafted a custom tweet for this post, it will be
-         * stored in the swp_custom_tweet custom field. We will check and use
-         * this if it is available.
-         *
-         */
+		/**
+		 * If the user has drafted a custom tweet for this post, it will be
+		 * stored in the swp_custom_tweet custom field. We will check and use
+		 * this if it is available.
+		 *
+		 */
 		$tweet = get_post_meta( $post_data['ID'] , 'swp_custom_tweet' , true );
 
 
@@ -240,12 +241,12 @@ class SWP_Twitter extends SWP_Social_Network {
 		 * use the title of the post instead.
 		 *
 		 */
-        if ( empty( $tweet ) ) {
-            $tweet = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
-        }
+		if ( empty( $tweet ) ) {
+			$tweet = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
+		}
 
 		return urlencode( $tweet );
-    }
+	}
 
 
 	/**

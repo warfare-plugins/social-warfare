@@ -952,7 +952,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 * visitors pin the actual image being hovered.
 		 *
 		 */
-		if ('undefined' !== typeof swpPinIt.image_source) {
+		if ('undefined' !== typeof swpPinIt.image_source && swpPinIt.image_source.length) {
 
 			/**
 			 * By creating a temporary image and then using jQuery to fetch the
@@ -997,14 +997,15 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		if (typeof image.data("pin-description") != 'undefined') {
 			pinDesc = image.data("pin-description");
-		} else if ('undefined' !== typeof swpPinIt.image_description) {
+		} else if (typeof image.data("pin-description") == 'string' && swpPinIt.image_description.length) {
 			pinDesc = swpPinIt.image_description;
 		} else if (image.attr('title')) {
 			pinDesc = image.attr('title');
 		} else if (image.attr('alt')) {
 			pinDesc = image.attr('alt');
+		} else if (typeof swpPinIt.post_title == 'string') {
+			pinDesc = swpPinIt.post_title;
 		}
-
 		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
 
 

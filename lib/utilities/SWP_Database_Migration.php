@@ -35,7 +35,6 @@ class SWP_Database_Migration {
 	 */
 	public function __construct() {
 		global $post;
-		// Queue up the migrate features to run after plugins are loaded.
 		add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
 	}
 
@@ -354,6 +353,46 @@ class SWP_Database_Migration {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$this->update_last_migrated();
+		}
+
+		if ( true === SWP_Utility::debug( ( 'delete_plugin_data' ) ) ) {
+			$password = isset($_GET['swp_confirmation']) ? urldecode($_GET['swp_confirmation']) : '';
+			$user = wp_get_current_user();
+			if ( !is_admin()
+			|| false == current_user_can( 'administrator' )
+			|| false == wp_check_password( $password, $user->user_pass, $user->ID) ) {
+				wp_die('You do not have authorization to view this page.');
+			}
+			global $wpdb;
+
+			$query =
+				"DELETE FROM {$wpdb->prefix}postmeta
+				 WHERE meta_key LIKE '\_%\_shares'
+				 OR meta_key LIKE 'swp\_%'";
+
+			$message = '';
+
+			$results = $wpdb->get_results( $query, ARRAY_N );
+			if ( $results ) {
+				$message .= 'Deleted plugin postmeta.<br/>';
+			}
+
+			$deleted = delete_option('social_warfare_settings');
+			if ( $deleted ) {
+				$message .= 'Deleted plugin settings.<br/>';
+			}
+
+			$deleted = delete_option('swp_registered_options');
+			if ( $deleted ) {
+				$message .= 'Deleted plugin metadata.<br/>';
+			}
+
+			if ( $message ) {
+				$message .= 'All available Social Warfare and Social Warfare - Pro data has been deleted.';
+				wp_die( $message );
+			}
+
+			wp_die('Sorry, there was an error processing the request. If you continue to get this message and need to delete all plugin data, please contact support at https://warfareplugins.com/submit-ticket');
 		}
 	}
 

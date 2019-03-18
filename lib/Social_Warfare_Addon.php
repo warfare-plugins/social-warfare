@@ -27,13 +27,9 @@ class Social_Warfare_Addon {
 			endif;
 		}
 		if ( isset( $this->product_id ) && empty ( $this->store_url ) ) {
-			// $message = "You provided `product_id` without a `store_url`. Please provide `store_url` as a top level domain, such as 'https://warfareplugins.com'.";
-			// throw new Exception($message);
 			$this->store_url = 'https://warfareplugins.com';
-		}
-
-		if ( isset( $this->product_id ) && empty ( $this->site_url ) ) {
-			$this->store_url = SWP_Utility::get_site_url();
+			$message = "You provided `product_id` without a `store_url`. Please provide `store_url` as a top level domain. Using default value " . $this->store_url;
+			error_log( $message );
 		}
 	}
 
@@ -220,19 +216,17 @@ class Social_Warfare_Addon {
 	 *
 	 */
 	public function unregister_plugin() {
+
 		// Setup the variables needed for processing
 		$options = get_option( 'social_warfare_settings' );
 		$key = $_POST['name_key'];
 		$item_id = $_POST['item_id'];
-		$response = array();
+		$response = array('success' => false);
 
 		// Check to see if the license key is even in the options
 		if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
-
 			$response['success'] = true;
-			echo json_encode($response);
-			wp_die();
-
+			wp_die(json_encode($response));
 		endif;
 
 		// Grab the license key so we can use it below
@@ -246,16 +240,22 @@ class Social_Warfare_Addon {
 			'url' => $this->site_url,
 		);
 
-	   //* wp_remote_retrieve_body encodes to JSON for us.
 		$response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+		if ( empty( $response ) ) {
+			$response['success'] = false;
+			$response['message'] = 'Error making deactivation request to ' . $this->store_url;
+			wp_die( json_encode( $response ) );
+		}
 
-		$options = get_option( 'social_warfare_settings' );
-		$options[$key.'_license_key'] = '';
-		update_option( 'social_warfare_settings' , $options );
+		$response = json_decode( $response );
 
-		echo $response;
+		if ( $response->license == 'deactivated' ) {
+			$options = get_option( 'social_warfare_settings' );
+			$options[$key.'_license_key'] = '';
+			update_option( 'social_warfare_settings' , $options );
+		}
 
-		wp_die();
+		wp_die(json_encode($response));
 	}
 
 	public function ajax_passthrough() {
