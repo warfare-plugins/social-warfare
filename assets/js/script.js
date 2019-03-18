@@ -1003,7 +1003,7 @@ window.socialWarfare = window.socialWarfare || {};
 			pinDesc = image.attr('title');
 		} else if (image.attr('alt')) {
 			pinDesc = image.attr('alt');
-		} else if (typeof swpPintIt.post_title == 'string') {
+		} else if (typeof swpPinIt.post_title == 'string') {
 			pinDesc = swpPinIt.post_title;
 		}
 		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
