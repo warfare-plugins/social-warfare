@@ -335,9 +335,22 @@ class SWP_Post_Cache {
 	public function update_image_cache( $meta_key ) {
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
+
+		/**
+		 * If there is no image ID from the meta field, we need to delete this
+		 * and all related fields just in case there used to be an image but it
+		 * was removed. Prior to deleting these fields, the Pinterest image
+		 * URL and data generated here would persist after the image was
+		 * deleted from the meta field.
+		 *
+		 */
 		if ( false === $new_id ) {
-			return delete_post_meta( $this->post_id, $meta_key );
+			delete_post_meta( $this->post_id, $meta_key.'_data' );
+			delete_post_meta( $this->post_id, $meta_key.'_url' );
+			delete_post_meta( $this->post_id, $meta_key );
+			return;
 		}
+
 
 		/**
 		 * Fetch the URL of the new image and the URL of the
