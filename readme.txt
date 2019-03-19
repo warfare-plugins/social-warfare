@@ -193,6 +193,14 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.5.2 (19 MAR 2019) =
+* Fixed <meta> tags for OG and Twitter Card. 
+* Fixed source of Pinterest description when pinning from Save or Pinterest button.
+* Fixed empty 'via' being added to Pinterest description and Click to Tweet.
+* Updated addon registration and unregistration messages.
+* Updated icon font file and encoding.
+
+
 = 3.5.1 (27 FEB 2019) =
 * Fixed the total share displaying an incorrect value.
 * Fixed PHP notices about 'undefined variable'.
