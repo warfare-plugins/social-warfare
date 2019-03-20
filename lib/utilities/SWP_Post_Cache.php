@@ -357,16 +357,15 @@ class SWP_Post_Cache {
 		 * previously cached image so that we can see if anything has changed.
 		 *
 		 */
-		$new_data   = wp_get_attachment_image_src( $new_id, 'full_size' );
+		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
 		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_data' );
 
-		if ( false == $new_data || is_array($new_data) && $new_data[0] === $old_data[0] ) {
+		if ( false == $new_data || $new_data === $old_data ) {
 			return;
 		}
 
 		delete_post_meta( $this->post_id, $meta_key.'_data' );
 		delete_post_meta( $this->post_id, $meta_key.'_url' );
-
 
 		update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
