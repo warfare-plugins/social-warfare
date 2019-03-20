@@ -249,7 +249,7 @@ class Social_Warfare_Addon {
 
 		$response = json_decode( $response );
 
-		if ( $response->license == 'deactivated' ) {
+		if ( $response->license == 'deactivated' || $response->license == 'failed' ) {
 			$options = get_option( 'social_warfare_settings' );
 			$options[$key.'_license_key'] = '';
 			update_option( 'social_warfare_settings' , $options );
