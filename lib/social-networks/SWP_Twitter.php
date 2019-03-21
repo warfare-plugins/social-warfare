@@ -155,11 +155,12 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * This is the method that generates the via=username section of the share link.
 	 *
 	 * @since  3.4.0 | 19 NOV 2018 | Created
+	 * @since  3.5.2 | 21 MAR 2018 | Changed access from protected to public.
 	 * @param  array $post_data The array of information passed in from the buttons panel.
 	 * @return sting The via=username section of the share link.
 	 *
 	 */
-	protected function get_via_parameter( $post_data ) {
+	public function get_via_parameter( $post_data ) {
 
 
 		/**
