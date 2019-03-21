@@ -166,6 +166,15 @@ class SWP_Utility {
 		wp_die();
 	}
 
+	/**
+	 * Handle the options save request inside of admin-ajax.php
+	 *
+	 * @since  2.x.x | Unknown | Created.
+	 * @since  3.5.3 | 21 MAR 2019 | Created the method.
+	 *
+	 * @return bool True if it is good, else it dies.
+	 * 
+	 */
 	public static function auth() {
 		if ( !is_admin() || !current_user_can( 'administrator' ) ) {
 			wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
