@@ -517,34 +517,6 @@ class SWP_Post_Cache {
 
 
 	/**
-	 * Creates a trailing slash and non-trailing slash version of API urls for $network.
-	 *
-	 * @since  3.5.2 | 21 MAR 2019 | Created the method.
-	 * @var    string $key The network whose URLs to update.
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	protected function add_slash_to_permalinks( $network ) {
-		$alt_links = array();
-		$raw_links = $this->permalinks[$network];
-
-		foreach( $raw_links as $raw_link ) {
-			$alt_link = rtrim( $raw_link, '/' );
-
-			// The raw link didn't have a trailing slash.
-			if ( $alt_link == $raw_link ) {
-				$alt_link .= '/';
-			}
-
-			$alt_links[] = $alt_link;
-		}
-
-		$this->permalinks[$network] = array_merge( $raw_links, $alt_links );
-	}
-
-
-	/**
 	 * Prepares outbound API links per network.
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created the method.
