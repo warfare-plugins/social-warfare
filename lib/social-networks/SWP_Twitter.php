@@ -161,6 +161,10 @@ class SWP_Twitter extends SWP_Social_Network {
 	 *
 	 */
 	public function get_via_parameter( $post_data ) {
+		if ( is_object( $post_data ) ) {
+			// A global $post, for example
+			$post_data = (array) $post_data;
+		}
 
 
 		/**
