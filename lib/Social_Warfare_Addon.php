@@ -7,11 +7,9 @@ class Social_Warfare_Addon {
 		$this->is_registered = $this->establish_resgistration();
 
 		// Verify the user can perform these types of actions.
-		if ( SWP_Utility::auth() ) {
-			add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
-			add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
-			add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
-		}
+		add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
+		add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
+		add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
 
 		add_filter( 'swp_registrations', array( $this, 'add_self' ) );
 	}
@@ -219,7 +217,6 @@ class Social_Warfare_Addon {
 	 *
 	 */
 	public function unregister_plugin() {
-
 		// Setup the variables needed for processing
 		$options = get_option( 'social_warfare_settings' );
 		$key = $_POST['name_key'];
@@ -262,6 +259,7 @@ class Social_Warfare_Addon {
 	}
 
 	public function ajax_passthrough() {
+
 		if ( ! check_ajax_referer( 'swp_plugin_registration', 'security', false ) ) {
 			wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
 			die;
