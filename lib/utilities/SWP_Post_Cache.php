@@ -534,7 +534,7 @@ class SWP_Post_Cache {
 
 			// The raw link didn't have a trailing slash.
 			if ( $alt_link == $raw_link ) {
-				$alt_link = $alt_link . '/';
+				$alt_link .= '/';
 			}
 
 			$alt_links[] = $alt_link;
