@@ -119,38 +119,8 @@ class SWP_Shortcode {
 		}
 
 
-		/**
-		 * Fetch a Twitter Username for the Via parameter.
-		 *
-		 * We'll fetch the Twitter username at the global level, the author
-		 * level and the post level and then use the lowest level available.
-		 *
-		 */
-		$twitter_handle        = SWP_Utility::get_option( 'twitter_id' );
-		$author_twitter_handle = get_the_author_meta( 'swp_twitter', $post->post_author );
-
-
-		/**
-		 * If the author of thist post has an assigned Twitter username, we will
-		 * override the global Twitter username with the author level username.
-		 *
-		 */
-		if ( false !== $author_twitter_handle && !empty( $author_twitter_handle ) ) {
-			$twitter_handle = $author_twitter_handle;
-		}
-
-
-		/**
-		 * If after all three checks, we were able to find a Twitter username,
-		 * then we'll create the via parameter of the link. If not, it will be
-		 * an empty string.
-		 *
-		 */
-		$via = '';
-		if( !empty( $twitter_handle ) ) {
-			$via = '&via=' . $twitter_handle;
-		}
-
+		// Generate the @via for the author of this $post, or an empty string.
+		$via = SWP_Twitter::get_via_parameter( $post );
 
 		/**
 		 * If a theme was passed into the shortcode via a parameter, we'll use
