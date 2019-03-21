@@ -490,22 +490,6 @@ class SWP_Post_Cache {
 
 
 			/**
-			 * Pinterest counts requests to URLs with trailing slashes
-			 * separate from URLs without. For completeness, we have to
-			 * make requests to both URLs.
-			 *
-			 */
-			if ( 'pinterest' == $key ) {
-				/**
-				 * @nicholas-cardot
-				 * This is where we should be able to count all pinterest shares
-				 * at the cost of 1 to  $n more API requests.
-				 */
-				$this->add_slash_to_permalinks( $key );
-			}
-
-
-			/**
 			 * This filter allows third-parties to enable another permalink for
 			 * which to check for share counts.
 			 *
