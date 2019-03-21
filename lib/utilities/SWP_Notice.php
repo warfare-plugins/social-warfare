@@ -41,12 +41,9 @@ class SWP_Notice {
 		add_action( 'admin_notices', array( $this, 'print_HTML' ) );
 		add_action( 'swp_admin_notices', array( $this, 'get_HTML' ) );
 
-
-		if ( SWP_Utility::auth() ) {
-			// Add a hook for permanently dismissing a notice via admin-ajax.php
-			add_action( 'wp_ajax_dismiss', array( $this, 'dismiss' ) );
-			add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'dismiss' ) );
-		}
+		// Add a hook for permanently dismissing a notice via admin-ajax.php
+		add_action( 'wp_ajax_dismiss', array( $this, 'dismiss' ) );
+		add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'dismiss' ) );
 
 	}
 
@@ -143,6 +140,8 @@ class SWP_Notice {
 	 *
 	 */
 	public function dismiss() {
+
+		SWP_Utility::auth();
 
 		$key = $_POST['key'];
 		$timeframe = $_POST['timeframe'];
