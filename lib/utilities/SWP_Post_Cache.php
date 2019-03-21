@@ -501,7 +501,7 @@ class SWP_Post_Cache {
 				 * This is where we should be able to count all pinterest shares
 				 * at the cost of 1 to  $n more API requests.
 				 */
-				// $this->add_slash_to_permalinks( $key );
+				$this->add_slash_to_permalinks( $key );
 			}
 
 
@@ -540,7 +540,7 @@ class SWP_Post_Cache {
 			$alt_links[] = $alt_link;
 		}
 
-		$this->permalinks[$network] = aray_merge( $raw_links, $alt_links );
+		$this->permalinks[$network] = array_merge( $raw_links, $alt_links );
 	}
 
 
