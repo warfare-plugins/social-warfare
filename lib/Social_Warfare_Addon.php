@@ -6,9 +6,12 @@ class Social_Warfare_Addon {
 		$this->establish_license_key();
 		$this->is_registered = $this->establish_resgistration();
 
-		add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
-		add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
-		add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
+		// Verify the user can perform these types of actions.
+		if ( SWP_Utility::auth() ) {
+			add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
+			add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
+			add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
+		}
 
 		add_filter( 'swp_registrations', array( $this, 'add_self' ) );
 	}
@@ -249,7 +252,7 @@ class Social_Warfare_Addon {
 
 		$response = json_decode( $response );
 
-		if ( $response->license == 'deactivated' ) {
+		if ( $response->license == 'deactivated' || $response->license == 'failed' ) {
 			$options = get_option( 'social_warfare_settings' );
 			$options[$key.'_license_key'] = '';
 			update_option( 'social_warfare_settings' , $options );
