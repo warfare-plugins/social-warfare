@@ -142,7 +142,6 @@ class Social_Warfare_Addon {
 	 *
 	 */
 	public function register_plugin() {
-		SWP_Utility::auth();
 		// Check to ensure that license key was passed into the function
 		if ( !empty( $_POST['license_key'] ) ) :
 
@@ -218,8 +217,6 @@ class Social_Warfare_Addon {
 	 *
 	 */
 	public function unregister_plugin() {
-		SWP_Utility::auth();
-
 		// Setup the variables needed for processing
 		$options = get_option( 'social_warfare_settings' );
 		$key = $_POST['name_key'];
@@ -262,7 +259,6 @@ class Social_Warfare_Addon {
 	}
 
 	public function ajax_passthrough() {
-		SWP_Utility::auth();
 
 		if ( ! check_ajax_referer( 'swp_plugin_registration', 'security', false ) ) {
 			wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
