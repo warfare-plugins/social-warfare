@@ -176,7 +176,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$author = SWP_User_Profile::get_author( $post_data['ID'] );
 		$user_twitter_handle = get_the_author_meta( 'swp_twitter' , $author );
 		if ( !empty( $user_twitter_handle ) ) {
-			return '&via=' . str_replace( '@', '', $user_twitter_handle );
+			return '&via=' . str_replace( '@', '', esc_attr( $user_twitter_handle ) );
 		}
 
 
