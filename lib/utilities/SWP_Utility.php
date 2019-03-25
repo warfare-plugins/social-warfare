@@ -131,7 +131,7 @@ class SWP_Utility {
 	 * @return bool Whether or not the options were updated in the database.
 	 */
 	public static function store_settings() {
-		
+
 
 		if ( !check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
 			wp_send_json_error( esc_html__( 'Security failed 1.', 'social-warfare' ) );
@@ -176,7 +176,7 @@ class SWP_Utility {
 	 *
 	 */
 	public static function auth() {
-		if ( !is_admin() || !current_user_can( 'administrator' ) ) {
+		if ( !current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( esc_html__( 'Security failed 2.', 'social-warfare' ) );
 			wp_die();
 		}
