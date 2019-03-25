@@ -124,7 +124,13 @@ class SWP_Header_Output {
 	 *
 	 */
 	function output_font_css( $meta_html ) {
-		//* Make sure we only output the style once.
+		// The var $meta_html is passed to both string and array filters.
+		// The solution is to re-wire those filters appropriately. This is the patch.
+		if ( is_array( $meta_html ) ) {
+			return $meta_html;
+		}
+
+		// Make sure we only output the style once.
 		if ( !empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
 			return $meta_html;
 		endif;
