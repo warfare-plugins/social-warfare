@@ -96,8 +96,11 @@ class SWP_User_Profile {
 			return false;
 		}
 
-		update_user_meta( $user_id, 'swp_twitter', $_POST['swp_twitter'] );
-		update_user_meta( $user_id, 'swp_fb_author', $_POST['swp_fb_author'] );
+		$twitter =  isset( $_POST['swp_twitter'] ) ? sanitize_text_field( $_POST['swp_twitter'] ) : '';
+	  $facebook =	isset( $_POST['swp_fb_author'] ? sanitize_text_field( $_POST['swp_fb_author'] ) : '';
+
+		update_user_meta( $user_id, 'swp_twitter', $twitter );
+		update_user_meta( $user_id, 'swp_fb_author', $facebook );
 	}
 
 

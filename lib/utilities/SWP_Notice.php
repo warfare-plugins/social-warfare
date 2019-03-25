@@ -30,22 +30,22 @@ class SWP_Notice {
 	 * @param string $message The message for this notice
 	 *
 	 */
-    public function __construct( $key = "", $message = "", $ctas = array() ) {
-        $this->set_key( $key );
-        $this->init();
-        $this->set_message( $message );
-        $this->actions = $ctas;
-        $this->no_cta = false;
+	public function __construct( $key = "", $message = "", $ctas = array() ) {
+		$this->set_key( $key );
+		$this->init();
+		$this->set_message( $message );
+		$this->actions = $ctas;
+		$this->no_cta = false;
 
 		// Add hooks to display our admin notices in the dashbaord and on our settings page.
-        add_action( 'admin_notices', array( $this, 'print_HTML' ) );
-        add_action( 'swp_admin_notices', array( $this, 'get_HTML' ) );
+		add_action( 'admin_notices', array( $this, 'print_HTML' ) );
+		add_action( 'swp_admin_notices', array( $this, 'get_HTML' ) );
 
 		// Add a hook for permanently dismissing a notice via admin-ajax.php
-        add_action( 'wp_ajax_dismiss', array( $this, 'dismiss' ) );
-        add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'dismiss' ) );
+		add_action( 'wp_ajax_dismiss', array( $this, 'dismiss' ) );
+		add_action( 'wp_ajax_nopriv_dismiss', array( $this, 'dismiss' ) );
 
-    }
+	}
 
 
 	/**
@@ -63,20 +63,20 @@ class SWP_Notice {
 	 * @return null
 	 *
 	 */
-    public function init() {
-        $notices = get_option( 'social_warfare_dismissed_notices', false );
+	public function init() {
+		$notices = get_option( 'social_warfare_dismissed_notices', false );
 
-        if ( false === $notices ) {
-            update_option( 'social_warfare_dismissed_notices', array() );
-            $notices = array();
-        }
+		if ( false === $notices ) {
+			update_option( 'social_warfare_dismissed_notices', array() );
+			$notices = array();
+		}
 
-        $this->notices = $notices;
+		$this->notices = $notices;
 
-        if ( isset( $notices[$this->key] ) ) :
-            $this->data = $notices[$this->key];
-        endif;
-    }
+		if ( isset( $notices[$this->key] ) ) :
+			$this->data = $notices[$this->key];
+		endif;
+	}
 
 
 	/**
@@ -92,11 +92,11 @@ class SWP_Notice {
 	 * @return bool Default true.
 	 *
 	 */
-    public function should_display_notice() {
-        $now = new DateTime();
+	public function should_display_notice() {
+		$now = new DateTime();
 		$now = $now->format('Y-m-d H:i:s');
 
-        // If the start date has not been reached.
+		// If the start date has not been reached.
 		if ( isset( $this->start_date ) && $now < $this->start_date ) {
 			return false;
 		}
@@ -106,26 +106,26 @@ class SWP_Notice {
 			return false;
 		}
 
-        //* No dismissal has happened yet.
-        if ( empty( $this->data['timestamp']) ) :
-            return true;
-        endif;
+		//* No dismissal has happened yet.
+		if ( empty( $this->data['timestamp']) ) :
+			return true;
+		endif;
 
-        //* They have dismissed a permadismiss.
-        if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] == 0) {
-            return false;
-        }
+		//* They have dismissed a permadismiss.
+		if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] == 0) {
+			return false;
+		}
 
-        //* They have dismissed with a temp CTA.
-        if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
+		//* They have dismissed with a temp CTA.
+		if ( isset( $this->data['timeframe'] ) && $this->data['timeframe'] > 0 ) {
 
-            $expiry = $this->data['timestamp'];
+			$expiry = $this->data['timestamp'];
 
-            return $now > $expiry;
-        }
+			return $now > $expiry;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 
 	/**
@@ -139,23 +139,26 @@ class SWP_Notice {
 	 * @return null The response from update_option is echoed.
 	 *
 	 */
-    public function dismiss() {
-        $key = $_POST['key'];
-        $timeframe = $_POST['timeframe'];
-        $now = new DateTime();
+	public function dismiss() {
 
-        if ( 0 < $timeframe ) {
-            $timestamp = $now->modify("+$timeframe days")->format('Y-m-d H:i:s');
-        } else {
-            $timestamp = $now->format('Y-m-d H:i:s');
-        }
+		SWP_Utility::auth();
 
-        $this->notices[$key]['timestamp'] = $timestamp;
-        $this->notices[$key]['timeframe'] = $timeframe;
+		$key = $_POST['key'];
+		$timeframe = $_POST['timeframe'];
+		$now = new DateTime();
 
-        echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
-        wp_die();
-    }
+		if ( 0 < $timeframe ) {
+			$timestamp = $now->modify("+$timeframe days")->format('Y-m-d H:i:s');
+		} else {
+			$timestamp = $now->format('Y-m-d H:i:s');
+		}
+
+		$this->notices[$key]['timestamp'] = $timestamp;
+		$this->notices[$key]['timeframe'] = $timeframe;
+
+		echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
+		wp_die();
+	}
 
 
 	/**
@@ -167,15 +170,15 @@ class SWP_Notice {
 	 * @return object $this    Allows for method chaining.
 	 *
 	 */
-    public function set_message( $message ) {
-        if ( !is_string( $message ) ) :
-            throw("Please provide a string for your database key.");
-        endif;
+	public function set_message( $message ) {
+		if ( !is_string( $message ) ) :
+			throw("Please provide a string for your database key.");
+		endif;
 
-        $this->message = $message;
+		$this->message = $message;
 
-        return $this;
-    }
+		return $this;
+	}
 
 
 	/**
@@ -187,15 +190,15 @@ class SWP_Notice {
 	 * @return object $this  Allows for method chaining.
 	 *
 	 */
-    protected function set_key( $key ) {
-        if ( !is_string ( $key ) ) :
-            throw("Please provide a string for your database key.");
-        endif;
+	protected function set_key( $key ) {
+		if ( !is_string ( $key ) ) :
+			throw("Please provide a string for your database key.");
+		endif;
 
-        $this->key = $key;
+		$this->key = $key;
 
-        return $this;
-    }
+		return $this;
+	}
 
 
 	/**
@@ -214,9 +217,9 @@ class SWP_Notice {
 	 *
 	 */
 	public function set_start_date( $start_date ) {
-        if ( $this->is_date( $start_date ) ) :
-		    $this->start_date = $start_date;
-        endif;
+		if ( $this->is_date( $start_date ) ) :
+			$this->start_date = $start_date;
+		endif;
 
 		return $this;
 	}
@@ -242,38 +245,38 @@ class SWP_Notice {
 	 *
 	 */
 	public function set_end_date( $end_date ) {
-        if ( $this->is_date( $end_date ) ) :
-		    $this->end_date = $end_date;
-        endif;
+		if ( $this->is_date( $end_date ) ) :
+			$this->end_date = $end_date;
+		endif;
 
 		return $this;
 	}
 
 
-    /**
-    * Creates the interactive CTA for the notice.
-    *
-    * @since  3.0.9 | 07 JUN 2018 | Created
-    * @access public
-    * @param  string $action Optional. The message to be displayed. Default "Thanks, I understand."
-    * @param  string $href Optional. The outbound href.
-    * @param  string $class Optional. The CSS classname to assign to the CTA.
-    * @param  string $timeframe
-    * @return $this Allows for method chaining.
-    *
-    */
-    public function add_default_cta()  {
-        $cta = array();
-        $cta['action']    = "Thanks, I understand.";
-        $cta['href']      = '';
-        $cta['target']    = '_self';
-        $cta['class']     = '';
+	/**
+	* Creates the interactive CTA for the notice.
+	*
+	* @since  3.0.9 | 07 JUN 2018 | Created
+	* @access public
+	* @param  string $action Optional. The message to be displayed. Default "Thanks, I understand."
+	* @param  string $href Optional. The outbound href.
+	* @param  string $class Optional. The CSS classname to assign to the CTA.
+	* @param  string $timeframe
+	* @return $this Allows for method chaining.
+	*
+	*/
+	public function add_default_cta()  {
+		$cta = array();
+		$cta['action']    = "Thanks, I understand.";
+		$cta['href']      = '';
+		$cta['target']    = '_self';
+		$cta['class']     = '';
 		$cta['timeframe'] =  0;
 
-        $this->actions[] = $cta;
+		$this->actions[] = $cta;
 
-        return $this;
-    }
+		return $this;
+	}
 
 
 	/**
@@ -288,32 +291,32 @@ class SWP_Notice {
 	 * @return string The compiled HTML of the dashboard notice.
 	 *
 	 */
-    public function render_HTML() {
-        if ( empty( $this->actions ) && false === $this->no_cta) :
-            $this->add_default_cta();
-        endif;
+	public function render_HTML() {
+		if ( empty( $this->actions ) && false === $this->no_cta) :
+			$this->add_default_cta();
+		endif;
 
-        $html = '<div class="swp-dismiss-notice notice notice-info " data-key="' . $this->key . '">';
-            $html .= '<p>' . $this->message . ' - Warfare Plugins Team</p>';
-            $html .= '<div class="swp-actions">';
+		$html = '<div class="swp-dismiss-notice notice notice-info " data-key="' . $this->key . '">';
+			$html .= '<p>' . $this->message . ' - Warfare Plugins Team</p>';
+			$html .= '<div class="swp-actions">';
 
-                foreach( $this->actions as $cta) {
-                    $class = isset( $cta['class'] ) ? $cta['class'] : '';
-                    $href = isset( $cta['href'] ) ? $cta['href'] : '';
-                    $target = isset( $cta['target'] ) ? $cta['target'] : '';
-                    $timeframe = isset( $cta['timeframe'] ) ?  $cta['timeframe'] : 0;
-                    $html .= '<a class="swp-notice-cta ' . $class . '" href="' . $href . '" target="' . $target . '" data-timeframe="' . $timeframe .'">';
-                        $html .= $cta['action'];
-                    $html .= "</a>";
-                }
+				foreach( $this->actions as $cta) {
+					$class = isset( $cta['class'] ) ? $cta['class'] : '';
+					$href = isset( $cta['href'] ) ? $cta['href'] : '';
+					$target = isset( $cta['target'] ) ? $cta['target'] : '';
+					$timeframe = isset( $cta['timeframe'] ) ?  $cta['timeframe'] : 0;
+					$html .= '<a class="swp-notice-cta ' . $class . '" href="' . $href . '" target="' . $target . '" data-timeframe="' . $timeframe .'">';
+						$html .= $cta['action'];
+					$html .= "</a>";
+				}
 
-            $html .= '</div>';
-        $html .= '</div>';
+			$html .= '</div>';
+		$html .= '</div>';
 
-        $this->html = $html;
+		$this->html = $html;
 
-        return $this;
-    }
+		return $this;
+	}
 
 
 	/**
@@ -328,14 +331,14 @@ class SWP_Notice {
 	 * @return string          The modified string of notices' html.
 	 *
 	 */
-    public function get_HTML( $notices = '' ) {
+	public function get_HTML( $notices = '' ) {
 
-        if ( !$this->should_display_notice() ) :
-            return $notices;
-        endif;
+		if ( !$this->should_display_notice() ) :
+			return $notices;
+		endif;
 
-        return $this->html;
-    }
+		return $this->html;
+	}
 
 
 	/**
@@ -350,49 +353,49 @@ class SWP_Notice {
 	 * @return string          The modified string of notices' html.
 	 *
 	 */
-    public function print_HTML() {
-        if ( !$this->should_display_notice() ) :
-            return;
-        endif;
+	public function print_HTML() {
+		if ( !$this->should_display_notice() ) :
+			return;
+		endif;
 
-        if ( empty( $this->html ) ) :
-            $this->render_HTML();
-        endif;
+		if ( empty( $this->html ) ) :
+			$this->render_HTML();
+		endif;
 
-        echo $this->html;
+		echo $this->html;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Checks whether a string is formatted as our default Date format.
-     *
-     * @since  3.0.9 | 08 JUN 2018 | Created
-     * @param string $string The datetime string in question.
-     * @return bool True iff the string is of the format 'Y-m-d h:i:s'.
-     *
-     */
-    private function is_date( $string ) {
-        return DateTime::createFromFormat( 'Y-m-d h:i:s', $string ) !== false;
-    }
+	/**
+	 * Checks whether a string is formatted as our default Date format.
+	 *
+	 * @since  3.0.9 | 08 JUN 2018 | Created
+	 * @param string $string The datetime string in question.
+	 * @return bool True iff the string is of the format 'Y-m-d h:i:s'.
+	 *
+	 */
+	private function is_date( $string ) {
+		return DateTime::createFromFormat( 'Y-m-d h:i:s', $string ) !== false;
+	}
 
 
-    /**
-     * Prevents a CTA from being displayed on the notice.
-     *
-     * In cases where we require the user to take action, we need them
-     * to follow the directions in the message before removing the notice.
-     *
-     * @since  3.1.0 | 05 JUL 2018 | Created the method.
-     * @return SWP_Notice $this, for method chaining.
-     *
-     */
-     public function remove_cta() {
-         //* Force the ctas to an empty array so render can still loop over it.
-         $this->actions = array();
+	/**
+	 * Prevents a CTA from being displayed on the notice.
+	 *
+	 * In cases where we require the user to take action, we need them
+	 * to follow the directions in the message before removing the notice.
+	 *
+	 * @since  3.1.0 | 05 JUL 2018 | Created the method.
+	 * @return SWP_Notice $this, for method chaining.
+	 *
+	 */
+	 public function remove_cta() {
+		 //* Force the ctas to an empty array so render can still loop over it.
+		 $this->actions = array();
 
-         $this->no_cta = true;
+		 $this->no_cta = true;
 
-         return $this;
-     }
+		 return $this;
+	 }
 }

@@ -131,16 +131,18 @@ class SWP_Utility {
 	 * @return bool Whether or not the options were updated in the database.
 	 */
 	public static function store_settings() {
+		
+
 		if ( !check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
-			wp_send_json_error( esc_html__( 'Security failed.', 'social-warfare' ) );
-			die;
+			wp_send_json_error( esc_html__( 'Security failed 1.', 'social-warfare' ) );
+			wp_die();
 		}
 
 		$data = wp_unslash( $_POST );
 
 		if ( empty( $data['settings'] ) ) {
 			wp_send_json_error( esc_html__( 'No settings to save.', 'social-warfare' ) );
-			die;
+			wp_die();
 		}
 
 		$options = get_option( 'social_warfare_settings', array() );
@@ -162,6 +164,24 @@ class SWP_Utility {
 		echo json_encode( update_option( 'social_warfare_settings', $new_settings ) );
 
 		wp_die();
+	}
+
+	/**
+	 * Handle the options save request inside of admin-ajax.php
+	 *
+	 * @since  2.x.x | Unknown | Created.
+	 * @since  3.5.3 | 21 MAR 2019 | Created the method.
+	 *
+	 * @return bool True if it is good, else it dies.
+	 *
+	 */
+	public static function auth() {
+		if ( !is_admin() || !current_user_can( 'administrator' ) ) {
+			wp_send_json_error( esc_html__( 'Security failed 2.', 'social-warfare' ) );
+			wp_die();
+		}
+
+		return true;
 	}
 
 

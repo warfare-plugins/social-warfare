@@ -155,11 +155,16 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * This is the method that generates the via=username section of the share link.
 	 *
 	 * @since  3.4.0 | 19 NOV 2018 | Created
+	 * @since  3.5.2 | 21 MAR 2018 | Changed access from protected to public.
 	 * @param  array $post_data The array of information passed in from the buttons panel.
 	 * @return sting The via=username section of the share link.
 	 *
 	 */
-	protected function get_via_parameter( $post_data ) {
+	public function get_via_parameter( $post_data ) {
+		if ( is_object( $post_data ) ) {
+			// A global $post, for example
+			$post_data = (array) $post_data;
+		}
 
 
 		/**
@@ -171,7 +176,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$author = SWP_User_Profile::get_author( $post_data['ID'] );
 		$user_twitter_handle = get_the_author_meta( 'swp_twitter' , $author );
 		if ( !empty( $user_twitter_handle ) ) {
-			return '&via=' . str_replace( '@', '', $user_twitter_handle );
+			return '&via=' . str_replace( '@', '', esc_attr( $user_twitter_handle ) );
 		}
 
 
@@ -182,7 +187,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		 */
 		$twitter_id = SWP_Utility::get_option( 'twitter_id' );
 		if ( !empty( $twitter_id ) ) {
-			return '&via=' . str_replace( '@', '', $twitter_id );
+			return '&via=' . str_replace( '@', '', esc_attr( $twitter_id ) );
 		}
 
 		return '';
