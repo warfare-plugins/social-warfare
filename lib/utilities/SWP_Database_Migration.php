@@ -218,7 +218,6 @@ class SWP_Database_Migration {
 		// }
 
 
-
 		if ( true === SWP_Utility::debug('get_filtered_options') ) :
 			global $swp_user_options;
 			echo "<pre>";
@@ -242,7 +241,7 @@ class SWP_Database_Migration {
 		 * @since 3.4.2
 		 */
 		if ( true == SWP_Utility::debug('reset_float_location') ) {
-			if (!is_admin()) {
+			if (!current_user_can( 'manage_options' )) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
@@ -252,7 +251,7 @@ class SWP_Database_Migration {
 
 		// Migrate settings page if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_db') ) {
-			if (!is_admin()) {
+			if (!current_user_can( 'manage_options' )) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$this->migrate();
@@ -260,7 +259,7 @@ class SWP_Database_Migration {
 
 		// Initialize database if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('initialize_db') ) {
-			if (!is_admin()) {
+			if (!current_user_can( 'manage_options' )) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$this->initialize_db();
@@ -268,7 +267,7 @@ class SWP_Database_Migration {
 
 		// Update post meta if explicitly being called via a debugging parameter.
 		if ( true === SWP_Utility::debug('migrate_post_meta') ) {
-			if (!is_admin()) {
+			if (!current_user_can( 'manage_options' )) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$this->update_post_meta();
@@ -277,7 +276,7 @@ class SWP_Database_Migration {
 
 		// Output the last_migrated status if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('get_last_migrated') ) {
-			if (!is_admin()) {
+			if (!current_user_can( 'manage_options' )) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$this->get_last_migrated( true );
@@ -285,7 +284,7 @@ class SWP_Database_Migration {
 
 		// Update the last migrated status if called via a debugging parameter.
 		if ( true === SWP_Utility::debug('update_last_migrated') ) {
-			if (!is_admin()) {
+			if (!current_user_can( 'manage_options' )) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$this->update_last_migrated();
@@ -294,13 +293,19 @@ class SWP_Database_Migration {
 		if ( true === SWP_Utility::debug( ( 'delete_plugin_data' ) ) ) {
 			$password = isset($_GET['swp_confirmation']) ? urldecode($_GET['swp_confirmation']) : '';
 			$user = wp_get_current_user();
-			if ( !is_admin()
-			|| false == current_user_can( 'administrator' )
+			if ( !current_user_can( 'manage_options' )
 			|| false == wp_check_password( $password, $user->user_pass, $user->ID) ) {
 				wp_die('You do not have authorization to view this page.');
 			}
 			global $wpdb;
 
+
+			/**
+			 * Looks for any post_meta keys that begin with `swp_` OR begin
+			 * with `_` AND end with `_shares`. Note that the underscores are
+			 * escaped, else they would be interpreted as wildcards.
+			 *
+			 */
 			$query =
 				"DELETE FROM {$wpdb->prefix}postmeta
 				 WHERE meta_key LIKE '\_%\_shares'
