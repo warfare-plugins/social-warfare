@@ -187,7 +187,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		 */
 		$twitter_id = SWP_Utility::get_option( 'twitter_id' );
 		if ( !empty( $twitter_id ) ) {
-			return '&via=' . str_replace( '@', '', $twitter_id );
+			return '&via=' . str_replace( '@', '', esc_attr( $twitter_id ) );
 		}
 
 		return '';
