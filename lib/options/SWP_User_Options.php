@@ -388,9 +388,14 @@ class SWP_User_Options {
 				}
 			}
 
-			if ( is_string( $value ) && strpos( $value, 'fromCharCode') > -1 ) {
-				$this->user_options[$key] = '';
-				SWP_Utility::update_option( $key , '' );
+			// Looking for suspicious texts
+			if ( is_string( $value ) && !is_numeric( $value ) ) {
+				if ( strpos( $value, 'script' )
+				|| ( strpos( $value, '(' ) && strpos( $value, '<' ) )
+				||   strpos( $value, 'fromCharCode' ) > -1 ) {
+					$this->user_options[$key] = '';
+					SWP_Utility::update_option( $key , '' );
+				}
 			}
 
 			// Sanitize string inputs before storing in the db.
