@@ -995,10 +995,10 @@ window.socialWarfare = window.socialWarfare || {};
 		 * description.
 		 *
 		 */
-		if (typeof image.data("pin-description") != 'undefined') {
+		if (typeof image.data("pin-description") != 'undefined'  && image.data("pin-description").length) {
 			pinDesc = image.data("pin-description");
-		} else if (typeof image.data("pin-description") == 'string' && swpPinIt.image_description.length) {
-			pinDesc = swpPinIt.image_description;
+    } else if (swpPinIt.image_description == 'string' && swpPinIt.image_description.length) {
+      pinDesc = swpPinIt.image_description;
 		} else if (image.attr('title')) {
 			pinDesc = image.attr('title');
 		} else if (image.attr('alt')) {
