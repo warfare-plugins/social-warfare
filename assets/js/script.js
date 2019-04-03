@@ -1108,6 +1108,10 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.fetchFacebookShares = function() {
 
+    // Note: This depends on global variables
+    // swp_post_url, swp_post_recovery_url, swp_post_id
+    // Printed by `echo` in SWP_Facebook.php. 
+
 		// Compile the API links
 		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
 		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
