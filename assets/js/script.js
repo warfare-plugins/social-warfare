@@ -831,6 +831,8 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 *
 	 ***************************************************************************/
+
+
 	/**
 	 * Adds the "Save" button to images when the option is enabled.
 	 *
@@ -980,8 +982,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		if (typeof image.data("pin-description") != 'undefined'  && image.data("pin-description").length) {
 			pinDesc = image.data("pin-description");
-	} else if (swpPinIt.image_description == 'string' && swpPinIt.image_description.length) {
-	  pinDesc = swpPinIt.image_description;
+		} else if (typeof swpPinIt.image_description == 'string' && swpPinIt.image_description.length) {
+			pinDesc = swpPinIt.image_description;
 		} else if (image.attr('title')) {
 			pinDesc = image.attr('title');
 		} else if (image.attr('alt')) {
@@ -1363,20 +1365,23 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		$(window).resize(socialWarfare.onWindowResize);
 
-	});
-
-
-	 /**
-	 * This reactivates and creates new image hover pin buttons when a page has
-	 * been loaded via AJAX. The 'load' event is the proper event that theme and
-	 * plugin creators are supposed to use when the AJAX load is complete.
-	 *
-	 */
-	$(window).on('load', function() {
-
 		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
 			socialWarfare.enablePinterestSaveButtons();
 		}
 	});
+
+	/**
+	* This reactivates and creates new image hover pin buttons when a page has
+	* been loaded via AJAX. The 'load' event is the proper event that theme and
+	* plugin creators are supposed to use when the AJAX load is complete.
+	*
+	*/
+   $(window).on('load', function() {
+
+	   if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+		   socialWarfare.enablePinterestSaveButtons();
+	   }
+	   window.clearCheckID = 0;
+   });
 
 })(this, jQuery);
