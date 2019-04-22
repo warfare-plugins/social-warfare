@@ -41,11 +41,7 @@
  *        Function: socialWarfare.renderPinterestSaveButton()
  *        Function: socialWarfare.findPinterestBrowserSaveButtons()
  *        Function: socialWarfare.removePinterestBrowserSaveButtons()
- *
- *     #5. Facebook Share Count Functions
- *        Function: socialWarfare.fetchFacebookShares()
- *        Function: socialWarfare.parseFacebookShares()
- *
+
  *     #6. Utility/Helper Functions
  *        Function: socialWarfare.throttle()
  *        Function: socialWarfare.trigger()
@@ -1070,85 +1066,6 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
-	/***************************************************************************
-	 *
-	 *
-	 *    SECTION #5: FACEBOOK SHARE COUNT FUNCTIONS
-	 *
-	 *
-	 ***************************************************************************/
-
-
-	/**
-	 * Makes external requsts to fetch Facebook share counts. We fetch Facebook
-	 * share counts via the frontened Javascript because their API has harsh
-	 * rate limits that are IP Address based. So it's very easy for a website to
-	 * hit those limits and recieve temporary bans from accessing the share count
-	 * data. By using the front end, the IP Addresses are distributed to users,
-	 * are therefore spread out, and don't hit the rate limits.
-	 *
-	 * @param  void
-	 * @return void
-	 *
-	 */
-	socialWarfare.fetchFacebookShares = function() {
-
-	// Note: This depends on global variables
-	// swp_post_url, swp_post_recovery_url, swp_post_id
-	// Printed by `echo` in SWP_Facebook.php.
-
-		// Compile the API links
-		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
-		var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_recovery_url : '';
-
-		// Use this to ensure that we wait until the API requests are done.
-		$.when( $.get( url1 ), $.get( url2 ) )
-		.then(function(response1, response2) {
-			var shares, data;
-
-			// Parse the shares and add them up into a running total.
-			shares = socialWarfare.parseFacebookShares(response1[0]);
-			if (swp_post_recovery_url) {
-				shares += socialWarfare.parseFacebookShares(response2[0]);
-			}
-
-			// Compile the data and send out the AJAX request to store the count.
-			var data   = {
-				action: 'swp_facebook_shares_update',
-				post_id: swp_post_id,
-				share_counts: shares
-			};
-			$.post(swp_admin_ajax, data);
-
-		});
-	}
-
-
-	/**
-	 * Sums the share data from a facebook API response. This is a utility
-	 * function used by socialWarfare.fetchFacebookShares to allow easy access
-	 * to parsing out the JSON response that we got from Facebook's API and
-	 * converting it into an integer that reflects the tally of all activity
-	 * on the URl in question including like, comments, and shares.
-	 *
-	 * @param  object response The API response received from Facebook.
-	 * @return number The total shares summed from the request, or 0.
-	 *
-	 */
-	socialWarfare.parseFacebookShares = function(response) {
-		var total = 0;
-
-		if ('undefined' !== typeof response.share) {
-			total += parseInt(response.share.share_count);
-			total += parseInt(response.share.comment_count);
-		}
-
-		if (typeof response.og_object != 'undefined') {
-			total += parseInt(response.og_object.likes.summary.total_count);
-		}
-
-		return total;
-	}
 
 
 	/***************************************************************************
