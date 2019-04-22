@@ -351,14 +351,22 @@ class SWP_Post_Cache {
 		 * image, convert it back to the correct ID of said image, and store that
 		 * back in the original meta field.
 		 *
+		 * This was caused by a bug in a previous version that was overwriting
+		 * the ID in this field with the image_data array. This will fix that
+		 * and restore the field to an ID.
+		 *
 		 */
 		if( true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL) ) {
+
+			// Convert the image URL into a valid WP ID.
 			$new_id = attachment_url_to_postid( $new_id[0] );
 
+			// Bail if we didn't get an ID from the above function.
 			if( empty( $new_id ) ){
 				return;
 			}
 
+			// Delete and update the meta field with the corrected ID.
 			delete_post_meta( $this->post_id, $meta_key );
 			update_post_meta( $this->post_id, $meta_key, $new_id );
 
