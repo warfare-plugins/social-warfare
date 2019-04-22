@@ -1072,7 +1072,7 @@ window.socialWarfare = window.socialWarfare || {};
 	/***************************************************************************
 	 *
 	 *
-	 *    SECTION #6: UTILITY/HELPER FUNCTIONS
+	 *    SECTION #5: UTILITY/HELPER FUNCTIONS
 	 *
 	 *
 	 ***************************************************************************/
