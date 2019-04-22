@@ -833,21 +833,6 @@ window.socialWarfare = window.socialWarfare || {};
 	 ***************************************************************************/
 
 
-	 /**
-	 * This reactivates and creates new image hover pin buttons when a page has
-	 * been loaded via AJAX. The 'load' event is the proper event that theme and
-	 * plugin creators are supposed to use when the AJAX load is complete.
-	 *
-	 */
-	$(window).on('load', function() {
-
-		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
-			socialWarfare.enablePinterestSaveButtons();
-		}
-		window.clearCheckID = 0;
-	});
-
-
 	/**
 	 * Adds the "Save" button to images when the option is enabled.
 	 *
@@ -995,9 +980,9 @@ window.socialWarfare = window.socialWarfare || {};
 		 * description.
 		 *
 		 */
-		if (typeof image.data("pin-description") != 'undefined') {
+		if (typeof image.data("pin-description") != 'undefined'  && image.data("pin-description").length) {
 			pinDesc = image.data("pin-description");
-		} else if (typeof image.data("pin-description") == 'string' && swpPinIt.image_description.length) {
+		} else if (typeof swpPinIt.image_description == 'string' && swpPinIt.image_description.length) {
 			pinDesc = swpPinIt.image_description;
 		} else if (image.attr('title')) {
 			pinDesc = image.attr('title');
@@ -1107,6 +1092,10 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.fetchFacebookShares = function() {
+
+	// Note: This depends on global variables
+	// swp_post_url, swp_post_recovery_url, swp_post_id
+	// Printed by `echo` in SWP_Facebook.php.
 
 		// Compile the API links
 		var url1 = 'https://graph.facebook.com/?fields=og_object{likes.summary(true).limit(0)},share&id=' + swp_post_url;
@@ -1376,6 +1365,23 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		$(window).resize(socialWarfare.onWindowResize);
 
+		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+			socialWarfare.enablePinterestSaveButtons();
+		}
 	});
+
+	/**
+	* This reactivates and creates new image hover pin buttons when a page has
+	* been loaded via AJAX. The 'load' event is the proper event that theme and
+	* plugin creators are supposed to use when the AJAX load is complete.
+	*
+	*/
+   $(window).on('load', function() {
+
+	   if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
+		   socialWarfare.enablePinterestSaveButtons();
+	   }
+	   window.clearCheckID = 0;
+   });
 
 })(this, jQuery);
