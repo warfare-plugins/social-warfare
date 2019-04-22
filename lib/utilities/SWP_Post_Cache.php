@@ -395,12 +395,14 @@ class SWP_Post_Cache {
 
 
 		/**
-		 * Fetch the URL of the new image and the URL of the
+		 * Fetch the data array of the new image and the data array of the old
 		 * previously cached image so that we can see if anything has changed.
+		 *
+		 * This needs to be set to _data to get the correct comparison.
 		 *
 		 */
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
-		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_url' );
+		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_data' );
 
 
 		/**
