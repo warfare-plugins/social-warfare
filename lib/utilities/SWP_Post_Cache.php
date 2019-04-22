@@ -349,14 +349,6 @@ class SWP_Post_Cache {
 		 */
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
-		if ( empty( $new_id ) ) {
-			$image_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . "_data" );
-			if ( is_array( $image_data) && !empty( $image_data ) ) {
-				$image_src = $image_data[0];
-				$new_id = self::get_image_id( $image_data[0] );
-			}
-		}
-
 
 		/**
 		 * If the meta key was stored as an array, let's find the URL of the
@@ -365,7 +357,7 @@ class SWP_Post_Cache {
 		 *
 		 */
 		if( true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL) ) {
-			$new_id = attachment_url_to_postid( $new_id[0] );
+			$new_id = self::get_image_id( $new_id[0] );
 
 			if( empty( $new_id ) ){
 				return;
