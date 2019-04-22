@@ -323,6 +323,7 @@ class SWP_Post_Cache {
 		}
 	}
 
+
 	/**
 	 * Store image url, id, and metadata in post_meta for quicker access later.
 	 *
@@ -332,7 +333,7 @@ class SWP_Post_Cache {
 	 *                          swp_og_image, swp_pinterest_image, swp_twitter_image
 	 * @param  int    $new_id The attachment ID to update.
 	 * @return void
-	 * 
+	 *
 	 */
 	public function update_image_cache( $meta_key ) {
 
@@ -378,6 +379,7 @@ class SWP_Post_Cache {
 		if ( false == $new_data || $new_data === $old_data ) {
 			return;
 		}
+
 
 		/**
 		 * We are not changing the value of the original field which contains
