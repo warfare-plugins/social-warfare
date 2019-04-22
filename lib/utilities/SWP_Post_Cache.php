@@ -386,7 +386,7 @@ class SWP_Post_Cache {
 		 * deleted from the meta field.
 		 *
 		 */
-		if ( false === $new_id ) {
+		if ( empty( $new_id ) ) {
 			delete_post_meta( $this->post_id, $meta_key.'_data' );
 			delete_post_meta( $this->post_id, $meta_key.'_url' );
 			delete_post_meta( $this->post_id, $meta_key );
