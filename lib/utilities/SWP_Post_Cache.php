@@ -81,7 +81,6 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function __construct( $post_id ) {
-
 		// Set up the post data into local properties.
 		$this->post_id = $post_id;
 		$this->establish_share_counts();
@@ -251,6 +250,12 @@ class SWP_Post_Cache {
 	 *
 	 */
 
+	 static function get_image_id( $image_url ) {
+		 global $wpdb;
+		 $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
+			 // Add a check here for a valid response prior to returning a subset of an array
+			 return $attachment[0];
+	 }
 
 	/**
 	 * A method to rebuild all cached data
@@ -269,6 +274,7 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function rebuild_cached_data() {
+
 		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
 			$this->update_image_cache( 'swp_pinterest_image' );
@@ -336,8 +342,6 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function update_image_cache( $meta_key ) {
-
-
 		/**
 		 * Fetch the ID of the image in question. We will use this to extrapalate
 		 * the information that we need to prepopulate into the other fields.
@@ -345,28 +349,28 @@ class SWP_Post_Cache {
 		 */
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
+		if ( empty( $new_id ) ) {
+			$image_data = SWP_Utility::get_meta( $this->post_id, $meta_key . "_data" );
+			if ( is_array( $image_data) && !empty( $image_data ) ) {
+				$image_src = $image_data[0];
+				$new_id = get_image_id( $image_data[0] );
+			}
+		}
+
 
 		/**
 		 * If the meta key was stored as an array, let's find the URL of the
 		 * image, convert it back to the correct ID of said image, and store that
 		 * back in the original meta field.
 		 *
-		 * This was caused by a bug in a previous version that was overwriting
-		 * the ID in this field with the image_data array. This will fix that
-		 * and restore the field to an ID.
-		 *
 		 */
 		if( true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL) ) {
-
-			// Convert the image URL into a valid WP ID.
 			$new_id = attachment_url_to_postid( $new_id[0] );
 
-			// Bail if we didn't get an ID from the above function.
 			if( empty( $new_id ) ){
 				return;
 			}
 
-			// Delete and update the meta field with the corrected ID.
 			delete_post_meta( $this->post_id, $meta_key );
 			update_post_meta( $this->post_id, $meta_key, $new_id );
 
