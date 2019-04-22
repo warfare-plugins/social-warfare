@@ -75,8 +75,8 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @since  3.6.0 | 22 APR 2019 | Updated to parse API v. 3.2.
 	 * @access public
-	 * @param  string $response The raw response returned from the API request
-	 * @return int $total_activity The number of shares reported from the API
+	 * @param  string  $response The raw response returned from the API request
+	 * @return integer $total_activity The number of shares reported from the API
 	 *
 	 */
 	public function parse_api_response( $response ) {
