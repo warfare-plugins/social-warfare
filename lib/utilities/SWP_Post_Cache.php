@@ -347,6 +347,25 @@ class SWP_Post_Cache {
 
 
 		/**
+		 * If the meta key was stored as an array, let's find the URL of the
+		 * image, convert it back to the correct ID of said image, and store that
+		 * back in the original meta field.
+		 *
+		 */
+		if( true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL) ) {
+			$new_id = attachment_url_to_postid( $new_id[0] );
+
+			if( empty( $new_id ) ){
+				return;
+			}
+
+			delete_post_meta( $this->post_id, $meta_key );
+			update_post_meta( $this->post_id, $meta_key, $new_id );
+
+		}
+
+
+		/**
 		 * If there is no image ID from the meta field, we need to delete this
 		 * and all related fields just in case there used to be an image but it
 		 * was removed. Prior to deleting these fields, the Pinterest image
