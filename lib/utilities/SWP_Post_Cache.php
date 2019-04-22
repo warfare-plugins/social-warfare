@@ -332,6 +332,7 @@ class SWP_Post_Cache {
 	 *                          swp_og_image, swp_pinterest_image, swp_twitter_image
 	 * @param  int    $new_id The attachment ID to update.
 	 * @return void
+	 * 
 	 */
 	public function update_image_cache( $meta_key ) {
 
