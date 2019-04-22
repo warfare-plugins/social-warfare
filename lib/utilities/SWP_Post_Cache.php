@@ -350,10 +350,10 @@ class SWP_Post_Cache {
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
 		if ( empty( $new_id ) ) {
-			$image_data = SWP_Utility::get_meta( $this->post_id, $meta_key . "_data" );
+			$image_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . "_data" );
 			if ( is_array( $image_data) && !empty( $image_data ) ) {
 				$image_src = $image_data[0];
-				$new_id = get_image_id( $image_data[0] );
+				$new_id = self::get_image_id( $image_data[0] );
 			}
 		}
 
