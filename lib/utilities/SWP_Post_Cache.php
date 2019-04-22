@@ -384,14 +384,15 @@ class SWP_Post_Cache {
 		}
 
 
-
 		/**
 		 * Fetch the URL of the new image and the URL of the
 		 * previously cached image so that we can see if anything has changed.
 		 *
 		 */
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
-		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key );
+		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_url' );
+
+
 		/**
 		 * If the old data is the same as the new data, then there is no need to
 		 * make any new database calls. Just exit and move on with our lives.
@@ -414,7 +415,6 @@ class SWP_Post_Cache {
 		delete_post_meta( $this->post_id, $meta_key.'_url' );
 		update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
-		update_post_meta( $this->post_id, $meta_key, $new_id );
 	}
 
 
