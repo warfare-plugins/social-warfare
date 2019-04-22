@@ -333,6 +333,13 @@ class SWP_Post_Cache {
 	 * @return void
 	 */
 	public function update_image_cache( $meta_key ) {
+
+
+		/**
+		 * Fetch the ID of the image in question. We will use this to extrapalate
+		 * the information that we need to prepopulate into the other fields.
+		 *
+		 */
 		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
 
 
@@ -360,15 +367,26 @@ class SWP_Post_Cache {
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
 		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_data' );
 
+
+		/**
+		 * If the old data is the same as the new data, then there is no need to
+		 * make any new database calls. Just exit and move on with our lives.
+		 *
+		 */
 		if ( false == $new_data || $new_data === $old_data ) {
 			return;
 		}
 
+		/**
+		 * We are not changing the value of the original field which contains
+		 * the WordPress attachement ID of the image in question. We are,
+		 * however, updating two additional fields (_data and _url) so that this
+		 * data will be preloaded with the post load. We will delete them first
+		 * to ensure that we never have more than one of the same field.
+		 *
+		 */
 		delete_post_meta( $this->post_id, $meta_key.'_data' );
 		delete_post_meta( $this->post_id, $meta_key.'_url' );
-		delete_post_meta( $this->post_id, $meta_key );
-
-    update_post_meta( $this->post_id, $meta_key, json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
 	}

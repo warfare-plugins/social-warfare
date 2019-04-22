@@ -4,6 +4,9 @@
  *
  * @since 1.0.0 | 01 JAN 2016 | Created
  * @since 3.4.0 | 19 OCT 2018 | Cleaned, Refactored, Simplified, Docblocked.
+ * @since 3.6.0 | 22 APR 2019 | Removed Facebook share counts. These are now
+ *                              fetched via PHP on the server side just like all
+ *                              other social networks.
  * @package   SocialWarfare\Assets\JS\
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
@@ -41,8 +44,8 @@
  *        Function: socialWarfare.renderPinterestSaveButton()
  *        Function: socialWarfare.findPinterestBrowserSaveButtons()
  *        Function: socialWarfare.removePinterestBrowserSaveButtons()
-
- *     #6. Utility/Helper Functions
+ *
+ *     #5. Utility/Helper Functions
  *        Function: socialWarfare.throttle()
  *        Function: socialWarfare.trigger()
  *        Function: socialWarfare.trackClick()
@@ -1066,12 +1069,10 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
-
-
 	/***************************************************************************
 	 *
 	 *
-	 *    SECTION #6: UTILITY/HELPER FUNCTIONS
+	 *    SECTION #5: UTILITY/HELPER FUNCTIONS
 	 *
 	 *
 	 ***************************************************************************/
