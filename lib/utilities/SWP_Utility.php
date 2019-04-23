@@ -485,7 +485,6 @@ class SWP_Utility {
 			if ( ( strpos( $meta_key, 'swp_' ) === 0 ||
 				 ( strpos( $meta_key, '_shares' ) > 0 ) &&
 				   strpos( $meta_key, '_') === 0 ) ) {
-				//* Everything comes in as an array, pull out the first value.
 				delete_post_meta( $post_id, $meta_key );
 			}
 		}
