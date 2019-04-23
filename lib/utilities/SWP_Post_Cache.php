@@ -349,10 +349,25 @@ class SWP_Post_Cache {
 		 * the information that we need to prepopulate into the other fields.
 		 *
 		 */
-		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
+		$new_id   = SWP_Utility::get_meta( $this->post_id, $meta_key );
+		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_data' );
 
 
 		/**
+		 * The following two processes are designed to fix and restore the image
+		 * from a bug that was either converting the field from and ID to an array
+		 * or was deleting the field entirely in which case we restore it from
+		 * the cached fields.
+		 *
+		 * RESTORE FIELD FROM CACHE
+		 *
+		 * If the field is empty, but we have the correct cached data, then
+		 * let's repopulate the field from the cache. The empty field is most
+		 * likely caused by the bug from 3.5.x that was deleting or altering
+		 * the data in the field. This will restore it.
+		 *
+		 * RESTORE FIELD FROM ARRAY
+		 *
 		 * If the meta key was stored as an array, let's find the URL of the
 		 * image, convert it back to the correct ID of said image, and store that
 		 * back in the original meta field.
@@ -362,10 +377,17 @@ class SWP_Post_Cache {
 		 * and restore the field to an ID.
 		 *
 		 */
-		if( true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL) ) {
+		$restore_from_cache = empty( $new_id ) && is_array( $old_data ) && false !== filter_var( $old_data[0], FILTER_VALIDATE_URL);
+		$restore_from_array = true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL);
+
+		if( $restore_from_cache || $restore_from_array ) {
 
 			// Convert the image URL into a valid WP ID.
-			$new_id = self::get_image_id( $new_id[0] );
+			if( $restore_from_array ) {
+				$new_id = self::get_image_id( $new_id[0] );
+			} elseif ( $restore_from_cache ) {
+				$new_id = self::get_image_id( $old_data[0] );
+			}
 
 			// Bail if we didn't get an ID from the above function.
 			if( empty( $new_id ) ){
@@ -402,7 +424,6 @@ class SWP_Post_Cache {
 		 *
 		 */
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
-		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_data' );
 
 
 		/**
