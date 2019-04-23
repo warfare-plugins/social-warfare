@@ -377,20 +377,27 @@ class SWP_Post_Cache {
 		 * and restore the field to an ID.
 		 *
 		 */
-		$restore_from_cache = empty( $new_id ) && is_array( $old_data ) && false !== filter_var( $old_data[0], FILTER_VALIDATE_URL);
-		$restore_from_array = true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL);
+		$restore_from_cache = empty( $new_id ) && is_array( $old_data ) && false !== filter_var( $old_data[0], FILTER_VALIDATE_URL );
+		$restore_from_array = is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL );
 
-		if( $restore_from_cache || $restore_from_array ) {
-
+		if ( $restore_from_cache || $restore_from_array ) {
+			/**
+			 * This block is for people who are missing a key like `swp_og_image`
+			 * between v3.5.0 and v3.5.4.
+			 * The logic below will create the missing key based off of
+			 * data we have previously saved.
+			 *
+			 */
+			
 			// Convert the image URL into a valid WP ID.
-			if( $restore_from_array ) {
+			if ( $restore_from_array ) {
 				$new_id = self::get_image_id( $new_id[0] );
 			} elseif ( $restore_from_cache ) {
 				$new_id = self::get_image_id( $old_data[0] );
 			}
 
 			// Bail if we didn't get an ID from the above function.
-			if( empty( $new_id ) ){
+			if ( empty( $new_id ) ) {
 				return;
 			}
 
