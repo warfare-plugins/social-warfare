@@ -178,31 +178,35 @@ class SWP_Permalink {
 				endif;
 
 				// Check if they're using cross domain recovery
-				if ( isset( $swp_user_options['current_domain'] ) && $swp_user_options['current_domain']
-				&& isset( $swp_user_options['former_domain'] ) && $swp_user_options['former_domain'] ) :
-					$url = str_replace( $swp_user_options['current_domain'],$swp_user_options['former_domain'],$url );
+				$current_domain = SWP_Utility::get_option( 'current_domain' );
+				$former_domain = SWP_Utility::get_option( 'former_domain' );
+				if ( isset( $current_domain ) && isset( $former_domain ) && $former_domain ) :
+					$url = str_replace( $current_domain, $former_domain, $url );
 				endif;
 
 				// Filter the Protocol
-				if ( $swp_user_options['recovery_protocol'] == 'https' && strpos( $url,'https' ) === false ) :
+				$protocol = SWP_Utility::get_option( 'recovery_protocol' );
+				if ( $protocol == 'https' && strpos( $url,'https' ) === false ) :
 					$url = str_replace( 'http','https',$url );
-				elseif ( $swp_user_options['recovery_protocol'] == 'http' && strpos( $url,'https' ) !== false ) :
+				elseif ( $protocol == 'http' && strpos( $url,'https' ) !== false ) :
 					$url = str_replace( 'https','http',$url );
 				endif;
 
 				// Filter the prefix
-				if ( $swp_user_options['recovery_prefix'] == 'unchanged' ) :
-				elseif ( $swp_user_options['recovery_prefix'] == 'www' && strpos( $url,'www' ) === false ) :
-					$url = str_replace( 'http://','http://www.',$url );
-					$url = str_replace( 'https://','https://www.',$url );
-				elseif ( $swp_user_options['recovery_prefix'] == 'nonwww' && strpos( $url,'www' ) !== false ) :
-					$url = str_replace( 'http://www.','http://',$url );
-					$url = str_replace( 'https://www.','https://',$url );
+				$recovery_prefix = SWP_Utility::get_option( 'recovery_prefix' );
+				if ( $recovery_prefix == 'unchanged' ) :
+				elseif ( $recovery_prefix == 'www' && strpos( $url,'www' ) === false ) :
+					$url = str_replace( 'http://', 'http://www.', $url );
+					$url = str_replace( 'https://', 'https://www.', $url );
+				elseif ( $recovery_prefix == 'nonwww' && strpos( $url,'www' ) !== false ) :
+					$url = str_replace( 'http://www.', 'http://', $url );
+					$url = str_replace( 'https://www.', 'https://', $url );
 				endif;
 
 				// Filter out the subdomain
-				if ( isset( $swp_user_options['recovery_subdomain'] ) && $swp_user_options['recovery_subdomain'] != '' ) :
-					$url = str_replace( $swp_user_options['recovery_subdomain'] . '.' , '' , $url );
+				$recovery_subdomain = SWP_Utility::get_option( 'recovery_subdomain' );
+				if ( $recovery_subdomain && $recovery_subdomain != '' ) :
+					$url = str_replace( $recovery_subdomain . '.' , '' , $url );
 				endif;
 
 				return $url;
