@@ -418,9 +418,8 @@ class SWP_Post_Cache {
 
 		/**
 		 * Fetch the data array of the new image and the data array of the old
-		 * previously cached image so that we can see if anything has changed.
-		 *
-		 * This needs to be set to _data to get the correct comparison.
+		 * previously cached image (fetchd above) so that we can see if anything
+		 * has changed.
 		 *
 		 */
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
