@@ -378,7 +378,7 @@ class SWP_Post_Cache {
 		 *
 		 */
 		$restore_from_cache = empty( $new_id ) && is_array( $old_data ) && false !== filter_var( $old_data[0], FILTER_VALIDATE_URL);
-		$restore_from_array = true == is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL);
+		$restore_from_array = is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL);
 
 		if( $restore_from_cache || $restore_from_array ) {
 
