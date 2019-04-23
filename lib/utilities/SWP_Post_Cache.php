@@ -123,7 +123,7 @@ class SWP_Post_Cache {
 		 endif;
 
 		// Always be true if we're not a single post.
-		if ( !is_singular() ) :
+		if ( !is_singular() && !is_admin() ) :
 			return true;
 		endif;
 
@@ -249,13 +249,12 @@ class SWP_Post_Cache {
 	 * The methods in this section are used to rebuild all of the cached data.
 	 *
 	 */
-
-	 static function get_image_id( $image_url ) {
-		 global $wpdb;
-		 $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
-			 // Add a check here for a valid response prior to returning a subset of an array
-			 return $attachment[0];
-	 }
+	static function get_image_id( $image_url ) {
+		global $wpdb;
+		$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
+		// Add a check here for a valid response prior to returning a subset of an array
+		return $attachment[0];
+	}
 
 	/**
 	 * A method to rebuild all cached data
@@ -275,10 +274,11 @@ class SWP_Post_Cache {
 	 */
 	public function rebuild_cached_data() {
 
+		$this->update_image_cache( 'swp_pinterest_image' );
+		$this->update_image_cache( 'swp_og_image' );
+
 		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
-			$this->update_image_cache( 'swp_pinterest_image' );
-			$this->update_image_cache( 'swp_og_image' );
 			$this->process_urls();
 			$this->reset_timestamp();
 
