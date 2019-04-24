@@ -74,7 +74,7 @@ Before submitting an issue to the issue tracker, please be sure of a few things.
 First check the [support documentation](https://warfareplugins.com/support/) on the Warfare Plugins website to ensure that a solution to your issue has not already been addressed. Once you've determined that there is no useful information for your particular issue, you may proceed to step 2.
 
 #### 2. Submit a Support Ticket First
-Once you have completed step 1, you need to submit a ticket using the [contact form on the Warfare Plugins website](https://warfareplugins.com/). Once submitted, most tickets are responded to on the same or next business day so please allow until the end of the next business day for a response.
+Once you have completed step 1, you need to submit a ticket using the [contact form on the Warfare Plugins website](https://warfareplugins.com/submit-ticket/). Once submitted, most tickets are responded to on the same or next business day so please allow until the end of the next business day for a response.
 
 Many tickets being posted here are issues that simply require adjusting a single setting to accomodate themes or plugins in certain ways. The support team is able to respond to these much, much more quickly than here in the developer's workspace. Since this is the case, any issues submitted without first going through the support team will be deleted. Otherwise it is a waste of both your time and ours.
 
