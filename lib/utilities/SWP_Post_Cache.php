@@ -249,12 +249,7 @@ class SWP_Post_Cache {
 	 * The methods in this section are used to rebuild all of the cached data.
 	 *
 	 */
-	static function get_image_id( $image_url ) {
-		global $wpdb;
-		$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
-		// Add a check here for a valid response prior to returning a subset of an array
-		return $attachment[0];
-	}
+
 
 	/**
 	 * A method to rebuild all cached data
@@ -388,12 +383,12 @@ class SWP_Post_Cache {
 			 * data we have previously saved.
 			 *
 			 */
-			
+
 			// Convert the image URL into a valid WP ID.
 			if ( $restore_from_array ) {
-				$new_id = self::get_image_id( $new_id[0] );
+				$new_id = SWP_Utility::get_image_id_by_url( $new_id[0] );
 			} elseif ( $restore_from_cache ) {
-				$new_id = self::get_image_id( $old_data[0] );
+				$new_id = SWP_Utility::get_image_id_by_url( $old_data[0] );
 			}
 
 			// Bail if we didn't get an ID from the above function.
