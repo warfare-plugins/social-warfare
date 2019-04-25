@@ -96,6 +96,14 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 	}
 
+  /**
+   * Values from the server may be sent as strings, but may also be empty.
+   * In this context, we are interested in strings with length only.
+   */
+  function isString(maybeString) {
+      return typeof maybeString == 'string' && maybeString.length > 0;
+  }
+
 	/***************************************************************************
 	 *
 	 *
@@ -862,12 +870,12 @@ window.socialWarfare = window.socialWarfare || {};
          * forces their custom Pinterest image instaed of the visitor's selection.
          *
          */
-        if (typeof swpPinIt.image_source == 'string' && swpPinIt.image_source.length > 0) {
+        if (isString(swpPinIt.image_source)) {
             return swpPinIt.image_source;
         }
 
         // Most images will have a src already defined, this gets top priority.
-        if (image.attr("src") && image.attr("src").length > 0) {
+        if (isString(image.attr("src"))) {
             return image.attr("src");
         }
 
@@ -877,7 +885,7 @@ window.socialWarfare = window.socialWarfare || {};
 
         // Search for the first existing value and keep it if found.
         dataSources.some(function(maybeSource) {
-            if (typeof image.data(maybeSource) == 'string' && image.data(maybeSource).length > 0) {
+            if (isString(image.data(maybeSource))) {
               media = image.data(maybeSource);
               return true;
             }
@@ -904,26 +912,26 @@ window.socialWarfare = window.socialWarfare || {};
      *
      */
     socialWarfare.getPinDescription = function(image) {
-      if (typeof swpPinIt.image_description == 'string' && swpPinIt.image_description.length > 0 ) {
+      if (isString(swpPinIt.image_description)) {
           return swpPinIt.image_description;
       }
 
-      if (typeof image.data("pin-description") != 'undefined'  && image.data("pin-description").length) {
+      if (isString(image.data("pin-description"))) {
           return image.data("pin-description");
       }
 
       // Try image Title or Alt text.
-      if (typeof image.attr("title") == 'string' && image.attr("title").length > 0) {
+      if (isString(image.attr("title"))) {
         return image.attr("title");
       }
 
-      if (typeof image.attr("alt") == 'string' && image.attr("alt").length > 0) {
+      if (isString(image.attr("alt"))) {
         return image.attr("alt");
       }
 
       // Default to the post title if nothing else is found.
 
-      if (typeof swpPinIt.post_title == 'string' && swpPinIt.post_title.length > 0) {
+      if (isString(swpPinIt.post_title)) {
         return swpPinIt.post_title;
       }
     }
