@@ -831,12 +831,20 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 ***************************************************************************/
 
+   // Create a single instance of the save button and keep a reference in socialWarfare.
+   socialWarfare.createHoverSaveButton = function() {
+       var button = document.createElement("a");
+       button.className = "sw-pinit-button sw-pinit-" + swpPinIt.vLocation + " sw-pinit-" + swpPinIt.hLocation;
+       button.style.display = 'none';
+
+       socialWarfare.saveButton = button;
+       return button;
+   }
+
     socialWarfare.imageHoverSaveButton = function(event) {
         var image = $(event.target);
         var description = socialWarfare.getPinterestDescription(image);
         var media = socialWarfare.getPinterestMedia(image);
-
-
     }
 
     socialWarfare.triggerImageListeners = function() {
