@@ -156,7 +156,12 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
-    socialWarfare.triggerImageListeners();
+
+    if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
+        socialWarfare.createHoverSaveButton();
+        socialWarfare.triggerImageListeners();
+    }
+
 
 		/**
 		 * In some instances, the click bindings were not being instantiated
@@ -858,10 +863,9 @@ window.socialWarfare = window.socialWarfare || {};
      *
      */
     socialWarfare.triggerImageListeners = function() {
-        if (typeof swpPinIt != 'object' || swpPinIt.enabled == false) {
-          return;
-        }
-        socialWarfare.createHoverSaveButton();
+
+
+
 
         $(".swp-content-locator").parent().find("img").off('mouseenter', socialWarfare.renderPinterestSaveButton)
         $(".swp-content-locator").parent().find("img").on('mouseenter', socialWarfare.renderPinterestSaveButton)
@@ -971,15 +975,53 @@ window.socialWarfare = window.socialWarfare || {};
 
 
   socialWarfare.toggleHoverSaveDisplay = function(image) {
+      var top = image.offset().top;
+      var left = image.offset().left;
+      var vMargin = 15
+      var hMargin = 15
+      // Known height from CSS is 34 px.
+      // Known width  from CSS is 120 px.
+
+       switch (swpPinIt.vLocation) {
+         case "top" :
+             top += vMargin;
+             break;
+
+         case "center" :
+             var offset = image.height() / 2 - (vMargin / 2) - (34 / 2);
+             top += offset;
+             break;
+
+         case "bottom" :
+             top -= vMargin;
+             break;
+       }
+
+
+        switch (swpPinIt.hLocation) {
+          case "top" :
+              left += hMargin;
+              break;
+
+          case "center" :
+              var offset = image.width() / 2 - (hMargin / 2) - (120 / 2);
+              left += offset;
+              break;
+
+          case "bottom" :
+              left -= hMargin;
+              break;
+        }
+
       socialWarfare.hoverSaveButton.css({
-          position: "fixed",
-          top: "15px",
-          left: "15px",
+          position: "absolute",
+          top: top,
+          left: left,
           display: "block"
       });
 
       image.on("mouseleave", function() {
-          socialWarfare.hoverSaveButton.css("display", "none");
+          $(".swp-hover-pin-button").remove();
       });
 
       $(document.body).append(socialWarfare.hoverSaveButton);
@@ -1034,18 +1076,19 @@ window.socialWarfare = window.socialWarfare || {};
   			  return;
   		}
 
-      socialWarfare.toggleHoverSaveDisplay(image)
-      var description = socialWarfare.getPinDescription(image);
-      var media = socialWarfare.getPinMedia(image);
-  		var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
-      var callback = function(event) {
-          event.preventDefault();
-          window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-          socialWarfare.trackClick('pin_image');
-      }
+        var description = socialWarfare.getPinDescription(image);
+        var media = socialWarfare.getPinMedia(image);
+        var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 
-      socialWarfare.hoverSaveButton.off("click", callback);
-      socialWarfare.hoverSaveButton.on("click", callback);
+        function openWindow(event) {
+            event.preventDefault();
+            window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+            socialWarfare.trackClick('pin_image');
+        }
+
+      socialWarfare.toggleHoverSaveDisplay(image);
+      socialWarfare.hoverSaveButton.off("click", openWindow);
+      socialWarfare.hoverSaveButton.on("click", openWindow);
 	}
 
 
