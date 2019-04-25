@@ -836,7 +836,7 @@ window.socialWarfare = window.socialWarfare || {};
         var description = socialWarfare.getPinterestDescription(image);
         var media = socialWarfare.getPinterestMedia(image);
 
-        
+
     }
 
     socialWarfare.triggerImageListeners = function() {
@@ -846,6 +846,35 @@ window.socialWarfare = window.socialWarfare || {};
         // We need to assign `imageHoverSaveButton` to new images
         // loaded by ajax as users scroll through a page.
         setTimeout(socialWarfare.triggerImageListeners, 2000);
+    }
+
+    socialWarfare.getPinMedia = function( image ) {
+        /**
+         * If the swpPinIt.image_source variable exists, it means that the user
+         * forces their custom Pinterest image instaed of the visitor's selection.
+         *
+         */
+        if (typeof swpPinIt.image_source == 'string' && swpPinIt.image_source.length > 0) {
+            return swpPinIt.image_source;
+        }
+
+        // Check common data-attributes for an image source.
+        var sources = ['src', 'lazy-src', 'media'];
+        var media = '';
+
+        // Search for the first existing value and keep it if found.
+        sources.some(function(maybeSource) {
+            if (typeof image.data(maybeSource) == 'string' && image.data(maybeSource).length > 0) {
+              media = image.data(maybeSource);
+              return true;
+            }
+        }
+
+        // Use a jQuery image to guarantee we have an absolute path to the resource.
+        // Pinterest throws an error when passed a relative path.
+        var i = $("<img>");
+        i.attr("src", media)
+        return i.prop("src");
     }
 
 
