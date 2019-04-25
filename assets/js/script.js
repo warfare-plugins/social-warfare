@@ -993,47 +993,47 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function(image) {
-		/**
-		 * This disables the Pinterest save buttosn on images that are anchors/links
-		 * if the user has them disabled on them in the options page. So if this
-		 * image is a link, we just bail out.
-		 *
-		 */
-		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-			if (image.parents().filter("a").length) {
-			  	return;
-			}
-		}
+  		/**
+  		 * This disables the Pinterest save buttosn on images that are anchors/links
+  		 * if the user has them disabled on them in the options page. So if this
+  		 * image is a link, we just bail out.
+  		 *
+  		 */
+  		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+  			if (image.parents().filter("a").length) {
+  			  	return;
+  			}
+  		}
 
 
-		/**
-		 * In the option page, the user can set a minimum width and a minimum
-		 * height. Anything that isn't as large as these image dimensions will
-		 * be skipped. This is a JS variable that is generated and output by
-		 * the server.
-		 *
-		 */
-		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-			  return;
-		}
+  		/**
+  		 * In the option page, the user can set a minimum width and a minimum
+  		 * height. Anything that isn't as large as these image dimensions will
+  		 * be skipped. This is a JS variable that is generated and output by
+  		 * the server.
+  		 *
+  		 */
+  		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
+  			  return;
+  		}
 
 
-		/**
-		 * We offer users the option to manually opt any image out of having a
-		 * Pinterest save button on it by simply adding either the no_pin class
-		 * or the no-pin class. There is also a checkbox in the media uploader
-		 * that when checked will add one of these classes. If this image has
-		 * one, skip it.
-		 *
-		 */
-		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-			  return;
-		}
+  		/**
+  		 * We offer users the option to manually opt any image out of having a
+  		 * Pinterest save button on it by simply adding either the no_pin class
+  		 * or the no-pin class. There is also a checkbox in the media uploader
+  		 * that when checked will add one of these classes. If this image has
+  		 * one, skip it.
+  		 *
+  		 */
+  		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
+  			  return;
+  		}
 
-    var description = socialWarfare.getPinDescription(image);
-    var media = socialWarfare.getPinMedia(image)
+      var description = socialWarfare.getPinDescription(image);
+      var media = socialWarfare.getPinMedia(image);
 
-		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
+  		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 	}
 
 
