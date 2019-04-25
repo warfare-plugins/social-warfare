@@ -855,9 +855,17 @@ window.socialWarfare = window.socialWarfare || {};
         var media = socialWarfare.getPinterestMedia(image);
     }
 
+
+    /**
+     * Find all images of the images that are in the content area by looking
+     * for the .swp-content-locator div which is an empty div that we add via
+     * the_content() hook just so that we can target it here. Then iterate
+     * through them and determine if we should add a Pinterest save button.
+     *
+     */
     socialWarfare.triggerImageListeners = function() {
-        $('img').off('hover', socialWarfare.imageHoverSaveButton)
-        $('img').on('hover', socialWarfare.imageHoverSaveButton)
+        $('.swp-content-locator img').off('hover', socialWarfare.imageHoverSaveButton)
+        $('.swp-content-locator img').on('hover', socialWarfare.imageHoverSaveButton)
 
         // We need to assign `imageHoverSaveButton` to new images
         // loaded by ajax as users scroll through a page.
@@ -962,14 +970,7 @@ window.socialWarfare = window.socialWarfare || {};
 			}
 		});
 
-		/**
-		 * Find all images of the images that are in the content area by looking
-		 * for the .swp-content-locator div which is an empty div that we add via
-		 * the_content() hook just so that we can target it here. Then iterate
-		 * through them and determine if we should add a Pinterest save button.
-		 *
-		 */
-		$('.swp-content-locator').parent().find('img').each(socialWarfare.renderPinterestSaveButton);
+
 
 
 		/**
@@ -992,9 +993,8 @@ window.socialWarfare = window.socialWarfare || {};
 	* @since  void
 	*
 	*/
-	socialWarfare.renderPinterestSaveButton = function() {
+	socialWarfare.renderPinterestSaveButton = function(image) {
 		var image, pinMedia,  bookmark, imageClasses, imageStyles, shareLink;
-		image = $(this);
 
 		/**
 		 * This disables the Pinterest save buttosn on images that are anchors/links
