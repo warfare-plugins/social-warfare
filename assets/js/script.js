@@ -843,7 +843,7 @@ window.socialWarfare = window.socialWarfare || {};
 
     socialWarfare.imageHoverSaveButton = function(event) {
         var image = $(event.target);
-        var description = socialWarfare.getPinterestDescription(image);
+        var description = socialWarfare.getPinDescription(image);
         var media = socialWarfare.getPinterestMedia(image);
     }
 
@@ -892,6 +892,40 @@ window.socialWarfare = window.socialWarfare || {};
         var i = $("<img>");
         i.attr("src", media)
         return i.prop("src");
+    }
+
+
+    /**
+     * This is where we compute a description that will be used when the
+     * image is shared to Pinterest. In order of precedence, we will use the
+     * image's data-pin-description attribute, the custom Pinterest description
+     * for the post passed from the server, the image title, or the image
+     * description.
+     *
+     */
+    socialWarfare.getPinDescription = function(image) {
+      if (typeof swpPinIt.image_description == 'string' && swpPinIt.image_description.length > 0 ) {
+          return swpPinIt.image_description;
+      }
+
+      if (typeof image.data("pin-description") != 'undefined'  && image.data("pin-description").length) {
+          return image.data("pin-description");
+      }
+
+      // Try image Title or Alt text.
+      if (typeof image.attr("title") == 'string' && image.attr("title").length > 0) {
+        return image.attr("title");
+      }
+
+      if (typeof image.attr("alt") == 'string' && image.attr("alt").length > 0) {
+        return image.attr("alt");
+      }
+
+      // Default to the post title if nothing else is found.
+
+      if (typeof swpPinIt.post_title == 'string' && swpPinIt.post_title.length > 0) {
+        return swpPinIt.post_title;
+      }
     }
 
 
@@ -952,7 +986,7 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function() {
-		var image, pinMedia, pinDesc, bookmark, imageClasses, imageStyles, shareLink;
+		var image, pinMedia,  bookmark, imageClasses, imageStyles, shareLink;
 		image = $(this);
 
 		/**
@@ -1034,25 +1068,7 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 
 
-		/**
-		 * This is where we compute a description that will be used when the
-		 * image is shared to Pinterest. In order of precedence, we will use the
-		 * image's data-pin-description attribute, the custom Pinterest description
-		 * for the post passed from the server, the image title, or the image
-		 * description.
-		 *
-		 */
-		if (typeof image.data("pin-description") != 'undefined'  && image.data("pin-description").length) {
-			pinDesc = image.data("pin-description");
-		} else if (typeof swpPinIt.image_description == 'string' && swpPinIt.image_description.length) {
-			pinDesc = swpPinIt.image_description;
-		} else if (image.attr('title')) {
-			pinDesc = image.attr('title');
-		} else if (image.attr('alt')) {
-			pinDesc = image.attr('alt');
-		} else if (typeof swpPinIt.post_title == 'string') {
-			pinDesc = swpPinIt.post_title;
-		}
+
 		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
 
 
