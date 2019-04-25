@@ -831,6 +831,23 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 ***************************************************************************/
 
+    socialWarfare.imageHoverSaveButton = function(event) {
+        var image = $(event.target);
+        var description = socialWarfare.getPinterestDescription(image);
+        var media = socialWarfare.getPinterestMedia(image);
+
+        
+    }
+
+    socialWarfare.triggerImageListeners = function() {
+        $('img').off('hover', socialWarfare.imageHoverSaveButton)
+        $('img').on('hover', socialWarfare.imageHoverSaveButton)
+
+        // We need to assign `imageHoverSaveButton` to new images
+        // loaded by ajax as users scroll through a page.
+        setTimeout(socialWarfare.triggerImageListeners, 2000);
+    }
+
 
 	/**
 	 * Adds the "Save" button to images when the option is enabled.
