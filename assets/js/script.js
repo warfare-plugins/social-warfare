@@ -849,11 +849,6 @@ window.socialWarfare = window.socialWarfare || {};
        return button;
    }
 
-    socialWarfare.imageHoverSaveButton = function(event) {
-        var image = $(event.target);
-        var description = socialWarfare.getPinDescription(image);
-        var media = socialWarfare.getPinterestMedia(image);
-    }
 
     /**
      * Find all images of the images that are in the content area by looking
@@ -863,8 +858,8 @@ window.socialWarfare = window.socialWarfare || {};
      *
      */
     socialWarfare.triggerImageListeners = function() {
-        $('.swp-content-locator img').off('hover', socialWarfare.imageHoverSaveButton)
-        $('.swp-content-locator img').on('hover', socialWarfare.imageHoverSaveButton)
+        $('.swp-content-locator img').off('hover', socialWarfare.renderPinterestSaveButton)
+        $('.swp-content-locator img').on('hover', socialWarfare.renderPinterestSaveButton)
 
         // We need to assign `imageHoverSaveButton` to new images
         // loaded by ajax as users scroll through a page.
@@ -955,33 +950,18 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.enablePinterestSaveButtons = function() {
-
-		/**
-		 * Search and Destroy: This will find any Pinterest buttons that were
-		 * added via their browser extension and then destroy them so that only
-		 * ours are on the page.
-		 *
-		 */
-		jQuery('img').on('mouseenter', function() {
-			var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
-			if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
-				socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
-			}
-		});
-
-
-
-
-		/**
-		 * Attach a click handler to each of the newly created "Save" buttons,
-		 * and trigger the click tracking function.
-		 *
-		 */
-		$('.sw-pinit .sw-pinit-button').on('click', function(event) {
-			event.preventDefault();
-			window.open($(this).attr('href'), 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-			socialWarfare.trackClick('pin_image');
-		});
+  		/**
+  		 * Search and Destroy: This will find any Pinterest buttons that were
+  		 * added via their browser extension and then destroy them so that only
+  		 * ours are on the page.
+  		 *
+  		 */
+  		jQuery('img').on('mouseenter', function() {
+    			var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
+    			if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
+    				socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+    			}
+  		});
 	}
 
 
@@ -992,7 +972,9 @@ window.socialWarfare = window.socialWarfare || {};
 	* @since  void
 	*
 	*/
-	socialWarfare.renderPinterestSaveButton = function(image) {
+	socialWarfare.renderPinterestSaveButton = function(event) {
+      var image = $(event.target);
+
   		/**
   		 * This disables the Pinterest save buttosn on images that are anchors/links
   		 * if the user has them disabled on them in the options page. So if this
@@ -1000,9 +982,9 @@ window.socialWarfare = window.socialWarfare || {};
   		 *
   		 */
   		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-  			if (image.parents().filter("a").length) {
-  			  	return;
-  			}
+    			if (image.parents().filter("a").length) {
+    			  	return;
+    			}
   		}
 
 
@@ -1032,8 +1014,15 @@ window.socialWarfare = window.socialWarfare || {};
 
       var description = socialWarfare.getPinDescription(image);
       var media = socialWarfare.getPinMedia(image);
+  		var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 
-  		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
+      socialWarfare.hoverSaveButton.attr('href', shareLink);
+      socialWarfare.hoverSaveButton.off("click");
+      socialWarfare.hoverSaveButton.on("click", function(event) {
+          event.preventDefault();
+          window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+          socialWarfare.trackClick('pin_image');
+      });
 	}
 
 
