@@ -156,7 +156,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
-
+    socialWarfare.triggerImageListeners();
 
 		/**
 		 * In some instances, the click bindings were not being instantiated
@@ -839,13 +839,13 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 ***************************************************************************/
 
-   // Create a single instance of the save button and keep a reference in socialWarfare.
+   // Create a single instance of the save button and store it in socialWarfare.
    socialWarfare.createHoverSaveButton = function() {
-       var button = document.createElement("a");
-       button.className = "sw-pinit-button sw-pinit-" + swpPinIt.vLocation + " sw-pinit-" + swpPinIt.hLocation;
-       button.style.display = 'none';
-
-       socialWarfare.saveButton = button;
+       var button = $(document.createElement("div"))
+       button.css("display: none");
+       button.addClass("swp-hover-pin-button");
+       button.text("Save");
+       socialWarfare.hoverSaveButton = $(button);
        return button;
    }
 
@@ -858,11 +858,16 @@ window.socialWarfare = window.socialWarfare || {};
      *
      */
     socialWarfare.triggerImageListeners = function() {
-        $('.swp-content-locator img').off('hover', socialWarfare.renderPinterestSaveButton)
-        $('.swp-content-locator img').on('hover', socialWarfare.renderPinterestSaveButton)
+        if (typeof swpPinIt != 'object' || swpPinIt.enabled == false) {
+          return;
+        }
+        socialWarfare.createHoverSaveButton();
 
-        // We need to assign `imageHoverSaveButton` to new images
-        // loaded by ajax as users scroll through a page.
+        $(".swp-content-locator").parent().find("img").off('mouseenter', socialWarfare.renderPinterestSaveButton)
+        $(".swp-content-locator").parent().find("img").on('mouseenter', socialWarfare.renderPinterestSaveButton)
+
+        // We need to assign the hover callback to new images
+        // loaded by ajax as the visitor scrolls through the page.
         setTimeout(socialWarfare.triggerImageListeners, 2000);
     }
 
@@ -959,10 +964,26 @@ window.socialWarfare = window.socialWarfare || {};
   		jQuery('img').on('mouseenter', function() {
     			var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
     			if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
-    				socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+    				  socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
     			}
   		});
 	}
+
+
+  socialWarfare.toggleHoverSaveDisplay = function(image) {
+      socialWarfare.hoverSaveButton.css({
+          position: "fixed",
+          top: "15px",
+          left: "15px",
+          display: "block"
+      });
+
+      image.on("mouseleave", function() {
+          socialWarfare.hoverSaveButton.css("display", "none");
+      });
+
+      $(document.body).append(socialWarfare.hoverSaveButton);
+  }
 
 
 	/**
@@ -973,10 +994,11 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function(event) {
+      console.log('renderPinterestSaveButton')
       var image = $(event.target);
 
   		/**
-  		 * This disables the Pinterest save buttosn on images that are anchors/links
+  		 * This disables the Pinterest save buttons on images that are anchors/links
   		 * if the user has them disabled on them in the options page. So if this
   		 * image is a link, we just bail out.
   		 *
@@ -1012,17 +1034,18 @@ window.socialWarfare = window.socialWarfare || {};
   			  return;
   		}
 
+      socialWarfare.toggleHoverSaveDisplay(image)
       var description = socialWarfare.getPinDescription(image);
       var media = socialWarfare.getPinMedia(image);
   		var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
-
-      socialWarfare.hoverSaveButton.attr('href', shareLink);
-      socialWarfare.hoverSaveButton.off("click");
-      socialWarfare.hoverSaveButton.on("click", function(event) {
+      var callback = function(event) {
           event.preventDefault();
           window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
           socialWarfare.trackClick('pin_image');
-      });
+      }
+
+      socialWarfare.hoverSaveButton.off("click", callback);
+      socialWarfare.hoverSaveButton.on("click", callback);
 	}
 
 
