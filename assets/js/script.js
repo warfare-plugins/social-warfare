@@ -855,7 +855,6 @@ window.socialWarfare = window.socialWarfare || {};
         var media = socialWarfare.getPinterestMedia(image);
     }
 
-
     /**
      * Find all images of the images that are in the content area by looking
      * for the .swp-content-locator div which is an empty div that we add via
@@ -994,8 +993,6 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function(image) {
-		var image, pinMedia,  bookmark, imageClasses, imageStyles, shareLink;
-
 		/**
 		 * This disables the Pinterest save buttosn on images that are anchors/links
 		 * if the user has them disabled on them in the options page. So if this
@@ -1003,8 +1000,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-			if ($(image).parents().filter("a").length) {
-				return;
+			if (image.parents().filter("a").length) {
+			  	return;
 			}
 		}
 
@@ -1017,7 +1014,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-			return;
+			  return;
 		}
 
 
@@ -1026,77 +1023,17 @@ window.socialWarfare = window.socialWarfare || {};
 		 * Pinterest save button on it by simply adding either the no_pin class
 		 * or the no-pin class. There is also a checkbox in the media uploader
 		 * that when checked will add one of these classes. If this image has
-		 * one of these classes, just bail and skip this image.
+		 * one, skip it.
 		 *
 		 */
 		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-			return;
+			  return;
 		}
 
+    var description = socialWarfare.getPinDescription(image);
+    var media = socialWarfare.getPinMedia(image)
 
-		/**
-		 * If the swpPinIt.image_source variable exists, it means that the user
-		 * has opted to use their custom Pinterest image rather than having
-		 * visitors pin the actual image being hovered.
-		 *
-		 */
-		if ('undefined' !== typeof swpPinIt.image_source && swpPinIt.image_source.length) {
-
-			/**
-			 * By creating a temporary image and then using jQuery to fetch the
-			 * URL of that image, it will convert any relative paths to
-			 * absolute paths. If we send a relative path image to Pinterest, it
-			 * will throw errors.
-			 *
-			 */
-			var i = new Image();
-			i.src = swpPinIt.image_source;
-			pinMedia = $(i).prop('src');
-
-
-		/**
-		 * Both media and lazy-src are data attributes used by some lazy loading
-		 * plugins. If we don't look for these, we're not able to add the save
-		 * button to lazy loaded images that have not been loaded when the
-		 * document has been loaded.
-		 *
-		 */
-		} else if (image.data('media')) {
-			pinMedia = image.data('media');
-		} else if ($(this).data('lazy-src')) {
-			pinMedia = $(this).data('lazy-src');
-		} else if (image[0].src) {
-			pinMedia = image[0].src;
-		}
-
-		// Bail if we don't have any media to pin.
-		if (!pinMedia || 'undefined' === typeof pinMedia) {
-			return;
-		}
-
-
-
-		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(pinMedia) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(pinDesc);
-
-
-		/**
-		 * In order to preserve all of the layout, positioning and style of the
-		 * image, we are going to fetch all of the classes and inline styles of
-		 * the image and move them onto the parent container in which we will be
-		 * wrapping the image.
-		 *
-		 */
-		imageClasses = image.attr('class');
-		imageStyles  = image.attr('style');
-
-		// Remove the image classes and styles. Create the wrapper div.
-		image.removeClass().attr('style', '').wrap('<div class="sw-pinit" />');
-
-		// Append the button as the last element inside the wrapper div.
-		image.after('<a href="' + shareLink + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>');
-
-		// Add the removed classes and styles to the wrapper div.
-		image.parent('.sw-pinit').addClass(imageClasses).attr('style', imageStyles);
+		shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 	}
 
 
