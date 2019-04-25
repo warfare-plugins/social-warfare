@@ -866,16 +866,25 @@ window.socialWarfare = window.socialWarfare || {};
             return swpPinIt.image_source;
         }
 
-        // Check common data-attributes for an image source.
-        var sources = ['src', 'lazy-src', 'media'];
+        // Most images will have a src already defined, this gets top priority.
+        if (image.attr("src") && image.attr("src").length > 0) {
+            return image.attr("src");
+        }
+
+        // Otherise check common data-attributes for an image source.
+        var dataSources = ['src', 'lazy-src', 'media'];
         var media = '';
 
         // Search for the first existing value and keep it if found.
-        sources.some(function(maybeSource) {
+        dataSources.some(function(maybeSource) {
             if (typeof image.data(maybeSource) == 'string' && image.data(maybeSource).length > 0) {
               media = image.data(maybeSource);
               return true;
             }
+        }
+
+        if (media == '') {
+          return;
         }
 
         // Use a jQuery image to guarantee we have an absolute path to the resource.
