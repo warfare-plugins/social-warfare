@@ -889,7 +889,7 @@ window.socialWarfare = window.socialWarfare || {};
               media = image.data(maybeSource);
               return true;
             }
-        }
+        })
 
         if (media == '') {
           return;
@@ -912,28 +912,27 @@ window.socialWarfare = window.socialWarfare || {};
      *
      */
     socialWarfare.getPinDescription = function(image) {
-      if (isString(swpPinIt.image_description)) {
-          return swpPinIt.image_description;
-      }
+        if (isString(swpPinIt.image_description)) {
+            return swpPinIt.image_description;
+        }
 
-      if (isString(image.data("pin-description"))) {
-          return image.data("pin-description");
-      }
+        if (isString(image.data("pin-description"))) {
+            return image.data("pin-description");
+        }
 
-      // Try image Title or Alt text.
-      if (isString(image.attr("title"))) {
-        return image.attr("title");
-      }
+        // Try image Title or Alt text.
+        if (isString(image.attr("title"))) {
+            return image.attr("title");
+        }
 
-      if (isString(image.attr("alt"))) {
-        return image.attr("alt");
-      }
+        if (isString(image.attr("alt"))) {
+            return image.attr("alt");
+        }
 
-      // Default to the post title if nothing else is found.
-
-      if (isString(swpPinIt.post_title)) {
-        return swpPinIt.post_title;
-      }
+        // Default to the post title if nothing else is found.
+        if (isString(swpPinIt.post_title)) {
+            return swpPinIt.post_title;
+        }
     }
 
 
