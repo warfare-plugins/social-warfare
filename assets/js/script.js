@@ -863,10 +863,6 @@ window.socialWarfare = window.socialWarfare || {};
      *
      */
     socialWarfare.triggerImageListeners = function() {
-
-
-
-
         $(".swp-content-locator").parent().find("img").off('mouseenter', socialWarfare.renderPinterestSaveButton)
         $(".swp-content-locator").parent().find("img").on('mouseenter', socialWarfare.renderPinterestSaveButton)
 
@@ -1020,7 +1016,10 @@ window.socialWarfare = window.socialWarfare || {};
           display: "block"
       });
 
-      image.on("mouseleave", function() {
+      image.on("mouseleave", function(event) {
+          if (event.relatedTarget.className == 'swp-hover-pin-button') {
+            return;
+          }
           $(".swp-hover-pin-button").remove();
       });
 
@@ -1036,9 +1035,16 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function(event) {
-      console.log('renderPinterestSaveButton')
-      var image = $(event.target);
+      console.log('renderPinterestSaveButton');
+      if (event.relatedTarget && event.relatedTarget.className == 'swp-hover-pin-button') {
+        return;
+      }
 
+      if ($(".swp-hover-pin-button").length > 0) {
+          return;
+      }
+
+      var image = $(event.target);
   		/**
   		 * This disables the Pinterest save buttons on images that are anchors/links
   		 * if the user has them disabled on them in the options page. So if this
@@ -1051,7 +1057,6 @@ window.socialWarfare = window.socialWarfare || {};
     			}
   		}
 
-
   		/**
   		 * In the option page, the user can set a minimum width and a minimum
   		 * height. Anything that isn't as large as these image dimensions will
@@ -1062,7 +1067,6 @@ window.socialWarfare = window.socialWarfare || {};
   		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
   			  return;
   		}
-
 
   		/**
   		 * We offer users the option to manually opt any image out of having a
@@ -1076,19 +1080,21 @@ window.socialWarfare = window.socialWarfare || {};
   			  return;
   		}
 
-        var description = socialWarfare.getPinDescription(image);
-        var media = socialWarfare.getPinMedia(image);
-        var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
-
-        function openWindow(event) {
-            event.preventDefault();
-            window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-            socialWarfare.trackClick('pin_image');
-        }
-
       socialWarfare.toggleHoverSaveDisplay(image);
-      socialWarfare.hoverSaveButton.off("click", openWindow);
-      socialWarfare.hoverSaveButton.on("click", openWindow);
+
+      var description = socialWarfare.getPinDescription(image);
+      var media = socialWarfare.getPinMedia(image);
+      var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
+
+      function openPinterestDialogue(event) {
+          console.log("open window")
+          window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+          socialWarfare.trackClick('pin_image');
+          $(".swp-hover-pin-button").remove();
+      }
+
+      $(".swp-hover-pin-button").on("click", openPinterestDialogue);
+      // The elemnt and its event handlers are removed in toggleHoverSaveDisplay().
 	}
 
 
