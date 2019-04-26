@@ -1009,12 +1009,8 @@ window.socialWarfare = window.socialWarfare || {};
               break;
         }
 
-      socialWarfare.hoverSaveButton.css({
-          position: "absolute",
-          top: top,
-          left: left,
-          display: "block"
-      });
+      socialWarfare.hoverSaveButton.css("top", top);
+      socialWarfare.hoverSaveButton.css("left", left);
 
       image.on("mouseleave", function(event) {
           if (event.relatedTarget.className == 'swp-hover-pin-button') {
