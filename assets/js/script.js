@@ -846,7 +846,7 @@ window.socialWarfare = window.socialWarfare || {};
 
    // Create a single instance of the save button and store it in socialWarfare.
    socialWarfare.createHoverSaveButton = function() {
-       var button = $(document.createElement("div"))
+       var button = $(document.createElement("a"));
        button.css("display: none");
        button.addClass("swp-hover-pin-button");
        button.text("Save");

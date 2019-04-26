@@ -1579,7 +1579,7 @@ span.swp_pop_count {
 }
 
 
-div.swp-hover-pin-button {
+a.swp-hover-pin-button {
 		background: #cd2029;
 		border: 1px solid #aa1b29;
 		border: 0;
@@ -1603,14 +1603,14 @@ div.swp-hover-pin-button {
 		z-index: 200;
 }
 
-div.swp-hover-pin-button {
+a.swp-hover-pin-button {
 		height: 34px !important;
 		width: 120px !important;
 		text-align: center;
 		opacity: 1;
 }
 
-div.swp-hover-pin-button::before {
+a.swp-hover-pin-button::before {
 		color: #fff;
 		content: "b";
 		float: left;
@@ -1622,12 +1622,12 @@ div.swp-hover-pin-button::before {
 		margin-right: 10px;
 }
 
-div.swp-hover-pin-button:hover::before {
+a.swp-hover-pin-button:hover::before {
 	content: "F";
 }
 
-div.swp-hover-pin-button:hover,
-div.swp-hover-pin-button:focus {
+a.swp-hover-pin-button:hover,
+a.swp-hover-pin-button:focus {
 	background: #aa1b29;
 	color: #fff;
 	text-decoration: none;
