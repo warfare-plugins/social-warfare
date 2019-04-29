@@ -1860,6 +1860,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	transform-origin: bottom right;
 }
 
+/* The custom color selects in Social WarfareW > Styles */
 div[class*=custom_color][class^=_wrapper] {
 	display: none;
 }
@@ -1867,6 +1868,11 @@ div[class*=custom_color][class^=_wrapper] {
 .swp-pinterest-image-top {
 	margin-bottom: 20px;
 }
+
+.swp-pinterest-image-bottom {
+	/* exists but not styled */
+}
+
 .swp_modern, .swp_dark {
   background: #fff;
   height: 62px;
