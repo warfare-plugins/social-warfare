@@ -982,11 +982,11 @@ window.socialWarfare = window.socialWarfare || {};
 
 	   switch (swpPinIt.vLocation) {
 		 case "top" :
-			 top += vMargin + buttonHeight;
+			 top += vMargin;
 			 break;
 
 		 case "middle" :
-			 var offset = image.height() / 2 - (vMargin / 2) - (34 / 2);
+			 var offset = image.height() / 2 - (vMargin / 2) - (buttonHeight / 2);
 			 top += offset;
 			 break;
 
@@ -998,11 +998,11 @@ window.socialWarfare = window.socialWarfare || {};
 
 		switch (swpPinIt.hLocation) {
 		  case "left" :
-			  left += hMargin + buttonWidth;
+			  left += hMargin;
 			  break;
 
 		  case "center" :
-			  var offset = image.width() / 2 - (hMargin / 2) - (120 / 2);
+			  var offset = image.width() / 2 - (hMargin / 2) - (buttonWidth / 2);
 			  left += offset;
 			  break;
 
