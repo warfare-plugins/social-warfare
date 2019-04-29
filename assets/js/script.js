@@ -1017,6 +1017,9 @@ window.socialWarfare = window.socialWarfare || {};
 	  socialWarfare.hoverSaveButton.css("top", top);
 	  socialWarfare.hoverSaveButton.css("left", left);
 
+
+	  // Entering the button from the image triggers mouseleave and mouseenter.
+	  // Keep the button where it would otherwise disappear due to a mouseleave.
 	  image.on("mouseleave", function(event) {
 		  if (event.relatedTarget.className == 'swp-hover-pin-button') {
 			return;
