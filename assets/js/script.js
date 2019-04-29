@@ -101,7 +101,7 @@ window.socialWarfare = window.socialWarfare || {};
    * In this context, we are interested in strings with length only.
    */
   function isString(maybeString) {
-      return typeof maybeString == 'string' && maybeString.length > 0;
+	  return typeof maybeString == 'string' && maybeString.length > 0;
   }
 
 	/***************************************************************************
@@ -157,10 +157,10 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
 
-    if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
-        socialWarfare.createHoverSaveButton();
-        socialWarfare.triggerImageListeners();
-    }
+	if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
+		socialWarfare.createHoverSaveButton();
+		socialWarfare.triggerImageListeners();
+	}
 
 
 		/**
@@ -846,101 +846,101 @@ window.socialWarfare = window.socialWarfare || {};
 
    // Create a single instance of the save button and store it in socialWarfare.
    socialWarfare.createHoverSaveButton = function() {
-       var button = $(document.createElement("a"));
-       button.css("display: none");
-       button.addClass("swp-hover-pin-button");
-       button.text("Save");
-       socialWarfare.hoverSaveButton = $(button);
-       return button;
+	   var button = $(document.createElement("a"));
+	   button.css("display: none");
+	   button.addClass("swp-hover-pin-button");
+	   button.text("Save");
+	   socialWarfare.hoverSaveButton = $(button);
+	   return button;
    }
 
 
-    /**
-     * Find all images of the images that are in the content area by looking
-     * for the .swp-content-locator div which is an empty div that we add via
-     * the_content() hook just so that we can target it here. Then iterate
-     * through them and determine if we should add a Pinterest save button.
-     *
-     */
-    socialWarfare.triggerImageListeners = function() {
-        $(".swp-content-locator").parent().find("img").off('mouseenter', socialWarfare.renderPinterestSaveButton)
-        $(".swp-content-locator").parent().find("img").on('mouseenter', socialWarfare.renderPinterestSaveButton)
+	/**
+	 * Find all images of the images that are in the content area by looking
+	 * for the .swp-content-locator div which is an empty div that we add via
+	 * the_content() hook just so that we can target it here. Then iterate
+	 * through them and determine if we should add a Pinterest save button.
+	 *
+	 */
+	socialWarfare.triggerImageListeners = function() {
+		$(".swp-content-locator").parent().find("img").off('mouseenter', socialWarfare.renderPinterestSaveButton)
+		$(".swp-content-locator").parent().find("img").on('mouseenter', socialWarfare.renderPinterestSaveButton)
 
-        // We need to assign the hover callback to new images
-        // loaded by ajax as the visitor scrolls through the page.
-        setTimeout(socialWarfare.triggerImageListeners, 2000);
-    }
+		// We need to assign the hover callback to new images
+		// loaded by ajax as the visitor scrolls through the page.
+		setTimeout(socialWarfare.triggerImageListeners, 2000);
+	}
 
-    socialWarfare.getPinMedia = function( image ) {
-        /**
-         * If the swpPinIt.image_source variable exists, it means that the user
-         * forces their custom Pinterest image instaed of the visitor's selection.
-         *
-         */
-        if (isString(swpPinIt.image_source)) {
-            return swpPinIt.image_source;
-        }
+	socialWarfare.getPinMedia = function( image ) {
+		/**
+		 * If the swpPinIt.image_source variable exists, it means that the user
+		 * forces their custom Pinterest image instaed of the visitor's selection.
+		 *
+		 */
+		if (isString(swpPinIt.image_source)) {
+			return swpPinIt.image_source;
+		}
 
-        // Most images will have a src already defined, this gets top priority.
-        if (isString(image.attr("src"))) {
-            return image.attr("src");
-        }
+		// Most images will have a src already defined, this gets top priority.
+		if (isString(image.attr("src"))) {
+			return image.attr("src");
+		}
 
-        // Otherise check common data-attributes for an image source.
-        var dataSources = ['src', 'lazy-src', 'media'];
-        var media = '';
+		// Otherise check common data-attributes for an image source.
+		var dataSources = ['src', 'lazy-src', 'media'];
+		var media = '';
 
-        // Search for the first existing value and keep it if found.
-        dataSources.some(function(maybeSource) {
-            if (isString(image.data(maybeSource))) {
-              media = image.data(maybeSource);
-              return true;
-            }
-        })
+		// Search for the first existing value and keep it if found.
+		dataSources.some(function(maybeSource) {
+			if (isString(image.data(maybeSource))) {
+			  media = image.data(maybeSource);
+			  return true;
+			}
+		})
 
-        if (media == '') {
-          return;
-        }
+		if (media == '') {
+		  return;
+		}
 
-        // Use a jQuery image to guarantee we have an absolute path to the resource.
-        // Pinterest throws an error when passed a relative path.
-        var i = $("<img>");
-        i.attr("src", media)
-        return i.prop("src");
-    }
+		// Use a jQuery image to guarantee we have an absolute path to the resource.
+		// Pinterest throws an error when passed a relative path.
+		var i = $("<img>");
+		i.attr("src", media)
+		return i.prop("src");
+	}
 
 
-    /**
-     * This is where we compute a description that will be used when the
-     * image is shared to Pinterest. In order of precedence, we will use the
-     * image's data-pin-description attribute, the custom Pinterest description
-     * for the post passed from the server, the image title, or the image
-     * description.
-     *
-     */
-    socialWarfare.getPinDescription = function(image) {
-        if (isString(swpPinIt.image_description)) {
-            return swpPinIt.image_description;
-        }
+	/**
+	 * This is where we compute a description that will be used when the
+	 * image is shared to Pinterest. In order of precedence, we will use the
+	 * image's data-pin-description attribute, the custom Pinterest description
+	 * for the post passed from the server, the image title, or the image
+	 * description.
+	 *
+	 */
+	socialWarfare.getPinDescription = function(image) {
+		if (isString(swpPinIt.image_description)) {
+			return swpPinIt.image_description;
+		}
 
-        if (isString(image.data("pin-description"))) {
-            return image.data("pin-description");
-        }
+		if (isString(image.data("pin-description"))) {
+			return image.data("pin-description");
+		}
 
-        // Try image Title or Alt text.
-        if (isString(image.attr("title"))) {
-            return image.attr("title");
-        }
+		// Try image Title or Alt text.
+		if (isString(image.attr("title"))) {
+			return image.attr("title");
+		}
 
-        if (isString(image.attr("alt"))) {
-            return image.attr("alt");
-        }
+		if (isString(image.attr("alt"))) {
+			return image.attr("alt");
+		}
 
-        // Default to the post title if nothing else is found.
-        if (isString(swpPinIt.post_title)) {
-            return swpPinIt.post_title;
-        }
-    }
+		// Default to the post title if nothing else is found.
+		if (isString(swpPinIt.post_title)) {
+			return swpPinIt.post_title;
+		}
+	}
 
 
 	/**
@@ -955,71 +955,76 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.enablePinterestSaveButtons = function() {
-  		/**
-  		 * Search and Destroy: This will find any Pinterest buttons that were
-  		 * added via their browser extension and then destroy them so that only
-  		 * ours are on the page.
-  		 *
-  		 */
-  		jQuery('img').on('mouseenter', function() {
-    			var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
-    			if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
-    				  socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
-    			}
-  		});
+		  /**
+		   * Search and Destroy: This will find any Pinterest buttons that were
+		   * added via their browser extension and then destroy them so that only
+		   * ours are on the page.
+		   *
+		   */
+		  jQuery('img').on('mouseenter', function() {
+				var pinterestBrowserButtons = socialWarfare.findPinterestBrowserSaveButtons();
+				if (typeof pinterestBrowserButtons != 'undefined' && pinterestBrowserButtons) {
+					  socialWarfare.removePinterestBrowserSaveButtons(pinterestBrowserButtons);
+				}
+		  });
 	}
 
 
   socialWarfare.toggleHoverSaveDisplay = function(image) {
-      var top = image.offset().top;
-      var left = image.offset().left;
-      var vMargin = 15
-      var hMargin = 15
-      // Known height from CSS is 34 px.
-      // Known width  from CSS is 120 px.
+	  var top = image.offset().top;
+	  var left = image.offset().left;
+	  var vMargin = 15;
+	  var hMargin = 15;
+	  var buttonHeight = 24;
+	  var buttonWidth = 120;
+	  // Known height from CSS is 34 px.
+	  // Known width  from CSS is 120 px.
 
-       switch (swpPinIt.vLocation) {
-         case "top" :
-             top += vMargin;
-             break;
+	   switch (swpPinIt.vLocation) {
+		 case "top" :
+			 top += vMargin + buttonHeight;
+			 break;
 
-         case "center" :
-             var offset = image.height() / 2 - (vMargin / 2) - (34 / 2);
-             top += offset;
-             break;
+		 case "middle" :
+			 var offset = image.height() / 2 - (vMargin / 2) - (34 / 2);
+			 top += offset;
+			 break;
 
-         case "bottom" :
-             top -= vMargin;
-             break;
-       }
+		 case "bottom" :
+			 top +=  image.height() - vMargin - buttonHeight;
+			 break;
+	   }
 
 
-        switch (swpPinIt.hLocation) {
-          case "top" :
-              left += hMargin;
-              break;
+		switch (swpPinIt.hLocation) {
+		  case "left" :
+			  left += hMargin + buttonWidth;
+			  break;
 
-          case "center" :
-              var offset = image.width() / 2 - (hMargin / 2) - (120 / 2);
-              left += offset;
-              break;
+		  case "center" :
+			  var offset = image.width() / 2 - (hMargin / 2) - (120 / 2);
+			  left += offset;
+			  break;
 
-          case "bottom" :
-              left -= hMargin;
-              break;
-        }
+		  case "right" :
+			  left += image.width() - hMargin - buttonWidth;
+			  break;
+		}
 
-      socialWarfare.hoverSaveButton.css("top", top);
-      socialWarfare.hoverSaveButton.css("left", left);
+		console.log("Using value top", top)
+		console.log("Using value left",left)
 
-      image.on("mouseleave", function(event) {
-          if (event.relatedTarget.className == 'swp-hover-pin-button') {
-            return;
-          }
-          $(".swp-hover-pin-button").remove();
-      });
+	  socialWarfare.hoverSaveButton.css("top", top);
+	  socialWarfare.hoverSaveButton.css("left", left);
 
-      $(document.body).append(socialWarfare.hoverSaveButton);
+	  image.on("mouseleave", function(event) {
+		  if (event.relatedTarget.className == 'swp-hover-pin-button') {
+			return;
+		  }
+		  $(".swp-hover-pin-button").remove();
+	  });
+
+	  $(document.body).append(socialWarfare.hoverSaveButton);
   }
 
 
@@ -1031,66 +1036,66 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function(event) {
-      console.log('renderPinterestSaveButton');
-      if (event.relatedTarget && event.relatedTarget.className == 'swp-hover-pin-button') {
-        return;
-      }
+	  console.log('renderPinterestSaveButton');
+	  if (event.relatedTarget && event.relatedTarget.className == 'swp-hover-pin-button') {
+		return;
+	  }
 
-      if ($(".swp-hover-pin-button").length > 0) {
-          return;
-      }
+	  if ($(".swp-hover-pin-button").length > 0) {
+		  return;
+	  }
 
-      var image = $(event.target);
-  		/**
-  		 * This disables the Pinterest save buttons on images that are anchors/links
-  		 * if the user has them disabled on them in the options page. So if this
-  		 * image is a link, we just bail out.
-  		 *
-  		 */
-  		if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
-    			if (image.parents().filter("a").length) {
-    			  	return;
-    			}
-  		}
+	  var image = $(event.target);
+		  /**
+		   * This disables the Pinterest save buttons on images that are anchors/links
+		   * if the user has them disabled on them in the options page. So if this
+		   * image is a link, we just bail out.
+		   *
+		   */
+		  if (typeof swpPinIt.disableOnAnchors != undefined && swpPinIt.disableOnAnchors) {
+				if (image.parents().filter("a").length) {
+					  return;
+				}
+		  }
 
-  		/**
-  		 * In the option page, the user can set a minimum width and a minimum
-  		 * height. Anything that isn't as large as these image dimensions will
-  		 * be skipped. This is a JS variable that is generated and output by
-  		 * the server.
-  		 *
-  		 */
-  		if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
-  			  return;
-  		}
+		  /**
+		   * In the option page, the user can set a minimum width and a minimum
+		   * height. Anything that isn't as large as these image dimensions will
+		   * be skipped. This is a JS variable that is generated and output by
+		   * the server.
+		   *
+		   */
+		  if (image.outerHeight() < swpPinIt.minHeight || image.outerWidth() < swpPinIt.minWidth) {
+				return;
+		  }
 
-  		/**
-  		 * We offer users the option to manually opt any image out of having a
-  		 * Pinterest save button on it by simply adding either the no_pin class
-  		 * or the no-pin class. There is also a checkbox in the media uploader
-  		 * that when checked will add one of these classes. If this image has
-  		 * one, skip it.
-  		 *
-  		 */
-  		if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
-  			  return;
-  		}
+		  /**
+		   * We offer users the option to manually opt any image out of having a
+		   * Pinterest save button on it by simply adding either the no_pin class
+		   * or the no-pin class. There is also a checkbox in the media uploader
+		   * that when checked will add one of these classes. If this image has
+		   * one, skip it.
+		   *
+		   */
+		  if (image.hasClass('no_pin') || image.hasClass('no-pin')) {
+				return;
+		  }
 
-      socialWarfare.toggleHoverSaveDisplay(image);
+	  socialWarfare.toggleHoverSaveDisplay(image);
 
-      var description = socialWarfare.getPinDescription(image);
-      var media = socialWarfare.getPinMedia(image);
-      var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
+	  var description = socialWarfare.getPinDescription(image);
+	  var media = socialWarfare.getPinMedia(image);
+	  var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 
-      function openPinterestDialogue(event) {
-          console.log("open window")
-          window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
-          socialWarfare.trackClick('pin_image');
-          $(".swp-hover-pin-button").remove();
-      }
+	  function openPinterestDialogue(event) {
+		  console.log("open window")
+		  window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+		  socialWarfare.trackClick('pin_image');
+		  $(".swp-hover-pin-button").remove();
+	  }
 
-      $(".swp-hover-pin-button").on("click", openPinterestDialogue);
-      // The elemnt and its event handlers are removed in toggleHoverSaveDisplay().
+	  $(".swp-hover-pin-button").on("click", openPinterestDialogue);
+	  // The elemnt and its event handlers are removed in toggleHoverSaveDisplay().
 	}
 
 
