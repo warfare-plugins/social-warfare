@@ -491,4 +491,23 @@ class SWP_Utility {
 
 		wp_die(1);
 	}
+
+	/**
+	 * Tries to get an image ID provided the URL of the image.
+	 *
+	 * @since 3.6.0   | 24 APR 2019 | Created.
+	 * @param  string $image_url The image to get an ID for.
+	 * @return mixed  integer ID if an ID is found, else false.
+	 *
+	 */
+	static function get_image_id_by_url( $image_url ) {
+		global $wpdb;
+		$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
+
+		if ( !is_array( $attachment ) || !is_numeric( $attachment[0] ) ) {
+			return false;
+		}
+
+		return $attachment[0];
+	}
 }
