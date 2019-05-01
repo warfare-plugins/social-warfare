@@ -919,12 +919,13 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 */
 	socialWarfare.getPinDescription = function(image) {
-		if (isString(swpPinIt.image_description)) {
-			return swpPinIt.image_description;
+    if (isString(image.data("pin-description"))) {
+			return image.data("pin-description");
 		}
 
-		if (isString(image.data("pin-description"))) {
-			return image.data("pin-description");
+
+		if (isString(swpPinIt.image_description)) {
+			return swpPinIt.image_description;
 		}
 
 		// Try image Title or Alt text.
