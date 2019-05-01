@@ -1012,9 +1012,6 @@ window.socialWarfare = window.socialWarfare || {};
 			  break;
 		}
 
-		console.log("Using value top", top)
-		console.log("Using value left",left)
-
 	  socialWarfare.hoverSaveButton.css("top", top);
 	  socialWarfare.hoverSaveButton.css("left", left);
 
@@ -1040,7 +1037,6 @@ window.socialWarfare = window.socialWarfare || {};
 	*
 	*/
 	socialWarfare.renderPinterestSaveButton = function(event) {
-	  console.log('renderPinterestSaveButton');
 	  if (event.relatedTarget && event.relatedTarget.className == 'swp-hover-pin-button') {
 		return;
 	  }
@@ -1092,8 +1088,11 @@ window.socialWarfare = window.socialWarfare || {};
 	  var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 
 	  function openPinterestDialogue(event) {
-		  console.log("open window")
-		  window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1');
+      var offsetLeft = $(window).width() - 632 * 2;
+      var offsetTop = $(window).height() - 253 * 2;
+      var position = ',top=' + offsetTop + ',left=' + offsetLeft;
+
+		  window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' + position);
 		  socialWarfare.trackClick('pin_image');
 		  $(".swp-hover-pin-button").remove();
 	  }
