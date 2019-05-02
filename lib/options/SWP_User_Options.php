@@ -388,19 +388,20 @@ class SWP_User_Options {
 				}
 			}
 
-			// Looking for suspicious texts
 			if ( is_string( $value ) && !is_numeric( $value ) ) {
+
+				// Looking for suspicious texts
 				if ( strpos( $value, 'script' )
 				|| ( strpos( $value, '(' ) && strpos( $value, '<' ) )
-				||   strpos( $value, 'fromCharCode' ) > -1 ) {
+				|| ( strpos( $value, 'fromCharCode' ) > -1 ) ) {
 					$this->user_options[$key] = '';
 					SWP_Utility::update_option( $key , '' );
 				}
-			}
 
-			// Sanitize string inputs before storing in the db.
-			if ( is_string( $value ) && !is_numeric( $value ) ) {
-				$this->user_options[$key] = htmlspecialchars( $value );
+				else {
+					// Sanitize string inputs before storing in the db.
+					$this->user_options[$key] = htmlspecialchars( $value );
+				}
 			}
 
 			if( $values[$key]['type'] == 'select' && !array_key_exists( $value, $values[$key]['values']) ) {

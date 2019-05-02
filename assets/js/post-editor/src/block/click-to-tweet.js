@@ -7,7 +7,6 @@ const { getCurrentPostId } = wp.data.select( 'core/editor' );
 const Dashicon = wp.components.Dashicon;
 
 const icon = <div className="swp-block-icon" style={ {color: '#429cd6'} }><Dashicon icon="twitter"/></div>
-
 /**
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -45,7 +44,6 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	 edit: function( props ) {
-		 console.log('editing ctt')
 		 window.onetwothree=123;
 		 const { tweetText, displayText, theme } = props.attributes;
 		const styles = ['Default', 'Send Her My Love', 'Roll With The Changes', 'Free Bird', 'Don\'t Stop Believin\'', 'Thunderstruck', 'Livin\' On A Prayer'];
@@ -57,7 +55,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		 * Local method delcarations.
 		 */
 		const updateTweetText = ( event ) => {
-			  const tweetText = event.target.value;
+			  const tweetText = event.target.value.replace('"', "'");
 
 			if ( !tweetText || !tweetText.length ) {
 				return props.setAttributes( { tweetText: '', overLimit: false } );
@@ -69,7 +67,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		  }
 
 		const updateDisplayText = ( event ) => {
-			 const displayText = event.target.value;
+			 const displayText = event.target.value.replace('"', "'");
 
 			props.setAttributes( { displayText } );
 		 }
@@ -172,16 +170,14 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
-		console.log('saving ctt')
-		let { tweetText, displayText } = props.attributes;
+		var tweetText = props.attributes.tweetText;
+		var displayText = props.attributes.displayText;
+		if (!tweetText) return;
 		if ( !displayText ) {
 			displayText = tweetText;
 		}
 
-		const theme = props.attributes.theme ? `style${props.attributes.theme}` : '';
-
-		if (!tweetText) return;
-
+		var theme = props.attributes.theme ? `style${props.attributes.theme}` : '';
 		return (
 			<div className='social-warfare-admin-block'>
 				[click_to_tweet tweet="{tweetText}" quote="{displayText}" theme="{theme}"]
