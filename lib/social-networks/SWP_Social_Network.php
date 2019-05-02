@@ -424,7 +424,7 @@ class SWP_Social_Network {
 		}
 
 		// False if the share count is zero.
-		if( $share_counts[$this->key] = 0 ) {
+		if( $share_counts[$this->key] == 0 ) {
 			return false;
 		}
 

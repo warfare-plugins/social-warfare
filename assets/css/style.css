@@ -1578,98 +1578,56 @@ span.swp_pop_count {
 	border-radius: 3px;
 }
 
-div.sw-pinit {
-	display: table !important;
-	line-height: 0;
-	position: relative !important;
+
+a.swp-hover-pin-button {
+		background: #cd2029;
+		border: 1px solid #aa1b29;
+		border: 0;
+		border-bottom: none;
+		  -webkit-border-radius: 4px;
+		border-radius: 3px;
+		  -webkit-box-shadow: none;
+		box-shadow: none;
+		color: #fff;
+		font-family: Lato,sans-serif;
+		font-size: 15px;
+		width: 120px !important;
+		height: 32px;
+		line-height: 32px;
+		padding: 0 20px;
+		position: absolute;
+		text-decoration: none;
+		text-align: center;
+		  -webkit-transition: opacity 0.5s;
+		transition: opacity 0.5s;
+		z-index: 3200;
+		position: absolute;
+		cursor: pointer;
 }
 
-div.sw-pinit a.sw-pinit-button,
-div.sw-pinit a.sw-pinit-button:visited {
-	background: #cd2029;
-	border: 1px solid #aa1b29;
-	border: 0;
-	border-bottom: none;
-	-webkit-border-radius: 4px;
-	border-radius: 3px;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-	color: #fff;
-	font-family: Lato,sans-serif;
-	font-size: 15px;
-	height: 32px;
-	line-height: 32px;
-	opacity: 0;
-	padding: 0 20px;
-	position: absolute;
-	text-decoration: none;
-	text-decoration: none;
-	-webkit-transition: opacity 0.5s;
-	transition: opacity 0.5s;
-	z-index: 200;
+a.swp-hover-pin-button::before {
+		color: #fff;
+		content: "b";
+		float: left;
+		font-family: sw-icon-font;
+		font-size: 20px;
+		font-weight: 400;
+		line-height: 36px;
+		margin-left: -5px;
+		margin-right: 10px;
 }
 
-.wp-block-gallery div.sw-pinit a.sw-pinit-button,
-.blocks-gallery-item div.sw-pinit a.sw-pinit-button,
-.blocks-gallery-item div.sw-pinit a.sw-pinit-button:visited {
-	height: 34px !important;
-	width: 120px !important;
-	text-align: center;
-}
-
-div.sw-pinit:hover a.sw-pinit-button,
-div.sw-pinit:focus a.sw-pinit-button {
-	opacity: 1;
-}
-
-div.sw-pinit a.sw-pinit-button::before {
-	color: #fff;
-	content: "b";
-	float: left;
-	font-family: sw-icon-font;
-	font-size: 20px;
-	font-weight: 400;
-	line-height: 36px;
-	margin-left: -5px;
-	margin-right: 10px;
-}
-
-div.sw-pinit a.sw-pinit-button:hover::before {
+a.swp-hover-pin-button:hover::before {
 	content: "F";
 }
 
-div.sw-pinit a.sw-pinit-button:hover,
-div.sw-pinit a.sw-pinit-button:focus {
+a.swp-hover-pin-button:hover,
+a.swp-hover-pin-button:focus {
 	background: #aa1b29;
 	color: #fff;
 	text-decoration: none;
 }
 
-div.sw-pinit .sw-pinit-left {
-	left: 30px;
-}
-
-div.sw-pinit .sw-pinit-center {
-	margin-left: -60px;
-	left: 50%;
-}
-
-div.sw-pinit .sw-pinit-right {
-	right: 30px;
-}
-
-div.sw-pinit .sw-pinit-top {
-	top: 30px;
-}
-
-div.sw-pinit .sw-pinit-middle {
-	margin-top: -25px;
-	top: 50%;
-}
-
-div.sw-pinit .sw-pinit-bottom {
-	bottom: 30px;
-}
 
 .swp_social_panel.notMobile .nc_tweetContainer:nth-last-child(1),
 .mobile .nc_tweetContainer:nth-last-child(2),
@@ -1861,16 +1819,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	flex: 2;
 }
 
-.sw-pinit.aligncenter {
-	margin: 0 auto;
-}
 
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-	div.sw-pinit {
-		display: inline-block!important;
-		max-width: 100%;
-	}
-}
 
 .swp_hidden_pin_image {
 	height: 0;
@@ -1880,9 +1829,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	width: 0;
 	z-index: -10;
 }
-.fl-module-content .uabb-blog-posts .uabb-post-thumbnail .sw-pinit.lazyloaded {
-	display: block !important;
-}
+
 
 .swp-content-locator {
    display: none !important;
@@ -1913,6 +1860,7 @@ div.swp_social_panel .nc_tweetContainer.swp_emphasize {
 	transform-origin: bottom right;
 }
 
+/* The custom color selects in Social WarfareW > Styles */
 div[class*=custom_color][class^=_wrapper] {
 	display: none;
 }
@@ -1920,6 +1868,11 @@ div[class*=custom_color][class^=_wrapper] {
 .swp-pinterest-image-top {
 	margin-bottom: 20px;
 }
+
+.swp-pinterest-image-bottom {
+	/* exists but not styled */
+}
+
 .swp_modern, .swp_dark {
   background: #fff;
   height: 62px;

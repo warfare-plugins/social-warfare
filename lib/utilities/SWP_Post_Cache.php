@@ -81,7 +81,6 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function __construct( $post_id ) {
-
 		// Set up the post data into local properties.
 		$this->post_id = $post_id;
 		$this->establish_share_counts();
@@ -124,7 +123,7 @@ class SWP_Post_Cache {
 		 endif;
 
 		// Always be true if we're not a single post.
-		if ( !is_singular() ) :
+		if ( !is_singular() && !is_admin() ) :
 			return true;
 		endif;
 
@@ -269,10 +268,13 @@ class SWP_Post_Cache {
 	 *
 	 */
 	public function rebuild_cached_data() {
+
+		$this->update_image_cache( 'swp_pinterest_image' );
+		$this->update_image_cache( 'swp_og_image' );
+
+		// Don't run these methods unless the post is published.
 		if( true === $this->is_post_published() ) {
 			$this->rebuild_share_counts();
-			$this->update_image_cache( 'swp_pinterest_image' );
-			$this->update_image_cache( 'swp_og_image' );
 			$this->process_urls();
 			$this->reset_timestamp();
 
@@ -323,17 +325,86 @@ class SWP_Post_Cache {
 		}
 	}
 
+
 	/**
 	 * Store image url, id, and metadata in post_meta for quicker access later.
 	 *
 	 * @since  3.5.0 | 19 DEC 2018 | Merged old methods into this new method.
+	 * @since  3.6.0 | 22 APR 2019 | Remvoed calls to delete the original field.
 	 * @param  string $meta_key The image field to update. Known examples include
 	 *                          swp_og_image, swp_pinterest_image, swp_twitter_image
 	 * @param  int    $new_id The attachment ID to update.
 	 * @return void
+	 *
 	 */
 	public function update_image_cache( $meta_key ) {
-		$new_id = SWP_Utility::get_meta( $this->post_id, $meta_key );
+
+
+		/**
+		 * Fetch the ID of the image in question. We will use this to extrapalate
+		 * the information that we need to prepopulate into the other fields.
+		 *
+		 */
+		$new_id   = SWP_Utility::get_meta( $this->post_id, $meta_key );
+		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_data' );
+
+
+		/**
+		 * The following two processes are designed to fix and restore the image
+		 * from a bug that was either converting the field from and ID to an array
+		 * or was deleting the field entirely in which case we restore it from
+		 * the cached fields.
+		 *
+		 * RESTORE FIELD FROM CACHE
+		 *
+		 * If the field is empty, but we have the correct cached data, then
+		 * let's repopulate the field from the cache. The empty field is most
+		 * likely caused by the bug from 3.5.x that was deleting or altering
+		 * the data in the field. This will restore it.
+		 *
+		 * RESTORE FIELD FROM ARRAY
+		 *
+		 * If the meta key was stored as an array, let's find the URL of the
+		 * image, convert it back to the correct ID of said image, and store that
+		 * back in the original meta field.
+		 *
+		 * This was caused by a bug in a previous version that was overwriting
+		 * the ID in this field with the image_data array. This will fix that
+		 * and restore the field to an ID.
+		 *
+		 */
+		$restore_from_cache = empty( $new_id ) && is_array( $old_data ) && false !== filter_var( $old_data[0], FILTER_VALIDATE_URL );
+		$restore_from_array = is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL );
+
+
+		/**
+		 * Filter out requests from the admin so that this "fix" doesn't
+		 * override the user's preference whilst they are updating a post.
+		 *
+		 * This block is for people who are missing a key like `swp_og_image`
+		 * between v3.5.0 and v3.5.4. The logic below will create the missing
+		 * key based off of data we have previously saved.
+		 *
+		 */
+		if ( ($restore_from_cache || $restore_from_array) && !is_admin() ) {
+
+
+			// Convert the image URL into a valid WP ID.
+			if ( $restore_from_array ) {
+				$new_id = SWP_Utility::get_image_id_by_url( $new_id[0] );
+			} elseif ( $restore_from_cache ) {
+				$new_id = SWP_Utility::get_image_id_by_url( $old_data[0] );
+			}
+
+			// Bail if we didn't get an ID from the above function.
+			if ( empty( $new_id ) ) {
+				return;
+			}
+
+			// Delete and update the meta field with the corrected ID.
+			delete_post_meta( $this->post_id, $meta_key );
+			update_post_meta( $this->post_id, $meta_key, $new_id );
+		}
 
 
 		/**
@@ -344,7 +415,7 @@ class SWP_Post_Cache {
 		 * deleted from the meta field.
 		 *
 		 */
-		if ( false === $new_id ) {
+		if ( empty( $new_id ) ) {
 			delete_post_meta( $this->post_id, $meta_key.'_data' );
 			delete_post_meta( $this->post_id, $meta_key.'_url' );
 			delete_post_meta( $this->post_id, $meta_key );
@@ -353,21 +424,34 @@ class SWP_Post_Cache {
 
 
 		/**
-		 * Fetch the URL of the new image and the URL of the
-		 * previously cached image so that we can see if anything has changed.
+		 * Fetch the data array of the new image and the data array of the old
+		 * previously cached image (fetchd above) so that we can see if anything
+		 * has changed.
 		 *
 		 */
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
-		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key.'_data' );
 
+
+		/**
+		 * If the old data is the same as the new data, then there is no need to
+		 * make any new database calls. Just exit and move on with our lives.
+		 *
+		 */
 		if ( false == $new_data || $new_data === $old_data ) {
 			return;
 		}
 
+
+		/**
+		 * We are not changing the value of the original field which contains
+		 * the WordPress attachement ID of the image in question. We are,
+		 * however, updating two additional fields (_data and _url) so that this
+		 * data will be preloaded with the post load. We will delete them first
+		 * to ensure that we never have more than one of the same field.
+		 *
+		 */
 		delete_post_meta( $this->post_id, $meta_key.'_data' );
 		delete_post_meta( $this->post_id, $meta_key.'_url' );
-		delete_post_meta( $this->post_id, $meta_key );
-
 		update_post_meta( $this->post_id, $meta_key.'_data', json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key.'_url', $new_data[0] );
 	}

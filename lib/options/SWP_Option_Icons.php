@@ -138,9 +138,7 @@ class SWP_Option_Icons extends SWP_Option {
 					continue;
 				}
 
-				$network = $all_networks[$network_key];
-
-				if ( false == $network->active ) {
+				if ( false == $all_networks[$network_key] ) {
 					continue;
 				}
 
