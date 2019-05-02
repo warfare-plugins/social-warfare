@@ -57,7 +57,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		 * Local method delcarations.
 		 */
 		const updateTweetText = ( event ) => {
-			  const tweetText = event.target.value;
+			  const tweetText = event.target.value.replace('"', "'");
 
 			if ( !tweetText || !tweetText.length ) {
 				return props.setAttributes( { tweetText: '', overLimit: false } );
