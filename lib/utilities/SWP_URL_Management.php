@@ -85,12 +85,9 @@ class SWP_URL_Management {
 		 * it to the end of the URL, and return the modified array.
 		 *
 		 */
-		$separator     = ( true == strpos( $array['url'], '?' ) ? '&' : '?' );
-		$utm_source    = 'utm_source=' . $array['network'];
-		$utm_medium    = '&utm_medium=' . SWP_Utility::get_option( 'analytics_medium' );
-		$utm_campaign  = '&utm_campaign=' . SWP_Utility::get_option( 'analytics_campaign' );
-        $url_string    = $separator . $utm_source . $utm_medium . $utm_campaign;
-		$array['url'] .= $url_string;
+		$array['url']  = add_query_arg( 'utm_source', $array['network'], $array['url'] );
+		$array['url']  = add_query_arg( 'utm_medium', SWP_Utility::get_option( 'analytics_medium' ), $array['url'] );
+		$array['url']  = add_query_arg( 'utm_campaign', SWP_Utility::get_option( 'analytics_campaign' ), $array['url'] );
 
 	    return $array;
 	}

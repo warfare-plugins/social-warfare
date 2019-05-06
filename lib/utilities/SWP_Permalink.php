@@ -177,6 +177,16 @@ class SWP_Permalink {
 					$url = get_site_url();
 				endif;
 
+		        // The URL is missing any kind of protocol.
+				if ( false === str_pos( $url, '//' ) || 0 == str_pos( $url, '//') ) {
+					$protocol = is_ssl() ? 'https' : 'http';
+
+					// For shared load servers. See https://codex.wordpress.org/Function_Reference/is_ssl
+					if ('http' == $protocol && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+			            $protocol = 'https';
+					}
+				}
+
 				// Check if they're using cross domain recovery
 				$current_domain = SWP_Utility::get_option( 'current_domain' );
 				$former_domain = SWP_Utility::get_option( 'former_domain' );
@@ -186,6 +196,7 @@ class SWP_Permalink {
 
 				// Filter the Protocol
 				$protocol = SWP_Utility::get_option( 'recovery_protocol' );
+
 				if ( $protocol == 'https' && strpos( $url,'https' ) === false ) :
 					$url = str_replace( 'http','https',$url );
 				elseif ( $protocol == 'http' && strpos( $url,'https' ) !== false ) :
