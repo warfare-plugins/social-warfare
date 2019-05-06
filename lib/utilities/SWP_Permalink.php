@@ -178,7 +178,7 @@ class SWP_Permalink {
 				endif;
 
 		        // The URL is missing any kind of protocol.
-				if ( false === str_pos( $url, '//' ) || 0 == str_pos( $url, '//') ) {
+				if ( false === strpos( $url, '//' ) || 0 == strpos( $url, '//') ) {
 					$protocol = is_ssl() ? 'https' : 'http';
 
 					// For shared load servers. See https://codex.wordpress.org/Function_Reference/is_ssl
