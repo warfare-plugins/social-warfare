@@ -173,7 +173,7 @@ class SWP_Permalink {
 				$url = apply_filters( 'post_link', $permalink, $post, $leavename );
 
 				// Ignore all filters and just start with the site url on the home page
-				if( is_front_page() ):
+				if( is_front_page() ) :
 					$url = get_site_url();
 				endif;
 
@@ -185,6 +185,8 @@ class SWP_Permalink {
 					if ('http' == $protocol && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
 			            $protocol = 'https';
 					}
+
+					$url = $protocol . $url;
 				}
 
 				// Check if they're using cross domain recovery
