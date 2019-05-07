@@ -504,10 +504,14 @@ class SWP_Utility {
 		global $wpdb;
 		$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
 
-		if ( !is_array( $attachment ) || !is_numeric( $attachment[0] ) ) {
-			return false;
+		if ( is_object( $attachment ) && is_numeric( $attachment->ID ) ) {
+			return $attachment->ID;
 		}
 
-		return $attachment[0];
+		if ( is_array( $attachment ) && is_numeric( $attachment['ID'] ) ) {
+            return $attachment['ID'];
+		}
+
+		return false;
 	}
 }
