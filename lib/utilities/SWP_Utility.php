@@ -510,7 +510,7 @@ class SWP_Utility {
 			return $attachment->ID;
 		}
 
-		if ( is_array( $attachment ) && is_numeric( $attachment['ID'] ) ) {
+		if ( is_array( $attachment ) && isset( $attachment['ID'] ) ) {
             return $attachment['ID'];
 		}
 
