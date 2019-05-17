@@ -280,29 +280,58 @@ class SWP_Script {
 	/**
 	 * Creates the `socialWarfare` object and initializes it with server-side data.
 	 *
+	 * We'll use this to also add a little bit of data that the JS file can use
+	 * to accomplish its functionality like the post ID, for example.
+	 *
 	 * @since 3.4.0 | 20 NOV 2018 | Created
+	 * @since 3.6.1 | 17 MAY 2019 | Changed $addons to $installed_addons to avoid
+	 *                              using the parent variable within its own loop.
+	 * @param  void
 	 * @return void
 	 *
 	 */
 	function localize_variables() {
 		global $post;
-		$id = isset( $post ) ? $post->ID : 0; // No ID on SW settings page. 
-		$addons = apply_filters( 'swp_registrations', array() );
-		$addon_vars = apply_filters( 'swp_addon_javascript_variables', array() );
 
-		foreach( $addons as $addon ) {
+
+		/**
+		 * The post ID will be null/unset if we are on the plugin's admin
+		 * settings page. As such, we'll just use 0.
+		 *
+		 */
+		$id = isset( $post ) ? $post->ID : 0;
+
+
+		/**
+		 * We'll fetch all the registered addons so that we can list the key of
+		 * each one in the socialWarfare.addons variable.
+		 *
+		 */
+		$installed_addons = apply_filters( 'swp_registrations', array() );
+		$addon_vars       = apply_filters( 'swp_addon_javascript_variables', array() );
+
+
+		/**
+		 * Loop through all of the addons that we found and fetch the key for
+		 * each one. The key should be the only information we need on the
+		 * front-end. Example keys: "pro", "affiliatewp", etc.
+		 *
+		 */
+		foreach( $installed_addons as $addon ) {
 			$addons[] = $addon->key;
 		}
 
-		$data = array(
-			'addons'	=> $addons,
-			'post_id' => $id,
-			'floatBeforeContent'	=> SWP_Utility::get_option( 'float_before_content' )
-		);
 
-		foreach( $addon_vars as $addon_key => $data_array ) {
-			$data[$addon_key] = $data_array;
-		}
+		/**
+		 * Once all the data has been collected, we'll organize it into a single
+		 * variable for output.
+		 *
+		 */
+		$data = array(
+			'addons'             => $addons,
+			'post_id'            => $id,
+			'floatBeforeContent' => SWP_Utility::get_option( 'float_before_content' )
+		);
 
 		wp_localize_script( 'social_warfare_script', 'socialWarfare', $data );
 	}
