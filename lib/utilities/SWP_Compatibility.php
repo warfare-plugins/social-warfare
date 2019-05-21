@@ -164,7 +164,7 @@ class SWP_Compatibility {
 		libxml_clear_errors();
 
 		if ( $added_xml_statement ) {
-			$html = str_replace( $xml_statement, '', $html );
+			$content = str_replace( $xml_statement, '', $content );
 		}
 
 		return $content;
