@@ -194,6 +194,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.6.1 (21 MAY 2019) =
+* Updated Hover Save Pin functionality to work more globally.
+
+
 = 3.6.0 (2 MAY 2019) =
 * Updated Hover Save Pin functionality to work more globally.
 * Updated how Facebook share counts are requested.

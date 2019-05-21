@@ -846,6 +846,31 @@ window.socialWarfare = window.socialWarfare || {};
 
    // Create a single instance of the save button and store it in socialWarfare.
    socialWarfare.createHoverSaveButton = function() {
+
+
+	   /**
+	    * This is a compatibility patch to make our plugin work nicely with the
+	    * Thrive Architect plugin. This will do two things:
+	    *
+	    * 1. It will stop the Pinterest Save button from appearing on images
+	    * when the post being loaded is inside of the Thrive Architect page
+	    * builder/editor.
+	    *
+	    * 2. It will locate any old Save buttons that have been added previously
+	    * that were then erroneously saved in the database. This way, whenever
+	    * they edit a post, it will simultanously repair/remove the invalid
+	    * markup that was stored in the database. 
+	    *
+	    */
+	   if( $('.tve_editor_page').length ) {
+		   $('.sw-pinit-button').remove();
+		   $('.sw-pinit').each( function() {
+			   var inner_content = $('.sw-pinit').contents();
+			   $(this).replaceWith(inner_content);
+		   });
+		   return;
+	   }
+
 	   var button = $(document.createElement("a"));
 	   button.css("display: none");
 	   button.addClass("swp-hover-pin-button");
