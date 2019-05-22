@@ -8,6 +8,7 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 22 FEB 2018 | Refactored into a class-based system.
+ * @since     3.6.1 | 22 MAY 2019 | Added the Pin Button Cleaner. Updated docblocks.
  *
  */
 class SWP_Compatibility {
@@ -20,23 +21,46 @@ class SWP_Compatibility {
 	 * plugin, and Really Simple SSL.
 	 *
 	 * @since  2.1.4
+	 * @since  3.6.1 | 22 MAY 2019 | Added the Pin Button Cleaner
+	 * @since  3.6.1 | 22 MAY 2019 | Moved core functionality into separate methods.
 	 * @access public
 	 * @param  integer $id The post ID
 	 * @return none
 	 *
 	 */
 	public function __construct() {
+		$this->queue_compatibility_filter_hooks();
+		$this->make_simple_podcast_press_compatible();
+	}
 
-		// Disabe Open Graph tags on Simple Podcast Press Pages
-		if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
-			global $ob_wp_simplepodcastpress;
-			remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress, 'spp_open_graph' ) , 1 );
-		}
 
-		// Remove our custom fields when a post is duplicated via the Duplicate Post plugin.
+	/**
+	 * A method to hook into custom hooks provided by other plugins. These allow
+	 * us access to their functionality to allow for easy compatibility patches.
+	 *
+	 * @since  3.6.1 | 22 MAY 2019 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function queue_compatibility_filter_hooks() {
+
+
+		/**
+		 * This will remove our custom meta fields from a newly duplicated post
+		 * so that when Duplicate Post plugin does it's thing, the share counts
+		 * and other data won't be duplicated with the post.
+		 *
+		 */
 		add_filter( 'duplicate_post_meta_keys_filter' , array( $this, 'filter_duplicate_meta_keys' ) );
 
-		// Fix the links that are modified by the Really Simple SSL plugin.
+
+		/**
+		 * This will make it so that the Really Simple SSL plugin won't be able
+		 * to hijack and manipulate the URL's that we are attempting to use for
+		 * the share recovery features.
+		 *
+		 */
 		add_filter("rsssl_fixer_output", array( $this, 'rsssl_fix_compatibility') );
 
 
@@ -45,8 +69,24 @@ class SWP_Compatibility {
 		 * inside of a page builder html and then subsequently saved into the content.
 		 *
 		 */
-		add_filter( 'the_content', array( $this, 'clean_out_pin_buttons' ) , 500);
+		add_filter( 'the_content', array( $this, 'clean_out_pin_buttons' ) );
+	}
 
+
+	/**
+	 * A method used to disable the open graph tags from the Podcast Press
+	 * plugin to allow ours to be the only ones in the markup.
+	 *
+	 * @since  3.6.1 | 22 MAY 2019 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function make_simple_podcast_press_compatible() {
+		if ( is_plugin_active( 'simple-podcast-press/simple-podcast-press.php' ) ) {
+			global $ob_wp_simplepodcastpress;
+			remove_action( 'wp_head' , array( $ob_wp_simplepodcastpress, 'spp_open_graph' ) , 1 );
+		}
 	}
 
 
@@ -172,11 +212,17 @@ class SWP_Compatibility {
 
 
 	/**
-	 * A function to fix the share recovery conflict with Really Simple SSL plugin
+	 * A function to fix the share recovery conflict with Really Simple SSL
+	 * plugin. Their plugin was using some sort of find/replace to ensure that
+	 * all links on the site use the HTTPS protocol. However, share recovery is
+	 * specifically attempting to fetch share counts for the old non-ssl
+	 * protocol, so we need to make sure that we undo this replacement before
+	 * fetching share counts.
+	 *
+	 * @since 2.2.2 | 01 JAN 2018 | Created
 	 * @param  string $html A string of html to be filtered
 	 * @return string $html The filtered string of html
 	 * @access public
-	 * @since 2.2.2
 	 *
 	 */
 	public function rsssl_fix_compatibility($html) {
@@ -185,12 +231,19 @@ class SWP_Compatibility {
 	    return $html;
 	}
 
+
     /**
      * Removes Social Warfare keys from the meta before post is duplicated.
      *
+     * This method is a specific compatibility patch for the plugin Duplicate
+     * Posts. Since our share counts, social media images, descriptions, etc.,
+     * are all stored in post meta fields, they get duplicated when a post is
+     * duplicated. This results in wrong or unuseful data on the new post. This
+     * method stops that from happening.
+     *
+     * @since  3.4.2 | 10 DEC 2018 | Created
      * @param  array  $meta_keys All meta keys prepared for duplication.
      * @return array  $meta_keys $meta_keys with no Social Warfare keys.
-     * @since  3.4.2 | 10 DEC 2018 | Created
      *
      */
 	public function filter_duplicate_meta_keys( $meta_keys = array() ) {

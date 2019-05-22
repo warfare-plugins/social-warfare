@@ -844,8 +844,8 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 ***************************************************************************/
 
-   // Create a single instance of the save button and store it in socialWarfare.
-   socialWarfare.createHoverSaveButton = function() {
+	// Create a single instance of the save button and store it in socialWarfare.
+	socialWarfare.createHoverSaveButton = function() {
 
 
 	   /**
@@ -859,25 +859,25 @@ window.socialWarfare = window.socialWarfare || {};
 	    * 2. It will locate any old Save buttons that have been added previously
 	    * that were then erroneously saved in the database. This way, whenever
 	    * they edit a post, it will simultanously repair/remove the invalid
-	    * markup that was stored in the database. 
+	    * markup that was stored in the database.
 	    *
 	    */
-	   if( $('.tve_editor_page').length ) {
-		   $('.sw-pinit-button').remove();
-		   $('.sw-pinit').each( function() {
-			   var inner_content = $('.sw-pinit').contents();
-			   $(this).replaceWith(inner_content);
-		   });
-		   return;
-	   }
+		if( $('.tve_editor_page').length ) {
+			$('.sw-pinit-button').remove();
+			$('.sw-pinit').each( function() {
+				var inner_content = $('.sw-pinit').contents();
+				$(this).replaceWith(inner_content);
+			});
+			return;
+		}
 
-	   var button = $(document.createElement("a"));
-	   button.css("display: none");
-	   button.addClass("swp-hover-pin-button");
-	   button.text("Save");
-	   socialWarfare.hoverSaveButton = $(button);
-	   return button;
-   }
+		var button = $(document.createElement("a"));
+		button.css("display: none");
+		button.addClass("swp-hover-pin-button");
+		button.text("Save");
+		socialWarfare.hoverSaveButton = $(button);
+		return button;
+	}
 
 
 	/**
