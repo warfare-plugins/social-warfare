@@ -96,13 +96,13 @@ window.socialWarfare = window.socialWarfare || {};
 		}
 	}
 
-  /**
-   * Values from the server may be sent as strings, but may also be empty.
-   * In this context, we are interested in strings with length only.
-   */
-  function isString(maybeString) {
+	/**
+	* Values from the server may be sent as strings, but may also be empty.
+	* In this context, we are interested in strings with length only.
+	*/
+	function isString(maybeString) {
 	  return typeof maybeString == 'string' && maybeString.length > 0;
-  }
+	}
 
 	/***************************************************************************
 	 *
