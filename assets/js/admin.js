@@ -11,125 +11,6 @@
 var socialWarfareAdmin = socialWarfareAdmin || {};
 var swpWidget, widgetSubmit;
 
-/**
-* Show and hide input fields based on conditional values.
-*
-* This function iterates over each element with the "dep" data attribute. For each
-* such dependant element, its parent element controls whether the dependant is shown or hidden
-* if the parent's value matches the condition.
-*
-* @since 3.0.0 Feb 12 2018 | Brought func in from admin-options-page.js and set to global scope; Updated variable names for semantics, switched to Yoda condietionals.
-* @since 3.0.0 Feb 14 2018 | Mapped the required array from variable types to string.
-*
-* @see admin-options-page.js
-* @return none
-*/
-function swpConditionalFields() {
-	if (typeof $ == 'undefined') {
-		$ = jQuery;
-	}
-
-	function swp_selected(name) {
-		return $('select[name="' + name + '"]').val();
-	}
-
-	function swp_checked(name) {
-		return $('[name="' + name + '"]').prop('checked');
-	}
-
-	function string_to_bool(string) {
-		if (string === 'true') { string = true };
-		if (string === 'false'){ string = false };
-		return string;
-	}
-
-	// Loop through all the fields that have dependancies
-	$("[data-dep]").each(function() {
-		// Fetch the conditional values
-		var condition = $(this).data('dep');
-		var required = JSON.parse(JSON.stringify($(this).data('dep_val')));
-
-		// Check if we're on the options page or somewhere else
-		if (window.location.href.indexOf("page=social-warfare") === -1) {
-			var conditionEl = $(this).parents('.widgets-holder-wrap').find('[data-swp-name="' + condition + '"]');
-		} else {
-			var conditionEl = $('[name="' + condition + '"]')[0];
-		}
-
-		var value;
-
-		if (typeof conditionEl === 'undefined') {
-			conditionEl = $('[name="' + condition + '"]')[0];
-
-			if (typeof conditionEl === 'undefined') {
-				conditionEl = $('[field$=' + condition + ']')[0];
-			}
-		}
-
-		// Fetch the value of checkboxes or other input types
-		if ($(conditionEl).attr('type') == 'checkbox') {
-			value = $(conditionEl).prop('checked');
-		} else {
-			value = $(conditionEl).val();
-		}
-
-		value = string_to_bool(value);
-
-	  //* Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
-		// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
-
-		if (window.location.href.indexOf("page=social-warfare") !== -1) {
-			// If the required value matches and it's parent is also being shown, show this conditional field
-			if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
-				$(this).show();
-			} else {
-				$(this).hide();
-			}
-		}
-
-		else {
-			// If the required value matches, show this conditional field
-			if ($.inArray(value, required) !== -1 || value === required) {
-				$(this).show();
-			} else {
-				$(this).hide();
-			}
-		}
-	});
-
-	if (false === swp_checked('float_style_source') &&
-		   'custom_color'              === swp_selected('float_default_colors')
-		|| 'custom_color_outlines'     === swp_selected('float_default_colors')
-		|| 'custom_color'              === swp_selected('float_single_colors')
-		|| 'custom_color_outlines'     === swp_selected('float_single_colors')
-		|| 'custom_color'              === swp_selected('float_hover_colors')
-		  || 'custom_color_outlines'     === swp_selected('float_hover_colors')) {
-		$('.sideCustomColor_wrapper').slideDown();
-
-	} else {
-		$('.sideCustomColor_wrapper').slideUp();
-	}
-}
-
-//* Only run on widgets.php
-if (window.location.href.indexOf("widgets.php") > -1) {
-	//* Make sure the elements exist before trying to read them.
-	//*
-	var widgetFinder = setInterval(function() {
-		if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
-
-		swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
-		widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
-
-		//* Force swpConditionalFields to run when the widget is opened or saved.
-		$(swpWidget).on("click", swpConditionalFields);
-
-		$(widgetSubmit).on("click", function() {
-			setTimeout(swpConditionalFields, 600);
-		});
-
-	}, 50);
-}
 
 (function(window, $) {
 	'use strict';
@@ -147,6 +28,127 @@ if (window.location.href.indexOf("widgets.php") > -1) {
 			return;
 		}
 	}
+
+	/**
+	* Show and hide input fields based on conditional values.
+	*
+	* This function iterates over each element with the "dep" data attribute. For each
+	* such dependant element, its parent element controls whether the dependant is shown or hidden
+	* if the parent's value matches the condition.
+	*
+	* @since 3.0.0 Feb 12 2018 | Brought func in from admin-options-page.js and set to global scope; Updated variable names for semantics, switched to Yoda condietionals.
+	* @since 3.0.0 Feb 14 2018 | Mapped the required array from variable types to string.
+	*
+	* @see admin-options-page.js
+	* @return none
+	*/
+	function swpConditionalFields() {
+		if (typeof $ == 'undefined') {
+			$ = jQuery;
+		}
+
+		function swp_selected(name) {
+			return $('select[name="' + name + '"]').val();
+		}
+
+		function swp_checked(name) {
+			return $('[name="' + name + '"]').prop('checked');
+		}
+
+		function string_to_bool(string) {
+			if (string === 'true') { string = true };
+			if (string === 'false'){ string = false };
+			return string;
+		}
+
+		// Loop through all the fields that have dependancies
+		$("[data-dep]").each(function() {
+			// Fetch the conditional values
+			var condition = $(this).data('dep');
+			var required = JSON.parse(JSON.stringify($(this).data('dep_val')));
+
+			// Check if we're on the options page or somewhere else
+			if (window.location.href.indexOf("page=social-warfare") === -1) {
+				var conditionEl = $(this).parents('.widgets-holder-wrap').find('[data-swp-name="' + condition + '"]');
+			} else {
+				var conditionEl = $('[name="' + condition + '"]')[0];
+			}
+
+			var value;
+
+			if (typeof conditionEl === 'undefined') {
+				conditionEl = $('[name="' + condition + '"]')[0];
+
+				if (typeof conditionEl === 'undefined') {
+					conditionEl = $('[field$=' + condition + ']')[0];
+				}
+			}
+
+			// Fetch the value of checkboxes or other input types
+			if ($(conditionEl).attr('type') == 'checkbox') {
+				value = $(conditionEl).prop('checked');
+			} else {
+				value = $(conditionEl).val();
+			}
+
+			value = string_to_bool(value);
+
+		  //* Options page uses parent visibilty to check. Widget page does not. This could definiitely look better.
+			// Show or hide based on the conditional values (and the dependancy must be visible in case it is dependant)
+
+			if (window.location.href.indexOf("page=social-warfare") !== -1) {
+				// If the required value matches and it's parent is also being shown, show this conditional field
+				if ($.inArray(value, required) !== -1 && $(conditionEl).parent('.sw-grid').is(':visible') ) {
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			}
+
+			else {
+				// If the required value matches, show this conditional field
+				if ($.inArray(value, required) !== -1 || value === required) {
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			}
+		});
+
+		if (false === swp_checked('float_style_source') &&
+			   'custom_color'              === swp_selected('float_default_colors')
+			|| 'custom_color_outlines'     === swp_selected('float_default_colors')
+			|| 'custom_color'              === swp_selected('float_single_colors')
+			|| 'custom_color_outlines'     === swp_selected('float_single_colors')
+			|| 'custom_color'              === swp_selected('float_hover_colors')
+			  || 'custom_color_outlines'     === swp_selected('float_hover_colors')) {
+			$('.sideCustomColor_wrapper').slideDown();
+
+		} else {
+			$('.sideCustomColor_wrapper').slideUp();
+		}
+	}
+
+	//* Only run on widgets.php
+	if (window.location.href.indexOf("widgets.php") > -1) {
+		//* Make sure the elements exist before trying to read them.
+		//*
+		var widgetFinder = setInterval(function() {
+			if (typeof swpWidget !== 'undefined') clearInterval(widgetFinder);
+
+			swpWidget = $("#widgets-right [id*=_swp_popular_posts_widget], [id*=_swp_popular_posts_widget].open")[0];
+			widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
+
+			//* Force swpConditionalFields to run when the widget is opened or saved.
+			$(swpWidget).on("click", swpConditionalFields);
+
+			$(widgetSubmit).on("click", function() {
+				setTimeout(swpConditionalFields, 600);
+			});
+
+		}, 50);
+	}
+
 
 	socialWarfareAdmin.linkLength = function(input) {
 		var tmp = '';
