@@ -400,11 +400,12 @@ class Social_Warfare {
 		 * provides for maximum extensibility to allow addons even easier access
 		 * than ever before to create and add more social networks to the plugin.
 		 *
+		 * @since 3.6.1 | 31 MAY 2019 | Removed Google Plus
+		 * 
 		 */
 		$social_networks = array(
 			'Social_Networks_Loader',
 			'Social_Network',
-			'Google_Plus',
 			'Facebook',
 			'Twitter',
 			'Linkedin',
