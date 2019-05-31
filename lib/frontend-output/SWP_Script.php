@@ -29,7 +29,8 @@ class SWP_Script {
 
 
 	/**
-	 * Add this classes methods to the appropiate hooks.
+	 * This method queues up the helper methods of this class to run when
+	 * WordPress fires off some of their hooks (e.g. wp_footer hook).
 	 *
 	 * @since  3.1.0 | 18 JUNE 2018 | Created
 	 * @param  void
