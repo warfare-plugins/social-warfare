@@ -42,7 +42,7 @@ var swpWidget, widgetSubmit;
 	* @see admin-options-page.js
 	* @return none
 	*/
-	function swpConditionalFields() {
+	socialWarfareAdmin.conditionalFields = function() {
 		if (typeof $ == 'undefined') {
 			$ = jQuery;
 		}
@@ -140,10 +140,10 @@ var swpWidget, widgetSubmit;
 			widgetSubmit = $(swpWidget).find("[id$=savewidget]")[0];
 
 			//* Force swpConditionalFields to run when the widget is opened or saved.
-			$(swpWidget).on("click", swpConditionalFields);
+			$(swpWidget).on("click", socialWarfareAdmin.conditionalFields);
 
 			$(widgetSubmit).on("click", function() {
-				setTimeout(swpConditionalFields, 600);
+				setTimeout(socialWarfareAdmin.conditionalFields, 600);
 			});
 
 		}, 50);
@@ -537,10 +537,10 @@ var swpWidget, widgetSubmit;
 		if ($('#social_warfare.postbox').length) {
 			createTextCounters();
 			socialWarfareAdmin.createResetButton();
-			swpConditionalFields();
+			socialWarfareAdmin.conditionalFields();
 
 			$(".sw-checkbox-toggle.swp-post-editor").click(postEditorCheckboxChange);
-			$('.swp_popular_post_options select').on('change', swpConditionalFields);
+			$('.swp_popular_post_options select').on('change', socialWarfareAdmin.conditionalFields);
 
 			//* Wait for the Rilis metabox to populate itself.
 			window.initSWMetabox = setInterval(displayMetaBox, 10);

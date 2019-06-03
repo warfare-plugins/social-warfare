@@ -206,7 +206,7 @@
 				socialWarfare.activateHoverStates();
 			}
 
-			swpConditionalFields();
+			socialWarfareAdmin.conditionalFields();
 
 		});
 	}
@@ -232,13 +232,13 @@
 
 			saveColorToggle();
 
-			swpConditionalFields();
+			socialWarfareAdmin.conditionalFields();
 		});
 	}
 
 	function populateOptions() {
 		jQuery('form.sw-admin-settings-form input, form.sw-admin-settings-form select').on('change', function() {
-			swpConditionalFields();
+			socialWarfareAdmin.conditionalFields();
 
 			socialWarfare.newOptions = fetchAllOptions();
 
@@ -872,7 +872,7 @@
 		tabNavInit();
 		checkboxesInit();
 		updateButtonPreviews();
-		swpConditionalFields();
+		socialWarfareAdmin.conditionalFields();
 		updateCttDemo();
 		updateScale();
 		handleRegistration();
