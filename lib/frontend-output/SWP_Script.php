@@ -318,6 +318,7 @@ class SWP_Script {
 		 * front-end. Example keys: "pro", "affiliatewp", etc.
 		 *
 		 */
+		$addons = array();
 		foreach( $installed_addons as $addon ) {
 			$addons[] = $addon->key;
 		}
