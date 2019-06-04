@@ -121,6 +121,15 @@ class SWP_Compatibility {
 
 
 		/**
+		 * If the content doesn't contain any pinit buttons, just bail out and
+		 * return the content. We don't have anything to process here.
+		 *
+		 */
+		if (strpos($content, 'sw-pinit-button') === false) {
+		    return $content;
+		}
+
+		/**
 		 * We'll be using PHP's DOMDocument to make our alterations to the
 		 * content, so if it doesn't exist, we'll need to bail out. This has
 		 * been available since PHP 5, but some server's may have it manually
