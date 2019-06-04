@@ -129,6 +129,7 @@ class SWP_Compatibility {
 		    return $content;
 		}
 
+
 		/**
 		 * We'll be using PHP's DOMDocument to make our alterations to the
 		 * content, so if it doesn't exist, we'll need to bail out. This has
@@ -139,6 +140,7 @@ class SWP_Compatibility {
 		if( !class_exists( 'DOMDocument' ) ) {
 			return $content;
 		}
+
 
 		// DOMDocument works better with an XML delcaration.
 		if ( false === strpos( $content, '?xml version' ) ) {
