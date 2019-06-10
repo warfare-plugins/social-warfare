@@ -38,6 +38,7 @@ class Social_Warfare {
 		add_action('plugins_loaded', array($this, 'init'));
 	}
 
+
 	public function init() {
 		// Loads the files for each class.
 		$this->load_classes();
@@ -401,7 +402,7 @@ class Social_Warfare {
 		 * than ever before to create and add more social networks to the plugin.
 		 *
 		 * @since 3.6.1 | 31 MAY 2019 | Removed Google Plus
-		 * 
+		 *
 		 */
 		$social_networks = array(
 			'Social_Networks_Loader',
