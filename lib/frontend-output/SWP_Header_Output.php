@@ -103,7 +103,7 @@ class SWP_Header_Output {
 		$meta_html = apply_filters( 'swp_header_html', '' );
 
 		if ( $meta_html ) :
-			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->';
+			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->' . PHP_EOL;
 			echo $meta_html;
 			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->' . PHP_EOL . PHP_EOL;
 		endif;
