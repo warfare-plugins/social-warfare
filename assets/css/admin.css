@@ -449,3 +449,70 @@ a.swp-notice-cta {
 .wp-core-ui #social_warfare a.swpmb-add-media.button {
 	margin: 15px 0;
 }
+
+/**
+ * Follow Widget Styles
+ *
+ */
+ .swfw-revoke-button,
+ .swfw-authorization-button {
+   width: 70%;
+   text-align: center;
+   max-width: 200px;
+ }
+
+ .swfw-input-field,
+ .swfw-follow-field {
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: space-between;
+   align-items: center;
+   height: 50px;
+   margin: 15px auto;
+ }
+
+ .swfw-follow-field.swfw-inactive a {
+   cursor: initial;
+ }
+ .swfw-follow-field.swfw-active a {
+   cursor: pointer;
+ }
+
+ .swfw-follow-field-icon {
+   color: black;
+   width: 40px;
+   font-size: 40px;
+   line-height: 42px;
+   font-weight: bold;
+   transition: all 300ms;
+   border-radius: 3px;
+   height: 40px;
+   text-align: center;
+   padding: 2px;
+ }
+
+ .swfw-widget label {
+   font-size: 14px;
+   width: 100px;
+ }
+
+ .swfw-follow-field label {
+   text-align: right;
+ }
+
+ .swfw-input-field input,
+ .swfw-input-field select,
+ .swfw-follow-field input {
+   padding: 15px;
+   width: 50%;
+   height: 100%;
+   border-radius: 4px;
+ }
+
+ .swfw-follow-field.swfw-inactive div {
+   background: white;
+ }
+
+ .swfw-follow-field.swfw-active div {
+   color: white;
+ }
