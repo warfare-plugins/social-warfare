@@ -124,17 +124,33 @@ class SWP_Header_Output {
 	 *
 	 */
 	function output_font_css( $meta_html ) {
-		// The var $meta_html is passed to both string and array filters.
-		// The solution is to re-wire those filters appropriately. This is the patch.
+
+
+		/**
+		 * The var $meta_html is passed to both string and array filters. The
+		 * solution is to re-wire those filters appropriately. This is the patch.
+		 *
+		 */
 		if ( is_array( $meta_html ) ) {
 			return $meta_html;
 		}
 
-		// Make sure we only output the style once.
+		/**
+		 * This ensures that the icon font CSS that gets compiled below will
+		 * only be generated one time. If it's already been generated and exists
+		 * in this string, then bail out.
+		 *
+		 */
 		if ( !empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
 			return $meta_html;
 		endif;
 
+
+		/**
+		 * If, for some reason, we have something other than a string here,
+		 * convert it into a string and then proceed as planned.
+		 *
+		 */
 		if ( false == is_string( $meta_html ) ) {
 		   $meta_html = '';
 		}
