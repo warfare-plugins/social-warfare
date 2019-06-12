@@ -103,7 +103,7 @@ class SWP_Header_Output {
 		$meta_html = apply_filters( 'swp_header_html', '' );
 
 		if ( $meta_html ) :
-			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->';
+			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->' . PHP_EOL;
 			echo $meta_html;
 			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com -->' . PHP_EOL . PHP_EOL;
 		endif;
@@ -124,24 +124,57 @@ class SWP_Header_Output {
 	 *
 	 */
 	function output_font_css( $meta_html ) {
-		// The var $meta_html is passed to both string and array filters.
-		// The solution is to re-wire those filters appropriately. This is the patch.
+
+
+		/**
+		 * The var $meta_html is passed to both string and array filters. The
+		 * solution is to re-wire those filters appropriately. This is the patch.
+		 *
+		 */
 		if ( is_array( $meta_html ) ) {
 			return $meta_html;
 		}
 
-		// Make sure we only output the style once.
+		/**
+		 * This ensures that the icon font CSS that gets compiled below will
+		 * only be generated one time. If it's already been generated and exists
+		 * in this string, then bail out.
+		 *
+		 */
 		if ( !empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
 			return $meta_html;
 		endif;
 
+
+		/**
+		 * If, for some reason, we have something other than a string here,
+		 * convert it into a string and then proceed as planned.
+		 *
+		 */
 		if ( false == is_string( $meta_html ) ) {
 		   $meta_html = '';
 		}
 
-		$style = '<style>@font-face {font-family: "sw-icon-font";src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
-	url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");font-weight: normal;font-style: normal;}</style>';
+		$style = '<style>
+	@font-face {
+		font-family: "sw-icon-font";
+		src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");
+		src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),
+		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
+		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),
+		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");
+		font-weight: normal;
+		font-style: normal;
+	}
+</style>';
 
+
+		/**
+		 * If we are in the admin area, then we need to echo this string
+		 * directly to the screen. Otherwise, we're going to return the string
+		 * so that it will get output via the header hook.
+		 *
+		 */
 		if ( true === is_admin() ) {
 			echo $style;
 		} else {
