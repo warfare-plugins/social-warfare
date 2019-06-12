@@ -168,6 +168,13 @@ class SWP_Header_Output {
 	}
 </style>';
 
+
+		/**
+		 * If we are in the admin area, then we need to echo this string
+		 * directly to the screen. Otherwise, we're going to return the string
+		 * so that it will get output via the header hook.
+		 *
+		 */
 		if ( true === is_admin() ) {
 			echo $style;
 		} else {
