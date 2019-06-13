@@ -66,6 +66,16 @@ class Social_Warfare_Addon {
 	 * 2. key: This is the snake_cased name of the addon.
 	 * 3. version: The current version number of the addon.
 	 *
+	 * NOTE: These can be passed in as an associative array diring insantation
+	 * of your class or they can be set directly as class properties in your
+	 * class constructor prior to calling parent__construct();
+	 *
+	 * Example:
+	 *     $this->name    = 'Social Warfare - Pro';
+	 *     $this->key     = 'pro';
+	 *     $this->version = 3.6.1;
+	 *     parent::__contruct();
+	 *
 	 * @since  3.0.0 | 01 MAR 2019 | Created
 	 * @param  array  $args An associative array of class properties.
 	 * @return void
