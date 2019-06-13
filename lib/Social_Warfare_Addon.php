@@ -1,32 +1,87 @@
 <?php
 
+/**
+ * The Social Warfare Addon Class
+ *
+ * This class serves as the parent class for all addons to the Social Warfare
+ * framework. This class allows the setting of certain properties (like the
+ * addon key, product ID, etc.) that will allow the addon to properly control
+ * the registration of the product, the validity of the license key used for the
+ * addon, and other necessary checks that allow the addons to integrate
+ * seemlessly with the core plugin.
+ *
+ * @package Social Warfar / Lib
+ * @since  3.0.0 | 01 MAR 2018 | Created
+ *
+ */
 class Social_Warfare_Addon {
+
+
+	/**
+	 * The Magic Constructor Method
+	 *
+	 * This method instantiates the addon object and sets up all the object
+	 * properties that will be needed.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  array $args [description]
+	 * @return void
+	 *
+	 */
 	public function __construct( $args = array() ) {
+
 		$this->establish_class_properties( $args );
 		$this->establish_license_key();
 		$this->is_registered = $this->establish_resgistration();
 
-		// Verify the user can perform these types of actions.
-		add_action( 'wp_ajax_swp_register_plugin', [$this, 'register_plugin'] );
-		add_action( 'wp_ajax_swp_unregister_plugin', [$this, 'unregister_plugin'] );
-		add_action( 'wp_ajax_swp_ajax_passthrough', [$this, 'ajax_passthrough'] );
 
+		/**
+		 * This queues up our register and unregister hooks that will be sent
+		 * from the settings page to admin-ajax.php.
+		 *
+		 */
+		add_action( 'wp_ajax_swp_register_plugin', array( $this, 'register_plugin' ) );
+		add_action( 'wp_ajax_swp_unregister_plugin', array( $this, 'unregister_plugin' ) );
+		add_action( 'wp_ajax_swp_ajax_passthrough', array( $this, 'ajax_passthrough' ) );
+
+
+		/**
+		 * This is a custom filter hook that gets called in core that fetches
+		 * all of the addons so that we can have the key for each addon in a
+		 * nice, neat array for easy access.
+		 *
+		 */
 		add_filter( 'swp_registrations', array( $this, 'add_self' ) );
 	}
 
-	private function establish_class_properties( $args = array () ) {
-		$required= ['name', 'key', 'version'];
 
+	/**
+	 * Establish the Class Properties for this Addon
+	 *
+	 * @since  3.0.0 | 01 MAR 2019 | Created
+	 * @param  array  $args An associative array of class properties.
+	 * @return void
+	 *
+	 */
+	private function establish_class_properties( $args = array () ) {
+
+		// Migrate all passed $args into local class properties.
 		foreach($args as $key => $value) {
 			$this->$key = $value;
 		}
 
+		// Mandatory class properties for an addon to function properly.
+		$required = array( 'name', 'key', 'version' );
+
+		// Check to ensure that all required properties have been passed in.
 		foreach($required as $key) {
 			if ( !isset( $this->$key ) ) :
 				$message = "Hey developer, you must provide us this information for your class: $key => \$value";
 				throw new Exception($message);
 			endif;
 		}
+
+		// If they don't set a store url, default to our storefront.
 		if ( isset( $this->product_id ) && empty ( $this->store_url ) ) {
 			$this->store_url = 'https://warfareplugins.com';
 		}
