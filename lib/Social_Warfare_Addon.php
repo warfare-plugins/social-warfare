@@ -12,6 +12,7 @@
  *
  * @package Social Warfar / Lib
  * @since  3.0.0 | 01 MAR 2018 | Created
+ * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
  *
  */
 class Social_Warfare_Addon {
@@ -24,6 +25,7 @@ class Social_Warfare_Addon {
 	 * properties that will be needed.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array $args [description]
 	 * @return void
 	 *
@@ -77,6 +79,7 @@ class Social_Warfare_Addon {
 	 *     parent::__contruct();
 	 *
 	 * @since  3.0.0 | 01 MAR 2019 | Created
+	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array  $args An associative array of class properties.
 	 * @return void
 	 *
@@ -129,6 +132,7 @@ class Social_Warfare_Addon {
 	 * This should be the last item called in an addon's main class.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array $addons The array of addons currently activated.
 	 * @return array $addons The modified array of addons currently activated.
 	 *
@@ -138,18 +142,49 @@ class Social_Warfare_Addon {
 		return $addons;
 	}
 
+
+	/**
+	 * A method to fetch the license key from the database and store it in a
+	 * local class property for the Addon object.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
+	 * @param  void
+	 * @return void Processed values are stored in $this->license_key.
+	 *
+	 */
 	public function establish_license_key() {
+
+
+		/**
+		 * The license key is stored in our options set in the database. This
+		 * utility method allows us to easily retrieve it.
+		 *
+		 */
 		$key = SWP_Utility::get_option( $this->key . '_license_key' );
 
-		if ( !$key ) :
+
+		/**
+		 * This check exists to retrieve the license key from the old, legacy
+		 * Social Warfare options set in the database. This was changed to a new
+		 * set when 3.0.0 rolled out. This is most likely no longer needed, but
+		 * we'll leave it in there for any stragglers who are updating from 2.x
+		 * to a current version.
+		 *
+		 */
+		if ( !$key ) {
 			$old_options = get_option( 'socialWarfareOptions', false );
+			if ( isset( $old_options[$this->key . '_license_key']) ) {
+				$key = $old_options[$this->key . '_license_key'];
+			}
+		}
 
-			if ( isset( $old_options[$this->key . '_license_key']) ) :
-				$key = isset( $old_options[$this->key . '_license_key']);
-			endif;
 
-		endif;
-
+		/**
+		 * If we were able to find a license key, then we'll go ahead and store
+		 * it in a local class property for this addon.
+		 *
+		 */
 		$this->license_key = $key ? $key : '';
 	}
 
