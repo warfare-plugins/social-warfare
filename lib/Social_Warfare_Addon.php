@@ -58,6 +58,14 @@ class Social_Warfare_Addon {
 	/**
 	 * Establish the Class Properties for this Addon
 	 *
+	 * Each addon that extends this class will be required to pass in three
+	 * required class properties in order to instantiate without errors. The
+	 * following is an index of required properties:
+	 *
+	 * 1. name: This is the nice/pretty name of the addon.
+	 * 2. key: This is the snake_cased name of the addon.
+	 * 3. version: The current version number of the addon.
+	 *
 	 * @since  3.0.0 | 01 MAR 2019 | Created
 	 * @param  array  $args An associative array of class properties.
 	 * @return void
@@ -73,10 +81,16 @@ class Social_Warfare_Addon {
 		// Mandatory class properties for an addon to function properly.
 		$required = array( 'name', 'key', 'version' );
 
-		// Check to ensure that all required properties have been passed in.
+
+		/**
+		 * Check to ensure that all required properties have been passed in.
+		 * If a required field hasn't been passed in from the addon, we'll
+		 * manually trigger an exception here to notify the developer.
+		 *
+		 */
 		foreach($required as $key) {
 			if ( !isset( $this->$key ) ) :
-				$message = "Hey developer, you must provide us this information for your class: $key => \$value";
+				$message = "Hey developer, you are attempting to instantiate a class that extends the Social_Warfare_Addon class. In order to do this, you must provide the following argument for your class: $key => \$value. You can read more about required class properties for this class in the docblock provided in /lib/Social_Warfare_Addon.php for the establish_class_properties() method.";
 				throw new Exception($message);
 			endif;
 		}
@@ -98,7 +112,6 @@ class Social_Warfare_Addon {
 	 */
 	public function add_self( $addons ) {
 		$addons[] = $this;
-
 		return $addons;
 	}
 
