@@ -105,7 +105,16 @@ class Social_Warfare_Addon {
 			endif;
 		}
 
-		// If they don't set a store url, default to our storefront.
+
+		/**
+		 * This is the store URL used by Easy Digital Downloads to ping our site
+		 * in order to check the validity of the the registration license key.
+		 *
+		 * In third party addons, vendors can set this to their own websites. If
+		 * not, we'll assume it's one of our own addons and ping our site to
+		 * check the license key.
+		 *
+		 */
 		if ( isset( $this->product_id ) && empty ( $this->store_url ) ) {
 			$this->store_url = 'https://warfareplugins.com';
 		}
