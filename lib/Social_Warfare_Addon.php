@@ -116,9 +116,13 @@ class Social_Warfare_Addon {
 	 * The callback function used to add a new instance of this
 	 * to our swp_registrations filter.
 	 *
+	 * See above: add_filter( 'swp_registrations', array( $this, 'add_self' ) );
 	 * This should be the last item called in an addon's main class.
 	 *
-	 * @param array $addons The array of addons currently activated.
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  array $addons The array of addons currently activated.
+	 * @return array $addons The modified array of addons currently activated.
+	 *
 	 */
 	public function add_self( $addons ) {
 		$addons[] = $this;
