@@ -188,15 +188,38 @@ class Social_Warfare_Addon {
 		$this->license_key = $key ? $key : '';
 	}
 
-	public function establish_resgistration() {
-		// Get the timestamps setup for comparison to see if a week has passed since our last check
-		$current_time = time();
 
-		if ( !( $timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' ) ) ) {
+	/**
+	 * A method to ping our EDD storefront API and verify the validity of a
+	 * registration license key.
+	 *
+	 * We recheck the license key to see if it is STILL valid once per week.
+	 * This is because if soemone cancels their subscription, files for a refund,
+	 * or in some other way brings their license key to the end of it's life,
+	 * the plugin will need to be able to detect this and deactivate the premium,
+	 * registration locked features. 
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return bool The current registration status
+	 *
+	 */
+	public function establish_resgistration() {
+
+
+		/**
+		 * The timestamp in the database will represent the unix time of the
+		 * last time that the license key was checked to see if it is still valid.
+		 *
+		 */
+		$timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' );
+		if ( empty( $timestamp ) ) {
 			$timestamp =  0;
 		}
 
+
 		$time_to_recheck = $timestamp + 604800;
+		$current_time = time();
 
 		// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
 		if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) :
