@@ -197,7 +197,7 @@ class Social_Warfare_Addon {
 	 * This is because if soemone cancels their subscription, files for a refund,
 	 * or in some other way brings their license key to the end of it's life,
 	 * the plugin will need to be able to detect this and deactivate the premium,
-	 * registration locked features. 
+	 * registration locked features.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @param  void
@@ -217,14 +217,19 @@ class Social_Warfare_Addon {
 			$timestamp =  0;
 		}
 
-
 		$time_to_recheck = $timestamp + 604800;
-		$current_time = time();
+		$current_time    = time();
 
-		// If they have a key and a week hasn't passed since the last check, just return true...the plugin is registered.
-		if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) :
+
+		/**
+		 * If they have a key and a week hasn't passed since the last check,
+		 * just return true...the plugin is registered.
+		 *
+		 */
+		if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) {
 			return true;
-		endif;
+		}
+
 
 		// If a week has passed since the last check, ping our API to check the validity of the license key
 		if ( !empty( $this->license_key) ) :
