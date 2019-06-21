@@ -171,7 +171,7 @@ class SWP_Compatibility {
 		 *
 		 */
 		$dom = new DOMDocument();
-		$dom->loadHTML( $content );
+		$dom->loadHTML( $content, LIBXML_HTML_NODEFDTD );
 		$xpath = new DOMXPath( $dom );
 
 
@@ -210,7 +210,11 @@ class SWP_Compatibility {
 		 * modified content.
 		 *
 		 */
-		$content = $dom->saveHTML();
+		$html    = $dom->saveHTML();
+		$start   = strpos($html,'<body>') + 6;
+	 	$end     = strrpos($html,'</body>') - strlen($html);
+		$content = substr($html, $start, $end);
+		
 		libxml_use_internal_errors( $libxml_error_status );
 		libxml_clear_errors();
 
