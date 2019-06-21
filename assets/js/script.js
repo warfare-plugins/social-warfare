@@ -1168,7 +1168,7 @@ window.socialWarfare = window.socialWarfare || {};
 		pinterestSquare = button.nextSibling;
 
 		//* The sibling to the Pinterest button is always a span.
-		if (typeof pinterestSquare != 'undefined' && pinterestSquare.nodeName == 'SPAN') {
+		if ( pinterestSquare != undefined && pinterestSquare.nodeName == 'SPAN') {
 			style = window.getComputedStyle(pinterestSquare);
 			size = "24px";
 
