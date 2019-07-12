@@ -399,10 +399,9 @@ class SWP_Social_Network {
 	 * @since  3.0.0 | 18 APR 2018 | Created
 	 * @since  3.3.0 | 24 AUG 2018 | Removed use of $options, calls
 	 *                               SWP_Utility::get_option() instead.
-	 *
+	 * @since  4.0.0 | 12 JUL 2019 | Added check for delayed share count display.
 	 * @param  array $share_counts The array of share counts
 	 * @param  array $options  DEPRECATED The array of options from the button panel object.
-	 *
 	 * @return bool  True if share counts should be displayed, else false.
 	 *
 	 */
@@ -440,8 +439,12 @@ class SWP_Social_Network {
 			return false;
 		}
 
-		// Cast a string 'true'/'false' to a boolean true/false in case it was
-		// passed in via the shortcode.
+
+		/**
+		 * Cast a string 'true'/'false' to a boolean true/false in case it was
+		 * passed in via the shortcode.
+		 *
+		 */
 		if( is_string( $options['network_shares'] ) ) {
 			$options['network_shares'] = (strtolower( $options['network_shares'] ) === 'true');
 		}
