@@ -366,7 +366,7 @@ class SWP_Social_Network {
 			$icon .= '</span>';
 		$icon .= '</span>';
 
-		if ( true === $this->are_shares_shown( $share_counts , $panel_context['options'] ) ) :
+		if ( true === $this->are_shares_shown( $panel_context ) ) :
 			$icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
 		else :
 			$icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
@@ -397,7 +397,8 @@ class SWP_Social_Network {
 	 * Returns a boolean indicateding whether or not to display share counts.
 	 *
 	 * @since  3.0.0 | 18 APR 2018 | Created
-	 * @since  3.3.0 | 24 AUG 2018 | Removed use of $options, calls SWP::Utility instead.
+	 * @since  3.3.0 | 24 AUG 2018 | Removed use of $options, calls
+	 *                               SWP_Utility::get_option() instead.
 	 *
 	 * @param  array $share_counts The array of share counts
 	 * @param  array $options  DEPRECATED The array of options from the button panel object.
@@ -405,7 +406,39 @@ class SWP_Social_Network {
 	 * @return bool  True if share counts should be displayed, else false.
 	 *
 	 */
-	public function are_shares_shown( $share_counts , $options = array()) {
+	public function are_shares_shown( $panel_context = array() ) {
+
+
+		/**
+		 * Bail out and return false if the $panel_context was not passed in
+		 * properly as a paramter. We'll need this for share counts, post data,
+		 * and other important information.
+		 *
+		 */
+		if( empty( $panel_context ) ) {
+			return false;
+		}
+
+
+		/**
+		 * There are three main sections of the $panel_context. We'll take what
+		 * we need here so that we can have cleaner, neater access to them later.
+		 *
+		 */
+		$share_counts = $panel_context['shares'];
+		$options      = $panel_context['options'];
+		$post_id      = $panel_context['post_data']['ID'];
+
+
+		/**
+		 * If the share counts are delayed in the option, then we'll check the
+		 * current age of the post and check to see if they are still delayed
+		 * or if they can be shown now.
+		 *
+		 */
+		if( true === SWP_Buttons_Panel::are_share_counts_delayed( $post_id ) ) {
+			return false;
+		}
 
 		// Cast a string 'true'/'false' to a boolean true/false in case it was
 		// passed in via the shortcode.
