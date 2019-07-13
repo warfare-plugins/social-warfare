@@ -881,7 +881,7 @@ trait SWP_Buttons_Panel_Trait {
 	   $this->html = '<div ' . $this->classes . $this->attributes . '>' . $this->inner_html . '</div>';
    }
 
-   
+
    /**
 	* This allows users to delay the display of share counts until the post
 	* has reached a certain age in hours. So if they set the option to 10,
@@ -898,7 +898,7 @@ trait SWP_Buttons_Panel_Trait {
 	   if( !empty($delay_share_counts) && is_numeric($delay_share_counts) && $delay_share_counts > 0 ) {
 		   $delay_share_counts = $delay_share_counts * 60 * 60;
 		   $current_time       = date( 'U' );
-		   $publication_time   = get_post_time( 'U' , false , $post_id );
+		   $publication_time   = get_post_time( 'U' , true , $post_id );
 		   $post_age           = $current_time - $publication_time;
 
 		   if($post_age < $delay_share_counts ) {
