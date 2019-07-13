@@ -46,6 +46,7 @@ class SWP_Script {
 
 		// Queue up our footer hook function
 		add_filter( 'swp_footer_scripts', array( $this, 'click_tracking' ) );
+		add_filter( 'swp_javascript_variables', array( $this, 'emphasize_buttons' ) );
 
 		// Queue up the Social Warfare scripts and styles
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -309,7 +310,7 @@ class SWP_Script {
 		 *
 		 */
 		$installed_addons = apply_filters( 'swp_registrations', array() );
-		$addon_vars       = apply_filters( 'swp_addon_javascript_variables', array() );
+		$js_variables     = apply_filters( 'swp_javascript_variables', array() );
 
 
 		/**
@@ -332,6 +333,7 @@ class SWP_Script {
 		$data = array(
 			'addons'             => $addons,
 			'post_id'            => $id,
+			'variables'          => $js_variables,
 			'floatBeforeContent' => SWP_Utility::get_option( 'float_before_content' )
 		);
 
@@ -350,6 +352,20 @@ class SWP_Script {
 	public function hook_esi() {
 		echo ' var swp_nonce = "'.wp_create_nonce().'";';
 		exit;
+	}
+
+
+	/**
+	 * A method for outputting the "Emphasize Buttons" server variable.
+	 *
+	 * @since  4.0.0 | 13 JUL 2019 | Created
+	 * @param  array $variables An array of server variables to be sent to the JS
+	 * @return array The modified array of server variables to be sent to the JS
+	 * 
+	 */
+	public function emphasize_buttons( $variables ) {
+		$variables['emphasizeIcons'] = SWP_Utility::get_option('emphasized_icon');
+		return $variables;
 	}
 
 }

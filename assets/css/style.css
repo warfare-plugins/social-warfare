@@ -2600,5 +2600,6 @@ div[class*=custom_color][class^=_wrapper] {
 .swfw-follow-field.swfw-active div {
   color: white;
 }
-
-/*# sourceMappingURL=style.css.map */
+.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer.swp-emphasize {
+  flex: 2;
+}
