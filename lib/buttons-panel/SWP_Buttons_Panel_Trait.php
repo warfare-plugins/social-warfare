@@ -894,8 +894,9 @@ trait SWP_Buttons_Panel_Trait {
    public static function are_share_counts_delayed( $post_id ) {
 	   $delay_share_counts = SWP_Utility::get_option( 'delay_share_counts' );
 	   if( !empty($delay_share_counts) && is_numeric($delay_share_counts) && $delay_share_counts > 0 ) {
-		   $current_time     = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
-		   $publication_time = floor( ( ( get_post_time( 'U' , false , $post_id ) / 60 ) / 60 ) );
+		   $delay_share_counts = $delay_share_counts * 60 * 60;
+		   $current_time     = date( 'U' );
+		   $publication_time = get_post_time( 'U' , false , $post_id );
 		   $post_age         = $current_time - $publication_time;
 
 		   if($post_age < $delay_share_counts ) {
