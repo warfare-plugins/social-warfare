@@ -72,7 +72,7 @@ class SWP_Script {
 			$debug = true;
 		}
 
-		$enabled = (bool) apply_filters( 'swp_enable_suffix', ! $debug );
+		$enabled = (bool) apply_filters( 'swp_enable_suffix', !$debug );
 
 		return $enabled ? '.min' : '';
 	}
