@@ -880,6 +880,8 @@ trait SWP_Buttons_Panel_Trait {
    protected function combine_html_assets() {
 	   $this->html = '<div ' . $this->classes . $this->attributes . '>' . $this->inner_html . '</div>';
    }
+
+   
    /**
 	* This allows users to delay the display of share counts until the post
 	* has reached a certain age in hours. So if they set the option to 10,
