@@ -1,4 +1,5 @@
 <?php
+
 /**
 * The core Social Warfare admin settings page.
 *
@@ -20,6 +21,8 @@
 *
 */
 class SWP_Options_Page extends SWP_Option_Abstract {
+
+
 	/**
 	* The Options Page Tabs
 	*
