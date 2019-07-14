@@ -151,16 +151,17 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
+		socialWarfare.emphasizeButtons();
 		socialWarfare.createFloatHorizontalPanel();
 		socialWarfare.positionFloatSidePanel();
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
 
-	if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
-		socialWarfare.createHoverSaveButton();
-		socialWarfare.triggerImageListeners();
-	}
+		if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
+			socialWarfare.createHoverSaveButton();
+			socialWarfare.triggerImageListeners();
+		}
 
 
 		/**
@@ -227,6 +228,70 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.panels.floatingSide = $(".swp_social_panelSide");
 
 		return socialWarfare.panels;
+	}
+
+
+	/**
+	 * A function to emphasize the first couple of buttons in the panel.
+	 *
+	 * @since  4.0.0 | 14 JUL 2019 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	socialWarfare.emphasizeButtons = function() {
+
+
+		/**
+		 * If the variable that was passed from the server with the setting
+		 * isn't set, then bail early. Gracefully fail.
+		 *
+		 */
+		if (typeof socialWarfare.variables.emphasizeIcons == 'undefined') {
+			return;
+		}
+
+
+		/**
+		 * Don't use this feature on mobile. This is a desktop only feature.
+		 *
+		 */
+		if (socialWarfare.isMobile()) {
+			return;
+		}
+
+
+		/**
+		 * Loop through each buttons panel on the page. Within each panel, we'll
+		 * loop through each of the buttons and emphasize them.
+		 *
+		 */
+		jQuery(".swp_social_panel:not(.swp_social_panelSide)").each(function(i, panel){
+			jQuery(panel).find(".nc_tweetContainer:not(.total_shares)").each( function(index, button) {
+				if( index < socialWarfare.variables.emphasizeIcons) {
+
+					var shareWidth     = jQuery(button).find(".swp_share").width();
+					var iconWidth      = jQuery(button).find("i.sw").outerWidth();
+					var iconTextWidth  = shareWidth + iconWidth + 35;
+					var containerWidth = jQuery(button).width();
+					var change         = 1 + ((shareWidth + 35) / containerWidth);
+
+					if(change < 2) {
+						jQuery(button)
+							.addClass("swp_nohover")
+							.css({'flex': '2 1 0%'})
+							.find('.iconFiller')
+							.width(iconTextWidth);
+					} else {
+						jQuery(button)
+							.addClass("swp_nohover")
+							.css({'flex': change  + ' 1 0%'})
+							.find('.iconFiller')
+							.width(iconTextWidth);
+					}
+				}
+			});
+		});
 	}
 
 
