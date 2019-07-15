@@ -10,6 +10,7 @@
  */
 class SWP_Script {
 
+
 	/**
 	 * The magic method used to instatiate our class and queue up all of the
 	 * add_action and add_filter functions as well as fix a known compatibility
@@ -279,6 +280,7 @@ class SWP_Script {
 		return $vars;
 	}
 
+
 	/**
 	 * Creates the `socialWarfare` object and initializes it with server-side data.
 	 *
@@ -361,7 +363,7 @@ class SWP_Script {
 	 * @since  4.0.0 | 13 JUL 2019 | Created
 	 * @param  array $variables An array of server variables to be sent to the JS
 	 * @return array The modified array of server variables to be sent to the JS
-	 * 
+	 *
 	 */
 	public function emphasize_buttons( $variables ) {
 		$variables['emphasizeIcons'] = SWP_Utility::get_option('emphasized_icon');
