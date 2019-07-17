@@ -35,7 +35,9 @@ class SWP_URL_Management {
 
 		/**
 		 * This class will manage and add the URL parameters for shared links
-		 * using the Google Analytics UTM format.
+		 * using the Google Analytics UTM format. The link modifications made by
+		 * this class are added via filter and will be accessed by applying the
+		 * swp_analytics filter.
 		 *
 		 */
 		new SWP_Google_Analytics();

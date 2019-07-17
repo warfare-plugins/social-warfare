@@ -35,7 +35,8 @@ class SWP_Utility {
 
 	/**
 	 *
-	 * Fetches a key from our filtered $swp_user_options.
+	 * Given a unique option key, this will return the option value from our
+	 * filtered, processed and cleaned up $swp_user_options global array.
 	 *
 	 * @since  3.0.0 | 24 APR 2018 | Created.
 	 * @since  3.0.8 | 16 MAY 2018 | Added $options parameter.

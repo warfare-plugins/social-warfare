@@ -3,8 +3,10 @@
 /**
  * SWP_Google_Analytics
  *
- * A class to manage the URL parameters added to the end of URL's that are
- * shared out the various social networks.
+ * This class will manage and add the URL parameters for shared links
+ * using the Google Analytics UTM format. The link modifications made by
+ * this class are added via filter and will be accessed by applying the
+ * swp_analytics filter.
  *
  * @since  4.0.0 | 17 JUL 2019 | Created
  *
@@ -24,7 +26,7 @@ class SWP_Google_Analytics {
 	 *
 	 */
 	public function __construct() {
-		add_filter( 'swp_analytics', array( $this, 'add_analytics_parameters' ) );
+		add_filter( 'swp_analytics', array( $this, 'add_utm_parameters' ) );
 	}
 
 
@@ -45,7 +47,7 @@ class SWP_Google_Analytics {
 	 * @return array $args The modified array.
 	 *
 	 */
-	public function add_analytics_parameters( $args ) {
+	public function add_utm_parameters( $args ) {
 
 
 		/**
