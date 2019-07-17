@@ -9,6 +9,8 @@
 *
 * @since 3.0.0 | 14 FEB 2018 | Added check for is_attachment() to swp_google_analytics
 * @since 3.0.0 | 04 APR 2018 | Converted to class-based, object-oriented system.
+* @since 4.0.0 | 17 JUL 2019 | Refactored into a more expandable system so that
+*                              we can easily add multiple link shortening services.
 *
 */
 class SWP_URL_Management {
@@ -22,74 +24,26 @@ class SWP_URL_Management {
 	 * modifying the links.
 	 *
 	 * @since  3.0.0 | 04 APR 2018 | Created
+	 * @since  4.0.0 | 17 JUL 2019 | Migrating link modifying filters into their
+	 *                               own classes for more specialized management.
 	 * @param  void
 	 * @return void
 	 *
 	 */
 	public function __construct() {
 
+
+		/**
+		 * This class will manage and add the URL parameters for shared links
+		 * using the Google Analytics UTM format.
+		 *
+		 */
+		new SWP_Google_Analytics();
+
+
 		add_filter( 'swp_link_shortening'  	        , array( __CLASS__ , 'link_shortener' ) );
-		add_filter( 'swp_analytics' 		        , array( $this , 'google_analytics' ) );
 		add_action( 'wp_ajax_nopriv_swp_bitly_oauth', array( $this , 'bitly_oauth_callback' ) );
 
-	}
-
-
-	/**
-	 * Google Analytics UTM Tracking Parameters
-	 *
-	 * This is the method used to add Google analytics UTM parameters to the links
-	 * that are being shared on social media.
-	 *
-	 * @since  3.0.0 | 04 APR 2018 | Created
-	 * @since  3.4.0 | 16 OCT 2018 | Refactored, Simplified, Docblocked.
-	 * @param  array $array An array of arguments and data used in processing the URL.
-	 * @return array $array The modified array.
-	 *
-	 */
-	public function google_analytics( $array ) {
-
-
-		/**
-		 * If Google UTM Analytics are disabled, then bail out early and return
-		 * the unmodified array.
-		 *
-		 */
-    	if ( false == SWP_Utility::get_option('google_analytics') ) {
-			return $array;
-		}
-
-
-		/**
-		 * If the network is Pinterest and UTM analtyics are disabled on
-		 * Pinterest links, then simply bail out and return the unmodified array.
-		 *
-		 */
-		if ( 'pinterest' === $array['network'] && false == SWP_Utility::get_option('utm_on_pins') ) {
-			return $array;
-		}
-
-
-		/**
-		 * If we're on a WordPress attachment, then bail out early and return
-		 * the unmodified array.
-		 *
-		 */
-    	if ( true === is_attachment() ) {
-    		return $array;
-    	}
-
-
-		/**
-		 * If all of our checks are passed, then compile the UTM string, attach
-		 * it to the end of the URL, and return the modified array.
-		 *
-		 */
-		$array['url']  = add_query_arg( 'utm_source', $array['network'], $array['url'] );
-		$array['url']  = add_query_arg( 'utm_medium', SWP_Utility::get_option( 'analytics_medium' ), $array['url'] );
-		$array['url']  = add_query_arg( 'utm_campaign', SWP_Utility::get_option( 'analytics_campaign' ), $array['url'] );
-
-	    return $array;
 	}
 
 
