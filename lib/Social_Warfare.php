@@ -365,6 +365,14 @@ class Social_Warfare {
 		// WordPress functions for plugin operations.
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
+
+		$url_management = array(
+			'Permalink',
+			'URL_Management'
+		);
+		$this->load_files( '/lib/url-management/', $url_management);
+
+
 		/**
 		 * Utility Classes
 		 *
@@ -377,9 +385,7 @@ class Social_Warfare {
 			'Compatibility',
 			'CURL',
 			'Localization',
-			'Permalink',
 			'Database_Migration',
-			'URL_Management',
 			'Notice',
 			'Notice_Loader',
 			'Post_Cache_Loader',
