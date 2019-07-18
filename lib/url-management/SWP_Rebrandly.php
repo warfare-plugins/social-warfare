@@ -7,7 +7,8 @@
  * Rebrandly integration.
  *
  * @since 4.0.0 | 17 JUL 2019 | Created
+ * 
  */
 class SWP_Rebrandly {
-	
+
 }
