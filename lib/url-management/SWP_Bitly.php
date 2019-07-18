@@ -75,6 +75,8 @@ class SWP_Bitly {
 		 * Bitly links can now be turned on or off at the post_type level on the
 		 * options page. So if the bitly links are turned off for our current
 		 * post type, let's bail and return the unmodified array.
+		 * @todo Update this option in the DB to be more generic. Ensure current
+		 *       setting migrates into the new one.
 		 *
 		 */
 		$links_enabled = SWP_Utility::get_option( "bitly_links_{$post->post_type}" );
