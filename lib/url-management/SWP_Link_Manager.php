@@ -40,7 +40,7 @@ class SWP_URL_Management {
 		 * swp_analytics filter.
 		 *
 		 */
-		new SWP_Google_Analytics();
+		new SWP_Google_UTM_Tracking();
 
 
 		add_filter( 'swp_link_shortening'  	        , array( __CLASS__ , 'link_shortener' ) );

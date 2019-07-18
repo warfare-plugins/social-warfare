@@ -368,11 +368,11 @@ class Social_Warfare {
 
 		$url_management = array(
 			'Bitly',
-			'Google_Analytics',
+			'Google_UTM_Tracking',
 			'Permalink',
 			'Rebrandly',
-			'Shortlinks',
-			'URL_Management',
+			'Link_Shortener',
+			'Link_Manager',
 		);
 		$this->load_files( '/lib/url-management/', $url_management);
 
