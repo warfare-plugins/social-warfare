@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SWP_Google_Analytics
+ * SWP_Google_UTM_Tracking
  *
  * This class will manage and add the URL parameters for shared links
  * using the Google Analytics UTM format. The link modifications made by
@@ -11,7 +11,7 @@
  * @since  4.0.0 | 17 JUL 2019 | Created
  *
  */
-class SWP_Google_Analytics {
+class SWP_Google_UTM_Tracking {
 
 
 	/**
@@ -26,7 +26,7 @@ class SWP_Google_Analytics {
 	 *
 	 */
 	public function __construct() {
-		add_filter( 'swp_analytics', array( $this, 'add_utm_parameters' ) );
+		add_filter( 'swp_analytics', array( $this, 'add_url_parameters' ) );
 	}
 
 
@@ -47,7 +47,7 @@ class SWP_Google_Analytics {
 	 * @return array $args The modified array.
 	 *
 	 */
-	public function add_utm_parameters( $args ) {
+	public function add_url_parameters( $args ) {
 
 
 		/**
