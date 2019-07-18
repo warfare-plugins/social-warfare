@@ -115,7 +115,7 @@ class Social_Warfare {
 		 * This is the class that controls short links and UTM parameters.
 		 *
 		 */
-		new SWP_URL_Management();
+		new SWP_Link_Manager();
 
 
 		/**
@@ -369,10 +369,10 @@ class Social_Warfare {
 		$url_management = array(
 			'Bitly',
 			'Google_UTM_Tracking',
+			'Link_Manager',
+			'Link_Shortener',
 			'Permalink',
 			'Rebrandly',
-			'Link_Shortener',
-			'Link_Manager',
 		);
 		$this->load_files( '/lib/url-management/', $url_management);
 

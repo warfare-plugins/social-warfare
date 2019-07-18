@@ -320,7 +320,7 @@ class SWP_Post_Cache {
 		$permalink = get_permalink( $this->post_id );
 		foreach( $swp_social_networks as $network ) {
 			if( $network->is_active() ) {
-				SWP_URL_Management::process_url( $permalink, $network->key, $this->post_id, false );
+				SWP_Link_Manager::process_url( $permalink, $network->key, $this->post_id, false );
 			}
 		}
 	}
