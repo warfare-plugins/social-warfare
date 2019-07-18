@@ -8,8 +8,13 @@
  * settings chosen by the admin.
  *
  * @since 4.0.0 | 17 JUL 2019 | Created
- * 
+ *
  */
 class SWP_Link_Shortener {
+
+	public function __contruct() {
+	}
+
+
 
 }

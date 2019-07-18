@@ -113,7 +113,7 @@ class SWP_Shortcode {
 		 * tweet itself.
 		 *
 		*/
-		$url = '&url=' . SWP_URL_Management::process_url( get_permalink() , 'twitter' , get_the_ID() );
+		$url = '&url=' . SWP_Link_Manager::process_url( get_permalink() , 'twitter' , get_the_ID() );
 		if ( strpos( $atts['tweet'], 'http' ) > -1 ) {
 			$url = '&url=x';
 		}

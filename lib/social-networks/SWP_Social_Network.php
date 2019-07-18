@@ -486,7 +486,7 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function get_shareable_permalink( $post_data ) {
-		return urlencode( urldecode( SWP_URL_Management::process_url( $post_data['permalink'] , $this->key , $post_data['ID'] ) ) );
+		return urlencode( urldecode( SWP_Link_Manager::process_url( $post_data['permalink'] , $this->key , $post_data['ID'] ) ) );
 	}
 
 

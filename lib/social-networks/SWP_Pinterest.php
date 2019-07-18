@@ -86,7 +86,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 public function render_HTML( $panel_context, $echo = false ) {
 		global $swp_user_options;
 		$post_id = $panel_context['post_data']['ID'];
-		$post_url = urlencode( urldecode( SWP_URL_Management::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
+		$post_url = urlencode( urldecode( SWP_Link_Manager::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
 
 		$options = $swp_user_options;
 		$metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
