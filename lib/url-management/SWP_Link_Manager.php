@@ -246,9 +246,14 @@ class SWP_Link_Manager {
 		$i = 50;
 		foreach( $post_types as $index => $post ) {
 			$i++; $priority = 100 + $i * 10;
+
 			$default = false;
 			if($post == 'post') {
 				$default = true;
+			}
+
+			if($post == 'archive_categories'){
+				continue;
 			}
 
 			$post_type_toggles[$i] = new SWP_Option_Toggle( str_replace('_', ' & ', ucfirst($post)) , 'short_link_toggle_' . $post );
