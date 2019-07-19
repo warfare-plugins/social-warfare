@@ -170,11 +170,12 @@ class SWP_Link_Manager {
 			$available_services[$service['key']] = $service['name'];
 
 			// Create the authentication button option.
+			$button_properties = $service['object']->get_button_properties();
 			$authentications[$service['key']] = new SWP_Option_Button(
-				'Authenticate',
-				'bitly',
-				'button sw-navy-button swp-revoke-button',
-				'http://google.com'
+				$button_properties['text'],
+				$button_properties['key'],
+				$button_properties['class'],
+				$button_properties['link']
 			);
 
 			// Add the size, priority, and dependency to the option.
