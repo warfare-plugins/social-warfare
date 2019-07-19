@@ -214,11 +214,12 @@ class SWP_Link_Manager {
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
 			->set_premium( 'pro' )
-			->set_priority( 15 );
+			->set_priority( 25 );
 
 		$post_type_description = new SWP_Section_HTML('Link Shortening Per Post Type', 'post_types');
 		$post_type_description->add_html('<p class="sw-subtitle">Turn link shortening on or off for each post type across your site.</p>')
-			->set_priority(100);
+			->set_priority(100)
+			->set_dependency( 'link_shortening_toggle', true );
 
 		$post_types = SWP_Utility::get_post_types();
 		$i = 50;
@@ -234,6 +235,7 @@ class SWP_Link_Manager {
 				->set_size( 'sw-col-300' )
 				->set_priority( $priority )
 				->set_default( $default )
+				->set_dependency( 'link_shortening_toggle', true )
 				->set_premium( 'pro' );
 		}
 

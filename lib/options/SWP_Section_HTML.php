@@ -643,6 +643,12 @@ class SWP_Section_HTML extends SWP_Option {
 	*
 	*/
 	public function render_HTML() {
-		return $this->html;
+		$html = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+		$html .= $this->render_dependency();
+		$html .= $this->render_premium();
+		$html .= '>';
+		$html .= $this->html;
+		$html .= '</div>';
+		return $html;
 	}
 }
