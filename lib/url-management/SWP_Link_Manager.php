@@ -46,7 +46,7 @@ class SWP_Link_Manager {
  	 	 * manipulate.
 		 *
 		 */
-		add_action( 'wp_loaded', array( $this, 'add_settings_page_options') , 20 );
+		add_action( 'wp_loaded', array( $this, 'add_settings_page_options'), 20 );
 
 	}
 
@@ -136,7 +136,8 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare'), 'bitly' );
-		$link_shortening->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare') )
+		$link_shortening
+			->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare') )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-bitly-link-shortening/' )
 			->set_priority( 20 );
 
@@ -150,7 +151,8 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$link_shortening_toggle = new SWP_Option_Toggle( __('Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
-		$link_shortening_toggle->set_size( 'sw-col-300' )
+		$link_shortening_toggle
+			->set_size( 'sw-col-300' )
 			->set_priority( 10 )
 			->set_default( false )
 			->set_premium( 'pro' );
@@ -167,22 +169,21 @@ class SWP_Link_Manager {
 		foreach( $services as $service ) {
 
 			// Add the key and name to an array for use in the dropdown option.
-			$available_services[$service['key']] = $service['name'];
+			$available_services[$service->key] = $service->name;
 
 			// Create the authentication button option.
-			$button_properties = $service['object']->get_button_properties();
-			$authentications[$service['key']] = new SWP_Option_Button(
-				$button_properties['text'],
-				$button_properties['key'],
-				$button_properties['class'],
-				$button_properties['link']
+			$authentications[$service->key] = new SWP_Option_Button(
+				$service->button_text,
+				$service->key,
+				$service->button_class,
+				$service->button_link
 			);
 
 			// Add the size, priority, and dependency to the option.
-			$authentications[$service['key']]
+			$authentications[$service->key]
 				->set_size( 'sw-col-300' )
 				->set_priority( 20 )
-				->set_dependency('link_shortening_service', $service['key']);
+				->set_dependency('link_shortening_service', $service->key);
 		}
 
 
@@ -192,7 +193,8 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$link_shortening_service = new SWP_Option_Select( __( 'Link Shortening Service', 'social-warfare' ), 'link_shortening_service' );
-		$link_shortening_service->set_choices( $available_services )
+		$link_shortening_service
+			->set_choices( $available_services )
 			->set_default( 'bitly')
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
@@ -207,7 +209,8 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date', 'social-warfare' ), 'link_shortening_start_date' );
-		$link_shortening_start_date->set_default( date('Y-m-d') )
+		$link_shortening_start_date
+			->set_default( date('Y-m-d') )
 			->set_priority( 30 )
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
