@@ -159,6 +159,8 @@ class SWP_Link_Manager {
 
 
 		/**
+		 * Minimum Publish Date
+		 *
 		 * This will add the option for a minimum publish date. Any post
 		 * published prior to the date in this field will not get shortened
 		 * links for the share buttons.
@@ -174,6 +176,8 @@ class SWP_Link_Manager {
 
 
 		/**
+		 * Loop Through Available Shorteners
+		 *
 		 * This section will access our swp_link_shorteners filter
 		 * to see which link shortening services have been registered for
 		 * use with the plugin. We will then loop through them and add them
@@ -203,6 +207,8 @@ class SWP_Link_Manager {
 
 
 		/**
+		 * Link Shortener Service Selection
+		 *
 		 * This will add the select dropdown box wherein the user can select
 		 * which of the available link shortening services they want to use.
 		 *
@@ -216,11 +222,26 @@ class SWP_Link_Manager {
 			->set_premium( 'pro' )
 			->set_priority( 25 );
 
+
+		/**
+		 * Post Type Description
+		 *
+		 * This will add a brief text description to let the user know what the
+		 * toggles do on the per-post-type section of the options.
+		 *
+		 */
 		$post_type_description = new SWP_Section_HTML('Link Shortening Per Post Type', 'post_types');
 		$post_type_description->add_html('<p class="sw-subtitle">Turn link shortening on or off for each post type across your site.</p>')
 			->set_priority(100)
 			->set_dependency( 'link_shortening_toggle', true );
 
+
+		/**
+		 * Here we are going to fetch all of the post types that are registered
+		 * on the site and then loop through them to create an on/off toggle
+		 * for each one. They will then be stored using the key short_link_toggle_$post
+		 *
+		 */
 		$post_types = SWP_Utility::get_post_types();
 		$i = 50;
 		foreach( $post_types as $index => $post ) {
