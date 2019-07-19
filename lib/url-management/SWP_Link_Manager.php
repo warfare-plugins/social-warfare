@@ -159,6 +159,21 @@ class SWP_Link_Manager {
 
 
 		/**
+		 * This will add the option for a minimum publish date. Any post
+		 * published prior to the date in this field will not get shortened
+		 * links for the share buttons.
+		 *
+		 */
+		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
+		$link_shortening_start_date
+			->set_default( date('Y-m-d') )
+			->set_priority( 20 )
+			->set_size( 'sw-col-300' )
+			->set_dependency( 'link_shortening_toggle', true )
+			->set_premium( 'pro');
+
+
+		/**
 		 * This section will access our swp_link_shorteners filter
 		 * to see which link shortening services have been registered for
 		 * use with the plugin. We will then loop through them and add them
@@ -174,7 +189,7 @@ class SWP_Link_Manager {
 			// Create the authentication button option.
 			$authentications[$service->key] = new SWP_Option_Button(
 				$service->button_text,
-				$service->key,
+				'authenticate_' . $service->key,
 				$service->button_class,
 				$service->button_link
 			);
@@ -182,7 +197,7 @@ class SWP_Link_Manager {
 			// Add the size, priority, and dependency to the option.
 			$authentications[$service->key]
 				->set_size( 'sw-col-300' )
-				->set_priority( 20 )
+				->set_priority( 30 )
 				->set_dependency('link_shortening_service', $service->key);
 		}
 
@@ -201,20 +216,26 @@ class SWP_Link_Manager {
 			->set_premium( 'pro' )
 			->set_priority( 15 );
 
+		$post_type_description = new SWP_Section_HTML('Link Shortening Per Post Type', 'post_types');
+		$post_type_description->add_html('<p class="sw-subtitle">Turn link shortening on or off for each post type across your site.</p>')
+			->set_priority(100);
 
-		/**
-		 * This will add the option for a minimum publish date. Any post
-		 * published prior to the date in this field will not get shortened
-		 * links for the share buttons.
-		 *
-		 */
-		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date', 'social-warfare' ), 'link_shortening_start_date' );
-		$link_shortening_start_date
-			->set_default( date('Y-m-d') )
-			->set_priority( 30 )
-			->set_size( 'sw-col-300' )
-			->set_dependency( 'link_shortening_toggle', true )
-			->set_premium( 'pro');
+		$post_types = SWP_Utility::get_post_types();
+		$i = 50;
+		foreach( $post_types as $index => $post ) {
+			$i++; $priority = 100 + $i * 10;
+			$default = false;
+			if($post == 'post') {
+				$default = true;
+			}
+
+			$post_type_toggles[$i] = new SWP_Option_Toggle( str_replace('_', ' & ', ucfirst($post)) , 'short_link_toggle_' . $post );
+			$post_type_toggles[$i]
+				->set_size( 'sw-col-300' )
+				->set_priority( $priority )
+				->set_default( $default )
+				->set_premium( 'pro' );
+		}
 
 
 		/**
@@ -222,8 +243,14 @@ class SWP_Link_Manager {
 		 * to the link shortening section of the page.
 		 *
 		 */
-		$link_shortening->add_options( array( $link_shortening_toggle, $link_shortening_service, $link_shortening_start_date ) );
+		$link_shortening->add_options( array(
+			$link_shortening_toggle,
+			$link_shortening_service,
+			$link_shortening_start_date,
+			$post_type_description
+		));
 		$link_shortening->add_options( $authentications );
+		$link_shortening->add_options( $post_type_toggles );
 
 
 		/**
