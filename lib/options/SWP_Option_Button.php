@@ -57,7 +57,7 @@ class SWP_Option_Button extends SWP_Option {
 		$html .= '>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<p class="sw-input-label">' . ucfirst( $this->key ) . '</p>';
+				$html .= '<p class="sw-input-label">' . ucwords( str_replace('_', ' ', $this->key) ) . '</p>';
 			$html .= '</div>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
