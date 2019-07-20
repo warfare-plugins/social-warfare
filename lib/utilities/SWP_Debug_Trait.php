@@ -63,11 +63,27 @@ trait SWP_Debug_Trait {
 	 *
 	 */
 	public function debug() {
+
+
+		/**
+		 * This will allow the dumping of an entire class by simply adding
+		 * ?swp_debug=class_name (without the swp_) to the end of a page's URL.
+		 *
+		 * Example: ?swp_debug=pro_bitly
+		 *
+		 */
 		$class_name = str_replace('swp_', '', strtolower( get_class( $this ) ) );
 		if( true === SWP_Utility::debug( $class_name ) ) {
 			echo "<pre>", var_dump( $this ), "</pre>";
 		}
 
+
+		/**
+		 * This will dump out all method exit statuses by simply adding
+		 * ?swp_debug=exit_statuses. This allows us to view the reasons why any
+		 * class methods bailed out at any given time.
+		 *
+		 */
 		global $swp_exit_statuses;
 		if( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
 			echo '<pre class="swp_debug_data"><h3>Class Method Exit Statuses</h3><ol>';
