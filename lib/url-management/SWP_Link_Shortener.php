@@ -16,6 +16,7 @@ class SWP_Link_Shortener {
 	/**
 	 * The unique key for each child class that extends this link shortening
 	 * class. Keys should be snake_cased.
+	 *
 	 * @var string
 	 *
 	 */
@@ -25,7 +26,9 @@ class SWP_Link_Shortener {
 	/**
 	 * The pretty name of the link shortener that will be used when printing the
 	 * name to the screen for the users to see.
+	 *
 	 * @var string
+	 *
 	 */
 	public $name;
 
@@ -41,9 +44,21 @@ class SWP_Link_Shortener {
 	 * link: The URL to which the button should link.
 	 *
 	 * @var array
-	 * 
+	 *
 	 */
 	public $button_properties = array();
+
+
+	/**
+	 * A string representing the name of the hook and the name of the
+	 * corresponding function that will handle removing the token, login or
+	 * whatever else information may be necessary to remove the apps authorization
+	 * credentials from the plugin.
+	 *
+	 * @var string
+	 *
+	 */
+	public $deactivation_hook = '';
 
 
 	/**
