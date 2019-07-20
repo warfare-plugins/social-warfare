@@ -33,7 +33,6 @@ class SWP_Social_Networks_Loader {
 		$swp_social_networks = array();
 
 		add_filter( 'plugins_loaded' , array( $this , 'instantiate_networks' ) , 999 );
-
 	}
 
 
@@ -50,11 +49,12 @@ class SWP_Social_Networks_Loader {
 	 *
 	 */
 	public function instantiate_networks() {
-		foreach( get_declared_classes() as $class ){
-			if( is_subclass_of( $class, 'SWP_Social_Network' ) ) {
-				new $class;
-			}
-		}
+			new SWP_Facebook();
+			new SWP_Linkedin();
+			new SWP_Mix();
+			new SWP_Pinterest();
+			new SWP_Stumble_Upon();
+			new SWP_Twitter();
 	}
 
 }
