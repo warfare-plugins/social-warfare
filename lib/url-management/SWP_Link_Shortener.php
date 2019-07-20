@@ -14,6 +14,39 @@ class SWP_Link_Shortener {
 
 
 	/**
+	 * The unique key for each child class that extends this link shortening
+	 * class. Keys should be snake_cased.
+	 * @var string
+	 *
+	 */
+	public $key;
+
+
+	/**
+	 * The pretty name of the link shortener that will be used when printing the
+	 * name to the screen for the users to see.
+	 * @var string
+	 */
+	public $name;
+
+
+	/**
+	 * The properties that will be used to generate the authentication button
+	 * on the options page. This should contain, at a minimum, the following
+	 * indices in the array.
+	 *
+	 * text: The text that will appear on the button.
+	 * classes: The css classes that will be added to the button.
+	 * target: An empty string or _blank for the anchor target.
+	 * link: The URL to which the button should link.
+	 *
+	 * @var array
+	 * 
+	 */
+	public $button_properties = array();
+
+
+	/**
 	 * This trait gives us access to the following debugging methods:
 	 *
 	 * $this->debug()  Outputs all class properties to the screen.
@@ -21,7 +54,7 @@ class SWP_Link_Shortener {
 	 *
 	 */
 	use SWP_Debug_Trait;
-	
+
 
 	/**
 	 * The Magic Constructor
