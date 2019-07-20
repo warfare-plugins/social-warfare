@@ -70,7 +70,11 @@ trait SWP_Debug_Trait {
 
 		global $swp_exit_statuses;
 		if( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
-			echo "<pre>", var_dump( $swp_exit_statuses ), "</pre>";
+			echo '<pre class="swp_debug_data"><h3>Class Method Exit Statuses</h3><ol>';
+			foreach($swp_exit_statuses as $key => $value ){
+				echo '<li>' . $value . '</li>';
+			}
+			echo '</ol></pre>';
 			$swp_exit_statuses['printed'] = true;
 		}
 	}
