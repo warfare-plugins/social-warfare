@@ -67,7 +67,7 @@ class SWP_JSON_Cache_Handler {
 	public function __construct() {
 		if( false === $this->is_cache_fresh() ):
 			$this->fetch_new_json_data();
-			$this->debug();
+			add_action( 'wp_footer', array( $this, 'debug' ) );
 		endif;
 	}
 

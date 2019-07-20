@@ -67,6 +67,12 @@ trait SWP_Debug_Trait {
 		if( true === SWP_Utility::debug( $class_name ) ) {
 			echo "<pre>", var_dump( $this ), "</pre>";
 		}
+
+		global $swp_exit_statuses;
+		if( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
+			echo "<pre>", var_dump( $swp_exit_statuses ), "</pre>";
+			$swp_exit_statuses['printed'] = true;
+		}
 	}
 
 
@@ -94,13 +100,23 @@ trait SWP_Debug_Trait {
 	 *
 	 */
 	public function record_exit_status( $reason ) {
+		$class_name = str_replace('swp_', '', strtolower( get_class( $this ) ) );
+		if( false === SWP_Utility::debug( 'exit_statuses' ) && false === SWP_Utility::debug( $class_name ) ) {
+			return;
+		}
+		global $swp_exit_statuses;
+		if( empty( $swp_exit_statuses ) ) {
+			$swp_exit_statuses = array();
+		}
 		$backtrace = debug_backtrace();
 		$file      = $backtrace[0]['file'];
 		$line      = $backtrace[0]['line'];
 		$class     = $backtrace[1]['class'];
 		$method    = $backtrace[1]['function'];
 
-		$this->exit_statuses[$method] = $class . '->' . $method .'() exited while checking for "' . $reason . '" in ' . $file .' on line ' . ($line - 1);
+		$status = $class . '->' . $method .'() exited while checking for "' . $reason . '" in ' . $file .' on line ' . ($line - 1);
+		$swp_exit_statuses[$class . '->' . $method .'()'] = $status;
+		$this->exit_statuses[$method] = $status;
 	}
 
 }

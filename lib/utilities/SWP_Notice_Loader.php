@@ -41,7 +41,7 @@ class SWP_Notice_Loader {
 	 */
     public function __construct() {
 		$this->activate_json_notices();
-		$this->debug();
+		add_action( 'wp_footer', array( $this, 'debug' ) );
     }
 
 
