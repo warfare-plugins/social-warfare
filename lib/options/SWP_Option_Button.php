@@ -24,12 +24,11 @@ class SWP_Option_Button extends SWP_Option {
 	* @param string $name The display name for the toggle.
 	* @param string $key The database key for the user setting.
 	*/
-	public function __construct( $name, $key, $class, $link, $new_tab = false ) {
+	public function __construct( $name, $key, $class, $link, $new_tab = false, $deactivation_hook = '' ) {
 		parent::__construct( $name, $key );
 		$this->new_tab = $new_tab;
 		$this->link = isset( $link ) ? $link : '';
 		$this->class = isset( $class ) ? $class : '';
-
 	}
 
 

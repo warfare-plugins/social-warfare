@@ -195,7 +195,9 @@ class SWP_Link_Manager {
 				$service->button_properties['text'],
 				'authenticate_' . $service->key,
 				$service->button_properties['classes'],
-				$service->button_properties['link']
+				$service->button_properties['link'],
+				$service->button_properties['new_tab'],
+				$service->deactivation_hook
 			);
 
 			// Add the size, priority, and dependency to the option.
