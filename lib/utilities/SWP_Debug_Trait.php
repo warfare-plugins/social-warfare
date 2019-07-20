@@ -120,20 +120,29 @@ trait SWP_Debug_Trait {
 	 *
 	 */
 	public function record_exit_status( $reason ) {
+
+		// The lowercase class name without the swp_ prefix.
 		$class_name = str_replace('swp_', '', strtolower( get_class( $this ) ) );
+
+		// We'll only run the debug_backtrace if debugging is being accessed.
 		if( false === SWP_Utility::debug( 'exit_statuses' ) && false === SWP_Utility::debug( $class_name ) ) {
 			return;
 		}
+
+		// A global allows us to collect statuses from all across the plugin.
 		global $swp_exit_statuses;
 		if( empty( $swp_exit_statuses ) ) {
 			$swp_exit_statuses = array();
 		}
+
+		// Collect the line, file, class and method that exited.
 		$backtrace = debug_backtrace();
 		$file      = $backtrace[0]['file'];
 		$line      = $backtrace[0]['line'];
 		$class     = $backtrace[1]['class'];
 		$method    = $backtrace[1]['function'];
 
+		// Compile the status and store it in the local $exit_statuses property and in the global.
 		$status = $class . '->' . $method .'() exited while checking for "' . $reason . '" in ' . $file .' on line ' . ($line - 1);
 		$swp_exit_statuses[$class . '->' . $method .'()'] = $status;
 		$this->exit_statuses[$method] = $status;
