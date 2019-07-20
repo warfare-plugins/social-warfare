@@ -12,14 +12,24 @@
  */
 class SWP_Link_Shortener {
 
-	use SWP_Debug_Trait;
+
+	/**
+	 * The Magic Constructor
+	 *
+	 * This will queue up the register_self() method which will, in turn, add
+	 * this link shortener to the available drop-down list.
+	 *
+	 * @since  4.0.0 | 19 JUL 2019 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	public function __construct() {
 		add_filter( 'swp_available_link_shorteners', array( $this, 'register_self' ) );
 	}
 
+
 	/**
-	 * register_self()
-	 *
 	 * A function to register this link shortening integration with the
 	 * 'swp_register_link_shortners' filter so that it will show up and become
 	 * an option on the options page.
@@ -33,5 +43,4 @@ class SWP_Link_Shortener {
 		$array[$this->key] = $this;
 		return $array;
 	}
-
 }
