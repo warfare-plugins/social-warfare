@@ -366,13 +366,6 @@ class Social_Warfare {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 
-		$url_management = array(
-			'Link_Manager',
-			'Permalink',
-		);
-		$this->load_files( '/lib/url-management/', $url_management);
-
-
 		/**
 		 * Utility Classes
 		 *
@@ -397,6 +390,21 @@ class Social_Warfare {
 			'Credential_Helper'
 		);
 		$this->load_files( '/lib/utilities/', $utilities);
+
+
+		/**
+		 * The URL Management Classes
+		 *
+		 * These classes will control the shortlinks and Google UTM parameters
+		 * functionality of the shareable links.
+		 *
+		 */
+		$url_management = array(
+			'Link_Manager',
+			'Link_Shortener',
+			'Permalink',
+		);
+		$this->load_files( '/lib/url-management/', $url_management);
 
 
 		/**
