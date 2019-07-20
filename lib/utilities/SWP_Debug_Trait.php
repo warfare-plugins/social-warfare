@@ -70,6 +70,37 @@ trait SWP_Debug_Trait {
 	}
 
 
+	/**
+	 * An easy to access method for recording exit statuses. We often bail out
+	 * of methods when certain conditions are not met. This will record that bail
+	 * in a local class property (exit_status).
+	 *
+	 * This will create messages in the following format:
+	 *
+	 * "SWP_Pro_Bitly->shorten_link() exited while checking for "access_token" in
+	 * \wp-content\plugins\social-warfare-pro\lib\url-management\SWP_Pro_Bitly.php
+	 * on line 179"
+	 *
+	 * IMPORTANT: This should be implemented every single time a method contains
+	 * a bail conditional. This will make debugging much, much easier.
+	 *
+	 * We subtract 1 from the line number, so if we always place this on the very
+	 * next line immediately following the bail conditional then it will return
+	 * the line number of the conditional itself.
+	 *
+	 * @since  4.0.0 | 19 JUL 2019 | Created
+	 * @param  string $reason The name of the item, variable, or condition that caused the bail.
+	 * @return void
+	 *
+	 */
+	public function record_exit_status( $reason ) {
+		$backtrace = debug_backtrace();
+		$file      = $backtrace[0]['file'];
+		$line      = $backtrace[0]['line'];
+		$class     = $backtrace[1]['class'];
+		$method    = $backtrace[1]['function'];
 
+		$this->exit_statuses[$method] = $class . '->' . $method .'() exited while checking for "' . $reason . '" in ' . $file .' on line ' . ($line - 1);
+	}
 
 }
