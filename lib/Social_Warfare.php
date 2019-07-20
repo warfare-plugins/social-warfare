@@ -554,16 +554,32 @@ class Social_Warfare {
 	/**
 	 * Loads an array of related files.
 	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.0.0 | 20 JUL 2019 | Implemented autoloading.
 	 * @param  string   $path  The relative path to the files home.
 	 * @param  array    $files The name of the files (classes), no vendor prefix.
-	 * @return none     The files are loaded into memory.
+	 * @return void     The files are loaded into memory.
 	 *
 	 */
 	private function load_files( $path, $files ) {
+
+		// Use Autoload to loadup out files and classes.
+		spl_autoload_register( function( $class_name ) use ($path) {
+			if( file_exists( SWP_PLUGIN_DIR.$path.$class_name.'.php' ) ) {
+				include SWP_PLUGIN_DIR.$path.$class_name.'.php';
+			}
+		});
+
+		// If autoloading fails, we'll loop and manually add all the files.
 		foreach( $files as $file ) {
 
-			//* Add our vendor prefix to the file name.
-			$file = "SWP_" . $file;
+			// If the class exists, then autoloading is functional so bail out.
+			if( class_exists( 'SWP_' . $file ) ) {
+				return;
+			}
+
+			// Add our vendor prefix to the file name.
+			$file = 'SWP_' . $file;
 			require_once SWP_PLUGIN_DIR . $path . $file . '.php';
 		}
 	}
