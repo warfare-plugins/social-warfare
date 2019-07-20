@@ -233,10 +233,10 @@ class SWP_Buttons_Panel {
 		$this->establish_post_data();
 		$this->establish_local_options();
 		$this->establish_share_data();
-		  $this->establish_location();
+		$this->establish_location();
 		$this->establish_permalink();
 		$this->establish_active_buttons();
-		$this->debug();
+		add_action( 'wp_footer', array( $this, 'debug' ) );
 	}
 
 

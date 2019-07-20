@@ -64,8 +64,8 @@ class SWP_Link_Shortener {
 	/**
 	 * This trait gives us access to the following debugging methods:
 	 *
-	 * $this->debug()  Outputs all class properties to the screen.
-	 * $this->record_exit_status()  Stores bail conditions in a local property.
+	 * debug()  Outputs all class properties to the screen.
+	 * record_exit_status()  Stores bail conditions a dumpable array.
 	 *
 	 */
 	use SWP_Debug_Trait;
@@ -84,6 +84,7 @@ class SWP_Link_Shortener {
 	 */
 	public function __construct() {
 		add_filter( 'swp_available_link_shorteners', array( $this, 'register_self' ) );
+		add_action( 'wp_footer', array( $this, 'debug' ) );
 	}
 
 

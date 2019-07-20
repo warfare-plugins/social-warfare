@@ -91,7 +91,7 @@ class SWP_Post_Cache {
 		}
 
 		// Debugging
-		$this->debug();
+		add_action( 'wp_footer', array( $this, 'debug' ) );
 	}
 
 

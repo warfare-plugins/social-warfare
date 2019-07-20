@@ -70,7 +70,7 @@ class SWP_Plugin_Updater {
 
 		// Set up hooks.
 		$this->init();
-        $this->debug();
+        add_action( 'wp_footer', array( $this, 'debug' ) );
 
 	}
 
