@@ -189,27 +189,24 @@
 	function tabNavInit() {
 		jQuery('.sw-tab-selector').on('click', function(event) {
 			event.preventDefault();
-
 			jQuery('html, body').animate({ scrollTop: 0 }, 300);
-
 			var tab = jQuery(this).attr('data-link');
-
-			jQuery('.sw-admin-tab').hide();
-
-			jQuery('#' + tab).show();
-
-			jQuery('.sw-header-menu li').removeClass('sw-active-tab');
-
-			jQuery(this).parents('li').addClass('sw-active-tab');
-
-			if ('swp_styles' === tab) {
-				socialWarfare.activateHoverStates();
-			}
-
-			socialWarfareAdmin.conditionalFields();
-
+			sessionStorage.setItem('swp_tab', tab);
+			activateSelectedTab(tab);
 		});
 	}
+
+	function activateSelectedTab(tab) {
+		jQuery('.sw-admin-tab').hide();
+		jQuery('#' + tab).show();
+		jQuery('.sw-header-menu li').removeClass('sw-active-tab');
+		jQuery('[data-link="'+ tab +'"]').parents('li').addClass('sw-active-tab');
+		if ('swp_styles' === tab) {
+			socialWarfare.activateHoverStates();
+		}
+		socialWarfareAdmin.conditionalFields();
+	}
+
 
 	/*********************************************************
 		Checkboxes
@@ -864,14 +861,37 @@
 			jQuery(icon).hover(createTooltip, removeTooltip);
 		});
 	}
+
+
+	/**
+	 * A method to handle the deactivation functionality of the authorization
+	 * buttons for integrations like link shortening API's. This will ping the
+	 * registered function via admin-ajax which will in turn delete the stored
+	 * tokens from the database.
+	 *
+	 * @since  4.0.0 | 21 JUL 2019 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	function handleDeactivations() {
 		jQuery('a[data-deactivation]').on('click',function( event ) {
+
+			// Fetch and check for the name of the deactivation hook.
 			var deactivationHook = $(this).data('deactivation');
 			if( deactivationHook ) {
+
+				// Activate the loading screen and disable the default click action.
 				loadingScreen();
 				event.preventDefault();
+
+				// Add our vender prefix to the admin-ajax action name.
 				var data = { action: 'swp_' + deactivationHook };
+
+				// Send the post request to admin-ajax.
 				jQuery.post(ajaxurl, data, function(response) {
+
+					// If successful, refresh the page so that the button is rebuilt.
 					if( 'success' == response ) {
 						location.reload();
 					}
@@ -881,7 +901,27 @@
 		});
 	}
 
+	function loadPreviousTab() {
+		var previousTime = sessionStorage.getItem('swp_tab_time');
+		var previousTab = sessionStorage.getItem('swp_tab');
+		var dateObject = new Date();
+		var currentTime = dateObject.getTime() / 1000;
+		if( (currentTime - previousTime) < 15) {
+			activateSelectedTab( previousTab );
+		}
+	}
+
+	function savePreviousTab() {
+		window.onbeforeunload = function(e) {
+			var dateObject = new Date();
+			var seconds = dateObject.getTime() / 1000;
+			sessionStorage.setItem('swp_tab_time', seconds);
+		}
+	}
+
 	jQuery(document).ready(function() {
+		savePreviousTab();
+		loadPreviousTab();
 		handleSettingSave();
 		populateOptions();
 		headerMenuInit();
