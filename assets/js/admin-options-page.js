@@ -864,6 +864,22 @@
 			jQuery(icon).hover(createTooltip, removeTooltip);
 		});
 	}
+	function handleDeactivations() {
+		jQuery('a[data-deactivation]').on('click',function( event ) {
+			var deactivationHook = $(this).data('deactivation');
+			if( deactivationHook ) {
+				loadingScreen();
+				event.preventDefault();
+				var data = { action: 'swp_' + deactivationHook };
+				jQuery.post(ajaxurl, data, function(response) {
+					if( 'success' == response ) {
+						location.reload();
+					}
+				});
+
+			}
+		});
+	}
 
 	jQuery(document).ready(function() {
 		handleSettingSave();
@@ -880,6 +896,7 @@
 		getSystemStatus();
 		customUploaderInit();
 		set_ctt_preview();
-	  addIconTooltips();
+		addIconTooltips();
+		handleDeactivations();
 	});
 })(this, jQuery);
