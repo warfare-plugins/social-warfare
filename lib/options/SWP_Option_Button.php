@@ -27,6 +27,7 @@ class SWP_Option_Button extends SWP_Option {
 	public function __construct( $name, $key, $class, $link, $new_tab = false, $deactivation_hook = '' ) {
 		parent::__construct( $name, $key );
 		$this->new_tab = $new_tab;
+		$this->deactivation_hook = $deactivation_hook;
 		$this->link = isset( $link ) ? $link : '';
 		$this->class = isset( $class ) ? $class : '';
 	}
@@ -49,7 +50,7 @@ class SWP_Option_Button extends SWP_Option {
 	*/
 	public function render_HTML() {
 		$target = $this->new_tab ? 'target="_blank"' : '';
-
+		
 		$html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
 		$html .= $this->render_premium();
@@ -62,7 +63,7 @@ class SWP_Option_Button extends SWP_Option {
 			$html .= '<div class="sw-grid ' . $this->size . '">';
 				if ( !empty( $this->link ) ) {
 					// Apply a wrapper anchor tag.
-					$html .= '<a href="' . $this->link .'" class="' . $this->class . '" ' . $target .'>' ;
+					$html .= '<a href="' . $this->link .'" class="' . $this->class . '" ' . $target .' data-deactivation="'.$this->deactivation_hook.'">' ;
 					$html .= '<div id="' . strtolower($this->key) . '" field="#' . $this->key . '">' . $this->name . '</div>';
 					$html .= '</a>';
 				}
