@@ -104,6 +104,112 @@ class SWP_Link_Shortener {
 	}
 
 
+	/**
+	 * The Bitly Link Shortener Method
+	 *
+	 * This is the function used to manage shortened links via the Bitly link
+	 * shortening service.
+	 *
+	 * @since  3.0.0 | 04 APR 2018 | Created
+	 * @since  3.4.0 | 16 OCT 2018 | Modified order of conditionals, docblocked.
+	 * @since  4.0.0 | 17 JUL 2019 | Migrated into this standalone Bitly class.
+	 * @since  4.0.0 | 23 JUL 2019 | Migrated into the parent Link_Shortener class.
+	 * @param  array $array An array of arguments and information.
+	 * @return array $array The modified array.
+	 *
+	 */
+	public function provide_shortlink( $array ) {
+
+
+		/**
+		 * Pull together the information that we'll need to generate bitly links.
+		 *
+		 */
+		global $post;
+		$network           = $array['network'];
+		$post_id           = $array['post_id'];
+		$fresh_cache       = $array['fresh_cache'];
+		$google_analytics  = SWP_Utility::get_option('google_analytics');
+
+
+		/**
+		 * Check if any of the bail conditions are met, in which case we'll exit
+		 * the function without returning any kind of shortlinks.
+		 *
+		 */
+		if( false === $this->should_link_be_shortened( $network ) ) {
+			return $array;
+		}
+
+
+		/**
+		 * Bail if we don't have a valid Bitly token.
+		 *
+		 */
+		if ( false == $this->access_token ) {
+			$this->record_exit_status( 'access_token' );
+			return $array;
+		}
+
+
+		/**
+		 * If the chache is fresh and we have a valid bitly link stored in the
+		 * database, then let's use our cached link.
+		 *
+		 * If the cache is fresh and we don't have a valid bitly link, we just
+		 * return the unmodified array. This will prevent it from running non-stop
+		 * API requests if one failed.
+		 *
+		 */
+		if ( true == $fresh_cache ) {
+			$this->record_exit_status( 'fresh_cache' );
+			if( $this->fetch_cached_shortlink( $post_id, $network ) ) {
+				$array['url'] = $this->fetch_cached_shortlink( $post_id, $network );
+			}
+			return $array;
+		}
+
+
+		/**
+		 * If all checks have passed, let's generate a new bitly URL. If an
+		 * existing link exists for the link passed to the API, it won't generate
+		 * a new one, but will instead return the existing one.
+		 *
+		 */
+		$url           = urldecode( $array['url'] );
+		$new_bitly_url = $this->generate_new_shortlink( $url );
+
+
+		/**
+		 * If a link was successfully created, let's store it in the database,
+		 * let's store it in the url indice of the array, and then let's wrap up.
+		 *
+		 */
+		if ( $new_shortlink ) {
+			$meta_key = $this->key . '_link';
+
+			if ( $google_analytics ) {
+				$meta_key .= "_$network";
+			}
+
+			delete_post_meta( $post_id, $meta_key );
+			update_post_meta( $post_id, $meta_key, $new_shortlink );
+			$array['url'] = $new_shorlink;
+		}
+
+		return $array;
+	}
+
+
+	/**
+	 * A method to check the bail conditons before fetching, generating or
+	 * returning a shortlink.
+	 *
+	 * @since  4.0.0 | 23 JUL 2019 | Created
+	 * @param  string $network The key corresponding to a social network.
+	 * @return bool   True if cleared to continue; false if we should bail.
+	 * 
+	 */
 	public function should_link_be_shortened( $network ) {
 		global $post;
 
