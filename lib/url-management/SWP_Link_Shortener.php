@@ -102,4 +102,53 @@ class SWP_Link_Shortener {
 		$array[$this->key] = $this;
 		return $array;
 	}
+
+
+	/**
+	 * Fetch the bitly link that is cached in the local database.
+	 *
+	 * When the cache is fresh, we just pull the existing bitly link from the
+	 * database rather than making an API call on every single page load.
+	 *
+	 * @since  3.3.2 | 12 SEP 2018 | Created
+	 * @since  3.4.0 | 16 OCT 2018 | Refactored, Simplified, Docblocked.
+	 * @since  4.0.0 | 23 JUL 2019 | Moved into this parent class.
+	 * @param  int $post_id The post ID
+	 * @param  string $network The key for the current social network
+	 * @return mixed           string: The short url; false on failure.
+	 *
+	 */
+	public function fetch_cached_shortlink( $post_id, $network ) {
+
+
+		/**
+		 * Fetch the local bitly link. We'll use this one if Google Analytics is
+		 * not enabled. Otherwise we'll switch it out below.
+		 *
+		 */
+		$short_url = get_post_meta( $post_id, $this->key . '_link', true );
+
+
+		/**
+		 * If Google analytics are enabled, we'll need to fetch a different
+		 * shortlink for each social network. If they are disabled, we just use
+		 * the same shortlink for all of them.
+		 *
+		 */
+		if ( true == SWP_Utility::get_option('google_analytics') ) {
+			$short_url = get_post_meta( $post_id, $this->key . '_link_' . $network, true);
+		}
+
+
+		/**
+		 * We need to make sure that the $short_url returned from get_post_meta()
+		 * is not false or an empty string. If so, we'll return false.
+		 *
+		 */
+		if ( !empty( $short_url ) ) {
+			return $short_url;
+		}
+
+		return false;
+	}
 }
