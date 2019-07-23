@@ -374,6 +374,7 @@ class SWP_Link_Shortener {
 		return false;
 	}
 
+
 	/**
 	 * Users can select a date prior to which articles will not get short
 	 * links. This is to prevent the case where some users get their quotas
