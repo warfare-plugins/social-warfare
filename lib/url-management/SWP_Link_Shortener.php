@@ -213,7 +213,7 @@ class SWP_Link_Shortener {
 		 *
 		 */
 		$url           = urldecode( $array['url'] );
-		$new_bitly_url = $this->generate_new_shortlink( $url );
+		$new_shortlink = $this->generate_new_shortlink( $url );
 
 
 		/**
