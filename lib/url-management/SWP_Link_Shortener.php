@@ -104,6 +104,70 @@ class SWP_Link_Shortener {
 	}
 
 
+	public function should_link_be_shortened( $network ) {
+		global $post;
+
+
+		/**
+		 * We don't want bitly links generated for the total shares buttons
+		 * (since they don't have any links at all), and Pinterest doesn't allow
+		 * shortlinks on their network.
+		 *
+		 */
+		if ( 'total_shares' == $network || 'pinterest' == $network ) {
+			return false;
+		}
+
+
+		/**
+		 * Bail if link shortening is turned off.
+		 *
+		 */
+		if( false == SWP_Utility::get_option( 'link_shortening_toggle' ) ) {
+			$this->record_exit_status( 'link_shortening_toggle' );
+			return false;
+		}
+
+
+		/**
+		 * Bail if the current shortener is not the selected Link shortener.
+		 *
+		 */
+		if( $this->key !== SWP_Utility::get_option( 'link_shortening_service' ) ) {
+			$this->record_exit_status( 'link_shortening_service' );
+			return false;
+		}
+
+
+		/**
+		 * Bail out if the post is older than the specified minimum publication
+		 * date for posts and pages.
+		 *
+		 */
+		if ( false == $this->check_publication_date() ) {
+			$this->record_exit_status( 'publication_date' );
+			return false;
+		}
+
+
+		/**
+		 * Shortlinks can now be turned on or off at the post_type level on the
+		 * options page. So if the shortlinks are turned off for our current
+		 * post type, let's bail
+		 *
+		 */
+		$post_type_toggle = SWP_Utility::get_option( 'short_link_toggle_' . $post->post_type );
+		if ( false === $post_type_toggle ) {
+			$this->record_exit_status( 'short_link_toggle_' . $post->post_type );
+			return false;
+		}
+
+
+		// If all checks pass, return true. We should shortend the link.
+		return true;
+	}
+
+
 	/**
 	 * Fetch the bitly link that is cached in the local database.
 	 *
