@@ -14,6 +14,16 @@ class SWP_Link_Shortener {
 
 
 	/**
+	 * This trait gives us access to the following debugging methods:
+	 *
+	 * debug()  Outputs all class properties to the screen.
+	 * record_exit_status()  Stores bail conditions a dumpable array.
+	 *
+	 */
+	use SWP_Debug_Trait;
+
+
+	/**
 	 * The unique key for each child class that extends this link shortening
 	 * class. Keys should be snake_cased.
 	 *
@@ -59,16 +69,6 @@ class SWP_Link_Shortener {
 	 *
 	 */
 	public $deactivation_hook = '';
-
-
-	/**
-	 * This trait gives us access to the following debugging methods:
-	 *
-	 * debug()  Outputs all class properties to the screen.
-	 * record_exit_status()  Stores bail conditions a dumpable array.
-	 *
-	 */
-	use SWP_Debug_Trait;
 
 
 	/**
