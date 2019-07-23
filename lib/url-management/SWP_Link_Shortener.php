@@ -150,10 +150,11 @@ class SWP_Link_Shortener {
 
 
 	/**
-	 * The Bitly Link Shortener Method
-	 *
-	 * This is the function used to manage shortened links via the Bitly link
-	 * shortening service.
+	 * A method to provide a shortened link from the chosen link shortening
+	 * service. This is the generic method which can either pull a cached link
+	 * from the database or generate a new link if one does not exist. Each of
+	 * those processes will be outsourced to other methods: fetch_cached_shortlink()
+	 * and generate_new_shortlink().
 	 *
 	 * @since  3.0.0 | 04 APR 2018 | Created
 	 * @since  3.4.0 | 16 OCT 2018 | Modified order of conditionals, docblocked.
