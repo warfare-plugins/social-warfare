@@ -99,7 +99,7 @@ class SWP_Link_Shortener {
 		add_action( 'wp_ajax_swp_' .$this->deactivation_hook, array( $this, $this->deactivation_hook ) );
 		add_action( 'wp_footer', array( $this, 'debug' ) );
 		add_filter( 'swp_link_shortening', array( $this, 'provide_shortlink' ) );
-		add_action( 'wp_ajax_nopriv_swp_' $this->activation_hook, array( $this , $this->activation_hook ) );
+		add_action( 'wp_ajax_nopriv_swp_' . $this->activation_hook, array( $this , $this->activation_hook ) );
 	}
 
 
