@@ -321,7 +321,7 @@ class SWP_Link_Shortener {
 		}
 
 
-		// If all checks pass, return true. We should shortend the link.
+		// If all checks pass, return true. We should shorten the link.
 		return true;
 	}
 
