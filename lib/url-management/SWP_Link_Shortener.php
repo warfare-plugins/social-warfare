@@ -191,8 +191,8 @@ class SWP_Link_Shortener {
 		 * Bail if we don't have a valid Bitly token.
 		 *
 		 */
-		if ( false == $this->access_token ) {
-			$this->record_exit_status( 'access_token' );
+		if ( false == $this->active ) {
+			$this->record_exit_status( 'Is this link shortener authenticated?' );
 			return $array;
 		}
 
