@@ -151,4 +151,42 @@ class SWP_Link_Shortener {
 
 		return false;
 	}
+
+	/**
+	 * Users can select a date prior to which articles will not get short
+	 * links. This is to prevent the case where some users get their quotas
+	 * filled up as soon as the option is turned on because it is generating
+	 * links for older articles. So this conditional checks the publish date
+	 * of an article and ensures that the article is eligible for links.
+	 *
+	 * @since  4.0.0 | 23 JUL 2019 | Created
+	 * @param  void
+	 * @return bool True if publication date is valid; false if not.
+	 *
+	 */
+	public function check_publication_date() {
+		global $post;
+
+		// Fetch the user-set start date from the options page.
+		$start_date = SWP_Utility::get_option( 'link_shortening_start_date' );
+
+		// If the start date is actually set...
+		if ( $start_date ) {
+
+			// Bail if we don't have a valid post object or post_date.
+			if ( !is_object( $post ) || empty( $post->post_date ) ) {
+				return $array;
+			}
+
+			// Format the start dates into something we can use.
+			$start_date = DateTime::createFromFormat( 'Y-m-d', $start_date );
+			$post_date  = new DateTime( $post->post_date );
+
+			// The post is older than the minimum publication date, return false.
+			if ( $start_date > $post_date ) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
