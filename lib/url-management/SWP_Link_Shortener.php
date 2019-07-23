@@ -188,16 +188,6 @@ class SWP_Link_Shortener {
 
 
 		/**
-		 * Bail if we don't have a valid Bitly token.
-		 *
-		 */
-		if ( false == $this->active ) {
-			$this->record_exit_status( 'Is this link shortener authenticated?' );
-			return $array;
-		}
-
-
-		/**
 		 * If the chache is fresh and we have a valid bitly link stored in the
 		 * database, then let's use our cached link.
 		 *
@@ -287,6 +277,16 @@ class SWP_Link_Shortener {
 		if( $this->key !== SWP_Utility::get_option( 'link_shortening_service' ) ) {
 			$this->record_exit_status( 'link_shortening_service' );
 			return false;
+		}
+
+
+		/**
+		 * Bail if we don't have a valid Bitly token.
+		 *
+		 */
+		if ( false == $this->active ) {
+			$this->record_exit_status( 'Is this link shortener authenticated?' );
+			return $array;
 		}
 
 
