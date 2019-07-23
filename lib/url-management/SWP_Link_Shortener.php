@@ -44,6 +44,17 @@ class SWP_Link_Shortener {
 
 
 	/**
+	 * A local property to let us know if this link shortening API has been
+	 * activated. For bitly, for example this will reflect whether or not we
+	 * have an Access Token.
+	 *
+	 * @var boolean
+	 *
+	 */
+	public $active = false;
+
+
+	/**
 	 * The properties that will be used to generate the authentication button
 	 * on the options page. This should contain, at a minimum, the following
 	 * indices in the array.
@@ -83,8 +94,12 @@ class SWP_Link_Shortener {
 	 *
 	 */
 	public function __construct() {
+		$this->establish_button_properties();
 		add_filter( 'swp_available_link_shorteners', array( $this, 'register_self' ) );
+		add_action( 'wp_ajax_swp_' .$this->deactivation_hook, array( $this, $this->deactivation_hook ) );
 		add_action( 'wp_footer', array( $this, 'debug' ) );
+		add_filter( 'swp_link_shortening', array( $this, 'provide_shortlink' ) );
+		add_action( 'wp_ajax_nopriv_swp_' $this->activation_hook, array( $this , $this->activation_hook ) );
 	}
 
 
@@ -101,6 +116,36 @@ class SWP_Link_Shortener {
 	public function register_self( $array ) {
 		$array[$this->key] = $this;
 		return $array;
+	}
+
+
+	/**
+	 * generate_authentication_button_data()
+	 *
+	 * A method to generate an array of information that can be used to generate
+	 * the authentication button for this network on the options page.
+	 *
+	 * @since  4.0.0 | 18 JUL 2019 | Created
+	 * @param  void
+	 * @return array The array of button data including the text, color_css,
+	 *               target, and link.
+	 *
+	 */
+	public function establish_button_properties() {
+
+		if ( true == $this->active ) {
+			$this->button_properties['text']              = __( 'Connected', 'social-warfare' );
+			$this->button_properties['classes']           = 'button sw-green-button';
+			$this->button_properties['new_tab']           = true;
+			$this->button_properties['link']              = '#';
+			$this->button_properties['deactivation_hook'] = $this->deactivation_hook;
+		} else {
+			$this->button_properties['text']              = __( 'Authenticate', 'social-warfare' );
+			$this->button_properties['classes']           = 'button sw-navy-button';
+			$this->button_properties['new_tab']           = false;
+			$this->button_properties['link']              = $this->authorization_link;
+			$this->button_properties['deactivation_hook'] = '';
+		}
 	}
 
 
@@ -208,7 +253,7 @@ class SWP_Link_Shortener {
 	 * @since  4.0.0 | 23 JUL 2019 | Created
 	 * @param  string $network The key corresponding to a social network.
 	 * @return bool   True if cleared to continue; false if we should bail.
-	 * 
+	 *
 	 */
 	public function should_link_be_shortened( $network ) {
 		global $post;
