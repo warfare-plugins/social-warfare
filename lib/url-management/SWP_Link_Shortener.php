@@ -272,7 +272,10 @@ class SWP_Link_Shortener {
 
 
 		/**
-		 * Bail if the current shortener is not the selected Link shortener.
+		 * This checks if the user has selected the current link shortener as
+		 * their service of choice. For example, if the Bitly class is calling
+		 * this, but the option is set to something other than Bitly, it will
+		 * bail out here.
 		 *
 		 */
 		if( $this->key !== SWP_Utility::get_option( 'link_shortening_service' ) ) {
@@ -282,7 +285,10 @@ class SWP_Link_Shortener {
 
 
 		/**
-		 * Bail if we don't have a valid Bitly token.
+		 * Bail if this link shortener isn't active. This property will be set
+		 * in the child class and will be determined based on the conditions of
+		 * that shortener. For example, the Bitly child class check to see if
+		 * the Access Token is set, and if it does it sets this property to true.
 		 *
 		 */
 		if ( false == $this->active ) {
