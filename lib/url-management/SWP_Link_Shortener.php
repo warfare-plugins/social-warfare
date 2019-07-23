@@ -160,7 +160,7 @@ class SWP_Link_Shortener {
 	 * @since  3.4.0 | 16 OCT 2018 | Modified order of conditionals, docblocked.
 	 * @since  4.0.0 | 17 JUL 2019 | Migrated into this standalone Bitly class.
 	 * @since  4.0.0 | 23 JUL 2019 | Migrated into the parent Link_Shortener class.
-	 * @param  array $array An array of arguments and information.
+	 * @param  array $array An array of arguments and information passed by the filter hook.
 	 * @return array $array The modified array.
 	 *
 	 */
