@@ -886,7 +886,7 @@ div.error {
 	color: white;
 	text-decoration: none;
 	font-size: 15px;
-	line-height: 15px;
+	line-height: 1;
 }
 
 .swp-authorization-button > div {
