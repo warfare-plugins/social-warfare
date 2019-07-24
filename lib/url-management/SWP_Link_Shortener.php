@@ -29,12 +29,14 @@
  *     B.  The Remove Authorization callback method: This needs to be named and
  *         then referenced as a string stored in the $deactivation_hook property.
  *
- * 3.  There are 4 mandatory class properties:
+ * 3.  There are 5 mandatory class properties:
  *
  *     A. key: The snake_cased name of the link shortener (e.g. 'bitly').
  *     B. name: The pretty name of the link shortener (e.g. 'Bily').
  *     C. deactivation_hook: The name of the deactivation callback method.
  *     D. activation_hook: The name of the OAuth activation callback method.
+ *     E. active: A boolean set in the constructor showing if the authentication
+ *        has been activated or not.
  *
  * @since 4.0.0 | 19 JUL 2019 | Created
  *
