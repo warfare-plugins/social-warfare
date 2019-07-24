@@ -2459,7 +2459,7 @@ div[class*=custom_color][class^=_wrapper] {
   min-width: 100px;
   border-radius: 3px;
   background: white;
-  padding: 0px 15px;
+  padding: 5px;
 }
 .swfw_block_button .swfw-cta-button a div:hover, .swfw-follow-button.swfw_shift_button .swfw-cta-button a div:hover, .swfw_shift_button.swfw_square_button .swfw-cta-button a div:hover, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a div:hover, .swfw-follow-button.swfw_pill_button .swfw-cta-button a div:hover, .swfw_pill_button.swfw_square_button .swfw-cta-button a div:hover, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a div:hover, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a div:hover, .swfw_leaf_button.swfw_square_button .swfw-cta-button a div:hover, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a div:hover {
   transition: all 300ms;
