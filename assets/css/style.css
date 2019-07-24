@@ -2486,7 +2486,7 @@ div[class*=custom_color][class^=_wrapper] {
  */
 .swfw-follow-button.swfw_pill_button, .swfw_pill_button.swfw_square_button, .swfw_pill_button.swfw_buttons_button, .swfw_pill_button.swfw_block_button {
   border-radius: 50px;
-  padding: 20px;
+  padding: 10px;
 }
 .swfw-follow-button.swfw_pill_button .swfw-network-icon, .swfw_pill_button.swfw_square_button .swfw-network-icon, .swfw_pill_button.swfw_buttons_button .swfw-network-icon, .swfw_pill_button.swfw_block_button .swfw-network-icon {
   margin-left: 10px;
