@@ -905,6 +905,7 @@ a.swp-button.swp-authorization-button {
 }
 
 .swp-authorization-button i.sw {
+	margin-top:4px;
 	padding-right: 10px;
 	font-size: 24px;
 }
