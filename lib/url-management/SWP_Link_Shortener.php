@@ -7,6 +7,35 @@
  * These integrations can extend this class to get easy access to it's methods
  * and properties.
  *
+ * -------------------------  EXTENDING THIS CLASS  ----------------------------
+ *
+ * A child class of SWP_Link_Shortener needs only four methods and a handful of
+ * properties in order to be able to process everything properly:
+ *
+ * 1.  There are two methods with mandatory names:
+ *
+ *     A.  The __construct method: This needs to set the $active property and the
+ *         $authorization_link property.
+ *
+ *     B.  The generate_new_shortlink() method: This will be called by the
+ *         parent class whenever it needs to generate a new shortlink.
+ *
+ * 2.  There are two methods with arbitrary names whose names must be identified
+ *     in mandatory class properties.
+ *
+ *     A.  The OAuth callback method: This needs to be named and then referenced
+ *         as a string stored in the $activation_hook property.
+ *
+ *     B.  The Remove Authorization callback method: This needs to be named and
+ *         then referenced as a string stored in the $deactivation_hook property.
+ *
+ * 3.  There are 4 mandatory class properties:
+ *
+ *     A. key: The snake_cased name of the link shortener (e.g. 'bitly').
+ *     B. name: The pretty name of the link shortener (e.g. 'Bily').
+ *     C. deactivation_hook: The name of the deactivation callback method.
+ *     D. activation_hook: The name of the OAuth activation callback method.
+ *
  * @since 4.0.0 | 19 JUL 2019 | Created
  *
  */
@@ -120,19 +149,15 @@ class SWP_Link_Shortener {
 
 
 	/**
-	 * generate_authentication_button_data()
-	 *
-	 * A method to generate an array of information that can be used to generate
-	 * the authentication button for this network on the options page.
+	 * A method to generate an array of information that can be used to populate
+	 * the options page authentication button for this network.
 	 *
 	 * @since  4.0.0 | 18 JUL 2019 | Created
 	 * @param  void
-	 * @return array The array of button data including the text, color_css,
-	 *               target, and link.
+	 * @return void All date will be stored in the local $button_properties property.
 	 *
 	 */
 	public function establish_button_properties() {
-
 		if ( true == $this->active ) {
 			$this->button_properties['text']              = __( 'Connected', 'social-warfare' );
 			$this->button_properties['classes']           = 'button sw-green-button';
