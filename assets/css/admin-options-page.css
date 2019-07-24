@@ -889,6 +889,10 @@ div.error {
 	line-height: 1;
 }
 
+a.swp-button.swp-authorization-button {
+	padding: 15px;
+}
+
 .swp-authorization-button > div {
 	display: flex;
 	width: 100%;
