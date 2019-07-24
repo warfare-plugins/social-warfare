@@ -319,8 +319,8 @@ class SWP_Link_Shortener {
 		 *
 		 */
 		if ( false == $this->active ) {
-			$this->record_exit_status( 'Is this link shortener authenticated?' );
-			return $array;
+			$this->record_exit_status( 'authentication' );
+			return false;
 		}
 
 
