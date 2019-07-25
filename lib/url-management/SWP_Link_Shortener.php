@@ -38,6 +38,9 @@
  *     E. active: A boolean set in the constructor showing if the authentication
  *        has been activated or not.
  *
+ * 4.  Optional, a method to add any options to the options page that are
+ *     specific to that link shortening API.
+ *
  * @since 4.0.0 | 19 JUL 2019 | Created
  *
  */
@@ -127,10 +130,16 @@ class SWP_Link_Shortener {
 	public function __construct() {
 		$this->establish_button_properties();
 		add_filter( 'swp_available_link_shorteners', array( $this, 'register_self' ) );
-		add_action( 'wp_ajax_swp_' .$this->deactivation_hook, array( $this, $this->deactivation_hook ) );
 		add_action( 'wp_footer', array( $this, 'debug' ) );
 		add_filter( 'swp_link_shortening', array( $this, 'provide_shortlink' ) );
-		add_action( 'wp_ajax_nopriv_swp_' . $this->activation_hook, array( $this , $this->activation_hook ) );
+
+		if( !empty( $this->deactivation_hook ) ) {
+			add_action( 'wp_ajax_nopriv_swp_' . $this->activation_hook, array( $this , $this->activation_hook ) );
+		}
+
+		if( !empty( $this->deactivation_hook ) ) {
+			add_action( 'wp_ajax_swp_' .$this->deactivation_hook, array( $this, $this->deactivation_hook ) );
+		}
 	}
 
 
