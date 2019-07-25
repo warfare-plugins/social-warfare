@@ -249,7 +249,7 @@ class SWP_Link_Shortener {
 		 *
 		 */
 		$url           = urldecode( $array['url'] );
-		$new_shortlink = $this->generate_new_shortlink( $url, $post_id );
+		$new_shortlink = $this->generate_new_shortlink( $url, $post_id, $network );
 
 
 		/**
