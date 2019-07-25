@@ -249,7 +249,7 @@ class SWP_Link_Shortener {
 		 *
 		 */
 		$url           = urldecode( $array['url'] );
-		$new_shortlink = $this->generate_new_shortlink( $url );
+		$new_shortlink = $this->generate_new_shortlink( $url, $post_id );
 
 
 		/**
@@ -266,7 +266,7 @@ class SWP_Link_Shortener {
 
 			delete_post_meta( $post_id, $meta_key );
 			update_post_meta( $post_id, $meta_key, $new_shortlink );
-			$array['url'] = $new_shorlink;
+			$array['url'] = $new_shortlink;
 		}
 
 		return $array;
