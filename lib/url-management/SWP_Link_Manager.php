@@ -135,7 +135,7 @@ class SWP_Link_Manager {
 		 * of the link shortening options that are available to the user.
 		 *
 		 */
-		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare'), 'bitly' );
+		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare'), 'link_shortening' );
 		$link_shortening
 			->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare') )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-bitly-link-shortening/' )
@@ -184,27 +184,8 @@ class SWP_Link_Manager {
 		 * to our dropdown select and an authentication button.
 		 *
 		 */
-		$authentications = array();
 		foreach( $services as $service ) {
-
-			// Add the key and name to an array for use in the dropdown option.
 			$available_services[$service->key] = $service->name;
-
-			// Create the authentication button option.
-			$authentications[$service->key] = new SWP_Option_Button(
-				$service->button_properties['text'],
-				'authenticate_' . $service->key,
-				$service->button_properties['classes'],
-				$service->button_properties['link'],
-				$service->button_properties['new_tab'],
-				$service->button_properties['deactivation_hook']
-			);
-
-			// Add the size, priority, and dependency to the option.
-			$authentications[$service->key]
-				->set_size( 'sw-col-300' )
-				->set_priority( 30 )
-				->set_dependency('link_shortening_service', $service->key);
 		}
 
 
@@ -279,7 +260,6 @@ class SWP_Link_Manager {
 			$link_shortening_start_date,
 			$post_type_description
 		));
-		$link_shortening->add_options( $authentications );
 		$link_shortening->add_options( $post_type_toggles );
 
 
