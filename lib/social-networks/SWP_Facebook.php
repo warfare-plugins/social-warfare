@@ -47,7 +47,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->cta            = __( 'Share','social-warfare' );
 		$this->key            = 'facebook';
 		$this->default        = 'true';
-		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
+		$this->base_share_url = 'https://graph.facebook.com/?fields=og_object{engagement}&id=';
 
 		$this->init_social_network();
 	}
@@ -64,8 +64,12 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	public function get_api_link( $url ) {
+
+		return 'https://graph.facebook.com/?id='.$url.'&fields=og_object{engagement}';
+
+		// Saving for later when we'll need access tokens. Return already fired above.
 		$access_token = base64_decode('MTc5NjYwNzk4Nzc0Mjk2fGZld2FfS0VPUzBwZWxzcFBPZndfanFsanFUaw==');
-		return 'https://graph.facebook.com/v3.2/?id='.$url.'&fields=engagement&access_token=' . $access_token;
+		return 'https://graph.facebook.com/v5.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $access_token;
 	}
 
 
@@ -73,29 +77,25 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * Parse the response to get the share count
 	 *
 	 * @since  1.0.0 | 06 APR 2018 | Created
-	 * @since  3.6.0 | 22 APR 2019 | Updated to parse API v. 3.2.
+	 * @since  3.6.0 | 22 APR 2019 | Updated to parse API v.3.2.
+	 * @since  4.0.0 | 03 DEC 2019 | Updated to parse API v.3.2 without token.
 	 * @access public
 	 * @param  string  $response The raw response returned from the API request
-	 * @return integer $total_activity The number of shares reported from the API
+	 * @return integer The number of shares reported from the API
 	 *
 	 */
 	public function parse_api_response( $response ) {
 
-		// JSON decode the response.
-		$formatted_response = json_decode( $response , true);
+		// Parse the response into a generic PHP object.
+		$response = json_decode( $response );
 
 		// Parse the response to get integers.
-		if( !empty( $formatted_response['engagement'] ) ) {
-			$reaction_count = $formatted_response['engagement']['reaction_count'];
-			$comment_count  = $formatted_response['engagement']['comment_count'];
-			$share_count    = $formatted_response['engagement']['share_count'];
-		} else {
-			$reaction_count = $comment_count = $share_count = 0;
+		if( !empty( $response->og_object ) && !empty( $response->og_object->engagement ) ) {
+			return $response->og_object->engagement->count;
 		}
 
-		// Add up the integers and return the total.
-		$total = $reaction_count + $comment_count + $share_count;
-		return $total;
+		// Return 0 if no valid counts were able to be extracted.
+		return 0;
 	}
 
 }
