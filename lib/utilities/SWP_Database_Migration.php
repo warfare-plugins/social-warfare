@@ -34,8 +34,17 @@ class SWP_Database_Migration {
 	 *
 	 */
 	public function __construct() {
-		global $post;
-		add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
+
+
+		/**
+		 * We're commenting out the functionality in this file as it has been
+		 * over a year and a half since this was needed and 99.9% of sites
+		 * should already have been migrated by now.
+		 *
+		 */
+
+		// global $post;
+		// add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
 	}
 
 
