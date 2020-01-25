@@ -47,7 +47,9 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->cta            = __( 'Share','social-warfare' );
 		$this->key            = 'facebook';
 		$this->default        = 'true';
-		$this->base_share_url = 'https://graph.facebook.com/?fields=og_object{engagement}&id=';
+
+		// This is the link that is clicked on to share an article to their network.
+		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
 	}
@@ -58,6 +60,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @since  3.6.0 | 22 APR 2019 | Updated API to v3.2.
+	 * @since  4.0.0 | 25 JAN 2020 | Added access_token based API call.
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -67,7 +70,6 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		return 'https://graph.facebook.com/?id='.$url.'&fields=og_object{engagement}';
 
-		// Saving for later when we'll need access tokens. Return already fired above.
 		$access_token = base64_decode('MTc5NjYwNzk4Nzc0Mjk2fGZld2FfS0VPUzBwZWxzcFBPZndfanFsanFUaw==');
 		return 'https://graph.facebook.com/v5.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $access_token;
 	}
