@@ -580,8 +580,9 @@ class SWP_Post_Cache {
 			 *
 			 */
 			$this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
-
 		}
+
+		$this->display_permalinks();
 	}
 
 
@@ -906,5 +907,26 @@ class SWP_Post_Cache {
 		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
 			echo $string;
 		}
+	}
+
+
+	/**
+	 * A method for displaying the permalinks that are being used to fetch
+	 * share counts for this post or page. This will output an array of permalinks
+	 * separated by social network.
+	 *
+	 * @since  4.0.0 | 19 FEB 2020 | Created
+	 * @param  void
+	 * @return void All data is output to the screen.
+	 *
+	 */
+	protected function display_permalinks() {
+		if( false === SWP_Utility::debug( 'recovery' ) ) {
+			return;
+		}
+		
+		echo '<pre style="background:yellow;">';
+		var_dump($this->permalinks);
+		echo '</pre>';
 	}
 }
