@@ -518,14 +518,44 @@ class SWP_Utility {
 		return false;
 	}
 
-	function starts_with($haystack, $needle)
-	{
+
+	/**
+	 * A simple utility method that can be used as a shortcut to see if a string
+	 * starts with a particular character/string. For example, this can be used to see
+	 * if a permalink currently starts with https.
+	 *
+	 * if( true === starts_with( $some_link, 'https' ) ) {
+	 *     echo 'This is an https link!'
+	 * }
+	 *
+	 * @since  4.0.0 | 21 FEB 2020 | Created
+	 * @param  string $haystack The string to be examined.
+	 * @param  string $needle   The string to search for.
+	 * @return boolean True on success, False on failure.
+	 *
+	 */
+	function starts_with($haystack, $needle) {
 	     $length = strlen($needle);
 	     return (substr($haystack, 0, $length) === $needle);
 	}
-	
-	function ends_with($haystack, $needle)
-	{
+
+
+	/**
+	 * A simple utility method that can be used as a shortcut to see if a string
+	 * ends with a particular character/string. For example, this can be used to see
+	 * if a permalink currently ends with a trailing slash (/).
+	 *
+	 * if( true === ends_with( $some_link, '/' ) ) {
+	 *     echo 'This link ends with a trailing slash!'
+	 * }
+	 *
+	 * @since  4.0.0 | 21 FEB 2020 | Created
+	 * @param  string $haystack The string to be examined.
+	 * @param  string $needle   The string to search for.
+	 * @return boolean True on success, False on failure.
+	 *
+	 */
+	function ends_with($haystack, $needle){
 	    $length = strlen($needle);
 	    if ($length == 0) {
 	        return true;
