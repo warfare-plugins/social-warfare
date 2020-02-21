@@ -528,6 +528,8 @@ class SWP_Post_Cache {
 	 *                 share count update process.
 	 *
 	 * @since  3.1.0 | 21 JUN 2018 | Created
+	 * @since  4.0.0 | 20 FEB 2020 | Added call to debug_display_permalinks()
+	 * @since  4.0.0 | 21 FEB 2020 | Added call to add_trailing_slashes()
 	 * @param  void
 	 * @return void
 	 *
@@ -581,11 +583,23 @@ class SWP_Post_Cache {
 			 */
 			$this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
 
-			$this->add_trailing_slash($key);
+
+			/**
+			 * Duplicates the URL's so that the given network will be check for
+			 * a permalink with both a trailing slash and without one.
+			 *
+			 */
+			$this->add_trailing_slashes( $key );
 
 		}
 
-		$this->display_permalinks();
+
+		/**
+		 * This will output the checked permalinks to the screen when the following
+		 * URL parameters are added to the address bar: ?swp_cache=rebuild&swp_debug=recovery.
+		 *
+		 */
+		$this->debug_display_permalinks();
 	}
 
 
@@ -918,44 +932,85 @@ class SWP_Post_Cache {
 	 * share counts for this post or page. This will output an array of permalinks
 	 * separated by social network.
 	 *
+	 * To activate: ?swp_cache=rebuild&swp_debug=recovery
+	 *
 	 * @since  4.0.0 | 19 FEB 2020 | Created
 	 * @param  void
 	 * @return void All data is output to the screen.
 	 *
 	 */
-	protected function display_permalinks() {
+	protected function debug_display_permalinks() {
+
+		// Bail if debugging is not currently active.
 		if( false === SWP_Utility::debug( 'recovery' ) ) {
 			return;
 		}
 
+		// Output the preformatted box with the array of permalinks.
 		echo '<pre style="background:yellow;">';
 		var_dump($this->permalinks);
 		echo '</pre>';
 	}
 
 
-	protected function add_trailing_slash( $key ) {
+	/**
+	 * This function will add or remove the trailing slash so that we check a
+	 * network for share counts for both versions of the link. Now we will check
+	 * for the following versions of a link:
+	 *
+	 * Note: This is currently done exclusively for Pinterest, but other networks
+	 * can be added instantaneously by adding them to the $eligible_networks array below.
+	 *
+	 * /my-blog-post/
+	 * /my-blog-post
+	 *
+	 * @since 4.0.0 | 21 FEB 2020 | Created
+	 * @param string $key The key corresponding to the current social network.
+	 * @return void All data is stored in class properties.
+	 * 
+	 */
+	protected function add_trailing_slashes( $key ) {
 
 		// The list of networks that we will check both URL versions for.
-		$networks = array('pinterest');
+		$eligible_networks = array('pinterest');
 
 		// If this isn't one of those networks, bail out early.
-		if( false === in_array( $key, $networks ) ) {
+		if( false === in_array( $key, $eligible_networks ) ) {
 			return false;
 		}
 
-
+		/**
+		 * We'll add our newly created permalinks to this now-empty array. Later
+		 * we'll merge this back into the original class property array.
+		 *
+		 */
 		$new_links = array();
+
+
+		/**
+		 * We'll loop through every single permalink that is being checked for
+		 * this network (both normal and recovery), and create a second version
+		 * either by adding a trailing slash or removing it.
+		 *
+		 */
 		foreach( $this->permalinks[$key] as $permalink ) {
+
+			// If it doesn't have a trailing slash, we'll add one.
 			if( false === SWP_Utility::ends_with( $permalink, '/' ) ) {
 				$new_links[] = $permalink . '/';
+
+			// If it does have a trailing slash, we'll remove it.
 			} else {
 				$new_links[] = rtrim( $permalink, '/');
 			}
 		}
-		var_dump($new_links);
 
+		/**
+		 * Merge our newly created permalinks array into the class property array
+		 * whilst specifically targeting the array that lives in the indice for
+		 * this network.
+		 */
 		$this->permalinks[$key] = array_merge( $this->permalinks[$key], $new_links );
-	}
 
+	}
 }
