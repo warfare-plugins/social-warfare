@@ -517,4 +517,21 @@ class SWP_Utility {
 
 		return false;
 	}
+
+	function starts_with($haystack, $needle)
+	{
+	     $length = strlen($needle);
+	     return (substr($haystack, 0, $length) === $needle);
+	}
+	
+	function ends_with($haystack, $needle)
+	{
+	    $length = strlen($needle);
+	    if ($length == 0) {
+	        return true;
+	    }
+
+	    return (substr($haystack, -$length) === $needle);
+	}
+
 }

@@ -580,6 +580,9 @@ class SWP_Post_Cache {
 			 *
 			 */
 			$this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
+
+			$this->add_trailing_slash($key);
+
 		}
 
 		$this->display_permalinks();
@@ -924,9 +927,35 @@ class SWP_Post_Cache {
 		if( false === SWP_Utility::debug( 'recovery' ) ) {
 			return;
 		}
-		
+
 		echo '<pre style="background:yellow;">';
 		var_dump($this->permalinks);
 		echo '</pre>';
 	}
+
+
+	protected function add_trailing_slash( $key ) {
+
+		// The list of networks that we will check both URL versions for.
+		$networks = array('pinterest');
+
+		// If this isn't one of those networks, bail out early.
+		if( false === in_array( $key, $networks ) ) {
+			return false;
+		}
+
+
+		$new_links = array();
+		foreach( $this->permalinks[$key] as $permalink ) {
+			if( false === SWP_Utility::ends_with( $permalink, '/' ) ) {
+				$new_links[] = $permalink . '/';
+			} else {
+				$new_links[] = rtrim( $permalink, '/');
+			}
+		}
+		var_dump($new_links);
+
+		$this->permalinks[$key] = array_merge( $this->permalinks[$key], $new_links );
+	}
+
 }
