@@ -165,6 +165,7 @@ class SWP_Header_Output {
 		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");
 		font-weight: normal;
 		font-style: normal;
+		font-display:block;
 	}
 </style>';
 
