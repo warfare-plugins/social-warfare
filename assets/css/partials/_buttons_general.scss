@@ -1,0 +1,375 @@
+// main:../style.scss
+
+@media print {
+	.swp_social_panel {
+		display: none;
+		opacity: 0;
+		visibility: collapse;
+	}
+}
+
+/* For non-English sites */
+html[lang] .site * i.sw {
+	font-family: sw-icon-font !important;
+}
+
+.swp_social_panel {
+	clear: both;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	height: 34px;
+	line-height: 1;
+	margin-bottom: 20px!important;
+	margin-top: 20px!important;
+	overflow: hidden;
+	padding: 0;
+
+	-webkit-align-items: stretch;
+	align-items: stretch;
+	-webkit-box-align: stretch;
+	-moz-box-align: stretch;
+	-webkit-box-pack: justify;
+	-moz-box-pack: justify;
+	direction: ltr;
+	-ms-flex-align: stretch;
+	-ms-flex-line-pack: center;
+	-ms-flex-pack: justify;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+}
+
+@media print {
+	.swp_social_panel {
+		display: none;
+		opacity: 0;
+		visibility: collapse;
+	}
+}
+
+.swp_social_panel:not(.nc_floater):not(.swp_social_panelSide) {
+	width: 100%!important;
+}
+
+.nc_wrapper .swp_social_panel {
+	margin-bottom: 10px!important;
+	margin-top: 10px!important;
+}
+
+div.swp_social_panel .nc_tweetContainer:not(.total_shares):not(.total_sharesalt) {
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	cursor: pointer;
+	float: left;
+	font-family: Lato;
+	height: 32px;
+	margin: 0 5px 3px 5px;
+	min-width: 34px;
+	overflow: hidden;
+	text-align: center;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+
+div.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+.swp_social_panel .nc_tweetContainer a.nc_tweet,
+.swp_social_panel .total_shares .swp_count {
+	display: block;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	font-family: Lato, sans-serif;
+	font-size: 18px!important;
+	font-weight: bold;
+	height: 30px;
+	text-decoration: none;
+	text-decoration: none!important;
+	text-transform: none;
+
+	-webkit-box-direction: normal;
+	-moz-box-direction: normal;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	box-shadow:none;
+}
+
+.swp_social_panel:not(.nc_floater):not(.swp_social_panelSide).swp_shift {
+	 padding:0 10px;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:nth-child(1) {
+	margin-left: 0;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer:nth-last-child(1) {
+	margin-right: 0;
+}
+
+.swp_social_panel a .swp_count:not(.swp_hide) {
+	display: inline-block;
+	line-height: 32px;
+	margin: 0;
+	padding: 0 5px;
+
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+.swp_social_panel a .swp_count.swp_hide {
+	margin: 0 auto;
+}
+
+.swp_social_panel span:before {
+	content: initial!important;
+}
+
+.swp_social_panel .total_shares .swp_count {
+	line-height: 30px;
+}
+
+.swp_social_panel span.swp_count {
+	font-size: 14px;
+}
+
+.swp_social_panel span.iconFiller {
+	font-size: 18px;
+	margin: 0 auto;
+}
+
+.swp_social_panel.notMobile .nc_tweetContainer:nth-child(1) {
+	margin-left: 0;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) {
+	-webkit-transition: opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) div.total_shares.total_sharesalt:nth-child(1) {
+	margin-left: 0;
+	margin-right: 15px;
+	padding-left: 0;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) div.total_shares.total_sharesalt:nth-last-child(1) {
+	margin-right: 0;
+	padding-right: 0;
+}
+
+a.swp_CTT {
+	cursor: pointer;
+}
+
+span.swp_share {
+	display: block;
+	float: right;
+	float: left;
+	font-size: 14px;
+	font-weight: normal;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 0 0 6px;
+	max-width: none!important;
+	vertical-align: middle;
+}
+
+.swp_social_panelSide span.swp_share {
+	margin: 0;
+}
+
+.swp_social_panel .sw {
+	float: left;
+	height: 30px;
+	line-height: 32px;
+	margin: 0 5px;
+	text-shadow: none!important;
+	width: 20px;
+}
+
+.iconFiller {
+	display: block;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	-webkit-transition: width 0.1s linear;
+	transition: width 0.1s linear;
+}
+
+.swp_social_panel .iconFiller {
+	width: 30px;
+}
+
+span.spaceManWilly {
+	display: block;
+	width: 120px;
+}
+
+.swp_social_panel .total_shares {
+	background: transparent !important;;
+	border: none !important;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	color: white;
+	cursor: default;
+	display: block;
+	font-size: 19px;
+	padding: 0 10px;
+
+	-webkit-box-flex: 0!important;
+	-moz-box-flex: 0!important;
+	-webkit-flex: none!important;
+	-ms-flex: none!important;
+	flex: none!important;
+}
+
+.swp_social_panel .total_sharesalt {
+	background: transparent !important;
+	border: none !important;
+}
+
+.swp_social_panel div.total_shares.total_sharesalt,
+.swp_social_panel:hover div.total_shares.total_sharesalt:not(:nth-child(1)) {
+	background: transparent!important;
+	border: none;
+	color: #474b4d;
+	margin-left: 0!important;
+	margin-bottom: 10px !important;
+}
+
+div.swp_social_panel:hover div.total_shares.total_sharesalt:not(:nth-child(1)) {
+	background: transparent;
+	color: #474b4d;
+	margin-left: 10px;
+}
+
+.swp_social_panel .total_shares.total_sharesalt .swp_label {
+	color: #474b4d;
+	font-size: 10px;
+	letter-spacing: 0;
+	min-width: 40px;
+	vertical-align: middle;
+}
+
+.swp_social_panel .total_shares .swp_label {
+	font-size: 10px;
+	vertical-align: middle;
+}
+
+.swp_social_panel .total_shares.total_sharesalt .swp_count {
+	color: #474b4d;
+	font-size: 24px;
+}
+
+.swp_social_panel:hover .total_shares,
+.swp_social_panel.swp_full_color .total_shares,
+.swp_social_panel.swp_fade .total_shares,
+.swp_social_panel.swp_customFull:hover div.total_shares {
+	background: #e08a0f;
+}
+
+.swp_social_panel .nc_tweetContainer.total_shares.total_sharesalt:before {
+	content: "o";
+	display: inline-block;
+	font-family: sw-icon-font;
+	margin-top: 7px;
+	vertical-align: top;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) .total_shares.total_sharesalt .swp_count {
+	display: inline-block;
+	line-height: 0;
+	margin-left: 8px;
+	margin-top: 12px;
+	min-width: 45px;
+	position: relative;
+	vertical-align: middle;
+}
+
+span.swp_label {
+	display: block;
+	font-size: 9px!important;
+	margin-top: 13px;
+	position: absolute;
+	text-align: center!important;
+	text-transform: uppercase;
+}
+
+.swp_social_panelSide span.swp_label {
+	margin-top: 0;
+}
+
+.swp_social_panel.swp_leaf .nc_tweetContainer {
+	-webkit-border-radius: 15px 0!important;
+	border-radius: 15px 0!important;
+	border-width: 1px;
+}
+
+.swp_social_panel.swp_pill .nc_tweetContainer {
+	-webkit-border-radius: 50px !important;
+	border-radius: 50px !important;
+	border-width: 1px;
+}
+
+.swp_social_panel.swp_shift .nc_tweetContainer:not(.total_shares) {
+	border-width: 1px;
+	-moz-transform: skew(-25deg);
+	-o-transform: skew(-25deg);
+	-webkit-transform: skew(-25deg);
+}
+
+.swp_social_panel.swp_shift .nc_tweetContainer a {
+	-moz-transform: skew(25deg);
+	-o-transform: skew(25deg);
+	-webkit-transform: skew(25deg);
+}
+
+.swp_connected .nc_tweetContainer,
+.swp_connected:hover .nc_tweetContainer,
+.swp_connected .nc_tweetContainer:hover {
+	-webkit-border-radius: 0!important;
+	border-radius: 0!important;
+	border-width: 1px;
+	margin: 0!important;
+}
+
+.swp_social_panel.mobile .iconFiller ~ .swp_count,
+.sw-content-locator {
+	display: none;
+}
+
+/* The custom color selects in Social WarfareW > Styles */
+div[class*=custom_color][class^=_wrapper] {
+	display: none;
+}
+
+.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer.swp-emphasize {
+  flex: 2;
+}
+
+pre.swp_debug_data {
+	white-space: pre-wrap;
+	padding: 0 25px;
+	max-width: 1000px;
+	margin: 0 auto 50px auto;
+	border: 3px solid #666;
+}

@@ -593,13 +593,6 @@ class SWP_Post_Cache {
 
 		}
 
-
-		/**
-		 * This will output the checked permalinks to the screen when the following
-		 * URL parameters are added to the address bar: ?swp_cache=rebuild&swp_debug=recovery.
-		 *
-		 */
-		$this->debug_display_permalinks();
 	}
 
 
@@ -685,6 +678,14 @@ class SWP_Post_Cache {
 				$current_request++;
 			}
 		}
+
+
+		/**
+		 * This will output the checked permalinks to the screen when the following
+		 * URL parameters are added to the address bar: ?swp_cache=rebuild&swp_debug=recovery.
+		 *
+		 */
+		$this->debug_display_permalinks();
 	}
 
 
@@ -946,6 +947,7 @@ class SWP_Post_Cache {
 			return;
 		}
 
+
 		// Output the preformatted box with the array of permalinks.
 		echo '<pre style="background:yellow;">';
 		var_dump($this->permalinks);
@@ -967,7 +969,7 @@ class SWP_Post_Cache {
 	 * @since 4.0.0 | 21 FEB 2020 | Created
 	 * @param string $key The key corresponding to the current social network.
 	 * @return void All data is stored in class properties.
-	 * 
+	 *
 	 */
 	protected function add_trailing_slashes( $key ) {
 
