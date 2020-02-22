@@ -118,6 +118,7 @@ class SWP_Header_Output {
 	 * support the necessary mime & cross-origin access types to deliver them.
 	 *
 	 * @since  1.0.0
+	 * @since  4.0.0 | 21 FEB 2020 | Added font-display:block
 	 * @access public
 	 * @param  array  $info An array of information about the post
 	 * @return array  $info The modified array
