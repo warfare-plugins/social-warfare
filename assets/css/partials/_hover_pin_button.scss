@@ -1,0 +1,58 @@
+// main:../style.scss
+
+a.swp-hover-pin-button {
+		background: #cd2029;
+		border: 1px solid #aa1b29;
+		border: 0;
+		border-bottom: none;
+		  -webkit-border-radius: 4px;
+		border-radius: 3px;
+		  -webkit-box-shadow: none;
+		box-shadow: none;
+		color: #fff;
+		font-family: Lato,sans-serif;
+		font-size: 15px;
+		width: 120px !important;
+		height: 32px;
+		line-height: 32px;
+		padding: 0 20px;
+		position: absolute;
+		text-decoration: none;
+		text-align: center;
+		  -webkit-transition: opacity 0.5s;
+		transition: opacity 0.5s;
+		z-index: 3200;
+		position: absolute;
+		cursor: pointer;
+}
+
+a.swp-hover-pin-button::before {
+		color: #fff;
+		content: "b";
+		float: left;
+		font-family: sw-icon-font;
+		font-size: 20px;
+		font-weight: 400;
+		line-height: 36px;
+		margin-left: -5px;
+		margin-right: 10px;
+}
+
+a.swp-hover-pin-button:hover::before {
+	content: "F";
+}
+
+a.swp-hover-pin-button:hover,
+a.swp-hover-pin-button:focus {
+	background: #aa1b29;
+	color: #fff;
+	text-decoration: none;
+}
+
+.swp-pinterest-image-top {
+	margin-bottom: 20px;
+}
+
+.swp-pinterest-image-bottom {
+	margin-top: 20px;
+}

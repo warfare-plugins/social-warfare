@@ -1,0 +1,39 @@
+// main:../style.scss
+
+.swp_pop_thumb {
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	float: left;
+	height: 100px;
+	margin: 5px 25px 5px 0;
+	width: 100px;
+}
+
+.swp_popular_post {
+	clear: both;
+}
+
+.swp_clearfix:after {
+	clear: both;
+	content: " ";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.swp_popular_post a.swp_popularity {
+	border: none;
+	display: block;
+	line-height: 1.5;
+	margin: 20px 0;
+}
+
+span.swp_pop_count {
+	display: block;
+	font-size: 70%;
+}
+
+.swp_widget_box {
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}

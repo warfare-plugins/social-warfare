@@ -1,0 +1,363 @@
+// main:../style.scss
+
+.swp_social_panelSide {
+	flex-direction: column;
+	height: auto;
+	overflow: visible;
+	/*top: 200px;*/
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+
+	z-index: 9998;
+	margin: 10px 5px !important;
+	padding: 0;
+
+	-webkit-box-direction: normal;
+	-moz-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+}
+
+.swp_social_panelSide.slide,
+.swp_social_panelSide.fade  {
+	position: fixed;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+
+.swp_social_panelSide.fade.swp_float_left {
+	left: 5px;
+}
+
+.swp_social_panelSide.fade.swp_float_right {
+	right: 5px;
+}
+
+.swp_social_panelSide[class*=swp_side] {
+	height: auto;
+	display: flex;
+	position: fixed;
+	padding: 30px 0;
+}
+
+.swp_social_panelSide.fade {
+	display: none;
+}
+
+.swp_social_panelSide.swp_float_right {
+	align-content: flex-end;
+}
+
+.swp_social_panelSide.swp_side_top {
+	top: 15px;
+}
+
+.swp_social_panelSide.swp_side_bottom {
+	bottom: 15px;
+}
+
+.swp_social_panelSide.swp_side_center {
+}
+
+.swp_social_panelSide .nc_tweetContainer {
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	clear: both;
+	display: block;
+	font-family: Lato, sans-serif;
+	height: 32px;
+	margin: 3px 0!important;
+	overflow: hidden;
+	padding: 0;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: top;
+	width: 90px;
+}
+
+.swp_social_panelSide .nc_tweetContainer .iconFiller {
+	display: inline-block;
+	height: 40px;
+	margin: 0 6px;
+	padding: 0;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: middle;
+	width: 21px;
+}
+
+.swp_social_panelSide .nc_tweetContainer .swp_count {
+	display: inline-block;
+	font-size: 14px;
+	height: 32px;
+	line-height: 16px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: right;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: top;
+	width: 0;
+}
+
+.swp_social_panelSide .nc_tweetContainer a {
+	cursor: pointer;
+	display: block;
+	font-weight: 500;
+	height: 36px;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	vertical-align: top;
+}
+
+.swp_social_panelSide .nc_tweetContainer .sw,
+.swp_social_panelSide .nc_tweetContainer .swp_share {
+	float: left;
+	line-height: 34px;
+}
+
+.swp_social_panelSide.swp_default .nc_tweetContainer .sw {
+	line-height: 32px;
+}
+
+.swp_social_panelSide.swp_default .nc_tweetContainer .swp_share {
+	line-height: 30px;
+}
+
+.swp_social_panelSide .nc_tweetContainer .swp_share {
+	font-size: 13px;
+}
+
+.swp_social_panelSide .nc_tweetContainer:hover,
+.swp_social_panelSide .nc_tweetContainer:hover .iconFiller,
+.swp_social_panelSide .nc_tweetContainer:hover .swp_count {
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer, .swp_social_panelSide.swp_circles .nc_tweetContainer {
+	margin-bottom: 5px;
+	width: 67.5px !important;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer,
+.swp_social_panelSide.swp_boxed .nc_tweetContainer a,
+.swp_social_panelSide.swp_circles .nc_tweetContainer,
+.swp_social_panelSide.swp_circles .nc_tweetContainer a {
+	width: 67.5px;
+	height: 67.5px !important;
+	position: relative;
+}
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares),
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) a {
+	border-radius:50%!important;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer i.sw,
+.swp_social_panelSide.swp_circles .nc_tweetContainer i.sw {
+	font-size: 27px;
+	height: 40px;
+	margin: 0;
+	padding-top: 10px;
+	text-align: center;
+	width: 100%;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_share,
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_share {
+	height: 35px;
+	opacity: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	width: 67.5px;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_count,
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_count {
+	height: 35px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	-webkit-transition: padding 0.1s linear;
+	transition: padding 0.1s linear;
+	width: 100%;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) span.swp_count.swp_hide,
+.swp_social_panelSide.swp_boxed .nc_tweetContainer span.swp_hide .iconFiller,
+.swp_social_panelSide.swp_boxed .nc_tweetContainer span.swp_hide .spaceManWilly,
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) span.swp_count.swp_hide,
+.swp_social_panelSide.swp_circles .nc_tweetContainer span.swp_hide .iconFiller,
+.swp_social_panelSide.swp_circles .nc_tweetContainer span.swp_hide .spaceManWilly {
+	height: 67.5px;
+	opacity: 1;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer span.iconFiller,
+.swp_social_panelSide.swp_circles .nc_tweetContainer span.iconFiller {
+	height: 40px;
+	width: 67.5px;
+}
+
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide),
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover span.swp_count:not(.swp_hide) {
+	opacity: 0;
+}
+
+.swp_social_panelSide.swp_boxed .total_shares,
+.swp_social_panelSide.swp_circles .total_shares {
+	padding: 0;
+	width: 67.5px!important;
+}
+
+.swp_social_panelSide .nc_tweetContainer:not(.total_shares) {
+	line-height: 34px;
+}
+
+.swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares) .iconFiller{
+	margin-left: 2px;
+	width: 30px;
+}
+
+.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .swp_count {
+	padding: 0 8px;
+	width: 48px;
+}
+
+.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .swp_count.swp_hide {
+	padding: 0;
+	width: 100%;
+}
+
+.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .swp_count.swp_hide .iconFiller {
+	display: block;
+	float: none;
+	margin: 0 auto;
+}
+
+
+.swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares):hover {
+	width: 150px;
+}
+
+.swp_social_panelSide .nc_tweetContainer[data-network]:not(.total_shares):hover .iconFiller,
+.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .spaceManWilly {
+	width: 90px;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover .iconFiller,
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .spaceManWilly,
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover .iconFiller,
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) .spaceManWilly {
+	width: 100%;
+}
+
+.swp_social_panelSide .nc_tweetContainer.total_shares {
+	background: rgba(0, 0, 0, 0);
+	border: 0!important;
+	font-weight: 800;
+	height: 55px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	width: 90px;
+	order:-100;
+}
+
+.swp_social_panelSide .nc_tweetContainer.total_shares .swp_count {
+	color: #444;
+	display: block;
+	font-family: Lato, sans-serif;
+	height: 28px;
+	text-align: center;
+	width: 100%;
+}
+
+.swp_social_panelSide .nc_tweetContainer.total_shares .swp_label {
+	color: #444;
+	display: block;
+	font-family: Lato, sans-serif;
+	font-size: 50%;
+	position: relative;
+	text-align: center;
+	width: 100%;
+}
+
+.nc_wrapper {
+	background: white;
+	position: fixed;
+	-webkit-transition: top 0.5s bottom 0.5s;
+	transition: top 0.5s bottom 0.5s;
+	width: 100%;
+	z-index: 99999;
+}
+
+.nc_wrapper.bottom {
+	bottom: 0;
+	left: 0;
+}
+
+.nc_wrapper.top {
+	top: 0;
+	left: 0;
+}
+
+.nc_floater {
+	margin: 10px 0;
+	position: relative;
+	/* left: 304px; */
+	/* width: 740px; */
+}
+
+.swp_social_panelSide.hideCounts a {
+	text-align: center;
+}
+
+.swp_social_panelSide.hideCounts .iconFiller {
+	float: none;
+	text-align: left;
+}
+
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares) .swp_hide span.swp_share,
+.swp_social_panelSide.swp_boxed .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide),
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares) .swp_hide span.swp_share,
+.swp_social_panelSide.swp_circles .nc_tweetContainer:not(.total_shares):hover span.swp_share:not(.swp_hide) {
+	opacity: 1;
+}
+
+
+.float-position-top-left {
+	transform-origin: top left;
+}
+
+.float-position-center-left {
+	transform-origin: center left;
+}
+
+.float-position-bottom-left {
+	transform-origin: bottom left;
+}
+
+.float-position-top-right {
+	transform-origin: top right;
+}
+
+.float-position-center-right {
+	transform-origin: center right;
+}
+
+.float-position-bottom-right {
+	transform-origin: bottom right;
+}
