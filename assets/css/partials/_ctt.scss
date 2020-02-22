@@ -217,3 +217,12 @@ a.style6:hover .sw-click-to-tweet i.swp_twitter {
 	color: #2a2d34;
 	text-decoration: none;
 }
+
+.swp_social_panel.swp_default_color_outlines .swp_twitter a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_twitter a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_twitter a,
+.wp-editor-container .swp_twitter:before,
+a.style1 .sw-click-to-tweet i.swp_twitter,
+a.style2 .sw-click-to-tweet i.swp_twitter {
+	color: #429cd6;
+}

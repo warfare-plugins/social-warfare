@@ -1,9 +1,6 @@
 // main:../style.scss
-//
-/**
-* Social Network Colors
-*
-*/
+
+// Colors for each social network.
 $network_colors: (
 	"twitter": #429cd6,
 	"facebook": #4267B2,
@@ -20,4 +17,11 @@ $network_colors: (
 	"hacker_news": #d85623,
 	"flipboard": #bf2626,
 	"vk": #4a76a8,
-)
+);
+
+// Colors for each of the grayscale themes.
+$gray_colors: (
+	"light_gray": #cccccc,
+	"medium_gray": #999999,
+	"dark_gray": #444444,
+);
