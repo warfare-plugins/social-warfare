@@ -194,6 +194,16 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 4.0.0 =
+* New: Added Rebrandly as a link shortening service.
+* New: Added social follow widget.
+* New: Added the ability to authenticate the plugin with social networks.
+* New: Added a bunch of brand new shortcodes.
+* New: Added the ability to emphasize the first one or two buttons in the panel.
+* New: Added the ability to use ?swp_cache=rebuild&swp_debug=recovery to view the URL's being checked for shares.
+* Fixed: Fixed an extra doctype that would sometimes get added to the content.
+* Removed: Removed all instances of Google Plus.
+
 = 3.6.1 (3 JUN 2019) =
 * Updated Hover Save Pin functionality to work more globally.
 * Fixed conflcit with hover pin button in Thrive Architect page builder.
