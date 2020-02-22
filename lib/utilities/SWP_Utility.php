@@ -534,7 +534,7 @@ class SWP_Utility {
 	 * @return boolean True on success, False on failure.
 	 *
 	 */
-	function starts_with($haystack, $needle) {
+	static function starts_with($haystack, $needle) {
 	     $length = strlen($needle);
 	     return (substr($haystack, 0, $length) === $needle);
 	}
@@ -555,7 +555,7 @@ class SWP_Utility {
 	 * @return boolean True on success, False on failure.
 	 *
 	 */
-	function ends_with($haystack, $needle){
+	static function ends_with($haystack, $needle){
 	    $length = strlen($needle);
 	    if ($length == 0) {
 	        return true;
