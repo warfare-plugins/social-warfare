@@ -1936,7 +1936,7 @@ div[class*=custom_color][class^=_wrapper] {
 }
 
 .swp-pinterest-image-bottom {
-	/* exists but not styled */
+	margin-top: 20px;
 }
 
 .swp_modern, .swp_dark {
@@ -2180,12 +2180,6 @@ div[class*=custom_color][class^=_wrapper] {
   background: #069BD1;
   color: #fff;
 }
-
-
-/*# sourceMappingURL=converted_style.tmp.map */
-
-
-
 
 
 /**

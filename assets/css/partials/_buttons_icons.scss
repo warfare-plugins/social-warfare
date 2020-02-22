@@ -1,5 +1,6 @@
 // main:../style.scss
 
+// Style up the container for the icon.
 .sw {
 	display: inline-block;
 	font-family: sw-icon-font!important;
@@ -13,10 +14,21 @@
 	-ms-transform: translate(0, 0);
 	-webkit-transform: translate(0, 0);
 	transform: translate(0, 0);
+	&:before {
+		display: block!important;
+	}
 }
 
-.sw:before {
-	display: block!important;
+// Loop through and create all of the icons for each network's button.
+@each $network, $icon in $network_icons {
+	i.swp_#{$network}_icon:before {
+		content: $icon;
+	}
+}
+
+// The Social Warfare icon.
+.sw-social-warfare:before {
+	content: "p";
 }
 
 .wp-editor-container .sw:before {
@@ -24,122 +36,15 @@
 	line-height: 22px;
 }
 
-.wp-editor-container .sw-social-warfare:before {
-	color: #ee464f;
+.wp-editor-container .sw-social-warfare:before,
+.mce-ico.sw-social-warfare:before,
+.mce-ico.sw-social-warfare {
+	color: $social_warfare_red;
 }
 
 .mce-container .sw-social-warfare {
-	color: #ee464f;
+	color: $social_warfare_red;
 	font-size: 20px;
 	margin-right: 15px;
 	vertical-align: middle;
-}
-
-.mce-ico.sw-social-warfare:before {
-	color: #ee464f;
-}
-
-.mce-ico.sw-social-warfare {
-	color: #ee464f;
-}
-
-i.swp_google_plus_icon:before {
-	content: "h";
-}
-
-i.swp_pinterest_icon:before {
-	content: "b";
-}
-
-i.swp_twitter_icon:before {
-	content: "s";
-}
-
-i.swp_facebook_icon:before {
-	content: "j";
-}
-
-i.swp_linkedin_icon:before {
-	content: "f";
-}
-
-i.swp_tumblr_icon:before {
-	content: "r";
-}
-
-i.swp_mix_icon:before {
-	content: "g";
-}
-
-i.swp_reddit_icon:before {
-	content: "a";
-}
-
-i.swp_email_icon:before {
-	content: "k";
-}
-
-i.swp_yummly_icon:before {
-	content: "x";
-}
-
-i.swp_whatsapp_icon:before {
-	content: "y";
-}
-
-i.swp_pocket_icon:before {
-	content: "B";
-}
-
-i.swp_buffer_icon:before {
-	content: "z";
-}
-
-i.swp_hacker_news_icon:before {
-	content: "D";
-}
-
-i.swp_flipboard_icon:before {
-	content: "C";
-}
-
-i.swp_vk_icon:before {
-	content: "C";
-}
-
-i.swp_vimeo_icon:before {
-	content: "t";
-}
-
-i.swp_instagram_icon:before {
-	content: "d";
-}
-
-i.swp_blogger_icon:before {
-	content: "m";
-}
-
-i.swp_medium_icon:before {
-	content: "e";
-}
-
-i.swp_periscope_icon:before {
-	content: "c";
-}
-
-i.swp_snapchat_icon:before {
-	content: "u";
-}
-
-i.swp_ello_icon:before {
-	content: "l";
-}
-
-i.swp_flickr_icon:before {
-	content: "i";
-}
-
-
-.sw-social-warfare:before {
-	content: "p";
 }
