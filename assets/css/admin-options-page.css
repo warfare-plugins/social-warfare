@@ -690,6 +690,15 @@ p.sw-subtitle.sw-registration-text {
 	border-color: #bf2626;
 }
 
+.sw-vk-icon:before {
+	content: 'C';
+}
+
+.sw-s.sw-vk-icon {
+	background-color: #4a76a8;
+	border-color: #4872a3;
+}
+
 @media screen and (max-width: 1350px) {
 	.sw-header-menu li {
 		font-size: 14px;
