@@ -350,6 +350,12 @@ span.swp_label {
 	margin: 0!important;
 }
 
+
+/**
+ * Default Border Colors for each network.
+ *
+ *
+ */
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_google_plus,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_google_plus:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_google_plus:not(:hover) {
@@ -440,6 +446,18 @@ body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_flipboard:
 	border: 1px solid #bf2626;
 }
 
+.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_vk,
+html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_vk:hover,
+body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_vk:not(:hover) {
+	border: 1px solid #4a76a8;
+}
+
+
+/**
+ * Full color backgrounds and borders for each network.
+ *
+ *
+ */
 .swp_social_panel.swp_default_full_color .swp_google_plus,
 html body .swp_social_panel.swp_individual_full_color .swp_google_plus:hover,
 body .swp_social_panel.swp_other_full_color:hover .swp_google_plus {
@@ -545,6 +563,19 @@ body .swp_social_panel.swp_other_full_color:hover .swp_flipboard {
 	border: 1px solid #bf2626;
 }
 
+.swp_social_panel.swp_default_full_color .swp_vk,
+html body .swp_social_panel.swp_individual_full_color .swp_vk:hover,
+body .swp_social_panel.swp_other_full_color:hover .swp_vk {
+	background: #4a76a8;
+	border: 1px solid #4872a3;
+}
+
+
+/**
+ * Accent colors for the 3D bottom border color.
+ *
+ *
+ */
 .swp_social_panel.swp_three_dee.swp_default_full_color .swp_google_plus,
 html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_google_plus:hover,
 body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_google_plus {
@@ -635,6 +666,12 @@ body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_flipboard {
 	border-bottom: 3px solid #bf2626;
 }
 
+.swp_social_panel.swp_three_dee.swp_default_full_color .swp_vk,
+html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_vk:hover,
+body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_vk {
+	border-bottom: 3px solid #4a76a8;
+}
+
 .swp_social_panel.swp_default_light_gray .nc_tweetContainer,
 html body .swp_social_panel.swp_individual_light_gray .nc_tweetContainer:hover,
 body .swp_social_panel.swp_other_light_gray:hover .nc_tweetContainer {
@@ -713,6 +750,12 @@ body .swp_social_panel.swp_other_dark_gray_outlines:hover .nc_tweetContainer {
 	border: 1px solid #444;
 }
 
+
+/**
+ * Outline colors for "colored outlines" color themes.
+ *
+ *
+ */
 .swp_social_panel.swp_default_color_outlines .swp_google_plus a,
 html body .swp_social_panel.swp_individual_color_outlines .swp_google_plus a:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_google_plus a {
@@ -797,6 +840,18 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard a {
 	color: #e02828;
 }
 
+.swp_social_panel.swp_default_color_outlines .swp_vk a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_vk a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_vk a {
+	color: #4a76a8;
+}
+
+
+/**
+ * Outlines border colors for "colored outlines" color themes.
+ *
+ *
+ */
 .swp_social_panel.swp_default_color_outlines .swp_google_plus,
 html body .swp_social_panel.swp_individual_color_outlines .swp_google_plus:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_google_plus {
@@ -900,6 +955,13 @@ html body .swp_social_panel.swp_individual_color_outlines .swp_flipboard:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_flipboard {
 	background: transparent;
 	border: 1px solid #bf2626;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_vk,
+html body .swp_social_panel.swp_individual_color_outlines .swp_vk:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_vk {
+	background: transparent;
+	border: 1px solid #4a76a8;
 }
 
 .swp_social_panelSide {
@@ -1332,6 +1394,10 @@ i.swp_hacker_news_icon:before {
 }
 
 i.swp_flipboard_icon:before {
+	content: "C";
+}
+
+i.swp_vk_icon:before {
 	content: "C";
 }
 
