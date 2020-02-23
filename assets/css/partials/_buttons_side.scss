@@ -62,6 +62,10 @@
 		}
 	}
 
+	span.swp_label {
+		margin-top: 0;
+	}
+
 	.nc_tweetContainer {
 		@include transition(0.1s);
 		border-radius: 3px;
@@ -155,6 +159,7 @@
 
 		.swp_share {
 			font-size: 13px;
+			margin:0;
 		}
 
 		&[data-network]:not(.total_shares):hover .iconFiller,
@@ -289,6 +294,11 @@
 	&.top {
 		top: 0;
 		left: 0;
+	}
+
+	.swp_social_panel {
+		margin-bottom: 10px!important;
+		margin-top: 10px!important;
 	}
 }
 
