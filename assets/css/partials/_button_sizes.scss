@@ -12,8 +12,8 @@
 }
 
 // This controls the alignment when the buttons are smaller than 100% in size.
-@each $direction in (left,center,right) {
-	.scale-#{$direction} {
+@each $label, $direction in (left:left,center:center,right:right,full_width:left) {
+	.scale-#{$label} {
 		transform-origin: $direction;
 	}
 }
