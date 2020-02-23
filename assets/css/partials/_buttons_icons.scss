@@ -11,9 +11,8 @@
 	font-weight: normal;
 	text-rendering: auto;
 	text-transform: none!important;
-	-ms-transform: translate(0, 0);
-	-webkit-transform: translate(0, 0);
-	transform: translate(0, 0);
+	transform: translate(0,0);
+	@include prefix( transform, translate(0, 0) );
 	&:before {
 		display: block!important;
 	}
