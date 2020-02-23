@@ -172,8 +172,13 @@ html[lang] .site * i.sw {
 	&:not(.swp_social_panelSide) {
 		transition: opacity 0.2s ease-in-out;
 
+
 		.nc_tweetContainer {
 			flex: 1;
+
+			&.swp-emphasize {
+			  flex: 2;
+			}
 
 			&:nth-child(1) {
 				margin-left: 0;
@@ -249,35 +254,34 @@ html[lang] .site * i.sw {
 			background: #e08a0f;
 		}
 	}
-}
 
+	&.swp_leaf .nc_tweetContainer {
+		border-radius: 15px 0!important;
+		border-width: 1px;
+	}
 
+	&.swp_pill .nc_tweetContainer {
+		border-radius: 50px !important;
+		border-width: 1px;
+	}
 
-.swp_social_panel.swp_leaf .nc_tweetContainer {
-	border-radius: 15px 0!important;
-	border-width: 1px;
-}
+	&.swp_shift .nc_tweetContainer {
+		&:not(.total_shares) {
+			border-width: 1px;
+			transform: skew(-25deg);
+		}
 
-.swp_social_panel.swp_pill .nc_tweetContainer {
-	border-radius: 50px !important;
-	border-width: 1px;
-}
-
-.swp_social_panel.swp_shift .nc_tweetContainer:not(.total_shares) {
-	border-width: 1px;
-	transform: skew(-25deg);
-}
-
-.swp_social_panel.swp_shift .nc_tweetContainer a {
-	transform: skew(25deg);
-}
-
-.swp_connected .nc_tweetContainer,
-.swp_connected:hover .nc_tweetContainer,
-.swp_connected .nc_tweetContainer:hover {
-	border-radius: 0!important;
-	border-width: 1px;
-	margin: 0!important;
+		a {
+			transform: skew(25deg);
+		}
+	}
+	&.swp_connected {
+		&:hover .nc_tweetContainer, .nc_tweetContainer, .nc_tweetContainer:hover {
+			border-radius: 0!important;
+			border-width: 1px;
+			margin: 0!important;
+		}
+	}
 }
 
 .swp_social_panel.mobile .iconFiller ~ .swp_count,
@@ -290,10 +294,7 @@ div[class*=custom_color][class^=_wrapper] {
 	display: none;
 }
 
-.swp_social_panel:not(.swp_social_panelSide) .nc_tweetContainer.swp-emphasize {
-  flex: 2;
-}
-
+// A little style for the debug information output on the screen.
 pre.swp_debug_data {
 	white-space: pre-wrap;
 	padding: 0 25px;
