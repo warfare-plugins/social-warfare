@@ -56,7 +56,7 @@
 	justify-content: space-between;
 	line-height: 1;
 	margin-bottom: 10px;
-	padding: 20px;
+	padding: 15px;
 	width: 100%;
 
 	&.swp-snapchat, &.swp-snapchat a {
@@ -281,7 +281,7 @@
 	@extend .swfw-follow-button;
 	flex-flow: row nowrap;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-between;
 	cursor: initial;
 	position: relative;
 
@@ -338,7 +338,7 @@
 			  min-width: 100px;
 			  border-radius: 3px;
 			  background: white;
-			  padding: 0px 15px;
+			  padding: 5px 15px;
 		  }
 	  }
 
