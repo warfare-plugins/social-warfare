@@ -49,6 +49,7 @@
 
 	a {
 		text-decoration: none!important;
+		margin:5px 0;
 	}
 
 	.swfw-follow-button {
@@ -60,7 +61,7 @@
 		font-size: initial;
 		justify-content: space-between;
 		line-height: 1;
-		margin-bottom: 10px;
+		margin: 0;
 		padding: 20px;
 		width: 100%;
 
@@ -82,8 +83,93 @@
 			line-height: 36px;
 			text-decoration: none !important;
 		}
-	}
 
+		&.swfw_shift_button, &.swfw_square_button, &.swfw_buttons_button, &.swfw_block_button, &.swfw_pill_button {
+			flex-flow: row nowrap;
+			align-items: center;
+			justify-content: space-around;
+			cursor: initial;
+			position: relative;
+
+			> * {
+			  width: -moz-min-content;
+			  width: -webkit-min-content;
+			  width: min-content;
+			}
+
+			.swfw-network-icon {
+				margin-left: 10px;
+	  			flex: 1;
+			}
+
+			.swfw-text {
+				flex: 2;
+
+				.swfw-count {
+					width: -moz-max-content;
+					width: -webkit-max-content;
+					width: max-content;
+					font-size: 15px;
+				}
+			}
+
+			.swfw-cta-button {
+				flex: 1;
+				font-size: 12px;
+				line-height: 24px;
+				left: calc(10px + 60px);
+				color: white;
+				text-align: center;
+
+				a {
+					padding: none;
+
+					div {
+					  padding: 10px 30px;
+					  background: white;
+					  border-radius: 2px;
+					}
+				}
+
+				&:hover div {
+					background: rgba(33, 33, 33, 0.3);
+				}
+			}
+
+			.swfw-cta {
+				border-radius: 3px;
+			}
+
+			.swfw-cta-button {
+				font-size: 24px;
+				padding: 5px;
+				line-height: 24px;
+				border-radius: 4px;
+				text-align: center;
+				right: 0;
+
+				a {
+					text-decoration: none !important;
+
+					div {
+						font-size: 14px;
+						min-width: 100px;
+						border-radius: 3px;
+						background: white;
+						padding: 5px;
+
+						&:hover {
+							transition: all 300ms;
+							background: rgba(30, 30, 30, 0.3);
+							cursor: pointer;
+							color: white;
+						}
+
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * Square Buttons
@@ -123,6 +209,7 @@
 				transition: opacity 120ms 0;
 				font-size: 12px;
 
+				// If there are no follow counts to display, just show the CTA.
 				&[count="false"] {
 					opacity:0;
 					~.swfw-cta {
@@ -154,10 +241,83 @@
 
 	}
 
+	/**
+	 * The "Buttons" Shaped Buttons
+	 *
+	 */
+	&.swfw_buttons_container {
+		.swfw_buttons_button {
+			display: flex;
+			flex-flow: row nowrap;
+			width: -moz-max-content;
+			width: -webkit-max-content;
+			width: max-content;
+			margin: 0px;
+			border-radius: 4px;
+			padding: 15px;
+			color: white;
+			width:100%;
+			cursor:pointer;
+
+			.swfw-network-icon {
+				padding: 0;
+				font-size: 32px;
+			}
+
+			.swfw-text {
+				width: -webkit-max-content;
+				width: -moz-max-content;
+				width: max-content;
+				margin: 0 10px;
+				transition: margin 300ms;
+				display: flex;
+				justify-content: center;
+				line-height: 32px;
+				color: white;
+
+				.swfw-cta, .swfw-count {
+					display: inline;
+					position: relative;
+					transition: all 300ms;
+				}
+
+				.swfw-cta {
+					width: 0;
+					overflow-x: hidden;
+					position: absolute;
+					color: transparent;
+					margin-right: 0;
+					font-weight: normal;
+				}
+
+				&:hover .swfw-cta {
+					color: white;
+				}
+			}
+
+			&:hover .swfw-text {
+			  width: -moz-max-content;
+			  width: -webkit-max-content;
+			  width: max-content;
+			}
+			&:hover .swfw-text .swfw-cta {
+			  width: -moz-min-content;
+			  width: -webkit-min-content;
+			  width: min-content;
+			  overflow-x: visible;
+			  position: relative;
+			  margin-right: 10px;
+			  color: white;
+			}
+		}
+
+	}
 
 	// Snapchat is too light on the background so dark text is needed.
-	.swp-snapchat, .swp-snapchat a, .swp-snapchat .swfw-text {
-		color:#000000!important;
+	.swp-snapchat {
+		a, .swfw-text, .swfw-cta, i {
+			color:#000000!important;
+		}
 	}
 
 }
@@ -193,68 +353,7 @@
 
 
 
-/**
- * Buttons buttons
- *
- */
-.swfw_buttons_button {
-  display: flex;
-  flex-flow: row nowrap;
-  width: -moz-max-content;
-  width: -webkit-max-content;
-  width: max-content;
-  margin: 10px 5px;
-  border-radius: 4px;
-  padding: 5px 15px;
-  color: white;
-}
-.swfw_buttons_button .swfw-network-icon {
-  padding: 0;
-  font-size: 32px;
-}
-.swfw_buttons_button .swfw-text {
-  width: -moz-max-content;
-  width: -webkit-max-content;
-  width: max-content;
-  margin: 0 10px;
-  transition: margin 300ms;
-  display: flex;
-  justify-content: center;
-  line-height: 32px;
-  color: white;
-}
-.swfw_buttons_button .swfw-text .swfw-cta,
-.swfw_buttons_button .swfw-text .swfw-count {
-  display: inline;
-  position: relative;
-  transition: all 300ms;
-}
-.swfw_buttons_button .swfw-text .swfw-cta {
-  width: 0;
-  overflow-x: hidden;
-  position: absolute;
-  color: transparent;
-  margin-right: 0;
-  font-weight: normal;
-}
-.swfw_buttons_button .swfw-text:hover .swfw-cta {
-  color: white;
-}
 
-.swfw_buttons_button:hover .swfw-text {
-  width: -moz-max-content;
-  width: -webkit-max-content;
-  width: max-content;
-}
-.swfw_buttons_button:hover .swfw-text .swfw-cta {
-  width: -moz-min-content;
-  width: -webkit-min-content;
-  width: min-content;
-  overflow-x: visible;
-  position: relative;
-  margin-right: 10px;
-  color: white;
-}
 /**
  * Block Buttons
  *
@@ -262,84 +361,7 @@
 /**
 /// Mixins used by block variations.
 **/
-.swfw-follow-button.swfw_shift_button .swfw-network-icon, .swfw_shift_button.swfw_square_button .swfw-network-icon, .swfw_shift_button.swfw_buttons_button .swfw-network-icon, .swfw_shift_button.swfw_block_button .swfw-network-icon, .swfw-follow-button.swfw_pill_button .swfw-network-icon, .swfw_pill_button.swfw_square_button .swfw-network-icon, .swfw_pill_button.swfw_buttons_button .swfw-network-icon, .swfw_pill_button.swfw_block_button .swfw-network-icon, .swfw-follow-button.swfw_leaf_button .swfw-network-icon, .swfw_leaf_button.swfw_square_button .swfw-network-icon, .swfw_leaf_button.swfw_buttons_button .swfw-network-icon, .swfw_leaf_button.swfw_block_button .swfw-network-icon {
-  margin-left: 10px;
-  flex: 1;
-}
-.swfw-follow-button.swfw_shift_button .swfw-text, .swfw_shift_button.swfw_square_button .swfw-text, .swfw_shift_button.swfw_buttons_button .swfw-text, .swfw_shift_button.swfw_block_button .swfw-text, .swfw-follow-button.swfw_pill_button .swfw-text, .swfw_pill_button.swfw_square_button .swfw-text, .swfw_pill_button.swfw_buttons_button .swfw-text, .swfw_pill_button.swfw_block_button .swfw-text, .swfw-follow-button.swfw_leaf_button .swfw-text, .swfw_leaf_button.swfw_square_button .swfw-text, .swfw_leaf_button.swfw_buttons_button .swfw-text, .swfw_leaf_button.swfw_block_button .swfw-text {
-  flex: 2;
-}
-.swfw-follow-button.swfw_shift_button .swfw-cta-button, .swfw_shift_button.swfw_square_button .swfw-cta-button, .swfw_shift_button.swfw_buttons_button .swfw-cta-button, .swfw_shift_button.swfw_block_button .swfw-cta-button, .swfw-follow-button.swfw_pill_button .swfw-cta-button, .swfw_pill_button.swfw_square_button .swfw-cta-button, .swfw_pill_button.swfw_buttons_button .swfw-cta-button, .swfw_pill_button.swfw_block_button .swfw-cta-button, .swfw-follow-button.swfw_leaf_button .swfw-cta-button, .swfw_leaf_button.swfw_square_button .swfw-cta-button, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button, .swfw_leaf_button.swfw_block_button .swfw-cta-button {
-  flex: 1;
-}
-.swfw-follow-button.swfw_shift_button .swfw-cta-button a, .swfw_shift_button.swfw_square_button .swfw-cta-button a, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a, .swfw_shift_button.swfw_block_button .swfw-cta-button a, .swfw-follow-button.swfw_pill_button .swfw-cta-button a, .swfw_pill_button.swfw_square_button .swfw-cta-button a, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a, .swfw_pill_button.swfw_block_button .swfw-cta-button a, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a, .swfw_leaf_button.swfw_square_button .swfw-cta-button a, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a, .swfw_leaf_button.swfw_block_button .swfw-cta-button a {
-  padding: none;
-}
-.swfw-follow-button.swfw_shift_button .swfw-cta-button a div, .swfw_shift_button.swfw_square_button .swfw-cta-button a div, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a div, .swfw_shift_button.swfw_block_button .swfw-cta-button a div, .swfw-follow-button.swfw_pill_button .swfw-cta-button a div, .swfw_pill_button.swfw_square_button .swfw-cta-button a div, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a div, .swfw_pill_button.swfw_block_button .swfw-cta-button a div, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a div, .swfw_leaf_button.swfw_square_button .swfw-cta-button a div, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a div, .swfw_leaf_button.swfw_block_button .swfw-cta-button a div {
-  padding: 10px 30px;
-  background: white;
-  border-radius: 2px;
-}
-.swfw-follow-button.swfw_shift_button .swfw-cta-button a:hover div, .swfw_shift_button.swfw_square_button .swfw-cta-button a:hover div, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a:hover div, .swfw_shift_button.swfw_block_button .swfw-cta-button a:hover div, .swfw-follow-button.swfw_pill_button .swfw-cta-button a:hover div, .swfw_pill_button.swfw_square_button .swfw-cta-button a:hover div, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a:hover div, .swfw_pill_button.swfw_block_button .swfw-cta-button a:hover div, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a:hover div, .swfw_leaf_button.swfw_square_button .swfw-cta-button a:hover div, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a:hover div, .swfw_leaf_button.swfw_block_button .swfw-cta-button a:hover div {
-  background: rgba(33, 33, 33, 0.3);
-}
 
-.swfw_block_button, .swfw-follow-button.swfw_shift_button, .swfw_shift_button.swfw_square_button, .swfw_shift_button.swfw_buttons_button, .swfw_shift_button.swfw_block_button, .swfw-follow-button.swfw_pill_button, .swfw_pill_button.swfw_square_button, .swfw_pill_button.swfw_buttons_button, .swfw_pill_button.swfw_block_button, .swfw-follow-button.swfw_leaf_button, .swfw_leaf_button.swfw_square_button, .swfw_leaf_button.swfw_buttons_button, .swfw_leaf_button.swfw_block_button {
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-around;
-  cursor: initial;
-  position: relative;
-}
-.swfw_block_button > *, .swfw-follow-button.swfw_shift_button > *, .swfw_shift_button.swfw_square_button > *, .swfw_shift_button.swfw_buttons_button > *, .swfw_shift_button.swfw_block_button > *, .swfw-follow-button.swfw_pill_button > *, .swfw_pill_button.swfw_square_button > *, .swfw_pill_button.swfw_buttons_button > *, .swfw_pill_button.swfw_block_button > *, .swfw-follow-button.swfw_leaf_button > *, .swfw_leaf_button.swfw_square_button > *, .swfw_leaf_button.swfw_buttons_button > *, .swfw_leaf_button.swfw_block_button > * {
-  width: -moz-min-content;
-  width: -webkit-min-content;
-  width: min-content;
-}
-.swfw_block_button .swfw-network-icon, .swfw-follow-button.swfw_shift_button .swfw-network-icon, .swfw_shift_button.swfw_square_button .swfw-network-icon, .swfw_shift_button.swfw_buttons_button .swfw-network-icon, .swfw-follow-button.swfw_pill_button .swfw-network-icon, .swfw_pill_button.swfw_square_button .swfw-network-icon, .swfw_pill_button.swfw_buttons_button .swfw-network-icon, .swfw-follow-button.swfw_leaf_button .swfw-network-icon, .swfw_leaf_button.swfw_square_button .swfw-network-icon, .swfw_leaf_button.swfw_buttons_button .swfw-network-icon {
-  margin-left: 10px;
-}
-.swfw_block_button .swfw-text, .swfw-follow-button.swfw_shift_button .swfw-text, .swfw_shift_button.swfw_square_button .swfw-text, .swfw_shift_button.swfw_buttons_button .swfw-text, .swfw-follow-button.swfw_pill_button .swfw-text, .swfw_pill_button.swfw_square_button .swfw-text, .swfw_pill_button.swfw_buttons_button .swfw-text, .swfw-follow-button.swfw_leaf_button .swfw-text, .swfw_leaf_button.swfw_square_button .swfw-text, .swfw_leaf_button.swfw_buttons_button .swfw-text {
-  font-size: 12px;
-  line-height: 24px;
-  left: calc(10px + 60px);
-  color: white;
-  text-align: center;
-}
-.swfw_block_button .swfw-text .swfw-count, .swfw-follow-button.swfw_shift_button .swfw-text .swfw-count, .swfw_shift_button.swfw_square_button .swfw-text .swfw-count, .swfw_shift_button.swfw_buttons_button .swfw-text .swfw-count, .swfw-follow-button.swfw_pill_button .swfw-text .swfw-count, .swfw_pill_button.swfw_square_button .swfw-text .swfw-count, .swfw_pill_button.swfw_buttons_button .swfw-text .swfw-count, .swfw-follow-button.swfw_leaf_button .swfw-text .swfw-count, .swfw_leaf_button.swfw_square_button .swfw-text .swfw-count, .swfw_leaf_button.swfw_buttons_button .swfw-text .swfw-count {
-  width: -moz-max-content;
-  width: -webkit-max-content;
-  width: max-content;
-  font-size: 15px;
-}
-
-.swfw_block_button .swfw-cta, .swfw-follow-button.swfw_shift_button .swfw-cta, .swfw_shift_button.swfw_square_button .swfw-cta, .swfw_shift_button.swfw_buttons_button .swfw-cta, .swfw-follow-button.swfw_pill_button .swfw-cta, .swfw_pill_button.swfw_square_button .swfw-cta, .swfw_pill_button.swfw_buttons_button .swfw-cta, .swfw-follow-button.swfw_leaf_button .swfw-cta, .swfw_leaf_button.swfw_square_button .swfw-cta, .swfw_leaf_button.swfw_buttons_button .swfw-cta {
-  border-radius: 3px;
-}
-.swfw_block_button .swfw-cta-button, .swfw-follow-button.swfw_shift_button .swfw-cta-button, .swfw_shift_button.swfw_square_button .swfw-cta-button, .swfw_shift_button.swfw_buttons_button .swfw-cta-button, .swfw-follow-button.swfw_pill_button .swfw-cta-button, .swfw_pill_button.swfw_square_button .swfw-cta-button, .swfw_pill_button.swfw_buttons_button .swfw-cta-button, .swfw-follow-button.swfw_leaf_button .swfw-cta-button, .swfw_leaf_button.swfw_square_button .swfw-cta-button, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button {
-  font-size: 24px;
-  padding: 5px;
-  line-height: 24px;
-  border-radius: 4px;
-  text-align: center;
-  right: 0;
-}
-.swfw_block_button .swfw-cta-button a, .swfw-follow-button.swfw_shift_button .swfw-cta-button a, .swfw_shift_button.swfw_square_button .swfw-cta-button a, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a, .swfw-follow-button.swfw_pill_button .swfw-cta-button a, .swfw_pill_button.swfw_square_button .swfw-cta-button a, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a, .swfw_leaf_button.swfw_square_button .swfw-cta-button a, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a {
-  text-decoration: none !important;
-}
-.swfw_block_button .swfw-cta-button a div, .swfw-follow-button.swfw_shift_button .swfw-cta-button a div, .swfw_shift_button.swfw_square_button .swfw-cta-button a div, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a div, .swfw-follow-button.swfw_pill_button .swfw-cta-button a div, .swfw_pill_button.swfw_square_button .swfw-cta-button a div, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a div, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a div, .swfw_leaf_button.swfw_square_button .swfw-cta-button a div, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a div {
-  font-size: 14px;
-  min-width: 100px;
-  border-radius: 3px;
-  background: white;
-  padding: 5px;
-}
-.swfw_block_button .swfw-cta-button a div:hover, .swfw-follow-button.swfw_shift_button .swfw-cta-button a div:hover, .swfw_shift_button.swfw_square_button .swfw-cta-button a div:hover, .swfw_shift_button.swfw_buttons_button .swfw-cta-button a div:hover, .swfw-follow-button.swfw_pill_button .swfw-cta-button a div:hover, .swfw_pill_button.swfw_square_button .swfw-cta-button a div:hover, .swfw_pill_button.swfw_buttons_button .swfw-cta-button a div:hover, .swfw-follow-button.swfw_leaf_button .swfw-cta-button a div:hover, .swfw_leaf_button.swfw_square_button .swfw-cta-button a div:hover, .swfw_leaf_button.swfw_buttons_button .swfw-cta-button a div:hover {
-  transition: all 300ms;
-  background: rgba(30, 30, 30, 0.3);
-  cursor: pointer;
-  color: white;
-}
 
 /**
  * Leaf style
