@@ -58,7 +58,7 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * @since  3.0.0 | 07 APR 2018 | Created
 	 * @since  3.4.0 | 16 NOV 2018 | Removed Open Share Counts API.
 	 * @since  3.4.0 | 16 NOV 2018 | Added local property for debugging.
-	 * @since  4.0.0 | 24 FEB 2018 | Added Open Share Count API.
+	 * @since  4.0.0 | 24 FEB 2020 | Added Open Share Count API.
 	 * @var    $request_url Stored in a local property to allow us to output it
 	 *                      via the debug method when ?swp_debug=twitter is used.
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
