@@ -91,6 +91,17 @@ class SWP_Twitter extends SWP_Social_Network {
 			return $this->request_url;
 		}
 
+
+		/**
+		 * Twitcount is currently the only working, valid source of Twitter
+		 * share counts. If it's active, return the API url of the JSON enpoint.
+		 *
+		 */
+		if( 'opensharecount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
+			$this->request_url = 'https://opensharecount.com/count.json?url=' . $url;
+			return $this->request_url;
+		}
+
 		return 0;
 	}
 
