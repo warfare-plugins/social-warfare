@@ -1,0 +1,20 @@
+// main:../style.scss
+
+.swp-lightbox-wrapper {
+	width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background: rgba(0,0,0,0.7);
+
+	.swp-lightbox-inner {
+		width: 50%;
+	    left: 25%;
+	    position: relative;
+	    top: 20%;
+	    background: #ffffff;
+	    padding: 35px;
+	    border: 10px solid $social_warfare_red;
+	    border-radius: 10px;
+	}
+}

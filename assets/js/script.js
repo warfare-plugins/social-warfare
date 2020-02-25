@@ -412,7 +412,9 @@ window.socialWarfare = window.socialWarfare || {};
 				};
 
 				jQuery.post(swp_ajax_url, data, function(response){
-				    console.log(response);
+				    $('body').append(response);
+					socialWarfare.activateHoverStates();
+					socialWarfare.handleButtonClicks();
 				});
 
 				return;
