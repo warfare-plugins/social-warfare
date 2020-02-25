@@ -2966,6 +2966,12 @@ span.swp_pop_count {
 	background: rgba(0, 0, 0, 0.7);
 }
 
+@media print {
+	.swp-lightbox-wrapper {
+		display: none;
+	}
+}
+
 .swp-lightbox-wrapper .swp-lightbox-inner {
 	width: 50%;
 	left: 25%;
