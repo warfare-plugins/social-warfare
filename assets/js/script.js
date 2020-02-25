@@ -363,6 +363,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 * Manager if the user has that feature enabled.
 	 *
 	 * @since  1.0.0 | 01 JAN 2018 | Created
+	 * @since  4.0.0 | 25 FEB 2020 | Added "Print" button functionality. 
 	 * @param  void
 	 * @return bool Returns false on failure.
 	 *
@@ -380,6 +381,19 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		$('.nc_tweet, a.swp_CTT').off('click');
 		$('.nc_tweet, a.swp_CTT').on('click', function(event) {
+
+
+			/**
+			 * This will intercept clicks that are made on the "Print" button
+			 * and trigger the window.print() method opening the browser's print
+			 * functionality.
+			 *
+			 */
+			if ($(this).parent('.swp_print').length > 0) {
+				event.preventDefault();
+				window.print();
+				return;
+			}
 
 
 			/**
