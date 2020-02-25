@@ -470,8 +470,8 @@ a.swp-notice-cta {
  .swfw-follow-field-icon {
    color: black;
    width: 40px;
-   font-size: 40px;
-   line-height: 42px;
+   font-size: 27px;
+   line-height: 45px;
    font-weight: bold;
    transition: all 300ms;
    border-radius: 3px;
@@ -504,4 +504,8 @@ a.swp-notice-cta {
 
  .swfw-follow-field.swfw-active div {
    color: white;
+ }
+
+ .swfw-follow-field.swfw-active div.swp-snapchat {
+   color: black;
  }
