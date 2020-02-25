@@ -44,6 +44,7 @@ class SWP_Script {
 		add_filter( 'swp_footer_scripts', array( $this, 'nonce' ) );
 		add_filter( 'swp_footer_scripts', array( $this, 'frame_buster' ) );
 		add_filter( 'swp_footer_scripts', array( $this, 'float_before_content' ) );
+		add_filter( 'swp_footer_scripts', array( $this, 'ajaxurl' ) );
 
 		// Queue up our footer hook function
 		add_filter( 'swp_footer_scripts', array( $this, 'click_tracking' ) );
@@ -256,6 +257,23 @@ class SWP_Script {
 
 		// Create a nonce
 		$info['footer_output'] .= ' var swp_nonce = "'.wp_create_nonce().'";';
+		return $info;
+	}
+
+
+	/**
+	 * Ensure the ajaxurl gets output to the screen.
+	 *
+	 * @since  4.0.0 | 24 FEB 2020 | Created
+	 * @access public
+	 * @param  array $info An array of footer script information.
+	 * @return array $info A modified array of footer script information.
+	 *
+	 */
+	public function nonce( $info ) {
+
+		// Create a variable containing the AJAX url.
+		$info['footer_output'] .= ' var swp_ajax_url = "'.admin_url( 'admin-ajax.php' ).'";';
 		return $info;
 	}
 
