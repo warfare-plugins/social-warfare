@@ -3,7 +3,6 @@
 	A Responsive Grid System
 
 *********************************************************/
-
 .sw-grid {
 	float: left;
 	margin-bottom: 2.127659574468%;
@@ -118,15 +117,15 @@ img {
 }
 
 .sw-hidden {
-	display: none!important;
+	display: none !important;
 }
+
 .swp_support_link {
 	border: 1px solid #ccc;
 	font-size: 18px;
 	line-height: 20px;
 	text-decoration: none;
-	-webkit-border-radius: 50%;
-			border-radius: 50%;
+	border-radius: 50%;
 	width: 20px;
 	display: block;
 	float: right;
@@ -137,16 +136,19 @@ img {
 	padding: 2px;
 	font-weight: bold;
 }
+
 .swp_support_link:hover {
-	color:#6BCCE9;
-	border-color:#6BCCE9;
+	color: #6BCCE9;
+	border-color: #6BCCE9;
 }
+
 .swp_support_link.swp_four_fourths {
 	margin-left: 20px;
 	margin-top: 13px;
 }
+
 #screen-meta-links .screen-meta-toggle {
-	display:none!important;
+	display: none !important;
 }
 
 /*********************************************************
@@ -154,7 +156,6 @@ img {
 	The Header Menu
 
 *********************************************************/
-
 #wpwrap,
 #wpcontent {
 	background: #fff;
@@ -178,12 +179,13 @@ img {
 	height: 75px;
 	float: left;
 }
+
 .sw-top-menu[sw-registered="1"] .sw-header-logo {
-	display:none;
+	display: none;
 }
 
 .sw-top-menu[sw-registered="0"] .sw-header-logo-pro {
-	display:none;
+	display: none;
 }
 
 .sw-header-menu {
@@ -201,8 +203,7 @@ img {
 
 .sw-header-menu li:focus, .sw-header-menu li a:focus {
 	outline: none;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 }
 
 .sw-header-menu li span {
@@ -225,13 +226,11 @@ img {
 	margin-bottom: 0;
 }
 
-
 /*********************************************************
 
 	The Header Menu
 
 *********************************************************/
-
 .sw-admin-wrapper, .sw-header-wrapper {
 	clear: both;
 	margin: 20px auto 20px auto;
@@ -312,42 +311,34 @@ h3.sw-buttons-toggle {
 	padding-left: 10%;
 }
 
-
 input.sw-admin-input {
 	padding: 15px;
 	border: 1px solid #ced3cd;
-	-webkit-border-radius: 4px;
-			border-radius: 4px;
+	border-radius: 4px;
 	float: right;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 	margin: 2px 0 1px 0;
 	width: 100%;
 }
 
 .sw-grid select {
 	width: 100%;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 	border: 1px solid #ced3cd;
 	height: 51px;
 	padding: 15px;
 	margin: 2px 1px 3px 0;
-	-webkit-border-radius: 4px;
-			border-radius: 4px;
+	border-radius: 4px;
 }
 
 /* old selectors */
 a.button.sw-navy-button, a.button.sw-blue-button, a.button.sw-green-button, a.button.sw-red-button,
-/* 2019 selector */
 .swp-button {
 	padding: 15px 30px;
 	height: auto;
 	line-height: 1;
-	-webkit-border-radius: 4px;
-			border-radius: 4px;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	border-radius: 4px;
+	box-shadow: none;
 	float: right;
 	margin: 15px 0;
 }
@@ -356,40 +347,35 @@ a.button.sw-navy-button, a.button.sw-navy-button:focus {
 	background: #30394f;
 	color: #fff;
 	border-color: #2a2d34;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 }
 
 a.button.sw-navy-button:hover, a.button.sw-blue-button:hover {
 	background: #2a2d34;
 	border-color: #2a2d34;
 	color: #fff;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 }
 
 a.button.sw-blue-button, a.button.sw-blue-button:focus {
 	background: #6bcce9;
 	border-color: #6bcce9;
 	color: #fff;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 }
 
 a.button.sw-green-button, a.button.sw-green-button:focus {
 	background: #71C069;
 	color: #fff;
 	border-color: #71C069;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 }
 
 a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hover {
 	background: #ee464f;
 	color: #fff;
 	border-color: #ee464f;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 }
 
 .sw-admin-tab a.button {
@@ -404,17 +390,16 @@ a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hov
 .sw-red-notice, .sw-green-notice {
 	color: #fff;
 	padding: 15px;
-	-webkit-border-radius: 2px;
-			border-radius: 2px;
+	border-radius: 2px;
 	margin: 15px 0;
 }
 
 .sw-red-notice, .sw-loading-message {
-	background: #ee464f
+	background: #ee464f;
 }
 
 .sw-green-notice, .sw-loading-complete {
-	background: #71C069
+	background: #71C069;
 }
 
 .sw-loading-bg {
@@ -455,11 +440,11 @@ a.button.sw-red-button, a.button.sw-red-button:focus, a.button.sw-red-button:hov
 }
 
 .sw-loading-message:before {
-	content: "\f158"
+	content: "\f158";
 }
 
 .sw-green-notice:before, .sw-loading-complete:before {
-	content: "\f147"
+	content: "\f147";
 }
 
 .sw-admin-tab .two-thirds-advanced h2.sw-h-label {
@@ -497,8 +482,7 @@ p.sw-subtitle.sw-registration-text {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	-webkit-border-radius: 3px;
-			border-radius: 3px;
+	border-radius: 3px;
 	padding: 25px;
 	text-align: center;
 	font-size: 20px;
@@ -513,10 +497,9 @@ p.sw-subtitle.sw-registration-text {
 	Textarea
 
 *********************************************************/
-
 .sw-grid textarea {
-	width:100%;
-	height:120px;
+	width: 100%;
+	height: 120px;
 }
 
 /*********************************************************
@@ -524,19 +507,17 @@ p.sw-subtitle.sw-registration-text {
 	Buttons Drag & Drop
 
 *********************************************************/
-
 .sw-active, .sw-inactive {
 	margin: 0 0 5px 0;
 	min-width: 50px;
 	min-height: 40px;
 	border: 1px dashed #ced3dc;
 	padding: 0;
-	-webkit-border-radius: 4px;
-			border-radius: 4px;
+	border-radius: 4px;
 	width: auto;
 	height: auto;
 	display: inline-block;
-	max-width:520px;
+	max-width: 520px;
 }
 
 .sw-s {
@@ -544,8 +525,7 @@ p.sw-subtitle.sw-registration-text {
 	color: #fff;
 	padding: 5px 30px 4px;
 	margin: 7px 5px 7px;
-	-webkit-border-radius: 2px;
-			border-radius: 2px;
+	border-radius: 2px;
 	display: inline-block;
 	font-style: normal;
 	font-size: 15px;
@@ -554,149 +534,233 @@ p.sw-subtitle.sw-registration-text {
 	max-width: 15px;
 }
 
-
-.sw-twitter-icon:before {
-	content: 's';
-}
-
-.sw-s.sw-twitter-icon {
-	background-color: #429cd6;
-	border-color: #3c87b2;
-}
-
-.sw-google_plus-icon:before {
-	content: 'h';
-}
-
-.sw-s.sw-google_plus-icon {
-	background-color: #df4b37;
-	border-color: #c44133;
-}
-
-.sw-facebook-icon:before {
-	content: 'j';
-}
-
-.sw-s.sw-facebook-icon {
-	background-color: #3a589e;
-	border-color: #2e4675;
-}
-
-.sw-pinterest-icon:before {
-	content: 'b';
-}
-
-.sw-s.sw-pinterest-icon {
-	background-color: #cd2029;
-	border-color: #aa1b29;
-}
-
-.sw-linkedin-icon:before {
-	content: 'f';
-}
-
-.sw-s.sw-linkedin-icon {
-	background-color: #0d77b7;
-	border-color: #0c6591;
-}
-
-.sw-tumblr-icon:before {
-	content: 'r';
-}
-
-.sw-s.sw-tumblr-icon {
-	background-color: #39475d;
-	border-color: #27313f;
-}
-
-.sw-mix-icon:before {
-	content: 'g';
-}
-
-.sw-s.sw-mix-icon {
-	background-color: #f4812c;
-	border-color: #c96a29;
-}
-
-.sw-reddit-icon:before {
-	content: 'a';
-}
-
-.sw-s.sw-reddit-icon {
-	background-color: #f04b23;
-	border-color: #d33f27;
-}
-
-.sw-yummly-icon:before {
-	content: 'x';
-}
-
-.sw-s.sw-yummly-icon {
-	background-color: #e26426;
-	border-color: #b65027;
-}
-
-.sw-whatsapp-icon:before {
-	content: 'y';
-}
-
-.sw-s.sw-whatsapp-icon {
-	background-color: #71c169;
-	border-color: #28b04b;
-}
-
-.sw-pocket-icon:before {
-	content: 'B';
-}
-
-.sw-s.sw-pocket-icon {
-	background-color: #ef4056;
-	border-color: #ce3d55;
+.sw-blogger-icon:before {
+	content: "m";
 }
 
 .sw-buffer-icon:before {
-	content: 'z';
+	content: "z";
+}
+
+.sw-ello-icon:before {
+	content: "l";
+}
+
+.sw-email-icon:before {
+	content: "k";
+}
+
+.sw-facebook-icon:before {
+	content: "j";
+}
+
+.sw-flickr-icon:before {
+	content: "i";
+}
+
+.sw-flipboard-icon:before {
+	content: "C";
+}
+
+.sw-hacker_news-icon:before {
+	content: "D";
+}
+
+.sw-instagram-icon:before {
+	content: "d";
+}
+
+.sw-linkedin-icon:before {
+	content: "f";
+}
+
+.sw-medium-icon:before {
+	content: "e";
+}
+
+.sw-mix-icon:before {
+	content: "g";
+}
+
+.sw-more-icon:before {
+	content: "+";
+}
+
+.sw-periscope-icon:before {
+	content: "c";
+}
+
+.sw-pinterest-icon:before {
+	content: "b";
+}
+
+.sw-pocket-icon:before {
+	content: "B";
+}
+
+.sw-print-icon:before {
+	content: "A";
+}
+
+.sw-reddit-icon:before {
+	content: "a";
+}
+
+.sw-social-warfare-icon:before {
+	content: "p";
+}
+
+.sw-snapchat-icon:before {
+	content: "u";
+}
+
+.sw-tumblr-icon:before {
+	content: "r";
+}
+
+.sw-twitter-icon:before {
+	content: "s";
+}
+
+.sw-vimeo-icon:before {
+	content: "t";
+}
+
+.sw-vk-icon:before {
+	content: "C";
+}
+
+.sw-whatsapp-icon:before {
+	content: "y";
+}
+
+.sw-yummly-icon:before {
+	content: "x";
+}
+
+.sw-s.sw-blogger-icon {
+	background-color: #ff5722;
+	border-color: #ee3900;
 }
 
 .sw-s.sw-buffer-icon {
 	background-color: #323b43;
-	border-color: #59626a;
+	border-color: #1c2126;
 }
 
-.sw-email-icon:before {
-	content: 'k';
+.sw-s.sw-ello-icon {
+	background-color: #000000;
+	border-color: black;
 }
 
 .sw-s.sw-email-icon {
 	background-color: #6bcce9;
-	border-color: #6bcce9;
+	border-color: #3fbde2;
 }
 
-.sw-hacker_news-icon:before {
-	content: 'D';
+.sw-s.sw-facebook-icon {
+	background-color: #4267B2;
+	border-color: #34518d;
 }
 
-.sw-s.sw-hacker_news-icon {
-	background-color: #f16522;
-	border-color: #d85623;
-}
-
-.sw-flipboard-icon:before {
-	content: 'C';
+.sw-s.sw-flickr-icon {
+	background-color: #ff0084;
+	border-color: #cc006a;
 }
 
 .sw-s.sw-flipboard-icon {
-	background-color: #e02828;
-	border-color: #bf2626;
+	background-color: #bf2626;
+	border-color: #941e1e;
 }
 
-.sw-vk-icon:before {
-	content: 'C';
+.sw-s.sw-hacker_news-icon {
+	background-color: #d85623;
+	border-color: #ac451c;
+}
+
+.sw-s.sw-instagram-icon {
+	background-color: #405de6;
+	border-color: #1c3dd7;
+}
+
+.sw-s.sw-linkedin-icon {
+	background-color: #0d77b7;
+	border-color: #0a5887;
+}
+
+.sw-s.sw-medium-icon {
+	background-color: #00ab6c;
+	border-color: #00784c;
+}
+
+.sw-s.sw-mix-icon {
+	background-color: #f4812c;
+	border-color: #e1660c;
+}
+
+.sw-s.sw-more-icon {
+	background-color: #ee464f;
+	border-color: #ea1723;
+}
+
+.sw-s.sw-periscope-icon {
+	background-color: #3aa4c6;
+	border-color: #2e849f;
+}
+
+.sw-s.sw-pinterest-icon {
+	background-color: #cd2029;
+	border-color: #a11920;
+}
+
+.sw-s.sw-pocket-icon {
+	background-color: #ef4056;
+	border-color: #e9132e;
+}
+
+.sw-s.sw-print-icon {
+	background-color: #777777;
+	border-color: #5e5e5e;
+}
+
+.sw-s.sw-reddit-icon {
+	background-color: #f04b23;
+	border-color: #d2340e;
+}
+
+.sw-s.sw-snapchat-icon {
+	background-color: #FFFC00;
+	border-color: #ccca00;
+}
+
+.sw-s.sw-twitter-icon {
+	background-color: #429cd6;
+	border-color: #2982bc;
+}
+
+.sw-s.sw-tumblr-icon {
+	background-color: #39475d;
+	border-color: #262f3d;
+}
+
+.sw-s.sw-vimeo-icon {
+	background-color: #162221;
+	border-color: #020303;
 }
 
 .sw-s.sw-vk-icon {
 	background-color: #4a76a8;
-	border-color: #4872a3;
+	border-color: #3a5d85;
+}
+
+.sw-s.sw-whatsapp-icon {
+	background-color: #71c169;
+	border-color: #52af48;
+}
+
+.sw-s.sw-yummly-icon {
+	background-color: #e26426;
+	border-color: #bc4f19;
 }
 
 @media screen and (max-width: 1350px) {
@@ -712,15 +776,13 @@ p.sw-subtitle.sw-registration-text {
 	}
 }
 
-
 /*********************************************************
 
 	Premium
 
 *********************************************************/
-
 .sw-admin-wrapper[sw-registered="0"] [premium="1"] {
-	display:none!important;
+	display: none !important;
 }
 
 .sw-admin-wrapper[sw-registered="0"] .sw-option-container {
@@ -728,7 +790,7 @@ p.sw-subtitle.sw-registration-text {
 }
 
 .sw-admin-wrapper[sw-registered="0"] [premium="1"] .sw-premium-blocker {
-	display:none;
+	display: none;
 }
 
 .sw-admin-wrapper[sw-registered="0"] [premium="1"] .sw-premium-blocker:not(.no-icon):before {
@@ -757,7 +819,7 @@ p.sw-subtitle.sw-registration-text {
 .sw-admin-wrapper[swp-addons*="pro"][swp-registrations*="pro"] [premium],
 .sw-admin-wrapper[swp-addons*="affiliatewp"][swp-registrations*="affiliatewp"] [premium],
 .sw-admin-wrapper[swp-addons*="enhanced_shortcodes"][swp-registrations*="enhanced_shortcodes"] [premium],
-.sw-admin-wrapper[swp-addons*="advanced_display"][swp-registrations*="advanced_display"] [premium]{
+.sw-admin-wrapper[swp-addons*="advanced_display"][swp-registrations*="advanced_display"] [premium] {
 	display: inherit;
 }
 
@@ -765,12 +827,10 @@ p.sw-subtitle.sw-registration-text {
 	background: #ee464f;
 	color: #fff;
 	padding: 15px;
-	-webkit-border-radius: 2px;
-			border-radius: 2px;
+	border-radius: 2px;
 	margin: 15px 0;
 	border: 0;
-	-webkit-box-shadow: none;
-			box-shadow: none;
+	box-shadow: none;
 	max-width: none;
 	padding: 20px;
 }
@@ -826,13 +886,11 @@ div.error {
 	display: block;
 }
 
-
-
 .sw-grid-textarea {
-	border: rgb(221, 221, 221);
-	box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	border: #dddddd;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
 	height: 120px;
-	width: 97%
+	width: 97%;
 }
 
 #color-notice {
@@ -841,14 +899,13 @@ div.error {
 	margin: 0 auto;
 	left: 25%;
 	right: 25%;
-	background: rgba( 255, 225, 255, .37 );
+	background: rgba(255, 225, 255, 0.37);
 	background-color: #ced3dc;
 	color: #30394f;
 	padding: 20px;
 	border-radius: 4px;
 	text-align: left;
 	width: 650px;
-
 }
 
 #color-notice p {
@@ -888,7 +945,7 @@ div.error {
 	border-radius: 3px;
 	font-size: 13px;
 	letter-spacing: 1.2px;
-	font-family: "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+	font-family: "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .swp-authorization-button {
@@ -898,7 +955,11 @@ div.error {
 	line-height: 1;
 }
 
-a.swp-button.swp-authorization-button:active, a.swp-button.swp-authorization-button:focus, a.swp-button.swp-authorization-button:hover {color: #fff;outline: none;box-shadow: none;}
+a.swp-button.swp-authorization-button:active, a.swp-button.swp-authorization-button:focus, a.swp-button.swp-authorization-button:hover {
+	color: #fff;
+	outline: none;
+	box-shadow: none;
+}
 
 a.swp-button.swp-authorization-button {
 	padding: 15px;
@@ -910,11 +971,10 @@ a.swp-button.swp-authorization-button {
 	text-align: right;
 	justify-content: space-between;
 	align-items: center;
-
 }
 
 .swp-authorization-button i.sw {
-	margin-top:4px;
+	margin-top: 4px;
 	padding-right: 10px;
 	font-size: 24px;
 }
@@ -927,3 +987,5 @@ a.swp-button.swp-authorization-button {
 	width: 100%;
 	box-sizing: border-box;
 }
+
+/*# sourceMappingURL=admin-options-page.css.map */

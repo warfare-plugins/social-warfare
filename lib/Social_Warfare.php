@@ -235,6 +235,8 @@ class Social_Warfare {
 
 		new SWP_Utility();
 
+		new SWP_Buttons_Panel_Ajax();
+
 	}
 
 
@@ -439,6 +441,7 @@ class Social_Warfare {
 		 *
 		 */
 		$buttons_panels = array(
+			'Buttons_Panel_Ajax',
 			'Buttons_Panel_Trait',
 			'Buttons_Panel',
 			'Buttons_Panel_Side',

@@ -363,7 +363,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 * Manager if the user has that feature enabled.
 	 *
 	 * @since  1.0.0 | 01 JAN 2018 | Created
-	 * @since  4.0.0 | 25 FEB 2020 | Added "Print" button functionality. 
+	 * @since  4.0.0 | 25 FEB 2020 | Added "Print" button functionality.
 	 * @param  void
 	 * @return bool Returns false on failure.
 	 *
@@ -392,6 +392,29 @@ window.socialWarfare = window.socialWarfare || {};
 			if ($(this).parent('.swp_print').length > 0) {
 				event.preventDefault();
 				window.print();
+				return;
+			}
+
+
+			/**
+			 * This will intercept clicks that are made on the "More" button and
+			 * load up our lightbox containing the buttons panels with all of
+			 * the available buttons for the entire plugin.
+			 *
+			 */
+			if ($(this).parent('.swp_more').length > 0) {
+				event.preventDefault();
+
+				var data = {
+					action: 'swp_buttons_panel',
+					post_id: swp_post_id,
+					_ajax_nonce: swp_nonce
+				};
+
+				jQuery.post(swp_ajax_url, data, function(response){
+				    console.log(response);
+				});
+
 				return;
 			}
 
