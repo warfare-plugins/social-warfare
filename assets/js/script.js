@@ -508,28 +508,60 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	/**
+	 * The openMoreOptions function will open up the lightbox panel that contains
+	 * all of the social network buttons for the entire plugin allowing the user
+	 * to choose from all available sharing options.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	socialWarfare.openMoreOptions = function() {
+
+		// If the options already exist, just reopen them by fading them in.
+		if( $('.swp-lightbox-wrapper').length > 0 ) {
+			$('.swp-lightbox-wrapper').fadeIn('fast');
+			return;
+		}
+
+		// Setup the data for the admin-ajax call to fetch the button's html.
 		var data = {
 			action: 'swp_buttons_panel',
 			post_id: swp_post_id,
 			_ajax_nonce: swp_nonce
 		};
 
-		if( $('.swp-lightbox-wrapper').length > 0 ) {
-			$('.swp-lightbox-wrapper').fadeIn('fast');
-			return;
-		}
-
+		// Post the data to the admin-ajax and fetch the html.
 		jQuery.post(swp_ajax_url, data, function(response){
+
+			// Append the fetched html to the body.
 			$('body').append(response);
+
+			// Hide the appended html only so that we can fade it into view.
 			$('.swp-lightbox-wrapper').hide().fadeIn('fast');
+
+			// Activate the hover states and button click handlers.
 			socialWarfare.activateHoverStates();
 			socialWarfare.handleButtonClicks();
 		});
 	}
 
+
+	/**
+	 * The closeMoreOptions function will handle clicks on the red X in the
+	 * corner of the more options box and will fade the lightbox out of view.
+	 *
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	socialWarfare.closeMoreOptions = function() {
+
+		// Handle clicks on the red X
 		$('body').on('click','.swp-lightbox-close', function() {
+
+			// Fade the lightbox out of view.
 			$('.swp-lightbox-wrapper').fadeOut('fast');
 		});
 	}
