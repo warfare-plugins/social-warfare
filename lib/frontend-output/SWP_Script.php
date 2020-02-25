@@ -44,7 +44,8 @@ class SWP_Script {
 		add_filter( 'swp_footer_scripts', array( $this, 'nonce' ) );
 		add_filter( 'swp_footer_scripts', array( $this, 'frame_buster' ) );
 		add_filter( 'swp_footer_scripts', array( $this, 'float_before_content' ) );
-		add_filter( 'swp_footer_scripts', array( $this, 'ajaxurl' ) );
+		add_filter( 'swp_footer_scripts', array( $this, 'ajax_url' ) );
+		add_filter( 'swp_footer_scripts', array( $this, 'post_id' ) );
 
 		// Queue up our footer hook function
 		add_filter( 'swp_footer_scripts', array( $this, 'click_tracking' ) );
@@ -270,10 +271,29 @@ class SWP_Script {
 	 * @return array $info A modified array of footer script information.
 	 *
 	 */
-	public function nonce( $info ) {
+	public function ajax_url( $info ) {
 
 		// Create a variable containing the AJAX url.
 		$info['footer_output'] .= ' var swp_ajax_url = "'.admin_url( 'admin-ajax.php' ).'";';
+		return $info;
+	}
+
+
+	/**
+	 * Ensure the ajax requests have a valid post_id to work with.
+	 *
+	 * @since  4.0.0 | 24 FEB 2020 | Created
+	 * @access public
+	 * @param  array $info An array of footer script information.
+	 * @return array $info A modified array of footer script information.
+	 *
+	 */
+	public function post_id( $info ) {
+
+		// Create a variable containing the AJAX url.
+		if( true === is_singular() ) {
+			$info['footer_output'] .= ' var swp_post_id = "'.get_the_ID().'";';
+		}
 		return $info;
 	}
 

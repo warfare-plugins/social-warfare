@@ -414,8 +414,11 @@ class SWP_Social_Network {
 		 * and other important information.
 		 *
 		 */
-		if( empty( $panel_context ) ) {
-			return false;
+		$required_context = array( 'shares', 'options', 'post_data' );
+		foreach( $required_context as $requirement ) {
+			if( empty( $panel_context[$requirement] ) ) {
+				return false;
+			}
 		}
 
 
