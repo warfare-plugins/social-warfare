@@ -48,6 +48,13 @@ class SWP_Buttons_Panel_Ajax {
 	 *
 	 */
 	public function build_buttons_panels() {
+
+		// If the post_id is invalid, just bail out immediately.
+		if( empty( $_POST['post_id']) || false === is_numeric( $_POST['post_id'] ) ) {
+			wp_die();
+			return;
+		}
+
 		$this->establish_available_buttons();
 		$this->generate_buttons_panel_html();
 		$this->generate_lightbox_container();
@@ -145,13 +152,14 @@ class SWP_Buttons_Panel_Ajax {
 
 
 	/**
+	 *
 	 * The generate_lightbox_container() will take all of the generated html and
 	 * compile it into its complete and final form ready to send to the screen.
 	 *
 	 * @since  4.0.0 | 25 FEB 2020 | Created
 	 * @param  void
 	 * @return void Generated html is echoed directly to the screen.
-	 * 
+	 *
 	 */
 	private function generate_lightbox_container() {
 		$html = '<div class="swp-lightbox-wrapper"><div class="swp-lightbox-inner">';
