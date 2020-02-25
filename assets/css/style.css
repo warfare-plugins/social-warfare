@@ -2958,4 +2958,23 @@ span.swp_pop_count {
 	margin: 0 !important;
 }
 
+.swp-lightbox-wrapper {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.swp-lightbox-wrapper .swp-lightbox-inner {
+	width: 50%;
+	left: 25%;
+	position: relative;
+	top: 20%;
+	background: #ffffff;
+	padding: 35px;
+	border: 10px solid #ee464f;
+	border-radius: 10px;
+}
+
 /*# sourceMappingURL=style.css.map */
