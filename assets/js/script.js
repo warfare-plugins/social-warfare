@@ -499,9 +499,10 @@ window.socialWarfare = window.socialWarfare || {};
 			 *
 			 */
 			top = window.screenY + (window.innerHeight - height) / 2;
-			 left = window.screenX + (window.innerWidth - width) / 2;
-			 windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
-			 instance = window.open(href, network, windowAttributes);
+			left = window.screenX + (window.innerWidth - width) / 2;
+			windowAttributes = 'height=' + height + ',width=' + width + ',top=' + top + ',left=' + left;
+			instance = window.open(href, network, windowAttributes);
+
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
