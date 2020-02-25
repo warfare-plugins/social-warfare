@@ -75,7 +75,7 @@ class SWP_Buttons_Panel_Ajax {
 	private function generate_lightbox_container() {
 		$html = '<div class="swp-lightbox-wrapper"><div class="swp-lightbox-inner">';
 		$html .= '<div class="swp-lightbox-close"></div>';
-		$html .= '<h1>Additonal Sharing Options</h1>';
+		$html .= '<h1><i class="sw sw-social-warfare"></i>Additonal Sharing Options</h1>';
 		$html .= $this->buttons_html;
 		$html .= '</div></div>';
 		echo $html;

@@ -2973,8 +2973,41 @@ span.swp_pop_count {
 	top: 20%;
 	background: #ffffff;
 	padding: 35px;
-	border: 10px solid #ee464f;
+	border: 10px solid #30394F;
 	border-radius: 10px;
+}
+
+.swp-lightbox-wrapper .swp-lightbox-inner h1 .sw {
+	color: #ee464f;
+	font-size: 45px;
+	line-height: 45px;
+	margin-top: 8px;
+	float: left;
+	margin-right: 10px;
+}
+
+.swp-lightbox-wrapper .swp-lightbox-inner .swp-lightbox-close {
+	position: absolute;
+	font-family: arial;
+	font-weight: bold;
+	border: 7px solid #000;
+	display: block;
+	font-size: 30px;
+	border-radius: 50%;
+	padding: 3px 3px 3px 4px;
+	height: 55px;
+	width: 55px;
+	text-align: center;
+	line-height: 38px;
+	top: -33px;
+	right: -33px;
+	cursor: pointer;
+	background: #ee464f;
+}
+
+.swp-lightbox-wrapper .swp-lightbox-inner .swp-lightbox-close:before {
+	content: 'X';
+	font-family: arial;
 }
 
 /*# sourceMappingURL=style.css.map */

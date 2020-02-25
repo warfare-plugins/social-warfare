@@ -157,6 +157,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
+		socialWarfare.closeMoreOptions();
 
 		if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
 			socialWarfare.createHoverSaveButton();
@@ -404,19 +405,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 */
 			if ($(this).parent('.swp_more').length > 0) {
 				event.preventDefault();
-
-				var data = {
-					action: 'swp_buttons_panel',
-					post_id: swp_post_id,
-					_ajax_nonce: swp_nonce
-				};
-
-				jQuery.post(swp_ajax_url, data, function(response){
-				    $('body').append(response);
-					socialWarfare.activateHoverStates();
-					socialWarfare.handleButtonClicks();
-				});
-
+				socialWarfare.openMoreOptions();
 				return;
 			}
 
@@ -515,6 +504,33 @@ window.socialWarfare = window.socialWarfare || {};
 			 instance = window.open(href, network, windowAttributes);
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
+		});
+	}
+
+
+	socialWarfare.openMoreOptions = function() {
+		var data = {
+			action: 'swp_buttons_panel',
+			post_id: swp_post_id,
+			_ajax_nonce: swp_nonce
+		};
+
+		if( $('.swp-lightbox-wrapper').length > 0 ) {
+			$('.swp-lightbox-wrapper').fadeIn('fast');
+			return;
+		}
+
+		jQuery.post(swp_ajax_url, data, function(response){
+			$('body').append(response);
+			$('.swp-lightbox-wrapper').hide().fadeIn('fast');
+			socialWarfare.activateHoverStates();
+			socialWarfare.handleButtonClicks();
+		});
+	}
+
+	socialWarfare.closeMoreOptions = function() {
+		$('body').on('click','.swp-lightbox-close', function() {
+			$('.swp-lightbox-wrapper').fadeOut('fast');
 		});
 	}
 
