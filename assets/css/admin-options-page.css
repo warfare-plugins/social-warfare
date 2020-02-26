@@ -626,6 +626,10 @@ p.sw-subtitle.sw-registration-text {
 	content: "s";
 }
 
+.sw-viber-icon:before {
+	content: "t";
+}
+
 .sw-vimeo-icon:before {
 	content: "t";
 }
@@ -759,6 +763,11 @@ p.sw-subtitle.sw-registration-text {
 .sw-s.sw-vimeo-icon {
 	background-color: #162221;
 	border-color: #020303;
+}
+
+.sw-s.sw-viber-icon {
+	background-color: #8f5db7;
+	border-color: #75459c;
 }
 
 .sw-s.sw-vk-icon {

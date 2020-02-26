@@ -1062,6 +1062,52 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_vimeo {
 	color: #ffffff;
 }
 
+.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_viber,
+html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_viber:hover,
+body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_viber:not(:hover) {
+	border: 1px solid #8f5db7;
+}
+
+.swp_social_panel.swp_default_full_color .swp_viber,
+html body .swp_social_panel.swp_individual_full_color .swp_viber:hover,
+body .swp_social_panel.swp_other_full_color:hover .swp_viber {
+	background: #8f5db7;
+	border: 1px solid #75459c;
+}
+
+.swp_social_panel.swp_three_dee.swp_default_full_color .swp_viber,
+html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_viber:hover,
+body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_viber {
+	border-bottom: 3px solid #75459c;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_viber a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_viber a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_viber a {
+	color: #8f5db7;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_viber,
+html body .swp_social_panel.swp_individual_color_outlines .swp_viber:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_viber {
+	background: transparent;
+	border: 1px solid #8f5db7;
+}
+
+.swp-viber {
+	background: #8f5db7;
+	border-color: #75459c;
+}
+
+.swp-viber a {
+	color: #8f5db7;
+}
+
+.swp-viber a:hover {
+	background: #75459c;
+	color: #ffffff;
+}
+
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_vk,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_vk:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_vk:not(:hover) {
@@ -1901,6 +1947,10 @@ i.swp_tumblr_icon:before {
 
 i.swp_twitter_icon:before {
 	content: "s";
+}
+
+i.swp_viber_icon:before {
+	content: "t";
 }
 
 i.swp_vimeo_icon:before {
