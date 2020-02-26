@@ -2966,12 +2966,6 @@ span.swp_pop_count {
 	background: rgba(0, 0, 0, 0.7);
 }
 
-@media print {
-	.swp-lightbox-wrapper {
-		display: none;
-	}
-}
-
 .swp-lightbox-wrapper .swp-lightbox-inner {
 	width: 50%;
 	left: 25%;
@@ -3014,6 +3008,12 @@ span.swp_pop_count {
 .swp-lightbox-wrapper .swp-lightbox-inner .swp-lightbox-close:before {
 	content: 'X';
 	font-family: arial;
+}
+
+@media print {
+	.swp-lightbox-wrapper {
+		display: none;
+	}
 }
 
 /*# sourceMappingURL=style.css.map */
