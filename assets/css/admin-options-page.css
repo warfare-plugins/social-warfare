@@ -550,6 +550,10 @@ p.sw-subtitle.sw-registration-text {
 	content: "k";
 }
 
+.sw-evernote-icon:before {
+	content: "k";
+}
+
 .sw-facebook-icon:before {
 	content: "j";
 }
@@ -660,6 +664,11 @@ p.sw-subtitle.sw-registration-text {
 .sw-s.sw-email-icon {
 	background-color: #6bcce9;
 	border-color: #3fbde2;
+}
+
+.sw-s.sw-evernote-icon {
+	background-color: #2dbe60;
+	border-color: #23954b;
 }
 
 .sw-s.sw-facebook-icon {
