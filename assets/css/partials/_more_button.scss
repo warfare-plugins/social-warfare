@@ -7,10 +7,6 @@
     top: 0;
     background: rgba(0,0,0,0.7);
 
-	@media print {
-		display:none;
-	}
-
 	.swp-lightbox-inner {
 		width: 50%;
 	    left: 25%;
@@ -54,5 +50,9 @@
 				font-family:arial;
 			}
 		}
+	}
+
+	@media print {
+		display:none;
 	}
 }
