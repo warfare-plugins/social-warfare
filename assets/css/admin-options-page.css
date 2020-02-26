@@ -634,6 +634,10 @@ p.sw-subtitle.sw-registration-text {
 	content: "y";
 }
 
+.sw-xing-icon:before {
+	content: "z";
+}
+
 .sw-yummly-icon:before {
 	content: "x";
 }
@@ -756,6 +760,11 @@ p.sw-subtitle.sw-registration-text {
 .sw-s.sw-whatsapp-icon {
 	background-color: #71c169;
 	border-color: #52af48;
+}
+
+.sw-s.sw-xing-icon {
+	background-color: #026466;
+	border-color: #013334;
 }
 
 .sw-s.sw-yummly-icon {
