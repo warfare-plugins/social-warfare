@@ -5,7 +5,7 @@
     height: 100%;
     position: fixed;
     top: 0;
-    background: rgba(0,0,0,0.7);
+    background: #ffffff;
 
 	.swp-lightbox-inner {
 		width: 50%;
@@ -14,39 +14,27 @@
 	    top: 20%;
 	    background: #ffffff;
 	    padding: 35px;
-	    border: 10px solid $social_warfare_blue;
 	    border-radius: 10px;
 
-		h1 {
-			.sw {
-				color: $social_warfare_red;
-			    font-size: 45px;
-			    line-height: 45px;
-			    margin-top: 8px;
-			    float: left;
-			    margin-right: 10px;
-			}
+		h5 {
+			font-family: Lato, sans-serif;
+			font-size:25px;
+			text-align:center;
 		}
 
 		.swp-lightbox-close {
-			position: absolute;
-		    font-family: arial;
-		    font-weight: bold;
-		    border: 7px solid #000;
-		    display: block;
-		    font-size: 30px;
-		    border-radius: 50%;
-		    padding: 3px 3px 3px 4px;
-		    height: 55px;
-		    width: 55px;
-		    text-align: center;
-		    line-height: 38px;
-		    top: -33px;
-		    right: -33px;
+			font-weight: bold;
+		    height: 20px;
+		    width: 20px;
 		    cursor: pointer;
-		    background: $social_warfare_red;
+		    color: #30394f;
+		    text-align: right;
+		    transform: rotate(45deg);
+		    display: inline-block;
+		    float: right;
+		    margin: -30px;
 			&:before {
-				content:'X';
+				content:'+';
 				font-family:arial;
 			}
 		}
