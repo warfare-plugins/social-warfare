@@ -188,6 +188,52 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_email {
 	color: #ffffff;
 }
 
+.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_evernote,
+html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_evernote:hover,
+body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_evernote:not(:hover) {
+	border: 1px solid #2dbe60;
+}
+
+.swp_social_panel.swp_default_full_color .swp_evernote,
+html body .swp_social_panel.swp_individual_full_color .swp_evernote:hover,
+body .swp_social_panel.swp_other_full_color:hover .swp_evernote {
+	background: #2dbe60;
+	border: 1px solid #23954b;
+}
+
+.swp_social_panel.swp_three_dee.swp_default_full_color .swp_evernote,
+html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_evernote:hover,
+body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_evernote {
+	border-bottom: 3px solid #23954b;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_evernote a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_evernote a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_evernote a {
+	color: #2dbe60;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_evernote,
+html body .swp_social_panel.swp_individual_color_outlines .swp_evernote:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_evernote {
+	background: transparent;
+	border: 1px solid #2dbe60;
+}
+
+.swp-evernote {
+	background: #2dbe60;
+	border-color: #23954b;
+}
+
+.swp-evernote a {
+	color: #2dbe60;
+}
+
+.swp-evernote a:hover {
+	background: #23954b;
+	color: #ffffff;
+}
+
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_facebook,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_facebook:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_facebook:not(:hover) {
@@ -1778,6 +1824,10 @@ i.swp_ello_icon:before {
 }
 
 i.swp_email_icon:before {
+	content: "k";
+}
+
+i.swp_evernote_icon:before {
 	content: "k";
 }
 
