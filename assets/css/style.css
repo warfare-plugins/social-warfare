@@ -3157,6 +3157,22 @@ span.swp_pop_count {
 	}
 }
 
+.swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner {
+	text-align: center;
+}
+
+.swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner .swp_pinterest_icon {
+	color: #cd2029;
+	font-size: 45px;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+}
+
+.swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner h5 {
+	margin-bottom: 20px;
+}
+
 .swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper {
 	text-align: center;
 }
@@ -3171,7 +3187,7 @@ span.swp_pop_count {
 	position: initial;
 	width: 100% !important;
 	display: block;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
