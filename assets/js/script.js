@@ -365,6 +365,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 *
 	 * @since  1.0.0 | 01 JAN 2018 | Created
 	 * @since  4.0.0 | 25 FEB 2020 | Added "Print" button functionality.
+	 * @since  4.0.0 | 28 FEB 2020 | Added the Pinterest multi image section.
 	 * @param  void
 	 * @return bool Returns false on failure.
 	 *
@@ -523,6 +524,16 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	/**
+	 * The openMultiPinterestOverlay() function will control the overlay that
+	 * appears on the screen when the user has multiple Pinterest images
+	 * available to choose from.
+	 *
+	 * @since  4.0.0 | 28 FEB 2020 | Created
+	 * @param  object element The Pinterest button DOM element that was clicked.
+	 * @return void
+	 *
+	 */
 	socialWarfare.openMultiPinterestOverlay = function( element ) {
 
 
@@ -551,33 +562,51 @@ window.socialWarfare = window.socialWarfare || {};
 		var pin_data = element.data('pins');
 		var pin_images = '';
 
+
+		/**
+		 * We'll loop through each available image that the user has provided
+		 * and create a pinnable link to each one for the end user to select from.
+		 *
+		 */
 		pin_data.images.forEach( function( image ) {
 
+			// Build the share link for this image.
 			var share_url = 'https://pinterest.com/pin/create/button/?url=' + pin_data.url +
 			'&media=' + image +
 			'&description=' + pin_data.description;
 
+			// Build out the HTML for the image and button.
 			var pin_html = '';
 			pin_html += '<div class="pin_image_select_wrapper">';
 			pin_html += '<img class="pin_image" src="'+ image +'" />';
 			pin_html += '<a class="swp-hover-pin-button" href="'+ share_url +'" data-link="'+ share_url +'">Save</a>';
 			pin_html += '</div>';
 
+			// Add all the images and buttons to the main html.
 			pin_images += pin_html;
 		});
 
-
+		// Create the html for the lightbox overlay, the title, and the close button.
 		html += '<div class="swp-lightbox-wrapper pinterest-overlay"><div class="swp-lightbox-inner">';
+		html += '<i class="sw swp_pinterest_icon"></i>';
 		html += '<div class="swp-lightbox-close"></div>';
 		html += '<h5>Which image would you like to pin?</h5>';
 		html += '<div class="pin_images_wrapper">';
 		html += pin_images;
 		html += '</div></div></div>';
 
+		// Append it, and hide it first so that we can fade it in.
 		$('body').append(html).hide().fadeIn();
 
+		// Add the click handlers to the newly added elements (i.e. the buttons)
 		socialWarfare.handleButtonClicks();
 
+		/**
+		 * Here we'll loop through all of the images, and find the shortest one.
+		 * We'll then restrict all of them to be that height. This way all of the
+		 * images in the row will be the same height.
+		 *
+		 */
 		var max_height = 999999;
 		$('.pinterest-overlay img').load( function() {
 			$('.pinterest-overlay img').each( function() {

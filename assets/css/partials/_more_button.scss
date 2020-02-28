@@ -46,6 +46,20 @@
 	}
 
 	&.pinterest-overlay {
+		.swp-lightbox-inner {
+			text-align: center;
+
+			.swp_pinterest_icon {
+				color: #cd2029;
+			    font-size: 45px;
+			    margin: 0;
+			    padding: 0;
+			    line-height: 0;
+			}
+			h5 {
+				margin-bottom:20px;
+			}
+		}
 		.pin_images_wrapper {
 			text-align:center;
 			.pin_image_select_wrapper {
@@ -56,7 +70,7 @@
 					position:initial;
 					width:100%!important;
 					display:block;
-					margin-top:5px;
+					margin-top:10px;
 				}
 			}
 		}
