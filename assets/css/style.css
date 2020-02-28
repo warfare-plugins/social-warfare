@@ -3158,6 +3158,8 @@ span.swp_pop_count {
 }
 
 .swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner {
+	width: 70%;
+	left: 15%;
 	text-align: center;
 }
 
