@@ -83,60 +83,162 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @param  bool $echo If true, this will immediately echo its code rather than save it for later.
 	 *
 	 */
-	 public function render_HTML( $panel_context, $echo = false ) {
+	public function render_HTML( $panel_context, $echo = false ) {
+
+		/**
+		 * The global array containing the admin's options as set on the Social
+		 * Warfare admin options page.
+		 *
+		 */
 		global $swp_user_options;
-		$post_id = $panel_context['post_data']['ID'];
-		$post_url = urlencode( urldecode( SWP_Link_Manager::process_url( $panel_context['post_data']['permalink'] , 'pinterest' , $post_id ) ) );
-
 		$options = $swp_user_options;
-		$metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
 
-		if ( !empty( $metabox_pinterest_image ) ) :
-			$pinterest_image = $metabox_pinterest_image;
-		elseif ( isset($options['pinterest_fallback']) && $options['pinterest_fallback'] == 'featured' ):
+		// The ID of the current WordPress post or page.
+		$post_id = $panel_context['post_data']['ID'];
+
+		/**
+		 * The processed permalink for the current post. Since this passes
+		 * through our SWP_Link_Manager::process_url() method it will have the
+		 * Google Anaytlics UTM and link shortening applied (if those features
+		 * are turned on in the options).
+		 *
+		 */
+		$post_url = urlencode( urldecode( SWP_Link_Manager::process_url( $panel_context['post_data']['permalink'], 'pinterest', $post_id ) ) );
+
+
+		/**
+		 * This meta or custom field is where the ID is stored for the image
+		 * that the user has uploaded into the "Pinterest Image" spot. This will
+		 * return an array of images ID's.
+		 *
+		 */
+		$metabox_pinterest_image = get_post_meta( $post_id , 'swp_pinterest_image', false );
+
+
+		/**
+		 * This conditonal will trigger if the user has uploaded an image into
+		 * the "Pinterest Image" field.
+		 *
+		 */
+		if ( false === empty( $metabox_pinterest_image ) && false !== $metabox_pinterest_image ):
+
+			// If the user has uploaded multiple Pinterest images.
+			if( count( $metabox_pinterest_image ) > 1 ) {
+				$pinterest_image = 'multiple';
+
+			// If the user has uploaded only one single Pinterest image.
+			} else {
+				$pinterest_image = wp_get_attachment_url( $metabox_pinterest_image[0] );
+			}
+
+
+		/**
+		 * The user has not uploaded a designated Pinterest image, then we will
+		 * check for fallback image conditions and use those if necessary.
+		 *
+		 * In this case, we'll attempt to use the post's designated featured
+		 * image as the Pinterest image.
+		 *
+		 */
+		elseif ( 'featured' === SWP_Utility::get_option( 'pinterest_fallback' ) ):
 			$pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 		else :
 			$pinterest_image = '';
 		endif;
 
+
+		/**
+		 * This section will get the Pinterest username if one is set in the
+		 * admin options page. We will include this in the description when shared.
+		 *
+		 */
 		$pinterest_username = '';
 		$pinterest_id = SWP_Utility::get_option( 'pinterest_id' );
-		if ( !empty( $pinterest_id ) ) {
+		if ( false === empty( $pinterest_id ) ) {
 			 $pinterest_username = ' via @' . str_replace( '@' , '' , $pinterest_id );
 		}
 
+		// The post's title.
 		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
-		$pinterest_description	= get_post_meta( $post_id , 'swp_pinterest_description' , true );
 
+		/**
+		 * Check if the user has provided a description for the "Pinterest
+		 * Description" field in the post meta boxes.
+		 *
+		 */
+		$pinterest_description	= get_post_meta( $post_id, 'swp_pinterest_description', true );
+
+
+		/**
+		 * In some bizarre instances, the description was returned as an array
+		 * even when the "true" parameter is provided as the third parameter in
+		 * the get_post_meta() function above. If this is the case, we'll strip
+		 * it out here and just grab the very first item returned in that array.
+		 *
+		 */
 		if( is_array( $pinterest_description ) && !empty( $pinterest_description ) ) {
 			$pinterest_description = $pinterest_description[0];
 			// delete_post_meta( $post_id , 'swp_pinterest_description' );
 			update_post_meta( $post_id , 'swp_pinterest_description' , $pinterest_description );
 		}
 
-		if ( empty( $pinterest_description ) ) :
+
+		/**
+		 * If no Pinterest description was provided, then we'll use the post
+		 * title as the description.
+		 *
+		 */
+		if ( empty( $pinterest_description ) ) {
 			$pinterest_description = $title;
-		endif;
+		}
 
 		$pinterest_username = SWP_Pinterest::get_via();
 		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
 
-		if ( !empty( $pinterest_image ) ) :
-			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
+
+		/**
+		 * Now that we've processed all of our variables, we'll proceed to put
+		 * together the HTML for the button.
+		 *
+		 * If we have a designated Pinterest image, we'll start here...
+		 */
+		if ( !empty( $pinterest_image ) ) {
+
+			// If the user has uploaded multiple Pinterest images...
+			if( 'multiple' === $pinterest_image ) {
+
+				// Build all the data needed by the JS process into this array.
+				$pin_data                = array();
+				$pin_data['description'] = $pinterest_description;
+				$pin_data['url']         = $post_url;
+
+				// Store the permalink of each Pinterest image in the "images" indice.
+				foreach( $metabox_pinterest_image as $image ) {
+					$pin_data['images'][] = wp_get_attachment_url( $image );
+				}
+
+				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link pinterest_multi_image_select" data-count="0" data-link="#" data-pins=\''.json_encode($pin_data).'\'>';
+
+			// If the user has uploaded one single Pinterest image...
+			} else {
+				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
 						'data-link="https://pinterest.com/pin/create/button/' .
 						'?url=' . $panel_context['post_data']['permalink'] .
 						'&media=' . urlencode( $pinterest_image ) .
 						'&description=' . urlencode( $pinterest_description ) .
 					'">';
-		   else :
-			   $anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
-						'onClick="var e=document.createElement(\'script\');
-						   e.setAttribute(\'type\',\'text/javascript\');
-						   e.setAttribute(\'charset\',\'UTF-8\');
-						   e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
-						   document.body.appendChild(e);
-						" >';
-		   endif;
+			}
+
+		// If the user has not uploaded any Pinterest images.
+		} else {
+			$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
+					'onClick="var e=document.createElement(\'script\');
+						e.setAttribute(\'type\',\'text/javascript\');
+						e.setAttribute(\'charset\',\'UTF-8\');
+						e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
+						document.body.appendChild(e);
+					" >';
+		}
 
 		 //* Begin parent class method.
 

@@ -380,8 +380,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 * share windows to pop out.
 		 *
 		 */
-		$('.nc_tweet, a.swp_CTT').off('click');
-		$('.nc_tweet, a.swp_CTT').on('click', function(event) {
+		$('.nc_tweet, a.swp_CTT, .swp-hover-pin-button').off('click');
+		$('.nc_tweet, a.swp_CTT, .swp-hover-pin-button').on('click', function(event) {
 
 
 			/**
@@ -390,9 +390,23 @@ window.socialWarfare = window.socialWarfare || {};
 			 * functionality.
 			 *
 			 */
-			if ($(this).parent('.swp_print').length > 0) {
+			if($(this).parent('.swp_print').length > 0) {
 				event.preventDefault();
 				window.print();
+				return;
+			}
+
+
+			/**
+			 * This will intercept clicks that are made on the Pinterest button
+			 * if the Pinterest button is set to display multiple images
+			 * available to the user to choose from. This will trigger the
+			 * lightbox overlay presenting the images to the user.
+			 *
+			 */
+			if( true === $(this).hasClass('pinterest_multi_image_select') ) {
+				event.preventDefault();
+				socialWarfare.openMultiPinterestOverlay( $(this) );
 				return;
 			}
 
@@ -403,7 +417,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 * the available buttons for the entire plugin.
 			 *
 			 */
-			if ($(this).parent('.swp_more').length > 0) {
+			if($(this).parent('.swp_more').length > 0) {
 				event.preventDefault();
 				socialWarfare.openMoreOptions();
 				return;
@@ -506,6 +520,77 @@ window.socialWarfare = window.socialWarfare || {};
 			// Active Google Analytics event tracking for the button click.
 			socialWarfare.trackClick(network);
 		});
+	}
+
+
+	socialWarfare.openMultiPinterestOverlay = function( element ) {
+
+
+		if( $('.pinterest-overlay').length > 0 ) {
+			$('.pinterest-overlay').fadeIn('fast');
+			return;
+		}
+
+
+		/**
+		 * We'll use this variable to store the string of html as we build it out.
+		 *
+		 */
+		var html = '';
+
+
+		/**
+		 * The pin data will be a JSON encoded array of data needed to build the
+		 * Pinterest image selection overlay. It will contain the following data:
+		 *
+		 * description - The Pinterest Description
+		 * url         - The processes, shareable link to the post.
+		 * images      - An array of image URL's to populate the selection.
+		 *
+		 */
+		var pin_data = element.data('pins');
+		var pin_images = '';
+
+		pin_data.images.forEach( function( image ) {
+
+			var share_url = 'https://pinterest.com/pin/create/button/?url=' + pin_data.url +
+			'&media=' + image +
+			'&description=' + pin_data.description;
+
+			var pin_html = '';
+			pin_html += '<div class="pin_image_select_wrapper">';
+			pin_html += '<img class="pin_image" src="'+ image +'" />';
+			pin_html += '<a class="swp-hover-pin-button" href="'+ share_url +'" data-link="'+ share_url +'">Save</a>';
+			pin_html += '</div>';
+
+			pin_images += pin_html;
+		});
+
+
+		html += '<div class="swp-lightbox-wrapper pinterest-overlay"><div class="swp-lightbox-inner">';
+		html += '<div class="swp-lightbox-close"></div>';
+		html += '<h5>Which image would you like to pin?</h5>';
+		html += '<div class="pin_images_wrapper">';
+		html += pin_images;
+		html += '</div></div></div>';
+
+		$('body').append(html).hide().fadeIn();
+
+		socialWarfare.handleButtonClicks();
+
+		var max_height = 999999;
+		$('.pinterest-overlay img').load( function() {
+			$('.pinterest-overlay img').each( function() {
+				if( $(this).height() < max_height ) {
+					max_height = $(this).height();
+				}
+			}).promise().done( function() {
+				$('.pinterest-overlay img').height(max_height + 'px');
+			});
+		});
+
+
+
 	}
 
 

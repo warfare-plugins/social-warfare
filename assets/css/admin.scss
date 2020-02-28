@@ -43,17 +43,21 @@
 
 #social_warfare .open-graph ul.swpmb-media-list,
 #social_warfare .twitter ul.swpmb-media-list {
-	background-image: url("../images/img-placeholder-og.jpg");
+	background-image: url('../images/img-placeholder-og.jpg');
 }
 
-#social_warfare .pinterest ul.swpmb-media-list:empty {
-	background-image: url("../images/img-placeholder-pin.jpg");
+#social_warfare .pinterest ul.swpmb-media-list {
+	&:empty {
+		background-image: url('../images/img-placeholder-pin.jpg');
+	}
+
+	&:not(:empty) {
+		display:flex;
+		background:#ffffff;
+	}
+
 }
 
-#social_warfare .pinterest ul.swpmb-media-list:not(:empty) {
-	display: flex;
-	background: #ffffff;
-}
 
 #social_warfare .swpmb-field {
 	margin-top: 10px;
@@ -107,7 +111,7 @@
 }
 
 #social_warfare .swpmb-divider-wrapper hr {
-	border: none !important;
+	border: none!important
 }
 
 #social_warfare .swpmb-label label {
@@ -202,15 +206,15 @@
 }
 
 a.swp-notice-cta {
-	cursor: pointer;
-	text-decoration: underline;
-	font-size: 15px;
-	line-height: 30px;
-	margin-right: 50px;
+   cursor: pointer;
+   text-decoration: underline;
+   font-size: 15px;
+   line-height: 30px;
+   margin-right: 50px;
 }
 
 #swp-admin-sidebar {
-	margin-top: -20px;
+	margin-top:-20px;
 }
 
 #swp-admin-sidebar .swp-component.dark-text {
@@ -256,6 +260,7 @@ a.swp-notice-cta {
 	text-align: center;
 }
 
+
 #swp-admin-sidebar .swp-component .swp-component-title {
 	font-size: 26px;
 	text-align: center;
@@ -267,6 +272,7 @@ a.swp-notice-cta {
 	Checkboxes
 
 *********************************************************/
+
 .sw-checkbox-toggle {
 	width: 150px;
 	height: 46px;
@@ -303,7 +309,6 @@ a.swp-notice-cta {
 .sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-on {
 	display: none;
 }
-
 .sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-off {
 	right: 0;
 	background-color: #ee464f;
@@ -319,11 +324,12 @@ a.swp-notice-cta {
  * mockup:
  * https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d6f-af31cba9f8e2.png
  */
-.swpmb-heading-wrapper h1 {
-	font-weight: bold;
-}
 
-.swpmb-meta-box {
+.swpmb-heading-wrapper h1 {
+	 font-weight: bold;
+ }
+
+ .swpmb-meta-box {
 	margin: 25px 30px;
 }
 
@@ -377,6 +383,7 @@ a.swp-notice-cta {
 	}
 }
 
+
 .swpmb-left-wrap {
 	margin-right: 30px;
 }
@@ -389,6 +396,11 @@ a.swp-notice-cta {
  * Children of the left-wrap and right-wrap.
  *
  */
+.swpmb-left,
+.swpmb-right {
+
+}
+
 .swpmb-input {
 	margin-top: 10px;
 }
@@ -418,14 +430,13 @@ a.swp-notice-cta {
 }
 
 #social_warfare .sw-checkbox-toggle {
-	width: 84px;
-	height: 32px;
+   width: 84px;
+   height: 32px;
 }
-
 #social_warfare .sw-checkbox-on,
 #social_warfare .sw-checkbox-off {
-	font-size: 12px;
-	line-height: 32px;
+   font-size: 12px;
+   line-height: 32px;
 }
 
 #social_warfare p.description {
@@ -440,72 +451,69 @@ a.swp-notice-cta {
  * Follow Widget Styles
  *
  */
-.swfw-revoke-button,
-.swfw-authorization-button {
-	width: 70%;
-	text-align: center;
-	max-width: 200px;
-}
+ .swfw-revoke-button,
+ .swfw-authorization-button {
+   width: 70%;
+   text-align: center;
+   max-width: 200px;
+ }
 
-.swfw-input-field,
-.swfw-follow-field {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: space-between;
-	align-items: center;
-	height: 50px;
-	margin: 15px auto;
-}
+ .swfw-input-field,
+ .swfw-follow-field {
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: space-between;
+   align-items: center;
+   height: 50px;
+   margin: 15px auto;
+ }
 
-.swfw-follow-field.swfw-inactive a {
-	cursor: initial;
-}
+ .swfw-follow-field.swfw-inactive a {
+   cursor: initial;
+ }
+ .swfw-follow-field.swfw-active a {
+   cursor: pointer;
+ }
 
-.swfw-follow-field.swfw-active a {
-	cursor: pointer;
-}
+ .swfw-follow-field-icon {
+   color: black;
+   width: 40px;
+   font-size: 27px;
+   line-height: 45px;
+   font-weight: bold;
+   transition: all 300ms;
+   border-radius: 3px;
+   height: 40px;
+   text-align: center;
+   padding: 2px;
+ }
 
-.swfw-follow-field-icon {
-	color: black;
-	width: 40px;
-	font-size: 27px;
-	line-height: 45px;
-	font-weight: bold;
-	transition: all 300ms;
-	border-radius: 3px;
-	height: 40px;
-	text-align: center;
-	padding: 2px;
-}
+ .swfw-widget label {
+   font-size: 14px;
+   width: 100px;
+ }
 
-.swfw-widget label {
-	font-size: 14px;
-	width: 100px;
-}
+ .swfw-follow-field label {
+   text-align: right;
+ }
 
-.swfw-follow-field label {
-	text-align: right;
-}
+ .swfw-input-field input,
+ .swfw-input-field select,
+ .swfw-follow-field input {
+   padding: 10px;
+   width: 50%;
+   height: 100%;
+   border-radius: 4px;
+ }
 
-.swfw-input-field input,
-.swfw-input-field select,
-.swfw-follow-field input {
-	padding: 10px;
-	width: 50%;
-	height: 100%;
-	border-radius: 4px;
-}
+ .swfw-follow-field.swfw-inactive div {
+   background: white;
+ }
 
-.swfw-follow-field.swfw-inactive div {
-	background: white;
-}
+ .swfw-follow-field.swfw-active div {
+   color: white;
+ }
 
-.swfw-follow-field.swfw-active div {
-	color: white;
-}
-
-.swfw-follow-field.swfw-active div.swp-snapchat {
-	color: black;
-}
-
-/*# sourceMappingURL=admin.css.map */
+ .swfw-follow-field.swfw-active div.swp-snapchat {
+   color: black;
+ }

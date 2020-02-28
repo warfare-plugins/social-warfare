@@ -33,6 +33,7 @@
 		    display: inline-block;
 		    float: right;
 		    margin: -30px;
+			font-size:25px;
 			&:before {
 				content:'+';
 				font-family:arial;
@@ -42,5 +43,22 @@
 
 	@media print {
 		display:none;
+	}
+
+	&.pinterest-overlay {
+		.pin_images_wrapper {
+			text-align:center;
+			.pin_image_select_wrapper {
+				display:inline-block;
+				width:24%;
+				margin-right:1%;
+				.swp-hover-pin-button {
+					position:initial;
+					width:100%!important;
+					display:block;
+					margin-top:5px;
+				}
+			}
+		}
 	}
 }
