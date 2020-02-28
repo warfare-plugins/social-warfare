@@ -158,6 +158,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
 		socialWarfare.closeMoreOptions();
+		socialWarfare.preloadPinterestImages();
 
 		if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
 			socialWarfare.createHoverSaveButton();
@@ -596,7 +597,7 @@ window.socialWarfare = window.socialWarfare || {};
 		html += '</div></div></div>';
 
 		// Append it, and hide it first so that we can fade it in.
-		$('body').append(html).hide().fadeIn();
+		$('body').append(html);
 
 		// Add the click handlers to the newly added elements (i.e. the buttons)
 		socialWarfare.handleButtonClicks();
@@ -608,18 +609,42 @@ window.socialWarfare = window.socialWarfare || {};
 		 *
 		 */
 		var max_height = 999999;
-		$('.pinterest-overlay img').load( function() {
-			$('.pinterest-overlay img').each( function() {
-				if( $(this).height() < max_height ) {
-					max_height = $(this).height();
-				}
-			}).promise().done( function() {
-				$('.pinterest-overlay img').height(max_height + 'px');
-			});
+		var iteration = 0;
+		var images = $('.pinterest-overlay img');
+
+		/**
+		 * This will run when each image is loaded, so we'll filter below to
+		 * only run when the last one is finished.
+		 *
+		 */
+		images.load( function() {
+
+			// This will run after the last image has been loaded.
+			if( ++iteration === images.length ) {
+				$('.pinterest-overlay img').each( function() {
+					if( $(this).height() < max_height ) {
+						max_height = $(this).height();
+					}
+				}).promise().done( function() {
+					$('.pinterest-overlay img').height(max_height + 'px');
+				});
+			}
 		});
 
+	}
 
 
+	socialWarfare.preloadPinterestImages = function() {
+		console.log($('.pinterest_multi_image_select').length);
+		if( $('.pinterest_multi_image_select').length < 1 ) {
+			return;
+		}
+
+		var pin_data = $('.pinterest_multi_image_select').data('pins');
+		pin_data.images.forEach( function( image_url ) {
+			var image_object = new Image();
+			image_object.src = image_url;
+		});
 	}
 
 
