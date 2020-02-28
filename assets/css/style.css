@@ -3120,7 +3120,7 @@ span.swp_pop_count {
 	width: 50%;
 	left: 25%;
 	position: relative;
-	top: 20%;
+	top: 10%;
 	background: #ffffff;
 	padding: 35px;
 	border-radius: 10px;
@@ -3192,6 +3192,7 @@ span.swp_pop_count {
 	width: 100% !important;
 	display: block;
 	margin-top: 10px;
+	margin-bottom: 40px;
 }
 
 /*# sourceMappingURL=style.css.map */
