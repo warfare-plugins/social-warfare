@@ -297,57 +297,7 @@ class SWP_Section_HTML extends SWP_Option {
 		$style = 'swp_' . SWP_Utility::get_option( 'button_shape' );
 		ob_start() ?>
 
-		<div class="swp_social_panel <?= $style ?> swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_medium_gray" data-position="both" data-count="6" data-floatcolor="#ffffff" data-scale="1" data-align="full_width">
-			<div class="nc_tweetContainer swp_share_button swp_twitter" data-id="3">
-				<a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet swp_share_link">
-					<span class="iconFiller">
-						<span class="spaceManWilly">
-							<i class="sw swp_twitter_icon"></i>
-							<span class="swp_share"><?php __( 'Tweet','social-warfare' ) ?></span>
-						</span>
-					</span>
-					<span class="swp_count">280</span>
-				</a>
-			</div>
-			<div class="nc_tweetContainer swp_share_button swp_pinterest" data-id="6">
-				<a data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fget-content-shared-735x1102.jpg&description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21" class="nc_tweet swp_share_link" data-count="0">
-					<span class="iconFiller">
-						<span class="spaceManWilly">
-							<i class="sw swp_pinterest_icon"></i>
-							<span class="swp_share"><?php __( 'Pin','social-warfare' ) ?></span>
-						</span>
-					</span>
-					<span class="swp_count">104</span>
-				</a>
-			</div>
-			<div class="nc_tweetContainer swp_share_button swp_facebook" data-id="4">
-				<a target="_blank" href="https://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" data-link="https://www.facebook.com/share.php?u=http%3A%2F%2Fwfa.re%2F1W28vov" class="nc_tweet swp_share_link">
-					<span class="iconFiller">
-						<span class="spaceManWilly">
-							<i class="sw swp_facebook_icon"></i>
-							<span class="swp_share"><?php __( 'Share','social-warfare' ) ?></span>
-						</span>
-					</span>
-					<span class="swp_count">157</span>
-				</a>
-			</div>
-			<div class="nc_tweetContainer swp_share_button swp_linkedin" data-id="5">
-				<a target="_blank" href="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" data-link="https://www.linkedin.com/cws/share?url=http%3A%2F%2Fwfa.re%2F1W28twH" class="nc_tweet swp_share_link">
-					<span class="iconFiller">
-						<span class="spaceManWilly">
-							<i class="sw swp_linkedin_icon"></i>
-							<span class="swp_share"><?php __( 'Share','social-warfare' ) ?></span>
-						</span>
-					</span>
-					<span class="swp_count">51</span>
-				</a>
-			</div>
-			<div class="nc_tweetContainer swp_share_button total_shares total_sharesalt" data-id="6" >
-			<span class="swp_count">
-				<span class="swp_label">Shares</span> 1.8K
-			</span>
-			</div>
-		</div>
+<div class="swp_social_panel swp_horizontal_panel swp_flat_fresh  swp_default_full_color swp_other_full_color swp_individual_full_color scale-100 scale-full_width" data-float-color="#ffffff" data-float="none" data-float-mobile="none" data-transition="slide"><div class="nc_tweetContainer swp_share_button swp_facebook" data-network="facebook"><a class="nc_tweet swp_share_link" rel="nofollow noreferrer noopener" target="_blank" href="https://www.facebook.com/share.php?u=https%3A%2F%2Fwarfareplugins.com%2F%3Futm_source%3Dfacebook%26utm_medium%3DSocial%26utm_campaign%3DSocialWarfare" data-link="https://www.facebook.com/share.php?u=https%3A%2F%2Fwarfareplugins.com%2F%3Futm_source%3Dfacebook%26utm_medium%3DSocial%26utm_campaign%3DSocialWarfare"><span class="iconFiller"><span class="spaceManWilly"><i class="sw swp_facebook_icon"></i><span class="swp_share">Share</span></span></span><span class="swp_count" style="transition: padding 0.1s linear 0s;">17.5K</span></a></div><div class="nc_tweetContainer swp_share_button swp_twitter" data-network="twitter"><a class="nc_tweet swp_share_link" rel="nofollow noreferrer noopener" target="_blank" href="https://twitter.com/intent/tweet?text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&amp;url=/&amp;via=DustinWStout" data-link="https://twitter.com/intent/tweet?text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&amp;url=/&amp;via=DustinWStout"><span class="iconFiller"><span class="spaceManWilly"><i class="sw swp_twitter_icon"></i><span class="swp_share">Tweet</span></span></span><span class="swp_count" style="transition: padding 0.1s linear 0s;">158.9K</span></a></div><div class="nc_tweetContainer swp_share_button swp_pinterest" data-network="pinterest"><a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" data-link="https://pinterest.com/pin/create/button/?url=https://warfareplugins.com/&amp;media=https%3A%2F%2Fwarfareplugins.com%2Fwp-content%2Fuploads%2Fincrease-shares-drive-traffic-735x1498.jpg&amp;description=Customize+your+Pinterest+sharing+options%2C+create+easy+%22click+to+tweet%22+buttons+within+your+blog+posts%2C+beautiful+sharing+buttons+and+more.+Social+Warfare+is+the+ultimate+social+sharing+arsenal+for+WordPress%21+via+%40warfareplugins"><span class="iconFiller"><span class="spaceManWilly"><i class="sw swp_pinterest_icon"></i><span class="swp_share">Pin</span></span></span><span class="swp_count" style="transition: padding 0.1s linear 0s;">122.0K</span></a></div><div class="nc_tweetContainer swp_share_button swp_linkedin" data-network="linkedin"><a class="nc_tweet swp_share_link" rel="nofollow noreferrer noopener" target="_blank" href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwarfareplugins.com%2F%3Futm_source%3Dlinkedin%26utm_medium%3DSocial%26utm_campaign%3DSocialWarfare" data-link="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwarfareplugins.com%2F%3Futm_source%3Dlinkedin%26utm_medium%3DSocial%26utm_campaign%3DSocialWarfare"><span class="iconFiller"><span class="spaceManWilly"><i class="sw swp_linkedin_icon"></i><span class="swp_share">Share</span></span></span><span class="swp_count" style="transition: padding 0.1s linear 0s;">1.5K</span></a></div><div class="nc_tweetContainer swp_share_button total_shares total_sharesalt"><span class="swp_count " style="transition: padding 0.1s linear 0s;">298.4K <span class="swp_label">Shares</span></span></div></div>
 
 		<?php
 
