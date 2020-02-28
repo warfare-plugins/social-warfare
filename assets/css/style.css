@@ -3143,6 +3143,7 @@ span.swp_pop_count {
 	display: inline-block;
 	float: right;
 	margin: -30px;
+	font-size: 25px;
 }
 
 .swp-lightbox-wrapper .swp-lightbox-inner .swp-lightbox-close:before {
@@ -3154,6 +3155,23 @@ span.swp_pop_count {
 	.swp-lightbox-wrapper {
 		display: none;
 	}
+}
+
+.swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper {
+	text-align: center;
+}
+
+.swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper .pin_image_select_wrapper {
+	display: inline-block;
+	width: 24%;
+	margin-right: 1%;
+}
+
+.swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper .pin_image_select_wrapper .swp-hover-pin-button {
+	position: initial;
+	width: 100% !important;
+	display: block;
+	margin-top: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */
