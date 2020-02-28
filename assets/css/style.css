@@ -3161,6 +3161,8 @@ span.swp_pop_count {
 	width: 70%;
 	left: 15%;
 	text-align: center;
+	height: 80%;
+	overflow-y: auto;
 }
 
 .swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner .swp_pinterest_icon {
