@@ -635,8 +635,8 @@ window.socialWarfare = window.socialWarfare || {};
 	socialWarfare.openMoreOptions = function() {
 
 		// If the options already exist, just reopen them by fading them in.
-		if( $('.swp-lightbox-wrapper').length > 0 ) {
-			$('.swp-lightbox-wrapper').fadeIn('fast');
+		if( $('.swp-more-wrapper').length > 0 ) {
+			$('.swp-more-wrapper').fadeIn('fast');
 			return;
 		}
 
