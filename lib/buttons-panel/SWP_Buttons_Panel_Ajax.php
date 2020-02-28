@@ -162,7 +162,7 @@ class SWP_Buttons_Panel_Ajax {
 	 *
 	 */
 	private function generate_lightbox_container() {
-		$html = '<div class="swp-lightbox-wrapper"><div class="swp-lightbox-inner">';
+		$html = '<div class="swp-lightbox-wrapper swp-more-wrapper"><div class="swp-lightbox-inner">';
 		$html .= '<div class="swp-lightbox-close"></div>';
 		$html .= '<h5>Additonal Sharing Options</h5>';
 		$html .= $this->buttons_html;
