@@ -298,17 +298,6 @@ class SWP_Section_HTML extends SWP_Option {
 		ob_start() ?>
 
 		<div class="swp_social_panel <?= $style ?> swp_flat_fresh swp_default_full_color swp_individual_full_color swp_other_medium_gray" data-position="both" data-count="6" data-floatcolor="#ffffff" data-scale="1" data-align="full_width">
-			<div class="nc_tweetContainer swp_share_button swp_google_plus" data-id="2">
-				<a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" data-link="https://plus.google.com/share?url=http%3A%2F%2Fwfa.re%2F1W28voz" class="nc_tweet swp_share_link">
-					<span class="iconFiller">
-						<span class="spaceManWilly">
-							<i class="sw swp_google_plus_icon"></i>
-							<span class="swp_share"><?php __( '+1','social-warfare' ) ?></span>
-						</span>
-					</span>
-					<span class="swp_count">1.2K</span>
-				</a>
-			</div>
 			<div class="nc_tweetContainer swp_share_button swp_twitter" data-id="3">
 				<a href="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" data-link="https://twitter.com/share?original_referer=/&text=Ultimate+Social+Share+%23WordPress+plugin%21+Beautiful%2C+super+fast+%26+more+http%3A%2F%2Fwarfareplugins.com+pic.twitter.com%2FA2zcCJwZtO&url=/&via=WarfarePlugins" class="nc_tweet swp_share_link">
 					<span class="iconFiller">
