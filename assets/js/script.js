@@ -539,7 +539,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 		if( $('.pinterest-overlay').length > 0 ) {
-			$('.pinterest-overlay').fadeIn('fast');
+			$('.pinterest-overlay').fadeIn();
 			return;
 		}
 
@@ -598,6 +598,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		// Append it, and hide it first so that we can fade it in.
 		$('body').append(html);
+		$('.pinterest-overlay').hide().fadeIn();
 
 		// Add the click handlers to the newly added elements (i.e. the buttons)
 		socialWarfare.handleButtonClicks();
@@ -607,10 +608,26 @@ window.socialWarfare = window.socialWarfare || {};
 		 * We'll then restrict all of them to be that height. This way all of the
 		 * images in the row will be the same height.
 		 *
+		 * Since we're looking for the smalled image, we'll start with an
+		 * insanely high number and every time we encounter one that is shorter,
+		 * we'll overwrite the number with that one.
+		 *
 		 */
 		var max_height = 999999;
-		var iteration = 0;
-		var images = $('.pinterest-overlay img');
+
+
+		/**
+		 * The images.load() will fire each and every time an image in the set
+		 * is loaded. This means that if there are 5 images, it will fire off
+		 * 5 separate times. However, we only want to fire after the last one is
+		 * loaded. As such, we'll count the number of elements, and iterate a
+		 * counter on each lap through the loop. Then once the counter reaches
+		 * the total count of the images, we'll run our function. This means that
+		 * it will only run one time after all of the images have loaded.
+		 *
+		 */
+		var iteration = 0, images = $('.pinterest-overlay img');
+
 
 		/**
 		 * This will run when each image is loaded, so we'll filter below to
@@ -621,12 +638,64 @@ window.socialWarfare = window.socialWarfare || {};
 
 			// This will run after the last image has been loaded.
 			if( ++iteration === images.length ) {
-				$('.pinterest-overlay img').each( function() {
+
+				// This will select all of the images and loop through them.
+				images.each( function() {
+
+					// Check if this image is shorter than the previous image.
 					if( $(this).height() < max_height ) {
+
+						// If it is shorter, this becomes our new "max height"
 						max_height = $(this).height();
 					}
+
+				/**
+				 * Once we've looped through all of the images and determined
+				 * the shortest image, now we'll set the height of all of the
+				 * taller images to match the shortest one. Now they are all the
+				 * same height.
+				 *
+				 */
 				}).promise().done( function() {
-					$('.pinterest-overlay img').height(max_height + 'px');
+					images.height(max_height + 'px');
+
+					var number_of_rows = Math.ceil( images.length / 4 );
+					var last_row_images_count = images.length % 4;
+
+					for (i = 0; i < number_of_rows; i++) {
+						var current_row_images = images.slice( i * 4, i * 4 + 4 );
+
+						// Find the total width of the container element.
+						var total_width = $('.pin_images_wrapper').width() * 0.94 * (current_row_images.length / 4 );
+
+						// Find the total width of all of the images in this row.
+						var total_images_width = 0;
+						current_row_images.each( function() {
+							total_images_width = total_images_width + $(this).width();
+						});
+
+						// Find the ratio between image width and container width.
+						var ratio = total_width / total_images_width;
+
+						// Increase the size of all images based on the above ratio.
+						current_row_images.each( function() {
+							$(this).parent().width( $(this).width() * ratio );
+							$(this).height('auto');
+						});
+
+
+						/**
+						 * Some of the image heights were off by as much as 2px
+						 * from each other. With this, we'll just grab the height
+						 * of the first image in the set and then set all the
+						 * heights and widths to a static measurements.
+						 *
+						 */
+						var height = current_row_images.first().height();
+						current_row_images.each( function() {
+							$(this).width( $(this).width() ).height(height);
+						});
+					}
 				});
 			}
 		});
@@ -635,7 +704,6 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	socialWarfare.preloadPinterestImages = function() {
-		console.log($('.pinterest_multi_image_select').length);
 		if( $('.pinterest_multi_image_select').length < 1 ) {
 			return;
 		}
@@ -661,7 +729,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		// If the options already exist, just reopen them by fading them in.
 		if( $('.swp-more-wrapper').length > 0 ) {
-			$('.swp-more-wrapper').fadeIn('fast');
+			$('.swp-more-wrapper').fadeIn();
 			return;
 		}
 
@@ -679,7 +747,7 @@ window.socialWarfare = window.socialWarfare || {};
 			$('body').append(response);
 
 			// Hide the appended html only so that we can fade it into view.
-			$('.swp-lightbox-wrapper').hide().fadeIn('fast');
+			$('.swp-lightbox-wrapper').hide().fadeIn();
 
 			// Activate the hover states and button click handlers.
 			socialWarfare.activateHoverStates();
@@ -702,7 +770,7 @@ window.socialWarfare = window.socialWarfare || {};
 		$('body').on('click','.swp-lightbox-close', function() {
 
 			// Fade the lightbox out of view.
-			$('.swp-lightbox-wrapper').fadeOut('fast');
+			$('.swp-lightbox-wrapper').fadeOut();
 		});
 	}
 
