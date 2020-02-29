@@ -3187,6 +3187,10 @@ span.swp_pop_count {
 	margin-right: 1%;
 }
 
+.swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper .pin_image_select_wrapper img {
+	border-radius: 3px;
+}
+
 .swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper .pin_image_select_wrapper .swp-hover-pin-button {
 	position: initial;
 	width: 100% !important;
