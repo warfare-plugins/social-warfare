@@ -540,6 +540,7 @@ window.socialWarfare = window.socialWarfare || {};
 
 		if( $('.pinterest-overlay').length > 0 ) {
 			$('.pinterest-overlay').fadeIn();
+			$('.swp-lightbox-inner').scrollTop(0);
 			return;
 		}
 
@@ -769,9 +770,21 @@ window.socialWarfare = window.socialWarfare || {};
 		// Handle clicks on the red X
 		$('body').on('click','.swp-lightbox-close', function() {
 
-			// Fade the lightbox out of view.
+			// Fade the lightbox out of view and scroll it to the top so that it
+			// doesn't open midway down the viewport.
 			$('.swp-lightbox-wrapper').fadeOut();
 		});
+
+		// Handle presses of the "Escape" button on the keyboard.
+		$(document).keyup(function(e) {
+			if (e.key === "Escape") {
+
+				// Fade the lightbox out of view and scroll it to the top so that it
+				// doesn't open midway down the viewport.
+				$('.swp-lightbox-wrapper').fadeOut();
+			}
+		});
+
 	}
 
 
