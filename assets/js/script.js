@@ -157,7 +157,7 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.activateHoverStates();
 		socialWarfare.handleButtonClicks();
 		socialWarfare.updateFloatingButtons();
-		socialWarfare.closeMoreOptions();
+		socialWarfare.closeLightboxOverlay();
 		socialWarfare.preloadPinterestImages();
 
 		if (typeof swpPinIt == 'object' && swpPinIt.enabled == true) {
@@ -704,6 +704,16 @@ window.socialWarfare = window.socialWarfare || {};
 	}
 
 
+	/**
+	 * If we preload the images prior to bringing up the overlay, they'll be
+	 * ready so that we can run our resizing algorithms on them and get the
+	 * overlay loaded instantly when called.
+	 *
+	 * @since  4.0.0 | 29 FEB 2020
+	 * @param  void
+	 * @return void
+	 * 
+	 */
 	socialWarfare.preloadPinterestImages = function() {
 		if( $('.pinterest_multi_image_select').length < 1 ) {
 			return;
@@ -758,14 +768,14 @@ window.socialWarfare = window.socialWarfare || {};
 
 
 	/**
-	 * The closeMoreOptions function will handle clicks on the red X in the
+	 * The closeLightboxOverlay() function will handle clicks on the red X in the
 	 * corner of the more options box and will fade the lightbox out of view.
 	 *
 	 * @param  void
 	 * @return void
 	 *
 	 */
-	socialWarfare.closeMoreOptions = function() {
+	socialWarfare.closeLightboxOverlay = function() {
 
 		// Handle clicks on the red X
 		$('body').on('click','.swp-lightbox-close', function() {
