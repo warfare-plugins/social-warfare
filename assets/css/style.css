@@ -3114,6 +3114,7 @@ span.swp_pop_count {
 	position: fixed;
 	top: 0;
 	background: #ffffff;
+	z-index: 99999;
 }
 
 .swp-lightbox-wrapper .swp-lightbox-inner {
