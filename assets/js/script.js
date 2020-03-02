@@ -537,7 +537,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 */
 	socialWarfare.openMultiPinterestOverlay = function( element ) {
 
-
+		// If the overly has already been loaded once, just fade it in.
 		if( $('.pinterest-overlay').length > 0 ) {
 			$('.pinterest-overlay').fadeIn();
 			$('.swp-lightbox-inner').scrollTop(0);
@@ -604,6 +604,7 @@ window.socialWarfare = window.socialWarfare || {};
 		// Add the click handlers to the newly added elements (i.e. the buttons)
 		socialWarfare.handleButtonClicks();
 
+
 		/**
 		 * Here we'll loop through all of the images, and find the shortest one.
 		 * We'll then restrict all of them to be that height. This way all of the
@@ -634,6 +635,10 @@ window.socialWarfare = window.socialWarfare || {};
 		 * This will run when each image is loaded, so we'll filter below to
 		 * only run when the last one is finished.
 		 *
+		 * This will cause each of the images to be the same exact height as one
+		 * another while also always filling up 100% of the width of the overlay
+		 * container. It's very similar to the Flick image layout effect.
+		 *
 		 */
 		images.load( function() {
 
@@ -650,6 +655,7 @@ window.socialWarfare = window.socialWarfare || {};
 						max_height = $(this).height();
 					}
 
+
 				/**
 				 * Once we've looped through all of the images and determined
 				 * the shortest image, now we'll set the height of all of the
@@ -658,16 +664,24 @@ window.socialWarfare = window.socialWarfare || {};
 				 *
 				 */
 				}).promise().done( function() {
+
+					// This will make all of the images the same height.
 					images.height(max_height + 'px');
 
+					// Calculate the number of horizontal rows.
 					var number_of_rows = Math.ceil( images.length / 4 );
-					var last_row_images_count = images.length % 4;
 
+					// Loop through each row of images.
 					for (i = 0; i < number_of_rows; i++) {
+
+						// Select the images that are in this row.
 						var current_row_images = images.slice( i * 4, i * 4 + 4 );
 
+						// If a row only has 2 images, it will be a maximum of 50% filled.
+						var max_allowable_width = current_row_images.length / 4;
+
 						// Find the total width of the container element.
-						var total_width = $('.pin_images_wrapper').width() * 0.94 * (current_row_images.length / 4 );
+						var total_width = $('.pin_images_wrapper').width();
 
 						// Find the total width of all of the images in this row.
 						var total_images_width = 0;
@@ -678,9 +692,15 @@ window.socialWarfare = window.socialWarfare || {};
 						// Find the ratio between image width and container width.
 						var ratio = total_width / total_images_width;
 
-						// Increase the size of all images based on the above ratio.
+
+						/**
+						 * This will set the width of each pin to our calculated
+						 * value minus 1% since we add 1% of padding to the side.
+						 *
+						 */
 						current_row_images.each( function() {
-							$(this).parent().width( $(this).width() * ratio );
+							var new_width = ( ( $(this).width() * ratio / total_width ) * 100) * max_allowable_width - 1;
+							$(this).parent().width( new_width + '%' );
 							$(this).height('auto');
 						});
 
@@ -709,17 +729,22 @@ window.socialWarfare = window.socialWarfare || {};
 	 * ready so that we can run our resizing algorithms on them and get the
 	 * overlay loaded instantly when called.
 	 *
-	 * @since  4.0.0 | 29 FEB 2020
+	 * @since  4.0.0 | 29 FEB 2020 | Created
 	 * @param  void
 	 * @return void
-	 * 
+	 *
 	 */
 	socialWarfare.preloadPinterestImages = function() {
+
+		// Bail if we don't have a Pinterest Multi-Image setup to preload.
 		if( $('.pinterest_multi_image_select').length < 1 ) {
 			return;
 		}
 
+		// Fetch the pin_data from the data attribute.
 		var pin_data = $('.pinterest_multi_image_select').data('pins');
+
+		// Loop through the Pinterest images and preload them.
 		pin_data.images.forEach( function( image_url ) {
 			var image_object = new Image();
 			image_object.src = image_url;
