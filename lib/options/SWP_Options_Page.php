@@ -537,9 +537,25 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 			$button_position->add_option( $button_position_table );
 
+		$powered_by = new SWP_Options_Page_Section( __( 'Promote Social Warfare', 'social-warfare' ), 'powered_by' );
+		$powered_by->set_priority( 90 )
+			->set_description( __( 'If you\'d like, you can add a very small "Powered by Social Warfare" to the bottom of the "More" button overlay, "Pinterest" multi-image overlay, and site footer linking to our site with your affiliate link.', 'social-warfare' ) );
+
+			//* totes => totals
+			$powered_by_toggle = new SWP_Option_Toggle( __( 'Display "Powered By"?', 'social-warfare' ), 'powered_by_toggle' );
+			$powered_by_toggle->set_default( false )
+				->set_priority( 10 )
+				->set_size( 'sw-col-460', 'sw-col-460' );
+
+			$affiliate_link = new SWP_Option_Text( __( 'Affiliate Link', 'social-warfare' ), 'affiliate_link' );
+			$affiliate_link->set_size( 'sw-col-460', 'sw-col-460' )
+				->set_priority( 20 )
+				->set_default( '' );
+
+			$powered_by->add_options( [$powered_by_toggle, $affiliate_link] );
 
 
-		$display->add_sections( [$social_networks, $share_counts, $button_position] );
+		$display->add_sections( [$social_networks, $share_counts, $button_position, $powered_by] );
 
 		$this->tabs->display = $display;
 

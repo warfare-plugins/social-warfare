@@ -163,9 +163,21 @@ class SWP_Buttons_Panel_Ajax {
 	 */
 	private function generate_lightbox_container() {
 		$html = '<div class="swp-lightbox-wrapper swp-more-wrapper"><div class="swp-lightbox-inner">';
+		$html .= '<i class="sw swp_share_icon"></i>';
 		$html .= '<div class="swp-lightbox-close"></div>';
-		$html .= '<h5>Additonal Sharing Options</h5>';
+		$html .= '<h5>Where would you like to share this?</h5>';
 		$html .= $this->buttons_html;
+
+		if( true === SWP_Utility::get_option('powered_by_toggle')) {
+
+			$affiliate_link = SWP_Utility::get_option('affiliate_link');
+			if( false === $affiliate_link || empty( $affiliate_link ) || '#' === $affiliate_link ) {
+				$affiliate_link = 'https://warfareplugins.com';
+			}
+
+			$html .= '<div class="swp_powered_by"><a href="'. $affiliate_link .'" target="_blank"><span>Powered by</span> <img src="/wp-content/plugins/social-warfare/assets/images/admin-options-page/social-warfare-pro-light.png"></a></div>';
+		}
+
 		$html .= '</div></div>';
 		echo $html;
 	}

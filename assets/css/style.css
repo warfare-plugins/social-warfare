@@ -1835,6 +1835,28 @@ pre.swp_debug_data {
 	color: #429cd6;
 }
 
+.swp_powered_by {
+	font-family: helvetica, arial, sans-serif;
+	color: black;
+}
+
+.swp_powered_by span {
+	clear: both;
+	width: 100%;
+	display: block;
+	padding: 0 25px 0 0;
+	margin: 36px 0px -30px 0;
+}
+
+.swp_powered_by a {
+	color: black;
+	text-decoration: none;
+}
+
+.swp_powered_by img {
+	height: 70px;
+}
+
 .sw {
 	display: inline-block;
 	font-family: sw-icon-font !important;
@@ -1931,6 +1953,10 @@ i.swp_print_icon:before {
 
 i.swp_reddit_icon:before {
 	content: "a";
+}
+
+i.swp_share_icon:before {
+	content: "o";
 }
 
 i.swp_social-warfare_icon:before {
@@ -3121,6 +3147,7 @@ span.swp_pop_count {
 	width: 50%;
 	left: 25%;
 	position: relative;
+	text-align: center;
 	top: 10%;
 	background: #ffffff;
 	padding: 35px;
@@ -3158,20 +3185,23 @@ span.swp_pop_count {
 	}
 }
 
-.swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner {
-	width: 70%;
-	left: 15%;
-	text-align: center;
-	height: 80%;
-	overflow-y: auto;
-}
-
-.swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner .swp_pinterest_icon {
+.swp-lightbox-wrapper .swp_pinterest_icon.top_icon, .swp-lightbox-wrapper .swp_share_icon {
 	color: #cd2029;
 	font-size: 45px;
 	margin: 0;
 	padding: 0;
 	line-height: 0;
+}
+
+.swp-lightbox-wrapper .swp_share_icon {
+	color: #000000;
+}
+
+.swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner {
+	width: 70%;
+	left: 15%;
+	height: 80%;
+	overflow-y: auto;
 }
 
 .swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner h5 {
