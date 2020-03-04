@@ -590,12 +590,14 @@ window.socialWarfare = window.socialWarfare || {};
 
 		// Create the html for the lightbox overlay, the title, and the close button.
 		html += '<div class="swp-lightbox-wrapper pinterest-overlay"><div class="swp-lightbox-inner">';
-		html += '<i class="sw swp_pinterest_icon"></i>';
+		html += '<i class="sw swp_pinterest_icon top_icon"></i>';
 		html += '<div class="swp-lightbox-close"></div>';
 		html += '<h5>Which image would you like to pin?</h5>';
 		html += '<div class="pin_images_wrapper">';
 		html += pin_images;
-		html += '</div></div></div>';
+		html += '</div>';
+		html += socialWarfare.buildPoweredByLink();
+		html += '</div></div>';
 
 		// Append it, and hide it first so that we can fade it in.
 		$('body').append(html);
@@ -628,7 +630,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 * it will only run one time after all of the images have loaded.
 		 *
 		 */
-		var iteration = 0, images = $('.pinterest-overlay img');
+		var iteration = 0, images = $('.pinterest-overlay .pin_images_wrapper img');
 
 
 		/**
@@ -721,6 +723,24 @@ window.socialWarfare = window.socialWarfare || {};
 			}
 		});
 
+	}
+
+
+	socialWarfare.buildPoweredByLink = function() {
+		var html = '';
+		if( true === socialWarfare.variables.powered_by_toggle ) {
+			var anchor_tag_open = '';
+			var anchor_tag_close = '';
+
+			if( false !== socialWarfare.variables.affiliate_link ) {
+				anchor_tag_open = '<a href="'+ socialWarfare.variables.affiliate_link +'" target="_blank">';
+				anchor_tag_close = '</a>';
+			}
+
+			html = '<div class="swp_powered_by">'+ anchor_tag_open +'<span>Powered by</span> <img src="/wp-content/plugins/social-warfare/assets/images/admin-options-page/social-warfare-pro-light.png">'+ anchor_tag_close +'</div>';
+
+		}
+		return html;
 	}
 
 

@@ -311,3 +311,22 @@ pre.swp_debug_data {
 .wp-editor-container .swp_twitter:before {
 	color: #429cd6;
 }
+
+.swp_powered_by {
+	font-family:helvetica, arial, sans-serif;
+	color:black;
+	span {
+		clear: both;
+		width: 100%;
+		display: block;
+		padding: 0 25px 0 0;
+		margin: 36px 0px -30px 0;
+	}
+	a {
+		color:black;
+		text-decoration:none;
+	}
+	img {
+		height:70px;
+	}
+}

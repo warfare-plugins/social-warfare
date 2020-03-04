@@ -50,6 +50,7 @@ class SWP_Script {
 		// Queue up our footer hook function
 		add_filter( 'swp_footer_scripts', array( $this, 'click_tracking' ) );
 		add_filter( 'swp_javascript_variables', array( $this, 'emphasize_buttons' ) );
+		add_filter( 'swp_javascript_variables', array( $this, 'powered_by_variables' ) );
 
 		// Queue up the Social Warfare scripts and styles
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -405,6 +406,18 @@ class SWP_Script {
 	 */
 	public function emphasize_buttons( $variables ) {
 		$variables['emphasizeIcons'] = SWP_Utility::get_option('emphasized_icon');
+		return $variables;
+	}
+
+	public function powered_by_variables( $variables ) {
+		$variables['powered_by_toggle'] = SWP_Utility::get_option('powered_by_toggle');
+
+		$affiliate_link = SWP_Utility::get_option('affiliate_link');
+		if( false === $affiliate_link || empty( $affiliate_link ) || '#' === $affiliate_link ) {
+			$affiliate_link = 'https://warfareplugins.com';
+		}
+
+		$variables['affiliate_link'] = $affiliate_link;
 		return $variables;
 	}
 

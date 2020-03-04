@@ -434,7 +434,7 @@ class SWP_Link_Shortener {
 
 			// Bail if we don't have a valid post object or post_date.
 			if ( !is_object( $post ) || empty( $post->post_date ) ) {
-				return $array;
+				return false;
 			}
 
 			// Format the start dates into something we can use.
