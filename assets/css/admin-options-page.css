@@ -535,119 +535,123 @@ p.sw-subtitle.sw-registration-text {
 }
 
 .sw-blogger-icon:before {
-	content: "m";
-}
-
-.sw-buffer-icon:before {
-	content: "z";
-}
-
-.sw-ello-icon:before {
-	content: "l";
-}
-
-.sw-email-icon:before {
-	content: "k";
-}
-
-.sw-evernote-icon:before {
-	content: "k";
-}
-
-.sw-facebook-icon:before {
-	content: "j";
-}
-
-.sw-flickr-icon:before {
-	content: "i";
-}
-
-.sw-flipboard-icon:before {
-	content: "C";
-}
-
-.sw-hacker_news-icon:before {
-	content: "D";
-}
-
-.sw-instagram-icon:before {
-	content: "d";
-}
-
-.sw-linkedin-icon:before {
-	content: "f";
-}
-
-.sw-medium-icon:before {
-	content: "e";
-}
-
-.sw-mix-icon:before {
-	content: "g";
-}
-
-.sw-more-icon:before {
-	content: "+";
-}
-
-.sw-periscope-icon:before {
 	content: "c";
 }
 
-.sw-pinterest-icon:before {
-	content: "b";
+.sw-buffer-icon:before {
+	content: "d";
 }
 
-.sw-pocket-icon:before {
-	content: "B";
+.sw-ello-icon:before {
+	content: "h";
 }
 
-.sw-print-icon:before {
-	content: "A";
+.sw-email-icon:before {
+	content: "i";
 }
 
-.sw-reddit-icon:before {
-	content: "a";
+.sw-evernote-icon:before {
+	content: "j";
 }
 
-.sw-social-warfare-icon:before {
-	content: "p";
+.sw-facebook-icon:before {
+	content: "k";
 }
 
-.sw-snapchat-icon:before {
-	content: "u";
+.sw-flickr-icon:before {
+	content: "l";
 }
 
-.sw-tumblr-icon:before {
-	content: "r";
+.sw-flipboard-icon:before {
+	content: "m";
 }
 
-.sw-twitter-icon:before {
+.sw-hacker_news-icon:before {
+	content: "o";
+}
+
+.sw-instagram-icon:before {
+	content: "q";
+}
+
+.sw-linkedin-icon:before {
 	content: "s";
 }
 
-.sw-viber-icon:before {
-	content: "t";
+.sw-medium-icon:before {
+	content: "u";
 }
 
-.sw-vimeo-icon:before {
-	content: "t";
+.sw-mix-icon:before {
+	content: "w";
 }
 
-.sw-vk-icon:before {
-	content: "C";
+.sw-more-icon:before {
+	content: "B";
 }
 
-.sw-whatsapp-icon:before {
+.sw-periscope-icon:before {
 	content: "y";
 }
 
+.sw-pinterest-icon:before {
+	content: "A";
+}
+
+.sw-pocket-icon:before {
+	content: "C";
+}
+
+.sw-print-icon:before {
+	content: "D";
+}
+
+.sw-reddit-icon:before {
+	content: "E";
+}
+
+.sw-share-icon:before {
+	content: "G";
+}
+
+.sw-social-warfare-icon:before {
+	content: "K";
+}
+
+.sw-snapchat-icon:before {
+	content: "J";
+}
+
+.sw-tumblr-icon:before {
+	content: "M";
+}
+
+.sw-twitter-icon:before {
+	content: "N";
+}
+
+.sw-viber-icon:before {
+	content: "O";
+}
+
+.sw-vimeo-icon:before {
+	content: "P";
+}
+
+.sw-vk-icon:before {
+	content: "R";
+}
+
+.sw-whatsapp-icon:before {
+	content: "U";
+}
+
 .sw-xing-icon:before {
-	content: "z";
+	content: "W";
 }
 
 .sw-yummly-icon:before {
-	content: "x";
+	content: "Z";
 }
 
 .sw-s.sw-blogger-icon {
