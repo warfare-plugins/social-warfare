@@ -1807,12 +1807,6 @@ html[lang] .site * i.sw {
 	margin: 0 !important;
 }
 
-.swp_social_panel .swp_more .sw {
-	font-weight: bold;
-	line-height: 26px;
-	font-size: 24px;
-}
-
 .swp_social_panel.mobile .iconFiller ~ .swp_count,
 .sw-content-locator {
 	display: none;
@@ -1880,123 +1874,123 @@ pre.swp_debug_data {
 }
 
 i.swp_blogger_icon:before {
-	content: "m";
-}
-
-i.swp_buffer_icon:before {
-	content: "z";
-}
-
-i.swp_ello_icon:before {
-	content: "l";
-}
-
-i.swp_email_icon:before {
-	content: "k";
-}
-
-i.swp_evernote_icon:before {
-	content: "k";
-}
-
-i.swp_facebook_icon:before {
-	content: "j";
-}
-
-i.swp_flickr_icon:before {
-	content: "i";
-}
-
-i.swp_flipboard_icon:before {
-	content: "C";
-}
-
-i.swp_hacker_news_icon:before {
-	content: "D";
-}
-
-i.swp_instagram_icon:before {
-	content: "d";
-}
-
-i.swp_linkedin_icon:before {
-	content: "f";
-}
-
-i.swp_medium_icon:before {
-	content: "e";
-}
-
-i.swp_mix_icon:before {
-	content: "g";
-}
-
-i.swp_more_icon:before {
-	content: "+";
-}
-
-i.swp_periscope_icon:before {
 	content: "c";
 }
 
-i.swp_pinterest_icon:before {
-	content: "b";
+i.swp_buffer_icon:before {
+	content: "d";
 }
 
-i.swp_pocket_icon:before {
-	content: "B";
+i.swp_ello_icon:before {
+	content: "h";
 }
 
-i.swp_print_icon:before {
-	content: "A";
+i.swp_email_icon:before {
+	content: "i";
 }
 
-i.swp_reddit_icon:before {
-	content: "a";
+i.swp_evernote_icon:before {
+	content: "j";
 }
 
-i.swp_share_icon:before {
+i.swp_facebook_icon:before {
+	content: "k";
+}
+
+i.swp_flickr_icon:before {
+	content: "l";
+}
+
+i.swp_flipboard_icon:before {
+	content: "m";
+}
+
+i.swp_hacker_news_icon:before {
 	content: "o";
 }
 
-i.swp_social-warfare_icon:before {
-	content: "p";
+i.swp_instagram_icon:before {
+	content: "q";
 }
 
-i.swp_snapchat_icon:before {
-	content: "u";
-}
-
-i.swp_tumblr_icon:before {
-	content: "r";
-}
-
-i.swp_twitter_icon:before {
+i.swp_linkedin_icon:before {
 	content: "s";
 }
 
-i.swp_viber_icon:before {
-	content: "t";
+i.swp_medium_icon:before {
+	content: "u";
 }
 
-i.swp_vimeo_icon:before {
-	content: "t";
+i.swp_mix_icon:before {
+	content: "w";
 }
 
-i.swp_vk_icon:before {
-	content: "C";
+i.swp_more_icon:before {
+	content: "B";
 }
 
-i.swp_whatsapp_icon:before {
+i.swp_periscope_icon:before {
 	content: "y";
 }
 
+i.swp_pinterest_icon:before {
+	content: "A";
+}
+
+i.swp_pocket_icon:before {
+	content: "C";
+}
+
+i.swp_print_icon:before {
+	content: "D";
+}
+
+i.swp_reddit_icon:before {
+	content: "E";
+}
+
+i.swp_share_icon:before {
+	content: "G";
+}
+
+i.swp_social-warfare_icon:before {
+	content: "K";
+}
+
+i.swp_snapchat_icon:before {
+	content: "J";
+}
+
+i.swp_tumblr_icon:before {
+	content: "M";
+}
+
+i.swp_twitter_icon:before {
+	content: "N";
+}
+
+i.swp_viber_icon:before {
+	content: "O";
+}
+
+i.swp_vimeo_icon:before {
+	content: "P";
+}
+
+i.swp_vk_icon:before {
+	content: "R";
+}
+
+i.swp_whatsapp_icon:before {
+	content: "U";
+}
+
 i.swp_xing_icon:before {
-	content: "z";
+	content: "W";
 }
 
 i.swp_yummly_icon:before {
-	content: "x";
+	content: "Z";
 }
 
 .sw-social-warfare:before {
