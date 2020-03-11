@@ -393,6 +393,12 @@ a.swp-notice-cta {
 	margin-top: 10px;
 }
 
+.swpmb-input input {
+	width: 100%;
+	padding: 10px;
+	margin: 0;
+}
+
 .swpmb-input textarea {
 	width: 100%;
 	resize: unset;
