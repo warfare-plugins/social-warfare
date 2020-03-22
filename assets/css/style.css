@@ -1722,7 +1722,7 @@ html[lang] .site * i.sw {
 }
 
 .swp_social_panel:not(.swp_social_panelSide) div.total_shares.total_sharesalt:before {
-	content: "o";
+	content: "G";
 	display: inline-block;
 	font-family: sw-icon-font;
 	margin-top: 7px;
@@ -3050,7 +3050,7 @@ a.swp-hover-pin-button {
 
 a.swp-hover-pin-button::before {
 	color: #fff;
-	content: "b";
+	content: "A";
 	float: left;
 	font-family: sw-icon-font;
 	font-size: 20px;
@@ -3061,7 +3061,7 @@ a.swp-hover-pin-button::before {
 }
 
 a.swp-hover-pin-button:hover::before {
-	content: "F";
+	content: "z";
 }
 
 a.swp-hover-pin-button:hover, a.swp-hover-pin-button:focus {

@@ -24,7 +24,7 @@ a.swp-hover-pin-button {
 
 	&::before {
 		color: #fff;
-		content: "b";
+		content: "A";
 		float: left;
 		font-family: sw-icon-font;
 		font-size: 20px;
@@ -35,7 +35,7 @@ a.swp-hover-pin-button {
 	}
 
 	&:hover::before {
-		content: "F";
+		content: "z";
 	}
 
 	&:hover, &:focus {
