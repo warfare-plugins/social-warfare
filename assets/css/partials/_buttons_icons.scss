@@ -21,13 +21,13 @@
 // Loop through and create all of the icons for each network's button.
 @each $network, $icon in $network_icons {
 	i.swp_#{$network}_icon:before {
-		content: $icon;
+		@include icon($network);
 	}
 }
 
 // The Social Warfare icon.
 .sw-social-warfare:before {
-	content: "p";
+	@include icon('social-warfare');
 }
 
 .wp-editor-container .sw:before {

@@ -1651,7 +1651,7 @@ html[lang] .site * i.sw {
 }
 
 .swp_social_panel .total_shares.total_sharesalt:before {
-	content: "o";
+	content: "G";
 	display: inline-block;
 	font-family: sw-icon-font;
 	margin-top: 7px;
@@ -1769,7 +1769,7 @@ html[lang] .site * i.sw {
 	float: left;
 	height: 30px;
 	line-height: 32px;
-	margin: 0 5px;
+	margin: 1px 5px 0;
 	text-shadow: none !important;
 	width: 20px;
 }
@@ -1838,7 +1838,6 @@ pre.swp_debug_data {
 	clear: both;
 	width: 100%;
 	display: block;
-	padding: 0 25px 0 0;
 	margin: 36px 0px -30px 0;
 }
 
@@ -1848,7 +1847,8 @@ pre.swp_debug_data {
 }
 
 .swp_powered_by img {
-	height: 70px;
+	height: 40px;
+	margin-top: 30px;
 }
 
 .sw {
@@ -1937,6 +1937,10 @@ i.swp_pinterest_icon:before {
 	content: "A";
 }
 
+i.swp_pin_icon:before {
+	content: "z";
+}
+
 i.swp_pocket_icon:before {
 	content: "C";
 }
@@ -1981,6 +1985,10 @@ i.swp_vk_icon:before {
 	content: "R";
 }
 
+i.swp_warfare-plugins_icon:before {
+	content: "Z";
+}
+
 i.swp_whatsapp_icon:before {
 	content: "U";
 }
@@ -1990,11 +1998,11 @@ i.swp_xing_icon:before {
 }
 
 i.swp_yummly_icon:before {
-	content: "Z";
+	content: "Y";
 }
 
 .sw-social-warfare:before {
-	content: "p";
+	content: "K";
 }
 
 .wp-editor-container .sw:before {
@@ -3049,8 +3057,8 @@ a.swp-hover-pin-button {
 }
 
 a.swp-hover-pin-button::before {
-	color: #fff;
 	content: "A";
+	color: #fff;
 	float: left;
 	font-family: sw-icon-font;
 	font-size: 20px;
