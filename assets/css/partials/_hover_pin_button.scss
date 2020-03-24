@@ -23,8 +23,8 @@ a.swp-hover-pin-button {
 	cursor: pointer;
 
 	&::before {
+		@include icon('pinterest');
 		color: #fff;
-		content: "A";
 		float: left;
 		font-family: sw-icon-font;
 		font-size: 20px;
@@ -35,7 +35,7 @@ a.swp-hover-pin-button {
 	}
 
 	&:hover::before {
-		content: "z";
+		@include icon('pin');
 	}
 
 	&:hover, &:focus {

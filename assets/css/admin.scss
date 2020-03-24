@@ -1,9 +1,19 @@
+@import 'partials/variables';
+
 #social_warfare.postbox {
 	display: none;
 }
 
 .notAvailable {
 	opacity: 0.3;
+}
+
+
+#toplevel_page_social-warfare .wp-menu-image.dashicons-before::before {
+	font-family:'sw-icon-font';
+	@include icon('social-warfare');
+	margin-top:3px;
+	transform:scale(1.2);
 }
 
 .swp_CountDown {
@@ -131,7 +141,7 @@
 }
 
 #social_warfare h2.hndle span:before {
-	content: 'p';
+	@include icon('social-warfare');
 	margin-right: 10px;
 	font-family: "sw-icon-font";
 	vertical-align: middle;
@@ -154,7 +164,7 @@
 	font-size: 26px;
 	margin: 0 15px 0 0;
 	vertical-align: middle;
-	content: 'E';
+	@include icon('social-warfare');
 	float: left;
 	font-style: normal;
 }

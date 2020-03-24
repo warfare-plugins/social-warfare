@@ -115,7 +115,7 @@ html[lang] .site * i.sw {
 			border: none !important;
 
 			&:before {
-				content: "o";
+				@include icon('share');
 				display: inline-block;
 				font-family: sw-icon-font;
 				margin-top: 7px;
@@ -191,7 +191,7 @@ html[lang] .site * i.sw {
 
 		div.total_shares.total_sharesalt {
 			&:before {
-				content: "G";
+				@include icon('share');
 				display: inline-block;
 				font-family: sw-icon-font;
 				margin-top: 7px;
@@ -240,7 +240,7 @@ html[lang] .site * i.sw {
 		float: left;
 		height: 30px;
 		line-height: 32px;
-		margin: 0 5px;
+		margin: 1px 5px 0;
 		text-shadow: none!important;
 		width: 20px;
 	}
@@ -314,7 +314,6 @@ pre.swp_debug_data {
 		clear: both;
 		width: 100%;
 		display: block;
-		padding: 0 25px 0 0;
 		margin: 36px 0px -30px 0;
 	}
 	a {
@@ -322,6 +321,7 @@ pre.swp_debug_data {
 		text-decoration:none;
 	}
 	img {
-		height:70px;
+		height: 40px;
+		margin-top: 30px;
 	}
 }

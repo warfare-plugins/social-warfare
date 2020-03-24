@@ -1,0 +1,62 @@
+// main:../admin-options-page.scss
+
+
+.sw-section h2:before {
+	font-family: "dashicons";
+    margin-right: 20px;
+	vertical-align:middle;
+	font-weight:normal;
+}
+
+$section_title_icons: (
+	'social_networks': "\f325",
+	'share_counts': "\f237",
+	'meta_tags': "\f481",
+	'button_position': "\f545",
+
+	'buttons_preview_section': "\f177",
+	'visual_options': "\f115",
+	'floating_share_buttons': "\f456",
+	'click_to_tweet': "\f301",
+
+	'sitewide_identity': "\f12e",
+	'open_graph': "\f121",
+	'activate_tweet_counts': "\f301",
+
+	'gutenberg': "\f538",
+	'frame_buster': "\f116",
+	'link_shortening': "\f103",
+	'analytics_tracking': "\f238",
+	'share_recovery': "\f147",
+	'full_content': "\f206",
+);
+
+@each $section_title, $icon in $section_title_icons {
+	.#{$section_title}_title_wrapper h2:before {
+		content: $icon;
+	}
+}
+
+.image_hover_title_wrapper h2:before,
+.advanced_pinterest_title_wrapper h2:before {
+	font-family:'sw-icon-font';
+	@include icon('pinterest');
+}
+
+.yummly_display_title_wrapper h2:before {
+	font-family:'sw-icon-font';
+	@include icon('yummly');
+}
+
+.powered_by_title_wrapper h2:before {
+	font-family:'sw-icon-font';
+	@include icon('social-warfare');
+}
+
+.swp_support_link:before {
+	font-family: "dashicons";
+	content: "\f348";
+	font-size:35px;
+	width:35px;
+	height:35px;
+}

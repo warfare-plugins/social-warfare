@@ -64,6 +64,7 @@ $network_icons: (
 	"more": "B",
 	"periscope": "y",
 	"pinterest": "A",
+	"pin": "z",
 	"pocket": "C",
 	"print": "D",
 	"reddit": "E",
@@ -75,9 +76,10 @@ $network_icons: (
 	"viber": 'O',
 	"vimeo": "P",
 	"vk": "R",
+	"warfare-plugins": "Z",
 	"whatsapp": "U",
 	"xing": "W",
-	"yummly": "Z",
+	"yummly": "Y",
 );
 
 // Easier way to add vendor prefixes
@@ -87,6 +89,12 @@ $network_icons: (
 	}
 }
 
+// Easy way to call in our default transition.
 @mixin transition( $duration: 0.2s ) {
 	transition: all $duration linear;
+}
+
+// Easy way to call in network icons.
+@mixin icon( $name ) {
+	content: map-get( $network_icons, $name );
 }

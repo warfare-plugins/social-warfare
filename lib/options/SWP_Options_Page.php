@@ -155,7 +155,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			'manage_options',
 			'social-warfare',
 			array( $this, 'render_HTML'),
-			SWP_PLUGIN_URL . '/assets/images/admin-options-page/socialwarfare-20x20.png'
+			'none'
 		);
 
 		// Hook into the CSS and Javascript Enqueue process for this specific page

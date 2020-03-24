@@ -5,6 +5,7 @@
 *********************************************************/
 
 @import 'partials/variables';
+@import 'partials/options_page_icons';
 
 .sw-grid {
 	float: left;
@@ -123,24 +124,19 @@ img {
 	display: none!important;
 }
 .swp_support_link {
-	border: 1px solid #ccc;
 	font-size: 18px;
-	line-height: 20px;
+	line-height: 35px;
 	text-decoration: none;
-	border-radius: 50%;
-	width: 20px;
-	display: block;
+	width: 35px;
 	float: right;
-	text-align: center;
 	color: #ccc;
 	margin-right: 20px;
-	margin-top: 4px;
-	padding: 2px;
+	margin:0;
+	padding: 0;
 	font-weight: bold;
 }
 .swp_support_link:hover {
 	color:#6BCCE9;
-	border-color:#6BCCE9;
 }
 .swp_support_link.swp_four_fourths {
 	margin-left: 20px;
@@ -171,13 +167,17 @@ img {
 }
 
 .sw-top-menu[sw-registered="0"] .sw-header-logo {
-	height: 75px;
-	float: left;
+	height: 46px;
+    margin-top: 18px;
+    float: left;
+	margin-right:20px;
 }
 
 .sw-top-menu[sw-registered="1"] .sw-header-logo-pro {
-	height: 75px;
-	float: left;
+	height: 46px;
+    margin-top: 18px;
+    float: left;
+	margin-right:20px;
 }
 .sw-top-menu[sw-registered="1"] .sw-header-logo {
 	display:none;
@@ -331,6 +331,7 @@ input.sw-admin-input {
 	padding: 15px;
 	margin: 2px 1px 3px 0;
 	border-radius: 4px;
+	line-height:1;
 }
 
 /* old selectors */
