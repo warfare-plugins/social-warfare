@@ -78,7 +78,7 @@ a.swp_CTT {
 			border-radius: 4px;
 
 			i.swp_twitter {
-				color: #429cd6;
+				color: map-get($network_colors, 'twitter');
 			}
 
 			.sw-ctt-text, .sw-ctt-btn {
