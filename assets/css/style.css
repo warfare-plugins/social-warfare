@@ -1691,6 +1691,7 @@ html[lang] .site * i.sw {
 
 .swp_social_panel a .swp_count.swp_hide {
 	margin: 0 auto;
+	width: auto;
 }
 
 .swp_social_panel:not(.nc_floater):not(.swp_social_panelSide) {
@@ -2083,7 +2084,7 @@ i.swp_yummly_icon:before {
 }
 
 .swp_social_panelSide.swp_default .nc_tweetContainer .swp_share {
-	line-height: 30px;
+	line-height: 32px;
 }
 
 .swp_social_panelSide span.swp_label {
@@ -2187,11 +2188,6 @@ i.swp_yummly_icon:before {
 	margin: 0;
 }
 
-.swp_social_panelSide .nc_tweetContainer[data-network]:not(.total_shares):hover .iconFiller,
-.swp_social_panelSide .nc_tweetContainer:not(.total_shares) .spaceManWilly {
-	width: 90px;
-}
-
 .swp_social_panelSide.swp_boxed .nc_tweetContainer, .swp_social_panelSide.swp_circles .nc_tweetContainer {
 	margin-bottom: 5px;
 	width: 67.5px !important;
@@ -2286,6 +2282,11 @@ i.swp_yummly_icon:before {
 .swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares) .iconFiller {
 	margin-left: 2px;
 	width: 30px;
+}
+
+.swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares)[data-network]:not(.total_shares):hover span.iconFiller,
+.swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares):not(.total_shares) .spaceManWilly {
+	width: 90px;
 }
 
 .swp_social_panelSide:not(.swp_boxed):not(.swp_circles) .nc_tweetContainer:not(.total_shares):hover {

@@ -58,7 +58,7 @@
 		}
 
 		.swp_share {
-			line-height: 30px;
+			line-height: 32px;
 		}
 	}
 
@@ -160,11 +160,6 @@
 		.swp_share {
 			font-size: 13px;
 			margin:0;
-		}
-
-		&[data-network]:not(.total_shares):hover .iconFiller,
-		&:not(.total_shares) .spaceManWilly {
-			width: 90px;
 		}
 	}
 
@@ -271,6 +266,11 @@
 		.iconFiller{
 			margin-left: 2px;
 			width: 30px;
+		}
+
+		&[data-network]:not(.total_shares):hover span.iconFiller,
+		&:not(.total_shares) .spaceManWilly {
+			width: 90px;
 		}
 
 		&:hover {
