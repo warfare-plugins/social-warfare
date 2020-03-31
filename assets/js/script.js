@@ -563,7 +563,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		var pin_data = element.data('pins');
 		var pin_images = '';
-
+		
 
 		/**
 		 * We'll loop through each available image that the user has provided
@@ -575,7 +575,7 @@ window.socialWarfare = window.socialWarfare || {};
 			// Build the share link for this image.
 			var share_url = 'https://pinterest.com/pin/create/button/?url=' + pin_data.url +
 			'&media=' + image +
-			'&description=' + pin_data.description;
+			'&description=' + encodeURIComponent( pin_data.description );
 
 			// Build out the HTML for the image and button.
 			var pin_html = '';

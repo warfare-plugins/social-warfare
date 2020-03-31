@@ -217,7 +217,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 					$pin_data['images'][] = wp_get_attachment_url( $image );
 				}
 
-				$json_pin_data = htmlspecialchars(json_encode( $pin_data ), ENT_QUOTES, 'UTF-8');
+				$json_pin_data = json_encode( $pin_data, JSON_HEX_APOS );
 				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link pinterest_multi_image_select" data-count="0" data-link="#" data-pins=\''.$json_pin_data.'\'>';
 
 			// If the user has uploaded one single Pinterest image...
