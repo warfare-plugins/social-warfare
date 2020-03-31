@@ -289,11 +289,6 @@ class SWP_Twitter extends SWP_Social_Network {
 			$service_name = 'New Share Count';
 		}
 
-		// If the current source is set to Open Share Counts
-		if ( 'opensharecount' == $source ) {
-			$service_name = 'Open Share Counts';
-		}
-
 		// If an invalid source was matched above, handle it here.
 		if( isset( $service_name ) ) {
 
