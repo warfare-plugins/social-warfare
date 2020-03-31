@@ -2423,7 +2423,7 @@ a.swp_CTT.style1 .sw-click-to-tweet {
 }
 
 a.swp_CTT.style1 .sw-click-to-tweet i.swp_twitter {
-	color: #1da1f2;
+	color: #429cd6;
 }
 
 a.swp_CTT.style1 .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style1 .sw-click-to-tweet .sw-ctt-btn {
@@ -2458,9 +2458,9 @@ a.swp_CTT.style2:hover .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style2:hover .
 }
 
 a.swp_CTT.style3 .sw-click-to-tweet {
-	background-color: #429cd6;
+	background-color: #1da1f2;
 	border: none;
-	border-left: 10px solid #429cd6;
+	border-left: 10px solid #15202b;
 	border-radius: 0;
 	padding-right: 20px;
 	transition: all 0.2s linear;
@@ -2476,7 +2476,7 @@ a.swp_CTT.style3 .sw-click-to-tweet .sw-ctt-text {
 }
 
 a.swp_CTT.style3:hover .sw-click-to-tweet {
-	border-left: 10px solid #3c87b2;
+	border-left: 10px solid #15202b;
 	padding-right: 20px;
 	transition: all 0.2s linear;
 }
