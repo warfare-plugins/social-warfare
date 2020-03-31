@@ -197,7 +197,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 = 4.0.0 =
 * New: Added the ability to assign multiple Pinterest images with a slick overlay interface.
 * New: Added a "More" button that brings up an overlay with all of the available share options.
-* New: Added social follow widget.
+* New: Added social follow widget with  lots of styles and options.
 * New: Added lots of new network buttons (Xing, VK, Viber, Blogger, Evernote)
 * New: Added a print button.
 * New: Added OpenShareCount API as a source for Tweet counts.
@@ -207,8 +207,16 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * New: Added the ability to emphasize the first one or two buttons in the panel.
 * New: Added the ability to use ?swp_cache=rebuild&swp_debug=recovery to view the URL's being checked for shares.
 * New: Converted all of the plugin's CSS to neatly organized SCSS/SASS.
+* New: Updated a few styles in the admin options page.
+* New: Updated the descriptions and image placeholders for the Social Warfare custom options in the post editor.
+* New: Added an "opt-in" only "Powered by Social Warfare" that will automatically link to our site using your affiliate URL.
+* New: Added an "age of post" check for shortlinks.
+* New: Added the option to delay the display of share counts on new posts.
 * Fixed: Fixed an extra doctype that would sometimes get added to the content.
+* Fixed: Fixed some javascript/jQuery errors.
+* Fixed: Fixed some PHP errors.
 * Removed: Removed all instances of Google Plus.
+* Maintenance: Vastly improved codebase organization and documentation.
 
 = 3.6.1 (3 JUN 2019) =
 * Updated Hover Save Pin functionality to work more globally.
