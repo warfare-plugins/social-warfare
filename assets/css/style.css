@@ -1995,7 +1995,7 @@ i.swp_whatsapp_icon:before {
 }
 
 i.swp_xing_icon:before {
-	content: "W";
+	content: "V";
 }
 
 i.swp_yummly_icon:before {
@@ -3160,6 +3160,7 @@ span.swp_pop_count {
 .swp-lightbox-wrapper .swp-lightbox-inner h5 {
 	font-family: Lato, sans-serif;
 	font-size: 25px;
+	margin-bottom: 40px;
 	text-align: center;
 }
 
@@ -3208,7 +3209,7 @@ span.swp_pop_count {
 }
 
 .swp-lightbox-wrapper.pinterest-overlay .swp-lightbox-inner h5 {
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 }
 
 .swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper {
