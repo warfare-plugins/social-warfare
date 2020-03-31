@@ -202,7 +202,6 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * New: Added a print button.
 * New: Added OpenShareCount API as a source for Tweet counts.
 * New: Added Rebrandly as a link shortening service.
-* New: Added the ability to authenticate the plugin with social networks.
 * New: Added a bunch of brand new shortcodes.
 * New: Added the ability to emphasize the first one or two buttons in the panel.
 * New: Added the ability to use ?swp_cache=rebuild&swp_debug=recovery to view the URL's being checked for shares.
