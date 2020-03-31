@@ -16,6 +16,10 @@
 	transform:scale(1.2);
 }
 
+#toplevel_page_social-warfare:hover .wp-menu-image.dashicons-before::before, #toplevel_page_social-warfare a.current .wp-menu-image.dashicons-before::before {
+	color: $social_warfare_red!important;
+}
+
 .swp_CountDown {
 	background-color: #CCC;
 	display: block;
