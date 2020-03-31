@@ -300,8 +300,10 @@ p.sw-subtext-label {
 	width: 90%;
 	height: 250px;
 	overflow: hidden;
+	overflow-y:auto;
 	border: 1px solid #CED3DC;
 	padding: 5%;
+	border-radius:10px;
 }
 
 h3.sw-buttons-toggle {
