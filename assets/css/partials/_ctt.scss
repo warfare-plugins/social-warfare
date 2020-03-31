@@ -78,7 +78,7 @@ a.swp_CTT {
 			border-radius: 4px;
 
 			i.swp_twitter {
-				color: map-get($network_colors, 'twitter');
+				color: #429cd6;
 			}
 
 			.sw-ctt-text, .sw-ctt-btn {
@@ -126,9 +126,9 @@ a.swp_CTT {
 
 	&.style3 {
 		.sw-click-to-tweet {
-			background-color: #429cd6;
+			background-color: #1da1f2;
 			border: none;
-			border-left: 10px solid #429cd6;
+			border-left: 10px solid #15202b;
 			border-radius: 0;
 			padding-right: 20px;
 			@include transition();
@@ -145,7 +145,7 @@ a.swp_CTT {
 
 		&:hover  {
 			.sw-click-to-tweet {
-				border-left: 10px solid #3c87b2;
+				border-left: 10px solid #15202b;
 				padding-right: 20px;
 				@include transition();
 
