@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, cdegraff1, ckmah
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 5.3
-Stable tag: 3.6.1
+Stable tag: 4.0.0
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -195,12 +195,18 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 = 4.0.0 =
-* New: Added Rebrandly as a link shortening service.
+* New: Added the ability to assign multiple Pinterest images with a slick overlay interface.
+* New: Added a "More" button that brings up an overlay with all of the available share options.
 * New: Added social follow widget.
+* New: Added lots of new network buttons (Xing, VK, Viber, Blogger, Evernote)
+* New: Added a print button.
+* New: Added OpenShareCount API as a source for Tweet counts.
+* New: Added Rebrandly as a link shortening service.
 * New: Added the ability to authenticate the plugin with social networks.
 * New: Added a bunch of brand new shortcodes.
 * New: Added the ability to emphasize the first one or two buttons in the panel.
 * New: Added the ability to use ?swp_cache=rebuild&swp_debug=recovery to view the URL's being checked for shares.
+* New: Converted all of the plugin's CSS to neatly organized SCSS/SASS.
 * Fixed: Fixed an extra doctype that would sometimes get added to the content.
 * Removed: Removed all instances of Google Plus.
 
