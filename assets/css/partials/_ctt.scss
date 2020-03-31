@@ -126,7 +126,7 @@ a.swp_CTT {
 
 	&.style3 {
 		.sw-click-to-tweet {
-			background-color: #1da1f2;
+			background-color: map-get($network_colors, 'twitter');
 			border: none;
 			border-left: 10px solid #15202b;
 			border-radius: 0;
