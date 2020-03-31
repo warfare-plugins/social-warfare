@@ -2442,7 +2442,7 @@ a.swp_CTT.style2 .sw-click-to-tweet {
 	border-radius: 0;
 }
 
-a.swp_CTT.style2 .sw-click-to-tweet i.swp_twitter {
+a.swp_CTT.style2 .sw-click-to-tweet .sw-ctt-btn {
 	color: #1da1f2;
 }
 
