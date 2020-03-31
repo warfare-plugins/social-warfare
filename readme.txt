@@ -197,7 +197,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 = 4.0.0 =
 * New: Added the ability to assign multiple Pinterest images with a slick overlay interface.
 * New: Added a "More" button that brings up an overlay with all of the available share options.
-* New: Added social follow widget with  lots of styles and options.
+* New: Added social follow widget with lots of styles and options.
 * New: Added lots of new network buttons (Xing, VK, Viber, Blogger, Evernote)
 * New: Added a print button.
 * New: Added OpenShareCount API as a source for Tweet counts.
