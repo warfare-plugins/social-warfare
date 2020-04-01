@@ -306,6 +306,19 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
+	* A method for getting the ID of the current post.
+	*
+	* @since  4.0.1 | 01 APR 2020 | Created
+	* @param  void
+	* @return string The HTML attribute to be added to the buttons panel.
+	*
+	*/
+	protected function get_post_id_attribute() {
+		return 'data-post-id="'.$this->post_id.'" ';
+	}
+
+
+	/**
 	* A method for getting the transition mode for the side floating buttons.
 	*
 	* @since  3.0.0 | 01 MAR 2018 | Created
@@ -842,6 +855,7 @@ trait SWP_Buttons_Panel_Trait {
 		$attributes .= $this->get_float_location_attribute();
 		$attributes .= $this->get_mobile_float_location();
 		$attributes .= $this->get_float_transition();
+		$attributes .= $this->get_post_id_attribute();
 		$this->attributes = $attributes;
 	}
 
