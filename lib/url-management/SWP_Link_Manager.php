@@ -167,8 +167,9 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
+
 		$link_shortening_start_date
-			->set_default( date('Y-m-d') )
+			->set_default( date('Y-m-d', strtotime('90 days ago')) )
 			->set_priority( 20 )
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
