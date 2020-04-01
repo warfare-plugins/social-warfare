@@ -18,6 +18,16 @@
 	    padding: 35px;
 	    border-radius: 10px;
 
+		@media (max-width: 768px) {
+			width:80%;
+			left:10%;
+		}
+
+		@media (max-width: 450px) {
+			width:90%;
+			left:5%;
+		}
+
 		h5 {
 			font-family: Lato, sans-serif;
 			font-size:25px;
