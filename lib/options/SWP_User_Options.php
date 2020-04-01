@@ -278,8 +278,19 @@ class SWP_User_Options {
 		 * saved in the database. Only save those keys that are registered.
 		 *
 		 */
-		$defaults          = array_keys( $this->registered_options['defaults'] );
-		$options           = array_keys ( $this->user_options );
+		$defaults = array_keys( $this->registered_options['defaults'] );
+		$options  = array_keys( $this->user_options );
+
+
+		/**
+		 * Bail out if either of the above checks failed to process properly.
+		 *
+		 */
+		if( false == $defaults || false == $options ) {
+			return;
+		}
+
+
 		$available_options = array_intersect( $defaults, $options );
 
 
