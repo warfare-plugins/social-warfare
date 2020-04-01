@@ -1848,7 +1848,7 @@ pre.swp_debug_data {
 }
 
 .swp_powered_by img {
-	height: 40px;
+	max-height: 40px;
 	margin-top: 30px;
 }
 
@@ -3155,6 +3155,20 @@ span.swp_pop_count {
 	background: #ffffff;
 	padding: 35px;
 	border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+	.swp-lightbox-wrapper .swp-lightbox-inner {
+		width: 80%;
+		left: 10%;
+	}
+}
+
+@media (max-width: 450px) {
+	.swp-lightbox-wrapper .swp-lightbox-inner {
+		width: 90%;
+		left: 5%;
+	}
 }
 
 .swp-lightbox-wrapper .swp-lightbox-inner h5 {
