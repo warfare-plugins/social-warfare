@@ -421,7 +421,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 */
 			if($(this).parent('.swp_more').length > 0) {
 				event.preventDefault();
-				socialWarfare.openMoreOptions();
+				socialWarfare.openMoreOptions( $(this) );
 				return;
 			}
 
@@ -563,7 +563,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		var pin_data = element.data('pins');
 		var pin_images = '';
-		
+
 
 		/**
 		 * We'll loop through each available image that the user has provided
@@ -781,7 +781,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 * @return void
 	 *
 	 */
-	socialWarfare.openMoreOptions = function() {
+	socialWarfare.openMoreOptions = function( element ) {
 
 		// If the options already exist, just reopen them by fading them in.
 		if( $('.swp-more-wrapper').length > 0 ) {
@@ -789,10 +789,13 @@ window.socialWarfare = window.socialWarfare || {};
 			return;
 		}
 
+		// Fetch the post_id from the parent container, the buttons panel.
+		var post_id = element.parents('.swp_social_panel').data('post-id');
+
 		// Setup the data for the admin-ajax call to fetch the button's html.
 		var data = {
 			action: 'swp_buttons_panel',
-			post_id: swp_post_id,
+			post_id: post_id,
 			_ajax_nonce: swp_nonce
 		};
 
