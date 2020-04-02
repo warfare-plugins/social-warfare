@@ -68,7 +68,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 */
 	public function get_api_link( $url ) {
 
-		return 'https://graph.facebook.com/?id='.$url.'&fields=og_object{engagement}';
+//		return 'https://graph.facebook.com/?id='.$url.'&fields=og_object{engagement}';
 
 		$access_token = base64_decode('MTc5NjYwNzk4Nzc0Mjk2fGZld2FfS0VPUzBwZWxzcFBPZndfanFsanFUaw==');
 		return 'https://graph.facebook.com/v5.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $access_token;
