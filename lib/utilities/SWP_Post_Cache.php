@@ -950,7 +950,10 @@ class SWP_Post_Cache {
 
 		// Output the preformatted box with the array of permalinks.
 		echo '<pre style="background:yellow;">';
+		echo '<h1>The URL\'s Being Checked:';
 		var_dump($this->permalinks);
+		echo '<h1>The Responses from the API:';
+		var_dump($this->raw_api_responses);
 		echo '</pre>';
 	}
 
