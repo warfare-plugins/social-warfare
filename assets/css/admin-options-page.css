@@ -47,6 +47,10 @@
 	content: "";
 }
 
+.addon_authorizations_title_wrapper h2:before {
+	content: "";
+}
+
 .open_graph_title_wrapper h2:before {
 	content: "";
 }
