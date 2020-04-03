@@ -60,7 +60,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @since  3.6.0 | 22 APR 2019 | Updated API to v3.2.
-	 * @since  4.0.0 | 25 JAN 2020 | Added access_token based API call.
+	 * @since  4.0.1 | 02 APR 2020 | Added access_token based API call.
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -68,10 +68,21 @@ class SWP_Facebook extends SWP_Social_Network {
 	 */
 	public function get_api_link( $url ) {
 
-//		return 'https://graph.facebook.com/?id='.$url.'&fields=og_object{engagement}';
 
-		$access_token = base64_decode('MTc5NjYwNzk4Nzc0Mjk2fGZld2FfS0VPUzBwZWxzcFBPZndfanFsanFUaw==');
-		return 'https://graph.facebook.com/v5.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $access_token;
+		/**
+		 * This will check to see if the user has connected Social Warfare with
+		 * Facebook using the oAuth authentication. If so, we'll use the offical
+		 * authentication API to fetch share counts. If not, we'll use the open,
+		 * unauthenticated API.
+		 *
+		 */
+		$auth_helper = new SWP_Auth_Helper( $this->key );
+		$access_token = $auth_helper->get_access_token();
+
+		if( $access_token ) {
+			return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token='.$access_token;
+		}
+		return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}';
 	}
 
 

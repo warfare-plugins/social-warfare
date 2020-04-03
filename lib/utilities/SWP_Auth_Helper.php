@@ -153,7 +153,7 @@ class SWP_Auth_Helper {
 
 
 	public function add_to_authorizations( $network_keys ) {
-		return $network_keys;
+		// return $network_keys;
 		return array_merge( $network_keys, array( $this->network ) );
 	}
 
