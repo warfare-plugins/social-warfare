@@ -64,7 +64,12 @@ class SWP_User_Options {
 	protected function establish_option_data() {
 		$this->unfiltered_options = get_option( 'social_warfare_settings', false );
 		$this->registered_options = get_option( 'swp_registered_options', false );
-		$this->user_options       = $this->unfiltered_options;
+
+		if( false == $this->unfiltered_options || empty( $this->unfiltered_options ) ) {
+			$this->unfiltered_options = array();
+		}
+
+		$this->user_options = $this->unfiltered_options;
 	}
 
 
