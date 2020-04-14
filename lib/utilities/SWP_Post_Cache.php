@@ -228,18 +228,24 @@ class SWP_Post_Cache {
 		$publication_time = get_post_time( 'U' , false , $this->post_id );
 		$post_age         = $current_time - $publication_time;
 
-		// If it's less than 21 days old.
-		if ( $post_age < ( 21 * 86400 ) ) {
+
+		// If it's less than 3 days old.
+		if( $post_age < ( 3 * 86400 ) ) {
 			return 1;
 		}
 
+		// If it's less than 21 days old.
+		if( $post_age < ( 21 * 86400 ) ) {
+			return 3;
+		}
+
 		// If it's less than 60 days old.
-		if ( $post_age < ( 60 * 86400 ) ) {
-			return 4;
+		if( $post_age < ( 60 * 86400 ) ) {
+			return 6;
 		}
 
 		// If it's really old.
-		return 12;
+		return 24;
 	}
 
 
