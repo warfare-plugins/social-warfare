@@ -3,7 +3,7 @@ Contributors: holas84, dustinwstout, webinator, warfareplugins, cdegraff1, ckmah
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 5.4
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -193,6 +193,14 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 4.0.1 (14 APR 2020) =
+* New: Added the ability to connect Social Warfare with Facebook. We use this to fetch follow counts for pages and faster, more accurate share counts for the share buttons. Go to Social Warfare -> Social Identity -> Social Network Connections to get started.
+* New: Added a notice about clearing caches after updates.
+* New: Added additional share count debugging to the ?swp_debug=recover debugger.
+* Fixed: Fixed some CSS for the "more" share box overlay.
+* Fixed: Fixed a PHP error related to user options.
+* Maintenance: Adjusted the cache rebuild schedule.
 
 = 4.0.0 =
 * New: Added the ability to assign multiple Pinterest images with a slick overlay interface.
