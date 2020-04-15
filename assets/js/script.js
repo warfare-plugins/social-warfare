@@ -1276,7 +1276,7 @@ window.socialWarfare = window.socialWarfare || {};
 	 ***************************************************************************/
 
 	// Create a single instance of the save button and store it in socialWarfare.
-	socialWarfare.createHoverSaveButton = function() {
+		socialWarfare.createHoverSaveButton = function() {
 
 
 	   /**
@@ -1432,6 +1432,7 @@ window.socialWarfare = window.socialWarfare || {};
 	  var left = image.offset().left;
 	  var vMargin = 15;
 	  var hMargin = 15;
+	  var button_size = swpPinIt.button_size || 1;
 	  var buttonHeight = 24;
 	  var buttonWidth = 120;
 	  // Known height from CSS is 34 px.
@@ -1468,8 +1469,13 @@ window.socialWarfare = window.socialWarfare || {};
 			  break;
 		}
 
-	  socialWarfare.hoverSaveButton.css("top", top);
-	  socialWarfare.hoverSaveButton.css("left", left);
+
+	socialWarfare.hoverSaveButton.css({
+		"top": top,
+		"left": left,
+		"transform": "scale(" + button_size + ")",
+		"transform-origin": swpPinIt.vLocation + ' ' + swpPinIt.hLocation,
+	});
 
 
 	  // Entering the button from the image triggers mouseleave and mouseenter.
