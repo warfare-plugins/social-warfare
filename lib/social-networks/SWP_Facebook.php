@@ -142,7 +142,6 @@ class SWP_Facebook extends SWP_Social_Network {
 			return;
 		}
 
-
 		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ), 10, 1 );
 		add_action( 'wp_ajax_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 		add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
@@ -162,7 +161,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 */
 	public function add_facebook_footer_hook( $post_id ) {
         $this->post_id = $post_id;
-		add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
+		add_action( 'swp_footer_scripts', array( $this, 'print_facebook_script' ) );
 	}
 
 
@@ -174,7 +173,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @return void Output is printed directly to the screen.
 	 *
 	 */
-	public function print_facebook_script() {
+	public function print_facebook_script( $info ) {
 
 		if ( true === SWP_Utility::get_option( 'recover_shares' ) ) {
 			$alternateURL = SWP_Permalink::get_alt_permalink( $this->post_id );
@@ -182,7 +181,7 @@ class SWP_Facebook extends SWP_Social_Network {
 			$alternateURL = false;
 		}
 
-		echo '<script type="text/javascript">
+		$info['footer_output'] .= PHP_EOL .  '
 			document.addEventListener("DOMContentLoaded", function() {
 				var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
 				if (swpButtonsExist) {
@@ -193,8 +192,9 @@ class SWP_Facebook extends SWP_Social_Network {
 					socialWarfare.fetchFacebookShares();
 				}
 			});
-			</script>
 		';
+
+		return $info;
 	}
 
 

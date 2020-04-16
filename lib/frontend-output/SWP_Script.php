@@ -169,6 +169,11 @@ class SWP_Script {
 		// Pass the array through our custom filters.
 		$info = apply_filters( 'swp_footer_scripts' , $info );
 
+		// Clean up and minifiy the output.
+		$info['footer_output'] = preg_replace( "/\r|\n/", "", $info['footer_output'] );
+		$info['footer_output'] = preg_replace( "/[ ]{2,}|[\t]/", " ", $info['footer_output'] );
+		$info['footer_output'] = preg_replace( "!\s+!", " ", $info['footer_output'] );
+
 		// If we have output, output it.
 		if ( $info['footer_output'] ) {
 			echo '<script type="text/javascript">';
