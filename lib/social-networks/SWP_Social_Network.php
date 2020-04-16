@@ -120,6 +120,7 @@ class SWP_Social_Network {
 	 */
 	public $html_store = array();
 
+
 	/**
 	 * The Base URL for the share link
 	 *
@@ -132,6 +133,7 @@ class SWP_Social_Network {
 	 *
 	 */
 	public $base_share_url = '';
+
 
 	/**
 	 * Whether or not to show the share count for this network.
@@ -550,6 +552,28 @@ class SWP_Social_Network {
 	 */
 	public function parse_api_response( $response ) {
 		return 0;
+	}
+
+	public function get_share_count( $post_id ) {
+		$share_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
+		if( $false === $share_counts ) {
+			return 0;
+		}
+		return (int) $share_counts;
+	}
+
+	public function update_total_counts( $post_id ) {
+		global $swp_social_networks;
+		$total_shares = 0;
+
+		foreach( $swp_social_networks as $Network ) {
+			if( $Network->is_active() ) {
+				$total_shares += $Network->get_share_count( $post_id );
+			}
+		}
+
+		delete_post_meta( $post_id, '_total_shares' );
+		update_post_meta( $post_id, '_total_shares', $total_shares );
 	}
 
 }

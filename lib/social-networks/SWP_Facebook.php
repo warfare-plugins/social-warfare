@@ -227,6 +227,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 			delete_post_meta( $post_id, '_facebook_shares' );
 			update_post_meta( $post_id, '_facebook_shares', $activity );
+			$this->update_total_counts();
 		endif;
 
 		wp_die();
