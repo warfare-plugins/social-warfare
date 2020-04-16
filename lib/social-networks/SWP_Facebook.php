@@ -48,10 +48,22 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->key            = 'facebook';
 		$this->default        = 'true';
 
+
+		/**
+		 * This will check to see if the user has connected Social Warfare with
+		 * Facebook using the oAuth authentication. If so, we'll use the offical
+		 * authentication API to fetch share counts. If not, we'll use the open,
+		 * unauthenticated API.
+		 *
+		 */
+		$auth_helper = new SWP_Auth_Helper( $this->key );
+		$this->access_token = $auth_helper->get_access_token();
+
 		// This is the link that is clicked on to share an article to their network.
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
+		$this->register_cache_processes();
 	}
 
 
@@ -79,10 +91,10 @@ class SWP_Facebook extends SWP_Social_Network {
 		$auth_helper = new SWP_Auth_Helper( $this->key );
 		$access_token = $auth_helper->get_access_token();
 
-		if( $access_token ) {
+		if( $this->access_token ) {
 			return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token='.$access_token;
 		}
-		return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}';
+		return 0;
 	}
 
 
@@ -109,6 +121,114 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		// Return 0 if no valid counts were able to be extracted.
 		return 0;
+	}
+
+
+	/**
+	 * Register Cache Processes
+	 *
+	 * This method registered the processes that will need to be run during the
+	 * cache rebuild process. The new caching class (codenames neo-advanced cache
+	 * method) allows us to hook in functions that will run during the cache
+	 * rebuild process by hooking into the swp_cache_rebuild hook.
+	 *
+	 * @since  3.1.0 | 26 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	private function register_cache_processes() {
+		if( false === $this->is_active() || $this->access_token ) {
+			return;
+		}
+
+		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ), 10, 1 );
+		add_action( 'wp_ajax_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+		add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
+	}
+
+
+	/**
+	 * A function to add the Facebook updater to the footer hook.
+	 *
+	 * This is a standalone method because we only want to hook into the footer
+	 * and display the script during the cache rebuild process.
+	 *
+	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function add_facebook_footer_hook( $post_id ) {
+        $this->post_id = $post_id;
+		add_action( 'wp_footer', array( $this, 'print_facebook_script' ) );
+	}
+
+
+	/**
+	 * Output the AJAX/JS for updating Facebook share counts.
+	 *
+	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void Output is printed directly to the screen.
+	 *
+	 */
+	public function print_facebook_script() {
+
+		if ( true === SWP_Utility::get_option( 'recover_shares' ) ) {
+			$alternateURL = SWP_Permalink::get_alt_permalink( $this->post_id );
+		} else {
+			$alternateURL = false;
+		}
+
+		echo '<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
+				if (swpButtonsExist) {
+					swp_admin_ajax = "' . admin_url( 'admin-ajax.php' ) . '";
+					swp_post_id=' . (int) $this->post_id . ';
+					swp_post_url= "' . get_permalink() . '";
+					swp_post_recovery_url = "' . $alternateURL . '";
+					socialWarfare.fetchFacebookShares();
+				}
+			});
+			</script>
+		';
+	}
+
+
+	/**
+	 * Process the Facebook shares response via admin-ajax.php.
+	 *
+	 * The object will be instantiated by the Cache_Loader class and it will
+	 * then call this method from there.
+	 *
+	 * @since  3.1.0 | 25 JUN 2018 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
+	public function facebook_shares_update() {
+		global $swp_user_options;
+
+		if (!is_numeric( $_POST['share_counts'] ) || !is_numeric( $_POST['post_id'] ) ) {
+			echo 'Invalid data types sent to the server. No information processed.';
+			wp_die();
+		}
+
+		$activity = (int) $_POST['share_counts'];
+		$post_id  = (int) $_POST['post_id'];
+
+		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
+
+		if ( $activity >= $previous_activity || true === SWP_Utility::debug('force_new_shares') ) :
+			echo 'Facebook Shares Updated: ' . $activity;
+
+			delete_post_meta( $post_id, '_facebook_shares' );
+			update_post_meta( $post_id, '_facebook_shares', $activity );
+		endif;
+
+		wp_die();
 	}
 
 }
