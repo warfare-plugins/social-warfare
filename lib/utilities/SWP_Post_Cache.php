@@ -517,20 +517,8 @@ class SWP_Post_Cache {
 		$this->parse_api_responses();
 		$this->calculate_network_shares();
 		$this->cache_share_counts();
-		$this->register_facebook_processes();
 	}
 
-
-	protected function register_facebook_processes() {
-		global $swp_social_networks;
-		$Facebook = $swp_social_networks['facebook'];
-
-		if( false === $Facebook->is_active() || $Facebook->access_token ) {
-			return;
-		}
-
-		add_action( 'swp_cache_rebuild', array( $Facebook, 'add_facebook_footer_hook' ), 10, 1 );
-	}
 
 	/**
 	 * Establish the Permalinks to be checked for shares.

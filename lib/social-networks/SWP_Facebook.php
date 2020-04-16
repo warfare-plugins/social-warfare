@@ -63,7 +63,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
 
 		$this->init_social_network();
-		$this->register_cache_processes();
+		$this->register_ajax_cache_callbacks();
 	}
 
 
@@ -137,11 +137,13 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @return void
 	 *
 	 */
-	private function register_cache_processes() {
+	private function register_ajax_cache_callbacks() {
 		if( false === $this->is_active() || $this->access_token ) {
 			return;
 		}
 
+
+		add_action( 'swp_cache_rebuild', array( $this, 'add_facebook_footer_hook' ), 10, 1 );
 		add_action( 'wp_ajax_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 		add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', array( $this, 'facebook_shares_update' ) );
 	}
