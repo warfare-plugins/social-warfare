@@ -554,11 +554,28 @@ class SWP_Social_Network {
 		return 0;
 	}
 
+
+	/**
+	 * The get_share_count() method is a quick and easy method for getting the
+	 * currently stored share count for this network for a given post. You must
+	 * pass it the post_id for the desired post.
+	 *
+	 * @since  4.1.0 | 17 APR 2020 | Created
+	 * @param  integer $post_id The ID of the desired post.
+	 * @return integer The number of shares for this post for this network.
+	 *
+	 */
 	public function get_share_count( $post_id ) {
+
+		// Get the share counts from the stored meta field.
 		$share_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
-		if( $false === $share_counts ) {
+
+		// If false was returned, return the integer 0 instead.
+		if( false === $share_counts ) {
 			return 0;
 		}
+
+		// Otherwise return the integer of the share counts.
 		return (int) $share_counts;
 	}
 
