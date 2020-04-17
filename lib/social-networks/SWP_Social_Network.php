@@ -564,8 +564,8 @@ class SWP_Social_Network {
 
 	public function update_total_counts( $post_id ) {
 		global $swp_social_networks;
-		$total_shares = 0;
 
+		$total_shares = 0;
 		foreach( $swp_social_networks as $Network ) {
 			if( $Network->is_active() ) {
 				$total_shares += $Network->get_share_count( $post_id );
