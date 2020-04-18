@@ -732,6 +732,10 @@ p.sw-subtitle.sw-registration-text {
 	content: "J";
 }
 
+.sw-telegram-icon:before {
+	content: "L";
+}
+
 .sw-tumblr-icon:before {
 	content: "M";
 }
@@ -866,6 +870,11 @@ p.sw-subtitle.sw-registration-text {
 .sw-s.sw-snapchat-icon {
 	background-color: #FFFC00;
 	border-color: #ccca00;
+}
+
+.sw-s.sw-telegram-icon {
+	background-color: #0088CC;
+	border-color: #006699;
 }
 
 .sw-s.sw-twitter-icon {
