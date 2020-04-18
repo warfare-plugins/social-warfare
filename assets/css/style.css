@@ -924,6 +924,52 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_snapchat {
 	color: #ffffff;
 }
 
+.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_telegram,
+html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_telegram:hover,
+body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_telegram:not(:hover) {
+	border: 1px solid #0088CC;
+}
+
+.swp_social_panel.swp_default_full_color .swp_telegram,
+html body .swp_social_panel.swp_individual_full_color .swp_telegram:hover,
+body .swp_social_panel.swp_other_full_color:hover .swp_telegram {
+	background: #0088CC;
+	border: 1px solid #006699;
+}
+
+.swp_social_panel.swp_three_dee.swp_default_full_color .swp_telegram,
+html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_telegram:hover,
+body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_telegram {
+	border-bottom: 3px solid #006699;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_telegram a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_telegram a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_telegram a {
+	color: #0088CC;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_telegram,
+html body .swp_social_panel.swp_individual_color_outlines .swp_telegram:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_telegram {
+	background: transparent;
+	border: 1px solid #0088CC;
+}
+
+.swp-telegram {
+	background: #0088CC;
+	border-color: #006699;
+}
+
+.swp-telegram a {
+	color: #0088CC;
+}
+
+.swp-telegram a:hover {
+	background: #006699;
+	color: #ffffff;
+}
+
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_twitter,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_twitter:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_twitter:not(:hover) {
@@ -1964,6 +2010,10 @@ i.swp_social-warfare_icon:before {
 
 i.swp_snapchat_icon:before {
 	content: "J";
+}
+
+i.swp_telegram_icon:before {
+	content: "L";
 }
 
 i.swp_tumblr_icon:before {
