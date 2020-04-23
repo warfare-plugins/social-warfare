@@ -99,11 +99,16 @@ class SWP_Facebook extends SWP_Social_Network {
 
 
 	/**
-	 * Parse the response to get the share count
+	 * The parse_api_response() method parses the raw response from the API and
+	 * returns the share count as an integer.
+	 *
+	 * In the case here for Facebook, it will json_decode the response and then
+	 * look for and return the $response->og_object->engagement->count property.
 	 *
 	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @since  3.6.0 | 22 APR 2019 | Updated to parse API v.3.2.
 	 * @since  4.0.0 | 03 DEC 2019 | Updated to parse API v.3.2 without token.
+	 * @since  4.1.0 | 18 APR 2020 | Updated to parse API v.6.0.
 	 * @access public
 	 * @param  string  $response The raw response returned from the API request
 	 * @return integer The number of shares reported from the API
@@ -122,6 +127,29 @@ class SWP_Facebook extends SWP_Social_Network {
 		// Return 0 if no valid counts were able to be extracted.
 		return 0;
 	}
+
+
+	/**
+	 * ATTENTION! ATTENTION! ATTENTION! ATTENTION! ATTENTION! ATTENTION! ATTENTION!
+	 *
+	 * All of the methods below this point are used for the client-side,
+	 * Javascript share count fetching. Since Facebook has implemented some
+	 * rather rigerous rate limits on their non-authenticated API, many
+	 * server-side use cases are reaching these rate limits somewhat rapidly and
+	 * spend as much time "down" as they do "up". This results in huge delays to
+	 * getting share count numbers.
+	 *
+	 * As such, we have moved the share counts to the client side and we fetch
+	 * those counts via javascript/jQuery. Now, instead of having 100 API hits
+	 * being counted against the server's IP address, it will be counted against
+	 * 100 different client/browser IP addresses. This should provide a virtually
+	 * unlimited access to the non-authenticated API. 
+	 *
+	 * You will also notice that these processes are conditonal on the plugin not
+	 * being connected to Facebook. If the user has connected the plugin to Facebook,
+	 * then we will simply use the authenticated API instead from the server.
+	 *
+	 */
 
 
 	/**
