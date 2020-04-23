@@ -115,6 +115,8 @@ class SWP_Section_HTML extends SWP_Option {
 	 *
 	 */
 	private function system_status() {
+		global $swp_social_networks;
+
 		/**
 		 * System Status Generator
 		 */
@@ -142,6 +144,16 @@ class SWP_Section_HTML extends SWP_Option {
 			$curl_status = '<span style="color:red;">Disabled</span>';
 		endif;
 
+		$auth_helper = new SWP_Auth_Helper( 'facebook' );
+		$access_token = $auth_helper->get_access_token();
+		if ( $access_token ) {
+			$facebook_status = '<span style="color:green;">Connected</span>';
+			$facebook_debug_link = '<span style="color:green;">https://graph.facebook.com/v6.0/?id={url_placeholder}&fields=og_object{engagement}&access_token='.$access_token.'</span>';
+		} else {
+			$facebook_status = '<span style="color:red;">Not Connected</span>';
+			$facebook_debug_link = '<span style="color:red;">Not Connected</span>';
+		}
+
 		$theme = wp_get_theme();
 
 		$system_status = '
@@ -156,6 +168,8 @@ class SWP_Section_HTML extends SWP_Option {
 				<tr><td><h2>Connection Statuses</h2></td><td></td></tr>
 				<tr><td><b>fsockopen</b></td><td>' . $fsockopen . '</td></tr>
 				<tr><td><b>cURL</b></td><td>' . $curl_status . '</td></tr>
+				<tr><td><b>Facebook</b></td><td>' . $facebook_status . '</td></tr>
+				<tr><td><b>FB Debug Link</b></td><td>' . $facebook_debug_link . '</td></tr>
 				<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
 				<tr><td><b>Theme Name</b></td><td>' . $theme['Name'] . '</td></tr>
 				<tr><td><b>Theme Version</b></td><td>' . $theme['Version'] . '</td></tr>
