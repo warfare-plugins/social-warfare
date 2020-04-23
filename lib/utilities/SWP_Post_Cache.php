@@ -955,6 +955,12 @@ class SWP_Post_Cache {
 
 		// Output the preformatted box with the array of permalinks.
 		echo '<pre style="background:yellow;">';
+		$with_pro = '';
+		if( defined( 'SWPP_VERSION' ) ) {
+			$with_pro = '(with Pro  ' . SWPP_VERSION .')';
+		}
+		echo '<p>Social Warfare ' . SWP_VERSION .' ' . $with_pro . ' </p>';
+
 		echo '<h1>The URL\'s Being Checked:</h1>';
 		var_dump($this->permalinks);
 		echo '<h1>The Responses from the API:</h1>';
