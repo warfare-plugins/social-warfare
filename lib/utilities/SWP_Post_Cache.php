@@ -956,10 +956,10 @@ class SWP_Post_Cache {
 		// Output the preformatted box with the array of permalinks.
 		echo '<pre style="background:yellow;">';
 		$with_pro = '';
-		if( defined( 'SWPP_VERSION' ) ) {
-			$with_pro = '(with Pro  ' . SWPP_VERSION .')';
+		if( defined( 'SWPP_VERSION' ) && defined( 'SWPP_DEV_VERSION' ) ) {
+			$with_pro = '(with Pro ' . SWPP_VERSION .'.'. SWPP_DEV_VERSION .')';
 		}
-		echo '<p>Social Warfare ' . SWP_VERSION .' ' . $with_pro . ' </p>';
+		echo '<p>Social Warfare ' . SWP_VERSION .'.'. SWP_DEV_VERSION .' ' . $with_pro . ' </p>';
 
 		echo '<h1>The URL\'s Being Checked:</h1>';
 		var_dump($this->permalinks);
