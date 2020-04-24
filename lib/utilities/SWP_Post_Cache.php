@@ -766,8 +766,6 @@ class SWP_Post_Cache {
 		}
 
 
-
-
 		/**
 		 * After we processed the API responses, we'll now go through all active
 		 * networks regardless of whether or not they have an API, and process
@@ -797,7 +795,9 @@ class SWP_Post_Cache {
 			 *
 			 */
 			$previous_count = get_post_meta( $this->post_id, "_${network}_shares", true );
-			$previous_count = ( isset( $previous_count ) ? $previous_count : 0 );
+			if( false === $previous_count ) {
+				$previous_count = 0;
+			}
 
 
 			/**
@@ -810,6 +810,7 @@ class SWP_Post_Cache {
 			if ( $count < $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
 				$count = $previous_count;
 			}
+
 
 			/**
 			 * Iterate the total shares with our new numbers, and then store
@@ -860,6 +861,11 @@ class SWP_Post_Cache {
 		 */
 		foreach( $this->share_counts as $key => $count ) {
 			if ( 'total_shares' === $key ) {
+				continue;
+			}
+
+			$previous_counts = get_post_meta( $this->post_id, "_${key}_shares" );
+			if( $previous_counts >= $this->share_counts[$key] ) {
 				continue;
 			}
 

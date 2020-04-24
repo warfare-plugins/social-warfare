@@ -143,7 +143,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * those counts via javascript/jQuery. Now, instead of having 100 API hits
 	 * being counted against the server's IP address, it will be counted against
 	 * 100 different client/browser IP addresses. This should provide a virtually
-	 * unlimited access to the non-authenticated API. 
+	 * unlimited access to the non-authenticated API.
 	 *
 	 * You will also notice that these processes are conditonal on the plugin not
 	 * being connected to Facebook. If the user has connected the plugin to Facebook,
@@ -250,13 +250,15 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
-		if ( $activity > $previous_activity || true === SWP_Utility::debug('force_new_shares') ) :
+		if ( $activity > $previous_activity || true === SWP_Utility::debug('force_new_shares') ) {
 			echo 'Facebook Shares Updated: ' . $activity;
 
 			delete_post_meta( $post_id, '_facebook_shares' );
 			update_post_meta( $post_id, '_facebook_shares', $activity );
 			$this->update_total_counts( $post_id );
-		endif;
+		} else {
+			echo "Facebook share counts not updated. New counts ($activity) is not higher than previously saved counts ($previous_activity)";
+		}
 
 		wp_die();
 	}
