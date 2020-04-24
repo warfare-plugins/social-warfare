@@ -3288,6 +3288,8 @@ span.swp_pop_count {
 
 .swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper .pin_image_select_wrapper img {
 	border-radius: 3px;
+	max-width: 100%;
+	height: auto;
 }
 
 .swp-lightbox-wrapper.pinterest-overlay .pin_images_wrapper .pin_image_select_wrapper .swp-hover-pin-button {
