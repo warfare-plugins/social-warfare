@@ -494,10 +494,11 @@ window.socialWarfare = window.socialWarfare || {};
 			 * that we set above.
 			 *
 			 */
-			if ($(this).is('.pinterest, .buffer_link, .flipboard')) {
+			if ($(this).is('.swp_pinterest a, .buffer_link a, .flipboard a, .swp-hover-pin-button')) {
 				height = 550;
 				width = 775;
 			}
+
 
 			/**
 			 * If a button was clicked, use the data-network attribute to
