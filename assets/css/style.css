@@ -2642,6 +2642,412 @@ a.swp_CTT.style6:hover .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style6:hover .
 	text-decoration: none;
 }
 
+div.swp-blogger {
+	background: #ff5722;
+	border-color: #ee3900;
+}
+
+div.swp-blogger a {
+	color: #ff5722;
+}
+
+div.swp-blogger a:hover {
+	background: #ee3900;
+	color: #ffffff;
+}
+
+div.swp-buffer {
+	background: #323b43;
+	border-color: #1c2126;
+}
+
+div.swp-buffer a {
+	color: #323b43;
+}
+
+div.swp-buffer a:hover {
+	background: #1c2126;
+	color: #ffffff;
+}
+
+div.swp-ello {
+	background: #000000;
+	border-color: black;
+}
+
+div.swp-ello a {
+	color: #000000;
+}
+
+div.swp-ello a:hover {
+	background: black;
+	color: #ffffff;
+}
+
+div.swp-email {
+	background: #6bcce9;
+	border-color: #3fbde2;
+}
+
+div.swp-email a {
+	color: #6bcce9;
+}
+
+div.swp-email a:hover {
+	background: #3fbde2;
+	color: #ffffff;
+}
+
+div.swp-evernote {
+	background: #2dbe60;
+	border-color: #23954b;
+}
+
+div.swp-evernote a {
+	color: #2dbe60;
+}
+
+div.swp-evernote a:hover {
+	background: #23954b;
+	color: #ffffff;
+}
+
+div.swp-facebook {
+	background: #1877f2;
+	border-color: #0b5fcc;
+}
+
+div.swp-facebook a {
+	color: #1877f2;
+}
+
+div.swp-facebook a:hover {
+	background: #0b5fcc;
+	color: #ffffff;
+}
+
+div.swp-flickr {
+	background: #ff0084;
+	border-color: #cc006a;
+}
+
+div.swp-flickr a {
+	color: #ff0084;
+}
+
+div.swp-flickr a:hover {
+	background: #cc006a;
+	color: #ffffff;
+}
+
+div.swp-flipboard {
+	background: #bf2626;
+	border-color: #941e1e;
+}
+
+div.swp-flipboard a {
+	color: #bf2626;
+}
+
+div.swp-flipboard a:hover {
+	background: #941e1e;
+	color: #ffffff;
+}
+
+div.swp-hacker_news {
+	background: #d85623;
+	border-color: #ac451c;
+}
+
+div.swp-hacker_news a {
+	color: #d85623;
+}
+
+div.swp-hacker_news a:hover {
+	background: #ac451c;
+	color: #ffffff;
+}
+
+div.swp-instagram {
+	background: #ea2454;
+	border-color: #c8133f;
+}
+
+div.swp-instagram a {
+	color: #ea2454;
+}
+
+div.swp-instagram a:hover {
+	background: #c8133f;
+	color: #ffffff;
+}
+
+div.swp-linkedin {
+	background: #2767b1;
+	border-color: #1e4f87;
+}
+
+div.swp-linkedin a {
+	color: #2767b1;
+}
+
+div.swp-linkedin a:hover {
+	background: #1e4f87;
+	color: #ffffff;
+}
+
+div.swp-medium {
+	background: #00ab6c;
+	border-color: #00784c;
+}
+
+div.swp-medium a {
+	color: #00ab6c;
+}
+
+div.swp-medium a:hover {
+	background: #00784c;
+	color: #ffffff;
+}
+
+div.swp-mix {
+	background: #f4812c;
+	border-color: #e1660c;
+}
+
+div.swp-mix a {
+	color: #f4812c;
+}
+
+div.swp-mix a:hover {
+	background: #e1660c;
+	color: #ffffff;
+}
+
+div.swp-more {
+	background: #ee464f;
+	border-color: #ea1723;
+}
+
+div.swp-more a {
+	color: #ee464f;
+}
+
+div.swp-more a:hover {
+	background: #ea1723;
+	color: #ffffff;
+}
+
+div.swp-periscope {
+	background: #3aa4c6;
+	border-color: #2e849f;
+}
+
+div.swp-periscope a {
+	color: #3aa4c6;
+}
+
+div.swp-periscope a:hover {
+	background: #2e849f;
+	color: #ffffff;
+}
+
+div.swp-pinterest {
+	background: #e60023;
+	border-color: #b3001b;
+}
+
+div.swp-pinterest a {
+	color: #e60023;
+}
+
+div.swp-pinterest a:hover {
+	background: #b3001b;
+	color: #ffffff;
+}
+
+div.swp-pocket {
+	background: #ef4056;
+	border-color: #e9132e;
+}
+
+div.swp-pocket a {
+	color: #ef4056;
+}
+
+div.swp-pocket a:hover {
+	background: #e9132e;
+	color: #ffffff;
+}
+
+div.swp-print {
+	background: #777777;
+	border-color: #5e5e5e;
+}
+
+div.swp-print a {
+	color: #777777;
+}
+
+div.swp-print a:hover {
+	background: #5e5e5e;
+	color: #ffffff;
+}
+
+div.swp-reddit {
+	background: #f04b23;
+	border-color: #d2340e;
+}
+
+div.swp-reddit a {
+	color: #f04b23;
+}
+
+div.swp-reddit a:hover {
+	background: #d2340e;
+	color: #ffffff;
+}
+
+div.swp-snapchat {
+	background: #FFFC00;
+	border-color: #ccca00;
+}
+
+div.swp-snapchat a {
+	color: #FFFC00;
+}
+
+div.swp-snapchat a:hover {
+	background: #ccca00;
+	color: #ffffff;
+}
+
+div.swp-telegram {
+	background: #0088CC;
+	border-color: #006699;
+}
+
+div.swp-telegram a {
+	color: #0088CC;
+}
+
+div.swp-telegram a:hover {
+	background: #006699;
+	color: #ffffff;
+}
+
+div.swp-twitter {
+	background: #1da1f2;
+	border-color: #0c85d0;
+}
+
+div.swp-twitter a {
+	color: #1da1f2;
+}
+
+div.swp-twitter a:hover {
+	background: #0c85d0;
+	color: #ffffff;
+}
+
+div.swp-tumblr {
+	background: #39475d;
+	border-color: #262f3d;
+}
+
+div.swp-tumblr a {
+	color: #39475d;
+}
+
+div.swp-tumblr a:hover {
+	background: #262f3d;
+	color: #ffffff;
+}
+
+div.swp-vimeo {
+	background: #162221;
+	border-color: #020303;
+}
+
+div.swp-vimeo a {
+	color: #162221;
+}
+
+div.swp-vimeo a:hover {
+	background: #020303;
+	color: #ffffff;
+}
+
+div.swp-viber {
+	background: #8f5db7;
+	border-color: #75459c;
+}
+
+div.swp-viber a {
+	color: #8f5db7;
+}
+
+div.swp-viber a:hover {
+	background: #75459c;
+	color: #ffffff;
+}
+
+div.swp-vk {
+	background: #4a76a8;
+	border-color: #3a5d85;
+}
+
+div.swp-vk a {
+	color: #4a76a8;
+}
+
+div.swp-vk a:hover {
+	background: #3a5d85;
+	color: #ffffff;
+}
+
+div.swp-whatsapp {
+	background: #71c169;
+	border-color: #52af48;
+}
+
+div.swp-whatsapp a {
+	color: #71c169;
+}
+
+div.swp-whatsapp a:hover {
+	background: #52af48;
+	color: #ffffff;
+}
+
+div.swp-xing {
+	background: #026466;
+	border-color: #013334;
+}
+
+div.swp-xing a {
+	color: #026466;
+}
+
+div.swp-xing a:hover {
+	background: #013334;
+	color: #ffffff;
+}
+
+div.swp-yummly {
+	background: #e26426;
+	border-color: #bc4f19;
+}
+
+div.swp-yummly a {
+	color: #e26426;
+}
+
+div.swp-yummly a:hover {
+	background: #bc4f19;
+	color: #ffffff;
+}
+
 /**
  * Individual Buttons
  *
@@ -2657,8 +3063,8 @@ a.swp_CTT.style6:hover .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style6:hover .
 	justify-content: space-between;
 	line-height: 1;
 	margin-bottom: 10px;
-	padding: 15px;
-	width: 100%;
+	padding: 15px 5%;
+	width: 90%;
 }
 
 .swfw-follow-button.swp-snapchat, .swp-snapchat.swfw_square_button, .swp-snapchat.swfw_buttons_button, .swp-snapchat.swfw_block_button, .swfw-follow-button.swp-snapchat a, .swp-snapchat.swfw_square_button a, .swp-snapchat.swfw_buttons_button a, .swp-snapchat.swfw_block_button a {
