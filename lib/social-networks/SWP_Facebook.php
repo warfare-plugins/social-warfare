@@ -250,7 +250,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
-		if ( $activity > $previous_activity || true === SWP_Utility::debug('force_new_shares') ) {
+		if ( $activity > $previous_activity ) {
 			echo 'Facebook Shares Updated: ' . $activity;
 
 			delete_post_meta( $post_id, '_facebook_shares' );

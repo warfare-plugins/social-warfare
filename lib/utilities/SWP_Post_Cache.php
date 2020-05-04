@@ -807,7 +807,7 @@ class SWP_Post_Cache {
 			 * highest between the current and previously fetched counts.
 			 *
 			 */
-			if ( $count < $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
+			if ( $count < $previous_count && false == SWP_Utility::debug( 'force_new_shares' ) ) {
 				$count = $previous_count;
 			}
 
