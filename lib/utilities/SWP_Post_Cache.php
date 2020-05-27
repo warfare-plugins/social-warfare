@@ -117,6 +117,7 @@ class SWP_Post_Cache {
 	*
 	*/
 	public function is_cache_fresh() {
+
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i',  wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
 			 return true;
@@ -906,21 +907,23 @@ class SWP_Post_Cache {
 	 */
 	protected function establish_share_counts() {
 		global $swp_social_networks;
-
+		$this->share_counts['total_shares'] = 0;
 
 		/**
 		 * Loop through the social networks and pull their share count from
 		 * the custom fields for this post.
 		 *
 		 */
-		foreach( $swp_social_networks as $network => $network_object ) {
+		foreach( $swp_social_networks as $Network ) {
 
-			$count = get_post_meta( $this->post_id, '_' . $network . '_shares', true );
-			$this->share_counts[$network] = $count ? $count : 0;
+			// Get the current share count from the cache.
+			$this->share_counts[$Network->key] = $Network->get_share_count( $this->post_id );
+
+			// Add up the total shares based on the counts of the active networks.
+			if( true === $Network->is_active() ) {
+				$this->share_counts['total_shares'] += $this->share_counts[$Network->key];
+			}
 		}
-
-		$total = get_post_meta( $this->post_id, '_total_shares', true );
-		$this->share_counts['total_shares'] = $total ? $total : 0;
 	}
 
 
