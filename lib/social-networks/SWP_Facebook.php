@@ -94,7 +94,8 @@ class SWP_Facebook extends SWP_Social_Network {
 		if( $this->access_token ) {
 			return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token='.$access_token;
 		}
-		return 0;
+
+		return 'https://graph.facebook.com/v6.0/?fields=og_object{engagement}&id=' . $url;
 	}
 
 

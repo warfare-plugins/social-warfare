@@ -614,7 +614,6 @@ class SWP_Post_Cache {
 	protected function establish_api_request_urls() {
 		global $swp_social_networks;
 		$this->api_urls = array();
-
 		foreach ( $this->permalinks as $network => $links ) {
 			$current_request = 0;
 			foreach( $links as $url ) {
@@ -673,12 +672,10 @@ class SWP_Post_Cache {
 		if ( empty( $this->raw_api_responses ) ) {
 			return;
 		}
-
 		$this->parsed_api_responses = array();
 
 		foreach( $this->raw_api_responses as $request => $responses ) {
 			$current_request = 0;
-
 			foreach ( $responses as $key => $response ) {
 				$this->parsed_api_responses[$current_request][$key][] = $swp_social_networks[$key]->parse_api_response( $response );
 				$current_request++;
@@ -865,7 +862,9 @@ class SWP_Post_Cache {
 				continue;
 			}
 
-			$previous_counts = get_post_meta( $this->post_id, "_${key}_shares" );
+			// Make sure this is set to true to only fetch a single field, and
+			// not an array of multiple fields.
+			$previous_counts = get_post_meta( $this->post_id, "_${key}_shares", true );
 			if( $previous_counts >= $this->share_counts[$key] ) {
 				continue;
 			}
