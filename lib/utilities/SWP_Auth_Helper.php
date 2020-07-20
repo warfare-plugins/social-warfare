@@ -103,6 +103,9 @@ class SWP_Auth_Helper {
 	 *
 	 */
 	public function get_access_token() {
+		if( false === defined( 'SWPP_VERSION' ) ) {
+			return false;
+		}
 		return $this->has_credentials ? $this->access_token : false;
 	}
 
