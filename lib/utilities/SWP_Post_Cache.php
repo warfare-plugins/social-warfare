@@ -973,7 +973,7 @@ class SWP_Post_Cache {
 		var_dump($this->permalinks);
 		echo '<h1>The Responses from the API:</h1>';
 		var_dump($this->raw_api_responses);
-		echo '<h1>This is the share counts array<h1>';
+		echo '<h1>This is the share counts array</h1>';
 		var_dump($this->share_counts);
 		echo '</pre>';
 	}
