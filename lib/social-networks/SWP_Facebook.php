@@ -48,6 +48,9 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->key            = 'facebook';
 		$this->default        = 'true';
 
+		$instance = new SWP_Auth_Helper( $this->key );
+		add_filter( 'swp_authorizations', array( $instance, 'add_to_authorizations' ) );
+
 
 		/**
 		 * This will check to see if the user has connected Social Warfare with
