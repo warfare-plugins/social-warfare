@@ -54,8 +54,8 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * we can fetch share counts through the authenticated API.
 		 *
 		 */
-		$instance = new SWP_Auth_Helper( $this->key );
-		add_filter( 'swp_authorizations', array( $instance, 'add_to_authorizations' ) );
+		$auth_helper = new SWP_Auth_Helper( $this->key );
+		add_filter( 'swp_authorizations', array( $auth_helper, 'add_to_authorizations' ) );
 
 
 		/**
@@ -65,8 +65,8 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * unauthenticated API.
 		 *
 		 */
-		$auth_helper = new SWP_Auth_Helper( $this->key );
 		$this->access_token = $auth_helper->get_access_token();
+
 
 		//$response = SWP_CURL::file_get_contents_curl('https://graph.facebook.com/debug_token?input_token='. $this->access_token .'&access_token=' . $this->access_token);
 		//var_dump($response);
@@ -76,6 +76,8 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$this->init_social_network();
 		$this->register_ajax_cache_callbacks();
+
+		$this->display_access_token_notices();
 	}
 
 
@@ -102,15 +104,14 @@ class SWP_Facebook extends SWP_Social_Network {
 		 *
 		 */
 		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
-		if( $Authentication_Helper->get_access_token() ) {
+		$access_token          = $Authentication_Helper->get_access_token();
 
-			// $url = 'https://www.complicitclergy.com/2020/07/20/why-are-californias-bishops-capitulating-to-governor-newsoms-tyrannical-lockdown-order/';
-			$api_link = 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Authentication_Helper->get_access_token();
-			return $api_link;
-
-			// return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $Authentication_Helper->get_access_token();
+		// Check if they have a token and it's not expired.
+		if( false !== empty( $access_token ) && 'expired' !== $access_token ) {
+			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Authentication_Helper->get_access_token();
 		}
 
+		// Return 0 as no server side check will be done. We'll check via JS later.
 		return 0;
 	}
 
@@ -140,6 +141,14 @@ class SWP_Facebook extends SWP_Social_Network {
 		if( !empty( $response->og_object ) && !empty( $response->og_object->engagement ) ) {
 			return $response->og_object->engagement->count;
 		}
+
+
+
+		if( !empty( $response->error ) && $response->error->code == 190 ) {
+			SWP_Credential_Helper::store_data('facebook', 'access_token', 'expired' );
+			return 0;
+		}
+
 
 		if( !empty( $response->engagement ) ) {
 			$activity =
@@ -191,7 +200,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	private function register_ajax_cache_callbacks() {
-		if( false === $this->is_active() || $this->access_token ) {
+		if( false === $this->is_active() || ( false !== empty( $access_token ) && 'expired' !== $access_token ) ) {
 			return;
 		}
 
@@ -286,6 +295,29 @@ class SWP_Facebook extends SWP_Social_Network {
 		}
 
 		wp_die();
+	}
+
+	public function display_access_token_notices() {
+		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
+		$is_notice_needed      = false;
+
+		// If there is no token.
+		if( false === $Authentication_Helper->get_access_token() ) {
+			$is_notice_needed = true;
+			$notice_key       = 'facebook_not_authenticated';
+			$notice_message   = '<b>Notice: Facebook is not authenticated with Social Warfare.</b> We\'ve added the ability to authenticate and connect Social Warfare with Facebook. This allows us access to their up-to-the-minute, always supported, and much more reliable API which we use for collecting more accurate share counts. Just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Connections" section and get yourself set up now!';
+		}
+
+		// If the token is expired.
+		if( 'expired' === $Authentication_Helper->get_access_token() ) {
+			$is_notice_needed = true;
+			$notice_key       = 'fb_token_expired_' . date('MY') ;
+			$notice_message   = '<b>Notice: Social Warfare\'s connection with Facebook has expired!</b> This happens by Facebook\'s design every couple of months. To give our plugin access to the most accurate and up-to-date data that we\'ll use to populate your share counts, just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Collections" section and get yourself set up now!<br /><br />P.S. We do NOT collect any of your data from the API to our servers or with any third parties. Absolutely None.';
+		}
+
+		if( true === $is_notice_needed ) {
+			new SWP_Notice( $notice_key, $notice_message );
+		}
 	}
 
 }
