@@ -48,6 +48,12 @@ class SWP_Facebook extends SWP_Social_Network {
 		$this->key            = 'facebook';
 		$this->default        = 'true';
 
+
+		/**
+		 * This will add the authentication module to the options page so that
+		 * we can fetch share counts through the authenticated API.
+		 *
+		 */
 		$instance = new SWP_Auth_Helper( $this->key );
 		add_filter( 'swp_authorizations', array( $instance, 'add_to_authorizations' ) );
 
@@ -61,6 +67,9 @@ class SWP_Facebook extends SWP_Social_Network {
 		 */
 		$auth_helper = new SWP_Auth_Helper( $this->key );
 		$this->access_token = $auth_helper->get_access_token();
+
+		//$response = SWP_CURL::file_get_contents_curl('https://graph.facebook.com/debug_token?input_token='. $this->access_token .'&access_token=' . $this->access_token);
+		//var_dump($response);
 
 		// This is the link that is clicked on to share an article to their network.
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';

@@ -864,7 +864,7 @@ class SWP_Post_Cache {
 		foreach( $this->share_counts as $key => $count ) {
 
 			// Skip it if this is the total shares. This will be added later.
-			if ( 'total_shares' === $key ) {
+			if ( empty( $swp_social_networks[$key] ) ) {
 				continue;
 			}
 
