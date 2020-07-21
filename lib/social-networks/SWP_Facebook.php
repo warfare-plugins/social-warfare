@@ -91,6 +91,8 @@ class SWP_Facebook extends SWP_Social_Network {
 		 */
 		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
 		if( $Authentication_Helper->get_access_token() ) {
+
+			// $url = 'https://www.complicitclergy.com/2020/07/20/why-are-californias-bishops-capitulating-to-governor-newsoms-tyrannical-lockdown-order/';
 			$api_link = 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Authentication_Helper->get_access_token();
 			return $api_link;
 
