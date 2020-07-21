@@ -85,14 +85,13 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * This will check to see if the user has connected Social Warfare with
 		 * Facebook using the oAuth authentication. If so, we'll use the offical
 		 * authentication API to fetch share counts. If not, we'll use the open,
-		 * unauthenticated API.
+		 * unauthenticated API, but we'll do so via the frontend JavaScript call
+		 * later on via a different function.
 		 *
 		 */
-		$auth_helper = new SWP_Auth_Helper( $this->key );
-		$access_token = $auth_helper->get_access_token();
-
-		if( $this->access_token ) {
-			return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token='.$access_token;
+		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
+		if( $Authentication_Helper->get_access_token() ) {
+			return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $Authentication_Helper->get_access_token();
 		}
 
 		return 0;
