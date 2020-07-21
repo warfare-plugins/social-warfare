@@ -579,30 +579,59 @@ class SWP_Social_Network {
 		return (int) $share_counts;
 	}
 
+
+	/**
+	 * The update_share_count() method will update the share counts for this
+	 * social network for a given post. It will check first to ensure that the
+	 * new numbers coming in are higher than the old, previous numbers, and then
+	 * store the new numbers.
+	 *
+	 * @since  4.1.0 | 21 JUL 2020 | Created
+	 * @param  integer $post_id     The Post ID
+	 * @param  integer $share_count The new number of shares/activity
+	 * @return boolean True if updated, False if not updated.
+	 *
+	 */
 	public function update_share_count( $post_id, $share_count ) {
 
+		// Check if the new counts are higher than the old counts.
 		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
 		if( $previous_counts >= $share_count ) {
 			return false;
 		}
 
+		// Remove the old counts and replace them with the new counts.
 		delete_post_meta( $post_id, '_' . $this->key . '_shares');
 		update_post_meta( $post_id, '_' . $this->key . '_shares', $share_count );
 		return true;
 	}
 
+
+	/**
+	 * The update_total_counts() method is used to update the "total shares"
+	 * value which aggregates the share counts of all the active social networks
+	 * combined.
+	 *
+	 * @since  4.1.0 | 21 JUL 2020 | Created
+	 * @param  integer $post_id The Post ID
+	 * @return void
+	 *
+	 */
 	public function update_total_counts( $post_id ) {
 		global $swp_social_networks;
 
+		// Fetch the current share count for each active network.
 		$total_shares = 0;
 		foreach( $swp_social_networks as $Network ) {
 			if( $Network->is_active() ) {
+
+				// Add the share count to our running total.
 				$total_shares += $Network->get_share_count( $post_id );
 			}
 		}
 
+		// Remove the old total and replace it with the new one.
 		delete_post_meta( $post_id, '_total_shares' );
 		update_post_meta( $post_id, '_total_shares', $total_shares );
 	}
-
 }
