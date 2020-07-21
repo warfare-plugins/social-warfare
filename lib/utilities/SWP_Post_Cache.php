@@ -857,16 +857,23 @@ class SWP_Post_Cache {
 		 * Loop through the share counts for each network and store the new
 		 * counts in the databse in custom fields.
 		 *
+		 * @var $key The key corresponding to a social network (e.g. 'twitter')
+		 * @var $count The share count for this network.
+		 *
 		 */
 		foreach( $this->share_counts as $key => $count ) {
+
+			// Skip it if this is the total shares. This will be added later.
 			if ( 'total_shares' === $key ) {
 				continue;
 			}
 
+			// Access the Social_Network object and update its count.
 			$Current_Social_Network = $swp_social_networks[$key];
 			$Current_Social_Network->update_share_count( $this->post_id, $count );
 		}
 
+		// Update the total shares.
 		delete_post_meta( $this->post_id, '_total_shares');
 		update_post_meta( $this->post_id, '_total_shares', $this->share_counts['total_shares'] );
 	}
