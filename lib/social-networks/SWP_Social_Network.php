@@ -579,6 +579,18 @@ class SWP_Social_Network {
 		return (int) $share_counts;
 	}
 
+	public function update_share_count( $post_id, $share_count ) {
+
+		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
+		if( $previous_counts >= $share_count ) {
+			return false;
+		}
+
+		delete_post_meta( $post_id, '_' . $this->key . '_shares');
+		update_post_meta( $post_id, '_' . $this->key . '_shares', $share_count );
+		return true;
+	}
+
 	public function update_total_counts( $post_id ) {
 		global $swp_social_networks;
 

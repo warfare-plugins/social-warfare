@@ -840,6 +840,7 @@ class SWP_Post_Cache {
 	 *
 	 */
 	protected function cache_share_counts() {
+		global $swp_social_networks;
 
 
 		/**
@@ -862,15 +863,8 @@ class SWP_Post_Cache {
 				continue;
 			}
 
-			// Make sure this is set to true to only fetch a single field, and
-			// not an array of multiple fields.
-			$previous_counts = get_post_meta( $this->post_id, "_${key}_shares", true );
-			if( $previous_counts >= $this->share_counts[$key] ) {
-				continue;
-			}
-
-			delete_post_meta( $this->post_id, "_${key}_shares");
-			update_post_meta( $this->post_id, "_${key}_shares", $this->share_counts[$key] );
+			$Current_Social_Network = $swp_social_networks[$key];
+			$Current_Social_Network->update_share_count( $this->post_id, $count );
 		}
 
 		delete_post_meta( $this->post_id, '_total_shares');
