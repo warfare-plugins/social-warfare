@@ -595,7 +595,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			$access_token = $instance->get_access_token();
 
 			// No access tokens exists for this network.
-			if ( false == $access_token ) {
+			if ( false == $access_token || 'expired' == $access_token ) {
 				$link = $instance->get_authorization_link();
 				$display_text = $instance->get_auth_button_text();
 				$classname = "swp-button swp-{$network_key} swp-authorization-button";
