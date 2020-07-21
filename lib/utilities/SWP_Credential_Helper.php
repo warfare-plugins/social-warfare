@@ -138,7 +138,8 @@ class SWP_Credential_Helper {
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
 	 * @param  string $network 	The host service that provided the token.
 	 * @param  string $field	The type of token to fetch. Usually 'access_token'.
-	 * @return bool  			True iff updated, else false.
+	 * @param  string $data     The value of the field.
+	 * @return bool  			True if updated, else false.
 	 *
 	 */
 	public static function store_data( $network, $field, $data ) {

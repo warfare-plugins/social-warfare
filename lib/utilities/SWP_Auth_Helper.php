@@ -103,6 +103,7 @@ class SWP_Auth_Helper {
 	 *
 	 */
 	public function get_access_token() {
+
 		return $this->has_credentials ? $this->access_token : false;
 	}
 

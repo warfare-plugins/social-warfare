@@ -17,7 +17,7 @@
  *
  */
 class SWP_Notice {
-
+	public static $notice_keys = array();
 
 	/**
 	 * The Magic __construct method
