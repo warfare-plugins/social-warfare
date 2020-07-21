@@ -91,7 +91,10 @@ class SWP_Facebook extends SWP_Social_Network {
 		 */
 		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
 		if( $Authentication_Helper->get_access_token() ) {
-			return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $Authentication_Helper->get_access_token();
+			$api_link = 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Authentication_Helper->get_access_token();
+			return $api_link;
+
+			// return 'https://graph.facebook.com/v6.0/?id='.$url.'&fields=og_object{engagement}&access_token=' . $Authentication_Helper->get_access_token();
 		}
 
 		return 0;
@@ -122,6 +125,14 @@ class SWP_Facebook extends SWP_Social_Network {
 		// Parse the response to get integers.
 		if( !empty( $response->og_object ) && !empty( $response->og_object->engagement ) ) {
 			return $response->og_object->engagement->count;
+		}
+
+		if( !empty( $response->engagement ) ) {
+			$activity =
+			$response->engagement->reaction_count +
+			$response->engagement->comment_count +
+			$response->engagement->share_count;
+			return $activity;
 		}
 
 		// Return 0 if no valid counts were able to be extracted.
