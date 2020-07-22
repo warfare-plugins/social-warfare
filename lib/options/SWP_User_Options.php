@@ -68,7 +68,6 @@ class SWP_User_Options {
 		if( false == $this->unfiltered_options || empty( $this->unfiltered_options ) ) {
 			$this->unfiltered_options = array();
 		}
-
 		$this->user_options = $this->unfiltered_options;
 	}
 
@@ -295,9 +294,7 @@ class SWP_User_Options {
 			return;
 		}
 
-
 		$available_options = array_intersect( $defaults, $options );
-
 
 		/**
 		 * Loop through each of the options in the users options and validate
