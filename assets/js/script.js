@@ -1662,9 +1662,15 @@ window.socialWarfare = window.socialWarfare || {};
 				var shares, data;
 
 				// Parse the shares and add them up into a running total.
-				shares = socialWarfare.parseFacebookShares(response1[0]);
+				shares1 = socialWarfare.parseFacebookShares(response1[0]);
+				shares2 = 0;
 				if (swp_post_recovery_url) {
-					shares += socialWarfare.parseFacebookShares(response2[0]);
+					shares2 = socialWarfare.parseFacebookShares(response2[0]);
+				}
+
+				shares = shares1;
+				if( shares1 !== shares2 ) {
+					shares = shares1 + shares2;
 				}
 
 				// Compile the data and send out the AJAX request to store the count.

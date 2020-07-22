@@ -7,6 +7,7 @@
  *
  * @since  3.0.0   | Created | 02 MAR 2017
  * @access public
+ *
  */
 class SWP_Option_Textarea extends SWP_Option {
 
@@ -34,17 +35,8 @@ class SWP_Option_Textarea extends SWP_Option {
 		$this->set_default('');
         $this->value = $this->get_value();
         $this->default = '';
-
     }
 
-
-	public function register_available_values( $values ) {
-		$values[$this->key] = array(
-			'type'  => 'text'
-		);
-
-		return $values;
-	}
 
     /**
     * Renders the HTML to create the <input type="text" /> element.
