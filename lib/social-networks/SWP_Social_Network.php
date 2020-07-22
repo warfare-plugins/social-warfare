@@ -596,7 +596,7 @@ class SWP_Social_Network {
 
 		// Check if the new counts are higher than the old counts.
 		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
-		if( $previous_counts >= $share_count ) {
+		if( $previous_counts > $share_count ) {
 			return false;
 		}
 
