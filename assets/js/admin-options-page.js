@@ -142,9 +142,10 @@
 
 			var name = jQueryfield.attr('name');
 			var value;
-
 			if ('checkbox' === jQueryfield.attr('type')) {
 					value = jQueryfield.prop('checked');
+			} else if ( 'textarea' === jQueryfield.attr('type') ) {
+					value = jQueryfield.val();
 			} else {
 					value = jQueryfield.val();
 			}
@@ -161,7 +162,7 @@
 			var network = jQuery(this).data('network');
 			values.order_of_icons[network] = network;
 		});
-
+		console.log(values);
 		return values;
 	}
 
@@ -286,7 +287,7 @@
 				success: function(response) {
 					// Clear the loading screen
 					clearLoadingScreen(true);
-
+					console.log(response);
 					// Reset the default options variable
 					socialWarfare.defaultOptions = fetchAllOptions();
 

@@ -31,9 +31,20 @@ class SWP_Option_Textarea extends SWP_Option {
     */
     public function __construct( $name, $key ) {
         parent::__construct( $name, $key );
+		$this->set_default('');
+        $this->value = $this->get_value();
         $this->default = '';
+
     }
 
+
+	public function register_available_values( $values ) {
+		$values[$this->key] = array(
+			'type'  => 'text'
+		);
+
+		return $values;
+	}
 
     /**
     * Renders the HTML to create the <input type="text" /> element.
@@ -60,27 +71,5 @@ class SWP_Option_Textarea extends SWP_Option {
         $this->html = $html;
 
         return $html;
-    }
-
-
-    /**
-    * Defines the default value among this select's choices.
-    *
-    *
-    * @param mixed $value The key associated with the default option.
-    * @return SWP_Option_Select $this The calling instance, for method chaining.
-    *
-    */
-    public function set_default( $default ) {
-        if ( is_numeric( $default) ) :
-            settype( $default, 'string' );
-        endif;
-
-        if ( !is_string( $default )  ) :
-            $this->_throw( 'Please provide a default value as a string.' );
-        endif;
-
-        return parent::set_default( $default );
-
     }
 }
