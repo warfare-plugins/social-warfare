@@ -80,8 +80,9 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * Generate the API Share Count Request URL
 	 *
 	 * @since  1.0.0 | 06 APR 2018 | Created
-	 * @since  3.6.0 | 22 APR 2019 | Updated API to v3.2.
+	 * @since  3.6.0 | 22 APR 2019 | Updated Facebook API call to v3.2.
 	 * @since  4.0.1 | 02 APR 2020 | Added access_token based API call.
+	 * @since  4.1.0 | 21 JUL 2020 | Updated Facebook API call to 7.0.
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -116,40 +117,67 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * returns the share count as an integer.
 	 *
 	 * In the case here for Facebook, it will json_decode the response and then
-	 * look for and return the $response->og_object->engagement->count property.
+	 * look for and return the $response->engagement properties.
 	 *
 	 * @since  1.0.0 | 06 APR 2018 | Created
 	 * @since  3.6.0 | 22 APR 2019 | Updated to parse API v.3.2.
 	 * @since  4.0.0 | 03 DEC 2019 | Updated to parse API v.3.2 without token.
 	 * @since  4.1.0 | 18 APR 2020 | Updated to parse API v.6.0.
+	 * @since  4.1.0 | 21 JUL 2020 | Updated to parse API v.7.0.
+	 *                               Added authenticated API to core.
+	 *                               Added checking for expired tokens.
 	 * @access public
 	 * @param  string  $response The raw response returned from the API request
-	 * @return integer The number of shares reported from the API
+	 * @return integer The number of shares reported from the API. 0 on failure.
 	 *
 	 */
 	public function parse_api_response( $response ) {
 
-		// Parse the response into a generic PHP object.
+
+		/**
+		 * This is the response that came back from Facebook's server/API. Since
+		 * this response is JSON encoded, we'll decode it into a generic PHP
+		 * object so that we can access it's properties.
+		 *
+		 */
 		$response = json_decode( $response );
 
-		// Parse the response to get integers.
-		if( !empty( $response->og_object ) && !empty( $response->og_object->engagement ) ) {
-			return $response->og_object->engagement->count;
-		}
 
-
-
+		/**
+		 * This will catch the error code whenever Facebook responds by telling
+		 * us that the user's access token has expired. If so, we'll update the
+		 * access token to the value "expired" so that the rest of the plugin
+		 * can take action to fix it. The plugin will then stop using the access
+		 * token and will display a notice to the user telling them to update
+		 * their authentication.
+		 *
+		 */
 		if( !empty( $response->error ) && $response->error->code == 190 ) {
 			SWP_Credential_Helper::store_data('facebook', 'access_token', 'expired' );
 			return 0;
 		}
 
 
+		/**
+		 * I don't think this method is used anymore and it probably needs to be
+		 * removed. In the mean time, if it does detect the presence of these
+		 * fields, it will know what to do with them.
+		 *
+		 */
+		if( !empty( $response->og_object ) && !empty( $response->og_object->engagement ) ) {
+			return $response->og_object->engagement->count;
+		}
+
+
+		/**
+		 * This API returns the numbers as their individual parts: reactions,
+		 * comments, and shares. We'll add these numbers together before
+		 * returning the count to the caller.
+		 *
+		 */
 		if( !empty( $response->engagement ) ) {
-			$activity =
-			$response->engagement->reaction_count +
-			$response->engagement->comment_count +
-			$response->engagement->share_count;
+			$engagement = $response->engagement;
+			$activity = $engagement->reaction_count + $engagement->comment_count + $engagement->share_count;
 			return $activity;
 		}
 
