@@ -297,29 +297,57 @@ class SWP_Facebook extends SWP_Social_Network {
 	public function facebook_shares_update() {
 		global $swp_user_options;
 
+
+		/**
+		 * Verify that the data being submitted and later sent to the database
+		 * are actual numbers. This ensures that it's the data type that we
+		 * need, but it also prevents any kind of malicious code from being used.
+		 *
+		 */
 		if (!is_numeric( $_POST['share_counts'] ) || !is_numeric( $_POST['post_id'] ) ) {
 			echo 'Invalid data types sent to the server. No information processed.';
 			wp_die();
 		}
 
+		// Cast them to integers just in case they come in as numeric strings.
 		$activity = (int) $_POST['share_counts'];
 		$post_id  = (int) $_POST['post_id'];
 
-		$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 
-		if ( $activity >= $previous_activity ) {
-			echo 'Facebook Shares Updated: ' . $activity;
-
-			delete_post_meta( $post_id, '_facebook_shares' );
-			update_post_meta( $post_id, '_facebook_shares', $activity );
+		/**
+		 * We will attempt to update the share counts. If the new numbers are
+		 * higher than the old numbers, it will return true. If not, it will
+		 * return false. Either way, we'll echo a message so that we can know
+		 * what happened.
+		 *
+		 */
+		if ( true === $this->update_share_count( $post_id, $activity ) ) {
 			$this->update_total_counts( $post_id );
+			echo 'Facebook Shares Updated: ' . $activity;
 		} else {
+			$previous_activity = get_post_meta( $post_id, '_facebook_shares', true );
 			echo "Facebook share counts not updated. New counts ($activity) is not higher than previously saved counts ($previous_activity)";
 		}
 
 		wp_die();
 	}
 
+
+	/**
+	 * The display_access_token_notices() method is designed to imform the user
+	 * as to the status of their Facebook authentication with the plugin.
+	 *
+	 * 1. If the plugin has not been authenticated with Facebook, it will inform
+	 * the user of the benefits and encourage them to do so.
+	 *
+	 * 2. If the plugin has been authenticated, but it has expired, it will
+	 * inform them and encourage them to authenticate it again.
+	 *
+	 * @since  4.1.0 | 22 JUL 2020 | Created
+	 * @param  void
+	 * @return void
+	 *
+	 */
 	public function display_access_token_notices() {
 		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
 		$is_notice_needed      = false;
@@ -338,6 +366,7 @@ class SWP_Facebook extends SWP_Social_Network {
 			$notice_message   = '<b>Notice: Social Warfare\'s connection with Facebook has expired!</b> This happens by Facebook\'s design every couple of months. To give our plugin access to the most accurate, reliable and up-to-date data that we\'ll use to populate your share counts, just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Collections" section and get yourself set up now!<br /><br />P.S. We do NOT collect any of your data from the API to our servers or share it with any third parties. Absolutely None.';
 		}
 
+		// If a message was generated above, send it to the notice class.
 		if( true === $is_notice_needed ) {
 			new SWP_Notice( $notice_key, $notice_message );
 		}
