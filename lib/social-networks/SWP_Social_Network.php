@@ -142,7 +142,7 @@ class SWP_Social_Network {
 	 */
 	public $show_shares = false;
 
-
+	// TODO: Docblock
 	public $visible_on_amp = true;
 
 
@@ -356,6 +356,7 @@ class SWP_Social_Network {
 	 */
 	public function render_HTML( $panel_context , $echo = false ) {
 
+		// TODO: DOCBLOCK
 		if( false === $this->visible_on_amp && SWP_AMP::is_amp() ) {
 			return '';
 		}

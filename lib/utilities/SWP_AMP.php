@@ -1,5 +1,5 @@
 <?php
-
+// TODO: Document
 class SWP_AMP {
 
 	public static function is_amp() {
