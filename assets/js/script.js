@@ -1668,6 +1668,7 @@ window.socialWarfare = window.socialWarfare || {};
 					shares2 = socialWarfare.parseFacebookShares(response2[0]);
 				}
 
+				// This will eliminate adding together duplicate data.
 				shares = shares1;
 				if( shares1 !== shares2 ) {
 					shares = shares1 + shares2;
