@@ -99,12 +99,11 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * later on via a different function.
 		 *
 		 */
-		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
-		$access_token          = $Authentication_Helper->get_access_token();
+		$Facebook_Authentication = new SWP_Auth_Helper( $this->key );
 
 		// Check if they have a token and it's not expired.
-		if( false != $access_token && 'expired' !== $access_token ) {
-			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Authentication_Helper->get_access_token();
+		if( $Facebook_Authentication->has_valid_token() ) {
+			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Facebook_Authentication->get_access_token();
 		}
 
 		// Return 0 as no server side check will be done. We'll check via JS later.
