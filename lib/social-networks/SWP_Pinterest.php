@@ -222,12 +222,12 @@ class SWP_Pinterest extends SWP_Social_Network {
 
 			// If the user has uploaded one single Pinterest image...
 			} else {
+				$link = 'https://pinterest.com/pin/create/button/' .
+				'?url=' . $panel_context['post_data']['permalink'] .
+				'&media=' . urlencode( $pinterest_image ) .
+				'&description=' . urlencode( $pinterest_description );
 				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
-						'data-link="https://pinterest.com/pin/create/button/' .
-						'?url=' . $panel_context['post_data']['permalink'] .
-						'&media=' . urlencode( $pinterest_image ) .
-						'&description=' . urlencode( $pinterest_description ) .
-					'">';
+						'data-link="'.$link.'" '.SWP_AMP::display_if_amp('href="'.$link.'"').' >';
 			}
 
 		// If the user has not uploaded any Pinterest images.

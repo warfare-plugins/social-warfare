@@ -14,9 +14,16 @@ class SWP_AMP {
 		return false;
 	}
 
-	public static function hide_if_amp( $text ) {
+	public static function hide_if_amp( $text, $fallback = '' ) {
 		if ( self::is_amp() ) {
-			return '';
+			return $fallback;
+		}
+		return $text;
+	}
+
+	public static function display_if_amp( $text, $fallback = '' ) {
+		if ( false === self::is_amp() ) {
+			return $fallback;
 		}
 		return $text;
 	}

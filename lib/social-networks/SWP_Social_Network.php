@@ -143,6 +143,9 @@ class SWP_Social_Network {
 	public $show_shares = false;
 
 
+	public $visible_on_amp = true;
+
+
 	/**
 	 * A method to add this network object to the globally accessible array.
 	 *
@@ -352,6 +355,10 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function render_HTML( $panel_context , $echo = false ) {
+
+		if( false === $this->visible_on_amp && SWP_AMP::is_amp() ) {
+			return '';
+		}
 
 		$post_data = $panel_context['post_data'];
 		$share_counts = $panel_context['shares'];
