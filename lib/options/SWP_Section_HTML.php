@@ -146,9 +146,11 @@ class SWP_Section_HTML extends SWP_Option {
 
 		$auth_helper = new SWP_Auth_Helper( 'facebook' );
 		$access_token = $auth_helper->get_access_token();
-		if ( $access_token ) {
+		var_dump(false == $access_token);
+		if( false != $access_token && 'expired' !== $access_token ) {
 			$facebook_status = '<span style="color:green;">Connected</span>';
-			$facebook_debug_link = '<span style="color:green;">https://graph.facebook.com/v6.0/?id={url_placeholder}&fields=og_object{engagement}&access_token='.$access_token.'</span>';
+			$facebook_debug_link = '<span style="color:green;">https://graph.facebook.com/v6.0/?id={url_placeholder}&fields=engagement&access_token='.$access_token.'</span>';
+			$facebook_token = '<span style="color:green;">'.$access_token.'</span>';
 		} else {
 			$facebook_status = '<span style="color:red;">Not Connected</span>';
 			$facebook_debug_link = '<span style="color:red;">Not Connected</span>';
@@ -170,6 +172,7 @@ class SWP_Section_HTML extends SWP_Option {
 				<tr><td><b>cURL</b></td><td>' . $curl_status . '</td></tr>
 				<tr><td><b>Facebook</b></td><td>' . $facebook_status . '</td></tr>
 				<tr><td><b>FB Debug Link</b></td><td>' . $facebook_debug_link . '</td></tr>
+				<tr><td><b>FB Access Token</b></td><td>' . $facebook_token . '</td></tr>
 				<tr><td><h2>Plugin Statuses</h2></td><td></td></tr>
 				<tr><td><b>Theme Name</b></td><td>' . $theme['Name'] . '</td></tr>
 				<tr><td><b>Theme Version</b></td><td>' . $theme['Version'] . '</td></tr>

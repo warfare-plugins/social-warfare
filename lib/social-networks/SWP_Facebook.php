@@ -103,7 +103,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$access_token          = $Authentication_Helper->get_access_token();
 
 		// Check if they have a token and it's not expired.
-		if( false !== empty( $access_token ) && 'expired' !== $access_token ) {
+		if( false != $access_token && 'expired' !== $access_token ) {
 			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Authentication_Helper->get_access_token();
 		}
 
@@ -223,7 +223,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	private function register_ajax_cache_callbacks() {
-		if( false === $this->is_active() || ( false !== empty( $this->access_token ) && 'expired' !== $this->access_token ) ) {
+		if( false === $this->is_active() || ( false != $access_token && 'expired' !== $access_token ) ) {
 			return;
 		}
 
