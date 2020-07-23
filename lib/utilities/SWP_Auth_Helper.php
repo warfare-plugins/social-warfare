@@ -107,6 +107,18 @@ class SWP_Auth_Helper {
 		return $this->has_credentials ? $this->access_token : false;
 	}
 
+	public function has_valid_token() {
+		if ( false == $this->get_access_token() ) {
+			return false;
+		}
+
+		if( 'expired' == $this->get_access_token() ) {
+			return false;
+		}
+		
+		return true;
+	}
+
 
 	/**
 	 * Provides the SWP API secret, if it exists.
