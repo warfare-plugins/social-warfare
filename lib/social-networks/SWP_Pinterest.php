@@ -221,6 +221,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link pinterest_multi_image_select" data-count="0" data-link="#" data-pins=\''.$json_pin_data.'\'>';
 
 			// If the user has uploaded one single Pinterest image...
+			// TODO: Document
 			} else {
 				$link = 'https://pinterest.com/pin/create/button/' .
 				'?url=' . $panel_context['post_data']['permalink'] .
@@ -232,13 +233,20 @@ class SWP_Pinterest extends SWP_Social_Network {
 
 		// If the user has not uploaded any Pinterest images.
 		} else {
-			$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
-					'onClick="var e=document.createElement(\'script\');
-						e.setAttribute(\'type\',\'text/javascript\');
-						e.setAttribute(\'charset\',\'UTF-8\');
-						e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
-						document.body.appendChild(e);
-					" >';
+			if( SWP_AMP::is_amp() ) {
+				$link = 'https://pinterest.com/pin/create/button/' .
+				'?url=' . $panel_context['post_data']['permalink'];
+				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
+						'data-link="'.$link.'" href="'.$link.'" >';
+			} else {
+				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
+						'onClick="var e=document.createElement(\'script\');
+							e.setAttribute(\'type\',\'text/javascript\');
+							e.setAttribute(\'charset\',\'UTF-8\');
+							e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
+							document.body.appendChild(e);
+						" >';
+			}
 		}
 
 		 //* Begin parent class method.
