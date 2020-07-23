@@ -1659,7 +1659,7 @@ window.socialWarfare = window.socialWarfare || {};
 			// Use this to ensure that we wait until the API requests are done.
 			$.when( $.get( url1 ), $.get( url2 ) )
 			.then(function(response1, response2) {
-				var shares, data;
+				var shares, shares1, shares2, data;
 
 				// Parse the shares and add them up into a running total.
 				shares1 = socialWarfare.parseFacebookShares(response1[0]);
