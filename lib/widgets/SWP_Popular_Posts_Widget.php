@@ -490,9 +490,9 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 							$thumb_width = preg_replace("/[^0-9]/", "", $thumb_width);
 							$thumb_height = preg_replace("/[^0-9]/", "", $thumb_height);
 
-							$thumbnail_html .= '<img style="width:' . $thumb_width . 'px;height:' . $thumb_height . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
+							$thumbnail_html .= '<img style="width:' . $thumb_width . 'px;height:' . $thumb_height . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" '. SWP_AMP::hide_if_amp('nopin="nopin"') . ' />';
 						else:
-							$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title()) . '" nopin="nopin" />';
+							$thumbnail_html .= '<img style="width:' . $thumb_size . 'px;height:' . $thumb_size . 'px;" class="swp_pop_thumb" src="' . $thumbnail_url[0] . '" title="' . str_replace('"','\'',get_the_title()) . '" alt="' . str_replace('"','\'',get_the_title())  . '" '. SWP_AMP::hide_if_amp('nopin="nopin"') . '  />';
 						endif;
 
 						$thumbnail_html .= '</a>';

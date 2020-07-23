@@ -101,13 +101,15 @@ class SWP_Script {
 			SWP_VERSION
 		);
 
-		wp_enqueue_script(
-			'social_warfare_script',
-			SWP_PLUGIN_URL . "/assets/js/script{$suffix}.js",
-			array( 'jquery' ),
-			SWP_VERSION,
-			true
-		);
+		if( false === SWP_AMP::is_amp() ) {
+			wp_enqueue_script(
+				'social_warfare_script',
+				SWP_PLUGIN_URL . "/assets/js/script{$suffix}.js",
+				array( 'jquery' ),
+				SWP_VERSION,
+				true
+			);
+		}
 
 		$this->localize_variables();
 
@@ -162,6 +164,11 @@ class SWP_Script {
 	 *
 	 */
 	public function footer_functions() {
+
+		if( SWP_AMP::is_amp() ) {
+			return;
+		}
+
 		// Fetch a few variables.
 		$info['postID']           = get_the_ID();
 		$info['footer_output']    = '';

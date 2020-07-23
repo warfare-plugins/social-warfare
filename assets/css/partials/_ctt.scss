@@ -236,4 +236,33 @@ a.swp_CTT {
 			}
 		}
 	}
+
+	&.style7 {
+		.sw-click-to-tweet {
+			@include transition();
+			background: #f9f9f9;
+		    color: #1DA1F2;
+		    border-radius: 10px;
+		    transform: skewX(-15deg);
+		    // box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+			border:7px dashed #e5e5e5;
+			.sw-ctt-text, .sw-ctt-btn {
+				@include transition();
+				transform: skewX(15deg);
+			}
+		}
+
+		&:hover {
+			.sw-click-to-tweet {
+				@include transition();
+				background:#ffffff;
+				border-color:#DDDDDD;
+				transform:skewX(-10deg) scale(1.02);
+				.sw-ctt-text, .sw-ctt-btn {
+					@include transition();
+					transform: skewX(10deg);
+				}
+			}
+		}
+	}
 }
