@@ -94,6 +94,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @since  3.6.0 | 22 APR 2019 | Updated Facebook API call to v3.2.
 	 * @since  4.0.1 | 02 APR 2020 | Added access_token based API call.
 	 * @since  4.1.0 | 21 JUL 2020 | Updated Facebook API call to 7.0.
+	 * @since  4.1.0 | 23 JUL 2020 | Added use of has_valid_token() method.
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -111,7 +112,14 @@ class SWP_Facebook extends SWP_Social_Network {
 		 *
 		 */
 		if( $this->Authentication->has_valid_token() ) {
-			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $this->Authentication->get_access_token();
+
+			// Organize the necessary URL parameters.
+			$query['id']           = $url;
+			$query['fields']       = 'engagement';
+			$query['access_token'] = $this->Authentication->get_access_token();
+
+			// Return the compiled API link.
+			return 'https://graph.facebook.com/v7.0/?' . http_build_query( $query );
 		}
 
 		// Return 0 as no server side check will be done. We'll check via JS later.
