@@ -26,6 +26,17 @@ class SWP_Facebook extends SWP_Social_Network {
 
 
 	/**
+	 * The private $Authorization property will contain an instance of the
+	 * SWP_Auth_Helper class which will allow us access to things like the
+	 * get_access_token() and has_valid_token() methods.
+	 *
+	 * @var Object
+	 *
+	 */
+	private $Authentication;
+
+
+	/**
 	 * The Magic __construct Method
 	 *
 	 * This method is used to instantiate the social network object. It does three things.
@@ -54,8 +65,8 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * we can fetch share counts through the authenticated API.
 		 *
 		 */
-		$auth_helper = new SWP_Auth_Helper( $this->key );
-		add_filter( 'swp_authorizations', array( $auth_helper, 'add_to_authorizations' ) );
+		$this->Authentication = new SWP_Auth_Helper( $this->key );
+		add_filter( 'swp_authorizations', array( $this->Authentication, 'add_to_authorizations' ) );
 
 
 		/**
@@ -65,7 +76,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * unauthenticated API.
 		 *
 		 */
-		$this->access_token = $auth_helper->get_access_token();
+		$this->access_token = $this->Authentication->get_access_token();
 
 		// This is the link that is clicked on to share an article to their network.
 		$this->base_share_url = 'https://www.facebook.com/share.php?u=';
@@ -99,11 +110,8 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * later on via a different function.
 		 *
 		 */
-		$Facebook_Authentication = new SWP_Auth_Helper( $this->key );
-
-		// Check if they have a token and it's not expired.
-		if( $Facebook_Authentication->has_valid_token() ) {
-			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $Facebook_Authentication->get_access_token();
+		if( $this->Authentication->has_valid_token() ) {
+			return 'https://graph.facebook.com/v7.0/?id='.$url.'&fields=engagement&access_token=' . $this->Authentication->get_access_token();
 		}
 
 		// Return 0 as no server side check will be done. We'll check via JS later.
@@ -222,7 +230,8 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	private function register_ajax_cache_callbacks() {
-		if( false === $this->is_active() || ( false != $access_token && 'expired' !== $access_token ) ) {
+
+		if( false === $this->is_active() || $this->Authentication->has_valid_token() ) {
 			return;
 		}
 
@@ -348,18 +357,17 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	public function display_access_token_notices() {
-		$Authentication_Helper = new SWP_Auth_Helper( $this->key );
 		$is_notice_needed      = false;
 
 		// If there is no token.
-		if( false === $Authentication_Helper->get_access_token() ) {
+		if( false === $this->Authentication->get_access_token() ) {
 			$is_notice_needed = true;
 			$notice_key       = 'facebook_not_authenticated';
 			$notice_message   = '<b>Notice: Facebook is not authenticated with Social Warfare.</b> We\'ve added the ability to authenticate and connect Social Warfare with Facebook. This allows us access to their official API which we use for collecting more accurate share counts. Just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Connections" section and get yourself set up now!';
 		}
 
 		// If the token is expired.
-		if( 'expired' === $Authentication_Helper->get_access_token() ) {
+		if( 'expired' === $this->Authentication->get_access_token() ) {
 			$is_notice_needed = true;
 			$notice_key       = 'fb_token_expired_' . date('MY') ;
 			$notice_message   = '<b>Notice: Social Warfare\'s connection with Facebook has expired!</b> This happens by Facebook\'s design every couple of months. To give our plugin access to the most accurate, reliable and up-to-date data that we\'ll use to populate your share counts, just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Collections" section and get yourself set up now!<br /><br />P.S. We do NOT collect any of your data from the API to our servers or share it with any third parties. Absolutely None.';
