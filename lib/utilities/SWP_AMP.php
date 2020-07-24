@@ -26,6 +26,12 @@ class SWP_AMP {
 	 * Each of the conditionals below are used by different plugins to determine
 	 * if their plugin is currently on an AMP endpoint or not.
 	 *
+	 * Example Usage:
+	 *
+	 * if( true === SWP_AMP::is_amp() ) {
+	 *     // Do something.
+	 * }
+	 *
 	 * @since  4.0.2 | 23 JUL 2020 | Created
 	 * @param  void
 	 * @return boolean True if AMP endpoint; False if not.
@@ -68,6 +74,11 @@ class SWP_AMP {
 	 * page being rendered is not AMP. It will return an empty string (hence
 	 * it will hide it) if it is being accessed via an AMP endpoint.
 	 *
+	 * Example Usage:
+	 *
+	 * $attribute = SWP_AMP::hide_if_amp( 'some_attribute' );
+	 * $div = '<div ' . $attribute . '>';
+	 *
 	 * @since  4.0.2 | 24 JUL 2020 | Created
 	 * @param  string $text     The text to be shown or hidden.
 	 * @param  string $fallback An optional fallback to return instead of an empty string.
@@ -90,6 +101,11 @@ class SWP_AMP {
 	 * The display_if_amp() method will return the supplied string if the current
 	 * page being rendered is AMP. It will return an empty string if it is being
 	 * accessed via a non-AMP endpoint.
+	 *
+	 * Example Usage:
+	 *
+	 * $attribute = SWP_AMP::display_if_amp( 'some_attribute' );
+	 * $div = '<div ' . $attribute . '>';
 	 *
 	 * @since  4.0.2 | 24 JUL 2020 | Created
 	 * @param  string $text     The text to be shown or hidden.
