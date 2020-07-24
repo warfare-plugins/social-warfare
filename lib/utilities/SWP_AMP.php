@@ -123,5 +123,4 @@ class SWP_AMP {
 		// If this is an AMP endpoint, return the supplied text.
 		return $text;
 	}
-
 }

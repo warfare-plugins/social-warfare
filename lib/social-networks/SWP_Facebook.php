@@ -30,6 +30,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * SWP_Auth_Helper class which will allow us access to things like the
 	 * get_access_token() and has_valid_token() methods.
 	 *
+	 * @see class SWP_Auth_Helper in /lib/utilities/SWP_Auth_Helper.php
 	 * @var Object
 	 *
 	 */
