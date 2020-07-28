@@ -194,6 +194,13 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 4.0.2 (28 JUL 2020) = 
+* Added Facebook authentications to core to allow for faster and more reliable share counts when authenticated.
+* Added full AMP compatibility to the plugin.
+* Fixed the custom CSS field on the settings page so that it saves properly now.
+* Added dashboard notifications to alert users as to the state of their Facebook authentications.
+
+
 = 4.0.1 (14 APR 2020) =
 * New: Added the ability to connect Social Warfare with Facebook. We use this to fetch follow counts for pages and faster, more accurate share counts for the share buttons. Go to Social Warfare -> Social Identity -> Social Network Connections to get started.
 * New: Added a notice about clearing caches after updates.
