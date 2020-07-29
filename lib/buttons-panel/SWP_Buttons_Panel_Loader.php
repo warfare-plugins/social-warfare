@@ -174,7 +174,7 @@ class SWP_Buttons_panel_Loader {
 		global $post;
 
 		  // Ensure it's not an embedded post
-		  if ( is_singular() && $post->ID !== get_queried_object_id() ) {
+		  if ( is_singular() && ( $post->ID !== get_queried_object_id() || is_embed() ) ) {
 			return $content;
 		  }
 
