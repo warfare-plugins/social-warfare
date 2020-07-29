@@ -876,6 +876,7 @@ class SWP_Post_Cache {
 		// Update the total shares.
 		delete_post_meta( $this->post_id, '_total_shares');
 		update_post_meta( $this->post_id, '_total_shares', $this->share_counts['total_shares'] );
+		do_action('swp_analytics_record_shares', $this->post_id, $this->share_counts );
 	}
 
 
