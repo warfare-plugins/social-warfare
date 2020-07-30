@@ -386,8 +386,8 @@ window.socialWarfare = window.socialWarfare || {};
 		 * share windows to pop out.
 		 *
 		 */
-		$('.nc_tweet, a.swp_CTT, .swp-hover-pin-button').off('click');
-		$('.nc_tweet, a.swp_CTT, .swp-hover-pin-button').on('click', function(event) {
+		$('.nc_tweet, a.swp_CTT').off('click');
+		$('.nc_tweet, a.swp_CTT').on('click', function(event) {
 
 
 			/**
@@ -454,7 +454,7 @@ window.socialWarfare = window.socialWarfare || {};
 			 * we need to make sure that this attribute exists.
 			 *
 			 */
-			if ('undefined' == typeof $(this).data('link')) {
+			if ('undefined' == typeof $(this).data('link') && false === $(this).is('.swp-hover-pin-button')) {
 				return event;
 			}
 
@@ -1486,7 +1486,8 @@ window.socialWarfare = window.socialWarfare || {};
 	  // Entering the button from the image triggers mouseleave and mouseenter.
 	  // Keep the button where it would otherwise disappear due to a mouseleave.
 	  image.on("mouseleave", function(event) {
-		  if (event.relatedTarget.className == 'swp-hover-pin-button') {
+
+		  if (event.relatedTarget != null && event.relatedTarget.className == 'swp-hover-pin-button') {
 			return;
 		  }
 		  $(".swp-hover-pin-button").remove();
@@ -1555,11 +1556,11 @@ window.socialWarfare = window.socialWarfare || {};
 	  var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 
 	  function openPinterestDialogue(event) {
-      var offsetLeft = $(window).width() - 632 * 2;
-      var offsetTop = $(window).height() - 253 * 2;
+      var offsetLeft = ($(window).width() - 550) / 2;
+      var offsetTop = ($(window).height() - 775) / 2;
       var position = ',top=' + offsetTop + ',left=' + offsetLeft;
 
-		  window.open(shareLink, 'Pinterest', 'width=632,height=253,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' + position);
+		  window.open(shareLink, 'Pinterest', 'width=550,height=775,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' + position);
 		  socialWarfare.trackClick('pin_image');
 		  $(".swp-hover-pin-button").remove();
 	  }

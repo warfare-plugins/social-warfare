@@ -158,6 +158,16 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			'none'
 		);
 
+		add_submenu_page(
+			'social-warfare',
+			'Social Warfare Settings',
+			'Settings',
+			'manage_options',
+			'social-warfare',
+			array( $this, 'render_HTML'),
+			1
+		);
+
 		// Hook into the CSS and Javascript Enqueue process for this specific page
 		add_action( 'admin_print_styles-' . $swp_menu, array( $this, 'admin_css' ) );
 		add_action( 'admin_print_scripts-' . $swp_menu, array( $this, 'admin_js' ) );
