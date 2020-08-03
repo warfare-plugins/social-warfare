@@ -1556,11 +1556,11 @@ window.socialWarfare = window.socialWarfare || {};
 	  var shareLink = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI(media) + '&url=' + encodeURI(document.URL) + '&is_video=false' + '&description=' + encodeURIComponent(description);
 
 	  function openPinterestDialogue(event) {
-      var offsetLeft = ($(window).width() - 550) / 2;
-      var offsetTop = ($(window).height() - 775) / 2;
+      var offsetLeft = ($(window).width() - 775) / 2;
+      var offsetTop = ($(window).height() - 550) / 2;
       var position = ',top=' + offsetTop + ',left=' + offsetLeft;
 
-		  window.open(shareLink, 'Pinterest', 'width=550,height=775,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' + position);
+		  window.open(shareLink, 'Pinterest', 'width=775,height=550,status=0,toolbar=0,menubar=0,location=1,scrollbars=1' + position);
 		  socialWarfare.trackClick('pin_image');
 		  $(".swp-hover-pin-button").remove();
 	  }
