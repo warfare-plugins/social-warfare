@@ -286,7 +286,8 @@ class SWP_Buttons_panel_Loader {
 		 * invisible, and echo it to the screen.
 		 *
 		 */
-		$staticHorizontal = new SWP_Buttons_Panel();
+		$staticHorizontal = new SWP_Buttons_Panel( array(), true );
+
 		$html  = '<div class="swp-hidden-panel-wrap" style="display: none; visibility: collapse; opacity: 0">';
 		$html .= $staticHorizontal->render_html();
 		$html .= '</div>';
