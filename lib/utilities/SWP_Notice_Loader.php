@@ -171,7 +171,7 @@ class SWP_Notice_Loader {
 	private function activate_clear_caches_notice() {
 
 		$key = 'clear_caches_' . SWP_VERSION;
-		$message = '<h3>Social Warfare has been updated. Please Clear Your Caching Plugins.</h3><b>Congratulations!</b> You\'ve just updated to the latest version of Social Warfare. After updating any plugin or theme, you should be sure to <b>clear all of your site\'s caches</b> (W3 Total Cache, WP Super Cache, etc.) to ensure that all of the newest CSS and Javascript files are being loaded. Loading outdated files is the number one cause of bugs after plugin and theme updates, and <b>clearing your site\'s caches is the solution.</b>';
+		$message = '<h3>Social Warfare has been updated. If you have installed a caching plugin, please Clear Your Caching Plugins.</h3><b>Congratulations!</b> You\'ve just updated to the latest version of Social Warfare. After updating any plugin or theme, you should be sure to <b>clear all of your site\'s caches</b> (W3 Total Cache, WP Super Cache, etc.) to ensure that all of the newest CSS and Javascript files are being loaded. Loading outdated files is the number one cause of bugs after plugin and theme updates, and <b>clearing your site\'s caches is the solution.</b> Consult your caching plugin documentation for more information about how to clear the cache.';
 
 		new SWP_Notice( $key, $message );
 	}
