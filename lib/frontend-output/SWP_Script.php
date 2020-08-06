@@ -138,13 +138,6 @@ class SWP_Script {
 		);
 
 		wp_enqueue_script(
-			'chartjs',
-			SWP_PLUGIN_URL . "/assets/js/chart{$suffix}.js",
-			array( 'jquery' ),
-			SWP_VERSION
-		);
-
-		wp_enqueue_script(
 			'social_warfare_admin_script',
 			SWP_PLUGIN_URL . "/assets/js/admin{$suffix}.js",
 			array( 'jquery' ),

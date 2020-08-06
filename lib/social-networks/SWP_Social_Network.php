@@ -594,7 +594,8 @@ class SWP_Social_Network {
 	 * new numbers coming in are higher than the old, previous numbers, and then
 	 * store the new numbers.
 	 *
-	 * @since  4.1.0 | 21 JUL 2020 | Created
+	 * @since  4.0.2 | 21 JUL 2020 | Created
+	 * @since  4.1.0 | 06 AUG 2020 | Added a check for force_new_shares debugging.
 	 * @param  integer $post_id     The Post ID
 	 * @param  integer $share_count The new number of shares/activity
 	 * @return boolean True if updated, False if not updated.
@@ -602,9 +603,17 @@ class SWP_Social_Network {
 	 */
 	public function update_share_count( $post_id, $share_count ) {
 
-		// Check if the new counts are higher than the old counts.
+		/**
+		 * Check if the new counts are higher than the old counts.
+		 *
+		 * However, right here we also check to see if the
+		 * ?swp_debug=force_new_shares URL parameter has been set. This will
+		 * force us to accept the new share counts even if they are lower than
+		 * the previously stored share counts.
+		 * 
+		 */
 		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
-		if( $previous_counts > $share_count ) {
+		if( $previous_counts > $share_count && false == SWP_Utility::debug( 'force_new_shares' ) ) {
 			return false;
 		}
 
