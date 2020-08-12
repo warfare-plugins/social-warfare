@@ -413,7 +413,7 @@ var swpWidget, widgetSubmit;
 
 		//* Begin Temp code only for 3.4.1
 		var status = $("#swp_twitter_use_open_graph").val()
-		if (status == 'false') {
+		if (status == 0) {
 			$('.swpmb-meta-container[data-type=twitter]').slideDown()
 		} else {
 			$('.swpmb-meta-container[data-type=twitter]').slideUp()
