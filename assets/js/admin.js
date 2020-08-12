@@ -300,7 +300,7 @@ var swpWidget, widgetSubmit;
 	 * @return {[type]} [description]
 	 */
 	function fillContainer(container) {
-		var positions = ['full-width', 'left', 'right'];
+		var positions = ['full-width', 'left', 'right', 'centered'];
 		var type = $(container).data('type');
 
 		positions.forEach(function(position) {
@@ -369,15 +369,15 @@ var swpWidget, widgetSubmit;
 	//* The next version should have a more long-term sustainable way to manage
 	//* post-editor fields with dependencies.
 	function setTempConditionalField() {
-		$('[field=#swp_twitter_use_open_graph]').click(function(event) {
+		$('.twitter_og_toggle .swpmb-switch').click(function(event) {
 			var target = $("#swp_twitter_use_open_graph");
 
-			if (target.attr('value') == 'true') {
-				$('.swpmb-meta-container[data-type=twitter]').slideUp()
-				target.attr('value', 'true');
-			} else {
+			if (target.val() == 1) {
 				$('.swpmb-meta-container[data-type=twitter]').slideDown()
-				target.attr('value', 'false');
+				target.attr('value', 0);
+			} else {
+				$('.swpmb-meta-container[data-type=twitter]').slideUp()
+				target.attr('value', 1);
 			}
 
 			socialWarfareAdmin.resizeImageFields();
