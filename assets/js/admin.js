@@ -419,8 +419,8 @@ var swpWidget, widgetSubmit;
 		setTempConditionalField();
 		//* End Temp code
 
-		$('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
-		$("#social_warfare.ui-sortable-handle").click(socialWarfareAdmin.resizeImageFields);  //* The open/close handle WP gives us. Images need to be resized if it was closed then opened.
+//		$('ul.swpmb-media-list').find(".swpmb-overlay").click(socialWarfareAdmin.resizeImageFields);
+//		$("#social_warfare.ui-sortable-handle").click(socialWarfareAdmin.resizeImageFields);  //* The open/close handle WP gives us. Images need to be resized if it was closed then opened.
 		socialWarfareAdmin.addImageEditListeners()
 
 		$("#social_warfare.postbox").show();
@@ -428,7 +428,8 @@ var swpWidget, widgetSubmit;
 
 	//* These elements are only created once an image exists
 	socialWarfareAdmin.addImageEditListeners = function() {
-		$('.swpmb-edit-media, .swpmb-remove-media').on('click', function() {setTimeout(socialWarfareAdmin.resizeImageFields, 50)});
+		$(document).on('change', '.swpmb-image_advanced', socialWarfareAdmin.resizeImageFields );
+		$(document).on('click', '.swpmb-edit-media, .swpmb-remove-media', function() {setTimeout(socialWarfareAdmin.resizeImageFields, 200)});
 	}
 
 	// The network key is stored in a classname `swp-network-$network`.
