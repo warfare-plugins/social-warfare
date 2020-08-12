@@ -369,15 +369,13 @@ var swpWidget, widgetSubmit;
 	//* The next version should have a more long-term sustainable way to manage
 	//* post-editor fields with dependencies.
 	function setTempConditionalField() {
-		$('.twitter_og_toggle .swpmb-switch').click(function(event) {
+		$('#social_warfare .twitter_og_toggle').on('click', function(event) {
 			var target = $("#swp_twitter_use_open_graph");
 
-			if (target.val() == 1) {
-				$('.swpmb-meta-container[data-type=twitter]').slideDown()
-				target.attr('value', 0);
-			} else {
+			if(jQuery('#swp_twitter_use_open_graph').is(':checked')) {
 				$('.swpmb-meta-container[data-type=twitter]').slideUp()
-				target.attr('value', 1);
+			} else {
+				$('.swpmb-meta-container[data-type=twitter]').slideDown()
 			}
 
 			socialWarfareAdmin.resizeImageFields();
@@ -412,12 +410,12 @@ var swpWidget, widgetSubmit;
 		setTimeout(socialWarfareAdmin.resizeImageFields, 3000);
 
 		//* Begin Temp code only for 3.4.1
-		var status = $("#swp_twitter_use_open_graph").val()
-		if (status == 0) {
-			$('.swpmb-meta-container[data-type=twitter]').slideDown()
+		if(jQuery('#swp_twitter_use_open_graph').is(':checked')) {
+			$('.swpmb-meta-container[data-type=twitter]').hide()
 		} else {
-			$('.swpmb-meta-container[data-type=twitter]').slideUp()
+			$('.swpmb-meta-container[data-type=twitter]').show()
 		}
+
 		setTempConditionalField();
 		//* End Temp code
 
