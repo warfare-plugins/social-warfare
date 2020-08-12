@@ -428,8 +428,7 @@ var swpWidget, widgetSubmit;
 
 	//* These elements are only created once an image exists
 	socialWarfareAdmin.addImageEditListeners = function() {
-		$('.swpmb-edit-media, .swpmb-remove-media').off(socialWarfareAdmin.resizeImageFields);
-		$('.swpmb-edit-media, .swpmb-remove-media').on(socialWarfareAdmin.resizeImageFields);
+		$('.swpmb-edit-media, .swpmb-remove-media').on('click', function() {setTimeout(socialWarfareAdmin.resizeImageFields, 50)});
 	}
 
 	// The network key is stored in a classname `swp-network-$network`.
