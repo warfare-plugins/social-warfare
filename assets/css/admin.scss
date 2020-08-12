@@ -80,7 +80,7 @@
 }
 
 #social_warfare .swpmb-image-item,
-#social_warfare .swpmb-media-preview,
+#social_warfare .swpmb-attachment-preview,
 #social_warfare .swpmb-media-content .centered,
 #social_warfare .swpmb-media-content img {
 	width: 100%;
@@ -90,22 +90,49 @@
 	transform: none;
 }
 
-.wp-core-ui #social_warfare a.swpmb-add-media.button {
-	display: block;
-	background: #30394f;
-	color: #fff;
-	font-size: 12px;
-	line-height: 1;
-	text-align: center;
-	vertical-align: middle;
-	padding: 15px 25px;
-	margin: 0;
-	box-shadow: none;
-	border: none;
-	height: auto;
+.wp-core-ui #social_warfare {
+	#swp_meta_box_heading {
+		display:none;
+	}
+	.attachment {
+		position:relative;
+		padding:0 0 12px 0;
+		background:#ffffff;
+		.attachment-preview {
+			&:before {
+				padding:0;
+				content:'';
+			}
+			.thumbnail {
+				position:relative;
+				.centered {
+					position:relative;
+					img {
+						position:relative;
+					}
+				}
+			}
+		}
+	}
+	.swpmb-media-add a.button {
+		display: block;
+		background: #30394f;
+		color: #fff;
+		font-size: 12px;
+		line-height: 1;
+		text-align: center;
+		vertical-align: middle;
+		padding: 15px 25px;
+		margin: 0;
+		box-shadow: none;
+		border: none;
+		height: auto;
+	}
 }
-
-.wp-core-ui #social_warfare a.swpmb-add-media.button:hover {
+.swpmb-media-status {
+	display:none;
+}
+.wp-core-ui #social_warfare .swpmb-media-add a.button:hover {
 	background: #EE464F;
 }
 

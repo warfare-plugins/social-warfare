@@ -1,3 +1,55 @@
+/*
+ * DOM element rendering detection
+ * https://davidwalsh.name/detect-node-insertion
+ */
+@keyframes chartjs-render-animation {
+	from {
+		opacity: 0.99;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.chartjs-render-monitor {
+	animation: chartjs-render-animation 0.001s;
+}
+
+/*
+ * DOM element resizing detection
+ * https://github.com/marcj/css-element-queries
+ */
+.chartjs-size-monitor,
+.chartjs-size-monitor-expand,
+.chartjs-size-monitor-shrink {
+	position: absolute;
+	direction: ltr;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	pointer-events: none;
+	visibility: hidden;
+	z-index: -1;
+}
+
+.chartjs-size-monitor-expand > div {
+	position: absolute;
+	width: 1000000px;
+	height: 1000000px;
+	left: 0;
+	top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+	position: absolute;
+	width: 200%;
+	height: 200%;
+	left: 0;
+	top: 0;
+}
+
 #social_warfare.postbox {
 	display: none;
 }
@@ -72,7 +124,7 @@
 }
 
 #social_warfare .swpmb-image-item,
-#social_warfare .swpmb-media-preview,
+#social_warfare .swpmb-attachment-preview,
 #social_warfare .swpmb-media-content .centered,
 #social_warfare .swpmb-media-content img {
 	width: 100%;
@@ -82,7 +134,34 @@
 	transform: none;
 }
 
-.wp-core-ui #social_warfare a.swpmb-add-media.button {
+.wp-core-ui #social_warfare #swp_meta_box_heading {
+	display: none;
+}
+
+.wp-core-ui #social_warfare .attachment {
+	position: relative;
+	padding: 0 0 12px 0;
+	background: #ffffff;
+}
+
+.wp-core-ui #social_warfare .attachment .attachment-preview:before {
+	padding: 0;
+	content: '';
+}
+
+.wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail {
+	position: relative;
+}
+
+.wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail .centered {
+	position: relative;
+}
+
+.wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail .centered img {
+	position: relative;
+}
+
+.wp-core-ui #social_warfare .swpmb-media-add a.button {
 	display: block;
 	background: #30394f;
 	color: #fff;
@@ -97,7 +176,11 @@
 	height: auto;
 }
 
-.wp-core-ui #social_warfare a.swpmb-add-media.button:hover {
+.swpmb-media-status {
+	display: none;
+}
+
+.wp-core-ui #social_warfare .swpmb-media-add a.button:hover {
 	background: #EE464F;
 }
 
