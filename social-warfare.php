@@ -4,7 +4,7 @@
  * Plugin Name: Social Warfare
  * Plugin URI:  https://warfareplugins.com
  * Description: A plugin to maximize social shares and drive more traffic using the fastest and most intelligent share buttons on the market, calls to action via in-post click-to-tweets, popular posts widgets based on share popularity, link-shortening, Google Analytics and much, much more!
- * Version:     4.0.2
+ * Version:     4.0.9.a
  * Author:      Warfare Plugins
  * Author URI:  https://warfareplugins.com
  * Text Domain: social-warfare
@@ -18,7 +18,7 @@ defined( 'WPINC' ) || die;
  * for things like includes and requires.
  *
  */
-define( 'SWP_VERSION', '4.0.2' );
+define( 'SWP_VERSION', '4.0.9.a' );
 define( 'SWP_DEV_VERSION', '2020.07.29.12:45.share-text-fix' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
 define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
