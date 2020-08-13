@@ -159,6 +159,7 @@
 
 .wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail .centered img {
 	position: relative;
+	max-width: 100%;
 }
 
 .wp-core-ui #social_warfare .swpmb-media-add a.button {
