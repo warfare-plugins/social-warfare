@@ -172,6 +172,7 @@
 	background: #000;
 	opacity: 0;
 	transition: opacity .2s;
+	height: 97%;
 }
 
 .wp-core-ui #social_warfare .attachment:hover .swpmb-image-actions {
