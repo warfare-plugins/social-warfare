@@ -162,6 +162,26 @@
 	max-width: 100%;
 }
 
+.wp-core-ui #social_warfare .attachment .swpmb-image-overlay {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #000;
+	opacity: 0;
+	transition: opacity .2s;
+}
+
+.wp-core-ui #social_warfare .attachment:hover .swpmb-image-actions {
+	opacity: 1;
+}
+
+.wp-core-ui #social_warfare .attachment:hover .swpmb-image-overlay {
+	opacity: .6;
+}
+
 .wp-core-ui #social_warfare .swpmb-media-add a.button {
 	display: block;
 	background: #30394f;

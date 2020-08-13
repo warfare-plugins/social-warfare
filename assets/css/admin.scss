@@ -114,6 +114,24 @@
 				}
 			}
 		}
+		.swpmb-image-overlay {
+		    position: absolute;
+		    z-index: 1;
+		    top: 0;
+		    bottom: 0;
+		    left: 0;
+		    right: 0;
+		    background: #000;
+		    opacity: 0;
+		    transition: opacity .2s;
+		}
+
+		&:hover .swpmb-image-actions {
+			opacity: 1;
+		}
+		&:hover .swpmb-image-overlay {
+			opacity: .6;
+		}
 	}
 	.swpmb-media-add a.button {
 		display: block;
