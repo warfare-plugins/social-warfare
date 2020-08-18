@@ -79,6 +79,8 @@
 	max-width: 200px;
 	float: right;
 	font-size: 12px;
+	min-width: 50px;
+	text-align: center;
 }
 
 .swp_CountDown.swp_blue {
