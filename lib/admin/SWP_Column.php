@@ -57,7 +57,7 @@ class SWP_Column {
 	 *
 	 */
 	public function create_social_shares_column( $defaults ) {
-		$defaults['swSocialShares'] = 'Social Shares';
+		$defaults['swSocialShares'] = array('Social Shares', 'desc');
 		return $defaults;
 	}
 
