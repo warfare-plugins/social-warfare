@@ -57,7 +57,7 @@ class SWP_Column {
 	 *
 	 */
 	public function create_social_shares_column( $defaults ) {
-		$defaults['swSocialShares'] = array('Social Shares', 'desc');
+		$defaults['swSocialShares'] = 'Social Shares';
 		return $defaults;
 	}
 
@@ -94,12 +94,13 @@ class SWP_Column {
 	 * Make the column sortable
 	 *
 	 * @since  1.4.0 | 01 JAN 2018 | Created
+	 * @since  4.2.0 | 22 AUG 2020 | Made the sort default to desc.
 	 * @param  array The array of registered columns.
 	 * @return array The array modified columns.
 	 *
 	 */
     public function make_social_shares_sortable( $columns ) {
-    	$columns['swSocialShares'] = 'Social Shares';
+    	$columns['swSocialShares'] = array( 'Social Shares', 'desc' );
     	return $columns;
     }
 
