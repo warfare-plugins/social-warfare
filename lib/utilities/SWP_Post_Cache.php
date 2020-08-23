@@ -1051,5 +1051,7 @@ class SWP_Post_Cache {
 		delete_post_meta( $this->post_id, '_totes');
 		delete_post_meta( $this->post_id, '_email_shares');
 		delete_post_meta( $this->post_id, '_more_shares');
+		delete_post_meta( $this->post_id, '_print_shares');
+		delete_post_meta( $this->post_id, '_telegram_shares');
 	}
 }
