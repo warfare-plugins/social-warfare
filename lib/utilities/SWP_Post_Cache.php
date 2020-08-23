@@ -868,6 +868,10 @@ class SWP_Post_Cache {
 				continue;
 			}
 
+			if( 0 === $swp_social_networks[$key]->get_api_link('') ) {
+				continue;
+			}
+
 			// Access the Social_Network object and update its count.
 			$Current_Social_Network = $swp_social_networks[$key];
 			$Current_Social_Network->update_share_count( $this->post_id, $count );
@@ -876,6 +880,7 @@ class SWP_Post_Cache {
 		// Update the total shares.
 		delete_post_meta( $this->post_id, '_total_shares');
 		update_post_meta( $this->post_id, '_total_shares', $this->share_counts['total_shares'] );
+		$this->cleanup_remnants();
 		do_action('swp_analytics_record_shares', $this->post_id, $this->share_counts );
 	}
 
@@ -1040,5 +1045,11 @@ class SWP_Post_Cache {
 		 */
 		$this->permalinks[$key] = array_merge( $this->permalinks[$key], $new_links );
 
+	}
+
+	public function cleanup_remnants() {
+		delete_post_meta( $this->post_id, '_totes');
+		delete_post_meta( $this->post_id, '_email_shares');
+		delete_post_meta( $this->post_id, '_more_shares');
 	}
 }
