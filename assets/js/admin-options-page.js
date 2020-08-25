@@ -4,7 +4,7 @@
 
 	window.onload = function() {
 		/*********************************************************
-			Temporary patch for the custom color se lects.
+			Temporary patch for the custom color selects.
 		*********************************************************/
 		/*
 		*  Temp patch on the Visual Options colors.
@@ -197,14 +197,40 @@
 		});
 	}
 
+
+	/**
+	 * The activateSelectedTab() function will hide all of the tabbed sections
+	 * and then reveal the one that was clicked on.
+	 *
+	 * @since  1.0.0 | UNKNOWN | Created
+	 * @since  4.2.0 | 25 AUG 2020 | Added existence check for tab content.
+	 * @param  string tab The unique key of the selected tab.
+	 * @return void
+	 *
+	 */
 	function activateSelectedTab(tab) {
+
+		// Bail if the requested tab doesn't exist on this page.
+		if( 0 === jQuery('[data-link="'+ tab +'"]').length ) {
+			return;
+		};
+
+		// Hide all of the tabs in one go.
 		jQuery('.sw-admin-tab').hide();
+
+		// Reveal the selected tab.
 		jQuery('#' + tab).show();
+
+		// Update the items in the menu so the right one has the active class.
 		jQuery('.sw-header-menu li').removeClass('sw-active-tab');
 		jQuery('[data-link="'+ tab +'"]').parents('li').addClass('sw-active-tab');
+
+		// Run some special stuff if we're on the styles tab now.
 		if ('swp_styles' === tab) {
 			socialWarfare.activateHoverStates();
 		}
+
+		// Update all of the conditional fields...just in case.
 		socialWarfareAdmin.conditionalFields();
 	}
 
