@@ -307,7 +307,8 @@
 			};
 
 			// Send the POST request
-			jQuery.post({
+			jQuery.ajax({
+				type: 'POST',
 				url: ajaxurl,
 				data: data,
 				success: function(response) {
@@ -316,7 +317,7 @@
 					console.log(response);
 					// Reset the default options variable
 					socialWarfare.defaultOptions = fetchAllOptions();
-
+					console.log('woohoo');
 					saveColorToggle();
 				}
 

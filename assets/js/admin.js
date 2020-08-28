@@ -218,7 +218,8 @@ var swpWidget, widgetSubmit;
 
 			var parent = $(this).parents(".swp-dismiss-notice");
 
-			$.post({
+			$.ajax({
+				type: 'POST',
 				url: ajaxurl,
 				data: {
 					action: 'dismiss',
