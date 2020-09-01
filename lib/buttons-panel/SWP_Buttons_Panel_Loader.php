@@ -115,13 +115,13 @@ class SWP_Buttons_panel_Loader {
 		// Only hook into the_content filter if is_singular() is true or
 		// they don't use excerpts on the archive pages.
 		if( is_singular() || true === SWP_Utility::get_option( 'full_content' ) ) {
-			add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 20 );
-			add_filter( 'the_content', array( $this, 'add_content_locator' ), 20);
+			add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ) , 1000 );
+			add_filter( 'the_content', array( $this, 'add_content_locator' ), 1000);
 		}
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
 		if ( !is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
-			add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ) );
+			add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper', 1000 ) );
 		}
 	}
 
