@@ -491,8 +491,8 @@ var swpWidget, widgetSubmit;
 
 	socialWarfareAdmin.triggerDeletePostMeta = function(event) {
 		event.preventDefault()
-		var message = "This will delete all Social Warfare meta keys for this post, including Open Graph, Twitter, and Pinterest descriptions and images. If you want to keep these, please copy them to an offline file first, and paste them back in after the reset. To reset, enter reset_post_meta";
-		var prompt = window.prompt(message, 'reset_or_cancel');
+		var message = "This will delete all Social Warfare data (share counts and custom fields) for this post, including Open Graph, Twitter, and Pinterest descriptions and images. If you want to keep these, please copy them to an offline file first, and paste them back in after the reset. To reset, enter reset_post_meta";
+		var prompt = window.prompt(message, '');
 		console.log('prompt', prompt)
 		if (prompt == 'reset_post_meta') {
 			jQuery.post({
