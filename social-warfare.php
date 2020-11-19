@@ -17,11 +17,13 @@ defined( 'WPINC' ) || die;
  * We create these constants here so that we can use them throughout the plugin
  * for things like includes and requires.
  *
+ * @since 4.2.0 | 19 NOV 2020 | The str_replace() removes any linebreaks in the string.
+ *
  */
 define( 'SWP_VERSION', '4.1.0' );
 define( 'SWP_DEV_VERSION', '2020.08.18.Master' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
-define( 'SWP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'SWP_PLUGIN_URL', str_replace( array("\r", "\n") , '', untrailingslashit( plugin_dir_url( __FILE__ ) ) ) );
 define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
 
