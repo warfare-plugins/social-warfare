@@ -597,6 +597,8 @@ class SWP_Post_Cache {
 			 */
 			$this->add_trailing_slashes( $key );
 
+			$this->add_utm_codes( $key );
+
 		}
 
 	}
@@ -1038,6 +1040,7 @@ class SWP_Post_Cache {
 			}
 		}
 
+
 		/**
 		 * Merge our newly created permalinks array into the class property array
 		 * whilst specifically targeting the array that lives in the indice for
@@ -1046,6 +1049,71 @@ class SWP_Post_Cache {
 		$this->permalinks[$key] = array_merge( $this->permalinks[$key], $new_links );
 
 	}
+
+
+	/**
+	 * This function will add a version of the URL with UTM codes so we check a
+	 * network for share counts for both versions of the link. Now we will check
+	 * for the following versions of a link:
+	 *
+	 * Note: This is currently done exclusively for Pinterest, but other networks
+	 * can be added instantaneously by adding them to the $eligible_networks array below.
+	 *
+	 * /my-blog-post/
+	 * /my-blog-post/?utm=blahblah
+	 *
+	 * @since 4.2.0 | 30 NOV 2020 | Created
+	 * @param string $key The key corresponding to the current social network.
+	 * @return void All data is stored in class properties.
+	 *
+	 */
+	protected function add_utm_codes( $key ) {
+		global $swp_social_networks;
+
+		// The list of networks that we will check both URL versions for.
+		$eligible_networks = array('pinterest');
+
+		// If this isn't one of those networks, bail out early.
+		if( false === in_array( $key, $eligible_networks ) ) {
+			return false;
+		}
+
+		// If Google Analytics are turned off, then just bail out.
+		if( false === SWP_Utility::get_option( 'google_analytics' ) ) {
+			return;
+		}
+
+
+		// If UTM is turned off on Pinterest, and this is Pinterest, just bail out.
+		if( false === SWP_Utility::get_option( 'utm_on_pins' ) && 'pinterest' === $key ) {
+			return;
+		}
+
+
+		/**
+		 * We'll add our newly created permalinks to this now-empty array. Later
+		 * we'll merge this back into the original class property array.
+		 *
+		 */
+		$new_links = array();
+
+		// The data needed by the get_shareable_permalink() method below.
+		$post_data = array(
+			'ID'        => $this->post_id,
+			'permalink' => $this->permalinks[$key][0]
+		);
+
+		$new_links[] = urldecode( $swp_social_networks[$key]->get_shareable_permalink( $post_data ) );
+
+
+		/**
+		 * Merge our newly created permalinks array into the class property array
+		 * whilst specifically targeting the array that lives in the indice for
+		 * this network.
+		 */
+		$this->permalinks[$key] = array_merge( $this->permalinks[$key], $new_links );
+	}
+
 
 	public function cleanup_remnants() {
 		delete_post_meta( $this->post_id, '_totes');
