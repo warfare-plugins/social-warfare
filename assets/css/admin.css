@@ -1,7 +1,3 @@
-/*
- * DOM element rendering detection
- * https://davidwalsh.name/detect-node-insertion
- */
 @keyframes chartjs-render-animation {
 	from {
 		opacity: 0.99;
@@ -15,10 +11,6 @@
 	animation: chartjs-render-animation 0.001s;
 }
 
-/*
- * DOM element resizing detection
- * https://github.com/marcj/css-element-queries
- */
 .chartjs-size-monitor,
 .chartjs-size-monitor-expand,
 .chartjs-size-monitor-shrink {
