@@ -195,6 +195,11 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 = 4.2.1 (07 DEC 2020) =
+The 4.2 release was a major release that introduced a whole suite of social analytics
+tools. As you might imagine with a release featuring that many new features, and
+new lines of code, there were a few hiccups along the way. But we've spent the weekend
+getting them all fixed right up and now here we are with 4.2.1.
+
 * Fix for broken admin pages due to some JS errors on the analytics charts.
 * Fix for division by zero errors in the social optimizer PHP file.
 * Fix for a few other minor bugs and glitches.
