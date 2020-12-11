@@ -648,6 +648,52 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_more {
 	color: #ffffff;
 }
 
+.swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_parler,
+html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_parler:hover,
+body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_parler:not(:hover) {
+	border: 1px solid #be1e2c;
+}
+
+.swp_social_panel.swp_default_full_color .swp_parler,
+html body .swp_social_panel.swp_individual_full_color .swp_parler:hover,
+body .swp_social_panel.swp_other_full_color:hover .swp_parler {
+	background: #be1e2c;
+	border: 1px solid #921722;
+}
+
+.swp_social_panel.swp_three_dee.swp_default_full_color .swp_parler,
+html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_parler:hover,
+body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_parler {
+	border-bottom: 3px solid #921722;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_parler a,
+html body .swp_social_panel.swp_individual_color_outlines .swp_parler a:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_parler a {
+	color: #be1e2c;
+}
+
+.swp_social_panel.swp_default_color_outlines .swp_parler,
+html body .swp_social_panel.swp_individual_color_outlines .swp_parler:hover,
+body .swp_social_panel.swp_other_color_outlines:hover .swp_parler {
+	background: transparent;
+	border: 1px solid #be1e2c;
+}
+
+.swp-parler {
+	background: #be1e2c;
+	border-color: #921722;
+}
+
+.swp-parler a {
+	color: #be1e2c;
+}
+
+.swp-parler a:hover {
+	background: #921722;
+	color: #ffffff;
+}
+
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_periscope,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_periscope:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_periscope:not(:hover) {
@@ -1976,6 +2022,10 @@ i.swp_more_icon:before {
 	content: "B";
 }
 
+i.swp_parler_icon:before {
+	content: "0";
+}
+
 i.swp_periscope_icon:before {
 	content: "y";
 }
@@ -2604,6 +2654,32 @@ a.swp_CTT.style6:hover .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style6:hover .
 	text-decoration: none;
 }
 
+a.swp_CTT.style7 .sw-click-to-tweet {
+	transition: all 0.2s linear;
+	background: #f9f9f9;
+	color: #1DA1F2;
+	border-radius: 10px;
+	transform: skewX(-15deg);
+	border: 7px dashed #e5e5e5;
+}
+
+a.swp_CTT.style7 .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style7 .sw-click-to-tweet .sw-ctt-btn {
+	transition: all 0.2s linear;
+	transform: skewX(15deg);
+}
+
+a.swp_CTT.style7:hover .sw-click-to-tweet {
+	transition: all 0.2s linear;
+	background: #ffffff;
+	border-color: #DDDDDD;
+	transform: skewX(-10deg) scale(1.02);
+}
+
+a.swp_CTT.style7:hover .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style7:hover .sw-click-to-tweet .sw-ctt-btn {
+	transition: all 0.2s linear;
+	transform: skewX(10deg);
+}
+
 /**
 /// Frontend Style
 **/
@@ -2835,6 +2911,20 @@ div.swp-more a {
 
 div.swp-more a:hover {
 	background: #ea1723;
+	color: #ffffff;
+}
+
+div.swp-parler {
+	background: #be1e2c;
+	border-color: #921722;
+}
+
+div.swp-parler a {
+	color: #be1e2c;
+}
+
+div.swp-parler a:hover {
+	background: #921722;
 	color: #ffffff;
 }
 
