@@ -696,6 +696,10 @@ p.sw-subtitle.sw-registration-text {
 	content: "B";
 }
 
+.sw-parler-icon:before {
+	content: "0";
+}
+
 .sw-periscope-icon:before {
 	content: "y";
 }
@@ -840,6 +844,11 @@ p.sw-subtitle.sw-registration-text {
 .sw-s.sw-more-icon {
 	background-color: #ee464f;
 	border-color: #ea1723;
+}
+
+.sw-s.sw-parler-icon {
+	background-color: #be1e2c;
+	border-color: #921722;
 }
 
 .sw-s.sw-periscope-icon {
