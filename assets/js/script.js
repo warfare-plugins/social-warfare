@@ -192,7 +192,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 */
 		var time = Date.now();
 		var scrollDelay = 50;
-		$(window).scroll(function() {
+		$(window).on('scroll', function() {
 			if ((time + scrollDelay - Date.now()) < 0) {
 				socialWarfare.updateFloatingButtons();
 				time = Date.now();
@@ -839,7 +839,7 @@ window.socialWarfare = window.socialWarfare || {};
 		});
 
 		// Handle presses of the "Escape" button on the keyboard.
-		$(document).keyup(function(e) {
+		$(document).on('keyup', function(e) {
 			if (e.key === "Escape") {
 
 				// Fade the lightbox out of view and scroll it to the top so that it
@@ -1925,7 +1925,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 * causes the isMobile() check to flip from true to false or vica versa.
 		 *
 		 */
-		$(window).resize(socialWarfare.onWindowResize);
+		$(window).on('resize', socialWarfare.onWindowResize);
 
 		if ('undefined' !== typeof swpPinIt && swpPinIt.enabled) {
 			socialWarfare.enablePinterestSaveButtons();
