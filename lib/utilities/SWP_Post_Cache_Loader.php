@@ -11,7 +11,7 @@
  * This class is essentially a loader class for the post_cache objects.
  *
  * @package   SocialWarfare\Functions\Utilities
- * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @copyright Copyright (c) 2020, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     3.1.0 | 20 JUN 2018 | Created
  * @access    public
@@ -24,6 +24,12 @@ class SWP_Post_Cache_Loader {
     * Array of the currently loaded SWP_Post_Cache objects, indexed by post_id.
     * These are meant to be accessed by the Buttons Panel, for example.
     *
+    * Example Data:
+    * $post_caches = array(
+    * 	282 => post cache object for post 282
+    * 	983 => post cache object for post 983
+    * )
+    *
     * @var array
     *
     */
@@ -31,7 +37,8 @@ class SWP_Post_Cache_Loader {
 
 
 	/**
-	 * Load the class and queue up the admin hooks.
+	 * Load the class and queue up the admin hooks. This will run a few common
+	 * cache related taskes whenever a post is updated.
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @since  3.4.0 | 17 OCT 2018 | Removed legacy AJAX methods (hooked here).
@@ -94,7 +101,11 @@ class SWP_Post_Cache_Loader {
 
 		/**
 		 * Instantiate a post cache object for this post, and then call the
-		 * public method delete_timestamp();
+		 * public method delete_timestamp(); This will make it so that the next
+		 * time the post is loaded, we will not used cached data to populate
+		 * the cache object, but will rebuild the cache with fresh data. This
+		 * way the cache will reflect any changes that were made when the post
+		 * was updated. 
 		 *
 		 */
 		$Post_Cache = new SWP_Post_Cache( $post_id );

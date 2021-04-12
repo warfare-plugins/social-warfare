@@ -67,6 +67,15 @@ class SWP_Post_Cache {
 
 
 	/**
+	 * A collection of permalinks for which to check for share counts.
+	 *
+	 * @var array
+	 *
+	 */
+	public $permalinks = array();
+
+
+	/**
 	 * The Magic Construct Method
 	 *
 	 * This method 1.) instantiates the object
@@ -551,6 +560,16 @@ class SWP_Post_Cache {
 		 *
 		 */
 		foreach( $swp_social_networks as $key => $object) {
+
+
+			/**
+			 * Ensure that the array object is already setup to recieve the
+			 * permalinks.
+			 *
+			 */
+			if( !isset( $this->permalinks[$key] ) ) {
+				$this->permalinks[$key] = array();
+			}
 
 
 			/**
