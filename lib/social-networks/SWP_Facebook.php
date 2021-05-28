@@ -116,7 +116,6 @@ class SWP_Facebook extends SWP_Social_Network {
 
 			// Organize the necessary URL parameters.
 			$query['id']           = $url;
-			$query['id']           = 'https://google.com';
 			$query['fields']       = 'engagement';
 			$query['access_token'] = $this->Authentication->get_access_token();
 
