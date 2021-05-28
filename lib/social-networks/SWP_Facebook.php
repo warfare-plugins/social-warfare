@@ -116,6 +116,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 			// Organize the necessary URL parameters.
 			$query['id']           = $url;
+			$query['id']           = 'https://google.com';
 			$query['fields']       = 'engagement';
 			$query['access_token'] = $this->Authentication->get_access_token();
 
@@ -171,6 +172,36 @@ class SWP_Facebook extends SWP_Social_Network {
 		if( !empty( $response->error ) && $response->error->code == 190 ) {
 			SWP_Credential_Helper::store_data('facebook', 'access_token', 'expired' );
 			return 0;
+		}
+
+
+		/**
+		 * This will parse the currently formatted responses from the API as of
+		 * May 28, 2021. This will grab the engagement counts object which contains
+		 * an integer for reaction_count, comment_count, share_count, and
+		 * comment_plugin_count. This will simply loop through them and add them
+		 * all into a single integer.
+		 *
+		 * @since  4.3.0 | 28 MAY 2021 | Added this entire block of code.
+		 */
+		$engagement = 0;
+
+		// Check if the engagement object exists in this response.
+		if( !empty( $response->engagement ) ) {
+
+			// Loop through each item in that response.
+			foreach( $response->engagement as $this_engagement ) {
+
+				// Ensure that the response is valid.
+				if( is_numeric( $this_engagment ) ) {
+
+					// Add the response to our ongoing total.
+					$engagment += $this_engagment;
+				}
+			}
+
+			// Return the total.
+			return $engagement;
 		}
 
 
