@@ -116,11 +116,12 @@ class SWP_Facebook extends SWP_Social_Network {
 
 			// Organize the necessary URL parameters.
 			$query['id']           = $url;
+//			$query['id']           = 'https://google.com';
 			$query['fields']       = 'engagement';
 			$query['access_token'] = $this->Authentication->get_access_token();
 
 			// Return the compiled API link.
-			return 'https://graph.facebook.com/v7.0/?' . http_build_query( $query );
+			return 'https://graph.facebook.com/v10.0/?' . http_build_query( $query );
 		}
 
 		// Return 0 as no server side check will be done. We'll check via JS later.
