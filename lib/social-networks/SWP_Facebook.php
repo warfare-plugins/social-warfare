@@ -138,7 +138,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		$previous_check_timestamp = get_post_meta( $post_id, '_facebook_og_id_timestamp', true );
 		if( $previous_check_timestamp > time() - 3600 ) {
-			// return false;
+			return false;
 		}
 
 		// Organize the necessary URL parameters.
