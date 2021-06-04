@@ -96,6 +96,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @since  4.0.1 | 02 APR 2020 | Added access_token based API call.
 	 * @since  4.1.0 | 21 JUL 2020 | Updated Facebook API call to 7.0.
 	 * @since  4.1.0 | 23 JUL 2020 | Added use of has_valid_token() method.
+	 * @since  4.3.0 | 04 JUN 2021 | Added call for get_og_id().
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
@@ -119,7 +120,10 @@ class SWP_Facebook extends SWP_Social_Network {
 			$paremeters['fields']       = 'engagement';
 			$paremeters['access_token'] = $this->Authentication->get_access_token();
 
+			// Compile the API URL
 			$api_url = 'https://graph.facebook.com/v10.0/?' . http_build_query( $paremeters );
+
+			// Return the API link to the caller.
 			return $api_url;
 		}
 
@@ -182,6 +186,7 @@ class SWP_Facebook extends SWP_Social_Network {
 			return false;
 		}
 
+
 		/**
 		 * If everything checks out above, we'll proceed to make an API request.
 		 * The basic goal here is to give Facebook the URL and then use the
@@ -211,6 +216,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		update_post_meta( $post_id, '_facebook_og_id_timestamp', time() );
 		return false;
 	}
+
 
 	/**
 	 * The parse_api_response() method parses the raw response from the API and
