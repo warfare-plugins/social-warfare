@@ -112,22 +112,53 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * later on via a different function.
 		 *
 		 */
-		if( $this->Authentication->has_valid_token() ) {
+		if( $this->Authentication->has_valid_token() && false !== $this->get_og_id($url) ) {
 
-			// Organize the necessary URL parameters.
-			$query['id']           = $url;
-//			$query['id']           = 'https://google.com';
-			$query['fields']       = 'engagement';
-			$query['access_token'] = $this->Authentication->get_access_token();
+			$paremeters['id'] = $this->get_og_id( $url );
+			$paremeters['fields'] = 'engagement';
+			$paremeters['access_token'] = $this->Authentication->get_access_token();
 
-			// Return the compiled API link.
-			return 'https://graph.facebook.com/v10.0/?' . http_build_query( $query );
+			$api_url = 'https://graph.facebook.com/v10.0/?' . http_build_query( $paremeters );
+			return $api_url;
 		}
 
 		// Return 0 as no server side check will be done. We'll check via JS later.
 		return 0;
 	}
 
+
+	private function get_og_id( $url ) {
+
+		$post_id = get_the_id();
+		$facebook_id = get_post_meta( $post_id, '_facebook_og_id', true );
+
+		if( false !== $facebook_id && !empty( $facebook_id ) ) {
+			return $facebook_id;
+		}
+
+		$previous_check_timestamp = get_post_meta( $post_id, '_facebook_og_id_timestamp', true );
+		if( $previous_check_timestamp > time() - 3600 ) {
+			// return false;
+		}
+
+		// Organize the necessary URL parameters.
+		$query['access_token'] = $this->Authentication->get_access_token();
+		$query['fields']       = 'engagement,og_object';
+		$query['id']           = $url;
+
+		// Return the compiled API link.
+		$api_url = 'https://graph.facebook.com/v10.0/?' . http_build_query( $query );
+		$response = SWP_CURL::file_get_contents_curl( $api_url );
+		$response = json_decode( $response );
+
+		if( !empty( $response->og_object ) ) {
+			update_post_meta( $post_id, '_facebook_og_id', $response->og_object->id );
+			return $response->og_object->id;
+		}
+
+		update_post_meta( $post_id, '_facebook_og_id_timestamp', time() );
+		return false;
+	}
 
 	/**
 	 * The parse_api_response() method parses the raw response from the API and
@@ -193,10 +224,10 @@ class SWP_Facebook extends SWP_Social_Network {
 			foreach( $response->engagement as $this_engagement ) {
 
 				// Ensure that the response is valid.
-				if( is_numeric( $this_engagment ) ) {
+				if( is_numeric( $this_engagement ) ) {
 
 					// Add the response to our ongoing total.
-					$engagment += $this_engagment;
+					$engagement += $this_engagement;
 				}
 			}
 
