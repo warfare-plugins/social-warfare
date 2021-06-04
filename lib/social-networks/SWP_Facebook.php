@@ -114,8 +114,9 @@ class SWP_Facebook extends SWP_Social_Network {
 		 */
 		if( $this->Authentication->has_valid_token() && false !== $this->get_og_id($url) ) {
 
-			$paremeters['id'] = $this->get_og_id( $url );
-			$paremeters['fields'] = 'engagement';
+			// Organize the necessary URL parameters.
+			$paremeters['id']           = $this->get_og_id( $url );
+			$paremeters['fields']       = 'engagement';
 			$paremeters['access_token'] = $this->Authentication->get_access_token();
 
 			$api_url = 'https://graph.facebook.com/v10.0/?' . http_build_query( $paremeters );
@@ -127,35 +128,86 @@ class SWP_Facebook extends SWP_Social_Network {
 	}
 
 
+
+	/**
+	 * Thie method exists to fetch and store the Facebook Open Graph ID of a
+	 * particular URL. For some reason, when we request "?fields=engagement" with
+	 * a URL in the ID parameter, it returns much different results than when
+	 * requesting it with the OG ID in the ID parameter.
+	 *
+	 * Example: URL is https://beta.warfareplugins.com/index.php/2020/10/21/hello-world/
+	 *          OG ID is 4578410412187144
+	 *
+	 * @since 4.3.0 | 04 JUN 2021 | Created
+	 * @param  String $url The URL of the post being checked.
+	 * @return Integer/Bool The ID number (integer) or false on failure (bool)
+	 *
+	 */
 	private function get_og_id( $url ) {
 
-		$post_id = get_the_id();
-		$facebook_id = get_post_meta( $post_id, '_facebook_og_id', true );
+		// Fetch the post ID
+		$post_id     = get_the_id();
 
+
+		/**
+		 * Check if the Facebook ID is already stored in a post meta field. If
+		 * we succeed in fetching the POST ID, we'll store it in this field so
+		 * that we don't have to waste an API call on future uses in order to
+		 * use this ID. So the first thing we do is check to see if we already
+		 * have one. If so, we'll return it instead of continuing on.
+		 *
+		 */
+		$facebook_id = get_post_meta( $post_id, '_facebook_og_id', true );
 		if( false !== $facebook_id && !empty( $facebook_id ) ) {
 			return $facebook_id;
 		}
 
-		$previous_check_timestamp = get_post_meta( $post_id, '_facebook_og_id_timestamp', true );
-		if( $previous_check_timestamp > time() - 3600 ) {
+
+		// Bail if the user doesn't have Facebook authenticated.
+		if( false == $this->Authentication->has_valid_token() ) {
 			return false;
 		}
+
+
+		/**
+		 * Check to make sure that we haven't already attempted to fetch this ID
+		 * within the past 10 minutes. We only get so many API requests per URL
+		 * per app so we need to throttle our attempts to reach the API here. As
+		 * such, if the attempt fails, we won't try again for a minimum of 10
+		 * minutes between calls.
+		 *
+		 */
+		$previous_check_timestamp = get_post_meta( $post_id, '_facebook_og_id_timestamp', true );
+		if( $previous_check_timestamp > time() - 600 ) {
+			return false;
+		}
+
+		/**
+		 * If everything checks out above, we'll proceed to make an API request.
+		 * The basic goal here is to give Facebook the URL and then use the
+		 * response to have the Facebook OG ID.
+		 *
+		 */
 
 		// Organize the necessary URL parameters.
 		$query['access_token'] = $this->Authentication->get_access_token();
 		$query['fields']       = 'engagement,og_object';
 		$query['id']           = $url;
 
-		// Return the compiled API link.
+		// Compile the API link.
 		$api_url = 'https://graph.facebook.com/v10.0/?' . http_build_query( $query );
+
+		// Make and parse the API call.
 		$response = SWP_CURL::file_get_contents_curl( $api_url );
 		$response = json_decode( $response );
 
+		// If the object we need exists, then store the ID in post meta and return it.
 		if( !empty( $response->og_object ) ) {
 			update_post_meta( $post_id, '_facebook_og_id', $response->og_object->id );
 			return $response->og_object->id;
 		}
 
+		// If the call failed, store a timestamp and return false.
 		update_post_meta( $post_id, '_facebook_og_id_timestamp', time() );
 		return false;
 	}
