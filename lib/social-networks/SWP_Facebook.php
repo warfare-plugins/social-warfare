@@ -200,7 +200,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		$query['id']           = $url;
 
 		// Compile the API link.
-		$api_url = 'https://graph.facebook.com/v10.0/?' . http_build_query( $query );
+		$api_url = 'https://graph.facebook.com/v11.0/?' . http_build_query( $query );
 
 		// Make and parse the API call.
 		$response = SWP_CURL::file_get_contents_curl( $api_url );
