@@ -371,6 +371,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			'product.group',
 			'product.item',
 			'profile',
+			'recipe',
 			'restaurant.menu',
 			'restaurant.menu_item',
 			'restaurant.menu_section',
