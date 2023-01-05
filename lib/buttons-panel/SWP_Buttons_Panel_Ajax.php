@@ -135,7 +135,7 @@ class SWP_Buttons_Panel_Ajax {
 
 			// Set up the $args to be passed to the SWP_Buttons_Panel class.
 			$args = array(
-				'id' => $_POST['post_id'],
+				'id' => sanitize_key( $_POST['post_id'] ),
 				'buttons' => $networks,
 				'button_size' => 1.4,
 				'network_shares' => false
