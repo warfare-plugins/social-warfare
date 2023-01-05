@@ -473,7 +473,13 @@ class SWP_Utility {
 	 *
 	 */
 	public static function reset_post_meta() {
-		$post_id = $_POST['post_id'];
+
+		// Bail out if the user is not allowed to manage options.
+		if(false === current_user_can('manage_options') ) {
+			return;
+		}
+
+		$post_id = sanitize_key( $_POST['post_id'] );
 		if ( empty( $post_id ) ) {
 			wp_die(0);
 		}
