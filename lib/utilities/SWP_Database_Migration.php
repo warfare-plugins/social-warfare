@@ -254,6 +254,7 @@ class SWP_Database_Migration {
 				wp_die('You do not have authorization to view this page.');
 			}
 			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
+			$post_type = sanitize_text_field( $post_type );
 			$this->reset_post_meta_float_location( $post_type );
 		}
 
