@@ -213,7 +213,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		wp_enqueue_style(
 			'swp-admin-ui-css',
-			'//code.jquery.com/ui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.min.css',
+			SWP_PLUGIN_URL . '/assets/css/jquery-ui.min.css',
 			false,
 			SWP_VERSION,
 			false
