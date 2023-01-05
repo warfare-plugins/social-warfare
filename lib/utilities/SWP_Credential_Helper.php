@@ -89,13 +89,17 @@ class SWP_Credential_Helper {
 			return false;
 		}
 
-		// We have a new access_token.
-		$network = $_GET['network'];
-		self::store_data( $network, 'access_token', $_GET['access_token'] );
+		// Fetch and sanitize variables for use below.
+		$network = sanitize_text_field( $_GET['network'] );
+		$access_token = sanitize_text_field( $_GET['access_token'] );
 
-		// Not every network uses access_secret.
+		// Store the access token for this network
+		self::store_data( $network, 'access_token', $access_token );
+
+		// Not every network uses access_secret. If it has one, sanitize and store it.
 		if ( isset( $_GET['access_secret'] ) ) {
-			self::store_data( $network, 'access_secret', $_GET['access_secret'] );
+			$access_secret = sanitize_text_field( $_GET['access_token'] );
+			self::store_data( $network, 'access_secret', $access_secret );
 		}
 	}
 
