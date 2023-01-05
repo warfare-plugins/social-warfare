@@ -921,7 +921,13 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 *
 	 */
 	public function delete_network_tokens() {
-		$network = $_POST['network'];
+
+		// Bail out if the user is not allowed to manage options.
+		if(false === current_user_can('manage_options') ) {
+			return;
+		}
+
+		$network = sanitize_text_field( $_POST['network'] );
 		$response = array('ok' => false);
 		$response['ok'] = SWP_Credential_Helper::delete_token($network);
 		SWP_Credential_Helper::delete_token($network, 'access_secret');
