@@ -143,7 +143,7 @@ class SWP_Notice {
 
 		SWP_Utility::auth();
 
-		$key = $_POST['key'];
+		$key = sanitize_key( $_POST['key'] );
 		$timeframe = $_POST['timeframe'];
 		$now = new DateTime();
 
