@@ -386,7 +386,6 @@ class Social_Warfare {
 			'Post_Cache_Loader',
 			'Post_Cache',
 			'JSON_Cache_Handler',
-			'Plugin_Updater',
 			'Utility',
 			'Auth_Helper',
 			'Credential_Helper',
@@ -540,17 +539,6 @@ class Social_Warfare {
 			'Option_Button'
 		);
 		$this->load_files( '/lib/options/', $options );
-
-
-		/**
-		 * The Update Checker
-		 *
-		 * This loads the class which will in turn load all other class that are
-		 * needed in order to properly check for updates for addons.
-		 *
-		 */
-		require_once SWP_PLUGIN_DIR . '/lib/update-checker/plugin-update-checker.php';
-
 
 	}
 

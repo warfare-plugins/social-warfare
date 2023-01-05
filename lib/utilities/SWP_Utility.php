@@ -162,7 +162,7 @@ class SWP_Utility {
 
 		$new_settings = array_merge( $options, $settings );
 		echo json_encode( update_option( 'social_warfare_settings', $new_settings ) );
-	
+
 		wp_die();
 	}
 
