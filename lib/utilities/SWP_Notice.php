@@ -144,9 +144,10 @@ class SWP_Notice {
 		SWP_Utility::auth();
 
 		$key = sanitize_key( $_POST['key'] );
-		$timeframe = $_POST['timeframe'];
+		$timeframe = sanitize_key( $_POST['timeframe'] );
 		$now = new DateTime();
 
+		// Further sanitize, validate, and format the timeframe.
 		if ( 0 < $timeframe ) {
 			$timestamp = $now->modify("+$timeframe days")->format('Y-m-d H:i:s');
 		} else {
