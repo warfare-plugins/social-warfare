@@ -1,379 +1,372 @@
 @keyframes chartjs-render-animation {
-	from {
-		opacity: 0.99;
-	}
-	to {
-		opacity: 1;
-	}
+  from {
+    opacity: 0.99;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 .chartjs-render-monitor {
-	animation: chartjs-render-animation 0.001s;
+  animation: chartjs-render-animation 0.001s;
 }
 
 .chartjs-size-monitor,
 .chartjs-size-monitor-expand,
 .chartjs-size-monitor-shrink {
-	position: absolute;
-	direction: ltr;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	overflow: hidden;
-	pointer-events: none;
-	visibility: hidden;
-	z-index: -1;
+  position: absolute;
+  direction: ltr;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
 }
 
 .chartjs-size-monitor-expand > div {
-	position: absolute;
-	width: 1000000px;
-	height: 1000000px;
-	left: 0;
-	top: 0;
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
 }
 
 .chartjs-size-monitor-shrink > div {
-	position: absolute;
-	width: 200%;
-	height: 200%;
-	left: 0;
-	top: 0;
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
 }
 
 #social_warfare.postbox {
-	display: none;
+  display: none;
 }
 
 .notAvailable {
-	opacity: 0.3;
+  opacity: 0.3;
+}
+
+[swp-registrations=pro] #upgrade {
+  display: none;
 }
 
 #toplevel_page_social-warfare .wp-menu-image.dashicons-before::before {
-	font-family: 'sw-icon-font';
-	content: "K";
-	margin-top: 3px;
-	transform: scale(1.2);
+  font-family: "sw-icon-font";
+  content: "K";
+  margin-top: 3px;
+  transform: scale(1.2);
 }
 
 #toplevel_page_social-warfare:hover .wp-menu-image.dashicons-before::before, #toplevel_page_social-warfare a.current .wp-menu-image.dashicons-before::before {
-	color: #ee464f !important;
+  color: #ee464f !important;
 }
 
 .swp_CountDown {
-	background-color: #CCC;
-	display: block;
-	padding: 5px 15px;
-	border-radius: 3px 3px 0 0;
-	color: #FFF;
-	font-weight: bold;
-	max-width: 200px;
-	float: right;
-	font-size: 12px;
-	min-width: 50px;
-	text-align: center;
+  background-color: #CCC;
+  display: block;
+  padding: 5px 15px;
+  border-radius: 3px 3px 0 0;
+  color: #FFF;
+  font-weight: bold;
+  max-width: 200px;
+  float: right;
+  font-size: 12px;
+  min-width: 50px;
+  text-align: center;
 }
 
 .swp_CountDown.swp_blue {
-	background-color: #30394F;
+  background-color: #30394F;
 }
 
 .swp_CountDown.swp_red {
-	background-color: #EE464F;
+  background-color: #EE464F;
 }
 
 #social_warfare textarea.large-text {
-	width: 100%;
+  width: 100%;
 }
 
 #social_warfare ul.swpmb-media-list.ui-sortable {
-	display: block;
-	width: 100%;
-	background-size: cover;
-	background-position-x: center;
-	background-repeat: no-repeat;
-	background-color: #ccc;
-	border-radius: 4px;
-	padding: 0;
+  display: block;
+  width: 100%;
+  background-size: cover;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-color: #ccc;
+  border-radius: 4px;
+  padding: 0;
 }
 
 #social_warfare #swp_reset_button {
-	display: none;
+  display: none;
 }
 
 #social_warfare .open-graph ul.swpmb-media-list,
 #social_warfare .twitter ul.swpmb-media-list {
-	background-image: url("../images/img-placeholder-og.jpg");
+  background-image: url("../images/img-placeholder-og.jpg");
 }
 
 #social_warfare .pinterest ul.swpmb-media-list:empty {
-	background-image: url("../images/img-placeholder-pin.jpg");
+  background-image: url("../images/img-placeholder-pin.jpg");
 }
-
 #social_warfare .pinterest ul.swpmb-media-list:not(:empty) {
-	display: flex;
-	background: #ffffff;
+  display: flex;
+  background: #ffffff;
 }
 
 #social_warfare .swpmb-field {
-	margin-top: 10px;
-	position: relative;
+  margin-top: 10px;
+  position: relative;
 }
 
 #social_warfare .swpmb-image-item,
 #social_warfare .swpmb-attachment-preview,
 #social_warfare .swpmb-media-content .centered,
 #social_warfare .swpmb-media-content img {
-	width: 100%;
-	margin-bottom: -5px;
-	height: auto;
-	max-height: none;
-	transform: none;
+  width: 100%;
+  margin-bottom: -5px;
+  height: auto;
+  max-height: none;
+  transform: none;
 }
 
 .wp-core-ui #social_warfare #swp_meta_box_heading {
-	display: none;
+  display: none;
 }
-
 .wp-core-ui #social_warfare .attachment {
-	position: relative;
-	padding: 0 0 12px 0;
-	background: #ffffff;
+  position: relative;
+  padding: 0 0 12px 0;
+  background: #ffffff;
 }
-
 .wp-core-ui #social_warfare .attachment .attachment-preview:before {
-	padding: 0;
-	content: '';
+  padding: 0;
+  content: "";
 }
-
 .wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail {
-	position: relative;
+  position: relative;
 }
-
 .wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail .centered {
-	position: relative;
+  position: relative;
 }
-
 .wp-core-ui #social_warfare .attachment .attachment-preview .thumbnail .centered img {
-	position: relative;
-	max-width: 100%;
+  position: relative;
+  max-width: 100%;
 }
-
 .wp-core-ui #social_warfare .attachment .swpmb-image-overlay {
-	position: absolute;
-	z-index: 1;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background: #000;
-	opacity: 0;
-	transition: opacity .2s;
-	height: 97%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  opacity: 0;
+  transition: opacity 0.2s;
+  height: 97%;
 }
-
 .wp-core-ui #social_warfare .attachment:hover .swpmb-image-actions {
-	opacity: 1;
+  opacity: 1;
 }
-
 .wp-core-ui #social_warfare .attachment:hover .swpmb-image-overlay {
-	opacity: .6;
+  opacity: 0.6;
 }
-
 .wp-core-ui #social_warfare .swpmb-media-add a.button {
-	display: block;
-	background: #30394f;
-	color: #fff;
-	font-size: 12px;
-	line-height: 1;
-	text-align: center;
-	vertical-align: middle;
-	padding: 15px 25px;
-	margin: 0;
-	box-shadow: none;
-	border: none;
-	height: auto;
+  display: block;
+  background: #30394f;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  padding: 15px 25px;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  height: auto;
 }
 
 .swpmb-media-status {
-	display: none;
+  display: none;
 }
 
 .wp-core-ui #social_warfare .swpmb-media-add a.button:hover {
-	background: #EE464F;
+  background: #EE464F;
 }
 
 #social_warfare .swpmb-media-content img {
-	transform: translate(0%, 0%);
+  transform: translate(0%, 0%);
 }
 
 #social_warfare .swpmb-media-content {
-	overflow: visible;
+  overflow: visible;
 }
 
 #social_warfare .swpmb-media-preview:before {
-	padding-top: 0px;
+  padding-top: 0px;
 }
 
 #social_warfare .swpmb-media-content {
-	position: inherit;
+  position: inherit;
 }
 
 #social_warfare .swpmb-divider-wrapper hr {
-	border: none !important;
+  border: none !important;
 }
 
 #social_warfare .swpmb-label label {
-	font-weight: bold;
-	color: #30394f;
-	font-size: 18px;
+  font-weight: bold;
+  color: #30394f;
+  font-size: 18px;
 }
 
 #social_warfare .swpmb-divider-wrapper {
-	max-height: 1px;
-	clear: both;
+  max-height: 1px;
+  clear: both;
 }
 
 #social_warfare .swpmb-label {
-	margin-bottom: 10px;
-	display: inline;
+  margin-bottom: 10px;
+  display: inline;
 }
 
 #social_warfare h2.hndle span:before {
-	content: "K";
-	margin-right: 10px;
-	font-family: "sw-icon-font";
-	vertical-align: middle;
+  content: "K";
+  margin-right: 10px;
+  font-family: "sw-icon-font";
+  vertical-align: middle;
 }
 
 .ui-tooltip.sw-admin-hover-notice {
-	background: #ee464f;
-	color: #fff;
-	padding: 15px;
-	border-radius: 2px;
-	margin: 15px 0;
-	border: 0;
-	box-shadow: none;
-	max-width: none;
-	padding: 20px;
+  background: #ee464f;
+  color: #fff;
+  padding: 15px;
+  border-radius: 2px;
+  margin: 15px 0;
+  border: 0;
+  box-shadow: none;
+  max-width: none;
+  padding: 20px;
 }
 
 .sw-admin-hover-notice i:before {
-	font-family: 'sw-icon-font';
-	font-size: 26px;
-	margin: 0 15px 0 0;
-	vertical-align: middle;
-	content: "K";
-	float: left;
-	font-style: normal;
+  font-family: "sw-icon-font";
+  font-size: 26px;
+  margin: 0 15px 0 0;
+  vertical-align: middle;
+  content: "K";
+  float: left;
+  font-style: normal;
 }
 
 /* Adds the border between sections. */
 [class$=title_wrapper] ~ [class$=title_wrapper] {
-	border-top: 1px solid #CED3DC;
-	padding-top: 40px;
+  border-top: 1px solid #CED3DC;
+  padding-top: 40px;
 }
 
 .swp-notice-wrapper {
-	max-width: 73%;
-	margin-top: -15px;
-	margin-bottom: 15px;
+  max-width: 73%;
+  margin-top: -15px;
+  margin-bottom: 15px;
 }
 
 .swp-notice {
-	padding: 10px 15px;
-	padding: 20px;
+  padding: 10px 15px;
+  padding: 20px;
 }
 
 .swp-actions {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .swp-notice a {
-	cursor: hover;
-	text-decoration: underline;
-	margin: 0 10px;
+  cursor: hover;
+  text-decoration: underline;
+  margin: 0 10px;
 }
 
 .swp-dismiss-notice.notice.notice-info {
-	font-size: 15px;
-	line-height: 25px;
+  font-size: 15px;
+  line-height: 25px;
 }
 
 .swp-dismiss-notice.notice.notice-info {
-	border-left-color: #D34250;
-	padding: 20px;
-	margin: 15px 0 15px;
+  border-left-color: #D34250;
+  padding: 20px;
+  margin: 15px 0 15px;
 }
 
 .swp-dismiss-notice.notice.notice-info p {
-	font-size: 15px;
-	line-height: 25px;
-	padding: 0;
-	margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 25px;
+  padding: 0;
+  margin: 0 0 20px;
 }
 
 a.swp-notice-cta {
-	cursor: pointer;
-	text-decoration: underline;
-	font-size: 15px;
-	line-height: 30px;
-	margin-right: 50px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 15px;
+  line-height: 30px;
+  margin-right: 50px;
 }
 
 #swp-admin-sidebar {
-	margin-top: -20px;
+  margin-top: -20px;
 }
 
 #swp-admin-sidebar .swp-component.dark-text {
-	color: #333;
+  color: #333;
 }
 
 #swp-admin-sidebar .swp-component.light-text {
-	color: #eee;
+  color: #eee;
 }
 
 #swp-admin-sidebar .swp-component {
-	font-size: 13px;
-	padding: 20px;
-	margin: 20px 0;
-	border-radius: 8px;
+  font-size: 13px;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
 }
 
 #swp-admin-sidebar .swp-component.text-center {
-	text-align: center;
+  text-align: center;
 }
 
 #swp-admin-sidebar .swp-component-cta {
-	margin: 0 auto;
-	display: block;
-	padding: 10px 15px;
-	border: 0;
-	border-radius: 4px;
-	text-align: center;
-	text-decoration: none;
-	color: white;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	font-weight: bold;
-	cursor: pointer;
-	width: 90%;
+  margin: 0 auto;
+  display: block;
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
 }
 
 #swp-admin-sidebar button.swp-component-cta {
-	width: 100%;
+  width: 100%;
 }
 
 #swp-admin-sidebar .swp-component-icon {
-	text-align: center;
+  text-align: center;
 }
 
 #swp-admin-sidebar .swp-component .swp-component-title {
-	font-size: 26px;
-	text-align: center;
-	font-weight: bold;
+  font-size: 26px;
+  text-align: center;
+  font-weight: bold;
 }
 
 /*********************************************************
@@ -382,51 +375,51 @@ a.swp-notice-cta {
 
 *********************************************************/
 .sw-checkbox-toggle {
-	width: 150px;
-	height: 46px;
-	background-color: #30394f;
-	float: right;
-	margin: 5px 0;
-	cursor: pointer;
-	border-radius: 4px;
-	overflow: hidden;
-	position: relative;
+  width: 150px;
+  height: 46px;
+  background-color: #30394f;
+  float: right;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
 }
 
 .sw-checkbox-on, .sw-checkbox-off {
-	color: white;
-	font-size: 15px;
-	text-align: center;
-	line-height: 46px;
-	position: absolute;
-	top: 0;
-	width: 50%;
-	height: 100%;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  line-height: 46px;
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
 }
 
-.sw-checkbox-toggle[status="on"] .sw-checkbox-on {
-	left: 0;
-	background-color: #71C069;
+.sw-checkbox-toggle[status=on] .sw-checkbox-on {
+  left: 0;
+  background-color: #71C069;
 }
 
-.sw-checkbox-toggle[status="on"] .sw-checkbox-off,
-.sw-checkbox-toggle[status="off"] .sw-checkbox-on {
-	display: none;
+.sw-checkbox-toggle[status=on] .sw-checkbox-off,
+.sw-checkbox-toggle[status=off] .sw-checkbox-on {
+  display: none;
 }
 
-.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-on {
-	display: none;
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status=on] .sw-checkbox-on {
+  display: none;
 }
 
-.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status="on"] .sw-checkbox-off {
-	right: 0;
-	background-color: #ee464f;
-	display: block;
+.sw-admin-wrapper[sw-registered="0"] .sw-option-container[premium="1"] .sw-checkbox-toggle[status=on] .sw-checkbox-off {
+  right: 0;
+  background-color: #ee464f;
+  display: block;
 }
 
-.sw-checkbox-toggle[status="off"] .sw-checkbox-off {
-	right: 0;
-	background-color: #ee464f;
+.sw-checkbox-toggle[status=off] .sw-checkbox-off {
+  right: 0;
+  background-color: #ee464f;
 }
 
 /*
@@ -434,17 +427,17 @@ a.swp-notice-cta {
  * https://user-images.githubusercontent.com/2152604/35994059-13570396-0cc4-11e8-9d6f-af31cba9f8e2.png
  */
 .swpmb-heading-wrapper h1 {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .swpmb-meta-box {
-	margin: 25px 30px;
+  margin: 25px 30px;
 }
 
 .swpmb-meta-container {
-	display: flex;
-	flex-flow: row wrap;
-	margin: 25px 0;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 25px 0;
 }
 
 /**
@@ -452,8 +445,8 @@ a.swp-notice-cta {
  * We want their content to stack vertically in the left/right columns.
  */
 .swpmb-flex {
-	display: flex;
-	flex-flow: column nowrap;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 /**
@@ -461,42 +454,39 @@ a.swp-notice-cta {
  *
  */
 .swpmb-full-width-wrap {
-	order: 1;
-	width: 96.5%;
+  order: 1;
+  width: 96.5%;
 }
 
 .swpmb-left-wrap,
 .swpmb-right-wrap {
-	order: 2;
+  order: 2;
 }
 
 @media screen and (max-width: 767px) {
-	.swpmb-left-wrap,
-	.swpmb-right-wrap {
-		flex-basis: 40%;
-	}
+  .swpmb-left-wrap,
+  .swpmb-right-wrap {
+    flex-basis: 40%;
+  }
 }
-
 @media screen and (max-width: 996px) {
-	.swpmb-left-wrap,
-	.swpmb-right-wrap {
-		flex-basis: 44%;
-	}
+  .swpmb-left-wrap,
+  .swpmb-right-wrap {
+    flex-basis: 44%;
+  }
 }
-
 @media screen and (min-width: 997px) {
-	.swpmb-left-wrap,
-	.swpmb-right-wrap {
-		flex-basis: 47%;
-	}
+  .swpmb-left-wrap,
+  .swpmb-right-wrap {
+    flex-basis: 47%;
+  }
 }
-
 .swpmb-left-wrap {
-	margin-right: 30px;
+  margin-right: 30px;
 }
 
 .swpmb-right-wrap {
-	align-content: last baseline;
+  align-content: last baseline;
 }
 
 /**
@@ -504,56 +494,56 @@ a.swp-notice-cta {
  *
  */
 .swpmb-input {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .swpmb-input input {
-	width: 100%;
-	padding: 10px;
-	margin: 0;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
 }
 
 .swpmb-input textarea {
-	width: 100%;
-	resize: unset;
-	border-radius: 5px;
-	padding: 10px;
-	min-height: 120px;
+  width: 100%;
+  resize: unset;
+  border-radius: 5px;
+  padding: 10px;
+  min-height: 120px;
 }
 
 .swpmb-field.inline-select .swpmb-input {
-	margin-top: 0;
-	display: inline;
-	float: right;
-	border-radius: 5px;
+  margin-top: 0;
+  display: inline;
+  float: right;
+  border-radius: 5px;
 }
 
 .swpmb-field .swpmb-label {
-	margin-bottom: none;
+  margin-bottom: none;
 }
 
 /* Give the "Other" options more space around them. */
 .swpmb-field.other {
-	margin: 15px 0;
+  margin: 15px 0;
 }
 
 #social_warfare .sw-checkbox-toggle {
-	width: 84px;
-	height: 32px;
+  width: 84px;
+  height: 32px;
 }
 
 #social_warfare .sw-checkbox-on,
 #social_warfare .sw-checkbox-off {
-	font-size: 12px;
-	line-height: 32px;
+  font-size: 12px;
+  line-height: 32px;
 }
 
 #social_warfare p.description {
-	padding: 15px 0;
+  padding: 15px 0;
 }
 
 .wp-core-ui #social_warfare a.swpmb-add-media.button {
-	margin: 15px 0;
+  margin: 15px 0;
 }
 
 /**
@@ -562,70 +552,70 @@ a.swp-notice-cta {
  */
 .swfw-revoke-button,
 .swfw-authorization-button {
-	width: 70%;
-	text-align: center;
-	max-width: 200px;
+  width: 70%;
+  text-align: center;
+  max-width: 200px;
 }
 
 .swfw-input-field,
 .swfw-follow-field {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: space-between;
-	align-items: center;
-	height: 50px;
-	margin: 15px auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  margin: 15px auto;
 }
 
 .swfw-follow-field.swfw-inactive a {
-	cursor: initial;
+  cursor: initial;
 }
 
 .swfw-follow-field.swfw-active a {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .swfw-follow-field-icon {
-	color: black;
-	width: 40px;
-	font-size: 27px;
-	line-height: 45px;
-	font-weight: bold;
-	transition: all 300ms;
-	border-radius: 3px;
-	height: 40px;
-	text-align: center;
-	padding: 2px;
+  color: black;
+  width: 40px;
+  font-size: 27px;
+  line-height: 45px;
+  font-weight: bold;
+  transition: all 300ms;
+  border-radius: 3px;
+  height: 40px;
+  text-align: center;
+  padding: 2px;
 }
 
 .swfw-widget label {
-	font-size: 14px;
-	width: 100px;
+  font-size: 14px;
+  width: 100px;
 }
 
 .swfw-follow-field label {
-	text-align: right;
+  text-align: right;
 }
 
 .swfw-input-field input,
 .swfw-input-field select,
 .swfw-follow-field input {
-	padding: 10px;
-	width: 50%;
-	height: 100%;
-	border-radius: 4px;
+  padding: 10px;
+  width: 50%;
+  height: 100%;
+  border-radius: 4px;
 }
 
 .swfw-follow-field.swfw-inactive div {
-	background: white;
+  background: white;
 }
 
 .swfw-follow-field.swfw-active div {
-	color: white;
+  color: white;
 }
 
 .swfw-follow-field.swfw-active div.swp-snapchat {
-	color: black;
+  color: black;
 }
 
 /*# sourceMappingURL=admin.css.map */

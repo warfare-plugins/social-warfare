@@ -37,41 +37,4 @@ class SWP_CURL {
 	public static function file_get_contents_curl( $url, $headers = null) {
 		return SWP_Requests::file_get_contents_http( $url, $headers );
 	}
-
-
-
-
-	/**
-	 * A public static method that allows easy access to creating POST
-	 * submissions to remote servers.
-	 *
-	 * @param  string $url    The URL of the remote server.
-	 * @param  array  $fields An array of fields to be submitted via POST.
-	 * @return string The response from the server.
-	 *
-	 */
-	public static function post_json( $url, $fields, $headers = array() ) {
-
-		//url-ify the data for the POST
-		$fields_json = json_encode($fields);
-
-		//open connection
-		$ch = curl_init();
-
-		//set the url, number of POST vars, POST data
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 3 );
-		curl_setopt( $ch, CURLOPT_TIMEOUT, 5 );
-		curl_setopt( $ch, CURLOPT_URL, $url);
-		curl_setopt( $ch, CURLOPT_POST, true);
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields_json);
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-
-		$response = curl_exec($ch);
-		curl_close($ch);
-
-		return $response;
-	}
 }

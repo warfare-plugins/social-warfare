@@ -763,6 +763,11 @@ class SWP_Section_HTML extends SWP_Option {
 			'sup' => array(),
 			'em' => array(),
 			'code' => array(),
+			'button' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
 		);
 	}
 }
