@@ -378,6 +378,7 @@ class Social_Warfare {
 		$utilities = array(
 			'Debug_Trait',
 			'Compatibility',
+			'Requests',
 			'CURL',
 			'Localization',
 			'Database_Migration',

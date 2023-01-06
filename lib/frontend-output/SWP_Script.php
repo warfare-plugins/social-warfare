@@ -183,9 +183,10 @@ class SWP_Script {
 
 		// If we have output, output it.
 		if ( $info['footer_output'] ) {
-			echo '<script type="text/javascript">';
-			echo $info['footer_output'];
-			echo '</script>';
+			$html = '<script type="text/javascript">';
+			$html .= $info['footer_output'];
+			$html .= '</script>';
+			echo wp_kses($html, SWP_Section_HTML::get_allowable_html() );
 		}
 	}
 
