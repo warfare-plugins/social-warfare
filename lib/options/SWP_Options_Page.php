@@ -318,7 +318,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					continue;
 				endif;
 
-
 				$addon_templates[] = new SWP_Registration_Tab_Template( $addon );
 				$active_addons .= " $addon->key ";
 
@@ -337,7 +336,9 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$html = $menu . $tabs;
 		$this->html = $html;
 
-		echo $html;
+		$escaped_html = wp_kses($html, SWP_Section_HTML::get_allowable_html() );
+		$escaped_html = htmlspecialchars_decode($escaped_html);
+		echo $escaped_html;
 
 		return $this;
 	}

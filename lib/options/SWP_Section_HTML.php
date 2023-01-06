@@ -98,7 +98,7 @@ class SWP_Section_HTML extends SWP_Option {
 		endif;
 
 		$html .= '<div class="system-status-wrapper">';
-			$html .= '<h4><?= $status_title ?></h4>';
+			$html .= '<h4>' . $status_title . '</h4>';
 			$html .= '<div class="system-status-container"> '. $this->system_status() . '</div>';
 		$html .= '</div></div>';
 
@@ -587,5 +587,182 @@ class SWP_Section_HTML extends SWP_Option {
 		$html .= $this->html;
 		$html .= '</div>';
 		return $html;
+	}
+
+
+	/**
+	 * SWP_Section_HTML::get_allowable_html();
+	 *
+	 * This function allows us to return an array of HTML entities and their
+	 * tags which will be allowed to render when escaping html output.
+	 *
+	 * @return array The array of allowed entities and their tags
+	 *
+	 */
+	public static function get_allowable_html() {
+		return array(
+			'input' => array(
+				'type'  => array(),
+				'id'    => array(),
+				'name'  => array(),
+				'value' => array(),
+				'div'   => array(),
+				'data-swp-name' => array(),
+				'placeholder' => array(),
+				'checked' => array(),
+				'class' => array()
+			),
+			'div' => array(
+				'class' => array(),
+				'sw-registered' => array(),
+				'src' => array(),
+				'id'   => array(),
+				'swp-addons' => array(),
+				'swp-registrations' => array(),
+				'data-dep' => array(),
+				'data-dep_val' => array(),
+				'data-dep-value' => array(),
+				'data-float-color' => array(),
+				'data-float' => array(),
+				'data-float-mobile' => array(),
+				'data-transition' => array(),
+				'data-network' => array(),
+				'field' => array(),
+				'status' => array(),
+				'registration' => array(),
+			),
+			'img' => array(
+				'class' => array(),
+				'src' => array(),
+				'id'   => array()
+			),
+			'ul' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'li' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'a' => array(
+				'class' => array(),
+				'href' => array(),
+				'target' => array(),
+				'rel' => array(),
+				'data-link' => array(),
+				'data-count' => array(),
+				'id' => array(),
+				'data-rating-value' => array(),
+				'title' => array(),
+				'data-style' => array(),
+				'style' => array(),
+				'data-deactivation' => array(),
+				'swp-addon' => array(),
+				'swp-item-id' => array()
+			),
+			'form' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'h1' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'h2' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'h3' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'h4' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'h5' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'h6' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'i' => array(
+				'class' => array(),
+				'id'   => array(),
+				'data-network' => array(),
+				'premium' => array()
+			),
+			'option' => array(
+				'class' => array(),
+				'id'   => array(),
+				'value' => array(),
+				'selected' => array(),
+			),
+			'select' => array(
+				'class' => array(),
+				'id'   => array(),
+				'name' => array(),
+			),
+			'p' => array(
+				'class' => array(),
+				'id'   => array()
+			),
+			'span' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array(
+					'transition' => array()
+				)
+			),
+			'textarea' => array(
+				'class' => array(),
+				'id'   => array(),
+				'name' => array(),
+				'data-swp-name' => array(),
+			),
+			'table' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
+			'tr' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
+			'td' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
+			'table' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
+			'b' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
+			'style' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array()
+			),
+			'script' => array(
+				'class' => array(),
+				'id'   => array(),
+				'style' => array(),
+				'name' => array(),
+				'type' => array()
+			),
+			'br' => array(),
+			'sup' => array(),
+			'em' => array(),
+			'code' => array(),
+		);
 	}
 }

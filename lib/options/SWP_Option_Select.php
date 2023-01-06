@@ -144,7 +144,7 @@ class SWP_Option_Select extends SWP_Option {
             $value = $this->default;
         endif;
 
-        $html = '<select name=' . $this->key . '>';
+        $html = '<select name="' . $this->key . '">';
 
         foreach ( $this->choices as $key => $display_name ) {
             $selected = selected( $key, $value, false );
