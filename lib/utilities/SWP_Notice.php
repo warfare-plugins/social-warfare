@@ -143,8 +143,8 @@ class SWP_Notice {
 
 		SWP_Utility::auth();
 
-		$key = sanitize_key( $_POST['key'] );
-		$timeframe = sanitize_key( $_POST['timeframe'] );
+		$key = sanitize_text_field( $_POST['key'] );
+		$timeframe = sanitize_text_field( $_POST['timeframe'] );
 		$now = new DateTime();
 
 		// Further sanitize, validate, and format the timeframe.

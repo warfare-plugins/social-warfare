@@ -298,9 +298,9 @@ class Social_Warfare_Addon {
 		if ( !empty( $_POST['license_key'] ) ) :
 
 			// Grab the license key so we can use it below
-			$key = $_POST['name_key'];
-			$license = $_POST['license_key'];
-			$item_id = $_POST['item_id'];
+			$key = sanitize_text_field( $_POST['name_key'] );
+			$license = sanitize_text_field( $_POST['license_key'] );
+			$item_id = sanitize_text_field( $_POST['item_id'] );
 			$this->store_url = 'https://warfareplugins.com';
 
 			$api_params = array(
@@ -371,8 +371,8 @@ class Social_Warfare_Addon {
 	public function unregister_plugin() {
 		// Setup the variables needed for processing
 		$options = get_option( 'social_warfare_settings' );
-		$key = $_POST['name_key'];
-		$item_id = $_POST['item_id'];
+		$key = sanitize_text_field( $_POST['name_key'] );
+		$item_id = sanitize_text_field( $_POST['item_id'] );
 		$response = array('success' => false);
 
 		// Check to see if the license key is even in the options
@@ -417,7 +417,7 @@ class Social_Warfare_Addon {
 			die;
 		}
 
-		$data = wp_unslash( $_POST ); // Input var okay.
+		$data = wp_unslash( $_POST ); // Each sub-item is sanitized when referenced below
 
 		if ( ! isset( $data['activity'], $data['email'] ) ) {
 			wp_send_json_error( esc_html__( 'Required fields missing.', 'social-warfare' ) );
@@ -425,7 +425,7 @@ class Social_Warfare_Addon {
 		}
 
 		if ( 'register' === $data['activity'] ) {
-			$response = swp_register_plugin( $data['email'], SWP_Utility::get_site_url() );
+			$response = swp_register_plugin( sanitize_email( $data['email'] ), SWP_Utility::get_site_url() );
 
 			if ( ! $response ) {
 				wp_send_json_error( esc_html__( 'Plugin could not be registered.', 'social-warfare' ) );
@@ -436,7 +436,7 @@ class Social_Warfare_Addon {
 		}
 
 		if ( 'unregister' === $data['activity'] && isset( $data['key'] ) ) {
-			$response = swp_unregister_plugin( $data['email'], $data['key'] );
+			$response = swp_unregister_plugin( sanitize_email( $data['email'] ), sanitize_text_field( $data['key'] ) );
 
 			if ( ! $response ) {
 				wp_send_json_error( esc_html__( 'Plugin could not be unregistered.', 'social-warfare' ) );

@@ -336,9 +336,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$html = $menu . $tabs;
 		$this->html = $html;
 //		echo $html;
-		$escaped_html = wp_kses($html, SWP_Section_HTML::get_allowable_html() );
-		$escaped_html = htmlspecialchars_decode($escaped_html);
-		echo $escaped_html;
+		echo htmlspecialchars_decode( wp_kses($html, SWP_Section_HTML::get_allowable_html() ) );
 
 		return $this;
 	}

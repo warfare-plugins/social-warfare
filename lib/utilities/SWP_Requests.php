@@ -71,6 +71,7 @@ class SWP_Requests {
 	}
 
 	public static function file_get_contents_http( $url, $headers = null) {
-		return wp_remote_get( $url );
+		$response = wp_remote_get( $url );
+		return $response['body'];
 	}
 }
