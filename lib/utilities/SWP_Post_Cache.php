@@ -964,7 +964,7 @@ class SWP_Post_Cache {
 	 */
 	protected function debug_message( $string ) {
 		if( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-			echo $string;
+			echo htmlspecialchars_decode( wp_kses($string, SWP_Section_HTML::get_allowable_html() ) );
 		}
 	}
 
@@ -995,7 +995,8 @@ class SWP_Post_Cache {
 		if( defined( 'SWPP_VERSION' ) && defined( 'SWPP_DEV_VERSION' ) ) {
 			$with_pro = '(with Pro ' . SWPP_VERSION .'.'. SWPP_DEV_VERSION .')';
 		}
-		echo '<p>Social Warfare ' . SWP_VERSION .'.'. SWP_DEV_VERSION .' ' . $with_pro . ' </p>';
+		$version_output = '<p>Social Warfare ' . SWP_VERSION .'.'. SWP_DEV_VERSION .' ' . $with_pro . ' </p>';
+		echo htmlspecialchars_decode( wp_kses($version_output, SWP_Section_HTML::get_allowable_html() ) );
 
 		echo '<h1>The URL\'s Being Checked:</h1>';
 		var_dump($this->permalinks);

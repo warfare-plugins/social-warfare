@@ -20,7 +20,7 @@ defined( 'WPINC' ) || die;
  * @since 4.2.0 | 19 NOV 2020 | The str_replace() removes any linebreaks in the string.
  *
  */
-define( 'SWP_VERSION', '4.3.0' );
+define( 'SWP_VERSION', '4.3.1' );
 define( 'SWP_DEV_VERSION', '2021.06.01 MASTER' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
 define( 'SWP_PLUGIN_URL', str_replace( array("\r", "\n") , '', untrailingslashit( plugin_dir_url( __FILE__ ) ) ) );

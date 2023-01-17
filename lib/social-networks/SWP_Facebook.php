@@ -204,6 +204,7 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		// Make and parse the API call.
 		$response = SWP_CURL::file_get_contents_curl( $api_url );
+		// var_dump($response);	
 		$response = json_decode( $response );
 
 		// If the object we need exists, then store the ID in post meta and return it.

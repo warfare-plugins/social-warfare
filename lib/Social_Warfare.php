@@ -347,6 +347,7 @@ class Social_Warfare {
 		 *
 		 */
 		new SWP_Notice_Loader();
+		
 	}
 
 
