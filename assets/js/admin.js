@@ -473,7 +473,8 @@ var swpWidget, widgetSubmit;
 			 url: ajaxurl,
 			 data: {
 				 action: 'swp_delete_network_tokens',
-				 network: network
+				 network: network,
+				 swp_nonce: swpAdminOptionsData.optionsNonce
 			 },
 			 success: function(r) {
 				 var response = JSON.parse(r)
@@ -499,7 +500,8 @@ var swpWidget, widgetSubmit;
 				url: ajaxurl,
 				data: {
 					action: 'swp_reset_post_meta',
-					post_id: socialWarfare.post_id
+					post_id: socialWarfare.post_id,
+					nonce: swpAdminOptionsData.optionsNonce
 				},
 				complete: function(response) {
 					socialWarfareAdmin.resetMetaFields()
