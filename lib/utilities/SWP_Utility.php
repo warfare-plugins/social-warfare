@@ -469,13 +469,17 @@ class SWP_Utility {
 	 * Ajax callback to delete all post meta for a post.
 	 *
 	 * @since  3.5.0  | 14 FEB 2019 | Created.
+	 * @since  4.4.0 | 09 JAN 2013 | Added nonce and capabilities check.
 	 * @return bool   True iff reset, else false.
 	 *
 	 */
 	public static function reset_post_meta() {
+
+		// Bail out if the nonce token is not set properly.
 		if ( false === check_ajax_referer( 'swp_plugin_options_save', 'swp_nonce', 0 ) ) {
 			return;
 		}
+
 		// Bail out if the user is not allowed to manage options.
 		if(false === current_user_can('manage_options') ) {
 			return;
