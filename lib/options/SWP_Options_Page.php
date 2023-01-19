@@ -915,21 +915,25 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * Called when a 'Revoke Access' button is clicked on the Social Identity tab.
 	 *
 	 * @since 3.5.0 | 25 JAN 2019 | Created.
+	 * @since 4.4.0 | 09 JAN 2013 | Added nonce and capabilities check.
 	 * @param void
 	 * @return void
 	 *
 	 */
 	public function delete_network_tokens() {
+
+		// Bail out if the nonce token is not set properly.
 		if ( false === check_ajax_referer( 'swp_plugin_options_save', 'swp_nonce', 0 ) ) {
 			return;
 		}
+
 		// Bail out if the user is not allowed to manage options.
-		if(false === current_user_can('manage_options') ) {
+		if( false === current_user_can('manage_options') ) {
 			return;
 		}
 
-		$network = sanitize_text_field( $_POST['network'] );
-		$response = array('ok' => false);
+		$network        = sanitize_text_field( $_POST['network'] );
+		$response       = array('ok' => false);
 		$response['ok'] = SWP_Credential_Helper::delete_token($network);
 		SWP_Credential_Helper::delete_token($network, 'access_secret');
 
