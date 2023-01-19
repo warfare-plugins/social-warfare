@@ -473,7 +473,7 @@ class SWP_Utility {
 	 *
 	 */
 	public static function reset_post_meta() {
-		if ( check_ajax_referer( 'swp_plugin_options_save', 'swp_nonce', 0 ) ) {
+		if ( false === check_ajax_referer( 'swp_plugin_options_save', 'swp_nonce', 0 ) ) {
 			return;
 		}
 		// Bail out if the user is not allowed to manage options.
