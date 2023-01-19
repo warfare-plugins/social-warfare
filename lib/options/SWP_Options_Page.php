@@ -920,7 +920,9 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 *
 	 */
 	public function delete_network_tokens() {
-
+		if ( check_ajax_referer( 'swp_plugin_options_save', 'swp_nonce', 0 ) ) {
+			return;
+		}
 		// Bail out if the user is not allowed to manage options.
 		if(false === current_user_can('manage_options') ) {
 			return;
