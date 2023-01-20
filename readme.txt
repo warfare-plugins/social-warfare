@@ -3,7 +3,7 @@ Contributors: holas84, webinator, warfareplugins, cdegraff1
 Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 6.1
-Stable tag: 4.3.0
+Stable tag: 4.4.0
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -207,6 +207,7 @@ inclusion in the WordPress repository.
 * Moved the CSS for jQuery UI to an internal asset.
 * Removed all branded logos from the header banner.
 * Removed the word WordPress from the beginning of the plugin name.
+* Added capability and nonce checks to AJAX calls.
 
 = 4.3.0 (20 JUL 2020) =
 This is a major update to the Facebook share checking functionality of the plugin.
