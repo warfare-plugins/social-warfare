@@ -37,4 +37,8 @@ class SWP_CURL {
 	public static function file_get_contents_curl( $url, $headers = null) {
 		return SWP_Requests::file_get_contents_http( $url, $headers );
 	}
+
+	public static function post_json( $url, $fields, $headers = array() ) {
+		return SWP_Requests::post_json( $url, $fields, $headers );
+	}
 }

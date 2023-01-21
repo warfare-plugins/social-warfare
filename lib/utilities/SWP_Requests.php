@@ -57,6 +57,7 @@ class SWP_Requests {
 		$responses = Requests::request_multiple( $request_multi );
 
 		// Loop through and parse the response
+		$response = array();
 		foreach( $responses as $key => $object ) {
 			$response[$key] = $object->body;
 		}
@@ -72,6 +73,18 @@ class SWP_Requests {
 
 	public static function file_get_contents_http( $url, $headers = null) {
 		$response = wp_remote_get( $url );
+		return $response['body'];
+	}
+
+	public static function post_json( $url, $fields, $headers = array('Content-Type' => 'application/json; charset=utf-8') ) {
+
+		$response = wp_remote_post($url, array(
+		    'headers'     => $headers,
+		    'body'        => json_encode($fields),
+		    'method'      => 'POST',
+		    'data_format' => 'body',
+		));
+
 		return $response['body'];
 	}
 }
