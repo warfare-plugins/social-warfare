@@ -186,7 +186,14 @@ class SWP_Script {
 			$html = '<script type="text/javascript">';
 			$html .= $info['footer_output'];
 			$html .= '</script>';
-			echo wp_kses($html, SWP_Section_HTML::get_allowable_html() );
+
+			// Grab the html after using wp_kses.
+			$html = wp_kses($html, SWP_Section_HTML::get_allowable_html() );
+
+			// Replace the &lt; and &quot; after wp_kses is run to properly output our inline javascript.
+			$html = preg_replace( '%&lt;%', '<', $html );
+			$html = preg_replace( '%&quot;%', '"', $html );
+			echo $html;
 		}
 	}
 
