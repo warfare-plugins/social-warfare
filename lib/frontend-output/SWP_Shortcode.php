@@ -88,6 +88,7 @@ class SWP_Shortcode {
 	/**
 	 * The function to build the click to tweets
 	 *
+	 * @since  4.4.0 Update to check for $atts key before use.
 	 * @param  array $atts The shortcode key/value attributes.
 	 * @return string The html of a click to tweet
 	 *
@@ -114,7 +115,7 @@ class SWP_Shortcode {
 		 *
 		*/
 		$url = '&url=' . SWP_Link_Manager::process_url( get_permalink() , 'twitter' , get_the_ID() );
-		if ( strpos( $atts['tweet'], 'http' ) > -1 ) {
+		if ( ! empty( $atts['tweet'] ) && strpos( $atts['tweet'], 'http' ) > -1 ) {
 			$url = '&url=x';
 		}
 
@@ -167,7 +168,7 @@ class SWP_Shortcode {
 		$html .= '" rel="nofollow noreferrer noopener" target="_blank">';
 			$html .= '<span class="sw-click-to-tweet">';
 				$html .= '<span class="sw-ctt-text">';
-					$html .= $atts['quote'];
+					$html .= ( ! empty( $atts['quote'] ) ) ? $atts['quote'] : '';
 				$html .= '</span>';
 				$html .= '<span class="sw-ctt-btn">';
 					$html .= __( 'Click To Tweet','social-warfare' );
@@ -193,7 +194,7 @@ class SWP_Shortcode {
 		$max_tweet_length = 240;
 
 		// Check for a custom tweet from the shortcode attributes. .
-		$tweet = $atts['tweet'];
+		$tweet = ( ! empty( $atts['tweet'] ) ) ? $atts['tweet'] : '';
 
 		if ( function_exists( 'mb_convert_encoding' ) ) :
 			$tweet = mb_convert_encoding( $tweet, 'UTF-8', get_bloginfo( "charset" ) );
