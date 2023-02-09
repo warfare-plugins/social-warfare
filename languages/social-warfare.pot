@@ -329,7 +329,7 @@ msgid "Frame Buster"
 msgstr ""
 
 #: functions/options-array.php:328
-msgid "If you want to stop content pirates from framing your content, turn this on."
+msgid "If you want to stop content pirates from stealing your content, turn this on. This feature detects when your site is being targeted by framing apps and immediately redirects your visitors to the unframed, original version of your site."
 msgstr ""
 
 #: functions/options-array.php:335
