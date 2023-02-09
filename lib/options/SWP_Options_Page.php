@@ -429,7 +429,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		$frame_buster = new SWP_Options_Page_Section( __( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
 		$frame_buster->set_priority( 10 )
-			->set_description( __( 'If you want to stop content pirates from framing your content, turn this on.', 'social-warfare' ) )
+			->set_description( __( 'If you want to stop content pirates from stealing your content, turn this on. This feature detects when your site is being targeted by framing apps and immediately redirects your visitors to the unframed, original version of your site.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-frame-buster/');
 
 			//* sniplyBuster => frame_buster
