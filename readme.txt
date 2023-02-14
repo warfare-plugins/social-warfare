@@ -194,6 +194,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 4.4.1 (14 FEB 2023) =
+* Replace some characters after they are converted to html entities.
+* Check for $attr key before trying to use them.
+* Update verbiage on Advanced tab Frame Buster.
+* Remove DustinWStout handle on twitter admin test and use warfareplugins.
+
 = 4.4.0 (10 JAN 2023) =
 This update provides a nice, robust audit of the plugin. It ensures that the
 plugin remains in full compliance with the latest WordPress requirements for
