@@ -127,6 +127,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		if ( count( $authorizations ) > 0 ) {
 
 			$auths = new SWP_Options_Page_Section( __( 'Social Network Connections', 'social-warfare' ), 'addon_authorizations' );
+			$auths->set_description( __( 'By clicking this button, you\'ll allow Social Warfare to authenticate and connect with Facebook. This allows the plugin to access Facebook\'s API and use it to determine your share counts more accurately.', 'social-warfare' ) );
+			
 			$auths->set_priority( 20 );
 
 				foreach( $authorizations as $auth ) {
