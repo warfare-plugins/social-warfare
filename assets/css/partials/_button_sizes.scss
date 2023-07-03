@@ -3,11 +3,11 @@
 // This creates the sizing rules for how big the buttons should appear.
 @for $size from 7 to 15 {
 	.scale-#{$size*10} {
-		transform: scale(#{$size/10});
+		transform: scale(calc($size/10));
 	}
 
 	.swp_social_panel:not(.nc_floater).scale-#{$size*10}.scale-full_width {
-		width: #{10/$size*100}%!important;
+		width: calc(10/$size*100) !important;
 	}
 }
 
