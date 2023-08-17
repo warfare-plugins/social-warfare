@@ -1643,6 +1643,7 @@ window.socialWarfare = window.socialWarfare || {};
 		 * data. By using the front end, the IP Addresses are distributed to users,
 		 * are therefore spread out, and don't hit the rate limits.
 		 *
+		 * @since  4.3.0 | 17 AUG 2023 | Updated Graph API endpoint to v17.0
 		 * @param  void
 		 * @return void
 		 *
@@ -1650,8 +1651,8 @@ window.socialWarfare = window.socialWarfare || {};
 		socialWarfare.fetchFacebookShares = function() {
 
 			// Compile the API links
-			var url1 = 'https://graph.facebook.com/v6.0/?fields=og_object{engagement}&id=' + swp_post_url;
-			var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/v6.0/?fields=og_object{engagement}&id=' + swp_post_recovery_url : '';
+			var url1 = 'https://graph.facebook.com/v17.0/?fields=og_object{engagement}&id=' + swp_post_url;
+			var url2 = swp_post_recovery_url ? 'https://graph.facebook.com/v17.0/?fields=og_object{engagement}&id=' + swp_post_recovery_url : '';
 
 			// Record the tested URL's
 			console.log('Facebook Share API: ' + url1 );
