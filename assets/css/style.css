@@ -975,44 +975,44 @@ body .swp_social_panel.swp_other_color_outlines:hover .swp_telegram {
 .swp_social_panel.swp_flat_fresh.swp_default_full_color .swp_twitter,
 html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_twitter:hover,
 body .swp_social_panel.swp_flat_fresh.swp_other_full_color:hover .swp_twitter:not(:hover) {
-  border: 1px solid #1da1f2;
+  border: 1px solid #0D1014;
 }
 
 .swp_social_panel.swp_default_full_color .swp_twitter,
 html body .swp_social_panel.swp_individual_full_color .swp_twitter:hover,
 body .swp_social_panel.swp_other_full_color:hover .swp_twitter {
-  background: #1da1f2;
-  border: 1px solid #0c85d0;
+  background: #0D1014;
+  border: 1px solid black;
 }
 
 .swp_social_panel.swp_three_dee.swp_default_full_color .swp_twitter,
 html body .swp_social_panel.swp_three_dee.swp_individual_full_color .swp_twitter:hover,
 body .swp_social_panel.swp_three_dee.swp_other_full_color:hover .swp_twitter {
-  border-bottom: 3px solid #0c85d0;
+  border-bottom: 3px solid black;
 }
 
 .swp_social_panel.swp_default_color_outlines .swp_twitter a,
 html body .swp_social_panel.swp_individual_color_outlines .swp_twitter a:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_twitter a {
-  color: #1da1f2;
+  color: #0D1014;
 }
 
 .swp_social_panel.swp_default_color_outlines .swp_twitter,
 html body .swp_social_panel.swp_individual_color_outlines .swp_twitter:hover,
 body .swp_social_panel.swp_other_color_outlines:hover .swp_twitter {
   background: transparent;
-  border: 1px solid #1da1f2;
+  border: 1px solid #0D1014;
 }
 
 .swp-twitter {
-  background: #1da1f2;
-  border-color: #0c85d0;
+  background: #0D1014;
+  border-color: black;
 }
 .swp-twitter a {
-  color: #1da1f2;
+  color: #0D1014;
 }
 .swp-twitter a:hover {
-  background: #0c85d0;
+  background: black;
   color: #ffffff;
 }
 
@@ -2401,7 +2401,7 @@ a.swp_CTT.style1 .sw-click-to-tweet {
   border-radius: 4px;
 }
 a.swp_CTT.style1 .sw-click-to-tweet i.swp_twitter {
-  color: #1da1f2;
+  color: #0D1014;
 }
 a.swp_CTT.style1 .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style1 .sw-click-to-tweet .sw-ctt-btn {
   color: #999;
@@ -2417,7 +2417,7 @@ a.swp_CTT.style2 .sw-click-to-tweet {
   border-radius: 0;
 }
 a.swp_CTT.style2 .sw-click-to-tweet .sw-ctt-btn {
-  color: #1da1f2;
+  color: #0D1014;
 }
 a.swp_CTT.style2 .sw-click-to-tweet .sw-ctt-text {
   color: #666;
@@ -2429,7 +2429,7 @@ a.swp_CTT.style2:hover .sw-click-to-tweet .sw-ctt-text, a.swp_CTT.style2:hover .
   text-decoration: none;
 }
 a.swp_CTT.style3 .sw-click-to-tweet {
-  background-color: #1da1f2;
+  background-color: #0D1014;
   border: none;
   border-left: 10px solid #15202b;
   border-radius: 0;
@@ -2830,14 +2830,14 @@ div.swp-telegram a:hover {
 }
 
 div.swp-twitter {
-  background: #1da1f2;
-  border-color: #0c85d0;
+  background: #0D1014;
+  border-color: black;
 }
 div.swp-twitter a {
-  color: #1da1f2;
+  color: #0D1014;
 }
 div.swp-twitter a:hover {
-  background: #0c85d0;
+  background: black;
   color: #ffffff;
 }
 
