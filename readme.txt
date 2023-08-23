@@ -182,6 +182,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 4.4.2 (23 Aug 2023 - pre-release) =
+* Updated Graph API endpoint to v17.0
+* Changed Twitter button branding
+
 = 4.4.1 (14 FEB 2023) =
 * Replace some characters after they are converted to html entities.
 * Check for $attr key before trying to use them.
