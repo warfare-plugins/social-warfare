@@ -172,7 +172,7 @@ a.swp_CTT {
 
 		&:hover {
 			.sw-click-to-tweet {
-				border-left: 10px solid #3c87b2;
+				border-left: 10px solid #000000;
 				@include transition();
 
 				.sw-ctt-text, .sw-ctt-btn, i.swp_twitter {
@@ -241,7 +241,7 @@ a.swp_CTT {
 		.sw-click-to-tweet {
 			@include transition();
 			background: #f9f9f9;
-		    color: #1DA1F2;
+		    color: #0D1014;
 		    border-radius: 10px;
 		    transform: skewX(-15deg);
 		    // box-shadow: 3px 3px 3px rgba(0,0,0,0.1);

@@ -55,7 +55,6 @@ class SWP_Social_Networks_Loader {
 			new SWP_Pinterest();
 			new SWP_Stumble_Upon();
 			new SWP_Twitter();
-			new SWP_Mastodon();
 	}
 
 }
