@@ -1,9 +1,9 @@
 === Social Sharing Plugin - Social Warfare ===
-Contributors: holas84, webinator, warfareplugins, cdegraff1
+Contributors: holas84, webinator, warfareplugins, cdegraff1, andbalashov
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 6.3.2
-Stable tag: 4.4.3
+Stable tag: 4.4.4
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -182,6 +182,11 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 4.4.4 (23 OCT 2023) =
+* Security patch: Prevent XSS vulnerabilities in the plugin
+  - Escaped output in the `generate_css_classes` method to prevent potential XSS vulnerabilities.
+  - Added validation and escaping in the `get_min_width` method to ensure input is safe from potential XSS vulnerabilities.
 
 = 4.4.3 (19 OCT 2023) =
 * Added a new Twitter branding
