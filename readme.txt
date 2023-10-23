@@ -1,5 +1,5 @@
 === Social Sharing Plugin - Social Warfare ===
-Contributors: holas84, webinator, warfareplugins, cdegraff1, andbalashov
+Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalashov
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 6.3.2
