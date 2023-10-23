@@ -289,19 +289,19 @@ trait SWP_Buttons_Panel_Trait {
 	* A method for getting the minimum width of the buttons panel.
 	*
 	* @since  3.0.0 | 01 MAR 2018 | Created
+	* @since  4.4.2 | 23 OCT 2023 | Security Patch: Added validation and escaping to ensure input is safe from potential XSS vulnerabilities.
 	* @param  void
 	* @return string The HTML attribute to be added to the buttons panel.
 	*
 	*/
 	protected function get_min_width() {
-		$min_width = $this->get_option( 'float_screen_width' );
-
-		//* They have gone from an Addon to Core.
-		if ( false === $min_width ) {
-		   return 'data-min-width="1100" ';
+		$min_width = $this->get_option('float_screen_width');
+	
+		if (!is_numeric($min_width)) {
+			$min_width = "1100";
 		}
-
-		return 'data-min-width="' . $min_width . '" ';
+		
+		return 'data-min-width="' . esc_attr($min_width) . '" ';
 	}
 
 
@@ -864,6 +864,7 @@ trait SWP_Buttons_Panel_Trait {
 	 * Generate the CSS classes that need to be applied to the buttons panel.
 	 *
 	 * @since  3.4.0 | 23 OCT 2018 | Created
+	 * @since  4.4.3 | 23 OCT 2023 | Security Patch: Escaped output to prevent potential XSS vulnerabilities.
 	 * @param  void
 	 * @return void
 	 * @var    $this->classes Stores panel classes as a string of text.
@@ -871,10 +872,10 @@ trait SWP_Buttons_Panel_Trait {
 	 */
    protected function generate_css_classes() {
 		$classes = 'class="swp_social_panel swp_horizontal_panel ';
-		$classes .= $this->get_shape();
-		$classes .= $this->get_colors();
-		$classes .= $this->get_scale();
-		$classes .= $this->get_alignment();
+		$classes .= esc_attr($this->get_shape());
+		$classes .= esc_attr($this->get_colors());
+		$classes .= esc_attr($this->get_scale());
+		$classes .= esc_attr($this->get_alignment());
 		$classes .= '" ';
 		$this->classes = $classes;
    }
