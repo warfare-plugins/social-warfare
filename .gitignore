@@ -12,3 +12,4 @@ assets/css/converted_style.tmp
 atom-sftp-sync.json
 deployment-config.json
 .vscode
+vendor
