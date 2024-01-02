@@ -35,4 +35,4 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Check WordPress Coding Standards
-      run: phpcs .
+      run: php -d memory_limit=512M vendor/bin/phpcs .
