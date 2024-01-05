@@ -92,7 +92,7 @@ class SWP_Shortcode {
 	 * @return string The html of a click to tweet
 	 *
 	 */
-	function click_to_tweet( $atts ) {
+	public function click_to_tweet( $atts ) {
 		global $post;
 
 		// This is the Add Post editor for a new post, so no $post.
@@ -128,7 +128,7 @@ class SWP_Shortcode {
 		 *
 		 */
 		$theme = SWP_Utility::get_option( 'ctt_theme' );
-		if ( ! empty( $atts['theme'] ) && $atts['theme'] != 'default' ) {
+		if ( ! empty( $atts['theme'] ) && 'default' !== $atts['theme'] ) {
 			$theme = $atts['theme'];
 		}
 
