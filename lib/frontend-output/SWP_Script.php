@@ -348,7 +348,7 @@ class SWP_Script {
 	 * @return void
 	 *
 	 */
-	function localize_variables() {
+	public function localize_variables() {
 		global $post;
 
 		/**
