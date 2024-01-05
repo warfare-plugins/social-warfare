@@ -48,9 +48,9 @@ class SWP_Header_Output {
 	}
 
 	private function init() {
-		add_action( 'wp_head'           , array( $this, 'add_header_output' ), 1 );
-		add_filter( 'swp_header_html'   , array( $this, 'output_font_css' ), 20 );
-		add_action( 'admin_head'        , array( $this, 'output_font_css' ), 20 );
+		add_action( 'wp_head', array( $this, 'add_header_output' ), 1 );
+		add_filter( 'swp_header_html', array( $this, 'output_font_css' ), 20 );
+		add_action( 'admin_head', array( $this, 'output_font_css' ), 20 );
 	}
 
 
@@ -71,7 +71,6 @@ class SWP_Header_Output {
 		// Get the global options and the post ID
 		$info['postID'] = get_the_ID();
 
-
 		/**
 		 * Create and return the values to be used in the header meta tags
 		 *
@@ -86,8 +85,7 @@ class SWP_Header_Output {
 		 * @return array $info The modified array with the 'meta_tag_values' index populated
 		 *
 		 */
-		$info = apply_filters( 'swp_header_values' , $info );
-
+		$info = apply_filters( 'swp_header_values', $info );
 
 		/**
 		 * Assembles the meta tags, CSS, icon font, and other items that go in <head>
@@ -126,7 +124,6 @@ class SWP_Header_Output {
 	 */
 	function output_font_css( $meta_html ) {
 
-
 		/**
 		 * The var $meta_html is passed to both string and array filters. The
 		 * solution is to re-wire those filters appropriately. This is the patch.
@@ -142,10 +139,9 @@ class SWP_Header_Output {
 		 * in this string, then bail out.
 		 *
 		 */
-		if ( !empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
+		if ( ! empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
 			return $meta_html;
 		endif;
-
 
 		/**
 		 * If, for some reason, we have something other than a string here,
@@ -153,7 +149,7 @@ class SWP_Header_Output {
 		 *
 		 */
 		if ( false == is_string( $meta_html ) ) {
-		   $meta_html = '';
+			$meta_html = '';
 		}
 
 		$style = '<style>
@@ -169,7 +165,6 @@ class SWP_Header_Output {
 		font-display:block;
 	}
 </style>';
-
 
 		/**
 		 * If we are in the admin area, then we need to echo this string

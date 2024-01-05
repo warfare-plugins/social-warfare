@@ -36,7 +36,6 @@ class Social_Warfare_Addon {
 		$this->establish_license_key();
 		$this->is_registered = $this->establish_resgistration();
 
-
 		/**
 		 * This queues up our register and unregister hooks that will be sent
 		 * from the settings page to admin-ajax.php.
@@ -45,7 +44,6 @@ class Social_Warfare_Addon {
 		add_action( 'wp_ajax_swp_register_plugin', array( $this, 'register_plugin' ) );
 		add_action( 'wp_ajax_swp_unregister_plugin', array( $this, 'unregister_plugin' ) );
 		add_action( 'wp_ajax_swp_ajax_passthrough', array( $this, 'ajax_passthrough' ) );
-
 
 		/**
 		 * This is a custom filter hook that gets called in core that fetches
@@ -84,16 +82,15 @@ class Social_Warfare_Addon {
 	 * @return void
 	 *
 	 */
-	private function establish_class_properties( $args = array () ) {
+	private function establish_class_properties( $args = array() ) {
 
 		// Migrate all passed $args into local class properties.
-		foreach($args as $key => $value) {
+		foreach ( $args as $key => $value ) {
 			$this->$key = $value;
 		}
 
 		// Mandatory class properties for an addon to function properly.
 		$required = array( 'name', 'key', 'version' );
-
 
 		/**
 		 * Check to ensure that all required properties have been passed in.
@@ -101,13 +98,12 @@ class Social_Warfare_Addon {
 		 * manually trigger an exception here to notify the developer.
 		 *
 		 */
-		foreach($required as $key) {
-			if ( !isset( $this->$key ) ) :
+		foreach ( $required as $key ) {
+			if ( ! isset( $this->$key ) ) :
 				$message = "Hey developer, you are attempting to instantiate a class that extends the Social_Warfare_Addon class. In order to do this, you must provide the following argument for your class: $key => \$value. You can read more about required class properties for this class in the docblock provided in /lib/Social_Warfare_Addon.php for the establish_class_properties() method.";
-				throw new Exception($message);
+				throw new Exception( $message );
 			endif;
 		}
-
 
 		/**
 		 * This is the store URL used by Easy Digital Downloads to ping our site
@@ -118,7 +114,7 @@ class Social_Warfare_Addon {
 		 * check the license key.
 		 *
 		 */
-		if ( isset( $this->product_id ) && empty ( $this->store_url ) ) {
+		if ( isset( $this->product_id ) && empty( $this->store_url ) ) {
 			$this->store_url = 'https://warfareplugins.com';
 		}
 	}
@@ -155,14 +151,12 @@ class Social_Warfare_Addon {
 	 */
 	public function establish_license_key() {
 
-
 		/**
 		 * The license key is stored in our options set in the database. This
 		 * utility method allows us to easily retrieve it.
 		 *
 		 */
 		$key = SWP_Utility::get_option( $this->key . '_license_key' );
-
 
 		/**
 		 * This check exists to retrieve the license key from the old, legacy
@@ -172,13 +166,12 @@ class Social_Warfare_Addon {
 		 * to a current version.
 		 *
 		 */
-		if ( !$key ) {
+		if ( ! $key ) {
 			$old_options = get_option( 'socialWarfareOptions', false );
-			if ( isset( $old_options[$this->key . '_license_key']) ) {
-				$key = $old_options[$this->key . '_license_key'];
+			if ( isset( $old_options[ $this->key . '_license_key' ] ) ) {
+				$key = $old_options[ $this->key . '_license_key' ];
 			}
 		}
-
 
 		/**
 		 * If we were able to find a license key, then we'll go ahead and store
@@ -206,7 +199,6 @@ class Social_Warfare_Addon {
 	 */
 	public function establish_resgistration() {
 
-
 		/**
 		 * The timestamp in the database will represent the unix time of the
 		 * last time that the license key was checked to see if it is still valid.
@@ -214,62 +206,68 @@ class Social_Warfare_Addon {
 		 */
 		$timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' );
 		if ( empty( $timestamp ) ) {
-			$timestamp =  0;
+			$timestamp = 0;
 		}
 
 		$time_to_recheck = $timestamp + 604800;
 		$current_time    = time();
-
 
 		/**
 		 * If they have a key and a week hasn't passed since the last check,
 		 * just return true...the plugin is registered.
 		 *
 		 */
-		if( !empty( $this->license_key)  && $current_time < $time_to_recheck ) {
+		if ( ! empty( $this->license_key ) && $current_time < $time_to_recheck ) {
 			return true;
 		}
 
-
 		// If a week has passed since the last check, ping our API to check the validity of the license key
-		if ( !empty( $this->license_key) ) :
+		if ( ! empty( $this->license_key ) ) :
 			global $swp_user_options;
 
 			$data = array(
 				'edd_action' => 'check_license',
-				'item_id' => $this->product_id,
-				'license' => $this->license_key,
-				'url' => $this->site_url,
+				'item_id'    => $this->product_id,
+				'license'    => $this->license_key,
+				'url'        => $this->site_url,
 			);
 
-			$response = wp_remote_retrieve_body( wp_remote_post( $this->store_url , array('body' => $data, 'timeout' => 10 ) ) );
+			$response = wp_remote_retrieve_body(
+				wp_remote_post(
+					$this->store_url,
+					array(
+						'body'    => $data,
+						'timeout' => 10,
+					)
+				)
+			);
 
-			if( false !== $response ) :
+			if ( false !== $response ) :
 				$license_data = json_decode( $response );
 
-				$swp_user_options[$this->key . '_license_key_timestamp'] = $current_time;
+				$swp_user_options[ $this->key . '_license_key_timestamp' ] = $current_time;
 
 				// If the license was invalid
 				if ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
 					$this->license_key = '';
 
-					$swp_user_options[$this->key . '_license_key'] = '';
+					$swp_user_options[ $this->key . '_license_key' ] = '';
 
-					update_option( 'social_warfare_settings' , $swp_user_options );
+					update_option( 'social_warfare_settings', $swp_user_options );
 
 					return false;
 
-				// If the property is some other status, just go with it.
+					// If the property is some other status, just go with it.
 				else :
-					update_option( 'social_warfare_settings' , $swp_user_options );
+					update_option( 'social_warfare_settings', $swp_user_options );
 
 					return true;
 				endif;
 
-			// If we recieved no response from the server, we'll just check again next week
+				// If we recieved no response from the server, we'll just check again next week
 			else :
-				$swp_user_options[$key.'_license_key_timestamp'] = $current_time;
-				update_option( 'social_warfare_settings' , $swp_user_options );
+				$swp_user_options[ $key . '_license_key_timestamp' ] = $current_time;
+				update_option( 'social_warfare_settings', $swp_user_options );
 
 				return true;
 			endif;
@@ -279,7 +277,7 @@ class Social_Warfare_Addon {
 	}
 
 	public function check_for_updates() {
-		if ( version_compare(SWP_VERSION, $this->core_required) >= 0 ) :
+		if ( version_compare( SWP_VERSION, $this->core_required ) >= 0 ) :
 
 		endif;
 	}
@@ -295,22 +293,30 @@ class Social_Warfare_Addon {
 	 */
 	public function register_plugin() {
 		// Check to ensure that license key was passed into the function
-		if ( !empty( $_POST['license_key'] ) ) :
+		if ( ! empty( $_POST['license_key'] ) ) :
 
 			// Grab the license key so we can use it below
-			$key = sanitize_text_field( $_POST['name_key'] );
-			$license = sanitize_text_field( $_POST['license_key'] );
-			$item_id = sanitize_text_field( $_POST['item_id'] );
+			$key             = sanitize_text_field( $_POST['name_key'] );
+			$license         = sanitize_text_field( $_POST['license_key'] );
+			$item_id         = sanitize_text_field( $_POST['item_id'] );
 			$this->store_url = 'https://warfareplugins.com';
 
 			$api_params = array(
 				'edd_action' => 'activate_license',
-				'item_id' => $item_id,
-				'license' => $license,
-				'url' => $this->site_url
+				'item_id'    => $item_id,
+				'license'    => $license,
+				'url'        => $this->site_url,
 			);
 
-			$response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+			$response = wp_remote_retrieve_body(
+				wp_remote_post(
+					$this->store_url,
+					array(
+						'body'    => $api_params,
+						'timeout' => 10,
+					)
+				)
+			);
 
 			if ( false != $response ) :
 
@@ -318,44 +324,43 @@ class Social_Warfare_Addon {
 				$license_data = json_decode( $response );
 
 				// If the license is valid store it in the database
-				if( isset($license_data->license) && 'valid' == $license_data->license ) :
+				if ( isset( $license_data->license ) && 'valid' == $license_data->license ) :
 
-					$current_time = time();
-					$options = get_option( 'social_warfare_settings' );
-					$options[$key.'_license_key'] = $license;
-					$options[$key.'_license_key_timestamp'] = $current_time;
-					update_option( 'social_warfare_settings' , $options );
+					$current_time                               = time();
+					$options                                    = get_option( 'social_warfare_settings' );
+					$options[ $key . '_license_key' ]           = $license;
+					$options[ $key . '_license_key_timestamp' ] = $current_time;
+					update_option( 'social_warfare_settings', $options );
 
-					echo json_encode($license_data);
+					echo json_encode( $license_data );
 					wp_die();
 
-				// If the license is not valid
-				elseif( isset($license_data->license) &&  'invalid' == $license_data->license ) :
-					echo json_encode($license_data);
+					// If the license is not valid
+				elseif ( isset( $license_data->license ) && 'invalid' == $license_data->license ) :
+					echo json_encode( $license_data );
 					wp_die();
 
-				// If some other status was returned
+					// If some other status was returned
 				else :
 					$license_data['success'] = false;
-					$license_data['data'] = 'Invaid response from the registration server.';
-					echo json_encode($license_data);
+					$license_data['data']    = 'Invaid response from the registration server.';
+					echo json_encode( $license_data );
 					wp_die();
 				endif;
 
-			// If we didn't get a response from the registration server
+				// If we didn't get a response from the registration server
 			else :
 				$license_data['success'] = false;
-				$license_data['data'] = 'Failed to connect to registration server.';
-				echo json_encode($license_data);
+				$license_data['data']    = 'Failed to connect to registration server.';
+				echo json_encode( $license_data );
 				wp_die();
 			endif;
 		endif;
 
 		$license_data['success'] = false;
-		$license_data['data'] = 'Admin Ajax did not receive valid POST data.';
-		echo json_encode($license_data);
+		$license_data['data']    = 'Admin Ajax did not receive valid POST data.';
+		echo json_encode( $license_data );
 		wp_die();
-
 	}
 
 
@@ -370,29 +375,37 @@ class Social_Warfare_Addon {
 	 */
 	public function unregister_plugin() {
 		// Setup the variables needed for processing
-		$options = get_option( 'social_warfare_settings' );
-		$key = sanitize_text_field( $_POST['name_key'] );
-		$item_id = sanitize_text_field( $_POST['item_id'] );
-		$response = array('success' => false);
+		$options  = get_option( 'social_warfare_settings' );
+		$key      = sanitize_text_field( $_POST['name_key'] );
+		$item_id  = sanitize_text_field( $_POST['item_id'] );
+		$response = array( 'success' => false );
 
 		// Check to see if the license key is even in the options
-		if ( !SWP_Utility::get_option( $key . '_license_key' ) ) :
+		if ( ! SWP_Utility::get_option( $key . '_license_key' ) ) :
 			$response['success'] = true;
-			wp_die(json_encode($response));
+			wp_die( json_encode( $response ) );
 		endif;
 
 		// Grab the license key so we can use it below
-		$license = $options[$key.'_license_key'];
+		$license = $options[ $key . '_license_key' ];
 
 		// Setup the API request parameters
 		$api_params = array(
 			'edd_action' => 'deactivate_license',
-			'item_id' => $item_id,
-			'license' => $license,
-			'url' => $this->site_url,
+			'item_id'    => $item_id,
+			'license'    => $license,
+			'url'        => $this->site_url,
 		);
 
-		$response =  wp_remote_retrieve_body( wp_remote_post( $this->store_url, array( 'body' => $api_params, 'timeout' => 10 ) ) );
+		$response = wp_remote_retrieve_body(
+			wp_remote_post(
+				$this->store_url,
+				array(
+					'body'    => $api_params,
+					'timeout' => 10,
+				)
+			)
+		);
 		if ( empty( $response ) ) {
 			$response['success'] = false;
 			$response['message'] = 'Error making deactivation request to ' . $this->store_url;
@@ -402,12 +415,12 @@ class Social_Warfare_Addon {
 		$response = json_decode( $response );
 
 		if ( $response->license == 'deactivated' || $response->license == 'failed' ) {
-			$options = get_option( 'social_warfare_settings' );
-			$options[$key.'_license_key'] = '';
-			update_option( 'social_warfare_settings' , $options );
+			$options                          = get_option( 'social_warfare_settings' );
+			$options[ $key . '_license_key' ] = '';
+			update_option( 'social_warfare_settings', $options );
 		}
 
-		wp_die(json_encode($response));
+		wp_die( json_encode( $response ) );
 	}
 
 	public function ajax_passthrough() {

@@ -33,23 +33,23 @@ class SWP_Requests {
 	 */
 	public static function fetch_shares_via_wordpress_multi( $links ) {
 		if ( SWP_Utility::debug( 'is_cache_fresh' ) ) :
-			  $started = time();
-			  echo "Starting multi curl request at : " . $started;
+				$started = time();
+				echo 'Starting multi curl request at : ' . $started;
 		endif;
 
 		// Build out the array that can be passed into request_multiple()
 		$request_multi = array();
-		foreach( $links as $key => $value ) {
+		foreach ( $links as $key => $value ) {
 
 			// If its not zero, we use it.
-			if( 0 !== $value ) {
-				$request_multi[$key] = array(
-					'url' => $value
+			if ( 0 !== $value ) {
+				$request_multi[ $key ] = array(
+					'url' => $value,
 				);
 
-			// If it is zero, we'll just re-add it later.
+				// If it is zero, we'll just re-add it later.
 			} else {
-				$discards[$key] = 0;
+				$discards[ $key ] = 0;
 			}
 		}
 
@@ -58,35 +58,38 @@ class SWP_Requests {
 
 		// Loop through and parse the response
 		$response = array();
-		foreach( $responses as $key => $object ) {
-			$response[$key] = $object->body;
+		foreach ( $responses as $key => $object ) {
+			$response[ $key ] = $object->body;
 		}
 
 		// Merge the discarded zeroes back into it.
-		if( false == empty( $discards) ) {
-			$response = array_merge($response, $discards);
+		if ( false == empty( $discards ) ) {
+			$response = array_merge( $response, $discards );
 		}
 
 		// Return the response.
 		return $response;
 	}
 
-	public static function file_get_contents_http( $url, $headers = null) {
+	public static function file_get_contents_http( $url, $headers = null ) {
 		$response = wp_remote_get( $url );
-		if( false == is_array( $response ) ) {
+		if ( false == is_array( $response ) ) {
 			return false;
 		}
 		return $response['body'];
 	}
 
-	public static function post_json( $url, $fields, $headers = array('Content-Type' => 'application/json; charset=utf-8') ) {
+	public static function post_json( $url, $fields, $headers = array( 'Content-Type' => 'application/json; charset=utf-8' ) ) {
 
-		$response = wp_remote_post($url, array(
-		    'headers'     => $headers,
-		    'body'        => json_encode($fields),
-		    'method'      => 'POST',
-		    'data_format' => 'body',
-		));
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers'     => $headers,
+				'body'        => json_encode( $fields ),
+				'method'      => 'POST',
+				'data_format' => 'body',
+			)
+		);
 
 		return $response['body'];
 	}

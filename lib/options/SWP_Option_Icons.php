@@ -42,7 +42,7 @@ class SWP_Option_Icons extends SWP_Option {
 		global $swp_user_options;
 
 		parent::__construct( $name, $key );
-		add_filter( 'swp_options_page_defaults', array( $this , 'register_default' ) );
+		add_filter( 'swp_options_page_defaults', array( $this, 'register_default' ) );
 		add_filter( 'swp_options_page_values', array( $this, 'register_available_values' ) );
 
 		$this->user_options = $swp_user_options;
@@ -50,13 +50,13 @@ class SWP_Option_Icons extends SWP_Option {
 
 
 	public function register_default( $defaults = array() ) {
-		if ( !array_key_exists( 'order_of_icons', $defaults ) ) :
+		if ( ! array_key_exists( 'order_of_icons', $defaults ) ) :
 			$defaults['order_of_icons'] = array(
 				'google_plus' => 'google_plus',
 				'twitter'     => 'twitter',
 				'facebook'    => 'facebook',
 				'linkedin'    => 'linkedin',
-				'pinterest'   => 'pinterest'
+				'pinterest'   => 'pinterest',
 			);
 		endif;
 
@@ -72,13 +72,13 @@ class SWP_Option_Icons extends SWP_Option {
 		 * So we need to create an array in that form.
 		 * Yes, it is redundant, but that's how it is.
 		 */
-		foreach( $swp_social_networks as $key => $object ) {
-			$networks[$key] = $key;
+		foreach ( $swp_social_networks as $key => $object ) {
+			$networks[ $key ] = $key;
 		}
 
 		$values['order_of_icons'] = array(
-			'type' => 'none',
-			'values'   => $networks
+			'type'   => 'none',
+			'values' => $networks,
 		);
 
 		return $values;
@@ -123,31 +123,31 @@ class SWP_Option_Icons extends SWP_Option {
 	*/
 	public function render_active_icons() {
 		$all_networks = $this->get_all_networks();
-		$user_icons = SWP_Utility::get_option( 'order_of_icons' );
+		$user_icons   = SWP_Utility::get_option( 'order_of_icons' );
 
-		$html = '<div class="sw-grid sw-col-300">';
-			$html .= '<h3 class="sw-buttons-toggle">' . __( 'Active' , 'social-warfare' ) . '</h3>';
-		$html .= '</div>';
+		$html      = '<div class="sw-grid sw-col-300">';
+			$html .= '<h3 class="sw-buttons-toggle">' . __( 'Active', 'social-warfare' ) . '</h3>';
+		$html     .= '</div>';
 
-		$html .= '<div class="sw-grid sw-col-620 sw-fit">';
+		$html     .= '<div class="sw-grid sw-col-620 sw-fit">';
 			$html .= '<div class="sw-active sw-buttons-sort">';
 
-			foreach( $user_icons as $network_key ) {
-				// The user no longer has the addon with this $network_key.
-				if ( !array_key_exists( $network_key, $all_networks ) ) {
-					continue;
-				}
-
-				if ( false == $all_networks[$network_key] ) {
-					continue;
-				}
-
-				$html .= $this->render_icon_HTML( $all_networks[$network_key] );
+		foreach ( $user_icons as $network_key ) {
+			// The user no longer has the addon with this $network_key.
+			if ( ! array_key_exists( $network_key, $all_networks ) ) {
+				continue;
 			}
 
+			if ( false == $all_networks[ $network_key ] ) {
+				continue;
+			}
+
+			$html .= $this->render_icon_HTML( $all_networks[ $network_key ] );
+		}
+
 			$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="sw-clearfix"></div>';
+		$html     .= '</div>';
+		$html     .= '<div class="sw-clearfix"></div>';
 
 		$this->html = $html;
 
@@ -165,31 +165,30 @@ class SWP_Option_Icons extends SWP_Option {
 	*/
 	public function render_inactive_icons() {
 		$all_networks = $this->get_all_networks();
-		$user_icons = SWP_Utility::get_option( 'order_of_icons' );
+		$user_icons   = SWP_Utility::get_option( 'order_of_icons' );
 		$network_keys = array();
 
-		foreach( $all_networks as $object ) {
+		foreach ( $all_networks as $object ) {
 			$network_keys[] = $object->key;
 		}
 
 		$inactive_icons = array_diff( $network_keys, $user_icons );
 
-		$html = '<div class="sw-grid sw-col-300">';
-			$html .=  '<h3 class="sw-buttons-toggle">' . __( 'Inactive' , 'social-warfare' ) . '</h3>';
-		$html .=  '</div>';
+		$html      = '<div class="sw-grid sw-col-300">';
+			$html .= '<h3 class="sw-buttons-toggle">' . __( 'Inactive', 'social-warfare' ) . '</h3>';
+		$html     .= '</div>';
 
-		$html .=  '<div class="sw-grid sw-col-620 sw-fit">';
-			$html .=  '<div class="sw-inactive sw-buttons-sort">';
+		$html     .= '<div class="sw-grid sw-col-620 sw-fit">';
+			$html .= '<div class="sw-inactive sw-buttons-sort">';
 
-			foreach( $inactive_icons as $network_key) {
-				$network = $all_networks[$network_key];
+		foreach ( $inactive_icons as $network_key ) {
+			$network = $all_networks[ $network_key ];
 
-
-				$html .= $this->render_icon_HTML( $network );
-			}
+			$html .= $this->render_icon_HTML( $network );
+		}
 
 			$html .= '</div>';
-		$html .= '</div>';
+		$html     .= '</div>';
 
 		$this->html = $html;
 
@@ -206,11 +205,11 @@ class SWP_Option_Icons extends SWP_Option {
 	 *
 	 */
 	protected function render_icon_HTML( $network ) {
-		$html = '<i class="sw-s sw-' . $network->key . '-icon" ';
+		$html  = '<i class="sw-s sw-' . $network->key . '-icon" ';
 		$html .= ' data-network="' . $network->key . '"';
 
-		if ( !empty($network->premium) ) :
-			$html .= ' premium="'.$network->premium.'"';
+		if ( ! empty( $network->premium ) ) :
+			$html .= ' premium="' . $network->premium . '"';
 		endif;
 
 		$html .= '></i>';
@@ -228,7 +227,7 @@ class SWP_Option_Icons extends SWP_Option {
 	 *
 	 */
 	public function render_HTML() {
-		if ($this->is_active_icons) {
+		if ( $this->is_active_icons ) {
 			$this->render_active_icons();
 		} else {
 			$this->render_inactive_icons();
@@ -236,5 +235,4 @@ class SWP_Option_Icons extends SWP_Option {
 
 		return $this->html;
 	}
-
 }

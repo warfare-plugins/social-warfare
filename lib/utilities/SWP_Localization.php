@@ -17,13 +17,13 @@ class SWP_Localization {
 	 * @since  1.0.0
 	 * @return void
 	 */
-    public function init() {
-        $loaded = load_plugin_textdomain(
+	public function init() {
+		$loaded = load_plugin_textdomain(
 			'social-warfare',
 			false,
 			dirname( plugin_basename( SWP_PLUGIN_FILE ) ) . '/languages'
 		);
-    }
+	}
 
 
 	/**
@@ -49,5 +49,4 @@ class SWP_Localization {
 	public function swp_is_textdomain_loaded() {
 		return is_textdomain_loaded( 'social-warfare' );
 	}
-
 }

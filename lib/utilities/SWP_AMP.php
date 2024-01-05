@@ -39,7 +39,6 @@ class SWP_AMP {
 	 */
 	public static function is_amp() {
 
-
 		/**
 		 * This is used by the AMP for WP plugin.
 		 *
@@ -48,10 +47,9 @@ class SWP_AMP {
 		 * Documentation: https://ampforwp.com/tutorials/article/detect-amp-page-function/
 		 *
 		 */
-		if( function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint() ) {
+		if ( function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint() ) {
 			return true;
 		}
-
 
 		/**
 		 * This is used by the official AMP plugin.
@@ -61,8 +59,8 @@ class SWP_AMP {
 		 * Documention: https://amp-wp.org/documentation/developing-wordpress-amp-sites/how-to-develop-with-the-amp-plugin/
 		 *
 		 */
-		if( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-		    return true;
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return true;
 		}
 
 		return false;

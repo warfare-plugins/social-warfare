@@ -55,11 +55,10 @@ class SWP_Facebook extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name           = __( 'Facebook','social-warfare' );
-		$this->cta            = __( 'Share','social-warfare' );
-		$this->key            = 'facebook';
-		$this->default        = 'true';
-
+		$this->name    = __( 'Facebook', 'social-warfare' );
+		$this->cta     = __( 'Share', 'social-warfare' );
+		$this->key     = 'facebook';
+		$this->default = 'true';
 
 		/**
 		 * This will add the authentication module to the options page so that
@@ -68,7 +67,6 @@ class SWP_Facebook extends SWP_Social_Network {
 		 */
 		$this->Authentication = new SWP_Auth_Helper( $this->key );
 		add_filter( 'swp_authorizations', array( $this->Authentication, 'add_to_authorizations' ) );
-
 
 		/**
 		 * This will check to see if the user has connected Social Warfare with
@@ -105,7 +103,6 @@ class SWP_Facebook extends SWP_Social_Network {
 	 */
 	public function get_api_link( $url ) {
 
-
 		/**
 		 * This will check to see if the user has connected Social Warfare with
 		 * Facebook using the oAuth authentication. If so, we'll use the offical
@@ -114,7 +111,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * later on via a different function.
 		 *
 		 */
-		if( $this->Authentication->has_valid_token() && false !== $this->get_og_id($url) ) {
+		if ( $this->Authentication->has_valid_token() && false !== $this->get_og_id( $url ) ) {
 
 			// Organize the necessary URL parameters.
 			$paremeters['id']           = $this->get_og_id( $url );
@@ -152,8 +149,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	private function get_og_id( $url ) {
 
 		// Fetch the post ID
-		$post_id     = get_the_id();
-
+		$post_id = get_the_id();
 
 		/**
 		 * Check if the Facebook ID is already stored in a post meta field. If
@@ -164,16 +160,14 @@ class SWP_Facebook extends SWP_Social_Network {
 		 *
 		 */
 		$facebook_id = get_post_meta( $post_id, '_facebook_og_id', true );
-		if( false !== $facebook_id && !empty( $facebook_id ) ) {
+		if ( false !== $facebook_id && ! empty( $facebook_id ) ) {
 			return $facebook_id;
 		}
 
-
 		// Bail if the user doesn't have Facebook authenticated.
-		if( false == $this->Authentication->has_valid_token() ) {
+		if ( false == $this->Authentication->has_valid_token() ) {
 			return false;
 		}
-
 
 		/**
 		 * Check to make sure that we haven't already attempted to fetch this ID
@@ -184,10 +178,9 @@ class SWP_Facebook extends SWP_Social_Network {
 		 *
 		 */
 		$previous_check_timestamp = get_post_meta( $post_id, '_facebook_og_id_timestamp', true );
-		if( $previous_check_timestamp > time() - 600 ) {
+		if ( $previous_check_timestamp > time() - 600 ) {
 			return false;
 		}
-
 
 		/**
 		 * If everything checks out above, we'll proceed to make an API request.
@@ -206,11 +199,11 @@ class SWP_Facebook extends SWP_Social_Network {
 
 		// Make and parse the API call.
 		$response = SWP_CURL::file_get_contents_curl( $api_url );
-		// var_dump($response);	
+		// var_dump($response);
 		$response = json_decode( $response );
 
 		// If the object we need exists, then store the ID in post meta and return it.
-		if( !empty( $response->og_object ) ) {
+		if ( ! empty( $response->og_object ) ) {
 			update_post_meta( $post_id, '_facebook_og_id', $response->og_object->id );
 			return $response->og_object->id;
 		}
@@ -242,7 +235,6 @@ class SWP_Facebook extends SWP_Social_Network {
 	 */
 	public function parse_api_response( $response ) {
 
-
 		/**
 		 * This is the response that came back from Facebook's server/API. Since
 		 * this response is JSON encoded, we'll decode it into a generic PHP
@@ -250,7 +242,6 @@ class SWP_Facebook extends SWP_Social_Network {
 		 *
 		 */
 		$response = json_decode( $response );
-
 
 		/**
 		 * This will catch the error code whenever Facebook responds by telling
@@ -261,11 +252,10 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * their authentication.
 		 *
 		 */
-		if( !empty( $response->error ) && $response->error->code == 190 ) {
-			SWP_Credential_Helper::store_data('facebook', 'access_token', 'expired' );
+		if ( ! empty( $response->error ) && $response->error->code == 190 ) {
+			SWP_Credential_Helper::store_data( 'facebook', 'access_token', 'expired' );
 			return 0;
 		}
-
 
 		/**
 		 * This will parse the currently formatted responses from the API as of
@@ -279,13 +269,13 @@ class SWP_Facebook extends SWP_Social_Network {
 		$engagement = 0;
 
 		// Check if the engagement object exists in this response.
-		if( !empty( $response->engagement ) ) {
+		if ( ! empty( $response->engagement ) ) {
 
 			// Loop through each item in that response.
-			foreach( $response->engagement as $this_engagement ) {
+			foreach ( $response->engagement as $this_engagement ) {
 
 				// Ensure that the response is valid.
-				if( is_numeric( $this_engagement ) ) {
+				if ( is_numeric( $this_engagement ) ) {
 
 					// Add the response to our ongoing total.
 					$engagement += $this_engagement;
@@ -296,17 +286,15 @@ class SWP_Facebook extends SWP_Social_Network {
 			return $engagement;
 		}
 
-
 		/**
 		 * I don't think this method is used anymore and it probably needs to be
 		 * removed. In the mean time, if it does detect the presence of these
 		 * fields, it will know what to do with them.
 		 *
 		 */
-		if( !empty( $response->og_object ) && !empty( $response->og_object->engagement ) ) {
+		if ( ! empty( $response->og_object ) && ! empty( $response->og_object->engagement ) ) {
 			return $response->og_object->engagement->count;
 		}
-
 
 		/**
 		 * This API returns the numbers as their individual parts: reactions,
@@ -314,9 +302,9 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * returning the count to the caller.
 		 *
 		 */
-		if( !empty( $response->engagement ) ) {
+		if ( ! empty( $response->engagement ) ) {
 			$engagement = $response->engagement;
-			$activity = $engagement->reaction_count + $engagement->comment_count + $engagement->share_count;
+			$activity   = $engagement->reaction_count + $engagement->comment_count + $engagement->share_count;
 			return $activity;
 		}
 
@@ -363,7 +351,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 */
 	private function register_ajax_cache_callbacks() {
 
-		if( false === $this->is_active() || $this->Authentication->has_valid_token() ) {
+		if ( false === $this->is_active() || $this->Authentication->has_valid_token() ) {
 			return;
 		}
 
@@ -385,7 +373,7 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	public function add_facebook_footer_hook( $post_id ) {
-        $this->post_id = $post_id;
+		$this->post_id = $post_id;
 		add_action( 'swp_footer_scripts', array( $this, 'print_facebook_script' ) );
 	}
 
@@ -406,7 +394,7 @@ class SWP_Facebook extends SWP_Social_Network {
 			$alternateURL = false;
 		}
 
-		$info['footer_output'] .= PHP_EOL .  '
+		$info['footer_output'] .= PHP_EOL . '
 			document.addEventListener("DOMContentLoaded", function() {
 				var swpButtonsExist = document.getElementsByClassName( "swp_social_panel" ).length > 0;
 				if (swpButtonsExist) {
@@ -437,14 +425,13 @@ class SWP_Facebook extends SWP_Social_Network {
 	public function facebook_shares_update() {
 		global $swp_user_options;
 
-
 		/**
 		 * Verify that the data being submitted and later sent to the database
 		 * are actual numbers. This ensures that it's the data type that we
 		 * need, but it also prevents any kind of malicious code from being used.
 		 *
 		 */
-		if (!is_numeric( $_POST['share_counts'] ) || !is_numeric( $_POST['post_id'] ) ) {
+		if ( ! is_numeric( $_POST['share_counts'] ) || ! is_numeric( $_POST['post_id'] ) ) {
 			echo 'Invalid data types sent to the server. No information processed.';
 			wp_die();
 		}
@@ -452,7 +439,6 @@ class SWP_Facebook extends SWP_Social_Network {
 		// Cast them to integers just in case they come in as numeric strings.
 		$activity = (int) $_POST['share_counts'];
 		$post_id  = (int) $_POST['post_id'];
-
 
 		/**
 		 * We will attempt to update the share counts. If the new numbers are
@@ -489,26 +475,25 @@ class SWP_Facebook extends SWP_Social_Network {
 	 *
 	 */
 	public function display_access_token_notices() {
-		$is_notice_needed      = false;
+		$is_notice_needed = false;
 
 		// If there is no token.
-		if( false === $this->Authentication->get_access_token() ) {
+		if ( false === $this->Authentication->get_access_token() ) {
 			$is_notice_needed = true;
 			$notice_key       = 'facebook_not_authenticated';
 			$notice_message   = '<b>Notice: Facebook is not authenticated with Social Warfare.</b> We\'ve added the ability to authenticate and connect Social Warfare with Facebook. This allows us access to their official API which we use for collecting more accurate share counts. Just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Connections" section and get yourself set up now!';
 		}
 
 		// If the token is expired.
-		if( 'expired' === $this->Authentication->get_access_token() ) {
+		if ( 'expired' === $this->Authentication->get_access_token() ) {
 			$is_notice_needed = true;
-			$notice_key       = 'fb_token_expired_' . date('MY') ;
+			$notice_key       = 'fb_token_expired_' . date( 'MY' );
 			$notice_message   = '<b>Notice: Social Warfare\'s connection with Facebook has expired!</b> This happens by Facebook\'s design every couple of months. To give our plugin access to the most accurate, reliable and up-to-date data that we\'ll use to populate your share counts, just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Collections" section and get yourself set up now!<br /><br />P.S. We do NOT collect any of your data from the API to our servers or share it with any third parties. Absolutely None.';
 		}
 
 		// If a message was generated above, send it to the notice class.
-		if( true === $is_notice_needed ) {
+		if ( true === $is_notice_needed ) {
 			new SWP_Notice( $notice_key, $notice_message );
 		}
 	}
-
 }
