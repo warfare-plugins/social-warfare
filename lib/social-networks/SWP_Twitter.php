@@ -127,7 +127,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$this->response = 0;
 
 		// If the user has enabled Twitter shares....
-		if ( true == SWP_Utility::get_option( 'twitter_shares' ) ) {
+		if ( true === SWP_Utility::get_option( 'twitter_shares' ) ) {
 			$response       = json_decode( $response, true );
 			$this->response = isset( $response['count'] ) ? intval( $response['count'] ) : 0;
 			return $this->response;
@@ -221,7 +221,8 @@ class SWP_Twitter extends SWP_Social_Network {
 		 *
 		 */
 		if ( false !== strpos( $tweet, 'http' ) ) {
-			return $url_parameter = '&url=/';
+			$url_parameter = '&url=/';
+			return $url_parameter;
 		}
 
 		$twitter_link = $this->get_shareable_permalink( $post_data );
@@ -277,7 +278,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		$source = SWP_Utility::get_option( 'tweet_count_source' );
 
 		// If the current source is set to New Share Counts
-		if ( 'newsharecounts' == $source ) {
+		if ( 'newsharecounts' === $source ) {
 			$service_name = 'New Share Count';
 		}
 
