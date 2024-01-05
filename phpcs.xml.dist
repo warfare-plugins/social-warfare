@@ -29,5 +29,10 @@
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/vendor/*</exclude-pattern>
 
+	<!-- Exclude the filename format rule -->
+    <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+        <severity>0</severity>
+    </rule>
+
 	<rule ref="WordPress-Core"/>
 </ruleset>
