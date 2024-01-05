@@ -133,12 +133,12 @@ class SWP_Link_Shortener {
 		add_action( 'wp_footer', array( $this, 'debug' ) );
 		add_filter( 'swp_link_shortening', array( $this, 'provide_shortlink' ) );
 
-		if( !empty( $this->deactivation_hook ) ) {
-			add_action( 'wp_ajax_nopriv_swp_' . $this->activation_hook, array( $this , $this->activation_hook ) );
+		if ( ! empty( $this->deactivation_hook ) ) {
+			add_action( 'wp_ajax_nopriv_swp_' . $this->activation_hook, array( $this, $this->activation_hook ) );
 		}
 
-		if( !empty( $this->deactivation_hook ) ) {
-			add_action( 'wp_ajax_swp_' .$this->deactivation_hook, array( $this, $this->deactivation_hook ) );
+		if ( ! empty( $this->deactivation_hook ) ) {
+			add_action( 'wp_ajax_swp_' . $this->deactivation_hook, array( $this, $this->deactivation_hook ) );
 		}
 	}
 
@@ -154,7 +154,7 @@ class SWP_Link_Shortener {
 	 *
 	 */
 	public function register_self( $array ) {
-		$array[$this->key] = $this;
+		$array[ $this->key ] = $this;
 		return $array;
 	}
 
@@ -202,27 +202,24 @@ class SWP_Link_Shortener {
 	 */
 	public function provide_shortlink( $array ) {
 
-
 		/**
 		 * Pull together the information that we'll need to generate bitly links.
 		 *
 		 */
 		global $post;
-		$network           = $array['network'];
-		$post_id           = $array['post_id'];
-		$fresh_cache       = $array['fresh_cache'];
-		$google_analytics  = SWP_Utility::get_option('google_analytics');
-
+		$network          = $array['network'];
+		$post_id          = $array['post_id'];
+		$fresh_cache      = $array['fresh_cache'];
+		$google_analytics = SWP_Utility::get_option( 'google_analytics' );
 
 		/**
 		 * Check if any of the bail conditions are met, in which case we'll exit
 		 * the function without returning any kind of shortlinks.
 		 *
 		 */
-		if( false === $this->should_link_be_shortened( $network ) ) {
+		if ( false === $this->should_link_be_shortened( $network ) ) {
 			return $array;
 		}
-
 
 		/**
 		 * If the chache is fresh and we have a valid bitly link stored in the
@@ -235,12 +232,11 @@ class SWP_Link_Shortener {
 		 */
 		if ( true == $fresh_cache ) {
 			$this->record_exit_status( 'fresh_cache' );
-			if( $this->fetch_cached_shortlink( $post_id, $network ) ) {
+			if ( $this->fetch_cached_shortlink( $post_id, $network ) ) {
 				$array['url'] = $this->fetch_cached_shortlink( $post_id, $network );
 			}
 			return $array;
 		}
-
 
 		/**
 		 * If all checks have passed, let's generate a new bitly URL. If an
@@ -250,7 +246,6 @@ class SWP_Link_Shortener {
 		 */
 		$url           = urldecode( $array['url'] );
 		$new_shortlink = $this->generate_new_shortlink( $url, $post_id, $network );
-
 
 		/**
 		 * If a link was successfully created, let's store it in the database,
@@ -285,7 +280,6 @@ class SWP_Link_Shortener {
 	public function should_link_be_shortened( $network ) {
 		global $post;
 
-
 		/**
 		 * We don't want bitly links generated for the total shares buttons
 		 * (since they don't have any links at all), and Pinterest doesn't allow
@@ -296,16 +290,14 @@ class SWP_Link_Shortener {
 			return false;
 		}
 
-
 		/**
 		 * Bail if link shortening is turned off.
 		 *
 		 */
-		if( false == SWP_Utility::get_option( 'link_shortening_toggle' ) ) {
+		if ( false == SWP_Utility::get_option( 'link_shortening_toggle' ) ) {
 			$this->record_exit_status( 'link_shortening_toggle' );
 			return false;
 		}
-
 
 		/**
 		 * This checks if the user has selected the current link shortener as
@@ -314,11 +306,10 @@ class SWP_Link_Shortener {
 		 * bail out here.
 		 *
 		 */
-		if( $this->key !== SWP_Utility::get_option( 'link_shortening_service' ) ) {
+		if ( $this->key !== SWP_Utility::get_option( 'link_shortening_service' ) ) {
 			$this->record_exit_status( 'link_shortening_service' );
 			return false;
 		}
-
 
 		/**
 		 * Bail if this link shortener isn't active. This property will be set
@@ -332,7 +323,6 @@ class SWP_Link_Shortener {
 			return false;
 		}
 
-
 		/**
 		 * Bail out if the post is older than the specified minimum publication
 		 * date for posts and pages.
@@ -342,7 +332,6 @@ class SWP_Link_Shortener {
 			$this->record_exit_status( 'publication_date' );
 			return false;
 		}
-
 
 		/**
 		 * Shortlinks can now be turned on or off at the post_type level on the
@@ -355,7 +344,6 @@ class SWP_Link_Shortener {
 			$this->record_exit_status( 'short_link_toggle_' . $post->post_type );
 			return false;
 		}
-
 
 		// If all checks pass, return true. We should shorten the link.
 		return true;
@@ -378,7 +366,6 @@ class SWP_Link_Shortener {
 	 */
 	public function fetch_cached_shortlink( $post_id, $network ) {
 
-
 		/**
 		 * Fetch the local bitly link. We'll use this one if Google Analytics is
 		 * not enabled. Otherwise we'll switch it out below.
@@ -386,24 +373,22 @@ class SWP_Link_Shortener {
 		 */
 		$short_url = get_post_meta( $post_id, $this->key . '_link', true );
 
-
 		/**
 		 * If Google analytics are enabled, we'll need to fetch a different
 		 * shortlink for each social network. If they are disabled, we just use
 		 * the same shortlink for all of them.
 		 *
 		 */
-		if ( true == SWP_Utility::get_option('google_analytics') ) {
-			$short_url = get_post_meta( $post_id, $this->key . '_link_' . $network, true);
+		if ( true == SWP_Utility::get_option( 'google_analytics' ) ) {
+			$short_url = get_post_meta( $post_id, $this->key . '_link_' . $network, true );
 		}
-
 
 		/**
 		 * We need to make sure that the $short_url returned from get_post_meta()
 		 * is not false or an empty string. If so, we'll return false.
 		 *
 		 */
-		if ( !empty( $short_url ) ) {
+		if ( ! empty( $short_url ) ) {
 			return $short_url;
 		}
 
@@ -433,7 +418,7 @@ class SWP_Link_Shortener {
 		if ( $start_date ) {
 
 			// Bail if we don't have a valid post object or post_date.
-			if ( !is_object( $post ) || empty( $post->post_date ) ) {
+			if ( ! is_object( $post ) || empty( $post->post_date ) ) {
 				return false;
 			}
 

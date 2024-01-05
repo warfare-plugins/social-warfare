@@ -20,20 +20,20 @@
 class SWP_Post_Cache_Loader {
 
 
-    /**
-    * Array of the currently loaded SWP_Post_Cache objects, indexed by post_id.
-    * These are meant to be accessed by the Buttons Panel, for example.
-    *
-    * Example Data:
-    * $post_caches = array(
-    * 	282 => post cache object for post 282
-    * 	983 => post cache object for post 983
-    * )
-    *
-    * @var array
-    *
-    */
-    public $post_caches = array();
+	/**
+	* Array of the currently loaded SWP_Post_Cache objects, indexed by post_id.
+	* These are meant to be accessed by the Buttons Panel, for example.
+	*
+	* Example Data:
+	* $post_caches = array(
+	*   282 => post cache object for post 282
+	*   983 => post cache object for post 983
+	* )
+	*
+	* @var array
+	*
+	*/
+	public $post_caches = array();
 
 
 	/**
@@ -47,7 +47,7 @@ class SWP_Post_Cache_Loader {
 	 *
 	 */
 	public function __construct() {
-        add_action( 'save_post', array( $this, 'update_post' ) );
+		add_action( 'save_post', array( $this, 'update_post' ) );
 		add_action( 'publish_post', array( $this, 'update_post' ) );
 	}
 
@@ -66,13 +66,13 @@ class SWP_Post_Cache_Loader {
 	 * @return object           The post_cache object for the post.
 	 *
 	 */
-    public function get_post_cache( $post_id ) {
+	public function get_post_cache( $post_id ) {
 
-		if ( empty( $this->post_caches[$post_id] ) ) {
-			$this->post_caches[$post_id] = new SWP_Post_Cache( $post_id );
+		if ( empty( $this->post_caches[ $post_id ] ) ) {
+			$this->post_caches[ $post_id ] = new SWP_Post_Cache( $post_id );
 		}
 
-		return $this->post_caches[$post_id];
+		return $this->post_caches[ $post_id ];
 	}
 
 
@@ -88,7 +88,6 @@ class SWP_Post_Cache_Loader {
 	 */
 	public function update_post( $post_id ) {
 
-
 		/**
 		 * If the post isn't published, we don't need to do anything with the
 		 * post cache. Just ignore it.
@@ -98,18 +97,16 @@ class SWP_Post_Cache_Loader {
 			return;
 		}
 
-
 		/**
 		 * Instantiate a post cache object for this post, and then call the
 		 * public method delete_timestamp(); This will make it so that the next
 		 * time the post is loaded, we will not used cached data to populate
 		 * the cache object, but will rebuild the cache with fresh data. This
 		 * way the cache will reflect any changes that were made when the post
-		 * was updated. 
+		 * was updated.
 		 *
 		 */
 		$Post_Cache = new SWP_Post_Cache( $post_id );
 		$Post_Cache->delete_timestamp();
 	}
-
 }

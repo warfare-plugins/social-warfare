@@ -19,19 +19,19 @@ abstract class SWP_Widget extends WP_Widget {
 	*  @since  1.0.0 | 01 JAN 2018 | Created
 	*  @param $key The unique classname of the Widget.
 	*  @param $name The display name for WP Admin -> Appearance -> Widgets.
-	*  @param $widget array Fields required by wordpress.
+	*  @param $widget array Fields required by WordPress.
 	*                       At a minimum, ['classname' => '', 'description' => '']
 	*  @access public
 	*/
 	function __construct( $key, $name, $widget ) {
-		$this->data = $widget;
-		$this->key = $key;
-		$widget['key'] = $key;
+		$this->data     = $widget;
+		$this->key      = $key;
+		$widget['key']  = $key;
 		$widget['name'] = $name;
 
 		parent::__construct( $key, $name, $widget );
 
-		  add_filter( 'swp_widgets', array( $this, 'register_self' ) );
+			add_filter( 'swp_widgets', array( $this, 'register_self' ) );
 	}
 
 
@@ -89,7 +89,7 @@ abstract class SWP_Widget extends WP_Widget {
 	 */
 	public function form( $settings ) {
 
-		$form = '<div class="swp-widget swp_widget">';
+		$form  = '<div class="swp-widget swp_widget">';
 		$form .= $this->generate_form_HTML( $settings );
 		$form .= '</div>';
 
@@ -133,32 +133,32 @@ abstract class SWP_Widget extends WP_Widget {
 	*
 	*/
 	public function widget( $args, $settings ) {
-		if( isset( $args['before_widget'] ) ) {
+		if ( isset( $args['before_widget'] ) ) {
 			echo $args['before_widget'];
 		}
 		$title = isset( $settings['title'] ) ? $settings['title'] : '';
 
 		echo '<div class="widget-text swp_widget_box">';
 
-			if( isset( $args['before_title'] ) ) {
-				echo $args['before_title'];
-			}
+		if ( isset( $args['before_title'] ) ) {
+			echo $args['before_title'];
+		}
 
 			echo '<div class="swp-widget-title">'
-				 . $this->generate_widget_title( $title )
-				 . '</div>';
+				. $this->generate_widget_title( $title )
+				. '</div>';
 
-			if( isset( $args['after_title'] ) ) {
-				echo $args['after_title'];
-			}
+		if ( isset( $args['after_title'] ) ) {
+			echo $args['after_title'];
+		}
 
 			echo '<div class="swp-widget-content">'
-				 . $this->generate_widget_HTML( $settings )
-				 .'</div>';
+				. $this->generate_widget_HTML( $settings )
+				. '</div>';
 
 		echo '</div>';
 
-		if( isset( $args['after_widget'] ) ) {
+		if ( isset( $args['after_widget'] ) ) {
 			echo $args['after_widget'];
 		}
 	}
