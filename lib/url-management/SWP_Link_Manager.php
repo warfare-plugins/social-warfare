@@ -161,7 +161,7 @@ class SWP_Link_Manager {
 		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
 
 		$link_shortening_start_date
-			->set_default( date( 'Y-m-d', strtotime( '90 days ago' ) ) )
+			->set_default( gmdate( 'Y-m-d', strtotime( '90 days ago' ) ) )
 			->set_priority( 20 )
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
@@ -221,11 +221,11 @@ class SWP_Link_Manager {
 			$priority = 100 + $i * 10;
 
 			$default = false;
-			if ( $post == 'post' ) {
+			if ( 'post' === $post ) {
 				$default = true;
 			}
 
-			if ( $post == 'archive_categories' ) {
+			if ( 'archive_categories' === $post ) {
 				continue;
 			}
 
