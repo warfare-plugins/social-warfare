@@ -34,5 +34,10 @@
         <severity>0</severity>
     </rule>
 
+	<!-- Exclude the variable name format rule -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
+		<severity>0</severity>
+    </rule>
+
 	<rule ref="WordPress-Core"/>
 </ruleset>
