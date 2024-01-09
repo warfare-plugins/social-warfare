@@ -45,7 +45,7 @@ trait SWP_Buttons_Panel_Trait {
 		 * according to that location.
 		 *
 		 */
-		if ( $this->panel_type === 'static_horizontal' ) {
+		if ( 'static_horizontal' === $this->panel_type ) {
 			switch ( $this->location ) {
 				case 'both':
 					$content = $this->html . $this->content . $this->html;
@@ -56,9 +56,9 @@ trait SWP_Buttons_Panel_Trait {
 				case 'below':
 					$content = $this->content . $this->html;
 					break;
-
 				case 'none':
 					$content = $this->content;
+					break;
 				default:
 					$content = $this->content;
 					break;
@@ -71,7 +71,7 @@ trait SWP_Buttons_Panel_Trait {
 		 * with the generated html for the panel.
 		 *
 		 */
-		if ( $this->panel_type === 'floating_side' ) {
+		if ( 'floating_side' === $this->panel_type ) {
 			$content = $this->html;
 		}
 
@@ -95,8 +95,8 @@ trait SWP_Buttons_Panel_Trait {
 	* @return string The converted string.
 	*
 	*/
-	public function get_key_from_name( $string ) {
-		return preg_replace( '/[\s]+/', '_', strtolower( trim( $string ) ) );
+	public function get_key_from_name( $name ) {
+		return preg_replace( '/[\s]+/', '_', strtolower( trim( $name ) ) );
 	}
 
 
@@ -175,11 +175,11 @@ trait SWP_Buttons_Panel_Trait {
 	*
 	* @since  3.0.0 | 01 MAR 2018 | Created
 	* @since  3.3.2 | 13 SEP 2018 | Modified to control float selectors better
-	* @param  boolean $float Whether this is a floating panel or not.
+	* @param  boolean $float_panel Whether this is a floating panel or not.
 	* @return string  The string of CSS classes to be used on the panel.
 	*
 	*/
-	protected function get_colors( $float = false ) {
+	protected function get_colors( $float_panel = false ) {
 
 		/**
 		* If pro was installed, but no longer is installed or activated,
@@ -212,7 +212,7 @@ trait SWP_Buttons_Panel_Trait {
 		* buttons being rendered.
 		*
 		*/
-		if ( true === $float && false === $this->options['float_style_source'] ) {
+		if ( true === $float_panel && false === $this->options['float_style_source'] ) {
 			$prefix = 'float_';
 		}
 
@@ -400,7 +400,7 @@ trait SWP_Buttons_Panel_Trait {
 		 * be showing any.
 		 *
 		 */
-		if ( false == isset( $this->post_id ) ) {
+		if ( false === isset( $this->post_id ) ) {
 			return 'none';
 		}
 
@@ -412,7 +412,7 @@ trait SWP_Buttons_Panel_Trait {
 		 */
 		$float_location    = $this->get_option( 'float_location' );
 		$global_setting    = $this->get_option( 'floating_panel' );
-		$post_type_setting = 'on' == $this->get_option( 'float_location_' . $this->post_data['post_type'] );
+		$post_type_setting = 'on' === $this->get_option( 'float_location_' . $this->post_data['post_type'] );
 		$post_setting      = get_post_meta( $this->post_id, 'swp_float_location', true );
 
 		/**
@@ -505,7 +505,7 @@ trait SWP_Buttons_Panel_Trait {
 		 * any floating buttons on mobile either.
 		 *
 		 */
-		if ( 'none' == $this->get_float_location() ) {
+		if ( 'none' === $this->get_float_location() ) {
 			$mobile_location = 'none';
 		}
 
@@ -527,7 +527,7 @@ trait SWP_Buttons_Panel_Trait {
 			 * setting as no actual transition is needed.
 			 *
 			 */
-			if ( true === in_array( $float_location, array( 'left', 'right' ) ) ) {
+			if ( true === in_array( $float_location, array( 'left', 'right' ), true ) ) {
 				$mobile_location = 'none';
 			}
 		}
@@ -537,7 +537,7 @@ trait SWP_Buttons_Panel_Trait {
 		if ( is_front_page() || is_archive() || is_category() ) {
 			$float_enabled = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
 
-			if ( 'off' != $float_enabled ) {
+			if ( 'off' !== $float_enabled ) {
 				return 'data-float-mobile="' . $mobile_location . '" ';
 			}
 
@@ -598,7 +598,7 @@ trait SWP_Buttons_Panel_Trait {
 		*/
 		arsort( $this->shares );
 		foreach ( $this->shares as $network => $share_count ) {
-			if ( $network != 'total_shares' && in_array( $network, $active_networks ) ) {
+			if ( 'total_shares' !== $network && in_array( $network, $active_networks, true ) ) {
 				$order[ $network ] = $network;
 			}
 		}
@@ -656,7 +656,7 @@ trait SWP_Buttons_Panel_Trait {
 			 * zero, it represents unlimited buttons can be displayed.
 			 *
 			 */
-			if ( 0 !== $this->max_buttons && $count == $this->max_buttons ) :
+			if ( 0 !== $this->max_buttons && $count === $this->max_buttons ) :
 				return $html;
 			endif;
 
@@ -736,8 +736,8 @@ trait SWP_Buttons_Panel_Trait {
 		*/
 		$buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
 		if ( $this->is_shortcode && ! empty( $buttons ) ) {
-			$total                   = in_array( 'total', array_map( 'strtolower', $buttons ) );
-			$totals                  = in_array( 'totals', array_map( 'strtolower', $buttons ) );
+			$total                   = in_array( 'total', array_map( 'strtolower', $buttons ), true );
+			$totals                  = in_array( 'totals', array_map( 'strtolower', $buttons ), true );
 			$are_total_shares_active = ( $total || $totals );
 		}
 
@@ -747,7 +747,7 @@ trait SWP_Buttons_Panel_Trait {
 		* any total shares.
 		*
 		*/
-		if ( false == $are_total_shares_active ) {
+		if ( false === $are_total_shares_active ) {
 			return false;
 		}
 
@@ -778,8 +778,8 @@ trait SWP_Buttons_Panel_Trait {
 		// Generate the html for the total shares and each button in the set.
 		$total_shares_html = $this->generate_total_shares_html();
 		$buttons_html      = $this->generate_individual_buttons_html();
-		$is_side_floating  = ( 'floating_side' == $this->panel_type );
-		$is_left_aligned   = ( 'totals_left' == $this->get_option( 'totals_alignment' ) );
+		$is_side_floating  = ( 'floating_side' === $this->panel_type );
+		$is_left_aligned   = ( 'totals_left' === $this->get_option( 'totals_alignment' ) );
 
 		/**
 		 * $is_side_floating: If this is a set of floating sidebar buttons, then
@@ -794,15 +794,12 @@ trait SWP_Buttons_Panel_Trait {
 		if ( $is_side_floating || $is_left_aligned ) {
 			$this->inner_html = $total_shares_html . $buttons_html;
 			return;
-		}
-
-		/**
-		 * If it's not a set of floating buttons and it's not set to the left,
-		 * then we attach the total shares on the right.
-		 *
-		 */
-
-		else {
+		} else {
+			/**
+			 * If it's not a set of floating buttons and it's not set to the left,
+			 * then we attach the total shares on the right.
+			 *
+			 */
 			$this->inner_html = $buttons_html . $total_shares_html;
 		}
 	}
@@ -880,7 +877,7 @@ trait SWP_Buttons_Panel_Trait {
 		$delay_share_counts = SWP_Utility::get_option( 'delay_share_counts' );
 		if ( ! empty( $delay_share_counts ) && is_numeric( $delay_share_counts ) && $delay_share_counts > 0 ) {
 			$delay_share_counts = $delay_share_counts * 60 * 60;
-			$current_time       = date( 'U' );
+			$current_time       = gmdate( 'U' );
 			$publication_time   = get_post_time( 'U', true, $post_id );
 			$post_age           = $current_time - $publication_time;
 
