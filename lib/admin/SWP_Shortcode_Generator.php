@@ -40,12 +40,12 @@ class SWP_Shortcode_Generator {
 	/**
 	* Pretty print data for debugging.
 	*
-	* @param Array $array The data to print.
+	* @param Array $data The data to print.
 	*
 	*/
-	public function debug( $array ) {
+	public function debug( $data ) {
 		echo '<pre>';
-		print_r( $array );
+		print_r( $data );
 		echo '</pre>';
 	}
 
@@ -77,7 +77,7 @@ class SWP_Shortcode_Generator {
 			return;
 		}
 
-		if ( get_user_option( 'rich_editing' ) == 'true' ) {
+		if ( get_user_option( 'rich_editing' ) === 'true' ) {
 			add_filter( 'mce_external_plugins', array( $this, 'tinymce_register_plugin' ) );
 			add_filter( 'mce_buttons', array( $this, 'tinymce_register_button' ) );
 		}
@@ -106,7 +106,7 @@ class SWP_Shortcode_Generator {
 	*
 	*/
 	public function tinymce_register_plugin( $plugin_array ) {
-		if ( true == SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
+		if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
 			return $plugin_array;
 		}
 		$plugin_array['swp_shortcode_generator'] = SWP_PLUGIN_URL . '/assets/js/sw-shortcode-generator.js';
