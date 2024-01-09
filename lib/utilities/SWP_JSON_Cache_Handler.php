@@ -111,7 +111,7 @@ class SWP_JSON_Cache_Handler {
 	private function is_cache_fresh() {
 
 		// If we're debugging, the cache is expired and needs to fetch.
-		if ( true == SWP_Utility::debug( 'json_fetch' ) ) :
+		if ( true === SWP_Utility::debug( 'json_fetch' ) ) :
 			return false;
 		endif;
 
