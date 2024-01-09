@@ -43,7 +43,7 @@ class SWP_Section_HTML extends SWP_Option {
 	*
 	*/
 	public function __construct( $name, $key = null ) {
-		$key = $key === null ? $name : $key;
+		$key = null === $key ? $name : $key;
 
 		parent::__construct( $name, $key );
 
@@ -102,7 +102,8 @@ class SWP_Section_HTML extends SWP_Option {
 			$html .= '<div class="system-status-container"> ' . $this->system_status() . '</div>';
 		$html     .= '</div></div>';
 
-		return $this->html = $html;
+		$this->html = $html;
+		return $this->html;
 	}
 
 
@@ -196,7 +197,7 @@ class SWP_Section_HTML extends SWP_Option {
 	 */
 	public function do_tweet_count_registration() {
 		// Check for a default value
-		if ( true == SWP_Utility::get_option( 'twitter_shares' ) ) :
+		if ( true === SWP_Utility::get_option( 'twitter_shares' ) ) :
 			$status   = 'on';
 			$selected = 'checked';
 		else :
@@ -372,7 +373,7 @@ class SWP_Section_HTML extends SWP_Option {
 				$html .= '</div>';
 				$html .= '<div class="sw-grid sw-col-300 sw-fit">';
 
-			if ( $post !== 'home' && $post !== 'archive_categories' ) :
+			if ( 'home' !== $post && 'archive_categories' !== $post ) :
 
 				$float = new SWP_Option_Select( 'Float ' . ucfirst( $post ), 'float_location_' . $post );
 				$float->set_priority( $priority + 5 )
