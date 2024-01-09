@@ -146,7 +146,7 @@ class SWP_Option extends SWP_Option_Abstract {
 			return $this->value;
 		}
 
-		if ( false != SWP_Utility::get_option( $this->key ) ) {
+		if ( false !== SWP_Utility::get_option( $this->key ) ) {
 			return SWP_Utility::get_option( $this->key );
 		}
 
@@ -216,14 +216,14 @@ class SWP_Option extends SWP_Option_Abstract {
 	* is hidden until the dependency is set to that value.
 	*
 	* @since  3.0.0 | 02 MAR 2018 | Created
-	* @param  string $parent The parent option's key.
+	* @param  string $parent_item The parent option's key.
 	* @param  array $values Values which enable this option to exist.
 	* @return object $this Allows for method chaining.
 	*
 	*/
-	public function set_dependency( $parent, $values ) {
-		if ( ! is_string( $parent ) ) {
-			$this->_throw( 'Argument $parent needs to be a string matching the key of another option.' );
+	public function set_dependency( $parent_item, $values ) {
+		if ( ! is_string( $parent_item ) ) {
+			$this->_throw( 'Argument $parent_item needs to be a string matching the key of another option.' );
 		}
 
 		if ( ! isset( $values ) ) {
@@ -236,7 +236,7 @@ class SWP_Option extends SWP_Option_Abstract {
 		}
 
 		$this->dependency         = new stdClass();
-		$this->dependency->parent = $parent;
+		$this->dependency->parent = $parent_item;
 		$this->dependency->values = $values;
 
 		return $this;

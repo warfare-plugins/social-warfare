@@ -65,7 +65,7 @@ class SWP_User_Options {
 		$this->unfiltered_options = get_option( 'social_warfare_settings', false );
 		$this->registered_options = get_option( 'swp_registered_options', false );
 
-		if ( false == $this->unfiltered_options || empty( $this->unfiltered_options ) ) {
+		if ( false === $this->unfiltered_options || empty( $this->unfiltered_options ) ) {
 			$this->unfiltered_options = array();
 		}
 		$this->user_options = $this->unfiltered_options;
@@ -192,7 +192,7 @@ class SWP_User_Options {
 		 * current.
 		 *
 		 */
-		if ( $new_registered_options != $this->registered_options ) {
+		if ( $new_registered_options !== $this->registered_options ) {
 			update_option( 'swp_registered_options', $new_registered_options );
 		}
 	}
@@ -279,7 +279,7 @@ class SWP_User_Options {
 		 * Bail out if either of the above checks failed to process properly.
 		 *
 		 */
-		if ( false == $defaults || false == $options ) {
+		if ( false === $defaults || false === $options ) {
 			return;
 		}
 
@@ -297,7 +297,7 @@ class SWP_User_Options {
 			 * the logic that controls it's filtering to a separate method.
 			 *
 			 */
-			if ( $key == 'order_of_icons' ) {
+			if ( 'order_of_icons' === $key ) {
 				$value                    = $this->filter_order_of_icons( $value );
 				$this->user_icons[ $key ] = $value;
 				continue;
@@ -308,7 +308,7 @@ class SWP_User_Options {
 			 * options, we need to filter it out of the user options.
 			 *
 			 */
-			if ( ! in_array( $key, $available_options ) ) {
+			if ( ! in_array( $key, $available_options, true ) ) {
 				unset( $this->user_options[ $key ] );
 			}
 		}
@@ -378,7 +378,7 @@ class SWP_User_Options {
 		foreach ( $this->user_options as $key => $value ) {
 
 			// For the Zero Day bug catch
-			if ( 'twitter_id' == $key ) {
+			if ( 'twitter_id' === $key ) {
 				if ( strpos( $value, '<' ) || strlen( $value ) > 15 ) {
 					$this->user_options['twitter_id'] = '';
 					SWP_Utility::update_option( 'twitter_id', '' );
@@ -399,7 +399,7 @@ class SWP_User_Options {
 				}
 			}
 
-			if ( $values[ $key ]['type'] == 'select' && ! array_key_exists( $value, $values[ $key ]['values'] ) ) {
+			if ( 'select' === $values[ $key ]['type'] && ! array_key_exists( $value, $values[ $key ]['values'] ) ) {
 				$this->user_options[ $key ] = $defaults[ $key ];
 			}
 		}
