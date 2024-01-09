@@ -40,7 +40,7 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
 		$this->default        = 'false';
 		$this->base_share_url = 'https://www.stumbleupon.com/submit?url=';
 
-		$today  = date( 'Y-m-d H:i:s' );
+		$today  = gmdate( 'Y-m-d H:i:s' );
 		$expiry = '2018-06-30 00:00:00';
 
 		if ( $today < $expiry ) :
