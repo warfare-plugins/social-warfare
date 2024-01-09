@@ -63,7 +63,7 @@ class SWP_Requests {
 		}
 
 		// Merge the discarded zeroes back into it.
-		if ( false == empty( $discards ) ) {
+		if ( false === empty( $discards ) ) {
 			$response = array_merge( $response, $discards );
 		}
 
@@ -73,7 +73,7 @@ class SWP_Requests {
 
 	public static function file_get_contents_http( $url, $headers = null ) {
 		$response = wp_remote_get( $url );
-		if ( false == is_array( $response ) ) {
+		if ( false === is_array( $response ) ) {
 			return false;
 		}
 		return $response['body'];
