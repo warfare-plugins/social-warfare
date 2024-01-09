@@ -252,18 +252,18 @@ class SWP_Option_Abstract {
 	}
 
 
-	public function get_priority_map( $object ) {
+	public function get_priority_map( $object_status ) {
 
-		return array_values( $this->object_to_array( $object ) );
+		return array_values( $this->object_to_array( $object_status ) );
 	}
 
 
-	public function object_to_array( $object ) {
-		if ( ! is_object( $object ) && ! is_array( $object ) ) :
-			return $object;
+	public function object_to_array( $object_status ) {
+		if ( ! is_object( $object_status ) && ! is_array( $object_status ) ) :
+			return $object_status;
 		endif;
 
-		return array_map( array( $this, 'object_to_array' ), (array) $object );
+		return array_map( array( $this, 'object_to_array' ), (array) $object_status );
 	}
 
 
@@ -278,12 +278,12 @@ class SWP_Option_Abstract {
 	*/
 	//* Logic: http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
 	//* Code: http://andrewbaxter.net/quicksort.php
-	public function sort_by_priority( $object ) {
+	public function sort_by_priority( $object_status ) {
 
-		if ( is_object( $object ) ) {
-			$array = $this->get_priority_map( $object ); //get_object_vars($object);
+		if ( is_object( $object_status ) ) {
+			$array = $this->get_priority_map( $object_status ); //get_object_vars($object_status);
 		} else {
-			$array = $object;
+			$array = $object_status;
 		}
 
 		$length = count( $array );
@@ -292,20 +292,20 @@ class SWP_Option_Abstract {
 			return $array;
 		}
 
-		if ( $length === 2 ) :
+		if ( 2 === $length ) :
 			$first;
 			$second;
 			$index = 0;
 
-			foreach ( $array as $name => $object ) {
-				if ( $index === 2 ) {
+			foreach ( $array as $name => $object_status ) {
+				if ( 2 === $index ) {
 					break;
 				}
 
-				if ( $index === 0 ) {
-					$first = $object;
+				if ( 0 === $index ) {
+					$first = $object_status;
 				} else {
-					$second = $object;
+					$second = $object_status;
 				}
 
 				++$index;
@@ -318,7 +318,8 @@ class SWP_Option_Abstract {
 			return array( $first, $second );
 		endif;
 
-		$left = $right = array();
+		$left  = array();
+		$right = array();
 
 		$pivot = $array[0];
 

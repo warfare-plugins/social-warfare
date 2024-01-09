@@ -103,7 +103,7 @@ class SWP_Buttons_Panel_Ajax {
 
 			// Iterate our counters.
 			++$i;
-			if ( $i % 4 === 0 ) {
+			if ( 0 === $i % 4 ) {
 				++$group;
 			}
 		}
