@@ -150,9 +150,9 @@ class SWP_Utility {
 
 		// Loop and check for checkbox values, convert them to boolean.
 		foreach ( $data['settings'] as $key => $value ) {
-			if ( 'true' == $value ) {
+			if ( 'true' === $value ) {
 				$settings[ $key ] = true;
-			} elseif ( 'false' == $value ) {
+			} elseif ( 'false' === $value ) {
 				$settings[ $key ] = false;
 			} else {
 				$settings[ $key ] = $value;
@@ -211,7 +211,7 @@ class SWP_Utility {
 			$value  = $number / 1000000;
 		}
 
-		if ( 'period' == SWP_Utility::get_option( 'decimal_separator' ) ) :
+		if ( 'period' === SWP_Utility::get_option( 'decimal_separator' ) ) :
 			$decimal_point       = '.';
 			$thousands_separator = ',';
 		else :
@@ -291,7 +291,7 @@ class SWP_Utility {
 	 *
 	 */
 	public static function debug( $key = '' ) {
-		return ! empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) == strtolower( $key ) );
+		return ! empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) === strtolower( $key ) );
 	}
 
 	/**
@@ -348,7 +348,7 @@ class SWP_Utility {
 	public static function remove_screen_options( $show_screen, $wp_screen ) {
 		$blacklist = array( 'admin.php?page=social-warfare' );
 
-		if ( in_array( $GLOBALS['pagenow'], $blacklist ) ) {
+		if ( in_array( $GLOBALS['pagenow'], $blacklist, true ) ) {
 			$wp_screen->render_screen_layout();
 			$wp_screen->render_per_page_options();
 			return false;
@@ -367,7 +367,7 @@ class SWP_Utility {
 	 *
 	 */
 	public static function get_site_url() {
-		if ( true == is_multisite() ) {
+		if ( true === is_multisite() ) {
 			return network_site_url();
 		} else {
 			return get_site_url();
@@ -432,7 +432,7 @@ class SWP_Utility {
 		$version_difference = absint( $core_versions[1] - $addon_versions[1] );
 
 		//* Force plugin users to be on the same major version.
-		if ( $core_versions[0] != $addon_verisons[0] ) {
+		if ( $core_versions[0] !== $addon_verisons[0] ) {
 			return false;
 		}
 
@@ -456,7 +456,7 @@ class SWP_Utility {
 	public static function settings_page_redirect( $params = '' ) {
 		$destination = admin_url( '?page=social-warfare' );
 
-		if ( is_string( $params ) && 0 == strpos( $params, '&' ) ) {
+		if ( is_string( $params ) && 0 === strpos( $params, '&' ) ) {
 			$destination .= $params;
 		}
 
@@ -516,10 +516,10 @@ class SWP_Utility {
 	 * @return mixed  integer ID if an ID is found, else false.
 	 *
 	 */
-	static function get_image_id_by_url( $image_url ) {
+	public static function get_image_id_by_url( $image_url ) {
 		global $wpdb;
 
-		$prepared_statement = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url );
+		$prepared_statement = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s;", $image_url );
 		$attachment         = $wpdb->get_col( $prepared_statement );
 
 		if ( is_object( $attachment ) && is_numeric( $attachment->ID ) ) {
@@ -549,7 +549,7 @@ class SWP_Utility {
 	 * @return boolean True on success, False on failure.
 	 *
 	 */
-	static function starts_with( $haystack, $needle ) {
+	public static function starts_with( $haystack, $needle ) {
 		$length = strlen( $needle );
 		return ( substr( $haystack, 0, $length ) === $needle );
 	}
@@ -570,9 +570,9 @@ class SWP_Utility {
 	 * @return boolean True on success, False on failure.
 	 *
 	 */
-	static function ends_with( $haystack, $needle ) {
+	public static function ends_with( $haystack, $needle ) {
 		$length = strlen( $needle );
-		if ( $length == 0 ) {
+		if ( 0 === $length ) {
 			return true;
 		}
 
