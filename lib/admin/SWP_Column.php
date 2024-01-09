@@ -75,7 +75,7 @@ class SWP_Column {
 	public function populate_social_shares_column( $column_name, $post_ID ) {
 
 		// Exit if we're not processing our own column.
-		if ( $column_name !== 'swSocialShares' ) {
+		if ( 'swSocialShares' !== $column_name ) {
 			return;
 		}
 
