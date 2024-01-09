@@ -39,5 +39,10 @@
 		<severity>0</severity>
     </rule>
 
+	<!-- Exclude the function name format rule -->
+	<rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
+		<severity>0</severity>
+    </rule>
+
 	<rule ref="WordPress-Core"/>
 </ruleset>

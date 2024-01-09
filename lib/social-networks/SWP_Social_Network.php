@@ -318,22 +318,22 @@ class SWP_Social_Network {
 	 * @TODO Make it accept two parameters, both arrays, $options and $share_counts.
 	 *
 	 */
-	public function is_share_count_shown( $array ) {
+	public function is_share_count_shown( $btn_array ) {
 
 		// If the shares value isn't set, don't show the share count.
-		if ( ! isset( $array['shares'][ $this->key ] ) ) :
+		if ( ! isset( $btn_array['shares'][ $this->key ] ) ) :
 			return false;
 
 			// If the global button level shares are turned off, don't show the share count.
-		elseif ( ! $array['options']['network_shares'] ) :
+		elseif ( ! $btn_array['options']['network_shares'] ) :
 			return false;
 
 			// If the total shares haven't yet exceeded the minimum set in the options, don't show the share count.
-		elseif ( $array['shares']['total_shares'] < $array['options']['minimum_shares'] ) :
+		elseif ( $btn_array['shares']['total_shares'] < $btn_array['options']['minimum_shares'] ) :
 			return false;
 
 			// If the share count is literally 0, don't show the share count.
-		elseif ( $array['shares'][ $this->key ] <= 0 ) :
+		elseif ( $btn_array['shares'][ $this->key ] <= 0 ) :
 			return false;
 
 			// Show the share count.
@@ -353,7 +353,7 @@ class SWP_Social_Network {
 	 * @todo   Eliminate the array
 	 *
 	 */
-	public function render_HTML( $panel_context, $echo = false ) {
+	public function render_HTML( $panel_context, $output = false ) {
 
 		// TODO: DOCBLOCK
 		if ( false === $this->visible_on_amp && SWP_AMP::is_amp() ) {
@@ -391,7 +391,7 @@ class SWP_Social_Network {
 		// Store these buttons so that we don't have to generate them for each set
 		$this->html = $html;
 
-		if ( $echo ) :
+		if ( $output ) :
 			echo $html;
 		endif;
 
@@ -466,12 +466,12 @@ class SWP_Social_Network {
 		}
 
 		// False if the share count is zero.
-		if ( $share_counts[ $this->key ] == 0 ) {
+		if ( 0 === $share_counts[ $this->key ] ) {
 			return false;
 		}
 
 		// False if network shares are turned off in the options.
-		if ( false == $options['network_shares'] ) {
+		if ( false === $options['network_shares'] ) {
 			return false;
 		}
 
@@ -605,7 +605,7 @@ class SWP_Social_Network {
 		 *
 		 */
 		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
-		if ( $previous_counts > $share_count && false == SWP_Utility::debug( 'force_new_shares' ) ) {
+		if ( $previous_counts > $share_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
 			return false;
 		}
 
