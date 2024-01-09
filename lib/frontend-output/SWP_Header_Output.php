@@ -66,7 +66,7 @@ class SWP_Header_Output {
 	 * @return none
 	 *
 	 */
-	function add_header_output() {
+	public function add_header_output() {
 
 		// Get the global options and the post ID
 		$info['postID'] = get_the_ID();
@@ -122,7 +122,7 @@ class SWP_Header_Output {
 	 * @return array  $info The modified array
 	 *
 	 */
-	function output_font_css( $meta_html ) {
+	public function output_font_css( $meta_html ) {
 
 		/**
 		 * The var $meta_html is passed to both string and array filters. The
@@ -148,7 +148,7 @@ class SWP_Header_Output {
 		 * convert it into a string and then proceed as planned.
 		 *
 		 */
-		if ( false == is_string( $meta_html ) ) {
+		if ( false === is_string( $meta_html ) ) {
 			$meta_html = '';
 		}
 
