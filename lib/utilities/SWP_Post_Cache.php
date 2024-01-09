@@ -172,7 +172,7 @@ class SWP_Post_Cache {
 		 * so that we can compare them to find out how old the cache is.
 		 *
 		 */
-		$current_time      = floor( ( ( date( 'U' ) / 60 ) / 60 ) );
+		$current_time      = floor( ( ( gmdate( 'U' ) / 60 ) / 60 ) );
 		$last_updated_time = get_post_meta( $this->post_id, 'swp_cache_timestamp', true );
 
 		/**
@@ -181,7 +181,7 @@ class SWP_Post_Cache {
 		 * so that we can use it in the mathematical comparisons.
 		 *
 		 */
-		if ( false == is_numeric( $last_updated_time ) ) {
+		if ( false === is_numeric( $last_updated_time ) ) {
 			$last_updated_time = 0;
 		}
 
@@ -224,12 +224,12 @@ class SWP_Post_Cache {
 		 */
 		$network_shares = SWP_Utility::get_option( 'network_shares' );
 		$total_shares   = SWP_Utility::get_option( 'total_shares' );
-		if ( false == ( $network_shares || $total_shares ) ) {
+		if ( false === ( $network_shares || $total_shares ) ) {
 			return 24;
 		}
 
 		// Integer in hours of the current age of the post.
-		$current_time     = floor( date( 'U' ) );
+		$current_time     = floor( gmdate( 'U' ) );
 		$publication_time = get_post_time( 'U', false, $this->post_id );
 		$post_age         = $current_time - $publication_time;
 
@@ -440,7 +440,7 @@ class SWP_Post_Cache {
 		 * make any new database calls. Just exit and move on with our lives.
 		 *
 		 */
-		if ( false == $new_data || $new_data === $old_data ) {
+		if ( false === $new_data || $new_data === $old_data ) {
 			return;
 		}
 
@@ -470,7 +470,7 @@ class SWP_Post_Cache {
 	 */
 	public function reset_timestamp() {
 		delete_post_meta( $this->post_id, 'swp_cache_timestamp' );
-		update_post_meta( $this->post_id, 'swp_cache_timestamp', floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+		update_post_meta( $this->post_id, 'swp_cache_timestamp', floor( ( ( gmdate( 'U' ) / 60 ) / 60 ) ) );
 	}
 
 
@@ -560,7 +560,7 @@ class SWP_Post_Cache {
 			 * not fetch any share counts for it.
 			 *
 			 */
-			if ( false == $object->active ) {
+			if ( false === $object->active ) {
 				continue;
 			}
 
@@ -773,7 +773,7 @@ class SWP_Post_Cache {
 			 * then let's start by using the count fetched from the API.
 			 *
 			 */
-			if ( in_array( $network, $checked_networks ) ) {
+			if ( in_array( $network, $checked_networks, true ) ) {
 				$count = $share_counts[ $network ];
 			}
 
@@ -794,7 +794,7 @@ class SWP_Post_Cache {
 			 * highest between the current and previously fetched counts.
 			 *
 			 */
-			if ( $count < $previous_count && false == SWP_Utility::debug( 'force_new_shares' ) ) {
+			if ( $count < $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
 				$count = $previous_count;
 			}
 
@@ -923,13 +923,13 @@ class SWP_Post_Cache {
 	 * A method for outputting debug notices when cache rebuild parameters are present.
 	 *
 	 * @since  3.2.0 | 31 JUL 2018 | Created
-	 * @param  string $string The message to be displayed.
+	 * @param  string $message The message to be displayed.
 	 * @return void
 	 *
 	 */
-	protected function debug_message( $string ) {
+	protected function debug_message( $message ) {
 		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-			echo htmlspecialchars_decode( wp_kses( $string, SWP_Section_HTML::get_allowable_html() ) );
+			echo htmlspecialchars_decode( wp_kses( $message, SWP_Section_HTML::get_allowable_html() ) );
 		}
 	}
 
@@ -994,7 +994,7 @@ class SWP_Post_Cache {
 		$eligible_networks = array( 'pinterest' );
 
 		// If this isn't one of those networks, bail out early.
-		if ( false === in_array( $key, $eligible_networks ) ) {
+		if ( false === in_array( $key, $eligible_networks, true ) ) {
 			return false;
 		}
 
@@ -1055,7 +1055,7 @@ class SWP_Post_Cache {
 		$eligible_networks = array( 'pinterest' );
 
 		// If this isn't one of those networks, bail out early.
-		if ( false === in_array( $key, $eligible_networks ) ) {
+		if ( false === in_array( $key, $eligible_networks, true ) ) {
 			return false;
 		}
 
