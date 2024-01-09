@@ -34,7 +34,7 @@ class SWP_Widget_Loader {
 	 * @return void
 	 *
 	 */
-	function register_widgets() {
+	public function register_widgets() {
 		$widgets = apply_filters( 'swp_widgets', array() );
 		// Apply default values after filtering to guarantee ours are included.
 
