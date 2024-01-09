@@ -318,13 +318,13 @@ class Social_Warfare_Addon {
 				)
 			);
 
-			if ( false != $response ) :
+			if ( false !== $response ) :
 
 				// Parse the response into an object
 				$license_data = json_decode( $response );
 
 				// If the license is valid store it in the database
-				if ( isset( $license_data->license ) && 'valid' == $license_data->license ) :
+				if ( isset( $license_data->license ) && 'valid' === $license_data->license ) :
 
 					$current_time                               = time();
 					$options                                    = get_option( 'social_warfare_settings' );
@@ -336,7 +336,7 @@ class Social_Warfare_Addon {
 					wp_die();
 
 					// If the license is not valid
-				elseif ( isset( $license_data->license ) && 'invalid' == $license_data->license ) :
+				elseif ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
 					echo json_encode( $license_data );
 					wp_die();
 
@@ -414,7 +414,7 @@ class Social_Warfare_Addon {
 
 		$response = json_decode( $response );
 
-		if ( $response->license == 'deactivated' || $response->license == 'failed' ) {
+		if ( 'deactivated' === $response->license || 'failed' === $response->license ) {
 			$options                          = get_option( 'social_warfare_settings' );
 			$options[ $key . '_license_key' ] = '';
 			update_option( 'social_warfare_settings', $options );
