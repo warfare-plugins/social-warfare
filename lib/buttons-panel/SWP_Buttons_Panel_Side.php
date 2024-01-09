@@ -42,7 +42,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 *
 		 */
 		$max_buttons = $this->get_option( 'float_button_count' );
-		if ( false == $max_buttons || 0 == $max_buttons ) {
+		if ( false === $max_buttons || 0 === $max_buttons ) {
 			$max_buttons = 5;
 		}
 		$this->max_buttons = $max_buttons;
@@ -76,11 +76,11 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 *
 		 */
 		$blacklist = array( 'none', 'top', 'bottom' );
-		if ( in_array( $this->get_option( 'float_location' ), $blacklist ) ) {
+		if ( in_array( $this->get_option( 'float_location' ), $blacklist, true ) ) {
 			return false;
 		}
 
-		if ( in_array( $this->get_float_location(), $blacklist ) ) {
+		if ( in_array( $this->get_float_location(), $blacklist, true ) ) {
 			return false;
 		}
 
@@ -119,7 +119,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 * the left side of the screen or the right side of the screen.
 		 *
 		 */
-		if ( 'none' != $this->get_float_location() ) {
+		if ( 'none' !== $this->get_float_location() ) {
 			$classes .= ' swp_float_' . $this->get_option( 'float_location' );
 		}
 
