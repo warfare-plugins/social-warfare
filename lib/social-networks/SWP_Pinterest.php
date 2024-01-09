@@ -80,10 +80,10 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 *                   ['post_data']  => metadata about the post;
 	 *                   ['shares']     => share count data
 	 *                   ['options']    => swp_user_options
-	 * @param  bool $echo If true, this will immediately echo its code rather than save it for later.
+	 * @param  bool $output If true, this will immediately echo its code rather than save it for later.
 	 *
 	 */
-	public function render_HTML( $panel_context, $echo = false ) {
+	public function render_HTML( $panel_context, $output = false ) {
 
 		/**
 		 * The global array containing the admin's options as set on the Social
@@ -273,7 +273,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 		// Store these buttons so that we don't have to generate them for each set
 		$this->html = $html;
 
-		if ( $echo ) :
+		if ( $output ) :
 			echo $html;
 		endif;
 
