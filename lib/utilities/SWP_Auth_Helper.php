@@ -121,12 +121,12 @@ class SWP_Auth_Helper {
 	public function has_valid_token() {
 
 		// If we don't have an access token at all.
-		if ( false == $this->get_access_token() ) {
+		if ( false === $this->get_access_token() ) {
 			return false;
 		}
 
 		// If the access token is expired.
-		if ( 'expired' == $this->get_access_token() ) {
+		if ( 'expired' === $this->get_access_token() ) {
 			return false;
 		}
 
@@ -175,8 +175,9 @@ class SWP_Auth_Helper {
 			$this->access_secret = $access_secret;
 		}
 
-		$this->access_token           = $access_token;
-		return $this->has_credentials = true;
+		$this->access_token    = $access_token;
+		$this->has_credentials = true;
+		return $this->has_credentials;
 	}
 
 
