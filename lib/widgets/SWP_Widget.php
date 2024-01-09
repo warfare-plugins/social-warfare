@@ -23,7 +23,7 @@ abstract class SWP_Widget extends WP_Widget {
 	*                       At a minimum, ['classname' => '', 'description' => '']
 	*  @access public
 	*/
-	function __construct( $key, $name, $widget ) {
+	public function __construct( $key, $name, $widget ) {
 		$this->data     = $widget;
 		$this->key      = $key;
 		$widget['key']  = $key;
@@ -44,21 +44,21 @@ abstract class SWP_Widget extends WP_Widget {
 	 * This method must be defined in child class.
 	 *
 	 */
-	abstract function generate_form_HTML( $settings );
+	abstract public function generate_form_HTML( $settings );
 
 	/**
 	 * Creates the frontend display title for the widget.
 	 * This method must be defined in child class.
 	 *
 	 */
-	abstract function generate_widget_title( $title );
+	abstract public function generate_widget_title( $title );
 
 	/**
 	 * Creates the frontend display of the main widget contents.
 	 * This method must be defined in child class.
 	 *
 	 */
-	abstract function generate_widget_HTML( $settings );
+	abstract public function generate_widget_HTML( $settings );
 
 
 	/**
