@@ -33,7 +33,7 @@ class SWP_Option_Icons extends SWP_Option {
 	 * The magic construct method designed to instantiate this option object.
 	 *
 	 * @since  3.0.0 | 02 MAR 2018 | Created
-	 * @since  4.4.4 | 08 JAN 2014 | Removed Google Plus
+	 * @since  4.4.5 | 08 JAN 2014 | Removed Google Plus
 	 * @param  string $name The name of this option object.
 	 * @param  string $key  The unique key of this option object.
 	 * @return void

@@ -595,7 +595,7 @@ class SWP_Database_Migration {
 	 * This also deletes the previous keys once the migration is done.
 	 * @since  3.0.0  | 01 MAY 2018 | Created the function
 	 * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
-	 * @since  4.4.4 | 08 JAN 2014 | Removed Google Plus
+	 * @since  4.4.5 | 08 JAN 2014 | Removed Google Plus
 	 * @param  void
 	 * @return void
 	 *
