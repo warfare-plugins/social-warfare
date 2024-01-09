@@ -46,10 +46,10 @@ class SWP_Option_Toggle extends SWP_Option {
 		$status = $this->default ? 'on' : 'off';
 
 		if ( isset( $this->user_options[ $this->key ] ) ) :
-			$status = $this->user_options[ $this->key ] === true ? 'on' : 'off';
+			$status = true === $this->user_options[ $this->key ] ? 'on' : 'off';
 		endif;
 
-		$checked = $status === 'on' ? ' checked ' : '';
+		$checked = 'on' === $status ? ' checked ' : '';
 
 		$html  = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
