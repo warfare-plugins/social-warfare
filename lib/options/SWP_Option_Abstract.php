@@ -121,7 +121,7 @@ class SWP_Option_Abstract {
 	 * A function to pull the global social networks into a local property.
 	 *
 	 * @since  3.0.0 | 24 APR 2018 | Created
-	 * @since  4.4.4 | 08 JAN 2014 | Removed Google Plus
+	 * @since  4.4.5 | 08 JAN 2014 | Removed Google Plus
 	 * @param  none
 	 * @return none
 	 *
