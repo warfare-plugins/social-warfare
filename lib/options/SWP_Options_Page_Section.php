@@ -122,7 +122,7 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 		$type = get_class( $option );
 
-		if ( ! ( in_array( $type, $types ) || is_subclass_of( $option, 'SWP_Option' ) ) ) {
+		if ( ! ( in_array( $type, $types, true ) || is_subclass_of( $option, 'SWP_Option' ) ) ) {
 			$this->_throw( 'Requres one of the SWP_Option child classes.' );
 		}
 
