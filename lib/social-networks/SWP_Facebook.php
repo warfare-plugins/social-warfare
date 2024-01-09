@@ -165,7 +165,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		}
 
 		// Bail if the user doesn't have Facebook authenticated.
-		if ( false == $this->Authentication->has_valid_token() ) {
+		if ( false === $this->Authentication->has_valid_token() ) {
 			return false;
 		}
 
@@ -252,7 +252,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		 * their authentication.
 		 *
 		 */
-		if ( ! empty( $response->error ) && $response->error->code == 190 ) {
+		if ( ! empty( $response->error ) && 190 === $response->error->code ) {
 			SWP_Credential_Helper::store_data( 'facebook', 'access_token', 'expired' );
 			return 0;
 		}
@@ -487,7 +487,7 @@ class SWP_Facebook extends SWP_Social_Network {
 		// If the token is expired.
 		if ( 'expired' === $this->Authentication->get_access_token() ) {
 			$is_notice_needed = true;
-			$notice_key       = 'fb_token_expired_' . date( 'MY' );
+			$notice_key       = 'fb_token_expired_' . gmdate( 'MY' );
 			$notice_message   = '<b>Notice: Social Warfare\'s connection with Facebook has expired!</b> This happens by Facebook\'s design every couple of months. To give our plugin access to the most accurate, reliable and up-to-date data that we\'ll use to populate your share counts, just go to the Social Warfare Option Page, select the "Social Identity" tab, then scoll down to the "Social Network Collections" section and get yourself set up now!<br /><br />P.S. We do NOT collect any of your data from the API to our servers or share it with any third parties. Absolutely None.';
 		}
 
