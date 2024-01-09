@@ -149,13 +149,13 @@ class SWP_Link_Shortener {
 	 * an option on the options page.
 	 *
 	 * @since  4.0.0 | 18 JUL 2019 | Created
-	 * @param  array $array An array of link shortening integrations.
+	 * @param  array $link_array An array of link shortening integrations.
 	 * @return array        The modified array with our integration added.
 	 *
 	 */
-	public function register_self( $array ) {
-		$array[ $this->key ] = $this;
-		return $array;
+	public function register_self( $link_array ) {
+		$link_array[ $this->key ] = $this;
+		return $link_array;
 	}
 
 
@@ -169,7 +169,7 @@ class SWP_Link_Shortener {
 	 *
 	 */
 	public function establish_button_properties() {
-		if ( true == $this->active ) {
+		if ( true === $this->active ) {
 			$this->button_properties['text']              = __( 'Connected', 'social-warfare' );
 			$this->button_properties['classes']           = 'button sw-green-button';
 			$this->button_properties['new_tab']           = true;
@@ -196,20 +196,20 @@ class SWP_Link_Shortener {
 	 * @since  3.4.0 | 16 OCT 2018 | Modified order of conditionals, docblocked.
 	 * @since  4.0.0 | 17 JUL 2019 | Migrated into this standalone Bitly class.
 	 * @since  4.0.0 | 23 JUL 2019 | Migrated into the parent Link_Shortener class.
-	 * @param  array $array An array of arguments and information passed by the filter hook.
-	 * @return array $array The modified array.
+	 * @param  array $arg_array An array of arguments and information passed by the filter hook.
+	 * @return array $arg_array The modified array.
 	 *
 	 */
-	public function provide_shortlink( $array ) {
+	public function provide_shortlink( $arg_array ) {
 
 		/**
 		 * Pull together the information that we'll need to generate bitly links.
 		 *
 		 */
 		global $post;
-		$network          = $array['network'];
-		$post_id          = $array['post_id'];
-		$fresh_cache      = $array['fresh_cache'];
+		$network          = $arg_array['network'];
+		$post_id          = $arg_array['post_id'];
+		$fresh_cache      = $arg_array['fresh_cache'];
 		$google_analytics = SWP_Utility::get_option( 'google_analytics' );
 
 		/**
@@ -218,7 +218,7 @@ class SWP_Link_Shortener {
 		 *
 		 */
 		if ( false === $this->should_link_be_shortened( $network ) ) {
-			return $array;
+			return $arg_array;
 		}
 
 		/**
@@ -230,12 +230,12 @@ class SWP_Link_Shortener {
 		 * API requests if one failed.
 		 *
 		 */
-		if ( true == $fresh_cache ) {
+		if ( true === $fresh_cache ) {
 			$this->record_exit_status( 'fresh_cache' );
 			if ( $this->fetch_cached_shortlink( $post_id, $network ) ) {
-				$array['url'] = $this->fetch_cached_shortlink( $post_id, $network );
+				$arg_array['url'] = $this->fetch_cached_shortlink( $post_id, $network );
 			}
-			return $array;
+			return $arg_array;
 		}
 
 		/**
@@ -244,7 +244,7 @@ class SWP_Link_Shortener {
 		 * a new one, but will instead return the existing one.
 		 *
 		 */
-		$url           = urldecode( $array['url'] );
+		$url           = urldecode( $arg_array['url'] );
 		$new_shortlink = $this->generate_new_shortlink( $url, $post_id, $network );
 
 		/**
@@ -261,10 +261,10 @@ class SWP_Link_Shortener {
 
 			delete_post_meta( $post_id, $meta_key );
 			update_post_meta( $post_id, $meta_key, $new_shortlink );
-			$array['url'] = $new_shortlink;
+			$arg_array['url'] = $new_shortlink;
 		}
 
-		return $array;
+		return $arg_array;
 	}
 
 
@@ -286,7 +286,7 @@ class SWP_Link_Shortener {
 		 * shortlinks on their network.
 		 *
 		 */
-		if ( 'total_shares' == $network || 'pinterest' == $network ) {
+		if ( 'total_shares' === $network || 'pinterest' === $network ) {
 			return false;
 		}
 
@@ -294,7 +294,7 @@ class SWP_Link_Shortener {
 		 * Bail if link shortening is turned off.
 		 *
 		 */
-		if ( false == SWP_Utility::get_option( 'link_shortening_toggle' ) ) {
+		if ( false === SWP_Utility::get_option( 'link_shortening_toggle' ) ) {
 			$this->record_exit_status( 'link_shortening_toggle' );
 			return false;
 		}
@@ -306,7 +306,7 @@ class SWP_Link_Shortener {
 		 * bail out here.
 		 *
 		 */
-		if ( $this->key !== SWP_Utility::get_option( 'link_shortening_service' ) ) {
+		if ( SWP_Utility::get_option( 'link_shortening_service' ) !== $this->key ) {
 			$this->record_exit_status( 'link_shortening_service' );
 			return false;
 		}
@@ -318,7 +318,7 @@ class SWP_Link_Shortener {
 		 * the Access Token is set, and if it does it sets this property to true.
 		 *
 		 */
-		if ( false == $this->active ) {
+		if ( false === $this->active ) {
 			$this->record_exit_status( 'authentication' );
 			return false;
 		}
@@ -328,7 +328,7 @@ class SWP_Link_Shortener {
 		 * date for posts and pages.
 		 *
 		 */
-		if ( false == $this->check_publication_date() ) {
+		if ( false === $this->check_publication_date() ) {
 			$this->record_exit_status( 'publication_date' );
 			return false;
 		}
@@ -379,7 +379,7 @@ class SWP_Link_Shortener {
 		 * the same shortlink for all of them.
 		 *
 		 */
-		if ( true == SWP_Utility::get_option( 'google_analytics' ) ) {
+		if ( true === SWP_Utility::get_option( 'google_analytics' ) ) {
 			$short_url = get_post_meta( $post_id, $this->key . '_link_' . $network, true );
 		}
 
