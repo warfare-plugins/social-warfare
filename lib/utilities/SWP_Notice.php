@@ -111,7 +111,7 @@ class SWP_Notice {
 		endif;
 
 		//* They have dismissed a permadismiss.
-		if ( isset( $this->data['timestamp'] ) && $this->data['timeframe'] == 0 ) {
+		if ( isset( $this->data['timestamp'] ) && 0 === $this->data['timeframe'] ) {
 			return false;
 		}
 
@@ -371,12 +371,12 @@ class SWP_Notice {
 	 * Checks whether a string is formatted as our default Date format.
 	 *
 	 * @since  3.0.9 | 08 JUN 2018 | Created
-	 * @param string $string The datetime string in question.
+	 * @param string $datetime The datetime string in question.
 	 * @return bool True iff the string is of the format 'Y-m-d h:i:s'.
 	 *
 	 */
-	private function is_date( $string ) {
-		return DateTime::createFromFormat( 'Y-m-d h:i:s', $string ) !== false;
+	private function is_date( $datetime ) {
+		return DateTime::createFromFormat( 'Y-m-d h:i:s', $datetime ) !== false;
 	}
 
 
