@@ -232,7 +232,7 @@ class SWP_Database_Migration {
 			wp_die();
 		endif;
 
-		if ( true == SWP_Utility::debug( 'get_post_meta' ) ) :
+		if ( true === SWP_Utility::debug( 'get_post_meta' ) ) :
 
 			add_action( 'template_redirect', array( $this, 'print_post_meta' ) );
 
@@ -246,7 +246,7 @@ class SWP_Database_Migration {
 		 *
 		 * @since 3.4.2
 		 */
-		if ( true == SWP_Utility::debug( 'reset_float_location' ) ) {
+		if ( true === SWP_Utility::debug( 'reset_float_location' ) ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( 'You do not have authorization to view this page.' );
 			}
@@ -300,7 +300,7 @@ class SWP_Database_Migration {
 			$password = isset( $_GET['swp_confirmation'] ) ? sanitize_text_field( urldecode( $_GET['swp_confirmation'] ) ) : '';
 			$user     = wp_get_current_user();
 			if ( ! current_user_can( 'manage_options' )
-			|| false == wp_check_password( $password, $user->user_pass, $user->ID ) ) {
+			|| false === wp_check_password( $password, $user->user_pass, $user->ID ) ) {
 				wp_die( 'You do not have authorization to view this page.' );
 			}
 			global $wpdb;
@@ -604,7 +604,7 @@ class SWP_Database_Migration {
 	private function migrate() {
 		$options = get_option( 'socialWarfareOptions', array() );
 
-		if ( $options === array() ) :
+		if ( array() === $options ) :
 			//* The old options do not exist.
 			return;
 		endif;
@@ -707,19 +707,19 @@ class SWP_Database_Migration {
 			endif;
 
 			//* Specific case: customColor mapping.
-			if ( $old === 'customColor' ) :
+			if ( 'customColor' === $old ) :
 				$migrations['custom_color']          = $new_value;
 				$migrations['custom_color_outlines'] = $new_value;
 
 						// If the float style source is set to inherit the style from the static buttons.
-				if ( $options['floatStyleSource'] == true ) :
+				if ( true === $options['floatStyleSource'] ) :
 					$migrations['float_custom_color']          = $new_value;
 					$migrations['float_custom_color_outlines'] = $new_value;
 				endif;
 			endif;
 
 			// Only if the source is set to not inherit them from the static buttons.
-			if ( $old === 'sideCustomColor' ) :
+			if ( 'sideCustomColor' === $old ) :
 				$migrations['float_custom_color']          = $new_value;
 				$migrations['float_custom_color_outlines'] = $new_value;
 			endif;
@@ -787,22 +787,22 @@ class SWP_Database_Migration {
 	 * to run again.
 	 *
 	 * @since  3.0.0 | Created | 08 MAY 2018
-	 * @param  boolean $echo True echoes the data; False returns it.
+	 * @param  boolean $output True echoes the data; False returns it.
 	 * @return mixed         (str) Version number if found, (bool) false if not found.
 	 *
 	 */
-	public function get_last_migrated( $echo = false ) {
+	public function get_last_migrated( $output = false ) {
 		$options = get_option( 'social_warfare_settings' );
 
 		if ( array_key_exists( 'last_migrated', $options ) ) :
-			if ( true === $echo ) :
+			if ( true === $output ) :
 				var_dump( $options['last_migrated'] );
 			endif;
 
 			return $options['last_migrated'];
 		endif;
 
-		if ( true === $echo ) :
+		if ( true === $output ) :
 			echo 'No previous migration version has been set.';
 		endif;
 
