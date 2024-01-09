@@ -16,10 +16,10 @@ class SWP_Option_Text extends SWP_Option {
 	*
 	* The default value for this input type="text".
 	*
-	* @var string $default
+	* @var string $default_option
 	*
 	*/
-	public $default = '';
+	public $default_option = '';
 
 
 	/**
@@ -85,15 +85,15 @@ class SWP_Option_Text extends SWP_Option {
 	* @return SWP_Option_Select $this The calling instance, for method chaining.
 	*
 	*/
-	public function set_default( $default ) {
-		if ( is_numeric( $default ) ) :
-			settype( $default, 'string' );
+	public function set_default( $default_option ) {
+		if ( is_numeric( $default_option ) ) :
+			settype( $default_option, 'string' );
 		endif;
 
-		if ( ! is_string( $default ) ) :
+		if ( ! is_string( $default_option ) ) :
 			$this->_throw( 'Please provide a default value as a string.' );
 		endif;
 
-		return parent::set_default( $default );
+		return parent::set_default( $default_option );
 	}
 }
