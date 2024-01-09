@@ -269,9 +269,12 @@ class SWP_Buttons_Panel {
 		 * convert it into a valid WordPress ID for a post.
 		 *
 		 */
-		if ( isset( $this->args['url'] ) && $post_id_from_url = url_to_postid( $this->args['url'] ) ) {
-			$this->post_id = $post_id_from_url;
-			return true;
+		if ( isset( $this->args['url'] ) ) {
+			$post_id_from_url = url_to_postid( $this->args['url'] );
+			if ( $post_id_from_url ) {
+				$this->post_id = $post_id_from_url;
+				return true;
+			}
 		}
 
 		/**
@@ -408,7 +411,7 @@ class SWP_Buttons_Panel {
 		 * what we need.
 		 *
 		 */
-		if ( empty( $this->content ) && true == $this->is_shortcode ) {
+		if ( empty( $this->content ) && true === $this->is_shortcode ) {
 			$this->location = 'above';
 			return;
 		}
@@ -439,7 +442,7 @@ class SWP_Buttons_Panel {
 		 * using any of the global or post type settings for the location.
 		 *
 		 */
-		if ( is_singular() && ! empty( $post_setting ) && 'default' != $post_setting ) {
+		if ( is_singular() && ! empty( $post_setting ) && 'default' !== $post_setting ) {
 			$this->location = $post_setting;
 			return;
 		}
@@ -602,7 +605,7 @@ class SWP_Buttons_Panel {
 		if ( empty( $option ) ) :
 			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype( $value ) . '.';
 			throw new Exception( $message );
-		elseif ( null == $value ) :
+		elseif ( null === $value ) :
 			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . ' a second paramter: $value (mixed type). You provided ' . gettype( $value ) . '.';
 			throw new Exception( $message );
 		endif;
@@ -665,7 +668,7 @@ class SWP_Buttons_Panel {
 		 * desired conditions are met in order to allow us to print the buttons.
 		 *
 		 */
-		if ( false == $this->should_panel_display() ) {
+		if ( false === $this->should_panel_display() ) {
 			return $this->content;
 		}
 
