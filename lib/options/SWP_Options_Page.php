@@ -182,7 +182,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	*/
 	public function add_tab( $tab ) {
 		$class = get_class( $tab );
-		if ( ! ( $class === 'SWP_Options_Page_Tab' || is_subclass_of( $class, 'SWP_Options_Page_Tab' ) ) ) :
+		if ( ! ( 'SWP_Options_Page_Tab' === $class || is_subclass_of( $class, 'SWP_Options_Page_Tab' ) ) ) :
 			$this->_throw( 'Requires an instance of SWP_Options_Page_Tab or a class which inherits this class.' );
 		endif;
 
@@ -617,10 +617,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				$classname    = "swp-button swp-{$network_key} swp-authorization-button";
 				$option       = new SWP_Option_Button( $display_text, $network_key, $classname, $link );
 
-			}
-
-			// Provide the option to revoke the connection.
-			else {
+			} else {
+				// Provide the option to revoke the connection.
 				$link         = $instance->get_revoke_access_url();
 				$display_text = 'Disconnect ' . ucfirst( $network_key );
 
@@ -835,7 +833,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				if ( $prioritized_tab['key'] === $tab->key ) :
 
 					//* Skip the registration tab if there are no addons.
-					if ( 'registration' == $tab->key && 0 === count( $addons ) ) :
+					if ( 'registration' === $tab->key && 0 === count( $addons ) ) :
 						continue;
 					endif;
 
