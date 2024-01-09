@@ -29,7 +29,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	*  @access public
 	*
 	*/
-	function __construct() {
+	public function __construct() {
 		parent::__construct( false, $name = 'Social Warfare: Popular Posts' );
 	}
 
@@ -39,13 +39,13 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	*
 	* @since  3.0.0 | 08 Feb 2018 | Created
 	* @param  string $name The name to be called.
-	* @param  string $class The CSS class to be applied.
+	* @param  string $css_class The CSS class to be applied.
 	* @param  string $value The default value for the element.
 	* @return string The string filled with attribute/value pairs.
 	*
 	*/
-	private function set_attributes( $name, $class, $value ) {
-		$attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
+	private function set_attributes( $name, $css_class, $value ) {
+		$attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$css_class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
 
 		if ( isset( $value ) ) {
 			$attributes .= " value=\"{$value}\" ";
@@ -65,7 +65,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	 * @return void Output is echoed directly to the screen
 	 *
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 
 		$defaults = array(
 			'title'        => 'Popular Posts',
@@ -175,7 +175,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		// Count Label Field
-		$form .= '<p ' . ( $showCount != true ? 'style="display:none;"' : '' ) . ' data-dep="showCount" data-dep_val=\'' . json_encode( array( true ) ) . '\' class="countLabel">';
+		$form .= '<p ' . ( true !== $showCount ? 'style="display:none;"' : '' ) . ' data-dep="showCount" data-dep_val=\'' . json_encode( array( true ) ) . '\' class="countLabel">';
 		$form .= '<label for="' . $this->get_field_id( 'countLabel' ) . '">Count Number Label</label>';
 		$form .= "<input type=\"text\" {$this->set_attributes( 'countLabel', 'widefat', $countLabel)} />";
 		$form .= '</p>';
@@ -190,7 +190,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		// Thumbnails size field
-		$form .= '<p ' . ( $thumbnails != true ? 'style="display:none;"' : '' ) . ' data-dep="thumbnails" data-dep_val=\'' . json_encode( array( true ) ) . '\' class="thumb_size">';
+		$form .= '<p ' . ( true !== $thumbnails ? 'style="display:none;"' : '' ) . ' data-dep="thumbnails" data-dep_val=\'' . json_encode( array( true ) ) . '\' class="thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
 		$form .= "<select {$this->set_attributes( 'thumb_size', 'widefat', null )} >";
 
@@ -205,12 +205,12 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		//  If $thumb_size, show the custom height/width fields.
-		$form .= '<p ' . ( $thumb_size != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
+		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_width', 'widefat', $thumb_width)} />";
 		$form .= '</p>';
 
-		$form .= '<p ' . ( $thumb_size != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
+		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail height</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_height', 'widefat', $thumb_height)} />";
 		$form .= '</p>';
@@ -265,13 +265,13 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		// Custom Background Color Field
-		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_bg">';
+		$form .= '<p ' . ( 'custom' !== $style ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_bg">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_bg' ) . '">Custom Background Color</label>';
 		$form .= "<input type=\"text\" {$this->set_attributes( 'custom_bg', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Custom Link Color Field
-		$form .= '<p ' . ( $style != 'custom' ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_link">';
+		$form .= '<p ' . ( 'custom' !== $style ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_link">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_link' ) . '">Custom Link Color</label>';
 		$form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_link )} />";
 		$form .= '</p>';
@@ -294,7 +294,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	* @return array Sanitized array of final values.
 	*
 	*/
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
 		// Fetch the values from the form
@@ -330,28 +330,32 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	* @param  array $instance The settings for the particular instance of the widget.
 	*
 	*/
-	function widget( $args, $instance ) {
-		extract( $args );
+	public function widget( $args, $instance ) {
+		// Assign values from $args
+		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
+		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : '';
+		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : '';
+		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : '';
 
 		// Fetch the field values from the form
-		( isset( $instance['title'] ) ? $title        = $instance['title'] : $title        = 'Popular Posts' );
-		( isset( $instance['count'] ) ? $count        = $instance['count'] : $count        = '10' );
-		( isset( $instance['timeframe'] ) ? $timeframe    = $instance['timeframe'] : $timeframe    = '0' );
-		( isset( $instance['post_type'] ) ? $post_type    = $instance['post_type'] : $post_type    = 'post' );
-		( isset( $instance['network'] ) ? $network      = $instance['network'] : $network      = 'total_shares' );
-		( isset( $instance['showCount'] ) ? $showCount    = $instance['showCount'] : $showCount    = 'true' );
-		( isset( $instance['countLabel'] ) ? $countLabel   = $instance['countLabel'] : $countLabel   = 'Total Shares' );
-		( isset( $instance['style'] ) ? $style        = $instance['style'] : $style        = 'style_01' );
-		( isset( $instance['thumbnails'] ) ? $thumbnails   = $instance['thumbnails'] : $thumbnails   = 'true' );
-		( isset( $instance['thumb_size'] ) ? $thumb_size   = $instance['thumb_size'] : $thumb_size   = '100' );
-		( isset( $instance['font_size'] ) ? $font_size    = $instance['font_size'] : $font_size    = '100' );
-		( isset( $instance['custom_bg'] ) ? $custom_bg    = $instance['custom_bg'] : $custom_bg    = '#ffffff' );
-		( isset( $instance['thumb_width'] ) ? $thumb_width  = $instance['thumb_width'] : $thumb_width  = $thumb_size );
-		( isset( $instance['thumb_height'] ) ? $thumb_height = $instance['thumb_height'] : $thumb_height = $thumb_size );
-		( isset( $instance['custom_link'] ) ? $custom_link  = $instance['custom_link'] : $custom_link  = '#000000' );
+		$title        = isset( $instance['title'] ) ? $instance['title'] : 'Popular Posts';
+		$count        = isset( $instance['count'] ) ? $instance['count'] : '10';
+		$timeframe    = isset( $instance['timeframe'] ) ? $instance['timeframe'] : '0';
+		$post_type    = isset( $instance['post_type'] ) ? $instance['post_type'] : 'post';
+		$network      = isset( $instance['network'] ) ? $instance['network'] : 'total_shares';
+		$showCount    = isset( $instance['showCount'] ) ? $instance['showCount'] : 'true';
+		$countLabel   = isset( $instance['countLabel'] ) ? $instance['countLabel'] : 'Total Shares';
+		$style        = isset( $instance['style'] ) ? $instance['style'] : 'style_01';
+		$thumbnails   = isset( $instance['thumbnails'] ) ? $instance['thumbnails'] : 'true';
+		$thumb_size   = isset( $instance['thumb_size'] ) ? $instance['thumb_size'] : '100';
+		$font_size    = isset( $instance['font_size'] ) ? $instance['font_size'] : '100';
+		$custom_bg    = isset( $instance['custom_bg'] ) ? $instance['custom_bg'] : '#ffffff';
+		$thumb_width  = isset( $instance['thumb_width'] ) ? $instance['thumb_width'] : $thumb_size;
+		$thumb_height = isset( $instance['thumb_height'] ) ? $instance['thumb_height'] : $thumb_size;
+		$custom_link  = isset( $instance['custom_link'] ) ? $instance['custom_link'] : '#000000';
 
 		// Correct the previous style with the new version if it is present on the site
-		if ( $style == 'first_style' || $style == 'second_style' ) :
+		if ( 'first_style' === $style || 'second_style' === $style ) :
 			$style = 'style_01';
 		endif;
 
@@ -437,7 +441,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 			'ignore_sticky_posts'    => 1,
 		);
 
-		if ( $timeframe != 0 ) {
+		if ( 0 !== $timeframe ) {
 			$swp_args['date_query'] = array(
 				'column' => 'post_date',
 				'after'  => '- ' . $timeframe . ' days',
@@ -459,7 +463,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 					$swq->the_post();
 
 					// If we are supposed to show count numbers....
-					if ( $showCount == 'true' ) :
+					if ( 'true' === $showCount ) :
 						$postID     = get_the_ID();
 						$shares     = get_post_meta( $postID, '_' . $network, true );
 						$share_html = '<span class="swp_pop_count">' . SWP_Utility::kilomega( $shares ) . ' ' . $countLabel . '</span>';
@@ -470,11 +474,11 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 					endif;
 
 					// If we are supposed to show thumbnails
-					if ( $thumbnails == 'true' && has_post_thumbnail() ) :
+					if ( 'true' === $thumbnails && has_post_thumbnail() ) :
 						$thumbnail_url  = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumbnail' );
 						$thumbnail_html = '<a href="' . get_the_permalink() . '">';
 
-						if ( $thumb_size === 'custom' ) :
+						if ( 'custom' === $thumb_size ) :
 							$thumb_width  = preg_replace( '/[^0-9]/', '', $thumb_width );
 							$thumb_height = preg_replace( '/[^0-9]/', '', $thumb_height );
 
