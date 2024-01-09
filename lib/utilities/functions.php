@@ -31,12 +31,12 @@ function social_warfare( $args = array() ) {
  * ago to make sure that it will still work for them.
  *
  */
-function socialWarfare( $content = false, $where = 'default', $echo = true ) {
+function socialWarfare( $content = false, $where = 'default', $output = true ) {
 	social_warfare(
 		array(
 			'content' => $content,
 			'where'   => $where,
-			'echo'    => $echo,
+			'echo'    => $output,
 		)
 	);
 }
