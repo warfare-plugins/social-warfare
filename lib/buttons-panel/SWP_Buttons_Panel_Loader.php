@@ -18,7 +18,7 @@
  * @since     3.4.0 | 21 SEP 2018 | Ported from SWP_Display to SWP_Buttons_Panel_Loader
  *
  */
-class SWP_Buttons_panel_Loader {
+class SWP_Buttons_Panel_Loader {
 
 
 	/**
@@ -177,7 +177,7 @@ class SWP_Buttons_panel_Loader {
 		global $post;
 
 			// Ensure it's not an embedded post
-		if ( is_singular() && ( $post->ID !== get_queried_object_id() || is_embed() ) ) {
+		if ( is_singular() && ( get_queried_object_id() !== $post->ID || is_embed() ) ) {
 			return $content;
 		}
 
@@ -195,7 +195,7 @@ class SWP_Buttons_panel_Loader {
 	 * @return void
 	 *
 	 */
-	function floating_buttons() {
+	public function floating_buttons() {
 
 		// Bail if we're in the presence of a known conflict with no fix.
 		if ( Social_Warfare::has_plugin_conflict() ) {
@@ -328,7 +328,7 @@ class SWP_Buttons_panel_Loader {
 		 * Bail out if the floating options are set to off on this specific post.
 		 *
 		 */
-		if ( 'off' == $post_meta_enabled_floating ) {
+		if ( 'off' === $post_meta_enabled_floating ) {
 			return false;
 		}
 
@@ -336,7 +336,7 @@ class SWP_Buttons_panel_Loader {
 		 * Autimatically be true if set to on for this post.
 		 *
 		 */
-		if ( 'on' == $post_meta_enabled_floating ) {
+		if ( 'on' === $post_meta_enabled_floating ) {
 			return true;
 		}
 
@@ -345,7 +345,7 @@ class SWP_Buttons_panel_Loader {
 		 * at least somewhere. If all floating options are off, just bail.
 		 *
 		 */
-		if ( false == $floating_panel && 'off' == $float_mobile && 'off' == $float_location_post_type ) {
+		if ( false === $floating_panel && 'off' === $float_mobile && 'off' === $float_location_post_type ) {
 			return false;
 		}
 
@@ -363,8 +363,8 @@ class SWP_Buttons_panel_Loader {
 		 * won't need this.
 		 *
 		 */
-		if ( ! in_array( $float_location, $acceptable_locations )
-			&& ! in_array( $float_mobile, $acceptable_locations ) ) {
+		if ( ! in_array( $float_location, $acceptable_locations, true )
+			&& ! in_array( $float_mobile, $acceptable_locations, true ) ) {
 			return false;
 		}
 
@@ -374,7 +374,7 @@ class SWP_Buttons_panel_Loader {
 		 * can just bail out because the JS will use the preexisting panel.
 		 *
 		 */
-		if ( 'none' != $post_meta_enabled_static && 'none' != $location_post_type ) {
+		if ( 'none' !== $post_meta_enabled_static && 'none' !== $location_post_type ) {
 			return false;
 		}
 
