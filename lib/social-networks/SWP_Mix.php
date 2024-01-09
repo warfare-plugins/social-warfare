@@ -40,7 +40,7 @@ class SWP_Mix extends SWP_Social_Network {
 		$this->default        = 'false';
 		$this->base_share_url = 'https://mix.com/mixit?url=';
 
-		$today = date( 'Y-m-d H:i:s' );
+		$today = gmdate( 'Y-m-d H:i:s' );
 
 		$this->check_stumble_upon_shares();
 		$this->init_social_network();
