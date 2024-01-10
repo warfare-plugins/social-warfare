@@ -53,10 +53,10 @@ class SWP_Option_Icons extends SWP_Option {
 	public function register_default( $defaults = array() ) {
 		if ( ! array_key_exists( 'order_of_icons', $defaults ) ) :
 			$defaults['order_of_icons'] = array(
-				'twitter'     => 'twitter',
-				'facebook'    => 'facebook',
-				'linkedin'    => 'linkedin',
-				'pinterest'   => 'pinterest',
+				'twitter'   => 'twitter',
+				'facebook'  => 'facebook',
+				'linkedin'  => 'linkedin',
+				'pinterest' => 'pinterest',
 			);
 		endif;
 

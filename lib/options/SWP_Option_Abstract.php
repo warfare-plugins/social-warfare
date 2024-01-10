@@ -152,10 +152,10 @@ class SWP_Option_Abstract {
 
 		if ( false === $user_icons ) {
 			return array(
-				'twitter'     => 'twitter',
-				'facebook'    => 'facebook',
-				'linkedin'    => 'linkedin',
-				'pinterest'   => 'pinterest',
+				'twitter'   => 'twitter',
+				'facebook'  => 'facebook',
+				'linkedin'  => 'linkedin',
+				'pinterest' => 'pinterest',
 			);
 		}
 
