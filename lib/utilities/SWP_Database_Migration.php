@@ -421,10 +421,8 @@ class SWP_Database_Migration {
 		}
 
 		$hidden_map = array(
-			'_googlePlus_shares'    => '_google_plus_shares',
 			'_linkedIn_shares'      => '_linkedin_shares',
-			'bitly_link_googlePlus' => '_bitly_link_google_plus',
-			'bitly_link_linkedIn'   => '_bitly_link_linked_in',
+			'bitly_link_linkedIn'   => '_bitly_link_linked_in'
 		);
 
 		$query = '
@@ -583,8 +581,7 @@ class SWP_Database_Migration {
 				'linkedIn'    => 'linkedin',
 				'pinterest'   => 'pinterest',
 				'facebook'    => 'facebook',
-				'google_plus' => 'google_plus',
-			),
+      ),
 		);
 
 		update_option( 'social_warfare_settings', $defaults );
@@ -597,6 +594,7 @@ class SWP_Database_Migration {
 	 * This also deletes the previous keys once the migration is done.
 	 * @since  3.0.0  | 01 MAY 2018 | Created the function
 	 * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
+	 * @since  4.4.5 | 08 JAN 2014 | Removed Google Plus
 	 * @param  void
 	 * @return void
 	 *
@@ -695,12 +693,7 @@ class SWP_Database_Migration {
 
 			//* Specific case: newOrderOfIcons mapping.
 			if ( 'newOrderOfIcons' === $old ) :
-				if ( array_key_exists( 'googlePlus', $new_value ) ) :
-					unset( $new_value['googlePlus'] );
-					$new_value[] = 'google_plus';
-				endif;
-
-				if ( array_key_exists( 'linkedIn', $new_value ) ) :
+				if (array_key_exists( 'linkedIn', $new_value) ) :
 					unset( $new_value['linkedIn'] );
 					$new_value[] = 'linkedin';
 				endif;
