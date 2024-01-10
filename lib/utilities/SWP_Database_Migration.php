@@ -421,8 +421,8 @@ class SWP_Database_Migration {
 		}
 
 		$hidden_map = array(
-			'_linkedIn_shares'      => '_linkedin_shares',
-			'bitly_link_linkedIn'   => '_bitly_link_linked_in'
+			'_linkedIn_shares'    => '_linkedin_shares',
+			'bitly_link_linkedIn' => '_bitly_link_linked_in',
 		);
 
 		$query = '
@@ -577,11 +577,11 @@ class SWP_Database_Migration {
 			'force_new_shares'               => false,
 			'cache_method'                   => 'advanced',
 			'order_of_icons'                 => array(
-				'twitter'     => 'twitter',
-				'linkedIn'    => 'linkedin',
-				'pinterest'   => 'pinterest',
-				'facebook'    => 'facebook',
-      ),
+				'twitter'   => 'twitter',
+				'linkedIn'  => 'linkedin',
+				'pinterest' => 'pinterest',
+				'facebook'  => 'facebook',
+			),
 		);
 
 		update_option( 'social_warfare_settings', $defaults );
@@ -693,7 +693,7 @@ class SWP_Database_Migration {
 
 			//* Specific case: newOrderOfIcons mapping.
 			if ( 'newOrderOfIcons' === $old ) :
-				if (array_key_exists( 'linkedIn', $new_value) ) :
+				if ( array_key_exists( 'linkedIn', $new_value ) ) :
 					unset( $new_value['linkedIn'] );
 					$new_value[] = 'linkedin';
 				endif;
