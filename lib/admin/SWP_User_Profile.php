@@ -37,10 +37,10 @@ class SWP_User_Profile {
 	 *
 	 */
 	public function __construct() {
-		add_action( 'show_user_profile', array( $this , 'show_user_profile_fields' ) );
-		add_action( 'edit_user_profile', array( $this , 'show_user_profile_fields' ) );
-		add_action( 'personal_options_update', array( $this , 'save_user_profile_fields' ) );
-		add_action( 'edit_user_profile_update', array( $this , 'save_user_profile_fields' ) );
+		add_action( 'show_user_profile', array( $this, 'show_user_profile_fields' ) );
+		add_action( 'edit_user_profile', array( $this, 'show_user_profile_fields' ) );
+		add_action( 'personal_options_update', array( $this, 'save_user_profile_fields' ) );
+		add_action( 'edit_user_profile_update', array( $this, 'save_user_profile_fields' ) );
 	}
 
 
@@ -61,17 +61,17 @@ class SWP_User_Profile {
 		echo '<h3>Social Warfare Fields</h3>';
 		echo '<table class="form-table">';
 		echo '<tr>';
-		echo '<th><label for="twitter">' . __( 'Twitter Username','social-warfare' ) . '</label></th>';
+		echo '<th><label for="twitter">' . __( 'Twitter Username', 'social-warfare' ) . '</label></th>';
 		echo '<td>';
-		echo '<input type="text" name="swp_twitter" id="swp_twitter" value="' . esc_attr( get_the_author_meta( 'swp_twitter' , $user->ID ) ) . '" class="regular-text" />';
-		echo '<br /><span class="description">' . __( 'Please enter your Twitter username.','social-warfare' ) . '</span>';
+		echo '<input type="text" name="swp_twitter" id="swp_twitter" value="' . esc_attr( get_the_author_meta( 'swp_twitter', $user->ID ) ) . '" class="regular-text" />';
+		echo '<br /><span class="description">' . __( 'Please enter your Twitter username.', 'social-warfare' ) . '</span>';
 		echo '</td>';
 		echo '</tr>';
 		echo '<tr>';
-		echo '<th><label for="facebook_author">' . __( 'Facebook Author URL','social-warfare' ) . '</label></th>';
+		echo '<th><label for="facebook_author">' . __( 'Facebook Author URL', 'social-warfare' ) . '</label></th>';
 		echo '<td>';
-		echo '<input type="text" name="swp_fb_author" id="swp_fb_author" value="' . esc_attr( get_the_author_meta( 'swp_fb_author' , $user->ID ) ) . '" class="regular-text" />';
-		echo '<br /><span class="description">' . __( 'Please enter the URL of your Facebok profile.','social-warfare' ) . '</span>';
+		echo '<input type="text" name="swp_fb_author" id="swp_fb_author" value="' . esc_attr( get_the_author_meta( 'swp_fb_author', $user->ID ) ) . '" class="regular-text" />';
+		echo '<br /><span class="description">' . __( 'Please enter the URL of your Facebok profile.', 'social-warfare' ) . '</span>';
 		echo '</td>';
 		echo '</tr>';
 		echo '</table>';
@@ -92,38 +92,34 @@ class SWP_User_Profile {
 	 */
 	public function save_user_profile_fields( $user_id ) {
 
-
 		/**
 		 * Make sure the the user making these changes is a user that has been
 		 * authorized to edit user profile fields.
 		 *
 		 */
-		if ( !current_user_can( 'edit_user' ) ) {
+		if ( ! current_user_can( 'edit_user' ) ) {
 			return false;
 		}
-
 
 		/**
 		 * Sanitize the Twitter field and then ensure that the Twitter field is
 		 * not longer than the max allowed characters on Twitter.
 		 *
 		 */
-		$twitter =  isset( $_POST['swp_twitter'] ) ? sanitize_text_field( $_POST['swp_twitter'] ) : '';
-		if( strlen( $twitter ) > 15 ) {
+		$twitter = isset( $_POST['swp_twitter'] ) ? sanitize_text_field( $_POST['swp_twitter'] ) : '';
+		if ( strlen( $twitter ) > 15 ) {
 			$twitter = '';
 		}
-
 
 		/**
 		 * Sanitize the Facebook field and then ensure that the Facebook field is
 		 * not longer than the max allowed characters on Facebook.
 		 *
 		 */
-		$facebook =	isset( $_POST['swp_fb_author']) ? sanitize_text_field( $_POST['swp_fb_author'] ) : '';
-        if ( strlen( $facebook ) > 50 ) {
+		$facebook = isset( $_POST['swp_fb_author'] ) ? sanitize_text_field( $_POST['swp_fb_author'] ) : '';
+		if ( strlen( $facebook ) > 50 ) {
 			$facebook = '';
 		}
-
 
 		/**
 		 * If everything checks out, then go ahead and save the fields to the

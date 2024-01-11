@@ -35,7 +35,6 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	public function __construct() {
 		parent::__construct();
 
-
 		/**
 		 * The floating button doesn't look good if you have a ton of buttons
 		 * enabled. As such, we have an option to limit the number of buttons
@@ -43,11 +42,10 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 *
 		 */
 		$max_buttons = $this->get_option( 'float_button_count' );
-		if( false == $max_buttons || 0 == $max_buttons ) {
+		if ( false === $max_buttons || 0 === $max_buttons ) {
 			$max_buttons = 5;
 		}
 		$this->max_buttons = $max_buttons;
-
 	}
 
 
@@ -63,16 +61,14 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	 */
 	public function should_panel_display() {
 
-
 		/**
 		 * If for some reason the post_data failed to populate, we just have to
 		 * bail out so the PHP doesn't throw undefined property errors.
 		 *
 		 */
-		if( empty( $this->post_data ) ) {
+		if ( empty( $this->post_data ) ) {
 			return false;
 		}
-
 
 		/**
 		 * We are only generating the floating buttons panel if it is set to
@@ -80,12 +76,11 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 *
 		 */
 		$blacklist = array( 'none', 'top', 'bottom' );
-		if ( in_array( $this->get_option('float_location'), $blacklist ) ) {
+		if ( in_array( $this->get_option( 'float_location' ), $blacklist, true ) ) {
 			return false;
 		}
 
-
-		if( in_array( $this->get_float_location(), $blacklist ) ) {
+		if ( in_array( $this->get_float_location(), $blacklist, true ) ) {
 			return false;
 		}
 
@@ -94,7 +89,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 		 * turned off, or if this is a post preview.
 		 *
 		 */
-		if( !is_singular() || is_admin() || is_feed() || is_search() || is_attachment() || is_preview() ) {
+		if ( ! is_singular() || is_admin() || is_feed() || is_search() || is_attachment() || is_preview() ) {
 			return false;
 		}
 
@@ -113,42 +108,39 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 	 */
 	protected function generate_css_classes() {
 
-		$classes = 'class="';
+		$classes  = 'class="';
 		$classes .= 'swp_social_panelSide swp_floating_panel swp_social_panel';
-		$classes .= ' swp_' . $this->get_option('float_button_shape');
-		$classes .= $this->get_colors(true);
-		$classes .= $this->get_option('transition');
-
+		$classes .= ' swp_' . $this->get_option( 'float_button_shape' );
+		$classes .= $this->get_colors( true );
+		$classes .= $this->get_option( 'transition' );
 
 		/**
 		 * This controls whether the floating panel is going to be displayed on
 		 * the left side of the screen or the right side of the screen.
 		 *
 		 */
-		if ( 'none' != $this->get_float_location() ) {
-			$classes .= " swp_float_" . $this->get_option('float_location');
+		if ( 'none' !== $this->get_float_location() ) {
+			$classes .= ' swp_float_' . $this->get_option( 'float_location' );
 		}
-
 
 		/**
 		 * This determines if the floating buttons will be snug against the top
 		 * of the screen, the bottom of the screen or centered vertically.
 		 *
 		 */
-		if ($this->get_option('float_alignment')  ) {
-			$classes .= " swp_side_" . $this->get_option('float_alignment');
+		if ( $this->get_option( 'float_alignment' ) ) {
+			$classes .= ' swp_side_' . $this->get_option( 'float_alignment' );
 		}
-
 
 		/**
 		 * This determines if the user has set the size of the panel. If so, the
 		 * CSS will use the transform:scale() to make it that size.
 		 *
 		 */
-		if ( isset($this->options['float_size']) ) {
-			$size     = $this->get_option('float_size') * 100;
-			$side     = $this->get_option('float_location');
-			$position = $this->get_option('float_alignment');
+		if ( isset( $this->options['float_size'] ) ) {
+			$size     = $this->get_option( 'float_size' ) * 100;
+			$side     = $this->get_option( 'float_location' );
+			$position = $this->get_option( 'float_alignment' );
 			$classes .= " scale-${size} float-position-${position}-${side}";
 		}
 
