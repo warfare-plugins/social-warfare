@@ -38,16 +38,14 @@ class SWP_Link_Manager {
 	 */
 	public function __construct() {
 
-
 		/**
 		 * This will enqueue our options to be added on the wp_loaded hook. We
- 	 	 * defer the call to this method as such to ensure that the $SWP_Options_Page
- 	 	 * global object has already been created and is available for us to
- 	 	 * manipulate.
+		 * defer the call to this method as such to ensure that the $SWP_Options_Page
+		 * global object has already been created and is available for us to
+		 * manipulate.
 		 *
 		 */
-		add_action( 'wp_loaded', array( $this, 'add_settings_page_options'), 20 );
-
+		add_action( 'wp_loaded', array( $this, 'add_settings_page_options' ), 20 );
 	}
 
 
@@ -68,16 +66,14 @@ class SWP_Link_Manager {
 	 */
 	public static function process_url( $url, $network, $post_id, $is_cache_fresh = true ) {
 
-
 		/**
 		 * Bail out if this is an attachment page. We had reports of short links
 		 * being created on these.
 		 *
 		 */
-		if( is_attachment() ) {
+		if ( is_attachment() ) {
 			return $url;
 		}
-
 
 		/**
 		 * Compile all of the parameters passed in into an array so that we can
@@ -88,8 +84,8 @@ class SWP_Link_Manager {
 		$array['network']     = $network;
 		$array['post_id']     = $post_id;
 		$array['fresh_cache'] = $is_cache_fresh;
-		$array                = apply_filters( 'swp_analytics' , $array );
-		$array                = apply_filters( 'swp_link_shortening', $array);
+		$array                = apply_filters( 'swp_analytics', $array );
+		$array                = apply_filters( 'swp_link_shortening', $array );
 
 		return $array['url'];
 	}
@@ -114,7 +110,6 @@ class SWP_Link_Manager {
 	 */
 	public function add_settings_page_options() {
 
-
 		/**
 		 * If there are no link shortening services regsitered via this hook,
 		 * then just bail out and don't create of the link shortening section or
@@ -122,11 +117,10 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$services = array();
-		$services = apply_filters('swp_available_link_shorteners', $services );
-		if( true === empty( $services ) ) {
+		$services = apply_filters( 'swp_available_link_shorteners', $services );
+		if ( true === empty( $services ) ) {
 			return;
 		}
-
 
 		/**
 		 * The Link Shortening Section
@@ -135,12 +129,11 @@ class SWP_Link_Manager {
 		 * of the link shortening options that are available to the user.
 		 *
 		 */
-		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare'), 'link_shortening' );
+		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare' ), 'link_shortening' );
 		$link_shortening
-			->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare') )
+			->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-bitly-link-shortening/' )
 			->set_priority( 20 );
-
 
 		/**
 		 * The Link Shortening On/Off Toggle
@@ -150,13 +143,12 @@ class SWP_Link_Manager {
 		 * is turned on.
 		 *
 		 */
-		$link_shortening_toggle = new SWP_Option_Toggle( __('Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
+		$link_shortening_toggle = new SWP_Option_Toggle( __( 'Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
 		$link_shortening_toggle
 			->set_size( 'sw-col-300' )
 			->set_priority( 10 )
 			->set_default( false )
 			->set_premium( 'pro' );
-
 
 		/**
 		 * Minimum Publish Date
@@ -169,12 +161,11 @@ class SWP_Link_Manager {
 		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
 
 		$link_shortening_start_date
-			->set_default( date('Y-m-d', strtotime('90 days ago')) )
+			->set_default( gmdate( 'Y-m-d', strtotime( '90 days ago' ) ) )
 			->set_priority( 20 )
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
-			->set_premium( 'pro');
-
+			->set_premium( 'pro' );
 
 		/**
 		 * Loop Through Available Shorteners
@@ -185,10 +176,9 @@ class SWP_Link_Manager {
 		 * to our dropdown select and an authentication button.
 		 *
 		 */
-		foreach( $services as $service ) {
-			$available_services[$service->key] = $service->name;
+		foreach ( $services as $service ) {
+			$available_services[ $service->key ] = $service->name;
 		}
-
 
 		/**
 		 * Link Shortener Service Selection
@@ -200,12 +190,11 @@ class SWP_Link_Manager {
 		$link_shortening_service = new SWP_Option_Select( __( 'Link Shortening Service', 'social-warfare' ), 'link_shortening_service' );
 		$link_shortening_service
 			->set_choices( $available_services )
-			->set_default( 'bitly')
+			->set_default( 'bitly' )
 			->set_size( 'sw-col-300' )
 			->set_dependency( 'link_shortening_toggle', true )
 			->set_premium( 'pro' )
 			->set_priority( 25 );
-
 
 		/**
 		 * Post Type Description
@@ -214,11 +203,10 @@ class SWP_Link_Manager {
 		 * toggles do on the per-post-type section of the options.
 		 *
 		 */
-		$post_type_description = new SWP_Section_HTML('Link Shortening Per Post Type', 'post_types');
-		$post_type_description->add_html('<p class="sw-subtitle">Turn link shortening on or off for each post type across your site.</p>')
-			->set_priority(100)
+		$post_type_description = new SWP_Section_HTML( 'Link Shortening Per Post Type', 'post_types' );
+		$post_type_description->add_html( '<p class="sw-subtitle">Turn link shortening on or off for each post type across your site.</p>' )
+			->set_priority( 100 )
 			->set_dependency( 'link_shortening_toggle', true );
-
 
 		/**
 		 * Here we are going to fetch all of the post types that are registered
@@ -227,21 +215,22 @@ class SWP_Link_Manager {
 		 *
 		 */
 		$post_types = SWP_Utility::get_post_types();
-		$i = 50;
-		foreach( $post_types as $index => $post ) {
-			$i++; $priority = 100 + $i * 10;
+		$i          = 50;
+		foreach ( $post_types as $index => $post ) {
+			++$i;
+			$priority = 100 + $i * 10;
 
 			$default = false;
-			if($post == 'post') {
+			if ( 'post' === $post ) {
 				$default = true;
 			}
 
-			if($post == 'archive_categories'){
+			if ( 'archive_categories' === $post ) {
 				continue;
 			}
 
-			$post_type_toggles[$i] = new SWP_Option_Toggle( str_replace('_', ' & ', ucfirst($post)) , 'short_link_toggle_' . $post );
-			$post_type_toggles[$i]
+			$post_type_toggles[ $i ] = new SWP_Option_Toggle( str_replace( '_', ' & ', ucfirst( $post ) ), 'short_link_toggle_' . $post );
+			$post_type_toggles[ $i ]
 				->set_size( 'sw-col-300' )
 				->set_priority( $priority )
 				->set_default( $default )
@@ -249,20 +238,20 @@ class SWP_Link_Manager {
 				->set_premium( 'pro' );
 		}
 
-
 		/**
 		 * After all of the option objects have been created, this will add them
 		 * to the link shortening section of the page.
 		 *
 		 */
-		$link_shortening->add_options( array(
-			$link_shortening_toggle,
-			$link_shortening_service,
-			$link_shortening_start_date,
-			$post_type_description
-		));
+		$link_shortening->add_options(
+			array(
+				$link_shortening_toggle,
+				$link_shortening_service,
+				$link_shortening_start_date,
+				$post_type_description,
+			)
+		);
 		$link_shortening->add_options( $post_type_toggles );
-
 
 		/**
 		 * This will access the global $SWP_Options_Page object, find the
@@ -272,6 +261,5 @@ class SWP_Link_Manager {
 		global $SWP_Options_Page;
 		$advanced_tab = $SWP_Options_Page->tabs->advanced;
 		$advanced_tab->add_sections( array( $link_shortening ) );
-
 	}
 }

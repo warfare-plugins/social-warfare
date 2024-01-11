@@ -26,24 +26,24 @@ trait SWP_Debug_Trait {
 
 
 	/**
-    * Give classes an error handling method.
-    *
-    * @since  3.0.0 | 07 APR 2018 | Created
-    * @param  mixed $message The message to send as an error.
-    * @return object Exception An exception with the passed in message.
-    *
-    */
-    public function _throw( $message ) {
-        ob_start();
-        print_r( debug_backtrace()[1]['args'] );
-        $dump = ob_get_clean();
+	* Give classes an error handling method.
+	*
+	* @since  3.0.0 | 07 APR 2018 | Created
+	* @param  mixed $message The message to send as an error.
+	* @return object Exception An exception with the passed in message.
+	*
+	*/
+	public function _throw( $message ) {
+		ob_start();
+		print_r( debug_backtrace()[1]['args'] );
+		$dump = ob_get_clean();
 
-        if ( is_string( $message ) ) {
-            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump );
-        } else {
-            throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
-        }
-    }
+		if ( is_string( $message ) ) {
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump );
+		} else {
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
+		}
+	}
 
 
 	/**
@@ -64,7 +64,6 @@ trait SWP_Debug_Trait {
 	 */
 	public function debug() {
 
-
 		/**
 		 * This will allow the dumping of an entire class by simply adding
 		 * ?swp_debug=class_name (without the swp_) to the end of a page's URL.
@@ -72,11 +71,10 @@ trait SWP_Debug_Trait {
 		 * Example: ?swp_debug=pro_bitly
 		 *
 		 */
-		$class_name = str_replace('swp_', '', strtolower( get_class( $this ) ) );
-		if( true === SWP_Utility::debug( $class_name ) ) {
+		$class_name = str_replace( 'swp_', '', strtolower( get_class( $this ) ) );
+		if ( true === SWP_Utility::debug( $class_name ) ) {
 			echo '<pre class="swp_debug_data">', var_dump( $this ), '</pre>';
 		}
-
 
 		/**
 		 * This will dump out all method exit statuses by simply adding
@@ -85,9 +83,9 @@ trait SWP_Debug_Trait {
 		 *
 		 */
 		global $swp_exit_statuses;
-		if( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
+		if ( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
 			echo '<pre class="swp_debug_data"><h3>Class Method Exit Statuses</h3><ol>';
-			foreach($swp_exit_statuses as $key => $value ){
+			foreach ( $swp_exit_statuses as $key => $value ) {
 				echo '<li>' . $value . '</li>';
 			}
 			echo '</ol></pre>';
@@ -122,16 +120,16 @@ trait SWP_Debug_Trait {
 	public function record_exit_status( $reason ) {
 
 		// The lowercase class name without the swp_ prefix.
-		$class_name = str_replace('swp_', '', strtolower( get_class( $this ) ) );
+		$class_name = str_replace( 'swp_', '', strtolower( get_class( $this ) ) );
 
 		// We'll only run the debug_backtrace if debugging is being accessed.
-		if( false === SWP_Utility::debug( 'exit_statuses' ) && false === SWP_Utility::debug( $class_name ) ) {
+		if ( false === SWP_Utility::debug( 'exit_statuses' ) && false === SWP_Utility::debug( $class_name ) ) {
 			return;
 		}
 
 		// A global allows us to collect statuses from all across the plugin.
 		global $swp_exit_statuses;
-		if( empty( $swp_exit_statuses ) ) {
+		if ( empty( $swp_exit_statuses ) ) {
 			$swp_exit_statuses = array();
 		}
 
@@ -143,9 +141,8 @@ trait SWP_Debug_Trait {
 		$method    = $backtrace[1]['function'];
 
 		// Compile the status and store it in the local $exit_statuses property and in the global.
-		$status = $class . '->' . $method .'() exited while checking for "' . $reason . '" in ' . $file .' on line ' . ($line - 1);
-		$swp_exit_statuses[$class . '->' . $method .'()'] = $status;
-		$this->exit_statuses[$method] = $status;
+		$status = $class . '->' . $method . '() exited while checking for "' . $reason . '" in ' . $file . ' on line ' . ( $line - 1 );
+		$swp_exit_statuses[ $class . '->' . $method . '()' ] = $status;
+		$this->exit_statuses[ $method ]                      = $status;
 	}
-
 }

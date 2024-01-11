@@ -27,9 +27,9 @@ class SWP_Option_Toggle extends SWP_Option {
 
 
 	public function register_available_values( $values ) {
-		$values[$this->key] = array(
-			'type'      => 'boolean',
-			'values'    => array( true, false )
+		$values[ $this->key ] = array(
+			'type'   => 'boolean',
+			'values' => array( true, false ),
 		);
 
 		return $values;
@@ -45,29 +45,29 @@ class SWP_Option_Toggle extends SWP_Option {
 		//* Map the default boolean to on/off.
 		$status = $this->default ? 'on' : 'off';
 
-		if ( isset( $this->user_options[$this->key] ) ) :
-			$status = $this->user_options[$this->key] === true ? 'on' : 'off';
+		if ( isset( $this->user_options[ $this->key ] ) ) :
+			$status = true === $this->user_options[ $this->key ] ? 'on' : 'off';
 		endif;
 
-		$checked = $status === 'on' ? ' checked ' : '';
+		$checked = 'on' === $status ? ' checked ' : '';
 
-		$html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+		$html  = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
 		$html .= $this->render_premium();
 		$html .= '>';
 
-			$html .= '<div class="sw-grid ' . $this->size . '">';
+			$html     .= '<div class="sw-grid ' . $this->size . '">';
 				$html .= '<p class="sw-checkbox-label">' . $this->name . '</p>';
-			$html .= '</div>';
+			$html     .= '</div>';
 
-			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
+			$html         .= '<div class="sw-grid ' . $this->size . '">';
+				$html     .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
 					$html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
 					$html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
-				$html .= '</div>';
+				$html     .= '</div>';
 
 				$html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '"' . $checked . '/>';
-			$html .= '</div>';
+			$html     .= '</div>';
 
 		$html .= '</div>';
 
@@ -84,7 +84,7 @@ class SWP_Option_Toggle extends SWP_Option {
 	* @return SWP_Option_Toggle $this The calling object, for method chaining.
 	*/
 	public function set_default( $value ) {
-		if ( !is_bool( $value ) ||  !isset( $value ) ) {
+		if ( ! is_bool( $value ) || ! isset( $value ) ) {
 			$this->_throw( 'Please provide a default value as a boolean.' );
 		}
 

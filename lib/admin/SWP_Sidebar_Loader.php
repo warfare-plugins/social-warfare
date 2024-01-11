@@ -22,7 +22,7 @@ class SWP_Sidebar_Loader {
 	 *
 	 */
 	use SWP_Debug_Trait;
-	
+
 
 	/**
 	 * Instantiate the class.
@@ -32,9 +32,9 @@ class SWP_Sidebar_Loader {
 	 * @return void
 	 *
 	 */
-    public function __construct() {
+	public function __construct() {
 		$this->load_components();
-    }
+	}
 
 
 	/**
@@ -46,19 +46,21 @@ class SWP_Sidebar_Loader {
 	 *
 	 */
 	private function load_components() {
-		$cache_data = get_option('swp_json_cache');
+		$cache_data = get_option( 'swp_json_cache' );
 
-		if( false === $cache_data ):
+		if ( false === $cache_data ) :
 			return;
 		endif;
 
-		if( !is_array( $cache_data ) || empty($cache_data['sidebar']) ):
+		if ( ! is_array( $cache_data ) || empty( $cache_data['sidebar'] ) ) :
 			return;
 		endif;
 
-        add_filter( 'swp_admin_sidebar', function( $components ) {
-            return array_merge( $components, $cache_data['sidebar'] );
-        });
+		add_filter(
+			'swp_admin_sidebar',
+			function ( $components ) {
+				return array_merge( $components, $cache_data['sidebar'] );
+			}
+		);
 	}
-
 }
