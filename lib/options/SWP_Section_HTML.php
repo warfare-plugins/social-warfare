@@ -110,6 +110,7 @@ class SWP_Section_HTML extends SWP_Option {
 	 * A method for compiling the system status html.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.4.6 | 17 JAN 2024 | Updated Graph API endpoint to v18.0
 	 * @param  void
 	 * @return string The compiled html returned as a string.
 	 *
@@ -148,7 +149,7 @@ class SWP_Section_HTML extends SWP_Option {
 
 		if( $Facebook_Authentication->has_valid_token() ) {
 			$facebook_status     = '<span style="color:green;">Connected</span>';
-			$facebook_debug_link = '<span style="color:green;">https://graph.facebook.com/v6.0/?id={url_placeholder}&fields=engagement&access_token='.$Facebook_Authentication->get_access_token().'</span>';
+			$facebook_debug_link = '<span style="color:green;">https://graph.facebook.com/v18.0/?id={url_placeholder}&fields=engagement&access_token='.$Facebook_Authentication->get_access_token().'</span>';
 			$facebook_token      = '<span style="color:green;">'.$Facebook_Authentication->get_access_token().'</span>';
 		} else {
 			$facebook_status     = '<span style="color:red;">Not Connected</span>';
