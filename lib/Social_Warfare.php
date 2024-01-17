@@ -587,7 +587,7 @@ class Social_Warfare {
  */
 if ( is_admin() ) {
 	require_once SWP_PLUGIN_DIR . '/lib/admin/SWP_System_Checker.php';
-	require_once SWP_PLUGIN_DIR . '/lib/admin/SWP_Php_Check.php';
 	require_once SWP_PLUGIN_DIR . '/lib/admin/SWP_Custom_Check.php';
+	require_once SWP_PLUGIN_DIR . '/lib/admin/SWP_Php_Check.php';
 	require_once SWP_PLUGIN_DIR . '/lib/admin/SWP_Curl_Check.php';
 }
