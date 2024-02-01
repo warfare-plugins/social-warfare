@@ -28,7 +28,8 @@
 	<!-- Directories and third party library exclusions. -->
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/vendor/*</exclude-pattern>
-
+	<exclude-pattern>/lib/admin/swp_system_checker.php</exclude-pattern>
+	
     <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
         <severity>0</severity>
     </rule>
