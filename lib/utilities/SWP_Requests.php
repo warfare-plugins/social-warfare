@@ -79,18 +79,37 @@ class SWP_Requests {
 		return $response['body'];
 	}
 
-	public static function post_json( $url, $fields, $headers = array( 'Content-Type' => 'application/json; charset=utf-8' ) ) {
+	/**
+	 * SWP_CURL::post_json()
+	 *
+	 * This function will make an API request using the cURL library instead of WordPress's built-in wp_remote_post()
+	 * to resolve issues with the Bitly API's response. This function ensures compatibility and more direct control over the HTTP request.
+	 *
+	 * @param  string $url The endpoint URL for the API request.
+	 * @param  array $fields The body data (usually parameters or data payload) to be sent in the API request.
+	 * @param  array $headers Headers to be sent with the API request. Default is JSON content type.
+	 * @return string Response from the API request.
+	 *
+	 * @since  4.4.5 | 24 OCT 2023 | Created as a direct cURL alternative to wp_remote_post() for Bitly API.
+	 */
+	public static function post_json( $url, $fields, $headers = array() ) {
+		if ( ! in_array( 'Content-Type: application/json; charset=utf-8', $headers, true ) ) {
+			$headers[] = 'Content-Type: application/json; charset=utf-8';
+		}
 
-		$response = wp_remote_post(
-			$url,
-			array(
-				'headers'     => $headers,
-				'body'        => json_encode( $fields ),
-				'method'      => 'POST',
-				'data_format' => 'body',
-			)
-		);
+		$curl = curl_init( $url );
 
-		return $response['body'];
+		curl_setopt( $curl, CURLOPT_POST, true );
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 );
+		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 );
+
+		$resp = curl_exec( $curl );
+
+		curl_close( $curl );
+
+		return $resp;
 	}
 }
