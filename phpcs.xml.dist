@@ -38,10 +38,6 @@
 		<severity>0</severity>
     </rule>
 
-	<rule ref="Universal.NamingConventions.NoReservedKeywordParameterNames.stringFound">
-		<severity>0</severity>
-    </rule>
-
 	<rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
 		<severity>0</severity>
     </rule>
