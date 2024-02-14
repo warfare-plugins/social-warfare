@@ -23,8 +23,8 @@ defined( 'WPINC' ) || die;
 define( 'SWP_VERSION', '4.4.5.1' );
 define( 'SWP_DEV_VERSION', '2024.01.11 MASTER' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
-define( 'SWP_PLUGIN_URL', str_replace( array("\r", "\n") , '', untrailingslashit( plugin_dir_url( __FILE__ ) ) ) );
-define( 'SWP_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'SWP_PLUGIN_URL', str_replace( array( "\r", "\n" ), '', untrailingslashit( plugin_dir_url( __FILE__ ) ) ) );
+define( 'SWP_PLUGIN_DIR', __DIR__ );
 define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
 
 
@@ -36,7 +36,7 @@ define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
  * @todo This needs to be moved into the Social_Warfare class.
  *
  */
-add_filter('the_excerpt', 'do_shortcode', 1);
+add_filter( 'the_excerpt', 'do_shortcode', 1 );
 
 
 /**

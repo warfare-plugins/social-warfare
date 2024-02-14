@@ -12,24 +12,24 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 20 FEB 2018 | Refactored this file to align
- * 			  with our code style guide
+ *            with our code style guide
  *
  */
 class SWP_Shortcode_Generator {
 
 	/**
-    * The magic method for instatiating this class
-    *
-    * This method called the activation and decativation hooks and
-    * sets up the button and it's associated JS to be registered with
-    * the TinyMCE editor on WordPress posts (AKA the Kitchen Sink).
-    *
-    * @param None
-    * @return None
-    *
-    */
+	* The magic method for instatiating this class
+	*
+	* This method called the activation and decativation hooks and
+	* sets up the button and it's associated JS to be registered with
+	* the TinyMCE editor on WordPress posts (AKA the Kitchen Sink).
+	*
+	* @param None
+	* @return None
+	*
+	*/
 	public function __construct() {
-        register_activation_hook( __FILE__, array( __CLASS__, 'activation' ) );
+		register_activation_hook( __FILE__, array( __CLASS__, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( __CLASS__, 'deactivation' ) );
 
 		if ( is_admin() ) {
@@ -37,47 +37,47 @@ class SWP_Shortcode_Generator {
 		}
 	}
 
-    /**
-    * Pretty print data for debugging.
-    *
-    * @param Array $array The data to print.
-    *
-    */
-	public function debug( $array ) {
+	/**
+	* Pretty print data for debugging.
+	*
+	* @param Array $data The data to print.
+	*
+	*/
+	public function debug( $data ) {
 		echo '<pre>';
-		print_r( $array );
+		print_r( $data );
 		echo '</pre>';
 	}
 
-    /**
-    * Activate the shortcode
-    *
-    */
+	/**
+	* Activate the shortcode
+	*
+	*/
 	public function activation() {
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
 
-    /**
-    * Register the admin hooks
-    *
-    */
+	/**
+	* Register the admin hooks
+	*
+	*/
 	public function register_admin_hooks() {
 		add_filter( 'tiny_mce_version', array( $this, 'refresh_mce' ) );
 		add_action( 'init', array( $this, 'tinymce_button' ) );
 	}
 
 
-    /**
-    * A method for adding the button to tinymce editor
-    *
-    */
+	/**
+	* A method for adding the button to tinymce editor
+	*
+	*/
 	public function tinymce_button() {
 		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
 			return;
 		}
 
-		if ( get_user_option( 'rich_editing' ) == 'true' ) {
+		if ( get_user_option( 'rich_editing' ) === 'true' ) {
 			add_filter( 'mce_external_plugins', array( $this, 'tinymce_register_plugin' ) );
 			add_filter( 'mce_buttons', array( $this, 'tinymce_register_button' ) );
 		}
@@ -85,35 +85,35 @@ class SWP_Shortcode_Generator {
 
 
 
-    /**
-     * Register the shortcode button.
-     *
-     * @param array $buttons
-     * @return array
-     *
-     */
+	/**
+	 * Register the shortcode button.
+	 *
+	 * @param array $buttons
+	 * @return array
+	 *
+	 */
 	public function tinymce_register_button( $buttons ) {
 		array_push( $buttons, '|', 'swp_shortcode_generator' );
 		return $buttons;
 	}
 
 
-    /**
-    * Register the JS file with the TinyMCE editor
-    *
-    * @param Array An array of plugins registered with the TinyMCE editor
-    * @return Array The modified array with our plugin and JS file added
-    *
-    */
+	/**
+	* Register the JS file with the TinyMCE editor
+	*
+	* @param Array An array of plugins registered with the TinyMCE editor
+	* @return Array The modified array with our plugin and JS file added
+	*
+	*/
 	public function tinymce_register_plugin( $plugin_array ) {
-		if( true == SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' )  && is_gutenberg_page() ) {
+		if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
 			return $plugin_array;
 		}
 		$plugin_array['swp_shortcode_generator'] = SWP_PLUGIN_URL . '/assets/js/sw-shortcode-generator.js';
 		return $plugin_array;
 	}
 
-    /**
+	/**
 	 * Force TinyMCE to refresh.
 	 *
 	 * @param  int $version
