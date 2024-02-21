@@ -84,23 +84,33 @@ class SWP_Credential_Helper {
 	 *
 	 */
 	public static function options_page_scan_url() {
-		if ( empty( $_GET['network'] ) || empty( $_GET['access_token'] ) ) {
+		// Check for user authentication
+		if (!is_user_logged_in()) {
 			return false;
 		}
-
-		// Fetch and sanitize variables for use below.
-		$network      = sanitize_text_field( $_GET['network'] );
-		$access_token = sanitize_text_field( $_GET['access_token'] );
-
-		// Store the access token for this network
-		self::store_data( $network, 'access_token', $access_token );
-
-		// Not every network uses access_secret. If it has one, sanitize and store it.
-		if ( isset( $_GET['access_secret'] ) ) {
-			$access_secret = sanitize_text_field( $_GET['access_token'] );
-			self::store_data( $network, 'access_secret', $access_secret );
+	
+		// Verify nonce for CSRF protection
+		$nonce = $_GET['_wpnonce'] ?? '';
+		if (!wp_verify_nonce($nonce, 'unique_action_identifier')) {
+			return false;
 		}
-	}
+	
+		// Sanitize and validate inputs
+		$network = sanitize_text_field($_GET['network'] ?? '');
+		$access_token = sanitize_text_field($_GET['access_token'] ?? '');
+		$access_secret = sanitize_text_field($_GET['access_secret'] ?? '');
+	
+		if (empty($network) || empty($access_token)) {
+			return false;
+		}
+	
+		// Proceed with storing sanitized and validated data
+		self::store_data($network, 'access_token', $access_token);
+	
+		if (!empty($access_secret)) {
+			self::store_data($network, 'access_secret', $access_secret);
+		}
+	}	
 
 
 	/**
