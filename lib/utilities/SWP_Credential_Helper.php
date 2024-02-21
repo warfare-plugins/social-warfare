@@ -79,6 +79,7 @@ class SWP_Credential_Helper {
 	 * https://warfareplugins.com/authorizations/${network}/return_token.php.
 	 *
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
+	 * @since 4.4.6 | 21 FEB 2024 | Added nonce verification.
 	 * @param void
 	 * @return void
 	 *
