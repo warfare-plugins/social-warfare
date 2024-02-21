@@ -90,7 +90,7 @@ class SWP_Requests {
 	 * @param  array $headers Headers to be sent with the API request. Default is JSON content type.
 	 * @return string Response from the API request.
 	 *
-	 * @since  4.4.5 | 24 OCT 2023 | Created as a direct cURL alternative to wp_remote_post() for Bitly API.
+	 * @since  4.4.6 | 21 FEB 2024 | Created as a direct cURL alternative to wp_remote_post() for Bitly API.
 	 */
 	public static function post_json( $url, $fields, $headers = array() ) {
 		if ( ! in_array( 'Content-Type: application/json; charset=utf-8', $headers, true ) ) {
