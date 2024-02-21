@@ -85,32 +85,32 @@ class SWP_Credential_Helper {
 	 */
 	public static function options_page_scan_url() {
 		// Check for user authentication
-		if (!is_user_logged_in()) {
+		if ( ! is_user_logged_in() ) {
 			return false;
 		}
-	
+
 		// Verify nonce for CSRF protection
 		$nonce = $_GET['_wpnonce'] ?? '';
-		if (!wp_verify_nonce($nonce, 'unique_action_identifier')) {
+		if ( ! wp_verify_nonce( $nonce, 'unique_action_identifier' ) ) {
 			return false;
 		}
-	
+
 		// Sanitize and validate inputs
-		$network = sanitize_text_field($_GET['network'] ?? '');
-		$access_token = sanitize_text_field($_GET['access_token'] ?? '');
-		$access_secret = sanitize_text_field($_GET['access_secret'] ?? '');
-	
-		if (empty($network) || empty($access_token)) {
+		$network       = sanitize_text_field( $_GET['network'] ?? '' );
+		$access_token  = sanitize_text_field( $_GET['access_token'] ?? '' );
+		$access_secret = sanitize_text_field( $_GET['access_secret'] ?? '' );
+
+		if ( empty( $network ) || empty( $access_token ) ) {
 			return false;
 		}
-	
+
 		// Proceed with storing sanitized and validated data
-		self::store_data($network, 'access_token', $access_token);
-	
-		if (!empty($access_secret)) {
-			self::store_data($network, 'access_secret', $access_secret);
+		self::store_data( $network, 'access_token', $access_token );
+
+		if ( ! empty( $access_secret ) ) {
+			self::store_data( $network, 'access_secret', $access_secret );
 		}
-	}	
+	}
 
 
 	/**
