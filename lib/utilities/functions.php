@@ -20,8 +20,8 @@
  * @return void   It echoes the results to the screen.
  */
 function social_warfare( $args = array() ) {
-    $buttons_panel = new SWP_Buttons_Panel( $args, true );
-    echo $buttons_panel->render_html();
+	$buttons_panel = new SWP_Buttons_Panel( $args, true );
+	echo $buttons_panel->render_html();
 }
 
 
@@ -31,8 +31,14 @@ function social_warfare( $args = array() ) {
  * ago to make sure that it will still work for them.
  *
  */
-function socialWarfare( $content = false, $where = 'default', $echo = true ) {
-    social_warfare( array( 'content' => $content, 'where' => $where, 'echo' => $echo ) );
+function socialWarfare( $content = false, $where = 'default', $output = true ) {
+	social_warfare(
+		array(
+			'content' => $content,
+			'where'   => $where,
+			'echo'    => $output,
+		)
+	);
 }
 
 
@@ -43,5 +49,5 @@ function socialWarfare( $content = false, $where = 'default', $echo = true ) {
  * @return string          The formatted number.
  */
 function swp_kilomega( $number ) {
-    return SWP_Utiltiy::kilomega( $number );
+	return SWP_Utiltiy::kilomega( $number );
 }

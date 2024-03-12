@@ -36,17 +36,17 @@ class SWP_Permalink {
 			'%hour%',
 			'%minute%',
 			'%second%',
-			$leavename? '' : '%postname%',
+			$leavename ? '' : '%postname%',
 			'%post_id%',
 			'%category%',
 			'%author%',
-			$leavename? '' : '%pagename%',
+			$leavename ? '' : '%pagename%',
 		);
 
-		if ( is_object( $post ) && isset( $post->filter ) && 'sample' == $post->filter ) {
+		if ( is_object( $post ) && isset( $post->filter ) && 'sample' === $post->filter ) {
 			$sample = true;
 		} else {
-			$post = get_post( $post );
+			$post   = get_post( $post );
 			$sample = false;
 		}
 
@@ -57,19 +57,19 @@ class SWP_Permalink {
 		// Build the structure
 		$structure = $swp_user_options['recovery_format'];
 
-		if ( $structure == 'custom' ) :
+		if ( 'custom' === $structure ) :
 			$permalink = $swp_user_options['recovery_permalink'];
-		elseif ( $structure == 'unchanged' ) :
+		elseif ( 'unchanged' === $structure ) :
 			$permalink = get_option( 'permalink_structure' );
-			elseif ( $structure == 'default' ) :
+			elseif ( 'default' === $structure ) :
 				$permalink = '';
-			elseif ( $structure == 'day_and_name' ) :
+			elseif ( 'day_and_name' === $structure ) :
 				$permalink = '/%year%/%monthnum%/%day%/%postname%/';
-			elseif ( $structure == 'month_and_name' ) :
+			elseif ( 'month_and_name' === $structure ) :
 				$permalink = '/%year%/%monthnum%/%postname%/';
-			elseif ( $structure == 'numeric' ) :
+			elseif ( 'numeric' === $structure ) :
 				$permalink = '/archives/%post_id%';
-			elseif ( $structure == 'post_name' ) :
+			elseif ( 'post_name' === $structure ) :
 				$permalink = '/%postname%/';
 			else :
 				$permalink = get_option( 'permalink_structure' );
@@ -89,12 +89,12 @@ class SWP_Permalink {
 			$permalink = apply_filters( 'pre_post_link', $permalink, $post, $leavename );
 
 			// Check if the user has defined a specific custom URL
-			$custom_url = get_post_meta( get_the_ID() , 'swp_recovery_url' , true );
+			$custom_url = get_post_meta( get_the_ID(), 'swp_recovery_url', true );
 			if ( $custom_url ) :
 				return $custom_url;
 			else :
 
-				if ( '' != $permalink && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft', 'future' ) ) ) {
+				if ( '' !== $permalink && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft', 'future' ), true ) ) {
 					$unixtime = strtotime( $post->post_date );
 
 					$category = '';
@@ -113,10 +113,11 @@ class SWP_Permalink {
 							 * @param WP_Post  $post The post in question.
 							 */
 							$category_object = apply_filters( 'post_link_category', $cats[0], $cats, $post );
-
 							$category_object = get_term( $category_object, 'category' );
-							$category = $category_object->slug;
-							if ( $parent = $category_object->parent ) {
+							$category        = $category_object->slug;
+
+							$parent = $category_object->parent;
+							if ( $parent ) {
 								$category = get_category_parents( $parent, false, '/', true ) . $category;
 							}
 						}
@@ -124,17 +125,17 @@ class SWP_Permalink {
 						// having to assign it explicitly
 						if ( empty( $category ) ) {
 							$default_category = get_term( get_option( 'default_category' ), 'category' );
-							$category = is_wp_error( $default_category ) ? '' : $default_category->slug;
+							$category         = is_wp_error( $default_category ) ? '' : $default_category->slug;
 						}
 					}
 
 					$author = '';
 					if ( strpos( $permalink, '%author%' ) !== false ) {
 						$authordata = get_userdata( $post->post_author );
-						$author = $authordata->user_nicename;
+						$author     = $authordata->user_nicename;
 					}
 
-					$date = explode( ' ',date( 'Y m d H i s', $unixtime ) );
+					$date           = explode( ' ', gmdate( 'Y m d H i s', $unixtime ) );
 					$rewritereplace =
 					array(
 						$date[0],
@@ -149,9 +150,9 @@ class SWP_Permalink {
 						$author,
 						$post->post_name,
 					);
-					$permalink = home_url( str_replace( $rewritecode, $rewritereplace, $permalink ) );
+					$permalink      = home_url( str_replace( $rewritecode, $rewritereplace, $permalink ) );
 
-					if ( $structure != 'custom' ) :
+					if ( 'custom' !== $structure ) :
 						$permalink = user_trailingslashit( $permalink, 'single' );
 					endif;
 
@@ -173,17 +174,17 @@ class SWP_Permalink {
 				$url = apply_filters( 'post_link', $permalink, $post, $leavename );
 
 				// Ignore all filters and just start with the site url on the home page
-				if( is_front_page() ) :
+				if ( is_front_page() ) :
 					$url = get_site_url();
 				endif;
 
-		        // The URL is missing any kind of protocol.
-				if ( false === strpos( $url, '//' ) || 0 == strpos( $url, '//') ) {
+				// The URL is missing any kind of protocol.
+				if ( false === strpos( $url, '//' ) || 0 === strpos( $url, '//' ) ) {
 					$protocol = is_ssl() ? 'https' : 'http';
 
 					// For shared load servers. See https://codex.wordpress.org/Function_Reference/is_ssl
-					if ('http' == $protocol && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-			            $protocol = 'https';
+					if ( 'http' === $protocol && isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+						$protocol = 'https';
 					}
 
 					$url = $protocol . $url;
@@ -191,7 +192,7 @@ class SWP_Permalink {
 
 				// Check if they're using cross domain recovery
 				$current_domain = SWP_Utility::get_option( 'current_domain' );
-				$former_domain = SWP_Utility::get_option( 'former_domain' );
+				$former_domain  = SWP_Utility::get_option( 'former_domain' );
 				if ( isset( $current_domain ) && isset( $former_domain ) && $former_domain ) :
 					$url = str_replace( $current_domain, $former_domain, $url );
 				endif;
@@ -199,33 +200,31 @@ class SWP_Permalink {
 				// Filter the Protocol
 				$protocol = SWP_Utility::get_option( 'recovery_protocol' );
 
-				if ( $protocol == 'https' && strpos( $url,'https' ) === false ) :
-					$url = str_replace( 'http','https',$url );
-				elseif ( $protocol == 'http' && strpos( $url,'https' ) !== false ) :
-					$url = str_replace( 'https','http',$url );
+				if ( 'https' === $protocol && strpos( $url, 'https' ) === false ) :
+					$url = str_replace( 'http', 'https', $url );
+				elseif ( 'http' === $protocol && strpos( $url, 'https' ) !== false ) :
+					$url = str_replace( 'https', 'http', $url );
 				endif;
 
 				// Filter the prefix
 				$recovery_prefix = SWP_Utility::get_option( 'recovery_prefix' );
-				if ( $recovery_prefix == 'unchanged' ) :
-				elseif ( $recovery_prefix == 'www' && strpos( $url,'www' ) === false ) :
+				if ( 'unchanged' === $recovery_prefix ) :
+				elseif ( 'www' === $recovery_prefix && strpos( $url, 'www' ) === false ) :
 					$url = str_replace( 'http://', 'http://www.', $url );
 					$url = str_replace( 'https://', 'https://www.', $url );
-				elseif ( $recovery_prefix == 'nonwww' && strpos( $url,'www' ) !== false ) :
+				elseif ( 'nonwww' === $recovery_prefix && strpos( $url, 'www' ) !== false ) :
 					$url = str_replace( 'http://www.', 'http://', $url );
 					$url = str_replace( 'https://www.', 'https://', $url );
 				endif;
 
 				// Filter out the subdomain
 				$recovery_subdomain = SWP_Utility::get_option( 'recovery_subdomain' );
-				if ( $recovery_subdomain && $recovery_subdomain != '' ) :
-					$url = str_replace( $recovery_subdomain . '.' , '' , $url );
+				if ( $recovery_subdomain && '' !== $recovery_subdomain ) :
+					$url = str_replace( $recovery_subdomain . '.', '', $url );
 				endif;
 
 				return $url;
 
 			endif;
-
 	}
-
 }

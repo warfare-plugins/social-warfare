@@ -40,12 +40,12 @@ class SWP_Notice_Loader {
 	 * @return void
 	 *
 	 */
-    public function __construct() {
+	public function __construct() {
 		$this->activate_json_notices();
 		$this->activate_clear_caches_notice();
 		// $this->load_persistent_notices();
 		add_action( 'wp_footer', array( $this, 'debug' ) );
-    }
+	}
 
 
 	/**
@@ -59,7 +59,6 @@ class SWP_Notice_Loader {
 	 */
 	private function activate_json_notices() {
 
-
 		/**
 		 * The JSON loader class fetches the JSON from
 		 * https://warfareplugins.com/JSON_updates.php. This is stored in the
@@ -69,44 +68,39 @@ class SWP_Notice_Loader {
 		 */
 		$cache_data = get_option( 'swp_json_cache' );
 
-
 		/**
 		 * If there is nothing in the JSON notices options table, then simply
 		 * bail out because we have no notices to process.
 		 *
 		 */
-		if( false === $cache_data ) {
+		if ( false === $cache_data ) {
 			return;
 		}
-
 
 		/**
 		 * If the notices are not an array or if it is an empty array, it means
 		 * that we have no notices to print so just bail out.
 		 *
 		 */
-		if( !is_array( $cache_data ) || empty( $cache_data['notices'] ) ) {
+		if ( ! is_array( $cache_data ) || empty( $cache_data['notices'] ) ) {
 			return;
 		}
-
 
 		/**
 		 * Loop through each available notice in the array, and use the data in
 		 * that array to instantiate a notice object.
 		 *
 		 */
-		foreach( $cache_data['notices'] as $data ) {
-
+		foreach ( $cache_data['notices'] as $data ) {
 
 			/**
 			 * Each notice must have a key and a message or else an SWP_Notice
 			 * object will not be able to be instantiated.
 			 *
 			 */
-            if ( empty( $data['key'] ) || empty( $data['message'] ) ) {
-                continue;
-            }
-
+			if ( empty( $data['key'] ) || empty( $data['message'] ) ) {
+				continue;
+			}
 
 			/**
 			 * If this notice has a "Call to Action" then use it, otherwise we
@@ -114,8 +108,7 @@ class SWP_Notice_Loader {
 			 * to pass in to the SWP_Notice class.
 			 *
 			 */
-            $ctas = !empty( $data['ctas'] ) ? $data['ctas'] : array();
-
+			$ctas = ! empty( $data['ctas'] ) ? $data['ctas'] : array();
 
 			/**
 			 * This is what actually creates the notice. This will instantiate
@@ -124,38 +117,34 @@ class SWP_Notice_Loader {
 			 * up both on the admin dashboard and on our options page.
 			 *
 			 */
-            $notice = new SWP_Notice( $data['key'], $data['message'], $ctas );
-
+			$notice = new SWP_Notice( $data['key'], $data['message'], $ctas );
 
 			/**
 			 * If the notice has a start date, go ahead and set it. The notice
 			 * will not be displayed prior to this date.
 			 *
 			 */
-            if ( isset( $data['start_date'] ) ) {
-                $notice->set_start_date( $data['start_date'] );
-            }
-
+			if ( isset( $data['start_date'] ) ) {
+				$notice->set_start_date( $data['start_date'] );
+			}
 
 			/**
 			 * If the notice has an end date, go ahead and set it. The notice
 			 * will not be displayed after this date has passed.
 			 *
 			 */
-            if ( isset( $data['end_date'] ) ) {
-                $notice->set_end_date( $data['end_date'] );
-            }
-
+			if ( isset( $data['end_date'] ) ) {
+				$notice->set_end_date( $data['end_date'] );
+			}
 
 			/**
 			 * If the CTA's are removed, this will simply make the notice have
 			 * the default dismissal CTA, "Thanks, I understand."
 			 *
 			 */
-            if ( isset( $data['no_cta'] ) ) {
-                $notice->remove_cta();
-            }
-
+			if ( isset( $data['no_cta'] ) ) {
+				$notice->remove_cta();
+			}
 
 			/**
 			 * This is added to a local property so that when we use the debug
@@ -170,13 +159,13 @@ class SWP_Notice_Loader {
 
 	private function activate_clear_caches_notice() {
 
-		$key = 'clear_caches_' . SWP_VERSION;
+		$key     = 'clear_caches_' . SWP_VERSION;
 		$message = '<h3>Social Warfare has been updated. If you have installed a caching plugin, please Clear Your Caching Plugins.</h3><b>Congratulations!</b> You\'ve just updated to the latest version of Social Warfare. After updating any plugin or theme, you should be sure to <b>clear all of your site\'s caches</b> (W3 Total Cache, WP Super Cache, etc.) to ensure that all of the newest CSS and Javascript files are being loaded. Loading outdated files is the number one cause of bugs after plugin and theme updates, and <b>clearing your site\'s caches is the solution.</b> Consult your caching plugin documentation for more information about how to clear the cache.';
 
 		new SWP_Notice( $key, $message );
 	}
 
-	public static function create_persistent_notice(  $key = "", $message = "", $ctas = array() ) {
+	public static function create_persistent_notice( $key = '', $message = '', $ctas = array() ) {
 
 		// Fetch the current array of persistent notices from the database.
 		$notices = get_option( 'social_warfare_persistent_notices', false );
@@ -186,7 +175,11 @@ class SWP_Notice_Loader {
 			$notices = array();
 		}
 
-		$notices[$key] = array( 'key' => $key, 'message' => $message, 'ctas' => $ctas );
+		$notices[ $key ] = array(
+			'key'     => $key,
+			'message' => $message,
+			'ctas'    => $ctas,
+		);
 		update_option( 'social_warfare_persistent_notices', $notices );
 	}
 
@@ -200,10 +193,10 @@ class SWP_Notice_Loader {
 			return;
 		}
 
-		foreach( $notices as $notice ) {
+		foreach ( $notices as $notice ) {
 
 			// Each notice needs as least a key and a message.
-			if( empty( $notice['key'] ) || empty( $notice['message'] ) ) {
+			if ( empty( $notice['key'] ) || empty( $notice['message'] ) ) {
 				continue;
 			}
 

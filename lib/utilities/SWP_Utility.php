@@ -29,7 +29,7 @@ class SWP_Utility {
 	public function __construct() {
 		add_action( 'wp_ajax_swp_store_settings', array( 'SWP_Utility', 'store_settings' ) );
 		add_filter( 'screen_options_show_screen', array( 'SWP_Utility', 'remove_screen_options' ), 10, 2 );
-		add_action( 'wp_ajax_swp_reset_post_meta', array ( 'SWP_Utility' , 'reset_post_meta' ) );
+		add_action( 'wp_ajax_swp_reset_post_meta', array( 'SWP_Utility', 'reset_post_meta' ) );
 	}
 
 
@@ -47,18 +47,18 @@ class SWP_Utility {
 	 *
 	 */
 	public static function get_option( $key = '' ) {
-		if ( !isset( $key ) || !is_string( $key ) ) :
+		if ( ! isset( $key ) || ! is_string( $key ) ) :
 			return false;
 		endif;
 
 		global $swp_user_options;
 
-		if ( !is_array( $swp_user_options ) ) :
+		if ( ! is_array( $swp_user_options ) ) :
 			return false;
 		endif;
 
 		if ( array_key_exists( $key, $swp_user_options ) ) :
-			return $swp_user_options[$key];
+			return $swp_user_options[ $key ];
 		endif;
 
 		return false;
@@ -76,21 +76,21 @@ class SWP_Utility {
 	 *
 	 * * @TODO This needs to go through SWP meta filters.
 	 */
-	 public static function get_meta( $id, $key ) {
-		 $value = get_post_meta( $id, $key, true );
+	public static function get_meta( $id, $key ) {
+		$value = get_post_meta( $id, $key, true );
 
-		 // Sometimes a boolean value is stored in the meta as a string.
-		 if ( 'false' === $value ) {
-			  return false;
-		 }
+		// Sometimes a boolean value is stored in the meta as a string.
+		if ( 'false' === $value ) {
+			return false;
+		}
 
-		 if ( 'true' === $value ) {
-			 return true;
-		 }
-		 // echo "<br>".__METHOD__, var_dump($id), var_dump($key), var_dump($value);
+		if ( 'true' === $value ) {
+			return true;
+		}
+		// echo "<br>".__METHOD__, var_dump($id), var_dump($key), var_dump($value);
 
-		 return $value;
-	 }
+		return $value;
+	}
 
 	/**
 	 * Fetches a meta key we know to be an array.
@@ -103,16 +103,16 @@ class SWP_Utility {
 
 		// Sometimes a boolean value ideas stored in the meta as a string.
 		if ( 'false' === $value ) {
-			 return false;
-		 }
+			return false;
+		}
 
 		if ( 'true' === $value ) {
 			return true;
 		}
 
 		//* I think everything fetched form meta is returned as a string.
-		if (is_string($value)) {
-			$value = json_decode($value);
+		if ( is_string( $value ) ) {
+			$value = json_decode( $value );
 		}
 
 		//* Do the same kind of checks/filtering as above.
@@ -133,8 +133,7 @@ class SWP_Utility {
 	 */
 	public static function store_settings() {
 
-
-		if ( !check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
+		if ( ! check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
 			wp_send_json_error( esc_html__( 'Security failed 1.', 'social-warfare' ) );
 			wp_die();
 		}
@@ -146,17 +145,17 @@ class SWP_Utility {
 			wp_die();
 		}
 
-		$options = get_option( 'social_warfare_settings', array() );
+		$options  = get_option( 'social_warfare_settings', array() );
 		$settings = $data['settings'];
 
 		// Loop and check for checkbox values, convert them to boolean.
 		foreach ( $data['settings'] as $key => $value ) {
-			if ( 'true' == $value ) {
-				$settings[$key] = true;
-			} elseif ( 'false' == $value ) {
-				$settings[$key] = false;
+			if ( 'true' === $value ) {
+				$settings[ $key ] = true;
+			} elseif ( 'false' === $value ) {
+				$settings[ $key ] = false;
 			} else {
-				$settings[$key] = $value;
+				$settings[ $key ] = $value;
 			}
 		}
 
@@ -176,7 +175,7 @@ class SWP_Utility {
 	 *
 	 */
 	public static function auth() {
-		if ( !current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( esc_html__( 'Security failed 2.', 'social-warfare' ) );
 			wp_die();
 		}
@@ -195,11 +194,10 @@ class SWP_Utility {
 	 * @return float A rounded number.
 	 *
 	 */
-	public static function kilomega( $number = 0) {
+	public static function kilomega( $number = 0 ) {
 		if ( empty( $number ) ) :
 			return 0;
 		endif;
-
 
 		if ( $number < 1000 ) :
 			return $number;
@@ -207,21 +205,21 @@ class SWP_Utility {
 
 		if ( $number < 1000000 ) {
 			$suffix = 'K';
-			$value = $number / 1000;
+			$value  = $number / 1000;
 		} else {
 			$suffix = 'M';
-			$value = $number / 1000000;
+			$value  = $number / 1000000;
 		}
 
-		if ( 'period' == SWP_Utility::get_option( 'decimal_separator' ) ) :
-			$decimal_point = '.';
+		if ( 'period' === SWP_Utility::get_option( 'decimal_separator' ) ) :
+			$decimal_point       = '.';
 			$thousands_separator = ',';
 		else :
-			$decimal_point = ',';
+			$decimal_point       = ',';
 			$thousands_separator = '.';
 		endif;
 
-		$decimals = SWP_Utility::get_option( 'decimals' );
+		$decimals       = SWP_Utility::get_option( 'decimals' );
 		$display_number = number_format( $value, $decimals, $decimal_point, $thousands_separator ) . $suffix;
 
 		return $display_number;
@@ -245,29 +243,29 @@ class SWP_Utility {
 	public static function get_the_excerpt( $post_id ) {
 		// Check if the post has an excerpt
 		if ( has_excerpt() ) :
-			$the_post = get_post( $post_id ); // Gets post ID
+			$the_post    = get_post( $post_id ); // Gets post ID
 			$the_excerpt = $the_post->post_excerpt;
 
-		// If not, let's create an excerpt
+			// If not, let's create an excerpt
 		else :
-			$the_post = get_post( $post_id ); // Gets post ID
+			$the_post    = get_post( $post_id ); // Gets post ID
 			$the_excerpt = $the_post->post_content; // Gets post_content to be used as a basis for the excerpt
 		endif;
 
 		$excerpt_length = 100; // Sets excerpt length by word count
 
 		// Filter out any inline script or style tags as well as their content
-		if( !empty( $the_excerpt ) ):
-			$the_excerpt = preg_replace('/(<script[^>]*>.+?<\/script>|<style[^>]*>.+?<\/style>)/s', '', $the_excerpt);
+		if ( ! empty( $the_excerpt ) ) :
+			$the_excerpt = preg_replace( '/(<script[^>]*>.+?<\/script>|<style[^>]*>.+?<\/style>)/s', '', $the_excerpt );
 		endif;
 
-		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
-		$the_excerpt = preg_replace( '/\[[^\]]+\]/', '', $the_excerpt );
-		$the_excerpt = str_replace( ']]>', ']]&gt;', $the_excerpt );
-		$the_excerpt = strip_tags( $the_excerpt );
+		$the_excerpt    = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
+		$the_excerpt    = preg_replace( '/\[[^\]]+\]/', '', $the_excerpt );
+		$the_excerpt    = str_replace( ']]>', ']]&gt;', $the_excerpt );
+		$the_excerpt    = strip_tags( $the_excerpt );
 		$excerpt_length = apply_filters( 'excerpt_length', 100 );
-		$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[...]' );
-		$words = preg_split( "/[\n\r\t ]+/", $the_excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
+		$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[...]' );
+		$words          = preg_split( "/[\n\r\t ]+/", $the_excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
 
 		if ( count( $words ) > $excerpt_length ) :
 			array_pop( $words );
@@ -293,7 +291,7 @@ class SWP_Utility {
 	 *
 	 */
 	public static function debug( $key = '' ) {
-		return !empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) == strtolower( $key ) );
+		return ! empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) === strtolower( $key ) );
 	}
 
 	/**
@@ -323,7 +321,13 @@ class SWP_Utility {
 	 *
 	 */
 	public static function get_post_types() {
-		$types = get_post_types( array( 'public' => true, '_builtin' => false ), 'names' );
+		$types = get_post_types(
+			array(
+				'public'   => true,
+				'_builtin' => false,
+			),
+			'names'
+		);
 
 		$types = array_merge( array( 'home', 'archive_categories', 'post', 'page' ), $types );
 
@@ -341,29 +345,29 @@ class SWP_Utility {
 	 * @return boolean $display or false.
 	 *
 	 */
-	public static function remove_screen_options( $show_screen, $wp_screen ){
-		 $blacklist = array('admin.php?page=social-warfare');
+	public static function remove_screen_options( $show_screen, $wp_screen ) {
+		$blacklist = array( 'admin.php?page=social-warfare' );
 
-		 if ( in_array( $GLOBALS['pagenow'], $blacklist ) ) {
-			 $wp_screen->render_screen_layout();
-			 $wp_screen->render_per_page_options();
-			 return false;
-		 }
+		if ( in_array( $GLOBALS['pagenow'], $blacklist, true ) ) {
+			$wp_screen->render_screen_layout();
+			$wp_screen->render_per_page_options();
+			return false;
+		}
 
-		 return $show_screen;
-	 }
+		return $show_screen;
+	}
 
 
-	 /**
-	  * Returns the URL of current website or network.
-	  *
-	  * @since 2.3.3 | 25 SEP 2017 | Created.
-	  *
-	  * @return string The URL of the site.
-	  *
-	  */
+	/**
+	 * Returns the URL of current website or network.
+	 *
+	 * @since 2.3.3 | 25 SEP 2017 | Created.
+	 *
+	 * @return string The URL of the site.
+	 *
+	 */
 	public static function get_site_url() {
-		if( true == is_multisite() ) {
+		if ( true === is_multisite() ) {
 			return network_site_url();
 		} else {
 			return get_site_url();
@@ -385,50 +389,50 @@ class SWP_Utility {
 			return false;
 		}
 
-		$options = get_option( 'social_warfare_settings', array() );
-		$options[$key] = $value;
+		$options         = get_option( 'social_warfare_settings', array() );
+		$options[ $key ] = $value;
 
 		return update_option( 'social_warfare_settings', $options );
 	}
 
 	public static function delete_option( $key ) {
-		if ( empty( $key )  ) {
+		if ( empty( $key ) ) {
 			return false;
 		}
 
 		$options = get_option( 'social_warfare_settings', array() );
-		unset( $options[$key] );
+		unset( $options[ $key ] );
 
-		return update_option( 'social_warfare_settings', $options);
+		return update_option( 'social_warfare_settings', $options );
 	}
 
-   /**
-	* Check the version range between core and addons.
-	*
-	* The idea here is that we can only maintain backwards compatibility to a
-	* reasonable, but limited, extent. As such, we will check if the version
-	* of core is within 6 version of pro. This will allow us to depracate and
-	* remove some really old backwards-compatibility workarounds that we've put
-	* in place.
-	*
-	* We want to be able to input two version (core and pro) and have it return
-	* a string/integer indicating how many versions they are different from one
-	* another. If the answer is greater than -6 and less than 6, we can fire up
-	* the pro addon.
-	*
-	* @param  string $core_version The verison of Core currently installed.
-	* @param  string $addon_version The version of the addon currently installed.
-	* @return bool   True if the versions are compatible, else false.
-	*
-	*/
+	/**
+	 * Check the version range between core and addons.
+	 *
+	 * The idea here is that we can only maintain backwards compatibility to a
+	 * reasonable, but limited, extent. As such, we will check if the version
+	 * of core is within 6 version of pro. This will allow us to depracate and
+	 * remove some really old backwards-compatibility workarounds that we've put
+	 * in place.
+	 *
+	 * We want to be able to input two version (core and pro) and have it return
+	 * a string/integer indicating how many versions they are different from one
+	 * another. If the answer is greater than -6 and less than 6, we can fire up
+	 * the pro addon.
+	 *
+	 * @param  string $core_version The verison of Core currently installed.
+	 * @param  string $addon_version The version of the addon currently installed.
+	 * @return bool   True if the versions are compatible, else false.
+	 *
+	 */
 	public static function check_version_range( $core_version, $addon_version ) {
-		$core_versions = explode( '.', $core_version );
+		$core_versions  = explode( '.', $core_version );
 		$addon_versions = explode( '.', $addon_version );
 
 		$version_difference = absint( $core_versions[1] - $addon_versions[1] );
 
 		//* Force plugin users to be on the same major version.
-		if ( $core_versions[0] != $addon_verisons[0] ) {
+		if ( $core_versions[0] !== $addon_verisons[0] ) {
 			return false;
 		}
 
@@ -450,15 +454,15 @@ class SWP_Utility {
 	 *
 	 */
 	public static function settings_page_redirect( $params = '' ) {
-		$destination = admin_url('?page=social-warfare');
+		$destination = admin_url( '?page=social-warfare' );
 
-		if ( is_string($params) && 0 == strpos( $params, '&' ) ) {
+		if ( is_string( $params ) && 0 === strpos( $params, '&' ) ) {
 			$destination .= $params;
 		}
 
-		if ( is_array($params) ) {
-			foreach($params as $key => $value) {
-				$destination = add_query_arg($key, $value, $destination);
+		if ( is_array( $params ) ) {
+			foreach ( $params as $key => $value ) {
+				$destination = add_query_arg( $key, $value, $destination );
 			}
 		}
 
@@ -481,13 +485,13 @@ class SWP_Utility {
 		}
 
 		// Bail out if the user is not allowed to manage options.
-		if(false === current_user_can('manage_options') ) {
+		if ( false === current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
 		$post_id = sanitize_key( $_POST['post_id'] );
 		if ( empty( $post_id ) ) {
-			wp_die(0);
+			wp_die( 0 );
 		}
 
 		$all_meta = get_post_meta( $post_id );
@@ -495,13 +499,13 @@ class SWP_Utility {
 		foreach ( $all_meta as $meta_key => $value ) {
 			// Confirm this is a social warfare meta key.
 			if ( ( strpos( $meta_key, 'swp_' ) === 0 ||
-				 ( strpos( $meta_key, '_shares' ) > 0 ) &&
-				   strpos( $meta_key, '_') === 0 ) ) {
+				( strpos( $meta_key, '_shares' ) > 0 ) &&
+					strpos( $meta_key, '_' ) === 0 ) ) {
 				delete_post_meta( $post_id, $meta_key );
 			}
 		}
 
-		wp_die(1);
+		wp_die( 1 );
 	}
 
 	/**
@@ -512,18 +516,18 @@ class SWP_Utility {
 	 * @return mixed  integer ID if an ID is found, else false.
 	 *
 	 */
-	static function get_image_id_by_url( $image_url ) {
+	public static function get_image_id_by_url( $image_url ) {
 		global $wpdb;
 
-		$prepared_statement = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url );
-		$attachment = $wpdb->get_col( $prepared_statement );
+		$prepared_statement = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s;", $image_url );
+		$attachment         = $wpdb->get_col( $prepared_statement );
 
 		if ( is_object( $attachment ) && is_numeric( $attachment->ID ) ) {
 			return $attachment->ID;
 		}
 
 		if ( is_array( $attachment ) && isset( $attachment['ID'] ) ) {
-            return $attachment['ID'];
+			return $attachment['ID'];
 		}
 
 		return false;
@@ -545,9 +549,9 @@ class SWP_Utility {
 	 * @return boolean True on success, False on failure.
 	 *
 	 */
-	static function starts_with($haystack, $needle) {
-	     $length = strlen($needle);
-	     return (substr($haystack, 0, $length) === $needle);
+	public static function starts_with( $haystack, $needle ) {
+		$length = strlen( $needle );
+		return ( substr( $haystack, 0, $length ) === $needle );
 	}
 
 
@@ -566,13 +570,12 @@ class SWP_Utility {
 	 * @return boolean True on success, False on failure.
 	 *
 	 */
-	static function ends_with($haystack, $needle){
-	    $length = strlen($needle);
-	    if ($length == 0) {
-	        return true;
-	    }
+	public static function ends_with( $haystack, $needle ) {
+		$length = strlen( $needle );
+		if ( 0 === $length ) {
+			return true;
+		}
 
-	    return (substr($haystack, -$length) === $needle);
+		return ( substr( $haystack, -$length ) === $needle );
 	}
-
 }
