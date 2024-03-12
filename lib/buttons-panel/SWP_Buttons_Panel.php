@@ -27,7 +27,7 @@
  *
  * SECTION #4: Utility methods used throughout the class (protected).
  *
- * 	   NOTE: These are inherited from SWP_Buttons_Panel_Trait.
+ *     NOTE: These are inherited from SWP_Buttons_Panel_Trait.
  *
  *     generate_panel_html();
  *     generate_individual_buttons_html();
@@ -186,7 +186,7 @@ class SWP_Buttons_Panel {
 	 * local properties. Later we will call the public method render_html()
 	 * (e.g. $Buttons_Panel->render_html(); ) to actually render out the panel to
 	 * the screen.
-	  *
+	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @since  3.1.0 | 05 JUL 2018 | Created debug() & establish_post_data() methods.
 	 * @since  3.4.0 | 20 SEP 2018 | Moved establish_post_id() into a conditional.
@@ -199,7 +199,6 @@ class SWP_Buttons_Panel {
 	public function __construct( $args = array(), $shortcode = false ) {
 		global $swp_social_networks;
 
-
 		/**
 		 * Pull in necessary data so that the methods below can use it to setup
 		 * the Buttons_panel object properly.
@@ -209,7 +208,6 @@ class SWP_Buttons_Panel {
 		$this->args         = $args;
 		$this->content      = isset( $args['content'] ) ? $args['content'] : '';
 		$this->is_shortcode = $shortcode;
-
 
 		/**
 		 * The establish_post_id() runs several checks including fallback
@@ -222,7 +220,6 @@ class SWP_Buttons_Panel {
 		if ( false === $this->establish_post_id() ) {
 			return;
 		}
-
 
 		/**
 		 * Step by step, these methods walk through the process of compiling
@@ -252,33 +249,33 @@ class SWP_Buttons_Panel {
 	 * @return boolean     True on success; False on failure.
 	 *
 	 */
-	 public function establish_post_id() {
-
+	public function establish_post_id() {
 
 		/**
 		 * Cycle through the available post_id labels, find which one was passed
 		 * in and use it as the post_id for this panel of buttons.
 		 *
 		 */
-		 $id_labels = array( 'id', 'post_id', 'postid' );
-		 foreach( $id_labels as $label ) {
-			 if ( isset( $this->args[$label] ) && is_numeric( $this->args[$label] ) ) {
-				 $this->post_id = $this->args[$label];
-				 return true;
-			 }
-		 }
-
+		$id_labels = array( 'id', 'post_id', 'postid' );
+		foreach ( $id_labels as $label ) {
+			if ( isset( $this->args[ $label ] ) && is_numeric( $this->args[ $label ] ) ) {
+				$this->post_id = $this->args[ $label ];
+				return true;
+			}
+		}
 
 		/**
 		 * If the user provided a URL instead of an ID, let's see if we can
 		 * convert it into a valid WordPress ID for a post.
 		 *
 		 */
-		if ( isset( $this->args['url'] ) && $post_id_from_url = url_to_postid( $this->args['url'] ) ) {
-			$this->post_id = $post_id_from_url;
-			return true;
+		if ( isset( $this->args['url'] ) ) {
+			$post_id_from_url = url_to_postid( $this->args['url'] );
+			if ( $post_id_from_url ) {
+				$this->post_id = $post_id_from_url;
+				return true;
+			}
 		}
-
 
 		/**
 		 * If the user didn't pass in any arguments related to an ID or URL then
@@ -291,15 +288,13 @@ class SWP_Buttons_Panel {
 			return true;
 		endif;
 
-
 		/**
 		 * If we were completely unable to establish a post_id, then return
 		 * false.
 		 *
 		 */
 		return false;
-
-	   }
+	}
 
 
 	/**
@@ -316,7 +311,7 @@ class SWP_Buttons_Panel {
 		$post = get_post( $this->post_id );
 
 		// Bail if the post object failed.
-		if ( !is_object( $post ) ) {
+		if ( ! is_object( $post ) ) {
 			return;
 		}
 
@@ -327,7 +322,7 @@ class SWP_Buttons_Panel {
 			'permalink'    => get_the_permalink( $post->ID ),
 			'post_title'   => $post->post_title,
 			'post_status'  => $post->post_status,
-			'post_content' => $post->post_content
+			'post_content' => $post->post_content,
 		);
 	}
 
@@ -348,7 +343,7 @@ class SWP_Buttons_Panel {
 	 */
 	protected function establish_local_options() {
 		global $swp_user_options;
-		$this->options = array_merge( $swp_user_options, $this->args);
+		$this->options = array_merge( $swp_user_options, $this->args );
 	}
 
 
@@ -385,7 +380,6 @@ class SWP_Buttons_Panel {
 	 */
 	public function establish_location() {
 
-
 		/**
 		 * Establish the default as none. If nothing gets caught in the
 		 * conditionals below, the buttons should not be displayed so we'll
@@ -394,17 +388,15 @@ class SWP_Buttons_Panel {
 		 */
 		$this->location = 'none';
 
-
 		/**
 		 * In previous versions, we had reports of buttons showing up on media
 		 * attachment pages. This prevents that from happening by returning with
 		 * $this->location still set to 'none'.
 		 *
 		 */
-		if( is_attachment() ) {
+		if ( is_attachment() ) {
 			return;
 		}
-
 
 		/**
 		 * If this class is instantiated via the [social_warfare] shortcode or
@@ -419,11 +411,10 @@ class SWP_Buttons_Panel {
 		 * what we need.
 		 *
 		 */
-		if ( empty( $this->content ) && true == $this->is_shortcode ) {
+		if ( empty( $this->content ) && true === $this->is_shortcode ) {
 			$this->location = 'above';
 			return;
 		}
-
 
 		/**
 		 * Location from the Post Options
@@ -434,7 +425,6 @@ class SWP_Buttons_Panel {
 		 */
 		$post_setting = get_post_meta( $this->post_id, 'swp_post_location', true );
 
-
 		/**
 		 * Since we passed true in as the third parameter of get_post_meta(), it
 		 * should never return an array of items, but in a few rare instances,
@@ -442,10 +432,9 @@ class SWP_Buttons_Panel {
 		 * first item from the array and use that instead.
 		 *
 		 */
-		if( is_array($post_setting) ) {
-			 $post_setting = $post_setting[0];
+		if ( is_array( $post_setting ) ) {
+			$post_setting = $post_setting[0];
 		}
-
 
 		/**
 		 * This checks to see if the user has explicitly set the buttons location
@@ -453,11 +442,10 @@ class SWP_Buttons_Panel {
 		 * using any of the global or post type settings for the location.
 		 *
 		 */
-		if ( is_singular() && !empty( $post_setting ) && 'default' != $post_setting ) {
+		if ( is_singular() && ! empty( $post_setting ) && 'default' !== $post_setting ) {
 			$this->location = $post_setting;
 			return;
 		}
-
 
 		/**
 		 * Global Location Settings
@@ -466,7 +454,6 @@ class SWP_Buttons_Panel {
 		 * for that post type from the global options.
 		 *
 		 */
-
 
 		/**
 		 * If we are on the home page of the site then we'll use the location_home
@@ -477,11 +464,10 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		$home_location = $this->get_option( 'location_home' );
-		if( is_front_page() && !empty( $home_location ) ) {
+		if ( is_front_page() && ! empty( $home_location ) ) {
 			$this->location = $home_location;
 			return;
 		}
-
 
 		/**
 		 * If we are on a singular() post/page and we have a valid location
@@ -493,7 +479,7 @@ class SWP_Buttons_Panel {
 		 *
 		 */
 		$post_type_location = $this->get_option( 'location_' . $this->post_data['post_type'] );
-		if ( is_singular() && !empty( $post_type_location ) ) {
+		if ( is_singular() && ! empty( $post_type_location ) ) {
 			$this->location = $post_type_location;
 			return;
 		}
@@ -540,7 +526,6 @@ class SWP_Buttons_Panel {
 	public function establish_active_buttons() {
 		$network_objects = array();
 
-
 		/**
 		 * If the user passed in an array of buttons either via the social_warfare()
 		 * function of the [social_warfare buttons="buttons"] shortcode, these
@@ -551,7 +536,6 @@ class SWP_Buttons_Panel {
 		if ( isset( $this->args['buttons'] ) ) {
 			$this->args['buttons'] = explode( ',', $this->args['buttons'] );
 
-
 			/**
 			 * Trim out white space. We need to trim any whitespace in case
 			 * folks put a space before or after any of the commas separating
@@ -560,10 +544,9 @@ class SWP_Buttons_Panel {
 			 * e.g. [social_warfare buttons="twitter, google_plus"]
 			 *
 			 */
-			foreach( $this->args['buttons'] as $index => $button ) {
-				$this->args['buttons'][$index] = trim( $button );
+			foreach ( $this->args['buttons'] as $index => $button ) {
+				$this->args['buttons'][ $index ] = trim( $button );
 			}
-
 
 			/**
 			 * Loop through the passed-in array of buttons, find the global
@@ -573,8 +556,8 @@ class SWP_Buttons_Panel {
 			 */
 			foreach ( $this->args['buttons'] as $network_name ) {
 				$network_key = $this->get_key_from_name( $network_name );
-				foreach( $this->networks as $key => $network ):
-					if( $network_key === $key ):
+				foreach ( $this->networks as $key => $network ) :
+					if ( $network_key === $key ) :
 						$network_objects[] = $network;
 					endif;
 				endforeach;
@@ -620,14 +603,14 @@ class SWP_Buttons_Panel {
 	 */
 	public function set_option( $option = '', $value = null ) {
 		if ( empty( $option ) ) :
-			$message = "Hey developer, " . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype($value) . ".";
-			throw new Exception($message);
-		elseif ( null == $value ) :
-			$message = "Hey developer, " . __CLASS__ . __METHOD__ . " a second paramter: \$value (mixed type). You provided " . gettype($value) . ".";
-			throw new Exception($message);
+			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype( $value ) . '.';
+			throw new Exception( $message );
+		elseif ( null === $value ) :
+			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . ' a second paramter: $value (mixed type). You provided ' . gettype( $value ) . '.';
+			throw new Exception( $message );
 		endif;
 
-		$this->options[$this->options] = $value;
+		$this->options[ $this->options ] = $value;
 		return $this;
 	}
 
@@ -644,12 +627,12 @@ class SWP_Buttons_Panel {
 	 *
 	 */
 	public function set_options( $options = array() ) {
-		if ( !is_array( $options) ) :
-			$message = "Hey developer, " . __CLASS__ . __METHOD__ . " requires an arry of options. You provided " . gettype($options) . ".";
-			throw new Exception($message);
+		if ( ! is_array( $options ) ) :
+			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . ' requires an arry of options. You provided ' . gettype( $options ) . '.';
+			throw new Exception( $message );
 		endif;
 
-		array_merge( $this->options , $options );
+		array_merge( $this->options, $options );
 		return $this;
 	}
 
@@ -666,30 +649,28 @@ class SWP_Buttons_Panel {
 	 ***************************************************************************/
 
 
-	 /**
-	  * Runs checks before ordering a set of buttons.
-	  *
-	  * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
-	  * @since  3.3.3 | 18 SEP 2018 | Added return value for
-	  *                               should_panel_display() condition.
-	  * @since  3.4.0 | 21 SEP 2018 | Removed $content parameter.
-	  * @since  3.4.0 | 24 OCT 2018 | Simplified, combined with method from the
-	  *                               side panel child class.
-	  * @param  string $content The WordPress content, if passed in.
-	  *
-	  */
+	/**
+	 * Runs checks before ordering a set of buttons.
+	 *
+	 * @since  3.0.6 | 14 MAY 2018 | Removed the swp-content-locator div.
+	 * @since  3.3.3 | 18 SEP 2018 | Added return value for
+	 *                               should_panel_display() condition.
+	 * @since  3.4.0 | 21 SEP 2018 | Removed $content parameter.
+	 * @since  3.4.0 | 24 OCT 2018 | Simplified, combined with method from the
+	 *                               side panel child class.
+	 * @param  string $content The WordPress content, if passed in.
+	 *
+	 */
 	public function render_html() {
 
-
-		 /**
-		  * We have a standalone method designed to let us know if all the proper
-		  * desired conditions are met in order to allow us to print the buttons.
-		  *
-		  */
-		if ( false == $this->should_panel_display() ) {
+		/**
+		 * We have a standalone method designed to let us know if all the proper
+		 * desired conditions are met in order to allow us to print the buttons.
+		 *
+		 */
+		if ( false === $this->should_panel_display() ) {
 			return $this->content;
 		}
-
 
 		/**
 		 * Compile the entire buttons panel. Generate the CSS classes, generate
@@ -701,7 +682,7 @@ class SWP_Buttons_Panel {
 		$this->generate_attributes();
 		$this->generate_buttons_and_totals_html();
 		$this->combine_html_assets();
-		 $this->append_panel_to_content();
+		$this->append_panel_to_content();
 
 		return $this->content;
 	}

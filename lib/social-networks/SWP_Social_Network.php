@@ -67,10 +67,10 @@ class SWP_Social_Network {
 	 * The default state of this network
 	 *
 	 * This property will determine where the icon appears in the options page
-	  * prior to the user setting and saving it. If true, it will appear in the
-	  * active section. If false, it will appear in the inactive section. Once
-	  * the user has updated/saved their preferences, this property will no
-	  * longer do anything.
+	 * prior to the user setting and saving it. If true, it will appear in the
+	 * active section. If false, it will appear in the inactive section. Once
+	 * the user has updated/saved their preferences, this property will no
+	 * longer do anything.
 	 *
 	 * @var bool If true, the button is turned on by default.
 	 *
@@ -158,8 +158,7 @@ class SWP_Social_Network {
 	public function add_to_global() {
 
 		global $swp_social_networks;
-		$swp_social_networks[$this->key] = $this;
-
+		$swp_social_networks[ $this->key ] = $this;
 	}
 
 
@@ -189,8 +188,8 @@ class SWP_Social_Network {
 	 */
 	public function set_name( $value ) {
 
-		if ( !is_string( $value )  ||  empty( $value ) ) {
-			$this->_throw("Please provide a string for your object's name." );
+		if ( ! is_string( $value ) || empty( $value ) ) {
+			$this->_throw( "Please provide a string for your object's name." );
 		}
 
 		$this->name = $value;
@@ -209,8 +208,8 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function set_default( $value ) {
-		if ( !is_bool( $value ) || empty( $value ) ) {
-			$this->_throw("Please provide a boolean value for your object's default state." );
+		if ( ! is_bool( $value ) || empty( $value ) ) {
+			$this->_throw( "Please provide a boolean value for your object's default state." );
 		}
 
 		$this->default = $value;
@@ -230,7 +229,7 @@ class SWP_Social_Network {
 	 */
 	public function set_key( $value ) {
 
-		if ( !is_string( $value ) ||  empty( $value ) ) {
+		if ( ! is_string( $value ) || empty( $value ) ) {
 			$this->_throw( 'Please provide a snake_case string for the key value.' );
 		}
 
@@ -250,7 +249,7 @@ class SWP_Social_Network {
 	 */
 	public function set_premium( $value ) {
 
-		if ( !is_string( $value ) ||  empty( $value ) ) {
+		if ( ! is_string( $value ) || empty( $value ) ) {
 			$this->_throw( 'Please provide a string corresponding to the premium addon to which this network depends.' );
 		}
 
@@ -284,7 +283,7 @@ class SWP_Social_Network {
 	 */
 	public function set_active_state() {
 		global $swp_user_options;
-		if ( isset( $swp_user_options['order_of_icons'][$this->key] ) ) {
+		if ( isset( $swp_user_options['order_of_icons'][ $this->key ] ) ) {
 			$this->active = true;
 		}
 	}
@@ -302,8 +301,8 @@ class SWP_Social_Network {
 	 * @access public
 	 *
 	 */
-	public function save_html( $html , $post_id ) {
-		$this->html_store[$post_id] = $html;
+	public function save_html( $html, $post_id ) {
+		$this->html_store[ $post_id ] = $html;
 	}
 
 	/**
@@ -319,26 +318,26 @@ class SWP_Social_Network {
 	 * @TODO Make it accept two parameters, both arrays, $options and $share_counts.
 	 *
 	 */
-	public function is_share_count_shown( $array ) {
+	public function is_share_count_shown( $btn_array ) {
 
 		// If the shares value isn't set, don't show the share count.
-		if( !isset( $array['shares'][$this->key] )):
+		if ( ! isset( $btn_array['shares'][ $this->key ] ) ) :
 			return false;
 
-		// If the global button level shares are turned off, don't show the share count.
-		elseif( !$array['options']['network_shares'] ):
+			// If the global button level shares are turned off, don't show the share count.
+		elseif ( ! $btn_array['options']['network_shares'] ) :
 			return false;
 
-		// If the total shares haven't yet exceeded the minimum set in the options, don't show the share count.
-		elseif( $array['shares']['total_shares'] < $array['options']['minimum_shares']):
+			// If the total shares haven't yet exceeded the minimum set in the options, don't show the share count.
+		elseif ( $btn_array['shares']['total_shares'] < $btn_array['options']['minimum_shares'] ) :
 			return false;
 
-		// If the share count is literally 0, don't show the share count.
-		elseif( $array['shares'][$this->key] <= 0 ):
+			// If the share count is literally 0, don't show the share count.
+		elseif ( $btn_array['shares'][ $this->key ] <= 0 ) :
 			return false;
 
-		// Show the share count.
-		else:
+			// Show the share count.
+		else :
 			return true;
 		endif;
 	}
@@ -354,51 +353,49 @@ class SWP_Social_Network {
 	 * @todo   Eliminate the array
 	 *
 	 */
-	public function render_HTML( $panel_context , $echo = false ) {
+	public function render_HTML( $panel_context, $output = false ) {
 
 		// TODO: DOCBLOCK
-		if( false === $this->visible_on_amp && SWP_AMP::is_amp() ) {
+		if ( false === $this->visible_on_amp && SWP_AMP::is_amp() ) {
 			return '';
 		}
 
-		$post_data = $panel_context['post_data'];
-		$share_counts = $panel_context['shares'];
+		$post_data            = $panel_context['post_data'];
+		$share_counts         = $panel_context['shares'];
 		$post_data['options'] = $panel_context['options'];
-
 
 		$share_link = $this->generate_share_link( $post_data );
 
 		// Build the button.
-		$icon = '<span class="iconFiller">';
-			$icon.= '<span class="spaceManWilly">';
-				$icon.= '<i class="sw swp_'.$this->key.'_icon"></i>';
-				$icon.= '<span class="swp_share">' . $this->cta . '</span>';
-			$icon .= '</span>';
-		$icon .= '</span>';
+		$icon          = '<span class="iconFiller">';
+			$icon     .= '<span class="spaceManWilly">';
+				$icon .= '<i class="sw swp_' . $this->key . '_icon"></i>';
+				$icon .= '<span class="swp_share">' . $this->cta . '</span>';
+			$icon     .= '</span>';
+		$icon         .= '</span>';
 
 		if ( true === $this->are_shares_shown( $panel_context ) ) :
-			$icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[$this->key] ) . '</span>';
+			$icon .= '<span class="swp_count">' . SWP_Utility::kilomega( $share_counts[ $this->key ] ) . '</span>';
 		else :
 			$icon = '<span class="swp_count swp_hide">' . $icon . '</span>';
 		endif;
 
 		// Build the wrapper.
-		$html = '<div class="nc_tweetContainer swp_share_button swp_'.$this->key.'" data-network="'.$this->key.'">';
+		$html      = '<div class="nc_tweetContainer swp_share_button swp_' . $this->key . '" data-network="' . $this->key . '">';
 			$html .= '<a class="nc_tweet swp_share_link" rel="nofollow noreferrer noopener" target="_blank" href="' . $share_link . '" data-link="' . $share_link . '">';
 				// Put the button inside.
 				$html .= $icon;
-			$html.= '</a>';
-		$html.= '</div>';
+			$html     .= '</a>';
+		$html         .= '</div>';
 
 		// Store these buttons so that we don't have to generate them for each set
 		$this->html = $html;
 
-		if ( $echo ) :
+		if ( $output ) :
 			echo $html;
 		endif;
 
 		return $html;
-
 	}
 
 
@@ -417,7 +414,6 @@ class SWP_Social_Network {
 	 */
 	public function are_shares_shown( $panel_context = array() ) {
 
-
 		/**
 		 * Bail out and return false if the $panel_context was not passed in
 		 * properly as a paramter. We'll need this for share counts, post data,
@@ -425,12 +421,11 @@ class SWP_Social_Network {
 		 *
 		 */
 		$required_context = array( 'shares', 'options', 'post_data' );
-		foreach( $required_context as $requirement ) {
-			if( empty( $panel_context[$requirement] ) ) {
+		foreach ( $required_context as $requirement ) {
+			if ( empty( $panel_context[ $requirement ] ) ) {
 				return false;
 			}
 		}
-
 
 		/**
 		 * There are three main sections of the $panel_context. We'll take what
@@ -441,49 +436,46 @@ class SWP_Social_Network {
 		$options      = $panel_context['options'];
 		$post_id      = $panel_context['post_data']['ID'];
 
-
 		/**
 		 * If the share counts are delayed in the option, then we'll check the
 		 * current age of the post and check to see if they are still delayed
 		 * or if they can be shown now.
 		 *
 		 */
-		if( true === SWP_Buttons_Panel::are_share_counts_delayed( $post_id ) ) {
+		if ( true === SWP_Buttons_Panel::are_share_counts_delayed( $post_id ) ) {
 			return false;
 		}
-
 
 		/**
 		 * Cast a string 'true'/'false' to a boolean true/false in case it was
 		 * passed in via the shortcode.
 		 *
 		 */
-		if( is_string( $options['network_shares'] ) ) {
-			$options['network_shares'] = (strtolower( $options['network_shares'] ) === 'true');
+		if ( is_string( $options['network_shares'] ) ) {
+			$options['network_shares'] = ( strtolower( $options['network_shares'] ) === 'true' );
 		}
 
 		// False if the share count is empty
-		if ( empty( $share_counts[$this->key] ) ) {
+		if ( empty( $share_counts[ $this->key ] ) ) {
 			return false;
 		}
 
 		// False if the total share count is below the minimum
-		if( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ) {
+		if ( $share_counts['total_shares'] < SWP_Utility::get_option( 'minimum_shares' ) ) {
 			return false;
 		}
 
 		// False if the share count is zero.
-		if( $share_counts[$this->key] == 0 ) {
+		if ( 0 === $share_counts[ $this->key ] ) {
 			return false;
 		}
 
 		// False if network shares are turned off in the options.
-		if( false == $options['network_shares'] ) {
+		if ( false === $options['network_shares'] ) {
 			return false;
 		}
 
 		return true;
-
 	}
 
 
@@ -499,7 +491,7 @@ class SWP_Social_Network {
 	 *
 	 */
 	public function get_shareable_permalink( $post_data ) {
-		return urlencode( urldecode( SWP_Link_Manager::process_url( $post_data['permalink'] , $this->key , $post_data['ID'] ) ) );
+		return urlencode( urldecode( SWP_Link_Manager::process_url( $post_data['permalink'], $this->key, $post_data['ID'] ) ) );
 	}
 
 
@@ -579,7 +571,7 @@ class SWP_Social_Network {
 		$share_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
 
 		// If false was returned, return the integer 0 instead.
-		if( false === $share_counts ) {
+		if ( false === $share_counts ) {
 			return 0;
 		}
 
@@ -610,15 +602,15 @@ class SWP_Social_Network {
 		 * ?swp_debug=force_new_shares URL parameter has been set. This will
 		 * force us to accept the new share counts even if they are lower than
 		 * the previously stored share counts.
-		 * 
+		 *
 		 */
 		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
-		if( $previous_counts > $share_count && false == SWP_Utility::debug( 'force_new_shares' ) ) {
+		if ( $previous_counts > $share_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
 			return false;
 		}
 
 		// Remove the old counts and replace them with the new counts.
-		delete_post_meta( $post_id, '_' . $this->key . '_shares');
+		delete_post_meta( $post_id, '_' . $this->key . '_shares' );
 		update_post_meta( $post_id, '_' . $this->key . '_shares', $share_count );
 		return true;
 	}
@@ -639,8 +631,8 @@ class SWP_Social_Network {
 
 		// Fetch the current share count for each active network.
 		$total_shares = 0;
-		foreach( $swp_social_networks as $Network ) {
-			if( $Network->is_active() ) {
+		foreach ( $swp_social_networks as $Network ) {
+			if ( $Network->is_active() ) {
 
 				// Add the share count to our running total.
 				$total_shares += $Network->get_share_count( $post_id );

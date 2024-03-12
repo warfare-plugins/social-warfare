@@ -84,12 +84,12 @@ class SWP_Auth_Helper {
 
 	public function __construct( $network_key ) {
 		if ( empty( $network_key ) ) {
-			error_log('Please provide a network_key when constructing an SWP_Auth_Controller.');
+			error_log( 'Please provide a network_key when constructing an SWP_Auth_Controller.' );
 			return;
 		}
 
 		$this->network = $network_key;
-		$this->key = $network_key;
+		$this->key     = $network_key;
 		$this->establish_credentials();
 	}
 
@@ -121,12 +121,12 @@ class SWP_Auth_Helper {
 	public function has_valid_token() {
 
 		// If we don't have an access token at all.
-		if ( false == $this->get_access_token() ) {
+		if ( false === $this->get_access_token() ) {
 			return false;
 		}
 
 		// If the access token is expired.
-		if( 'expired' == $this->get_access_token() ) {
+		if ( 'expired' === $this->get_access_token() ) {
 			return false;
 		}
 
@@ -171,12 +171,13 @@ class SWP_Auth_Helper {
 		}
 
 		$access_secret = SWP_Credential_Helper::get_token( $this->network, 'access_secret' );
-		if ( !empty( $access_secret ) ) {
+		if ( ! empty( $access_secret ) ) {
 			$this->access_secret = $access_secret;
 		}
 
-		$this->access_token = $access_token;
-		return $this->has_credentials = true;
+		$this->access_token    = $access_token;
+		$this->has_credentials = true;
+		return $this->has_credentials;
 	}
 
 
@@ -196,7 +197,7 @@ class SWP_Auth_Helper {
 	 */
 	public function get_authorization_link() {
 		$request_url = 'https://warfareplugins.com/authorizations/' . $this->network . '/request_token.php';
-		return add_query_arg('return_address', admin_url('?page=social-warfare'), $request_url);
+		return add_query_arg( 'return_address', admin_url( '?page=social-warfare' ), $request_url );
 	}
 
 
@@ -211,24 +212,24 @@ class SWP_Auth_Helper {
 	 *
 	 */
 	public function get_revoke_access_url() {
-		switch( $this->network ) {
+		switch ( $this->network ) {
 
-			case 'facebook' :
+			case 'facebook':
 				return 'https://www.facebook.com/settings?tab=applications';
 
-			case 'instagram' :
+			case 'instagram':
 				return 'https://www.instagram.com/accounts/manage_access/';
 
-			case 'pinterest' :
+			case 'pinterest':
 				return 'https://www.pinterest.com/settings#apps';
 
-			case 'twitter' :
+			case 'twitter':
 				return 'https://twitter.com/settings/sessions';
 
-			case 'tumblr' :
+			case 'tumblr':
 				return 'https://www.tumblr.com/settings/apps';
 
-			case 'vimeo' :
+			case 'vimeo':
 				return 'https://vimeo.com/settings/apps';
 
 			default:
@@ -238,11 +239,11 @@ class SWP_Auth_Helper {
 
 	public function get_auth_button_text() {
 		switch ( $this->network ) {
-			case 'facebook' :
+			case 'facebook':
 				return '<i class="sw swp_facebook_icon"></i> Continue with Facebook';
 
-			default :
-				return '<i class="sw swp_'.$this->key.'_icon"></i> Login with ' . ucfirst( $this->key );
+			default:
+				return '<i class="sw swp_' . $this->key . '_icon"></i> Login with ' . ucfirst( $this->key );
 		}
 	}
 }
