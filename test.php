@@ -9,5 +9,3 @@
  */
 
 echo 'hello world';
-
-?>

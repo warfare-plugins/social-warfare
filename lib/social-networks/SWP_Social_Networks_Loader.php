@@ -32,7 +32,7 @@ class SWP_Social_Networks_Loader {
 		global $swp_social_networks;
 		$swp_social_networks = array();
 
-		add_filter( 'plugins_loaded' , array( $this , 'instantiate_networks' ) , 999 );
+		add_filter( 'plugins_loaded', array( $this, 'instantiate_networks' ), 999 );
 	}
 
 
@@ -56,5 +56,4 @@ class SWP_Social_Networks_Loader {
 			new SWP_Stumble_Upon();
 			new SWP_Twitter();
 	}
-
 }

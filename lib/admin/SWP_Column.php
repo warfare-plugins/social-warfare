@@ -29,23 +29,23 @@ class SWP_Column {
 	 * @return void
 	 *
 	 */
-    public function __construct() {
+	public function __construct() {
 
 		// Create the social shares column
-        add_filter( 'manage_post_posts_columns', array($this, 'create_social_shares_column' ) );
-        add_filter( 'manage_page_posts_columns', array($this, 'create_social_shares_column' ) );
+		add_filter( 'manage_post_posts_columns', array( $this, 'create_social_shares_column' ) );
+		add_filter( 'manage_page_posts_columns', array( $this, 'create_social_shares_column' ) );
 
 		// Populate the social shares column with data
-        add_action( 'manage_posts_custom_column', array( $this, 'populate_social_shares_column' ), 10, 2 );
-    	add_action( 'manage_page_posts_custom_column', array( $this, 'populate_social_shares_column' ), 10, 2 );
+		add_action( 'manage_posts_custom_column', array( $this, 'populate_social_shares_column' ), 10, 2 );
+		add_action( 'manage_page_posts_custom_column', array( $this, 'populate_social_shares_column' ), 10, 2 );
 
 		// Make the social shares column sortable
-    	add_filter( 'manage_edit-post_sortable_columns', array($this, 'make_social_shares_sortable' ) );
-    	add_filter( 'manage_edit-page_sortable_columns', array($this, 'make_social_shares_sortable' ) );
+		add_filter( 'manage_edit-post_sortable_columns', array( $this, 'make_social_shares_sortable' ) );
+		add_filter( 'manage_edit-page_sortable_columns', array( $this, 'make_social_shares_sortable' ) );
 
 		// Sort the output of the posts according to the sortable option created above
-        add_action( 'pre_get_posts', array( $this, 'swp_social_shares_orderby' ) );
-    }
+		add_action( 'pre_get_posts', array( $this, 'swp_social_shares_orderby' ) );
+	}
 
 
 	/**
@@ -75,14 +75,14 @@ class SWP_Column {
 	public function populate_social_shares_column( $column_name, $post_ID ) {
 
 		// Exit if we're not processing our own column.
-		if ( $column_name !== 'swSocialShares' ) {
+		if ( 'swSocialShares' !== $column_name ) {
 			return;
 		}
 
 		// Get the share count, format it, echo it to the screen.
- 		$count = get_post_meta( $post_ID , '_total_shares' , true );
-		if( !empty( $count ) ) {
- 			echo SWP_Utility::kilomega( $count );
+		$count = get_post_meta( $post_ID, '_total_shares', true );
+		if ( ! empty( $count ) ) {
+			echo SWP_Utility::kilomega( $count );
 			return;
 		}
 
@@ -99,26 +99,26 @@ class SWP_Column {
 	 * @return array The array modified columns.
 	 *
 	 */
-    public function make_social_shares_sortable( $columns ) {
-    	$columns['swSocialShares'] = array( 'Social Shares', 'desc' );
-    	return $columns;
-    }
+	public function make_social_shares_sortable( $columns ) {
+		$columns['swSocialShares'] = array( 'Social Shares', 'desc' );
+		return $columns;
+	}
 
 
-    /**
-    * Sort the column by share count.
-    *
-    * @since  1.4.0 | 01 JAN 2018 | Created
-    * @param  object $query The WordPress query object.
-    * @return void
-    *
-    */
+	/**
+	* Sort the column by share count.
+	*
+	* @since  1.4.0 | 01 JAN 2018 | Created
+	* @param  object $query The WordPress query object.
+	* @return void
+	*
+	*/
 	public function swp_social_shares_orderby( $query ) {
 
 		// Bail if we're not even in the admin area.
-		if ( !is_admin() ) {
-	 		return;
-	 	}
+		if ( ! is_admin() ) {
+			return;
+		}
 
 		// Bail if we're not supposed to be ordering by social shares.
 		if ( 'Social Shares' !== $query->get( 'orderby' ) ) {
@@ -126,7 +126,7 @@ class SWP_Column {
 		}
 
 		// Order by the _total_shares using a numeric interpretation of the value.
- 		$query->set( 'meta_key', '_total_shares' );
- 		$query->set( 'orderby', 'meta_value_num' );
+		$query->set( 'meta_key', '_total_shares' );
+		$query->set( 'orderby', 'meta_value_num' );
 	}
 }

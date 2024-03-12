@@ -22,7 +22,7 @@ class SWP_Widget_Loader {
 	 *
 	 */
 	public function __construct() {
-		add_action( 'widgets_init', array( $this , 'register_widgets' ) );
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 	}
 
 
@@ -34,16 +34,16 @@ class SWP_Widget_Loader {
 	 * @return void
 	 *
 	 */
-	function register_widgets() {
+	public function register_widgets() {
 		$widgets = apply_filters( 'swp_widgets', array() );
 		// Apply default values after filtering to guarantee ours are included.
 
-		if (!is_array($widgets)) {
+		if ( ! is_array( $widgets ) ) {
 			$widgets = array();
 		}
 		$widgets = array_merge( array( 'swp_popular_posts_widget' ), $widgets );
 
-		foreach( $widgets as $widget ) {
+		foreach ( $widgets as $widget ) {
 			if ( class_exists( $widget ) ) {
 				register_widget( $widget );
 			}

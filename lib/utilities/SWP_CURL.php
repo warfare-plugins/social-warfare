@@ -34,7 +34,7 @@ class SWP_CURL {
 		return SWP_Requests::fetch_shares_via_wordpress_multi( $links );
 	}
 
-	public static function file_get_contents_curl( $url, $headers = null) {
+	public static function file_get_contents_curl( $url, $headers = null ) {
 		return SWP_Requests::file_get_contents_http( $url, $headers );
 	}
 

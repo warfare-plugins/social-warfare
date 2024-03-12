@@ -65,7 +65,7 @@ class SWP_JSON_Cache_Handler {
 	 *
 	 */
 	public function __construct() {
-		if( false === $this->is_cache_fresh() ):
+		if ( false === $this->is_cache_fresh() ) :
 			$this->fetch_new_json_data();
 			add_action( 'wp_footer', array( $this, 'debug' ) );
 		endif;
@@ -83,21 +83,20 @@ class SWP_JSON_Cache_Handler {
 	private function fetch_new_json_data() {
 
 		// Fetch the response.
-        $response = wp_remote_get( 'https://warfareplugins.com/json_updates.php' );
+		$response       = wp_remote_get( 'https://warfareplugins.com/json_updates.php' );
 		$this->response = wp_remote_retrieve_body( $response );
 
 		// Create the cache data array.
 		$this->parsed_response = array();
 
-		if( !empty($this->response) ):
-			$this->parsed_response = json_decode( $this->response , true );
+		if ( ! empty( $this->response ) ) :
+			$this->parsed_response = json_decode( $this->response, true );
 		endif;
 
 		$this->parsed_response['timestamp'] = time();
 
 		// Store the data in the database.
-		update_option('swp_json_cache' , $this->parsed_response , true );
-
+		update_option( 'swp_json_cache', $this->parsed_response, true );
 	}
 
 
@@ -112,28 +111,27 @@ class SWP_JSON_Cache_Handler {
 	private function is_cache_fresh() {
 
 		// If we're debugging, the cache is expired and needs to fetch.
-		if( true == SWP_Utility::debug( 'json_fetch' ) ):
+		if ( true === SWP_Utility::debug( 'json_fetch' ) ) :
 			return false;
 		endif;
 
-		$this->cache_data = get_option('swp_json_cache');
+		$this->cache_data = get_option( 'swp_json_cache' );
 
 		// If no cached data, the cache is not fresh.
-		if( false === $this->cache_data):
+		if ( false === $this->cache_data ) :
 			return false;
 		endif;
 
 		// Forumlate the timestamps.
-		$timestamp = $this->cache_data['timestamp'];
-		$current_time = time();
+		$timestamp           = $this->cache_data['timestamp'];
+		$current_time        = time();
 		$time_between_checks = ( 6 * 60 * 60 );
 
 		// Compare the timestamps.
-		if ($current_time > $timestamp + $time_between_checks ) :
+		if ( $current_time > $timestamp + $time_between_checks ) :
 			return false;
 		endif;
 
 		return true;
-
 	}
 }
