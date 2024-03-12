@@ -21,7 +21,7 @@ defined( 'WPINC' ) || die;
  *
  */
 define( 'SWP_VERSION', '4.4.6' );
-define( 'SWP_DEV_VERSION', '2024.01.11 MASTER' );
+define( 'SWP_DEV_VERSION', '2024.03.12 MASTER' );
 define( 'SWP_PLUGIN_FILE', __FILE__ );
 define( 'SWP_PLUGIN_URL', str_replace( array( "\r", "\n" ), '', untrailingslashit( plugin_dir_url( __FILE__ ) ) ) );
 define( 'SWP_PLUGIN_DIR', __DIR__ );
