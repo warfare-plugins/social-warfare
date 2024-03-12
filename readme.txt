@@ -2,8 +2,8 @@
 Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalashov
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
-Tested up to: 6.4.2
-Stable tag: 4.4.5.1
+Tested up to: 6.5
+Stable tag: 4.4.6
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -182,6 +182,18 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 4.4.6 (12 Mar 2024) =
+* Upgraded to Facebook's Graph API v18.0, ensuring compatibility and compliance with the latest API standards.
+  - Deprecated Graph API v6.0 and v17.0 endpoints removed, aligning with Facebook's 2-year lifecycle policy.
+* Implemented WordPress coding standards across the plugin to enhance code quality and consistency.
+* Fixed syntax errors and updated deprecated functions, resulting in improved performance.
+* Enhanced security measures, including fixes for potential vulnerabilities.
+* Corrected the orientation of the 'X' Logo, ensuring it displays correctly. Issue #887 (https://github.com/warfare-plugins/social-warfare/issues/887)
+* Refactored the `post_json` function to utilize cURL directly, enhancing compatibility with the Bitly API and resolving previous link shortening issues.
+* Resolved Bitly link generation problem, ensuring short links are now created without issues. Issue #866 (https://github.com/warfare-plugins/social-warfare/issues/866)
+* Addressed CSRF vulnerability by adding user authentication, nonce verification, and improving access secret handling.
+* Enhanced user privacy and streamlined performance by discontinuing Facebook share counter functionality.
 
 = 4.4.5.1 (11 Jan 2024) =
 * Update SWP_Pro_Analytics_Database.php

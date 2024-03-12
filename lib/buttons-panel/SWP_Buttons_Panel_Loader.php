@@ -18,7 +18,7 @@
  * @since     3.4.0 | 21 SEP 2018 | Ported from SWP_Display to SWP_Buttons_Panel_Loader
  *
  */
-class SWP_Buttons_panel_Loader {
+class SWP_Buttons_Panel_Loader {
 
 
 	/**
@@ -67,7 +67,6 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function __construct() {
 
-
 		/**
 		 * The global array of posts that have already been processed. This
 		 * allows us to ensure that we are not filtering the content from
@@ -80,19 +79,19 @@ class SWP_Buttons_panel_Loader {
 		global $swp_user_options;
 
 		// Declare variable as array if not already done so.
-		if ( !is_array( $swp_already_print ) ) {
+		if ( ! is_array( $swp_already_print ) ) {
 			$swp_already_print = array();
 		}
 
 		// Move these two globals into local properties.
 		$this->already_printed = $swp_already_print;
-		$this->options = $swp_user_options;
+		$this->options         = $swp_user_options;
 
 		// Hook into the template_redirect so that is_singular() conditionals will be ready
 		add_action( 'template_redirect', array( $this, 'activate_buttons' ) );
-		add_action( 'wp_footer', array( $this, 'floating_buttons' ) , 20 );
-		add_filter( 'the_content', array( $this, 'add_static_panel_fallback_content' ) , 20 );
-		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback_footer' ) , 20 );
+		add_action( 'wp_footer', array( $this, 'floating_buttons' ), 20 );
+		add_filter( 'the_content', array( $this, 'add_static_panel_fallback_content' ), 20 );
+		add_action( 'wp_footer', array( $this, 'add_static_panel_fallback_footer' ), 20 );
 	}
 
 
@@ -103,7 +102,7 @@ class SWP_Buttons_panel_Loader {
 	 * @since  3.0.6 | 14 MAY 2018 | Added second filter for the_content.
 	 * @since  4.2.0 | 02 DEC 2020 | The priority (1000) needs to be a third
 	 *                               parameter, and not a third member of the
-	 *                               array being passed. Watch those closing 
+	 *                               array being passed. Watch those closing
 	 *                               paranthesis.
 	 * @param  void
 	 * @return void
@@ -118,13 +117,13 @@ class SWP_Buttons_panel_Loader {
 
 		// Only hook into the_content filter if is_singular() is true or
 		// they don't use excerpts on the archive pages.
-		if( is_singular() || true === SWP_Utility::get_option( 'full_content' ) ) {
+		if ( is_singular() || true === SWP_Utility::get_option( 'full_content' ) ) {
 			add_filter( 'the_content', array( $this, 'social_warfare_wrapper' ), 1000 );
-			add_filter( 'the_content', array( $this, 'add_content_locator' ), 1000);
+			add_filter( 'the_content', array( $this, 'add_content_locator' ), 1000 );
 		}
 
 		// If we're not on is_singlular, we'll hook into the excerpt.
-		if ( !is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
+		if ( ! is_singular() && false === SWP_Utility::get_option( 'full_content' ) ) {
 			add_filter( 'the_excerpt', array( $this, 'social_warfare_wrapper' ), 1000 );
 		}
 	}
@@ -155,7 +154,7 @@ class SWP_Buttons_panel_Loader {
 		$pinit_toggle         = SWP_Utility::get_option( 'pinit_toggle' );
 		$float_before_content = SWP_Utility::get_option( 'float_before_content' );
 
-		if( $pinit_toggle || !$float_before_content ) {
+		if ( $pinit_toggle || ! $float_before_content ) {
 			$content .= '<div class="swp-content-locator"></div>';
 		}
 
@@ -177,10 +176,10 @@ class SWP_Buttons_panel_Loader {
 		// The global WordPress post object.
 		global $post;
 
-		  // Ensure it's not an embedded post
-		  if ( is_singular() && ( $post->ID !== get_queried_object_id() || is_embed() ) ) {
+			// Ensure it's not an embedded post
+		if ( is_singular() && ( get_queried_object_id() !== $post->ID || is_embed() ) ) {
 			return $content;
-		  }
+		}
 
 		// Pass the content to the buttons constructor to place them inside.
 		$buttons_panel = new SWP_Buttons_Panel( array( 'content' => $content ) );
@@ -196,7 +195,7 @@ class SWP_Buttons_panel_Loader {
 	 * @return void
 	 *
 	 */
-	function floating_buttons() {
+	public function floating_buttons() {
 
 		// Bail if we're in the presence of a known conflict with no fix.
 		if ( Social_Warfare::has_plugin_conflict() ) {
@@ -204,7 +203,7 @@ class SWP_Buttons_panel_Loader {
 		}
 
 		// Instantiate a new Buttons Panel.
-		$side_panel = new SWP_Buttons_Panel_Side( array( 'content' => "" ) );
+		$side_panel = new SWP_Buttons_Panel_Side( array( 'content' => '' ) );
 
 		// Determine if the floating buttons are not supposed to print.
 		$location = $side_panel->get_float_location();
@@ -214,7 +213,6 @@ class SWP_Buttons_panel_Loader {
 
 		// Render the html to output to the screen.
 		echo $side_panel->render_html();
-
 	}
 
 
@@ -233,7 +231,7 @@ class SWP_Buttons_panel_Loader {
 		$this->content_loaded = true;
 
 		// Bail if we don't need these fallback buttons.
-		if( false === $this->should_float_fallback_display() ) {
+		if ( false === $this->should_float_fallback_display() ) {
 			return $content;
 		}
 
@@ -253,20 +251,18 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function add_static_panel_fallback_footer() {
 
-
 		// Bail if the content hook was successfully loaded.
-		if( true === $this->content_loaded ) {
+		if ( true === $this->content_loaded ) {
 			return;
 		}
 
 		// Bail if we don't need these buttons.
-		if( false === $this->should_float_fallback_display() ) {
+		if ( false === $this->should_float_fallback_display() ) {
 			return;
 		}
 
 		// Generate the static panel fallback and echo it to the screen.
 		echo $this->generate_static_panel_fallback();
-
 	}
 
 
@@ -282,7 +278,6 @@ class SWP_Buttons_panel_Loader {
 	 */
 	public function generate_static_panel_fallback( $content = '' ) {
 		global $post;
-
 
 		/**
 		 * If all the checks above get passed, then we'll go ahead and create a
@@ -311,10 +306,9 @@ class SWP_Buttons_panel_Loader {
 	public function should_float_fallback_display() {
 		global $post;
 
-		if ( !is_object( $post ) ) {
+		if ( ! is_object( $post ) ) {
 			return false;
 		}
-
 
 		/**
 		 * We'll gather up all of our data into some variables so that we can
@@ -326,25 +320,23 @@ class SWP_Buttons_panel_Loader {
 		$float_location_post_type   = SWP_Utility::get_option( 'float_location_' . $post->post_type );
 		$float_location             = SWP_Utility::get_option( 'float_location' );
 		$location_post_type         = SWP_Utility::get_option( 'location_' . $post->post_type );
-		$post_meta_enabled_static   = get_post_meta( $post->ID, 'swp_post_location', true);
+		$post_meta_enabled_static   = get_post_meta( $post->ID, 'swp_post_location', true );
 		$post_meta_enabled_floating = get_post_meta( $post->ID, 'swp_float_location', true );
 		$acceptable_locations       = array( 'top', 'bottom' );
-
 
 		/**
 		 * Bail out if the floating options are set to off on this specific post.
 		 *
 		 */
-		if ( 'off' == $post_meta_enabled_floating ) {
+		if ( 'off' === $post_meta_enabled_floating ) {
 			return false;
 		}
-
 
 		/**
 		 * Autimatically be true if set to on for this post.
 		 *
 		 */
-		if ( 'on' == $post_meta_enabled_floating ) {
+		if ( 'on' === $post_meta_enabled_floating ) {
 			return true;
 		}
 
@@ -353,19 +345,17 @@ class SWP_Buttons_panel_Loader {
 		 * at least somewhere. If all floating options are off, just bail.
 		 *
 		 */
-		if ( false == $floating_panel && 'off' == $float_mobile && 'off' == $float_location_post_type ) {
+		if ( false === $floating_panel && 'off' === $float_mobile && 'off' === $float_location_post_type ) {
 			return false;
 		}
-
 
 		/**
 		 * Do not print top/bottom floating buttons on blog pages.
 		 *
 		 */
-		if ( !is_singular() ) {
+		if ( ! is_singular() ) {
 			return false;
 		}
-
 
 		/**
 		 * If both the floating buttons location and the mobile floating
@@ -373,8 +363,8 @@ class SWP_Buttons_panel_Loader {
 		 * won't need this.
 		 *
 		 */
-		if(    !in_array( $float_location, $acceptable_locations )
-			&& !in_array( $float_mobile, $acceptable_locations ) ) {
+		if ( ! in_array( $float_location, $acceptable_locations, true )
+			&& ! in_array( $float_mobile, $acceptable_locations, true ) ) {
 			return false;
 		}
 
@@ -384,12 +374,11 @@ class SWP_Buttons_panel_Loader {
 		 * can just bail out because the JS will use the preexisting panel.
 		 *
 		 */
-		if ( 'none' != $post_meta_enabled_static && 'none' != $location_post_type ) {
+		if ( 'none' !== $post_meta_enabled_static && 'none' !== $location_post_type ) {
 			return false;
 		}
 
 		return true;
-
 	}
 
 

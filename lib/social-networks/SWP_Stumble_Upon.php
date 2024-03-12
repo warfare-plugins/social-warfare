@@ -34,24 +34,24 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name           = __( 'StumbleUpon','social-warfare' );
-		$this->cta            = __( 'Stumble','social-warfare' );
+		$this->name           = __( 'StumbleUpon', 'social-warfare' );
+		$this->cta            = __( 'Stumble', 'social-warfare' );
 		$this->key            = 'stumbleupon';
 		$this->default        = 'false';
 		$this->base_share_url = 'https://www.stumbleupon.com/submit?url=';
 
-        $today = date("Y-m-d H:i:s");
-        $expiry = "2018-06-30 00:00:00";
+		$today  = gmdate( 'Y-m-d H:i:s' );
+		$expiry = '2018-06-30 00:00:00';
 
-        if ( $today < $expiry ) :
-    		$this->init_social_network();
-        else :
-            $options = get_option('social_warfare_settings');
-            if ( isset( $options['order_of_icons']['stumbleupon'] ) ) :
-                unset( $options['order_of_icons']['stumbleupon'] );
-                update_option( 'social_warfare_settings', $options );
-            endif;
-        endif;
+		if ( $today < $expiry ) :
+			$this->init_social_network();
+		else :
+			$options = get_option( 'social_warfare_settings' );
+			if ( isset( $options['order_of_icons']['stumbleupon'] ) ) :
+				unset( $options['order_of_icons']['stumbleupon'] );
+				update_option( 'social_warfare_settings', $options );
+			endif;
+		endif;
 	}
 
 
@@ -79,7 +79,7 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
 	 *
 	 */
 	public function parse_api_response( $response ) {
-        $response = json_decode( $response, true );
-    	return isset( $response['result']['views'] ) ? intval( $response['result']['views'] ) : 0;
-    }
+		$response = json_decode( $response, true );
+		return isset( $response['result']['views'] ) ? intval( $response['result']['views'] ) : 0;
+	}
 }

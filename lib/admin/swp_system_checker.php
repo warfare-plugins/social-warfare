@@ -8,25 +8,25 @@
  * @since     2.2.4 | Created | 1 MAY 2017
  */
 
- /**
-  * A class for initializing the system checks
-  *
-  * @since  2.2.4 | Created | 1 MAY 2017
-  * @access public
-  */
- abstract class swp_custom_check
- {
- 	public $name = "";
- 	public $whats_wrong = "";
- 	public $how_to_fix= "";
- 	public $check_passed = null;
- 	public $additional_message = null;
+/**
+ * A class for initializing the system checks
+ *
+ * @since  2.2.4 | Created | 1 MAY 2017
+ * @access public
+ */
+abstract class swp_custom_check {
 
- 	/**
- 	 * Force children to have an executable run method.
- 	 */
- 	abstract public function run();
- }
+	public $name               = '';
+	public $whats_wrong        = '';
+	public $how_to_fix         = '';
+	public $check_passed       = null;
+	public $additional_message = null;
+
+	/**
+	 * Force children to have an executable run method.
+	 */
+	abstract public function run();
+}
 
 /**
  * A series of classes to check the user's system for minimum system requirements
@@ -35,52 +35,45 @@
  * @access public
  * @return string The HTML for an error notice if triggered
  */
-class swp_system_checker
-{
-    public static $custom_checks = array();
-	public static $has_error = FALSE;
+class swp_system_checker {
 
-    public static function full_system_check()
-    {
-    	swp_system_checker::load_all_checks();
-    	swp_system_checker::run_all_checks();
-    	swp_system_checker::print_all_errors();
+	public static $custom_checks = array();
+	public static $has_error     = false;
 
-    }
+	public static function full_system_check() {
+		swp_system_checker::load_all_checks();
+		swp_system_checker::run_all_checks();
+		swp_system_checker::print_all_errors();
+	}
 
-    public static function load_all_checks()
-    {
-    	swp_system_checker::$custom_checks[ 'swp_php_check' ]  = new swp_php_check();
-    	swp_system_checker::$custom_checks[ 'swp_curl_check' ] = new swp_curl_check();
-    }
+	public static function load_all_checks() {
+		swp_system_checker::$custom_checks['swp_php_check']  = new swp_php_check();
+		swp_system_checker::$custom_checks['swp_curl_check'] = new swp_curl_check();
+	}
 
-    public static function run_all_checks()
-    {
-		foreach( swp_system_checker::$custom_checks as $custom_check )
-		{
-			if( method_exists( $custom_check, 'run' ) ) {
-				if( !$custom_check->run() && !$custom_check->check_passed ) {
+	public static function run_all_checks() {
+		foreach ( swp_system_checker::$custom_checks as $custom_check ) {
+			if ( method_exists( $custom_check, 'run' ) ) {
+				if ( ! $custom_check->run() && ! $custom_check->check_passed ) {
 					swp_system_checker::$has_error = true;
-                }
-            }
+				}
+			}
 		}
-    }
+	}
 
-    public static function print_all_errors()
-    {
-    	if( !isset( swp_system_checker::$has_error ) || empty( swp_system_checker::$has_error ) ) {
-    		return FALSE;
-        }
+	public static function print_all_errors() {
+		if ( ! isset( swp_system_checker::$has_error ) || empty( swp_system_checker::$has_error ) ) {
+			return false;
+		}
 
-    	foreach( swp_system_checker::$custom_checks as $custom_check )
-    	{
-    		if( $custom_check->check_passed ) {
-    			continue;
-            }
+		foreach ( swp_system_checker::$custom_checks as $custom_check ) {
+			if ( $custom_check->check_passed ) {
+				continue;
+			}
 
-        	echo '<div class="sw-red-notice">' . $custom_check->whats_wrong . $custom_check->how_to_fix . '</div>';
-    	}
-    }
+			echo '<div class="sw-red-notice">' . $custom_check->whats_wrong . $custom_check->how_to_fix . '</div>';
+		}
+	}
 }
 
 /**
@@ -90,24 +83,19 @@ class swp_system_checker
  * @access public
  * @return string The HTML for an error notice if triggered
  */
-class swp_php_check extends swp_custom_check
-{
-	public function __construct()
-	{
+class swp_php_check extends swp_custom_check {
+
+	public function __construct() {
 		$this->name = 'PHP Check';
 	}
 
-	public function run()
-	{
-		if( version_compare( PHP_VERSION, '5.2.0' ) >= 0 )
-		{
+	public function run() {
+		if ( version_compare( PHP_VERSION, '5.2.0' ) >= 0 ) {
 			$this->check_passed = true;
-		}
-		else
-		{
+		} else {
 			$this->check_passed = false;
-			$this->whats_wrong = 'Your server is currently using PHP version '.PHP_VERSION.'. In order for our plugin to fetch share counts properly, you must be using PHP 5.3 or newer.';
-			$this->how_to_fix = 'To fix this, simply contact your hosting provider and ask them to update your server to the latest stable version of PHP.';
+			$this->whats_wrong  = 'Your server is currently using PHP version ' . PHP_VERSION . '. In order for our plugin to fetch share counts properly, you must be using PHP 5.3 or newer.';
+			$this->how_to_fix   = 'To fix this, simply contact your hosting provider and ask them to update your server to the latest stable version of PHP.';
 		}
 
 		return $this->check_passed;
@@ -121,25 +109,20 @@ class swp_php_check extends swp_custom_check
  * @access public
  * @return string The HTML for an error notice if triggered
  */
-class swp_curl_check extends swp_custom_check
-{
-	public function __construct()
-	{
+class swp_curl_check extends swp_custom_check {
+
+	public function __construct() {
 		$this->name = 'Curl Check';
 	}
 
-	public function run()
-	{
+	public function run() {
 
-		if( function_exists( 'curl_version' ) )
-		{
+		if ( function_exists( 'curl_version' ) ) {
 			$this->check_passed = true;
-		}
-		else
-		{
+		} else {
 			$this->check_passed = false;
-			$this->whats_wrong = 'Your server has cURL disabled. In order for our plugin to fetch share counts, you must have cURL enabled on your server.';
-			$this->how_to_fix = 'To fix this, simply contact your hosting provider and ask them to activate cURL on your server.';
+			$this->whats_wrong  = 'Your server has cURL disabled. In order for our plugin to fetch share counts, you must have cURL enabled on your server.';
+			$this->how_to_fix   = 'To fix this, simply contact your hosting provider and ask them to activate cURL on your server.';
 		}
 
 		return $this->check_passed;

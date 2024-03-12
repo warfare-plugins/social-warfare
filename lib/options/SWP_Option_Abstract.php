@@ -113,7 +113,7 @@ class SWP_Option_Abstract {
 		$this->set_name( $name );
 		$this->user_options = get_option( 'social_warfare_settings' );
 
-		add_action('plugins_loaded', array( $this , 'load_social_networks' ) , 1000 );
+		add_action( 'plugins_loaded', array( $this, 'load_social_networks' ), 1000 );
 	}
 
 
@@ -137,7 +137,7 @@ class SWP_Option_Abstract {
 			return $this->$property;
 		}
 
-		$this->_throw("Property $property does not exist in " . __CLASS__ . "." );
+		$this->_throw( "Property $property does not exist in " . __CLASS__ . '.' );
 	}
 
 
@@ -152,15 +152,15 @@ class SWP_Option_Abstract {
 
 		if ( false === $user_icons ) {
 			return array(
-				'twitter'     => 'twitter',
-				'facebook'    => 'facebook',
-				'linkedin'    => 'linkedin',
-				'pinterest'   => 'pinterest'
+				'twitter'   => 'twitter',
+				'facebook'  => 'facebook',
+				'linkedin'  => 'linkedin',
+				'pinterest' => 'pinterest',
 			);
 		}
 
 		// For legacy code below 2.3.5
-		if ( is_array( $user_icons ) && array_key_exists( 'active', $user_icons) ) :
+		if ( is_array( $user_icons ) && array_key_exists( 'active', $user_icons ) ) :
 			return $user_icons['active'];
 		endif;
 
@@ -177,8 +177,8 @@ class SWP_Option_Abstract {
 	 *
 	 */
 	public function set_name( $name ) {
-		if ( !is_string($name) ) {
-			$this->_throw("Please provide a string for your object's name." );
+		if ( ! is_string( $name ) ) {
+			$this->_throw( "Please provide a string for your object's name." );
 		}
 
 		$this->name = $name;
@@ -188,8 +188,8 @@ class SWP_Option_Abstract {
 
 
 	public function set_priority( $priority ) {
-		if ( ! intval( $priority ) || $priority < 1) {
-			$this->_throw("Requires an integer greater than 0.");
+		if ( ! intval( $priority ) || $priority < 1 ) {
+			$this->_throw( 'Requires an integer greater than 0.' );
 		}
 
 		$this->priority = $priority;
@@ -205,7 +205,7 @@ class SWP_Option_Abstract {
 	* @return string $key A valid PHP and jQuery target keyname.
 	*/
 	public function name_to_key( $name ) {
-		if ( !is_string( $name ) ) :
+		if ( ! is_string( $name ) ) :
 			$this->_throw( 'Please provide a string to get a key.' );
 		endif;
 
@@ -214,7 +214,6 @@ class SWP_Option_Abstract {
 
 		//* Replace spaces with underscores.
 		$key = preg_replace( '/\s+/', '_', $name );
-
 
 		return strtolower( $key );
 	}
@@ -237,14 +236,14 @@ class SWP_Option_Abstract {
 	*
 	*/
 	public function set_premium( $premium_addon ) {
-		if ( !is_string( $premium_addon ) ) {
-			$addons = [ 'pro' ];
+		if ( ! is_string( $premium_addon ) ) {
+			$addons       = array( 'pro' );
 			$addon_string = PHP_EOL;
 
-			foreach( $addons as $addon ) {
+			foreach ( $addons as $addon ) {
 				$addon_string . $addon . PHP_EOL;
 			}
-			$this->_throw( "Please provide a string that is one of the following: " . var_export($addons ) );
+			$this->_throw( 'Please provide a string that is one of the following: ' . var_export( $addons ) );
 		}
 
 		$this->premium = $premium_addon;
@@ -253,18 +252,18 @@ class SWP_Option_Abstract {
 	}
 
 
-	public function get_priority_map( $object) {
+	public function get_priority_map( $object_status ) {
 
-		return array_values( $this->object_to_array( $object ) );
+		return array_values( $this->object_to_array( $object_status ) );
 	}
 
 
-	public function object_to_array ( $object ) {
-		if(!is_object($object) && !is_array($object)):
-			return $object;
+	public function object_to_array( $object_status ) {
+		if ( ! is_object( $object_status ) && ! is_array( $object_status ) ) :
+			return $object_status;
 		endif;
 
-		return array_map( [$this, 'object_to_array'], (array) $object);
+		return array_map( array( $this, 'object_to_array' ), (array) $object_status );
 	}
 
 
@@ -279,55 +278,58 @@ class SWP_Option_Abstract {
 	*/
 	//* Logic: http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
 	//* Code: http://andrewbaxter.net/quicksort.php
-	public function sort_by_priority( $object ) {
+	public function sort_by_priority( $object_status ) {
 
-		if (is_object($object)) {
-			$array = $this->get_priority_map( $object) ; //get_object_vars($object);
+		if ( is_object( $object_status ) ) {
+			$array = $this->get_priority_map( $object_status ); //get_object_vars($object_status);
 		} else {
-			$array = $object;
+			$array = $object_status;
 		}
 
-		$length =  count( $array );
+		$length = count( $array );
 
 		if ( $length < 2 ) {
 			return $array;
 		}
 
-		if ( $length === 2 ) :
+		if ( 2 === $length ) :
 			$first;
 			$second;
 			$index = 0;
 
-			foreach( $array as $name => $object) {
-				if ( $index === 2) break;
-
-				if ( $index === 0) {
-					$first = $object;
-				} else {
-					$second = $object;
+			foreach ( $array as $name => $object_status ) {
+				if ( 2 === $index ) {
+					break;
 				}
 
-				$index++;
+				if ( 0 === $index ) {
+					$first = $object_status;
+				} else {
+					$second = $object_status;
+				}
+
+				++$index;
 			}
 
-			if ($first['priority'] > $second['priority']) {
-				return [$second, $first];
+			if ( $first['priority'] > $second['priority'] ) {
+				return array( $second, $first );
 			}
 
-			return [$first, $second];
+			return array( $first, $second );
 		endif;
 
-		$left = $right = array();
+		$left  = array();
+		$right = array();
 
 		$pivot = $array[0];
 
-		for ($i = 1; $i < $length; $i++) {
-			$item = $array[$i];
+		for ( $i = 1; $i < $length; $i++ ) {
+			$item = $array[ $i ];
 
 			$item['priority'] < $pivot['priority'] ? $left[] = $item : $right[] = $item;
 		}
 
-		return array_merge( $this->sort_by_priority($left), [$pivot], $this->sort_by_priority($right) );
+		return array_merge( $this->sort_by_priority( $left ), array( $pivot ), $this->sort_by_priority( $right ) );
 	}
 
 
@@ -337,8 +339,8 @@ class SWP_Option_Abstract {
 	* @return string The HTML attributes if the object has dependency, or an empty string.
 	*/
 	protected function render_dependency() {
-		if ( !empty( $this->dependency) ) :
-			return ' data-dep="' . $this->dependency->parent . '" data-dep_val=\'' . json_encode($this->dependency->values) . '\'';
+		if ( ! empty( $this->dependency ) ) :
+			return ' data-dep="' . $this->dependency->parent . '" data-dep_val=\'' . json_encode( $this->dependency->values ) . '\'';
 		endif;
 
 		return ' ';
@@ -370,8 +372,8 @@ class SWP_Option_Abstract {
 	*
 	*/
 	public function set_key( $key ) {
-		if ( !is_string($key) ) {
-			$this->_throw("Please provide a string for your object's key." );
+		if ( ! is_string( $key ) ) {
+			$this->_throw( "Please provide a string for your object's key." );
 		}
 
 		$this->key = $key;

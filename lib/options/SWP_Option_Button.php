@@ -24,19 +24,19 @@ class SWP_Option_Button extends SWP_Option {
 	* @param string $name The display name for the toggle.
 	* @param string $key The database key for the user setting.
 	*/
-	public function __construct( $name, $key, $class, $link, $new_tab = false, $deactivation_hook = '' ) {
+	public function __construct( $name, $key, $class_name, $link, $new_tab = false, $deactivation_hook = '' ) {
 		parent::__construct( $name, $key );
-		$this->new_tab = $new_tab;
+		$this->new_tab           = $new_tab;
 		$this->deactivation_hook = $deactivation_hook;
-		$this->link = isset( $link ) ? $link : '';
-		$this->class = isset( $class ) ? $class : '';
+		$this->link              = isset( $link ) ? $link : '';
+		$this->class             = isset( $class_name ) ? $class_name : '';
 	}
 
 
 	public function register_available_values( $values ) {
-		$values[$this->key] = array(
-			'type'      => 'boolean',
-			'values'    => array( true, false )
+		$values[ $this->key ] = array(
+			'type'   => 'boolean',
+			'values' => array( true, false ),
 		);
 
 		return $values;
@@ -50,27 +50,26 @@ class SWP_Option_Button extends SWP_Option {
 	*/
 	public function render_HTML() {
 		$target = $this->new_tab ? 'target="_blank"' : '';
-		
-		$html = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
+
+		$html  = '<div class="sw-grid ' . $this->parent_size . ' sw-fit sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
 		$html .= $this->render_premium();
 		$html .= '>';
 
-			$html .= '<div class="sw-grid ' . $this->size . '">';
-				$html .= '<p class="sw-input-label">' . ucwords( str_replace('_', ' ', $this->key) ) . '</p>';
-			$html .= '</div>';
+			$html     .= '<div class="sw-grid ' . $this->size . '">';
+				$html .= '<p class="sw-input-label">' . ucwords( str_replace( '_', ' ', $this->key ) ) . '</p>';
+			$html     .= '</div>';
 
 			$html .= '<div class="sw-grid ' . $this->size . '">';
-				if ( !empty( $this->link ) ) {
-					// Apply a wrapper anchor tag.
-					$html .= '<a href="' . $this->link .'" class="' . $this->class . '" ' . $target .' data-deactivation="'.$this->deactivation_hook.'">' ;
-					$html .= '<div id="' . strtolower($this->key) . '" field="#' . $this->key . '">' . $this->name . '</div>';
-					$html .= '</a>';
-				}
-				else {
-					// Just show a button. Use the id to target it with JS.
-					$html .= '<div id="' . strtolower($this->key) . '" class="' . $this->class . '" field="#' . $this->key . '">' . $this->name . '</div>';
-				}
+		if ( ! empty( $this->link ) ) {
+			// Apply a wrapper anchor tag.
+			$html .= '<a href="' . $this->link . '" class="' . $this->class . '" ' . $target . ' data-deactivation="' . $this->deactivation_hook . '">';
+			$html .= '<div id="' . strtolower( $this->key ) . '" field="#' . $this->key . '">' . $this->name . '</div>';
+			$html .= '</a>';
+		} else {
+			// Just show a button. Use the id to target it with JS.
+			$html .= '<div id="' . strtolower( $this->key ) . '" class="' . $this->class . '" field="#' . $this->key . '">' . $this->name . '</div>';
+		}
 			$html .= '</div>';
 
 		$html .= '</div>';
@@ -88,7 +87,7 @@ class SWP_Option_Button extends SWP_Option {
 	* @return SWP_Option_Toggle $this The calling object, for method chaining.
 	*/
 	public function set_default( $value ) {
-		if ( !is_bool( $value ) ||  !isset( $value ) ) {
+		if ( ! is_bool( $value ) || ! isset( $value ) ) {
 			$this->_throw( 'Please provide a default value as a boolean.' );
 		}
 
