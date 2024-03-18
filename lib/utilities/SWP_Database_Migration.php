@@ -42,8 +42,8 @@ class SWP_Database_Migration {
 		 *
 		 */
 
-		// global $post;
-		// add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
+		global $post;
+		add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
 	}
 
 
