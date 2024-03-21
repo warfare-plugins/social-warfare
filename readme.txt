@@ -183,6 +183,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 4.4.6.1 (21 Mar 2024) =
+* Updated social sharing buttons style, providing a modern look and improving user interface design. Issue #900 (https://github.com/warfare-plugins/social-warfare/issues/900)
+  - Removed Facebook share count functionality, simplifying the display and enhancing performance.
+* Upgraded SWP_Database_Migration class to version 4.4.6.1, introducing new methods and improvements for database handling.
+* Fixed an initialization issue in the SWP_Database_Migration class, ensuring smooth operation and compatibility with the latest WordPress versions.
+
 = 4.4.6 (12 Mar 2024) =
 * Upgraded to Facebook's Graph API v18.0, ensuring compatibility and compliance with the latest API standards.
   - Deprecated Graph API v6.0 and v17.0 endpoints removed, aligning with Facebook's 2-year lifecycle policy.
