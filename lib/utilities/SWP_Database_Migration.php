@@ -20,7 +20,7 @@ class SWP_Database_Migration {
 	 * @var string
 	 *
 	 */
-	public $last_migrated = '3.0.5';
+	public $last_migrated = '4.4.6.1';
 
 
 	/**
@@ -42,8 +42,8 @@ class SWP_Database_Migration {
 		 *
 		 */
 
-		// global $post;
-		// add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
+		global $post;
+		add_action( 'plugins_loaded', array( $this, 'init' ), 100 );
 	}
 
 
@@ -72,6 +72,11 @@ class SWP_Database_Migration {
 			$this->update_post_meta();
 			$this->update_hidden_post_meta();
 			$this->update_last_migrated();
+		}
+
+		// Check if the migration to remove _facebook_shares should run.
+		if ( $this->is_facebook_shares_migrated() ) {
+			$this->delete_facebook_shares_meta();
 		}
 
 		$this->debug_parameters();
@@ -816,5 +821,39 @@ class SWP_Database_Migration {
 		$options['last_migrated'] = $this->last_migrated;
 
 		update_option( 'social_warfare_settings', $options );
+	}
+
+	/**
+	 * Checks if there are more than one post meta entries with meta_key '_facebook_shares'.
+	 *
+	 * @since 4.4.4.1 | 18 MAR 2024 | Added method to check _facebook_shares meta entries.
+	 * @return bool True if more than one entry exists, false otherwise.
+	 */
+	public function is_facebook_shares_migrated() {
+		global $wpdb;
+
+		$meta_key = '_facebook_shares';
+		$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
+		$count    = $wpdb->get_var( $sql );
+
+		return ( $count > 1 );
+	}
+
+	/**
+	 * Deletes all post_meta entries where meta_key equals '_facebook_shares'.
+	 *
+	 * @since 4.4.6.1 | 18 MAR 2024 | Added method to remove _facebook_shares meta.
+	 * @return void
+	 */
+	public function delete_facebook_shares_meta() {
+		global $wpdb;
+
+		$meta_key = '_facebook_shares';
+		$sql      = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
+
+		$wpdb->query( $sql );
+
+		$rows_affected = $wpdb->rows_affected;
+		error_log( "Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'." );
 	}
 }
