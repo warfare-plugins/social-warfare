@@ -833,10 +833,10 @@ class SWP_Database_Migration {
 		global $wpdb;
 
 		$meta_key = '_facebook_shares';
-		$sql = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key);
-		$count = $wpdb->get_var($sql);
+		$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
+		$count    = $wpdb->get_var( $sql );
 
-		return ($count > 1);
+		return ( $count > 1 );
 	}
 
 	/**
@@ -849,11 +849,11 @@ class SWP_Database_Migration {
 		global $wpdb;
 
 		$meta_key = '_facebook_shares';
-		$sql = $wpdb->prepare("DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key);
+		$sql      = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
 
-		$wpdb->query($sql);
+		$wpdb->query( $sql );
 
 		$rows_affected = $wpdb->rows_affected;
-		error_log("Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'.");
+		error_log( "Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'." );
 	}
 }
