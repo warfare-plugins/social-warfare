@@ -3,7 +3,7 @@ Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalash
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 6.5
-Stable tag: 4.4.6
+Stable tag: 4.4.6.1
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -182,6 +182,12 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
+
+= 4.4.6.1 (21 Mar 2024) =
+* Updated social sharing buttons style, providing a modern look and improving user interface design. Issue #900 (https://github.com/warfare-plugins/social-warfare/issues/900)
+  - Removed Facebook share count functionality, simplifying the display and enhancing performance.
+* Upgraded SWP_Database_Migration class to version 4.4.6.1, introducing new methods and improvements for database handling.
+* Fixed an initialization issue in the SWP_Database_Migration class, ensuring smooth operation and compatibility with the latest WordPress versions.
 
 = 4.4.6 (12 Mar 2024) =
 * Upgraded to Facebook's Graph API v18.0, ensuring compatibility and compliance with the latest API standards.
