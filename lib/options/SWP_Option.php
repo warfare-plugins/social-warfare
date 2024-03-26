@@ -84,6 +84,14 @@ class SWP_Option extends SWP_Option_Abstract {
     public $parent_size;
 
 	/**
+     * Indicates the dependency of this option on another.
+     * Declared to prevent dynamic property creation and avoid deprecation warnings.
+     *
+     * @var stdClass
+     */
+    protected $dependency;
+
+	/**
 	* The required constructor for PHP classes.
 	*
 	* @since  3.0.0 | 02 MAR 2018 | Created
