@@ -101,6 +101,13 @@ class SWP_Option_Abstract {
     protected $key;
 
 	/**
+     * User options pulled from the database.
+     *
+     * @var array
+     */
+    protected $user_options;
+
+	/**
 	 * The Construct Method
 	 *
 	 * Pull in the users options from the database and pull in the global network objects.
