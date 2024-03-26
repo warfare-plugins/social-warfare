@@ -20,7 +20,6 @@ class SWP_Option_Abstract {
 	 */
 	use SWP_Debug_Trait;
 
-
 	/**
 	* Name
 	*
@@ -30,7 +29,6 @@ class SWP_Option_Abstract {
 	*
 	*/
 	public $name;
-
 
 	/**
 	* Type
@@ -43,7 +41,6 @@ class SWP_Option_Abstract {
 	*/
 	public $type;
 
-
 	/**
 	* Default
 	*
@@ -54,7 +51,6 @@ class SWP_Option_Abstract {
 	*
 	*/
 	public $default;
-
 
 	/**
 	* Premium
@@ -84,7 +80,6 @@ class SWP_Option_Abstract {
 	 */
 	public $addon = '';
 
-
 	/**
 	* Priority
 	*
@@ -98,6 +93,12 @@ class SWP_Option_Abstract {
 	*/
 	public $priority;
 
+	/**
+     * The key of this option, used as a unique identifier.
+     *
+     * @var string
+     */
+    protected $key;
 
 	/**
 	 * The Construct Method
