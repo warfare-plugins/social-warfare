@@ -27,6 +27,13 @@ class Social_Warfare {
     public $core_version;
 
 	/**
+     * Declaration of the unfiltered_options property to prevent dynamic property creation.
+     *
+     * @var array
+     */
+    public $unfiltered_options;
+
+	/**
 	 * The magic method used to instantiate this class.
 	 *
 	 * This method will load all of the classes using the "require_once" command.
