@@ -25,6 +25,12 @@ class SWP_User_Options {
 	 */
 	use SWP_Debug_Trait;
 
+	/**
+     * Declaration of the unfiltered_options property to prevent dynamic property creation.
+     *
+     * @var array
+     */
+    public $unfiltered_options;
 
 	/**
 	 * The Constructor
