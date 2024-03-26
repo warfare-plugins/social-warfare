@@ -40,6 +40,13 @@ class SWP_User_Options {
     protected $registered_options;
 
 	/**
+     * Declaration of the user_options property to prevent dynamic property creation.
+     *
+     * @var array
+     */
+    protected $user_options;
+
+	/**
 	 * The Constructor
 	 *
 	 * This is designed to pull in the user's options, filter them appropriately,
