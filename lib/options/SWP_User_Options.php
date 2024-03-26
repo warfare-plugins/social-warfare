@@ -47,6 +47,14 @@ class SWP_User_Options {
     protected $user_options;
 
 	/**
+     * Declaration of the user_icons property to prevent dynamic property creation.
+     * This property is used to store filtered social network icons data.
+     *
+     * @var array
+     */
+    protected $user_icons;
+
+	/**
 	 * The Constructor
 	 *
 	 * This is designed to pull in the user's options, filter them appropriately,
