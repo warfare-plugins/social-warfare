@@ -21,6 +21,14 @@ class SWP_Option_Abstract {
 	use SWP_Debug_Trait;
 
 	/**
+     * A collection of the social networks that are available within the plugin.
+     * This array is populated at runtime based on the active social networks.
+     *
+     * @var array
+     */
+    protected $networks = array();
+	
+	/**
 	* Name
 	*
 	* The name of this option. This is a "pretty" name that the plugin user will see.
