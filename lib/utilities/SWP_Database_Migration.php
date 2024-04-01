@@ -183,7 +183,7 @@ class SWP_Database_Migration {
 			}
 		}
 		if ( $count ) {
-			echo "Success! $count ${post_type}s updated.";
+			echo "Success! $count {$post_type}s updated.";
 		} else {
 			echo 'No matching posts were found to update.';
 		}
