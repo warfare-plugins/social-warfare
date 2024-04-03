@@ -20,6 +20,13 @@
 class Social_Warfare {
 
 	/**
+	 * Declare the core_version property.
+	 *
+	 * @var string
+	 */
+	public $core_version;
+
+	/**
 	 * The magic method used to instantiate this class.
 	 *
 	 * This method will load all of the classes using the "require_once" command.
