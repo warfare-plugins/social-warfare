@@ -26,33 +26,33 @@ class SWP_User_Options {
 	use SWP_Debug_Trait;
 
 	/**
-     * Declaration of the unfiltered_options property to prevent dynamic property creation.
-     *
-     * @var array
-     */
-    public $unfiltered_options;
+	 * Declaration of the unfiltered_options property to prevent dynamic property creation.
+	 *
+	 * @var array
+	 */
+	public $unfiltered_options;
 
 	/**
-     * Declaration of the registered_options property to prevent dynamic property creation.
-     *
-     * @var array
-     */
-    protected $registered_options;
+	 * Declaration of the registered_options property to prevent dynamic property creation.
+	 *
+	 * @var array
+	 */
+	protected $registered_options;
 
 	/**
-     * Declaration of the user_options property to prevent dynamic property creation.
-     *
-     * @var array
-     */
-    protected $user_options;
+	 * Declaration of the user_options property to prevent dynamic property creation.
+	 *
+	 * @var array
+	 */
+	protected $user_options;
 
 	/**
-     * Declaration of the user_icons property to prevent dynamic property creation.
-     * This property is used to store filtered social network icons data.
-     *
-     * @var array
-     */
-    protected $user_icons;
+	 * Declaration of the user_icons property to prevent dynamic property creation.
+	 * This property is used to store filtered social network icons data.
+	 *
+	 * @var array
+	 */
+	protected $user_icons;
 
 	/**
 	 * The Constructor

@@ -20,11 +20,11 @@
 class Social_Warfare {
 
 	/**
-     * Declare the core_version property.
-     *
-     * @var string
-     */
-    public $core_version;
+	 * Declare the core_version property.
+	 *
+	 * @var string
+	 */
+	public $core_version;
 
 	/**
 	 * The magic method used to instantiate this class.
