@@ -75,6 +75,21 @@ class SWP_Option extends SWP_Option_Abstract {
 	*/
 	public $swp_registration;
 
+	/**
+	 * The CSS class representing the size (width) of the parent container.
+	 * This property was dynamically created, but now is explicitly declared to avoid deprecation warnings.
+	 *
+	 * @var string $parent_size
+	 */
+	public $parent_size;
+
+	/**
+	 * Indicates the dependency of this option on another.
+	 * Declared to prevent dynamic property creation and avoid deprecation warnings.
+	 *
+	 * @var stdClass
+	 */
+	protected $dependency;
 
 	/**
 	* The required constructor for PHP classes.

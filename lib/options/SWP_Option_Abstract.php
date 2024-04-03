@@ -20,6 +20,13 @@ class SWP_Option_Abstract {
 	 */
 	use SWP_Debug_Trait;
 
+	/**
+	 * A collection of the social networks that are available within the plugin.
+	 * This array is populated at runtime based on the active social networks.
+	 *
+	 * @var array
+	 */
+	protected $networks = array();
 
 	/**
 	* Name
@@ -30,7 +37,6 @@ class SWP_Option_Abstract {
 	*
 	*/
 	public $name;
-
 
 	/**
 	* Type
@@ -43,7 +49,6 @@ class SWP_Option_Abstract {
 	*/
 	public $type;
 
-
 	/**
 	* Default
 	*
@@ -54,7 +59,6 @@ class SWP_Option_Abstract {
 	*
 	*/
 	public $default;
-
 
 	/**
 	* Premium
@@ -84,7 +88,6 @@ class SWP_Option_Abstract {
 	 */
 	public $addon = '';
 
-
 	/**
 	* Priority
 	*
@@ -98,6 +101,19 @@ class SWP_Option_Abstract {
 	*/
 	public $priority;
 
+	/**
+	 * The key of this option, used as a unique identifier.
+	 *
+	 * @var string
+	 */
+	protected $key;
+
+	/**
+	 * User options pulled from the database.
+	 *
+	 * @var array
+	 */
+	protected $user_options;
 
 	/**
 	 * The Construct Method
