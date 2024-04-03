@@ -25,11 +25,11 @@
 class SWP_Facebook extends SWP_Social_Network {
 
 	/**
-     * Indicates whether share counts are shown. This is specific to each social network.
-     *
-     * @var boolean
-     */
-    protected $are_shares_shown;
+	 * Indicates whether share counts are shown. This is specific to each social network.
+	 *
+	 * @var boolean
+	 */
+	protected $are_shares_shown;
 
 	/**
 	 * The Magic __construct Method

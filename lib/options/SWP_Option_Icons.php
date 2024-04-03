@@ -29,12 +29,12 @@ class SWP_Option_Icons extends SWP_Option {
 	public $html;
 
 	/**
-     * Indicates whether the icons being rendered are active or inactive.
-     * Explicitly declared to avoid dynamic property creation deprecation warning.
-     *
-     * @var bool
-    */
-    protected $is_active_icons;
+	 * Indicates whether the icons being rendered are active or inactive.
+	 * Explicitly declared to avoid dynamic property creation deprecation warning.
+	 *
+	 * @var bool
+	*/
+	protected $is_active_icons;
 
 
 	/**

@@ -54,13 +54,24 @@ class SWP_Buttons_Panel_Shortcode {
 	 * @return string The HTML of the Social Warfare buttons.
 	 *
 	 */
-	public function buttons_shortcode( $args ) {
+	public function buttons_shortcode( $atts ) {
+		$atts      = (array) $atts;
+		$safe_atts = $this->sanitize_attributes( $atts );
 
-		if ( ! is_array( $args ) ) :
-			$args = array();
-		endif;
-
-		$buttons_panel = new SWP_Buttons_Panel( $args, true );
+		$buttons_panel = new SWP_Buttons_Panel( $safe_atts, true );
 		return $buttons_panel->render_html();
+	}
+
+	private function sanitize_attributes( $atts ) {
+		$safe_atts = array();
+
+		foreach ( $atts as $attribute => $value ) {
+			$cleaned_value = sanitize_text_field( $value );
+			$cleaned_value = preg_replace( '/[^a-zA-Z0-9_\-#]/', '', $cleaned_value );
+
+			$safe_atts[ $attribute ] = $cleaned_value;
+		}
+
+		return $safe_atts;
 	}
 }
