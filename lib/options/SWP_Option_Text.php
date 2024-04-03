@@ -21,6 +21,12 @@ class SWP_Option_Text extends SWP_Option {
 	*/
 	public $default_option = '';
 
+	/**
+	 * The value of the input. Declared to avoid dynamic property creation.
+	 *
+	 * @var mixed
+	 */
+	protected $value;
 
 	/**
 	* The required constructor for PHP classes.
