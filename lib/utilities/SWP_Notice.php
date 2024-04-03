@@ -20,6 +20,53 @@ class SWP_Notice {
 	public static $notice_keys = array();
 
 	/**
+	 * Unique identifier for the notice. Used to differentiate between multiple notices.
+	 *
+	 * @var string
+	 */
+	protected $key = '';
+
+	/**
+	 * Collection of notices that have been dismissed by the user. Stored as an associative
+	 * array where the key is the notice identifier and the value is dismissal information.
+	 *
+	 * @var array
+	 */
+	protected $notices = array();
+
+	/**
+	 * Specific data related to the notice identified by $key. This may include timestamps,
+	 * dismissal state, and other relevant metadata.
+	 *
+	 * @var array
+	 */
+	protected $data = array();
+
+	/**
+	 * The message content of the notice. This is the main text displayed to the user.
+	 *
+	 * @var string
+	 */
+	protected $message = '';
+
+	/**
+	 * Actions associated with the notice. Each action is an array containing details
+	 * such as the action text, URL, and any additional CSS classes for styling.
+	 *
+	 * @var array
+	 */
+	protected $actions = array();
+
+	/**
+	 * Flag indicating whether to display a call-to-action (CTA) with the notice.
+	 * When set to true, no CTA is shown. This is useful for notices requiring
+	 * user action that cannot be dismissed with a simple click.
+	 *
+	 * @var bool
+	 */
+	protected $no_cta = false;
+
+	/**
 	 * The Magic __construct method
 	 *
 	 * This method will initialize our notice object and then add the necessary hooks to

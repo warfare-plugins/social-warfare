@@ -197,7 +197,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		for ( $i = 5; $i < 16; $i++ ) {
 			$val      = $i * 10;
 			$selected = selected( $thumb_size, $val, false );
-			$form    .= "<option value=\"$val\" $selected>${val}px</option>";
+			$form    .= "<option value=\"$val\" $selected>{$val}px</option>";
 		}
 
 		$form .= '<option value="custom" ' . selected( $thumb_size, 'custom', false ) . '>Custom</option>';
@@ -223,7 +223,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		for ( $i = 5; $i < 16; $i++ ) {
 			$val      = $i * 10;
 			$selected = selected( $font_size, $val, false );
-			$form    .= "<option value=\"$val\" $selected>${val}%</option>";
+			$form    .= "<option value=\"$val\" $selected>{$val}%</option>";
 		}
 
 		$form .= '</select>';
@@ -256,7 +256,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 			endif;
 
 			$selected = selected( $val, $style, false );
-			$form    .= "<option value=\"$val\" $selected>${ctt_style}</option>";
+			$form    .= "<option value=\"$val\" $selected>{$ctt_style}</option>";
 
 		endforeach;
 
