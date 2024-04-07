@@ -106,14 +106,14 @@ class SWP_Option_Abstract {
 	 *
 	 * @var string
 	 */
-	protected $key;
+	public $key;
 
 	/**
 	 * User options pulled from the database.
 	 *
 	 * @var array
 	 */
-	protected $user_options;
+	public $user_options;
 
 	/**
 	 * The Construct Method
