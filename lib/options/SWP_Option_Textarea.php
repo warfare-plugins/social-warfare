@@ -23,10 +23,10 @@ class SWP_Option_Textarea extends SWP_Option {
 	public $default = '';
 
 	/**
-     * The default value for the textarea.
-     * @var string
-     */
-    public $value;
+	 * The default value for the textarea.
+	 * @var string
+	 */
+	public $value;
 
 
 	/**

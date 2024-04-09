@@ -1,12 +1,12 @@
 <?php
 
 class SWP_Registration_Tab_Template extends SWP_Option {
-	public $key         = '';
-	public $license_key = '';
-	public $product_id  = 0;
-	public $registered  = 0;
+	public $key          = '';
+	public $license_key  = '';
+	public $product_id   = 0;
+	public $registered   = 0;
 	public $display_name = '';
-    public $version = '';
+	public $version      = '';
 
 	public function __construct( $addon ) {
 		parent::__construct( $addon->name, $addon->key );

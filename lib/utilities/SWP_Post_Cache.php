@@ -75,24 +75,24 @@ class SWP_Post_Cache {
 	public $permalinks = array();
 
 	/**
-     * The ID of the current post being processed.
-     * This property holds the unique identifier for the WordPress post,
-     * allowing the class to fetch or store data specific to this post.
-     *
-     * @var int
-     */
-    public $post_id;
+	 * The ID of the current post being processed.
+	 * This property holds the unique identifier for the WordPress post,
+	 * allowing the class to fetch or store data specific to this post.
+	 *
+	 * @var int
+	 */
+	public $post_id;
 
-    /**
-     * Share counts for the current post across different social networks.
-     * This associative array stores the number of shares for each social network
-     * where the keys are the network names (e.g., 'facebook', 'twitter') and the values
-     * are the corresponding share counts. Additionally, it includes a 'total_shares'
-     * key that sums the share counts across all networks.
-     *
-     * @var array
-     */
-    public $share_counts = array();
+	/**
+	 * Share counts for the current post across different social networks.
+	 * This associative array stores the number of shares for each social network
+	 * where the keys are the network names (e.g., 'facebook', 'twitter') and the values
+	 * are the corresponding share counts. Additionally, it includes a 'total_shares'
+	 * key that sums the share counts across all networks.
+	 *
+	 * @var array
+	 */
+	public $share_counts = array();
 
 	/**
 	 * The Magic Construct Method

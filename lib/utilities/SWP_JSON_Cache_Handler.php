@@ -54,10 +54,10 @@ class SWP_JSON_Cache_Handler {
 
 
 	/**
-     * Explicitly define the cache_data property to avoid dynamic property creation.
-     * @var array
-     */
-    private $cache_data = array();
+	 * Explicitly define the cache_data property to avoid dynamic property creation.
+	 * @var array
+	 */
+	private $cache_data = array();
 
 
 	/**

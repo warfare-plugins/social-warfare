@@ -18,30 +18,30 @@
 class Social_Warfare_Addon {
 
 	/**
-     * The license key for the addon.
-     *
-     * This property stores the license key used for activating the addon. It is
-     * utilized to check the validity of the addon's license against the Warfare
-     * Plugins server, ensuring that the user has a valid, active subscription.
-     * The license key is obtained from the plugin's settings page where the user
-     * inputs their purchase key.
-     *
-     * @var string
-     */
-    public $license_key;
+	 * The license key for the addon.
+	 *
+	 * This property stores the license key used for activating the addon. It is
+	 * utilized to check the validity of the addon's license against the Warfare
+	 * Plugins server, ensuring that the user has a valid, active subscription.
+	 * The license key is obtained from the plugin's settings page where the user
+	 * inputs their purchase key.
+	 *
+	 * @var string
+	 */
+	public $license_key;
 
-    /**
-     * The registration status of the addon.
-     *
-     * Indicates whether the addon is registered and activated with a valid
-     * license key. This status affects the availability of premium features and
-     * updates. If `true`, it means the addon is successfully registered with a
-     * valid license key. If `false`, the addon is either unregistered or the
-     * license key has expired or is invalid.
-     *
-     * @var bool
-     */
-    public $is_registered;
+	/**
+	 * The registration status of the addon.
+	 *
+	 * Indicates whether the addon is registered and activated with a valid
+	 * license key. This status affects the availability of premium features and
+	 * updates. If `true`, it means the addon is successfully registered with a
+	 * valid license key. If `false`, the addon is either unregistered or the
+	 * license key has expired or is invalid.
+	 *
+	 * @var bool
+	 */
+	public $is_registered;
 
 	/**
 	 * The Magic Constructor Method
