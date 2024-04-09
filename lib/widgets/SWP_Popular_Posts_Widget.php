@@ -407,7 +407,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 		// Output the "Before Widget" content
 		if ( isset( $args['before_widget'] ) ) :
-			echo esc_html($args['before_widget']);
+			echo esc_html( $args['before_widget'] );
 		endif;
 
 		// Begin output of the widget html
@@ -418,14 +418,14 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 			// Output the "Before Title" content
 			if ( isset( $args['before_title'] ) ) :
-				echo esc_html($args['before_title']);
+				echo esc_html( $args['before_title'] );
 			endif;
 
 			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . esc_attr( $styles[ $style ]['links'] ) . '">' . esc_html( $title ) . '</span>';
 
 			// Output the "After Title" content
 			if ( isset( $args['after_title'] ) ) :
-				echo esc_html($args['after_title']);
+				echo esc_html( $args['after_title'] );
 			endif;
 		endif;
 
@@ -466,7 +466,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 					if ( 'true' === $showCount ) :
 						$postID     = get_the_ID();
 						$shares     = get_post_meta( $postID, '_' . $network, true );
-						$share_html = '<span class="swp_pop_count">' . esc_html(SWP_Utility::kilomega( $shares )) . ' ' . esc_html($countLabel) . '</span>';
+						$share_html = '<span class="swp_pop_count">' . esc_html( SWP_Utility::kilomega( $shares ) ) . ' ' . esc_html( $countLabel ) . '</span>';
 					else :
 						$share_html = '';
 					endif;
@@ -480,9 +480,9 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 							$thumb_width  = preg_replace( '/[^0-9]/', '', $thumb_width );
 							$thumb_height = preg_replace( '/[^0-9]/', '', $thumb_height );
 
-							$thumbnail_html .= '<img style="width:' . esc_attr($thumb_width) . 'px;height:' . esc_attr($thumb_height) . 'px;" class="swp_pop_thumb" src="' . esc_url($thumbnail_url[0]) . '" title="' . esc_attr(str_replace( '"', '\'', get_the_title() )) . '" alt="' . esc_attr(str_replace( '"', '\'', get_the_title() )) . '" ' . SWP_AMP::hide_if_amp( 'nopin="nopin"' ) . ' />';
+							$thumbnail_html .= '<img style="width:' . esc_attr( $thumb_width ) . 'px;height:' . esc_attr( $thumb_height ) . 'px;" class="swp_pop_thumb" src="' . esc_url( $thumbnail_url[0] ) . '" title="' . esc_attr( str_replace( '"', '\'', get_the_title() ) ) . '" alt="' . esc_attr( str_replace( '"', '\'', get_the_title() ) ) . '" ' . SWP_AMP::hide_if_amp( 'nopin="nopin"' ) . ' />';
 						else :
-							$thumbnail_html .= '<img style="width:' . esc_attr($thumb_size) . 'px;height:' . esc_attr($thumb_size) . 'px;" class="swp_pop_thumb" src="' . esc_url($thumbnail_url[0]) . '" title="' . esc_attr(str_replace( '"', '\'', get_the_title() )) . '" alt="' . esc_attr(str_replace( '"', '\'', get_the_title() )) . '" ' . SWP_AMP::hide_if_amp( 'nopin="nopin"' ) . '  />';
+							$thumbnail_html .= '<img style="width:' . esc_attr( $thumb_size ) . 'px;height:' . esc_attr( $thumb_size ) . 'px;" class="swp_pop_thumb" src="' . esc_url( $thumbnail_url[0] ) . '" title="' . esc_attr( str_replace( '"', '\'', get_the_title() ) ) . '" alt="' . esc_attr( str_replace( '"', '\'', get_the_title() ) ) . '" ' . SWP_AMP::hide_if_amp( 'nopin="nopin"' ) . '  />';
 						endif;
 
 						$thumbnail_html .= '</a>';
@@ -493,10 +493,10 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 					endif;
 
 					// Generate the HTML for a link
-					$link_html = '<a style="font-size:' . esc_attr($font_size) . '%;' . $styles[ $style ]['links'] . '" class="swp_popularity" href="' . esc_url(get_the_permalink()) . '"><b>' . esc_html(get_the_title()) . '</b>' . $share_html . '</a>';
+					$link_html = '<a style="font-size:' . esc_attr( $font_size ) . '%;' . $styles[ $style ]['links'] . '" class="swp_popularity" href="' . esc_url( get_the_permalink() ) . '"><b>' . esc_html( get_the_title() ) . '</b>' . $share_html . '</a>';
 
 					// Output the post to the site
-					echo '<div class="swp_popular_post">' . wp_kses_post($thumbnail_html) . '' . wp_kses_post($link_html) . '</div>';
+					echo '<div class="swp_popular_post">' . wp_kses_post( $thumbnail_html ) . '' . wp_kses_post( $link_html ) . '</div>';
 					echo '<div class="swp_clearfix"></div>';
 
 				endif;
@@ -511,7 +511,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 		// Output the "After Widget" content
 		if ( isset( $args['after_widget'] ) ) :
-			echo esc_html($args['after_widget']);
+			echo esc_html( $args['after_widget'] );
 		endif;
 	}
 }
