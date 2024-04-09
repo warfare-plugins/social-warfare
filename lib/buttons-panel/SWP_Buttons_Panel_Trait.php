@@ -37,6 +37,15 @@
 trait SWP_Buttons_Panel_Trait {
 
 	/**
+     * The inner HTML content of the buttons panel.
+     * This property stores the generated HTML content of the buttons panel
+     * to avoid regenerating it multiple times.
+     *
+     * @var string
+     */
+    protected $inner_html = '';
+
+	/**
      * HTML attributes to be applied to the buttons panel container.
      * This string comprises various data attributes and settings
      * derived from the plugin's configuration and is dynamically
