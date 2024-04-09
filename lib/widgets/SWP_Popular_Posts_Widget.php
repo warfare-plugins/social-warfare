@@ -411,7 +411,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		endif;
 
 		// Begin output of the widget html
-		echo '<div class="widget-text swp_widget_box" style="' . $styles[ $style ]['wrapper'] . '">';
+		echo '<div class="widget-text swp_widget_box" style="' . esc_attr( $styles[ $style ]['wrapper'] ) . '">';
 
 		// Check if title is set
 		if ( $title ) :
@@ -421,7 +421,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 				echo $args['before_title'];
 			endif;
 
-			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . $styles[ $style ]['links'] . '">' . $title . '</span>';
+			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . esc_attr( $styles[ $style ]['links'] ) . '">' . esc_html( $title ) . '</span>';
 
 			// Output the "After Title" content
 			if ( isset( $args['after_title'] ) ) :
