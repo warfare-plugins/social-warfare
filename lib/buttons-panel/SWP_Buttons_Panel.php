@@ -200,6 +200,30 @@ class SWP_Buttons_Panel {
 	 */
 	public $post_data = array();
 
+	/**
+     * Share counts for the current post.
+     * Stores the number of shares each social network has for the post.
+     *
+     * @var array
+     */
+    public $shares = array();
+
+    /**
+     * The permalink of the current post.
+     * Used to generate share links and perform share counts.
+     *
+     * @var string
+     */
+    public $permalink = '';
+
+    /**
+     * CSS classes to be added to the button panel.
+     * Helps in styling and theming the buttons panel.
+     *
+     * @var array
+     */
+    public $classes = array();
+
 	/***************************************************************************
 	 *
 	 * SECTION #1: INSTANTIATE THE OBJECT
