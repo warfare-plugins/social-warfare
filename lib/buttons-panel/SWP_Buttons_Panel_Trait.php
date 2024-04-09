@@ -36,6 +36,15 @@
  */
 trait SWP_Buttons_Panel_Trait {
 
+	/**
+     * HTML attributes to be applied to the buttons panel container.
+     * This string comprises various data attributes and settings
+     * derived from the plugin's configuration and is dynamically
+     * generated to ensure correct panel behavior and styling.
+     *
+     * @var string
+     */
+    public $attributes = '';
 
 	protected function append_panel_to_content() {
 
