@@ -407,7 +407,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 		// Output the "Before Widget" content
 		if ( isset( $args['before_widget'] ) ) :
-			echo $args['before_widget'];
+			echo esc_html($args['before_widget']);
 		endif;
 
 		// Begin output of the widget html
@@ -418,14 +418,14 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 			// Output the "Before Title" content
 			if ( isset( $args['before_title'] ) ) :
-				echo $args['before_title'];
+				echo esc_html($args['before_title']);
 			endif;
 
 			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . esc_attr( $styles[ $style ]['links'] ) . '">' . esc_html( $title ) . '</span>';
 
 			// Output the "After Title" content
 			if ( isset( $args['after_title'] ) ) :
-				echo $args['after_title'];
+				echo esc_html($args['after_title']);
 			endif;
 		endif;
 
@@ -513,7 +513,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 		// Output the "After Widget" content
 		if ( isset( $args['after_widget'] ) ) :
-			echo $args['after_widget'];
+			echo esc_html($args['after_widget']);
 		endif;
 	}
 }
