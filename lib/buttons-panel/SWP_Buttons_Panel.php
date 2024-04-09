@@ -165,7 +165,40 @@ class SWP_Buttons_Panel {
 	 */
 	public $max_buttons = 0;
 
+	/**
+	 * Holds an array of social network names or identifiers.
+	 *
+	 * This property is used to store a list of social networks that the current instance
+	 * might interact with or manage. It's structured as an associative array where keys
+	 * can be the network name or identifier, and values can be specific details or configurations
+	 * related to that network.
+	 *
+	 * @var array
+	 */
+	public $networks = array();
 
+	/**
+	 * Indicates whether the current instance is being used in a shortcode context.
+	 *
+	 * This boolean flag is used to determine how the instance behaves in different contexts.
+	 * When set to true, it implies that the instance is being rendered as part of a WordPress
+	 * shortcode, potentially altering its output or functionality.
+	 *
+	 * @var bool
+	 */
+	public $is_shortcode = false;
+
+	/**
+	 * Contains data related to the current post or content.
+	 *
+	 * This array holds data that is specifically related to a WordPress post or custom post type.
+	 * It might include information such as the post title, ID, content, meta information, and more.
+	 * The structure and content of this array will depend on the specific needs of the instance
+	 * and how it interacts with the post data.
+	 *
+	 * @var array
+	 */
+	public $post_data = array();
 
 	/***************************************************************************
 	 *
