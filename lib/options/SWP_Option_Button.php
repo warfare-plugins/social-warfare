@@ -17,6 +17,29 @@ class SWP_Option_Button extends SWP_Option {
 	*/
 	public $default = true;
 
+	/**
+     * Indicates if the link should open in a new tab.
+     * @var bool
+     */
+    public $new_tab;
+
+    /**
+     * A hook to call upon deactivation.
+     * @var string
+     */
+    public $deactivation_hook;
+
+    /**
+     * The URL the button links to.
+     * @var string
+     */
+    public $link;
+
+    /**
+     * Additional CSS class names for the button.
+     * @var string
+     */
+    public $class;
 
 	/**
 	* The required constructor for PHP classes.
