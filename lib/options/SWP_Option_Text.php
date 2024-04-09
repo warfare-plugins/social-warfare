@@ -28,6 +28,13 @@ class SWP_Option_Text extends SWP_Option {
 	 */
 	protected $value;
 
+
+	/**
+     * The placeholder text for the text input.
+     * @var string
+     */
+    public $placeholder;
+
 	/**
 	* The required constructor for PHP classes.
 	*
