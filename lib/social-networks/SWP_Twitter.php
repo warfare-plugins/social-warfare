@@ -17,6 +17,10 @@
  */
 class SWP_Twitter extends SWP_Social_Network {
 
+	/**
+     * @var string The API URL used to fetch Twitter share counts.
+     */
+    protected $request_url = '';
 
 	/**
 	 * The Magic __construct Method
