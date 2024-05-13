@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="SocialWarfare">
 	<description>Extension of the SocialWarfare</description>
-	<rule ref="SocialWarfare">
+	<rule ref="10up-Default">
 		<!-- All of the files are missing comments -->
 		<exclude name="Squiz.Commenting.FileComment.Missing" />
 		<exclude name="Squiz.Commenting.ClassComment.Missing" />
@@ -13,6 +13,6 @@
 		<config name="ignore_warnings_on_exit" value="0"/>
 	</rule>
 
-	<!-- <exclude-pattern>/node_modules/*</exclude-pattern>
-	<exclude-pattern>/vendor/*</exclude-pattern> -->
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
 </ruleset>

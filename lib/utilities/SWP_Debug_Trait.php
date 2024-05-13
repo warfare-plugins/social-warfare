@@ -20,19 +20,17 @@
  * everywhere else into this trait.
  *
  * @since 3.0.0 | 07 APR 2018 | Created
- *
  */
 trait SWP_Debug_Trait {
 
 
 	/**
-	* Give classes an error handling method.
-	*
-	* @since  3.0.0 | 07 APR 2018 | Created
-	* @param  mixed $message The message to send as an error.
-	* @return object Exception An exception with the passed in message.
-	*
-	*/
+	 * Give classes an error handling method.
+	 *
+	 * @since  3.0.0 | 07 APR 2018 | Created
+	 * @param  mixed $message The message to send as an error.
+	 * @return object Exception An exception with the passed in message.
+	 */
 	public function _throw( $message ) {
 		ob_start();
 		print_r( debug_backtrace()[1]['args'] );
@@ -60,7 +58,6 @@ trait SWP_Debug_Trait {
 	 * @since  3.4.0 | 18 OCT 2018 | Moved into this trait.
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function debug() {
 
@@ -69,7 +66,6 @@ trait SWP_Debug_Trait {
 		 * ?swp_debug=class_name (without the swp_) to the end of a page's URL.
 		 *
 		 * Example: ?swp_debug=pro_bitly
-		 *
 		 */
 		$class_name = str_replace( 'swp_', '', strtolower( get_class( $this ) ) );
 		if ( true === SWP_Utility::debug( $class_name ) ) {
@@ -80,7 +76,6 @@ trait SWP_Debug_Trait {
 		 * This will dump out all method exit statuses by simply adding
 		 * ?swp_debug=exit_statuses. This allows us to view the reasons why any
 		 * class methods bailed out at any given time.
-		 *
 		 */
 		global $swp_exit_statuses;
 		if ( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
@@ -115,7 +110,6 @@ trait SWP_Debug_Trait {
 	 * @since  4.0.0 | 19 JUL 2019 | Created
 	 * @param  string $reason The name of the item, variable, or condition that caused the bail.
 	 * @return void
-	 *
 	 */
 	public function record_exit_status( $reason ) {
 

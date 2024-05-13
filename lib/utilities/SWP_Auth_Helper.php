@@ -13,31 +13,30 @@
  *
  * This class only tells us if we have access for a network, and if not,
  * which link we should use to request access.
- *
  */
 class SWP_Auth_Helper {
 
 
 	/**
 	 * The network this controller interfaces.
-	 * @var string $network
 	 *
+	 * @var string $network
 	 */
 	public $network = '';
 
 
 	/**
 	 * Alias of $network.
-	 * @var string $key
 	 *
+	 * @var string $key
 	 */
 	public $key = '';
 
 
 	/**
 	 * Whether or not we have registered credentials for this network.
-	 * @var bool $has_credentials;
 	 *
+	 * @var bool $has_credentials;
 	 */
 	public $has_credentials = false;
 
@@ -49,7 +48,6 @@ class SWP_Auth_Helper {
 	 * SWFW_Follow_Network __construct() method.
 	 *
 	 * @var string $client_secret;
-	 *
 	 */
 	protected $client_key = '';
 
@@ -61,23 +59,22 @@ class SWP_Auth_Helper {
 	 * SWFW_Follow_Network __construct() method.
 	 *
 	 * @var string $client_secret;
-	 *
 	 */
 	protected $client_secret = '';
 
 
 	/**
 	 * The user's API key.
-	 * @var string $consumer_key;
 	 *
+	 * @var string $consumer_key;
 	 */
 	protected $consumer_key = '';
 
 
 	/**
 	 * The user's API secret.
-	 * @var string $access_secret;
 	 *
+	 * @var string $access_secret;
 	 */
 	protected $access_secret = '';
 
@@ -100,7 +97,6 @@ class SWP_Auth_Helper {
 	 * @since 3.5.0 | 03 JAN 2018 | Created.
 	 * @param void
 	 * @return mixed String if the key exists, else false.
-	 *
 	 */
 	public function get_access_token() {
 
@@ -116,7 +112,6 @@ class SWP_Auth_Helper {
 	 * @since  4.0.2 | 23 JUL 2020 | Created
 	 * @param  void
 	 * @return boolean True if valid. False if invalid or missing.
-	 *
 	 */
 	public function has_valid_token() {
 
@@ -141,7 +136,6 @@ class SWP_Auth_Helper {
 	 * @since 3.5.0 | 03 JAN 2018 | Created.
 	 * @param void
 	 * @return mixed String if the key exists, else false.
-	 *
 	 */
 	public function get_access_secret() {
 		return $this->has_credentials ? $this->access_secret : false;
@@ -161,7 +155,6 @@ class SWP_Auth_Helper {
 	 *
 	 * @TODO Some networks may only have a key and no secret.
 	 * Right now both are required, so find a way to distinguish the two.
-	 *
 	 */
 	public function establish_credentials() {
 		$access_token = SWP_Credential_Helper::get_token( $this->network );
@@ -193,7 +186,6 @@ class SWP_Auth_Helper {
 	 * @since 3.5.0 | 03 JAN 2018 | Created.
 	 * @param void
 	 * @return string The URL which handles the oAuth handshakes.
-	 *
 	 */
 	public function get_authorization_link() {
 		$request_url = 'https://warfareplugins.com/authorizations/' . $this->network . '/request_token.php';
@@ -209,7 +201,6 @@ class SWP_Auth_Helper {
 	 * @since 3.5.0 | 15 JAN 2019 | Created.
 	 * @param void
 	 * @return string The URL which handles the revoke access action.
-	 *
 	 */
 	public function get_revoke_access_url() {
 		switch ( $this->network ) {

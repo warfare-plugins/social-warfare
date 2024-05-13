@@ -1,64 +1,62 @@
 <?php
 
 /**
-* The core Social Warfare admin settings page.
-*
-* This extensive method instantiates each of the five main tabs:
-* Display, Styles, Social Identity, Advanced, and Registration.
-*
-* For each of these tabs all of the core sections and options
-* are also created.
-*
-* Addons, such as Pro, can hook into this object to add
-* their own sections and options by using the one of the
-*
-* @package   SocialWarfare\Functions\Social-Networks
-* @copyright Copyright (c) 2018, Warfare Plugins, LLC
-* @license   GPL-3.0+
-* @since     3.0.0   | Created | 02 MAR 2017
-* @access    public
-* @todo      Clean out all array bracket notations.
-*
-*/
+ * The core Social Warfare admin settings page.
+ *
+ * This extensive method instantiates each of the five main tabs:
+ * Display, Styles, Social Identity, Advanced, and Registration.
+ *
+ * For each of these tabs all of the core sections and options
+ * are also created.
+ *
+ * Addons, such as Pro, can hook into this object to add
+ * their own sections and options by using the one of the
+ *
+ * @package   SocialWarfare\Functions\Social-Networks
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     3.0.0   | Created | 02 MAR 2017
+ * @access    public
+ * @todo      Clean out all array bracket notations.
+ */
 class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* The Options Page Tabs
-	*
-	* An object holding each of the tabs by index name.
-	* The tab is required to be either an SWP_Options_Page_Tab
-	* object, or a class which extends this object.
-	*
-	*/
+	 * The Options Page Tabs
+	 *
+	 * An object holding each of the tabs by index name.
+	 * The tab is required to be either an SWP_Options_Page_Tab
+	 * object, or a class which extends this object.
+	 */
 	public $tabs;
 
 
 	/**
-	* Boolean indicating whether the plugin is registered or not.
-	*
-	* @var bool $swp_registration
-	*
-	*/
+	 * Boolean indicating whether the plugin is registered or not.
+	 *
+	 * @var bool $swp_registration
+	 */
 	public $swp_registration;
 
 
 	/**
-	* The user's selected icons to display.
-	*
-	* As defined in the Display tab on the settings page.
-	*
-	*/
+	 * The user's selected icons to display.
+	 *
+	 * As defined in the Display tab on the settings page.
+	 */
 	public $icons = array();
 
 	/**
 	 * Boolean indicating whether the plugin is registered or not.
+	 *
 	 * @var bool
 	 */
 	public $is_registered;
 
 	/**
 	 * HTML content for the options page.
+	 *
 	 * @var string
 	 */
 	public $html;
@@ -75,7 +73,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @param  void
 	 * @return object $this The options page object. Allows for method chaining.
-	 *
 	 */
 	public function __construct() {
 		// Create a 'tabs' object to which we can begin adding tabs.
@@ -85,7 +82,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		 * STEP #1: We create the initial options object immediately when
 		 * this class is loaded which takes place while WordPress is loading
 		 * all of the installed plugins on the site.
-		 *
 		 */
 		$this->init_display_tab()
 			->init_styles_tab()
@@ -99,7 +95,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		 * tabs, sections, and options prior to the page being rendered.
 		 * They will need to use the 'plugins_loaded' hook to ensure that
 		 * the first step above has already occurred.
-		 *
 		 */
 
 		/**
@@ -107,7 +102,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		 * options page and it's necessary HTML. We defer this step until
 		 * much later using the admin_menu hook to ensure that all addons
 		 * have had an opportunity to modify the options object as needed.
-		 *
 		 */
 		add_action( 'admin_menu', array( $this, 'options_page' ) );
 
@@ -149,13 +143,12 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Create the admin menu options page
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return void
-	*
-	*/
+	 * Create the admin menu options page
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return void
+	 */
 	public function options_page() {
 
 		// Declare the menu link
@@ -185,13 +178,12 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Add a tab to the Options Page object.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param object $tab The SWP_Options_Page_Tab object to add.
-	* @return object $this The calling instance, for method chaining.
-	*
-	*/
+	 * Add a tab to the Options Page object.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param object $tab The SWP_Options_Page_Tab object to add.
+	 * @return object $this The calling instance, for method chaining.
+	 */
 	public function add_tab( $tab ) {
 		$class = get_class( $tab );
 		if ( ! ( 'SWP_Options_Page_Tab' === $class || is_subclass_of( $class, 'SWP_Options_Page_Tab' ) ) ) :
@@ -209,14 +201,13 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Enqueue the Settings Page CSS & Javascript
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @see    $this->options_page()
-	* @param  void
-	* @return void
-	*
-	*/
+	 * Enqueue the Settings Page CSS & Javascript
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @see    $this->options_page()
+	 * @param  void
+	 * @return void
+	 */
 	public function admin_css() {
 		$suffix     = SWP_Script::get_suffix();
 		$wp_scripts = wp_scripts();
@@ -246,15 +237,14 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Enqueue the admin javascript
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @see $this->options_page()
-	* @param  void
-	* @return void
-	* @todo: Are we still using the tooltip for anything?
-	*
-	*/
+	 * Enqueue the admin javascript
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @see $this->options_page()
+	 * @param  void
+	 * @return void
+	 * @todo: Are we still using the tooltip for anything?
+	 */
 	public function admin_js() {
 		$suffix = SWP_Script::get_suffix();
 
@@ -285,13 +275,12 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Creates the commonly used color choides for choice settings.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return array The key/value pairs of color choides.
-	*
-	*/
+	 * Creates the commonly used color choides for choice settings.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return array The key/value pairs of color choides.
+	 */
 	public static function get_color_choices_array() {
 		return array(
 			'full_color'            => __( 'Full Color', 'social-warfare' ),
@@ -309,16 +298,15 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Calls rendering methods to assemble HTML for the Admin Settings page.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return object $this The calling object for method chaining.
-	*
-	*/
+	 * Calls rendering methods to assemble HTML for the Admin Settings page.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this The calling object for method chaining.
+	 */
 	public function render_HTML() {
-		//* Fetch all the addons the user has installed,
-		//* whether or not they are actively registered.
+		// * Fetch all the addons the user has installed,
+		// * whether or not they are actively registered.
 		$addons              = apply_filters( 'swp_registrations', array() );
 		$this->is_registered = 0;
 		$addon_templates     = array();
@@ -349,7 +337,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 		$html       = $menu . $tabs;
 		$this->html = $html;
-		//      echo $html;
+		// echo $html;
 		echo htmlspecialchars_decode( wp_kses( $html, SWP_Section_HTML::get_allowable_html() ) );
 
 		return $this;
@@ -357,14 +345,13 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Handwritten list of OG Meta types.
-	*
-	* @since  3.0.0  | 01 MAR 2018 | Created
-	* @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
-	* @param  void
-	* @return array Custom Post Types.
-	*
-	*/
+	 * Handwritten list of OG Meta types.
+	 *
+	 * @since  3.0.0  | 01 MAR 2018 | Created
+	 * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
+	 * @param  void
+	 * @return array Custom Post Types.
+	 */
 	protected function get_og_post_types() {
 		return array(
 			'article',
@@ -397,14 +384,13 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Provides the common placement choices for the buttons.
-	*
-	* @since  3.0.0  | 01 MAR 2018 | Created
-	* @since  3.1.0 | 13 JUN 2018 | Replaced Array bracket notation.
-	* @param  void
-	* @return array Key/Value pairs of button placement options.
-	*
-	*/
+	 * Provides the common placement choices for the buttons.
+	 *
+	 * @since  3.0.0  | 01 MAR 2018 | Created
+	 * @since  3.1.0 | 13 JUN 2018 | Replaced Array bracket notation.
+	 * @param  void
+	 * @return array Key/Value pairs of button placement options.
+	 */
 	protected function get_static_options_array() {
 		return array(
 			'above' => __( 'Above the Content', 'social-warfare' ),
@@ -416,15 +402,14 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Create the Advanced section of the display tab.
-	*
-	* This section offers miscellaneous advanced settings for finer control of the plugin.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return object $this The calling object for method chaining.
-	*
-	*/
+	 * Create the Advanced section of the display tab.
+	 *
+	 * This section offers miscellaneous advanced settings for finer control of the plugin.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this The calling object for method chaining.
+	 */
 	protected function init_advanced_tab() {
 
 		$advanced = new SWP_Options_Page_Tab( __( 'Advanced', 'social-warfare' ), 'advanced' );
@@ -446,7 +431,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			->set_description( __( 'If you want to stop content pirates from stealing your content, turn this on. This feature detects when your site is being targeted by framing apps and immediately redirects your visitors to the unframed, original version of your site.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-frame-buster/' );
 
-			//* sniplyBuster => frame_buster
+			// * sniplyBuster => frame_buster
 			$frame_buster_toggle = new SWP_Option_Toggle( __( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
 			$frame_buster_toggle->set_default( true )
 				->set_size( 'sw-col-300' );
@@ -473,15 +458,14 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Create the Display section and its child options.
-	*
-	* This tab offers genereral layout setings for the front end of the site.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return object $this The calling object for method chaining.
-	*
-	*/
+	 * Create the Display section and its child options.
+	 *
+	 * This tab offers genereral layout setings for the front end of the site.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this The calling object for method chaining.
+	 */
 	protected function init_display_tab() {
 		$display = new SWP_Options_Page_Tab( __( 'Display', 'social-warfare' ), 'display' );
 		$display->set_priority( 10 );
@@ -491,7 +475,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				->set_description( __( 'Drag & Drop to activate and order your share buttons.', 'social-warfare' ) )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
 
-				//* These two sections are unique and need special HTML.
+				// * These two sections are unique and need special HTML.
 				$active = new SWP_Option_Icons( __( 'Active', 'social-warfare' ), 'active' );
 				$active->do_active_icons()->set_priority( 10 );
 
@@ -505,19 +489,19 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				->set_priority( 20 )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
 
-				//* toteseach => network_count
+				// * toteseach => network_count
 				$network_shares = new SWP_Option_Toggle( __( 'Button Counts', 'social-warfare' ), 'network_shares' );
 				$network_shares->set_default( true )
 					->set_priority( 10 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
-				//* totes => totals
+				// * totes => totals
 				$total_shares = new SWP_Option_Toggle( __( 'Total Counts', 'social-warfare' ), 'total_shares' );
 				$total_shares->set_default( true )
 					->set_priority( 20 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
-				//* swDecimals => decimals
+				// * swDecimals => decimals
 				$decimals = new SWP_Option_Select( __( 'Decimal Places', 'social-warfare' ), 'decimals' );
 				$decimals->set_choices(
 					array(
@@ -530,7 +514,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_priority( 30 );
 
-				//* swp_decimal_separator => decimal_separator
+				// * swp_decimal_separator => decimal_separator
 				$decimal_separator = new SWP_Option_Select( __( 'Decimal Separator', 'social-warfare' ), 'decimal_separator' );
 				$decimal_separator->set_choices(
 					array(
@@ -542,7 +526,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_priority( 50 );
 
-				//* swTotesFormat => totals_alignment
+				// * swTotesFormat => totals_alignment
 				$totals_alignment = new SWP_Option_Select( __( 'Alignment', 'social-warfare' ), 'totals_alignment' );
 				$totals_alignment->set_choices(
 					array(
@@ -575,15 +559,14 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Create the Registration section of the display tab.
-	*
-	* This section allows users to register activation keys for the premium plugin features.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return object $this The calling object for method chaining.
-	*
-	*/
+	 * Create the Registration section of the display tab.
+	 *
+	 * This section allows users to register activation keys for the premium plugin features.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return object $this The calling object for method chaining.
+	 */
 	protected function init_registration_tab( $addons ) {
 		$registration = new SWP_Options_Page_Tab( __( 'Registration', 'social-warfare' ), 'registration' );
 
@@ -610,7 +593,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @param void
 	 * @hook filter | swp_authorizations | Array of network keys requesting oAuth access.
 	 * @return array $authorization_options The qualified SWP_Options ready to render_HTML().
-	 *
 	 */
 	public function establish_authorizations() {
 		$authorizations        = apply_filters( 'swp_authorizations', array() );
@@ -638,7 +620,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				 * JavaScript needs to delete the tokens when this button is clicked.
 				 * The SWP_Option_Button does not provide access for data-attributes,
 				 * so we'll hack together a CSS classname to parse in JS.
-				 *
 				 */
 				$js_class = 'swp-network-' . $network_key;
 				$class    = "button sw-navy-button swp-revoke-button $js_class";
@@ -656,15 +637,14 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Create the Social Identity section of the display tab.
-	*
-	* This section allows the user to set social network handles and OG metadata.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return SWP_Options_Page $this The calling object for method chaining.
-	*
-	*/
+	 * Create the Social Identity section of the display tab.
+	 *
+	 * This section allows the user to set social network handles and OG metadata.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return SWP_Options_Page $this The calling object for method chaining.
+	 */
 	protected function init_social_tab() {
 		$social_identity = new SWP_Options_Page_Tab( __( 'Social Identity', 'social-warfare' ), 'social_identity' );
 		$social_identity->set_priority( 30 );
@@ -678,19 +658,19 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				->set_priority( 10 )
 				->set_default( '' );
 
-			//* pinterestID => pinterest_id
+			// * pinterestID => pinterest_id
 			$pinterest_id = new SWP_Option_Text( __( 'Pinterest Username', 'social-warfare' ), 'pinterest_id' );
 			$pinterest_id->set_size( 'sw-col-300' )
 				->set_priority( 20 )
 				->set_default( '' );
 
-			//* facebookPublisherUrl => facebook_publisher_url
+			// * facebookPublisherUrl => facebook_publisher_url
 			$facebook_publisher_url = new SWP_Option_Text( __( 'Facebook Page URL', 'social-warfare' ), 'facebook_publisher_url' );
 			$facebook_publisher_url->set_size( 'sw-col-300' )
 				->set_priority( 30 )
 				->set_default( '' );
 
-			//* facebookAppID => facebook_app_id
+			// * facebookAppID => facebook_app_id
 			$facebook_app_id = new SWP_Option_Text( __( 'Facebook App ID', 'social-warfare' ), 'facebook_app_id' );
 			$facebook_app_id->set_size( 'sw-col-300' )
 				->set_priority( 40 )
@@ -706,15 +686,14 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Create the Styles section of the display tab.
-	*
-	* This section allows the user to refine the look, feel, and placement of buttons.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return SWP_Options_Page $this The calling object for method chaining.
-	*
-	*/
+	 * Create the Styles section of the display tab.
+	 *
+	 * This section allows the user to refine the look, feel, and placement of buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return SWP_Options_Page $this The calling object for method chaining.
+	 */
 	protected function init_styles_tab() {
 		$styles = new SWP_Options_Page_Tab( __( 'Styles', 'social-warfare' ), 'styles' );
 		$styles->set_priority( 20 );
@@ -731,8 +710,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			//
 			// $total_counts = new SWP_Options_Page_Section( __( 'Total Counts', 'social-warfare' ), 'total_counts' );
 			// $total_counts->set_description( __( 'Customize how the "Total Shares" section of your share buttons look.', 'social-warfare' ) )
-			//     ->set_priority( 20 )
-			//     ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
+			// ->set_priority( 20 )
+			// ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
 
 			// $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
@@ -741,13 +720,13 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				->set_priority( 30 )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
 
-				//* float => floating_panel
+				// * float => floating_panel
 				$floating_panel = new SWP_Option_Toggle( __( 'Floating Share Buttons', 'social-warfare' ), 'floating_panel' );
 				$floating_panel->set_default( false )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_priority( 10 );
 
-				//* floatOption => float_location
+				// * floatOption => float_location
 				$float_location = new SWP_Option_Select( __( 'Float Position', 'social-warfare' ), 'float_location' );
 				$float_location->set_choices(
 					array(
@@ -762,21 +741,21 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_dependency( 'floating_panel', array( true ) );
 
-				//* floatBgColor => float_background_color
+				// * floatBgColor => float_background_color
 				$float_background_color = new SWP_Option_Text( __( 'Background Color', 'social-warfare' ), 'float_background_color' );
 				$float_background_color->set_default( '#ffffff' )
 					->set_priority( 25 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_dependency( 'float_location', array( 'top', 'bottom' ) );
 
-				//* swp_float_scr_sz => float_screen_width
+				// * swp_float_scr_sz => float_screen_width
 				$float_screen_width = new SWP_Option_Text( __( 'Minimum Screen Width', 'social-warfare' ), 'float_screen_width' );
 				$float_screen_width->set_default( '1100' )
 					->set_priority( 30 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_dependency( 'float_location', array( 'left', 'right' ) );
 
-				//* sideReveal => transition
+				// * sideReveal => transition
 				$float_transition = new SWP_Option_Select( __( 'Transition', 'social-warfare' ), 'transition' );
 				$float_transition->set_priority( 40 )
 					->set_choices(
@@ -817,19 +796,18 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Creates the HTML for the admin top menu (Logo, tabs, and save button).
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string $html The fully qualified HTML for the menu.
-	*
-	*/
+	 * Creates the HTML for the admin top menu (Logo, tabs, and save button).
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string $html The fully qualified HTML for the menu.
+	 */
 	private function create_menu( $addons ) {
-		//* Open the admin top menu wrapper.
+		// * Open the admin top menu wrapper.
 		$html      = '<div class="sw-header-wrapper">';
 			$html .= '<div class="sw-grid sw-col-940 sw-top-menu" sw-registered="' . $this->is_registered . '">';
 
-				//* Menu wrapper and tabs.
+				// * Menu wrapper and tabs.
 				$html     .= '<div class="sw-grid sw-col-700">';
 					$html .= '<img class="sw-header-logo" src="' . SWP_PLUGIN_URL . '/assets/images/admin-options-page/social-warfare-light.png" />';
 					$html .= '<img class="sw-header-logo-pro" src="' . SWP_PLUGIN_URL . '/assets/images/admin-options-page/social-warfare-pro-light.png" />';
@@ -844,7 +822,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 				if ( $prioritized_tab['key'] === $tab->key ) :
 
-					//* Skip the registration tab if there are no addons.
+					// * Skip the registration tab if there are no addons.
 					if ( 'registration' === $tab->key && 0 === count( $addons ) ) :
 						continue;
 					endif;
@@ -865,7 +843,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					$html .= '</ul>';
 				$html     .= '</div>';
 
-				//* "Save Changes" button.
+				// * "Save Changes" button.
 				$html .= '<div class="sw-grid sw-col-220 sw-fit">';
 				$html .= '<a href="#" class="button sw-navy-button sw-save-settings">' . __( 'Save Changes', 'social-warfare' ) . '</a>';
 				$html .= '</div>';
@@ -880,19 +858,18 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 
 	/**
-	* Renders HTML for each tab and assembles for outputting.
-	*
-	* Note: We have to utilize a $map varaible for this and each
-	* other render() method. This is because the data are all
-	* stored as objects, when can not be iterated by index,
-	* only by key. Since they keys are arbitrary (for a plugin
-	* or addon, for example), this is no good, hence the map.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string $container The Admin tab HTML container.
-	*
-	*/
+	 * Renders HTML for each tab and assembles for outputting.
+	 *
+	 * Note: We have to utilize a $map varaible for this and each
+	 * other render() method. This is because the data are all
+	 * stored as objects, when can not be iterated by index,
+	 * only by key. Since they keys are arbitrary (for a plugin
+	 * or addon, for example), this is no good, hence the map.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string $container The Admin tab HTML container.
+	 */
 	private function create_tabs( $active_addons, $registered_addons ) {
 		$sidebar    = new SWP_Section_HTML( 'Sidebar' );
 		$tab_map    = $this->sort_by_priority( $this->tabs );
@@ -941,7 +918,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @since 4.4.0 | 09 JAN 2013 | Added nonce and capabilities check.
 	 * @param void
 	 * @return void
-	 *
 	 */
 	public function delete_network_tokens() {
 

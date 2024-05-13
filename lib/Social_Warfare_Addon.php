@@ -13,7 +13,6 @@
  * @package Social Warfar / Lib
  * @since  3.0.0 | 01 MAR 2018 | Created
  * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
- *
  */
 class Social_Warfare_Addon {
 
@@ -53,7 +52,6 @@ class Social_Warfare_Addon {
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array $args [description]
 	 * @return void
-	 *
 	 */
 	public function __construct( $args = array() ) {
 
@@ -64,7 +62,6 @@ class Social_Warfare_Addon {
 		/**
 		 * This queues up our register and unregister hooks that will be sent
 		 * from the settings page to admin-ajax.php.
-		 *
 		 */
 		add_action( 'wp_ajax_swp_register_plugin', array( $this, 'register_plugin' ) );
 		add_action( 'wp_ajax_swp_unregister_plugin', array( $this, 'unregister_plugin' ) );
@@ -74,7 +71,6 @@ class Social_Warfare_Addon {
 		 * This is a custom filter hook that gets called in core that fetches
 		 * all of the addons so that we can have the key for each addon in a
 		 * nice, neat array for easy access.
-		 *
 		 */
 		add_filter( 'swp_registrations', array( $this, 'add_self' ) );
 	}
@@ -103,9 +99,8 @@ class Social_Warfare_Addon {
 	 *
 	 * @since  3.0.0 | 01 MAR 2019 | Created
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
-	 * @param  array  $args An associative array of class properties.
+	 * @param  array $args An associative array of class properties.
 	 * @return void
-	 *
 	 */
 	private function establish_class_properties( $args = array() ) {
 
@@ -121,7 +116,6 @@ class Social_Warfare_Addon {
 		 * Check to ensure that all required properties have been passed in.
 		 * If a required field hasn't been passed in from the addon, we'll
 		 * manually trigger an exception here to notify the developer.
-		 *
 		 */
 		foreach ( $required as $key ) {
 			if ( ! isset( $this->$key ) ) :
@@ -137,7 +131,6 @@ class Social_Warfare_Addon {
 		 * In third party addons, vendors can set this to their own websites. If
 		 * not, we'll assume it's one of our own addons and ping our site to
 		 * check the license key.
-		 *
 		 */
 		if ( isset( $this->product_id ) && empty( $this->store_url ) ) {
 			$this->store_url = 'https://warfareplugins.com';
@@ -156,7 +149,6 @@ class Social_Warfare_Addon {
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array $addons The array of addons currently activated.
 	 * @return array $addons The modified array of addons currently activated.
-	 *
 	 */
 	public function add_self( $addons ) {
 		$addons[] = $this;
@@ -172,14 +164,12 @@ class Social_Warfare_Addon {
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  void
 	 * @return void Processed values are stored in $this->license_key.
-	 *
 	 */
 	public function establish_license_key() {
 
 		/**
 		 * The license key is stored in our options set in the database. This
 		 * utility method allows us to easily retrieve it.
-		 *
 		 */
 		$key = SWP_Utility::get_option( $this->key . '_license_key' );
 
@@ -189,7 +179,6 @@ class Social_Warfare_Addon {
 		 * set when 3.0.0 rolled out. This is most likely no longer needed, but
 		 * we'll leave it in there for any stragglers who are updating from 2.x
 		 * to a current version.
-		 *
 		 */
 		if ( ! $key ) {
 			$old_options = get_option( 'socialWarfareOptions', false );
@@ -201,7 +190,6 @@ class Social_Warfare_Addon {
 		/**
 		 * If we were able to find a license key, then we'll go ahead and store
 		 * it in a local class property for this addon.
-		 *
 		 */
 		$this->license_key = $key ? $key : '';
 	}
@@ -220,14 +208,12 @@ class Social_Warfare_Addon {
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @param  void
 	 * @return bool The current registration status
-	 *
 	 */
 	public function establish_resgistration() {
 
 		/**
 		 * The timestamp in the database will represent the unix time of the
 		 * last time that the license key was checked to see if it is still valid.
-		 *
 		 */
 		$timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' );
 		if ( empty( $timestamp ) ) {
@@ -240,7 +226,6 @@ class Social_Warfare_Addon {
 		/**
 		 * If they have a key and a week hasn't passed since the last check,
 		 * just return true...the plugin is registered.
-		 *
 		 */
 		if ( ! empty( $this->license_key ) && $current_time < $time_to_recheck ) {
 			return true;
@@ -314,7 +299,6 @@ class Social_Warfare_Addon {
 	 * @since  2.3.0 Hooked registration into the new EDD Software Licensing API
 	 * @param  none
 	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
-	 *
 	 */
 	public function register_plugin() {
 		// Check to ensure that license key was passed into the function
@@ -396,7 +380,6 @@ class Social_Warfare_Addon {
 	 * @since  2.3.0 Hooked into the EDD Software Licensing API
 	 * @param  none
 	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
-	 *
 	 */
 	public function unregister_plugin() {
 		// Setup the variables needed for processing

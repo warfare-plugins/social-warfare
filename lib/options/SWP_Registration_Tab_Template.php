@@ -27,7 +27,7 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 			// translators: %s is the name of the feature or section.
 			$html .= '<h2>' . sprintf( __( '%s Registration', 'social-warfare' ), $this->name ) . '</h2>';
 
-			//* Print both types of HTML. Javascript determines which to display.
+			// * Print both types of HTML. Javascript determines which to display.
 			$html .= $this->not_registered_HTML();
 			$html .= $this->is_registered_HTML();
 

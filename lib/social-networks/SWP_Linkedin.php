@@ -15,7 +15,6 @@ class SWP_Linkedin extends SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function __construct() {
 

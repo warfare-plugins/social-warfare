@@ -8,7 +8,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 21 FEB 2018 | Updated to a class.
- *
  */
 class SWP_Header_Output {
 
@@ -18,7 +17,6 @@ class SWP_Header_Output {
 	 *
 	 * @since 3.0.0
 	 * @var array $swp_user_options An array of options as set by the WordPress admin.
-	 *
 	 */
 
 
@@ -27,7 +25,6 @@ class SWP_Header_Output {
 	 *
 	 * @since 3.0.0
 	 * @var array $swp_user_options An array of options as set by the WordPress admin.
-	 *
 	 */
 	public $options;
 
@@ -39,7 +36,6 @@ class SWP_Header_Output {
 	 *  pulling in the global in each method in which it is needed.
 	 *
 	 * @since 3.0.0 | 21 FEB 2018 | Created
-	 *
 	 */
 	public function __construct() {
 		global $swp_user_options;
@@ -64,7 +60,6 @@ class SWP_Header_Output {
 	 * @access public
 	 * @param  none
 	 * @return none
-	 *
 	 */
 	public function add_header_output() {
 
@@ -83,7 +78,6 @@ class SWP_Header_Output {
 		 * @access public
 		 * @var array $info An array of information
 		 * @return array $info The modified array with the 'meta_tag_values' index populated
-		 *
 		 */
 		$info = apply_filters( 'swp_header_values', $info );
 
@@ -96,7 +90,6 @@ class SWP_Header_Output {
 		 * @access public
 		 * @var array $info An array of information
 		 * @return array $info The modified array with the 'html_output' index populated.
-		 *
 		 */
 		$meta_html = apply_filters( 'swp_header_html', '' );
 
@@ -118,16 +111,14 @@ class SWP_Header_Output {
 	 * @since  1.0.0
 	 * @since  4.0.0 | 21 FEB 2020 | Added font-display:block
 	 * @access public
-	 * @param  array  $info An array of information about the post
+	 * @param  array $info An array of information about the post
 	 * @return array  $info The modified array
-	 *
 	 */
 	public function output_font_css( $meta_html ) {
 
 		/**
 		 * The var $meta_html is passed to both string and array filters. The
 		 * solution is to re-wire those filters appropriately. This is the patch.
-		 *
 		 */
 		if ( is_array( $meta_html ) ) {
 			return $meta_html;
@@ -137,7 +128,6 @@ class SWP_Header_Output {
 		 * This ensures that the icon font CSS that gets compiled below will
 		 * only be generated one time. If it's already been generated and exists
 		 * in this string, then bail out.
-		 *
 		 */
 		if ( ! empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
 			return $meta_html;
@@ -146,7 +136,6 @@ class SWP_Header_Output {
 		/**
 		 * If, for some reason, we have something other than a string here,
 		 * convert it into a string and then proceed as planned.
-		 *
 		 */
 		if ( false === is_string( $meta_html ) ) {
 			$meta_html = '';
@@ -170,7 +159,6 @@ class SWP_Header_Output {
 		 * If we are in the admin area, then we need to echo this string
 		 * directly to the screen. Otherwise, we're going to return the string
 		 * so that it will get output via the header hook.
-		 *
 		 */
 		if ( true === is_admin() ) {
 			echo $style;

@@ -32,7 +32,7 @@ function register_gutenberg_blocks() {
 
 	wp_enqueue_style( 'social-warfare-block-css' );
 
-	//* All of our block scripts are compiled to a single, common file.
+	// * All of our block scripts are compiled to a single, common file.
 	$scripts = array(
 		'editor_script' => 'social-warfare-block-js',
 		'block_script'  => 'social-warfare-block-js',
@@ -46,7 +46,7 @@ function register_gutenberg_blocks() {
 /**
  * Create the custom Social Warfare category for Gutenberg blocks.
  *
- * @param array $categories The registerd Gutenberg categories.
+ * @param array  $categories The registerd Gutenberg categories.
  * @param Object $post The WP post being edited, to optionally conditionally load blocks.
  * @since 3.4.0 | 26 NOV 2018 | Created.
  */
