@@ -15,7 +15,6 @@
  * @license   GPL-3.0+
  * @since     3.3.0 | 14 AUG 2018 | Created.
  * @access    public
- *
  */
 class SWP_Utility {
 
@@ -24,7 +23,6 @@ class SWP_Utility {
 	 * Insantiates filterss and hooks, for admin and ajax.
 	 *
 	 * @since  3.3.0 \ 14 AUG 2018 | Created.
-	 *
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_swp_store_settings', array( 'SWP_Utility', 'store_settings' ) );
@@ -44,7 +42,6 @@ class SWP_Utility {
 	 * @param  string $key   The key associated with the option we want.
 	 *
 	 * @return mixed  $value The value of the option if set, or false.
-	 *
 	 */
 	public static function get_option( $key = '' ) {
 		if ( ! isset( $key ) || ! is_string( $key ) ) :
@@ -94,6 +91,7 @@ class SWP_Utility {
 
 	/**
 	 * Fetches a meta key we know to be an array.
+	 *
 	 * @param  [type] $id  [description]
 	 * @param  [type] $key [description]
 	 * @return [type]      [description]
@@ -110,12 +108,12 @@ class SWP_Utility {
 			return true;
 		}
 
-		//* I think everything fetched form meta is returned as a string.
+		// * I think everything fetched form meta is returned as a string.
 		if ( is_string( $value ) ) {
 			$value = json_decode( $value );
 		}
 
-		//* Do the same kind of checks/filtering as above.
+		// * Do the same kind of checks/filtering as above.
 		return is_array( $value ) ? $value : false;
 	}
 
@@ -172,7 +170,6 @@ class SWP_Utility {
 	 * @since  3.5.3 | 21 MAR 2019 | Created the method.
 	 *
 	 * @return bool True if it is good, else it dies.
-	 *
 	 */
 	public static function auth() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -192,7 +189,6 @@ class SWP_Utility {
 	 * @param  float $number The float to be rounded.
 	 *
 	 * @return float A rounded number.
-	 *
 	 */
 	public static function kilomega( $number = 0 ) {
 		if ( empty( $number ) ) :
@@ -211,7 +207,7 @@ class SWP_Utility {
 			$value  = $number / 1000000;
 		}
 
-		if ( 'period' === SWP_Utility::get_option( 'decimal_separator' ) ) :
+		if ( 'period' === self::get_option( 'decimal_separator' ) ) :
 			$decimal_point       = '.';
 			$thousands_separator = ',';
 		else :
@@ -219,7 +215,7 @@ class SWP_Utility {
 			$thousands_separator = '.';
 		endif;
 
-		$decimals       = SWP_Utility::get_option( 'decimals' );
+		$decimals       = self::get_option( 'decimals' );
 		$display_number = number_format( $value, $decimals, $decimal_point, $thousands_separator ) . $suffix;
 
 		return $display_number;
@@ -238,7 +234,6 @@ class SWP_Utility {
 	 * @param  int $post_id The post ID to use when getting an exceprt.
 	 *
 	 * @return string The excerpt.
-	 *
 	 */
 	public static function get_the_excerpt( $post_id ) {
 		// Check if the post has an excerpt
@@ -288,7 +283,6 @@ class SWP_Utility {
 	 * @param  string $type The query paramter to check for.
 	 *
 	 * @return bool True if the specified key is set for debugging, else false.
-	 *
 	 */
 	public static function debug( $key = '' ) {
 		return ! empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) === strtolower( $key ) );
@@ -301,7 +295,6 @@ class SWP_Utility {
 	 * @param  string $content The text to be filtered.
 	 *
 	 * @return string $content The filtered text.
-	 *
 	 */
 	public static function convert_smart_quotes( $content ) {
 		$content = str_replace( '"', "'", $content );
@@ -318,7 +311,6 @@ class SWP_Utility {
 	 *
 	 * @since 2.x.x | Unknown | Created.
 	 * @return array The names of registered post types.
-	 *
 	 */
 	public static function get_post_types() {
 		$types = get_post_types(
@@ -340,10 +332,9 @@ class SWP_Utility {
 	 *
 	 * @since 2.2.1 | Unknown | Created.
 	 * @param bool Whether to show Screen Options tab. Default true.
-	 * @param WP_Screen $wp_screen Current WP_Screen instance.
+	 * @param WP_Screen                               $wp_screen Current WP_Screen instance.
 	 *
 	 * @return boolean $display or false.
-	 *
 	 */
 	public static function remove_screen_options( $show_screen, $wp_screen ) {
 		$blacklist = array( 'admin.php?page=social-warfare' );
@@ -364,7 +355,6 @@ class SWP_Utility {
 	 * @since 2.3.3 | 25 SEP 2017 | Created.
 	 *
 	 * @return string The URL of the site.
-	 *
 	 */
 	public static function get_site_url() {
 		if ( true === is_multisite() ) {
@@ -382,7 +372,6 @@ class SWP_Utility {
 	 * @param  string $key   The key under which the option needs to be stored.
 	 * @param  mixed  $value The value at the key.
 	 * @return bool          True if the option was updated, else false.
-	 *
 	 */
 	public static function update_option( $key, $value ) {
 		if ( empty( $key ) ) {
@@ -423,7 +412,6 @@ class SWP_Utility {
 	 * @param  string $core_version The verison of Core currently installed.
 	 * @param  string $addon_version The version of the addon currently installed.
 	 * @return bool   True if the versions are compatible, else false.
-	 *
 	 */
 	public static function check_version_range( $core_version, $addon_version ) {
 		$core_versions  = explode( '.', $core_version );
@@ -431,12 +419,12 @@ class SWP_Utility {
 
 		$version_difference = absint( $core_versions[1] - $addon_versions[1] );
 
-		//* Force plugin users to be on the same major version.
+		// * Force plugin users to be on the same major version.
 		if ( $core_versions[0] !== $addon_verisons[0] ) {
 			return false;
 		}
 
-		//* Require plugin users to be within nearby secondary versions.
+		// * Require plugin users to be within nearby secondary versions.
 		if ( $version_difference < 5 ) {
 			return true;
 		}
@@ -451,7 +439,6 @@ class SWP_Utility {
 	 * @param  string $params The pre-formatted string of query args.
 	 * @param  array  $params And asssociative array to format as query args.
 	 * @return exit           End all program exectution and return to SW.
-	 *
 	 */
 	public static function settings_page_redirect( $params = '' ) {
 		$destination = admin_url( '?page=social-warfare' );
@@ -475,7 +462,6 @@ class SWP_Utility {
 	 * @since  3.5.0  | 14 FEB 2019 | Created.
 	 * @since  4.4.0 | 09 JAN 2013 | Added nonce and capabilities check.
 	 * @return bool   True iff reset, else false.
-	 *
 	 */
 	public static function reset_post_meta() {
 
@@ -514,7 +500,6 @@ class SWP_Utility {
 	 * @since 3.6.0   | 24 APR 2019 | Created.
 	 * @param  string $image_url The image to get an ID for.
 	 * @return mixed  integer ID if an ID is found, else false.
-	 *
 	 */
 	public static function get_image_id_by_url( $image_url ) {
 		global $wpdb;
@@ -547,7 +532,6 @@ class SWP_Utility {
 	 * @param  string $haystack The string to be examined.
 	 * @param  string $needle   The string to search for.
 	 * @return boolean True on success, False on failure.
-	 *
 	 */
 	public static function starts_with( $haystack, $needle ) {
 		$length = strlen( $needle );
@@ -568,7 +552,6 @@ class SWP_Utility {
 	 * @param  string $haystack The string to be examined.
 	 * @param  string $needle   The string to search for.
 	 * @return boolean True on success, False on failure.
-	 *
 	 */
 	public static function ends_with( $haystack, $needle ) {
 		$length = strlen( $needle );

@@ -8,7 +8,6 @@
  * Author:      Warfare Plugins
  * Author URI:  https://warfareplugins.com
  * Text Domain: social-warfare
- *
  */
 defined( 'WPINC' ) || die;
 
@@ -18,7 +17,6 @@ defined( 'WPINC' ) || die;
  * for things like includes and requires.
  *
  * @since 4.2.0 | 19 NOV 2020 | The str_replace() removes any linebreaks in the string.
- *
  */
 define( 'SWP_VERSION', '4.4.7' );
 define( 'SWP_DEV_VERSION', '2024.04.05 MASTER' );
@@ -34,7 +32,6 @@ define( 'SWP_STORE_URL', 'https://warfareplugins.com' );
  * that they don't show up as plain text.
  *
  * @todo This needs to be moved into the Social_Warfare class.
- *
  */
 add_filter( 'the_excerpt', 'do_shortcode', 1 );
 
@@ -44,7 +41,6 @@ add_filter( 'the_excerpt', 'do_shortcode', 1 );
  * main function of this file (the main plugin file loaded by WordPress) is to
  * simply load the main Social_Warfare class and then instantiate it. This will,
  * in turn, fire up all the functionality of the plugin.
- *
  */
 require_once SWP_PLUGIN_DIR . '/lib/Social_Warfare.php';
 new Social_Warfare();

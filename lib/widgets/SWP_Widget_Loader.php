@@ -1,14 +1,13 @@
 <?php
 
 /**
-* A class designed to queue up and register this plugins widgets.
-*
-* @package   SocialWarfare\Functions\Widgets
-* @copyright Copyright (c) 2018, Warfare Plugins, LLC
-* @license   GPL-3.0+
-* @since     3.0.0 | 22 FEB 2018 | Class Created
-*
-*/
+ * A class designed to queue up and register this plugins widgets.
+ *
+ * @package   SocialWarfare\Functions\Widgets
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     3.0.0 | 22 FEB 2018 | Class Created
+ */
 class SWP_Widget_Loader {
 
 
@@ -19,7 +18,6 @@ class SWP_Widget_Loader {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function __construct() {
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
@@ -32,7 +30,6 @@ class SWP_Widget_Loader {
 	 * @since  Since 3.5.0 | 13 DEC 2018 Ported from SWP_Widget
 	 * @filter swp_popular_posts_widget
 	 * @return void
-	 *
 	 */
 	public function register_widgets() {
 		$widgets = apply_filters( 'swp_widgets', array() );

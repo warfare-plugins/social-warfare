@@ -1,49 +1,46 @@
 <?php
 
 /**
-* Popular Posts Widget
-*
-* Allows users to show most popular posts by share count.
-* Settings include widget title, network selections, thumbnail options, styles, and more.
-*
-* @package   SocialWarfare\Functions
-* @copyright Copyright (c) 2018, Warfare Plugins, LLC
-* @license   GPL-3.0+
-* @since     1.0.0 | Created | Unknown
-* @since     3.0.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
-* @since     3.0.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
-* @since     3.0.0 | Updated | 09 Feb 2018 | Added the post type selector
-*
-*/
+ * Popular Posts Widget
+ *
+ * Allows users to show most popular posts by share count.
+ * Settings include widget title, network selections, thumbnail options, styles, and more.
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2018, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0 | Created | Unknown
+ * @since     3.0.0 | Updated | 07 Feb 2018 | Adding custom thumbnail sizes
+ * @since     3.0.0 | Updated | 08 Feb 2018 | Refactored code from procedural style to loops. Added set_attributes().
+ * @since     3.0.0 | Updated | 09 Feb 2018 | Added the post type selector
+ */
 class SWP_Popular_Posts_Widget extends WP_Widget {
 
 	/**
-	* Class constructor.
-	*
-	* This function really doesn't do much except call the constructor from the
-	* parent class that's built into WordPress core.
-	*
-	*  @since  1.0.0 | 01 JAN 2018 | Created
-	*  @param  void
-	*  @return void
-	*  @access public
-	*
-	*/
+	 * Class constructor.
+	 *
+	 * This function really doesn't do much except call the constructor from the
+	 * parent class that's built into WordPress core.
+	 *
+	 *  @since  1.0.0 | 01 JAN 2018 | Created
+	 *  @param  void
+	 *  @return void
+	 *  @access public
+	 */
 	public function __construct() {
 		parent::__construct( false, $name = 'Social Warfare: Popular Posts' );
 	}
 
 
 	/**
-	* Sets commonly applied attributes.
-	*
-	* @since  3.0.0 | 08 Feb 2018 | Created
-	* @param  string $name The name to be called.
-	* @param  string $css_class The CSS class to be applied.
-	* @param  string $value The default value for the element.
-	* @return string The string filled with attribute/value pairs.
-	*
-	*/
+	 * Sets commonly applied attributes.
+	 *
+	 * @since  3.0.0 | 08 Feb 2018 | Created
+	 * @param  string $name The name to be called.
+	 * @param  string $css_class The CSS class to be applied.
+	 * @param  string $value The default value for the element.
+	 * @return string The string filled with attribute/value pairs.
+	 */
 	private function set_attributes( $name, $css_class, $value ) {
 		$attributes = " id=\"{$this->get_field_id($name)}\" class=\"{$css_class}\" name=\"{$this->get_field_name($name)}\" data-swp-name=\"{$name}\" ";
 
@@ -63,7 +60,6 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	 *                              and added custom thumb sizes
 	 * @param  array $instance Current settings.
 	 * @return void Output is echoed directly to the screen
-	 *
 	 */
 	public function form( $instance ) {
 
@@ -88,7 +84,6 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		/**
 		 * If the user set their value for $var, set it to that. Otherwise set
 		 * it to the default display value.
-		 *
 		 */
 		foreach ( $defaults as $var => $display ) :
 			if ( isset( $instance[ $var ] ) ) {
@@ -204,7 +199,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</select>';
 		$form .= '</p>';
 
-		//  If $thumb_size, show the custom height/width fields.
+		// If $thumb_size, show the custom height/width fields.
 		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_width', 'widefat', $thumb_width)} />";
@@ -285,15 +280,14 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 
 	/**
-	* Update widget form values.
-	*
-	* @since  1.0.0
-	* @access public
-	* @param  array $new_instance Updated values as input by the user in WP_Widget::form()
-	* @param  array $old_instance Previously set values.
-	* @return array Sanitized array of final values.
-	*
-	*/
+	 * Update widget form values.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $new_instance Updated values as input by the user in WP_Widget::form()
+	 * @param  array $old_instance Previously set values.
+	 * @return array Sanitized array of final values.
+	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
@@ -319,17 +313,16 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 
 	/**
-	* Echoes the widget content.
-	*
-	* This sub-class over-rides this function from the parent class to generate the widget code.
-	*
-	* @since  1.0.0
-	* @since  3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
-	* @access public
-	* @param  array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
-	* @param  array $instance The settings for the particular instance of the widget.
-	*
-	*/
+	 * Echoes the widget content.
+	 *
+	 * This sub-class over-rides this function from the parent class to generate the widget code.
+	 *
+	 * @since  1.0.0
+	 * @since  3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
+	 * @access public
+	 * @param  array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
+	 * @param  array $instance The settings for the particular instance of the widget.
+	 */
 	public function widget( $args, $instance ) {
 		// Assign values from $args
 		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
@@ -359,7 +352,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 			$style = 'style_01';
 		endif;
 
-		//  Define the array of background links and clors.
+		// Define the array of background links and clors.
 
 		// Vanilla (No Styling)
 		$styles['style_01']['wrapper'] = 'background:transparent;';

@@ -13,7 +13,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     4.3.0 | 05 JAN 2023 | Created
- *
  */
 class SWP_Requests {
 
@@ -29,7 +28,6 @@ class SWP_Requests {
 	 *         value = http link where we can fetch shares for a given post
 	 * @return array associative array of responses for each network
 	 * @since  4.3.0 | 05 JAN 2023 | Created
-	 *
 	 */
 	public static function fetch_shares_via_wordpress_multi( $links ) {
 		if ( SWP_Utility::debug( 'is_cache_fresh' ) ) :
@@ -86,8 +84,8 @@ class SWP_Requests {
 	 * to resolve issues with the Bitly API's response. This function ensures compatibility and more direct control over the HTTP request.
 	 *
 	 * @param  string $url The endpoint URL for the API request.
-	 * @param  array $fields The body data (usually parameters or data payload) to be sent in the API request.
-	 * @param  array $headers Headers to be sent with the API request. Default is JSON content type.
+	 * @param  array  $fields The body data (usually parameters or data payload) to be sent in the API request.
+	 * @param  array  $headers Headers to be sent with the API request. Default is JSON content type.
 	 * @return string Response from the API request.
 	 *
 	 * @since  4.4.6 | 21 FEB 2024 | Created as a direct cURL alternative to wp_remote_post() for Bitly API.
