@@ -43,7 +43,7 @@
       "husky": "^8.0.3",
       "jsdoc": "^4.0.2",
       "lint-staged": "^15.2.0",
-      "mochawesome-json-to-md": "^0.7.2",
+      "mochawesome-json-to-md": "^1.3.5",
       "node-wp-i18n": "^1.2.7",
       "svg-react-loader": "^0.4.6",
       "taffydb": "2.7.3",
