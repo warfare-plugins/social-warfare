@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Types of Variables
  *
