@@ -1,5 +1,5 @@
 # These owners will be the default owners for everything in the repo. Unless a later match takes precedence, @andbalashov or @Nicholas-Cardot, as primary maintainers will be requested for review when someone opens a Pull Request.
-*                   @warfare-plugins/social-warfare @andbalashov @Nicholas-Cardot
+*                   @andbalashov @Nicholas-Cardot
 
 # GitHub and WordPress.org specifics
 /.github/           @andbalashov
