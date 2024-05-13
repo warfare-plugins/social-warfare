@@ -51,6 +51,18 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	*/
 	public $icons = array();
 
+	/**
+	 * Boolean indicating whether the plugin is registered or not.
+	 * @var bool
+	 */
+	public $is_registered;
+
+	/**
+	 * HTML content for the options page.
+	 * @var string
+	 */
+	public $html;
+
 
 	/**
 	 * The magic construct method to instatiate the options object.

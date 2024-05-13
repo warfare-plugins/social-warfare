@@ -141,7 +141,7 @@ class SWP_Buttons_Panel_Side extends SWP_Buttons_Panel {
 			$size     = $this->get_option( 'float_size' ) * 100;
 			$side     = $this->get_option( 'float_location' );
 			$position = $this->get_option( 'float_alignment' );
-			$classes .= " scale-${size} float-position-${position}-${side}";
+			$classes .= " scale-{$size} float-position-{$position}-{$side}";
 		}
 
 		$classes .= '" ';

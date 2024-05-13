@@ -142,6 +142,15 @@ class SWP_Social_Network {
 	 */
 	public $show_shares = false;
 
+	/**
+	 * The generated HTML for the social network button.
+	 * This property stores the button's HTML once it is generated,
+	 * to avoid regenerating it multiple times.
+	 *
+	 * @var string
+	 */
+	public $html = '';
+
 	// TODO: Docblock
 	public $visible_on_amp = true;
 

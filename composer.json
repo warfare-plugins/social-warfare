@@ -1,11 +1,36 @@
 {
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^3.8",
-        "wp-coding-standards/wpcs": "^3.0"
+    "name": "warfare-plugins/social-warfare",
+    "description": "The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.",
+    "authors": [
+        {
+            "name": "WiserSires, LLC",
+            "email": "andrii@wisersites.com"
+        }
+    ],
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "require": {
+        "php": ">=7.4",
+        "yahnis-elsts/plugin-update-checker": "5.1",
+        "ua-parser/uap-php": "dev-master"
     },
+    "require-dev": {
+        "10up/phpcs-composer": "^3.0",
+        "yoast/phpunit-polyfills": "^1.0.0"
+    },
+    "scripts": {
+        "lint": "phpcs -s . --runtime-set testVersion 7.4-",
+        "lint-fix": "phpcbf ."
+    },
+    "minimum-stability": "dev",
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "archive": {
+        "exclude": [
+            "!/vendor/"
+        ]
     }
 }

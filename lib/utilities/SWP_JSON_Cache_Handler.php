@@ -54,6 +54,13 @@ class SWP_JSON_Cache_Handler {
 
 
 	/**
+	 * Explicitly define the cache_data property to avoid dynamic property creation.
+	 * @var array
+	 */
+	private $cache_data = array();
+
+
+	/**
 	 * Instantiate the class object.
 	 *
 	 * Check if the cache is fresh, if not, ping the JSON file on our server,

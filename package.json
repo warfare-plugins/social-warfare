@@ -1,0 +1,57 @@
+{
+    "name": "social-warfare",
+    "version": "4.4.7",
+    "license": "GPL-2.0-or-later",
+    "repository": "https://github.com/warfare-plugins/social-warfare",
+    "description": "The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.",
+    "scripts": {
+      "start": "wp-scripts start",
+      "build": "wp-scripts build",
+      "lint:js": "wp-scripts lint-js",
+      "lint:js-fix": "wp-scripts lint-js --fix",
+      "test": "./vendor/bin/phpunit",
+      "tests:e2e": "./vendor/bin/wpacceptance run",
+      "makepot": "wpi18n makepot && echo '.pot file updated'",
+      "cypress:open": "cypress open --config-file tests/cypress/config.config.js",
+      "cypress:run": "cypress run --browser chrome --config-file tests/cypress/config.config.js",
+      "env": "wp-env",
+      "env:start": "wp-env start",
+      "env:stop": "wp-env stop",
+      "env:destroy": "wp-env destroy",
+      "archive": "composer archive --file=$npm_package_name --format=zip",
+      "postarchive": "rm -rf ./release && unzip $npm_package_name.zip -d ./release",
+      "prepare": "husky install"
+    },
+    "lint-staged": {
+      "*.php": [
+        "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s --runtime-set testVersion 7.4"
+      ]
+    },
+    "author": {
+      "name": "WiserSires, LLC",
+      "email": "andrii@wisersites.com",
+      "url": "https://wisersites.com",
+      "role": "developer"
+    },
+    "devDependencies": {
+      "@wordpress/env": "^9.4.0",
+      "@wordpress/scripts": "^27.3.0",
+      "cypress": "^13.6.4",
+      "cypress-file-upload": "^5.0.8",
+      "cypress-mochawesome-reporter": "^3.8.1",
+      "cypress-plugin-tab": "^1.0.5",
+      "husky": "^8.0.3",
+      "jsdoc": "^4.0.2",
+      "lint-staged": "^15.2.0",
+      "mochawesome-json-to-md": "^0.7.2",
+      "node-wp-i18n": "^1.2.7",
+      "svg-react-loader": "^0.4.6",
+      "taffydb": "2.7.3",
+      "wp-hookdoc": "^0.2.0"
+    },
+    "dependencies": {
+      "@wordpress/icons": "^9.43.0",
+      "choices.js": "^10.2.0",
+      "tippy.js": "^6.3.7"
+    }
+  }

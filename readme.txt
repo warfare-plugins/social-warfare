@@ -3,7 +3,7 @@ Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalash
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 6.5
-Stable tag: 4.4.6.3
+Stable tag: 4.4.7
 Requires PHP: 5.6
 License: GNU General Public License v2.0 or later
 
@@ -182,7 +182,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
-= 4.4.6.3 (5 Apr 2024) =
+= 4.4.7 (5 Apr 2024) =
 * Changed the visibility of `$key` property from `private` to `public` to allow external access and manipulation, enhancing the flexibility for class interactions.
 * Changed the visibility of `$user_options` property from `private` to `public`, enabling direct access to user options pulled from the database. This adjustment aims to streamline processes that require external manipulation of user options.
 
