@@ -12,22 +12,6 @@ While this project has used various coding standards over time, this guide shoul
 ### WordPress Coding Standards
 All WordPress coding standards should be followed. Anything not specifically defined here should defer to WordPress's recommended coding standards found here: [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards).
 
-#### Running PHP_CodeSniffer
-
-To check your code against the WordPress coding standards, use the following command:
-
-```bash
-php -d memory_limit=512M vendor/bin/phpcs .
-```
-
-#### Running PHP Code Beautifier and Fixer
-
-To automatically fix coding standard violations, use `phpcbf`:
-
-```bash
-php -d memory_limit=512M vendor/bin/phpcbf .
-```
-
 ### Variables and Class Names
 All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. 
 
