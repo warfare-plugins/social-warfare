@@ -89,6 +89,13 @@ class SWP_Post_Cache {
 	public $share_counts = array();
 
 	/**
+	 * The array of API URLs.
+	 *
+	 * @var array
+	 */
+	public $api_urls = array();
+
+	/**
 	 * The Magic Construct Method
 	 *
 	 * This method 1.) instantiates the object
