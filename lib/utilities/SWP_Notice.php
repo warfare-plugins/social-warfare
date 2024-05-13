@@ -67,6 +67,13 @@ class SWP_Notice {
 	protected $no_cta = false;
 
 	/**
+     * The compiled HTML of the dashboard notice.
+     *
+     * @var string
+     */
+    protected $html = '';
+
+	/**
 	 * The Magic __construct method
 	 *
 	 * This method will initialize our notice object and then add the necessary hooks to
