@@ -1049,6 +1049,9 @@ class SWP_Post_Cache {
 	}
 
 
+	/**
+	 * Cleans up remnants of post meta data.
+	 */
 	public function cleanup_remnants() {
 		delete_post_meta( $this->post_id, '_totes' );
 		delete_post_meta( $this->post_id, '_email_shares' );
