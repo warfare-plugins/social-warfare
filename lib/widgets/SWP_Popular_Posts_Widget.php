@@ -23,7 +23,6 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	 * parent class that's built into WordPress core.
 	 *
 	 *  @since  1.0.0 | 01 JAN 2018 | Created
-	 *  @param  void
 	 *  @return void
 	 *  @access public
 	 */
@@ -98,7 +97,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$options = $swp_user_options;
 
 		// Fetch the networks that are active on this blog
-		$availableNetworks = $options['order_of_icons'];
+		$available_networks = $options['order_of_icons'];
 
 		// Build the Widget Form
 		$form = '<div class="swp_popular_post_options">';
@@ -147,7 +146,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= "<select {$this->set_attributes('network', 'widefat', null)}>";
 		$form .= "<option value=\"total_shares\" {selected($network, 'total_shares', false)}>All Networks</option>";
 
-		foreach ( $availableNetworks as $key => $value ) :
+		foreach ( $available_networks as $key => $value ) :
 
 			$opt      = $key . '_shares';
 			$selected = selected( $network, $opt, false );
@@ -164,15 +163,15 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '<p class="showCount">';
 		$form .= '<label for="' . $this->get_field_id( 'showCount' ) . '">Would you like to show the count?</label>';
 		$form .= "<select {$this->set_attributes( 'showCount', 'widefat', null )}>";
-		$form .= '<option value="true" ' . selected( $showCount, 'true', false ) . '>Yes</option>';
-		$form .= '<option value="false" ' . selected( $showCount, 'false', false ) . '>No</option>';
+		$form .= '<option value="true" ' . selected( $show_count, 'true', false ) . '>Yes</option>';
+		$form .= '<option value="false" ' . selected( $show_count, 'false', false ) . '>No</option>';
 		$form .= '</select>';
 		$form .= '</p>';
 
 		// Count Label Field
-		$form .= '<p ' . ( true !== $showCount ? 'style="display:none;"' : '' ) . ' data-dep="showCount" data-dep_val=\'' . json_encode( array( true ) ) . '\' class="countLabel">';
+		$form .= '<p ' . ( true !== $show_count ? 'style="display:none;"' : '' ) . ' data-dep="showCount" data-dep_val=\'' . wp_json_encode( array( true ) ) . '\' class="countLabel">';
 		$form .= '<label for="' . $this->get_field_id( 'countLabel' ) . '">Count Number Label</label>';
-		$form .= "<input type=\"text\" {$this->set_attributes( 'countLabel', 'widefat', $countLabel)} />";
+		$form .= "<input type=\"text\" {$this->set_attributes( 'countLabel', 'widefat', $count_label)} />";
 		$form .= '</p>';
 
 		// Post thumbnails toggle field
@@ -185,7 +184,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		// Thumbnails size field
-		$form .= '<p ' . ( true !== $thumbnails ? 'style="display:none;"' : '' ) . ' data-dep="thumbnails" data-dep_val=\'' . json_encode( array( true ) ) . '\' class="thumb_size">';
+		$form .= '<p ' . ( true !== $thumbnails ? 'style="display:none;"' : '' ) . ' data-dep="thumbnails" data-dep_val=\'' . wp_json_encode( array( true ) ) . '\' class="thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_size' ) . '">What size would you like your thumbnails?</label>';
 		$form .= "<select {$this->set_attributes( 'thumb_size', 'widefat', null )} >";
 
@@ -200,12 +199,12 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		// If $thumb_size, show the custom height/width fields.
-		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
+		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . wp_json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_width' ) . '">Thumbnail width</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_width', 'widefat', $thumb_width)} />";
 		$form .= '</p>';
 
-		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
+		$form .= '<p ' . ( 'custom' !== $thumb_size ? 'style="display:none;"' : '' ) . ' data-dep="thumb_size" data-dep_val=\'' . wp_json_encode( array( 'custom' ) ) . '\' class="custom_thumb_size">';
 		$form .= '<label for="' . $this->get_field_id( 'thumb_height' ) . '">Thumbnail height</label>';
 		$form .= "<input type=\"number\" {$this->set_attributes( 'thumb_height', 'widefat', $thumb_height)} />";
 		$form .= '</p>';
@@ -242,7 +241,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		foreach ( $ctt_styles as $idx => $ctt_style ) :
 
 			// *Accounting for 0 offset
-			$idx += 1;
+			++$idx;
 
 			if ( $idx < 10 ) :
 				$val = "style_0{$idx}";
@@ -260,13 +259,13 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</p>';
 
 		// Custom Background Color Field
-		$form .= '<p ' . ( 'custom' !== $style ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_bg">';
+		$form .= '<p ' . ( 'custom' !== $style ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . wp_json_encode( array( 'custom' ) ) . '\' class="custom_bg">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_bg' ) . '">Custom Background Color</label>';
 		$form .= "<input type=\"text\" {$this->set_attributes( 'custom_bg', 'widefat', $custom_bg )} />";
 		$form .= '</p>';
 
 		// Custom Link Color Field
-		$form .= '<p ' . ( 'custom' !== $style ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . json_encode( array( 'custom' ) ) . '\' class="custom_link">';
+		$form .= '<p ' . ( 'custom' !== $style ? 'style="display:none;"' : '' ) . ' data-dep="style" data-dep_val=\'' . wp_json_encode( array( 'custom' ) ) . '\' class="custom_link">';
 		$form .= '<label for="' . $this->get_field_id( 'custom_link' ) . '">Custom Link Color</label>';
 		$form .= "<input type=\"text\" {$this->set_attributes( 'custom_link', 'widefat', $custom_link )} />";
 		$form .= '</p>';
@@ -292,21 +291,21 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$instance = $old_instance;
 
 		// Fetch the values from the form
-		$instance['title']        = strip_tags( $new_instance['title'] );
-		$instance['count']        = strip_tags( $new_instance['count'] );
-		$instance['timeframe']    = strip_tags( $new_instance['timeframe'] );
-		$instance['post_type']    = strip_tags( $new_instance['post_type'] );
-		$instance['network']      = strip_tags( $new_instance['network'] );
-		$instance['showCount']    = strip_tags( $new_instance['showCount'] );
-		$instance['countLabel']   = strip_tags( $new_instance['countLabel'] );
-		$instance['style']        = strip_tags( $new_instance['style'] );
-		$instance['thumbnails']   = strip_tags( $new_instance['thumbnails'] );
-		$instance['thumb_size']   = strip_tags( $new_instance['thumb_size'] );
-		$instance['thumb_width']  = strip_tags( $new_instance['thumb_width'] );
-		$instance['thumb_height'] = strip_tags( $new_instance['thumb_height'] );
-		$instance['font_size']    = strip_tags( $new_instance['font_size'] );
-		$instance['custom_bg']    = strip_tags( $new_instance['custom_bg'] );
-		$instance['custom_link']  = strip_tags( $new_instance['custom_link'] );
+		$instance['title']        = wp_strip_all_tags( $new_instance['title'] );
+		$instance['count']        = wp_strip_all_tags( $new_instance['count'] );
+		$instance['timeframe']    = wp_strip_all_tags( $new_instance['timeframe'] );
+		$instance['post_type']    = wp_strip_all_tags( $new_instance['post_type'] );
+		$instance['network']      = wp_strip_all_tags( $new_instance['network'] );
+		$instance['showCount']    = wp_strip_all_tags( $new_instance['showCount'] );
+		$instance['countLabel']   = wp_strip_all_tags( $new_instance['countLabel'] );
+		$instance['style']        = wp_strip_all_tags( $new_instance['style'] );
+		$instance['thumbnails']   = wp_strip_all_tags( $new_instance['thumbnails'] );
+		$instance['thumb_size']   = wp_strip_all_tags( $new_instance['thumb_size'] );
+		$instance['thumb_width']  = wp_strip_all_tags( $new_instance['thumb_width'] );
+		$instance['thumb_height'] = wp_strip_all_tags( $new_instance['thumb_height'] );
+		$instance['font_size']    = wp_strip_all_tags( $new_instance['font_size'] );
+		$instance['custom_bg']    = wp_strip_all_tags( $new_instance['custom_bg'] );
+		$instance['custom_link']  = wp_strip_all_tags( $new_instance['custom_link'] );
 
 		return $instance;
 	}
@@ -336,8 +335,8 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$timeframe    = isset( $instance['timeframe'] ) ? $instance['timeframe'] : '0';
 		$post_type    = isset( $instance['post_type'] ) ? $instance['post_type'] : 'post';
 		$network      = isset( $instance['network'] ) ? $instance['network'] : 'total_shares';
-		$showCount    = isset( $instance['showCount'] ) ? $instance['showCount'] : 'true';
-		$countLabel   = isset( $instance['countLabel'] ) ? $instance['countLabel'] : 'Total Shares';
+		$show_count   = isset( $instance['showCount'] ) ? $instance['showCount'] : 'true';
+		$count_label  = isset( $instance['countLabel'] ) ? $instance['countLabel'] : 'Total Shares';
 		$style        = isset( $instance['style'] ) ? $instance['style'] : 'style_01';
 		$thumbnails   = isset( $instance['thumbnails'] ) ? $instance['thumbnails'] : 'true';
 		$thumb_size   = isset( $instance['thumb_size'] ) ? $instance['thumb_size'] : '100';
@@ -456,10 +455,10 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 					$swq->the_post();
 
 					// If we are supposed to show count numbers....
-					if ( 'true' === $showCount ) :
-						$postID     = get_the_ID();
-						$shares     = get_post_meta( $postID, '_' . $network, true );
-						$share_html = '<span class="swp_pop_count">' . esc_html( SWP_Utility::kilomega( $shares ) ) . ' ' . esc_html( $countLabel ) . '</span>';
+					if ( 'true' === $show_count ) :
+						$post_id    = get_the_ID();
+						$shares     = get_post_meta( $post_id, '_' . $network, true );
+						$share_html = '<span class="swp_pop_count">' . esc_html( SWP_Utility::kilomega( $shares ) ) . ' ' . esc_html( $count_label ) . '</span>';
 					else :
 						$share_html = '';
 					endif;
