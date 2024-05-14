@@ -829,8 +829,8 @@ class SWP_Post_Cache {
 			}
 
 			// Access the Social_Network object and update its count.
-			$Current_Social_Network = $swp_social_networks[ $key ];
-			$Current_Social_Network->update_share_count( $this->post_id, $count );
+			$current_social_network = $swp_social_networks[ $key ];
+			$current_social_network->update_share_count( $this->post_id, $count );
 		}
 
 		// Update the total shares.
