@@ -344,7 +344,6 @@ class SWP_Post_Cache {
 	 * @since  3.6.0 | 22 APR 2019 | Remvoed calls to delete the original field.
 	 * @param  string $meta_key The image field to update. Known examples include
 	 *                          swp_og_image, swp_pinterest_image, swp_twitter_image
-	 * @param  int    $new_id The attachment ID to update.
 	 * @return void
 	 */
 	public function update_image_cache( $meta_key ) {
