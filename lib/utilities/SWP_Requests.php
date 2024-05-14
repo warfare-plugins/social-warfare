@@ -101,18 +101,18 @@ class SWP_Requests {
 			$headers[] = 'Content-Type: application/json; charset=utf-8';
 		}
 
-		$curl = curl_init( $url );
+		$curl = curl_init( $url ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_init
 
-		curl_setopt( $curl, CURLOPT_POST, true );
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, wp_json_encode( $fields ) );
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 );
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 );
+		curl_setopt( $curl, CURLOPT_POST, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, wp_json_encode( $fields ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
+		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
 
-		$resp = curl_exec( $curl );
+		$resp = curl_exec( $curl ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_exec
 
-		curl_close( $curl );
+		curl_close( $curl ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_close
 
 		return $resp;
 	}
