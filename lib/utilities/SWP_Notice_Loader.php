@@ -23,6 +23,12 @@ class SWP_Notice_Loader {
 	 */
 	use SWP_Debug_Trait;
 
+	/**
+	 * Array of notices.
+	 *
+	 * @var array
+	 */
+	public $notices = array();
 
 	/**
 	 * Instantiate the class.
