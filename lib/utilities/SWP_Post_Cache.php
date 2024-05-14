@@ -96,6 +96,14 @@ class SWP_Post_Cache {
 	public $api_urls = array();
 
 	/**
+	 * The raw API responses.
+	 *
+	 * @var array
+	 */
+	public $raw_api_responses = array();
+
+
+	/**
 	 * The Magic Construct Method
 	 *
 	 * This method 1.) instantiates the object
