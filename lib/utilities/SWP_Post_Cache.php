@@ -468,7 +468,6 @@ class SWP_Post_Cache {
 	 * Removes the timestamp on certain hooks like when a post is updated.
 	 *
 	 * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
-	 * @param  void
 	 * @return void
 	 */
 	public function delete_timestamp() {
