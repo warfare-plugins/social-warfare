@@ -77,7 +77,7 @@ class SWP_Post_Cache_Loader {
 	 * @since  3.1.0 | 26 JUN 2018 | Created the method.
 	 * @since  3.4.0 | 17 OCT 2018 | Moved publish conditional from constructor
 	 *                               into this method.
-	 * @param  void
+	 * @param  int $post_id The ID of the post being updated.
 	 * @return void
 	 */
 	public function update_post( $post_id ) {
