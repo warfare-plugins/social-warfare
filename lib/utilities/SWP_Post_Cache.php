@@ -1003,7 +1003,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since 4.2.0 | 30 NOV 2020 | Created
 	 * @param string $key The key corresponding to the current social network.
-	 * @return void All data is stored in class properties.
 	 */
 	protected function add_utm_codes( $key ) {
 		global $swp_social_networks;
