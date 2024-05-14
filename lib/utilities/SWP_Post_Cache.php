@@ -686,7 +686,6 @@ class SWP_Post_Cache {
 	 *                               works the way that it's supposed to.
 	 * @since  3.4.0 | 18 OCT 2018 | Added array_unique to prevent double counts.
 	 * @var    share_counts An array of share count numbers.
-	 * @param  void
 	 * @return void All data stored in local properties.
 	 */
 	protected function calculate_network_shares() {
@@ -798,7 +797,6 @@ class SWP_Post_Cache {
 	 * zero response.
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
-	 * @param  void
 	 * @return void
 	 */
 	protected function cache_share_counts() {
