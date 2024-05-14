@@ -442,7 +442,6 @@ class SWP_Utility {
 	 *
 	 * @since  3.5.0  | 12 FEB 2019 | Created.
 	 * @param  string $params The pre-formatted string of query args.
-	 * @param  array  $params And asssociative array to format as query args.
 	 * @return exit           End all program exectution and return to SW.
 	 */
 	public static function settings_page_redirect( $params = '' ) {
