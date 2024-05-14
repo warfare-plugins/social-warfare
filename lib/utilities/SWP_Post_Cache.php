@@ -456,7 +456,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since 3.1.0 | 19 JUN 2018 | Ported from function to class method.
 	 * @access protected
-	 * @param  void
 	 * @return void
 	 */
 	public function reset_timestamp() {
