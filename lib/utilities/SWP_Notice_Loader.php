@@ -34,7 +34,6 @@ class SWP_Notice_Loader {
 	 * @since  3.1.0 | 27 JUN 2018 | Updated to use separate methods per notice.
 	 * @since  4.0.1 | 04 APR 2020 | Added the "clear caches" notice.
 	 * @see    SWP_Notice.php
-	 * @param  void
 	 * @return void
 	 */
 	public function __construct() {
