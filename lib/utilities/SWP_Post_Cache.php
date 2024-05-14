@@ -925,11 +925,11 @@ class SWP_Post_Cache {
 		echo esc_html( wp_kses( $version_output, SWP_Section_HTML::get_allowable_html() ) );
 
 		echo '<h1>The URL\'s Being Checked:</h1>';
-		var_dump( $this->permalinks );
+		var_dump( $this->permalinks ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		echo '<h1>The Responses from the API:</h1>';
-		var_dump( $this->raw_api_responses );
+		var_dump( $this->raw_api_responses ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		echo '<h1>This is the share counts array</h1>';
-		var_dump( $this->share_counts );
+		var_dump( $this->share_counts ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		echo '</pre>';
 	}
 
