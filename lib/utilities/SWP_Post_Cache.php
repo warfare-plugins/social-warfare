@@ -947,7 +947,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since 4.0.0 | 21 FEB 2020 | Created
 	 * @param string $key The key corresponding to the current social network.
-	 * @return void All data is stored in class properties.
 	 */
 	protected function add_trailing_slashes( $key ) {
 
