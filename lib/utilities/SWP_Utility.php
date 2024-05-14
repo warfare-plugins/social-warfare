@@ -84,7 +84,6 @@ class SWP_Utility {
 		if ( 'true' === $value ) {
 			return true;
 		}
-		// echo "<br>".__METHOD__, var_dump($id), var_dump($key), var_dump($value);
 
 		return $value;
 	}
@@ -126,8 +125,6 @@ class SWP_Utility {
 	 * @since  2.x.x | Unknown | Created.
 	 * @since  3.0.9 | 31 MAY 2018 | Added call to wp_cache_delete to make sure settings save
 	 * @since  3.3.0 | 14 AUG 2018 | Removed deprecated code.
-	 *
-	 * @return bool Whether or not the options were updated in the database.
 	 */
 	public static function store_settings() {
 
@@ -147,18 +144,20 @@ class SWP_Utility {
 		$settings = $data['settings'];
 
 		// Loop and check for checkbox values, convert them to boolean.
-		foreach ( $data['settings'] as $key => $value ) {
-			if ( 'true' === $value ) {
-				$settings[ $key ] = true;
-			} elseif ( 'false' === $value ) {
-				$settings[ $key ] = false;
-			} else {
-				$settings[ $key ] = $value;
+		if ( is_array( $data['settings'] ) ) {
+			foreach ( $data['settings'] as $key => $value ) {
+				if ( 'true' === $value ) {
+					$settings[ $key ] = true;
+				} elseif ( 'false' === $value ) {
+					$settings[ $key ] = false;
+				} else {
+					$settings[ $key ] = $value;
+				}
 			}
 		}
 
 		$new_settings = array_merge( $options, $settings );
-		echo json_encode( update_option( 'social_warfare_settings', $new_settings ) );
+		echo wp_json_encode( update_option( 'social_warfare_settings', $new_settings ) );
 
 		wp_die();
 	}
