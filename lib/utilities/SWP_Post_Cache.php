@@ -139,7 +139,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
 	 * @access public
-	 * @param  void
 	 * @return boolean True if fresh, false if expired and needs rebuilt.
 	 */
 	public function is_cache_fresh() {
