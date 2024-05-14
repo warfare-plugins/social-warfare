@@ -158,7 +158,7 @@ class SWP_Post_Cache {
 	public function is_cache_fresh() {
 
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
-		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', wp_unslash( filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING ) ) ) ) :
 			return true;
 		endif;
 
@@ -168,7 +168,7 @@ class SWP_Post_Cache {
 		endif;
 
 		// If a URL parameter is specifically telling it to rebuild.
-		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'rebuild_cache' ) ) {
 			return false;
 		}
 
