@@ -488,9 +488,7 @@ class SWP_Utility {
 
 		foreach ( $all_meta as $meta_key => $value ) {
 			// Confirm this is a social warfare meta key.
-			if ( ( strpos( $meta_key, 'swp_' ) === 0 ||
-				( strpos( $meta_key, '_shares' ) > 0 ) &&
-					strpos( $meta_key, '_' ) === 0 ) ) {
+			if ( ( strpos( $meta_key, 'swp_' ) === 0 || ( strpos( $meta_key, '_shares' ) > 0 ) ) && strpos( $meta_key, '_' ) === 0 ) {
 				delete_post_meta( $post_id, $meta_key );
 			}
 		}
