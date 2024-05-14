@@ -424,7 +424,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$swp_args = array(
 			'posts_per_page'         => $count,
 			'post_type'              => $post_type,
-			'meta_key'               => '_' . $network,
+			'meta_key'               => '_' . $network, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'orderby'                => 'meta_value_num',
 			'order'                  => 'DESC',
 			'cache_results'          => false,
