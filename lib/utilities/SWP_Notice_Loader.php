@@ -145,6 +145,9 @@ class SWP_Notice_Loader {
 		}
 	}
 
+	/**
+	 * Activates the clear caches notice.
+	 */
 	private function activate_clear_caches_notice() {
 
 		$key     = 'clear_caches_' . SWP_VERSION;
