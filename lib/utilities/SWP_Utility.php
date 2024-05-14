@@ -425,7 +425,7 @@ class SWP_Utility {
 		$version_difference = absint( $core_versions[1] - $addon_versions[1] );
 
 		// * Force plugin users to be on the same major version.
-		if ( $core_versions[0] !== $addon_verisons[0] ) {
+		if ( $core_versions[0] !== $addon_versions[0] ) {
 			return false;
 		}
 
