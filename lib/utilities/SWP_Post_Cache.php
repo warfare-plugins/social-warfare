@@ -102,6 +102,12 @@ class SWP_Post_Cache {
 	 */
 	public $raw_api_responses = array();
 
+	/**
+	 * The parsed API responses.
+	 *
+	 * @var array
+	 */
+	public $parsed_api_responses = array();
 
 	/**
 	 * The Magic Construct Method
@@ -636,7 +642,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    parsed_api_responses An array of integers from parsing the responses.
-	 * @param  void
 	 * @return void Processed data is stored in local properties.
 	 */
 	protected function parse_api_responses() {
