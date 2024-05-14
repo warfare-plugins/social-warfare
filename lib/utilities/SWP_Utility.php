@@ -253,10 +253,10 @@ class SWP_Utility {
 			$the_excerpt = preg_replace( '/(<script[^>]*>.+?<\/script>|<style[^>]*>.+?<\/style>)/s', '', $the_excerpt );
 		endif;
 
-		$the_excerpt    = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
+		$the_excerpt    = wp_strip_all_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
 		$the_excerpt    = preg_replace( '/\[[^\]]+\]/', '', $the_excerpt );
 		$the_excerpt    = str_replace( ']]>', ']]&gt;', $the_excerpt );
-		$the_excerpt    = strip_tags( $the_excerpt );
+		$the_excerpt    = wp_strip_all_tags( $the_excerpt );
 		$excerpt_length = apply_filters( 'excerpt_length', 100 );
 		$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[...]' );
 		$words          = preg_split( "/[\n\r\t ]+/", $the_excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
