@@ -306,7 +306,6 @@ class SWP_Post_Cache {
 	 * and which instances whe shouldn't.
 	 *
 	 * @since  3.2.0 | 24 JUL 2018 | Created
-	 * @param  void
 	 * @return bool True: fetch share counts; False: don't fetch counts.
 	 */
 	protected function is_post_published() {
