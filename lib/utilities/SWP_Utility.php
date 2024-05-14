@@ -479,7 +479,7 @@ class SWP_Utility {
 			return;
 		}
 
-		$post_id = sanitize_key( $_POST['post_id'] );
+		$post_id = isset( $_POST['post_id'] ) ? sanitize_key( $_POST['post_id'] ) : '';
 		if ( empty( $post_id ) ) {
 			wp_die( 0 );
 		}
