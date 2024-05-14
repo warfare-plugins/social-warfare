@@ -106,7 +106,7 @@ class SWP_Requests {
 		curl_setopt( $curl, CURLOPT_POST, true );
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, wp_json_encode( $fields ) );
 		curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 );
 		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 );
 
