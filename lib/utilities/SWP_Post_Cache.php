@@ -893,7 +893,7 @@ class SWP_Post_Cache {
 	 */
 	protected function debug_message( $message ) {
 		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-			echo htmlspecialchars_decode( wp_kses( $message, SWP_Section_HTML::get_allowable_html() ) );
+			echo esc_html( wp_kses( $message, SWP_Section_HTML::get_allowable_html() ) );
 		}
 	}
 
