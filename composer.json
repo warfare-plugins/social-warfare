@@ -16,7 +16,7 @@
     },
     "require-dev": {
         "10up/phpcs-composer": "^3.0",
-        "yoast/phpunit-polyfills": "^1.0.0"
+        "yoast/phpunit-polyfills": "^2.0.1"
     },
     "scripts": {
         "lint": "phpcs -s . --runtime-set testVersion 7.4-",
