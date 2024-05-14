@@ -258,7 +258,7 @@ class SWP_Utility {
 		$the_excerpt    = str_replace( ']]>', ']]&gt;', $the_excerpt );
 		$the_excerpt    = wp_strip_all_tags( $the_excerpt );
 		$excerpt_length = apply_filters( 'excerpt_length', 100 );
-		$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[...]' );
+		$excerpt_more   = apply_filters( 'excerpt_more', ' [...]' );
 		$words          = preg_split( "/[\n\r\t ]+/", $the_excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
 
 		if ( count( $words ) > $excerpt_length ) :
