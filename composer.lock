@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a32bd701e37249cb4cd450a38a181fb",
+    "content-hash": "ec562d8421acfa19ebd9fd24e26676a3",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -149,16 +149,16 @@
         },
         {
             "name": "yahnis-elsts/plugin-update-checker",
-            "version": "v5.1",
+            "version": "v5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/YahnisElsts/plugin-update-checker.git",
-                "reference": "48b03e93c9c2587f9276dce00ce2b6d94c1190d2"
+                "reference": "e8e53e6d98e37fa7c895c93417f52e3775494715"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/48b03e93c9c2587f9276dce00ce2b6d94c1190d2",
-                "reference": "48b03e93c9c2587f9276dce00ce2b6d94c1190d2",
+                "url": "https://api.github.com/repos/YahnisElsts/plugin-update-checker/zipball/e8e53e6d98e37fa7c895c93417f52e3775494715",
+                "reference": "e8e53e6d98e37fa7c895c93417f52e3775494715",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +168,7 @@
             "type": "library",
             "autoload": {
                 "files": [
-                    "load-v5p1.php"
+                    "load-v5p4.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -193,9 +193,9 @@
             ],
             "support": {
                 "issues": "https://github.com/YahnisElsts/plugin-update-checker/issues",
-                "source": "https://github.com/YahnisElsts/plugin-update-checker/tree/v5.1"
+                "source": "https://github.com/YahnisElsts/plugin-update-checker/tree/v5.4"
             },
-            "time": "2023-05-20T11:55:43+00:00"
+            "time": "2024-02-24T09:56:49+00:00"
         }
     ],
     "packages-dev": [
@@ -2770,5 +2770,5 @@
         "php": ">=7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
