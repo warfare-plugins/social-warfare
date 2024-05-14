@@ -32,7 +32,7 @@ class SWP_Requests {
 	public static function fetch_shares_via_wordpress_multi( $links ) {
 		if ( SWP_Utility::debug( 'is_cache_fresh' ) ) :
 				$started = time();
-				echo 'Starting multi curl request at : ' . $started;
+				echo 'Starting multi curl request at : ' . esc_html( $started );
 		endif;
 
 		// Build out the array that can be passed into request_multiple()
