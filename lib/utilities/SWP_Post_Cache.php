@@ -922,7 +922,7 @@ class SWP_Post_Cache {
 			$with_pro = '(with Pro ' . SWP_VERSION . '.' . SWP_DEV_VERSION . ')';
 		}
 		$version_output = '<p>Social Warfare ' . SWP_VERSION . '.' . SWP_DEV_VERSION . ' ' . $with_pro . ' </p>';
-		echo htmlspecialchars_decode( wp_kses( $version_output, SWP_Section_HTML::get_allowable_html() ) );
+		echo esc_html( wp_kses( $version_output, SWP_Section_HTML::get_allowable_html() ) );
 
 		echo '<h1>The URL\'s Being Checked:</h1>';
 		var_dump( $this->permalinks );
