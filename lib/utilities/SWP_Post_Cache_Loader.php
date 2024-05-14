@@ -98,7 +98,7 @@ class SWP_Post_Cache_Loader {
 		 * way the cache will reflect any changes that were made when the post
 		 * was updated.
 		 */
-		$Post_Cache = new SWP_Post_Cache( $post_id );
-		$Post_Cache->delete_timestamp();
+		$post_cache = new SWP_Post_Cache( $post_id );
+		$post_cache->delete_timestamp();
 	}
 }
