@@ -871,14 +871,14 @@ class SWP_Post_Cache {
 		 * Loop through the social networks and pull their share count from
 		 * the custom fields for this post.
 		 */
-		foreach ( $swp_social_networks as $Network ) {
+		foreach ( $swp_social_networks as $network ) {
 
 			// Get the current share count from the cache.
-			$this->share_counts[ $Network->key ] = $Network->get_share_count( $this->post_id );
+			$this->share_counts[ $network->key ] = $network->get_share_count( $this->post_id );
 
 			// Add up the total shares based on the counts of the active networks.
-			if ( true === $Network->is_active() ) {
-				$this->share_counts['total_shares'] += $this->share_counts[ $Network->key ];
+			if ( true === $network->is_active() ) {
+				$this->share_counts['total_shares'] += $this->share_counts[ $network->key ];
 			}
 		}
 	}
