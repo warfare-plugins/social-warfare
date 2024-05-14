@@ -892,12 +892,12 @@ class SWP_Post_Cache {
 	 * @return void
 	 */
 	protected function debug_message( $message ) {
-		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+		if ( isset( $_GET['swp_cache'], $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'swp_cache_nonce' ) && 'rebuild' === $_GET['swp_cache'] ) {
 			echo esc_html( wp_kses( $message, SWP_Section_HTML::get_allowable_html() ) );
 		}
 	}
 
-
+	
 	/**
 	 * A method for displaying the permalinks that are being used to fetch
 	 * share counts for this post or page. This will output an array of permalinks
