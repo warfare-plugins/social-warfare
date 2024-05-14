@@ -177,7 +177,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 19 JUN 2018 | Created the method.
 	 * @todo   Review
-	 * @param  void
 	 * @return int  The current age of the cache in hours.
 	 */
 	protected function get_cache_age() {
