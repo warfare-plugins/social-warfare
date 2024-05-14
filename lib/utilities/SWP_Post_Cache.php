@@ -518,7 +518,6 @@ class SWP_Post_Cache {
 	 * @since  3.1.0 | 21 JUN 2018 | Created
 	 * @since  4.0.0 | 20 FEB 2020 | Added call to debug_display_permalinks()
 	 * @since  4.0.0 | 21 FEB 2020 | Added call to add_trailing_slashes()
-	 * @param  void
 	 * @return void
 	 */
 	protected function establish_permalinks() {
