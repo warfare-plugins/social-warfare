@@ -280,7 +280,6 @@ class SWP_Post_Cache {
 	 * @todo   Move all calls to cache rebuild methods into this method. This
 	 *         will become the one and only method that is used to rebuild this
 	 *         particular cache of data.
-	 * @param  void
 	 * @return void
 	 */
 	public function rebuild_cached_data() {
