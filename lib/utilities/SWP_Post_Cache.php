@@ -845,7 +845,6 @@ class SWP_Post_Cache {
 	 * Gets the computed share data.
 	 *
 	 * @since  3.1.0 | 20 JUN 2018 | Created the method.
-	 * @param  void
 	 * @return array $this->share_counts if it exists, or an empty array.
 	 */
 	public function get_shares() {
