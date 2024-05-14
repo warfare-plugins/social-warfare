@@ -69,7 +69,13 @@ class SWP_Requests {
 		return $response;
 	}
 
-	public static function file_get_contents_http( $url, $headers = null ) {
+	/**
+	 * Fetches the contents of a URL using the file_get_contents function.
+	 *
+	 * @param string $url The URL to fetch the contents from.
+	 * @return string The contents of the URL.
+	 */
+	public static function file_get_contents_http( $url ) {
 		$response = wp_remote_get( $url );
 		if ( false === is_array( $response ) ) {
 			return false;
