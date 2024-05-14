@@ -40,7 +40,6 @@ class SWP_Post_Cache_Loader {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @since  3.4.0 | 17 OCT 2018 | Removed legacy AJAX methods (hooked here).
-	 * @param  void
 	 * @return void
 	 */
 	public function __construct() {
