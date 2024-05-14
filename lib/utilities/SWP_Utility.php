@@ -511,7 +511,14 @@ class SWP_Utility {
 	public static function get_image_id_by_url( $image_url ) {
 		global $wpdb;
 
-		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s;", $image_url ) );
+		$attachment = wp_cache_get( $image_url, 'attachment_ids' );
+
+		if ( false === $attachment ) {
+			$attachment = attachment_url_to_postid( $image_url );
+			wp_cache_set( $image_url, $attachment, 'attachment_ids' );
+		}
+
+		$attachment = is_array( $attachment ) ? reset( $attachment ) : false;
 
 		if ( is_object( $attachment ) && is_numeric( $attachment->ID ) ) {
 			return $attachment->ID;
