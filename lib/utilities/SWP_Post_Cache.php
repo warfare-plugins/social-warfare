@@ -489,7 +489,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 21 JUN 2018 | Created
 	 * @access protected
-	 * @param  void
 	 * @return void
 	 */
 	protected function rebuild_share_counts() {
