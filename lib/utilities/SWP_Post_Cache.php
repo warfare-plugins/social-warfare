@@ -220,7 +220,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 20 JUN 2018 | Created
 	 * @since  3.4.0 | Added check for share counts being active.
-	 * @param  void
 	 * @return integer The duration in hours that applies to this cache.
 	 */
 	public function get_allowable_age() {
