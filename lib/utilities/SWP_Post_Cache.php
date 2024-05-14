@@ -608,7 +608,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    raw_api_responses An array of responses from the API's.
-	 * @param  void
 	 * @return void All data is stored in local properties.
 	 */
 	protected function fetch_api_responses() {
