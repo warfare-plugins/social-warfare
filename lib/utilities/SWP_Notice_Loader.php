@@ -48,7 +48,6 @@ class SWP_Notice_Loader {
 	 *
 	 * @since  3.1.0 | 27 JUN 2018 | Created
 	 * @since  3.4.0 | 16 NOV 2018 | Audit, docblock, formatting.
-	 * @param  void
 	 * @return void
 	 */
 	private function activate_json_notices() {
