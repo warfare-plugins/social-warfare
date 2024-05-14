@@ -278,7 +278,7 @@ class SWP_Utility {
 	 * @since  2.1.0
 	 * @since  3.3.0 | 14 AUG 2018 | Refactored to a one-liner.
 	 * @access public
-	 * @param  string $type The query paramter to check for.
+	 * @param  string $key The query paramter to check for.
 	 *
 	 * @return bool True if the specified key is set for debugging, else false.
 	 */
