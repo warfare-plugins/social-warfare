@@ -584,7 +584,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created the method.
 	 * @var    api_urls The array of outbound API request destinations.
-	 * @param  void
 	 * @return void
 	 */
 	protected function establish_api_request_urls() {
