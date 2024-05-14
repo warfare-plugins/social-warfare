@@ -897,7 +897,7 @@ class SWP_Post_Cache {
 		}
 	}
 
-	
+
 	/**
 	 * A method for displaying the permalinks that are being used to fetch
 	 * share counts for this post or page. This will output an array of permalinks
