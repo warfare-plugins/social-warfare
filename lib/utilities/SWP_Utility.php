@@ -283,7 +283,12 @@ class SWP_Utility {
 	 * @return bool True if the specified key is set for debugging, else false.
 	 */
 	public static function debug( $key = '' ) {
-		return ! empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) === strtolower( $key ) );
+		if ( isset( $_GET['swp_debug'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['swp_debug'] ) ), 'swp_debug_nonce' ) ) {
+			$swp_debug = sanitize_text_field( wp_unslash( $_GET['swp_debug'] ) );
+		} else {
+			$swp_debug = '';
+		}
+		return ! empty( $swp_debug ) && ( strtolower( $swp_debug ) === strtolower( $key ) );
 	}
 
 	/**
