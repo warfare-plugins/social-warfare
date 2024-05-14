@@ -156,6 +156,13 @@ class SWP_Notice_Loader {
 		new SWP_Notice( $key, $message );
 	}
 
+	/**
+	 * Creates a persistent notice.
+	 *
+	 * @param string $key     The key of the notice.
+	 * @param string $message The message of the notice.
+	 * @param array  $ctas    The call to action buttons of the notice.
+	 */
 	public static function create_persistent_notice( $key = '', $message = '', $ctas = array() ) {
 
 		// Fetch the current array of persistent notices from the database.
