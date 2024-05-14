@@ -181,6 +181,9 @@ class SWP_Notice_Loader {
 		update_option( 'social_warfare_persistent_notices', $notices );
 	}
 
+	/**
+	 * Loads the persistent notices.
+	 */
 	private function load_persistent_notices() {
 
 		// Fetch the current array of persistent notices from the database.
