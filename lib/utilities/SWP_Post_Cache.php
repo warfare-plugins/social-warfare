@@ -906,7 +906,6 @@ class SWP_Post_Cache {
 	 * To activate: ?swp_cache=rebuild&swp_debug=recovery
 	 *
 	 * @since  4.0.0 | 19 FEB 2020 | Created
-	 * @param  void
 	 * @return void All data is output to the screen.
 	 */
 	protected function debug_display_permalinks() {
@@ -920,7 +919,7 @@ class SWP_Post_Cache {
 		echo '<pre style="background:yellow;">';
 		$with_pro = '';
 		if ( defined( 'SWPP_VERSION' ) && defined( 'SWPP_DEV_VERSION' ) ) {
-			$with_pro = '(with Pro ' . SWPP_VERSION . '.' . SWPP_DEV_VERSION . ')';
+			$with_pro = '(with Pro ' . SWP_VERSION . '.' . SWP_DEV_VERSION . ')';
 		}
 		$version_output = '<p>Social Warfare ' . SWP_VERSION . '.' . SWP_DEV_VERSION . ' ' . $with_pro . ' </p>';
 		echo htmlspecialchars_decode( wp_kses( $version_output, SWP_Section_HTML::get_allowable_html() ) );
