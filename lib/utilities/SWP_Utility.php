@@ -326,11 +326,11 @@ class SWP_Utility {
 
 
 	/**
-	 * A function to remove the screen options tab from our admin page
+	 * A function to remove the screen options tab from our admin page.
 	 *
 	 * @since 2.2.1 | Unknown | Created.
-	 * @param bool Whether to show Screen Options tab. Default true.
-	 * @param WP_Screen                               $wp_screen Current WP_Screen instance.
+	 * @param bool      $show_screen Whether to show Screen Options tab. Default true.
+	 * @param WP_Screen $wp_screen   Current WP_Screen instance.
 	 *
 	 * @return boolean $display or false.
 	 */
@@ -345,7 +345,6 @@ class SWP_Utility {
 
 		return $show_screen;
 	}
-
 
 	/**
 	 * Returns the URL of current website or network.
