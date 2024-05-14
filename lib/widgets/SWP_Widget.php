@@ -155,7 +155,7 @@ abstract class SWP_Widget extends WP_Widget {
 				. '</div>';
 
 		if ( isset( $args['after_title'] ) ) {
-			echo $args['after_title'];
+			echo esc_html( $args['after_title'] );
 		}
 
 			echo '<div class="swp-widget-content">'
