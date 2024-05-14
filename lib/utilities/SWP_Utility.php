@@ -263,7 +263,6 @@ class SWP_Utility {
 
 		if ( count( $words ) > $excerpt_length ) :
 			array_pop( $words );
-			// array_push($words, '…');
 			$the_excerpt = implode( ' ', $words );
 		endif;
 
