@@ -381,6 +381,14 @@ class SWP_Utility {
 		return update_option( 'social_warfare_settings', $options );
 	}
 
+	/**
+	 * Deletes an option from the Social Warfare settings.
+	 *
+	 * @since 3.3.2 | 12 SEP 2018 | Created.
+	 *
+	 * @param  string $key   The key of the option to be deleted.
+	 * @return bool          True if the option was deleted, else false.
+	 */
 	public static function delete_option( $key ) {
 		if ( empty( $key ) ) {
 			return false;
