@@ -1,4 +1,9 @@
 # Social Warfare Repository and Issue Tracker
+
+> The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
+
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) ![Latest Release](https://img.shields.io/github/v/release/warfare-plugins/social-warfare) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v6.5%20tested-success.svg)
+
 This is a public repository for the Social Warfare WordPress plugin created primarily for the purpose of publishing and maintaining a public list of bugs, known issues, and feature requests with the community at large. Please use the "Issues" link above to track or add information to existing issues or to submit new issues altogether (see the guidelines below prior to adding a new issue).
 
 ***
