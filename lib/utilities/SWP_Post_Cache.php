@@ -446,7 +446,7 @@ class SWP_Post_Cache {
 		 */
 		delete_post_meta( $this->post_id, $meta_key . '_data' );
 		delete_post_meta( $this->post_id, $meta_key . '_url' );
-		update_post_meta( $this->post_id, $meta_key . '_data', json_encode( $new_data ) );
+		update_post_meta( $this->post_id, $meta_key . '_data', wp_json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key . '_url', $new_data[0] );
 	}
 
