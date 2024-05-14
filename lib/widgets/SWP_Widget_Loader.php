@@ -15,9 +15,8 @@ class SWP_Widget_Loader {
 	 * The magic method used to instantiate this class.
 	 *
 	 * @since  3.0.0
-	 * @param  none
-	 * @return none
 	 * @access public
+	 * @return void
 	 */
 	public function __construct() {
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );

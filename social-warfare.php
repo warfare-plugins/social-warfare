@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: Social Warfare
  * Plugin URI:  https://warfareplugins.com
@@ -9,6 +8,7 @@
  * Author URI:  https://warfareplugins.com
  * Text Domain: social-warfare
  */
+
 defined( 'WPINC' ) || die;
 
 
