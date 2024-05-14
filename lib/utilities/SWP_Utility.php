@@ -488,7 +488,7 @@ class SWP_Utility {
 
 		foreach ( $all_meta as $meta_key => $value ) {
 			// Confirm this is a social warfare meta key.
-			if ( ( strpos( $meta_key, 'swp_' ) === 0 || ( strpos( $meta_key, '_shares' ) > 0 ) ) && strpos( $meta_key, '_' ) === 0 ) {
+			if ( ( strpos( $meta_key, 'swp_' ) === 0 || ( strpos( $meta_key, '_shares' ) > 0 ) && strpos( $meta_key, '_' ) === 0 ) ) {
 				delete_post_meta( $post_id, $meta_key );
 			}
 		}
@@ -506,8 +506,7 @@ class SWP_Utility {
 	public static function get_image_id_by_url( $image_url ) {
 		global $wpdb;
 
-		$prepared_statement = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s;", $image_url );
-		$attachment         = $wpdb->get_col( $prepared_statement );
+		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s;", $image_url ) );
 
 		if ( is_object( $attachment ) && is_numeric( $attachment->ID ) ) {
 			return $attachment->ID;
