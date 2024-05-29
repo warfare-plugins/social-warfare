@@ -68,7 +68,7 @@ trait SWP_Debug_Trait {
 		 */
 		$class_name = str_replace( 'swp_', '', strtolower( get_class( $this ) ) );
 		if ( true === SWP_Utility::debug( $class_name ) ) {
-			echo '<pre class="swp_debug_data">', var_dump( $this ), '</pre>';
+			echo '<pre class="swp_debug_data">', var_dump( $this ), '</pre>'; // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		}
 
 		/**
