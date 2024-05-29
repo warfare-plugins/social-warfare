@@ -39,7 +39,7 @@ trait SWP_Debug_Trait {
 		if ( is_string( $message ) ) {
 			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
 		} else {
-			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace, WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		}
 	}
 
