@@ -29,7 +29,7 @@ trait SWP_Debug_Trait {
 	 *
 	 * @since  3.0.0 | 07 APR 2018 | Created
 	 * @param  mixed $message The message to send as an error.
-	 * @return object Exception An exception with the passed in message.
+	 * @throws Exception The error message.
 	 */
 	public function _throw( $message ) {
 		ob_start();
@@ -56,7 +56,6 @@ trait SWP_Debug_Trait {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @since  3.4.0 | 18 OCT 2018 | Moved into this trait.
-	 * @param  void
 	 * @return void
 	 */
 	public function debug() {
