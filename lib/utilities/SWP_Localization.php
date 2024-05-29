@@ -7,7 +7,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  */
-
 class SWP_Localization {
 
 
