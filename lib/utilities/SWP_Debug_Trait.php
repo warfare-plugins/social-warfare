@@ -127,7 +127,7 @@ trait SWP_Debug_Trait {
 		}
 
 		// Collect the line, file, class and method that exited.
-		$backtrace = debug_backtrace();
+		$backtrace = debug_backtrace(); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
 		$file      = $backtrace[0]['file'];
 		$line      = $backtrace[0]['line'];
 		$class     = $backtrace[1]['class'];
