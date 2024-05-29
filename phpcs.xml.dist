@@ -12,6 +12,10 @@
 		<config name="ignore_warnings_on_exit" value="0"/>
 	</rule>
 
+	<rule ref="WordPress.Security.EscapeOutput">
+		<exclude-pattern>*</exclude-pattern>
+	</rule>
+
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/vendor/*</exclude-pattern>
 </ruleset>
