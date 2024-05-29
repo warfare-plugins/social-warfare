@@ -31,15 +31,15 @@ trait SWP_Debug_Trait {
 	 * @param  mixed $message The message to send as an error.
 	 * @throws Exception The error message.
 	 */
-	public function _throw( $message ) {
+	public function _throw( $message ) { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 		ob_start();
-		print_r( debug_backtrace()[1]['args'] );
+		print_r( debug_backtrace()[1]['args'] ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
 		$dump = ob_get_clean();
 
 		if ( is_string( $message ) ) {
-			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump );
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
 		} else {
-			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) );
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
 		}
 	}
 
