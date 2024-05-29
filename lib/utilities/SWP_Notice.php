@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SWP_Notice
  *
@@ -16,6 +15,12 @@
  * @access    public
  */
 class SWP_Notice {
+
+	/**
+	 * The noitice keys that have been registered.
+	 *
+	 * @var array
+	 */
 	public static $notice_keys = array();
 
 	/**
