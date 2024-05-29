@@ -218,6 +218,7 @@ class SWP_Notice {
 	 * @access public
 	 * @param  string $message A string of text for the notices message.
 	 * @return object $this    Allows for method chaining.
+	 * @throws Exception       If the provided key is not a string.
 	 */
 	public function set_message( $message ) {
 		if ( ! is_string( $message ) ) :
