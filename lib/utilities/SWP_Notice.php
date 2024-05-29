@@ -187,8 +187,6 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  null
-	 * @return null The response from update_option is echoed.
 	 */
 	public function dismiss() {
 
