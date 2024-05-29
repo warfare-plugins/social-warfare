@@ -27,7 +27,6 @@ class SWP_Database_Migration {
 	 * If not, runs the migration and updators.
 	 *
 	 * @since  3.0.0 | 01 MAY 2018 | Created the function
-	 * @param  void
 	 * @return void
 	 */
 	public function __construct() {
@@ -47,7 +46,6 @@ class SWP_Database_Migration {
 	 * This function initializes and calls up all the  migration methods.
 	 *
 	 * @since  3.0.0 | 08 MAY 2018 | Created
-	 * @param  void
 	 * @return void
 	 */
 	public function init() {
@@ -101,6 +99,12 @@ class SWP_Database_Migration {
 		return $options;
 	}
 
+	/**
+	 * Prints the post meta.
+	 *
+	 * @since 3.5.2 | 28 FEB 2019 | Created.
+	 * @return void
+	 */
 	public function print_post_meta() {
 		global $post;
 
