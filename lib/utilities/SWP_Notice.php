@@ -142,7 +142,6 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  null
 	 * @return bool Default true.
 	 */
 	public function should_display_notice() {
