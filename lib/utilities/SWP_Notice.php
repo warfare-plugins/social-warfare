@@ -206,7 +206,7 @@ class SWP_Notice {
 		$this->notices[ $key ]['timestamp'] = $timestamp;
 		$this->notices[ $key ]['timeframe'] = $timeframe;
 
-		echo json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
+		echo wp_json_encode( update_option( 'social_warfare_dismissed_notices', $this->notices ) );
 		wp_die();
 	}
 
