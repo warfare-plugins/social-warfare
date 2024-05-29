@@ -63,7 +63,6 @@ class SWP_JSON_Cache_Handler {
 	 * parse the results, and store them in an options field in the database.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
 	 * @return void
 	 */
 	public function __construct() {
@@ -78,7 +77,6 @@ class SWP_JSON_Cache_Handler {
 	 * Fetch new JSON data.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
 	 * @return void
 	 */
 	private function fetch_new_json_data() {
@@ -105,7 +103,6 @@ class SWP_JSON_Cache_Handler {
 	 * A method to determin if the cached data is still fresh.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
 	 * @return boolean true if fresh, false if expired.
 	 */
 	private function is_cache_fresh() {
