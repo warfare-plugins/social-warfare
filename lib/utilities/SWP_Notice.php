@@ -238,6 +238,7 @@ class SWP_Notice {
 	 * @access protected
 	 * @param  string $key   A string representing this notices unique key.
 	 * @return object $this  Allows for method chaining.
+	 * @throws Exception     If the provided key is not a string.
 	 */
 	protected function set_key( $key ) {
 		if ( ! is_string( $key ) ) :
@@ -305,10 +306,6 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  string $action Optional. The message to be displayed. Default "Thanks, I understand."
-	 * @param  string $href Optional. The outbound href.
-	 * @param  string $class Optional. The CSS classname to assign to the CTA.
-	 * @param  string $timeframe
 	 * @return $this Allows for method chaining.
 	 */
 	public function add_default_cta() {
@@ -333,10 +330,9 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  null
 	 * @return string The compiled HTML of the dashboard notice.
 	 */
-	public function render_HTML() {
+	public function render_HTML() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		if ( empty( $this->actions ) && false === $this->no_cta ) :
 			$this->add_default_cta();
 		endif;
@@ -375,7 +371,7 @@ class SWP_Notice {
 	 * @param  string $notices The string of notices to be modified.
 	 * @return string          The modified string of notices' html.
 	 */
-	public function get_HTML( $notices = '' ) {
+	public function get_HTML( $notices = '' ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 
 		if ( ! $this->should_display_notice() ) :
 			return $notices;
@@ -393,10 +389,9 @@ class SWP_Notice {
 	 *
 	 * @since  3.0.9 | 07 JUN 2018 | Created
 	 * @access public
-	 * @param  string $notices The string of notices to be modified.
 	 * @return string          The modified string of notices' html.
 	 */
-	public function print_HTML() {
+	public function print_HTML() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 		if ( ! $this->should_display_notice() ) :
 			return;
 		endif;
