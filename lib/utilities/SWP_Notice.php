@@ -192,8 +192,8 @@ class SWP_Notice {
 
 		SWP_Utility::auth();
 
-		$key       = sanitize_text_field( $_POST['key'] );
-		$timeframe = sanitize_text_field( $_POST['timeframe'] );
+		$key = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
+		$timeframe = isset( $_POST['timeframe'] ) ? sanitize_text_field( wp_unslash( $_POST['timeframe'] ) ) : '';
 		$now       = new DateTime();
 
 		// Further sanitize, validate, and format the timeframe.
