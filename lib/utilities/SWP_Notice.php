@@ -86,6 +86,7 @@ class SWP_Notice {
 	 * @since 3.0.9 | 07 JUN 2018 | Created
 	 * @param string $key     A unique key for this notice.
 	 * @param string $message The message for this notice
+	 * @param array  $ctas    An array of call-to-actions for this notice.
 	 */
 	public function __construct( $key = '', $message = '', $ctas = array() ) {
 		$this->set_key( $key );
