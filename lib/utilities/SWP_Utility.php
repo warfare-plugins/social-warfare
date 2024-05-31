@@ -514,7 +514,11 @@ class SWP_Utility {
 		$attachment = wp_cache_get( $image_url, 'attachment_ids' );
 
 		if ( false === $attachment ) {
-			$attachment = attachment_url_to_postid( $image_url );
+			if (function_exists('wpcom_vip_attachment_url_to_postid')) {
+				$attachment = wpcom_vip_attachment_url_to_postid( $image_url );
+			} else {
+				$attachment = attachment_url_to_postid( $image_url ); // phpcs:ignore
+			}
 			wp_cache_set( $image_url, $attachment, 'attachment_ids' );
 		}
 
