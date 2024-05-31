@@ -1,21 +1,103 @@
 <?xml version="1.0"?>
 <ruleset name="SocialWarfare">
 	<description>Extension of the SocialWarfare</description>
-	<rule ref="10up-Default">
-		<!-- All of the files are missing comments -->
-		<exclude name="Squiz.Commenting.FileComment.Missing" />
-		<exclude name="Squiz.Commenting.ClassComment.Missing" />
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
+
+	<arg name="extensions" value="php" />
+	<arg name="colors"/>
+	<!-- Show progress and standards. -->
+	<arg value="ps"/>
+
+	<config name="testVersion" value="8.1-"/>
+	<rule ref="PHPCompatibilityWP">
+		<include-pattern>*\.php$</include-pattern>
+	</rule>
+
+	<!-- Require valid syntax. -->
+	<rule ref="Generic.PHP.Syntax" />
+
+	<rule ref="WordPress-VIP-Go" />
+
+	<rule ref="WordPress-Extra">
+		<!-- Disallow long array syntax. -->
+		<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+		<!-- Multiple statements do not need to be aligned -->
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+		<!-- Allow inline comments to end without full stops -->
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+		<!-- Allow opening PHP tags on the same line -->
+		<exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterOpen" />
+		<!-- Allow closing PHP tags on the same line -->
+		<exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeEnd" />
+		<!-- Allow short array syntax -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
+		<!-- Allow short ternaries -->
+		<exclude name="Universal.Operators.DisallowShortTernary.Found" />
+		<!-- Array keys and values do not need to be aligned -->
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+		<!-- No Yoda conditions -->
+		<exclude name="WordPress.PHP.YodaConditions" />
+	</rule>
+
+	<rule ref="WordPress-Docs">
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
-		<!-- Class properties don't need this -->
-		<exclude name="Generic.Commenting.DocComment.MissingShort" />
-		<!-- For CI, also fail on warnings -->
-		<config name="ignore_warnings_on_exit" value="0"/>
+		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+		<exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
+		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
 	</rule>
 
-	<rule ref="WordPress.Security.EscapeOutput">
-		<exclude-pattern>*</exclude-pattern>
+	<!-- Allow for underscores in theme template file names -->
+	<rule ref="WordPress.Files.FileName">
+		<properties>
+			<property name="is_theme" value="true" />
+		</properties>
 	</rule>
 
-	<exclude-pattern>/node_modules/*</exclude-pattern>
-	<exclude-pattern>/vendor/*</exclude-pattern>
+	<!-- Allow multiple arguments to be on the same line -->
+	<rule ref="PEAR.Functions.FunctionCallSignature">
+		<properties>
+			<property name="allowMultipleArguments" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Disallow deprecated code -->
+	<rule ref="WordPress.WP.DeprecatedFunctions" />
+	<rule ref="WordPress.WP.DeprecatedClasses" />
+	<rule ref="WordPress.WP.DeprecatedParameters" />
+	<rule ref="WordPress.WP.DeprecatedParameterValues" />
+
+	<!-- Disallow changing PHP's timezone. -->
+	<rule ref="WordPress.DateTime.RestrictedFunctions">
+		<properties>
+			<!-- Allow other datetime functions, just not timezone. -->
+			<property name="exclude" type="array">
+				<element value="date" />
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Disallow old-style PHP tags (e.g. ASP-style) -->
+	<rule ref="Generic.PHP.DisallowAlternativePHPTags">
+		<exclude name="Generic.PHP.DisallowAlternativePHPTags.MaybeASPShortOpenTagFound" />
+		<exclude name="Generic.PHP.DisallowAlternativePHPTags.MaybeASPOpenTagFound" />
+	</rule>
+
+	<!-- Disallow querying more than 100 posts at once -->
+	<rule ref="WordPress.WP.PostsPerPage" />
+	<rule ref="WordPress.WP.PostsPerPage.posts_per_page_numberposts">
+		<type>error</type>
+	</rule>
+	<rule ref="WordPress.WP.PostsPerPage.posts_per_page_posts_per_page">
+		<type>error</type>
+	</rule>
 </ruleset>

@@ -10,17 +10,14 @@
 	"type": "wordpress-plugin",
 	"license": "GPLv2",
 	"require": {
-		"php": ">=7.4",
-		"yahnis-elsts/plugin-update-checker": "5.4",
-		"ua-parser/uap-php": "dev-master"
+		"php": ">=8.1"
 	},
 	"require-dev": {
-		"10up/phpcs-composer": "3.0",
-		"yoast/phpunit-polyfills": "^2.0.1"
+		"wp-coding-standards/wpcs": "^3.1"
 	},
 	"scripts": {
-		"lint": "phpcs -s . --runtime-set testVersion 7.4-",
-		"lint-fix": "phpcbf ."
+		"lint": "vendor/bin/phpcs ./lib",
+		"lint-fix": "vendor/bin/phpcbf ./lib"
 	},
 	"minimum-stability": "dev",
 	"config": {
