@@ -120,7 +120,7 @@ class Social_Warfare_Addon {
 		foreach ( $required as $key ) {
 			if ( ! isset( $this->$key ) ) :
 				$message = "Hey developer, you are attempting to instantiate a class that extends the Social_Warfare_Addon class. In order to do this, you must provide the following argument for your class: $key => \$value. You can read more about required class properties for this class in the docblock provided in /lib/Social_Warfare_Addon.php for the establish_class_properties() method.";
-				throw new Exception( $message );
+				throw new Exception( esc_html( $message ) );
 			endif;
 		}
 
