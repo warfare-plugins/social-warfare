@@ -80,10 +80,9 @@ class SWP_Auth_Helper {
 
 
 	public function __construct( $network_key ) {
-		if ( empty( $network_key ) ) {
-			error_log( 'Please provide a network_key when constructing an SWP_Auth_Controller.' );
-			return;
-		}
+		if (empty($network_key)) {
+			throw new InvalidArgumentException('Please provide a network_key when constructing an SWP_Auth_Controller.');
+		}		
 
 		$this->network = $network_key;
 		$this->key     = $network_key;
