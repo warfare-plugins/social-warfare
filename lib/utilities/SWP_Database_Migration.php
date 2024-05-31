@@ -784,7 +784,7 @@ class SWP_Database_Migration {
 	public function get_last_migrated( $output = false ) {
 		$options = get_option( 'social_warfare_settings' );
 
-		if ( array_key_exists( 'last_migrated', $options ) ) :
+		if ( is_array( $options ) && array_key_exists( 'last_migrated', $options ) ) :
 			if ( true === $output ) :
 				var_dump( $options['last_migrated'] );
 			endif;
