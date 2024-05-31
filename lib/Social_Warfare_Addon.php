@@ -369,14 +369,14 @@ class Social_Warfare_Addon {
 			else :
 				$license_data['success'] = false;
 				$license_data['data']    = 'Failed to connect to registration server.';
-				echo json_encode( $license_data );
+				echo wp_json_encode( $license_data );
 				wp_die();
 			endif;
 		endif;
 
 		$license_data['success'] = false;
 		$license_data['data']    = 'Admin Ajax did not receive valid POST data.';
-		echo json_encode( $license_data );
+		echo wp_json_encode( $license_data );
 		wp_die();
 	}
 
@@ -436,7 +436,7 @@ class Social_Warfare_Addon {
 			update_option( 'social_warfare_settings', $options );
 		}
 
-		wp_die( json_encode( $response ) );
+		wp_die( wp_json_encode( $response ) );
 	}
 
 	public function ajax_passthrough() {
