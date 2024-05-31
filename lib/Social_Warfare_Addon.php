@@ -399,7 +399,7 @@ class Social_Warfare_Addon {
 		// Check to see if the license key is even in the options
 		if ( ! SWP_Utility::get_option( $key . '_license_key' ) ) :
 			$response['success'] = true;
-			wp_die( json_encode( $response ) );
+			wp_die( wp_json_encode( $response ) );
 		endif;
 
 		// Grab the license key so we can use it below
