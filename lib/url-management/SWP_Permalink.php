@@ -156,7 +156,7 @@ class SWP_Permalink {
 
 				} else { // if they're not using the fancy permalink option
 					$permalink = home_url( '?p=' . $post->ID );
-				}// End if().
+				}
 
 				/**
 				 * Filter the permalink for a post.
