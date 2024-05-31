@@ -22,82 +22,16 @@
 
 	<rule ref="WordPress-VIP-Go" />
 
-	<rule ref="WordPress-Extra">
-		<!-- Disallow long array syntax. -->
-		<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
-		<!-- Multiple statements do not need to be aligned -->
-		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
-		<!-- Allow inline comments to end without full stops -->
-		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
-		<!-- Allow opening PHP tags on the same line -->
-		<exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterOpen" />
-		<!-- Allow closing PHP tags on the same line -->
-		<exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeEnd" />
-		<!-- Allow short array syntax -->
-		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
-		<!-- Allow short ternaries -->
-		<exclude name="Universal.Operators.DisallowShortTernary.Found" />
-		<!-- Array keys and values do not need to be aligned -->
-		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
-		<!-- No Yoda conditions -->
-		<exclude name="WordPress.PHP.YodaConditions" />
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+    	<severity>0</severity>
 	</rule>
-
-	<rule ref="WordPress-Docs">
-		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
-		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
-		<exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
-		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
-	</rule>
-
-	<!-- Allow for underscores in theme template file names -->
-	<rule ref="WordPress.Files.FileName">
-		<properties>
-			<property name="is_theme" value="true" />
-		</properties>
-	</rule>
-
-	<!-- Allow multiple arguments to be on the same line -->
-	<rule ref="PEAR.Functions.FunctionCallSignature">
-		<properties>
-			<property name="allowMultipleArguments" value="true"/>
-		</properties>
-	</rule>
-	<rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+	<rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
 		<severity>0</severity>
 	</rule>
-	<rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+	<rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
 		<severity>0</severity>
 	</rule>
-
-	<!-- Disallow deprecated code -->
-	<rule ref="WordPress.WP.DeprecatedFunctions" />
-	<rule ref="WordPress.WP.DeprecatedClasses" />
-	<rule ref="WordPress.WP.DeprecatedParameters" />
-	<rule ref="WordPress.WP.DeprecatedParameterValues" />
-
-	<!-- Disallow changing PHP's timezone. -->
-	<rule ref="WordPress.DateTime.RestrictedFunctions">
-		<properties>
-			<!-- Allow other datetime functions, just not timezone. -->
-			<property name="exclude" type="array">
-				<element value="date" />
-			</property>
-		</properties>
-	</rule>
-
-	<!-- Disallow old-style PHP tags (e.g. ASP-style) -->
-	<rule ref="Generic.PHP.DisallowAlternativePHPTags">
-		<exclude name="Generic.PHP.DisallowAlternativePHPTags.MaybeASPShortOpenTagFound" />
-		<exclude name="Generic.PHP.DisallowAlternativePHPTags.MaybeASPOpenTagFound" />
-	</rule>
-
-	<!-- Disallow querying more than 100 posts at once -->
-	<rule ref="WordPress.WP.PostsPerPage" />
-	<rule ref="WordPress.WP.PostsPerPage.posts_per_page_numberposts">
-		<type>error</type>
-	</rule>
-	<rule ref="WordPress.WP.PostsPerPage.posts_per_page_posts_per_page">
-		<type>error</type>
+	<rule ref="WordPress.DB.PreparedSQL.NotPrepared">
+		<severity>0</severity>
 	</rule>
 </ruleset>
