@@ -182,10 +182,9 @@ class SWP_Credential_Helper {
 	 * @return bool                     True iff the options were successfully updated.
 	 */
 	public static function update_authorizations( $encoded_tokens ) {
-		if ( ! is_array( $encoded_tokens ) ) {
-			error_log( 'SWP_Credential_Helper->update_options() requires parameter 1 to be an array.' );
-			return false;
-		}
+		if (!is_array($encoded_tokens)) {
+			throw new InvalidArgumentException('SWP_Credential_Helper->update_options() requires parameter 1 to be an array.');
+		}		
 
 		$encoded_json = base64_encode( json_encode( $encoded_tokens ) );
 
