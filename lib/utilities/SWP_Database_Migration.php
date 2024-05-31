@@ -212,7 +212,7 @@ class SWP_Database_Migration {
 			$options = get_option( 'social_warfare_settings', array() );
 			$options = self::filter_options( $options );
 			ksort( $options );
-			echo '<pre>', var_export( $options ), '</pre>';
+			echo '<pre>', esc_html(var_export( $options )) , '</pre>';
 			wp_die();
 		endif;
 
@@ -337,7 +337,7 @@ class SWP_Database_Migration {
 
 			if ( $message ) {
 				$message .= 'All available Social Warfare and Social Warfare - Pro data has been deleted.';
-				wp_die( $message );
+				wp_die(wp_kses_post($message));
 			}
 
 			wp_die( 'Sorry, there was an error processing the request. If you continue to get this message and need to delete all plugin data, please contact support at https://warfareplugins.com/submit-ticket' );
