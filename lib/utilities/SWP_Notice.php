@@ -78,6 +78,22 @@ class SWP_Notice {
 	protected $html = '';
 
 	/**
+	 * The start date for the notice. If set, the notice will not be displayed until
+	 * the current date is equal to or greater than the start date.
+	 *
+	 * @var string
+	 */
+	public $start_date;
+
+	/**
+	 * The end date for the notice. If set, the notice will not be displayed after the
+	 * current date is equal to or greater than the end date.
+	 *
+	 * @var string
+	 */
+	public $end_date;
+
+	/**
 	 * The Magic __construct method
 	 *
 	 * This method will initialize our notice object and then add the necessary hooks to
@@ -192,8 +208,8 @@ class SWP_Notice {
 
 		SWP_Utility::auth();
 
-		$key       = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
-		$timeframe = isset( $_POST['timeframe'] ) ? sanitize_text_field( wp_unslash( $_POST['timeframe'] ) ) : '';
+		$key       = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : ''; // phpcs:ignore
+		$timeframe = isset( $_POST['timeframe'] ) ? sanitize_text_field( wp_unslash( $_POST['timeframe'] ) ) : ''; // phpcs:ignore
 		$now       = new DateTime();
 
 		// Further sanitize, validate, and format the timeframe.
