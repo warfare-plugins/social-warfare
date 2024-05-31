@@ -418,14 +418,14 @@ class Social_Warfare_Addon {
 				$this->store_url,
 				array(
 					'body'    => $api_params,
-					'timeout' => 10,
+					'timeout' => 10 // phpcs:ignore
 				)
 			)
 		);
 		if ( empty( $response ) ) {
 			$response['success'] = false;
 			$response['message'] = 'Error making deactivation request to ' . $this->store_url;
-			wp_die( json_encode( $response ) );
+			wp_die( wp_json_encode( $response ) );
 		}
 
 		$response = json_decode( $response );
