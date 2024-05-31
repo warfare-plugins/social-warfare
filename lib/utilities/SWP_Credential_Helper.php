@@ -186,7 +186,7 @@ class SWP_Credential_Helper {
 			throw new InvalidArgumentException('SWP_Credential_Helper->update_options() requires parameter 1 to be an array.');
 		}		
 
-		$encoded_json = base64_encode( json_encode( $encoded_tokens ) );
+		$encoded_json = base64_encode( wp_json_encode( $encoded_tokens ) );
 
 		self::$swp_authorizations = $encoded_tokens;
 		return update_option( 'swp_authorizations', $encoded_json );
