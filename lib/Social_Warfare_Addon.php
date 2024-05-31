@@ -349,19 +349,19 @@ class Social_Warfare_Addon {
 					$options[ $key . '_license_key_timestamp' ] = $current_time;
 					update_option( 'social_warfare_settings', $options );
 
-					echo json_encode( $license_data );
+					echo wp_json_encode( $license_data );
 					wp_die();
 
 					// If the license is not valid
 				elseif ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
-					echo json_encode( $license_data );
+					echo wp_json_encode( $license_data );
 					wp_die();
 
 					// If some other status was returned
 				else :
 					$license_data['success'] = false;
 					$license_data['data']    = 'Invaid response from the registration server.';
-					echo json_encode( $license_data );
+					echo wp_json_encode( $license_data );
 					wp_die();
 				endif;
 
