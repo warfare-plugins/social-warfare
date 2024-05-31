@@ -845,6 +845,8 @@ class SWP_Database_Migration {
 		$wpdb->query( $sql );
 
 		$rows_affected = $wpdb->rows_affected;
-		error_log( "Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'." );
+		if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+			error_log("Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'."); // phpcs:ignore
+		}
 	}
 }
