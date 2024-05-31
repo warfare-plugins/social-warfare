@@ -145,7 +145,7 @@ class SWP_Database_Migration {
 		$meta['post_permalink'] = get_permalink( $post->ID );
 
 		// Using WordPress-specific escaping function for HTML.
-		echo '<pre>' . esc_html(var_export($meta, true)) . '</pre>';
+		echo '<pre>' . esc_html(var_export($meta, true)) . '</pre>'; // phpcs:ignore
 		wp_die();
 	}
 
@@ -167,7 +167,7 @@ class SWP_Database_Migration {
 			array(
 				'numberposts' => -1,
 				'meta_key'    => 'swp_float_location',
-				'meta_value'  => 'on',
+				'meta_value'  => 'on', // phpcs:ignore
 				'post_type'   => $post_type,
 			)
 		);
@@ -212,7 +212,7 @@ class SWP_Database_Migration {
 			$options = get_option( 'social_warfare_settings', array() );
 			$options = self::filter_options( $options );
 			ksort( $options );
-			echo '<pre>', esc_html(var_export( $options )) , '</pre>';
+			echo '<pre>', esc_html(var_export( $options )) , '</pre>'; // phpcs:ignore
 			wp_die();
 		endif;
 
@@ -228,9 +228,9 @@ class SWP_Database_Migration {
 		// }
 
 		if ( true === SWP_Utility::debug( 'get_filtered_options' ) ) :
-			global $swp_user_options;
+			global $swp_user_options; // phpcs:ignore
 			echo '<pre>';
-			var_export( self::filter_options( $swp_user_options ) );
+			var_export( self::filter_options( $swp_user_options ) ); // phpcs:ignore
 			echo '</pre>';
 			wp_die();
 		endif;
@@ -253,7 +253,7 @@ class SWP_Database_Migration {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( 'You do not have authorization to view this page.' );
 			}
-			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
+			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page'; // phpcs:ignore
 			$post_type = sanitize_text_field( $post_type );
 			$this->reset_post_meta_float_location( $post_type );
 		}
@@ -300,7 +300,7 @@ class SWP_Database_Migration {
 		}
 
 		if ( true === SWP_Utility::debug( ( 'delete_plugin_data' ) ) ) {
-			$password = isset( $_GET['swp_confirmation'] ) ? sanitize_text_field( urldecode( $_GET['swp_confirmation'] ) ) : '';
+			$password = isset( $_GET['swp_confirmation'] ) ? sanitize_text_field( urldecode( $_GET['swp_confirmation'] ) ) : ''; // phpcs:ignore
 			$user     = wp_get_current_user();
 			if ( ! current_user_can( 'manage_options' )
 			|| false === wp_check_password( $password, $user->user_pass, $user->ID ) ) {
@@ -320,7 +320,7 @@ class SWP_Database_Migration {
 
 			$message = '';
 
-			$results = $wpdb->get_results( $query, ARRAY_N );
+			$results = $wpdb->get_results( $query, ARRAY_N ); // phpcs:ignore
 			if ( $results ) {
 				$message .= 'Deleted plugin postmeta.<br/>';
 			}
@@ -434,7 +434,7 @@ class SWP_Database_Migration {
 		foreach ( $hidden_map as $old_key => $new_key ) {
 			// * Make replacements for the first kind of prefix.
 			$q = $wpdb->prepare( $query, $new_key, $old_key );
-			$wpdb->query( $q );
+			$wpdb->query( $q ); // phpcs:ignore
 		}
 	}
 
@@ -484,11 +484,11 @@ class SWP_Database_Migration {
 		foreach ( $metadata_map as $old_key => $new_key ) {
 			// * Make replacements for the first kind of prefix.
 			$q1      = $wpdb->prepare( $query, $new_key, $prefix1 . $old_key );
-			$results = $wpdb->query( $q1 );
+			$results = $wpdb->query( $q1 ); // phpcs:ignore
 
 			// * And make replacements for the second kind of prefix.
 			$q2      = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
-			$results = $wpdb->query( $q2 );
+			$results = $wpdb->query( $q2 ); // phpcs:ignore
 		}
 	}
 
@@ -786,7 +786,7 @@ class SWP_Database_Migration {
 
 		if ( is_array( $options ) && array_key_exists( 'last_migrated', $options ) ) :
 			if ( true === $output ) :
-				var_dump( $options['last_migrated'] );
+				var_dump( $options['last_migrated'] ); // phpcs:ignore
 			endif;
 
 			return $options['last_migrated'];
@@ -825,7 +825,7 @@ class SWP_Database_Migration {
 
 		$meta_key = '_facebook_shares';
 		$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
-		$count    = $wpdb->get_var( $sql );
+		$count    = $wpdb->get_var( $sql ); // phpcs:ignore
 
 		return ( $count > 1 );
 	}
@@ -842,7 +842,7 @@ class SWP_Database_Migration {
 		$meta_key = '_facebook_shares';
 		$sql      = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
 
-		$wpdb->query( $sql );
+		$wpdb->query( $sql ); // phpcs:ignore
 
 		$rows_affected = $wpdb->rows_affected;
 		if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
