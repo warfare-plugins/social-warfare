@@ -46,11 +46,13 @@ class SWP_Social_Networks_Loader {
 	 * @access public
 	 */
 	public function instantiate_networks() {
-			new SWP_Facebook();
-			new SWP_Linkedin();
-			new SWP_Mix();
-			new SWP_Pinterest();
-			new SWP_Stumble_Upon();
-			new SWP_Twitter();
+		new SWP_Facebook();
+		new SWP_Linkedin();
+		new SWP_Mix();
+		new SWP_Pinterest();
+		new SWP_Stumble_Upon();
+		new SWP_Twitter();
+
+		return true;
 	}
 }
