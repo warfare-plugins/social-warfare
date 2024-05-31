@@ -392,8 +392,8 @@ class Social_Warfare_Addon {
 	public function unregister_plugin() {
 		// Setup the variables needed for processing
 		$options  = get_option( 'social_warfare_settings' );
-		$key = isset( $_POST['name_key'] ) ? sanitize_text_field( $_POST['name_key'] ) : '';
-		$item_id  = isset( $_POST['item_id'] ) ? sanitize_text_field( $_POST['item_id'] ) : '';
+		$key = isset( $_POST['name_key'] ) ? sanitize_text_field( $_POST['name_key'] ) : ''; // phpcs:ignore
+		$item_id  = isset( $_POST['item_id'] ) ? sanitize_text_field( $_POST['item_id'] ) : ''; // phpcs:ignore
 		$response = array( 'success' => false );
 
 		// Check to see if the license key is even in the options
