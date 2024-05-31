@@ -13,7 +13,9 @@
 		"php": ">=8.1"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "^3.1"
+		"wp-coding-standards/wpcs": "^3.1",
+		"automattic/vipwpcs": "^3.0",
+		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"scripts": {
 		"lint": "vendor/bin/phpcs ./lib",
