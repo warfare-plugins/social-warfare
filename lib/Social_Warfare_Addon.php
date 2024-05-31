@@ -247,7 +247,7 @@ class Social_Warfare_Addon {
 					$this->store_url,
 					array(
 						'body'    => $data,
-						'timeout' => 10,
+						'timeout' => 10, // phpcs:ignore
 					)
 				)
 			);
@@ -302,7 +302,7 @@ class Social_Warfare_Addon {
 	 */
 	public function register_plugin() {
 		// Check to ensure that license key was passed into the function
-		if ( ! empty( $_POST['license_key'] ) ) :
+		if ( ! empty( $_POST['license_key'] ) && isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'license_key_nonce' ) ) :
 
 			// Grab the license key so we can use it below
 			$key             = sanitize_text_field( $_POST['name_key'] );
