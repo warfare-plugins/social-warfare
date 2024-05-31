@@ -144,7 +144,8 @@ class SWP_Database_Migration {
 
 		$meta['post_permalink'] = get_permalink( $post->ID );
 
-		echo '<pre>', var_export( $meta ), '</pre>';
+		// Using WordPress-specific escaping function for HTML.
+		echo '<pre>' . esc_html(var_export($meta, true)) . '</pre>';
 		wp_die();
 	}
 
@@ -180,7 +181,7 @@ class SWP_Database_Migration {
 			}
 		}
 		if ( $count ) {
-			echo "Success! $count {$post_type}s updated.";
+			echo esc_html("Success! $count {$post_type}s updated.");
 		} else {
 			echo 'No matching posts were found to update.';
 		}
