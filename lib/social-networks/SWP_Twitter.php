@@ -167,7 +167,6 @@ class SWP_Twitter extends SWP_Social_Network {
 	 */
 	public static function get_via_parameter( $post_data ) {
 		if ( is_object( $post_data ) ) {
-			// A global $post, for example
 			$post_data = (array) $post_data;
 		}
 
@@ -241,7 +240,7 @@ class SWP_Twitter extends SWP_Social_Network {
 		 * use the title of the post instead.
 		 */
 		if ( empty( $tweet ) ) {
-			$tweet = str_replace( '|', '', strip_tags( $post_data['post_title'] ) );
+			$tweet = str_replace( '|', '', wp_strip_all_tags( $post_data['post_title'] ) );
 		}
 
 		return urlencode( $tweet );
