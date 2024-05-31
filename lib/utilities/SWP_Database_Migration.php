@@ -414,7 +414,9 @@ class SWP_Database_Migration {
 			set_time_limit( 300 );
 		} catch ( Exception $e ) {
 			if ( function_exists( 'error_log' ) ) :
-				error_log( $e->getMessage() );
+				if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+					error_log($e->getMessage()); // phpcs:ignore
+				}
 			endif;
 		}
 
