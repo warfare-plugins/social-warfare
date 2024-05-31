@@ -76,7 +76,11 @@ class SWP_Requests {
 	 * @return string The contents of the URL.
 	 */
 	public static function file_get_contents_http( $url ) {
-		$response = wp_remote_get( $url );
+		if (function_exists('vip_safe_wp_remote_get')) {
+			$response = vip_safe_wp_remote_get( $url );
+		} else {
+			$response = wp_remote_get( $url ); // phpcs:ignore
+		}
 		if ( false === is_array( $response ) ) {
 			return false;
 		}
