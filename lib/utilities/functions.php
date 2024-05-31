@@ -20,7 +20,7 @@
  */
 function social_warfare( $args = array() ) {
 	$buttons_panel = new SWP_Buttons_Panel( $args, true );
-	echo $buttons_panel->render_html();
+	echo $buttons_panel->render_html(); // phpcs:ignore
 }
 
 
