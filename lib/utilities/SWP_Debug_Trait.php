@@ -31,15 +31,15 @@ trait SWP_Debug_Trait {
 	 * @param  mixed $message The message to send as an error.
 	 * @throws Exception The error message.
 	 */
-	public function _throw( $message ) { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+	public function _throw( $message ) { // phpcs:ignore
 		ob_start();
-		print_r( debug_backtrace()[1]['args'] ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+		print_r( debug_backtrace()[1]['args'] ); // phpcs:ignore
 		$dump = ob_get_clean();
 
 		if ( is_string( $message ) ) {
-			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . $message . ' Here is what I received: ' . $dump ); // phpcs:ignore
 		} else {
-			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace, WordPress.PHP.DevelopmentFunctions.error_log_var_dump
+			throw new Exception( get_class( $this ) . '->' . debug_backtrace()[1]['function'] . '() ' . PHP_EOL . var_dump( $message ) ); // phpcs:ignore
 		}
 	}
 
@@ -68,7 +68,7 @@ trait SWP_Debug_Trait {
 		 */
 		$class_name = str_replace( 'swp_', '', strtolower( get_class( $this ) ) );
 		if ( true === SWP_Utility::debug( $class_name ) ) {
-			echo '<pre class="swp_debug_data">', var_dump( $this ), '</pre>'; // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
+			echo '<pre class="swp_debug_data">', var_dump( $this ), '</pre>'; // phpcs:ignore
 		}
 
 		/**
@@ -80,7 +80,7 @@ trait SWP_Debug_Trait {
 		if ( true === SWP_Utility::debug( 'exit_statuses' ) && empty( $swp_exit_statuses['printed'] ) ) {
 			echo '<pre class="swp_debug_data"><h3>Class Method Exit Statuses</h3><ol>';
 			foreach ( $swp_exit_statuses as $key => $value ) {
-				echo '<li>' . $value . '</li>';
+				echo '<li>' . $value . '</li>'; // phpcs:ignore
 			}
 			echo '</ol></pre>';
 			$swp_exit_statuses['printed'] = true;
