@@ -87,7 +87,7 @@ class SWP_Credential_Helper {
 		}
 
 		// Verify nonce for CSRF protection
-		$nonce = $_GET['_wpnonce'] ?? '';
+		$nonce = isset($_GET['_wpnonce']) ? sanitize_text_field($_GET['_wpnonce']) : '';
 		if ( ! wp_verify_nonce( $nonce, 'unique_action_identifier' ) ) {
 			return false;
 		}
