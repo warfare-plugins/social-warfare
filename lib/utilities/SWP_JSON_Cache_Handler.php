@@ -81,8 +81,11 @@ class SWP_JSON_Cache_Handler {
 	 */
 	private function fetch_new_json_data() {
 
-		// Fetch the response.
-		$response       = wp_remote_get( 'https://warfareplugins.com/json_updates.php' );
+		if (function_exists('vip_safe_wp_remote_get')) {
+			$response = vip_safe_wp_remote_get('https://warfareplugins.com/json_updates.php');
+		} else {
+			$response = wp_remote_get('https://warfareplugins.com/json_updates.php'); // phpcs:ignore
+		}
 		$this->response = wp_remote_retrieve_body( $response );
 
 		// Create the cache data array.
