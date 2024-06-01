@@ -9,7 +9,6 @@
  * sharing buttons and will be activated when the "More" button is clicked on.
  *
  * @since  4.0.0 | 25 FEB 2020 | Created
- *
  */
 class SWP_Buttons_Panel_Ajax {
 
@@ -24,7 +23,6 @@ class SWP_Buttons_Panel_Ajax {
 	 * @since  4.0.0 | 25 FEB 2020 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 
@@ -45,7 +43,6 @@ class SWP_Buttons_Panel_Ajax {
 	 * @access public
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function build_buttons_panels() {
 
@@ -73,7 +70,6 @@ class SWP_Buttons_Panel_Ajax {
 	 * @since  4.0.0 | 25 FEB 2020 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	private function establish_available_buttons() {
 
@@ -121,7 +117,6 @@ class SWP_Buttons_Panel_Ajax {
 	 * @since  4.0.0 | 25 FEB 2020 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	private function generate_buttons_panel_html() {
 		$buttons = '';
@@ -162,7 +157,6 @@ class SWP_Buttons_Panel_Ajax {
 	 * @since  4.0.0 | 25 FEB 2020 | Created
 	 * @param  void
 	 * @return void Generated html is echoed directly to the screen.
-	 *
 	 */
 	private function generate_lightbox_container() {
 		$html  = '<div class="swp-lightbox-wrapper swp-more-wrapper"><div class="swp-lightbox-inner">';

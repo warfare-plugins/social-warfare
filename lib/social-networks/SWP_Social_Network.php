@@ -11,7 +11,6 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since 3.0.0 | 05 APR 2018 | Created
- *
  */
 class SWP_Social_Network {
 
@@ -19,7 +18,6 @@ class SWP_Social_Network {
 	/**
 	 * SWP_Debug_Trait provides useful tool like error handling and a debug
 	 * method which outputs the contents of the current object.
-	 *
 	 */
 	use SWP_Debug_Trait;
 
@@ -32,7 +30,6 @@ class SWP_Social_Network {
 	 * network is publicly branded.
 	 *
 	 * @var string
-	 *
 	 */
 	public $name = '';
 
@@ -45,7 +42,6 @@ class SWP_Social_Network {
 	 * says "+1".
 	 *
 	 * @var string
-	 *
 	 */
 	public $cta = '';
 
@@ -58,7 +54,6 @@ class SWP_Social_Network {
 	 * database and other such cool things.
 	 *
 	 * @var string
-	 *
 	 */
 	public $key = '';
 
@@ -73,7 +68,6 @@ class SWP_Social_Network {
 	 * longer do anything.
 	 *
 	 * @var bool If true, the button is turned on by default.
-	 *
 	 */
 	public $default = true;
 
@@ -88,7 +82,6 @@ class SWP_Social_Network {
 	 * the Social Warfare - Pro addon being installed and registered.
 	 *
 	 * @var string
-	 *
 	 */
 	public $premium = '';
 
@@ -100,7 +93,6 @@ class SWP_Social_Network {
 	 * property will be set to true. If not, it will be set to false.
 	 *
 	 * @var bool
-	 *
 	 */
 	public $active = false;
 
@@ -116,7 +108,6 @@ class SWP_Social_Network {
 	 * will contain the HTML for this button that was generated for post with 27 as ID.
 	 *
 	 * @var array
-	 *
 	 */
 	public $html_store = array();
 
@@ -130,7 +121,6 @@ class SWP_Social_Network {
 	 * overwrite that method in child classes that absolutely need it.
 	 *
 	 * @var string
-	 *
 	 */
 	public $base_share_url = '';
 
@@ -141,6 +131,15 @@ class SWP_Social_Network {
 	 * @var boolean $show_shares;
 	 */
 	public $show_shares = false;
+
+	/**
+	 * The generated HTML for the social network button.
+	 * This property stores the button's HTML once it is generated,
+	 * to avoid regenerating it multiple times.
+	 *
+	 * @var string
+	 */
+	public $html = '';
 
 	// TODO: Docblock
 	public $visible_on_amp = true;
@@ -153,7 +152,6 @@ class SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function add_to_global() {
 
@@ -169,7 +167,6 @@ class SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function init_social_network() {
 		$this->add_to_global();
@@ -184,7 +181,6 @@ class SWP_Social_Network {
 	 * @param string $value The name of the object.
 	 * @return object $this Allows chaining of methods.
 	 * @access public
-	 *
 	 */
 	public function set_name( $value ) {
 
@@ -205,7 +201,6 @@ class SWP_Social_Network {
 	 * @param bool $value The default status of the network.
 	 * @return object $this Allows chaining of methods.
 	 * @access public
-	 *
 	 */
 	public function set_default( $value ) {
 		if ( ! is_bool( $value ) || empty( $value ) ) {
@@ -225,7 +220,6 @@ class SWP_Social_Network {
 	 * @param string $value The key for the network.
 	 * @return object $this Allows chaining of methods.
 	 * @access public
-	 *
 	 */
 	public function set_key( $value ) {
 
@@ -245,7 +239,6 @@ class SWP_Social_Network {
 	 * @param string $value A string corresponding to the key of the dependant premium addon.
 	 * @return object $this Allows chaining of methods.
 	 * @access public
-	 *
 	 */
 	public function set_premium( $value ) {
 
@@ -265,7 +258,6 @@ class SWP_Social_Network {
 	 * @param none
 	 * @return bool
 	 * @access public
-	 *
 	 */
 	public function is_active() {
 		return $this->active;
@@ -279,7 +271,6 @@ class SWP_Social_Network {
 	 * @param none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function set_active_state() {
 		global $swp_user_options;
@@ -295,11 +286,10 @@ class SWP_Social_Network {
 	 * that was rendered by the method the first time it was created.
 	 *
 	 * @since  3.0.0 | 06 APR 2018 | Created
-	 * @param  string  $html     The string of HTML to save in this property.
-	 * @param  int     $post_id  The ID of the post that this belongs to.
+	 * @param  string $html     The string of HTML to save in this property.
+	 * @param  int    $post_id  The ID of the post that this belongs to.
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function save_html( $html, $post_id ) {
 		$this->html_store[ $post_id ] = $html;
@@ -316,7 +306,6 @@ class SWP_Social_Network {
 	 * @return bool
 	 * @access public
 	 * @TODO Make it accept two parameters, both arrays, $options and $share_counts.
-	 *
 	 */
 	public function is_share_count_shown( $btn_array ) {
 
@@ -351,7 +340,6 @@ class SWP_Social_Network {
 	 * @param  array $network_counts Associative array of 'network_key' => 'count_value'
 	 * @return array $array The modified array which will now contain the html for this button
 	 * @todo   Eliminate the array
-	 *
 	 */
 	public function render_HTML( $panel_context, $output = false ) {
 
@@ -410,7 +398,6 @@ class SWP_Social_Network {
 	 * @param  array $share_counts The array of share counts
 	 * @param  array $options  DEPRECATED The array of options from the button panel object.
 	 * @return bool  True if share counts should be displayed, else false.
-	 *
 	 */
 	public function are_shares_shown( $panel_context = array() ) {
 
@@ -418,7 +405,6 @@ class SWP_Social_Network {
 		 * Bail out and return false if the $panel_context was not passed in
 		 * properly as a paramter. We'll need this for share counts, post data,
 		 * and other important information.
-		 *
 		 */
 		$required_context = array( 'shares', 'options', 'post_data' );
 		foreach ( $required_context as $requirement ) {
@@ -430,7 +416,6 @@ class SWP_Social_Network {
 		/**
 		 * There are three main sections of the $panel_context. We'll take what
 		 * we need here so that we can have cleaner, neater access to them later.
-		 *
 		 */
 		$share_counts = $panel_context['shares'];
 		$options      = $panel_context['options'];
@@ -440,7 +425,6 @@ class SWP_Social_Network {
 		 * If the share counts are delayed in the option, then we'll check the
 		 * current age of the post and check to see if they are still delayed
 		 * or if they can be shown now.
-		 *
 		 */
 		if ( true === SWP_Buttons_Panel::are_share_counts_delayed( $post_id ) ) {
 			return false;
@@ -449,7 +433,6 @@ class SWP_Social_Network {
 		/**
 		 * Cast a string 'true'/'false' to a boolean true/false in case it was
 		 * passed in via the shortcode.
-		 *
 		 */
 		if ( is_string( $options['network_shares'] ) ) {
 			$options['network_shares'] = ( strtolower( $options['network_shares'] ) === 'true' );
@@ -488,7 +471,6 @@ class SWP_Social_Network {
 	 * @since  3.0.0 | 06 APR 2018 | Created
 	 * @param  array $array  The array of data from the buttons panel.
 	 * @return string        The processed URL.
-	 *
 	 */
 	public function get_shareable_permalink( $post_data ) {
 		return urlencode( urldecode( SWP_Link_Manager::process_url( $post_data['permalink'], $this->key, $post_data['ID'] ) ) );
@@ -508,7 +490,6 @@ class SWP_Social_Network {
 	 * @param  array $array The array of information passed in from the buttons panel.
 	 * @return string The generated link
 	 * @access public
-	 *
 	 */
 	public function generate_share_link( $post_data ) {
 		$share_link = $this->base_share_url . $this->get_shareable_permalink( $post_data );
@@ -528,7 +509,6 @@ class SWP_Social_Network {
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
-	 *
 	 */
 	public function get_api_link( $url ) {
 		return 0;
@@ -548,7 +528,6 @@ class SWP_Social_Network {
 	 * @access public
 	 * @param  string $response The raw response returned from the API request
 	 * @return int $total_activity The number of shares reported from the API
-	 *
 	 */
 	public function parse_api_response( $response ) {
 		return 0;
@@ -563,7 +542,6 @@ class SWP_Social_Network {
 	 * @since  4.1.0 | 17 APR 2020 | Created
 	 * @param  integer $post_id The ID of the desired post.
 	 * @return integer The number of shares for this post for this network.
-	 *
 	 */
 	public function get_share_count( $post_id ) {
 
@@ -591,7 +569,6 @@ class SWP_Social_Network {
 	 * @param  integer $post_id     The Post ID
 	 * @param  integer $share_count The new number of shares/activity
 	 * @return boolean True if updated, False if not updated.
-	 *
 	 */
 	public function update_share_count( $post_id, $share_count ) {
 
@@ -602,7 +579,6 @@ class SWP_Social_Network {
 		 * ?swp_debug=force_new_shares URL parameter has been set. This will
 		 * force us to accept the new share counts even if they are lower than
 		 * the previously stored share counts.
-		 *
 		 */
 		$previous_counts = get_post_meta( $post_id, '_' . $this->key . '_shares', true );
 		if ( $previous_counts > $share_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
@@ -624,7 +600,6 @@ class SWP_Social_Network {
 	 * @since  4.1.0 | 21 JUL 2020 | Created
 	 * @param  integer $post_id The Post ID
 	 * @return void
-	 *
 	 */
 	public function update_total_counts( $post_id ) {
 		global $swp_social_networks;

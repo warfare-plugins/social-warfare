@@ -12,7 +12,6 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     3.0.0 | 22 FEB 2018 | Refactored into a class-based system.
- *
  */
 class SWP_Permalink {
 
@@ -24,7 +23,6 @@ class SWP_Permalink {
 	 * @param int The post ID.
 	 * @param bool Whether to keep the post name.
 	 * @return string The modified URL of the post.
-	 *
 	 */
 	public static function get_alt_permalink( $post = 0, $leavename = false ) {
 		global $swp_user_options;
@@ -158,7 +156,7 @@ class SWP_Permalink {
 
 				} else { // if they're not using the fancy permalink option
 					$permalink = home_url( '?p=' . $post->ID );
-				}// End if().
+				}
 
 				/**
 				 * Filter the permalink for a post.

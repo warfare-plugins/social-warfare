@@ -8,7 +8,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 19 FEB 2018 | Refactored into a class-based system
- *
  */
 class SWP_Buttons_Panel_Shortcode {
 
@@ -22,7 +21,6 @@ class SWP_Buttons_Panel_Shortcode {
 	 * @since  3.0.0
 	 * @param  none
 	 * @return none
-	 *
 	 */
 	public function __construct() {
 		add_shortcode( 'social_warfare', array( $this, 'buttons_shortcode' ) );
@@ -52,7 +50,6 @@ class SWP_Buttons_Panel_Shortcode {
 	 *      echo: True echos the HTML to the screen. False returns the HTML as a string.
 	 *
 	 * @return string The HTML of the Social Warfare buttons.
-	 *
 	 */
 	public function buttons_shortcode( $atts ) {
 		$atts      = (array) $atts;

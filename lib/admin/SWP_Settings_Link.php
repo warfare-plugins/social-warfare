@@ -11,22 +11,20 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 21 FEB 2018 | Refactored into a class based system.
- *
  */
 class SWP_Settings_Link {
 
 
 	/**
-	* The magic method for instatiating this class
-	*
-	* This method called in the settings link by attaching it to the appropriate
-	* WordPress hooks and filtering the passed array of $links.
-	*
-	* @since  3.0.0
-	* @param  None
-	* @return None
-	*
-	*/
+	 * The magic method for instatiating this class
+	 *
+	 * This method called in the settings link by attaching it to the appropriate
+	 * WordPress hooks and filtering the passed array of $links.
+	 *
+	 * @since  3.0.0
+	 * @param  None
+	 * @return None
+	 */
 	public function __construct() {
 		add_filter( 'plugin_action_links_' . plugin_basename( SWP_PLUGIN_FILE ), array( $this, 'add_settings_links' ) );
 	}
@@ -37,7 +35,6 @@ class SWP_Settings_Link {
 	 * @since  1.0.0
 	 * @param  array $links Array of links passed in from WordPress core.
 	 * @return array $links Array of links modified by the function passed back to WordPress
-	 *
 	 */
 	public function add_settings_links( $links ) {
 		$settings_link = sprintf(

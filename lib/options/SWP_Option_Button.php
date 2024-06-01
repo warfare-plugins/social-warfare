@@ -2,28 +2,53 @@
 
 /**
  * A button with a CTA. The immediate use case is for network authorizations.
- *
  */
 class SWP_Option_Button extends SWP_Option {
 
 
 	/**
-	* Default
-	*
-	* The default value for this input type="checkbox".
-	*
-	* @var bool $default
-	*
-	*/
+	 * Default
+	 *
+	 * The default value for this input type="checkbox".
+	 *
+	 * @var bool $default
+	 */
 	public $default = true;
 
+	/**
+	 * Indicates if the link should open in a new tab.
+	 *
+	 * @var bool
+	 */
+	public $new_tab;
 
 	/**
-	* The required constructor for PHP classes.
-	*
-	* @param string $name The display name for the toggle.
-	* @param string $key The database key for the user setting.
-	*/
+	 * A hook to call upon deactivation.
+	 *
+	 * @var string
+	 */
+	public $deactivation_hook;
+
+	/**
+	 * The URL the button links to.
+	 *
+	 * @var string
+	 */
+	public $link;
+
+	/**
+	 * Additional CSS class names for the button.
+	 *
+	 * @var string
+	 */
+	public $class;
+
+	/**
+	 * The required constructor for PHP classes.
+	 *
+	 * @param string $name The display name for the toggle.
+	 * @param string $key The database key for the user setting.
+	 */
 	public function __construct( $name, $key, $class_name, $link, $new_tab = false, $deactivation_hook = '' ) {
 		parent::__construct( $name, $key );
 		$this->new_tab           = $new_tab;
@@ -44,10 +69,10 @@ class SWP_Option_Button extends SWP_Option {
 
 
 	/**
-	* Creates ready-to-print HTML for the checkbox/toggle module.
-	*
-	* @return SWP_Option_Toggle $this The calling object, for method chaining.
-	*/
+	 * Creates ready-to-print HTML for the checkbox/toggle module.
+	 *
+	 * @return SWP_Option_Toggle $this The calling object, for method chaining.
+	 */
 	public function render_HTML() {
 		$target = $this->new_tab ? 'target="_blank"' : '';
 
@@ -81,11 +106,11 @@ class SWP_Option_Button extends SWP_Option {
 
 
 	/**
-	* Override parent method to make this boolean-specific.
-	*
-	* @param boolean $value The boolean value to set as default.
-	* @return SWP_Option_Toggle $this The calling object, for method chaining.
-	*/
+	 * Override parent method to make this boolean-specific.
+	 *
+	 * @param boolean $value The boolean value to set as default.
+	 * @return SWP_Option_Toggle $this The calling object, for method chaining.
+	 */
 	public function set_default( $value ) {
 		if ( ! is_bool( $value ) || ! isset( $value ) ) {
 			$this->_throw( 'Please provide a default value as a boolean.' );

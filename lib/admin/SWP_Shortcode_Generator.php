@@ -13,21 +13,19 @@
  * @since     1.0.0
  * @since     3.0.0 | 20 FEB 2018 | Refactored this file to align
  *            with our code style guide
- *
  */
 class SWP_Shortcode_Generator {
 
 	/**
-	* The magic method for instatiating this class
-	*
-	* This method called the activation and decativation hooks and
-	* sets up the button and it's associated JS to be registered with
-	* the TinyMCE editor on WordPress posts (AKA the Kitchen Sink).
-	*
-	* @param None
-	* @return None
-	*
-	*/
+	 * The magic method for instatiating this class
+	 *
+	 * This method called the activation and decativation hooks and
+	 * sets up the button and it's associated JS to be registered with
+	 * the TinyMCE editor on WordPress posts (AKA the Kitchen Sink).
+	 *
+	 * @param None
+	 * @return None
+	 */
 	public function __construct() {
 		register_activation_hook( __FILE__, array( __CLASS__, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( __CLASS__, 'deactivation' ) );
@@ -38,11 +36,10 @@ class SWP_Shortcode_Generator {
 	}
 
 	/**
-	* Pretty print data for debugging.
-	*
-	* @param Array $data The data to print.
-	*
-	*/
+	 * Pretty print data for debugging.
+	 *
+	 * @param Array $data The data to print.
+	 */
 	public function debug( $data ) {
 		echo '<pre>';
 		print_r( $data );
@@ -50,18 +47,16 @@ class SWP_Shortcode_Generator {
 	}
 
 	/**
-	* Activate the shortcode
-	*
-	*/
+	 * Activate the shortcode
+	 */
 	public function activation() {
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
 
 	/**
-	* Register the admin hooks
-	*
-	*/
+	 * Register the admin hooks
+	 */
 	public function register_admin_hooks() {
 		add_filter( 'tiny_mce_version', array( $this, 'refresh_mce' ) );
 		add_action( 'init', array( $this, 'tinymce_button' ) );
@@ -69,9 +64,8 @@ class SWP_Shortcode_Generator {
 
 
 	/**
-	* A method for adding the button to tinymce editor
-	*
-	*/
+	 * A method for adding the button to tinymce editor
+	 */
 	public function tinymce_button() {
 		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
 			return;
@@ -90,7 +84,6 @@ class SWP_Shortcode_Generator {
 	 *
 	 * @param array $buttons
 	 * @return array
-	 *
 	 */
 	public function tinymce_register_button( $buttons ) {
 		array_push( $buttons, '|', 'swp_shortcode_generator' );
@@ -99,12 +92,11 @@ class SWP_Shortcode_Generator {
 
 
 	/**
-	* Register the JS file with the TinyMCE editor
-	*
-	* @param Array An array of plugins registered with the TinyMCE editor
-	* @return Array The modified array with our plugin and JS file added
-	*
-	*/
+	 * Register the JS file with the TinyMCE editor
+	 *
+	 * @param Array An array of plugins registered with the TinyMCE editor
+	 * @return Array The modified array with our plugin and JS file added
+	 */
 	public function tinymce_register_plugin( $plugin_array ) {
 		if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
 			return $plugin_array;

@@ -12,7 +12,6 @@
  *
  * To prevent this would be to store the data in our own server,
  * rather than the user's server, but that is not an option.
- *
  */
 class SWP_Credential_Helper {
 
@@ -32,7 +31,6 @@ class SWP_Credential_Helper {
 	 * @param  string $network The host service that provided the token.
 	 * @param  string $field    The type of token to fetch. Usually 'access_token'.
 	 * @return mixed  A string token, if it exists, else `false`.
-	 *
 	 */
 	public static function get_token( $network, $field = 'access_token' ) {
 		$encoded_tokens = self::get_authorizations();
@@ -61,7 +59,6 @@ class SWP_Credential_Helper {
 	 * @param  string $network The network with data to delete.
 	 * @param  string $field   The type of data to remove. Most often 'access_token'.
 	 * @return bool            True iff deleted, else false.
-	 *
 	 */
 	public static function delete_token( $network, $field = 'access_token' ) {
 		// No encoding/decoding necessary. It is handled in store_data.
@@ -82,7 +79,6 @@ class SWP_Credential_Helper {
 	 * @since 4.4.6 | 21 FEB 2024 | Added nonce verification.
 	 * @param void
 	 * @return void
-	 *
 	 */
 	public static function options_page_scan_url() {
 		// Check for user authentication
@@ -91,7 +87,7 @@ class SWP_Credential_Helper {
 		}
 
 		// Verify nonce for CSRF protection
-		$nonce = $_GET['_wpnonce'] ?? '';
+		$nonce = isset($_GET['_wpnonce']) ? sanitize_text_field($_GET['_wpnonce']) : '';
 		if ( ! wp_verify_nonce( $nonce, 'unique_action_identifier' ) ) {
 			return false;
 		}
@@ -122,7 +118,6 @@ class SWP_Credential_Helper {
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
 	 * @param  array $authorizations    The data to store.
 	 * @return array                    The authorizations, or an empty array.
-	 *
 	 */
 	public static function get_authorizations() {
 		if ( ! empty( self::$swp_authorizations ) ) {
@@ -154,7 +149,6 @@ class SWP_Credential_Helper {
 	 * @param  string $field    The type of token to fetch. Usually 'access_token'.
 	 * @param  string $data     The value of the field.
 	 * @return bool             True if updated, else false.
-	 *
 	 */
 	public static function store_data( $network, $field, $data ) {
 		$encoded_key   = base64_encode( $network );
@@ -167,7 +161,6 @@ class SWP_Credential_Helper {
 		 * A network may have both an access key and access secret.
 		 * Setting $tokens[$network_key] as an array keeps the network
 		 * open for arbitrary data storage.
-		 *
 		 */
 		if ( empty( $encoded_tokens[ $encoded_key ] ) ) {
 			$encoded_tokens[ $encoded_key ] = array();
@@ -187,15 +180,13 @@ class SWP_Credential_Helper {
 	 * @since 3.5.0 | 10 JAN 2018 | Created.
 	 * @param  array $authorizations    The data to store.
 	 * @return bool                     True iff the options were successfully updated.
-	 *
 	 */
 	public static function update_authorizations( $encoded_tokens ) {
-		if ( ! is_array( $encoded_tokens ) ) {
-			error_log( 'SWP_Credential_Helper->update_options() requires parameter 1 to be an array.' );
-			return false;
-		}
+		if (!is_array($encoded_tokens)) {
+			throw new InvalidArgumentException('SWP_Credential_Helper->update_options() requires parameter 1 to be an array.');
+		}		
 
-		$encoded_json = base64_encode( json_encode( $encoded_tokens ) );
+		$encoded_json = base64_encode( wp_json_encode( $encoded_tokens ) );
 
 		self::$swp_authorizations = $encoded_tokens;
 		return update_option( 'swp_authorizations', $encoded_json );

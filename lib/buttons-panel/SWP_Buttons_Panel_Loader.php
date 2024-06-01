@@ -16,7 +16,6 @@
  * @since     3.0.0 | 21 FEB 2018 | Refactored into a class-based system.
  * @since     3.1.0 | 18 JUN 2018 | Replaced brack array notation.
  * @since     3.4.0 | 21 SEP 2018 | Ported from SWP_Display to SWP_Buttons_Panel_Loader
- *
  */
 class SWP_Buttons_Panel_Loader {
 
@@ -29,7 +28,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since 2.1.4
 	 *
 	 * @var array
-	 *
 	 */
 	public $already_printed;
 
@@ -63,7 +61,6 @@ class SWP_Buttons_Panel_Loader {
 	 *                 This post data instead of data in the loop.
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 
@@ -71,7 +68,6 @@ class SWP_Buttons_Panel_Loader {
 		 * The global array of posts that have already been processed. This
 		 * allows us to ensure that we are not filtering the content from
 		 * the_content filter on the same post more than once.
-		 *
 		 */
 		global $swp_already_print;
 
@@ -106,7 +102,6 @@ class SWP_Buttons_Panel_Loader {
 	 *                               paranthesis.
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function activate_buttons() {
 
@@ -148,7 +143,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since  3.4.2 | 11 DEC 2018 | Added check for float_before_content option.
 	 * @param  string $content The WordPress content passed via filter.
 	 * @return string $content The modified string of content.
-	 *
 	 */
 	public function add_content_locator( $content ) {
 		$pinit_toggle         = SWP_Utility::get_option( 'pinit_toggle' );
@@ -163,14 +157,13 @@ class SWP_Buttons_Panel_Loader {
 
 
 	/**
-	* A wrapper function for adding the buttons, content, or excerpt.
-	*
-	* @since  1.0.0
-	* @param  string $content The content.
-	* @return string $content The modified content
-	* @todo   Why is the $content passed to both the instantator and the method?
-	*
-	*/
+	 * A wrapper function for adding the buttons, content, or excerpt.
+	 *
+	 * @since  1.0.0
+	 * @param  string $content The content.
+	 * @return string $content The modified content
+	 * @todo   Why is the $content passed to both the instantator and the method?
+	 */
 	public function social_warfare_wrapper( $content ) {
 
 		// The global WordPress post object.
@@ -193,7 +186,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since  2.0.0
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function floating_buttons() {
 
@@ -223,7 +215,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since  3.4.2 | 04 DEC 2018 | Created
 	 * @param string $content The post content to be modified
 	 * @return string The modified post content
-	 *
 	 */
 	public function add_static_panel_fallback_content( $content ) {
 
@@ -247,7 +238,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since 3.4.2 | 04 DEC 2018 | Created
 	 * @param void
 	 * @return void
-	 *
 	 */
 	public function add_static_panel_fallback_footer() {
 
@@ -274,7 +264,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since  3.4.0 | 25 OCT 2018 | Created.
 	 * @param  void
 	 * @return void The rendered HTML is echoed to the screen.
-	 *
 	 */
 	public function generate_static_panel_fallback( $content = '' ) {
 		global $post;
@@ -283,7 +272,6 @@ class SWP_Buttons_Panel_Loader {
 		 * If all the checks above get passed, then we'll go ahead and create a
 		 * static horizontal buttons panel, wrap it in a wrapper to make it
 		 * invisible, and echo it to the screen.
-		 *
 		 */
 		$staticHorizontal = new SWP_Buttons_Panel( array(), true );
 
@@ -301,7 +289,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @since  3.4.2 | 04 NOV 2018
 	 * @param  void
 	 * @return bool
-	 *
 	 */
 	public function should_float_fallback_display() {
 		global $post;
@@ -313,7 +300,6 @@ class SWP_Buttons_Panel_Loader {
 		/**
 		 * We'll gather up all of our data into some variables so that we can
 		 * clean up the conditionals below.
-		 *
 		 */
 		$floating_panel             = SWP_Utility::get_option( 'floating_panel' );
 		$float_mobile               = SWP_Utility::get_option( 'float_mobile' );
@@ -326,7 +312,6 @@ class SWP_Buttons_Panel_Loader {
 
 		/**
 		 * Bail out if the floating options are set to off on this specific post.
-		 *
 		 */
 		if ( 'off' === $post_meta_enabled_floating ) {
 			return false;
@@ -334,7 +319,6 @@ class SWP_Buttons_Panel_Loader {
 
 		/**
 		 * Autimatically be true if set to on for this post.
-		 *
 		 */
 		if ( 'on' === $post_meta_enabled_floating ) {
 			return true;
@@ -343,7 +327,6 @@ class SWP_Buttons_Panel_Loader {
 		/**
 		 * We are only generating this if the user has floating buttons activated
 		 * at least somewhere. If all floating options are off, just bail.
-		 *
 		 */
 		if ( false === $floating_panel && 'off' === $float_mobile && 'off' === $float_location_post_type ) {
 			return false;
@@ -351,7 +334,6 @@ class SWP_Buttons_Panel_Loader {
 
 		/**
 		 * Do not print top/bottom floating buttons on blog pages.
-		 *
 		 */
 		if ( ! is_singular() ) {
 			return false;
@@ -361,7 +343,6 @@ class SWP_Buttons_Panel_Loader {
 		 * If both the floating buttons location and the mobile floating
 		 * location are not set to top or bottom, then just bail out because we
 		 * won't need this.
-		 *
 		 */
 		if ( ! in_array( $float_location, $acceptable_locations, true )
 			&& ! in_array( $float_mobile, $acceptable_locations, true ) ) {
@@ -372,7 +353,6 @@ class SWP_Buttons_Panel_Loader {
 		 * This is a backup/fallback to provide a panel of buttons for the JS
 		 * to clone. Therefore if a set of buttons are already being printed, we
 		 * can just bail out because the JS will use the preexisting panel.
-		 *
 		 */
 		if ( 'none' !== $post_meta_enabled_static && 'none' !== $location_post_type ) {
 			return false;
@@ -390,7 +370,6 @@ class SWP_Buttons_Panel_Loader {
 	 * @param  array $array An array of options and information to pass into the
 	 *                      buttons function.
 	 * @return string       The html for a panel of buttons.
-	 *
 	 */
 	public static function social_warfare( $args = array() ) {
 		$Buttons_Panel = new SWP_Buttons_Panel( $args );

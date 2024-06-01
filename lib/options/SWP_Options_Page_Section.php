@@ -12,38 +12,34 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since 3.0.0 | 01 MAR 2018 | Created
- *
  */
 class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* The description printed on the Settings page under the title.
-	*
-	* @var string $description
-	*
-	*/
+	 * The description printed on the Settings page under the title.
+	 *
+	 * @var string $description
+	 */
 	public $description;
 
 
 	/**
-	* The KnowledgeBase link printed on the Settings page near the title.
-	*
-	* @var string $link
-	*
-	*/
+	 * The KnowledgeBase link printed on the Settings page near the title.
+	 *
+	 * @var string $link
+	 */
 	public $link;
 
 	/**
-	* The input elements reflecting configurable options to be set by the uesr.
-	*
-	* This is the array where each of the avialable option objects are stored.
-	* The HTML for each of these options will be rendered within this section
-	* on the options page.
-	*
-	* @var array Array of SWP_Option objects.
-	*
-	*/
+	 * The input elements reflecting configurable options to be set by the uesr.
+	 *
+	 * This is the array where each of the avialable option objects are stored.
+	 * The HTML for each of these options will be rendered within this section
+	 * on the options page.
+	 *
+	 * @var array Array of SWP_Option objects.
+	 */
 	public $options;
 
 
@@ -58,7 +54,6 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 	 * @param  string $name The name of this section. Will be printed at the top.
 	 * @param  string $key  The unique key for this section of the options page.
 	 * @return void
-	 *
 	 */
 	public function __construct( $name, $key ) {
 		$this->options = new stdClass();
@@ -68,13 +63,12 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* The related link to our KnowledgeBase article.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  string $link The direct link to the article.
-	* @return object $this Allows for method chaining.
-	*
-	*/
+	 * The related link to our KnowledgeBase article.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  string $link The direct link to the article.
+	 * @return object $this Allows for method chaining.
+	 */
 	public function set_information_link( $link ) {
 		if ( ! is_string( $link ) || strpos( $link, 'http' ) === false ) {
 			$this->_throw( $link . ' must be a valid URL.' );
@@ -87,13 +81,12 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* The description text appearing under the section's name.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  string $description The full text to be displayed in the section.
-	* @return object $this The updated object. Allows for method chaining.
-	*
-	*/
+	 * The description text appearing under the section's name.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  string $description The full text to be displayed in the section.
+	 * @return object $this The updated object. Allows for method chaining.
+	 */
 	public function set_description( $description ) {
 		if ( ! is_string( $description ) ) {
 			$this->_throw( 'Please pass the description as a string.' );
@@ -106,17 +99,16 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* Adds a user setting option to the section.
-	*
-	* This is the method that allows us to add an actual option to this section
-	* of the settings page. An SWP_Option needs to be created, and then this method
-	* allows that option to be added to this section.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  mixed $option One of the SWP_Option child classes.
-	* @return object $this The updated object. Allows for method chaining.
-	*
-	*/
+	 * Adds a user setting option to the section.
+	 *
+	 * This is the method that allows us to add an actual option to this section
+	 * of the settings page. An SWP_Option needs to be created, and then this method
+	 * allows that option to be added to this section.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  mixed $option One of the SWP_Option child classes.
+	 * @return object $this The updated object. Allows for method chaining.
+	 */
 	public function add_option( $option ) {
 		$types = array( 'SWP_Registration_Tab_Templates', 'SWP_Option_Toggle', 'SWP_Option_Select', 'SWP_Option_Text', 'SWP_Option_Textarea' );
 
@@ -134,16 +126,15 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* Adds multiple options at once.
-	*
-	* Option objects can be created inside of an array and then added to this
-	* section via this method.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param array $options An array of SWP_Option child objects.
-	* @return object $this The updated object. Allows for method chaining.
-	*
-	*/
+	 * Adds multiple options at once.
+	 *
+	 * Option objects can be created inside of an array and then added to this
+	 * section via this method.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param array $options An array of SWP_Option child objects.
+	 * @return object $this The updated object. Allows for method chaining.
+	 */
 	public function add_options( $options ) {
 		if ( ! is_array( $options ) ) {
 			$this->_throw( 'Requires an array of SWP_Option objects.' );
@@ -158,15 +149,14 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* A method to render the html for each tab.
-	*
-	* @since  3.0.0 | 03 MAR 2018 | Created
-	* @param  void
-	* @return string Fully qualified HTML for this tab.
-	*
-	*/
+	 * A method to render the html for each tab.
+	 *
+	 * @since  3.0.0 | 03 MAR 2018 | Created
+	 * @param  void
+	 * @return string Fully qualified HTML for this tab.
+	 */
 	public function render_HTML() {
-		//* The opening tag, which may or may not have dependencies or be premium.
+		// * The opening tag, which may or may not have dependencies or be premium.
 		$html  = '<div class="sw-section sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_title_wrapper" ';
 		$html .= $this->render_dependency();
 		$html .= $this->render_premium();
@@ -193,13 +183,12 @@ class SWP_Options_Page_Section extends SWP_Option_Abstract {
 
 
 	/**
-	* Renders the section's options HTML.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string $options The fully qualified HTML for the sections options.
-	*
-	*/
+	 * Renders the section's options HTML.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string $options The fully qualified HTML for the sections options.
+	 */
 	private function render_options() {
 		$map     = $this->sort_by_priority( $this->options );
 		$options = '';
