@@ -5,7 +5,7 @@ Requires at least: 4.5.0
 Tested up to: 6.6
 Stable tag: 4.5.0
 Requires PHP: 5.6
-License: GPLv2 or later
+License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
