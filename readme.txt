@@ -29,7 +29,6 @@ You can choose from the top social networks sharing buttons, including:
 * Pinterest
 * LinkedIn
 * Mix
-* Mastodon
 
 You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
@@ -134,6 +133,35 @@ Additionally, if you're a Google Analytics user, you can set up Analytics tracki
 You can also activate Event Tracking so that you can also see in Google Analytics exactly how many times your buttons are clicked.
 
 It is without question that Social Warfare is the most powerful social sharing plugin available for WordPress. You get all these premium features while still benefitting from a super-fast, light-weight code base.
+
+= Third-Party Services =
+
+This plugin uses APIs from the following third-party services for sharing content. Please review their terms and privacy policies:
+
+- **Facebook**
+  - [Service Link](https://www.facebook.com)
+  - [Terms of Service](https://www.facebook.com/terms.php)
+  - [Privacy Policy](https://www.facebook.com/policy.php)
+
+- **Twitter**
+  - [Service Link](https://www.twitter.com)
+  - [Terms of Service](https://twitter.com/en/tos)
+  - [Privacy Policy](https://twitter.com/en/privacy)
+
+- **Pinterest**
+  - [Service Link](https://www.pinterest.com)
+  - [Terms of Service](https://policy.pinterest.com/terms-of-service)
+  - [Privacy Policy](https://policy.pinterest.com/privacy-policy)
+
+- **LinkedIn**
+  - [Service Link](https://www.linkedin.com)
+  - [Terms of Service](https://www.linkedin.com/legal/user-agreement)
+  - [Privacy Policy](https://www.linkedin.com/legal/privacy-policy)
+
+- **Mix**
+  - [Service Link](https://www.mix.com)
+  - [Terms of Service](https://mix.com/terms)
+  - [Privacy Policy](https://mix.com/privacy)
 
 == Installation ==
 
