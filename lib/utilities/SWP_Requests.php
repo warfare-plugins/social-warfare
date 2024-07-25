@@ -99,25 +99,22 @@ class SWP_Requests {
 	 * @return string Response from the API request.
 	 *
 	 * @since  4.4.6 | 21 FEB 2024 | Created as a direct cURL alternative to wp_remote_post() for Bitly API.
+	 * @since  4.5.0 | 25 JUL 2024 | Repalced cURL with HTTP API [https://developer.wordpress.org/plugins/http-api/]
 	 */
 	public static function post_json( $url, $fields, $headers = array() ) {
 		if ( ! in_array( 'Content-Type: application/json; charset=utf-8', $headers, true ) ) {
 			$headers[] = 'Content-Type: application/json; charset=utf-8';
 		}
-
-		$curl = curl_init( $url ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_init
-
-		curl_setopt( $curl, CURLOPT_POST, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, wp_json_encode( $fields ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_setopt
-
-		$resp = curl_exec( $curl ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_exec
-
-		curl_close( $curl ); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_close
-
-		return $resp;
+	
+		$args = array(
+			'method'    => 'POST',
+			'headers'   => $headers,
+			'body'      => wp_json_encode( $fields ),
+			'sslverify' => false,
+		);
+	
+		$response = wp_remote_post( $url, $args );
+	
+		return is_wp_error( $response ) ? $response->get_error_message() : wp_remote_retrieve_body( $response );
 	}
 }
