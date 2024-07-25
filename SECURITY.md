@@ -11,14 +11,14 @@ The following versions of this project are currently being supported with securi
 
 ## Reporting a Vulnerability
 
-To report a security issue please email details to andrii@wisersites.com with a descriptive subject line.  In addition, please include the following information along with your report:
+To report a security issue please email details to info@warfareplugins.com with a descriptive subject line.  In addition, please include the following information along with your report:
 
 - Your name and affiliation (if any).
 - A description of the technical details of the vulnerability.  It is very important to let us know how we can reproduce your findings.
 - An explanation who can exploit this vulnerability, and what they gain when doing so -- write an attack scenario.  This will help us evaluate your report quickly, especially if the issue is complex.
-- Whether this vulnerability is public or known to third parties.  If it is, please provide details.
+- Whether this vulnerability is public or known to third parties. If it is, please provide details.
 
-If you believe that an existing (public) issue is security-related, please send an email to andrii@wisersites.com.  The email should include the issue ID and a short description of why it should be handled according to this security policy.
+If you believe that an existing (public) issue is security-related, please send an email to info@warfareplugins.com.  The email should include the issue ID and a short description of why it should be handled according to this security policy.
 
 ## Responding to Vulnerability Reports
 
