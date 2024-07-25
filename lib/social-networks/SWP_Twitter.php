@@ -61,6 +61,7 @@ class SWP_Twitter extends SWP_Social_Network {
 	 * @since  3.4.0 | 16 NOV 2018 | Removed Open Share Counts API.
 	 * @since  3.4.0 | 16 NOV 2018 | Added local property for debugging.
 	 * @since  4.0.0 | 24 FEB 2020 | Added Open Share Count API.
+	 * @since  4.5.0 | 25 JUL 2024 | Removed Open Share Count API.
 	 * @var    $request_url Stored in a local property to allow us to output it
 	 *                      via the debug method when ?swp_debug=twitter is used.
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
@@ -71,33 +72,6 @@ class SWP_Twitter extends SWP_Social_Network {
 		// Fetch the user's options
 		global $swp_user_options;
 		$this->request_url = 0;
-
-		/**
-		 * If share counts for Twitter aren't even turned on, just return zero
-		 * and bail early.
-		 */
-		if ( false === SWP_Utility::get_option( 'twitter_shares' ) ) {
-			return 0;
-		}
-
-		/**
-		 * Twitcount is a working, valid source of Twitter share counts. If it's
-		 * active, return the API url of the JSON enpoint.
-		 */
-		if ( 'twitcount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
-			$this->request_url = 'https://counts.twitcount.com/counts.php?url=' . $url;
-			return $this->request_url;
-		}
-
-		/**
-		 * OpenShareCount.com is another alternative source for fetching share
-		 * counts for shared pages. If it's active, we return it's API URL for
-		 * it's JSON endpoint.
-		 */
-		if ( 'opensharecount' === SWP_Utility::get_option( 'tweet_count_source' ) ) {
-			$this->request_url = 'https://opensharecount.com/count.json?url=' . $url;
-			return $this->request_url;
-		}
 
 		return 0;
 	}
