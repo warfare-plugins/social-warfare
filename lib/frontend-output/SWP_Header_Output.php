@@ -95,7 +95,7 @@ class SWP_Header_Output {
 
 		if ( $meta_html ) :
 			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com - BEGINNING OF OUTPUT -->' . PHP_EOL;
-			echo $meta_html;
+			echo wp_kses_post( $meta_html );
 			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com - END OF OUTPUT -->' . PHP_EOL . PHP_EOL;
 		endif;
 	}
