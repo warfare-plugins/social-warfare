@@ -248,13 +248,13 @@ class SWP_Database_Migration {
 		 *This debug paramter has an optional paramter, `post_type`, which defaults to 'page'.
 		 *
 		 * @since 3.4.2
+		 * @since 4.5.0 | 26 JUL 2024 | Implement sanitization
 		 */
 		if ( true === SWP_Utility::debug( 'reset_float_location' ) ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( 'You do not have authorization to view this page.' );
 			}
-			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page'; // phpcs:ignore
-			$post_type = sanitize_text_field( $post_type );
+			$post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : 'page'; // phpcs:ignore
 			$this->reset_post_meta_float_location( $post_type );
 		}
 
