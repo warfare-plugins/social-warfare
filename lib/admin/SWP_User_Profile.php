@@ -50,29 +50,30 @@ class SWP_User_Profile {
 	 *
 	 * @param  object $user The user object
 	 * @since  Unknown
-	 * @since  2.2.4   | Updated | 07 MAR 2017 | Added translation gettext calls to each title and description
+	 * @since  2.2.4   | 07 MAR 2017 | Added translation gettext calls to each title and description
+	 * @since  4.5.0   | 26 JUL 2024 | Added a esc_html__ call to all inputs
 	 * @access public
 	 * @return none
 	 */
 	public function show_user_profile_fields( $user ) {
-		echo '<h3>Social Warfare Fields</h3>';
+		echo '<h3>' . esc_html__( 'Social Warfare Fields', 'social-warfare' ) . '</h3>';
 		echo '<table class="form-table">';
 		echo '<tr>';
-		echo '<th><label for="twitter">' . __( 'Twitter Username', 'social-warfare' ) . '</label></th>';
+		echo '<th><label for="twitter">' . esc_html__( 'Twitter Username', 'social-warfare' ) . '</label></th>';
 		echo '<td>';
 		echo '<input type="text" name="swp_twitter" id="swp_twitter" value="' . esc_attr( get_the_author_meta( 'swp_twitter', $user->ID ) ) . '" class="regular-text" />';
-		echo '<br /><span class="description">' . __( 'Please enter your Twitter username.', 'social-warfare' ) . '</span>';
+		echo '<br /><span class="description">' . esc_html__( 'Please enter your Twitter username.', 'social-warfare' ) . '</span>';
 		echo '</td>';
 		echo '</tr>';
 		echo '<tr>';
-		echo '<th><label for="facebook_author">' . __( 'Facebook Author URL', 'social-warfare' ) . '</label></th>';
+		echo '<th><label for="facebook_author">' . esc_html__( 'Facebook Author URL', 'social-warfare' ) . '</label></th>';
 		echo '<td>';
 		echo '<input type="text" name="swp_fb_author" id="swp_fb_author" value="' . esc_attr( get_the_author_meta( 'swp_fb_author', $user->ID ) ) . '" class="regular-text" />';
-		echo '<br /><span class="description">' . __( 'Please enter the URL of your Facebok profile.', 'social-warfare' ) . '</span>';
+		echo '<br /><span class="description">' . esc_html__( 'Please enter the URL of your Facebook profile.', 'social-warfare' ) . '</span>';
 		echo '</td>';
 		echo '</tr>';
 		echo '</table>';
-	}
+	}	
 
 
 	/**
