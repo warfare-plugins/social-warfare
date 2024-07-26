@@ -71,6 +71,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @since  3.0.0 | 01 MAY 2018 | Re-wrote the function to a class method.
 	 * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
 	 * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image.
+	 * @since  4.5.0 | 26 JUL 2024 | Ensure proper escaping of HTML output
 	 * @access public
 	 * @return array $panel_context Array of
 	 *                   ['post_data']  => metadata about the post;
@@ -258,8 +259,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 		$this->html = $html;
 
 		if ( $output ) :
-			echo $html;
-		endif;
+			echo wp_kses_post( $html );
+		endif;		
 
 		return $html;
 	}
