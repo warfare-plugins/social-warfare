@@ -297,6 +297,7 @@ class Social_Warfare_Addon {
 	 *
 	 * @since  2.1.0
 	 * @since  2.3.0 Hooked registration into the new EDD Software Licensing API
+	 * @since  4.5.0 | 26 JUL 2024 | Ensure proper escaping of JSON output
 	 * @param  none
 	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
 	 */
@@ -349,19 +350,19 @@ class Social_Warfare_Addon {
 					$options[ $key . '_license_key_timestamp' ] = $current_time;
 					update_option( 'social_warfare_settings', $options );
 
-					echo wp_json_encode( $license_data );
+					echo wp_kses_post( wp_json_encode( $license_data ) );
 					wp_die();
 
 					// If the license is not valid
 				elseif ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
-					echo wp_json_encode( $license_data );
+					echo wp_kses_post( wp_json_encode( $license_data ) );
 					wp_die();
 
 					// If some other status was returned
 				else :
 					$license_data['success'] = false;
 					$license_data['data']    = 'Invaid response from the registration server.';
-					echo wp_json_encode( $license_data );
+					echo wp_kses_post( wp_json_encode( $license_data ) );
 					wp_die();
 				endif;
 
@@ -369,14 +370,14 @@ class Social_Warfare_Addon {
 			else :
 				$license_data['success'] = false;
 				$license_data['data']    = 'Failed to connect to registration server.';
-				echo wp_json_encode( $license_data );
+				echo wp_kses_post( wp_json_encode( $license_data ) );
 				wp_die();
 			endif;
 		endif;
 
 		$license_data['success'] = false;
 		$license_data['data']    = 'Admin Ajax did not receive valid POST data.';
-		echo wp_json_encode( $license_data );
+		echo wp_kses_post( wp_json_encode( $license_data ) );
 		wp_die();
 	}
 
