@@ -87,6 +87,7 @@ class SWP_Header_Output {
 		 * Note: Each meta tag should begin with PHP_EOL for clean structured HTML output
 		 *
 		 * @since 2.1.4
+		 * @since 4.5.0 | 26 JUL 2024 | Added the wp_kses_post() function to the output.
 		 * @access public
 		 * @var array $info An array of information
 		 * @return array $info The modified array with the 'html_output' index populated.
