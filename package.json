@@ -28,10 +28,10 @@
 		"role": "developer"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^9.10.0",
-		"@wordpress/scripts": "^27.9.0"
+		"@wordpress/env": "^10.4.0",
+		"@wordpress/scripts": "^28.3.0"
 	},
 	"dependencies": {
-		"@wordpress/icons": "^9.49.0"
+		"@wordpress/icons": "^10.4.0"
 	}
 }
