@@ -1,7 +1,10 @@
 {
-	"plugins": [ ".", "https://downloads.wordpress.org/plugin/plugin-check.1.0.2.zip" ],
+	"plugins": [
+		".",
+		"https://downloads.wordpress.org/plugin/plugin-check.1.0.2.zip"
+	],
 	"config": {
-        "WP_DEBUG": true,
-        "SCRIPT_DEBUG": true
-    }
+		"WP_DEBUG": true,
+		"SCRIPT_DEBUG": true
+	}
 }
