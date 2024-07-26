@@ -125,42 +125,52 @@ class SWP_Utility {
 	 * @since  2.x.x | Unknown | Created.
 	 * @since  3.0.9 | 31 MAY 2018 | Added call to wp_cache_delete to make sure settings save
 	 * @since  3.3.0 | 14 AUG 2018 | Removed deprecated code.
+	 * @since  4.5.0 | 26 JUL 2024 | Generalize sanitization for different types of input.
 	 */
 	public static function store_settings() {
 
 		if ( ! check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
-			wp_send_json_error( esc_html__( 'Security failed 1.', 'social-warfare' ) );
+			wp_send_json_error( esc_html__( 'Security check failed.', 'social-warfare' ) );
 			wp_die();
 		}
-
+	
 		$data = wp_unslash( $_POST );
-
-		if ( empty( $data['settings'] ) ) {
-			wp_send_json_error( esc_html__( 'No settings to save.', 'social-warfare' ) );
+	
+		if ( empty( $data['settings'] ) || ! is_array( $data['settings'] ) ) {
+			wp_send_json_error( esc_html__( 'Invalid settings data.', 'social-warfare' ) );
 			wp_die();
 		}
-
+	
 		$options  = get_option( 'social_warfare_settings', array() );
-		$settings = $data['settings'];
-
-		// Loop and check for checkbox values, convert them to boolean.
-		if ( is_array( $data['settings'] ) ) {
-			foreach ( $data['settings'] as $key => $value ) {
-				if ( 'true' === $value ) {
-					$settings[ $key ] = true;
-				} elseif ( 'false' === $value ) {
-					$settings[ $key ] = false;
-				} else {
-					$settings[ $key ] = $value;
-				}
+		$settings = array();
+	
+		// Generalize sanitization for different types of input.
+		foreach ( $data['settings'] as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$settings[ $key ] = array_map( 'sanitize_text_field', $value );
+			} elseif ( is_bool( $value ) || $value === 'true' || $value === 'false' ) {
+				$settings[ $key ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			} elseif ( is_numeric( $value ) ) {
+				$settings[ $key ] = intval( $value );
+			} elseif ( filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+				$settings[ $key ] = sanitize_email( $value );
+			} elseif ( preg_match( '/^#[a-f0-9]{6}$/i', $value ) ) {
+				$settings[ $key ] = sanitize_hex_color( $value );
+			} else {
+				$settings[ $key ] = sanitize_text_field( $value );
 			}
 		}
-
+	
 		$new_settings = array_merge( $options, $settings );
-		echo wp_json_encode( update_option( 'social_warfare_settings', $new_settings ) );
-
+	
+		if ( update_option( 'social_warfare_settings', $new_settings ) ) {
+			wp_send_json_success( esc_html__( 'Settings saved successfully.', 'social-warfare' ) );
+		} else {
+			wp_send_json_error( esc_html__( 'Failed to save settings.', 'social-warfare' ) );
+		}
+	
 		wp_die();
-	}
+	}		
 
 	/**
 	 * Handle the options save request inside of admin-ajax.php
