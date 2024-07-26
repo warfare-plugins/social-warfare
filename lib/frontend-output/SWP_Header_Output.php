@@ -87,7 +87,7 @@ class SWP_Header_Output {
 		 * Note: Each meta tag should begin with PHP_EOL for clean structured HTML output
 		 *
 		 * @since 2.1.4
-		 * @since 4.5.0 | 26 JUL 2024 | Added the wp_kses_post() function to the output.
+		 * @since 4.5.0 | 26 JUL 2024 | Added the wp_kses() function to the output.
 		 * @access public
 		 * @var array $info An array of information
 		 * @return array $info The modified array with the 'html_output' index populated.
@@ -95,9 +95,15 @@ class SWP_Header_Output {
 		$meta_html = apply_filters( 'swp_header_html', '' );
 
 		if ( $meta_html ) :
-			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com - BEGINNING OF OUTPUT -->' . PHP_EOL;
-			echo wp_kses_post( $meta_html );
-			echo PHP_EOL . '<!-- Social Warfare v' . SWP_VERSION . ' https://warfareplugins.com - END OF OUTPUT -->' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . '<!-- Social Warfare v' . esc_html( SWP_VERSION ) . ' https://warfareplugins.com - BEGINNING OF OUTPUT -->' . PHP_EOL;
+			
+			$allowed_html = array(
+				'style' => array(),
+			);
+		
+			echo wp_kses( $meta_html, $allowed_html );
+
+			echo PHP_EOL . '<!-- Social Warfare v' . esc_html( SWP_VERSION ) . ' https://warfareplugins.com - END OF OUTPUT -->' . PHP_EOL . PHP_EOL;
 		endif;
 	}
 
