@@ -128,8 +128,8 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$authorizations = $this->establish_authorizations();
 		if ( count( $authorizations ) > 0 ) {
 
-			$auths = new SWP_Options_Page_Section( __( 'Social Network Connections', 'social-warfare' ), 'addon_authorizations' );
-			$auths->set_description( __( 'By clicking this button, you\'ll allow Social Warfare to authenticate and connect with Facebook. This allows the plugin to access Facebook\'s API and use it to determine your share counts more accurately.', 'social-warfare' ) );
+			$auths = new SWP_Options_Page_Section( esc_html__( 'Social Network Connections', 'social-warfare' ), 'addon_authorizations' );
+			$auths->set_description( esc_html__( 'By clicking this button, you\'ll allow Social Warfare to authenticate and connect with Facebook. This allows the plugin to access Facebook\'s API and use it to determine your share counts more accurately.', 'social-warfare' ) );
 
 			$auths->set_priority( 20 );
 
@@ -283,16 +283,16 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	public static function get_color_choices_array() {
 		return array(
-			'full_color'            => __( 'Full Color', 'social-warfare' ),
-			'light_gray'            => __( 'Light Gray', 'social-warfare' ),
-			'medium_gray'           => __( 'Medium Gray', 'social-warfare' ),
-			'dark_gray'             => __( 'Dark Gray', 'social-warfare' ),
-			'light_gray_outlines'   => __( 'Light Gray Outlines', 'social-warfare' ),
-			'medium_gray_outlines'  => __( 'Medium Gray Outlines', 'social-warfare' ),
-			'dark_gray_outlines'    => __( 'Dark Gray Outlines', 'social-warfare' ),
-			'color_outlines'        => __( 'Color Outlines', 'social-warfare' ),
-			'custom_color'          => __( 'Custom Color', 'social-warfare' ),
-			'custom_color_outlines' => __( 'Custom Color Outlines', 'social-warfare' ),
+			'full_color'            => esc_html__( 'Full Color', 'social-warfare' ),
+			'light_gray'            => esc_html__( 'Light Gray', 'social-warfare' ),
+			'medium_gray'           => esc_html__( 'Medium Gray', 'social-warfare' ),
+			'dark_gray'             => esc_html__( 'Dark Gray', 'social-warfare' ),
+			'light_gray_outlines'   => esc_html__( 'Light Gray Outlines', 'social-warfare' ),
+			'medium_gray_outlines'  => esc_html__( 'Medium Gray Outlines', 'social-warfare' ),
+			'dark_gray_outlines'    => esc_html__( 'Dark Gray Outlines', 'social-warfare' ),
+			'color_outlines'        => esc_html__( 'Color Outlines', 'social-warfare' ),
+			'custom_color'          => esc_html__( 'Custom Color', 'social-warfare' ),
+			'custom_color_outlines' => esc_html__( 'Custom Color Outlines', 'social-warfare' ),
 		);
 	}
 
@@ -393,10 +393,10 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	protected function get_static_options_array() {
 		return array(
-			'above' => __( 'Above the Content', 'social-warfare' ),
-			'below' => __( 'Below the Content', 'social-warfare' ),
-			'both'  => __( 'Both Above and Below the Content', 'social-warfare' ),
-			'none'  => __( 'None/Manual Placement', 'social-warfare' ),
+			'above' => esc_html__( 'Above the Content', 'social-warfare' ),
+			'below' => esc_html__( 'Below the Content', 'social-warfare' ),
+			'both'  => esc_html__( 'Both Above and Below the Content', 'social-warfare' ),
+			'none'  => esc_html__( 'None/Manual Placement', 'social-warfare' ),
 		);
 	}
 
@@ -412,38 +412,38 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 */
 	protected function init_advanced_tab() {
 
-		$advanced = new SWP_Options_Page_Tab( __( 'Advanced', 'social-warfare' ), 'advanced' );
+		$advanced = new SWP_Options_Page_Tab( esc_html__( 'Advanced', 'social-warfare' ), 'advanced' );
 		$advanced->set_priority( 40 );
 
-		$gutenberg = new SWP_Options_Page_Section( __( 'Gutenberg Blocks<sup>beta</sup>', 'social-warfare' ), 'gutenberg' );
+		$gutenberg = new SWP_Options_Page_Section( esc_html__( 'Gutenberg Blocks<sup>beta</sup>', 'social-warfare' ), 'gutenberg' );
 		$gutenberg->set_priority( 5 )
 			->set_description( 'If you want to try Social Warfare blocks with Gutenberg, turn this on. <b>Tested with: WP Core 4.9, WP Core 5.1</b>. <em><br/>We are keeping up the best we can, but Gutenberg development is very rapid and can break our blocks overnight. <br/>If this happens, please turn this setting OFF. Your shortcodes will stay in place.</em>' );
 			// ->set_information_link( 'https://warfareplugins.com/support/using-shortcodes-and-php-snippets/' );
 
-			$gutenberg_switch = new SWP_Option_Toggle( __( 'Enable Gutenberg Blocks' ), 'gutenberg_switch' );
+			$gutenberg_switch = new SWP_Option_Toggle( esc_html__( 'Enable Gutenberg Blocks' ), 'gutenberg_switch' );
 			$gutenberg_switch->set_default( true )
 				->set_size( 'sw-col-300' );
 
 			$gutenberg->add_option( $gutenberg_switch );
 
-		$frame_buster = new SWP_Options_Page_Section( __( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
+		$frame_buster = new SWP_Options_Page_Section( esc_html__( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
 		$frame_buster->set_priority( 10 )
-			->set_description( __( 'If you want to stop content pirates from stealing your content, turn this on. This feature detects when your site is being targeted by framing apps and immediately redirects your visitors to the unframed, original version of your site.', 'social-warfare' ) )
+			->set_description( esc_html__( 'If you want to stop content pirates from stealing your content, turn this on. This feature detects when your site is being targeted by framing apps and immediately redirects your visitors to the unframed, original version of your site.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-frame-buster/' );
 
 			// * sniplyBuster => frame_buster
-			$frame_buster_toggle = new SWP_Option_Toggle( __( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
+			$frame_buster_toggle = new SWP_Option_Toggle( esc_html__( 'Frame Buster', 'social-warfare' ), 'frame_buster' );
 			$frame_buster_toggle->set_default( true )
 				->set_size( 'sw-col-300' );
 
 			$frame_buster->add_option( $frame_buster_toggle );
 
-		$full_content = new SWP_Options_Page_Section( __( 'Full Content vs. Excerpts', 'social-warfare' ), 'full_content' );
+		$full_content = new SWP_Options_Page_Section( esc_html__( 'Full Content vs. Excerpts', 'social-warfare' ), 'full_content' );
 		$full_content->set_priority( 70 )
-			->set_description( __( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.', 'social-warfare' ) )
+			->set_description( esc_html__( 'If your theme does not use excerpts, but instead displays the full post content on archive, category, and home pages, activate this toggle to allow the buttons to appear in those areas.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-full-content-vs-excerpts/' );
 
-			$full_content_toggle = new SWP_Option_Toggle( __( 'Full Content?', 'social-warfare' ), 'full_content' );
+			$full_content_toggle = new SWP_Option_Toggle( esc_html__( 'Full Content?', 'social-warfare' ), 'full_content' );
 			$full_content_toggle->set_default( false )
 				->set_size( 'sw-col-300' );
 
@@ -467,42 +467,42 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @return object $this The calling object for method chaining.
 	 */
 	protected function init_display_tab() {
-		$display = new SWP_Options_Page_Tab( __( 'Display', 'social-warfare' ), 'display' );
+		$display = new SWP_Options_Page_Tab( esc_html__( 'Display', 'social-warfare' ), 'display' );
 		$display->set_priority( 10 );
 
-			$social_networks = new SWP_Options_Page_Section( __( 'Social Networks', 'social-warfare' ), 'social_networks' );
+			$social_networks = new SWP_Options_Page_Section( esc_html__( 'Social Networks', 'social-warfare' ), 'social_networks' );
 			$social_networks->set_priority( 10 )
-				->set_description( __( 'Drag & Drop to activate and order your share buttons.', 'social-warfare' ) )
+				->set_description( esc_html__( 'Drag & Drop to activate and order your share buttons.', 'social-warfare' ) )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-social-networks/' );
 
 				// * These two sections are unique and need special HTML.
-				$active = new SWP_Option_Icons( __( 'Active', 'social-warfare' ), 'active' );
+				$active = new SWP_Option_Icons( esc_html__( 'Active', 'social-warfare' ), 'active' );
 				$active->do_active_icons()->set_priority( 10 );
 
-				$inactive = new SWP_Option_Icons( __( 'Inactive', 'social-warfare' ), 'inactive' );
+				$inactive = new SWP_Option_Icons( esc_html__( 'Inactive', 'social-warfare' ), 'inactive' );
 				$inactive->do_inactive_icons()->set_priority( 20 );
 
 				$social_networks->add_options( array( $active, $inactive ) );
 
-			$share_counts = new SWP_Options_Page_Section( __( 'Share Counts', 'social-warfare' ), 'share_counts' );
-			$share_counts->set_description( __( 'Use the toggles below to determine how to display your social proof.', 'social-warfare' ) )
+			$share_counts = new SWP_Options_Page_Section( esc_html__( 'Share Counts', 'social-warfare' ), 'share_counts' );
+			$share_counts->set_description( esc_html__( 'Use the toggles below to determine how to display your social proof.', 'social-warfare' ) )
 				->set_priority( 20 )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-share-counts/' );
 
 				// * toteseach => network_count
-				$network_shares = new SWP_Option_Toggle( __( 'Button Counts', 'social-warfare' ), 'network_shares' );
+				$network_shares = new SWP_Option_Toggle( esc_html__( 'Button Counts', 'social-warfare' ), 'network_shares' );
 				$network_shares->set_default( true )
 					->set_priority( 10 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
 				// * totes => totals
-				$total_shares = new SWP_Option_Toggle( __( 'Total Counts', 'social-warfare' ), 'total_shares' );
+				$total_shares = new SWP_Option_Toggle( esc_html__( 'Total Counts', 'social-warfare' ), 'total_shares' );
 				$total_shares->set_default( true )
 					->set_priority( 20 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' );
 
 				// * swDecimals => decimals
-				$decimals = new SWP_Option_Select( __( 'Decimal Places', 'social-warfare' ), 'decimals' );
+				$decimals = new SWP_Option_Select( esc_html__( 'Decimal Places', 'social-warfare' ), 'decimals' );
 				$decimals->set_choices(
 					array(
 						'0' => 'Zero',
@@ -515,7 +515,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					->set_priority( 30 );
 
 				// * swp_decimal_separator => decimal_separator
-				$decimal_separator = new SWP_Option_Select( __( 'Decimal Separator', 'social-warfare' ), 'decimal_separator' );
+				$decimal_separator = new SWP_Option_Select( esc_html__( 'Decimal Separator', 'social-warfare' ), 'decimal_separator' );
 				$decimal_separator->set_choices(
 					array(
 						'period' => 'Period',
@@ -527,7 +527,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					->set_priority( 50 );
 
 				// * swTotesFormat => totals_alignment
-				$totals_alignment = new SWP_Option_Select( __( 'Alignment', 'social-warfare' ), 'totals_alignment' );
+				$totals_alignment = new SWP_Option_Select( esc_html__( 'Alignment', 'social-warfare' ), 'totals_alignment' );
 				$totals_alignment->set_choices(
 					array(
 						'totals_right' => 'Right',
@@ -540,12 +540,12 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 			$share_counts->add_options( array( $network_shares, $total_shares, $decimals, $decimal_separator, $totals_alignment ) );
 
-			$button_position = new SWP_Options_Page_Section( __( 'Position Share Buttons', 'social-warfare' ), 'button_position' );
-			$button_position->set_description( __( 'These settings let you decide where the share buttons should go for each post type.', 'social-warfare' ) )
+			$button_position = new SWP_Options_Page_Section( esc_html__( 'Position Share Buttons', 'social-warfare' ), 'button_position' );
+			$button_position->set_description( esc_html__( 'These settings let you decide where the share buttons should go for each post type.', 'social-warfare' ) )
 				->set_priority( 40 )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-display-tab-position-share-buttons/' );
 
-				$button_position_table = new SWP_Section_HTML( __( 'Position Table', 'social-warfare' ), 'button_position_table' );
+				$button_position_table = new SWP_Section_HTML( esc_html__( 'Position Table', 'social-warfare' ), 'button_position_table' );
 				// $button_position_table->do_button_position_table();
 
 			$button_position->add_option( $button_position_table );
@@ -568,11 +568,11 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @return object $this The calling object for method chaining.
 	 */
 	protected function init_registration_tab( $addons ) {
-		$registration = new SWP_Options_Page_Tab( __( 'Registration', 'social-warfare' ), 'registration' );
+		$registration = new SWP_Options_Page_Tab( esc_html__( 'Registration', 'social-warfare' ), 'registration' );
 
 		$registration->set_priority( 50 );
 
-			$wrap = new SWP_Options_Page_Section( __( 'Addon Registrations', 'social-warfare' ), 'addon_registrations' );
+			$wrap = new SWP_Options_Page_Section( esc_html__( 'Addon Registrations', 'social-warfare' ), 'addon_registrations' );
 			$wrap->set_priority( 10 );
 
 		foreach ( $addons as $addon ) {
@@ -646,32 +646,32 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @return SWP_Options_Page $this The calling object for method chaining.
 	 */
 	protected function init_social_tab() {
-		$social_identity = new SWP_Options_Page_Tab( __( 'Social Identity', 'social-warfare' ), 'social_identity' );
+		$social_identity = new SWP_Options_Page_Tab( esc_html__( 'Social Identity', 'social-warfare' ), 'social_identity' );
 		$social_identity->set_priority( 30 );
 
 		$sitewide_identity = new SWP_Options_Page_Section( 'Sitewide Identity', 'sitewide_identity' );
-		$sitewide_identity->set_description( __( 'If you would like to set sitewide defaults for your social identity, add them below.', 'social-warfare' ) )
+		$sitewide_identity->set_description( esc_html__( 'If you would like to set sitewide defaults for your social identity, add them below.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-social-identity-tab-sitewide-identity/' );
 
-			$twitter_id = new SWP_Option_Text( __( 'Twitter Username', 'social-warfare' ), 'twitter_id' );
+			$twitter_id = new SWP_Option_Text( esc_html__( 'Twitter Username', 'social-warfare' ), 'twitter_id' );
 			$twitter_id->set_size( 'sw-col-300' )
 				->set_priority( 10 )
 				->set_default( '' );
 
 			// * pinterestID => pinterest_id
-			$pinterest_id = new SWP_Option_Text( __( 'Pinterest Username', 'social-warfare' ), 'pinterest_id' );
+			$pinterest_id = new SWP_Option_Text( esc_html__( 'Pinterest Username', 'social-warfare' ), 'pinterest_id' );
 			$pinterest_id->set_size( 'sw-col-300' )
 				->set_priority( 20 )
 				->set_default( '' );
 
 			// * facebookPublisherUrl => facebook_publisher_url
-			$facebook_publisher_url = new SWP_Option_Text( __( 'Facebook Page URL', 'social-warfare' ), 'facebook_publisher_url' );
+			$facebook_publisher_url = new SWP_Option_Text( esc_html__( 'Facebook Page URL', 'social-warfare' ), 'facebook_publisher_url' );
 			$facebook_publisher_url->set_size( 'sw-col-300' )
 				->set_priority( 30 )
 				->set_default( '' );
 
 			// * facebookAppID => facebook_app_id
-			$facebook_app_id = new SWP_Option_Text( __( 'Facebook App ID', 'social-warfare' ), 'facebook_app_id' );
+			$facebook_app_id = new SWP_Option_Text( esc_html__( 'Facebook App ID', 'social-warfare' ), 'facebook_app_id' );
 			$facebook_app_id->set_size( 'sw-col-300' )
 				->set_priority( 40 )
 				->set_default( '' );
@@ -695,45 +695,45 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * @return SWP_Options_Page $this The calling object for method chaining.
 	 */
 	protected function init_styles_tab() {
-		$styles = new SWP_Options_Page_Tab( __( 'Styles', 'social-warfare' ), 'styles' );
+		$styles = new SWP_Options_Page_Tab( esc_html__( 'Styles', 'social-warfare' ), 'styles' );
 		$styles->set_priority( 20 );
 
-			$buttons_preview = new SWP_Section_HTML( __( 'Buttons Preview', 'social-warfare' ) );
+			$buttons_preview = new SWP_Section_HTML( esc_html__( 'Buttons Preview', 'social-warfare' ) );
 			$buttons_preview->set_priority( 1000 )
 				->do_buttons_preview();
 
-			$buttons_preview_section = new SWP_Options_Page_Section( __( 'Buttons Preview', 'social-warfare' ), 'buttons_preview_section' );
+			$buttons_preview_section = new SWP_Options_Page_Section( esc_html__( 'Buttons Preview', 'social-warfare' ), 'buttons_preview_section' );
 			$buttons_preview_section->add_option( $buttons_preview );
 
 			$styles->add_section( $buttons_preview_section );
 			//
 			//
-			// $total_counts = new SWP_Options_Page_Section( __( 'Total Counts', 'social-warfare' ), 'total_counts' );
-			// $total_counts->set_description( __( 'Customize how the "Total Shares" section of your share buttons look.', 'social-warfare' ) )
+			// $total_counts = new SWP_Options_Page_Section( esc_html__( 'Total Counts', 'social-warfare' ), 'total_counts' );
+			// $total_counts->set_description( esc_html__( 'Customize how the "Total Shares" section of your share buttons look.', 'social-warfare' ) )
 			// ->set_priority( 20 )
 			// ->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-total-counts/' );
 
 			// $total_counts->add_options( [$decimals, $decimal_separator, $totals_alignment] );
 
-			$floating_share_buttons = new SWP_Options_Page_Section( __( 'Floating Share Buttons', 'social-warfare' ), 'floating_share_buttons' );
-			$floating_share_buttons->set_description( __( 'If you would like to activate floating share buttons, turn this on.', 'social-warfare' ) )
+			$floating_share_buttons = new SWP_Options_Page_Section( esc_html__( 'Floating Share Buttons', 'social-warfare' ), 'floating_share_buttons' );
+			$floating_share_buttons->set_description( esc_html__( 'If you would like to activate floating share buttons, turn this on.', 'social-warfare' ) )
 				->set_priority( 30 )
 				->set_information_link( 'https://warfareplugins.com/support/options-page-styles-tab-floating-share-buttons/' );
 
 				// * float => floating_panel
-				$floating_panel = new SWP_Option_Toggle( __( 'Floating Share Buttons', 'social-warfare' ), 'floating_panel' );
+				$floating_panel = new SWP_Option_Toggle( esc_html__( 'Floating Share Buttons', 'social-warfare' ), 'floating_panel' );
 				$floating_panel->set_default( false )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_priority( 10 );
 
 				// * floatOption => float_location
-				$float_location = new SWP_Option_Select( __( 'Float Position', 'social-warfare' ), 'float_location' );
+				$float_location = new SWP_Option_Select( esc_html__( 'Float Position', 'social-warfare' ), 'float_location' );
 				$float_location->set_choices(
 					array(
-						'top'    => __( 'Top of the Page', 'social-warfare' ),
-						'bottom' => __( 'Bottom of the Page', 'social-warfare' ),
-						'left'   => __( 'On the left side of the page', 'social-warfare' ),
-						'right'  => __( 'On the right side of the page', 'social-warfare' ),
+						'top'    => esc_html__( 'Top of the Page', 'social-warfare' ),
+						'bottom' => esc_html__( 'Bottom of the Page', 'social-warfare' ),
+						'left'   => esc_html__( 'On the left side of the page', 'social-warfare' ),
+						'right'  => esc_html__( 'On the right side of the page', 'social-warfare' ),
 					)
 				)
 					->set_default( 'bottom' )
@@ -742,26 +742,26 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 					->set_dependency( 'floating_panel', array( true ) );
 
 				// * floatBgColor => float_background_color
-				$float_background_color = new SWP_Option_Text( __( 'Background Color', 'social-warfare' ), 'float_background_color' );
+				$float_background_color = new SWP_Option_Text( esc_html__( 'Background Color', 'social-warfare' ), 'float_background_color' );
 				$float_background_color->set_default( '#ffffff' )
 					->set_priority( 25 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_dependency( 'float_location', array( 'top', 'bottom' ) );
 
 				// * swp_float_scr_sz => float_screen_width
-				$float_screen_width = new SWP_Option_Text( __( 'Minimum Screen Width', 'social-warfare' ), 'float_screen_width' );
+				$float_screen_width = new SWP_Option_Text( esc_html__( 'Minimum Screen Width', 'social-warfare' ), 'float_screen_width' );
 				$float_screen_width->set_default( '1100' )
 					->set_priority( 30 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
 					->set_dependency( 'float_location', array( 'left', 'right' ) );
 
 				// * sideReveal => transition
-				$float_transition = new SWP_Option_Select( __( 'Transition', 'social-warfare' ), 'transition' );
+				$float_transition = new SWP_Option_Select( esc_html__( 'Transition', 'social-warfare' ), 'transition' );
 				$float_transition->set_priority( 40 )
 					->set_choices(
 						array(
-							'slide' => __( 'Slide In / Slide Out', 'social-warfare' ),
-							'fade'  => __( 'Fade In / Fade Out', 'social-warfare' ),
+							'slide' => esc_html__( 'Slide In / Slide Out', 'social-warfare' ),
+							'fade'  => esc_html__( 'Fade In / Fade Out', 'social-warfare' ),
 						)
 					)
 					->set_default( 'slide' )
@@ -770,7 +770,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 				$color_choices = $this::get_color_choices_array();
 
-				$float_before_content = new SWP_Option_Toggle( __( 'Float Before Content', 'social-warfare' ), 'float_before_content' );
+				$float_before_content = new SWP_Option_Toggle( esc_html__( 'Float Before Content', 'social-warfare' ), 'float_before_content' );
 				$float_before_content->set_default( false )
 					->set_priority( 140 )
 					->set_size( 'sw-col-460', 'sw-col-460 sw-fit' )
@@ -845,7 +845,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 
 				// * "Save Changes" button.
 				$html .= '<div class="sw-grid sw-col-220 sw-fit">';
-				$html .= '<a href="#" class="button sw-navy-button sw-save-settings">' . __( 'Save Changes', 'social-warfare' ) . '</a>';
+				$html .= '<a href="#" class="button sw-navy-button sw-save-settings">' . esc_html__( 'Save Changes', 'social-warfare' ) . '</a>';
 				$html .= '</div>';
 
 				$html .= '<div class="sw-clearfix"></div>';

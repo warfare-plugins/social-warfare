@@ -29,8 +29,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 */
 	public function __construct() {
 		// Upinterest_descriptionate the class properties for this network
-		$this->name           = __( 'Pinterest', 'social-warfare' );
-		$this->cta            = __( 'Pin', 'social-warfare' );
+		$this->name           = esc_html__( 'Pinterest', 'social-warfare' );
+		$this->cta            = esc_html__( 'Pin', 'social-warfare' );
 		$this->key            = 'pinterest';
 		$this->default        = 'true';
 		$this->base_share_url = 'https://pinterest.com/pin/create/button/?url=';

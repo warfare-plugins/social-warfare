@@ -120,9 +120,9 @@ class SWP_Link_Manager {
 		 * This creates a new options page section. This section will house all
 		 * of the link shortening options that are available to the user.
 		 */
-		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare' ), 'link_shortening' );
+		$link_shortening = new SWP_Options_Page_Section( esc_html__( 'Link Shortening', 'social-warfare' ), 'link_shortening' );
 		$link_shortening
-			->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare' ) )
+			->set_description( esc_html__( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-bitly-link-shortening/' )
 			->set_priority( 20 );
 
@@ -133,7 +133,7 @@ class SWP_Link_Manager {
 		 * will be dependant on this one and will on be visible when this
 		 * is turned on.
 		 */
-		$link_shortening_toggle = new SWP_Option_Toggle( __( 'Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
+		$link_shortening_toggle = new SWP_Option_Toggle( esc_html__( 'Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
 		$link_shortening_toggle
 			->set_size( 'sw-col-300' )
 			->set_priority( 10 )
@@ -147,7 +147,7 @@ class SWP_Link_Manager {
 		 * published prior to the date in this field will not get shortened
 		 * links for the share buttons.
 		 */
-		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
+		$link_shortening_start_date = new SWP_Option_Text( esc_html__( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
 
 		$link_shortening_start_date
 			->set_default( gmdate( 'Y-m-d', strtotime( '90 days ago' ) ) )
@@ -174,7 +174,7 @@ class SWP_Link_Manager {
 		 * This will add the select dropdown box wherein the user can select
 		 * which of the available link shortening services they want to use.
 		 */
-		$link_shortening_service = new SWP_Option_Select( __( 'Link Shortening Service', 'social-warfare' ), 'link_shortening_service' );
+		$link_shortening_service = new SWP_Option_Select( esc_html__( 'Link Shortening Service', 'social-warfare' ), 'link_shortening_service' );
 		$link_shortening_service
 			->set_choices( $available_services )
 			->set_default( 'bitly' )

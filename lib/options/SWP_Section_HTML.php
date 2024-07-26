@@ -78,7 +78,7 @@ class SWP_Section_HTML extends SWP_Option {
 	 * @return string The compiled HTML returned as a string.
 	 */
 	public function do_admin_sidebar() {
-		$status_title = __( 'Press Ctrl+C to Copy this information.', 'social-warfare' );
+		$status_title = esc_html__( 'Press Ctrl+C to Copy this information.', 'social-warfare' );
 
 		// * This is an array of fully qualified HTML strings, ready to print.
 		$cache = get_option( 'swp_json_cache' );
@@ -196,7 +196,7 @@ class SWP_Section_HTML extends SWP_Option {
 		$html .= '<div class="sw-grid sw-col-940 swp_tweets_not_activated">';
 
 		// The Warning Notice & Instructions
-		$html .= '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://twitcount.com" target="_blank">' . __( 'Click here to visit TwitCount.com', 'social-warfare' ) . '</a> or <a style="float:none;" class="button sw-navy-button" href="http://opensharecount.com" target="_blank">' . __( 'Click here to visit OpenShareCount.com', 'social-warfare' ) . '</a><br />' . __( 'Step 2: Follow the prompts on their website to create an account and add your domain to be tracked for share counts. If you see a prompt to customize your button, ignore and click past that. You are not using their button, you are using ours.', 'social-warfare' ) . '<br />' . __( 'Step 3: Flip the switch below to "ON", select which tracking service the plugin should use, then save your changes.', 'social-warfare' ) . '</p>';
+		$html .= '<p class="sw-subtitle sw-registration-text sw-italic">Step 1: <a style="float:none;" class="button sw-navy-button" href="http://twitcount.com" target="_blank">' . esc_html__( 'Click here to visit TwitCount.com', 'social-warfare' ) . '</a> or <a style="float:none;" class="button sw-navy-button" href="http://opensharecount.com" target="_blank">' . esc_html__( 'Click here to visit OpenShareCount.com', 'social-warfare' ) . '</a><br />' . esc_html__( 'Step 2: Follow the prompts on their website to create an account and add your domain to be tracked for share counts. If you see a prompt to customize your button, ignore and click past that. You are not using their button, you are using ours.', 'social-warfare' ) . '<br />' . esc_html__( 'Step 3: Flip the switch below to "ON", select which tracking service the plugin should use, then save your changes.', 'social-warfare' ) . '</p>';
 
 		// Close the IS NOT ACTIVATED container
 		$html .= '</div>';
@@ -204,7 +204,7 @@ class SWP_Section_HTML extends SWP_Option {
 		// Checkbox Module
 		$html .= '<div class="sw-grid sw-col-300"><p class="sw-checkbox-label">Tweet Counts</p></div>';
 		$html .= '<div class="sw-grid sw-col-300">';
-		$html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#twitter_shares"><div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div></div>';
+		$html .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#twitter_shares"><div class="sw-checkbox-on">' . esc_html__( 'ON', 'social-warfare' ) . '</div><div class="sw-checkbox-off">' . esc_html__( 'OFF', 'social-warfare' ) . '</div></div>';
 		$html .= '<input type="checkbox" class="sw-hidden" name="twitter_shares" id="twitter_shares" ' . $selected . ' />';
 		$html .= '</div>';
 		$html .= '<div class="sw-grid sw-col-300 sw-fit"></div>';
@@ -233,7 +233,7 @@ class SWP_Section_HTML extends SWP_Option {
 		if ( SWP_Utility::get_option( 'bitly_access_token' ) ) {
 
 			// * Display a confirmation button. On click takes them to bitly settings page.
-			$text   = __( 'Connected', 'social-warfare' );
+			$text   = esc_html__( 'Connected', 'social-warfare' );
 			$text  .= ' for:<br/>' . SWP_Utility::get_option( 'bitly_access_login' );
 			$color  = 'sw-green-button';
 			$link   = 'https://app.bitly.com/bitlinks/?actions=accountMain&actions=settings&actions=security';
@@ -242,7 +242,7 @@ class SWP_Section_HTML extends SWP_Option {
 		} else {
 
 			// * Display the button, which takes them to a Bitly auth page.
-			$text   = __( 'Authenticate', 'social-warfare' );
+			$text   = esc_html__( 'Authenticate', 'social-warfare' );
 			$color  = 'sw-navy-button';
 			$target = '';
 
@@ -260,7 +260,7 @@ class SWP_Section_HTML extends SWP_Option {
 		}
 
 		$this->html  = '';
-		$this->html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" data-dep="bitly_authentication" data-dep_val="[true]"><div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . __( 'Bitly Link Shortening', 'social-warfare' ) . '</p></div><div class="sw-grid sw-col-300"><a  target="' . $target . '" class="button ' . $color . '" href="' . $link . '">' . $text . '</a></div><div class="sw-grid sw-col-300 sw-fit"></div></div>';
+		$this->html .= '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" data-dep="bitly_authentication" data-dep_val="[true]"><div class="sw-grid sw-col-300"><p class="sw-authenticate-label">' . esc_html__( 'Bitly Link Shortening', 'social-warfare' ) . '</p></div><div class="sw-grid sw-col-300"><a  target="' . $target . '" class="button ' . $color . '" href="' . $link . '">' . $text . '</a></div><div class="sw-grid sw-col-300 sw-fit"></div></div>';
 
 		return $this;
 	}
@@ -298,15 +298,15 @@ class SWP_Section_HTML extends SWP_Option {
 		$post_types = SWP_Utility::get_post_types();
 
 		$panel_locations = array(
-			'above' => __( 'Above the Content', 'social-warfare' ),
-			'below' => __( 'Below the Content', 'social-warfare' ),
-			'both'  => __( 'Both Above and Below the Content', 'social-warfare' ),
-			'none'  => __( 'None/Manual Placement', 'social-warfare' ),
+			'above' => esc_html__( 'Above the Content', 'social-warfare' ),
+			'below' => esc_html__( 'Below the Content', 'social-warfare' ),
+			'both'  => esc_html__( 'Both Above and Below the Content', 'social-warfare' ),
+			'none'  => esc_html__( 'None/Manual Placement', 'social-warfare' ),
 		);
 
 		$float_locations = array(
-			'on'  => __( 'On', 'social_warfare' ),
-			'off' => __( 'Off', 'social_warfare' ),
+			'on'  => esc_html__( 'On', 'social_warfare' ),
+			'off' => esc_html__( 'Off', 'social_warfare' ),
 		);
 
 		$html  = '<div class="sw-grid sw-col-940 sw-fit sw-option-container" ';
@@ -315,13 +315,13 @@ class SWP_Section_HTML extends SWP_Option {
 		$html .= '>';
 
 		$html     .= '<div class="sw-grid sw-col-300">';
-			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type', 'social-warfare' ) . '</p>';
+			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Post Type', 'social-warfare' ) . '</p>';
 		$html     .= '</div>';
 		$html     .= '<div class="sw-grid sw-col-300">';
-			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Static Buttons', 'social-warfare' ) . '</p>';
+			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Static Buttons', 'social-warfare' ) . '</p>';
 		$html     .= '</div>';
 		$html     .= '<div class="sw-grid sw-col-300 sw-fit">';
-			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Floating Buttons (If Activated)', 'social-warfare' ) . '</p>';
+			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Floating Buttons (If Activated)', 'social-warfare' ) . '</p>';
 		$html     .= '</div>';
 
 		// * Some indices are numeric, others are strings.
@@ -424,26 +424,26 @@ class SWP_Section_HTML extends SWP_Option {
 			$html     .= '</div>';
 
 			$html     .= '<div class="sw-grid sw-col-300">';
-				$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Category', 'social-warfare' ) . '</p>';
+				$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Choose Category', 'social-warfare' ) . '</p>';
 			$html     .= '</div>';
 
 			$html     .= '<div class="sw-grid sw-col-300 sw-fit">';
-				$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Choose Tag', 'social-warfare' ) . '</p>';
+				$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Choose Tag', 'social-warfare' ) . '</p>';
 			$html     .= '</div>';
 
-			$yummly_categories = new SWP_Option_Text( __( 'Yummly Categories', 'social-warfare' ), 'yummly_categories' );
+			$yummly_categories = new SWP_Option_Text( esc_html__( 'Yummly Categories', 'social-warfare' ), 'yummly_categories' );
 			$categories_html   = $yummly_categories->set_priority( 10 )
 				->set_default( '' )
 				->render_HTML_element();
 
-			$yummly_tags = new SWP_Option_Text( __( 'Yummly Tags', 'social-warfare' ), 'yummly_tags' );
+			$yummly_tags = new SWP_Option_Text( esc_html__( 'Yummly Tags', 'social-warfare' ), 'yummly_tags' );
 			$tags_html   = $yummly_tags->set_priority( 10 )
 				->set_default( '' )
 				->render_HTML_element();
 
 			// * Table body
 			$html     .= '<div class="sw-grid sw-col-300">';
-				$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Yummly Terms', 'social-warfare' ) . '</p>';
+				$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Yummly Terms', 'social-warfare' ) . '</p>';
 			$html     .= '</div>';
 
 			$html     .= '<div class="sw-grid sw-col-300">';
@@ -466,8 +466,8 @@ class SWP_Section_HTML extends SWP_Option {
 		$post_types = SWP_Utility::get_post_types();
 
 		$booleans = array(
-			'on'  => __( 'On', 'social_warfare' ),
-			'off' => __( 'Off', 'social_warfare' ),
+			'on'  => esc_html__( 'On', 'social_warfare' ),
+			'off' => esc_html__( 'Off', 'social_warfare' ),
 		);
 
 		$html  = '<div class="sw-grid sw-col-940 sw-fit sw-option-container ' . $this->key . '_wrapper" ';
@@ -494,11 +494,11 @@ class SWP_Section_HTML extends SWP_Option {
 		$html .= '<p class="sw-subtitle sw-col-620">Please enter start the date in the following format: <code style="float: right;">YYYY-MM-DD</code></p>';
 
 		$html     .= '<div class="sw-grid sw-col-300">';
-			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Post Type', 'social-warfare' ) . '</p>';
+			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Post Type', 'social-warfare' ) . '</p>';
 		$html     .= '</div>';
 
 		$html     .= '<div class="sw-grid sw-col-300 sw-fit">';
-			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . __( 'Create Bitly Links?', 'social-warfare' ) . '</p>';
+			$html .= '<p class="sw-select-label sw-short sw-no-padding">' . esc_html__( 'Create Bitly Links?', 'social-warfare' ) . '</p>';
 		$html     .= '</div>';
 
 		// * Some indices are numeric, others are strings.

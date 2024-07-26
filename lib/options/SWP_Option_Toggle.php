@@ -61,8 +61,8 @@ class SWP_Option_Toggle extends SWP_Option {
 
 			$html         .= '<div class="sw-grid ' . $this->size . '">';
 				$html     .= '<div class="sw-checkbox-toggle" status="' . $status . '" field="#' . $this->key . '">';
-					$html .= '<div class="sw-checkbox-on">' . __( 'ON', 'social-warfare' ) . '</div>';
-					$html .= '<div class="sw-checkbox-off">' . __( 'OFF', 'social-warfare' ) . '</div>';
+					$html .= '<div class="sw-checkbox-on">' . esc_html__( 'ON', 'social-warfare' ) . '</div>';
+					$html .= '<div class="sw-checkbox-off">' . esc_html__( 'OFF', 'social-warfare' ) . '</div>';
 				$html     .= '</div>';
 
 				$html .= '<input type="checkbox" id="' . $this->key . '" class="sw-hidden" name="' . $this->key . '"' . $checked . '/>';

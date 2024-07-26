@@ -129,7 +129,7 @@ class SWP_Option_Icons extends SWP_Option {
 		$user_icons   = SWP_Utility::get_option( 'order_of_icons' );
 
 		$html      = '<div class="sw-grid sw-col-300">';
-			$html .= '<h3 class="sw-buttons-toggle">' . __( 'Active', 'social-warfare' ) . '</h3>';
+			$html .= '<h3 class="sw-buttons-toggle">' . esc_html__( 'Active', 'social-warfare' ) . '</h3>';
 		$html     .= '</div>';
 
 		$html     .= '<div class="sw-grid sw-col-620 sw-fit">';
@@ -177,7 +177,7 @@ class SWP_Option_Icons extends SWP_Option {
 		$inactive_icons = array_diff( $network_keys, $user_icons );
 
 		$html      = '<div class="sw-grid sw-col-300">';
-			$html .= '<h3 class="sw-buttons-toggle">' . __( 'Inactive', 'social-warfare' ) . '</h3>';
+			$html .= '<h3 class="sw-buttons-toggle">' . esc_html__( 'Inactive', 'social-warfare' ) . '</h3>';
 		$html     .= '</div>';
 
 		$html     .= '<div class="sw-grid sw-col-620 sw-fit">';

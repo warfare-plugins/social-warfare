@@ -56,7 +56,7 @@ function add_block_category( $categories, $post ) {
 		array(
 			array(
 				'slug'  => 'social-warfare',
-				'title' => __( 'Social Warfare', 'social-warfare' ),
+				'title' => esc_html__( 'Social Warfare', 'social-warfare' ),
 				'icon'  => '<i className="mce-ico mce-i-sw sw sw-social-warfare" />',
 			),
 		)

@@ -25,7 +25,7 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 
 		$html = '<div class="registration-wrapper ' . $this->key . '" registration="' . $this->registered . '">';
 			// translators: %s is the name of the feature or section.
-			$html .= '<h2>' . sprintf( __( '%s Registration', 'social-warfare' ), $this->name ) . '</h2>';
+			$html .= '<h2>' . sprintf( esc_html__( '%s Registration', 'social-warfare' ), $this->name ) . '</h2>';
 
 			// * Print both types of HTML. Javascript determines which to display.
 			$html .= $this->not_registered_HTML();
@@ -101,18 +101,18 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 
 			$html .= '<div class="sw-red-notice">';
 				// translators: %s is the name of the plugin.
-				$html .= sprintf( __( 'This copy of %s is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.', 'social-warfare' ), $this->name );
+				$html .= sprintf( esc_html__( 'This copy of %s is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.', 'social-warfare' ), $this->name );
 			$html     .= '</div>';
 
 			$html .= '<p class="sw-subtitle sw-registration-text">';
 				// translators: %s is the name of the plugin.
-				$html .= sprintf( __( 'Enter your registration key for %s and then click Register Plugin.', 'social-warfare' ), $this->name );
+				$html .= sprintf( esc_html__( 'Enter your registration key for %s and then click Register Plugin.', 'social-warfare' ), $this->name );
 			$html     .= '</p>';
 
 			$html     .= '<div class="sw-grid sw-col-300">';
 				$html .= '<p class="sw-input-label">';
 					// translators: %s is the name of the plugin.
-					$html .= sprintf( __( '%s License Key', 'social-warfare' ), $this->name );
+					$html .= sprintf( esc_html__( '%s License Key', 'social-warfare' ), $this->name );
 				$html     .= '</p>';
 			$html         .= '</div>';
 
@@ -122,7 +122,7 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 
 			$html         .= '<div class="sw-grid sw-col-300 sw-fit register_button_grid">';
 				$html     .= '<a href="#" class="register-plugin button sw-navy-button" swp-addon="' . $this->key . '"  swp-item-id="' . $this->product_id . '">';
-					$html .= __( 'Register Plugin', 'social-warfare' );
+					$html .= esc_html__( 'Register Plugin', 'social-warfare' );
 				$html     .= '</a>';
 			$html         .= '</div>';
 
@@ -142,7 +142,7 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 			<div class="sw-green-notice">
 				<?php
 					// translators: %s is the name of the plugin.
-					printf( __( 'This copy of %s is registered. Wah-hoo!', 'social-warfare' ), esc_html( $this->name ) );
+					printf( esc_html__( 'This copy of %s is registered. Wah-hoo!', 'social-warfare' ), esc_html( $this->name ) );
 				?>
 			</div>
 

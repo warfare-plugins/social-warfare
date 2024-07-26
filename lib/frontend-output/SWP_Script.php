@@ -142,7 +142,7 @@ class SWP_Script {
 			'social_warfare_admin_script',
 			'swp_localize_admin',
 			array(
-				// 'swp_characters_remaining' => __( 'Characters Remaining', 'social-warfare' ),
+				// 'swp_characters_remaining' => esc_html__( 'Characters Remaining', 'social-warfare' ),
 				'swp_characters_remaining' => '',
 			)
 		);

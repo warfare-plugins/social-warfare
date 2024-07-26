@@ -47,8 +47,8 @@ class SWP_Facebook extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name             = __( 'Facebook', 'social-warfare' );
-		$this->cta              = __( 'Share', 'social-warfare' );
+		$this->name             = esc_html__( 'Facebook', 'social-warfare' );
+		$this->cta              = esc_html__( 'Share', 'social-warfare' );
 		$this->key              = 'facebook';
 		$this->default          = 'true';
 		$this->base_share_url   = 'https://www.facebook.com/share.php?u=';

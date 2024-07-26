@@ -38,8 +38,8 @@ class SWP_Twitter extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name    = __( 'Twitter', 'social-warfare' );
-		$this->cta     = __( 'Tweet', 'social-warfare' );
+		$this->name    = esc_html__( 'Twitter', 'social-warfare' );
+		$this->cta     = esc_html__( 'Tweet', 'social-warfare' );
 		$this->key     = 'twitter';
 		$this->default = 'true';
 

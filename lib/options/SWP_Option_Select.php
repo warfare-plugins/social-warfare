@@ -61,7 +61,7 @@ class SWP_Option_Select extends SWP_Option {
 			$this->_throw( 'Please provide a choice to add to the select. The choice must be passed as a string.' );
 		}
 
-		$choice = __( 'Known String', 'social-warfare' );
+		$choice = esc_html__( 'Known String', 'social-warfare' );
 		array_push( $this->choices, $choice );
 
 		return $this;

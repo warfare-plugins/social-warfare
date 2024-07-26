@@ -154,7 +154,7 @@ class SWP_Shortcode {
 					$html .= ( ! empty( $atts['quote'] ) ) ? $atts['quote'] : '';
 				$html     .= '</span>';
 				$html     .= '<span class="sw-ctt-btn">';
-					$html .= __( 'Click To Tweet', 'social-warfare' );
+					$html .= esc_html__( 'Click To Tweet', 'social-warfare' );
 					$html .= '<i class="sw swp_twitter_icon"></i>';
 			$html         .= '</span>';
 			$html         .= '</span>';

@@ -32,8 +32,8 @@ class SWP_Stumble_Upon extends SWP_Social_Network {
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name           = __( 'StumbleUpon', 'social-warfare' );
-		$this->cta            = __( 'Stumble', 'social-warfare' );
+		$this->name           = esc_html__( 'StumbleUpon', 'social-warfare' );
+		$this->cta            = esc_html__( 'Stumble', 'social-warfare' );
 		$this->key            = 'stumbleupon';
 		$this->default        = 'false';
 		$this->base_share_url = 'https://www.stumbleupon.com/submit?url=';

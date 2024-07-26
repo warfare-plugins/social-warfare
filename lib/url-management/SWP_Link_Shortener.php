@@ -160,13 +160,13 @@ class SWP_Link_Shortener {
 	 */
 	public function establish_button_properties() {
 		if ( true === $this->active ) {
-			$this->button_properties['text']              = __( 'Connected', 'social-warfare' );
+			$this->button_properties['text']              = esc_html__( 'Connected', 'social-warfare' );
 			$this->button_properties['classes']           = 'button sw-green-button';
 			$this->button_properties['new_tab']           = true;
 			$this->button_properties['link']              = '#';
 			$this->button_properties['deactivation_hook'] = $this->deactivation_hook;
 		} else {
-			$this->button_properties['text']              = __( 'Authenticate', 'social-warfare' );
+			$this->button_properties['text']              = esc_html__( 'Authenticate', 'social-warfare' );
 			$this->button_properties['classes']           = 'button sw-navy-button';
 			$this->button_properties['new_tab']           = false;
 			$this->button_properties['link']              = $this->authorization_link;
