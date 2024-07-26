@@ -152,15 +152,16 @@ class SWP_Post_Cache {
 	 * needs to be rebuilt.
 	 *
 	 * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
+	 * @since  4.5.0 | 26 JUL 2024 | Added sanitization functions
 	 * @access public
 	 * @return boolean True if fresh, false if expired and needs rebuilt.
 	 */
 	public function is_cache_fresh() {
 
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
-		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', wp_unslash( filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING ) ) ) ) :
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', sanitize_text_field( wp_unslash( filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING ) ) ) ) ) :
 			return true;
-		endif;
+		endif;		
 
 		// Always be true if we're not a single post.
 		if ( ! is_singular() && ! is_admin() ) :
