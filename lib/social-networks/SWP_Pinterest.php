@@ -10,7 +10,6 @@
  * @since     1.0.0 | Unknown     | CREATED
  * @since     2.2.4 | 02 MAY 2017 | Refactored functions & upinterest_descriptionated docblocking
  * @since     3.0.0 | 05 APR 2018 | Rebuilt into a class-based system.
- *
  */
 class SWP_Pinterest extends SWP_Social_Network {
 
@@ -27,12 +26,11 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function __construct() {
 		// Upinterest_descriptionate the class properties for this network
-		$this->name           = __( 'Pinterest', 'social-warfare' );
-		$this->cta            = __( 'Pin', 'social-warfare' );
+		$this->name           = esc_html__( 'Pinterest', 'social-warfare' );
+		$this->cta            = esc_html__( 'Pin', 'social-warfare' );
 		$this->key            = 'pinterest';
 		$this->default        = 'true';
 		$this->base_share_url = 'https://pinterest.com/pin/create/button/?url=';
@@ -46,7 +44,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @access public
 	 * @param  string $url The permalink of the page or post for which to fetch share counts
 	 * @return string $request_url The complete URL to be used to access share counts via the API
-	 *
 	 */
 	public function get_api_link( $url ) {
 		return 'https://api.pinterest.com/v1/urls/count.json?url=' . $url;
@@ -59,7 +56,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @access public
 	 * @param  string $response The raw response returned from the API request
 	 * @return int $total_activity The number of shares reported from the API
-	 *
 	 */
 	public function parse_api_response( $response ) {
 		$response = preg_replace( '/^receiveCount\((.*)\)$/', "\\1", $response );
@@ -75,20 +71,19 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @since  3.0.0 | 01 MAY 2018 | Re-wrote the function to a class method.
 	 * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
 	 * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image.
+	 * @since  4.5.0 | 26 JUL 2024 | Ensure proper escaping of HTML output
 	 * @access public
 	 * @return array $panel_context Array of
 	 *                   ['post_data']  => metadata about the post;
 	 *                   ['shares']     => share count data
 	 *                   ['options']    => swp_user_options
 	 * @param  bool $output If true, this will immediately echo its code rather than save it for later.
-	 *
 	 */
 	public function render_HTML( $panel_context, $output = false ) {
 
 		/**
 		 * The global array containing the admin's options as set on the Social
 		 * Warfare admin options page.
-		 *
 		 */
 		global $swp_user_options;
 		$options = $swp_user_options;
@@ -101,7 +96,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 		 * through our SWP_Link_Manager::process_url() method it will have the
 		 * Google Anaytlics UTM and link shortening applied (if those features
 		 * are turned on in the options).
-		 *
 		 */
 		$post_url = urlencode( urldecode( SWP_Link_Manager::process_url( $panel_context['post_data']['permalink'], 'pinterest', $post_id ) ) );
 
@@ -109,14 +103,12 @@ class SWP_Pinterest extends SWP_Social_Network {
 		 * This meta or custom field is where the ID is stored for the image
 		 * that the user has uploaded into the "Pinterest Image" spot. This will
 		 * return an array of images ID's.
-		 *
 		 */
 		$metabox_pinterest_image = get_post_meta( $post_id, 'swp_pinterest_image', false );
 
 		/**
 		 * This conditonal will trigger if the user has uploaded an image into
 		 * the "Pinterest Image" field.
-		 *
 		 */
 		if ( false === empty( $metabox_pinterest_image ) && false !== $metabox_pinterest_image ) :
 
@@ -135,7 +127,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 			 *
 			 * In this case, we'll attempt to use the post's designated featured
 			 * image as the Pinterest image.
-			 *
 			 */
 		elseif ( 'featured' === SWP_Utility::get_option( 'pinterest_fallback' ) ) :
 			$pinterest_image = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
@@ -146,7 +137,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 		/**
 		 * This section will get the Pinterest username if one is set in the
 		 * admin options page. We will include this in the description when shared.
-		 *
 		 */
 		$pinterest_username = '';
 		$pinterest_id       = SWP_Utility::get_option( 'pinterest_id' );
@@ -160,7 +150,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 		/**
 		 * Check if the user has provided a description for the "Pinterest
 		 * Description" field in the post meta boxes.
-		 *
 		 */
 		$pinterest_description = get_post_meta( $post_id, 'swp_pinterest_description', true );
 
@@ -169,7 +158,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 		 * even when the "true" parameter is provided as the third parameter in
 		 * the get_post_meta() function above. If this is the case, we'll strip
 		 * it out here and just grab the very first item returned in that array.
-		 *
 		 */
 		if ( is_array( $pinterest_description ) && ! empty( $pinterest_description ) ) {
 			$pinterest_description = $pinterest_description[0];
@@ -180,14 +168,13 @@ class SWP_Pinterest extends SWP_Social_Network {
 		/**
 		 * If no Pinterest description was provided, then we'll use the post
 		 * title as the description.
-		 *
 		 */
 		if ( empty( $pinterest_description ) ) {
 			$pinterest_description = $title;
 		}
 
-		$pinterest_username    = SWP_Pinterest::get_via();
-		$pinterest_description = SWP_Pinterest::trim_pinterest_description( $pinterest_description, $pinterest_username );
+		$pinterest_username    = self::get_via();
+		$pinterest_description = self::trim_pinterest_description( $pinterest_description, $pinterest_username );
 
 		/**
 		 * Now that we've processed all of our variables, we'll proceed to put
@@ -210,7 +197,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 					$pin_data['images'][] = wp_get_attachment_url( $image );
 				}
 
-				$json_pin_data = json_encode( $pin_data, JSON_HEX_APOS );
+				$json_pin_data = wp_json_encode( $pin_data, JSON_HEX_APOS );
 				$anchor        = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link pinterest_multi_image_select" data-count="0" data-link="#" data-pins=\'' . $json_pin_data . '\'>';
 
 				// If the user has uploaded one single Pinterest image...
@@ -225,24 +212,22 @@ class SWP_Pinterest extends SWP_Social_Network {
 			}
 
 			// If the user has not uploaded any Pinterest images.
-		} else {
-			if ( SWP_AMP::is_amp() ) {
+		} elseif ( SWP_AMP::is_amp() ) {
 				$link   = 'https://pinterest.com/pin/create/button/' .
 				'?url=' . $panel_context['post_data']['permalink'];
 				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
 						'data-link="' . $link . '" href="' . $link . '" >';
-			} else {
-				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
-						'onClick="var e=document.createElement(\'script\');
+		} else {
+			$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
+					'onClick="var e=document.createElement(\'script\');
 							e.setAttribute(\'type\',\'text/javascript\');
 							e.setAttribute(\'charset\',\'UTF-8\');
 							e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
 							document.body.appendChild(e);
 						" >';
-			}
 		}
 
-		//* Begin parent class method.
+		// * Begin parent class method.
 
 		$post_data    = $panel_context['post_data'];
 		$share_counts = $panel_context['shares'];
@@ -274,8 +259,8 @@ class SWP_Pinterest extends SWP_Social_Network {
 		$this->html = $html;
 
 		if ( $output ) :
-			echo $html;
-		endif;
+			echo wp_kses_post( $html );
+		endif;		
 
 		return $html;
 	}
@@ -291,14 +276,12 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @since  3.5.0 | 21 FEB 2019 | Created.
 	 * @param  string $pinterest_description The target Pinterest description.
 	 * @return string The same pinterest description, capped at 500 characters.
-	 *
 	 */
 	public static function trim_pinterest_description( $pinterest_description, $via = '' ) {
 		if ( strlen( $pinterest_description ) > 500 ) {
 			/**
 			 * The provided description is too long before we have added
 			 * anything. We need to trim it before appending the @via.
-			 *
 			 */
 			$read_more = '... ' . $via;
 			$cutoff    = 500 - strlen( $read_more );
@@ -309,7 +292,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 			/**
 			 * The description length + via length would be too long, so
 			 * trim a little bit of description so via will fit.
-			 *
 			 */
 			if ( strlen( $pinterest_description ) + strlen( $via ) > 500 ) {
 				$cutoff                = 500 - strlen( $via );
@@ -327,7 +309,6 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @since  3.5.1 | 26 FEB 2019 | Created.
 	 * @param  void
 	 * @return string The '@via $username', or an empty string.
-	 *
 	 */
 	public static function get_via() {
 		$pinterest_username = '';

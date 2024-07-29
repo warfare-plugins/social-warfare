@@ -1,25 +1,24 @@
 <?php
 
 /**
-* SWP_Link_Manager
-*
-* A class engineered to manage the links that are shared out to the various social
-* networks. This class will shorten them via Bitly or add Google Analytics tracking
-* parameters if the user has either of these options enabled and configured.
-*
-* Organization - This class has one primary function: It provides a publicly
-* accessable method that applies the link-modifying filters.
-*
-*    This will provides the plugin with an easy to access, static method which
-*    can be called from anywhere with minimal properties to quickly fetch a
-*    fully processed sharable link for the buttons.
-*
-* @since 3.0.0 | 14 FEB 2018 | Added check for is_attachment() to swp_google_analytics
-* @since 3.0.0 | 04 APR 2018 | Converted to class-based, object-oriented system.
-* @since 4.0.0 | 17 JUL 2019 | Refactored into a more expandable system so that
-*                              we can easily add multiple link shortening services.
-*
-*/
+ * SWP_Link_Manager
+ *
+ * A class engineered to manage the links that are shared out to the various social
+ * networks. This class will shorten them via Bitly or add Google Analytics tracking
+ * parameters if the user has either of these options enabled and configured.
+ *
+ * Organization - This class has one primary function: It provides a publicly
+ * accessable method that applies the link-modifying filters.
+ *
+ *    This will provides the plugin with an easy to access, static method which
+ *    can be called from anywhere with minimal properties to quickly fetch a
+ *    fully processed sharable link for the buttons.
+ *
+ * @since 3.0.0 | 14 FEB 2018 | Added check for is_attachment() to swp_google_analytics
+ * @since 3.0.0 | 04 APR 2018 | Converted to class-based, object-oriented system.
+ * @since 4.0.0 | 17 JUL 2019 | Refactored into a more expandable system so that
+ *                              we can easily add multiple link shortening services.
+ */
 class SWP_Link_Manager {
 
 
@@ -34,7 +33,6 @@ class SWP_Link_Manager {
 	 * @since  4.0.0 | 18 JUL 2019 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 
@@ -43,7 +41,6 @@ class SWP_Link_Manager {
 		 * defer the call to this method as such to ensure that the $SWP_Options_Page
 		 * global object has already been created and is available for us to
 		 * manipulate.
-		 *
 		 */
 		add_action( 'wp_loaded', array( $this, 'add_settings_page_options' ), 20 );
 	}
@@ -62,14 +59,12 @@ class SWP_Link_Manager {
 	 * @param  string $network The network on which the URL is being shared.
 	 * @param  int    $post_id The post ID.
 	 * @return string          The modified URL.
-	 *
 	 */
 	public static function process_url( $url, $network, $post_id, $is_cache_fresh = true ) {
 
 		/**
 		 * Bail out if this is an attachment page. We had reports of short links
 		 * being created on these.
-		 *
 		 */
 		if ( is_attachment() ) {
 			return $url;
@@ -78,7 +73,6 @@ class SWP_Link_Manager {
 		/**
 		 * Compile all of the parameters passed in into an array so that we can
 		 * pass it through our custom filters (which only accept one paramter).
-		 *
 		 */
 		$array['url']         = $url;
 		$array['network']     = $network;
@@ -106,7 +100,6 @@ class SWP_Link_Manager {
 	 * @since  4.0.0 | 18 JUL 2019 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function add_settings_page_options() {
 
@@ -114,7 +107,6 @@ class SWP_Link_Manager {
 		 * If there are no link shortening services regsitered via this hook,
 		 * then just bail out and don't create of the link shortening section or
 		 * options for the advanced tab. Just don't output anything.
-		 *
 		 */
 		$services = array();
 		$services = apply_filters( 'swp_available_link_shorteners', $services );
@@ -127,11 +119,10 @@ class SWP_Link_Manager {
 		 *
 		 * This creates a new options page section. This section will house all
 		 * of the link shortening options that are available to the user.
-		 *
 		 */
-		$link_shortening = new SWP_Options_Page_Section( __( 'Link Shortening', 'social-warfare' ), 'link_shortening' );
+		$link_shortening = new SWP_Options_Page_Section( esc_html__( 'Link Shortening', 'social-warfare' ), 'link_shortening' );
 		$link_shortening
-			->set_description( __( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare' ) )
+			->set_description( esc_html__( 'If you\'d like to have all of your links automatically shortened, turn this on.', 'social-warfare' ) )
 			->set_information_link( 'https://warfareplugins.com/support/options-page-advanced-tab-bitly-link-shortening/' )
 			->set_priority( 20 );
 
@@ -141,9 +132,8 @@ class SWP_Link_Manager {
 		 * This creates the on/off toggle. All other options in this section
 		 * will be dependant on this one and will on be visible when this
 		 * is turned on.
-		 *
 		 */
-		$link_shortening_toggle = new SWP_Option_Toggle( __( 'Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
+		$link_shortening_toggle = new SWP_Option_Toggle( esc_html__( 'Link Shortening', 'social-warfare' ), 'link_shortening_toggle' );
 		$link_shortening_toggle
 			->set_size( 'sw-col-300' )
 			->set_priority( 10 )
@@ -156,9 +146,8 @@ class SWP_Link_Manager {
 		 * This will add the option for a minimum publish date. Any post
 		 * published prior to the date in this field will not get shortened
 		 * links for the share buttons.
-		 *
 		 */
-		$link_shortening_start_date = new SWP_Option_Text( __( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
+		$link_shortening_start_date = new SWP_Option_Text( esc_html__( 'Minimum Publish Date (YYYY-MM-DD)', 'social-warfare' ), 'link_shortening_start_date' );
 
 		$link_shortening_start_date
 			->set_default( gmdate( 'Y-m-d', strtotime( '90 days ago' ) ) )
@@ -174,7 +163,6 @@ class SWP_Link_Manager {
 		 * to see which link shortening services have been registered for
 		 * use with the plugin. We will then loop through them and add them
 		 * to our dropdown select and an authentication button.
-		 *
 		 */
 		foreach ( $services as $service ) {
 			$available_services[ $service->key ] = $service->name;
@@ -185,9 +173,8 @@ class SWP_Link_Manager {
 		 *
 		 * This will add the select dropdown box wherein the user can select
 		 * which of the available link shortening services they want to use.
-		 *
 		 */
-		$link_shortening_service = new SWP_Option_Select( __( 'Link Shortening Service', 'social-warfare' ), 'link_shortening_service' );
+		$link_shortening_service = new SWP_Option_Select( esc_html__( 'Link Shortening Service', 'social-warfare' ), 'link_shortening_service' );
 		$link_shortening_service
 			->set_choices( $available_services )
 			->set_default( 'bitly' )
@@ -201,7 +188,6 @@ class SWP_Link_Manager {
 		 *
 		 * This will add a brief text description to let the user know what the
 		 * toggles do on the per-post-type section of the options.
-		 *
 		 */
 		$post_type_description = new SWP_Section_HTML( 'Link Shortening Per Post Type', 'post_types' );
 		$post_type_description->add_html( '<p class="sw-subtitle">Turn link shortening on or off for each post type across your site.</p>' )
@@ -212,7 +198,6 @@ class SWP_Link_Manager {
 		 * Here we are going to fetch all of the post types that are registered
 		 * on the site and then loop through them to create an on/off toggle
 		 * for each one. They will then be stored using the key short_link_toggle_$post
-		 *
 		 */
 		$post_types = SWP_Utility::get_post_types();
 		$i          = 50;
@@ -241,7 +226,6 @@ class SWP_Link_Manager {
 		/**
 		 * After all of the option objects have been created, this will add them
 		 * to the link shortening section of the page.
-		 *
 		 */
 		$link_shortening->add_options(
 			array(
@@ -256,7 +240,6 @@ class SWP_Link_Manager {
 		/**
 		 * This will access the global $SWP_Options_Page object, find the
 		 * advanced tab, and add our link shortening section to it.
-		 *
 		 */
 		global $SWP_Options_Page;
 		$advanced_tab = $SWP_Options_Page->tabs->advanced;

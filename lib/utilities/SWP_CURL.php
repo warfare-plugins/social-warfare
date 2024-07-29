@@ -13,7 +13,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 22 FEB 2018 | Refactored into a class-based system.
- *
  */
 class SWP_CURL {
 
@@ -28,7 +27,6 @@ class SWP_CURL {
 	 *         value = http link where we can fetch shares for a given post
 	 * @return array associative array of responses for each network
 	 * @since  4.3.0 | 05 JAN 2023 | Created
-	 *
 	 */
 	public static function fetch_shares_via_curl_multi( $links ) {
 		return SWP_Requests::fetch_shares_via_wordpress_multi( $links );

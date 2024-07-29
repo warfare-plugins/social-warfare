@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 /**
  * Used to create input options.
@@ -12,13 +12,12 @@ class SWP_Option_Text extends SWP_Option {
 
 
 	/**
-	* Default
-	*
-	* The default value for this input type="text".
-	*
-	* @var string $default_option
-	*
-	*/
+	 * Default
+	 *
+	 * The default value for this input type="text".
+	 *
+	 * @var string $default_option
+	 */
 	public $default_option = '';
 
 	/**
@@ -28,13 +27,20 @@ class SWP_Option_Text extends SWP_Option {
 	 */
 	protected $value;
 
+
 	/**
-	* The required constructor for PHP classes.
-	*
-	* @param string $name The display name for the toggle.
-	* @param string $key The database key for the user setting.
-	*
-	*/
+	 * The placeholder text for the text input.
+	 *
+	 * @var string
+	 */
+	public $placeholder;
+
+	/**
+	 * The required constructor for PHP classes.
+	 *
+	 * @param string $name The display name for the toggle.
+	 * @param string $key The database key for the user setting.
+	 */
 	public function __construct( $name, $key ) {
 		parent::__construct( $name, $key );
 		$this->set_default( '' );
@@ -52,11 +58,10 @@ class SWP_Option_Text extends SWP_Option {
 
 
 	/**
-	* Renders the HTML to create the <input type="text" /> element.
-	*
-	* @return string $html The fully qualified HTML.
-	*
-	*/
+	 * Renders the HTML to create the <input type="text" /> element.
+	 *
+	 * @return string $html The fully qualified HTML.
+	 */
 	public function render_HTML() {
 		$html  = '<div class="sw-grid ' . $this->parent_size . ' sw-option-container ' . $this->key . '_wrapper" ';
 		$html .= $this->render_dependency();
@@ -84,13 +89,11 @@ class SWP_Option_Text extends SWP_Option {
 
 
 	/**
-	* Defines the default value among this select's choices.
-	*
-	*
-	* @param mixed $value The key associated with the default option.
-	* @return SWP_Option_Select $this The calling instance, for method chaining.
-	*
-	*/
+	 * Defines the default value among this select's choices.
+	 *
+	 * @param mixed $value The key associated with the default option.
+	 * @return SWP_Option_Select $this The calling instance, for method chaining.
+	 */
 	public function set_default( $default_option ) {
 		if ( is_numeric( $default_option ) ) :
 			settype( $default_option, 'string' );

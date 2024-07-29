@@ -20,7 +20,6 @@
  *                                 Shares are now fetched using the same two
  *                                 method process that are used by all other
  *                                 social networks in the plugin.
- *
  */
 class SWP_Facebook extends SWP_Social_Network {
 
@@ -44,13 +43,12 @@ class SWP_Facebook extends SWP_Social_Network {
 	 * @param  none
 	 * @return none
 	 * @access public
-	 *
 	 */
 	public function __construct() {
 
 		// Update the class properties for this network
-		$this->name             = __( 'Facebook', 'social-warfare' );
-		$this->cta              = __( 'Share', 'social-warfare' );
+		$this->name             = esc_html__( 'Facebook', 'social-warfare' );
+		$this->cta              = esc_html__( 'Share', 'social-warfare' );
 		$this->key              = 'facebook';
 		$this->default          = 'true';
 		$this->base_share_url   = 'https://www.facebook.com/share.php?u=';

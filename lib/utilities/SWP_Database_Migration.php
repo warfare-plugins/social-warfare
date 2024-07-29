@@ -8,7 +8,6 @@
  * @since  3.0.0  | 08 MAY 2018 | Created
  * @since  3.0.6  | 14 MAY 2018 | Added local $last_migrated property.
  * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
- *
  */
 class SWP_Database_Migration {
 
@@ -18,7 +17,6 @@ class SWP_Database_Migration {
 	 * and therefore want the database migrator to have run up to this version.
 	 *
 	 * @var string
-	 *
 	 */
 	public $last_migrated = '4.4.6.1';
 
@@ -29,9 +27,7 @@ class SWP_Database_Migration {
 	 * If not, runs the migration and updators.
 	 *
 	 * @since  3.0.0 | 01 MAY 2018 | Created the function
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 
@@ -39,7 +35,6 @@ class SWP_Database_Migration {
 		 * We're commenting out the functionality in this file as it has been
 		 * over a year and a half since this was needed and 99.9% of sites
 		 * should already have been migrated by now.
-		 *
 		 */
 
 		global $post;
@@ -51,9 +46,7 @@ class SWP_Database_Migration {
 	 * This function initializes and calls up all the  migration methods.
 	 *
 	 * @since  3.0.0 | 08 MAY 2018 | Created
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function init() {
 
@@ -89,7 +82,6 @@ class SWP_Database_Migration {
 	 * @since 3.5.2  | 28 FEB 2019 | Created.
 	 * @param  array $options The information to filter.
 	 * @return array $options The same but without licenses or tokens.
-	 *
 	 */
 	public static function filter_options( $options ) {
 		foreach ( $options as $key => $value ) {
@@ -107,6 +99,12 @@ class SWP_Database_Migration {
 		return $options;
 	}
 
+	/**
+	 * Prints the post meta.
+	 *
+	 * @since 3.5.2 | 28 FEB 2019 | Created.
+	 * @return void
+	 */
 	public function print_post_meta() {
 		global $post;
 
@@ -125,10 +123,10 @@ class SWP_Database_Migration {
 			foreach ( $meta as $key => $value ) {
 				if ( ( strpos( $key, 'swp_' ) === 0
 					|| ( strpos( $key, '_shares' ) > 0 ) && strpos( $key, '_' ) === 0 ) ) {
-					//* Everything comes in as an array, pull out the first value.
+					// * Everything comes in as an array, pull out the first value.
 					$meta[ $key ] = $value[0];
 				} else {
-					//* Only print Social Warfare meta keys.
+					// * Only print Social Warfare meta keys.
 					unset( $meta[ $key ] );
 				}
 			}
@@ -146,7 +144,8 @@ class SWP_Database_Migration {
 
 		$meta['post_permalink'] = get_permalink( $post->ID );
 
-		echo '<pre>', var_export( $meta ), '</pre>';
+		// Using WordPress-specific escaping function for HTML.
+		echo '<pre>' . esc_html(var_export($meta, true)) . '</pre>'; // phpcs:ignore
 		wp_die();
 	}
 
@@ -160,7 +159,6 @@ class SWP_Database_Migration {
 	 *
 	 * @param string $post_type The type of posts you want to rest.
 	 * @return void
-	 *
 	 */
 	public function reset_post_meta_float_location( $post_type ) {
 		global $wpdb;
@@ -169,7 +167,7 @@ class SWP_Database_Migration {
 			array(
 				'numberposts' => -1,
 				'meta_key'    => 'swp_float_location',
-				'meta_value'  => 'on',
+				'meta_value'  => 'on', // phpcs:ignore
 				'post_type'   => $post_type,
 			)
 		);
@@ -183,7 +181,7 @@ class SWP_Database_Migration {
 			}
 		}
 		if ( $count ) {
-			echo "Success! $count {$post_type}s updated.";
+			echo esc_html("Success! $count {$post_type}s updated.");
 		} else {
 			echo 'No matching posts were found to update.';
 		}
@@ -212,27 +210,27 @@ class SWP_Database_Migration {
 		// Output an array of user options if called via a debugging parameter.
 		if ( true === SWP_Utility::debug( 'get_user_options' ) ) :
 			$options = get_option( 'social_warfare_settings', array() );
-			$options = SWP_Database_Migration::filter_options( $options );
+			$options = self::filter_options( $options );
 			ksort( $options );
-			echo '<pre>', var_export( $options ), '</pre>';
+			echo '<pre>', esc_html(var_export( $options )) , '</pre>'; // phpcs:ignore
 			wp_die();
 		endif;
 
 		// /**
-		//  * Output text representation of array of user options if called via a debugging parameter.
-		//  * Text is formatted for use with `eval`.
-		//  *
-		//  * @since 3.5.0 | 14 DEC 2018 | Created.
-		//  */
+		// * Output text representation of array of user options if called via a debugging parameter.
+		// * Text is formatted for use with `eval`.
+		// *
+		// * @since 3.5.0 | 14 DEC 2018 | Created.
+		// */
 		// if ( true === SWP_Utility::debug('get_user_options_raw') ) {
-		//  $options = get_option( 'social_warfare_settings', array() );
-		//  die(var_export('return ' . $options . ';'));
+		// $options = get_option( 'social_warfare_settings', array() );
+		// die(var_export('return ' . $options . ';'));
 		// }
 
 		if ( true === SWP_Utility::debug( 'get_filtered_options' ) ) :
-			global $swp_user_options;
+			global $swp_user_options; // phpcs:ignore
 			echo '<pre>';
-			var_export( SWP_Database_Migration::filter_options( $swp_user_options ) );
+			var_export( self::filter_options( $swp_user_options ) ); // phpcs:ignore
 			echo '</pre>';
 			wp_die();
 		endif;
@@ -250,13 +248,13 @@ class SWP_Database_Migration {
 		 *This debug paramter has an optional paramter, `post_type`, which defaults to 'page'.
 		 *
 		 * @since 3.4.2
+		 * @since 4.5.0 | 26 JUL 2024 | Implement sanitization
 		 */
 		if ( true === SWP_Utility::debug( 'reset_float_location' ) ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( 'You do not have authorization to view this page.' );
 			}
-			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'page';
-			$post_type = sanitize_text_field( $post_type );
+			$post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : 'page'; // phpcs:ignore
 			$this->reset_post_meta_float_location( $post_type );
 		}
 
@@ -302,7 +300,7 @@ class SWP_Database_Migration {
 		}
 
 		if ( true === SWP_Utility::debug( ( 'delete_plugin_data' ) ) ) {
-			$password = isset( $_GET['swp_confirmation'] ) ? sanitize_text_field( urldecode( $_GET['swp_confirmation'] ) ) : '';
+			$password = isset( $_GET['swp_confirmation'] ) ? sanitize_text_field( urldecode( $_GET['swp_confirmation'] ) ) : ''; // phpcs:ignore
 			$user     = wp_get_current_user();
 			if ( ! current_user_can( 'manage_options' )
 			|| false === wp_check_password( $password, $user->user_pass, $user->ID ) ) {
@@ -314,7 +312,6 @@ class SWP_Database_Migration {
 			 * Looks for any post_meta keys that begin with `swp_` OR begin
 			 * with `_` AND end with `_shares`. Note that the underscores are
 			 * escaped, else they would be interpreted as wildcards.
-			 *
 			 */
 			$query =
 				"DELETE FROM {$wpdb->prefix}postmeta
@@ -323,7 +320,7 @@ class SWP_Database_Migration {
 
 			$message = '';
 
-			$results = $wpdb->get_results( $query, ARRAY_N );
+			$results = $wpdb->get_results( $query, ARRAY_N ); // phpcs:ignore
 			if ( $results ) {
 				$message .= 'Deleted plugin postmeta.<br/>';
 			}
@@ -340,7 +337,7 @@ class SWP_Database_Migration {
 
 			if ( $message ) {
 				$message .= 'All available Social Warfare and Social Warfare - Pro data has been deleted.';
-				wp_die( $message );
+				wp_die(wp_kses_post($message));
 			}
 
 			wp_die( 'Sorry, there was an error processing the request. If you continue to get this message and need to delete all plugin data, please contact support at https://warfareplugins.com/submit-ticket' );
@@ -357,7 +354,6 @@ class SWP_Database_Migration {
 	 * @since  3.0.0 | 01 MAY 2018 | Created the function
 	 * @param  void
 	 * @return bool True if migrated, else false.
-	 *
 	 */
 	public function database_is_migrated() {
 		$option = get_option( 'social_warfare_settings', false );
@@ -366,35 +362,33 @@ class SWP_Database_Migration {
 
 
 	/**
-	* Checks to see if we have 3.0.0 settings installed or not.
-	*
-	* @since  3.0.0 | 01 MAY 2018 | Created the function
-	* @param  void
-	* @return bool True if the 3.0.0 array exists, otherwise false.
-	*
-	*/
+	 * Checks to see if we have 3.0.0 settings installed or not.
+	 *
+	 * @since  3.0.0 | 01 MAY 2018 | Created the function
+	 * @param  void
+	 * @return bool True if the 3.0.0 array exists, otherwise false.
+	 */
 	protected function has_3_0_0_settings() {
 
-		//* Check to see if the 3.0.0 settings exist.
+		// * Check to see if the 3.0.0 settings exist.
 		$settings = get_option( 'social_warfare_settings', false );
 		return is_array( $settings );
 	}
 
 
 	/**
-	* Tries to get an option that uses the old post_meta keynames.
-	*
-	* @since  3.0.0 | 01 MAY 2018 | Created the function
-	* @param  void
-	* @return bool True if the old option still exists; false otherwise.
-	*
-	*/
+	 * Tries to get an option that uses the old post_meta keynames.
+	 *
+	 * @since  3.0.0 | 01 MAY 2018 | Created the function
+	 * @param  void
+	 * @return bool True if the old option still exists; false otherwise.
+	 */
 	public function post_meta_is_migrated() {
 		if ( $this->last_migrated !== $this->get_last_migrated() ) {
 			return false;
 		}
 
-		//* Fetch posts with 2.3.5 metadata.
+		// * Fetch posts with 2.3.5 metadata.
 		$old_metadata = get_posts(
 			array(
 				'meta_key'    => 'nc_postLocation',
@@ -412,7 +406,6 @@ class SWP_Database_Migration {
 	 * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notations.
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function update_hidden_post_meta() {
 		global $wpdb;
@@ -421,7 +414,9 @@ class SWP_Database_Migration {
 			set_time_limit( 300 );
 		} catch ( Exception $e ) {
 			if ( function_exists( 'error_log' ) ) :
-				error_log( $e->getMessage() );
+				if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+					error_log($e->getMessage()); // phpcs:ignore
+				}
 			endif;
 		}
 
@@ -437,30 +432,29 @@ class SWP_Database_Migration {
 		';
 
 		foreach ( $hidden_map as $old_key => $new_key ) {
-			//* Make replacements for the first kind of prefix.
+			// * Make replacements for the first kind of prefix.
 			$q = $wpdb->prepare( $query, $new_key, $old_key );
-			$wpdb->query( $q );
+			$wpdb->query( $q ); // phpcs:ignore
 		}
 	}
 
 
 	/**
-	* Replaces 2.3.5 camelCased keys with 3.0.0 standardized snake_cased keys.
-	*
-	* @since  3.0.0 | 01 MAY 2018 | Created the function
-	* @since  3.0.6 | 14 MAY 2018 | Added time limit to prevent very large datasets from timing out.
-	* @param  void
-	* @return void
-	*
-	*/
+	 * Replaces 2.3.5 camelCased keys with 3.0.0 standardized snake_cased keys.
+	 *
+	 * @since  3.0.0 | 01 MAY 2018 | Created the function
+	 * @since  3.0.6 | 14 MAY 2018 | Added time limit to prevent very large datasets from timing out.
+	 * @param  void
+	 * @return void
+	 */
 	public function update_post_meta() {
 		global $wpdb;
 
 		set_time_limit( 300 );
 
-		//* Notice there is no prefix on any of the indices.
-		//* Old code has prefixed these with either "nc_" or "swp_".
-		//* For simplicity's sake, we'll just check each for both.
+		// * Notice there is no prefix on any of the indices.
+		// * Old code has prefixed these with either "nc_" or "swp_".
+		// * For simplicity's sake, we'll just check each for both.
 		$metadata_map = array(
 			'ogImage'                        => 'swp_og_image',
 			'ogTitle'                        => 'swp_og_title',
@@ -488,25 +482,24 @@ class SWP_Database_Migration {
 		';
 
 		foreach ( $metadata_map as $old_key => $new_key ) {
-			//* Make replacements for the first kind of prefix.
+			// * Make replacements for the first kind of prefix.
 			$q1      = $wpdb->prepare( $query, $new_key, $prefix1 . $old_key );
-			$results = $wpdb->query( $q1 );
+			$results = $wpdb->query( $q1 ); // phpcs:ignore
 
-			//* And make replacements for the second kind of prefix.
+			// * And make replacements for the second kind of prefix.
 			$q2      = $wpdb->prepare( $query, $new_key, $prefix2 . $old_key );
-			$results = $wpdb->query( $q2 );
+			$results = $wpdb->query( $q2 ); // phpcs:ignore
 		}
 	}
 
 
 	/**
-	* Seeds the database with Social Warfare 3.0.0 default values.
-	*
-	* @since  3.0.0 | 01 MAY 2018 | Created the function
-	* @param  void
-	* @return void
-	*
-	*/
+	 * Seeds the database with Social Warfare 3.0.0 default values.
+	 *
+	 * @since  3.0.0 | 01 MAY 2018 | Created the function
+	 * @param  void
+	 * @return void
+	 */
 	public function initialize_database() {
 		$defaults = array(
 			'location_archive_categories'    => 'below',
@@ -597,23 +590,23 @@ class SWP_Database_Migration {
 	 * Map prevous key/value pairs to new keys.
 	 *
 	 * This also deletes the previous keys once the migration is done.
+	 *
 	 * @since  3.0.0  | 01 MAY 2018 | Created the function
 	 * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
 	 * @since  4.4.5 | 08 JAN 2014 | Removed Google Plus
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	private function migrate() {
 		$options = get_option( 'socialWarfareOptions', array() );
 
 		if ( array() === $options ) :
-			//* The old options do not exist.
+			// * The old options do not exist.
 			return;
 		endif;
 
 		$map = array(
-			//* Options names
+			// * Options names
 			'locationSite'                      => 'location_archive_categories',
 			'locationHome'                      => 'location_home',
 			'totesEach'                         => 'network_shares',
@@ -686,17 +679,17 @@ class SWP_Database_Migration {
 		$migrations = array();
 
 		foreach ( $options as $old => $value ) {
-			//* The order of icons used to be stored in an array at 'active'.
+			// * The order of icons used to be stored in an array at 'active'.
 			if ( is_array( $value ) && array_key_exists( 'active', $value ) ) :
 				$new_value = $value;
-				//* Filter out the booleans and integers.
+				// * Filter out the booleans and integers.
 			elseif ( is_string( $value ) ) :
 				$new_value = array_key_exists( $value, $value_map ) ? $value_map[ $value ] : $value;
 			else :
 				$new_value = $value;
 			endif;
 
-			//* Specific case: newOrderOfIcons mapping.
+			// * Specific case: newOrderOfIcons mapping.
 			if ( 'newOrderOfIcons' === $old ) :
 				if ( array_key_exists( 'linkedIn', $new_value ) ) :
 					unset( $new_value['linkedIn'] );
@@ -704,7 +697,7 @@ class SWP_Database_Migration {
 				endif;
 			endif;
 
-			//* Specific case: customColor mapping.
+			// * Specific case: customColor mapping.
 			if ( 'customColor' === $old ) :
 				$migrations['custom_color']          = $new_value;
 				$migrations['custom_color_outlines'] = $new_value;
@@ -723,17 +716,17 @@ class SWP_Database_Migration {
 			endif;
 
 			if ( array_key_exists( $old, $map ) ) :
-				//* We specified an update to the key.
+				// * We specified an update to the key.
 				$new                = $map[ $old ];
 				$migrations[ $new ] = $new_value;
 			else :
-				//* The previous key was fine, keep it.
+				// * The previous key was fine, keep it.
 				$migrations[ $old ] = $new_value;
 			endif;
 
 		}
 
-		//* Manually adding these in as short term solution.
+		// * Manually adding these in as short term solution.
 		if ( ! isset( $migrations['float_size'] ) ) :
 			$migrations['float_size'] = '1';
 		endif;
@@ -771,8 +764,8 @@ class SWP_Database_Migration {
 		endforeach;
 
 		update_option( 'social_warfare_settings', $migrations );
-		//* Play it safe for now.
-		//* Leave socialWarfareOptions in the database.
+		// * Play it safe for now.
+		// * Leave socialWarfareOptions in the database.
 		// delete_option( 'socialWarfareOptions' );
 	}
 
@@ -787,14 +780,13 @@ class SWP_Database_Migration {
 	 * @since  3.0.0 | Created | 08 MAY 2018
 	 * @param  boolean $output True echoes the data; False returns it.
 	 * @return mixed         (str) Version number if found, (bool) false if not found.
-	 *
 	 */
 	public function get_last_migrated( $output = false ) {
 		$options = get_option( 'social_warfare_settings' );
 
-		if ( array_key_exists( 'last_migrated', $options ) ) :
+		if ( is_array( $options ) && array_key_exists( 'last_migrated', $options ) ) :
 			if ( true === $output ) :
-				var_dump( $options['last_migrated'] );
+				var_dump( $options['last_migrated'] ); // phpcs:ignore
 			endif;
 
 			return $options['last_migrated'];
@@ -814,7 +806,6 @@ class SWP_Database_Migration {
 	 * @since  3.0.0 | Created | 08 MAY 2018
 	 * @param  null
 	 * @return void
-	 *
 	 */
 	public function update_last_migrated() {
 		$options                  = get_option( 'social_warfare_settings' );
@@ -834,7 +825,7 @@ class SWP_Database_Migration {
 
 		$meta_key = '_facebook_shares';
 		$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
-		$count    = $wpdb->get_var( $sql );
+		$count    = $wpdb->get_var( $sql ); // phpcs:ignore
 
 		return ( $count > 1 );
 	}
@@ -851,9 +842,11 @@ class SWP_Database_Migration {
 		$meta_key = '_facebook_shares';
 		$sql      = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
 
-		$wpdb->query( $sql );
+		$wpdb->query( $sql ); // phpcs:ignore
 
 		$rows_affected = $wpdb->rows_affected;
-		error_log( "Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'." );
+		if (defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+			error_log("Deleted $rows_affected rows from postmeta where meta_key is '_facebook_shares'."); // phpcs:ignore
+		}
 	}
 }

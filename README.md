@@ -1,4 +1,9 @@
 # Social Warfare Repository and Issue Tracker
+
+> The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
+
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) ![Latest Release](https://img.shields.io/github/v/release/warfare-plugins/social-warfare) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v6.5%20tested-success.svg)
+
 This is a public repository for the Social Warfare WordPress plugin created primarily for the purpose of publishing and maintaining a public list of bugs, known issues, and feature requests with the community at large. Please use the "Issues" link above to track or add information to existing issues or to submit new issues altogether (see the guidelines below prior to adding a new issue).
 
 ***
@@ -11,22 +16,6 @@ While this project has used various coding standards over time, this guide shoul
 
 ### WordPress Coding Standards
 All WordPress coding standards should be followed. Anything not specifically defined here should defer to WordPress's recommended coding standards found here: [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards).
-
-#### Running PHP_CodeSniffer
-
-To check your code against the WordPress coding standards, use the following command:
-
-```bash
-php -d memory_limit=512M vendor/bin/phpcs .
-```
-
-#### Running PHP Code Beautifier and Fixer
-
-To automatically fix coding standard violations, use `phpcbf`:
-
-```bash
-php -d memory_limit=512M vendor/bin/phpcbf .
-```
 
 ### Variables and Class Names
 All PHP and Javascript variables, functions and classes, and CSS classes and ID's should follow the following naming standards. 
@@ -57,7 +46,7 @@ The following will serve as an example docblock with instructions to follow.
 3.      *
 4.      * @since  3.0.8  | 16 MAY 2018 | Created the method.
 5.      * @since  3.0.8  | 24 MAY 2018 | Added check for order_of_icons
-6.      * @since  3.1.0 | 13 JUN 2018 | Replaced array bracket notation.
+6.      * @since  3.1.0  | 13 JUN 2018 | Replaced array bracket notation.
 7.      * @param  void
 8.      * @return void
 9.      *

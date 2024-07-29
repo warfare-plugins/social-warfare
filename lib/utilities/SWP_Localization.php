@@ -7,7 +7,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  */
-
 class SWP_Localization {
 
 
@@ -32,7 +31,6 @@ class SWP_Localization {
 	 * @since  1.0.0
 	 * @access public
 	 * @return bool true if the text domain was loaded, false if it was not.
-	 *
 	 */
 	public function swp_unload_textdomain() {
 		return unload_textdomain( 'social-warfare' );
@@ -44,7 +42,6 @@ class SWP_Localization {
 	 * @since  1.0.0
 	 * @access public
 	 * @return bool
-	 *
 	 */
 	public function swp_is_textdomain_loaded() {
 		return is_textdomain_loaded( 'social-warfare' );

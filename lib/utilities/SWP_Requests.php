@@ -13,7 +13,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     4.3.0 | 05 JAN 2023 | Created
- *
  */
 class SWP_Requests {
 
@@ -29,12 +28,11 @@ class SWP_Requests {
 	 *         value = http link where we can fetch shares for a given post
 	 * @return array associative array of responses for each network
 	 * @since  4.3.0 | 05 JAN 2023 | Created
-	 *
 	 */
 	public static function fetch_shares_via_wordpress_multi( $links ) {
 		if ( SWP_Utility::debug( 'is_cache_fresh' ) ) :
 				$started = time();
-				echo 'Starting multi curl request at : ' . $started;
+				echo 'Starting multi curl request at : ' . esc_html( $started );
 		endif;
 
 		// Build out the array that can be passed into request_multiple()
@@ -71,8 +69,18 @@ class SWP_Requests {
 		return $response;
 	}
 
-	public static function file_get_contents_http( $url, $headers = null ) {
-		$response = wp_remote_get( $url );
+	/**
+	 * Fetches the contents of a URL using the file_get_contents function.
+	 *
+	 * @param string $url The URL to fetch the contents from.
+	 * @return string The contents of the URL.
+	 */
+	public static function file_get_contents_http( $url ) {
+		if (function_exists('vip_safe_wp_remote_get')) {
+			$response = vip_safe_wp_remote_get( $url );
+		} else {
+			$response = wp_remote_get( $url ); // phpcs:ignore
+		}
 		if ( false === is_array( $response ) ) {
 			return false;
 		}
@@ -86,30 +94,27 @@ class SWP_Requests {
 	 * to resolve issues with the Bitly API's response. This function ensures compatibility and more direct control over the HTTP request.
 	 *
 	 * @param  string $url The endpoint URL for the API request.
-	 * @param  array $fields The body data (usually parameters or data payload) to be sent in the API request.
-	 * @param  array $headers Headers to be sent with the API request. Default is JSON content type.
+	 * @param  array  $fields The body data (usually parameters or data payload) to be sent in the API request.
+	 * @param  array  $headers Headers to be sent with the API request. Default is JSON content type.
 	 * @return string Response from the API request.
 	 *
 	 * @since  4.4.6 | 21 FEB 2024 | Created as a direct cURL alternative to wp_remote_post() for Bitly API.
+	 * @since  4.5.0 | 25 JUL 2024 | Repalced cURL with HTTP API [https://developer.wordpress.org/plugins/http-api/]
 	 */
 	public static function post_json( $url, $fields, $headers = array() ) {
 		if ( ! in_array( 'Content-Type: application/json; charset=utf-8', $headers, true ) ) {
 			$headers[] = 'Content-Type: application/json; charset=utf-8';
 		}
-
-		$curl = curl_init( $url );
-
-		curl_setopt( $curl, CURLOPT_POST, true );
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, json_encode( $fields ) );
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 );
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 );
-
-		$resp = curl_exec( $curl );
-
-		curl_close( $curl );
-
-		return $resp;
+	
+		$args = array(
+			'method'    => 'POST',
+			'headers'   => $headers,
+			'body'      => wp_json_encode( $fields ),
+			'sslverify' => false,
+		);
+	
+		$response = wp_remote_post( $url, $args );
+	
+		return is_wp_error( $response ) ? $response->get_error_message() : wp_remote_retrieve_body( $response );
 	}
 }

@@ -12,7 +12,6 @@
  * conditional is actually needed.
  *
  * @since 4.0.2 | 23 JUL 2020 | Created
- *
  */
 class SWP_AMP {
 
@@ -35,7 +34,6 @@ class SWP_AMP {
 	 * @since  4.0.2 | 23 JUL 2020 | Created
 	 * @param  void
 	 * @return boolean True if AMP endpoint; False if not.
-	 *
 	 */
 	public static function is_amp() {
 
@@ -45,7 +43,6 @@ class SWP_AMP {
 		 * Name: AMP for WP - Accelerated Mobile Pages
 		 * Link: https://wordpress.org/plugins/accelerated-mobile-pages/
 		 * Documentation: https://ampforwp.com/tutorials/article/detect-amp-page-function/
-		 *
 		 */
 		if ( function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint() ) {
 			return true;
@@ -57,7 +54,6 @@ class SWP_AMP {
 		 * Name: AMP - Official AMP plugin for WordPress
 		 * Link: https://wordpress.org/plugins/amp/
 		 * Documention: https://amp-wp.org/documentation/developing-wordpress-amp-sites/how-to-develop-with-the-amp-plugin/
-		 *
 		 */
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return true;
@@ -81,7 +77,6 @@ class SWP_AMP {
 	 * @param  string $text     The text to be shown or hidden.
 	 * @param  string $fallback An optional fallback to return instead of an empty string.
 	 * @return string           The original text, an empty string, or a fallback string.
-	 *
 	 */
 	public static function hide_if_amp( $text, $fallback = '' ) {
 
@@ -109,7 +104,6 @@ class SWP_AMP {
 	 * @param  string $text     The text to be shown or hidden.
 	 * @param  string $fallback An optional fallback to return instead of an empty string.
 	 * @return string           The original text, an empty string, or a fallback string.
-	 *
 	 */
 	public static function display_if_amp( $text, $fallback = '' ) {
 

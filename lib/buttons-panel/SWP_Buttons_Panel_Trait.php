@@ -29,13 +29,28 @@
  *     get_ordered_network_objects();
  *     get_key_from_name();
  *
- *
- *
  * @since 3.4.0 | 21 SEP 2018 | Created
- *
  */
 trait SWP_Buttons_Panel_Trait {
 
+	/**
+	 * The inner HTML content of the buttons panel.
+	 * This property stores the generated HTML content of the buttons panel
+	 * to avoid regenerating it multiple times.
+	 *
+	 * @var string
+	 */
+	protected $inner_html = '';
+
+	/**
+	 * HTML attributes to be applied to the buttons panel container.
+	 * This string comprises various data attributes and settings
+	 * derived from the plugin's configuration and is dynamically
+	 * generated to ensure correct panel behavior and styling.
+	 *
+	 * @var string
+	 */
+	public $attributes = '';
 
 	protected function append_panel_to_content() {
 
@@ -43,7 +58,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * If the panel type is static_horizontal, then the switch below will
 		 * determine the lcoation setting and append the html to the content
 		 * according to that location.
-		 *
 		 */
 		if ( 'static_horizontal' === $this->panel_type ) {
 			switch ( $this->location ) {
@@ -69,7 +83,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * If the panel type is floating_side, then forget the content because
 		 * it will be empty. Instead just replace the content to be returned
 		 * with the generated html for the panel.
-		 *
 		 */
 		if ( 'floating_side' === $this->panel_type ) {
 			$content = $this->html;
@@ -85,47 +98,43 @@ trait SWP_Buttons_Panel_Trait {
 	}
 
 	/**
-	* Takes a display name and returns the snake_cased key of that name.
-	*
-	* This is used to convert a network's name, such as Google Plus,
-	* to the database-friendly key of google_plus.
-	*
-	* @since  3.0.0 | 18 APR 2018 | Created
-	* @param  string $name The string to convert.
-	* @return string The converted string.
-	*
-	*/
+	 * Takes a display name and returns the snake_cased key of that name.
+	 *
+	 * This is used to convert a network's name, such as Google Plus,
+	 * to the database-friendly key of google_plus.
+	 *
+	 * @since  3.0.0 | 18 APR 2018 | Created
+	 * @param  string $name The string to convert.
+	 * @return string The converted string.
+	 */
 	public function get_key_from_name( $name ) {
 		return preg_replace( '/[\s]+/', '_', strtolower( trim( $name ) ) );
 	}
 
 
 	/**
-	* Tells you true/false if the buttons should print on this page.
-	*
-	* Each variable is a boolean value. For the buttons to eligible for printing,
-	* each of the variables must evaluate to true.
-	*
-	* $user_settings: Options editable by the Admin user.
-	* $desired_conditions: WordPress conditions we require for the buttons.
-	* $undesired_conditions: WordPress pages where we do not display the buttons.
-	*
-	*
-	* @return Boolean True if the buttons are okay to print, else false.
-	* @since  3.0.8 | 21 MAY 2018 | Added extra condition to check for content
-	*                               (for calls to social_warfare()).
-	* @since  3.3.3 | 18 SEP 2018 | Added check for in_the_loop().
-	* @since  3.4.0 | 24 OCT 2018 | Added check for $this->post_data.
-	* @param  void
-	* @return void
-	*
-	*/
+	 * Tells you true/false if the buttons should print on this page.
+	 *
+	 * Each variable is a boolean value. For the buttons to eligible for printing,
+	 * each of the variables must evaluate to true.
+	 *
+	 * $user_settings: Options editable by the Admin user.
+	 * $desired_conditions: WordPress conditions we require for the buttons.
+	 * $undesired_conditions: WordPress pages where we do not display the buttons.
+	 *
+	 * @return Boolean True if the buttons are okay to print, else false.
+	 * @since  3.0.8 | 21 MAY 2018 | Added extra condition to check for content
+	 *                               (for calls to social_warfare()).
+	 * @since  3.3.3 | 18 SEP 2018 | Added check for in_the_loop().
+	 * @since  3.4.0 | 24 OCT 2018 | Added check for $this->post_data.
+	 * @param  void
+	 * @return void
+	 */
 	public function should_panel_display() {
 
 		/**
 		 * If for some reason the post_data failed to populate, we just have to
 		 * bail out so the PHP doesn't throw undefined property errors.
-		 *
 		 */
 		if ( empty( $this->post_data ) ) {
 			return false;
@@ -134,7 +143,6 @@ trait SWP_Buttons_Panel_Trait {
 		/**
 		* WordPress requires title and content. This indicates the buttons are
 		* called via social_warfare() or via the shortcode.
-		*
 		*/
 		if ( empty( $this->content ) && ! isset( $this->args['content'] ) ) {
 			return true;
@@ -149,43 +157,40 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method to get the alignment when scale is set below 100%.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string A string of the appropriate CSS class to add to the panel.
-	*
-	*/
+	 * A method to get the alignment when scale is set below 100%.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string A string of the appropriate CSS class to add to the panel.
+	 */
 	protected function get_alignment() {
 		return ' scale-' . $this->get_option( 'button_alignment' );
 	}
 
 
 	/**
-	* A function to get the color states for this buttons panel.
-	*
-	* All of the buttons contain 3 states: default, hover, and single. The
-	* default state is what the buttons look like when not being interacted
-	* with. The hover is what all the buttons in the panel look like when
-	* the panel is being hovered. The single is what the individual button
-	* being hovered will look like.
-	*
-	* This method handles generating the classes that the CSS can target to
-	* ensure that all three of those states work.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @since  3.3.2 | 13 SEP 2018 | Modified to control float selectors better
-	* @param  boolean $float_panel Whether this is a floating panel or not.
-	* @return string  The string of CSS classes to be used on the panel.
-	*
-	*/
+	 * A function to get the color states for this buttons panel.
+	 *
+	 * All of the buttons contain 3 states: default, hover, and single. The
+	 * default state is what the buttons look like when not being interacted
+	 * with. The hover is what all the buttons in the panel look like when
+	 * the panel is being hovered. The single is what the individual button
+	 * being hovered will look like.
+	 *
+	 * This method handles generating the classes that the CSS can target to
+	 * ensure that all three of those states work.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  3.3.2 | 13 SEP 2018 | Modified to control float selectors better
+	 * @param  boolean $float_panel Whether this is a floating panel or not.
+	 * @return string  The string of CSS classes to be used on the panel.
+	 */
 	protected function get_colors( $float_panel = false ) {
 
 		/**
 		* If pro was installed, but no longer is installed or activated,
 		* then this option won't exist and will return false. If so, then
 		* we output the default core color/style classes.
-		*
 		*/
 		if ( false === $this->get_option( 'default_colors' ) ) {
 			return ' swp_default_full_color swp_individual_full_color swp_other_full_color ';
@@ -201,7 +206,6 @@ trait SWP_Buttons_Panel_Trait {
 		* the question "Do the floating buttons inherit their colors from
 		* the horizontal buttons?" It will be true if they do, and false if
 		* they don't.
-		*
 		*/
 		$prefix = '';
 
@@ -210,7 +214,6 @@ trait SWP_Buttons_Panel_Trait {
 		* the color styles from the static floating buttons, then we need
 		* to return the style classes that are specific to the floating
 		* buttons being rendered.
-		*
 		*/
 		if ( true === $float_panel && false === $this->options['float_style_source'] ) {
 			$prefix = 'float_';
@@ -226,7 +229,6 @@ trait SWP_Buttons_Panel_Trait {
 		* "float_" prefix since we don't use that on the actual CSS
 		* selector, and then return the CSS classes that will be added to
 		* this buttons panel that is being rendered.
-		*
 		*/
 		$default = str_replace( $prefix, '', $this->get_option( $prefix . 'default_colors' ) );
 		$hover   = str_replace( $prefix, '', $this->get_option( $prefix . 'hover_colors' ) );
@@ -236,17 +238,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method to fetch/determine the shape of the current buttons.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string The string of the CSS class to be used.
-	*
-	*/
+	 * A method to fetch/determine the shape of the current buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The string of the CSS class to be used.
+	 */
 	protected function get_shape() {
 		$button_shape = $this->get_option( 'button_shape' );
 
-		//* They have gone from an Addon to Core.
+		// * They have gone from an Addon to Core.
 		if ( false === $button_shape ) {
 			return 'swp_flat_fresh ';
 		}
@@ -256,17 +257,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method to fetch/determine the size/scale of the panel.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string The CSS class to be added to the panel.
-	*
-	*/
+	 * A method to fetch/determine the size/scale of the panel.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The CSS class to be added to the panel.
+	 */
 	protected function get_scale() {
 		$button_size = $this->get_option( 'button_size' );
 
-		//* They have gone from an Addon to Core.
+		// * They have gone from an Addon to Core.
 		if ( false === $button_size ) {
 			return 'scale-100 ';
 		}
@@ -276,14 +276,13 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method for getting the minimum width of the buttons panel.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @since  4.4.2 | 23 OCT 2023 | Security Patch: Added validation and escaping to ensure input is safe from potential XSS vulnerabilities.
-	* @param  void
-	* @return string The HTML attribute to be added to the buttons panel.
-	*
-	*/
+	 * A method for getting the minimum width of the buttons panel.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.4.2 | 23 OCT 2023 | Security Patch: Added validation and escaping to ensure input is safe from potential XSS vulnerabilities.
+	 * @param  void
+	 * @return string The HTML attribute to be added to the buttons panel.
+	 */
 	protected function get_min_width() {
 		$min_width = $this->get_option( 'float_screen_width' );
 
@@ -296,30 +295,28 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method for getting the ID of the current post.
-	*
-	* @since  4.0.1 | 01 APR 2020 | Created
-	* @param  void
-	* @return string The HTML attribute to be added to the buttons panel.
-	*
-	*/
+	 * A method for getting the ID of the current post.
+	 *
+	 * @since  4.0.1 | 01 APR 2020 | Created
+	 * @param  void
+	 * @return string The HTML attribute to be added to the buttons panel.
+	 */
 	protected function get_post_id_attribute() {
 		return 'data-post-id="' . $this->post_id . '" ';
 	}
 
 
 	/**
-	* A method for getting the transition mode for the side floating buttons.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string The HTML attribute to be added to the buttons panel.
-	*
-	*/
+	 * A method for getting the transition mode for the side floating buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The HTML attribute to be added to the buttons panel.
+	 */
 	protected function get_float_transition() {
 		$transition = $this->get_option( 'transition' );
 
-		//* They have gone from an Addon to Core.
+		// * They have gone from an Addon to Core.
 		if ( false === $transition ) {
 			return 'data-transition="slide" ';
 		}
@@ -329,17 +326,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method to determin the background color of the floating buttons.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  void
-	* @return string The HTML attribute to be added to the buttons panel.
-	*
-	*/
+	 * A method to determin the background color of the floating buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  void
+	 * @return string The HTML attribute to be added to the buttons panel.
+	 */
 	protected function get_float_background() {
 		$float_background_color = $this->get_option( 'float_background_color' );
 
-		//* They have gone from an Addon to Core.
+		// * They have gone from an Addon to Core.
 		if ( false === $float_background_color ) {
 			return '';
 		}
@@ -349,24 +345,23 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* Get one of the user options.
-	*
-	* This function acts just like the global SWP_Utility:get_option() method.
-	* In fact, it even uses that function as a fallback. Basically, when the
-	* Buttons_Panel class is instantiated, a user has the option to pass in an
-	* array of options. These will be merged with the global $swp_user_options,
-	* and stored in the $this->options property.
-	*
-	* First, we check if the option exists in our local options property. Second,
-	* we use the SWP_Utility::get_option() method which will pull the option
-	* from the global settings as well as handle things like requests for
-	* options that may not exist (return false).
-	*
-	* @since  3.0.5 | 10 MAY 2018 | Created
-	* @param  string $key The name of the option.
-	* @return mixed       The value of that option.
-	*
-	*/
+	 * Get one of the user options.
+	 *
+	 * This function acts just like the global SWP_Utility:get_option() method.
+	 * In fact, it even uses that function as a fallback. Basically, when the
+	 * Buttons_Panel class is instantiated, a user has the option to pass in an
+	 * array of options. These will be merged with the global $swp_user_options,
+	 * and stored in the $this->options property.
+	 *
+	 * First, we check if the option exists in our local options property. Second,
+	 * we use the SWP_Utility::get_option() method which will pull the option
+	 * from the global settings as well as handle things like requests for
+	 * options that may not exist (return false).
+	 *
+	 * @since  3.0.5 | 10 MAY 2018 | Created
+	 * @param  string $key The name of the option.
+	 * @return mixed       The value of that option.
+	 */
 	protected function get_option( $key ) {
 
 		// Check if this option exists in this panel's localized options.
@@ -380,25 +375,23 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A Method to determine the location of the floating buttons
-	*
-	* This method was created because we can't just use the option as it is set
-	* in the options page. Instead, we must first check that we are on a single.php
-	* page and second we must check that the floating buttons toggle is turned on.
-	* Then and only then will we check the actual floating location and return it.
-	*
-	* @since  3.0.0 | 09 MAY 2018 | Created
-	* @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
-	* @param  void
-	* @return string A string containing the float bar location.
-	*
-	*/
+	 * A Method to determine the location of the floating buttons
+	 *
+	 * This method was created because we can't just use the option as it is set
+	 * in the options page. Instead, we must first check that we are on a single.php
+	 * page and second we must check that the floating buttons toggle is turned on.
+	 * Then and only then will we check the actual floating location and return it.
+	 *
+	 * @since  3.0.0 | 09 MAY 2018 | Created
+	 * @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
+	 * @param  void
+	 * @return string A string containing the float bar location.
+	 */
 	public function get_float_location() {
 
 		/**
 		 * If we failed to populate a post id, then we just bail out and won't
 		 * be showing any.
-		 *
 		 */
 		if ( false === isset( $this->post_id ) ) {
 			return 'none';
@@ -408,7 +401,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * These are the float location settings all across the WordPress
 		 * ecosystem. There is a global on/off setting, a per post type on/off
 		 * setting, and even a setting on each individual post.
-		 *
 		 */
 		$float_location    = $this->get_option( 'float_location' );
 		$global_setting    = $this->get_option( 'floating_panel' );
@@ -419,7 +411,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * If the floaters are implicitly turned on at the post level, then that
 		 * means the user wants them to float on this post regardless of the
 		 * global settings.
-		 *
 		 */
 		if ( 'on' === $post_setting ) {
 			return $float_location;
@@ -427,7 +418,6 @@ trait SWP_Buttons_Panel_Trait {
 
 		/**
 		 * We don't use floating buttons on the home page.
-		 *
 		 */
 		if ( is_home() && ! is_front_page() ) {
 			return 'none';
@@ -435,7 +425,6 @@ trait SWP_Buttons_Panel_Trait {
 
 		/**
 		 * Do not print floating buttons on archive pages.
-		 *
 		 */
 		if ( ! is_singular() ) {
 			return 'none';
@@ -445,7 +434,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * If the location on this specific post is set to off, then we'll
 		 * disable floating locations. Anything else and we'll defer to the
 		 * global setting.
-		 *
 		 */
 		if ( ! empty( $post_setting ) && 'off' === $post_setting ) {
 			return 'none';
@@ -454,7 +442,6 @@ trait SWP_Buttons_Panel_Trait {
 		/**
 		 * If everything checks out, we'll return the global float location. If
 		 * somehow nothing checked out, we'll return none.
-		 *
 		 */
 		if ( $global_setting && $post_type_setting ) {
 			return $float_location;
@@ -471,7 +458,6 @@ trait SWP_Buttons_Panel_Trait {
 	 * @since  3.4.0 | 24 OCT 2018 | Created
 	 * @param  void
 	 * @return string The html attribute.
-	 *
 	 */
 	public function get_float_location_attribute() {
 		return 'data-float="' . $this->get_float_location() . '" ';
@@ -479,21 +465,20 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A Method to determine the location of the floating buttons on mobile devices
-	*
-	* This method was created because we can't just use the option as it is set
-	* in the options page. Instead, we must first check that we are on a single.php
-	* page and second we must check that the floating buttons toggle is turned on.
-	* Then and only then will we check the actual floating location and return it.
-	*
-	* @since  3.0.0 | 09 MAY 2018 | Created
-	* @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
-	* @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category.
-	* @since  3.4.2 | 07 DEC 2018 | Added conditions for false mobile locations.
-	* @param  void
-	* @return string A string containing the float bar location.
-	*
-	*/
+	 * A Method to determine the location of the floating buttons on mobile devices
+	 *
+	 * This method was created because we can't just use the option as it is set
+	 * in the options page. Instead, we must first check that we are on a single.php
+	 * page and second we must check that the floating buttons toggle is turned on.
+	 * Then and only then will we check the actual floating location and return it.
+	 *
+	 * @since  3.0.0 | 09 MAY 2018 | Created
+	 * @since  3.0.4 | 09 MAY 2018 | Added check for the global post type on/off toggle.
+	 * @since  3.4.0 | 17 OCT 2018 | Added conditions for front_page, archive, category.
+	 * @since  3.4.2 | 07 DEC 2018 | Added conditions for false mobile locations.
+	 * @param  void
+	 * @return string A string containing the float bar location.
+	 */
 	public function get_mobile_float_location() {
 		$global_float_toggle    = $this->get_option( 'floating_panel' );
 		$post_type_float_toggle = $this->get_option( 'float_location_' . $this->post_data['post_type'] );
@@ -503,7 +488,6 @@ trait SWP_Buttons_Panel_Trait {
 		/**
 		 * If the float location is completely set to none, then we won't have
 		 * any floating buttons on mobile either.
-		 *
 		 */
 		if ( 'none' === $this->get_float_location() ) {
 			$mobile_location = 'none';
@@ -514,7 +498,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * is not available which means that pro is not installed. If this
 		 * option were available, it would return as a string.
 		 * As such, we'll set it to the defaults that are available in core.
-		 *
 		 */
 		if ( false === $mobile_location ) {
 			$mobile_location = $float_location;
@@ -525,15 +508,14 @@ trait SWP_Buttons_Panel_Trait {
 			 * Switching from side to top/bottom is a pro only feature. If they
 			 * have them already set to top/bottom then we will just keep that
 			 * setting as no actual transition is needed.
-			 *
 			 */
 			if ( true === in_array( $float_location, array( 'left', 'right' ), true ) ) {
 				$mobile_location = 'none';
 			}
 		}
 
-		//* Front page, archive, and categories do not have a global float option.
-		//* Instead they use options in the post editor (saved in post_meta).
+		// * Front page, archive, and categories do not have a global float option.
+		// * Instead they use options in the post editor (saved in post_meta).
 		if ( is_front_page() || is_archive() || is_category() ) {
 			$float_enabled = get_post_meta( $this->post_data['ID'], 'swp_float_location', true );
 
@@ -553,14 +535,13 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method to control the order in which the buttons are output.
-	*
-	* @since  3.4.0 | 20 SEP 2018 | Created
-	* @since  3.4.2 | 05 DEC 2018 | Added check for false sort_method for core.
-	* @param  void
-	* @return array The array of network names in their proper order.
-	*
-	*/
+	 * A method to control the order in which the buttons are output.
+	 *
+	 * @since  3.4.0 | 20 SEP 2018 | Created
+	 * @since  3.4.2 | 05 DEC 2018 | Added check for false sort_method for core.
+	 * @param  void
+	 * @return array The array of network names in their proper order.
+	 */
 	protected function get_order_of_icons() {
 		global $swp_social_networks;
 		$active_networks = SWP_Utility::get_option( 'order_of_icons' );
@@ -574,7 +555,6 @@ trait SWP_Buttons_Panel_Trait {
 		* Adding a check for false, because this option is pro only and will
 		* return false if it is not available in core, and therefore will default
 		* to the manual sorting method.
-		*
 		*/
 		if ( 'manual' === $sort_method || false === $sort_method ) {
 			return $active_networks;
@@ -584,7 +564,6 @@ trait SWP_Buttons_Panel_Trait {
 		* Even if it's not set to manual sorting, we will still use the manual
 		* order of the buttons if we don't have any share counts by which to
 		* process the order dynamically.
-		*
 		*/
 		if ( empty( $this->shares ) || ! is_array( $this->shares ) ) {
 			return $active_networks;
@@ -594,7 +573,6 @@ trait SWP_Buttons_Panel_Trait {
 		* If the icons are set to be ordered dynamically, and we passed the
 		* check above then we will sort them based on how many shares each
 		* network has.
-		*
 		*/
 		arsort( $this->shares );
 		foreach ( $this->shares as $network => $share_count ) {
@@ -608,14 +586,13 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* A method to arrange the array of network objects in proper order.
-	*
-	* @since  3.0.0 | 04 MAY 2018 | Created
-	* @since  3.3.0 | 30 AUG 2018 | Renamed from 'order_network_objects' to 'get_ordered_network_objects'
-	* @param  array $order An ordered array of network keys.
-	* @return array        An ordered array of network objects.
-	*
-	*/
+	 * A method to arrange the array of network objects in proper order.
+	 *
+	 * @since  3.0.0 | 04 MAY 2018 | Created
+	 * @since  3.3.0 | 30 AUG 2018 | Renamed from 'order_network_objects' to 'get_ordered_network_objects'
+	 * @param  array $order An ordered array of network keys.
+	 * @return array        An ordered array of network objects.
+	 */
 	protected function get_ordered_network_objects( $order ) {
 		$network_objects = array();
 
@@ -636,13 +613,12 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* Render the html for the indivial buttons.
-	*
-	* @since  3.0.0 | 01 MAR 2018 | Created
-	* @param  integer $max_count The maximum number of buttons to display.
-	* @return string             The compiled html for the buttons.
-	*
-	*/
+	 * Render the html for the indivial buttons.
+	 *
+	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @param  integer $max_count The maximum number of buttons to display.
+	 * @return string             The compiled html for the buttons.
+	 */
 	protected function generate_individual_buttons_html() {
 		$html  = '';
 		$count = 0;
@@ -654,7 +630,6 @@ trait SWP_Buttons_Panel_Trait {
 			 * be displayed at any given time. If that number is set, we bail
 			 * out once that maximum has been reached. If that number is set to
 			 * zero, it represents unlimited buttons can be displayed.
-			 *
 			 */
 			if ( 0 !== $this->max_buttons && $count === $this->max_buttons ) :
 				return $html;
@@ -673,17 +648,16 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* The Total Shares Count
-	*
-	* If share counts are active, renders the Total Share Counts HTML.
-	*
-	* @since  3.0.0 | 18 APR 2018 | Created
-	* @since  3.3.2 | 12 SEP 2018 | Moved strtolower to $totals_argument
-	* @since  3.4.0 | 20 SEP 2018 | Moved display logic to should_total_shares_display()
-	* @param  void
-	* @return string $html The fully qualified HTML to display share counts.
-	*
-	*/
+	 * The Total Shares Count
+	 *
+	 * If share counts are active, renders the Total Share Counts HTML.
+	 *
+	 * @since  3.0.0 | 18 APR 2018 | Created
+	 * @since  3.3.2 | 12 SEP 2018 | Moved strtolower to $totals_argument
+	 * @since  3.4.0 | 20 SEP 2018 | Moved display logic to should_total_shares_display()
+	 * @param  void
+	 * @return string $html The fully qualified HTML to display share counts.
+	 */
 	public function generate_total_shares_html() {
 
 		// Check if total shares should be rendered or not.
@@ -693,7 +667,7 @@ trait SWP_Buttons_Panel_Trait {
 
 		// Render the html for the total shares.
 		$html      = '<div class="nc_tweetContainer swp_share_button total_shares total_sharesalt" >';
-			$html .= '<span class="swp_count ">' . SWP_Utility::kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . __( 'Shares', 'social-warfare' ) . '</span></span>';
+			$html .= '<span class="swp_count ">' . SWP_Utility::kilomega( $this->shares['total_shares'] ) . ' <span class="swp_label">' . esc_html__( 'Shares', 'social-warfare' ) . '</span></span>';
 		$html     .= '</div>';
 
 		return $html;
@@ -701,20 +675,18 @@ trait SWP_Buttons_Panel_Trait {
 
 
 	/**
-	* Should the total shares be rendered.
-	*
-	* @since  3.4.0 | 20 SEP 2018 | Created
-	* @param  void
-	* @return bool True: show shares; False: don't render them.
-	*
-	*/
+	 * Should the total shares be rendered.
+	 *
+	 * @since  3.4.0 | 20 SEP 2018 | Created
+	 * @param  void
+	 * @return bool True: show shares; False: don't render them.
+	 */
 	protected function should_total_shares_display() {
 
 		/**
 		 * If the share counts are delayed in the options, then we'll check the
 		 * current age of the post and check to see if they are still delayed
 		 * or if they can be shown now.
-		 *
 		 */
 		if ( true === SWP_Buttons_Panel::are_share_counts_delayed( $this->post_id ) ) {
 			return false;
@@ -724,7 +696,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * Find out if the total shares are activated on the settings page. We
 		 * will overwrite this variable if the user has passed in a 'buttons'
 		 * argument and instead use what they've passed in.
-		 *
 		 */
 		$are_total_shares_active = $this->get_option( 'total_shares' );
 
@@ -732,7 +703,6 @@ trait SWP_Buttons_Panel_Trait {
 		* If this is a shortcode and the buttons argument has been specifically
 		* passed into the function, then we will use that buttons argument to
 		* determine whether or not to display the total shares.
-		*
 		*/
 		$buttons = isset( $this->args['buttons'] ) ? $this->args['buttons'] : array();
 		if ( $this->is_shortcode && ! empty( $buttons ) ) {
@@ -745,7 +715,6 @@ trait SWP_Buttons_Panel_Trait {
 		* If total shares are turned off or this is a shortcode with a buttons
 		* parameter that didn't include totals then we're not going to render
 		* any total shares.
-		*
 		*/
 		if ( false === $are_total_shares_active ) {
 			return false;
@@ -754,7 +723,6 @@ trait SWP_Buttons_Panel_Trait {
 		/**
 		* If minimum share counts are enabled and this post hasn't achieved
 		* that threshold of shares yet, then we don't show them.
-		*
 		*/
 		if ( $this->shares['total_shares'] < $this->get_option( 'minimum_shares' ) ) {
 			return false;
@@ -771,7 +739,6 @@ trait SWP_Buttons_Panel_Trait {
 	 * @since  3.4.0 | 23 OCT 2018 | Created
 	 * @param  void
 	 * @return string The html for the buttons and total shares.
-	 *
 	 */
 	protected function generate_buttons_and_totals_html() {
 
@@ -789,7 +756,6 @@ trait SWP_Buttons_Panel_Trait {
 		 * $is_left_aligned: If, in the options page, the user has set the total
 		 * shares to appear on the left, then we will concantenate the html to
 		 * the left.
-		 *
 		 */
 		if ( $is_side_floating || $is_left_aligned ) {
 			$this->inner_html = $total_shares_html . $buttons_html;
@@ -798,7 +764,6 @@ trait SWP_Buttons_Panel_Trait {
 			/**
 			 * If it's not a set of floating buttons and it's not set to the left,
 			 * then we attach the total shares on the right.
-			 *
 			 */
 			$this->inner_html = $buttons_html . $total_shares_html;
 		}
@@ -812,7 +777,6 @@ trait SWP_Buttons_Panel_Trait {
 	 * @param  void
 	 * @return void
 	 * @var    $this->attributes Stores panel html attributes as a string of text.
-	 *
 	 */
 	protected function generate_attributes() {
 		$attributes       = $this->get_min_width();
@@ -833,7 +797,6 @@ trait SWP_Buttons_Panel_Trait {
 	 * @param  void
 	 * @return void
 	 * @var    $this->classes Stores panel classes as a string of text.
-	 *
 	 */
 	protected function generate_css_classes() {
 		$classes       = 'class="swp_social_panel swp_horizontal_panel ';
@@ -855,7 +818,6 @@ trait SWP_Buttons_Panel_Trait {
 	 * @param  void
 	 * @return void
 	 * @var    $this->html Stores the fully compiled panel html as a string.
-	 *
 	 */
 	protected function combine_html_assets() {
 		$this->html = '<div ' . $this->classes . $this->attributes . '>' . $this->inner_html . '</div>';
@@ -871,7 +833,6 @@ trait SWP_Buttons_Panel_Trait {
 	 * @since  4.0.0 | 12 JUL 2019 | Created
 	 * @param  integer $post_id The Post ID
 	 * @return boolean True if delayed, false if not delayed.
-	 *
 	 */
 	public static function are_share_counts_delayed( $post_id ) {
 		$delay_share_counts = SWP_Utility::get_option( 'delay_share_counts' );

@@ -24,7 +24,6 @@
  * @license   GPL-3.0+
  * @since     3.1.0 | 20 JUN 2018 | Created
  * @access    public
- *
  */
 class SWP_Post_Cache {
 
@@ -32,7 +31,6 @@ class SWP_Post_Cache {
 	/**
 	 * SWP_Debug_Trait provides useful tool like error handling and a debug
 	 * method which outputs the contents of the current object.
-	 *
 	 */
 	use SWP_Debug_Trait;
 
@@ -43,7 +41,6 @@ class SWP_Post_Cache {
 	 * The methods in this section are used to set up the cache object by
 	 * initializing the object, setting up local properties, and pulling in the
 	 * global $post object that will be used throughout the class.
-	 *
 	 */
 
 	/**
@@ -51,7 +48,6 @@ class SWP_Post_Cache {
 	 *
 	 * @see $this->establish_post_data() method.
 	 * @var object
-	 *
 	 */
 	public $post;
 
@@ -61,7 +57,6 @@ class SWP_Post_Cache {
 	 *
 	 * @see $this->establish_post_data() method.
 	 * @var integer
-	 *
 	 */
 	public $id;
 
@@ -70,10 +65,49 @@ class SWP_Post_Cache {
 	 * A collection of permalinks for which to check for share counts.
 	 *
 	 * @var array
-	 *
 	 */
 	public $permalinks = array();
 
+	/**
+	 * The ID of the current post being processed.
+	 * This property holds the unique identifier for the WordPress post,
+	 * allowing the class to fetch or store data specific to this post.
+	 *
+	 * @var int
+	 */
+	public $post_id;
+
+	/**
+	 * Share counts for the current post across different social networks.
+	 * This associative array stores the number of shares for each social network
+	 * where the keys are the network names (e.g., 'facebook', 'twitter') and the values
+	 * are the corresponding share counts. Additionally, it includes a 'total_shares'
+	 * key that sums the share counts across all networks.
+	 *
+	 * @var array
+	 */
+	public $share_counts = array();
+
+	/**
+	 * The array of API URLs.
+	 *
+	 * @var array
+	 */
+	public $api_urls = array();
+
+	/**
+	 * The raw API responses.
+	 *
+	 * @var array
+	 */
+	public $raw_api_responses = array();
+
+	/**
+	 * The parsed API responses.
+	 *
+	 * @var array
+	 */
+	public $parsed_api_responses = array();
 
 	/**
 	 * The Magic Construct Method
@@ -87,7 +121,6 @@ class SWP_Post_Cache {
 	 * @since  3.1.0 | 20 JUN 2018 | Created
 	 * @param  integer $post_id The ID of the post
 	 * @return void
-	 *
 	 */
 	public function __construct( $post_id ) {
 		// Set up the post data into local properties.
@@ -109,28 +142,26 @@ class SWP_Post_Cache {
 	 *
 	 * The methods in this section are used to determine whether or not the
 	 * cached data needs to be rebuilt or not.
-	 *
 	 */
 
 
 	/**
-	* Determines if the data has recently been updated.
-	*
-	* This is the determining method to decide if a cache is fresh or if it
-	* needs to be rebuilt.
-	*
-	* @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
-	* @access public
-	* @param  void
-	* @return boolean True if fresh, false if expired and needs rebuilt.
-	*
-	*/
+	 * Determines if the data has recently been updated.
+	 *
+	 * This is the determining method to decide if a cache is fresh or if it
+	 * needs to be rebuilt.
+	 *
+	 * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
+	 * @since  4.5.0 | 26 JUL 2024 | Added sanitization functions
+	 * @access public
+	 * @return boolean True if fresh, false if expired and needs rebuilt.
+	 */
 	public function is_cache_fresh() {
 
 		// Bail early if it's a crawl bot. If so, ONLY SERVE CACHED RESULTS FOR MAXIMUM SPEED.
-		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) :
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider/i', sanitize_text_field( wp_unslash( filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) ) ) ) :
 			return true;
-		endif;
+		endif;		
 
 		// Always be true if we're not a single post.
 		if ( ! is_singular() && ! is_admin() ) :
@@ -138,7 +169,7 @@ class SWP_Post_Cache {
 		endif;
 
 		// If a URL parameter is specifically telling it to rebuild.
-		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
+		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'rebuild_cache' ) ) {
 			return false;
 		}
 
@@ -161,16 +192,13 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 19 JUN 2018 | Created the method.
 	 * @todo   Review
-	 * @param  void
 	 * @return int  The current age of the cache in hours.
-	 *
 	 */
 	protected function get_cache_age() {
 
 		/**
 		 * Fetch the current time and the time that the cache was last updated
 		 * so that we can compare them to find out how old the cache is.
-		 *
 		 */
 		$current_time      = floor( ( ( gmdate( 'U' ) / 60 ) / 60 ) );
 		$last_updated_time = get_post_meta( $this->post_id, 'swp_cache_timestamp', true );
@@ -179,7 +207,6 @@ class SWP_Post_Cache {
 		 * If the meta field is empty or non-existent, get_post_meta() will
 		 * return false. If it does, we'll simply convert it to an integer (0)
 		 * so that we can use it in the mathematical comparisons.
-		 *
 		 */
 		if ( false === is_numeric( $last_updated_time ) ) {
 			$last_updated_time = 0;
@@ -188,7 +215,6 @@ class SWP_Post_Cache {
 		/**
 		 * Compare the current time to the time the cache was last updated, and
 		 * determine the age of the cache.
-		 *
 		 */
 		$cache_age = $current_time - $last_updated_time;
 
@@ -209,9 +235,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 20 JUN 2018 | Created
 	 * @since  3.4.0 | Added check for share counts being active.
-	 * @param  void
 	 * @return integer The duration in hours that applies to this cache.
-	 *
 	 */
 	public function get_allowable_age() {
 
@@ -220,7 +244,6 @@ class SWP_Post_Cache {
 		 * as totals and on the buttons. We will only fetch once in a while so
 		 * that we can cache the data and use it for things like the popular
 		 * posts calculations and the admin posts column.
-		 *
 		 */
 		$network_shares = SWP_Utility::get_option( 'network_shares' );
 		$total_shares   = SWP_Utility::get_option( 'total_shares' );
@@ -257,7 +280,6 @@ class SWP_Post_Cache {
 	 * SECTION #3: REBUILDING THE CACHED DATA
 	 *
 	 * The methods in this section are used to rebuild all of the cached data.
-	 *
 	 */
 
 
@@ -273,9 +295,7 @@ class SWP_Post_Cache {
 	 * @todo   Move all calls to cache rebuild methods into this method. This
 	 *         will become the one and only method that is used to rebuild this
 	 *         particular cache of data.
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function rebuild_cached_data() {
 
@@ -301,9 +321,7 @@ class SWP_Post_Cache {
 	 * and which instances whe shouldn't.
 	 *
 	 * @since  3.2.0 | 24 JUL 2018 | Created
-	 * @param  void
 	 * @return bool True: fetch share counts; False: don't fetch counts.
-	 *
 	 */
 	protected function is_post_published() {
 
@@ -321,9 +339,7 @@ class SWP_Post_Cache {
 	 * Process the URLs for shortlinks, UTM, etc.
 	 *
 	 * @since  3.1.0 | 20 JUN 2018 | Created
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function process_urls() {
 		global $swp_social_networks;
@@ -343,16 +359,13 @@ class SWP_Post_Cache {
 	 * @since  3.6.0 | 22 APR 2019 | Remvoed calls to delete the original field.
 	 * @param  string $meta_key The image field to update. Known examples include
 	 *                          swp_og_image, swp_pinterest_image, swp_twitter_image
-	 * @param  int    $new_id The attachment ID to update.
 	 * @return void
-	 *
 	 */
 	public function update_image_cache( $meta_key ) {
 
 		/**
 		 * Fetch the ID of the image in question. We will use this to extrapalate
 		 * the information that we need to prepopulate into the other fields.
-		 *
 		 */
 		$new_id   = SWP_Utility::get_meta( $this->post_id, $meta_key );
 		$old_data = SWP_Utility::get_meta_array( $this->post_id, $meta_key . '_data' );
@@ -379,7 +392,6 @@ class SWP_Post_Cache {
 		 * This was caused by a bug in a previous version that was overwriting
 		 * the ID in this field with the image_data array. This will fix that
 		 * and restore the field to an ID.
-		 *
 		 */
 		$restore_from_cache = empty( $new_id ) && is_array( $old_data ) && false !== filter_var( $old_data[0], FILTER_VALIDATE_URL );
 		$restore_from_array = is_array( $new_id ) && false !== filter_var( $new_id[0], FILTER_VALIDATE_URL );
@@ -391,7 +403,6 @@ class SWP_Post_Cache {
 		 * This block is for people who are missing a key like `swp_og_image`
 		 * between v3.5.0 and v3.5.4. The logic below will create the missing
 		 * key based off of data we have previously saved.
-		 *
 		 */
 		if ( ( $restore_from_cache || $restore_from_array ) && ! is_admin() ) {
 
@@ -418,7 +429,6 @@ class SWP_Post_Cache {
 		 * was removed. Prior to deleting these fields, the Pinterest image
 		 * URL and data generated here would persist after the image was
 		 * deleted from the meta field.
-		 *
 		 */
 		if ( empty( $new_id ) ) {
 			delete_post_meta( $this->post_id, $meta_key . '_data' );
@@ -431,14 +441,12 @@ class SWP_Post_Cache {
 		 * Fetch the data array of the new image and the data array of the old
 		 * previously cached image (fetchd above) so that we can see if anything
 		 * has changed.
-		 *
 		 */
 		$new_data = wp_get_attachment_image_src( $new_id, 'full_size' );
 
 		/**
 		 * If the old data is the same as the new data, then there is no need to
 		 * make any new database calls. Just exit and move on with our lives.
-		 *
 		 */
 		if ( false === $new_data || $new_data === $old_data ) {
 			return;
@@ -450,11 +458,10 @@ class SWP_Post_Cache {
 		 * however, updating two additional fields (_data and _url) so that this
 		 * data will be preloaded with the post load. We will delete them first
 		 * to ensure that we never have more than one of the same field.
-		 *
 		 */
 		delete_post_meta( $this->post_id, $meta_key . '_data' );
 		delete_post_meta( $this->post_id, $meta_key . '_url' );
-		update_post_meta( $this->post_id, $meta_key . '_data', json_encode( $new_data ) );
+		update_post_meta( $this->post_id, $meta_key . '_data', wp_json_encode( $new_data ) );
 		update_post_meta( $this->post_id, $meta_key . '_url', $new_data[0] );
 	}
 
@@ -464,9 +471,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since 3.1.0 | 19 JUN 2018 | Ported from function to class method.
 	 * @access protected
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function reset_timestamp() {
 		delete_post_meta( $this->post_id, 'swp_cache_timestamp' );
@@ -478,9 +483,7 @@ class SWP_Post_Cache {
 	 * Removes the timestamp on certain hooks like when a post is updated.
 	 *
 	 * @since  3.1.0 | 19 JUN 2018 | Ported from function to class method.
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function delete_timestamp() {
 		delete_post_meta( $this->post_id, 'swp_cache_timestamp' );
@@ -501,9 +504,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 21 JUN 2018 | Created
 	 * @access protected
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	protected function rebuild_share_counts() {
 
@@ -525,15 +526,14 @@ class SWP_Post_Cache {
 	 * allow a filter for programatic adding of others, and so on.
 	 *
 	 * The processed results will be stored in $this->permalinks.
+	 *
 	 * @var permalinks Links to be checked for share counts during the
 	 *                 share count update process.
 	 *
 	 * @since  3.1.0 | 21 JUN 2018 | Created
 	 * @since  4.0.0 | 20 FEB 2020 | Added call to debug_display_permalinks()
 	 * @since  4.0.0 | 21 FEB 2020 | Added call to add_trailing_slashes()
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	protected function establish_permalinks() {
 		global $swp_social_networks;
@@ -542,14 +542,12 @@ class SWP_Post_Cache {
 		/**
 		 * Loop through the global social network objects, identify the active
 		 * networks, and find the permalinks to check for each one.
-		 *
 		 */
 		foreach ( $swp_social_networks as $key => $object ) {
 
 			/**
 			 * Ensure that the array object is already setup to recieve the
 			 * permalinks.
-			 *
 			 */
 			if ( ! isset( $this->permalinks[ $key ] ) ) {
 				$this->permalinks[ $key ] = array();
@@ -558,7 +556,6 @@ class SWP_Post_Cache {
 			/**
 			 * If this particular network isn't active, we need to skip it and
 			 * not fetch any share counts for it.
-			 *
 			 */
 			if ( false === $object->active ) {
 				continue;
@@ -567,7 +564,6 @@ class SWP_Post_Cache {
 			/**
 			 * This is the standard, current permalink for the post. We use the
 			 * standard permalink by default for checking for share counts.
-			 *
 			 */
 			$this->permalinks[ $key ][] = get_permalink( $this->post_id );
 
@@ -575,7 +571,6 @@ class SWP_Post_Cache {
 			 * If share count recovery is activated, we'll add a second permalink
 			 * to the array for each network. So now we'll have two permalinks
 			 * for which to fetch share counts.
-			 *
 			 */
 			if ( true === SWP_Utility::get_option( 'recover_shares' ) ) {
 				$this->permalinks[ $key ][] = SWP_Permalink::get_alt_permalink( $this->post_id );
@@ -584,14 +579,12 @@ class SWP_Post_Cache {
 			/**
 			 * This filter allows third-parties to enable another permalink for
 			 * which to check for share counts.
-			 *
 			 */
 			$this->permalinks = apply_filters( 'swp_recovery_filter', $this->permalinks );
 
 			/**
 			 * Duplicates the URL's so that the given network will be check for
 			 * a permalink with both a trailing slash and without one.
-			 *
 			 */
 			$this->add_trailing_slashes( $key );
 
@@ -606,9 +599,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created the method.
 	 * @var    api_urls The array of outbound API request destinations.
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	protected function establish_api_request_urls() {
 		global $swp_social_networks;
@@ -632,9 +623,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    raw_api_responses An array of responses from the API's.
-	 * @param  void
 	 * @return void All data is stored in local properties.
-	 *
 	 */
 	protected function fetch_api_responses() {
 		$current_request = 0;
@@ -654,9 +643,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
 	 * @var    parsed_api_responses An array of integers from parsing the responses.
-	 * @param  void
 	 * @return void Processed data is stored in local properties.
-	 *
 	 */
 	protected function parse_api_responses() {
 		global $swp_social_networks;
@@ -664,7 +651,6 @@ class SWP_Post_Cache {
 		/**
 		 * If for any reason the $raw_api_responses property failed to get
 		 * populated just gracefully bail out and stop processing.
-		 *
 		 */
 		if ( empty( $this->raw_api_responses ) ) {
 			return;
@@ -682,7 +668,6 @@ class SWP_Post_Cache {
 		/**
 		 * This will output the checked permalinks to the screen when the following
 		 * URL parameters are added to the address bar: ?swp_cache=rebuild&swp_debug=recovery.
-		 *
 		 */
 		$this->debug_display_permalinks();
 	}
@@ -702,9 +687,7 @@ class SWP_Post_Cache {
 	 *                               works the way that it's supposed to.
 	 * @since  3.4.0 | 18 OCT 2018 | Added array_unique to prevent double counts.
 	 * @var    share_counts An array of share count numbers.
-	 * @param  void
 	 * @return void All data stored in local properties.
-	 *
 	 */
 	protected function calculate_network_shares() {
 		global $swp_social_networks;
@@ -712,7 +695,6 @@ class SWP_Post_Cache {
 		/**
 		 * If for any reason the $parsed_api_responses property failed to get
 		 * populated just gracefully bail out and stop processing.
-		 *
 		 */
 		if ( empty( $this->parsed_api_responses ) ) {
 			return;
@@ -726,7 +708,6 @@ class SWP_Post_Cache {
 		 * This loops through all of the parsed API responses and converts them
 		 * into share counts. The next loop below will then go through all the
 		 * remaining networks that didn't have API requests/responses.
-		 *
 		 */
 		foreach ( $this->parsed_api_responses as $request => $networks ) {
 			foreach ( $networks as $network => $count_array ) {
@@ -737,7 +718,6 @@ class SWP_Post_Cache {
 				 * social networks detect the change in URL and return the same
 				 * share count for the current URL as well as the old, redirected
 				 * URL. This prevents the count from being doubled.
-				 *
 				 */
 				$count_array = array_unique( $count_array );
 				foreach ( $count_array as $count ) {
@@ -763,7 +743,6 @@ class SWP_Post_Cache {
 		 * is a network that used to have share counts. If so, we will not
 		 * override the old share counts unless the user is using the debug
 		 * parameter to force it to do so.
-		 *
 		 */
 		foreach ( SWP_Utility::get_option( 'order_of_icons' ) as $network ) {
 			$count = 0;
@@ -771,7 +750,6 @@ class SWP_Post_Cache {
 			/**
 			 * If this is a network that we checked above (that has an API),
 			 * then let's start by using the count fetched from the API.
-			 *
 			 */
 			if ( in_array( $network, $checked_networks, true ) ) {
 				$count = $share_counts[ $network ];
@@ -780,9 +758,8 @@ class SWP_Post_Cache {
 			/**
 			 * Let's fetch the previous count that we have stored in the database
 			 * from the previous API calls so that we can run a comparison.
-			 *
 			 */
-			$previous_count = get_post_meta( $this->post_id, "_${network}_shares", true );
+			$previous_count = get_post_meta( $this->post_id, "_{$network}_shares", true );
 			if ( false === $previous_count ) {
 				$previous_count = 0;
 			}
@@ -792,7 +769,6 @@ class SWP_Post_Cache {
 			 * newest numbers even if it is a lower number. If this debug
 			 * parameter is off, however, then we simply use whichever number is
 			 * highest between the current and previously fetched counts.
-			 *
 			 */
 			if ( $count < $previous_count && false === SWP_Utility::debug( 'force_new_shares' ) ) {
 				$count = $previous_count;
@@ -802,7 +778,6 @@ class SWP_Post_Cache {
 			 * Iterate the total shares with our new numbers, and then store
 			 * this network's count in the local property for caching and
 			 * display later on.
-			 *
 			 */
 			$share_counts['total_shares'] += $count;
 			$share_counts[ $network ]      = $count;
@@ -823,9 +798,7 @@ class SWP_Post_Cache {
 	 * zero response.
 	 *
 	 * @since  3.1.0 | 25 JUN 2018 | Created
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	protected function cache_share_counts() {
 		global $swp_social_networks;
@@ -833,7 +806,6 @@ class SWP_Post_Cache {
 		/**
 		 * If the local property $share_counts is empty, then we won't have any
 		 * share counts to cache in the database so just bail out.
-		 *
 		 */
 		if ( empty( $this->share_counts ) ) {
 			return;
@@ -845,7 +817,6 @@ class SWP_Post_Cache {
 		 *
 		 * @var $key The key corresponding to a social network (e.g. 'twitter')
 		 * @var $count The share count for this network.
-		 *
 		 */
 		foreach ( $this->share_counts as $key => $count ) {
 
@@ -859,8 +830,8 @@ class SWP_Post_Cache {
 			}
 
 			// Access the Social_Network object and update its count.
-			$Current_Social_Network = $swp_social_networks[ $key ];
-			$Current_Social_Network->update_share_count( $this->post_id, $count );
+			$current_social_network = $swp_social_networks[ $key ];
+			$current_social_network->update_share_count( $this->post_id, $count );
 		}
 
 		// Update the total shares.
@@ -875,9 +846,7 @@ class SWP_Post_Cache {
 	 * Gets the computed share data.
 	 *
 	 * @since  3.1.0 | 20 JUN 2018 | Created the method.
-	 * @param  void
 	 * @return array $this->share_counts if it exists, or an empty array.
-	 *
 	 */
 	public function get_shares() {
 		if ( ! empty( $this->share_counts ) ) {
@@ -893,9 +862,7 @@ class SWP_Post_Cache {
 	 *
 	 * @since 3.1.0 | 21 JUN 2018 | Created the method.
 	 * @access protected
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	protected function establish_share_counts() {
 		global $swp_social_networks;
@@ -904,16 +871,15 @@ class SWP_Post_Cache {
 		/**
 		 * Loop through the social networks and pull their share count from
 		 * the custom fields for this post.
-		 *
 		 */
-		foreach ( $swp_social_networks as $Network ) {
+		foreach ( $swp_social_networks as $network ) {
 
 			// Get the current share count from the cache.
-			$this->share_counts[ $Network->key ] = $Network->get_share_count( $this->post_id );
+			$this->share_counts[ $network->key ] = $network->get_share_count( $this->post_id );
 
 			// Add up the total shares based on the counts of the active networks.
-			if ( true === $Network->is_active() ) {
-				$this->share_counts['total_shares'] += $this->share_counts[ $Network->key ];
+			if ( true === $network->is_active() ) {
+				$this->share_counts['total_shares'] += $this->share_counts[ $network->key ];
 			}
 		}
 	}
@@ -925,11 +891,10 @@ class SWP_Post_Cache {
 	 * @since  3.2.0 | 31 JUL 2018 | Created
 	 * @param  string $message The message to be displayed.
 	 * @return void
-	 *
 	 */
 	protected function debug_message( $message ) {
-		if ( isset( $_GET['swp_cache'] ) && 'rebuild' === $_GET['swp_cache'] ) {
-			echo htmlspecialchars_decode( wp_kses( $message, SWP_Section_HTML::get_allowable_html() ) );
+		if ( isset( $_GET['swp_cache'], $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'swp_cache_nonce' ) && 'rebuild' === $_GET['swp_cache'] ) {
+			echo esc_html( wp_kses( $message, SWP_Section_HTML::get_allowable_html() ) );
 		}
 	}
 
@@ -942,9 +907,7 @@ class SWP_Post_Cache {
 	 * To activate: ?swp_cache=rebuild&swp_debug=recovery
 	 *
 	 * @since  4.0.0 | 19 FEB 2020 | Created
-	 * @param  void
 	 * @return void All data is output to the screen.
-	 *
 	 */
 	protected function debug_display_permalinks() {
 
@@ -957,17 +920,17 @@ class SWP_Post_Cache {
 		echo '<pre style="background:yellow;">';
 		$with_pro = '';
 		if ( defined( 'SWPP_VERSION' ) && defined( 'SWPP_DEV_VERSION' ) ) {
-			$with_pro = '(with Pro ' . SWPP_VERSION . '.' . SWPP_DEV_VERSION . ')';
+			$with_pro = '(with Pro ' . SWP_VERSION . '.' . SWP_DEV_VERSION . ')';
 		}
 		$version_output = '<p>Social Warfare ' . SWP_VERSION . '.' . SWP_DEV_VERSION . ' ' . $with_pro . ' </p>';
-		echo htmlspecialchars_decode( wp_kses( $version_output, SWP_Section_HTML::get_allowable_html() ) );
+		echo esc_html( wp_kses( $version_output, SWP_Section_HTML::get_allowable_html() ) );
 
 		echo '<h1>The URL\'s Being Checked:</h1>';
-		var_dump( $this->permalinks );
+		var_dump( $this->permalinks ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		echo '<h1>The Responses from the API:</h1>';
-		var_dump( $this->raw_api_responses );
+		var_dump( $this->raw_api_responses ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		echo '<h1>This is the share counts array</h1>';
-		var_dump( $this->share_counts );
+		var_dump( $this->share_counts ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 		echo '</pre>';
 	}
 
@@ -985,8 +948,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since 4.0.0 | 21 FEB 2020 | Created
 	 * @param string $key The key corresponding to the current social network.
-	 * @return void All data is stored in class properties.
-	 *
 	 */
 	protected function add_trailing_slashes( $key ) {
 
@@ -1001,7 +962,6 @@ class SWP_Post_Cache {
 		/**
 		 * We'll add our newly created permalinks to this now-empty array. Later
 		 * we'll merge this back into the original class property array.
-		 *
 		 */
 		$new_links = array();
 
@@ -1009,7 +969,6 @@ class SWP_Post_Cache {
 		 * We'll loop through every single permalink that is being checked for
 		 * this network (both normal and recovery), and create a second version
 		 * either by adding a trailing slash or removing it.
-		 *
 		 */
 		foreach ( $this->permalinks[ $key ] as $permalink ) {
 
@@ -1045,8 +1004,6 @@ class SWP_Post_Cache {
 	 *
 	 * @since 4.2.0 | 30 NOV 2020 | Created
 	 * @param string $key The key corresponding to the current social network.
-	 * @return void All data is stored in class properties.
-	 *
 	 */
 	protected function add_utm_codes( $key ) {
 		global $swp_social_networks;
@@ -1072,7 +1029,6 @@ class SWP_Post_Cache {
 		/**
 		 * We'll add our newly created permalinks to this now-empty array. Later
 		 * we'll merge this back into the original class property array.
-		 *
 		 */
 		$new_links = array();
 
@@ -1093,6 +1049,9 @@ class SWP_Post_Cache {
 	}
 
 
+	/**
+	 * Cleans up remnants of post meta data.
+	 */
 	public function cleanup_remnants() {
 		delete_post_meta( $this->post_id, '_totes' );
 		delete_post_meta( $this->post_id, '_email_shares' );

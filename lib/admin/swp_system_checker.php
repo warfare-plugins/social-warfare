@@ -14,7 +14,7 @@
  * @since  2.2.4 | Created | 1 MAY 2017
  * @access public
  */
-abstract class swp_custom_check {
+abstract class SWP_Custom_Check {
 
 	public $name               = '';
 	public $whats_wrong        = '';
@@ -35,38 +35,38 @@ abstract class swp_custom_check {
  * @access public
  * @return string The HTML for an error notice if triggered
  */
-class swp_system_checker {
+class Swp_System_Checker {
 
 	public static $custom_checks = array();
 	public static $has_error     = false;
 
 	public static function full_system_check() {
-		swp_system_checker::load_all_checks();
-		swp_system_checker::run_all_checks();
-		swp_system_checker::print_all_errors();
+		self::load_all_checks();
+		self::run_all_checks();
+		self::print_all_errors();
 	}
 
 	public static function load_all_checks() {
-		swp_system_checker::$custom_checks['swp_php_check']  = new swp_php_check();
-		swp_system_checker::$custom_checks['swp_curl_check'] = new swp_curl_check();
+		self::$custom_checks['swp_php_check']  = new SWP_PHP_Check();
+		self::$custom_checks['swp_curl_check'] = new SWP_Curl_Check();
 	}
 
 	public static function run_all_checks() {
-		foreach ( swp_system_checker::$custom_checks as $custom_check ) {
+		foreach ( self::$custom_checks as $custom_check ) {
 			if ( method_exists( $custom_check, 'run' ) ) {
 				if ( ! $custom_check->run() && ! $custom_check->check_passed ) {
-					swp_system_checker::$has_error = true;
+					self::$has_error = true;
 				}
 			}
 		}
 	}
 
 	public static function print_all_errors() {
-		if ( ! isset( swp_system_checker::$has_error ) || empty( swp_system_checker::$has_error ) ) {
+		if ( ! isset( self::$has_error ) || empty( self::$has_error ) ) {
 			return false;
 		}
 
-		foreach ( swp_system_checker::$custom_checks as $custom_check ) {
+		foreach ( self::$custom_checks as $custom_check ) {
 			if ( $custom_check->check_passed ) {
 				continue;
 			}
@@ -83,7 +83,7 @@ class swp_system_checker {
  * @access public
  * @return string The HTML for an error notice if triggered
  */
-class swp_php_check extends swp_custom_check {
+class SWP_PHP_Check extends SWP_Custom_Check {
 
 	public function __construct() {
 		$this->name = 'PHP Check';
@@ -109,7 +109,7 @@ class swp_php_check extends swp_custom_check {
  * @access public
  * @return string The HTML for an error notice if triggered
  */
-class swp_curl_check extends swp_custom_check {
+class SWP_Curl_Check extends SWP_Custom_Check {
 
 	public function __construct() {
 		$this->name = 'Curl Check';
