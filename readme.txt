@@ -2,10 +2,11 @@
 Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalashov
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
-Tested up to: 6.5
-Stable tag: 4.4.6.3
+Tested up to: 6.6
+Stable tag: 4.5.0
 Requires PHP: 5.6
-License: GNU General Public License v2.0 or later
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
 
@@ -28,7 +29,6 @@ You can choose from the top social networks sharing buttons, including:
 * Pinterest
 * LinkedIn
 * Mix
-* Mastodon
 
 You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
@@ -134,6 +134,35 @@ You can also activate Event Tracking so that you can also see in Google Analytic
 
 It is without question that Social Warfare is the most powerful social sharing plugin available for WordPress. You get all these premium features while still benefitting from a super-fast, light-weight code base.
 
+= Third-Party Services =
+
+This plugin uses APIs from the following third-party services for sharing content. Please review their terms and privacy policies:
+
+- **Facebook**
+  - [Service Link](https://www.facebook.com)
+  - [Terms of Service](https://www.facebook.com/terms.php)
+  - [Privacy Policy](https://www.facebook.com/policy.php)
+
+- **Twitter**
+  - [Service Link](https://www.twitter.com)
+  - [Terms of Service](https://twitter.com/en/tos)
+  - [Privacy Policy](https://twitter.com/en/privacy)
+
+- **Pinterest**
+  - [Service Link](https://www.pinterest.com)
+  - [Terms of Service](https://policy.pinterest.com/terms-of-service)
+  - [Privacy Policy](https://policy.pinterest.com/privacy-policy)
+
+- **LinkedIn**
+  - [Service Link](https://www.linkedin.com)
+  - [Terms of Service](https://www.linkedin.com/legal/user-agreement)
+  - [Privacy Policy](https://www.linkedin.com/legal/privacy-policy)
+
+- **Mix**
+  - [Service Link](https://www.mix.com)
+  - [Terms of Service](https://mix.com/terms)
+  - [Privacy Policy](https://mix.com/privacy)
+
 == Installation ==
 
 This section describes how to install the plugin.
@@ -182,7 +211,7 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 > Robert Ryan, Professional Web Designer
 
 == Changelog ==
-= 4.4.6.3 (5 Apr 2024) =
+= 4.4.7 (5 Apr 2024) =
 * Changed the visibility of `$key` property from `private` to `public` to allow external access and manipulation, enhancing the flexibility for class interactions.
 * Changed the visibility of `$user_options` property from `private` to `public`, enabling direct access to user options pulled from the database. This adjustment aims to streamline processes that require external manipulation of user options.
 

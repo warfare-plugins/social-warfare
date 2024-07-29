@@ -12,7 +12,6 @@
  * @since     1.0.0  | UNKNOWN     | Created
  * @since     3.0.0  | 21 FEB 2018 | Refactored into a class-based system.
  * @since     3.1.0 | 14 JUN 2018 | Added number_format for numeric output.
- *
  */
 class SWP_Column {
 
@@ -27,7 +26,6 @@ class SWP_Column {
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 
@@ -54,7 +52,6 @@ class SWP_Column {
 	 * @since  1.4.0 | 01 JAN 2016 | Created
 	 * @param  array $defaults The default columns registered with WordPress.
 	 * @return array           The array modified with our new column.
-	 *
 	 */
 	public function create_social_shares_column( $defaults ) {
 		$defaults['swSocialShares'] = 'Social Shares';
@@ -70,7 +67,6 @@ class SWP_Column {
 	 * @param  string $column_name The name of the column to be modified.
 	 * @param  int    $post_ID     The Post ID
 	 * @return void                The number is echoed to the screen.
-	 *
 	 */
 	public function populate_social_shares_column( $column_name, $post_ID ) {
 
@@ -97,7 +93,6 @@ class SWP_Column {
 	 * @since  4.2.0 | 22 AUG 2020 | Made the sort default to desc.
 	 * @param  array The array of registered columns.
 	 * @return array The array modified columns.
-	 *
 	 */
 	public function make_social_shares_sortable( $columns ) {
 		$columns['swSocialShares'] = array( 'Social Shares', 'desc' );
@@ -106,13 +101,12 @@ class SWP_Column {
 
 
 	/**
-	* Sort the column by share count.
-	*
-	* @since  1.4.0 | 01 JAN 2018 | Created
-	* @param  object $query The WordPress query object.
-	* @return void
-	*
-	*/
+	 * Sort the column by share count.
+	 *
+	 * @since  1.4.0 | 01 JAN 2018 | Created
+	 * @param  object $query The WordPress query object.
+	 * @return void
+	 */
 	public function swp_social_shares_orderby( $query ) {
 
 		// Bail if we're not even in the admin area.

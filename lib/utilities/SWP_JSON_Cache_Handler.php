@@ -13,7 +13,6 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since     3.1.0 | 27 JUN 2018 | Created
- *
  */
 class SWP_JSON_Cache_Handler {
 
@@ -21,7 +20,6 @@ class SWP_JSON_Cache_Handler {
 	/**
 	 * SWP_Debug_Trait provides useful tool like error handling and a debug
 	 * method which outputs the contents of the current object.
-	 *
 	 */
 	use SWP_Debug_Trait;
 
@@ -30,7 +28,6 @@ class SWP_JSON_Cache_Handler {
 	 * The fetched from the remote JSON file.
 	 *
 	 * @var string
-	 *
 	 */
 	private $response = '';
 
@@ -39,7 +36,6 @@ class SWP_JSON_Cache_Handler {
 	 * The responsed parsed into an associative array.
 	 *
 	 * @var array
-	 *
 	 */
 	private $parsed_response = array();
 
@@ -48,9 +44,16 @@ class SWP_JSON_Cache_Handler {
 	 * The cached JSON data fetched from the database.
 	 *
 	 * @var array
-	 *
 	 */
 	private $cached_data = array();
+
+
+	/**
+	 * Explicitly define the cache_data property to avoid dynamic property creation.
+	 *
+	 * @var array
+	 */
+	private $cache_data = array();
 
 
 	/**
@@ -60,9 +63,7 @@ class SWP_JSON_Cache_Handler {
 	 * parse the results, and store them in an options field in the database.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 		if ( false === $this->is_cache_fresh() ) :
@@ -76,14 +77,15 @@ class SWP_JSON_Cache_Handler {
 	 * Fetch new JSON data.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
 	 * @return void
-	 *
 	 */
 	private function fetch_new_json_data() {
 
-		// Fetch the response.
-		$response       = wp_remote_get( 'https://warfareplugins.com/json_updates.php' );
+		if (function_exists('vip_safe_wp_remote_get')) {
+			$response = vip_safe_wp_remote_get('https://warfareplugins.com/json_updates.php');
+		} else {
+			$response = wp_remote_get('https://warfareplugins.com/json_updates.php'); // phpcs:ignore
+		}
 		$this->response = wp_remote_retrieve_body( $response );
 
 		// Create the cache data array.
@@ -104,9 +106,7 @@ class SWP_JSON_Cache_Handler {
 	 * A method to determin if the cached data is still fresh.
 	 *
 	 * @since  3.1.0 | 28 JUN 2018 | Created
-	 * @param  void
 	 * @return boolean true if fresh, false if expired.
-	 *
 	 */
 	private function is_cache_fresh() {
 

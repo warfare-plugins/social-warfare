@@ -11,7 +11,6 @@
  * @license   GPL-3.0+
  * @since     1.0.0
  * @since     3.0.0 | 19 FEB 2018 | Refactored into a class-based system
- *
  */
 class SWP_Shortcode {
 
@@ -25,7 +24,6 @@ class SWP_Shortcode {
 	 * @since  3.0.0
 	 * @param  none
 	 * @return none
-	 *
 	 */
 	public function __construct() {
 		add_shortcode( 'total_shares', array( $this, 'post_total_shares' ) );
@@ -36,7 +34,6 @@ class SWP_Shortcode {
 		 * These are old legacy shortcodes that have been replaced with the ones seen above.
 		 * We're leaving these here to ensure that it won't break for anyone who has used these
 		 * ones in the past. The ones above adhere to our code style guide.
-		 *
 		 */
 		add_shortcode( 'clickToTweet', array( $this, 'click_to_tweet' ) );
 	}
@@ -54,7 +51,6 @@ class SWP_Shortcode {
 	 * @since  3.0.0
 	 * @param  $atts Array An array converted from shortcode attributes.
 	 * @return string A string of text representing the total shares for the post.
-	 *
 	 */
 	public function post_total_shares( $settings ) {
 		$unformatted_total_shares = get_post_meta( get_the_ID(), '_total_shares', true );
@@ -75,7 +71,6 @@ class SWP_Shortcode {
 	 * @since  3.0.0
 	 * @param  $atts Array An array converted from shortcode attributes.
 	 * @return string A string of text representing the total sitewide shares.
-	 *
 	 */
 	public function sitewide_total_shares( $settings ) {
 		global $wpdb;
@@ -90,7 +85,6 @@ class SWP_Shortcode {
 	 * @since  4.4.0 Update to check for $atts key before use.
 	 * @param  array $atts The shortcode key/value attributes.
 	 * @return string The html of a click to tweet
-	 *
 	 */
 	public function click_to_tweet( $atts ) {
 		global $post;
@@ -110,7 +104,6 @@ class SWP_Shortcode {
 		 * This means that Twitter will not add a URL to the end of the tweet
 		 * which is the desired effect since the author added a link within the
 		 * tweet itself.
-		 *
 		*/
 		$url = '&url=' . SWP_Link_Manager::process_url( get_permalink(), 'twitter', get_the_ID() );
 		if ( ! empty( $atts['tweet'] ) && strpos( $atts['tweet'], 'http' ) > -1 ) {
@@ -125,7 +118,6 @@ class SWP_Shortcode {
 		 * that theme. If a theme was not passed in, or if the theme is set to
 		 * 'default', or if an empty string was passed in, then we'll use the
 		 * global theme which is set on the plugin's options page.
-		 *
 		 */
 		$theme = SWP_Utility::get_option( 'ctt_theme' );
 		if ( ! empty( $atts['theme'] ) && 'default' !== $atts['theme'] ) {
@@ -136,7 +128,6 @@ class SWP_Shortcode {
 		 * If the Theme is set to false, it means that the user is on the free
 		 * version of the plugin and as such, the only available theme is the
 		 * first/default theme.
-		 *
 		 */
 		if ( false === $theme ) {
 			$theme = 'style1';
@@ -146,14 +137,12 @@ class SWP_Shortcode {
 		 * This will generate the user's custom Tweet that will be used to
 		 * prepopulate the share dialogue box when an end user clicks on the
 		 * actual Click to Tweet.
-		 *
 		 */
 		$tweet = $this->get_tweet( $atts );
 
 		/**
 		 * Now that all the information has been processed, we generate the
 		 * actual string of html that will be returned and output to the screen.
-		 *
 		 */
 		$html              = '<div class="sw-tweet-clear"></div>';
 		$html             .= '<a class="swp_CTT ' . $theme;
@@ -165,7 +154,7 @@ class SWP_Shortcode {
 					$html .= ( ! empty( $atts['quote'] ) ) ? $atts['quote'] : '';
 				$html     .= '</span>';
 				$html     .= '<span class="sw-ctt-btn">';
-					$html .= __( 'Click To Tweet', 'social-warfare' );
+					$html .= esc_html__( 'Click To Tweet', 'social-warfare' );
 					$html .= '<i class="sw swp_twitter_icon"></i>';
 			$html         .= '</span>';
 			$html         .= '</span>';
@@ -182,7 +171,6 @@ class SWP_Shortcode {
 	 * @param array $atts Shortcode attributes.
 	 *
 	 * @return string $tweet The encoded tweet text.
-	 *
 	 */
 	protected function get_tweet( $atts ) {
 		$max_tweet_length = 240;

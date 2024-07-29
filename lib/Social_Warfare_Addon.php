@@ -13,10 +13,34 @@
  * @package Social Warfar / Lib
  * @since  3.0.0 | 01 MAR 2018 | Created
  * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
- *
  */
 class Social_Warfare_Addon {
 
+	/**
+	 * The license key for the addon.
+	 *
+	 * This property stores the license key used for activating the addon. It is
+	 * utilized to check the validity of the addon's license against the Warfare
+	 * Plugins server, ensuring that the user has a valid, active subscription.
+	 * The license key is obtained from the plugin's settings page where the user
+	 * inputs their purchase key.
+	 *
+	 * @var string
+	 */
+	public $license_key;
+
+	/**
+	 * The registration status of the addon.
+	 *
+	 * Indicates whether the addon is registered and activated with a valid
+	 * license key. This status affects the availability of premium features and
+	 * updates. If `true`, it means the addon is successfully registered with a
+	 * valid license key. If `false`, the addon is either unregistered or the
+	 * license key has expired or is invalid.
+	 *
+	 * @var bool
+	 */
+	public $is_registered;
 
 	/**
 	 * The Magic Constructor Method
@@ -28,7 +52,6 @@ class Social_Warfare_Addon {
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array $args [description]
 	 * @return void
-	 *
 	 */
 	public function __construct( $args = array() ) {
 
@@ -39,7 +62,6 @@ class Social_Warfare_Addon {
 		/**
 		 * This queues up our register and unregister hooks that will be sent
 		 * from the settings page to admin-ajax.php.
-		 *
 		 */
 		add_action( 'wp_ajax_swp_register_plugin', array( $this, 'register_plugin' ) );
 		add_action( 'wp_ajax_swp_unregister_plugin', array( $this, 'unregister_plugin' ) );
@@ -49,7 +71,6 @@ class Social_Warfare_Addon {
 		 * This is a custom filter hook that gets called in core that fetches
 		 * all of the addons so that we can have the key for each addon in a
 		 * nice, neat array for easy access.
-		 *
 		 */
 		add_filter( 'swp_registrations', array( $this, 'add_self' ) );
 	}
@@ -78,9 +99,8 @@ class Social_Warfare_Addon {
 	 *
 	 * @since  3.0.0 | 01 MAR 2019 | Created
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
-	 * @param  array  $args An associative array of class properties.
+	 * @param  array $args An associative array of class properties.
 	 * @return void
-	 *
 	 */
 	private function establish_class_properties( $args = array() ) {
 
@@ -96,12 +116,11 @@ class Social_Warfare_Addon {
 		 * Check to ensure that all required properties have been passed in.
 		 * If a required field hasn't been passed in from the addon, we'll
 		 * manually trigger an exception here to notify the developer.
-		 *
 		 */
 		foreach ( $required as $key ) {
 			if ( ! isset( $this->$key ) ) :
 				$message = "Hey developer, you are attempting to instantiate a class that extends the Social_Warfare_Addon class. In order to do this, you must provide the following argument for your class: $key => \$value. You can read more about required class properties for this class in the docblock provided in /lib/Social_Warfare_Addon.php for the establish_class_properties() method.";
-				throw new Exception( $message );
+				throw new Exception( esc_html( $message ) );
 			endif;
 		}
 
@@ -112,7 +131,6 @@ class Social_Warfare_Addon {
 		 * In third party addons, vendors can set this to their own websites. If
 		 * not, we'll assume it's one of our own addons and ping our site to
 		 * check the license key.
-		 *
 		 */
 		if ( isset( $this->product_id ) && empty( $this->store_url ) ) {
 			$this->store_url = 'https://warfareplugins.com';
@@ -131,7 +149,6 @@ class Social_Warfare_Addon {
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  array $addons The array of addons currently activated.
 	 * @return array $addons The modified array of addons currently activated.
-	 *
 	 */
 	public function add_self( $addons ) {
 		$addons[] = $this;
@@ -147,14 +164,12 @@ class Social_Warfare_Addon {
 	 * @since  4.0.0 | 13 JUN 2019 | Updated, refactored, documentation added.
 	 * @param  void
 	 * @return void Processed values are stored in $this->license_key.
-	 *
 	 */
 	public function establish_license_key() {
 
 		/**
 		 * The license key is stored in our options set in the database. This
 		 * utility method allows us to easily retrieve it.
-		 *
 		 */
 		$key = SWP_Utility::get_option( $this->key . '_license_key' );
 
@@ -164,7 +179,6 @@ class Social_Warfare_Addon {
 		 * set when 3.0.0 rolled out. This is most likely no longer needed, but
 		 * we'll leave it in there for any stragglers who are updating from 2.x
 		 * to a current version.
-		 *
 		 */
 		if ( ! $key ) {
 			$old_options = get_option( 'socialWarfareOptions', false );
@@ -176,7 +190,6 @@ class Social_Warfare_Addon {
 		/**
 		 * If we were able to find a license key, then we'll go ahead and store
 		 * it in a local class property for this addon.
-		 *
 		 */
 		$this->license_key = $key ? $key : '';
 	}
@@ -195,14 +208,12 @@ class Social_Warfare_Addon {
 	 * @since  3.0.0 | 01 MAR 2018 | Created
 	 * @param  void
 	 * @return bool The current registration status
-	 *
 	 */
 	public function establish_resgistration() {
 
 		/**
 		 * The timestamp in the database will represent the unix time of the
 		 * last time that the license key was checked to see if it is still valid.
-		 *
 		 */
 		$timestamp = SWP_Utility::get_option( $this->key . '_license_key_timestamp' );
 		if ( empty( $timestamp ) ) {
@@ -215,7 +226,6 @@ class Social_Warfare_Addon {
 		/**
 		 * If they have a key and a week hasn't passed since the last check,
 		 * just return true...the plugin is registered.
-		 *
 		 */
 		if ( ! empty( $this->license_key ) && $current_time < $time_to_recheck ) {
 			return true;
@@ -237,7 +247,7 @@ class Social_Warfare_Addon {
 					$this->store_url,
 					array(
 						'body'    => $data,
-						'timeout' => 10,
+						'timeout' => 10, // phpcs:ignore
 					)
 				)
 			);
@@ -287,18 +297,26 @@ class Social_Warfare_Addon {
 	 *
 	 * @since  2.1.0
 	 * @since  2.3.0 Hooked registration into the new EDD Software Licensing API
+	 * @since  4.5.0 | 26 JUL 2024 | Ensure proper escaping of JSON output
 	 * @param  none
 	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
-	 *
 	 */
 	public function register_plugin() {
 		// Check to ensure that license key was passed into the function
-		if ( ! empty( $_POST['license_key'] ) ) :
+		if ( ! empty( $_POST['license_key'] ) && isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'license_key_nonce' ) ) :
 
 			// Grab the license key so we can use it below
-			$key             = sanitize_text_field( $_POST['name_key'] );
+			if (isset($_POST['name_key'])) {
+				$key = sanitize_text_field($_POST['name_key']);
+			} else {
+				$key = '';
+			}
 			$license         = sanitize_text_field( $_POST['license_key'] );
-			$item_id         = sanitize_text_field( $_POST['item_id'] );
+			if (isset($_POST['item_id'])) {
+				$item_id = sanitize_text_field($_POST['item_id']);
+			} else {
+				$item_id = '';
+			}
 			$this->store_url = 'https://warfareplugins.com';
 
 			$api_params = array(
@@ -313,7 +331,7 @@ class Social_Warfare_Addon {
 					$this->store_url,
 					array(
 						'body'    => $api_params,
-						'timeout' => 10,
+						'timeout' => 10 // phpcs:ignore
 					)
 				)
 			);
@@ -332,19 +350,19 @@ class Social_Warfare_Addon {
 					$options[ $key . '_license_key_timestamp' ] = $current_time;
 					update_option( 'social_warfare_settings', $options );
 
-					echo json_encode( $license_data );
+					echo wp_kses_post( wp_json_encode( $license_data ) );
 					wp_die();
 
 					// If the license is not valid
 				elseif ( isset( $license_data->license ) && 'invalid' === $license_data->license ) :
-					echo json_encode( $license_data );
+					echo wp_kses_post( wp_json_encode( $license_data ) );
 					wp_die();
 
 					// If some other status was returned
 				else :
 					$license_data['success'] = false;
 					$license_data['data']    = 'Invaid response from the registration server.';
-					echo json_encode( $license_data );
+					echo wp_kses_post( wp_json_encode( $license_data ) );
 					wp_die();
 				endif;
 
@@ -352,14 +370,14 @@ class Social_Warfare_Addon {
 			else :
 				$license_data['success'] = false;
 				$license_data['data']    = 'Failed to connect to registration server.';
-				echo json_encode( $license_data );
+				echo wp_kses_post( wp_json_encode( $license_data ) );
 				wp_die();
 			endif;
 		endif;
 
 		$license_data['success'] = false;
 		$license_data['data']    = 'Admin Ajax did not receive valid POST data.';
-		echo json_encode( $license_data );
+		echo wp_kses_post( wp_json_encode( $license_data ) );
 		wp_die();
 	}
 
@@ -371,19 +389,18 @@ class Social_Warfare_Addon {
 	 * @since  2.3.0 Hooked into the EDD Software Licensing API
 	 * @param  none
 	 * @return JSON Encoded Array (Echoed) - The Response from the EDD API
-	 *
 	 */
 	public function unregister_plugin() {
 		// Setup the variables needed for processing
 		$options  = get_option( 'social_warfare_settings' );
-		$key      = sanitize_text_field( $_POST['name_key'] );
-		$item_id  = sanitize_text_field( $_POST['item_id'] );
+		$key = isset( $_POST['name_key'] ) ? sanitize_text_field( $_POST['name_key'] ) : ''; // phpcs:ignore
+		$item_id  = isset( $_POST['item_id'] ) ? sanitize_text_field( $_POST['item_id'] ) : ''; // phpcs:ignore
 		$response = array( 'success' => false );
 
 		// Check to see if the license key is even in the options
 		if ( ! SWP_Utility::get_option( $key . '_license_key' ) ) :
 			$response['success'] = true;
-			wp_die( json_encode( $response ) );
+			wp_die( wp_json_encode( $response ) );
 		endif;
 
 		// Grab the license key so we can use it below
@@ -402,14 +419,14 @@ class Social_Warfare_Addon {
 				$this->store_url,
 				array(
 					'body'    => $api_params,
-					'timeout' => 10,
+					'timeout' => 10 // phpcs:ignore
 				)
 			)
 		);
 		if ( empty( $response ) ) {
 			$response['success'] = false;
 			$response['message'] = 'Error making deactivation request to ' . $this->store_url;
-			wp_die( json_encode( $response ) );
+			wp_die( wp_json_encode( $response ) );
 		}
 
 		$response = json_decode( $response );
@@ -420,7 +437,7 @@ class Social_Warfare_Addon {
 			update_option( 'social_warfare_settings', $options );
 		}
 
-		wp_die( json_encode( $response ) );
+		wp_die( wp_json_encode( $response ) );
 	}
 
 	public function ajax_passthrough() {

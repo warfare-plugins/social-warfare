@@ -1,0 +1,37 @@
+{
+	"name": "social-warfare",
+	"version": "4.4.7",
+	"license": "GPL-2.0-or-later",
+	"repository": "https://github.com/warfare-plugins/social-warfare",
+	"description": "The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.",
+	"scripts": {
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"makepot": "wpi18n makepot && echo '.pot file updated'",
+		"env": "wp-env",
+		"env:start": "wp-env start",
+		"env:stop": "wp-env stop",
+		"env:destroy": "wp-env destroy"
+	},
+	"lint-staged": {
+		"*.php": [
+			"./vendor/bin/phpcs --extensions=php --warning-severity=8 -s --runtime-set testVersion 7.4"
+		]
+	},
+	"author": {
+		"name": "Warfare Plugins, Inc.",
+		"email": "info@warfareplugins.com",
+		"url": "https://warfareplugins.com",
+		"role": "developer"
+	},
+	"devDependencies": {
+		"@wordpress/env": "^10.4.0",
+		"@wordpress/scripts": "^28.4.0"
+	},
+	"dependencies": {
+		"@wordpress/icons": "^10.4.0"
+	}
+}

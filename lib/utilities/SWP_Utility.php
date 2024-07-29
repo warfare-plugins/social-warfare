@@ -15,7 +15,6 @@
  * @license   GPL-3.0+
  * @since     3.3.0 | 14 AUG 2018 | Created.
  * @access    public
- *
  */
 class SWP_Utility {
 
@@ -24,7 +23,6 @@ class SWP_Utility {
 	 * Insantiates filterss and hooks, for admin and ajax.
 	 *
 	 * @since  3.3.0 \ 14 AUG 2018 | Created.
-	 *
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_swp_store_settings', array( 'SWP_Utility', 'store_settings' ) );
@@ -44,7 +42,6 @@ class SWP_Utility {
 	 * @param  string $key   The key associated with the option we want.
 	 *
 	 * @return mixed  $value The value of the option if set, or false.
-	 *
 	 */
 	public static function get_option( $key = '' ) {
 		if ( ! isset( $key ) || ! is_string( $key ) ) :
@@ -87,13 +84,13 @@ class SWP_Utility {
 		if ( 'true' === $value ) {
 			return true;
 		}
-		// echo "<br>".__METHOD__, var_dump($id), var_dump($key), var_dump($value);
 
 		return $value;
 	}
 
 	/**
 	 * Fetches a meta key we know to be an array.
+	 *
 	 * @param  [type] $id  [description]
 	 * @param  [type] $key [description]
 	 * @return [type]      [description]
@@ -110,12 +107,12 @@ class SWP_Utility {
 			return true;
 		}
 
-		//* I think everything fetched form meta is returned as a string.
+		// * I think everything fetched form meta is returned as a string.
 		if ( is_string( $value ) ) {
 			$value = json_decode( $value );
 		}
 
-		//* Do the same kind of checks/filtering as above.
+		// * Do the same kind of checks/filtering as above.
 		return is_array( $value ) ? $value : false;
 	}
 
@@ -128,42 +125,52 @@ class SWP_Utility {
 	 * @since  2.x.x | Unknown | Created.
 	 * @since  3.0.9 | 31 MAY 2018 | Added call to wp_cache_delete to make sure settings save
 	 * @since  3.3.0 | 14 AUG 2018 | Removed deprecated code.
-	 *
-	 * @return bool Whether or not the options were updated in the database.
+	 * @since  4.5.0 | 26 JUL 2024 | Generalize sanitization for different types of input.
 	 */
 	public static function store_settings() {
 
 		if ( ! check_ajax_referer( 'swp_plugin_options_save', 'security', false ) ) {
-			wp_send_json_error( esc_html__( 'Security failed 1.', 'social-warfare' ) );
+			wp_send_json_error( esc_html__( 'Security check failed.', 'social-warfare' ) );
 			wp_die();
 		}
-
+	
 		$data = wp_unslash( $_POST );
-
-		if ( empty( $data['settings'] ) ) {
-			wp_send_json_error( esc_html__( 'No settings to save.', 'social-warfare' ) );
+	
+		if ( empty( $data['settings'] ) || ! is_array( $data['settings'] ) ) {
+			wp_send_json_error( esc_html__( 'Invalid settings data.', 'social-warfare' ) );
 			wp_die();
 		}
-
+	
 		$options  = get_option( 'social_warfare_settings', array() );
-		$settings = $data['settings'];
-
-		// Loop and check for checkbox values, convert them to boolean.
+		$settings = array();
+	
+		// Generalize sanitization for different types of input.
 		foreach ( $data['settings'] as $key => $value ) {
-			if ( 'true' === $value ) {
-				$settings[ $key ] = true;
-			} elseif ( 'false' === $value ) {
-				$settings[ $key ] = false;
+			if ( is_array( $value ) ) {
+				$settings[ $key ] = array_map( 'sanitize_text_field', $value );
+			} elseif ( is_bool( $value ) || $value === 'true' || $value === 'false' ) {
+				$settings[ $key ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			} elseif ( is_numeric( $value ) ) {
+				$settings[ $key ] = intval( $value );
+			} elseif ( filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+				$settings[ $key ] = sanitize_email( $value );
+			} elseif ( preg_match( '/^#[a-f0-9]{6}$/i', $value ) ) {
+				$settings[ $key ] = sanitize_hex_color( $value );
 			} else {
-				$settings[ $key ] = $value;
+				$settings[ $key ] = sanitize_text_field( $value );
 			}
 		}
-
+	
 		$new_settings = array_merge( $options, $settings );
-		echo json_encode( update_option( 'social_warfare_settings', $new_settings ) );
-
+	
+		if ( update_option( 'social_warfare_settings', $new_settings ) ) {
+			wp_send_json_success( esc_html__( 'Settings saved successfully.', 'social-warfare' ) );
+		} else {
+			wp_send_json_error( esc_html__( 'Failed to save settings.', 'social-warfare' ) );
+		}
+	
 		wp_die();
-	}
+	}		
 
 	/**
 	 * Handle the options save request inside of admin-ajax.php
@@ -172,7 +179,6 @@ class SWP_Utility {
 	 * @since  3.5.3 | 21 MAR 2019 | Created the method.
 	 *
 	 * @return bool True if it is good, else it dies.
-	 *
 	 */
 	public static function auth() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -192,7 +198,6 @@ class SWP_Utility {
 	 * @param  float $number The float to be rounded.
 	 *
 	 * @return float A rounded number.
-	 *
 	 */
 	public static function kilomega( $number = 0 ) {
 		if ( empty( $number ) ) :
@@ -211,7 +216,7 @@ class SWP_Utility {
 			$value  = $number / 1000000;
 		}
 
-		if ( 'period' === SWP_Utility::get_option( 'decimal_separator' ) ) :
+		if ( 'period' === self::get_option( 'decimal_separator' ) ) :
 			$decimal_point       = '.';
 			$thousands_separator = ',';
 		else :
@@ -219,7 +224,7 @@ class SWP_Utility {
 			$thousands_separator = '.';
 		endif;
 
-		$decimals       = SWP_Utility::get_option( 'decimals' );
+		$decimals       = self::get_option( 'decimals' );
 		$display_number = number_format( $value, $decimals, $decimal_point, $thousands_separator ) . $suffix;
 
 		return $display_number;
@@ -238,7 +243,6 @@ class SWP_Utility {
 	 * @param  int $post_id The post ID to use when getting an exceprt.
 	 *
 	 * @return string The excerpt.
-	 *
 	 */
 	public static function get_the_excerpt( $post_id ) {
 		// Check if the post has an excerpt
@@ -259,17 +263,16 @@ class SWP_Utility {
 			$the_excerpt = preg_replace( '/(<script[^>]*>.+?<\/script>|<style[^>]*>.+?<\/style>)/s', '', $the_excerpt );
 		endif;
 
-		$the_excerpt    = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
+		$the_excerpt    = wp_strip_all_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
 		$the_excerpt    = preg_replace( '/\[[^\]]+\]/', '', $the_excerpt );
 		$the_excerpt    = str_replace( ']]>', ']]&gt;', $the_excerpt );
-		$the_excerpt    = strip_tags( $the_excerpt );
+		$the_excerpt    = wp_strip_all_tags( $the_excerpt );
 		$excerpt_length = apply_filters( 'excerpt_length', 100 );
-		$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[...]' );
+		$excerpt_more   = apply_filters( 'excerpt_more', ' [...]' );
 		$words          = preg_split( "/[\n\r\t ]+/", $the_excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
 
 		if ( count( $words ) > $excerpt_length ) :
 			array_pop( $words );
-			// array_push($words, '…');
 			$the_excerpt = implode( ' ', $words );
 		endif;
 
@@ -285,13 +288,17 @@ class SWP_Utility {
 	 * @since  2.1.0
 	 * @since  3.3.0 | 14 AUG 2018 | Refactored to a one-liner.
 	 * @access public
-	 * @param  string $type The query paramter to check for.
+	 * @param  string $key The query paramter to check for.
 	 *
 	 * @return bool True if the specified key is set for debugging, else false.
-	 *
 	 */
 	public static function debug( $key = '' ) {
-		return ! empty( $_GET['swp_debug'] ) && ( strtolower( $_GET['swp_debug'] ) === strtolower( $key ) );
+		if ( isset( $_GET['swp_debug'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['swp_debug'] ) ), 'swp_debug_nonce' ) ) {
+			$swp_debug = sanitize_text_field( wp_unslash( $_GET['swp_debug'] ) );
+		} else {
+			$swp_debug = '';
+		}
+		return ! empty( $swp_debug ) && ( strtolower( $swp_debug ) === strtolower( $key ) );
 	}
 
 	/**
@@ -301,7 +308,6 @@ class SWP_Utility {
 	 * @param  string $content The text to be filtered.
 	 *
 	 * @return string $content The filtered text.
-	 *
 	 */
 	public static function convert_smart_quotes( $content ) {
 		$content = str_replace( '"', "'", $content );
@@ -318,7 +324,6 @@ class SWP_Utility {
 	 *
 	 * @since 2.x.x | Unknown | Created.
 	 * @return array The names of registered post types.
-	 *
 	 */
 	public static function get_post_types() {
 		$types = get_post_types(
@@ -336,14 +341,13 @@ class SWP_Utility {
 
 
 	/**
-	 * A function to remove the screen options tab from our admin page
+	 * A function to remove the screen options tab from our admin page.
 	 *
 	 * @since 2.2.1 | Unknown | Created.
-	 * @param bool Whether to show Screen Options tab. Default true.
-	 * @param WP_Screen $wp_screen Current WP_Screen instance.
+	 * @param bool      $show_screen Whether to show Screen Options tab. Default true.
+	 * @param WP_Screen $wp_screen   Current WP_Screen instance.
 	 *
 	 * @return boolean $display or false.
-	 *
 	 */
 	public static function remove_screen_options( $show_screen, $wp_screen ) {
 		$blacklist = array( 'admin.php?page=social-warfare' );
@@ -357,14 +361,12 @@ class SWP_Utility {
 		return $show_screen;
 	}
 
-
 	/**
 	 * Returns the URL of current website or network.
 	 *
 	 * @since 2.3.3 | 25 SEP 2017 | Created.
 	 *
 	 * @return string The URL of the site.
-	 *
 	 */
 	public static function get_site_url() {
 		if ( true === is_multisite() ) {
@@ -382,7 +384,6 @@ class SWP_Utility {
 	 * @param  string $key   The key under which the option needs to be stored.
 	 * @param  mixed  $value The value at the key.
 	 * @return bool          True if the option was updated, else false.
-	 *
 	 */
 	public static function update_option( $key, $value ) {
 		if ( empty( $key ) ) {
@@ -395,6 +396,14 @@ class SWP_Utility {
 		return update_option( 'social_warfare_settings', $options );
 	}
 
+	/**
+	 * Deletes an option from the Social Warfare settings.
+	 *
+	 * @since 3.3.2 | 12 SEP 2018 | Created.
+	 *
+	 * @param  string $key   The key of the option to be deleted.
+	 * @return bool          True if the option was deleted, else false.
+	 */
 	public static function delete_option( $key ) {
 		if ( empty( $key ) ) {
 			return false;
@@ -423,7 +432,6 @@ class SWP_Utility {
 	 * @param  string $core_version The verison of Core currently installed.
 	 * @param  string $addon_version The version of the addon currently installed.
 	 * @return bool   True if the versions are compatible, else false.
-	 *
 	 */
 	public static function check_version_range( $core_version, $addon_version ) {
 		$core_versions  = explode( '.', $core_version );
@@ -431,12 +439,12 @@ class SWP_Utility {
 
 		$version_difference = absint( $core_versions[1] - $addon_versions[1] );
 
-		//* Force plugin users to be on the same major version.
-		if ( $core_versions[0] !== $addon_verisons[0] ) {
+		// * Force plugin users to be on the same major version.
+		if ( $core_versions[0] !== $addon_versions[0] ) {
 			return false;
 		}
 
-		//* Require plugin users to be within nearby secondary versions.
+		// * Require plugin users to be within nearby secondary versions.
 		if ( $version_difference < 5 ) {
 			return true;
 		}
@@ -449,9 +457,7 @@ class SWP_Utility {
 	 *
 	 * @since  3.5.0  | 12 FEB 2019 | Created.
 	 * @param  string $params The pre-formatted string of query args.
-	 * @param  array  $params And asssociative array to format as query args.
 	 * @return exit           End all program exectution and return to SW.
-	 *
 	 */
 	public static function settings_page_redirect( $params = '' ) {
 		$destination = admin_url( '?page=social-warfare' );
@@ -475,7 +481,6 @@ class SWP_Utility {
 	 * @since  3.5.0  | 14 FEB 2019 | Created.
 	 * @since  4.4.0 | 09 JAN 2013 | Added nonce and capabilities check.
 	 * @return bool   True iff reset, else false.
-	 *
 	 */
 	public static function reset_post_meta() {
 
@@ -489,7 +494,7 @@ class SWP_Utility {
 			return;
 		}
 
-		$post_id = sanitize_key( $_POST['post_id'] );
+		$post_id = isset( $_POST['post_id'] ) ? sanitize_key( $_POST['post_id'] ) : '';
 		if ( empty( $post_id ) ) {
 			wp_die( 0 );
 		}
@@ -498,9 +503,7 @@ class SWP_Utility {
 
 		foreach ( $all_meta as $meta_key => $value ) {
 			// Confirm this is a social warfare meta key.
-			if ( ( strpos( $meta_key, 'swp_' ) === 0 ||
-				( strpos( $meta_key, '_shares' ) > 0 ) &&
-					strpos( $meta_key, '_' ) === 0 ) ) {
+			if ( ( strpos( $meta_key, 'swp_' ) === 0 || ( strpos( $meta_key, '_shares' ) > 0 ) ) && strpos( $meta_key, '_' ) === 0 ) {
 				delete_post_meta( $post_id, $meta_key );
 			}
 		}
@@ -514,13 +517,22 @@ class SWP_Utility {
 	 * @since 3.6.0   | 24 APR 2019 | Created.
 	 * @param  string $image_url The image to get an ID for.
 	 * @return mixed  integer ID if an ID is found, else false.
-	 *
 	 */
 	public static function get_image_id_by_url( $image_url ) {
 		global $wpdb;
 
-		$prepared_statement = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s;", $image_url );
-		$attachment         = $wpdb->get_col( $prepared_statement );
+		$attachment = wp_cache_get( $image_url, 'attachment_ids' );
+
+		if ( false === $attachment ) {
+			if (function_exists('wpcom_vip_attachment_url_to_postid')) {
+				$attachment = wpcom_vip_attachment_url_to_postid( $image_url );
+			} else {
+				$attachment = attachment_url_to_postid( $image_url ); // phpcs:ignore
+			}
+			wp_cache_set( $image_url, $attachment, 'attachment_ids' );
+		}
+
+		$attachment = is_array( $attachment ) ? reset( $attachment ) : false;
 
 		if ( is_object( $attachment ) && is_numeric( $attachment->ID ) ) {
 			return $attachment->ID;
@@ -547,7 +559,6 @@ class SWP_Utility {
 	 * @param  string $haystack The string to be examined.
 	 * @param  string $needle   The string to search for.
 	 * @return boolean True on success, False on failure.
-	 *
 	 */
 	public static function starts_with( $haystack, $needle ) {
 		$length = strlen( $needle );
@@ -568,7 +579,6 @@ class SWP_Utility {
 	 * @param  string $haystack The string to be examined.
 	 * @param  string $needle   The string to search for.
 	 * @return boolean True on success, False on failure.
-	 *
 	 */
 	public static function ends_with( $haystack, $needle ) {
 		$length = strlen( $needle );

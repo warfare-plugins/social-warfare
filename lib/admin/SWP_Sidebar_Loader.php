@@ -11,7 +11,6 @@
  * @copyright Copyright (c) 2018, Warfare Plugins, LLC
  * @license   GPL-3.0+
  * @since  3.3.0 | 03 AUG 2018 | Created.
- *
  */
 class SWP_Sidebar_Loader {
 
@@ -19,7 +18,6 @@ class SWP_Sidebar_Loader {
 	/**
 	 * SWP_Debug_Trait provides useful tool like error handling and a debug
 	 * method which outputs the contents of the current object.
-	 *
 	 */
 	use SWP_Debug_Trait;
 
@@ -30,7 +28,6 @@ class SWP_Sidebar_Loader {
 	 * @since  3.3.0 | 03 AUG 2018 | Created.
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	public function __construct() {
 		$this->load_components();
@@ -43,7 +40,6 @@ class SWP_Sidebar_Loader {
 	 * @since  3.1.0 | 27 JUN 2018 | Created
 	 * @param  void
 	 * @return void
-	 *
 	 */
 	private function load_components() {
 		$cache_data = get_option( 'swp_json_cache' );
