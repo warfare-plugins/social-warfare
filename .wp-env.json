@@ -1,6 +1,7 @@
 {
 	"plugins": [
 		".",
+		"https://github.com/warfare-plugins/social-warfare-pro/archive/refs/tags/4.5.0.zip",
 		"https://downloads.wordpress.org/plugin/plugin-check.1.0.2.zip"
 	],
 	"config": {
