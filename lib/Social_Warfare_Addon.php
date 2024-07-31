@@ -303,7 +303,7 @@ class Social_Warfare_Addon {
 	 */
 	public function register_plugin() {
 		// Check to ensure that license key was passed into the function
-		if ( ! empty( $_POST['license_key'] ) && isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'license_key_nonce' ) ) :
+		if ( ! empty( $_POST['license_key'] ) && isset( $_POST['security'] ) && wp_verify_nonce(sanitize_text_field( $_POST['security'] ), 'swp_plugin_registration' ) ) :
 
 			// Grab the license key so we can use it below
 			if (isset($_POST['name_key'])) {
