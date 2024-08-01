@@ -138,30 +138,54 @@ It is without question that Social Warfare is the most powerful social sharing p
 
 This plugin uses APIs from the following third-party services for sharing content. Please review their terms and privacy policies:
 
-- **Facebook**
-  - [Service Link](https://www.facebook.com)
-  - [Terms of Service](https://www.facebook.com/terms.php)
-  - [Privacy Policy](https://www.facebook.com/policy.php)
+**Bitly**
 
-- **Twitter**
-  - [Service Link](https://www.twitter.com)
-  - [Terms of Service](https://twitter.com/en/tos)
-  - [Privacy Policy](https://twitter.com/en/privacy)
+Why and When We Use Bitly API:
+This plugin uses the Bitly API to shorten URLs for shared content. When a user enables the "URL Shortening" option in the plugin settings, the plugin will make requests to the Bitly API to generate shortened URLs.
 
-- **Pinterest**
-  - [Service Link](https://www.pinterest.com)
-  - [Terms of Service](https://policy.pinterest.com/terms-of-service)
-  - [Privacy Policy](https://policy.pinterest.com/privacy-policy)
+Data Sent to Bitly:
+- URLs to be shortened
+- Authentication data (Bitly Access Token)
 
-- **LinkedIn**
-  - [Service Link](https://www.linkedin.com)
-  - [Terms of Service](https://www.linkedin.com/legal/user-agreement)
-  - [Privacy Policy](https://www.linkedin.com/legal/privacy-policy)
+Impact on User Data:
+When using the Bitly API, URLs that users wish to shorten will be sent to Bitly's servers. Users should be aware that the data is transmitted to Bitly, and they should review Bitly's privacy policy to understand how their data is handled.
 
-- **Mix**
-  - [Service Link](https://www.mix.com)
-  - [Terms of Service](https://mix.com/terms)
-  - [Privacy Policy](https://mix.com/privacy)
+- [Bitly Service Link](https://bitly.com)
+- [Bitly Terms of Service](https://bitly.com/pages/terms-of-service)
+- [Bitly Privacy Policy](https://bitly.com/pages/privacy)
+
+**Warfare Plugins**
+
+Why and When We Use Warfare Plugins:
+This plugin integrates with the Warfare Plugins API to manage addon license keys and verify the validity of user subscriptions. The API is used when users register or unregister their plugin license.
+
+Data Sent to Warfare Plugins:
+- License key
+- Site URL
+- Plugin version
+
+Impact on User Data:
+When using the Warfare Plugins API, the license key and site URL are sent to the Warfare Plugins server to verify the subscription status. Users should be aware that their license key and site URL are transmitted to the server, and they should review Warfare Plugins' privacy policy to understand how their data is handled.
+
+- [Warfare Plugins Service Link](https://warfareplugins.com)
+- [Warfare Plugins Privacy Policy](https://warfareplugins.com/privacy-policy)
+
+**Pinterest**
+
+Why and When We Use Pinterest:
+This plugin integrates with the Pinterest API to allow users to share content directly to their Pinterest boards. When a user clicks the Pinterest share button, the plugin will generate a request to Pinterest's API to create a new pin.
+
+Data Sent to Pinterest:
+- URL of the content to be shared
+- Description of the content (if provided)
+- Image URL (if specified)
+
+Impact on User Data:
+When using the Pinterest API, the URLs, descriptions, and images that users wish to share will be sent to Pinterest's servers. Users should be aware that this data is transmitted to Pinterest, and they should review Pinterest's privacy policy to understand how their data is handled.
+
+- [Pinterest Service Link](https://www.pinterest.com)
+- [Pinterest Terms of Service](https://policy.pinterest.com/terms-of-service)
+- [Pinterest Privacy Policy](https://policy.pinterest.com/privacy-policy)
 
 == Installation ==
 
