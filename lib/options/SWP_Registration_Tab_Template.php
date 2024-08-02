@@ -158,7 +158,7 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 
 			<div class="sw-grid sw-col-300">
 				<a href="#" class="unregister-plugin button sw-navy-button" swp-addon="<?php echo $this->key; ?>"  swp-item-id="<?php echo $this->product_id; ?>">
-					<?php esc_htmlesc_html_e( 'Unregister Plugin', 'social-warfare' ); ?>
+					<?php esc_html_e( 'Unregister Plugin', 'social-warfare' ); ?>
 				</a>
 			</div>
 			<div class="sw-grid sw-col-300 sw-fit"></div>
