@@ -3,7 +3,7 @@ Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalash
 Tags: sharing buttons, social media share, floating share buttons, facebook share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
 Requires at least: 4.5.0
 Tested up to: 6.6
-Stable tag: 4.5.2
+Stable tag: 4.5.3
 Requires PHP: 5.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
