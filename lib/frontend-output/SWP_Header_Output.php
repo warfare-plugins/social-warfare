@@ -98,8 +98,19 @@ class SWP_Header_Output {
 			echo PHP_EOL . '<!-- Social Warfare v' . esc_html( SWP_VERSION ) . ' https://warfareplugins.com - BEGINNING OF OUTPUT -->' . PHP_EOL;
 			
 			$allowed_html = array(
-				'style' => array(),
-			);
+				'meta' => array(
+					'name'    => array(),
+					'content' => array(),
+					'property'=> array(),
+					'http-equiv' => array(),
+					'charset' => array(),
+				),
+				'style' => array(
+					'type' => array(),
+					'media' => array(),
+					'scoped' => array(),
+				),
+			);			
 		
 			echo wp_kses( $meta_html, $allowed_html );
 
