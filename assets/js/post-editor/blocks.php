@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */ 
 if ( true === SWP_Utility::get_option( 'gutenberg_switch' ) && function_exists( 'register_block_type' ) ) {
 	add_action( 'init', 'swp_initialize_gutenberg_blocks' );
-	add_filter( 'block_categories', 'swp_add_block_category', 10, 2 );
+	add_filter( 'block_categories_all', 'swp_add_block_category', 10, 2 );
 }
 
 /**
