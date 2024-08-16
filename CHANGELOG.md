@@ -5,6 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.3] - 2024-08-12
+
+### Updated
+
+- Updated stable tag and version numbers to 4.5.3.
+- Updated allowed HTML tags and attributes in `SWP_Header_Output.php` to enhance security and compatibility.
+
+## [4.5.2] - 2024-08-05
+
+### Updated
+
+- Updated stable tag and version numbers to 4.5.2.
+- Changed hook from `wp` to `wp_loaded` for deferred class instantiation to improve performance and compatibility.
+- Updated plugin version to 4.5.2.
+
+## [4.5.1] - 2024-07-29
+
+### Enhancements
+
+- Updated `.wp-env.json` with social-warfare-pro plugin version 4.5.1.
+
+### Refactoring
+
+- Improved security by updating `SWP_Addon.php` to use 'security' instead of 'nonce'.
+- Updated `SWP_Options_Page.php` to use translation functions for better internationalization support.
+
+## [4.5.0] - 2024-07-15
+
+### Summary of Updates
+
+- Implemented linting and WP ENV for local development.
+- Added PHPCS ruleset.
+- Removed coding standards workflow file.
+- Added compiled HTML property to `SWP_Notice` class.
+- Created and updated CODEOWNERS.
+- Removed unnecessary lines and comments.
+- Added API URLs array to `SWP_Post_Cache` class.
+- Created `dependabot.yml`.
+- Updated multiple dependencies and workflows.
+- Added Security Policy.
+- Refactored PHPDoc comments and auto-registered widget in `SWP_Popular_Posts_Widget`.
+- Escaped HTML output in `SWP_Widget.php`.
+- Enhanced form rendering in `SWP_Popular_Posts_Widget.php`.
+- Updated `meta_key` in `SWP_Popular_Posts_Widget`.
+- Optimized settings storage and HTML tag stripping in `SWP_Utility.php`.
+- Modified 'excerpt_more' filter.
+- Removed screen options tab from the admin page.
+- Corrected variable name typo in `SWP_Utility.php`.
+- Refactored and improved readability, naming conventions, and security in multiple classes.
+
+### Other Changes
+
+- Created persistent notices.
+- Updated `README.md`.
+
 ## [4.4.7] - 2024-04-05
 
 ### Changed
