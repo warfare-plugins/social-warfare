@@ -28,7 +28,7 @@
 		"role": "developer"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^10.4.0",
+		"@wordpress/env": "^10.6.0",
 		"@wordpress/scripts": "^28.4.0"
 	},
 	"dependencies": {
