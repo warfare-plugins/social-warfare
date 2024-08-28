@@ -72,6 +72,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 	 * @since  3.0.6 | 14 MAY 2018 | Appended $pinterest_username to $pinterest_description.
 	 * @since  3.0.9 | 04 JUN 2018 | Updated the check for pinterest image.
 	 * @since  4.5.0 | 26 JUL 2024 | Ensure proper escaping of HTML output
+	 * @since  4.5.4 | 28 AUG 2024 | Fix Pinterest share button to include href for SEO while preserving onclick functionality.
 	 * @access public
 	 * @return array $panel_context Array of
 	 *                   ['post_data']  => metadata about the post;
@@ -208,7 +209,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 				'&media=' . urlencode( $pinterest_image ) .
 				'&description=' . urlencode( $pinterest_description );
 				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
-						'data-link="' . $link . '" ' . SWP_AMP::display_if_amp( 'href="' . $link . '"' ) . ' >';
+						'data-link="' . $link . '" ' . 'href="' . $link . '" >';
 			}
 
 			// If the user has not uploaded any Pinterest images.
@@ -218,8 +219,10 @@ class SWP_Pinterest extends SWP_Social_Network {
 				$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link" data-count="0" ' .
 						'data-link="' . $link . '" href="' . $link . '" >';
 		} else {
-			$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' .
-					'onClick="var e=document.createElement(\'script\');
+			$link = 'https://pinterest.com/pin/create/button/?url=' . urlencode( $panel_context['post_data']['permalink'] );
+			$anchor = '<a rel="nofollow noreferrer noopener" class="nc_tweet swp_share_link noPop" ' . 'href="' . $link . '" ' .
+					'onClick="event.preventDefault(); 
+							var e=document.createElement(\'script\');
 							e.setAttribute(\'type\',\'text/javascript\');
 							e.setAttribute(\'charset\',\'UTF-8\');
 							e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);
