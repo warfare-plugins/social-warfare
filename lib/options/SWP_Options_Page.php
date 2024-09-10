@@ -642,6 +642,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 	 * This section allows the user to set social network handles and OG metadata.
 	 *
 	 * @since  3.0.0 | 01 MAR 2018 | Created
+	 * @since  4.5.4 | 10 SEP 2024 | Removed $facebook_publisher_url and $facebook_app_id.
 	 * @param  void
 	 * @return SWP_Options_Page $this The calling object for method chaining.
 	 */
@@ -664,19 +665,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 				->set_priority( 20 )
 				->set_default( '' );
 
-			// * facebookPublisherUrl => facebook_publisher_url
-			$facebook_publisher_url = new SWP_Option_Text( esc_html__( 'Facebook Page URL', 'social-warfare' ), 'facebook_publisher_url' );
-			$facebook_publisher_url->set_size( 'sw-col-300' )
-				->set_priority( 30 )
-				->set_default( '' );
-
-			// * facebookAppID => facebook_app_id
-			$facebook_app_id = new SWP_Option_Text( esc_html__( 'Facebook App ID', 'social-warfare' ), 'facebook_app_id' );
-			$facebook_app_id->set_size( 'sw-col-300' )
-				->set_priority( 40 )
-				->set_default( '' );
-
-		$sitewide_identity->add_options( array( $twitter_id, $pinterest_id, $facebook_publisher_url, $facebook_app_id ) );
+		$sitewide_identity->add_options( array( $twitter_id, $pinterest_id ) );
 		$social_identity->add_section( $sitewide_identity );
 
 		$this->tabs->social_identity = $social_identity;
