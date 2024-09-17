@@ -1,5 +1,7 @@
 <?php
 
+use WpOrg\Requests\Requests;
+
 /**
  * SWP_Requests: A class to process API share count requests via WordPress
  * built in HTTP Request mechanisms.

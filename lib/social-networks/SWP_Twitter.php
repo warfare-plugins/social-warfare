@@ -22,6 +22,11 @@ class SWP_Twitter extends SWP_Social_Network {
 	protected $request_url = '';
 
 	/**
+	 * @var string The raw response from the API request.
+	 */
+	protected $response = '';
+
+	/**
 	 * The Magic __construct Method
 	 *
 	 * This method is used to instantiate the social network object. It does three things.
