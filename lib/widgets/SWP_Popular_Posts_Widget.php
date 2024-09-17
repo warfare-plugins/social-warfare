@@ -274,7 +274,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</div>';
 
 		// Output the form fields
-		echo wp_kses_post( $form );
+		echo $form;
 	}
 
 
@@ -318,33 +318,35 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 	 *
 	 * @since  1.0.0
 	 * @since  3.0.0 | 09 FEB 2018 | Refactored and added the $args array output
+	 * @since  4.5.4 | 26 AUG 2024 | Replaced isset() checks with isset() && !empty() for better handling of default values. 
+	 * 								 Replaced esc_html() with wp_kses_post() to allow safe HTML rendering in widget content.
 	 * @access public
 	 * @param  array $args     Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
 	 * @param  array $instance The settings for the particular instance of the widget.
 	 */
 	public function widget( $args, $instance ) {
 		// Assign values from $args
-		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
-		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : '';
-		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : '';
-		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : '';
+		$before_widget = isset( $args['before_widget']) && !empty($args['before_widget'] ) ? $args['before_widget'] : '';
+		$after_widget  = isset( $args['after_widget']) && !empty($args['after_widget'] ) ? $args['after_widget'] : '';
+		$before_title  = isset( $args['before_title']) && !empty($args['before_title'] ) ? $args['before_title'] : '';
+		$after_title   = isset( $args['after_title']) && !empty($args['after_title'] ) ? $args['after_title'] : '';
 
 		// Fetch the field values from the form
-		$title        = isset( $instance['title'] ) ? $instance['title'] : 'Popular Posts';
-		$count        = isset( $instance['count'] ) ? $instance['count'] : '10';
-		$timeframe    = isset( $instance['timeframe'] ) ? $instance['timeframe'] : '0';
-		$post_type    = isset( $instance['post_type'] ) ? $instance['post_type'] : 'post';
-		$network      = isset( $instance['network'] ) ? $instance['network'] : 'total_shares';
-		$show_count   = isset( $instance['showCount'] ) ? $instance['showCount'] : 'true';
-		$count_label  = isset( $instance['countLabel'] ) ? $instance['countLabel'] : 'Total Shares';
-		$style        = isset( $instance['style'] ) ? $instance['style'] : 'style_01';
-		$thumbnails   = isset( $instance['thumbnails'] ) ? $instance['thumbnails'] : 'true';
-		$thumb_size   = isset( $instance['thumb_size'] ) ? $instance['thumb_size'] : '100';
-		$font_size    = isset( $instance['font_size'] ) ? $instance['font_size'] : '100';
-		$custom_bg    = isset( $instance['custom_bg'] ) ? $instance['custom_bg'] : '#ffffff';
-		$thumb_width  = isset( $instance['thumb_width'] ) ? $instance['thumb_width'] : $thumb_size;
-		$thumb_height = isset( $instance['thumb_height'] ) ? $instance['thumb_height'] : $thumb_size;
-		$custom_link  = isset( $instance['custom_link'] ) ? $instance['custom_link'] : '#000000';
+		$title        = isset( $instance['title']) && !empty($instance['title'] ) ? $instance['title'] : 'Popular Posts';
+		$count        = isset( $instance['count']) && !empty($instance['count'] ) ? $instance['count'] : 10;
+		$timeframe    = isset( $instance['timeframe']) && !empty($instance['timeframe'] ) ? $instance['timeframe'] : 0;
+		$post_type    = isset( $instance['post_type']) && !empty($instance['post_type'] ) ? $instance['post_type'] : 'post';
+		$network      = isset( $instance['network']) && !empty($instance['network'] ) ? $instance['network'] : 'total_shares';
+		$show_count   = isset( $instance['showCount']) && !empty($instance['showCount'] ) ? $instance['showCount'] : true;
+		$count_label  = isset( $instance['countLabel']) && !empty($instance['countLabel'] ) ? $instance['countLabel'] : 'Total Shares';
+		$style        = isset( $instance['style']) && !empty($instance['style'] ) ? $instance['style'] : 'style_01';
+		$thumbnails   = isset( $instance['thumbnails']) && !empty($instance['thumbnails'] ) ? $instance['thumbnails'] : true;
+		$thumb_size   = isset( $instance['thumb_size']) && !empty($instance['thumb_size'] ) ? $instance['thumb_size'] : 100;
+		$font_size    = isset( $instance['font_size']) && !empty($instance['font_size'] ) ? $instance['font_size'] : 100;
+		$custom_bg    = isset( $instance['custom_bg']) && !empty($instance['custom_bg'] ) ? $instance['custom_bg'] : '#ffffff';
+		$thumb_width  = isset( $instance['thumb_width']) && !empty($instance['thumb_width'] ) ? $instance['thumb_width'] : $thumb_size;
+		$thumb_height = isset( $instance['thumb_height']) && !empty($instance['thumb_height'] ) ? $instance['thumb_height'] : $thumb_size;
+		$custom_link  = isset( $instance['custom_link']) && !empty($instance['custom_link'] ) ? $instance['custom_link'] : '#000000';
 
 		// Correct the previous style with the new version if it is present on the site
 		if ( 'first_style' === $style || 'second_style' === $style ) :
@@ -399,7 +401,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 		// Output the "Before Widget" content
 		if ( isset( $args['before_widget'] ) ) :
-			echo esc_html( $args['before_widget'] );
+			echo wp_kses_post( $args['before_widget'] );
 		endif;
 
 		// Begin output of the widget html
@@ -410,14 +412,14 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 			// Output the "Before Title" content
 			if ( isset( $args['before_title'] ) ) :
-				echo esc_html( $args['before_title'] );
+				echo wp_kses_post( $args['before_title'] );
 			endif;
 
 			echo '<span class="widgettitle widget-title swp_popular_posts_title" style="' . esc_attr( $styles[ $style ]['links'] ) . '">' . esc_html( $title ) . '</span>';
 
 			// Output the "After Title" content
 			if ( isset( $args['after_title'] ) ) :
-				echo esc_html( $args['after_title'] );
+				echo wp_kses_post( $args['after_title'] );
 			endif;
 		endif;
 
@@ -503,7 +505,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 
 		// Output the "After Widget" content
 		if ( isset( $args['after_widget'] ) ) :
-			echo esc_html( $args['after_widget'] );
+			echo wp_kses_post( $args['after_widget'] );
 		endif;
 	}
 }
