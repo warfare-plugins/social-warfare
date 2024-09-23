@@ -32,6 +32,6 @@
 		"@wordpress/scripts": "^28.5.0"
 	},
 	"dependencies": {
-		"@wordpress/icons": "^10.5.0"
+		"@wordpress/icons": "^10.8.0"
 	}
 }
