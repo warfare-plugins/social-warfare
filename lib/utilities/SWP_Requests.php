@@ -1,7 +1,5 @@
 <?php
 
-use WpOrg\Requests\Requests;
-
 /**
  * SWP_Requests: A class to process API share count requests via WordPress
  * built in HTTP Request mechanisms.
@@ -30,6 +28,9 @@ class SWP_Requests {
 	 *         value = http link where we can fetch shares for a given post
 	 * @return array associative array of responses for each network
 	 * @since  4.3.0 | 05 JAN 2023 | Created
+	 * @since  4.5.5 | 04 OCT 2024 | Added a class existence check for `WpOrg\Requests\Requests` 
+	 * 								 to prevent fatal errors on WordPress versions that do not include 
+	 *								 this class (such as WP 5.8).
 	 */
 	public static function fetch_shares_via_wordpress_multi( $links ) {
 		if ( SWP_Utility::debug( 'is_cache_fresh' ) ) :
@@ -54,7 +55,16 @@ class SWP_Requests {
 		}
 
 		// Perform the HTTP Request
-		$responses = Requests::request_multiple( $request_multi );
+		if ( class_exists( 'WpOrg\Requests\Requests' ) ) {
+            // Perform the HTTP Request using Requests class
+            $responses = WpOrg\Requests\Requests::request_multiple( $request_multi );
+        } else {
+            // Fallback for older WP versions (use wp_remote_get)
+            $responses = array();
+            foreach ( $request_multi as $key => $request ) {
+                $responses[ $key ] = wp_remote_get( $request['url'] );
+            }
+        }
 
 		// Loop through and parse the response
 		$response = array();
