@@ -91,7 +91,7 @@ trait SWP_Buttons_Panel_Trait {
 		$this->content = $content;
 
 		if ( isset( $this->args['echo'] ) && true === $this->args['echo'] ) {
-			echo $this->content;
+			echo esc_html($this->content);
 		}
 
 		return $this->content;

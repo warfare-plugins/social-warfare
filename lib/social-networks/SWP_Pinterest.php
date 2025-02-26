@@ -146,7 +146,7 @@ class SWP_Pinterest extends SWP_Social_Network {
 		}
 
 		// The post's title.
-		$title = str_replace( '|', '', strip_tags( $panel_context['post_data']['post_title'] ) );
+		$title = str_replace( '|', '', wp_strip_all_tags( $panel_context['post_data']['post_title'] ) );
 
 		/**
 		 * Check if the user has provided a description for the "Pinterest

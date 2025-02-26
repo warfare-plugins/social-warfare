@@ -78,7 +78,7 @@ class SWP_Column {
 		// Get the share count, format it, echo it to the screen.
 		$count = get_post_meta( $post_ID, '_total_shares', true );
 		if ( ! empty( $count ) ) {
-			echo SWP_Utility::kilomega( $count );
+			echo esc_html( SWP_Utility::kilomega( $count ) );
 			return;
 		}
 

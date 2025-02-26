@@ -380,7 +380,7 @@ class SWP_Social_Network {
 		$this->html = $html;
 
 		if ( $output ) :
-			echo $html;
+			echo esc_html( $html );
 		endif;
 
 		return $html;
