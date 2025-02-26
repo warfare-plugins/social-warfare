@@ -3,7 +3,7 @@ Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalash
 Tags: sharing buttons, social media share, floating share buttons, social sharing plugin, share buttons
 Requires at least: 4.5.0
 Tested up to: 6.7.2
-Stable tag: 4.5.4
+Stable tag: 4.5.5
 Requires PHP: 5.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
