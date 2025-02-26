@@ -1,4 +1,5 @@
 /* global ajaxurl, swpAdminOptionsData, socialWarfare, wp */
+import DOMPurify from 'dompurify';
 ( function ( window, $ ) {
 	'use strict';
 
@@ -407,7 +408,7 @@
 
 		jQuery( 'style.swp_customColorStuff' ).remove();
 
-		const colorCode = jQuery( 'input[name="custom_color"]' ).val();
+		const colorCode = DOMPurify.sanitize(jQuery( 'input[name="custom_color"]' ).val());
 		let customCSS = '';
 
 		if (
