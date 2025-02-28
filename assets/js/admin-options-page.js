@@ -1,5 +1,4 @@
 /* global ajaxurl, swpAdminOptionsData, socialWarfare, wp */
-import DOMPurify from 'dompurify';
 ( function ( window, $ ) {
 	'use strict';
 
@@ -408,7 +407,8 @@ import DOMPurify from 'dompurify';
 
 		jQuery( 'style.swp_customColorStuff' ).remove();
 
-		const colorCode = DOMPurify.sanitize(jQuery( 'input[name="custom_color"]' ).val());
+		const colorCode = jQuery('input[name="custom_color"]').val().trim();
+		const sanitizedColorCode = /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(colorCode) ? colorCode : '#000000';
 		let customCSS = '';
 
 		if (
@@ -417,10 +417,11 @@ import DOMPurify from 'dompurify';
 			oColorSet == 'custom_color'
 		) {
 			customCSS =
-				'.swp_social_panel.swp_default_customColor a, html body .swp_social_panel.swp_individual_customColor .nc_tweetContainer:hover a, body .swp_social_panel.swp_other_customColor:hover a {color:white} .swp_social_panel.swp_default_customColor .nc_tweetContainer, html body .swp_social_panel.swp_individual_customColor .nc_tweetContainer:hover, body .swp_social_panel.swp_other_customColor:hover .nc_tweetContainer {background-color:' +
-				colorCode +
+				'.swp_social_panel.swp_default_customColor a, html body .swp_social_panel.swp_individual_customColor .nc_tweetContainer:hover a, body .swp_social_panel.swp_other_customColor:hover a {color:white} ' +
+				'.swp_social_panel.swp_default_customColor .nc_tweetContainer, html body .swp_social_panel.swp_individual_customColor .nc_tweetContainer:hover, body .swp_social_panel.swp_other_customColor:hover .nc_tweetContainer {background-color:' +
+				sanitizedColorCode +
 				';border:1px solid ' +
-				colorCode +
+				sanitizedColorCode +
 				';}';
 		}
 
@@ -432,9 +433,10 @@ import DOMPurify from 'dompurify';
 			customCSS =
 				customCSS +
 				' .swp_social_panel.swp_default_custom_color_outlines a, html body .swp_social_panel.swp_individual_custom_color_outlines .nc_tweetContainer:hover a, body .swp_social_panel.swp_other_custom_color_outlines:hover a { color:' +
-				colorCode +
-				'; } .swp_social_panel.swp_default_custom_color_outlines .nc_tweetContainer, html body .swp_social_panel.swp_individual_custom_color_outlines .nc_tweetContainer:hover, body .swp_social_panel.swp_other_custom_color_outlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' +
-				colorCode +
+				sanitizedColorCode +
+				'; } ' +
+				'.swp_social_panel.swp_default_custom_color_outlines .nc_tweetContainer, html body .swp_social_panel.swp_individual_custom_color_outlines .nc_tweetContainer:hover, body .swp_social_panel.swp_other_custom_color_outlines:hover .nc_tweetContainer { background:transparent; border:1px solid ' +
+				sanitizedColorCode +
 				'; }';
 		}
 
