@@ -238,6 +238,16 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 This changelog covers version 4.5.0 and later. The full changelog can be found on our <a href="https://github.com/warfare-plugins/social-warfare/blob/master/CHANGELOG.md" target="_blank">GitHub</a>.
 
+== Changelog ==
+
+= 4.5.5 (26 Feb 2025) =
+* Enhanced security by replacing `strip_tags()` with `wp_strip_all_tags()` and using `esc_html()` and `wp_kses()` for safer output.
+* Improved JSON security by switching from `json_encode()` to `wp_json_encode()`.
+* Added compatibility check for `WpOrg\Requests\Requests` to prevent errors on older WordPress versions.
+* Refactored Gutenberg Blocks for safer HTML output and improved CSS consistency.
+* Removed outdated config files from `assets/js/post-editor/`.
+* General cleanup, minor style adjustments, and improved code readability.
+
 = 4.5.3 (12 Aug 2024) =
 * Updated stable tag and version numbers to 4.5.3.
 * Updated allowed HTML tags and attributes in `SWP_Header_Output.php` to enhance security and compatibility.
