@@ -176,6 +176,6 @@ class SWP_Buttons_Panel_Ajax {
 		}
 
 		$html .= '</div></div>';
-		echo htmlspecialchars_decode( wp_kses( $html, SWP_Section_HTML::get_allowable_html() ) );
+		echo wp_kses( $html, SWP_Section_HTML::get_allowable_html() );
 	}
 }

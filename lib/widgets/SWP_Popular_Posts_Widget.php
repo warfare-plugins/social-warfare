@@ -274,7 +274,7 @@ class SWP_Popular_Posts_Widget extends WP_Widget {
 		$form .= '</div>';
 
 		// Output the form fields
-		echo $form;
+		echo wp_kses_post($form);
 	}
 
 

@@ -184,7 +184,7 @@ class SWP_Script {
 			$html .= '</script>';
 
 			// Convert special HTML entities back to Characters.
-			echo htmlspecialchars_decode( wp_kses( $html, SWP_Section_HTML::get_allowable_html() ) );
+			echo wp_kses( $html, SWP_Section_HTML::get_allowable_html() );
 		}
 	}
 
@@ -317,7 +317,7 @@ class SWP_Script {
 
 		$float_before_content = $options['float_before_content'];
 
-		$vars['footer_output'] .= 'var swpFloatBeforeContent = ' . json_encode( $float_before_content ) . ';';
+		$vars['footer_output'] .= 'var swpFloatBeforeContent = ' . wp_json_encode( $float_before_content ) . ';';
 
 		return $vars;
 	}
@@ -384,7 +384,7 @@ class SWP_Script {
 	 * @return void
 	 */
 	public function hook_esi() {
-		echo ' var swp_nonce = "' . wp_create_nonce() . '";';
+		echo ' var swp_nonce = "' . esc_js( wp_create_nonce() ) . '";';
 		exit;
 	}
 

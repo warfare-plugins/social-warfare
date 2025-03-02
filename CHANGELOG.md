@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.5] - 2022-02-26
+
+### Updated
+- Updated stable tag and version numbers to 4.5.5.
+- Updated security support matrix in `SECURITY.md` to reflect supported versions.
+- Updated required and tested WordPress versions in `readme.txt`.
+
+### Enhanced Security
+- Enhanced security by replacing `strip_tags()` with `wp_strip_all_tags()` in `SWP_Click_To_Tweet.php` and `SWP_Pinterest.php`.
+- Added `esc_html()` to sanitize output in `SWP_Column.php`, `swp_system_checker.php`, and `SWP_Buttons_Panel.php`.
+- Replaced `htmlspecialchars_decode()` with `wp_kses()` in `SWP_Buttons_Panel_Ajax.php` and `SWP_Options_Page.php`.
+- Improved security by using `wp_kses()` and `wp_kses_post()` for rendering HTML in multiple frontend and admin output files.
+- Applied `esc_js()` to `wp_create_nonce()` in `SWP_Script.php` for enhanced JavaScript security.
+- Replaced `json_encode()` with `wp_json_encode()` for secure JSON output in `SWP_Script.php` and `SWP_Option_Abstract.php`.
+
+### Compatibility & Refactoring
+- Added compatibility check for `WpOrg\Requests\Requests` in `SWP_Requests.php` to prevent fatal errors on older WordPress versions.
+- Refactored Gutenberg Blocks section to use `wp_kses()` for safe HTML output in `SWP_Options_Page.php`.
+- Refactored CSS and SCSS files in `assets/css/` for improved styling consistency and maintainability.
+
+### Removed
+- Removed `.editorconfig`, `.eslintignore`, `.eslintrc.json`, and `.gitignore` files from `assets/js/post-editor/` as they were no longer in use.
+
+### Miscellaneous
+- Minor style adjustments in `assets/css/admin.scss` for better UI consistency.
+- Fixed minor typos and improved code readability throughout the plugin files.
+- General cleanup and refactoring for better maintainability.
+
+### Note
+- This version enhances security, improves compatibility, and continues to support all current WordPress versions.
+
 ## [4.5.3] - 2024-08-12
 
 ### Updated

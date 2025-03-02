@@ -616,10 +616,10 @@ class SWP_Buttons_Panel {
 	public function set_option( $option = '', $value = null ) {
 		if ( empty( $option ) ) :
 			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . "  a first paramter $option (string) and \$value (mixed). You provided " . gettype( $value ) . '.';
-			throw new Exception( $message );
+			throw new Exception( esc_html( $message ) );
 		elseif ( null === $value ) :
 			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . ' a second paramter: $value (mixed type). You provided ' . gettype( $value ) . '.';
-			throw new Exception( $message );
+			throw new Exception( esc_html( $message ) );
 		endif;
 
 		$this->options[ $this->options ] = $value;
@@ -640,7 +640,7 @@ class SWP_Buttons_Panel {
 	public function set_options( $options = array() ) {
 		if ( ! is_array( $options ) ) :
 			$message = 'Hey developer, ' . __CLASS__ . __METHOD__ . ' requires an arry of options. You provided ' . gettype( $options ) . '.';
-			throw new Exception( $message );
+			throw new Exception( esc_html( $message ) );
 		endif;
 
 		array_merge( $this->options, $options );

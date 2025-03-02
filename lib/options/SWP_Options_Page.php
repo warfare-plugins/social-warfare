@@ -338,7 +338,7 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$html       = $menu . $tabs;
 		$this->html = $html;
 		// echo $html;
-		echo htmlspecialchars_decode( wp_kses( $html, SWP_Section_HTML::get_allowable_html() ) );
+		echo wp_kses( $html, SWP_Section_HTML::get_allowable_html() );
 
 		return $this;
 	}
@@ -415,7 +415,15 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 		$advanced = new SWP_Options_Page_Tab( esc_html__( 'Advanced', 'social-warfare' ), 'advanced' );
 		$advanced->set_priority( 40 );
 
-		$gutenberg = new SWP_Options_Page_Section( esc_html__( 'Gutenberg Blocks<sup>beta</sup>', 'social-warfare' ), 'gutenberg' );
+		$gutenberg = new SWP_Options_Page_Section( 
+			wp_kses( 
+				__( 'Gutenberg Blocks<sup>beta</sup>', 'social-warfare' ), 
+				array( 
+					'sup' => array() 
+				) 
+			), 
+			'gutenberg' 
+		);
 		$gutenberg->set_priority( 5 )
 			->set_description( 'If you want to try Social Warfare blocks with Gutenberg, turn this on. <b>Tested with: WP Core 4.9, WP Core 5.1</b>. <em><br/>We are keeping up the best we can, but Gutenberg development is very rapid and can break our blocks overnight. <br/>If this happens, please turn this setting OFF. Your shortcodes will stay in place.</em>' );
 			// ->set_information_link( 'https://warfareplugins.com/support/using-shortcodes-and-php-snippets/' );
@@ -929,6 +937,6 @@ class SWP_Options_Page extends SWP_Option_Abstract {
 			$response['url'] = SWP_Utility::settings_page_redirect();
 		}
 
-		die( json_encode( $response ) );
+		die( wp_json_encode( $response ) );
 	}
 }

@@ -2,8 +2,8 @@
 Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalashov
 Tags: sharing buttons, social media share, floating share buttons, social sharing plugin, share buttons
 Requires at least: 4.5.0
-Tested up to: 6.6
-Stable tag: 4.5.4
+Tested up to: 6.7.2
+Stable tag: 4.5.5
 Requires PHP: 5.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -237,6 +237,16 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 == Changelog ==
 
 This changelog covers version 4.5.0 and later. The full changelog can be found on our <a href="https://github.com/warfare-plugins/social-warfare/blob/master/CHANGELOG.md" target="_blank">GitHub</a>.
+
+== Changelog ==
+
+= 4.5.5 (26 Feb 2025) =
+* Enhanced security by replacing `strip_tags()` with `wp_strip_all_tags()` and using `esc_html()` and `wp_kses()` for safer output.
+* Improved JSON security by switching from `json_encode()` to `wp_json_encode()`.
+* Added compatibility check for `WpOrg\Requests\Requests` to prevent errors on older WordPress versions.
+* Refactored Gutenberg Blocks for safer HTML output and improved CSS consistency.
+* Removed outdated config files from `assets/js/post-editor/`.
+* General cleanup, minor style adjustments, and improved code readability.
 
 = 4.5.3 (12 Aug 2024) =
 * Updated stable tag and version numbers to 4.5.3.

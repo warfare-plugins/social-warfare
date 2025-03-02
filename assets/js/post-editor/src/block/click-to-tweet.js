@@ -69,7 +69,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		 * @param event
 		 */
 		const updateTweetText = ( event ) => {
-			const tweetText = event.target.value.replace( '"', "'" );
+			const tweetText = event.target.value.replace(/"/g, "'" );
 
 			if ( ! tweetText || ! tweetText.length ) {
 				return props.setAttributes( {
@@ -84,7 +84,7 @@ registerBlockType( 'social-warfare/click-to-tweet', {
 		};
 
 		const updateDisplayText = ( event ) => {
-			const displayText = event.target.value.replace( '"', "'" );
+			const displayText = event.target.value.replace(/"/g, "'" );
 
 			props.setAttributes( { displayText } );
 		};
