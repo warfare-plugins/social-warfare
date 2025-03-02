@@ -327,7 +327,7 @@
 						( e.attributes.overLimit,
 						e.attributes.overLimit ? 'over-limit' : '' ),
 					i = function ( t ) {
-						const a = t.target.value.replace( '"', "'" );
+						const a = t.target.value.replace(/"/g, "'" );
 						if ( ! a || ! a.length ) {
 							return e.setAttributes( {
 								tweetText: '',
@@ -338,7 +338,7 @@
 						e.setAttributes( { overLimit: n, tweetText: a } );
 					},
 					u = function ( t ) {
-						const a = t.target.value.replace( '"', "'" );
+						const a = t.target.value.replace(/"/g, "'" );
 						e.setAttributes( { displayText: a } );
 					},
 					m = function ( t ) {

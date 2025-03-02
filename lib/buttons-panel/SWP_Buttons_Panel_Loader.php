@@ -204,7 +204,7 @@ class SWP_Buttons_Panel_Loader {
 		}
 
 		// Render the html to output to the screen.
-		echo $side_panel->render_html();
+		echo wp_kses_post( $side_panel->render_html() );
 	}
 
 
@@ -252,7 +252,7 @@ class SWP_Buttons_Panel_Loader {
 		}
 
 		// Generate the static panel fallback and echo it to the screen.
-		echo $this->generate_static_panel_fallback();
+		echo wp_kses_post( $this->generate_static_panel_fallback() );
 	}
 
 
@@ -373,6 +373,6 @@ class SWP_Buttons_Panel_Loader {
 	 */
 	public static function social_warfare( $args = array() ) {
 		$Buttons_Panel = new SWP_Buttons_Panel( $args );
-		echo $Buttons_Panel->render_html();
+		echo wp_kses_post( $Buttons_Panel->render_html() );
 	}
 }

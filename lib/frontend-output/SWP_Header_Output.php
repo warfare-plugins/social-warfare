@@ -179,7 +179,7 @@ class SWP_Header_Output {
 		 * so that it will get output via the header hook.
 		 */
 		if ( true === is_admin() ) {
-			echo $style;
+			echo wp_kses( $style, array( 'style' => array() ) );
 		} else {
 			if ( empty( $meta_html ) ) :
 				$meta_html = '';

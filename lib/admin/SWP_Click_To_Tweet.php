@@ -124,7 +124,7 @@ class SWP_Click_To_Tweet {
 	 * @return str        The modified string.
 	 */
 	public function validate_settings( $input ) {
-		return str_replace( '@', '', strip_tags( stripslashes( $input ) ) );
+		return str_replace( '@', '', wp_strip_all_tags( stripslashes( $input ) ) );
 	}
 
 

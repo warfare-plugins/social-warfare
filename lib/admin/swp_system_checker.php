@@ -71,7 +71,7 @@ class Swp_System_Checker {
 				continue;
 			}
 
-			echo '<div class="sw-red-notice">' . $custom_check->whats_wrong . $custom_check->how_to_fix . '</div>';
+			echo '<div class="sw-red-notice">' . esc_html( $custom_check->whats_wrong ) . esc_html( $custom_check->how_to_fix ) . '</div>';
 		}
 	}
 }
